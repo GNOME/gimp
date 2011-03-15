@@ -1,14 +1,14 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2010
+# Marco Ciampa <ciampix@libero.it>, 2003-2011
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-20 22:13+0100\n"
-"PO-Revision-Date: 2010-12-20 22:14+0100\n"
+"POT-Creation-Date: 2011-03-16 00:33+0100\n"
+"PO-Revision-Date: 2011-03-16 00:37+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Intero livello"
 
 #. Create selection
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:172
-#: ../plug-ins/common/film.c:965 ../plug-ins/imagemap/imap_selection.c:340
+#: ../plug-ins/common/film.c:965 ../plug-ins/imagemap/imap_selection.c:339
 #: ../plug-ins/selection-to-path/selection-to-path.c:433
 msgid "Selection"
 msgstr "Selezione"
@@ -49,13 +49,13 @@ msgstr "Contesto"
 
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:297
-#: ../plug-ins/file-fli/fli-gimp.c:873 ../plug-ins/file-fli/fli-gimp.c:929
+msgctxt "color-range"
 msgid "From:"
 msgstr "Da:"
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:323
-#: ../plug-ins/file-fli/fli-gimp.c:882 ../plug-ins/file-fli/fli-gimp.c:938
+msgctxt "color-range"
 msgid "To:"
 msgstr "A:"
 
@@ -300,7 +300,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1039
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1080
-#: ../plug-ins/lighting/lighting-ui.c:414
+#: ../plug-ins/lighting/lighting-ui.c:418
 #: ../plug-ins/print/print-page-layout.c:461
 msgid "None"
 msgstr "No"
@@ -330,7 +330,7 @@ msgid "Left edge"
 msgstr "Bordo sinistro"
 
 #: ../plug-ins/common/align-layers.c:441 ../plug-ins/common/align-layers.c:471
-#: ../plug-ins/gradient-flare/gradient-flare.c:2712
+#: ../plug-ins/gradient-flare/gradient-flare.c:2710
 msgid "Center"
 msgstr "Centro"
 
@@ -548,7 +548,7 @@ msgstr "Applica tela"
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
 #: ../plug-ins/common/apply-canvas.c:1292 ../plug-ins/common/wind.c:945
-#: ../plug-ins/lighting/lighting-ui.c:516
+#: ../plug-ins/lighting/lighting-ui.c:520
 msgid "Direction"
 msgstr "Direzione"
 
@@ -570,7 +570,7 @@ msgstr "In basso a dest_ra"
 
 #: ../plug-ins/common/apply-canvas.c:1324 ../plug-ins/common/bump-map.c:916
 #: ../plug-ins/common/emboss.c:524 ../plug-ins/common/fractal-trace.c:796
-#: ../plug-ins/map-object/map-object-ui.c:573
+#: ../plug-ins/map-object/map-object-ui.c:518
 msgid "_Depth:"
 msgstr "Profon_dità:"
 
@@ -623,9 +623,10 @@ msgstr "_Verticale"
 #: ../plug-ins/file-faxg3/faxg3.c:477 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:248 ../plug-ins/file-jpeg/jpeg-load.c:760
 #: ../plug-ins/file-psd/psd-image-res-load.c:997
-#: ../plug-ins/file-psd/psd-load.c:1576 ../plug-ins/file-sgi/sgi.c:406
-#: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:139 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/file-psd/psd-load.c:1579 ../plug-ins/file-sgi/sgi.c:406
+#: ../plug-ins/gfig/gfig-dialog.c:1283
+#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1155
 msgid "Background"
 msgstr "Sfondo"
@@ -661,7 +662,7 @@ msgstr "Sfocatura selettiva Gaussiana"
 #: ../plug-ins/common/edge-dog.c:268 ../plug-ins/common/edge-neon.c:227
 #: ../plug-ins/common/edge-sobel.c:211 ../plug-ins/common/photocopy.c:243
 #: ../plug-ins/common/pixelize.c:292 ../plug-ins/common/softglow.c:223
-#: ../plug-ins/file-sgi/sgi.c:557 ../plug-ins/file-xjt/xjt.c:1683
+#: ../plug-ins/file-sgi/sgi.c:557 ../plug-ins/file-xjt/xjt.c:1685
 #: ../plug-ins/gradient-flare/gradient-flare.c:965
 msgid "Cannot operate on indexed color images."
 msgstr "Impossibile operare su immagini a colori indicizzati."
@@ -760,16 +761,16 @@ msgstr "Centro sfocatura"
 #: ../plug-ins/common/blur-motion.c:1096 ../plug-ins/common/lens-flare.c:762
 #: ../plug-ins/common/nova.c:453 ../plug-ins/common/tile-paper.c:282
 #: ../plug-ins/flame/flame.c:1248
-#: ../plug-ins/gradient-flare/gradient-flare.c:2724
-#: ../plug-ins/lighting/lighting-ui.c:475
+#: ../plug-ins/gradient-flare/gradient-flare.c:2722
+#: ../plug-ins/lighting/lighting-ui.c:479
 msgid "_X:"
 msgstr "_X:"
 
 #: ../plug-ins/common/blur-motion.c:1101 ../plug-ins/common/lens-flare.c:767
 #: ../plug-ins/common/nova.c:458 ../plug-ins/common/tile-paper.c:291
 #: ../plug-ins/flame/flame.c:1262
-#: ../plug-ins/gradient-flare/gradient-flare.c:2728
-#: ../plug-ins/lighting/lighting-ui.c:490
+#: ../plug-ins/gradient-flare/gradient-flare.c:2726
+#: ../plug-ins/lighting/lighting-ui.c:494
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -782,7 +783,7 @@ msgid "Blur Parameters"
 msgstr "Parametri sfocatura"
 
 #: ../plug-ins/common/blur-motion.c:1127
-#: ../plug-ins/map-object/map-object-ui.c:1252
+#: ../plug-ins/map-object/map-object-ui.c:1197
 msgid "L_ength:"
 msgstr "L_unghezza:"
 
@@ -859,17 +860,17 @@ msgstr "Mappa a s_balzo:"
 
 #. Map type menu
 #: ../plug-ins/common/bump-map.c:835 ../plug-ins/flame/flame.c:745
-#: ../plug-ins/lighting/lighting-ui.c:840
+#: ../plug-ins/lighting/lighting-ui.c:844
 msgid "Linear"
 msgstr "Lineare"
 
 #: ../plug-ins/common/bump-map.c:836 ../plug-ins/flame/flame.c:747
-#: ../plug-ins/lighting/lighting-ui.c:843
+#: ../plug-ins/lighting/lighting-ui.c:847
 msgid "Spherical"
 msgstr "Sferica"
 
 #: ../plug-ins/common/bump-map.c:837 ../plug-ins/flame/flame.c:746
-#: ../plug-ins/lighting/lighting-ui.c:842
+#: ../plug-ins/lighting/lighting-ui.c:846
 msgid "Sinusoidal"
 msgstr "Sinusoidale"
 
@@ -983,7 +984,7 @@ msgid "Blue"
 msgstr "Blu"
 
 #: ../plug-ins/common/channel-mixer.c:583
-#: ../plug-ins/common/color-exchange.c:412 ../plug-ins/common/compose.c:189
+#: ../plug-ins/common/color-exchange.c:411 ../plug-ins/common/compose.c:189
 #: ../plug-ins/common/compose.c:200 ../plug-ins/common/diffraction.c:500
 #: ../plug-ins/common/diffraction.c:538 ../plug-ins/common/diffraction.c:576
 #: ../plug-ins/common/noise-rgb.c:532 ../plug-ins/common/noise-rgb.c:539
@@ -991,7 +992,7 @@ msgid "_Red:"
 msgstr "_Rosso:"
 
 #: ../plug-ins/common/channel-mixer.c:601
-#: ../plug-ins/common/color-exchange.c:472 ../plug-ins/common/compose.c:190
+#: ../plug-ins/common/color-exchange.c:467 ../plug-ins/common/compose.c:190
 #: ../plug-ins/common/compose.c:201 ../plug-ins/common/diffraction.c:509
 #: ../plug-ins/common/diffraction.c:547 ../plug-ins/common/diffraction.c:585
 #: ../plug-ins/common/noise-rgb.c:533 ../plug-ins/common/noise-rgb.c:540
@@ -999,7 +1000,7 @@ msgid "_Green:"
 msgstr "_Verde:"
 
 #: ../plug-ins/common/channel-mixer.c:620
-#: ../plug-ins/common/color-exchange.c:533 ../plug-ins/common/compose.c:191
+#: ../plug-ins/common/color-exchange.c:523 ../plug-ins/common/compose.c:191
 #: ../plug-ins/common/compose.c:202 ../plug-ins/common/diffraction.c:518
 #: ../plug-ins/common/diffraction.c:556 ../plug-ins/common/diffraction.c:594
 #: ../plug-ins/common/noise-rgb.c:534 ../plug-ins/common/noise-rgb.c:541
@@ -1030,13 +1031,13 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:360
 #: ../plug-ins/common/file-pix.c:342 ../plug-ins/common/file-png.c:720
 #: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1036
-#: ../plug-ins/common/file-ps.c:3045 ../plug-ins/common/file-psp.c:1704
+#: ../plug-ins/common/file-ps.c:3045 ../plug-ins/common/file-psp.c:1708
 #: ../plug-ins/common/file-raw.c:255 ../plug-ins/common/file-raw.c:709
 #: ../plug-ins/common/file-sunras.c:390 ../plug-ins/common/file-svg.c:332
 #: ../plug-ins/common/file-svg.c:730 ../plug-ins/common/file-tga.c:441
 #: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:736
 #: ../plug-ins/common/file-xmc.c:666 ../plug-ins/common/file-xmc.c:853
-#: ../plug-ins/common/file-xwd.c:432 ../plug-ins/common/sphere-designer.c:2003
+#: ../plug-ins/common/file-xwd.c:432 ../plug-ins/common/sphere-designer.c:2004
 #: ../plug-ins/file-bmp/bmp-read.c:155 ../plug-ins/file-faxg3/faxg3.c:232
 #: ../plug-ins/file-fits/fits.c:357 ../plug-ins/file-fli/fli-gimp.c:458
 #: ../plug-ins/file-fli/fli-gimp.c:495 ../plug-ins/file-ico/ico-load.c:652
@@ -1044,13 +1045,13 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/file-jpeg/jpeg-load.c:830 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:189
-#: ../plug-ins/file-xjt/xjt.c:2525 ../plug-ins/file-xjt/xjt.c:2533
+#: ../plug-ins/file-xjt/xjt.c:2527 ../plug-ins/file-xjt/xjt.c:2535
 #: ../plug-ins/flame/flame.c:409
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:928
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:927
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
 #: ../plug-ins/help/gimphelplocale.c:238
-#: ../plug-ins/lighting/lighting-ui.c:1357
+#: ../plug-ins/lighting/lighting-ui.c:1365
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire '%s' in lettura: %s"
@@ -1065,7 +1066,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-compressor.c:507
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:677
-#: ../plug-ins/common/file-csource.c:406 ../plug-ins/common/file-dicom.c:1356
+#: ../plug-ins/common/file-csource.c:406 ../plug-ins/common/file-dicom.c:1351
 #: ../plug-ins/common/file-gbr.c:662 ../plug-ins/common/file-gif-save.c:781
 #: ../plug-ins/common/file-gih.c:1262 ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609 ../plug-ins/common/file-mng.c:943
@@ -1076,16 +1077,16 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-sunras.c:563 ../plug-ins/common/file-tga.c:1169
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
 #: ../plug-ins/common/file-xmc.c:1460 ../plug-ins/common/file-xwd.c:617
-#: ../plug-ins/common/sphere-designer.c:2112
+#: ../plug-ins/common/sphere-designer.c:2115
 #: ../plug-ins/file-bmp/bmp-write.c:295 ../plug-ins/file-fits/fits.c:475
 #: ../plug-ins/file-fli/fli-gimp.c:748 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1637
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:162
-#: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1711
+#: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1713
 #: ../plug-ins/flame/flame.c:440
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:798 ../plug-ins/ifs-compose/ifs-compose.c:2394
-#: ../plug-ins/lighting/lighting-ui.c:1214
+#: ../plug-ins/lighting/lighting-ui.c:1221
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire '%s' in scrittura: %s"
@@ -1361,7 +1362,7 @@ msgid "Random Seed"
 msgstr "Seme Casuale"
 
 #: ../plug-ins/common/cml-explorer.c:1292 ../plug-ins/common/filter-pack.c:699
-#: ../plug-ins/common/van-gogh-lic.c:671
+#: ../plug-ins/common/van-gogh-lic.c:673
 msgid "_Hue"
 msgstr "_Tonalità"
 
@@ -1605,44 +1606,44 @@ msgid "_Color Exchange..."
 msgstr "Scambio _colore..."
 
 #: ../plug-ins/common/color-exchange.c:212
-#: ../plug-ins/common/color-exchange.c:287
+#: ../plug-ins/common/color-exchange.c:286
 msgid "Color Exchange"
 msgstr "Scambio colore"
 
-#: ../plug-ins/common/color-exchange.c:310
+#: ../plug-ins/common/color-exchange.c:309
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
 msgstr ""
 "Fare clic con il tasto centrale nell'anteprima per prelevare \"da colore\""
 
-#: ../plug-ins/common/color-exchange.c:355
+#: ../plug-ins/common/color-exchange.c:354
 msgid "To Color"
 msgstr "A colore"
 
-#: ../plug-ins/common/color-exchange.c:355
+#: ../plug-ins/common/color-exchange.c:354
 msgid "From Color"
 msgstr "Da colore"
 
-#: ../plug-ins/common/color-exchange.c:379
+#: ../plug-ins/common/color-exchange.c:378
 msgid "Color Exchange: To Color"
 msgstr "Scambio colore: a colore"
 
-#: ../plug-ins/common/color-exchange.c:380
+#: ../plug-ins/common/color-exchange.c:379
 msgid "Color Exchange: From Color"
 msgstr "Scambio colore: da colore"
 
-#: ../plug-ins/common/color-exchange.c:438
+#: ../plug-ins/common/color-exchange.c:435
 msgid "R_ed threshold:"
 msgstr "Soglia d_el rosso:"
 
-#: ../plug-ins/common/color-exchange.c:498
+#: ../plug-ins/common/color-exchange.c:491
 msgid "G_reen threshold:"
 msgstr "Soglia del ve_rde:"
 
-#: ../plug-ins/common/color-exchange.c:559
+#: ../plug-ins/common/color-exchange.c:547
 msgid "B_lue threshold:"
 msgstr "Soglia del b_lu:"
 
-#: ../plug-ins/common/color-exchange.c:587
+#: ../plug-ins/common/color-exchange.c:573
 msgid "Lock _thresholds"
 msgstr "Blocca _soglie"
 
@@ -1989,39 +1990,39 @@ msgstr "Retine_x..."
 msgid "Retinex"
 msgstr "Retinex"
 
-#: ../plug-ins/common/contrast-retinex.c:285
+#: ../plug-ins/common/contrast-retinex.c:284
 msgid "Retinex Image Enhancement"
 msgstr "Miglioramento immagine Retinex"
 
-#: ../plug-ins/common/contrast-retinex.c:321
+#: ../plug-ins/common/contrast-retinex.c:320
 msgid "Uniform"
 msgstr "Uniforme"
 
-#: ../plug-ins/common/contrast-retinex.c:322
+#: ../plug-ins/common/contrast-retinex.c:321
 msgid "Low"
 msgstr "Basso"
 
-#: ../plug-ins/common/contrast-retinex.c:323
+#: ../plug-ins/common/contrast-retinex.c:322
 msgid "High"
 msgstr "Alto"
 
-#: ../plug-ins/common/contrast-retinex.c:334
+#: ../plug-ins/common/contrast-retinex.c:333
 msgid "_Level:"
 msgstr "_Livello:"
 
-#: ../plug-ins/common/contrast-retinex.c:339
+#: ../plug-ins/common/contrast-retinex.c:338
 msgid "_Scale:"
 msgstr "_Scala:"
 
-#: ../plug-ins/common/contrast-retinex.c:354
+#: ../plug-ins/common/contrast-retinex.c:351
 msgid "Scale _division:"
 msgstr "Di_visione scala:"
 
-#: ../plug-ins/common/contrast-retinex.c:369
+#: ../plug-ins/common/contrast-retinex.c:364
 msgid "Dy_namic:"
 msgstr "_Dinamica:"
 
-#: ../plug-ins/common/contrast-retinex.c:642
+#: ../plug-ins/common/contrast-retinex.c:635
 msgid "Retinex: filtering"
 msgstr "Retinex: filtraggio"
 
@@ -2262,7 +2263,7 @@ msgstr "Anteprima a_utomatica"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve-bend.c:1309 ../plug-ins/common/ripple.c:522
-#: ../plug-ins/gfig/gfig-dialog.c:1206
+#: ../plug-ins/gfig/gfig-dialog.c:1205
 msgid "Options"
 msgstr "Opzioni"
 
@@ -2646,7 +2647,7 @@ msgstr "_Ricorsivo"
 #: ../plug-ins/common/despeckle.c:509 ../plug-ins/common/edge-neon.c:732
 #: ../plug-ins/common/nl-filter.c:1090 ../plug-ins/common/nova.c:361
 #: ../plug-ins/common/unsharp-mask.c:866 ../plug-ins/common/whirl-pinch.c:589
-#: ../plug-ins/gradient-flare/gradient-flare.c:2757
+#: ../plug-ins/gradient-flare/gradient-flare.c:2755
 #: ../plug-ins/imagemap/imap_circle.c:277
 msgid "_Radius:"
 msgstr "_Raggio:"
@@ -2680,7 +2681,7 @@ msgstr "Destriscia"
 #: ../plug-ins/common/file-raw.c:1132 ../plug-ins/common/smooth-palette.c:435
 #: ../plug-ins/common/tile-paper.c:302 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
-#: ../plug-ins/imagemap/imap_rectangle.c:402
+#: ../plug-ins/imagemap/imap_rectangle.c:401
 #: ../plug-ins/print/print-page-layout.c:264
 msgid "_Width:"
 msgstr "_Larghezza:"
@@ -2706,7 +2707,7 @@ msgid "Diffraction Patterns"
 msgstr "Motivo di diffrazione"
 
 #: ../plug-ins/common/diffraction.c:476
-#: ../plug-ins/map-object/map-object-ui.c:1388
+#: ../plug-ins/map-object/map-object-ui.c:1339
 msgid "_Preview!"
 msgstr "_Anteprima!"
 
@@ -2992,7 +2993,7 @@ msgstr "Incisione"
 #: ../plug-ins/common/file-raw.c:1145 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:440 ../plug-ins/common/tile-paper.c:313
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:174
-#: ../plug-ins/imagemap/imap_rectangle.c:409
+#: ../plug-ins/imagemap/imap_rectangle.c:408
 #: ../plug-ins/print/print-page-layout.c:266
 msgid "_Height:"
 msgstr "_Altezza:"
@@ -3040,7 +3041,7 @@ msgstr "Carica tavolozza KISS"
 #: ../plug-ins/file-bmp/bmp-read.c:160 ../plug-ins/file-faxg3/faxg3.c:216
 #: ../plug-ins/file-fli/fli-gimp.c:500 ../plug-ins/file-ico/ico-load.c:645
 #: ../plug-ins/file-jpeg/jpeg-load.c:114 ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:329 ../plug-ins/file-xjt/xjt.c:3329
+#: ../plug-ins/file-sgi/sgi.c:329 ../plug-ins/file-xjt/xjt.c:3331
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
@@ -3068,7 +3069,7 @@ msgstr "Profondità di colore (in bit) non supportata (%d)!"
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:480
 #: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1642
-#: ../plug-ins/file-sgi/sgi.c:575 ../plug-ins/file-xjt/xjt.c:1692
+#: ../plug-ins/file-sgi/sgi.c:575 ../plug-ins/file-xjt/xjt.c:1694
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvataggio di '%s'"
@@ -3163,14 +3164,14 @@ msgstr "Immagini digitali e comunicazioni in immagini mediche"
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' non è un file DICOM"
 
-#: ../plug-ins/common/file-dicom.c:1324 ../plug-ins/common/file-pcx.c:673
+#: ../plug-ins/common/file-dicom.c:1319 ../plug-ins/common/file-pcx.c:673
 #: ../plug-ins/common/file-pnm.c:966
 msgid "Cannot save images with alpha channel."
 msgstr "Impossibile salvare immagini con canali alfa."
 
-#: ../plug-ins/common/file-dicom.c:1339 ../plug-ins/common/file-ps.c:1203
+#: ../plug-ins/common/file-dicom.c:1334 ../plug-ins/common/file-ps.c:1203
 #: ../plug-ins/common/file-xwd.c:607 ../plug-ins/file-fits/fits.c:465
-#: ../plug-ins/file-xjt/xjt.c:1687
+#: ../plug-ins/file-xjt/xjt.c:1689
 msgid "Cannot operate on unknown image types."
 msgstr "Impossibile operare su immagini di tipo sconosciuto."
 
@@ -3200,7 +3201,7 @@ msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
 #: ../plug-ins/common/file-gbr.c:460 ../plug-ins/common/file-gih.c:491
 #: ../plug-ins/common/file-gih.c:1141
-#: ../plug-ins/gradient-flare/gradient-flare.c:3062
+#: ../plug-ins/gradient-flare/gradient-flare.c:3060
 msgid "Unnamed"
 msgstr "Senzanome"
 
@@ -3328,19 +3329,19 @@ msgstr ""
 "Errore di caricamento file IU \"%s\":\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1184
+#: ../plug-ins/common/file-gif-save.c:1185
 msgid "I don't care"
 msgstr "Non importa"
 
-#: ../plug-ins/common/file-gif-save.c:1186
+#: ../plug-ins/common/file-gif-save.c:1187
 msgid "Cumulative layers (combine)"
 msgstr "Livelli cumulativi (combina)"
 
-#: ../plug-ins/common/file-gif-save.c:1188
+#: ../plug-ins/common/file-gif-save.c:1189
 msgid "One frame per layer (replace)"
 msgstr "Un fotogramma per livello (rimpiazza)"
 
-#: ../plug-ins/common/file-gif-save.c:1205
+#: ../plug-ins/common/file-gif-save.c:1206
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -3349,11 +3350,11 @@ msgstr ""
 "un livello. L'immagine che si sta tentando di esportare possiede un solo "
 "livello."
 
-#: ../plug-ins/common/file-gif-save.c:2349
+#: ../plug-ins/common/file-gif-save.c:2350
 msgid "Error writing output file."
 msgstr "Errore durante la scrittura del file di uscita."
 
-#: ../plug-ins/common/file-gif-save.c:2419
+#: ../plug-ins/common/file-gif-save.c:2420
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Il commento predefinito è limitato a %d caratteri."
@@ -3628,7 +3629,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:497 ../plug-ins/common/file-png.c:1760
+#: ../plug-ins/common/file-mng.c:497 ../plug-ins/common/file-png.c:1756
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Impossibile salvare senza degrado la trasparenza; salvataggio dell'opacità."
@@ -3662,7 +3663,7 @@ msgid "Save creation time"
 msgstr "Salva la data di creazione"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1801
+#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1797
 msgid "PNG"
 msgstr "PNG"
 
@@ -3702,39 +3703,39 @@ msgstr "Rimpiazza"
 msgid "Default frame disposal:"
 msgstr "Disposizione predefinita fotogrammi:"
 
-#: ../plug-ins/common/file-mng.c:1408
+#: ../plug-ins/common/file-mng.c:1407
 msgid "PNG compression level:"
 msgstr "Livello di compressione PNG:"
 
-#: ../plug-ins/common/file-mng.c:1416
+#: ../plug-ins/common/file-mng.c:1415
 msgid "Choose a high compression level for small file size"
 msgstr "Scegliere una compressione alta per ottenere file piccoli"
 
-#: ../plug-ins/common/file-mng.c:1430
+#: ../plug-ins/common/file-mng.c:1428
 msgid "JPEG compression quality:"
 msgstr "Livello di compressione JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1447
+#: ../plug-ins/common/file-mng.c:1444
 msgid "JPEG smoothing factor:"
 msgstr "Fattore di sfocatura JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1457
+#: ../plug-ins/common/file-mng.c:1454
 msgid "Animated MNG Options"
 msgstr "Opzioni MNG animata"
 
-#: ../plug-ins/common/file-mng.c:1463
+#: ../plug-ins/common/file-mng.c:1460
 msgid "Loop"
 msgstr "Ciclico"
 
-#: ../plug-ins/common/file-mng.c:1477
+#: ../plug-ins/common/file-mng.c:1474
 msgid "Default frame delay:"
 msgstr "Ritardo predefinito fotogrammi:"
 
-#: ../plug-ins/common/file-mng.c:1493
+#: ../plug-ins/common/file-mng.c:1490
 msgid "milliseconds"
 msgstr "millisecondi"
 
-#: ../plug-ins/common/file-mng.c:1506
+#: ../plug-ins/common/file-mng.c:1503
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -3742,7 +3743,7 @@ msgstr ""
 "Queste opzioni sono disponibili quando l'immagine esportata possiede più di "
 "un livello. L'immagine che si sta esportando ha un solo livello."
 
-#: ../plug-ins/common/file-mng.c:1559
+#: ../plug-ins/common/file-mng.c:1556
 msgid "MNG animation"
 msgstr "Animazione MNG"
 
@@ -3900,7 +3901,7 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Errore durante il salvataggio di '%s'. Impossibile salvare l'immagine."
 
-#: ../plug-ins/common/file-png.c:1818
+#: ../plug-ins/common/file-png.c:1814
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Errore di caricamento file IU \"%s\": %s"
@@ -4050,7 +4051,7 @@ msgstr "Pagine:"
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pagine da caricare (per es.: 1-4 o 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3201 ../plug-ins/common/sphere-designer.c:2647
+#: ../plug-ins/common/file-ps.c:3201 ../plug-ins/common/sphere-designer.c:2650
 msgid "Layers"
 msgstr "Livelli"
 
@@ -4138,7 +4139,7 @@ msgstr "_Millimetri"
 
 #. Rotation
 #: ../plug-ins/common/file-ps.c:3428
-#: ../plug-ins/map-object/map-object-ui.c:1035
+#: ../plug-ins/map-object/map-object-ui.c:980
 msgid "Rotation"
 msgstr "Rotazione"
 
@@ -5214,7 +5215,7 @@ msgstr "_Alteluci"
 msgid "Windows"
 msgstr "Finestre"
 
-#: ../plug-ins/common/filter-pack.c:703 ../plug-ins/common/van-gogh-lic.c:672
+#: ../plug-ins/common/filter-pack.c:703 ../plug-ins/common/van-gogh-lic.c:674
 msgid "_Saturation"
 msgstr "_Saturazione"
 
@@ -5283,7 +5284,7 @@ msgid "Advanced Filter Pack Options"
 msgstr "Opzioni avanzate blocco filtri"
 
 #. ****************** MISC OPTIONS **************************
-#: ../plug-ins/common/filter-pack.c:1417
+#: ../plug-ins/common/filter-pack.c:1416
 msgid "Preview Size"
 msgstr "Dimensione anteprima"
 
@@ -5365,7 +5366,7 @@ msgstr "_Griglia..."
 msgid "Drawing grid"
 msgstr "Disegno griglia"
 
-#: ../plug-ins/common/grid.c:634 ../plug-ins/gfig/gfig-dialog.c:1355
+#: ../plug-ins/common/grid.c:634 ../plug-ins/gfig/gfig-dialog.c:1354
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Grid"
 msgstr "Griglia"
@@ -5575,7 +5576,7 @@ msgid "Thresho_ld:"
 msgstr "Sog_lia:"
 
 #: ../plug-ins/common/iwarp.c:1223 ../plug-ins/common/sinus.c:770
-#: ../plug-ins/gradient-flare/gradient-flare.c:2866
+#: ../plug-ins/gradient-flare/gradient-flare.c:2864
 msgid "_Settings"
 msgstr "_Impostazioni"
 
@@ -5924,10 +5925,12 @@ msgid "_Filename:"
 msgstr "_Nome file:"
 
 #: ../plug-ins/common/mail.c:455
+msgctxt "email-address"
 msgid "_To:"
 msgstr "_A:"
 
 #: ../plug-ins/common/mail.c:469
+msgctxt "email-address"
 msgid "_From:"
 msgstr "_Da:"
 
@@ -6168,7 +6171,7 @@ msgid "_Factory Defaults"
 msgstr "Valori prede_finiti"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1433 ../plug-ins/gfig/gfig-dialog.c:1256
+#: ../plug-ins/common/newsprint.c:1433 ../plug-ins/gfig/gfig-dialog.c:1255
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -6695,8 +6698,8 @@ msgstr "Rimozione occhi rossi"
 
 #: ../plug-ins/common/red-eye-removal.c:170
 #: ../plug-ins/common/unsharp-mask.c:892 ../plug-ins/common/wind.c:1008
-#: ../plug-ins/imagemap/imap_preferences.c:440
-#: ../plug-ins/map-object/map-object-ui.c:585
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:530
 msgid "_Threshold:"
 msgstr "_Soglia:"
 
@@ -6791,77 +6794,77 @@ msgstr "Colora l'immagine usando un campione come modello"
 msgid "_Sample Colorize..."
 msgstr "Colora_zione a campione..."
 
-#: ../plug-ins/common/sample-colorize.c:1315
+#: ../plug-ins/common/sample-colorize.c:1324
 msgid "Sample Colorize"
 msgstr "Colorazione a campione"
 
-#: ../plug-ins/common/sample-colorize.c:1320
+#: ../plug-ins/common/sample-colorize.c:1329
 msgid "Get _Sample Colors"
 msgstr "_Preleva campioni di colore"
 
 #. layer combo_box (Dst)
-#: ../plug-ins/common/sample-colorize.c:1349
+#: ../plug-ins/common/sample-colorize.c:1358
 msgid "Destination:"
 msgstr "Destinazione:"
 
 #. layer combo_box (Sample)
-#: ../plug-ins/common/sample-colorize.c:1365
+#: ../plug-ins/common/sample-colorize.c:1374
 msgid "Sample:"
 msgstr "Campione:"
 
-#: ../plug-ins/common/sample-colorize.c:1375
+#: ../plug-ins/common/sample-colorize.c:1384
 msgid "From reverse gradient"
 msgstr "Dal gradiente inverso"
 
-#: ../plug-ins/common/sample-colorize.c:1380
+#: ../plug-ins/common/sample-colorize.c:1389
 msgid "From gradient"
 msgstr "Dal gradiente"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1401
-#: ../plug-ins/common/sample-colorize.c:1428
+#: ../plug-ins/common/sample-colorize.c:1410
+#: ../plug-ins/common/sample-colorize.c:1437
 msgid "Show selection"
 msgstr "Mostra selezione"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1412
-#: ../plug-ins/common/sample-colorize.c:1439
+#: ../plug-ins/common/sample-colorize.c:1421
+#: ../plug-ins/common/sample-colorize.c:1448
 msgid "Show color"
 msgstr "Mostra colore"
 
-#: ../plug-ins/common/sample-colorize.c:1552
+#: ../plug-ins/common/sample-colorize.c:1561
 msgid "Input levels:"
 msgstr "Livelli di ingresso:"
 
-#: ../plug-ins/common/sample-colorize.c:1602
+#: ../plug-ins/common/sample-colorize.c:1611
 msgid "Output levels:"
 msgstr "Livelli di uscita:"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1642
+#: ../plug-ins/common/sample-colorize.c:1651
 msgid "Hold intensity"
 msgstr "Mantieni l'intensità"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1653
+#: ../plug-ins/common/sample-colorize.c:1662
 msgid "Original intensity"
 msgstr "Intensità originale"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1671
+#: ../plug-ins/common/sample-colorize.c:1680
 msgid "Use subcolors"
 msgstr "Usa subcolori"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1682
+#: ../plug-ins/common/sample-colorize.c:1691
 msgid "Smooth samples"
 msgstr "Campioni delicati"
 
-#: ../plug-ins/common/sample-colorize.c:2654
+#: ../plug-ins/common/sample-colorize.c:2663
 msgid "Sample analyze"
 msgstr "Analisi campione"
 
-#: ../plug-ins/common/sample-colorize.c:3032
+#: ../plug-ins/common/sample-colorize.c:3041
 msgid "Remap colorized"
 msgstr "Rimappa colorati"
 
@@ -7064,7 +7067,7 @@ msgid "_Distorted"
 msgstr "_Distorta"
 
 #: ../plug-ins/common/sinus.c:781 ../plug-ins/common/sinus.c:797
-#: ../plug-ins/imagemap/imap_preferences.c:421
+#: ../plug-ins/imagemap/imap_preferences.c:432
 msgid "Colors"
 msgstr "Colori"
 
@@ -7349,7 +7352,7 @@ msgid "Spots"
 msgstr "Macchie"
 
 #: ../plug-ins/common/sphere-designer.c:1743
-#: ../plug-ins/common/sphere-designer.c:2694
+#: ../plug-ins/common/sphere-designer.c:2697
 msgid "Texture"
 msgstr "Trama"
 
@@ -7358,127 +7361,127 @@ msgid "Bumpmap"
 msgstr "Mappa a sbalzo"
 
 #: ../plug-ins/common/sphere-designer.c:1747
-#: ../plug-ins/common/sphere-designer.c:2696
+#: ../plug-ins/common/sphere-designer.c:2699
 msgid "Light"
 msgstr "Luce"
 
-#: ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/common/sphere-designer.c:2011
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "\"%s\" non è un file di salvataggio valido."
 
-#: ../plug-ins/common/sphere-designer.c:2188
+#: ../plug-ins/common/sphere-designer.c:2191
 msgid "Open File"
 msgstr "Apri file"
 
-#: ../plug-ins/common/sphere-designer.c:2188
+#: ../plug-ins/common/sphere-designer.c:2191
 msgid "Save File"
 msgstr "Salva file"
 
-#: ../plug-ins/common/sphere-designer.c:2547
+#: ../plug-ins/common/sphere-designer.c:2550
 msgid "Sphere Designer"
 msgstr "Designer sfera"
 
-#: ../plug-ins/common/sphere-designer.c:2679
+#: ../plug-ins/common/sphere-designer.c:2682
 msgid "Properties"
 msgstr "Proprietà"
 
-#: ../plug-ins/common/sphere-designer.c:2695
+#: ../plug-ins/common/sphere-designer.c:2698
 msgid "Bump"
 msgstr "Sbalzo"
 
 #. row labels
-#: ../plug-ins/common/sphere-designer.c:2703
-#: ../plug-ins/lighting/lighting-ui.c:403
+#: ../plug-ins/common/sphere-designer.c:2706
+#: ../plug-ins/lighting/lighting-ui.c:407
 msgid "Type:"
 msgstr "Tipo:"
 
-#: ../plug-ins/common/sphere-designer.c:2722
+#: ../plug-ins/common/sphere-designer.c:2725
 msgid "Texture:"
 msgstr "Trama:"
 
-#: ../plug-ins/common/sphere-designer.c:2727
+#: ../plug-ins/common/sphere-designer.c:2730
 msgid "Colors:"
 msgstr "Colori:"
 
-#: ../plug-ins/common/sphere-designer.c:2730
-#: ../plug-ins/common/sphere-designer.c:2741
+#: ../plug-ins/common/sphere-designer.c:2733
+#: ../plug-ins/common/sphere-designer.c:2744
 msgid "Color Selection Dialog"
 msgstr "Finestra di selezione del colore"
 
 #. Scale
-#: ../plug-ins/common/sphere-designer.c:2752
+#: ../plug-ins/common/sphere-designer.c:2755
 #: ../plug-ins/gimpressionist/paper.c:193
 #: ../plug-ins/ifs-compose/ifs-compose.c:551
 msgid "Scale:"
 msgstr "Scala:"
 
-#: ../plug-ins/common/sphere-designer.c:2760
+#: ../plug-ins/common/sphere-designer.c:2763
 msgid "Turbulence:"
 msgstr "Turbolenza:"
 
-#: ../plug-ins/common/sphere-designer.c:2767
+#: ../plug-ins/common/sphere-designer.c:2770
 msgid "Amount:"
 msgstr "Ammontare:"
 
-#: ../plug-ins/common/sphere-designer.c:2774
+#: ../plug-ins/common/sphere-designer.c:2777
 msgid "Exp.:"
 msgstr "Esp.:"
 
-#: ../plug-ins/common/sphere-designer.c:2781
+#: ../plug-ins/common/sphere-designer.c:2784
 msgid "Transformations"
 msgstr "Trasformazioni"
 
-#: ../plug-ins/common/sphere-designer.c:2797
-#: ../plug-ins/map-object/map-object-ui.c:1143
+#: ../plug-ins/common/sphere-designer.c:2800
+#: ../plug-ins/map-object/map-object-ui.c:1088
 msgid "Scale X:"
 msgstr "Scala X:"
 
-#: ../plug-ins/common/sphere-designer.c:2804
+#: ../plug-ins/common/sphere-designer.c:2807
 msgid "Scale Y:"
 msgstr "Scala Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2810
+#: ../plug-ins/common/sphere-designer.c:2813
 msgid "Scale Z:"
 msgstr "Scala Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2817
+#: ../plug-ins/common/sphere-designer.c:2820
 msgid "Rotate X:"
 msgstr "Rotazione X:"
 
-#: ../plug-ins/common/sphere-designer.c:2824
+#: ../plug-ins/common/sphere-designer.c:2827
 msgid "Rotate Y:"
 msgstr "Rotazione Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2831
+#: ../plug-ins/common/sphere-designer.c:2834
 msgid "Rotate Z:"
 msgstr "Rotazione Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2838
+#: ../plug-ins/common/sphere-designer.c:2841
 msgid "Position X:"
 msgstr "Posizione X:"
 
-#: ../plug-ins/common/sphere-designer.c:2845
+#: ../plug-ins/common/sphere-designer.c:2848
 msgid "Position Y:"
 msgstr "Posizione Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2852
+#: ../plug-ins/common/sphere-designer.c:2855
 msgid "Position Z:"
 msgstr "Posizione Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2969
+#: ../plug-ins/common/sphere-designer.c:2972
 msgid "Rendering sphere"
 msgstr "Rendering sfera"
 
-#: ../plug-ins/common/sphere-designer.c:3019
+#: ../plug-ins/common/sphere-designer.c:3022
 msgid "Create an image of a textured sphere"
 msgstr "Crea un'immagine di una sfera con texture"
 
-#: ../plug-ins/common/sphere-designer.c:3026
+#: ../plug-ins/common/sphere-designer.c:3029
 msgid "Sphere _Designer..."
 msgstr "_Designer sfera..."
 
-#: ../plug-ins/common/sphere-designer.c:3096
+#: ../plug-ins/common/sphere-designer.c:3099
 msgid "Region selected for plug-in is empty"
 msgstr "La regione selezionata per il plug-in è vuota"
 
@@ -7969,71 +7972,71 @@ msgstr "Propagazione canale _alfa"
 msgid "Propagating value channel"
 msgstr "Propagazione canale valore"
 
-#: ../plug-ins/common/van-gogh-lic.c:565 ../plug-ins/common/van-gogh-lic.c:640
+#: ../plug-ins/common/van-gogh-lic.c:567 ../plug-ins/common/van-gogh-lic.c:642
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
-#: ../plug-ins/common/van-gogh-lic.c:666
+#: ../plug-ins/common/van-gogh-lic.c:668
 msgid "Effect Channel"
 msgstr "Canale effetto"
 
-#: ../plug-ins/common/van-gogh-lic.c:673
+#: ../plug-ins/common/van-gogh-lic.c:675
 msgid "_Brightness"
 msgstr "_Brillantezza"
 
-#: ../plug-ins/common/van-gogh-lic.c:679
+#: ../plug-ins/common/van-gogh-lic.c:681
 msgid "Effect Operator"
 msgstr "Operatore effetto"
 
-#: ../plug-ins/common/van-gogh-lic.c:684
+#: ../plug-ins/common/van-gogh-lic.c:686
 msgid "_Derivative"
 msgstr "_Derivativo"
 
-#: ../plug-ins/common/van-gogh-lic.c:685
+#: ../plug-ins/common/van-gogh-lic.c:687
 msgid "_Gradient"
 msgstr "_Gradiente"
 
-#: ../plug-ins/common/van-gogh-lic.c:691
+#: ../plug-ins/common/van-gogh-lic.c:693
 msgid "Convolve"
 msgstr "Convoluzione"
 
-#: ../plug-ins/common/van-gogh-lic.c:696
+#: ../plug-ins/common/van-gogh-lic.c:698
 msgid "_With white noise"
 msgstr "Con _rumore bianco"
 
-#: ../plug-ins/common/van-gogh-lic.c:697
+#: ../plug-ins/common/van-gogh-lic.c:699
 msgid "W_ith source image"
 msgstr "Con _immagine sorgente"
 
-#: ../plug-ins/common/van-gogh-lic.c:716
+#: ../plug-ins/common/van-gogh-lic.c:718
 msgid "_Effect image:"
 msgstr "Immagine _effetto:"
 
-#: ../plug-ins/common/van-gogh-lic.c:727
+#: ../plug-ins/common/van-gogh-lic.c:729
 msgid "_Filter length:"
 msgstr "Lunghezza _filtro:"
 
-#: ../plug-ins/common/van-gogh-lic.c:736
+#: ../plug-ins/common/van-gogh-lic.c:738
 msgid "_Noise magnitude:"
 msgstr "Li_vello di disturbo:"
 
-#: ../plug-ins/common/van-gogh-lic.c:745
+#: ../plug-ins/common/van-gogh-lic.c:747
 msgid "In_tegration steps:"
 msgstr "Passi di in_tegrazione:"
 
-#: ../plug-ins/common/van-gogh-lic.c:754
+#: ../plug-ins/common/van-gogh-lic.c:756
 msgid "_Minimum value:"
 msgstr "Valore _minimo:"
 
-#: ../plug-ins/common/van-gogh-lic.c:763
+#: ../plug-ins/common/van-gogh-lic.c:765
 msgid "M_aximum value:"
 msgstr "Valore m_assimo:"
 
-#: ../plug-ins/common/van-gogh-lic.c:809
+#: ../plug-ins/common/van-gogh-lic.c:811
 msgid "Special effects that nobody understands"
 msgstr "Effetti speciali che nessuno capisce"
 
-#: ../plug-ins/common/van-gogh-lic.c:814
+#: ../plug-ins/common/van-gogh-lic.c:816
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC)..."
 
@@ -8145,7 +8148,7 @@ msgid "Smear"
 msgstr "Macchia"
 
 #: ../plug-ins/common/warp.c:501 ../plug-ins/file-fits/fits.c:1020
-#: ../plug-ins/flame/flame.c:1172 ../plug-ins/gfig/gfig-dialog.c:1461
+#: ../plug-ins/flame/flame.c:1172 ../plug-ins/gfig/gfig-dialog.c:1460
 msgid "Black"
 msgstr "Nero"
 
@@ -8522,8 +8525,8 @@ msgstr "Apri file FITS"
 msgid "Replacement for undefined pixels"
 msgstr "Rimpiazzo per pixel non definiti"
 
-#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1286
-#: ../plug-ins/gfig/gfig-dialog.c:1462
+#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1285
+#: ../plug-ins/gfig/gfig-dialog.c:1461
 msgid "White"
 msgstr "Bianco"
 
@@ -8556,6 +8559,16 @@ msgstr ""
 #: ../plug-ins/file-fli/fli-gimp.c:844
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Caricamento fotogrammi"
+
+#: ../plug-ins/file-fli/fli-gimp.c:873 ../plug-ins/file-fli/fli-gimp.c:929
+msgctxt "frame-range"
+msgid "From:"
+msgstr "Da:"
+
+#: ../plug-ins/file-fli/fli-gimp.c:882 ../plug-ins/file-fli/fli-gimp.c:938
+msgctxt "frame-range"
+msgid "To:"
+msgstr "A:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:912
 msgid "GFLI 1.3"
@@ -8852,16 +8865,16 @@ msgstr "Larghezza maschera di livello non supportata o non valida: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Dimensioni maschera di livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1202 ../plug-ins/file-psd/psd-load.c:1552
+#: ../plug-ins/file-psd/psd-load.c:1205 ../plug-ins/file-psd/psd-load.c:1555
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modalità di compressione non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1645
+#: ../plug-ins/file-psd/psd-load.c:1648
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:1820
+#: ../plug-ins/file-psd/psd-load.c:1823
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Dimensione canale non supportata o non valida."
@@ -9037,7 +9050,7 @@ msgstr "Si è verificato un errore di rete: %s"
 msgid "Downloading unknown amount of image data"
 msgstr "Scaricamento quantità sconosciuta di dati immagine"
 
-#: ../plug-ins/file-uri/uri.c:118 ../plug-ins/file-uri/uri.c:139
+#: ../plug-ins/file-uri/uri.c:121 ../plug-ins/file-uri/uri.c:142
 msgid "URI"
 msgstr "URI"
 
@@ -9095,17 +9108,17 @@ msgstr "Qualità:"
 msgid "Smoothing:"
 msgstr "Smussamento:"
 
-#: ../plug-ins/file-xjt/xjt.c:1701 ../plug-ins/file-xjt/xjt.c:3339
+#: ../plug-ins/file-xjt/xjt.c:1703 ../plug-ins/file-xjt/xjt.c:3341
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Impossibile creare la cartella di lavoro '%s': %s"
 
-#: ../plug-ins/file-xjt/xjt.c:3205
+#: ../plug-ins/file-xjt/xjt.c:3207
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Errore: impossibile leggere il file delle proprietà XJT '%s'."
 
-#: ../plug-ins/file-xjt/xjt.c:3212
+#: ../plug-ins/file-xjt/xjt.c:3214
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Errore: il file delle proprietà XJT '%s' è vuoto."
@@ -9168,7 +9181,7 @@ msgstr "Vortice"
 msgid "Horseshoe"
 msgstr "Ferro di cavallo"
 
-#: ../plug-ins/flame/flame.c:750 ../plug-ins/gfig/gfig-dialog.c:1443
+#: ../plug-ins/flame/flame.c:750 ../plug-ins/gfig/gfig-dialog.c:1442
 msgid "Polar"
 msgstr "Polare"
 
@@ -9240,7 +9253,7 @@ msgstr "Eyefish"
 msgid "Bubble"
 msgstr "Bolla"
 
-#: ../plug-ins/flame/flame.c:770 ../plug-ins/map-object/map-object-ui.c:491
+#: ../plug-ins/flame/flame.c:770 ../plug-ins/map-object/map-object-ui.c:423
 msgid "Cylinder"
 msgstr "Cilindro"
 
@@ -9357,22 +9370,22 @@ msgid "Fractal Parameters"
 msgstr "Parametri frattali"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:733
-#: ../plug-ins/map-object/map-object-ui.c:1099
+#: ../plug-ins/map-object/map-object-ui.c:1044
 msgid "Left:"
 msgstr "Sinistra:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:742
-#: ../plug-ins/map-object/map-object-ui.c:1099
+#: ../plug-ins/map-object/map-object-ui.c:1044
 msgid "Right:"
 msgstr "Destra:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:751
-#: ../plug-ins/map-object/map-object-ui.c:1098
+#: ../plug-ins/map-object/map-object-ui.c:1043
 msgid "Top:"
 msgstr "Alto:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:760
-#: ../plug-ins/map-object/map-object-ui.c:1098
+#: ../plug-ins/map-object/map-object-ui.c:1043
 msgid "Bottom:"
 msgstr "Basso:"
 
@@ -9594,7 +9607,7 @@ msgid "Rendering fractal"
 msgstr "Rendering frattale"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:755
-#: ../plug-ins/gradient-flare/gradient-flare.c:3199
+#: ../plug-ins/gradient-flare/gradient-flare.c:3197
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Siete sicuri di voler cancellare \"%s\" dalla lista e dal disco?"
@@ -9603,12 +9616,12 @@ msgstr "Siete sicuri di voler cancellare \"%s\" dalla lista e dal disco?"
 msgid "Delete Fractal"
 msgstr "Elimina frattale"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:949
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:948
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Il File '%s' non è un file di FractalExplorer"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:959
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:958
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -9617,27 +9630,27 @@ msgstr ""
 "File '%s' è corrotto.\n"
 "Sezione opzione non corretta alla linea %d"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1004
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1003
 msgid "My first fractal"
 msgstr "Primo frattale"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1068
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1067
 msgid "Select folder and rescan collection"
 msgstr "Seleziona la cartella e ripeti la scansione della collezione"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1080
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1079
 msgid "Apply currently selected fractal"
 msgstr "Applica il frattale attualmente selezionato"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1092
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1091
 msgid "Delete currently selected fractal"
 msgstr "Cancella il frattale attualmente selezionato"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1115
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1114
 msgid "Rescan for Fractals"
 msgstr "Ripeti scansione frattali"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1134
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1133
 msgid "Add FractalExplorer Path"
 msgstr "Aggiungi percorso di FractalExplorer"
 
@@ -9729,136 +9742,136 @@ msgstr "Salva disegno Gfig"
 msgid "First Gfig"
 msgstr "Primo Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:869
+#: ../plug-ins/gfig/gfig-dialog.c:868
 msgid "_Undo"
 msgstr "Ripristi_na"
 
-#: ../plug-ins/gfig/gfig-dialog.c:873
+#: ../plug-ins/gfig/gfig-dialog.c:872
 msgid "_Clear"
 msgstr "Pulis_ci"
 
-#: ../plug-ins/gfig/gfig-dialog.c:877 ../plug-ins/imagemap/imap_menu.c:208
+#: ../plug-ins/gfig/gfig-dialog.c:876 ../plug-ins/imagemap/imap_menu.c:208
 msgid "_Grid"
 msgstr "_Griglia"
 
-#: ../plug-ins/gfig/gfig-dialog.c:885
+#: ../plug-ins/gfig/gfig-dialog.c:884
 msgid "Raise selected object"
 msgstr "Innalza gli oggetti selezionati"
 
-#: ../plug-ins/gfig/gfig-dialog.c:889
+#: ../plug-ins/gfig/gfig-dialog.c:888
 msgid "Lower selected object"
 msgstr "Abbassa gli oggetti selezionati"
 
-#: ../plug-ins/gfig/gfig-dialog.c:893
+#: ../plug-ins/gfig/gfig-dialog.c:892
 msgid "Raise selected object to top"
 msgstr "Alza gli oggetti selezionati sino in cima"
 
-#: ../plug-ins/gfig/gfig-dialog.c:897
+#: ../plug-ins/gfig/gfig-dialog.c:896
 msgid "Lower selected object to bottom"
 msgstr "Abbassa gli oggetti selezionati sino in fondo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:901
+#: ../plug-ins/gfig/gfig-dialog.c:900
 msgid "Show previous object"
 msgstr "Mostra oggetti precedenti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:905
+#: ../plug-ins/gfig/gfig-dialog.c:904
 msgid "Show next object"
 msgstr "Mostra oggetti successivi"
 
-#: ../plug-ins/gfig/gfig-dialog.c:909 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:908 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "Mostra tutti gli oggetti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:915 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:914 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create line"
 msgstr "Crea linea"
 
-#: ../plug-ins/gfig/gfig-dialog.c:918 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:917 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create rectangle"
 msgstr "Crea rettangolo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:921 ../plug-ins/gfig/gfig-stock.c:41
+#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:41
 msgid "Create circle"
 msgstr "Crea cerchio"
 
-#: ../plug-ins/gfig/gfig-dialog.c:924 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:923 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Create ellipse"
 msgstr "Crea ellisse"
 
-#: ../plug-ins/gfig/gfig-dialog.c:927 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Create arc"
 msgstr "Crea arco"
 
-#: ../plug-ins/gfig/gfig-dialog.c:930 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Create reg polygon"
 msgstr "Crea poligono regolare"
 
-#: ../plug-ins/gfig/gfig-dialog.c:933 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "Crea stella"
 
-#: ../plug-ins/gfig/gfig-dialog.c:936 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "Crea spirale"
 
-#: ../plug-ins/gfig/gfig-dialog.c:939
+#: ../plug-ins/gfig/gfig-dialog.c:938
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 "Crea curva di Bezier. Maiusc + tasto conclude la creazione dell'oggetto."
 
-#: ../plug-ins/gfig/gfig-dialog.c:943 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:942 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
 msgstr "Sposta un oggetto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:946 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:945 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move a single point"
 msgstr "Sposta un singolo punto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:949 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:948 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Copy an object"
 msgstr "Copia un oggetto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:952 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:951 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Delete an object"
 msgstr "Elimina un oggetto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:955 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "Seleziona un oggetto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1037
+#: ../plug-ins/gfig/gfig-dialog.c:1036
 msgid "This tool has no options"
 msgstr "Questo strumento non ha opzioni"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1228
+#: ../plug-ins/gfig/gfig-dialog.c:1227
 msgid "Show position"
 msgstr "Mostra la posizione"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1240
+#: ../plug-ins/gfig/gfig-dialog.c:1239
 msgid "Show control points"
 msgstr "Mostra i punti di controllo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1274
+#: ../plug-ins/gfig/gfig-dialog.c:1273
 msgid "Max undo:"
 msgstr "Numero max di ripristini:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1283
+#: ../plug-ins/gfig/gfig-dialog.c:1282
 #: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Trasparente"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1285
+#: ../plug-ins/gfig/gfig-dialog.c:1284
 msgid "Foreground"
 msgstr "Primo piano"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1287 ../plug-ins/imagemap/imap_cmd_copy.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:1286 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: ../plug-ins/imagemap/imap_menu.c:159
 msgid "Copy"
 msgstr "Copia"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1296
+#: ../plug-ins/gfig/gfig-dialog.c:1295
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -9866,80 +9879,80 @@ msgstr ""
 "Tipo di livello di sfondo. La copia ha come effetto che il livello "
 "precedente viene copiato prima che venga effettuato il disegno."
 
-#: ../plug-ins/gfig/gfig-dialog.c:1302
+#: ../plug-ins/gfig/gfig-dialog.c:1301
 msgid "Background:"
 msgstr "Sfondo:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1305
+#: ../plug-ins/gfig/gfig-dialog.c:1304
 msgid "Feather"
 msgstr "Sfumata"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1329
+#: ../plug-ins/gfig/gfig-dialog.c:1328
 msgid "Radius:"
 msgstr "Raggio:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1387
+#: ../plug-ins/gfig/gfig-dialog.c:1386
 msgid "Grid spacing:"
 msgstr "Spaziatura griglia:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1404
+#: ../plug-ins/gfig/gfig-dialog.c:1403
 msgid "Polar grid sectors desired:"
 msgstr "Settori desiderati della griglia polare:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1426
+#: ../plug-ins/gfig/gfig-dialog.c:1425
 msgid "Polar grid radius interval:"
 msgstr "Intervallo raggio della griglia polare:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1442 ../plug-ins/imagemap/imap_menu.c:219
+#: ../plug-ins/gfig/gfig-dialog.c:1441 ../plug-ins/imagemap/imap_menu.c:219
 msgid "Rectangle"
 msgstr "Rettangolo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1444
+#: ../plug-ins/gfig/gfig-dialog.c:1443
 msgid "Isometric"
 msgstr "Isometrica"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1453
+#: ../plug-ins/gfig/gfig-dialog.c:1452
 msgid "Grid type:"
 msgstr "Tipo di griglia:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1460
+#: ../plug-ins/gfig/gfig-dialog.c:1459
 #: ../plug-ins/gradient-flare/gradient-flare.c:550
 msgid "Normal"
 msgstr "Normale"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1463
+#: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Grey"
 msgstr "Grigio"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1464
+#: ../plug-ins/gfig/gfig-dialog.c:1463
 msgid "Darker"
 msgstr "Scuro"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1465
+#: ../plug-ins/gfig/gfig-dialog.c:1464
 msgid "Lighter"
 msgstr "Luminoso"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1466
+#: ../plug-ins/gfig/gfig-dialog.c:1465
 msgid "Very dark"
 msgstr "Molto scuro"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1475
+#: ../plug-ins/gfig/gfig-dialog.c:1474
 msgid "Grid color:"
 msgstr "Colore griglia:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1698
+#: ../plug-ins/gfig/gfig-dialog.c:1697
 msgid "Sides:"
 msgstr "Lati:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1708
+#: ../plug-ins/gfig/gfig-dialog.c:1707
 msgid "Right"
 msgstr "Destra"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1709
+#: ../plug-ins/gfig/gfig-dialog.c:1708
 msgid "Left"
 msgstr "Sinistra"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1719
+#: ../plug-ins/gfig/gfig-dialog.c:1718
 #: ../plug-ins/gimpressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Orientamento:"
@@ -9948,11 +9961,11 @@ msgstr "Orientamento:"
 msgid "Hey where has the object gone ?"
 msgstr "Aho, ma dov'è andato l'oggetto?"
 
-#: ../plug-ins/gfig/gfig-dobject.c:954
+#: ../plug-ins/gfig/gfig-dobject.c:953
 msgid "Error reading file"
 msgstr "Errore nella lettura del file"
 
-#: ../plug-ins/gfig/gfig-dobject.c:1043
+#: ../plug-ins/gfig/gfig-dobject.c:1042
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Modifica di oggetto in sola lettura - non sarà possibile salvarlo"
 
@@ -10076,7 +10089,7 @@ msgid "Adds random noise to the color"
 msgstr "Aggiungi disturbo casuale al colore"
 
 #: ../plug-ins/gimpressionist/general.c:133
-#: ../plug-ins/gradient-flare/gradient-flare.c:3528
+#: ../plug-ins/gradient-flare/gradient-flare.c:3526
 msgid "_General"
 msgstr "_Generale"
 
@@ -10503,8 +10516,8 @@ msgstr "Rileggi la cartella delle preimpostazioni"
 
 #: ../plug-ins/gimpressionist/preview.c:173
 #: ../plug-ins/gimpressionist/repaint.c:1183
-#: ../plug-ins/imagemap/imap_polygon.c:514
-#: ../plug-ins/lighting/lighting-ui.c:1073
+#: ../plug-ins/imagemap/imap_polygon.c:513
+#: ../plug-ins/lighting/lighting-ui.c:1080
 msgid "_Update"
 msgstr "_Aggiorna"
 
@@ -10661,7 +10674,7 @@ msgstr "Chiarore a _gradiente..."
 #. *    Dialog Shell
 #.
 #: ../plug-ins/gradient-flare/gradient-flare.c:950
-#: ../plug-ins/gradient-flare/gradient-flare.c:2356
+#: ../plug-ins/gradient-flare/gradient-flare.c:2354
 msgid "Gradient Flare"
 msgstr "Chiarore a gradiente"
 
@@ -10698,15 +10711,15 @@ msgstr ""
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Errore di scrittura file chiarore a gradiente '%s': %s"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2413
+#: ../plug-ins/gradient-flare/gradient-flare.c:2411
 msgid "A_uto update preview"
 msgstr "A_utoaggiorna l'anteprima"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2464
+#: ../plug-ins/gradient-flare/gradient-flare.c:2462
 msgid "`Default' is created."
 msgstr "È stato creato 'predefinito'"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2465
+#: ../plug-ins/gradient-flare/gradient-flare.c:2463
 msgid "Default"
 msgstr "Predefinito"
 
@@ -10716,208 +10729,208 @@ msgstr "Predefinito"
 #.
 #. *    Scales
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:2744
-#: ../plug-ins/gradient-flare/gradient-flare.c:3581
-#: ../plug-ins/gradient-flare/gradient-flare.c:3686
-#: ../plug-ins/gradient-flare/gradient-flare.c:3823
+#: ../plug-ins/gradient-flare/gradient-flare.c:2742
+#: ../plug-ins/gradient-flare/gradient-flare.c:3579
+#: ../plug-ins/gradient-flare/gradient-flare.c:3684
+#: ../plug-ins/gradient-flare/gradient-flare.c:3821
 msgid "Parameters"
 msgstr "Parametri"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2770
+#: ../plug-ins/gradient-flare/gradient-flare.c:2768
 msgid "Ro_tation:"
 msgstr "Ro_tazione:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2782
+#: ../plug-ins/gradient-flare/gradient-flare.c:2780
 msgid "_Hue rotation:"
 msgstr "Rotazione _tonalità:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2794
+#: ../plug-ins/gradient-flare/gradient-flare.c:2792
 msgid "Vector _angle:"
 msgstr "_Angolo vettore:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2806
+#: ../plug-ins/gradient-flare/gradient-flare.c:2804
 msgid "Vector _length:"
 msgstr "_Lunghezza vettore:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2827
+#: ../plug-ins/gradient-flare/gradient-flare.c:2825
 msgid "A_daptive supersampling"
 msgstr "Sovrampionamento a_dattivo"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2846
+#: ../plug-ins/gradient-flare/gradient-flare.c:2844
 msgid "_Max depth:"
 msgstr "_Massima profondità:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2856
+#: ../plug-ins/gradient-flare/gradient-flare.c:2854
 msgid "_Threshold"
 msgstr "_Soglia"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2994
+#: ../plug-ins/gradient-flare/gradient-flare.c:2992
 msgid "S_elector"
 msgstr "S_elettore"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3058
+#: ../plug-ins/gradient-flare/gradient-flare.c:3056
 msgid "New Gradient Flare"
 msgstr "Nuovo chiarore a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3061
+#: ../plug-ins/gradient-flare/gradient-flare.c:3059
 msgid "Enter a name for the new GFlare"
 msgstr "Digitate un nome per il nuovo c. a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3081
+#: ../plug-ins/gradient-flare/gradient-flare.c:3079
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Il nome \"%s\" è già in uso!"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3137
+#: ../plug-ins/gradient-flare/gradient-flare.c:3135
 msgid "Copy Gradient Flare"
 msgstr "Copia chiarore a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3140
+#: ../plug-ins/gradient-flare/gradient-flare.c:3138
 msgid "Enter a name for the copied GFlare"
 msgstr "Digitate un nome per il c. a gradiente copiato"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3162
+#: ../plug-ins/gradient-flare/gradient-flare.c:3160
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "Il nome \"%s\" è già in uso!"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3193
+#: ../plug-ins/gradient-flare/gradient-flare.c:3191
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Impossibile eliminare! Dev'esserci almeno un c. a gradiente."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3203
+#: ../plug-ins/gradient-flare/gradient-flare.c:3201
 msgid "Delete Gradient Flare"
 msgstr "Elimina chiarore a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3275
+#: ../plug-ins/gradient-flare/gradient-flare.c:3273
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "non è stato trovato %s in gflare_list"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3316
+#: ../plug-ins/gradient-flare/gradient-flare.c:3314
 msgid "Gradient Flare Editor"
 msgstr "Editor c. a gradiente"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3320
+#: ../plug-ins/gradient-flare/gradient-flare.c:3318
 msgid "Rescan Gradients"
 msgstr "Aggiorna gradienti"
 
 #. Glow
-#: ../plug-ins/gradient-flare/gradient-flare.c:3445
+#: ../plug-ins/gradient-flare/gradient-flare.c:3443
 msgid "Glow Paint Options"
 msgstr "Opzioni disegno alone"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3456
-#: ../plug-ins/gradient-flare/gradient-flare.c:3484
-#: ../plug-ins/gradient-flare/gradient-flare.c:3512
+#: ../plug-ins/gradient-flare/gradient-flare.c:3454
+#: ../plug-ins/gradient-flare/gradient-flare.c:3482
+#: ../plug-ins/gradient-flare/gradient-flare.c:3510
 msgid "Opacity:"
 msgstr "Opacità:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3469
-#: ../plug-ins/gradient-flare/gradient-flare.c:3497
-#: ../plug-ins/gradient-flare/gradient-flare.c:3525
+#: ../plug-ins/gradient-flare/gradient-flare.c:3467
+#: ../plug-ins/gradient-flare/gradient-flare.c:3495
+#: ../plug-ins/gradient-flare/gradient-flare.c:3523
 msgid "Paint mode:"
 msgstr "Modalità disegno:"
 
 #. Rays
-#: ../plug-ins/gradient-flare/gradient-flare.c:3473
+#: ../plug-ins/gradient-flare/gradient-flare.c:3471
 msgid "Rays Paint Options"
 msgstr "Opzioni disegno a raggi"
 
 #. Rays
-#: ../plug-ins/gradient-flare/gradient-flare.c:3501
+#: ../plug-ins/gradient-flare/gradient-flare.c:3499
 msgid "Second Flares Paint Options"
 msgstr "Opzioni disegno riverberi secondari"
 
 #.
 #. *  Gradient Menus
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:3554
-#: ../plug-ins/gradient-flare/gradient-flare.c:3657
-#: ../plug-ins/gradient-flare/gradient-flare.c:3796
+#: ../plug-ins/gradient-flare/gradient-flare.c:3552
+#: ../plug-ins/gradient-flare/gradient-flare.c:3655
+#: ../plug-ins/gradient-flare/gradient-flare.c:3794
 msgid "Gradients"
 msgstr "Gradienti"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3565
-#: ../plug-ins/gradient-flare/gradient-flare.c:3670
-#: ../plug-ins/gradient-flare/gradient-flare.c:3807
+#: ../plug-ins/gradient-flare/gradient-flare.c:3563
+#: ../plug-ins/gradient-flare/gradient-flare.c:3668
+#: ../plug-ins/gradient-flare/gradient-flare.c:3805
 msgid "Radial gradient:"
 msgstr "Gradiente radiale:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3569
-#: ../plug-ins/gradient-flare/gradient-flare.c:3674
+#: ../plug-ins/gradient-flare/gradient-flare.c:3567
+#: ../plug-ins/gradient-flare/gradient-flare.c:3672
 msgid "Angular gradient:"
 msgstr "Gradiente angolare:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3573
-#: ../plug-ins/gradient-flare/gradient-flare.c:3678
+#: ../plug-ins/gradient-flare/gradient-flare.c:3571
+#: ../plug-ins/gradient-flare/gradient-flare.c:3676
 msgid "Angular size gradient:"
 msgstr "Gradiente angolare della dimensione:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3593
-#: ../plug-ins/gradient-flare/gradient-flare.c:3698
-#: ../plug-ins/gradient-flare/gradient-flare.c:3835
+#: ../plug-ins/gradient-flare/gradient-flare.c:3591
+#: ../plug-ins/gradient-flare/gradient-flare.c:3696
+#: ../plug-ins/gradient-flare/gradient-flare.c:3833
 msgid "Size (%):"
 msgstr "Dimensione (%):"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3605
-#: ../plug-ins/gradient-flare/gradient-flare.c:3710
-#: ../plug-ins/gradient-flare/gradient-flare.c:3847
+#: ../plug-ins/gradient-flare/gradient-flare.c:3603
+#: ../plug-ins/gradient-flare/gradient-flare.c:3708
+#: ../plug-ins/gradient-flare/gradient-flare.c:3845
 msgid "Rotation:"
 msgstr "Rotazione:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3617
-#: ../plug-ins/gradient-flare/gradient-flare.c:3723
-#: ../plug-ins/gradient-flare/gradient-flare.c:3860
+#: ../plug-ins/gradient-flare/gradient-flare.c:3615
+#: ../plug-ins/gradient-flare/gradient-flare.c:3721
+#: ../plug-ins/gradient-flare/gradient-flare.c:3858
 msgid "Hue rotation:"
 msgstr "Rotazione tonalità:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3631
+#: ../plug-ins/gradient-flare/gradient-flare.c:3629
 msgid "G_low"
 msgstr "A_lone"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3735
+#: ../plug-ins/gradient-flare/gradient-flare.c:3733
 msgid "# of Spikes:"
 msgstr "n° di scintillii:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3747
+#: ../plug-ins/gradient-flare/gradient-flare.c:3745
 msgid "Spike thickness:"
 msgstr "Spessore scintillii:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3761
+#: ../plug-ins/gradient-flare/gradient-flare.c:3759
 msgid "_Rays"
 msgstr "_Raggi"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3811
+#: ../plug-ins/gradient-flare/gradient-flare.c:3809
 msgid "Size factor gradient:"
 msgstr "Gradiente a fattore dimensione:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3815
+#: ../plug-ins/gradient-flare/gradient-flare.c:3813
 msgid "Probability gradient:"
 msgstr "Gradiente a probabilità:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:3877
+#: ../plug-ins/gradient-flare/gradient-flare.c:3875
 msgid "Shape of Second Flares"
 msgstr "Forma dei riverberi secondari"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3885
+#: ../plug-ins/gradient-flare/gradient-flare.c:3883
 #: ../plug-ins/imagemap/imap_menu.c:221
 msgid "Circle"
 msgstr "Cerchio"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3902
+#: ../plug-ins/gradient-flare/gradient-flare.c:3900
 #: ../plug-ins/imagemap/imap_menu.c:223
 msgid "Polygon"
 msgstr "Poligono"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3935
+#: ../plug-ins/gradient-flare/gradient-flare.c:3933
 msgid "Random seed:"
 msgstr "Seme casuale:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3949
+#: ../plug-ins/gradient-flare/gradient-flare.c:3947
 msgid "_Second Flares"
 msgstr "Riverberi _secondari"
 
@@ -11046,22 +11059,22 @@ msgstr "Frattale _IFS..."
 
 #. X
 #: ../plug-ins/ifs-compose/ifs-compose.c:523
-#: ../plug-ins/lighting/lighting-ui.c:525
-#: ../plug-ins/map-object/map-object-ui.c:675
-#: ../plug-ins/map-object/map-object-ui.c:729
-#: ../plug-ins/map-object/map-object-ui.c:997
-#: ../plug-ins/map-object/map-object-ui.c:1046
+#: ../plug-ins/lighting/lighting-ui.c:529
+#: ../plug-ins/map-object/map-object-ui.c:620
+#: ../plug-ins/map-object/map-object-ui.c:674
+#: ../plug-ins/map-object/map-object-ui.c:942
+#: ../plug-ins/map-object/map-object-ui.c:991
 msgid "X:"
 msgstr "X:"
 
 #. Y
 #: ../plug-ins/ifs-compose/ifs-compose.c:537
-#: ../plug-ins/lighting/lighting-ui.c:539
-#: ../plug-ins/map-object/map-object-ui.c:689
-#: ../plug-ins/map-object/map-object-ui.c:742
-#: ../plug-ins/map-object/map-object-ui.c:1010
-#: ../plug-ins/map-object/map-object-ui.c:1057
-#: ../plug-ins/map-object/map-object-ui.c:1155
+#: ../plug-ins/lighting/lighting-ui.c:543
+#: ../plug-ins/map-object/map-object-ui.c:634
+#: ../plug-ins/map-object/map-object-ui.c:687
+#: ../plug-ins/map-object/map-object-ui.c:955
+#: ../plug-ins/map-object/map-object-ui.c:1002
+#: ../plug-ins/map-object/map-object-ui.c:1100
 msgid "Y:"
 msgstr "Y:"
 
@@ -11234,14 +11247,14 @@ msgstr "Centra _x:"
 
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
-#: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:250
-#: ../plug-ins/imagemap/imap_grid.c:256
-#: ../plug-ins/imagemap/imap_polygon.c:504
-#: ../plug-ins/imagemap/imap_polygon.c:512
-#: ../plug-ins/imagemap/imap_rectangle.c:393
-#: ../plug-ins/imagemap/imap_rectangle.c:400
-#: ../plug-ins/imagemap/imap_rectangle.c:407
-#: ../plug-ins/imagemap/imap_rectangle.c:414
+#: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:249
+#: ../plug-ins/imagemap/imap_grid.c:255
+#: ../plug-ins/imagemap/imap_polygon.c:503
+#: ../plug-ins/imagemap/imap_polygon.c:511
+#: ../plug-ins/imagemap/imap_rectangle.c:392
+#: ../plug-ins/imagemap/imap_rectangle.c:399
+#: ../plug-ins/imagemap/imap_rectangle.c:406
+#: ../plug-ins/imagemap/imap_rectangle.c:413
 msgid "pixels"
 msgstr "punti"
 
@@ -11386,7 +11399,7 @@ msgstr "Inserisci punto"
 msgid "Move Down"
 msgstr "Sposta in basso"
 
-#: ../plug-ins/imagemap/imap_cmd_move_sash.c:68
+#: ../plug-ins/imagemap/imap_cmd_move_sash.c:69
 msgid "Move Sash"
 msgstr "Muovi telaio"
 
@@ -11531,55 +11544,55 @@ msgstr "Carica mappa immagine"
 msgid "Save Image Map"
 msgstr "Salva mappa immagine"
 
-#: ../plug-ins/imagemap/imap_grid.c:197
+#: ../plug-ins/imagemap/imap_grid.c:196
 msgid "Grid Settings"
 msgstr "Impostazioni griglia"
 
-#: ../plug-ins/imagemap/imap_grid.c:201
+#: ../plug-ins/imagemap/imap_grid.c:200
 msgid "_Snap-to grid enabled"
 msgstr "Attiva griglia _magnetica"
 
-#: ../plug-ins/imagemap/imap_grid.c:207
+#: ../plug-ins/imagemap/imap_grid.c:206
 msgid "Grid Visibility and Type"
 msgstr "Visibilità e tipo griglia"
 
-#: ../plug-ins/imagemap/imap_grid.c:214
+#: ../plug-ins/imagemap/imap_grid.c:213
 msgid "_Hidden"
 msgstr "_Nascosto"
 
-#: ../plug-ins/imagemap/imap_grid.c:222
+#: ../plug-ins/imagemap/imap_grid.c:221
 msgid "_Lines"
 msgstr "_Linee"
 
-#: ../plug-ins/imagemap/imap_grid.c:231
+#: ../plug-ins/imagemap/imap_grid.c:230
 msgid "C_rosses"
 msgstr "In_croci"
 
-#: ../plug-ins/imagemap/imap_grid.c:239
+#: ../plug-ins/imagemap/imap_grid.c:238
 msgid "Grid Granularity"
 msgstr "Granularità griglia"
 
-#: ../plug-ins/imagemap/imap_grid.c:246
+#: ../plug-ins/imagemap/imap_grid.c:245
 msgid "_Width"
 msgstr "_Larghezza"
 
-#: ../plug-ins/imagemap/imap_grid.c:252
+#: ../plug-ins/imagemap/imap_grid.c:251
 msgid "_Height"
 msgstr "_Altezza"
 
-#: ../plug-ins/imagemap/imap_grid.c:266
+#: ../plug-ins/imagemap/imap_grid.c:265
 msgid "Grid Offset"
 msgstr "Spostamento griglia"
 
-#: ../plug-ins/imagemap/imap_grid.c:273
+#: ../plug-ins/imagemap/imap_grid.c:272
 msgid "pixels from l_eft"
 msgstr "punti da _sinistra"
 
-#: ../plug-ins/imagemap/imap_grid.c:278
+#: ../plug-ins/imagemap/imap_grid.c:277
 msgid "pixels from _top"
 msgstr "punti dall'al_to"
 
-#: ../plug-ins/imagemap/imap_grid.c:289
+#: ../plug-ins/imagemap/imap_grid.c:288
 msgid "_Preview"
 msgstr "_Anteprima"
 
@@ -11591,41 +11604,41 @@ msgstr "Crea una mappa immagine clic-abile"
 msgid "_Image Map..."
 msgstr "Mappa _immagine..."
 
-#: ../plug-ins/imagemap/imap_main.c:516
+#: ../plug-ins/imagemap/imap_main.c:484
 #: ../plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<senzatitolo>"
 
-#: ../plug-ins/imagemap/imap_main.c:659
+#: ../plug-ins/imagemap/imap_main.c:626
 msgid "Some data has been changed!"
 msgstr "Alcuni dati sono cambiati!"
 
-#: ../plug-ins/imagemap/imap_main.c:662
+#: ../plug-ins/imagemap/imap_main.c:629
 msgid "Do you really want to discard your changes?"
 msgstr "Se sicuro di voler abbandonare i cambiamenti?"
 
-#: ../plug-ins/imagemap/imap_main.c:876
+#: ../plug-ins/imagemap/imap_main.c:841
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "File \"%s\" salvato."
 
-#: ../plug-ins/imagemap/imap_main.c:880
+#: ../plug-ins/imagemap/imap_main.c:845
 msgid "Couldn't save file:"
 msgstr "Impossibile salvare il file:"
 
-#: ../plug-ins/imagemap/imap_main.c:893
+#: ../plug-ins/imagemap/imap_main.c:858
 msgid "Image size has changed."
 msgstr "La dimensione immagine è cambiata"
 
-#: ../plug-ins/imagemap/imap_main.c:894
+#: ../plug-ins/imagemap/imap_main.c:859
 msgid "Resize area's?"
 msgstr "Ridimensionamento area?"
 
-#: ../plug-ins/imagemap/imap_main.c:928
+#: ../plug-ins/imagemap/imap_main.c:892
 msgid "Couldn't read file:"
 msgstr "Impossibile leggere il file:"
 
-#: ../plug-ins/imagemap/imap_main.c:975
+#: ../plug-ins/imagemap/imap_main.c:939
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -11792,95 +11805,99 @@ msgstr "Definisci area poligonale"
 msgid "_Polygon"
 msgstr "_Poligono"
 
-#: ../plug-ins/imagemap/imap_polygon.c:473
+#: ../plug-ins/imagemap/imap_polygon.c:472
 msgid "x (pixels)"
 msgstr "x (punti)"
 
-#: ../plug-ins/imagemap/imap_polygon.c:482
+#: ../plug-ins/imagemap/imap_polygon.c:481
 msgid "y (pixels)"
 msgstr "y (punti)"
 
-#: ../plug-ins/imagemap/imap_polygon.c:520
+#: ../plug-ins/imagemap/imap_polygon.c:519
 msgid "_Insert"
 msgstr "_Inserisci"
 
-#: ../plug-ins/imagemap/imap_polygon.c:526
+#: ../plug-ins/imagemap/imap_polygon.c:525
 msgid "A_ppend"
 msgstr "Aggiungi in _fondo"
 
-#: ../plug-ins/imagemap/imap_polygon.c:532
+#: ../plug-ins/imagemap/imap_polygon.c:531
 msgid "_Remove"
 msgstr "_Rimuovi"
 
-#: ../plug-ins/imagemap/imap_preferences.c:235
+#: ../plug-ins/imagemap/imap_preferences.c:247
 msgid "Couldn't save resource file:"
 msgstr "Impossibile salvare ul file risorse:"
 
-#: ../plug-ins/imagemap/imap_preferences.c:349
+#: ../plug-ins/imagemap/imap_preferences.c:360
 msgid "General"
 msgstr "Generale"
 
-#: ../plug-ins/imagemap/imap_preferences.c:353
+#: ../plug-ins/imagemap/imap_preferences.c:364
 msgid "Default Map Type"
 msgstr "Tipo media predefinito"
 
-#: ../plug-ins/imagemap/imap_preferences.c:372
+#: ../plug-ins/imagemap/imap_preferences.c:383
 msgid "_Prompt for area info"
 msgstr "_Segnalazione per informazioni area"
 
-#: ../plug-ins/imagemap/imap_preferences.c:374
+#: ../plug-ins/imagemap/imap_preferences.c:385
 msgid "_Require default URL"
 msgstr "_Richiedi valore predefinito URL"
 
-#: ../plug-ins/imagemap/imap_preferences.c:376
+#: ../plug-ins/imagemap/imap_preferences.c:387
 msgid "Show area _handles"
 msgstr "Mostra _maniglie area"
 
-#: ../plug-ins/imagemap/imap_preferences.c:378
+#: ../plug-ins/imagemap/imap_preferences.c:389
 msgid "_Keep NCSA circles true"
 msgstr "_Mantieni cerchio NCSA vero"
 
-#: ../plug-ins/imagemap/imap_preferences.c:380
+#: ../plug-ins/imagemap/imap_preferences.c:391
 msgid "Show area URL _tip"
 msgstr "Mostra suggerimen_to URL area"
 
-#: ../plug-ins/imagemap/imap_preferences.c:383
+#: ../plug-ins/imagemap/imap_preferences.c:394
 msgid "_Use double-sized grab handles"
 msgstr "_Usa maniglie per afferrare l'area di dimensioni doppie"
 
-#: ../plug-ins/imagemap/imap_preferences.c:390
+#: ../plug-ins/imagemap/imap_preferences.c:401
 msgid "Menu"
 msgstr "Menu"
 
-#: ../plug-ins/imagemap/imap_preferences.c:394
+#: ../plug-ins/imagemap/imap_preferences.c:405
 msgid "Number of _undo levels (1 - 99):"
 msgstr "Numero di livelli di ripristino (1 - 99):"
 
-#: ../plug-ins/imagemap/imap_preferences.c:399
+#: ../plug-ins/imagemap/imap_preferences.c:410
 msgid "Number of M_RU entries (1 - 16):"
 msgstr "Numero di voci M_RU (1 -16):"
 
-#: ../plug-ins/imagemap/imap_preferences.c:408
+#: ../plug-ins/imagemap/imap_preferences.c:419
 msgid "Select Color"
 msgstr "Seleziona colore"
 
-#: ../plug-ins/imagemap/imap_preferences.c:423
+#: ../plug-ins/imagemap/imap_preferences.c:434
 msgid "Normal:"
 msgstr "Normale:"
 
-#: ../plug-ins/imagemap/imap_preferences.c:427
+#: ../plug-ins/imagemap/imap_preferences.c:438
 msgid "Selected:"
 msgstr "Selezionato:"
 
-#: ../plug-ins/imagemap/imap_preferences.c:436
+#: ../plug-ins/imagemap/imap_preferences.c:442
+msgid "Interaction:"
+msgstr "Iterazione:"
+
+#: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
 msgstr "Regione conti_nua"
 
-#: ../plug-ins/imagemap/imap_preferences.c:442
+#: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
 msgstr "Converte _automaticamente"
 
-#: ../plug-ins/imagemap/imap_preferences.c:453
+#: ../plug-ins/imagemap/imap_preferences.c:468
 msgid "General Preferences"
 msgstr "Preferenze generali"
 
@@ -11888,27 +11905,27 @@ msgstr "Preferenze generali"
 msgid "_Rectangle"
 msgstr "_Rettangolo"
 
-#: ../plug-ins/imagemap/imap_rectangle.c:388
+#: ../plug-ins/imagemap/imap_rectangle.c:387
 msgid "Upper left _x:"
 msgstr "In alto a sinistra _x:"
 
-#: ../plug-ins/imagemap/imap_rectangle.c:395
+#: ../plug-ins/imagemap/imap_rectangle.c:394
 msgid "Upper left _y:"
 msgstr "In alto a sinistra _y:"
 
-#: ../plug-ins/imagemap/imap_selection.c:350
+#: ../plug-ins/imagemap/imap_selection.c:349
 msgid "#"
 msgstr "#"
 
-#: ../plug-ins/imagemap/imap_selection.c:361
+#: ../plug-ins/imagemap/imap_selection.c:360
 msgid "URL"
 msgstr "URL"
 
-#: ../plug-ins/imagemap/imap_selection.c:379
+#: ../plug-ins/imagemap/imap_selection.c:378
 msgid "ALT Text"
 msgstr "Testo ALT"
 
-#: ../plug-ins/imagemap/imap_selection.c:389
+#: ../plug-ins/imagemap/imap_selection.c:388
 msgid "Target"
 msgstr "Target"
 
@@ -11953,7 +11970,7 @@ msgid "View Source"
 msgstr "Visualizza sorgente"
 
 #: ../plug-ins/lighting/lighting-apply.c:105
-#: ../plug-ins/lighting/lighting-ui.c:1017
+#: ../plug-ins/lighting/lighting-ui.c:1021
 msgid "Lighting Effects"
 msgstr "Effetti luce"
 
@@ -11966,536 +11983,552 @@ msgid "_Lighting Effects..."
 msgstr "Effetti _luce..."
 
 #. General options
-#: ../plug-ins/lighting/lighting-ui.c:293
-#: ../plug-ins/map-object/map-object-ui.c:472
+#: ../plug-ins/lighting/lighting-ui.c:297
+#: ../plug-ins/map-object/map-object-ui.c:404
 msgid "General Options"
 msgstr "Opzioni generali"
 
-#: ../plug-ins/lighting/lighting-ui.c:301
+#: ../plug-ins/lighting/lighting-ui.c:305
 msgid "T_ransparent background"
 msgstr "Sfondo t_rasparente"
 
-#: ../plug-ins/lighting/lighting-ui.c:311
+#: ../plug-ins/lighting/lighting-ui.c:315
 msgid "Make destination image transparent where bump height is zero"
 msgstr ""
 "Crea immagine di destinazione dove l'altezza dello sbalzo è uguale a zero"
 
-#: ../plug-ins/lighting/lighting-ui.c:314
+#: ../plug-ins/lighting/lighting-ui.c:318
 msgid "Cre_ate new image"
 msgstr "Cre_a nuova immagine"
 
-#: ../plug-ins/lighting/lighting-ui.c:324
-#: ../plug-ins/map-object/map-object-ui.c:541
+#: ../plug-ins/lighting/lighting-ui.c:328
+#: ../plug-ins/map-object/map-object-ui.c:473
 msgid "Create a new image when applying filter"
-msgstr "Quando applichi il filtro crea una nuova immagine"
+msgstr "Quando si applica il filtro crea una nuova immagine"
 
-#: ../plug-ins/lighting/lighting-ui.c:326
+#: ../plug-ins/lighting/lighting-ui.c:330
 msgid "High _quality preview"
 msgstr "Anteprima in alta _qualità"
 
-#: ../plug-ins/lighting/lighting-ui.c:336
+#: ../plug-ins/lighting/lighting-ui.c:340
 msgid "Enable/disable high quality preview"
 msgstr "Attiva/disattiva anteprima in alta qualità"
 
-#: ../plug-ins/lighting/lighting-ui.c:343
+#: ../plug-ins/lighting/lighting-ui.c:347
 msgid "Distance:"
 msgstr "Distanza:"
 
-#: ../plug-ins/lighting/lighting-ui.c:376
-#: ../plug-ins/map-object/map-object-ui.c:619
+#: ../plug-ins/lighting/lighting-ui.c:380
+#: ../plug-ins/map-object/map-object-ui.c:564
 msgid "Light Settings"
 msgstr "Configurazione luce"
 
-#: ../plug-ins/lighting/lighting-ui.c:389
+#: ../plug-ins/lighting/lighting-ui.c:393
 msgid "Light 1"
 msgstr "Luce 1"
 
-#: ../plug-ins/lighting/lighting-ui.c:390
+#: ../plug-ins/lighting/lighting-ui.c:394
 msgid "Light 2"
 msgstr "Luce 2"
 
-#: ../plug-ins/lighting/lighting-ui.c:391
+#: ../plug-ins/lighting/lighting-ui.c:395
 msgid "Light 3"
 msgstr "Luce 3"
 
-#: ../plug-ins/lighting/lighting-ui.c:392
+#: ../plug-ins/lighting/lighting-ui.c:396
 msgid "Light 4"
 msgstr "Luce 4"
 
-#: ../plug-ins/lighting/lighting-ui.c:393
+#: ../plug-ins/lighting/lighting-ui.c:397
 msgid "Light 5"
 msgstr "Luce 5"
 
-#: ../plug-ins/lighting/lighting-ui.c:394
+#: ../plug-ins/lighting/lighting-ui.c:398
 msgid "Light 6"
 msgstr "Luce 6"
 
-#: ../plug-ins/lighting/lighting-ui.c:408
+#: ../plug-ins/lighting/lighting-ui.c:412
 msgid "Color:"
 msgstr "Colore:"
 
-#: ../plug-ins/lighting/lighting-ui.c:415
+#: ../plug-ins/lighting/lighting-ui.c:419
 msgid "Directional"
 msgstr "Direzionale"
 
-#: ../plug-ins/lighting/lighting-ui.c:416
+#: ../plug-ins/lighting/lighting-ui.c:420
 msgid "Point"
 msgstr "Punto"
 
-#: ../plug-ins/lighting/lighting-ui.c:430
-#: ../plug-ins/map-object/map-object-ui.c:642
+#: ../plug-ins/lighting/lighting-ui.c:434
+#: ../plug-ins/map-object/map-object-ui.c:587
 msgid "Type of light source to apply"
 msgstr "Tipo di sorgente di luce da applicare"
 
-#: ../plug-ins/lighting/lighting-ui.c:432
-#: ../plug-ins/map-object/map-object-ui.c:644
+#: ../plug-ins/lighting/lighting-ui.c:436
+#: ../plug-ins/map-object/map-object-ui.c:589
 msgid "Select lightsource color"
 msgstr "Selezione colore sorgente di luce"
 
-#: ../plug-ins/lighting/lighting-ui.c:446
-#: ../plug-ins/map-object/map-object-ui.c:657
+#: ../plug-ins/lighting/lighting-ui.c:450
+#: ../plug-ins/map-object/map-object-ui.c:602
 msgid "Set light source color"
 msgstr "Imposta colore sorgente di luce"
 
-#: ../plug-ins/lighting/lighting-ui.c:454
+#: ../plug-ins/lighting/lighting-ui.c:458
 msgid "_Intensity:"
 msgstr "_Intensità:"
 
-#: ../plug-ins/lighting/lighting-ui.c:462
+#: ../plug-ins/lighting/lighting-ui.c:466
 msgid "Light intensity"
 msgstr "Intensità della luce"
 
-#: ../plug-ins/lighting/lighting-ui.c:465
-#: ../plug-ins/map-object/map-object-ui.c:659
-#: ../plug-ins/map-object/map-object-ui.c:986
+#: ../plug-ins/lighting/lighting-ui.c:469
+#: ../plug-ins/map-object/map-object-ui.c:604
+#: ../plug-ins/map-object/map-object-ui.c:931
 #: ../plug-ins/print/print-page-layout.c:355
 msgid "Position"
 msgstr "Posizione"
 
-#: ../plug-ins/lighting/lighting-ui.c:483
-#: ../plug-ins/map-object/map-object-ui.c:683
+#: ../plug-ins/lighting/lighting-ui.c:487
+#: ../plug-ins/map-object/map-object-ui.c:628
 msgid "Light source X position in XYZ space"
 msgstr "Posizione X della sorgente di luce nello spazio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:498
-#: ../plug-ins/map-object/map-object-ui.c:697
+#: ../plug-ins/lighting/lighting-ui.c:502
+#: ../plug-ins/map-object/map-object-ui.c:642
 msgid "Light source Y position in XYZ space"
 msgstr "Posizione Y della sorgente di luce nello spazio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:505
+#: ../plug-ins/lighting/lighting-ui.c:509
 msgid "_Z:"
 msgstr "_Z:"
 
-#: ../plug-ins/lighting/lighting-ui.c:513
-#: ../plug-ins/map-object/map-object-ui.c:711
+#: ../plug-ins/lighting/lighting-ui.c:517
+#: ../plug-ins/map-object/map-object-ui.c:656
 msgid "Light source Z position in XYZ space"
 msgstr "Posizione Z della sorgente di luce nello spazio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:533
-#: ../plug-ins/map-object/map-object-ui.c:737
+#: ../plug-ins/lighting/lighting-ui.c:537
+#: ../plug-ins/map-object/map-object-ui.c:682
 msgid "Light source X direction in XYZ space"
 msgstr "Posizione X della sorgente di Luce nello spazio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:547
-#: ../plug-ins/map-object/map-object-ui.c:750
+#: ../plug-ins/lighting/lighting-ui.c:551
+#: ../plug-ins/map-object/map-object-ui.c:695
 msgid "Light source Y direction in XYZ space"
 msgstr "Posizione Y della sorgente di Luce nello spazio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:553
-#: ../plug-ins/map-object/map-object-ui.c:703
-#: ../plug-ins/map-object/map-object-ui.c:755
-#: ../plug-ins/map-object/map-object-ui.c:1023
-#: ../plug-ins/map-object/map-object-ui.c:1068
-#: ../plug-ins/map-object/map-object-ui.c:1167
+#: ../plug-ins/lighting/lighting-ui.c:557
+#: ../plug-ins/map-object/map-object-ui.c:648
+#: ../plug-ins/map-object/map-object-ui.c:700
+#: ../plug-ins/map-object/map-object-ui.c:968
+#: ../plug-ins/map-object/map-object-ui.c:1013
+#: ../plug-ins/map-object/map-object-ui.c:1112
 msgid "Z:"
 msgstr "Z:"
 
-#: ../plug-ins/lighting/lighting-ui.c:561
-#: ../plug-ins/map-object/map-object-ui.c:763
+#: ../plug-ins/lighting/lighting-ui.c:565
+#: ../plug-ins/map-object/map-object-ui.c:708
 msgid "Light source Z direction in XYZ space"
 msgstr "Posizione Z della sorgente di luce nello spazio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:564
+#: ../plug-ins/lighting/lighting-ui.c:568
 msgid "I_solate"
 msgstr "I_solata"
 
-#: ../plug-ins/lighting/lighting-ui.c:573
+#: ../plug-ins/lighting/lighting-ui.c:577
 msgid "Lighting preset:"
 msgstr "Preimpostazione luce:"
 
-#: ../plug-ins/lighting/lighting-ui.c:619
+#: ../plug-ins/lighting/lighting-ui.c:623
 msgid "Material Properties"
 msgstr "Proprietà del materiale"
 
-#: ../plug-ins/lighting/lighting-ui.c:637
+#: ../plug-ins/lighting/lighting-ui.c:641
 msgid "_Glowing:"
 msgstr "Incandescen_za:"
 
-#: ../plug-ins/lighting/lighting-ui.c:656
-#: ../plug-ins/map-object/map-object-ui.c:824
+#: ../plug-ins/lighting/lighting-ui.c:660
+#: ../plug-ins/map-object/map-object-ui.c:769
 msgid "Amount of original color to show where no direct light falls"
 msgstr ""
 "Ammontare dei colori originali da visualizzare dove non cade la luce diretta"
 
-#: ../plug-ins/lighting/lighting-ui.c:670
+#: ../plug-ins/lighting/lighting-ui.c:674
 msgid "_Bright:"
 msgstr "_Brillantezza:"
 
-#: ../plug-ins/lighting/lighting-ui.c:689
-#: ../plug-ins/map-object/map-object-ui.c:853
+#: ../plug-ins/lighting/lighting-ui.c:693
+#: ../plug-ins/map-object/map-object-ui.c:798
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
 "Intensità dei colori originali quando illuminati da una sorgente di luce"
 
-#: ../plug-ins/lighting/lighting-ui.c:703
+#: ../plug-ins/lighting/lighting-ui.c:707
 msgid "_Shiny:"
 msgstr "Rifles_so:"
 
-#: ../plug-ins/lighting/lighting-ui.c:722
-#: ../plug-ins/map-object/map-object-ui.c:925
+#: ../plug-ins/lighting/lighting-ui.c:726
+#: ../plug-ins/map-object/map-object-ui.c:870
 msgid "Controls how intense the highlights will be"
 msgstr "Gestione dell'intensità luminosa"
 
-#: ../plug-ins/lighting/lighting-ui.c:735
+#: ../plug-ins/lighting/lighting-ui.c:739
 msgid "_Polished:"
 msgstr "_Lucidata:"
 
-#: ../plug-ins/lighting/lighting-ui.c:754
-#: ../plug-ins/map-object/map-object-ui.c:954
+#: ../plug-ins/lighting/lighting-ui.c:758
+#: ../plug-ins/map-object/map-object-ui.c:899
 msgid "Higher values makes the highlights more focused"
 msgstr "Alti valori possono rendere la luminosità molto focalizzata"
 
 #. Metallic
-#: ../plug-ins/lighting/lighting-ui.c:764
+#: ../plug-ins/lighting/lighting-ui.c:768
 msgid "_Metallic"
 msgstr "_Metallica"
 
-#: ../plug-ins/lighting/lighting-ui.c:801
+#: ../plug-ins/lighting/lighting-ui.c:805
 msgid "E_nable bump mapping"
 msgstr "Attiva mappatura a sbal_zo"
 
-#: ../plug-ins/lighting/lighting-ui.c:815
+#: ../plug-ins/lighting/lighting-ui.c:819
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "Attiva/disattiva mappatura a sbalzo (profondità immagine)"
 
-#: ../plug-ins/lighting/lighting-ui.c:837
+#: ../plug-ins/lighting/lighting-ui.c:841
 msgid "Bumpm_ap image:"
 msgstr "Immagine mappa _a sbalzo:"
 
-#: ../plug-ins/lighting/lighting-ui.c:841
+#: ../plug-ins/lighting/lighting-ui.c:845
 msgid "Logarithmic"
 msgstr "Logaritmica"
 
-#: ../plug-ins/lighting/lighting-ui.c:853
+#: ../plug-ins/lighting/lighting-ui.c:857
 msgid "Cu_rve:"
 msgstr "Cu_rvatura:"
 
-#: ../plug-ins/lighting/lighting-ui.c:858
+#: ../plug-ins/lighting/lighting-ui.c:862
 msgid "Ma_ximum height:"
 msgstr "Altezza ma_ssima:"
 
-#: ../plug-ins/lighting/lighting-ui.c:868
+#: ../plug-ins/lighting/lighting-ui.c:872
 msgid "Maximum height for bumps"
 msgstr "Altezza massima per gli sbalzi"
 
-#: ../plug-ins/lighting/lighting-ui.c:892
+#: ../plug-ins/lighting/lighting-ui.c:896
 msgid "E_nable environment mapping"
 msgstr "Attiva la ma_ppatura ambiente"
 
-#: ../plug-ins/lighting/lighting-ui.c:906
+#: ../plug-ins/lighting/lighting-ui.c:910
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Attiva/disattiva la mappatura ambiente (riflessione)"
 
-#: ../plug-ins/lighting/lighting-ui.c:923
+#: ../plug-ins/lighting/lighting-ui.c:927
 msgid "En_vironment image:"
 msgstr "Immagine ambie_nte:"
 
-#: ../plug-ins/lighting/lighting-ui.c:926
+#: ../plug-ins/lighting/lighting-ui.c:930
 msgid "Environment image to use"
 msgstr "Immagine ambiente da usare"
 
-#: ../plug-ins/lighting/lighting-ui.c:948
+#: ../plug-ins/lighting/lighting-ui.c:952
 msgid "Op_tions"
 msgstr "Op_zioni"
 
-#: ../plug-ins/lighting/lighting-ui.c:952
-#: ../plug-ins/map-object/map-object-ui.c:1291
+#: ../plug-ins/lighting/lighting-ui.c:956
+#: ../plug-ins/map-object/map-object-ui.c:1236
 msgid "_Light"
 msgstr "_Luce"
 
-#: ../plug-ins/lighting/lighting-ui.c:956
-#: ../plug-ins/map-object/map-object-ui.c:1295
+#: ../plug-ins/lighting/lighting-ui.c:960
+#: ../plug-ins/map-object/map-object-ui.c:1240
 msgid "_Material"
 msgstr "_Materiali"
 
-#: ../plug-ins/lighting/lighting-ui.c:960
+#: ../plug-ins/lighting/lighting-ui.c:964
 msgid "_Bump Map"
 msgstr "Mappa a s_balzo"
 
-#: ../plug-ins/lighting/lighting-ui.c:964
+#: ../plug-ins/lighting/lighting-ui.c:968
 msgid "_Environment Map"
 msgstr "Mappa di ambient_e"
 
-#: ../plug-ins/lighting/lighting-ui.c:1080
-#: ../plug-ins/map-object/map-object-ui.c:1397
+#: ../plug-ins/lighting/lighting-ui.c:1087
+#: ../plug-ins/map-object/map-object-ui.c:1348
 msgid "Recompute preview image"
 msgstr "Ricalcola anteprima immagine"
 
-#: ../plug-ins/lighting/lighting-ui.c:1082
+#: ../plug-ins/lighting/lighting-ui.c:1089
 msgid "I_nteractive"
 msgstr "I_nterattivo"
 
-#: ../plug-ins/lighting/lighting-ui.c:1096
+#: ../plug-ins/lighting/lighting-ui.c:1103
 msgid "Enable/disable real time preview of changes"
 msgstr "Attiva/disattiva anteprima cambiamenti in tempo reale"
 
-#: ../plug-ins/lighting/lighting-ui.c:1140
+#: ../plug-ins/lighting/lighting-ui.c:1147
 msgid "Save Lighting Preset"
 msgstr "Salva impostazione luce"
 
-#: ../plug-ins/lighting/lighting-ui.c:1284
+#: ../plug-ins/lighting/lighting-ui.c:1291
 msgid "Load Lighting Preset"
 msgstr "Carica impostazione luce"
 
-#: ../plug-ins/map-object/map-object-apply.c:276
+#: ../plug-ins/map-object/map-object-apply.c:251
+#: ../plug-ins/map-object/map-object-apply.c:272
 msgid "Map to plane"
 msgstr "Mappa su piano"
 
-#: ../plug-ins/map-object/map-object-apply.c:279
+#: ../plug-ins/map-object/map-object-apply.c:251
+#: ../plug-ins/map-object/map-object-apply.c:275
 msgid "Map to sphere"
 msgstr "Mappa su sfera"
 
-#: ../plug-ins/map-object/map-object-apply.c:282
+#: ../plug-ins/map-object/map-object-apply.c:251
+#: ../plug-ins/map-object/map-object-apply.c:278
 msgid "Map to box"
 msgstr "Mappa su cubo"
 
-#: ../plug-ins/map-object/map-object-apply.c:285
+#: ../plug-ins/map-object/map-object-apply.c:252
+#: ../plug-ins/map-object/map-object-apply.c:281
 msgid "Map to cylinder"
 msgstr "Mappa su cilindro"
 
-#: ../plug-ins/map-object/map-object-main.c:192
+#: ../plug-ins/map-object/map-object-main.c:188
 msgid "Map the image to an object (plane, sphere, box or cylinder)"
 msgstr "Mappa l'immagine su di un oggetto (piano, sfera, cubo o cilindro)"
 
-#: ../plug-ins/map-object/map-object-main.c:197
+#: ../plug-ins/map-object/map-object-main.c:193
 msgid "Map _Object..."
 msgstr "Mappa su _oggetto..."
 
-#: ../plug-ins/map-object/map-object-ui.c:253
-#: ../plug-ins/map-object/map-object-ui.c:1305
+#: ../plug-ins/map-object/map-object-ui.c:199
+#: ../plug-ins/map-object/map-object-ui.c:1251
 msgid "_Box"
 msgstr "Cu_bo"
 
-#: ../plug-ins/map-object/map-object-ui.c:269
-#: ../plug-ins/map-object/map-object-ui.c:1311
+#: ../plug-ins/map-object/map-object-ui.c:216
+#: ../plug-ins/map-object/map-object-ui.c:1258
 msgid "C_ylinder"
 msgstr "Cilin_dro"
 
-#: ../plug-ins/map-object/map-object-ui.c:484
+#: ../plug-ins/map-object/map-object-ui.c:416
 msgid "Map to:"
 msgstr "Mappa su:"
 
-#: ../plug-ins/map-object/map-object-ui.c:488
+#: ../plug-ins/map-object/map-object-ui.c:420
 msgid "Plane"
 msgstr "Piano"
 
-#: ../plug-ins/map-object/map-object-ui.c:489
+#: ../plug-ins/map-object/map-object-ui.c:421
 msgid "Sphere"
 msgstr "Sfera"
 
-#: ../plug-ins/map-object/map-object-ui.c:490
+#: ../plug-ins/map-object/map-object-ui.c:422
 msgid "Box"
 msgstr "Cubo"
 
-#: ../plug-ins/map-object/map-object-ui.c:501
+#: ../plug-ins/map-object/map-object-ui.c:433
 msgid "Type of object to map to"
 msgstr "Tipologia di oggetto da mappare"
 
-#: ../plug-ins/map-object/map-object-ui.c:503
+#: ../plug-ins/map-object/map-object-ui.c:435
 msgid "Transparent background"
 msgstr "Sfondo trasparente"
 
-#: ../plug-ins/map-object/map-object-ui.c:514
+#: ../plug-ins/map-object/map-object-ui.c:446
 msgid "Make image transparent outside object"
 msgstr "Rendi l'immagine trasparente fuori dall'oggetto"
 
-#: ../plug-ins/map-object/map-object-ui.c:516
+#: ../plug-ins/map-object/map-object-ui.c:448
 msgid "Tile source image"
 msgstr "Piastrella immagine sorgente"
 
-#: ../plug-ins/map-object/map-object-ui.c:527
+#: ../plug-ins/map-object/map-object-ui.c:459
 msgid "Tile source image: useful for infinite planes"
 msgstr "Piastrella immagine sorgente: utile per piani infiniti"
 
-#: ../plug-ins/map-object/map-object-ui.c:530
+#: ../plug-ins/map-object/map-object-ui.c:462
 msgid "Create new image"
 msgstr "Crea nuova immagine"
 
-#: ../plug-ins/map-object/map-object-ui.c:549
+#: ../plug-ins/map-object/map-object-ui.c:475
+msgid "Create new layer"
+msgstr "Crea nuovo livello"
+
+#: ../plug-ins/map-object/map-object-ui.c:486
+msgid "Create a new layer when applying filter"
+msgstr "Quando si applica il filtro crea un nuovo livello"
+
+#: ../plug-ins/map-object/map-object-ui.c:494
 msgid "Enable _antialiasing"
 msgstr "Attiva _antialiasing"
 
-#: ../plug-ins/map-object/map-object-ui.c:560
+#: ../plug-ins/map-object/map-object-ui.c:505
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Attiva/disattiva rimozione contorni scalettati (antialiasing)"
 
-#: ../plug-ins/map-object/map-object-ui.c:576
+#: ../plug-ins/map-object/map-object-ui.c:521
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Qualità antialiasing. Il più alto è il migliore, ma risulta lento"
 
-#: ../plug-ins/map-object/map-object-ui.c:593
+#: ../plug-ins/map-object/map-object-ui.c:538
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "Ferma quando la differenza tra punti è più piccola di questo valore"
 
-#: ../plug-ins/map-object/map-object-ui.c:628
+#: ../plug-ins/map-object/map-object-ui.c:573
 msgid "Point light"
 msgstr "Punto luce"
 
-#: ../plug-ins/map-object/map-object-ui.c:629
+#: ../plug-ins/map-object/map-object-ui.c:574
 msgid "Directional light"
 msgstr "Luce direzionale"
 
-#: ../plug-ins/map-object/map-object-ui.c:630
+#: ../plug-ins/map-object/map-object-ui.c:575
 msgid "No light"
 msgstr "Nessuna luce"
 
-#: ../plug-ins/map-object/map-object-ui.c:635
+#: ../plug-ins/map-object/map-object-ui.c:580
 msgid "Lightsource type:"
 msgstr "Tipo di sorgente di luce:"
 
-#: ../plug-ins/map-object/map-object-ui.c:649
+#: ../plug-ins/map-object/map-object-ui.c:594
 msgid "Lightsource color:"
 msgstr "Colore della sorgente di luce:"
 
-#: ../plug-ins/map-object/map-object-ui.c:714
+#: ../plug-ins/map-object/map-object-ui.c:659
 msgid "Direction Vector"
 msgstr "Vettore direzione"
 
-#: ../plug-ins/map-object/map-object-ui.c:790
+#: ../plug-ins/map-object/map-object-ui.c:735
 msgid "Intensity Levels"
 msgstr "Livelli di intensità"
 
-#: ../plug-ins/map-object/map-object-ui.c:809
+#: ../plug-ins/map-object/map-object-ui.c:754
 msgid "Ambient:"
 msgstr "Ambiente:"
 
-#: ../plug-ins/map-object/map-object-ui.c:838
-#: ../plug-ins/map-object/map-object-ui.c:881
+#: ../plug-ins/map-object/map-object-ui.c:783
+#: ../plug-ins/map-object/map-object-ui.c:826
 msgid "Diffuse:"
 msgstr "Diffusa:"
 
-#: ../plug-ins/map-object/map-object-ui.c:862
+#: ../plug-ins/map-object/map-object-ui.c:807
 msgid "Reflectivity"
 msgstr "Riflettività"
 
-#: ../plug-ins/map-object/map-object-ui.c:896
+#: ../plug-ins/map-object/map-object-ui.c:841
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr ""
 "Valori alti possono fare in modo che l'oggetto rifletta più luce (appare più "
 "luminoso)"
 
-#: ../plug-ins/map-object/map-object-ui.c:910
+#: ../plug-ins/map-object/map-object-ui.c:855
 msgid "Specular:"
 msgstr "Speculare:"
 
-#: ../plug-ins/map-object/map-object-ui.c:939
+#: ../plug-ins/map-object/map-object-ui.c:884
 msgid "Highlight:"
 msgstr "Intensità luce:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1000
+#: ../plug-ins/map-object/map-object-ui.c:945
 msgid "Object X position in XYZ space"
 msgstr "Posizione oggetto X nello spazio XYZ"
 
-#: ../plug-ins/map-object/map-object-ui.c:1013
+#: ../plug-ins/map-object/map-object-ui.c:958
 msgid "Object Y position in XYZ space"
 msgstr "Posizione oggetto Y nello spazio XYZ"
 
-#: ../plug-ins/map-object/map-object-ui.c:1026
+#: ../plug-ins/map-object/map-object-ui.c:971
 msgid "Object Z position in XYZ space"
 msgstr "Posizione oggetto Z nello spazio XYZ"
 
-#: ../plug-ins/map-object/map-object-ui.c:1049
+#: ../plug-ins/map-object/map-object-ui.c:994
 msgid "Rotation angle about X axis"
 msgstr "Angolo di rotazione attorno all'asse X"
 
-#: ../plug-ins/map-object/map-object-ui.c:1060
+#: ../plug-ins/map-object/map-object-ui.c:1005
 msgid "Rotation angle about Y axis"
 msgstr "Angolo di rotazione attorno all'asse Y"
 
-#: ../plug-ins/map-object/map-object-ui.c:1071
+#: ../plug-ins/map-object/map-object-ui.c:1016
 msgid "Rotation angle about Z axis"
 msgstr "Angolo di rotazione attorno all'asse Z"
 
-#: ../plug-ins/map-object/map-object-ui.c:1097
+#: ../plug-ins/map-object/map-object-ui.c:1042
 msgid "Front:"
 msgstr "Fronte:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1097
+#: ../plug-ins/map-object/map-object-ui.c:1042
 msgid "Back:"
 msgstr "Retro:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1105
+#: ../plug-ins/map-object/map-object-ui.c:1050
 msgid "Map Images to Box Faces"
 msgstr "Mappa Immagini sulle facciate di un cubo"
 
-#: ../plug-ins/map-object/map-object-ui.c:1146
+#: ../plug-ins/map-object/map-object-ui.c:1091
 msgid "X scale (size)"
 msgstr "Scala X (dimensione)"
 
-#: ../plug-ins/map-object/map-object-ui.c:1158
+#: ../plug-ins/map-object/map-object-ui.c:1103
 msgid "Y scale (size)"
 msgstr "Scala Y (dimensione)"
 
-#: ../plug-ins/map-object/map-object-ui.c:1170
+#: ../plug-ins/map-object/map-object-ui.c:1115
 msgid "Z scale (size)"
 msgstr "Scala Z (dimensione)"
 
-#: ../plug-ins/map-object/map-object-ui.c:1193
+#: ../plug-ins/map-object/map-object-ui.c:1138
 #: ../plug-ins/print/print-page-layout.c:414
 msgid "_Top:"
 msgstr "_Superiore:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1193
+#: ../plug-ins/map-object/map-object-ui.c:1138
 #: ../plug-ins/print/print-page-layout.c:433
 msgid "_Bottom:"
 msgstr "_Inferiore:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1198
+#: ../plug-ins/map-object/map-object-ui.c:1143
 msgid "Images for the Cap Faces"
 msgstr "Immagini per le basi"
 
-#: ../plug-ins/map-object/map-object-ui.c:1227
+#: ../plug-ins/map-object/map-object-ui.c:1172
 #: ../plug-ins/print/print-page-layout.c:231
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../plug-ins/map-object/map-object-ui.c:1238
+#: ../plug-ins/map-object/map-object-ui.c:1183
 msgid "R_adius:"
 msgstr "R_aggio:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1242
+#: ../plug-ins/map-object/map-object-ui.c:1187
 msgid "Cylinder radius"
 msgstr "Raggio cilindro"
 
-#: ../plug-ins/map-object/map-object-ui.c:1256
+#: ../plug-ins/map-object/map-object-ui.c:1201
 msgid "Cylinder length"
 msgstr "Lunghezza cilindro"
 
-#: ../plug-ins/map-object/map-object-ui.c:1287
+#: ../plug-ins/map-object/map-object-ui.c:1232
 msgid "O_ptions"
 msgstr "O_pzioni"
 
-#: ../plug-ins/map-object/map-object-ui.c:1299
+#: ../plug-ins/map-object/map-object-ui.c:1244
 msgid "O_rientation"
 msgstr "O_rientamento"
 
-#: ../plug-ins/map-object/map-object-ui.c:1335
+#: ../plug-ins/map-object/map-object-ui.c:1282
 msgid "Map to Object"
 msgstr "Mappa sull'oggetto"
 
-#: ../plug-ins/map-object/map-object-ui.c:1415
-msgid "Show preview _wireframe"
-msgstr "Mostra anteprima a scheletro"
+#: ../plug-ins/map-object/map-object-ui.c:1366
+msgid "Show _wireframe"
+msgstr "Mostra anteprima a sc_heletro"
+
+#: ../plug-ins/map-object/map-object-ui.c:1375
+msgid "Update preview _live"
+msgstr "Aggiorna _l'anteprima in tempo reale"
 
 #: ../plug-ins/maze/maze-algorithms.c:278
 msgid "Constructing maze using Prim's Algorithm"
