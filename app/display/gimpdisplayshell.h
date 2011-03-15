@@ -49,8 +49,6 @@ struct _GimpDisplayShell
 {
   GtkBox             parent_instance;
 
-  /* --- cacheline 2 boundary (128 bytes) was 20 bytes ago --- */
-
   GimpDisplay       *display;
 
   GimpUIManager     *popup_manager;
@@ -63,8 +61,6 @@ struct _GimpDisplayShell
   gboolean           snap_to_grid;     /*  should the grid be snapped to?     */
   gboolean           snap_to_canvas;   /*  should the canvas be snapped to?   */
   gboolean           snap_to_vectors;  /*  should the active path be snapped  */
-
-  /* --- cacheline 3 boundary (192 bytes) --- */
 
   GimpUnit           unit;
 
@@ -83,8 +79,6 @@ struct _GimpDisplayShell
   gint               x_dest_inc;
   gint               y_dest_inc;
 
-  /* --- cacheline 4 boundary (256 bytes) --- */
-
   GimpZoomModel     *zoom;
 
   gdouble            last_scale;       /*  scale used when reverting zoom     */
@@ -98,8 +92,6 @@ struct _GimpDisplayShell
   gdouble            last_motion_delta_x;
   gdouble            last_motion_delta_y;
   gdouble            last_motion_distance;
-
-  /* --- cacheline 5 boundary (320 bytes) --- */
 
   GimpCoords         last_coords;      /* last motion event                   */
 
