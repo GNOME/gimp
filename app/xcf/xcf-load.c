@@ -842,7 +842,7 @@ xcf_load_layer_props (XcfInfo    *info,
             gimp_object_set_name (GIMP_OBJECT (group),
                                   gimp_object_get_name (*layer));
 
-            GIMP_DRAWABLE (group)->type =
+            GIMP_DRAWABLE (group)->private->type =
               gimp_drawable_type (GIMP_DRAWABLE (*layer));
 
             g_object_ref_sink (*layer);

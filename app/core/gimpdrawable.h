@@ -35,9 +35,7 @@ typedef struct _GimpDrawableClass   GimpDrawableClass;
 
 struct _GimpDrawable
 {
-  GimpItem       parent_instance;
-
-  GimpImageType  type;               /* type of drawable               */
+  GimpItem             parent_instance;
 
   GimpDrawablePrivate *private;
 };

@@ -258,7 +258,7 @@ gimp_drawable_init (GimpDrawable *drawable)
                                                    GIMP_TYPE_DRAWABLE,
                                                    GimpDrawablePrivate);
 
-  drawable->type = -1;
+  drawable->private->type = -1;
 }
 
 /* sorry for the evil casts */
@@ -417,7 +417,7 @@ gimp_drawable_duplicate (GimpItem *item,
 
       gimp_item_get_offset (item, &offset_x, &offset_y);
 
-      new_drawable->type = image_type;
+      new_drawable->private->type = image_type;
 
       if (new_drawable->private->tiles)
         tile_manager_unref (new_drawable->private->tiles);
@@ -425,7 +425,7 @@ gimp_drawable_duplicate (GimpItem *item,
       new_drawable->private->tiles =
         tile_manager_new (gimp_item_get_width  (new_item),
                           gimp_item_get_height (new_item),
-                          GIMP_IMAGE_TYPE_BYTES (new_drawable->type));
+                          gimp_drawable_bytes (new_drawable));
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          0, 0,
@@ -457,7 +457,7 @@ gimp_drawable_scale (GimpItem              *item,
   TileManager  *new_tiles;
 
   new_tiles = tile_manager_new (new_width, new_height,
-                                GIMP_IMAGE_TYPE_BYTES (drawable->type));
+                                gimp_drawable_bytes (drawable));
 
   GIMP_TIMER_START ();
 
@@ -560,7 +560,7 @@ gimp_drawable_resize (GimpItem    *item,
                             &copy_height);
 
   new_tiles = tile_manager_new (new_width, new_height,
-                                GIMP_IMAGE_TYPE_BYTES (drawable->type));
+                                gimp_drawable_bytes (drawable));
 
   /*  Determine whether the new tiles need to be initially cleared  */
   if (copy_width  != new_width ||
@@ -829,7 +829,7 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
     tile_manager_unref (drawable->private->tiles);
 
   drawable->private->tiles = tiles;
-  drawable->type           = type;
+  drawable->private->type  = type;
 
   gimp_item_set_offset (item, offset_x, offset_y);
   gimp_item_set_size (item,
@@ -1197,11 +1197,9 @@ gimp_drawable_new (GType          type,
                                            offset_x, offset_y,
                                            width, height));
 
-  drawable->type = image_type;
-
-  drawable->private->tiles =
-    tile_manager_new (width, height,
-                      GIMP_IMAGE_TYPE_BYTES (drawable->type));
+  drawable->private->type  = image_type;
+  drawable->private->tiles = tile_manager_new (width, height,
+                                               gimp_drawable_bytes (drawable));
 
   return drawable;
 }
@@ -1749,7 +1747,7 @@ gimp_drawable_type (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  return drawable->type;
+  return drawable->private->type;
 }
 
 GimpImageType
@@ -1797,7 +1795,7 @@ gimp_drawable_bytes (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  return GIMP_IMAGE_TYPE_BYTES (drawable->type);
+  return GIMP_IMAGE_TYPE_BYTES (drawable->private->type);
 }
 
 gint

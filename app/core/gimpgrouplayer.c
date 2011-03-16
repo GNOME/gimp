@@ -34,6 +34,7 @@
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
+#include "gimpdrawable-private.h" /* eek */
 #include "gimpdrawablestack.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
@@ -809,7 +810,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
    *  type to the new values so the projection will create its tiles
    *  with the right depth
    */
-  drawable->type = new_type;
+  drawable->private->type = new_type;
 
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
 
