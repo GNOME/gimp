@@ -412,10 +412,6 @@ gimp_drawable_duplicate (GimpItem *item,
       GimpImageType  image_type   = gimp_drawable_type (drawable);
       PixelRegion    srcPR;
       PixelRegion    destPR;
-      gint           offset_x;
-      gint           offset_y;
-
-      gimp_item_get_offset (item, &offset_x, &offset_y);
 
       new_drawable->private->type = image_type;
 
