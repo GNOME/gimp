@@ -338,7 +338,7 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
       gdouble scale;
 
       gimp_paint_core_get_last_coords (paint_core, &last_coords);
-      gimp_paint_core_get_current_coords (paint_core, &current_coords);
+      gimp_paint_core_get_current_coords (paint_core, paint_options, &current_coords);
 
       /* If we current point == last point, check if the brush
        * wants to be painted in that case. (Direction dependent
@@ -523,7 +523,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   g_return_if_fail (GIMP_IS_BRUSH (core->brush));
 
   gimp_paint_core_get_last_coords (paint_core, &last_coords);
-  gimp_paint_core_get_current_coords (paint_core, &current_coords);
+  gimp_paint_core_get_current_coords (paint_core, paint_options, &current_coords);
 
   /*  Zero sized brushes are unfit for interpolate, so we just let
    *  paint core fail onits own

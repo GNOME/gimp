@@ -629,13 +629,18 @@ gimp_paint_core_set_current_coords (GimpPaintCore    *core,
 }
 
 void
-gimp_paint_core_get_current_coords (GimpPaintCore *core,
-                                    GimpCoords    *coords)
+gimp_paint_core_get_current_coords (GimpPaintCore    *core,
+                                    GimpPaintOptions *paint_options,
+                                    GimpCoords       *coords)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (coords != NULL);
 
   *coords = core->cur_coords;
+
+  gimp_paint_core_smooth_coords (core,
+                                 paint_options,
+                                 coords);
 }
 
 void

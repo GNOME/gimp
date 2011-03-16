@@ -219,7 +219,7 @@ gimp_airbrush_timeout (gpointer data)
   GimpAirbrush *airbrush = GIMP_AIRBRUSH (data);
   GimpCoords    coords;
 
-  gimp_paint_core_get_current_coords (GIMP_PAINT_CORE (airbrush), &coords);
+  gimp_paint_core_get_current_coords (GIMP_PAINT_CORE (airbrush), airbrush->paint_options, &coords);
 
   gimp_airbrush_paint (GIMP_PAINT_CORE (airbrush),
                        airbrush->drawable,
