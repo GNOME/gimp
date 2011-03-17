@@ -43,7 +43,9 @@
 
 typedef enum
 {
-  GIMP_WIDGET_HELP_TYPE_HELP = 0xff
+  GIMP_WIDGET_HELP_TOOLTIP    = GTK_WIDGET_HELP_TOOLTIP,
+  GIMP_WIDGET_HELP_WHATS_THIS = GTK_WIDGET_HELP_WHATS_THIS,
+  GIMP_WIDGET_HELP_TYPE_HELP  = 0xff
 } GimpWidgetHelpType;
 
 
@@ -281,7 +283,7 @@ gimp_context_help (GtkWidget *widget)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  gimp_help_callback (widget, GTK_WIDGET_HELP_WHATS_THIS, NULL);
+  gimp_help_callback (widget, GIMP_WIDGET_HELP_WHATS_THIS, NULL);
 }
 
 /**
@@ -357,7 +359,7 @@ gimp_help_callback (GtkWidget          *widget,
         }
       return TRUE;
 
-    case GTK_WIDGET_HELP_WHATS_THIS:
+    case GIMP_WIDGET_HELP_WHATS_THIS:
       g_idle_add (gimp_context_help_idle_start, widget);
       return TRUE;
 
