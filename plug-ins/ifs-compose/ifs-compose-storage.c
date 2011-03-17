@@ -29,7 +29,7 @@
 #include "ifs-compose.h"
 
 
-enum {
+typedef enum {
   TOKEN_INVALID = G_TOKEN_LAST,
   TOKEN_ITERATIONS,
   TOKEN_MAX_MEMORY,
@@ -55,12 +55,12 @@ enum {
   TOKEN_VALUE_SCALE,
   TOKEN_SIMPLE_COLOR,
   TOKEN_PROB
-};
+} IfsComposeToken;
 
 static struct
 {
-  const gchar *name;
-  gint        token;
+  const gchar     *name;
+  IfsComposeToken  token;
 } symbols[] = {
   { "iterations",   TOKEN_ITERATIONS },
   { "max_memory",   TOKEN_MAX_MEMORY },
@@ -171,7 +171,7 @@ ifsvals_parse_element (GScanner       *scanner,
   token = g_scanner_get_next_token (scanner);
   while (token != G_TOKEN_RIGHT_CURLY)
     {
-      switch (token)
+      switch ((IfsComposeToken) token)
 	{
 	case TOKEN_X:
 	  expected_token = parse_genuine_float (scanner, &result->x);
@@ -281,6 +281,7 @@ ifsvals_parse_element (GScanner       *scanner,
 
       token = g_scanner_get_next_token (scanner);
     }
+
   return G_TOKEN_NONE;
 }
 
@@ -323,7 +324,7 @@ ifsvals_parse (GScanner         *scanner,
       if (g_scanner_eof (scanner))
 	  break;
 
-      switch (token)
+      switch ((IfsComposeToken) token)
 	{
 	case TOKEN_ITERATIONS:
 	  token = g_scanner_get_next_token (scanner);
