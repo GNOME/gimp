@@ -455,10 +455,15 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
               orig_height  = clip_width;
               break;
             }
-        }
 
-      new_width  = clip_width;
-      new_height = clip_height;
+          new_width  = clip_width;
+          new_height = clip_height;
+        }
+      else
+        {
+          new_width  = 0;
+          new_height = 0;
+        }
     }
   else
     {
@@ -472,7 +477,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
       new_y  = 0;
     }
 
-  if (new_width == 0 && new_height == 0)
+  if (new_width < 1 || new_height < 1)
     return new_tiles;
 
   pixel_region_init (&srcPR, orig_tiles,

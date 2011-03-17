@@ -23,6 +23,7 @@
 #include "widgets/gimpuimanager.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
@@ -94,6 +95,49 @@ gimp_test_image_teardown (GimpTestFixture *fixture,
                           gconstpointer    data)
 {
   g_object_unref (fixture->image);
+}
+
+/**
+ * rotate_non_overlapping:
+ * @fixture:
+ * @data:
+ *
+ * Super basic test that makes sure we can add a layer
+ * and call gimp_item_rotate with center at (0, -10)
+ * without triggering a failed assertion .
+ **/
+static void
+rotate_non_overlapping (GimpTestFixture *fixture,
+                        gconstpointer    data)
+{
+  GimpImage   *image = fixture->image;
+  GimpLayer   *layer;
+  GimpContext *context = gimp_context_new (gimp, "Test", NULL /*template*/);
+  gboolean     result;
+
+  g_assert_cmpint (gimp_image_get_n_layers (image), ==, 0);
+
+  layer = gimp_layer_new (image,
+                          GIMP_TEST_IMAGE_SIZE,
+                          GIMP_TEST_IMAGE_SIZE,
+                          GIMP_RGBA_IMAGE,
+                          "Test Layer",
+                          1.0,
+                          GIMP_NORMAL_MODE);
+
+  g_assert_cmpint (GIMP_IS_LAYER (layer), ==, TRUE);
+
+  result = gimp_image_add_layer (image,
+                                 layer,
+                                 GIMP_IMAGE_ACTIVE_PARENT,
+                                 0,
+                                 FALSE);
+
+  gimp_item_rotate (GIMP_ITEM (layer), context, GIMP_ROTATE_90, 0., -10., TRUE);
+
+  g_assert_cmpint (result, ==, TRUE);
+  g_assert_cmpint (gimp_image_get_n_layers (image), ==, 1);
+  g_object_unref (context);
 }
 
 /**
@@ -196,9 +240,14 @@ main (int    argc,
   /* Add tests */
   ADD_IMAGE_TEST (add_layer);
   ADD_IMAGE_TEST (remove_layer);
+  ADD_IMAGE_TEST (rotate_non_overlapping);
 
   /* Run the tests */
   result = g_test_run ();
+
+  /* Don't write files to the source dir */
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/gimpdir-output");
 
   /* Exit so we don't break script-fu plug-in wire */
   gimp_exit (gimp, TRUE);
