@@ -261,7 +261,7 @@ gimp_cursor_new (GdkDisplay         *display,
   g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
   g_return_val_if_fail (cursor_type < GIMP_CURSOR_LAST, NULL);
 
-  if (cursor_type <= GDK_LAST_CURSOR)
+  if (cursor_type <= (GimpCursorType) GDK_LAST_CURSOR)
     return gdk_cursor_new_for_display (display, cursor_type);
 
   g_return_val_if_fail (cursor_type >= GIMP_CURSOR_NONE, NULL);
