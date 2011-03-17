@@ -179,11 +179,10 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           gboolean           mask_empty,
                           GimpDisplay       *display)
 {
-  GimpFlipOptions      *options    = GIMP_FLIP_TOOL_GET_OPTIONS (trans_tool);
-  GimpTransformOptions *tr_options = GIMP_TRANSFORM_OPTIONS (options);
-  GimpContext          *context    = GIMP_CONTEXT (options);
-  gdouble               axis       = 0.0;
-  TileManager          *ret        = NULL;
+  GimpFlipOptions *options = GIMP_FLIP_TOOL_GET_OPTIONS (trans_tool);
+  GimpContext     *context = GIMP_CONTEXT (options);
+  gdouble          axis    = 0.0;
+  TileManager     *ret     = NULL;
 
   switch (options->flip_type)
     {
@@ -215,21 +214,23 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                       options->flip_type, axis, FALSE);
     }
 
-  switch (tr_options->type)
+  if (trans_tool->original)
     {
-    case GIMP_TRANSFORM_TYPE_LAYER:
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-      if (trans_tool->original)
-        ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
-                                                  context,
-                                                  trans_tool->original,
-                                                  options->flip_type, axis,
-                                                  FALSE);
-      break;
+      /*  this happens when transforming a normal drawable or the
+       *  selection
+       */
 
-    case GIMP_TRANSFORM_TYPE_PATH:
+      ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
+                                                context,
+                                                trans_tool->original,
+                                                options->flip_type, axis,
+                                                FALSE);
+    }
+  else
+    {
+      /*  this happens for paths and layer groups  */
+
       gimp_item_flip (active_item, context, options->flip_type, axis, FALSE);
-      break;
     }
 
   return ret;

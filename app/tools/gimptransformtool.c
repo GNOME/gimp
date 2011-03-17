@@ -1180,37 +1180,35 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                            progress);
     }
 
-  switch (options->type)
+  if (tr_tool->original)
     {
-    case GIMP_TRANSFORM_TYPE_LAYER:
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-      {
-        GimpTransformResize clip_result = options->clip;
+      /*  this happens when transforming a normal drawable or the
+       *  selection
+       */
 
-        /*  always clip the selction and unfloated channels
-         *  so they keep their size
-         */
-        if (tr_tool->original)
-          {
-            if (GIMP_IS_CHANNEL (active_item) &&
-                tile_manager_bpp (tr_tool->original) == 1)
-              clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
+      GimpTransformResize clip_result = options->clip;
 
-            ret =
-              gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
-                                                    context,
-                                                    tr_tool->original,
-                                                    &tr_tool->transform,
-                                                    options->direction,
-                                                    options->interpolation,
-                                                    options->recursion_level,
-                                                    clip_result,
-                                                    progress);
-          }
-      }
-      break;
+      /*  always clip the selction and unfloated channels
+       *  so they keep their size
+       */
+      if (GIMP_IS_CHANNEL (active_item) &&
+          tile_manager_bpp (tr_tool->original) == 1)
+        clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
-    case GIMP_TRANSFORM_TYPE_PATH:
+      ret = gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
+                                                  context,
+                                                  tr_tool->original,
+                                                  &tr_tool->transform,
+                                                  options->direction,
+                                                  options->interpolation,
+                                                  options->recursion_level,
+                                                  clip_result,
+                                                  progress);
+    }
+  else
+    {
+      /*  this happens for paths and layer groups  */
+
       gimp_item_transform (active_item, context,
                            &tr_tool->transform,
                            options->direction,
@@ -1218,7 +1216,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                            options->recursion_level,
                            options->clip,
                            progress);
-      break;
     }
 
   if (progress)
@@ -1310,9 +1307,10 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
-                                                       context,
-                                                       &new_layer);
+      if (! gimp_viewable_get_children (GIMP_VIEWABLE (tool->drawable)))
+        tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
+                                                         context,
+                                                         &new_layer);
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
@@ -1321,7 +1319,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      tr_tool->original = NULL;
       break;
     }
 
