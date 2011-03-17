@@ -1231,7 +1231,10 @@ gimp_label_set_attributes (GtkLabel *label,
 
   do
     {
-      PangoAttrType   attr_type = va_arg (args, PangoAttrType);
+      PangoAttrType attr_type = va_arg (args, PangoAttrType);
+
+      if (attr_type == -1)
+        attr_type = PANGO_ATTR_INVALID;
 
       switch (attr_type)
         {
@@ -1307,7 +1310,6 @@ gimp_label_set_attributes (GtkLabel *label,
         default:
           g_warning ("%s: invalid PangoAttribute type %d",
                      G_STRFUNC, attr_type);
-        case -1:
         case PANGO_ATTR_INVALID:
           attr = NULL;
           break;
