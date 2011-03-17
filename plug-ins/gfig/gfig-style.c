@@ -172,7 +172,7 @@ gfig_read_parameter_gimp_rgb (gchar        **text,
 
   style_entry->r = style_entry->g = style_entry->b = style_entry->a = 0.;
 
-  snprintf (fmt_str, sizeof (fmt_str), "%%%ds %%%ds %%%ds %%%ds",
+  snprintf (fmt_str, sizeof (fmt_str), "%%%zus %%%zus %%%zus %%%zus",
             sizeof (colorstr_r) - 1, sizeof (colorstr_g) - 1,
             sizeof (colorstr_b) - 1, sizeof (colorstr_a) - 1);
 
