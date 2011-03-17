@@ -184,33 +184,8 @@ gimp_session_info_dock_from_widget (GimpDock *dock)
     }
 
   dock_info->books = g_list_reverse (dock_info->books);
-  
+
   return dock_info;
-}
-
-static void
-gimp_session_info_dock_paned_size_allocate (GtkWidget     *paned,
-                                            GtkAllocation *allocation,
-                                            gpointer       data)
-{
-  g_signal_handlers_disconnect_by_func (paned,
-                                        gimp_session_info_dock_paned_size_allocate,
-                                        data);
-
-  gtk_paned_set_position (GTK_PANED (paned), GPOINTER_TO_INT (data));
-}
-
-static void
-gimp_session_info_dock_paned_map (GtkWidget *paned,
-                                  gpointer   data)
-{
-  g_signal_handlers_disconnect_by_func (paned,
-                                        gimp_session_info_dock_paned_map,
-                                        data);
-
-  g_signal_connect_after (paned, "size-allocate",
-                          G_CALLBACK (gimp_session_info_dock_paned_size_allocate),
-                          data);
 }
 
 void
@@ -263,9 +238,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
           GtkPaned *paned = GTK_PANED (parent);
 
           if (dockbook == gtk_paned_get_child2 (paned))
-            g_signal_connect_after (paned, "map",
-                                    G_CALLBACK (gimp_session_info_dock_paned_map),
-                                    GINT_TO_POINTER (book_info->position));
+            gtk_paned_set_position (paned, book_info->position);
         }
     }
 
