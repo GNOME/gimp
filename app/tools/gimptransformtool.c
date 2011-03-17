@@ -133,7 +133,7 @@ static void      gimp_transform_tool_bounds                 (GimpTransformTool  
 static void      gimp_transform_tool_dialog                 (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_prepare                (GimpTransformTool     *tr_tool,
                                                              GimpDisplay           *display);
-static void      gimp_transform_tool_doit                   (GimpTransformTool     *tr_tool,
+static void      gimp_transform_tool_transform              (GimpTransformTool     *tr_tool,
                                                              GimpDisplay           *display);
 static void      gimp_transform_tool_transform_bounding_box (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_grid_recalc            (GimpTransformTool     *tr_tool);
@@ -1228,8 +1228,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
 }
 
 static void
-gimp_transform_tool_doit (GimpTransformTool *tr_tool,
-                          GimpDisplay       *display)
+gimp_transform_tool_transform (GimpTransformTool *tr_tool,
+                               GimpDisplay       *display)
 {
   GimpTool             *tool           = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options        = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
@@ -1873,7 +1873,7 @@ gimp_transform_tool_response (GtkWidget         *widget,
 
     case GTK_RESPONSE_OK:
       g_return_if_fail (tool->display != NULL);
-      gimp_transform_tool_doit (tr_tool, tool->display);
+      gimp_transform_tool_transform (tr_tool, tool->display);
       break;
 
     default:
