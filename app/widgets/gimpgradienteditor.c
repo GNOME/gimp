@@ -1185,15 +1185,15 @@ control_expose (GtkWidget          *widget,
 {
   GtkAdjustment *adj = GTK_ADJUSTMENT (editor->scroll_data);
   cairo_t       *cr  = gdk_cairo_create (gtk_widget_get_window (widget));
-  gint           width;
-  gint           height;
+  GtkAllocation  allocation;
 
-  gdk_drawable_get_size (gtk_widget_get_window (widget), &width, &height);
+  gtk_widget_get_allocation (widget, &allocation);
 
   control_draw (editor,
                 GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data),
                 cr,
-                width, height,
+                allocation.width,
+                allocation.height,
                 gtk_adjustment_get_value (adj),
                 gtk_adjustment_get_value (adj) +
                 gtk_adjustment_get_page_size (adj));
