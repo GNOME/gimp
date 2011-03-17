@@ -1648,6 +1648,9 @@ gimp_image_set_imported_uri (GimpImage   *image,
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
+  if (gimp_image_get_imported_uri (image) == uri)
+    return;
+
   g_object_set_data_full (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY,
                           g_strdup (uri), (GDestroyNotify) g_free);
 }
@@ -1665,6 +1668,9 @@ gimp_image_set_exported_uri (GimpImage   *image,
                              const gchar *uri)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  if (gimp_image_get_exported_uri (image) == uri)
+    return;
 
   g_object_set_data_full (G_OBJECT (image),
                           GIMP_FILE_EXPORT_URI_KEY,
@@ -1684,6 +1690,9 @@ gimp_image_set_save_a_copy_uri (GimpImage   *image,
                                 const gchar *uri)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  if (gimp_image_get_save_a_copy_uri (image) == uri)
+    return;
 
   g_object_set_data_full (G_OBJECT (image),
                           GIMP_FILE_SAVE_A_COPY_URI_KEY,
