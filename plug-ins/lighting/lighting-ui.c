@@ -1393,7 +1393,7 @@ load_preset_response (GtkFileChooser *chooser,
                 }
 
               snprintf (fmt_str, sizeof (fmt_str),
-                        " Position: %%%lds %%%lds %%%lds",
+                        " Position: %%%ds %%%ds %%%ds",
                         sizeof (buffer1) - 1,
                         sizeof (buffer2) - 1,
                         sizeof (buffer3) - 1);
@@ -1403,7 +1403,7 @@ load_preset_response (GtkFileChooser *chooser,
               source->position.z = g_ascii_strtod (buffer3, &endptr);
 
               snprintf (fmt_str, sizeof (fmt_str),
-                        " Direction: %%%lds %%%lds %%%lds",
+                        " Direction: %%%ds %%%ds %%%ds",
                         sizeof (buffer1) - 1,
                         sizeof (buffer2) - 1,
                         sizeof (buffer3) - 1);
@@ -1413,7 +1413,7 @@ load_preset_response (GtkFileChooser *chooser,
               source->direction.z = g_ascii_strtod (buffer3, &endptr);
 
               snprintf (fmt_str, sizeof (fmt_str),
-                        " Color: %%%lds %%%lds %%%lds",
+                        " Color: %%%ds %%%ds %%%ds",
                         sizeof (buffer1) - 1,
                         sizeof (buffer2) - 1,
                         sizeof (buffer3) - 1);
@@ -1424,7 +1424,7 @@ load_preset_response (GtkFileChooser *chooser,
               source->color.a = 1.0;
 
               snprintf (fmt_str, sizeof (fmt_str),
-                        " Intensity: %%%lds",
+                        " Intensity: %%%ds",
                         sizeof (buffer1) - 1);
               fscanf (fp, fmt_str, buffer1);
               source->intensity = g_ascii_strtod (buffer1, &endptr);
