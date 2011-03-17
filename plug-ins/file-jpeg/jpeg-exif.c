@@ -124,6 +124,8 @@ jpeg_exif_get_resolution (ExifData *exif_data,
         break;
 
       r = exif_get_rational (entry->data, byte_order);
+      if (r.denominator == 0.0)
+        break;
       xres = r.numerator / r.denominator;
 
       entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
@@ -132,6 +134,8 @@ jpeg_exif_get_resolution (ExifData *exif_data,
         break;
 
       r = exif_get_rational (entry->data, byte_order);
+      if (r.denominator == 0.0)
+        break;
       yres = r.numerator / r.denominator;
 
       entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
