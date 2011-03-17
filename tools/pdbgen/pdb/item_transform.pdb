@@ -52,7 +52,8 @@ $assemble_matrix
       if (progress)
         gimp_progress_start (progress, _(\"$progress_text\"), FALSE);
 
-      if (GIMP_IS_DRAWABLE (item))
+      if (GIMP_IS_DRAWABLE (item) &&
+          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
         {
           GimpDrawable *drawable;
 
@@ -148,7 +149,8 @@ HELP
       gimp_transform_get_flip_axis (x, y, width, height,
                                     flip_type, auto_center, &axis);
 
-      if (GIMP_IS_DRAWABLE (item))
+      if (GIMP_IS_DRAWABLE (item) &&
+          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
         {
           GimpDrawable *drawable;
 
@@ -353,7 +355,8 @@ HELP
       gimp_transform_get_rotate_center (x, y, width, height,
                                         auto_center, &center_x, &center_y);
 
-      if (GIMP_IS_DRAWABLE (item))
+      if (GIMP_IS_DRAWABLE (item) &&
+          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
         {
           GimpDrawable *drawable;
 

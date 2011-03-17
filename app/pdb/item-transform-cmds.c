@@ -80,7 +80,8 @@ item_transform_flip_simple_invoker (GimpProcedure      *procedure,
           gimp_transform_get_flip_axis (x, y, width, height,
                                         flip_type, auto_center, &axis);
 
-          if (GIMP_IS_DRAWABLE (item))
+          if (GIMP_IS_DRAWABLE (item) &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
             {
               GimpDrawable *drawable;
 
@@ -157,7 +158,8 @@ item_transform_flip_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Flipping"), FALSE);
 
-          if (GIMP_IS_DRAWABLE (item))
+          if (GIMP_IS_DRAWABLE (item) &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
             {
               GimpDrawable *drawable;
 
@@ -255,7 +257,8 @@ item_transform_perspective_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Perspective"), FALSE);
 
-          if (GIMP_IS_DRAWABLE (item))
+          if (GIMP_IS_DRAWABLE (item) &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
             {
               GimpDrawable *drawable;
 
@@ -337,7 +340,8 @@ item_transform_rotate_simple_invoker (GimpProcedure      *procedure,
           gimp_transform_get_rotate_center (x, y, width, height,
                                             auto_center, &center_x, &center_y);
 
-          if (GIMP_IS_DRAWABLE (item))
+          if (GIMP_IS_DRAWABLE (item) &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
             {
               GimpDrawable *drawable;
 
@@ -422,7 +426,8 @@ item_transform_rotate_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Rotating"), FALSE);
 
-          if (GIMP_IS_DRAWABLE (item))
+          if (GIMP_IS_DRAWABLE (item) &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
             {
               GimpDrawable *drawable;
 
@@ -511,7 +516,8 @@ item_transform_scale_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
 
-          if (GIMP_IS_DRAWABLE (item))
+          if (GIMP_IS_DRAWABLE (item) &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
             {
               GimpDrawable *drawable;
 
@@ -596,7 +602,8 @@ item_transform_shear_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Shearing"), FALSE);
 
-          if (GIMP_IS_DRAWABLE (item))
+          if (GIMP_IS_DRAWABLE (item) &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
             {
               GimpDrawable *drawable;
 
@@ -692,7 +699,8 @@ item_transform_2d_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("2D Transform"), FALSE);
 
-          if (GIMP_IS_DRAWABLE (item))
+          if (GIMP_IS_DRAWABLE (item) &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
             {
               GimpDrawable *drawable;
 
@@ -796,7 +804,8 @@ item_transform_matrix_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("2D Transforming"), FALSE);
 
-          if (GIMP_IS_DRAWABLE (item))
+          if (GIMP_IS_DRAWABLE (item) &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
             {
               GimpDrawable *drawable;
 
