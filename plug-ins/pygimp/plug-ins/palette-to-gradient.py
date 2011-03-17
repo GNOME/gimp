@@ -19,7 +19,10 @@ gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 def make_gradient(palette, num_segments, num_colors):
     gradient = pdb.gimp_gradient_new(palette)
-    pdb.gimp_gradient_segment_range_split_uniform(gradient, 0, -1, num_segments)
+
+    if (num_segments > 1):
+        pdb.gimp_gradient_segment_range_split_uniform(gradient, 0, -1,
+                                                      num_segments)
 
     for color_number in range(0,num_segments):
         if (color_number == num_colors-1):color_number_next = 0
