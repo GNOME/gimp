@@ -99,6 +99,66 @@ jpeg_exif_get_orientation (ExifData *exif_data)
 }
 
 
+gboolean
+jpeg_exif_get_resolution (ExifData *exif_data,
+                          gdouble  *xresolution,
+                          gdouble  *yresolution,
+                          gint     *unit)
+{
+  gboolean       success;
+  ExifEntry     *entry;
+  gint           byte_order;
+  gdouble        xres;
+  gdouble        yres;
+  gint           ruint;
+  ExifRational   r;
+
+  success = FALSE;
+  byte_order = exif_data_get_byte_order (exif_data);
+
+  do
+    {
+      entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
+                                      EXIF_TAG_X_RESOLUTION);
+      if (!entry)
+        break;
+
+      r = exif_get_rational (entry->data, byte_order);
+      xres = r.numerator / r.denominator;
+
+      entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
+                                      EXIF_TAG_Y_RESOLUTION);
+      if (!entry)
+        break;
+
+      r = exif_get_rational (entry->data, byte_order);
+      yres = r.numerator / r.denominator;
+
+      entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
+                                      EXIF_TAG_RESOLUTION_UNIT);
+      if (!entry)
+        break;
+
+      ruint = exif_get_short (entry->data, byte_order);
+      if ((ruint != 2) && /* inches */
+          (ruint != 3))   /* centimetres */
+        break;
+
+      success = TRUE;
+    }
+  while (0);
+
+  if (success)
+    {
+      *xresolution = xres;
+      *yresolution = yres;
+      *unit = ruint;
+    }
+
+  return success;
+}
+
+
 void
 jpeg_setup_exif_for_save (ExifData     *exif_data,
                           const gint32  image_ID)

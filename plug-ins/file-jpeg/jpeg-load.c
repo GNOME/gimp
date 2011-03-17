@@ -47,8 +47,14 @@
 #include "jpeg-load.h"
 
 
-static void      jpeg_load_resolution  (gint32                         image_ID,
-                                        struct jpeg_decompress_struct *cinfo);
+static void  jpeg_load_resolution           (gint32    image_ID,
+                                             struct jpeg_decompress_struct
+                                                       *cinfo);
+
+#ifdef HAVE_EXIF
+static gboolean  jpeg_load_exif_resolution  (gint32    image_ID,
+                                             ExifData *exif_data);
+#endif
 
 static void      jpeg_load_sanitize_comment (gchar    *comment);
 
@@ -231,8 +237,6 @@ load_image (const gchar  *filename,
 
       gimp_image_undo_disable (image_ID);
       gimp_image_set_filename (image_ID, filename);
-
-      jpeg_load_resolution (image_ID, &cinfo);
     }
 
   if (preview)
@@ -307,6 +311,12 @@ load_image (const gchar  *filename,
 #endif
             }
         }
+
+#ifdef HAVE_EXIF
+      if (!jpeg_load_exif_resolution (image_ID, exif_data))
+#endif
+        jpeg_load_resolution (image_ID, &cinfo);
+
       /* if we found any comments, then make a parasite for them */
       if (comment_buffer && comment_buffer->len)
         {
@@ -517,6 +527,52 @@ jpeg_load_resolution (gint32                         image_ID,
     }
 }
 
+#ifdef HAVE_EXIF
+
+static gboolean
+jpeg_load_exif_resolution (gint32        image_ID,
+                           ExifData     *exif_data)
+{
+  gboolean success;
+  gdouble xresolution;
+  gdouble yresolution;
+  gint    unit;
+
+  if (!exif_data)
+    return FALSE;
+
+  if (!jpeg_exif_get_resolution (exif_data,
+                                 &xresolution,
+                                 &yresolution,
+                                 &unit))
+    return FALSE;
+
+  switch (unit)
+    {
+    case 2:
+      success = TRUE;
+      break;
+    case 3: /* dots per cm */
+      xresolution *= 2.54;
+      yresolution *= 2.54;
+      gimp_image_set_unit (image_ID, GIMP_UNIT_MM);
+      success = TRUE;
+      break;
+    default:
+      g_warning ("Unknown EXIF resolution unit %d; skipping EXIF resolution.",
+                 unit);
+      success = FALSE;
+    }
+
+  if (success)
+    {
+      gimp_image_set_resolution (image_ID, xresolution, yresolution);
+    }
+
+  return success;
+}
+
+#endif /* HAVE_EXIF */
 
 /*
  * A number of JPEG files have comments written in a local character set

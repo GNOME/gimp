@@ -76,6 +76,11 @@ ExifData * jpeg_exif_data_new_from_file (const gchar   *filename,
 
 gint      jpeg_exif_get_orientation     (ExifData      *exif_data);
 
+gboolean  jpeg_exif_get_resolution      (ExifData       *exif_data,
+                                         gdouble        *xresolution,
+                                         gdouble        *yresolution,
+                                         gint           *unit);
+
 void      jpeg_setup_exif_for_save      (ExifData      *exif_data,
                                          const gint32   image_ID);
 
