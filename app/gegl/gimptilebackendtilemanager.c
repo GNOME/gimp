@@ -217,7 +217,7 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
       {
         RamEntry *entry = lookup_entry (backend_tm, x, y, z);
 
-        return (gpointer) (entry != NULL);
+        return GINT_TO_POINTER (entry != NULL);
       }
 
     default:
