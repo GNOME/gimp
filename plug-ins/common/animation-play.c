@@ -649,7 +649,11 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_box_pack_end (GTK_BOX (hbox), progress, TRUE, TRUE, 0);
   gtk_widget_show (progress);
 
+#if GTK_CHECK_VERSION (2, 24, 0)
+  speedcombo = gtk_combo_box_text_new ();
+#else
   speedcombo = gtk_combo_box_new_text ();
+#endif
   gtk_box_pack_end (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
   gtk_widget_show (speedcombo);
 
@@ -659,7 +663,11 @@ build_dialog (GimpImageBaseType  basetype,
 
       /* list is given in "fps" - frames per second */
       text = g_strdup_printf  (_("%d fps"), get_fps (index));
+#if GTK_CHECK_VERSION (2, 24, 0)
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (speedcombo), text);
+#else
       gtk_combo_box_append_text (GTK_COMBO_BOX (speedcombo), text);
+#endif
       g_free (text);
     }
 
@@ -671,7 +679,11 @@ build_dialog (GimpImageBaseType  basetype,
 
   gimp_help_set_help_data (speedcombo, _("Default framerate"), NULL);
 
+#if GTK_CHECK_VERSION (2, 24, 0)
+  speedcombo = gtk_combo_box_text_new ();
+#else
   speedcombo = gtk_combo_box_new_text ();
+#endif
   gtk_box_pack_end (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
   gtk_widget_show (speedcombo);
 
@@ -680,7 +692,11 @@ build_dialog (GimpImageBaseType  basetype,
       gchar *text;
 
       text = g_strdup_printf  ("%g\303\227", (100 / get_duration_factor (index)) / 100);
+#if GTK_CHECK_VERSION (2, 24, 0)
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (speedcombo), text);
+#else
       gtk_combo_box_append_text (GTK_COMBO_BOX (speedcombo), text);
+#endif
       g_free (text);
     }
 

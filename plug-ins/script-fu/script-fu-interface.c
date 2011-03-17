@@ -503,13 +503,22 @@ script_fu_interface (SFScript  *script,
           break;
 
         case SF_OPTION:
+#if GTK_CHECK_VERSION (2, 24, 0)
+          widget = gtk_combo_box_text_new ();
+#else
           widget = gtk_combo_box_new_text ();
+#endif
           for (list = arg->default_value.sfa_option.list;
                list;
                list = g_slist_next (list))
             {
+#if GTK_CHECK_VERSION (2, 24, 0)
+              gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (widget),
+                                              gettext (list->data));
+#else
               gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
-                                         gettext ((const gchar *) list->data));
+                                         gettext (list->data));
+#endif
             }
 
           gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
