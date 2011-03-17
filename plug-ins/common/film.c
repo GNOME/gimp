@@ -470,7 +470,7 @@ film (void)
       height = gimp_image_height (image_ID_tmp);
       f = ((gdouble) picture_height) / (gdouble) height;
       picture_width = width * f;
-      if (gimp_image_base_type (image_ID_tmp) != GIMP_RGB_IMAGE)
+      if (gimp_image_base_type (image_ID_tmp) != GIMP_RGB)
         gimp_image_convert_rgb (image_ID_tmp);
       gimp_image_scale (image_ID_tmp, picture_width, picture_height);
 
