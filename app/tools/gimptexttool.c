@@ -1746,8 +1746,13 @@ gimp_text_tool_ensure_layout (GimpTextTool *text_tool)
   if (! text_tool->layout && text_tool->text)
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
+      gdouble    xres;
+      gdouble    yres;
 
-      text_tool->layout = gimp_text_layout_new (text_tool->layer->text, image);
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      text_tool->layout = gimp_text_layout_new (text_tool->layer->text,
+                                                xres, yres);
     }
 
   return text_tool->layout != NULL;

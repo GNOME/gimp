@@ -67,6 +67,8 @@ gimp_text_vectors_new (GimpImage *image,
       GimpTextLayout  *layout;
       cairo_surface_t *surface;
       cairo_t         *cr;
+      gdouble          xres;
+      gdouble          yres;
 
       if (text->text)
         gimp_object_set_name_safe (GIMP_OBJECT (vectors), text->text);
@@ -82,7 +84,9 @@ gimp_text_vectors_new (GimpImage *image,
       surface = cairo_image_surface_create (CAIRO_FORMAT_A8, 2, 2);
       cr = cairo_create (surface);
 
-      layout = gimp_text_layout_new (text, image);
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      layout = gimp_text_layout_new (text, xres, yres);
       gimp_text_layout_render (layout, cr, text->base_dir, TRUE);
       g_object_unref (layout);
 

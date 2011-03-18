@@ -562,6 +562,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
   GimpItem       *item;
   GimpImage      *image;
   GimpTextLayout *layout;
+  gdouble         xres;
+  gdouble         yres;
   gint            width;
   gint            height;
 
@@ -580,7 +582,9 @@ gimp_text_layer_render (GimpTextLayer *layer)
       return FALSE;
     }
 
-  layout = gimp_text_layout_new (layer->text, image);
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  layout = gimp_text_layout_new (layer->text, xres, yres);
 
   g_object_freeze_notify (G_OBJECT (drawable));
 

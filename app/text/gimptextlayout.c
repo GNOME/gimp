@@ -31,8 +31,6 @@
 
 #include "text-types.h"
 
-#include "core/gimpimage.h"
-
 #include "gimptext.h"
 #include "gimptextlayout.h"
 
@@ -108,22 +106,19 @@ gimp_text_layout_finalize (GObject *object)
 
 GimpTextLayout *
 gimp_text_layout_new (GimpText  *text,
-                      GimpImage *image)
+                      gdouble    xres,
+                      gdouble    yres)
 {
   GimpTextLayout       *layout;
   PangoContext         *context;
   PangoFontDescription *font_desc;
   PangoAlignment        alignment = PANGO_ALIGN_LEFT;
-  gdouble               xres, yres;
   gint                  size;
 
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   font_desc = pango_font_description_from_string (text->font);
   g_return_val_if_fail (font_desc != NULL, NULL);
-
-  gimp_image_get_resolution (image, &xres, &yres);
 
   size = gimp_text_layout_point_size (text->font_size,
                                       text->unit,
