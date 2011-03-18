@@ -3337,10 +3337,10 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           if(cdr(sc->args)==sc->NIL) {
                Error_0(sc,"expt: needs two arguments");
           } else {
+               pointer y=cadr(sc->args);
                /* This 'if' is an R5RS compatability fix. */
                if (rvalue(x) == 0 && rvalue(y) < 0)
                    s_return(sc, mk_real(sc, 0));
-               pointer y=cadr(sc->args);
                s_return(sc, mk_real(sc, pow(rvalue(x),rvalue(y))));
           }
 
