@@ -338,9 +338,6 @@ CFLAGS="$CFLAGS $extra_warnings"
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-declarations')
 CFLAGS="$CFLAGS $extra_warnings"
 
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wredundant-decls')
-CFLAGS="$CFLAGS $extra_warnings"
-
 GIMP_DETECT_CFLAGS(extra_warnings, '-Winit-self')
 CFLAGS="$CFLAGS $extra_warnings"
 
@@ -357,24 +354,6 @@ GIMP_DETECT_CFLAGS(extra_warnings, '-Wformat-security')
 CFLAGS="$CFLAGS $extra_warnings"
 
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wformat-non-literal')
-CFLAGS="$CFLAGS $extra_warnings"
-
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wundef')
-CFLAGS="$CFLAGS $extra_warnings"
-
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wshadow')
-CFLAGS="$CFLAGS $extra_warnings"
-
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wlogical-op')
-CFLAGS="$CFLAGS $extra_warnings"
-
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wendif-labels')
-CFLAGS="$CFLAGS $extra_warnings"
-
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wcast-align')
-CFLAGS="$CFLAGS $extra_warnings"
-
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wwrite-strings')
 CFLAGS="$CFLAGS $extra_warnings"
 
 
