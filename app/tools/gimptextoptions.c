@@ -27,6 +27,7 @@
 
 #include "config/gimpconfig-utils.h"
 
+#include "core/gimp.h"
 #include "core/gimpviewable.h"
 
 #include "text/gimptext.h"
@@ -649,20 +650,25 @@ gimp_text_options_editor_notify_font (GimpTextOptions *options,
 
 GtkWidget *
 gimp_text_options_editor_new (GtkWindow       *parent,
+                              Gimp            *gimp,
                               GimpTextOptions *options,
                               GimpMenuFactory *menu_factory,
                               const gchar     *title,
-                              GimpTextBuffer  *text_buffer)
+                              GimpTextBuffer  *text_buffer,
+                              gdouble          xres,
+                              gdouble          yres)
 {
   GtkWidget   *editor;
   const gchar *font_name;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (text_buffer), NULL);
 
-  editor = gimp_text_editor_new (title, parent, menu_factory, text_buffer);
+  editor = gimp_text_editor_new (title, parent, gimp, menu_factory,
+                                 text_buffer, xres, yres);
 
   font_name = gimp_context_get_font_name (GIMP_CONTEXT (options));
 

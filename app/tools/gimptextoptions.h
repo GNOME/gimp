@@ -67,10 +67,13 @@ void        gimp_text_options_connect_text (GimpTextOptions *options,
 GtkWidget * gimp_text_options_gui          (GimpToolOptions *tool_options);
 
 GtkWidget * gimp_text_options_editor_new   (GtkWindow       *parent,
+                                            Gimp            *gimp,
                                             GimpTextOptions *options,
                                             GimpMenuFactory *menu_factory,
                                             const gchar     *title,
-                                            GimpTextBuffer  *text_buffer);
+                                            GimpTextBuffer  *text_buffer,
+                                            gdouble          xres,
+                                            gdouble          yres);
 
 
 #endif /* __GIMP_TEXT_OPTIONS_H__ */

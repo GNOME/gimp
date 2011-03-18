@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayout.h"
@@ -1130,6 +1131,8 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
   GimpTextOptions   *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   GimpDialogFactory *dialog_factory;
   GtkWindow         *parent  = NULL;
+  gdouble            xres    = 1.0;
+  gdouble            yres    = 1.0;
 
   if (text_tool->editor_dialog)
     {
@@ -1146,11 +1149,14 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
       parent = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell)));
     }
 
+  if (text_tool->image)
+    gimp_image_get_resolution (text_tool->image, &xres, &yres);
+
   text_tool->editor_dialog =
-    gimp_text_options_editor_new (parent, options,
+    gimp_text_options_editor_new (parent, tool->tool_info->gimp, options,
                                   gimp_dialog_factory_get_menu_factory (dialog_factory),
                                   _("GIMP Text Editor"),
-                                  text_tool->buffer);
+                                  text_tool->buffer, xres, yres);
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor_dialog),
                              (gpointer) &text_tool->editor_dialog);
