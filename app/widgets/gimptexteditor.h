@@ -57,6 +57,7 @@ GtkWidget         * gimp_text_editor_new           (const gchar       *title,
                                                     GtkWindow         *parent,
                                                     Gimp              *gimp,
                                                     GimpMenuFactory   *menu_factory,
+                                                    GimpText          *text,
                                                     GimpTextBuffer    *text_buffer,
                                                     gdouble            xres,
                                                     gdouble            yres);

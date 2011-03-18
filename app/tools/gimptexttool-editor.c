@@ -183,6 +183,7 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
         gimp_image_get_resolution (text_tool->image, &xres, &yres);
 
       text_tool->style_editor = gimp_text_style_editor_new (gimp,
+                                                            text_tool->proxy,
                                                             text_tool->buffer,
                                                             gimp->fonts,
                                                             xres, yres);
@@ -1156,7 +1157,8 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
     gimp_text_options_editor_new (parent, tool->tool_info->gimp, options,
                                   gimp_dialog_factory_get_menu_factory (dialog_factory),
                                   _("GIMP Text Editor"),
-                                  text_tool->buffer, xres, yres);
+                                  text_tool->proxy, text_tool->buffer,
+                                  xres, yres);
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor_dialog),
                              (gpointer) &text_tool->editor_dialog);

@@ -39,6 +39,7 @@ struct _GimpTextStyleEditor
   Gimp           *gimp;
   GimpContext    *context;
 
+  GimpText       *text; /* read-only for default values */
   GimpTextBuffer *buffer;
 
   GimpContainer  *fonts;
@@ -77,6 +78,7 @@ struct _GimpTextStyleEditorClass
 GType       gimp_text_style_editor_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_text_style_editor_new       (Gimp                 *gimp,
+                                              GimpText             *text,
                                               GimpTextBuffer       *buffer,
                                               GimpContainer        *fonts,
                                               gdouble               resolution_x,

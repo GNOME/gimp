@@ -71,6 +71,7 @@ GtkWidget * gimp_text_options_editor_new   (GtkWindow       *parent,
                                             GimpTextOptions *options,
                                             GimpMenuFactory *menu_factory,
                                             const gchar     *title,
+                                            GimpText        *text,
                                             GimpTextBuffer  *text_buffer,
                                             gdouble          xres,
                                             gdouble          yres);

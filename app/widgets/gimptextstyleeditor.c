@@ -33,6 +33,7 @@
 #include "core/gimpcontext.h"
 
 #include "text/gimpfontlist.h"
+#include "text/gimptext.h"
 
 #include "gimpcolorpanel.h"
 #include "gimpcontainerentry.h"
@@ -48,6 +49,7 @@ enum
 {
   PROP_0,
   PROP_GIMP,
+  PROP_TEXT,
   PROP_BUFFER,
   PROP_FONTS,
   PROP_RESOLUTION_X,
@@ -132,6 +134,13 @@ gimp_text_style_editor_class_init (GimpTextStyleEditorClass *klass)
                                    g_param_spec_object ("gimp",
                                                         NULL, NULL,
                                                         GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_TEXT,
+                                   g_param_spec_object ("text",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_TEXT,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
@@ -370,6 +379,12 @@ gimp_text_style_editor_finalize (GObject *object)
       editor->context = NULL;
     }
 
+  if (editor->text)
+    {
+      g_object_unref (editor->text);
+      editor->text = NULL;
+    }
+
   if (editor->buffer)
     {
       g_object_unref (editor->buffer);
@@ -397,6 +412,9 @@ gimp_text_style_editor_set_property (GObject      *object,
     {
     case PROP_GIMP:
       editor->gimp = g_value_get_object (value); /* don't ref */
+      break;
+    case PROP_TEXT:
+      editor->text = g_value_dup_object (value);
       break;
     case PROP_BUFFER:
       editor->buffer = g_value_dup_object (value);
@@ -430,6 +448,9 @@ gimp_text_style_editor_get_property (GObject    *object,
     case PROP_GIMP:
       g_value_set_object (value, editor->gimp);
       break;
+    case PROP_TEXT:
+      g_value_set_object (value, editor->text);
+      break;
     case PROP_BUFFER:
       g_value_set_object (value, editor->buffer);
       break;
@@ -454,18 +475,21 @@ gimp_text_style_editor_get_property (GObject    *object,
 
 GtkWidget *
 gimp_text_style_editor_new (Gimp           *gimp,
+                            GimpText       *text,
                             GimpTextBuffer *buffer,
                             GimpContainer  *fonts,
                             gdouble         resolution_x,
                             gdouble         resolution_y)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), NULL);
   g_return_val_if_fail (resolution_x > 0.0, NULL);
   g_return_val_if_fail (resolution_y > 0.0, NULL);
 
   return g_object_new (GIMP_TYPE_TEXT_STYLE_EDITOR,
                        "gimp",         gimp,
+                       "text",         text,
                        "buffer",       buffer,
                        "fonts",        fonts,
                        "resolution-x", resolution_x,

@@ -654,6 +654,7 @@ gimp_text_options_editor_new (GtkWindow       *parent,
                               GimpTextOptions *options,
                               GimpMenuFactory *menu_factory,
                               const gchar     *title,
+                              GimpText        *text,
                               GimpTextBuffer  *text_buffer,
                               gdouble          xres,
                               gdouble          yres)
@@ -665,10 +666,11 @@ gimp_text_options_editor_new (GtkWindow       *parent,
   g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (title != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (text_buffer), NULL);
 
   editor = gimp_text_editor_new (title, parent, gimp, menu_factory,
-                                 text_buffer, xres, yres);
+                                 text, text_buffer, xres, yres);
 
   font_name = gimp_context_get_font_name (GIMP_CONTEXT (options));
 
