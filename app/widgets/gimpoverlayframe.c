@@ -113,32 +113,29 @@ static gboolean
 gimp_overlay_frame_expose (GtkWidget      *widget,
                            GdkEventExpose *eevent)
 {
-  cairo_t  *cr    = gdk_cairo_create (gtk_widget_get_window (widget));
-  GtkStyle *style = gtk_widget_get_style (widget);
-  gboolean  rgba;
+  cairo_t       *cr    = gdk_cairo_create (gtk_widget_get_window (widget));
+  GtkStyle      *style = gtk_widget_get_style (widget);
+  GtkAllocation  allocation;
+  gboolean       rgba;
+  gint           border_width;
 
   rgba = gdk_screen_get_rgba_colormap (gtk_widget_get_screen (widget)) != NULL;
+
+  gdk_cairo_region (cr, eevent->region);
+  cairo_clip (cr);
 
   if (rgba)
     {
       cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
-      gdk_cairo_region (cr, eevent->region);
-      cairo_clip_preserve (cr);
-      cairo_fill (cr);
+      cairo_paint (cr);
+      cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
     }
 
-  cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-  gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
+  gtk_widget_get_allocation (widget, &allocation);
+  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-  if (rgba)
+  if (rgba && border_width > 0)
     {
-      GtkAllocation  allocation;
-      gint           border_width;
-
-      gtk_widget_get_allocation (widget, &allocation);
-
-      border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-
 #define DEG_TO_RAD(deg) ((deg) * (G_PI / 180.0))
 
       cairo_arc (cr,
@@ -178,69 +175,23 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
                  DEG_TO_RAD (90),
                  DEG_TO_RAD (180));
       cairo_close_path (cr);
-
-      cairo_clip (cr);
+    }
+  else
+    {
+      cairo_rectangle (cr, 0, 0, allocation.width, allocation.height);
     }
 
-/* #define BLING 1 */
+  cairo_clip_preserve (cr);
 
-#ifdef BLING
-
-  {
-    GtkAllocation    allocation;
-    cairo_pattern_t *gradient;
-    GimpRGB          color;
-    gdouble          x0, y0;
-    gdouble          x1, y1;
-    gdouble          w, h;
-    gdouble          d, n;
-
-    gtk_widget_get_allocation (widget, &allocation);
-
-    w = allocation.width  - allocation.x;
-    h = allocation.height - allocation.y;
-
-    d = sqrt (SQR (w) + SQR (h));
-    n = w * h / d;
-
-    x0 = allocation.x + w / 2 - h * (n / d);
-    y0 = allocation.y + h / 2 - w * (n / d);
-
-    x1 = allocation.x + w / 2 + h * (n / d);
-    y1 = allocation.y + h / 2 + w * (n / d);
-
-    gradient = cairo_pattern_create_linear (x0, y0, x1, y1);
-
-    gimp_rgb_set_gdk_color (&color, &style->bg[GTK_STATE_NORMAL]);
-    cairo_pattern_add_color_stop_rgba (gradient,
-                                       0.0,
-                                       color.r,
-                                       color.g,
-                                       color.b,
-                                       1.0);
-    cairo_pattern_add_color_stop_rgba (gradient,
-                                       1.0,
-                                       color.r,
-                                       color.g,
-                                       color.b,
-                                       1.0);
-
-    gimp_rgb_set_gdk_color (&color, &style->bg[GTK_STATE_SELECTED]);
-    cairo_pattern_add_color_stop_rgba (gradient,
-                                       0.5,
-                                       color.r,
-                                       color.g,
-                                       color.b,
-                                       1.0);
-
-    cairo_set_source (cr, gradient);
-
-    cairo_pattern_destroy (gradient);
-  }
-
-#endif /* BLING */
-
+  gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
   cairo_paint (cr);
+
+  if (border_width > 0)
+    {
+      cairo_set_line_width (cr, 2.0);
+      gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
+      cairo_stroke (cr);
+    }
 
   cairo_destroy (cr);
 
