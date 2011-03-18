@@ -92,6 +92,9 @@ gdouble       gimp_pixels_to_units          (gdouble      pixels,
 gdouble       gimp_units_to_pixels          (gdouble      value,
                                              GimpUnit     unit,
                                              gdouble      resolution);
+gdouble       gimp_units_to_points          (gdouble      value,
+                                             GimpUnit     unit,
+                                             gdouble      resolution);
 
 
 G_END_DECLS

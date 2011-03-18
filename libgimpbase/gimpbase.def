@@ -120,6 +120,7 @@ EXPORTS
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
 	gimp_units_to_pixels
+	gimp_units_to_points
 	gimp_user_directory
 	gimp_user_directory_get_type
 	gimp_utf8_strtrim

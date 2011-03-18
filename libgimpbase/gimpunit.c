@@ -654,3 +654,30 @@ gimp_units_to_pixels (gdouble  value,
 
   return value * resolution / gimp_unit_get_factor (unit);
 }
+
+/**
+ * gimp_units_to_points:
+ * @value:      value in units
+ * @unit:       unit of @value
+ * @resolution: resloution in DPI
+ *
+ * Converts a @value specified in @unit to points.
+ *
+ * Returns: @value converted to points.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_units_to_points (gdouble  value,
+                      GimpUnit unit,
+                      gdouble  resolution)
+{
+  if (unit == GIMP_UNIT_POINT)
+    return value;
+
+  if (unit == GIMP_UNIT_PIXEL)
+    return (value * gimp_unit_get_factor (GIMP_UNIT_POINT) / resolution);
+
+  return (value *
+          gimp_unit_get_factor (GIMP_UNIT_POINT) / gimp_unit_get_factor (unit));
+}
