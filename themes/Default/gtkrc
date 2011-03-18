@@ -106,37 +106,6 @@ widget "*GimpDisplayShell.*" style "gimp-display-style"
 style "gimp-overlay-style" = "gimp-display-style"
 {
   GtkButton::focus-line_width = 1
-
-  color["fg_color"]          = "#E6E6E6"
-  color["bg_color"]          = "#555753"
-  color["base_color"]        = "#2E3436"
-  color["text_color"]        = "#D3D7CF"
-  color["selected_bg_color"] = "#3F403D"
-  color["selected_fg_color"] = "#7AA3CC"
-
-  fg[NORMAL]        = @fg_color
-  fg[PRELIGHT]      = @fg_color
-  fg[SELECTED]      = @selected_fg_color
-  fg[ACTIVE]        = @fg_color
-  fg[INSENSITIVE]   = darker (@bg_color)
-
-  bg[NORMAL]        = @bg_color
-  bg[PRELIGHT]      = shade (1.02, @bg_color)
-  bg[SELECTED]	    = @selected_bg_color
-  bg[INSENSITIVE]   = @bg_color
-  bg[ACTIVE]        = shade (0.9, @bg_color)
-
-  base[NORMAL]      = @base_color
-  base[PRELIGHT]    = shade (0.95, @bg_color)
-  base[ACTIVE]      = shade (0.9, @selected_bg_color)
-  base[SELECTED]    = @selected_bg_color
-  base[INSENSITIVE] = @bg_color
-
-  text[NORMAL]      = @text_color
-  text[PRELIGHT]    = @text_color
-  text[ACTIVE]      = @selected_fg_color
-  text[SELECTED]    = @selected_fg_color
-  text[INSENSITIVE] = darker (@bg_color)
 }
 
 widget_class "*<GimpOverlayFrame>*" style "gimp-overlay-style"
