@@ -321,15 +321,15 @@ gimp_spin_scale_get_target (GtkWidget *widget,
 }
 
 static void
-gimp_spin_scale_set_value (GtkWidget *widget,
-                           gdouble    x)
+gimp_spin_scale_change_value (GtkWidget *widget,
+                              gdouble    x)
 {
-  GtkSpinButton *spin_button = GTK_SPIN_BUTTON (widget);
-  GtkAdjustment *adjustment  = gtk_spin_button_get_adjustment (spin_button);
-  GdkWindow     *text_window = gtk_entry_get_text_window (GTK_ENTRY (widget));
-  gint           width;
-  gdouble        fraction;
-  gdouble        value;
+  GimpSpinScalePrivate *private     = GET_PRIVATE (widget);
+  GtkSpinButton        *spin_button = GTK_SPIN_BUTTON (widget);
+  GtkAdjustment        *adjustment  = gtk_spin_button_get_adjustment (spin_button);
+  GdkWindow            *text_window = gtk_entry_get_text_window (GTK_ENTRY (widget));
+  gint                  width;
+  gdouble               value;
 
 #if GTK_CHECK_VERSION (2, 24, 0)
   width = gdk_window_get_width (text_window);
@@ -337,29 +337,29 @@ gimp_spin_scale_set_value (GtkWidget *widget,
   gdk_drawable_get_size (text_window, &width, NULL);
 #endif
 
-  fraction = x / (gdouble) width;
+  if (private->relative_change)
+    {
+      gdouble diff;
+      gdouble step;
 
-  value = (fraction * (gtk_adjustment_get_upper (adjustment) -
-                       gtk_adjustment_get_lower (adjustment)) +
-           gtk_adjustment_get_lower (adjustment));
+      step = ((gtk_adjustment_get_upper (adjustment) -
+               gtk_adjustment_get_lower (adjustment)) +
+              gtk_adjustment_get_lower (adjustment)) / width / 10.0;
 
-  gtk_adjustment_set_value (adjustment, value);
-}
+      diff = x - private->start_x;
 
-static void
-gimp_spin_scale_change_value (GtkWidget *widget,
-                              gdouble    x)
-{
-  GimpSpinScalePrivate *private     = GET_PRIVATE (widget);
-  GtkSpinButton        *spin_button = GTK_SPIN_BUTTON (widget);
-  GtkAdjustment        *adjustment  = gtk_spin_button_get_adjustment (spin_button);
-  gdouble               diff;
-  gdouble               value;
+      value = (private->start_value + diff * step);
+    }
+  else
+    {
+      gdouble fraction;
 
-  diff = x - private->start_x;
+      fraction = x / (gdouble) width;
 
-  value = (private->start_value +
-           diff * gtk_adjustment_get_step_increment (adjustment));
+      value = (fraction * (gtk_adjustment_get_upper (adjustment) -
+                           gtk_adjustment_get_lower (adjustment)) +
+               gtk_adjustment_get_lower (adjustment));
+    }
 
   gtk_adjustment_set_value (adjustment, value);
 }
@@ -382,7 +382,7 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
           gtk_widget_grab_focus (widget);
 
-          gimp_spin_scale_set_value (widget, event->x);
+          gimp_spin_scale_change_value (widget, event->x);
 
           return TRUE;
 
@@ -415,14 +415,7 @@ gimp_spin_scale_button_release (GtkWidget      *widget,
     {
       private->changing_value = FALSE;
 
-      if (private->relative_change)
-        {
-          gimp_spin_scale_change_value (widget, event->x);
-        }
-      else
-        {
-          gimp_spin_scale_set_value (widget, event->x);
-        }
+      gimp_spin_scale_change_value (widget, event->x);
 
       return TRUE;
     }
@@ -438,14 +431,7 @@ gimp_spin_scale_button_motion (GtkWidget      *widget,
 
   if (private->changing_value)
     {
-      if (private->relative_change)
-        {
-          gimp_spin_scale_change_value (widget, event->x);
-        }
-      else
-        {
-          gimp_spin_scale_set_value (widget, event->x);
-        }
+      gimp_spin_scale_change_value (widget, event->x);
 
       return TRUE;
     }
