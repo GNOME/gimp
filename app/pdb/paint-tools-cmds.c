@@ -25,7 +25,10 @@
 
 #include "pdb-types.h"
 
+#include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdynamics.h"
+#include "core/gimpdynamicsoutput.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpparamspecs.h"
 #include "paint/gimppaintcore-stroke.h"
@@ -121,8 +124,17 @@ airbrush_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
 
           g_object_set (options,
+                        "brush-size", brush_size,
                         "pressure", pressure,
                         NULL);
 
@@ -165,6 +177,18 @@ airbrush_default_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
@@ -213,8 +237,17 @@ clone_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
 
           g_object_set (options,
+                        "brush-size", brush_size,
                         "clone-type", clone_type,
                         NULL);
 
@@ -260,6 +293,18 @@ clone_default_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
@@ -304,10 +349,19 @@ convolve_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
 
           g_object_set (options,
-                        "type", convolve_type,
-                        "rate", pressure,
+                        "brush-size", brush_size,
+                        "type",       convolve_type,
+                        "rate",       pressure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
@@ -349,6 +403,18 @@ convolve_default_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
@@ -395,11 +461,20 @@ dodgeburn_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
 
           g_object_set (options,
-                        "type",     dodgeburn_type,
-                        "mode",     dodgeburn_mode,
-                        "exposure", exposure,
+                        "brush-size", brush_size,
+                        "type",       dodgeburn_type,
+                        "mode",       dodgeburn_mode,
+                        "exposure",   exposure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
@@ -441,6 +516,18 @@ dodgeburn_default_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
@@ -485,8 +572,17 @@ eraser_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
 
           g_object_set (options,
+                        "brush-size",       brush_size,
                         "application-mode", method,
                         "hard",             hardness,
                         NULL);
@@ -530,6 +626,18 @@ eraser_default_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
@@ -576,6 +684,18 @@ heal_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
@@ -619,6 +739,18 @@ heal_default_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
@@ -665,19 +797,49 @@ paintbrush_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpDynamics     *pcb_dynamics = GIMP_DYNAMICS(gimp_dynamics_new(context, "pcb"));
+          GimpDynamics     *user_dynamics = gimp_context_get_dynamics(context);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
 
           g_object_set (options,
+                        "brush-size",       brush_size,
                         "application-mode", method,
-                        "use-fade",         fade_out > 0.0,
-                        "fade-length",      fade_out,
-                        "use-gradient",     gradient_length > 0.0,
-                        "gradient-length",  gradient_length,
+                        "fade-length",      MAX(fade_out, gradient_length),
                         NULL);
+
+          if (fade_out > 0)
+            {
+              GimpDynamicsOutput *opacity_output = gimp_dynamics_get_output(pcb_dynamics,
+                                                                            GIMP_DYNAMICS_OUTPUT_OPACITY);
+              g_object_set (opacity_output,
+                            "use-fade", TRUE,
+                            NULL);
+            }
+
+          if (gradient_length > 0)
+            {
+              GimpDynamicsOutput *color_output = gimp_dynamics_get_output(pcb_dynamics,
+                                                                          GIMP_DYNAMICS_OUTPUT_COLOR);
+              g_object_set (color_output,
+                            "use-fade", TRUE,
+                            NULL);
+            }
+
+          gimp_context_set_dynamics (context, pcb_dynamics);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", info->blurb,
                                         NULL);
+
+          gimp_context_set_dynamics (context, user_dynamics);
         }
       else
         success = FALSE;
@@ -713,6 +875,18 @@ paintbrush_default_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
@@ -753,6 +927,18 @@ pencil_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
@@ -795,8 +981,17 @@ smudge_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
 
           g_object_set (options,
+                        "brush-size", brush_size,
                         "rate", pressure,
                         NULL);
 
@@ -839,6 +1034,18 @@ smudge_default_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpBrush        *brush   = gimp_context_get_brush (context);
+          gdouble brush_size;
+          gint height;
+          gint width;
+
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
+
+          brush_size = MAX(height, width);
+
+          g_object_set (options,
+                        "brush-size", brush_size,
+                        NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
