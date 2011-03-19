@@ -793,9 +793,10 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
     {
       /* If the text buffer has no selection, draw the text cursor */
 
-      PangoRectangle cursor_rect;
-      gint           off_x, off_y;
-      gboolean       overwrite;
+      GimpCanvasItem *item;
+      PangoRectangle  cursor_rect;
+      gint            off_x, off_y;
+      gboolean        overwrite;
 
       gimp_text_tool_editor_get_cursor_rect (text_tool,
                                              text_tool->overwrite_mode,
@@ -807,7 +808,9 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       overwrite = text_tool->overwrite_mode && cursor_rect.width != 0;
 
-      gimp_draw_tool_add_text_cursor (draw_tool, &cursor_rect, overwrite);
+      item = gimp_draw_tool_add_text_cursor (draw_tool, &cursor_rect,
+                                             overwrite);
+      gimp_canvas_item_set_highlight (item, TRUE);
     }
 }
 
