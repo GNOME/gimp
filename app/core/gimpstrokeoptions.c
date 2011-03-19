@@ -569,7 +569,7 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
 
             brush = gimp_context_get_brush (context);
 
-            if (GIMP_IS_BRUSH(brush))
+            if (GIMP_IS_BRUSH (brush))
               {
                 gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
                 brush_size = MAX (height, width);
