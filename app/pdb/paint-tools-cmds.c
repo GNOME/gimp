@@ -28,6 +28,7 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
+#include "core/gimpdynamicsoutput.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpparamspecs.h"
 #include "paint/gimppaintcore-stroke.h"
@@ -128,9 +129,9 @@ airbrush_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -181,9 +182,9 @@ airbrush_default_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -241,9 +242,9 @@ clone_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -297,9 +298,9 @@ clone_default_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -353,14 +354,14 @@ convolve_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
-                        "type", convolve_type,
-                        "rate", pressure,
+                        "type",       convolve_type,
+                        "rate",       pressure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
@@ -407,9 +408,9 @@ convolve_default_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -465,18 +466,15 @@ dodgeburn_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
-                        NULL);
-
-          g_object_set (options,
-                        "type",     dodgeburn_type,
-                        "mode",     dodgeburn_mode,
-                        "exposure", exposure,
+                        "type",       dodgeburn_type,
+                        "mode",       dodgeburn_mode,
+                        "exposure",   exposure,
                         NULL);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
@@ -523,9 +521,9 @@ dodgeburn_default_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -579,9 +577,9 @@ eraser_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size",       brush_size,
@@ -633,9 +631,9 @@ eraser_default_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -691,9 +689,9 @@ heal_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -746,9 +744,9 @@ heal_default_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -806,9 +804,9 @@ paintbrush_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size",       brush_size,
@@ -818,18 +816,17 @@ paintbrush_invoker (GimpProcedure      *procedure,
 
           if (fade_out > 0)
             {
-               GimpDynamicsOutput *opacity_output = gimp_dynamics_get_output(pcb_dynamics,
-                                                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
-               g_object_set (opacity_output,
-                             "use-fade", TRUE,
-                             NULL);
+              GimpDynamicsOutput *opacity_output = gimp_dynamics_get_output(pcb_dynamics,
+                                                                            GIMP_DYNAMICS_OUTPUT_OPACITY);
+              g_object_set (opacity_output,
+                            "use-fade", TRUE,
+                            NULL);
             }
 
           if (gradient_length > 0)
             {
               GimpDynamicsOutput *color_output = gimp_dynamics_get_output(pcb_dynamics,
                                                                           GIMP_DYNAMICS_OUTPUT_COLOR);
-
               g_object_set (color_output,
                             "use-fade", TRUE,
                             NULL);
@@ -883,9 +880,9 @@ paintbrush_default_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -935,13 +932,14 @@ pencil_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
                         NULL);
+
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", info->blurb,
@@ -988,9 +986,9 @@ smudge_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
@@ -1041,9 +1039,9 @@ smudge_default_invoker (GimpProcedure      *procedure,
           gint height;
           gint width;
 
-          gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+          gimp_brush_transform_size(brush, 1.0, 1.0, 0.0, &height, &width);
 
-          brush_size = MAX (height, width);
+          brush_size = MAX(height, width);
 
           g_object_set (options,
                         "brush-size", brush_size,
