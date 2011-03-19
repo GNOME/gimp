@@ -25,7 +25,9 @@
 
 #include "pdb-types.h"
 
+#include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdynamics.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpparamspecs.h"
 #include "paint/gimppaintcore-stroke.h"
@@ -53,11 +55,22 @@ paint_tools_stroke (Gimp              *gimp,
 {
   GimpPaintCore *core;
   GimpCoords    *coords;
+  GimpBrush     *brush;
   gboolean       retval;
+  gdouble        brush_size;
+  gint           height, width;
   gint           i;
   va_list        args;
 
   n_strokes /= 2;  /* #doubles -> #points */
+
+  brush = gimp_context_get_brush (context);
+  gimp_brush_transform_size (brush, 1.0, 1.0, 0.0, &height, &width);
+  brush_size = MAX (height, width);
+
+  g_object_set (options,
+                "brush-size", brush_size,
+                NULL);
 
   /*  undefine the paint-relevant context properties and get them
    *  from the current context
@@ -665,19 +678,41 @@ paintbrush_invoker (GimpProcedure      *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
+          GimpDynamics     *pdb_dynamics = GIMP_DYNAMICS (gimp_dynamics_new (context, "pdb"));
+          GimpDynamics     *user_dynamics = gimp_context_get_dynamics (context);
 
           g_object_set (options,
                         "application-mode", method,
-                        "use-fade",         fade_out > 0.0,
-                        "fade-length",      fade_out,
-                        "use-gradient",     gradient_length > 0.0,
-                        "gradient-length",  gradient_length,
+                        "fade-length",      MAX (fade_out, gradient_length),
                         NULL);
+
+          if (fade_out > 0)
+            {
+               GimpDynamicsOutput *opacity_output = gimp_dynamics_get_output (pdb_dynamics,
+                                                                              GIMP_DYNAMICS_OUTPUT_OPACITY);
+               g_object_set (opacity_output,
+                             "use-fade", TRUE,
+                             NULL);
+            }
+
+          if (gradient_length > 0)
+            {
+              GimpDynamicsOutput *color_output = gimp_dynamics_get_output (pdb_dynamics,
+                                                                           GIMP_DYNAMICS_OUTPUT_COLOR);
+
+              g_object_set (color_output,
+                            "use-fade", TRUE,
+                            NULL);
+            }
+
+          gimp_context_set_dynamics (context, pdb_dynamics);
 
           success = paint_tools_stroke (gimp, context, options, drawable,
                                         num_strokes, strokes, error,
                                         "undo-desc", info->blurb,
                                         NULL);
+
+          gimp_context_set_dynamics (context, user_dynamics);
         }
       else
         success = FALSE;
