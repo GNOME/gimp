@@ -713,6 +713,8 @@ paintbrush_invoker (GimpProcedure      *procedure,
                                         NULL);
 
           gimp_context_set_dynamics (context, user_dynamics);
+
+          g_object_unref (pdb_dynamics);
         }
       else
         success = FALSE;
