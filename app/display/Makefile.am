@@ -132,7 +132,9 @@ libappdisplay_a_sources = \
 	gimpscalecombobox.c			\
 	gimpscalecombobox.h			\
 	gimpstatusbar.c				\
-	gimpstatusbar.h
+	gimpstatusbar.h				\
+	gimptooldialog.c			\
+	gimptooldialog.h
 
 libappdisplay_a_built_sources = display-enums.c
 

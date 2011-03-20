@@ -78,6 +78,8 @@ typedef struct _GimpNavigationEditor  GimpNavigationEditor;
 typedef struct _GimpScaleComboBox     GimpScaleComboBox;
 typedef struct _GimpStatusbar         GimpStatusbar;
 
+typedef struct _GimpToolDialog        GimpToolDialog;
+
 typedef struct _Selection             Selection;
 
 

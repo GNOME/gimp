@@ -39,7 +39,6 @@
 #include "core/gimpimage-undo-push.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimptooldialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpcanvasgroup.h"
@@ -47,6 +46,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
+#include "display/gimptooldialog.h"
 
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"

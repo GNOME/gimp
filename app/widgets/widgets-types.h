@@ -137,7 +137,6 @@ typedef struct _GimpMessageDialog            GimpMessageDialog;
 typedef struct _GimpProfileChooserDialog     GimpProfileChooserDialog;
 typedef struct _GimpProgressDialog           GimpProgressDialog;
 typedef struct _GimpTextEditor               GimpTextEditor;
-typedef struct _GimpToolDialog               GimpToolDialog;
 typedef struct _GimpViewableDialog           GimpViewableDialog;
 
 

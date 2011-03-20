@@ -29,10 +29,10 @@
 
 #include "widgets/gimpcolorframe.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimptooldialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimptooldialog.h"
 
 #include "gimpcolorpickeroptions.h"
 #include "gimpcolorpickertool.h"

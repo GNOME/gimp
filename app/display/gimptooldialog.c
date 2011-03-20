@@ -24,12 +24,13 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets-types.h"
+#include "display-types.h"
 
 #include "core/gimpobject.h"
 #include "core/gimptoolinfo.h"
 
-#include "gimpdialogfactory.h"
+#include "widgets/gimpdialogfactory.h"
+
 #include "gimptooldialog.h"
 
 

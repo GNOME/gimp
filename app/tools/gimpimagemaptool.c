@@ -54,13 +54,13 @@
 #include "widgets/gimpoverlaybox.h"
 #include "widgets/gimpoverlaydialog.h"
 #include "widgets/gimpsettingsbox.h"
-#include "widgets/gimptooldialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 #include "display/gimpimagewindow.h"
+#include "display/gimptooldialog.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpimagemaptool.h"

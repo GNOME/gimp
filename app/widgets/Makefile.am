@@ -338,8 +338,6 @@ libappwidgets_a_sources = \
 	gimptoolbox-image-area.h	\
 	gimptoolbox-indicator-area.c	\
 	gimptoolbox-indicator-area.h	\
-	gimptooldialog.c		\
-	gimptooldialog.h		\
 	gimptooleditor.c		\
 	gimptooleditor.h		\
 	gimptooloptionseditor.c		\
