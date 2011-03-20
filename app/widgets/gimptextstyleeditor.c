@@ -96,7 +96,7 @@ static void      gimp_text_style_editor_set_toggle        (GimpTextStyleEditor *
                                                            GtkToggleButton     *toggle,
                                                            gboolean             active);
 
-static void      gimp_text_style_editor_size_changed      (GtkAdjustment       *adjustment,
+static void      gimp_text_style_editor_size_changed      (GimpSizeEntry       *entry,
                                                            GimpTextStyleEditor *editor);
 static void      gimp_text_style_editor_set_size          (GimpTextStyleEditor *editor,
                                                            GtkTextTag          *size_tag);
@@ -204,19 +204,18 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gimp_help_set_help_data (editor->font_entry,
                            _("Change font of selected text"), NULL);
 
-  editor->size_adjustment =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1000.0, 1.0, 10.0, 0.0));
-  editor->size_spinbutton = gtk_spin_button_new (editor->size_adjustment,
-                                                 1.0, 1);
-  gtk_entry_set_width_chars (GTK_ENTRY (editor->size_spinbutton), 5);
-  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->size_spinbutton,
+  editor->size_entry =
+    gimp_size_entry_new (1, 0, "%a", TRUE, FALSE, FALSE, 10,
+                         GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_table_set_col_spacing (GTK_TABLE (editor->size_entry), 1, 0);
+  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->size_entry,
                       FALSE, FALSE, 0);
-  gtk_widget_show (editor->size_spinbutton);
+  gtk_widget_show (editor->size_entry);
 
-  gimp_help_set_help_data (editor->size_spinbutton,
+  gimp_help_set_help_data (editor->size_entry,
                            _("Change size of selected text"), NULL);
 
-  g_signal_connect (editor->size_adjustment, "value-changed",
+  g_signal_connect (editor->size_entry, "value-changed",
                     G_CALLBACK (gimp_text_style_editor_size_changed),
                     editor);
 
@@ -763,45 +762,55 @@ gimp_text_style_editor_set_toggle (GimpTextStyleEditor *editor,
 }
 
 static void
-gimp_text_style_editor_size_changed (GtkAdjustment       *adjustment,
+gimp_text_style_editor_size_changed (GimpSizeEntry       *entry,
                                      GimpTextStyleEditor *editor)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
   GtkTextIter    start, end;
+  gdouble        points;
 
   if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
     {
       return;
     }
 
+  points = gimp_units_to_points (gimp_size_entry_get_refval (entry, 0),
+                                 GIMP_UNIT_PIXEL,
+                                 editor->resolution_y);
+
   gimp_text_buffer_set_size (editor->buffer, &start, &end,
-                             gtk_adjustment_get_value (adjustment) *
-                             PANGO_SCALE);
+                             PANGO_SCALE * points);
 }
 
 static void
 gimp_text_style_editor_set_size (GimpTextStyleEditor *editor,
                                  GtkTextTag          *size_tag)
 {
-  gint size = 0;
+  gint    size = 0;
+  gdouble pixels;
 
   if (size_tag)
     size = gimp_text_tag_get_size (size_tag);
 
-  g_signal_handlers_block_by_func (editor->size_adjustment,
+  g_signal_handlers_block_by_func (editor->size_entry,
                                    gimp_text_style_editor_size_changed,
                                    editor);
 
-  gtk_adjustment_set_value (editor->size_adjustment,
-                            (gdouble) size / PANGO_SCALE);
+  pixels = gimp_units_to_pixels ((gdouble) size / PANGO_SCALE,
+                                 GIMP_UNIT_POINT,
+                                 editor->resolution_y);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (editor->size_entry), 0, pixels);
 
-  if (size != 0)
-    /* make sure the "" really gets replaced */
-    gtk_adjustment_value_changed (editor->size_adjustment);
-  else
-    gtk_entry_set_text (GTK_ENTRY (editor->size_spinbutton), "");
+  if (size == 0)
+    {
+      GtkWidget *spinbutton;
 
-  g_signal_handlers_unblock_by_func (editor->size_adjustment,
+      spinbutton = gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (editor->size_entry), 0);
+
+      gtk_entry_set_text (GTK_ENTRY (spinbutton), "");
+    }
+
+  g_signal_handlers_unblock_by_func (editor->size_entry,
                                      gimp_text_style_editor_size_changed,
                                      editor);
 }
@@ -809,17 +818,17 @@ gimp_text_style_editor_set_size (GimpTextStyleEditor *editor,
 static void
 gimp_text_style_editor_set_default_size (GimpTextStyleEditor *editor)
 {
-  gdouble points = gimp_units_to_points (editor->text->font_size,
+  gdouble pixels = gimp_units_to_pixels (editor->text->font_size,
                                          editor->text->unit,
                                          editor->resolution_y);
 
-  g_signal_handlers_block_by_func (editor->size_adjustment,
+  g_signal_handlers_block_by_func (editor->size_entry,
                                    gimp_text_style_editor_size_changed,
                                    editor);
 
-  gtk_adjustment_set_value (editor->size_adjustment, points);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (editor->size_entry), 0, pixels);
 
-  g_signal_handlers_unblock_by_func (editor->size_adjustment,
+  g_signal_handlers_unblock_by_func (editor->size_entry,
                                      gimp_text_style_editor_size_changed,
                                      editor);
 }
