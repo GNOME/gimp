@@ -110,7 +110,7 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 
   tool_class->initialize             = gimp_color_balance_tool_initialize;
 
-  im_tool_class->shell_desc          = _("Adjust Color Balance");
+  im_tool_class->dialog_desc         = _("Adjust Color Balance");
   im_tool_class->settings_name       = "color-balance";
   im_tool_class->import_dialog_title = _("Import Color Balance Settings");
   im_tool_class->export_dialog_title = _("Export Color Balance Settings");

@@ -90,7 +90,7 @@ gimp_desaturate_tool_class_init (GimpDesaturateToolClass *klass)
 
   tool_class->initialize       = gimp_desaturate_tool_initialize;
 
-  im_tool_class->shell_desc    = _("Desaturate (Remove Colors)");
+  im_tool_class->dialog_desc   = _("Desaturate (Remove Colors)");
 
   im_tool_class->get_operation = gimp_desaturate_tool_get_operation;
   im_tool_class->map           = gimp_desaturate_tool_map;

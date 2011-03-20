@@ -100,7 +100,7 @@ gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass)
 
   tool_class->initialize       = gimp_posterize_tool_initialize;
 
-  im_tool_class->shell_desc    = _("Posterize (Reduce Number of Colors)");
+  im_tool_class->dialog_desc   = _("Posterize (Reduce Number of Colors)");
 
   im_tool_class->get_operation = gimp_posterize_tool_get_operation;
   im_tool_class->map           = gimp_posterize_tool_map;

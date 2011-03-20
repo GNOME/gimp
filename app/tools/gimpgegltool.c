@@ -109,7 +109,7 @@ gimp_gegl_tool_class_init (GimpGeglToolClass *klass)
 
   tool_class->initialize       = gimp_gegl_tool_initialize;
 
-  im_tool_class->shell_desc    = _("GEGL Operation");
+  im_tool_class->dialog_desc   = _("GEGL Operation");
 
   im_tool_class->get_operation = gimp_gegl_tool_get_operation;
   im_tool_class->map           = gimp_gegl_tool_map;

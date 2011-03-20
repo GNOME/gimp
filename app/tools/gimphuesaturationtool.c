@@ -118,7 +118,7 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 
   tool_class->initialize             = gimp_hue_saturation_tool_initialize;
 
-  im_tool_class->shell_desc          = _("Adjust Hue / Lightness / Saturation");
+  im_tool_class->dialog_desc         = _("Adjust Hue / Lightness / Saturation");
   im_tool_class->settings_name       = "hue-saturation";
   im_tool_class->import_dialog_title = _("Import Hue-Saturation Settings");
   im_tool_class->export_dialog_title = _("Export Hue-Saturation Settings");

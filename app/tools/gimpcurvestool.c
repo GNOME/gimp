@@ -174,7 +174,7 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 
   color_tool_class->picked           = gimp_curves_tool_color_picked;
 
-  im_tool_class->shell_desc          = _("Adjust Color Curves");
+  im_tool_class->dialog_desc         = _("Adjust Color Curves");
   im_tool_class->settings_name       = "curves";
   im_tool_class->import_dialog_title = _("Import Curves");
   im_tool_class->export_dialog_title = _("Export Curves");

@@ -130,7 +130,7 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
   tool_class->button_release         = gimp_brightness_contrast_tool_button_release;
   tool_class->motion                 = gimp_brightness_contrast_tool_motion;
 
-  im_tool_class->shell_desc          = _("Adjust Brightness and Contrast");
+  im_tool_class->dialog_desc         = _("Adjust Brightness and Contrast");
   im_tool_class->settings_name       = "brightness-contrast";
   im_tool_class->import_dialog_title = _("Import Brightness-Contrast settings");
   im_tool_class->export_dialog_title = _("Export Brightness-Contrast settings");

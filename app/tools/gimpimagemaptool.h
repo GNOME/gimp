@@ -50,7 +50,7 @@ struct _GimpImageMapTool
 
   /* dialog */
   gboolean               overlay;
-  GtkWidget             *shell;
+  GtkWidget             *dialog;
   GtkWidget             *main_vbox;
   GtkWidget             *settings_box;
   GtkSizeGroup          *label_group;
@@ -60,7 +60,7 @@ struct _GimpImageMapToolClass
 {
   GimpColorToolClass  parent_class;
 
-  const gchar        *shell_desc;
+  const gchar        *dialog_desc;
   const gchar        *settings_name;
   const gchar        *import_dialog_title;
   const gchar        *export_dialog_title;

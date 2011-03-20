@@ -169,7 +169,7 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 
   color_tool_class->picked           = gimp_levels_tool_color_picked;
 
-  im_tool_class->shell_desc          = _("Adjust Color Levels");
+  im_tool_class->dialog_desc         = _("Adjust Color Levels");
   im_tool_class->settings_name       = "levels";
   im_tool_class->import_dialog_title = _("Import Levels");
   im_tool_class->export_dialog_title = _("Export Levels");
@@ -678,7 +678,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (image_map_tool->shell, "unmap",
+  g_signal_connect (image_map_tool->dialog, "unmap",
                     G_CALLBACK (gimp_levels_tool_dialog_unmap),
                     tool);
 

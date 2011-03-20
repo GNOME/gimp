@@ -106,7 +106,7 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
 
   tool_class->initialize             = gimp_threshold_tool_initialize;
 
-  im_tool_class->shell_desc          = _("Apply Threshold");
+  im_tool_class->dialog_desc         = _("Apply Threshold");
   im_tool_class->settings_name       = "threshold";
   im_tool_class->import_dialog_title = _("Import Threshold Settings");
   im_tool_class->export_dialog_title = _("Export Threshold Settings");
