@@ -1766,7 +1766,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
   tr_tool->dialog = gimp_tool_dialog_new (tool_info,
-                                          NULL /* tool->display->shell */,
+                                          gimp_display_get_shell (tool->display),
                                           tool_info->blurb,
                                           GIMP_STOCK_RESET, RESPONSE_RESET,
                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -1811,6 +1811,8 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->dialog),
                                          GIMP_VIEWABLE (drawable),
                                          GIMP_CONTEXT (options));
+      gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (tr_tool->dialog),
+                                  gimp_display_get_shell (display));
 
       gtk_widget_set_sensitive (tr_tool->dialog, TRUE);
     }

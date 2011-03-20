@@ -336,9 +336,12 @@ gimp_measure_tool_button_press (GimpTool            *tool,
     }
 
   if (measure->dialog)
-    gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (measure->dialog),
-                                       GIMP_VIEWABLE (image),
-                                       GIMP_CONTEXT (options));
+    {
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (measure->dialog),
+                                         GIMP_VIEWABLE (image),
+                                         GIMP_CONTEXT (options));
+      gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (measure->dialog), shell);
+    }
 }
 
 static void
@@ -995,7 +998,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   GtkWidget *label;
 
   dialog = gimp_tool_dialog_new (tool->tool_info,
-                                 NULL /* tool->display->shell */,
+                                 gimp_display_get_shell (tool->display),
                                  _("Measure Distances and Angles"),
 
                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,

@@ -31,7 +31,24 @@
 
 #include "widgets/gimpdialogfactory.h"
 
+#include "gimpdisplayshell.h"
 #include "gimptooldialog.h"
+
+
+typedef struct _GimpToolDialogPrivate GimpToolDialogPrivate;
+
+struct _GimpToolDialogPrivate
+{
+  GimpDisplayShell *shell;
+};
+
+#define GET_PRIVATE(dialog) G_TYPE_INSTANCE_GET_PRIVATE (dialog, \
+                                                         GIMP_TYPE_TOOL_DIALOG, \
+                                                         GimpToolDialogPrivate)
+
+
+static void   gimp_tool_dialog_shell_unmap (GimpDisplayShell *shell,
+                                            GimpToolDialog   *dialog);
 
 
 G_DEFINE_TYPE (GimpToolDialog, gimp_tool_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
@@ -40,6 +57,7 @@ G_DEFINE_TYPE (GimpToolDialog, gimp_tool_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
 static void
 gimp_tool_dialog_class_init (GimpToolDialogClass *klass)
 {
+  g_type_class_add_private (klass, sizeof (GimpToolDialogPrivate));
 }
 
 static void
@@ -51,7 +69,7 @@ gimp_tool_dialog_init (GimpToolDialog *dialog)
 /**
  * gimp_tool_dialog_new:
  * @tool_info: a #GimpToolInfo
- * @parent:    the parent widget of this dialog or %NULL
+ * @shell:     the parent display shell this dialog
  * @desc:      a string to use in the dialog header or %NULL to use the help
  *             field from #GimpToolInfo
  * @...:       a %NULL-terminated valist of button parameters as described in
@@ -64,9 +82,9 @@ gimp_tool_dialog_init (GimpToolDialog *dialog)
  * Return value: a new #GimpViewableDialog
  **/
 GtkWidget *
-gimp_tool_dialog_new (GimpToolInfo *tool_info,
-                      GtkWidget    *parent,
-                      const gchar  *desc,
+gimp_tool_dialog_new (GimpToolInfo     *tool_info,
+                      GimpDisplayShell *shell,
+                      const gchar      *desc,
                       ...)
 {
   GtkWidget   *dialog;
@@ -75,7 +93,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   va_list      args;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
-  g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
@@ -86,8 +104,9 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
                          "help-id",      tool_info->help_id,
                          "stock-id",     stock_id,
                          "description",  desc ? desc : tool_info->help,
-                         "parent",       parent,
                          NULL);
+
+  gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (dialog), shell);
 
   va_start (args, desc);
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
@@ -102,4 +121,55 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   g_free (identifier);
 
   return dialog;
+}
+
+void
+gimp_tool_dialog_set_shell (GimpToolDialog   *tool_dialog,
+                            GimpDisplayShell *shell)
+{
+  GimpToolDialogPrivate *private = GET_PRIVATE (tool_dialog);
+
+  g_return_if_fail (GIMP_IS_TOOL_DIALOG (tool_dialog));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell == private->shell)
+    return;
+
+  if (private->shell)
+    {
+      g_signal_handlers_disconnect_by_func (private->shell,
+                                            gimp_tool_dialog_shell_unmap,
+                                            tool_dialog);
+      private->shell = NULL;
+    }
+
+  private->shell = shell;
+
+  if (private->shell)
+    {
+      GtkWidget *toplevel;
+
+      g_signal_connect_object (private->shell, "unmap",
+                               G_CALLBACK (gimp_tool_dialog_shell_unmap),
+                               tool_dialog, 0);
+
+      toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
+      gtk_window_set_transient_for (GTK_WINDOW (tool_dialog),
+                                    GTK_WINDOW (toplevel));
+    }
+}
+
+
+/*  private functions  */
+
+static void
+gimp_tool_dialog_shell_unmap (GimpDisplayShell *shell,
+                              GimpToolDialog   *dialog)
+{
+  /*  the dialog being mapped while the shell is being unmapped
+   *  happens when switching images in GimpImageWindow
+   */
+  if (gtk_widget_get_mapped (GTK_WIDGET (dialog)))
+    g_signal_emit_by_name (dialog, "close");
 }

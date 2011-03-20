@@ -334,7 +334,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
         {
           image_map_tool->shell = shell =
             gimp_tool_dialog_new (tool_info,
-                                  GTK_WIDGET (display_shell),
+                                  display_shell,
                                   klass->shell_desc,
 
                                   GIMP_STOCK_RESET, RESPONSE_RESET,
@@ -390,9 +390,13 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
     }
 
   if (! image_map_tool->overlay)
-    gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
-                                       GIMP_VIEWABLE (drawable),
-                                       GIMP_CONTEXT (tool_info->tool_options));
+    {
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
+                                         GIMP_VIEWABLE (drawable),
+                                         GIMP_CONTEXT (tool_info->tool_options));
+      gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (image_map_tool->shell),
+                                  display_shell);
+    }
 
   gtk_widget_show (image_map_tool->shell);
 
