@@ -44,8 +44,7 @@ enum
   PROP_VIEWABLE,
   PROP_CONTEXT,
   PROP_STOCK_ID,
-  PROP_DESC,
-  PROP_PARENT
+  PROP_DESC
 };
 
 
@@ -82,25 +81,23 @@ gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
                                    g_param_spec_object ("viewable", NULL, NULL,
                                                         GIMP_TYPE_VIEWABLE,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_DESC,
                                    g_param_spec_string ("description", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class, PROP_PARENT,
-                                   g_param_spec_object ("parent", NULL, NULL,
-                                                        GTK_TYPE_WIDGET,
-                                                        GIMP_PARAM_WRITABLE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -177,6 +174,7 @@ gimp_viewable_dialog_set_property (GObject      *object,
                                          g_value_get_object (value),
                                          dialog->context);
       break;
+
     case PROP_CONTEXT:
       gimp_viewable_dialog_set_viewable (dialog,
                                          dialog->view ?
@@ -184,30 +182,18 @@ gimp_viewable_dialog_set_property (GObject      *object,
                                          NULL,
                                          g_value_get_object (value));
       break;
+
     case PROP_STOCK_ID:
       gtk_image_set_from_stock (GTK_IMAGE (dialog->icon),
                                 g_value_get_string (value),
                                 GTK_ICON_SIZE_LARGE_TOOLBAR);
       break;
+
     case PROP_DESC:
       gtk_label_set_text (GTK_LABEL (dialog->desc_label),
                           g_value_get_string (value));
       break;
-    case PROP_PARENT:
-      {
-        GtkWidget *parent = g_value_get_object (value);
 
-        if (parent)
-          {
-            if (GTK_IS_WINDOW (parent))
-              gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                            GTK_WINDOW (parent));
-            else
-              gtk_window_set_screen (GTK_WINDOW (dialog),
-                                     gtk_widget_get_screen (parent));
-          }
-      }
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -229,9 +215,11 @@ gimp_viewable_dialog_get_property (GObject    *object,
                           dialog->view ?
                           GIMP_VIEW (dialog->view)->viewable : NULL);
       break;
+
     case PROP_CONTEXT:
       g_value_set_object (value, dialog->context);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

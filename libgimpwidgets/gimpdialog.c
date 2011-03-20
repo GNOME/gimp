@@ -44,7 +44,8 @@ enum
 {
   PROP_0,
   PROP_HELP_FUNC,
-  PROP_HELP_ID
+  PROP_HELP_ID,
+  PROP_PARENT
 };
 
 
@@ -95,7 +96,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   dialog_class->close        = gimp_dialog_close;
 
   /**
-   * GimpDialog::help-func:
+   * GimpDialog:help-func:
    *
    * Since: GIMP 2.2
    **/
@@ -105,7 +106,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   /**
-   * GimpDialog::help-id:
+   * GimpDialog:help-id:
    *
    * Since: GIMP 2.2
    **/
@@ -113,6 +114,17 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                    g_param_spec_string ("help-id", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  /**
+   * GimpDialog:parent:
+   *
+   * Since: GIMP 2.8
+   **/
+  g_object_class_install_property (object_class, PROP_PARENT,
+                                   g_param_spec_object ("parent", NULL, NULL,
+                                                        GTK_TYPE_WIDGET,
+                                                        GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
@@ -193,11 +205,29 @@ gimp_dialog_set_property (GObject      *object,
       g_object_set_data (object, "gimp-dialog-help-func",
                          g_value_get_pointer (value));
       break;
+
     case PROP_HELP_ID:
       g_object_set_data_full (object, "gimp-dialog-help-id",
                               g_value_dup_string (value),
                               (GDestroyNotify) g_free);
       break;
+
+    case PROP_PARENT:
+      {
+        GtkWidget *parent = g_value_get_object (value);
+
+        if (parent)
+          {
+            if (GTK_IS_WINDOW (parent))
+              gtk_window_set_transient_for (GTK_WINDOW (object),
+                                            GTK_WINDOW (parent));
+            else
+              gtk_window_set_screen (GTK_WINDOW (object),
+                                     gtk_widget_get_screen (parent));
+          }
+      }
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -216,10 +246,12 @@ gimp_dialog_get_property (GObject    *object,
       g_value_set_pointer (value, g_object_get_data (object,
                                                      "gimp-dialog-help-func"));
       break;
+
     case PROP_HELP_ID:
       g_value_set_string (value, g_object_get_data (object,
                                                     "gimp-dialog-help-id"));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -391,21 +423,11 @@ gimp_dialog_new_valist (const gchar    *title,
                          "modal",     (flags & GTK_DIALOG_MODAL),
                          "help-func", help_func,
                          "help-id",   help_id,
+                         "parent",    parent,
                          NULL);
 
   if (parent)
     {
-      if (GTK_IS_WINDOW (parent))
-        {
-          gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                        GTK_WINDOW (parent));
-        }
-      else
-        {
-          gtk_window_set_screen (GTK_WINDOW (dialog),
-                                 gtk_widget_get_screen (parent));
-        }
-
       if (flags & GTK_DIALOG_DESTROY_WITH_PARENT)
         g_signal_connect_object (parent, "destroy",
                                  G_CALLBACK (gimp_dialog_close),
