@@ -49,8 +49,23 @@ enum
 };
 
 
+typedef struct _GimpDialogPrivate GimpDialogPrivate;
+
+struct _GimpDialogPrivate
+{
+  GimpHelpFunc  help_func;
+  gchar        *help_id;
+  GtkWidget    *help_button;
+};
+
+#define GET_PRIVATE(dialog) G_TYPE_INSTANCE_GET_PRIVATE (dialog, \
+                                                         GIMP_TYPE_DIALOG, \
+                                                         GimpDialogPrivate)
+
+
 static void       gimp_dialog_constructed  (GObject      *object);
 static void       gimp_dialog_dispose      (GObject      *object);
+static void       gimp_dialog_finalize     (GObject      *object);
 static void       gimp_dialog_set_property (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
@@ -87,6 +102,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
 
   object_class->constructed  = gimp_dialog_constructed;
   object_class->dispose      = gimp_dialog_dispose;
+  object_class->finalize     = gimp_dialog_finalize;
   object_class->set_property = gimp_dialog_set_property;
   object_class->get_property = gimp_dialog_get_property;
 
@@ -126,6 +142,8 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                                         GTK_TYPE_WIDGET,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_type_class_add_private (klass, sizeof (GimpDialogPrivate));
 }
 
 static void
@@ -142,34 +160,32 @@ gimp_dialog_init (GimpDialog *dialog)
 static void
 gimp_dialog_constructed (GObject *object)
 {
-  GimpHelpFunc  help_func;
-  const gchar  *help_id;
+  GimpDialogPrivate *private = GET_PRIVATE (object);
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  help_func = g_object_get_data (object, "gimp-dialog-help-func");
-  help_id   = g_object_get_data (object, "gimp-dialog-help-id");
+  if (private->help_func)
+    gimp_help_connect (GTK_WIDGET (object),
+                       private->help_func, private->help_id,
+                       object);
 
-  if (help_func)
-    gimp_help_connect (GTK_WIDGET (object), help_func, help_id, object);
-
-  if (show_help_button && help_func && help_id)
+  if (show_help_button && private->help_func && private->help_id)
     {
       GtkDialog *dialog      = GTK_DIALOG (object);
       GtkWidget *action_area = gtk_dialog_get_action_area (dialog);
-      GtkWidget *button      = gtk_button_new_from_stock (GTK_STOCK_HELP);
 
-      gtk_box_pack_end (GTK_BOX (action_area), button, FALSE, TRUE, 0);
+      private->help_button = gtk_button_new_from_stock (GTK_STOCK_HELP);
+
+      gtk_box_pack_end (GTK_BOX (action_area), private->help_button,
+                        FALSE, TRUE, 0);
       gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (action_area),
-                                          button, TRUE);
-      gtk_widget_show (button);
+                                          private->help_button, TRUE);
+      gtk_widget_show (private->help_button);
 
-      g_signal_connect_object (button, "clicked",
+      g_signal_connect_object (private->help_button, "clicked",
                                G_CALLBACK (gimp_dialog_help),
                                dialog, G_CONNECT_SWAPPED);
-
-      g_object_set_data (object, "gimp-dialog-help-button", button);
     }
 }
 
@@ -194,22 +210,35 @@ gimp_dialog_dispose (GObject *object)
 }
 
 static void
+gimp_dialog_finalize (GObject *object)
+{
+  GimpDialogPrivate *private = GET_PRIVATE (object);
+
+  if (private->help_id)
+    {
+      g_free (private->help_id);
+      private->help_id = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_dialog_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
+  GimpDialogPrivate *private = GET_PRIVATE (object);
+
   switch (property_id)
     {
     case PROP_HELP_FUNC:
-      g_object_set_data (object, "gimp-dialog-help-func",
-                         g_value_get_pointer (value));
+      private->help_func = g_value_get_pointer (value);
       break;
 
     case PROP_HELP_ID:
-      g_object_set_data_full (object, "gimp-dialog-help-id",
-                              g_value_dup_string (value),
-                              (GDestroyNotify) g_free);
+      private->help_id = g_value_dup_string (value);
       break;
 
     case PROP_PARENT:
@@ -240,16 +269,16 @@ gimp_dialog_get_property (GObject    *object,
                           GValue     *value,
                           GParamSpec *pspec)
 {
+  GimpDialogPrivate *private = GET_PRIVATE (object);
+
   switch (property_id)
     {
     case PROP_HELP_FUNC:
-      g_value_set_pointer (value, g_object_get_data (object,
-                                                     "gimp-dialog-help-func"));
+      g_value_set_pointer (value, private->help_func);
       break;
 
     case PROP_HELP_ID:
-      g_value_set_string (value, g_object_get_data (object,
-                                                    "gimp-dialog-help-id"));
+      g_value_set_string (value, private->help_id);
       break;
 
     default:
@@ -296,20 +325,23 @@ gimp_dialog_close (GtkDialog *dialog)
 static void
 gimp_dialog_help (GObject *dialog)
 {
-  GimpHelpFunc  help_func = g_object_get_data (dialog, "gimp-dialog-help-func");
+  GimpDialogPrivate *private = GET_PRIVATE (dialog);
 
-  if (help_func)
-    help_func (g_object_get_data (dialog, "gimp-dialog-help-id"), dialog);
+  if (private->help_func)
+    private->help_func (private->help_id, dialog);
 }
 
 static void
 gimp_dialog_response (GtkDialog *dialog,
                       gint       response_id)
 {
-  GList *children;
-  GList *list;
+  GtkWidget *action_area;
+  GList     *children;
+  GList     *list;
 
-  children = gtk_container_get_children (GTK_CONTAINER (gtk_dialog_get_action_area (dialog)));
+  action_area = gtk_dialog_get_action_area (dialog);
+
+  children = gtk_container_get_children (GTK_CONTAINER (action_area));
 
   for (list = children; list; list = g_list_next (list))
     {
@@ -461,10 +493,10 @@ gimp_dialog_add_button (GimpDialog  *dialog,
   /*  hide the automatically added help button if another one is added  */
   if (response_id == GTK_RESPONSE_HELP)
     {
-      GtkWidget *help_button = g_object_get_data (G_OBJECT (dialog),
-                                                  "gimp-dialog-help-button");
-      if (help_button)
-        gtk_widget_hide (help_button);
+      GimpDialogPrivate *private = GET_PRIVATE (dialog);
+
+      if (private->help_button)
+        gtk_widget_hide (private->help_button);
     }
 
   button = gtk_dialog_add_button (GTK_DIALOG (dialog), button_text,
