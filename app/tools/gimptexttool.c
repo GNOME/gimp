@@ -830,6 +830,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
   gint             i;
 
   fill_group = gimp_draw_tool_add_fill_group (draw_tool);
+  gimp_canvas_item_set_highlight (GIMP_CANVAS_ITEM (fill_group), TRUE);
 
   gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
 
