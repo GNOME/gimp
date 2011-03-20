@@ -225,9 +225,8 @@ gimp_color_picker_tool_oper_update (GimpTool         *tool,
       GdkModifierType  shift_mod = 0;
 
       if (! picker_tool->dialog)
-        {
-          shift_mod = GDK_SHIFT_MASK;
-        }
+        shift_mod = GDK_SHIFT_MASK;
+
       switch (options->pick_mode)
         {
         case GIMP_COLOR_PICK_MODE_NONE:
@@ -260,6 +259,7 @@ gimp_color_picker_tool_oper_update (GimpTool         *tool,
                                                 NULL, NULL, NULL);
           break;
         }
+
       if (status_help != NULL)
         {
           gimp_tool_push_status (tool, display, "%s", status_help);
@@ -299,6 +299,7 @@ static void
 gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
 {
   GimpTool  *tool = GIMP_TOOL (picker_tool);
+  GtkWidget *content_area;
   GtkWidget *hbox;
   GtkWidget *frame;
   GimpRGB    color;
@@ -306,7 +307,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
   g_return_if_fail (tool->drawable != NULL);
 
   picker_tool->dialog = gimp_tool_dialog_new (tool->tool_info,
-                                              NULL /* tool->display->shell */,
+                                              gimp_display_get_shell (tool->display),
                                               _("Color Picker Information"),
 
                                               GTK_STOCK_CLOSE,
@@ -324,10 +325,11 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
                     G_CALLBACK (gimp_color_picker_tool_info_response),
                     picker_tool);
 
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (picker_tool->dialog));
+
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (picker_tool->dialog))),
-                      hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (content_area), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   picker_tool->color_frame1 = gimp_color_frame_new ();
@@ -389,6 +391,7 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame2),
                               sample_type, color, color_index);
 
+  /*  don't use gtk_window_present() because it would focus the dialog  */
   if (gtk_widget_get_visible (picker_tool->dialog))
     gdk_window_show (gtk_widget_get_window (picker_tool->dialog));
   else
