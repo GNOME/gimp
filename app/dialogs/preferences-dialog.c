@@ -1391,7 +1391,7 @@ prefs_dialog_new (Gimp       *gimp,
   core_config    = GIMP_CORE_CONFIG (config);
   display_config = GIMP_DISPLAY_CONFIG (config);
 
-  dialog = gimp_dialog_new (_("Preferences"), "preferences",
+  dialog = gimp_dialog_new (_("Preferences"), "gimp-preferences",
                             NULL, 0,
                             prefs_help_func,
                             GIMP_HELP_PREFS_DIALOG,
