@@ -2323,35 +2323,44 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rect_tool,
 {
   GimpRectangleToolPrivate *private;
   GimpRectangleOptions     *options;
-  gdouble                   pub_x1, pub_y1;
-  gdouble                   pub_x2, pub_y2;
-  gdouble                   width;
-  gdouble                   height;
+  gdouble                   x1, y1;
+  gdouble                   x2, y2;
+  gdouble                   old_x;
+  gdouble                   old_y;
+  gdouble                   old_width;
+  gdouble                   old_height;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rect_tool);
 
-  gimp_rectangle_tool_get_public_rect (rect_tool,
-                                       &pub_x1, &pub_y1, &pub_x2, &pub_y2);
-  width  = pub_x2 - pub_x1;
-  height = pub_y2 - pub_y1;
+  gimp_rectangle_tool_get_public_rect (rect_tool, &x1, &y1, &x2, &y2);
 
   g_signal_handlers_block_by_func (options,
                                    gimp_rectangle_tool_options_notify,
                                    rect_tool);
 
-  g_object_set (options,
-                "x", pub_x1,
-                "y", pub_y1,
+  g_object_get (options,
+                "x",      &old_x,
+                "y",      &old_y,
+                "width",  &old_width,
+                "height", &old_height,
                 NULL);
 
-  g_object_set (options,
-                "width",  width,
-                NULL);
+  g_object_freeze_notify (G_OBJECT (options));
 
-  g_object_set (options,
-                "height", height,
-                NULL);
+  if (old_x != x1)
+    g_object_set (options, "x", x1, NULL);
+
+  if (old_y != y1)
+    g_object_set (options, "y", y1, NULL);
+
+  if (old_width != x2 - x1)
+    g_object_set (options, "width", x2 - x1, NULL);
+
+  if (old_height != y2 - y1)
+    g_object_set (options, "height", y2 - y1, NULL);
+
+  g_object_thaw_notify (G_OBJECT (options));
 
   g_signal_handlers_unblock_by_func (options,
                                      gimp_rectangle_tool_options_notify,
