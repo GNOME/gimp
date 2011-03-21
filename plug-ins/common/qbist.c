@@ -40,8 +40,14 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#if ! defined PATH_MAX && defined _MAX_PATH
-#  define PATH_MAX _MAX_PATH
+#if ! defined PATH_MAX
+#  if defined _MAX_PATH
+#    define PATH_MAX _MAX_PATH
+#  elif defined MAXPATHLEN
+#    define PATH_MAX MAXPATHLEN
+#  else
+#    define PATH_MAX 1024
+#  endif
 #endif
 
 /** qbist renderer ***********************************************************/
