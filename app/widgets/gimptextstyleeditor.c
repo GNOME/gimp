@@ -188,10 +188,11 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
+  gtk_box_set_spacing (GTK_BOX (editor), 2);
 
   /*  upper row  */
 
-  editor->upper_hbox = gtk_hbox_new (FALSE, 0);
+  editor->upper_hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (editor), editor->upper_hbox, FALSE, FALSE, 0);
   gtk_widget_show (editor->upper_hbox);
 
@@ -219,25 +220,9 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     G_CALLBACK (gimp_text_style_editor_size_changed),
                     editor);
 
-  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
-  editor->color_button = gimp_color_panel_new (_("Change color of selected text"),
-                                               &color,
-                                               GIMP_COLOR_AREA_FLAT, 20, 20);
-
-  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->color_button,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (editor->color_button);
-
-  gimp_help_set_help_data (editor->color_button,
-                           _("Change color of selected text"), NULL);
-
-  g_signal_connect (editor->color_button, "color-changed",
-                    G_CALLBACK (gimp_text_style_editor_color_changed),
-                    editor);
-
   /*  lower row  */
 
-  editor->lower_hbox = gtk_hbox_new (FALSE, 0);
+  editor->lower_hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (editor), editor->lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (editor->lower_hbox);
 
@@ -257,6 +242,22 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   image = gtk_image_new_from_stock (GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (editor->clear_button), image);
   gtk_widget_show (image);
+
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+  editor->color_button = gimp_color_panel_new (_("Change color of selected text"),
+                                               &color,
+                                               GIMP_COLOR_AREA_FLAT, 20, 20);
+
+  gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->color_button,
+                    FALSE, FALSE, 0);
+  gtk_widget_show (editor->color_button);
+
+  gimp_help_set_help_data (editor->color_button,
+                           _("Change color of selected text"), NULL);
+
+  g_signal_connect (editor->color_button, "color-changed",
+                    G_CALLBACK (gimp_text_style_editor_color_changed),
+                    editor);
 
   editor->kerning_adjustment =
     GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -1000.0, 1000.0, 1.0, 10.0, 0.0));
