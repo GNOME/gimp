@@ -356,6 +356,9 @@ CFLAGS="$CFLAGS $extra_warnings"
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wformat-non-literal')
 CFLAGS="$CFLAGS $extra_warnings"
 
+GIMP_DETECT_CFLAGS(extra_warnings, '-fno-common')
+CFLAGS="$CFLAGS $extra_warnings"
+
 
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
