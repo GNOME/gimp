@@ -2348,16 +2348,16 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rect_tool,
 
   g_object_freeze_notify (G_OBJECT (options));
 
-  if (old_x != x1)
+  if (! FEQUAL (old_x, x1))
     g_object_set (options, "x", x1, NULL);
 
-  if (old_y != y1)
+  if (! FEQUAL (old_y, y1))
     g_object_set (options, "y", y1, NULL);
 
-  if (old_width != x2 - x1)
+  if (! FEQUAL (old_width, x2 - x1))
     g_object_set (options, "width", x2 - x1, NULL);
 
-  if (old_height != y2 - y1)
+  if (! FEQUAL (old_height, y2 - y1))
     g_object_set (options, "height", y2 - y1, NULL);
 
   g_object_thaw_notify (G_OBJECT (options));
