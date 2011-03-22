@@ -95,6 +95,9 @@ GtkWidget * gimp_prop_language_combo_box_new (GObject     *config,
 GtkWidget * gimp_prop_language_entry_new     (GObject     *config,
                                               const gchar *property_name);
 
+GtkWidget * gimp_prop_icon_picker_new        (GObject     *config,
+                                              const gchar *property_name,
+                                              Gimp        *gimp);
 
 /*  A view on all of an object's properties  */
 

@@ -39,6 +39,7 @@
 
 #include "gimpcolorpanel.h"
 #include "gimpdnd.h"
+#include "gimpiconpicker.h"
 #include "gimplanguagecombobox.h"
 #include "gimplanguageentry.h"
 #include "gimpscalebutton.h"
@@ -1289,6 +1290,104 @@ gimp_prop_language_entry_notify (GObject    *config,
                                      config);
 
   g_free (value);
+}
+
+
+/*****************/
+/*  icon picker  */
+/*****************/
+
+static void   gimp_prop_icon_picker_callback (GtkWidget  *picker,
+                                              GParamSpec *param_spec,
+                                              GObject    *config);
+static void   gimp_prop_icon_picker_notify   (GObject    *config,
+                                              GParamSpec *param_spec,
+                                              GtkWidget  *picker);
+
+GtkWidget *
+gimp_prop_icon_picker_new (GObject     *config,
+                           const gchar *property_name,
+                           Gimp        *gimp)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *picker;
+  gchar      *value;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_STRING, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  picker = gimp_icon_picker_new (gimp);
+  gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (picker), value);
+  g_free (value);
+
+  set_param_spec (G_OBJECT (picker), picker, param_spec);
+
+  g_signal_connect (picker, "notify::stock-id",
+                    G_CALLBACK (gimp_prop_icon_picker_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_icon_picker_notify),
+                  picker);
+
+  return picker;
+}
+
+static void
+gimp_prop_icon_picker_callback (GtkWidget  *picker,
+                                GParamSpec *unuded_param_spec,
+                                GObject    *config)
+{
+  GParamSpec  *param_spec;
+  const gchar *value;
+
+  param_spec = get_param_spec (G_OBJECT (picker));
+  if (! param_spec)
+    return;
+
+  value = gimp_icon_picker_get_stock_id (GIMP_ICON_PICKER (picker));
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_icon_picker_notify,
+                                   picker);
+
+  g_object_set (config,
+                param_spec->name, value,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_icon_picker_notify,
+                                     picker);
+}
+
+static void
+gimp_prop_icon_picker_notify (GObject    *config,
+                              GParamSpec *param_spec,
+                              GtkWidget  *picker)
+{
+  gchar *value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (picker,
+                                   gimp_prop_icon_picker_callback,
+                                   config);
+
+  gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (picker), value);
+
+  g_free (value);
+
+  g_signal_handlers_unblock_by_func (picker,
+                                     gimp_prop_icon_picker_callback,
+                                     config);
 }
 
 

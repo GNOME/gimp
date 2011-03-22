@@ -31,7 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
 
-#include "gimpiconpicker.h"
+#include "gimppropwidgets.h"
 #include "gimptemplateeditor.h"
 
 #include "gimp-intl.h"
@@ -53,8 +53,6 @@ typedef struct _GimpTemplateEditorPrivate GimpTemplateEditorPrivate;
 struct _GimpTemplateEditorPrivate
 {
   GimpTemplate  *template;
-
-  GtkWidget     *icon_picker;
 
   GtkWidget     *aspect_button;
   gboolean       block_aspect;
@@ -88,9 +86,6 @@ static void gimp_template_editor_aspect_callback (GtkWidget          *widget,
                                                   GimpTemplateEditor *editor);
 static void gimp_template_editor_template_notify (GimpTemplate       *template,
                                                   GParamSpec         *param_spec,
-                                                  GimpTemplateEditor *editor);
-static void gimp_template_editor_icon_changed    (GimpIconPicker     *picker,
-                                                  const GParamSpec   *pspec,
                                                   GimpTemplateEditor *editor);
 
 
@@ -502,6 +497,7 @@ gimp_template_editor_new (GimpTemplate *template,
     {
       GtkWidget   *table;
       GtkWidget   *entry;
+      GtkWidget   *icon_picker;
       const gchar *stock_id;
 
       table = gtk_table_new (2, 2, FALSE);
@@ -519,17 +515,12 @@ gimp_template_editor_new (GimpTemplate *template,
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (private->template));
 
-      private->icon_picker = gimp_icon_picker_new (gimp);
-      gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (private->icon_picker),
-                                     stock_id);
-
-      g_signal_connect (private->icon_picker, "notify::stock-id",
-                        G_CALLBACK (gimp_template_editor_icon_changed),
-                        editor);
-
+      icon_picker = gimp_prop_icon_picker_new (G_OBJECT (private->template),
+                                               "stock-id",
+                                               gimp);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("_Icon:"), 1.0, 0.5,
-                                 private->icon_picker, 1, TRUE);
+                                 icon_picker, 1, TRUE);
     }
 
   return GTK_WIDGET (editor);
@@ -698,26 +689,4 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
 
   gtk_label_set_text (GTK_LABEL (private->more_label), text);
   g_free (text);
-
-  if (private->icon_picker)
-    {
-      const gchar *stock_id;
-
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (template));
-
-      gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (private->icon_picker),
-                                     stock_id);
-    }
-}
-
-static void
-gimp_template_editor_icon_changed (GimpIconPicker     *picker,
-                                   const GParamSpec   *pspec,
-                                   GimpTemplateEditor *editor)
-{
-  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
-
-  g_object_set (private->template,
-                "stock-id", gimp_icon_picker_get_stock_id (picker),
-                NULL);
 }
