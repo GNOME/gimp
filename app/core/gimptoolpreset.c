@@ -402,14 +402,12 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
 
 GimpData *
 gimp_tool_preset_new (GimpContext *context,
-                      const gchar *name)
+                      const gchar *unused)
 {
   GimpToolInfo *tool_info;
   const gchar  *stock_id;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (name[0] != '\0', NULL);
 
   tool_info = gimp_context_get_tool (context);
 
@@ -418,7 +416,7 @@ gimp_tool_preset_new (GimpContext *context,
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
   return g_object_new (GIMP_TYPE_TOOL_PRESET,
-                       "name",         name,
+                       "name",         tool_info->blurb,
                        "stock-id",     stock_id,
                        "gimp",         context->gimp,
                        "tool-options", tool_info->tool_options,

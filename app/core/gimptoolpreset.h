@@ -57,7 +57,7 @@ struct _GimpToolPresetClass
 GType                 gimp_tool_preset_get_type      (void) G_GNUC_CONST;
 
 GimpData            * gimp_tool_preset_new           (GimpContext    *context,
-                                                      const gchar    *name);
+                                                      const gchar    *unused);
 
 GimpContextPropMask   gimp_tool_preset_get_prop_mask (GimpToolPreset *preset);
 
