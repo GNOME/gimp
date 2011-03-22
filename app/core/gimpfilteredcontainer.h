@@ -1,9 +1,9 @@
-#if 0
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * gimpfilteredcontainer.h
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
+ *               2011 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,34 +38,24 @@ typedef struct _GimpFilteredContainerClass GimpFilteredContainerClass;
 
 struct _GimpFilteredContainer
 {
-  GimpList       parent_instance;
+  GimpList              parent_instance;
 
-  GimpContainer *src_container;
-  GList         *filter;
-  GHashTable    *tag_ref_counts;
-  gint           tag_count;
+  GimpContainer        *src_container;
+  GimpObjectFilterFunc  filter_func;
+  gpointer              filter_data;
 };
 
 struct _GimpFilteredContainerClass
 {
   GimpContainerClass  parent_class;
-
-  void (* tag_count_changed) (GimpFilteredContainer *container,
-                              gint                   count);
 };
 
 
-GType           gimp_filtered_container_get_type      (void) G_GNUC_CONST;
+GType           gimp_filtered_container_get_type (void) G_GNUC_CONST;
 
-GimpContainer * gimp_filtered_container_new           (GimpContainer         *src_container,
-                                                       GCompareFunc           sort_func);
-
-void            gimp_filtered_container_set_filter    (GimpFilteredContainer *filtered_container,
-                                                       GList                 *tags);
-const GList   * gimp_filtered_container_get_filter    (GimpFilteredContainer *filtered_container);
-
-gint            gimp_filtered_container_get_tag_count (GimpFilteredContainer *container);
+GimpContainer * gimp_filtered_container_new      (GimpContainer        *src_container,
+                                                  GimpObjectFilterFunc  filter_func,
+                                                  gpointer              filter_data);
 
 
 #endif  /* __GIMP_FILTERED_CONTAINER_H__ */
-#endif
