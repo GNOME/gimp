@@ -34,8 +34,8 @@ struct _GimpPixelRgn
   gint          rowstride;     /* bytes per pixel row */
   gint          x, y;          /* origin */
   gint          w, h;          /* width and height of region */
-  gint          dirty : 1;     /* will this region be dirtied? */
-  gint          shadow : 1;    /* will this region use the shadow or normal tiles */
+  guint         dirty : 1;     /* will this region be dirtied? */
+  guint         shadow : 1;    /* will this region use the shadow or normal tiles */
   gint          process_count; /* used internally */
 };
 
