@@ -390,9 +390,9 @@ gimp_filtered_container_check_needs_add (GimpObject  *object,
                                          MatchParams *match_params)
 {
   if (gimp_filtered_container_object_matches (match_params->filtered_container,
-                                              object)
-      && !gimp_container_have (GIMP_CONTAINER (match_params->filtered_container),
-                               object))
+                                              object) &&
+      ! gimp_container_have (GIMP_CONTAINER (match_params->filtered_container),
+                             object))
     {
       match_params->items_to_add = g_list_prepend (match_params->items_to_add,
                                                    object);
@@ -454,8 +454,8 @@ gimp_filtered_container_src_remove (GimpContainer         *src_container,
   gimp_filtered_container_tagged_item_removed (GIMP_TAGGED (obj),
                                                filtered_container);
 
-  if (! gimp_container_frozen (src_container)
-      && gimp_container_have (GIMP_CONTAINER (filtered_container), obj))
+  if (! gimp_container_frozen (src_container) &&
+      gimp_container_have (GIMP_CONTAINER (filtered_container), obj))
     {
       gimp_container_remove (GIMP_CONTAINER (filtered_container), obj);
     }
@@ -505,10 +505,10 @@ gimp_filtered_container_tagged_item_removed (GimpTagged            *tagged,
   GList *list;
 
   g_signal_handlers_disconnect_by_func (tagged,
-                                        G_CALLBACK (gimp_filtered_container_tag_added),
+                                        gimp_filtered_container_tag_added,
                                         filtered_container);
   g_signal_handlers_disconnect_by_func (tagged,
-                                        G_CALLBACK (gimp_filtered_container_tag_removed),
+                                        gimp_filtered_container_tag_removed,
                                         filtered_container);
 
   for (list = gimp_tagged_get_tags (tagged); list; list = g_list_next (list))
@@ -551,6 +551,7 @@ gimp_filtered_container_tag_removed (GimpTagged            *tagged,
   ref_count = GPOINTER_TO_INT (g_hash_table_lookup (filtered_container->tag_ref_counts,
                                                     tag));
   ref_count--;
+
   if (ref_count > 0)
     {
       g_hash_table_insert (filtered_container->tag_ref_counts,
@@ -578,15 +579,16 @@ gimp_filtered_container_tag_count_changed (GimpFilteredContainer *container,
  * gimp_filtered_container_get_tag_count:
  * @container:  a #GimpFilteredContainer object.
  *
- * Get number of distinct tags that are currently assigned to all objects
- * in the container. The count is independent of currently used filter, it
- * is provided for all available objects (ie. empty filter).
+ * Get number of distinct tags that are currently assigned to all
+ * objects in the container. The count is independent of currently
+ * used filter, it is provided for all available objects (ie. empty
+ * filter).
  *
  * Return value: number of distinct tags assigned to all objects in the
- * container.
+ *               container.
  **/
 gint
-gimp_filtered_container_get_tag_count  (GimpFilteredContainer  *container)
+gimp_filtered_container_get_tag_count (GimpFilteredContainer *container)
 {
   g_return_val_if_fail (GIMP_IS_FILTERED_CONTAINER (container), 0);
 
