@@ -25,7 +25,8 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
+#include "core/gimptoolinfo.h"
+#include "core/gimptooloptions.h"
 #include "core/gimptoolpreset.h"
 
 #include "gimpdocked.h"
@@ -76,7 +77,6 @@ gimp_tool_preset_editor_class_init (GimpToolPresetEditorClass *klass)
 static void
 gimp_tool_preset_editor_init (GimpToolPresetEditor *editor)
 {
-
 }
 
 static void
@@ -85,59 +85,85 @@ gimp_tool_preset_editor_constructed (GObject *object)
   GimpToolPresetEditor *editor      = GIMP_TOOL_PRESET_EDITOR (object);
   GimpDataEditor       *data_editor = GIMP_DATA_EDITOR (editor);
   GimpToolPreset       *preset;
+  GtkWidget            *hbox;
+  GtkWidget            *label;
   GtkWidget            *button;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  preset = editor->tool_preset_model = g_object_new (GIMP_TYPE_TOOL_PRESET,
-                                                     "gimp", data_editor->context->gimp,
-                                                     NULL);
+  preset = editor->tool_preset_model =
+    g_object_new (GIMP_TYPE_TOOL_PRESET,
+                  "gimp", data_editor->context->gimp,
+                  NULL);
 
   g_signal_connect (preset, "notify",
                     G_CALLBACK (gimp_tool_preset_editor_notify_model),
                     editor);
 
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (data_editor), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  editor->tool_icon = gtk_image_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), editor->tool_icon,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (editor->tool_icon);
+
+  editor->tool_label = gtk_label_new ("");
+  gimp_label_set_attributes (GTK_LABEL (editor->tool_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (hbox), editor->tool_label,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (editor->tool_label);
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (data_editor), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Icon:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  button = gimp_prop_icon_picker_new (G_OBJECT (preset), "stock-id",
+                                      data_editor->context->gimp);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   button = gimp_prop_check_button_new (G_OBJECT (preset), "use-fg-bg",
                                        _("Apply stored FG/BG"));
-  gtk_box_pack_start (GTK_BOX (data_editor), button,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (G_OBJECT (preset), "use-brush",
                                        _("Apply stored brush"));
-  gtk_box_pack_start (GTK_BOX (data_editor), button,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (G_OBJECT (preset), "use-dynamics",
                                        _("Apply stored dynamics"));
-  gtk_box_pack_start (GTK_BOX (data_editor), button,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (G_OBJECT (preset), "use-gradient",
                                        _("Apply stored gradient"));
-  gtk_box_pack_start (GTK_BOX (data_editor), button,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (G_OBJECT (preset), "use-pattern",
                                        _("Apply stored pattern"));
-  gtk_box_pack_start (GTK_BOX (data_editor), button,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (G_OBJECT (preset), "use-palette",
                                        _("Apply stored palette"));
-  gtk_box_pack_start (GTK_BOX (data_editor), button,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = gimp_prop_check_button_new (G_OBJECT (preset), "use-font",
                                        _("Apply stored font"));
-  gtk_box_pack_start (GTK_BOX (data_editor), button,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 }
 
@@ -159,7 +185,7 @@ static void
 gimp_tool_preset_editor_set_data (GimpDataEditor *editor,
                                   GimpData       *data)
 {
-  GimpToolPresetEditor *tool_preset_editor = GIMP_TOOL_PRESET_EDITOR (editor);
+  GimpToolPresetEditor *preset_editor = GIMP_TOOL_PRESET_EDITOR (editor);
 
   if (editor->data)
     g_signal_handlers_disconnect_by_func (editor->data,
@@ -170,21 +196,36 @@ gimp_tool_preset_editor_set_data (GimpDataEditor *editor,
 
   if (editor->data)
     {
-      g_signal_handlers_block_by_func (tool_preset_editor->tool_preset_model,
+      GimpToolInfo *tool_info;
+      const gchar  *stock_id;
+      gchar        *label;
+
+      g_signal_handlers_block_by_func (preset_editor->tool_preset_model,
                                        gimp_tool_preset_editor_notify_model,
                                        editor);
 
       gimp_config_copy (GIMP_CONFIG (editor->data),
-                        GIMP_CONFIG (tool_preset_editor->tool_preset_model),
+                        GIMP_CONFIG (preset_editor->tool_preset_model),
                         GIMP_CONFIG_PARAM_SERIALIZE);
 
-      g_signal_handlers_unblock_by_func (tool_preset_editor->tool_preset_model,
+      g_signal_handlers_unblock_by_func (preset_editor->tool_preset_model,
                                          gimp_tool_preset_editor_notify_model,
                                          editor);
 
       g_signal_connect (editor->data, "notify",
                         G_CALLBACK (gimp_tool_preset_editor_notify_data),
                         editor);
+
+      tool_info = preset_editor->tool_preset_model->tool_options->tool_info;
+
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+      label    = g_strdup_printf (_("%s Preset"), tool_info->blurb);
+
+      gtk_image_set_from_stock (GTK_IMAGE (preset_editor->tool_icon),
+                                stock_id, GTK_ICON_SIZE_MENU);
+      gtk_label_set_text (GTK_LABEL (preset_editor->tool_label), label);
+
+      g_free (label);
     }
 }
 

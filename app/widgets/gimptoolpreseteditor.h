@@ -38,6 +38,8 @@ struct _GimpToolPresetEditor
 
   GimpToolPreset *tool_preset_model;
 
+  GtkWidget      *tool_icon;
+  GtkWidget      *tool_label;
 };
 
 struct _GimpToolPresetEditorClass
