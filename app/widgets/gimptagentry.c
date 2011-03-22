@@ -30,9 +30,9 @@
 #include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpfilteredcontainer.h"
 #include "core/gimptag.h"
 #include "core/gimptagged.h"
+#include "core/gimptaggedcontainer.h"
 #include "core/gimpviewable.h"
 
 #include "gimptagentry.h"
@@ -157,9 +157,9 @@ gimp_tag_entry_class_init (GimpTagEntryClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_CONTAINER,
                                    g_param_spec_object ("container",
-                                                        "Filtered container",
-                                                        "The Filtered container",
-                                                        GIMP_TYPE_FILTERED_CONTAINER,
+                                                        "Tagged container",
+                                                        "The Tagged container",
+                                                        GIMP_TYPE_TAGGED_CONTAINER,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         G_PARAM_READWRITE));
 
@@ -310,7 +310,7 @@ gimp_tag_entry_get_property (GObject    *object,
 
 /**
  * gimp_tag_entry_new:
- * @container: a #GimpFilteredContainer object
+ * @container: a #GimpTaggedContainer object
  * @mode:      #GimpTagEntryMode to work in.
  *
  * #GimpTagEntry is a widget which can query and assign tags to tagged objects.
@@ -321,10 +321,10 @@ gimp_tag_entry_get_property (GObject    *object,
  * Return value: a new GimpTagEntry widget.
  **/
 GtkWidget *
-gimp_tag_entry_new (GimpFilteredContainer *container,
-                    GimpTagEntryMode       mode)
+gimp_tag_entry_new (GimpTaggedContainer *container,
+                    GimpTagEntryMode     mode)
 {
-  g_return_val_if_fail (GIMP_IS_FILTERED_CONTAINER (container), NULL);
+  g_return_val_if_fail (GIMP_IS_TAGGED_CONTAINER (container), NULL);
 
   return g_object_new (GIMP_TYPE_TAG_ENTRY,
                        "container", container,
@@ -616,8 +616,8 @@ gimp_tag_entry_query_tag (GimpTagEntry *entry)
     }
   g_strfreev (parsed_tags);
 
-  gimp_filtered_container_set_filter (GIMP_FILTERED_CONTAINER (entry->container),
-                                      query_list);
+  gimp_tagged_container_set_filter (GIMP_TAGGED_CONTAINER (entry->container),
+                                    query_list);
 
   if (has_invalid_tags != entry->has_invalid_tags)
     {

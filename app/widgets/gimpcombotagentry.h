@@ -54,8 +54,8 @@ struct _GimpComboTagEntryClass
 
 GType       gimp_combo_tag_entry_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_combo_tag_entry_new      (GimpFilteredContainer *container,
-                                           GimpTagEntryMode       mode);
+GtkWidget * gimp_combo_tag_entry_new      (GimpTaggedContainer *container,
+                                           GimpTagEntryMode     mode);
 
 
 #endif  /*  __GIMP_COMBO_TAG_ENTRY_H__  */

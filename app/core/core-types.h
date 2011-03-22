@@ -72,6 +72,7 @@ typedef struct _GimpDocumentList      GimpDocumentList;
 typedef struct _GimpDrawableStack     GimpDrawableStack;
 typedef struct _GimpFilteredContainer GimpFilteredContainer;
 typedef struct _GimpItemStack         GimpItemStack;
+typedef struct _GimpTaggedContainer   GimpTaggedContainer;
 typedef struct _GimpToolPresets       GimpToolPresets;
 
 

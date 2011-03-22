@@ -353,6 +353,8 @@ libappcore_a_sources = \
 	gimptagcache.h				\
 	gimptagged.c				\
 	gimptagged.h				\
+	gimptaggedcontainer.c			\
+	gimptaggedcontainer.h			\
 	gimptemplate.c				\
 	gimptemplate.h				\
 	gimptoolinfo.c				\

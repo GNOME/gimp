@@ -1,3 +1,4 @@
+#if 0
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
@@ -67,3 +68,4 @@ gint            gimp_filtered_container_get_tag_count (GimpFilteredContainer *co
 
 
 #endif  /* __GIMP_FILTERED_CONTAINER_H__ */
+#endif

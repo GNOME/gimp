@@ -29,9 +29,9 @@
 
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpfilteredcontainer.h"
 #include "core/gimptag.h"
 #include "core/gimptagged.h"
+#include "core/gimptaggedcontainer.h"
 #include "core/gimpviewable.h"
 
 #include "gimpcombotagentry.h"
@@ -195,28 +195,28 @@ gimp_tag_popup_init (GimpTagPopup *popup)
 static void
 gimp_tag_popup_constructed (GObject *object)
 {
-  GimpTagPopup          *popup = GIMP_TAG_POPUP (object);
-  GimpFilteredContainer *container;
-  GtkWidget             *entry;
-  GtkAllocation          entry_allocation;
-  GtkStyle              *frame_style;
-  gint                   x;
-  gint                   y;
-  gint                   width;
-  gint                   height;
-  gint                   popup_height;
-  GHashTable            *tag_hash;
-  GList                 *tag_list;
-  GList                 *tag_iterator;
-  gint                   i;
-  gint                   j;
-  gint                   max_height;
-  gint                   screen_height;
-  gchar                **current_tags;
-  gint                   current_count;
-  const gchar           *list_tag;
-  GdkRectangle           popup_rects[2]; /* variants of popup placement */
-  GdkRectangle           popup_rect; /* best popup rect in screen coordinates */
+  GimpTagPopup        *popup = GIMP_TAG_POPUP (object);
+  GimpTaggedContainer *container;
+  GtkWidget           *entry;
+  GtkAllocation        entry_allocation;
+  GtkStyle            *frame_style;
+  gint                 x;
+  gint                 y;
+  gint                 width;
+  gint                 height;
+  gint                 popup_height;
+  GHashTable          *tag_hash;
+  GList               *tag_list;
+  GList               *tag_iterator;
+  gint                 i;
+  gint                 j;
+  gint                 max_height;
+  gint                 screen_height;
+  gchar              **current_tags;
+  gint                 current_count;
+  const gchar         *list_tag;
+  GdkRectangle         popup_rects[2]; /* variants of popup placement */
+  GdkRectangle         popup_rect; /* best popup rect in screen coordinates */
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -1028,7 +1028,7 @@ gimp_tag_popup_toggle_tag (GimpTagPopup *popup,
 
   if (GIMP_TAG_ENTRY (popup->combo_entry)->mode == GIMP_TAG_ENTRY_MODE_QUERY)
     {
-      GimpFilteredContainer *container;
+      GimpTaggedContainer *container;
 
       container = GIMP_TAG_ENTRY (popup->combo_entry)->container;
 

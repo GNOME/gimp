@@ -35,9 +35,9 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdata.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimpfilteredcontainer.h"
 #include "core/gimplist.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptaggedcontainer.h"
 
 #include "gimpcombotagentry.h"
 #include "gimpcontainertreestore.h"
@@ -57,7 +57,7 @@ struct _GimpDataFactoryViewPriv
 {
   GimpDataFactory *factory;
 
-  GimpContainer   *tag_filtered_container;
+  GimpContainer   *tagged_container;
   GtkWidget       *query_tag_entry;
   GtkWidget       *assign_tag_entry;
   GList           *selected_items;
@@ -108,15 +108,15 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
                                             GIMP_TYPE_DATA_FACTORY_VIEW,
                                             GimpDataFactoryViewPriv);
 
-  view->priv->tag_filtered_container = NULL;
-  view->priv->query_tag_entry        = NULL;
-  view->priv->assign_tag_entry       = NULL;
-  view->priv->selected_items         = NULL;
-  view->priv->edit_button            = NULL;
-  view->priv->new_button             = NULL;
-  view->priv->duplicate_button       = NULL;
-  view->priv->delete_button          = NULL;
-  view->priv->refresh_button         = NULL;
+  view->priv->tagged_container = NULL;
+  view->priv->query_tag_entry  = NULL;
+  view->priv->assign_tag_entry = NULL;
+  view->priv->selected_items   = NULL;
+  view->priv->edit_button      = NULL;
+  view->priv->new_button       = NULL;
+  view->priv->duplicate_button = NULL;
+  view->priv->delete_button    = NULL;
+  view->priv->refresh_button   = NULL;
 }
 
 static void
@@ -124,10 +124,10 @@ gimp_data_factory_view_dispose (GObject *object)
 {
   GimpDataFactoryView *factory_view = GIMP_DATA_FACTORY_VIEW (object);
 
-  if (factory_view->priv->tag_filtered_container)
+  if (factory_view->priv->tagged_container)
     {
-      g_object_unref (factory_view->priv->tag_filtered_container);
-      factory_view->priv->tag_filtered_container = NULL;
+      g_object_unref (factory_view->priv->tagged_container);
+      factory_view->priv->tagged_container = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -241,13 +241,14 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   factory_view->priv->factory = factory;
 
-  factory_view->priv->tag_filtered_container =
-    gimp_filtered_container_new (gimp_data_factory_get_container (factory),
-                                 (GCompareFunc) gimp_data_compare);
+  factory_view->priv->tagged_container =
+    gimp_tagged_container_new (gimp_data_factory_get_container (factory),
+                               (GCompareFunc) gimp_data_compare);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
-                                         factory_view->priv->tag_filtered_container, context,
+                                         factory_view->priv->tagged_container,
+                                         context,
                                          view_size, view_border_width,
                                          menu_factory, menu_identifier,
                                          ui_identifier))
@@ -305,7 +306,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   /* Query tag entry */
   factory_view->priv->query_tag_entry =
-    gimp_combo_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->priv->tag_filtered_container),
+    gimp_combo_tag_entry_new (GIMP_TAGGED_CONTAINER (factory_view->priv->tagged_container),
                               GIMP_TAG_ENTRY_MODE_QUERY);
   gtk_box_pack_start (GTK_BOX (editor->view),
                       factory_view->priv->query_tag_entry,
@@ -316,7 +317,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   /* Assign tag entry */
   factory_view->priv->assign_tag_entry =
-    gimp_combo_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->priv->tag_filtered_container),
+    gimp_combo_tag_entry_new (GIMP_TAGGED_CONTAINER (factory_view->priv->tagged_container),
                               GIMP_TAG_ENTRY_MODE_ASSIGN);
   gimp_tag_entry_set_selected_items (GIMP_TAG_ENTRY (factory_view->priv->assign_tag_entry),
                                      factory_view->priv->selected_items);
