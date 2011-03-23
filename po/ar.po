@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-13 22:51+0200\n"
-"PO-Revision-Date: 2011-02-13 22:51+0300\n"
+"POT-Creation-Date: 2011-04-13 00:39+0200\n"
+"PO-Revision-Date: 2011-04-13 00:38+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
@@ -204,7 +204,7 @@ msgstr "(اكتب أي حرف لإغلاق هذه النافذة)\n"
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "خرْج جمب. تستطيع تصغير هذه النافذة، لكن لا تغلقها."
 
-#: ../app/sanity.c:398
+#: ../app/sanity.c:433
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -215,7 +215,7 @@ msgstr ""
 "\n"
 "من فضلك راجع قيمة متغير البيئة G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:417
+#: ../app/sanity.c:452
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -231,12 +231,12 @@ msgstr ""
 "من فضلك اضبط متغير البيئة G_FILENAME_ENCODING."
 
 #. show versions of libraries used by GIMP
-#: ../app/version.c:64
+#: ../app/version.c:63 ../app/version.c:130
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "يستخدم %s الإصدارة %s (مصرّفة مقابل الإصدارة %s)"
 
-#: ../app/version.c:127 ../tools/gimp-remote.c:94
+#: ../app/version.c:138 ../tools/gimp-remote.c:94
 #, c-format
 msgid "%s version %s"
 msgstr "‏%s إصدارة %s"
@@ -247,7 +247,7 @@ msgid "Brush Editor"
 msgstr "محرر الفُرَش"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:112 ../app/core/gimp.c:953
+#: ../app/actions/actions.c:112 ../app/core/gimp.c:952
 #: ../app/dialogs/dialogs.c:282 ../app/dialogs/preferences-dialog.c:2718
 msgid "Brushes"
 msgstr "الفُرَش"
@@ -336,19 +336,19 @@ msgid "Gradient Editor"
 msgstr "محرر التدرجات"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:172 ../app/core/gimp.c:973
+#: ../app/actions/actions.c:172 ../app/core/gimp.c:972
 #: ../app/dialogs/dialogs.c:286 ../app/dialogs/preferences-dialog.c:2734
 msgid "Gradients"
 msgstr "التدرجات"
 
 #. initialize the list of gimp tool presets
-#: ../app/actions/actions.c:175 ../app/core/gimp.c:983
+#: ../app/actions/actions.c:175 ../app/core/gimp.c:982
 #: ../app/dialogs/dialogs.c:302
 msgid "Tool Presets"
 msgstr "محفوظات الخيارات"
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:369
-#: ../app/widgets/gimptoolpreseteditor.c:73
+#: ../app/widgets/gimptoolpreseteditor.c:74
 msgid "Tool Preset Editor"
 msgstr "محرر محفوظات الخيارات"
 
@@ -376,13 +376,13 @@ msgid "Palette Editor"
 msgstr "محرر لوحة الألوان"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:196 ../app/core/gimp.c:968
+#: ../app/actions/actions.c:196 ../app/core/gimp.c:967
 #: ../app/dialogs/dialogs.c:288 ../app/dialogs/preferences-dialog.c:2730
 msgid "Palettes"
 msgstr "ألواح الألوان"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:199 ../app/core/gimp.c:963
+#: ../app/actions/actions.c:199 ../app/core/gimp.c:962
 #: ../app/dialogs/dialogs.c:284 ../app/dialogs/preferences-dialog.c:2726
 msgid "Patterns"
 msgstr "الأنماط"
@@ -404,7 +404,7 @@ msgid "Select"
 msgstr "اختر"
 
 #. initialize the template list
-#: ../app/actions/actions.c:214 ../app/core/gimp.c:988
+#: ../app/actions/actions.c:214 ../app/core/gimp.c:987
 #: ../app/dialogs/dialogs.c:296
 msgid "Templates"
 msgstr "القوالب"
@@ -418,7 +418,7 @@ msgid "Text Editor"
 msgstr "محرر النصوص"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:263
-#: ../app/dialogs/preferences-dialog.c:1854 ../app/gui/gui.c:425
+#: ../app/dialogs/preferences-dialog.c:1854 ../app/gui/gui.c:424
 msgid "Tool Options"
 msgstr "خيارات الأدوات"
 
@@ -427,7 +427,7 @@ msgid "Tools"
 msgstr "الأدوات"
 
 #: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:315
-#: ../app/tools/gimpvectortool.c:160
+#: ../app/tools/gimpvectortool.c:159
 msgid "Paths"
 msgstr "المسارات"
 
@@ -753,7 +753,7 @@ msgstr "خيارات القناة الجديدة"
 msgid "New Channel Color"
 msgstr "لون القناة الجديدة"
 
-#: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:252
+#: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:257
 #: ../app/display/gimpdisplayshell-dnd.c:599
 #: ../app/widgets/gimpchanneltreeview.c:251
 #: ../app/widgets/gimplayertreeview.c:778
@@ -950,9 +950,9 @@ msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
 msgstr "استخدم اللون الممزوج لكل الطبقات المرئية"
 
-#: ../app/actions/data-commands.c:104 ../app/actions/documents-commands.c:343
-#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:233
-#: ../app/dialogs/file-open-dialog.c:278
+#: ../app/actions/data-commands.c:88 ../app/actions/documents-commands.c:344
+#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:232
+#: ../app/dialogs/file-open-dialog.c:277
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:552
@@ -968,28 +968,14 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1534
+#: ../app/actions/data-commands.c:117
+#: ../app/actions/tool-options-commands.c:69
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1533
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:398 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
 msgid "Untitled"
 msgstr "غير معنون"
-
-#: ../app/actions/data-commands.c:238
-msgid "Delete Object"
-msgstr "احذف الكائن"
-
-#: ../app/actions/data-commands.c:261
-#, c-format
-msgid "Delete '%s'?"
-msgstr "أأحذف '%s'؟"
-
-#: ../app/actions/data-commands.c:264
-#, c-format
-msgid ""
-"Are you sure you want to remove '%s' from the list and delete it on disk?"
-msgstr "أمتأكد أنك تريد إزالة '%s' من القائمة وحذفه من القرص؟"
 
 #: ../app/actions/dialogs-actions.c:44
 msgctxt "windows-action"
@@ -2079,30 +2065,30 @@ msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "املأ التحديد باستخدام النمط النشط"
 
-#: ../app/actions/edit-actions.c:295
+#: ../app/actions/edit-actions.c:304
 #, c-format
 msgid "_Undo %s"
 msgstr "_تراجع عن %s"
 
-#: ../app/actions/edit-actions.c:302
+#: ../app/actions/edit-actions.c:311
 #, c-format
 msgid "_Redo %s"
 msgstr "أ_عد %s"
 
-#: ../app/actions/edit-actions.c:317
+#: ../app/actions/edit-actions.c:326
 #, c-format
 msgid "_Fade %s..."
 msgstr "أ_بهِت %s..."
 
-#: ../app/actions/edit-actions.c:329
+#: ../app/actions/edit-actions.c:338
 msgid "_Undo"
 msgstr "_تراجع"
 
-#: ../app/actions/edit-actions.c:330
+#: ../app/actions/edit-actions.c:339
 msgid "_Redo"
 msgstr "أ_عد"
 
-#: ../app/actions/edit-actions.c:331
+#: ../app/actions/edit-actions.c:340
 msgid "_Fade..."
 msgstr "أ_بهِت..."
 
@@ -2388,17 +2374,17 @@ msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "صدّر الصورة إلى أنساق الملفات المختلفة مثل PNG و JPEG"
 
-#: ../app/actions/file-actions.c:290
+#: ../app/actions/file-actions.c:292
 #, c-format
 msgid "Export to %s"
 msgstr "صدّر إلى %s"
 
-#: ../app/actions/file-actions.c:296
+#: ../app/actions/file-actions.c:298
 #, c-format
 msgid "Overwrite %s"
 msgstr "اطمس %s"
 
-#: ../app/actions/file-actions.c:304
+#: ../app/actions/file-actions.c:306
 msgid "Export to"
 msgstr "صدّر إلى"
 
@@ -3191,56 +3177,56 @@ msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "دوّر الصورة 90 درجة يسارا"
 
-#: ../app/actions/image-commands.c:236
+#: ../app/actions/image-commands.c:237
 msgid "Set Image Canvas Size"
 msgstr "حدد حجم رقعة الرسم"
 
-#: ../app/actions/image-commands.c:265 ../app/actions/image-commands.c:289
-#: ../app/actions/image-commands.c:581
+#: ../app/actions/image-commands.c:266 ../app/actions/image-commands.c:290
+#: ../app/actions/image-commands.c:583
 msgid "Resizing"
 msgstr "يغيّر الحجم"
 
-#: ../app/actions/image-commands.c:316
+#: ../app/actions/image-commands.c:317
 msgid "Set Image Print Resolution"
 msgstr "اضبط ميْز طباعة الصورة"
 
-#: ../app/actions/image-commands.c:378
-#: ../app/pdb/drawable-transform-cmds.c:153
-#: ../app/pdb/drawable-transform-cmds.c:230
-#: ../app/pdb/item-transform-cmds.c:158
+#: ../app/actions/image-commands.c:379
+#: ../app/pdb/drawable-transform-cmds.c:161
+#: ../app/pdb/drawable-transform-cmds.c:249
+#: ../app/pdb/item-transform-cmds.c:162
 msgid "Flipping"
 msgstr "يقلب"
 
-#: ../app/actions/image-commands.c:402
-#: ../app/pdb/drawable-transform-cmds.c:547
-#: ../app/pdb/drawable-transform-cmds.c:628 ../app/pdb/image-cmds.c:536
-#: ../app/pdb/item-transform-cmds.c:423 ../app/pdb/transform-tools-cmds.c:224
+#: ../app/actions/image-commands.c:403
+#: ../app/pdb/drawable-transform-cmds.c:608
+#: ../app/pdb/drawable-transform-cmds.c:700 ../app/pdb/image-cmds.c:536
+#: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:122
 msgid "Rotating"
 msgstr "يدوّر"
 
-#: ../app/actions/image-commands.c:428 ../app/actions/layers-commands.c:691
+#: ../app/actions/image-commands.c:429 ../app/actions/layers-commands.c:691
 msgid "Cannot crop because the current selection is empty."
 msgstr "تعذّر التقصير لأن التحديد الحالي فارغ"
 
-#: ../app/actions/image-commands.c:628
+#: ../app/actions/image-commands.c:630
 msgid "Change Print Size"
 msgstr "غيّر حجم الطباعة"
 
-#: ../app/actions/image-commands.c:669
+#: ../app/actions/image-commands.c:671
 msgid "Scale Image"
 msgstr "حجّم الصورة"
 
 #. Scaling
-#: ../app/actions/image-commands.c:680 ../app/actions/layers-commands.c:1145
+#: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
-#: ../app/pdb/drawable-transform-cmds.c:708
-#: ../app/pdb/drawable-transform-cmds.c:786 ../app/pdb/image-cmds.c:408
-#: ../app/pdb/image-cmds.c:444 ../app/pdb/item-transform-cmds.c:512
+#: ../app/pdb/drawable-transform-cmds.c:791
+#: ../app/pdb/drawable-transform-cmds.c:880 ../app/pdb/image-cmds.c:408
+#: ../app/pdb/image-cmds.c:444 ../app/pdb/item-transform-cmds.c:524
 #: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
-#: ../app/pdb/transform-tools-cmds.c:302 ../app/tools/gimpscaletool.c:106
+#: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:117
 msgid "Scaling"
-msgstr "يُحجّم"
+msgstr "التحجيم"
 
 #: ../app/actions/images-actions.c:43
 msgctxt "images-action"
@@ -4451,7 +4437,7 @@ msgstr "أو_صد التحديد إلى حواف الصورة"
 
 #: ../app/actions/select-commands.c:342 ../app/actions/select-commands.c:375
 #: ../app/actions/vectors-commands.c:386 ../app/actions/vectors-commands.c:420
-#: ../app/dialogs/stroke-dialog.c:289
+#: ../app/dialogs/stroke-dialog.c:291
 msgid "There is no active layer or channel to stroke to."
 msgstr "لا توجد طبقة أو قناة نشطة لرسم الحواف بها."
 
@@ -4514,24 +4500,24 @@ msgctxt "templates-action"
 msgid "Delete this template"
 msgstr "احذف هذه القالب"
 
-#: ../app/actions/templates-commands.c:111
+#: ../app/actions/templates-commands.c:110
 msgid "New Template"
 msgstr "قالب جديد"
 
-#: ../app/actions/templates-commands.c:114
+#: ../app/actions/templates-commands.c:113
 msgid "Create a New Template"
 msgstr "أنشئ قالبا جديدا"
 
-#: ../app/actions/templates-commands.c:174
-#: ../app/actions/templates-commands.c:177
+#: ../app/actions/templates-commands.c:173
+#: ../app/actions/templates-commands.c:176
 msgid "Edit Template"
 msgstr "حرّر القالب"
 
-#: ../app/actions/templates-commands.c:212
+#: ../app/actions/templates-commands.c:211
 msgid "Delete Template"
 msgstr "احذف القالب"
 
-#: ../app/actions/templates-commands.c:238
+#: ../app/actions/templates-commands.c:237
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
@@ -4672,83 +4658,61 @@ msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "من اليمين إلى اليسار"
 
-#: ../app/actions/tool-options-actions.c:55
+#: ../app/actions/tool-options-actions.c:54
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
 msgstr "قائمة خيارات الأدوات"
 
-#: ../app/actions/tool-options-actions.c:59
+#: ../app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
-msgid "_Save Options To"
-msgstr "ا_حفظ الخيارات في"
+msgid "_Save Tool Preset"
+msgstr "ا_حفظ محفوظة الخيارات"
 
-#: ../app/actions/tool-options-actions.c:63
+#: ../app/actions/tool-options-actions.c:62
 msgctxt "tool-options-action"
-msgid "_Restore Options From"
-msgstr "اس_ترجع الخيارات من"
+msgid "_Restore Tool Preset"
+msgstr "ا_ستعد محفوظة الخيارات"
 
-#: ../app/actions/tool-options-actions.c:67
+#: ../app/actions/tool-options-actions.c:66
 msgctxt "tool-options-action"
-msgid "Re_name Saved Options"
-msgstr "_غيّر اسم الخيارات المحفوظة"
+msgid "E_dit Tool Preset"
+msgstr "_حرّر محفوظة الخيارات"
 
-#: ../app/actions/tool-options-actions.c:71
+#: ../app/actions/tool-options-actions.c:70
 msgctxt "tool-options-action"
-msgid "_Delete Saved Options"
-msgstr "اح_ذف الخيارات المحفوظة"
+msgid "_Delete Tool Preset"
+msgstr "ا_حذف محفوظة الخيارات"
 
-#: ../app/actions/tool-options-actions.c:75
+#: ../app/actions/tool-options-actions.c:74
 msgctxt "tool-options-action"
-msgid "_New Entry..."
-msgstr "مد_خلة جديد..."
+msgid "_New Tool Preset..."
+msgstr "_محفوظة خيارات جديدة..."
 
-#: ../app/actions/tool-options-actions.c:80
+#: ../app/actions/tool-options-actions.c:79
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
 msgstr "_صفّر خيارات الأدوات"
 
-#: ../app/actions/tool-options-actions.c:81
+#: ../app/actions/tool-options-actions.c:80
 msgctxt "tool-options-action"
 msgid "Reset to default values"
 msgstr "استعد القيم المبدئية"
 
-#: ../app/actions/tool-options-actions.c:86
+#: ../app/actions/tool-options-actions.c:85
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
 msgstr "صفّر _كل خيارات الأدوات"
 
-#: ../app/actions/tool-options-actions.c:87
+#: ../app/actions/tool-options-actions.c:86
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
 msgstr "صفّر كل خيارات الأدوات"
 
-#: ../app/actions/tool-options-commands.c:70
-msgid "Save Tool Options"
-msgstr "احفظ خيارات الأدوات"
-
-#: ../app/actions/tool-options-commands.c:74
-msgid "Enter a name for the saved options"
-msgstr "أدخل اسما للخيارات المحفوظة"
-
-#: ../app/actions/tool-options-commands.c:75
-#: ../app/actions/tool-options-commands.c:245
-#: ../app/actions/tool-options-commands.c:262
-msgid "Saved Options"
-msgstr "الخيارات المحفوظة"
-
-#: ../app/actions/tool-options-commands.c:138
-msgid "Rename Saved Tool Options"
-msgstr "غيّر اسم خيارات الأدوات المحفوظة"
-
-#: ../app/actions/tool-options-commands.c:142
-msgid "Enter a new name for the saved options"
-msgstr "أدخل اسما جديدا للخيارات المحفوظة"
-
-#: ../app/actions/tool-options-commands.c:185
+#: ../app/actions/tool-options-commands.c:180
 msgid "Reset All Tool Options"
 msgstr "صفّر كل خيارات الأدوات"
 
-#: ../app/actions/tool-options-commands.c:208
+#: ../app/actions/tool-options-commands.c:203
 msgid "Do you really want to reset all tool options to default values?"
 msgstr "هل تريد حقا تصفير جميع خيارات الأدوات إلى القيم المبدئية؟"
 
@@ -5130,7 +5094,7 @@ msgid "New Path Options"
 msgstr "خيارات المسار الجديد"
 
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:198
-#: ../app/tools/gimpvectortool.c:1982
+#: ../app/tools/gimpvectortool.c:1980
 msgid "Stroke Path"
 msgstr "ارسم المسار"
 
@@ -5611,38 +5575,38 @@ msgstr "الشاشة %s"
 msgid "Move this window to screen %s"
 msgstr "انقل هذه النافذة إلى الشاشة %s"
 
-#: ../app/actions/windows-actions.c:85
+#: ../app/actions/windows-actions.c:86
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_نوافذ"
 
-#: ../app/actions/windows-actions.c:87
+#: ../app/actions/windows-actions.c:88
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "الأر_صفة المغلقة مؤخرا"
 
-#: ../app/actions/windows-actions.c:89
+#: ../app/actions/windows-actions.c:90
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "الحوارات القابلة للتر_صيف"
 
-#: ../app/actions/windows-actions.c:95
+#: ../app/actions/windows-actions.c:96
 msgctxt "windows-action"
 msgid "Hide Docks"
 msgstr "أخف الأرصفة"
 
-#: ../app/actions/windows-actions.c:103
+#: ../app/actions/windows-actions.c:104
 msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr "عند تفعيله ستكون الأرصفة والحوارات الأخرى مخفية تاركة نوافذ الصور فقط."
 
-#: ../app/actions/windows-actions.c:109
+#: ../app/actions/windows-actions.c:110
 msgctxt "windows-action"
 msgid "Single-Window Mode"
 msgstr "نمط النافذة الواحدة"
 
-#: ../app/actions/windows-actions.c:110
+#: ../app/actions/windows-actions.c:111
 msgctxt "windows-action"
 msgid ""
 "When enabled GIMP is in a single-window mode. Far from completely "
@@ -6882,12 +6846,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "اربط التحديد الحر"
 
-#: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:262
+#: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:261
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "الصق"
 
-#: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:501
+#: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:502
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "قص"
@@ -6898,7 +6862,7 @@ msgid "Text"
 msgstr "نص"
 
 #: ../app/core/core-enums.c:865 ../app/core/core-enums.c:907
-#: ../app/core/gimpdrawable-transform.c:567
+#: ../app/core/gimpdrawable-transform.c:592
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "حوّل"
@@ -7185,46 +7149,46 @@ msgstr "النفّاض"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:344
 #: ../app/gui/session.c:349 ../app/menus/menus.c:464
-#: ../app/widgets/gimpdevices.c:270
+#: ../app/widgets/gimpdevices.c:206
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "فشل حذف \"%s\"‏ : %s"
 
-#: ../app/core/gimp-edit.c:190 ../app/core/gimpimage-new.c:304
+#: ../app/core/gimp-edit.c:189 ../app/core/gimpimage-new.c:309
 msgid "Pasted Layer"
 msgstr "طبقة ملصقة"
 
-#: ../app/core/gimp-edit.c:389
+#: ../app/core/gimp-edit.c:388
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "امسح"
 
-#: ../app/core/gimp-edit.c:408
+#: ../app/core/gimp-edit.c:407
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "املأ بلون المقدمة"
 
-#: ../app/core/gimp-edit.c:412
+#: ../app/core/gimp-edit.c:411
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "املأ بلون الخلفية"
 
-#: ../app/core/gimp-edit.c:416
+#: ../app/core/gimp-edit.c:415
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "املأ بالأبيض"
 
-#: ../app/core/gimp-edit.c:420
+#: ../app/core/gimp-edit.c:419
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "املأ بالشفافية"
 
-#: ../app/core/gimp-edit.c:424
+#: ../app/core/gimp-edit.c:423
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "املأ بنمط"
 
-#: ../app/core/gimp-edit.c:513
+#: ../app/core/gimp-edit.c:515
 msgid "Global Buffer"
 msgstr "براح عام"
 
@@ -7289,42 +7253,42 @@ msgstr "ينشئ المجلد '%s'..."
 msgid "Cannot create folder '%s': %s"
 msgstr "تعذّر إنشاء المجلد '%s'‏: %s"
 
-#: ../app/core/gimp.c:597
+#: ../app/core/gimp.c:596
 msgid "Initialization"
 msgstr "يجهّز"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:698
+#: ../app/core/gimp.c:697
 msgid "Internal Procedures"
 msgstr "عملية داخلية"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:949
+#: ../app/core/gimp.c:948
 msgid "Looking for data files"
 msgstr "يبحث عن ملفات البيانات"
 
-#: ../app/core/gimp.c:949
+#: ../app/core/gimp.c:948
 msgid "Parasites"
 msgstr "الطفيليات"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:958 ../app/dialogs/preferences-dialog.c:2722
-#: ../app/tools/gimppaintoptions-gui.c:201
+#: ../app/core/gimp.c:957 ../app/dialogs/preferences-dialog.c:2722
+#: ../app/tools/gimppaintoptions-gui.c:202
 msgid "Dynamics"
 msgstr "الحركيات"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:978
+#: ../app/core/gimp.c:977
 msgid "Fonts (this may take a while)"
 msgstr "الخطوط (قد تستغرق بعض الوقت)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:992 ../app/dialogs/preferences-dialog.c:2750
+#: ../app/core/gimp.c:991 ../app/dialogs/preferences-dialog.c:2750
 msgid "Modules"
 msgstr "الوحدات"
 
 #. update tag cache
-#: ../app/core/gimp.c:996
+#: ../app/core/gimp.c:995
 msgid "Updating tag cache"
 msgstr "يُحدّث خبيئة الوسوم"
 
@@ -7372,7 +7336,7 @@ msgstr "سلسلة UTF-8 غير صحيحة في ملف الفرشاة '%s'."
 
 #: ../app/core/gimpbrush-load.c:284 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:82
-#: ../app/tools/gimpvectortool.c:319
+#: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "غير مسمى"
 
@@ -7396,7 +7360,7 @@ msgstr "خطأ تحليل فادح في ملف الفرشاة '%s':‏ تعذّ�
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr "خطأ تحليل فادح في ملف الفرشاة '%s':‏ الفرش العريضة غير مدعومة."
 
-#: ../app/core/gimpbrush.c:136
+#: ../app/core/gimpbrush.c:148
 msgid "Brush Spacing"
 msgstr "مباعدة الفرشاة"
 
@@ -7463,38 +7427,38 @@ msgstr "زاوية الفرشاة"
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "خطأ تحليل فادح في ملف الفرشاة '%s':‏ الملف تالف."
 
-#: ../app/core/gimpchannel-select.c:59
+#: ../app/core/gimpchannel-select.c:60
 msgctxt "undo-type"
 msgid "Rectangle Select"
 msgstr "تحديد مستطيل"
 
-#: ../app/core/gimpchannel-select.c:110
+#: ../app/core/gimpchannel-select.c:111
 msgctxt "undo-type"
 msgid "Ellipse Select"
 msgstr "تحديد بيضاوي"
 
-#: ../app/core/gimpchannel-select.c:164
+#: ../app/core/gimpchannel-select.c:165
 msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "تحديد مستطيل مدور الزوايا"
 
-#: ../app/core/gimpchannel-select.c:433 ../app/core/gimplayer.c:275
+#: ../app/core/gimpchannel-select.c:407 ../app/core/gimplayer.c:275
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "ألفا إلى التحديد"
 
-#: ../app/core/gimpchannel-select.c:471
+#: ../app/core/gimpchannel-select.c:445
 #, c-format
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
 msgstr "القناة %s إلى التحديد"
 
-#: ../app/core/gimpchannel-select.c:519
+#: ../app/core/gimpchannel-select.c:493
 msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr "تحديد ضبابي"
 
-#: ../app/core/gimpchannel-select.c:566
+#: ../app/core/gimpchannel-select.c:540
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "حدد باللون"
@@ -7529,7 +7493,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "دوّر القناة"
 
-#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:845
+#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:907
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "حوّل القناة"
@@ -7617,26 +7581,25 @@ msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "قلّص القناة"
 
-#: ../app/core/gimpchannel.c:728
+#: ../app/core/gimpchannel.c:730
 msgid "Cannot stroke empty channel."
 msgstr "لا يمكن رسم قناة فارغة."
 
-#: ../app/core/gimpchannel.c:1750
+#: ../app/core/gimpchannel.c:1757
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "حدد لون القناة"
 
-#: ../app/core/gimpchannel.c:1816
+#: ../app/core/gimpchannel.c:1823
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "حدد إعتام القناة"
 
-#: ../app/core/gimpchannel.c:1924 ../app/core/gimpselection.c:154
+#: ../app/core/gimpchannel.c:1931 ../app/core/gimpselection.c:154
 msgid "Selection Mask"
 msgstr "قناع التحديد"
 
 #: ../app/core/gimpcontext.c:638 ../app/tools/gimppaintoptions-gui.c:113
-#: ../app/tools/gimptransformoptions.c:332
 msgid "Opacity"
 msgstr "الإعتام"
 
@@ -7644,7 +7607,7 @@ msgstr "الإعتام"
 msgid "Paint Mode"
 msgstr "نمط التلوين"
 
-#: ../app/core/gimpdata.c:671 ../app/core/gimptoolpresets.c:277
+#: ../app/core/gimpdata.c:670
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "تعذّر حذف '%s'‏: %s"
@@ -7662,11 +7625,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:536 ../app/core/gimpdatafactory.c:539
-#: ../app/core/gimpitem.c:497 ../app/core/gimpitem.c:500
+#: ../app/core/gimpitem.c:493 ../app/core/gimpitem.c:496
 msgid "copy"
 msgstr "انسخ"
 
-#: ../app/core/gimpdatafactory.c:548 ../app/core/gimpitem.c:509
+#: ../app/core/gimpdatafactory.c:548 ../app/core/gimpitem.c:505
 #, c-format
 msgid "%s copy"
 msgstr "نسخة %s"
@@ -7791,49 +7754,53 @@ msgstr "إزاحة القابل للرسم"
 msgid "Posterize"
 msgstr "حوّل إلى مُلصق"
 
-#: ../app/core/gimpdrawable-stroke.c:327
-#: ../app/paint/gimppaintcore-stroke.c:336 ../app/vectors/gimpvectors.c:557
+#: ../app/core/gimpdrawable-stroke.c:272
+#: ../app/paint/gimppaintcore-stroke.c:336 ../app/vectors/gimpvectors.c:556
 msgid "Not enough points to stroke"
 msgstr "لا توجد نقاط كافية لرسم الخط"
 
-#: ../app/core/gimpdrawable-stroke.c:455
+#: ../app/core/gimpdrawable-stroke.c:273
+msgid "Not enough points to fill"
+msgstr "لا توجد نقاط كافية للملء"
+
+#: ../app/core/gimpdrawable-stroke.c:404
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "ارسم الخط"
 
 #: ../app/core/gimpdrawable-threshold.c:70
-#: ../app/core/gimpdrawable-threshold.c:81 ../app/tools/gimpblendoptions.c:274
+#: ../app/core/gimpdrawable-threshold.c:81 ../app/tools/gimpblendoptions.c:275
 #: ../app/tools/gimpbucketfilloptions.c:284
 #: ../app/tools/gimpregionselectoptions.c:214
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
 msgstr "العتبة"
 
-#: ../app/core/gimpdrawable-transform.c:644
+#: ../app/core/gimpdrawable-transform.c:680
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "اقلب"
 
-#: ../app/core/gimpdrawable-transform.c:718
+#: ../app/core/gimpdrawable-transform.c:765
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "دوّر"
 
-#: ../app/core/gimpdrawable-transform.c:843 ../app/core/gimplayer.c:274
+#: ../app/core/gimpdrawable-transform.c:905 ../app/core/gimplayer.c:274
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "حوّل الطبقة"
 
-#: ../app/core/gimpdrawable-transform.c:858
+#: ../app/core/gimpdrawable-transform.c:918
 msgid "Transformation"
 msgstr "التحويل"
 
-#: ../app/core/gimpdrawable.c:486
+#: ../app/core/gimpdrawable.c:483
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "حجّم"
 
-#: ../app/core/gimpdynamicsoutput.c:106
+#: ../app/core/gimpdynamicsoutput.c:135
 msgid "Output type"
 msgstr "نوع الخرج"
 
@@ -7908,41 +7875,41 @@ msgstr "الإزاحة الأفقية لخط الشبكة الأول؛ يمن أ
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "الإزاحة الرأسية لخط الشبكة الأول؛ يمن أن يكون سالبا."
 
-#: ../app/core/gimpgrouplayer.c:194
+#: ../app/core/gimpgrouplayer.c:204
 msgid "Layer Group"
 msgstr "مجموعة طبقات"
 
-#: ../app/core/gimpgrouplayer.c:195
+#: ../app/core/gimpgrouplayer.c:205
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "غيّر اسم مجموعة الطبقات"
 
-#: ../app/core/gimpgrouplayer.c:196
+#: ../app/core/gimpgrouplayer.c:206
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "انقل مجموعة الطبقات"
 
-#: ../app/core/gimpgrouplayer.c:197
+#: ../app/core/gimpgrouplayer.c:207
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "حجّم مجموعة الطبقات"
 
-#: ../app/core/gimpgrouplayer.c:198
+#: ../app/core/gimpgrouplayer.c:208
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "غيّر حجم مجموعة الطبقات"
 
-#: ../app/core/gimpgrouplayer.c:199
+#: ../app/core/gimpgrouplayer.c:209
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "اقلب مجموعة الطبقات"
 
-#: ../app/core/gimpgrouplayer.c:200
+#: ../app/core/gimpgrouplayer.c:210
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "دوّر مجموعة الطبقات"
 
-#: ../app/core/gimpgrouplayer.c:201
+#: ../app/core/gimpgrouplayer.c:211
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "حوّل مجموعة الطبقات"
@@ -8049,48 +8016,48 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "حوّل عناصر"
 
-#: ../app/core/gimpimage-merge.c:108 ../app/core/gimpimage-merge.c:122
+#: ../app/core/gimpimage-merge.c:131
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "ادمج الطبقات المرئية"
 
-#: ../app/core/gimpimage-merge.c:176
+#: ../app/core/gimpimage-merge.c:177
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "سطّح صورة"
 
-#: ../app/core/gimpimage-merge.c:225
+#: ../app/core/gimpimage-merge.c:247
 msgid "Cannot merge down to a layer group."
 msgstr "تعذّر دمج مجموعة طبقات لأسفل."
 
-#: ../app/core/gimpimage-merge.c:232
+#: ../app/core/gimpimage-merge.c:254
 msgid "The layer to merge down to is locked."
 msgstr "الطبقة التي ستُدمج لأسفل موصدة"
 
-#: ../app/core/gimpimage-merge.c:244
+#: ../app/core/gimpimage-merge.c:266
 msgid "There is no visible layer to merge down to."
 msgstr "لا طبقة مرئية ليُدمج لأسفل بها."
 
-#: ../app/core/gimpimage-merge.c:255
+#: ../app/core/gimpimage-merge.c:276
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "ادمج لأسفل"
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:304
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "ادمج مجموعة الطبقات"
 
-#: ../app/core/gimpimage-merge.c:330
+#: ../app/core/gimpimage-merge.c:357
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "ادمج المسارات المرئية"
 
-#: ../app/core/gimpimage-merge.c:366
+#: ../app/core/gimpimage-merge.c:393
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "لا يوجد مسارات مرئية كافية للدمج. لا بد من وجود اثنين على الأقل."
 
-#: ../app/core/gimpimage-new.c:135
+#: ../app/core/gimpimage-new.c:140
 msgid "Background"
 msgstr "الخلفية"
 
@@ -8129,96 +8096,96 @@ msgstr "حجّم الصورة"
 msgid "Can't undo %s"
 msgstr "تعذّر التراجع عن %s"
 
-#: ../app/core/gimpimage.c:1782
+#: ../app/core/gimpimage.c:1790
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "غيّر ميْز الصورة"
 
-#: ../app/core/gimpimage.c:1834
+#: ../app/core/gimpimage.c:1842
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "غيّر وحدة الصورة"
 
-#: ../app/core/gimpimage.c:2826
+#: ../app/core/gimpimage.c:2834
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "أرفِق طفيليا بالصورة"
 
-#: ../app/core/gimpimage.c:2867
+#: ../app/core/gimpimage.c:2875
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "احذف الطفيلي من الصورة"
 
-#: ../app/core/gimpimage.c:3576
+#: ../app/core/gimpimage.c:3584
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "أضِف طبقة"
 
-#: ../app/core/gimpimage.c:3626 ../app/core/gimpimage.c:3646
+#: ../app/core/gimpimage.c:3634 ../app/core/gimpimage.c:3654
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "احذف الطبقة"
 
-#: ../app/core/gimpimage.c:3639
+#: ../app/core/gimpimage.c:3647
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "أزل التحديد الحر"
 
-#: ../app/core/gimpimage.c:3805
+#: ../app/core/gimpimage.c:3816
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "أضِف قناة"
 
-#: ../app/core/gimpimage.c:3843 ../app/core/gimpimage.c:3855
+#: ../app/core/gimpimage.c:3854 ../app/core/gimpimage.c:3866
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "احذف القناة"
 
-#: ../app/core/gimpimage.c:3906
+#: ../app/core/gimpimage.c:3920
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "أضِف مسارا"
 
-#: ../app/core/gimpimage.c:3937
+#: ../app/core/gimpimage.c:3951
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "احذف المسار"
 
-#: ../app/core/gimpimagefile.c:534 ../app/dialogs/preferences-dialog.c:1711
+#: ../app/core/gimpimagefile.c:585 ../app/dialogs/preferences-dialog.c:1711
 msgid "Folder"
 msgstr "مجلد"
 
-#: ../app/core/gimpimagefile.c:539
+#: ../app/core/gimpimagefile.c:590
 msgid "Special File"
 msgstr "ملف خاص"
 
-#: ../app/core/gimpimagefile.c:555
+#: ../app/core/gimpimagefile.c:606
 msgid "Remote File"
 msgstr "ملف بعيد"
 
-#: ../app/core/gimpimagefile.c:574
+#: ../app/core/gimpimagefile.c:625
 msgid "Click to create preview"
 msgstr "انقر لإنشاء معاينة"
 
-#: ../app/core/gimpimagefile.c:580
+#: ../app/core/gimpimagefile.c:631
 msgid "Loading preview..."
 msgstr "يحمّل المعاينة..."
 
-#: ../app/core/gimpimagefile.c:586
+#: ../app/core/gimpimagefile.c:637
 msgid "Preview is out of date"
 msgstr "المعاينة غير محدثة"
 
-#: ../app/core/gimpimagefile.c:592
+#: ../app/core/gimpimagefile.c:643
 msgid "Cannot create preview"
 msgstr "تعذّر إنشاء معاينة"
 
-#: ../app/core/gimpimagefile.c:602
+#: ../app/core/gimpimagefile.c:653
 msgid "(Preview may be out of date)"
 msgstr "(المعاينة قد تكون غير محدثة)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:611 ../app/widgets/gimpimagepropview.c:438
-#: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:560
+#: ../app/core/gimpimagefile.c:662 ../app/widgets/gimpimagepropview.c:438
+#: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:568
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -8229,7 +8196,7 @@ msgstr[3] "%Id × %Id بسكل"
 msgstr[4] "%Id × %Id بسكل"
 msgstr[5] "%Id × %Id بسكل"
 
-#: ../app/core/gimpimagefile.c:634 ../app/display/gimpdisplayshell-title.c:339
+#: ../app/core/gimpimagefile.c:685 ../app/display/gimpdisplayshell-title.c:339
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -8240,22 +8207,22 @@ msgstr[3] "%Id طبقات"
 msgstr[4] "%Id طبقة"
 msgstr[5] "%Id طبقة"
 
-#: ../app/core/gimpimagefile.c:681
+#: ../app/core/gimpimagefile.c:733
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "تعذر فتح المصغرة '%s'‏: %s"
 
-#: ../app/core/gimpitem.c:1826
+#: ../app/core/gimpitem.c:1828
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "أرفق طفيليا"
 
-#: ../app/core/gimpitem.c:1836
+#: ../app/core/gimpitem.c:1838
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "أرفق طفيليا بالعنصر"
 
-#: ../app/core/gimpitem.c:1887 ../app/core/gimpitem.c:1894
+#: ../app/core/gimpitem.c:1889 ../app/core/gimpitem.c:1896
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "أزل الطفيلي من العنصر"
@@ -8581,38 +8548,38 @@ msgstr "قلّص التحديد"
 msgid "There is no selection to stroke."
 msgstr "لا تحديد لرسمه."
 
-#: ../app/core/gimpselection.c:668
+#: ../app/core/gimpselection.c:670
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "تعذّر القص أو النسخ لأن المنطقة المحددة فارغة."
 
-#: ../app/core/gimpselection.c:843
+#: ../app/core/gimpselection.c:847
 msgid "Cannot float selection because the selected region is empty."
 msgstr "تعذّر تحرير التحديد لأن المنطقة المحددة فارغة."
 
-#: ../app/core/gimpselection.c:850
+#: ../app/core/gimpselection.c:854
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "حرر التحديد"
 
-#: ../app/core/gimpselection.c:866
+#: ../app/core/gimpselection.c:870
 msgid "Floated Layer"
 msgstr "طبقة حرة"
 
-#: ../app/core/gimpstrokeoptions.c:151
+#: ../app/core/gimpstrokeoptions.c:181
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
 msgstr ""
 
-#: ../app/core/gimptemplate.c:103
+#: ../app/core/gimptemplate.c:129
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 
-#: ../app/core/gimptemplate.c:110
+#: ../app/core/gimptemplate.c:136
 msgid "The horizontal image resolution."
 msgstr "الميْز الأفقي للشاشة"
 
-#: ../app/core/gimptemplate.c:116
+#: ../app/core/gimptemplate.c:142
 msgid "The vertical image resolution."
 msgstr "الميْز الرأسي للشاشة"
 
@@ -8676,7 +8643,7 @@ msgctxt "plural"
 msgid "percent"
 msgstr "بالمئة"
 
-#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:479
+#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:478
 msgid "About GIMP"
 msgstr "عن جمب"
 
@@ -8733,7 +8700,7 @@ msgid "_Remove unused colors from colormap"
 msgstr "أ_زل الألوان غير المستخدمة من مخطط الألوان"
 
 #. dithering
-#: ../app/dialogs/convert-dialog.c:233 ../app/tools/gimpblendoptions.c:253
+#: ../app/dialogs/convert-dialog.c:233 ../app/tools/gimpblendoptions.c:254
 msgid "Dithering"
 msgstr "ارتجاف"
 
@@ -8753,7 +8720,22 @@ msgstr "يحول إلى ألوان مفهرسة"
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "تعذّر تحويل لوح ألوان ذو أكثر من 256 لون."
 
-#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:163
+#: ../app/dialogs/data-delete-dialog.c:81
+msgid "Delete Object"
+msgstr "احذف الكائن"
+
+#: ../app/dialogs/data-delete-dialog.c:104
+#, c-format
+msgid "Delete '%s'?"
+msgstr "أأحذف '%s'؟"
+
+#: ../app/dialogs/data-delete-dialog.c:107
+#, c-format
+msgid ""
+"Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgstr "أمتأكد أنك تريد إزالة '%s' من القائمة وحذفه من القرص؟"
+
+#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:161
 #: ../app/gui/gui-message.c:145
 msgid "GIMP Message"
 msgstr "رسالة جمب"
@@ -8835,7 +8817,7 @@ msgstr "ال_طور:"
 msgid "_Opacity:"
 msgstr "الإ_عتام:"
 
-#: ../app/dialogs/file-open-dialog.c:267
+#: ../app/dialogs/file-open-dialog.c:266
 msgid "Open layers"
 msgstr "افتح طبقات"
 
@@ -8927,35 +8909,39 @@ msgstr "اضبط شبكة الصورة"
 msgid "Grid"
 msgstr "الشبكة"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:64
+#: ../app/dialogs/image-merge-layers-dialog.c:68
 msgid "Merge Layers"
 msgstr "ادمج الطبقات"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:66
+#: ../app/dialogs/image-merge-layers-dialog.c:70
 msgid "Layers Merge Options"
 msgstr "خيارات دمج الطبقات"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:72
+#: ../app/dialogs/image-merge-layers-dialog.c:76
 msgid "_Merge"
 msgstr "ادم_ج"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:92
+#: ../app/dialogs/image-merge-layers-dialog.c:96
 msgid "Final, Merged Layer should be:"
 msgstr "الطبقة الأخيرة المدموجة يجب أن تكون:"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:96
+#: ../app/dialogs/image-merge-layers-dialog.c:100
 msgid "Expanded as necessary"
 msgstr "توسيع عند الضرورة"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:99
+#: ../app/dialogs/image-merge-layers-dialog.c:103
 msgid "Clipped to image"
 msgstr "قص إلى الصورة"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:102
+#: ../app/dialogs/image-merge-layers-dialog.c:106
 msgid "Clipped to bottom layer"
 msgstr "قص إلى طبقة القاع"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:110
+#: ../app/dialogs/image-merge-layers-dialog.c:114
+msgid "Merge within active _group only"
+msgstr "ادمج داخل المجمو_عة النشطة فقط"
+
+#: ../app/dialogs/image-merge-layers-dialog.c:127
 msgid "_Discard invisible layers"
 msgstr "_تجاهل الطبقات غير المرئية"
 
@@ -8968,17 +8954,17 @@ msgstr "أنشئ صورة جديدة"
 msgid "_Template:"
 msgstr "_قالب:"
 
-#: ../app/dialogs/image-new-dialog.c:299
+#: ../app/dialogs/image-new-dialog.c:303
 msgid "Confirm Image Size"
 msgstr "أكّد حجم الصورة"
 
-#: ../app/dialogs/image-new-dialog.c:321
+#: ../app/dialogs/image-new-dialog.c:325
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "تحاول إنشاء صورة بالحجم %s."
 
-#: ../app/dialogs/image-new-dialog.c:328
+#: ../app/dialogs/image-new-dialog.c:332
 #, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
@@ -9070,12 +9056,12 @@ msgstr "ا_سم الطبقة:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1076
+#: ../app/tools/gimpmeasuretool.c:1122
 msgid "Width:"
 msgstr "العرض:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1104
+#: ../app/tools/gimpmeasuretool.c:1150
 msgid "Height:"
 msgstr "الارتفاع:"
 
@@ -9141,7 +9127,7 @@ msgstr "أزِح القناة"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:118 ../app/dialogs/offset-dialog.c:152
-#: ../app/dialogs/resize-dialog.c:198 ../app/tools/gimpblendoptions.c:246
+#: ../app/dialogs/resize-dialog.c:198 ../app/tools/gimpblendoptions.c:247
 #: ../app/widgets/gimpgrideditor.c:206
 msgid "Offset"
 msgstr "الإزاحة"
@@ -9503,7 +9489,7 @@ msgstr "استخدم نسخة الإنترنت"
 
 #: ../app/dialogs/preferences-dialog.c:1802
 msgid "Use a locally installed copy"
-msgstr "استخدم نسخة مثبتة محليا"
+msgstr "استخدم النسخة المثبتة محليا"
 
 #: ../app/dialogs/preferences-dialog.c:1803
 msgid "User manual:"
@@ -9528,7 +9514,7 @@ msgstr "متصفح المساعدة الم_ستخدم:"
 
 #: ../app/dialogs/preferences-dialog.c:1869
 msgid "_Save tool options on exit"
-msgstr "ا_حقظ خيارات الأدوات عند الخروج"
+msgstr "ا_حفظ خيارات الأدوات عند الخروج"
 
 #: ../app/dialogs/preferences-dialog.c:1873
 msgid "Save Tool Options _Now"
@@ -9602,7 +9588,7 @@ msgstr "ضبط الأداة"
 
 #: ../app/dialogs/preferences-dialog.c:1990
 msgid "Default New Image"
-msgstr "صورة جديدة مبدئية"
+msgstr "الصورة الجديدة المبدئية"
 
 #: ../app/dialogs/preferences-dialog.c:1993
 msgid "Default Image"
@@ -9618,7 +9604,7 @@ msgstr "الشبكة المبدئية"
 
 #: ../app/dialogs/preferences-dialog.c:2053
 msgid "Image Windows"
-msgstr "نوافذ الصورة"
+msgstr "نوافذ الصور"
 
 #: ../app/dialogs/preferences-dialog.c:2068
 msgid "Use \"_Dot for dot\" by default"
@@ -10049,23 +10035,23 @@ msgstr "حجم الطباعة"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:193
-#: ../app/widgets/gimptemplateeditor.c:157
+#: ../app/widgets/gimptemplateeditor.c:180
 msgid "_Width:"
 msgstr "ال_عرض:"
 
 #: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:197
-#: ../app/widgets/gimptemplateeditor.c:164
+#: ../app/widgets/gimptemplateeditor.c:187
 msgid "H_eight:"
 msgstr "الار_تفاع:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:255
-#: ../app/widgets/gimptemplateeditor.c:284
+#: ../app/widgets/gimptemplateeditor.c:309
 msgid "_X resolution:"
 msgstr "ميْز _س:"
 
 #: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:258
-#: ../app/widgets/gimptemplateeditor.c:291
+#: ../app/widgets/gimptemplateeditor.c:316
 msgid "_Y resolution:"
 msgstr "ميْز _ص:"
 
@@ -10134,11 +10120,11 @@ msgid "_Vertical:"
 msgstr "رأ_سي:"
 
 #. Image size frame
-#: ../app/dialogs/scale-dialog.c:98 ../app/widgets/gimptemplateeditor.c:135
+#: ../app/dialogs/scale-dialog.c:98 ../app/widgets/gimptemplateeditor.c:158
 msgid "Image Size"
 msgstr "حجم الصورة"
 
-#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:377
+#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:384
 msgid "Quality"
 msgstr "الجودة"
 
@@ -10158,11 +10144,11 @@ msgstr ""
 msgid "Choose Stroke Style"
 msgstr "اختر طراز الحافة"
 
-#: ../app/dialogs/stroke-dialog.c:222
+#: ../app/dialogs/stroke-dialog.c:224
 msgid "Paint tool:"
 msgstr "أداة التلوين:"
 
-#: ../app/dialogs/stroke-dialog.c:236
+#: ../app/dialogs/stroke-dialog.c:238
 msgid "_Emulate brush dynamics"
 msgstr "_حاكي حركيات الفرشاة"
 
@@ -10310,24 +10296,24 @@ msgstr "ر"
 msgid "_Sample Merged"
 msgstr "عينة _مدمجة"
 
-#: ../app/display/gimpdisplayshell.c:500
+#: ../app/display/gimpdisplayshell.c:501
 msgid "Access the image menu"
 msgstr "اذهب إلى قائمة الصورة"
 
-#: ../app/display/gimpdisplayshell.c:607
+#: ../app/display/gimpdisplayshell.c:615
 msgid "Zoom image when window size changes"
 msgstr "قرّب الصورة عندما يتغير حجم النافذة"
 
-#: ../app/display/gimpdisplayshell.c:636
+#: ../app/display/gimpdisplayshell.c:644
 msgid "Toggle Quick Mask"
 msgstr "بدّل القناع السريع"
 
-#: ../app/display/gimpdisplayshell.c:659
+#: ../app/display/gimpdisplayshell.c:667
 msgid "Navigate the image display"
 msgstr "تصفّح عرض الصورة"
 
-#: ../app/display/gimpdisplayshell.c:727
-#: ../app/display/gimpdisplayshell.c:1311 ../app/widgets/gimptoolbox.c:270
+#: ../app/display/gimpdisplayshell.c:735
+#: ../app/display/gimpdisplayshell.c:1319 ../app/widgets/gimptoolbox.c:270
 msgid "Drop image files here to open them"
 msgstr "ألق ملفات الصور هنا لفتحها"
 
@@ -10396,16 +10382,16 @@ msgid "Drop New Path"
 msgstr "أفلت مسارا جديدا"
 
 #: ../app/display/gimpdisplayshell-dnd.c:347
-#: ../app/display/gimpdisplayshell-dnd.c:442 ../app/tools/gimpblendtool.c:171
+#: ../app/display/gimpdisplayshell-dnd.c:442 ../app/tools/gimpblendtool.c:173
 #: ../app/tools/gimpbucketfilltool.c:135 ../app/tools/gimpimagemaptool.c:280
 msgid "Cannot modify the pixels of layer groups."
 msgstr "تعذّر تعديل بكسلات مجموعات الطبقات."
 
 #: ../app/display/gimpdisplayshell-dnd.c:355
-#: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:178
-#: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:336
-#: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:275
-#: ../app/tools/gimptransformtool.c:305 ../app/tools/gimptransformtool.c:1251
+#: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:180
+#: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:325
+#: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:269
+#: ../app/tools/gimptransformtool.c:253 ../app/tools/gimptransformtool.c:1105
 msgid "The active layer's pixels are locked."
 msgstr "بكسلات الطبقة النشطة موصدة"
 
@@ -10428,12 +10414,12 @@ msgstr "مرشحات عرض الألوان"
 msgid "Configure Color Display Filters"
 msgstr "اضبط مرشحات عرض الألوان"
 
-#: ../app/display/gimpdisplayshell-handlers.c:802
+#: ../app/display/gimpdisplayshell-handlers.c:796
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "حفظت الصورة في '%s'"
 
-#: ../app/display/gimpdisplayshell-handlers.c:816
+#: ../app/display/gimpdisplayshell-handlers.c:810
 #, c-format
 msgid "Image exported to '%s'"
 msgstr "صُدّرت الصورة إلى '%s'"
@@ -10503,16 +10489,16 @@ msgstr "أرجعة الملحقة %s رسالة نجاح (SUCCESS) لكن لم �
 msgid "%s plug-In could not open image"
 msgstr "لم تستطع الملحقة %s فتح الصورة"
 
-#: ../app/file/file-open.c:521
+#: ../app/file/file-open.c:522
 msgid "Image doesn't contain any layers"
 msgstr "لا تحتوي الصورة أي طبقات"
 
-#: ../app/file/file-open.c:574
+#: ../app/file/file-open.c:575
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "فشل فتح '%s'‏: %s"
 
-#: ../app/file/file-open.c:681
+#: ../app/file/file-open.c:682
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10522,7 +10508,7 @@ msgstr "عُطِّلت إدارة الألوان. يمكن تفعيلها من �
 msgid "Unknown file type"
 msgstr "نوع ملف غير معروف"
 
-#: ../app/file/file-save.c:202
+#: ../app/file/file-save.c:208
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "لم تستطع الملحقة %s حفظ الصورة"
@@ -10539,12 +10525,12 @@ msgstr "تتبابع محارف غير صالح في المسار"
 #: ../app/gegl/gimp-gegl-enums.c:24
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
-msgstr ""
+msgstr "أنشئ أو اضبط القفص"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
 msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
-msgstr ""
+msgstr "شوّه القفص لتشويه الصورة"
 
 #: ../app/gegl/gimpcurvesconfig.c:384
 msgid "not a GIMP Curves file"
@@ -10559,7 +10545,7 @@ msgid "not a GIMP Levels file"
 msgstr "ليس ملف مستويات جمب"
 
 #. initialize the document history
-#: ../app/gui/gui.c:422
+#: ../app/gui/gui.c:421
 msgid "Documents"
 msgstr "المستندات"
 
@@ -10571,11 +10557,11 @@ msgstr "بدء جمب"
 msgid "Airbrush"
 msgstr "فرشاة هواء"
 
-#: ../app/paint/gimpbrushcore.c:430
+#: ../app/paint/gimpbrushcore.c:387
 msgid "No brushes available for use with this tool."
 msgstr "لا فرش متاحة للاستخدام مع هذه الأداة."
 
-#: ../app/paint/gimpbrushcore.c:437
+#: ../app/paint/gimpbrushcore.c:394
 msgid "No paint dynamics available for use with this tool."
 msgstr "لا حركيات متوفرة للاستخدام مع هذه الأداة."
 
@@ -10640,7 +10626,7 @@ msgid "Pencil"
 msgstr "قلم"
 
 #: ../app/paint/gimpperspectiveclone.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:122
+#: ../app/tools/gimpperspectiveclonetool.c:132
 msgid "Perspective Clone"
 msgstr "استنساخ منظوري"
 
@@ -10704,33 +10690,33 @@ msgstr "ضم الأقنعة"
 msgid "Plug-In"
 msgstr "ملحقة"
 
-#: ../app/pdb/drawable-transform-cmds.c:319
-#: ../app/pdb/drawable-transform-cmds.c:406
-#: ../app/pdb/item-transform-cmds.c:256 ../app/pdb/transform-tools-cmds.c:153
-#: ../app/tools/gimpperspectivetool.c:69
+#: ../app/pdb/drawable-transform-cmds.c:349
+#: ../app/pdb/drawable-transform-cmds.c:447
+#: ../app/pdb/item-transform-cmds.c:262 ../app/pdb/transform-tools-cmds.c:163
+#: ../app/tools/gimpperspectivetool.c:80
 msgid "Perspective"
 msgstr "منظوري"
 
-#: ../app/pdb/drawable-transform-cmds.c:862
-#: ../app/pdb/drawable-transform-cmds.c:936
-#: ../app/pdb/item-transform-cmds.c:597 ../app/pdb/transform-tools-cmds.c:375
+#: ../app/pdb/drawable-transform-cmds.c:967
+#: ../app/pdb/drawable-transform-cmds.c:1052
+#: ../app/pdb/item-transform-cmds.c:611 ../app/pdb/transform-tools-cmds.c:418
 #: ../app/tools/gimpsheartool.c:110
 msgid "Shearing"
 msgstr "تمزيق"
 
-#: ../app/pdb/drawable-transform-cmds.c:1023
-#: ../app/pdb/item-transform-cmds.c:693 ../app/pdb/transform-tools-cmds.c:453
+#: ../app/pdb/drawable-transform-cmds.c:1150
+#: ../app/pdb/item-transform-cmds.c:709 ../app/pdb/transform-tools-cmds.c:507
 msgid "2D Transform"
 msgstr "تحويل ثنائي الأبعاد"
 
-#: ../app/pdb/drawable-transform-cmds.c:1108
-#: ../app/pdb/drawable-transform-cmds.c:1203
-#: ../app/pdb/drawable-transform-cmds.c:1296
-#: ../app/pdb/item-transform-cmds.c:797
+#: ../app/pdb/drawable-transform-cmds.c:1246
+#: ../app/pdb/drawable-transform-cmds.c:1352
+#: ../app/pdb/drawable-transform-cmds.c:1456
+#: ../app/pdb/item-transform-cmds.c:815
 msgid "2D Transforming"
 msgstr "تحويل ثنائي الأبعاد"
 
-#: ../app/pdb/edit-cmds.c:725 ../app/tools/gimpblendtool.c:240
+#: ../app/pdb/edit-cmds.c:725 ../app/tools/gimpblendtool.c:249
 msgid "Blending"
 msgstr "مزج"
 
@@ -10866,7 +10852,7 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:410
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
-msgstr ""
+msgstr "يجب أن يكون العنصر '%s'‏ (%d) سلفا للعنصر '%s'‏ (%d)"
 
 #: ../app/pdb/gimppdb-utils.c:434
 #, c-format
@@ -10987,13 +10973,13 @@ msgid ""
 "s). This value is out of range."
 msgstr ""
 
-#: ../app/pdb/image-cmds.c:2272
+#: ../app/pdb/image-cmds.c:2273
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "ميْز الصورة جاوز الحد، سأستخدم الميْز المبدئي بدلا منه."
 
 #: ../app/pdb/image-select-cmds.c:295 ../app/pdb/selection-tools-cmds.c:217
-#: ../app/tools/gimpfreeselecttool.c:198
+#: ../app/tools/gimpfreeselecttool.c:195
 msgid "Free Select"
 msgstr "تحديد حر"
 
@@ -11119,35 +11105,35 @@ msgstr ""
 msgid "Failed to run plug-in \"%s\""
 msgstr "فشل تشغيل الملحقة \"%s\""
 
-#: ../app/plug-in/gimppluginmanager-restore.c:230
+#: ../app/plug-in/gimppluginmanager-restore.c:229
 msgid "Searching Plug-Ins"
 msgstr "يبحث في الامتدادات"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:279
+#: ../app/plug-in/gimppluginmanager-restore.c:284
 msgid "Resource configuration"
 msgstr "ضبط الموارد"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:315
+#: ../app/plug-in/gimppluginmanager-restore.c:320
 msgid "Querying new Plug-ins"
 msgstr "يستعلم عن الملحقات الجديدة"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:365
+#: ../app/plug-in/gimppluginmanager-restore.c:370
 msgid "Initializing Plug-ins"
 msgstr "يجهز الملحقات"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:437
+#: ../app/plug-in/gimppluginmanager-restore.c:442
 msgid "Starting Extensions"
 msgstr "يبدأ الامتدادات"
 
-#: ../app/plug-in/gimppluginmanager.c:297
+#: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
 msgstr "مفسّرات الملحقة"
 
-#: ../app/plug-in/gimppluginmanager.c:304
+#: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
 msgstr "بيئة الملحقة"
 
-#: ../app/plug-in/gimppluginprocedure.c:995
+#: ../app/plug-in/gimppluginprocedure.c:980
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -11156,7 +11142,7 @@ msgstr ""
 "خطأ في استدعاء '%s'‏:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1007
+#: ../app/plug-in/gimppluginprocedure.c:992
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -11184,12 +11170,12 @@ msgstr "الملحقة (%s) ناقصة"
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "يتجاوز '%s': إصدار بروتوكول جمب خاطئ."
 
-#: ../app/plug-in/plug-in-rc.c:478
+#: ../app/plug-in/plug-in-rc.c:477
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "قيمة غير صحيحة '%s' لنوع أيقونة"
 
-#: ../app/plug-in/plug-in-rc.c:493
+#: ../app/plug-in/plug-in-rc.c:492
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "'%ld'  قيمة غير صحيحة لأيقونة"
@@ -11204,7 +11190,7 @@ msgstr ""
 "أبجد هوز حطي كلمن\n"
 "سعفص قرشت ثخذ ضظغ."
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1385
+#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1367
 msgid "Add Text Layer"
 msgstr "أضِف طبقة نصية"
 
@@ -11244,11 +11230,11 @@ msgstr "حوّل الطبقة النصية"
 msgid "Discard Text Information"
 msgstr "تجاهل معلومات النص"
 
-#: ../app/text/gimptextlayer.c:578
+#: ../app/text/gimptextlayer.c:580
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "نظرا لعدم توفر أي خط؛ وظيفية النص لن تكون متاحة."
 
-#: ../app/text/gimptextlayer.c:629
+#: ../app/text/gimptextlayer.c:633
 msgid "Empty Text Layer"
 msgstr "أفرغ الطبقة النصية"
 
@@ -11272,7 +11258,7 @@ msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "ثابت"
 
-#: ../app/tools/gimp-tools.c:352
+#: ../app/tools/gimp-tools.c:351
 msgid ""
 "This tool has\n"
 "no options."
@@ -11292,7 +11278,7 @@ msgstr "فرشاة _هواء"
 msgid "Motion only"
 msgstr "حركة فقط"
 
-#: ../app/tools/gimpairbrushtool.c:91 ../app/tools/gimpconvolvetool.c:211
+#: ../app/tools/gimpairbrushtool.c:91 ../app/tools/gimpconvolvetool.c:222
 #: ../app/tools/gimpsmudgetool.c:91
 msgid "Rate"
 msgstr "المعدل"
@@ -11301,153 +11287,157 @@ msgstr "المعدل"
 msgid "Flow"
 msgstr "التدفق"
 
-#: ../app/tools/gimpaligntool.c:133 ../app/tools/gimpaligntool.c:770
-msgid "Align"
-msgstr "محاذاة"
-
-#: ../app/tools/gimpaligntool.c:134
-msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr "أداة المحاذاة: حاذ أو رتب الطبقات والكائنات الأخرى"
-
-#: ../app/tools/gimpaligntool.c:135
-msgid "_Align"
-msgstr "حا_ذ"
-
-#: ../app/tools/gimpaligntool.c:589
-msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
-msgstr "انقر على طبقة أو مسار أو دليل، أو انقر واسحب لالتقاط عدة طبقات"
-
-#: ../app/tools/gimpaligntool.c:598
-msgid "Click to pick this layer as first item"
-msgstr "انقر لأخذ هذه الطبقة كأول عنصر"
-
-#: ../app/tools/gimpaligntool.c:606
-msgid "Click to add this layer to the list"
-msgstr "انقر لإضافة هذه الطبقة إلى القائمة"
-
-#: ../app/tools/gimpaligntool.c:610
-msgid "Click to pick this guide as first item"
-msgstr "انقر لأخذ هذا الدليل كأول عنصر"
-
-#: ../app/tools/gimpaligntool.c:618
-msgid "Click to add this guide to the list"
-msgstr "انقر لإضافة هذا الدليل إلى القائمة"
-
-#: ../app/tools/gimpaligntool.c:622
-msgid "Click to pick this path as first item"
-msgstr "انقر لأخذ هذا المسار كأول عنصر"
-
-#: ../app/tools/gimpaligntool.c:630
-msgid "Click to add this path to the list"
-msgstr "انقر لإضافة هذا المسار إلى القائمة"
-
-#: ../app/tools/gimpaligntool.c:782
-msgid "Relative to:"
-msgstr "بالنسبة إلى:"
-
-#: ../app/tools/gimpaligntool.c:800
+#: ../app/tools/gimpalignoptions.c:244 ../app/tools/gimpalignoptions.c:295
 msgid "Align left edge of target"
 msgstr "حاذِ الحافة اليسرى للهدف"
 
-#: ../app/tools/gimpaligntool.c:806
+#: ../app/tools/gimpalignoptions.c:269 ../app/tools/gimpaligntool.c:124
+msgid "Align"
+msgstr "محاذاة"
+
+#: ../app/tools/gimpalignoptions.c:281
+msgid "Relative to:"
+msgstr "بالنسبة إلى:"
+
+#: ../app/tools/gimpalignoptions.c:299
 msgid "Align center of target"
 msgstr "حاذِ مركز الهدف"
 
-#: ../app/tools/gimpaligntool.c:812
+#: ../app/tools/gimpalignoptions.c:303
 msgid "Align right edge of target"
 msgstr "حاذِ الحافة اليمنى للهدف"
 
-#: ../app/tools/gimpaligntool.c:822
+#: ../app/tools/gimpalignoptions.c:311
 msgid "Align top edge of target"
 msgstr "حاذِ الحافة العليا للهدف"
 
-#: ../app/tools/gimpaligntool.c:828
+#: ../app/tools/gimpalignoptions.c:315
 msgid "Align middle of target"
 msgstr "حاذِ وسط الهدف"
 
-#: ../app/tools/gimpaligntool.c:834
+#: ../app/tools/gimpalignoptions.c:319
 msgid "Align bottom of target"
 msgstr "حاذِ قاع الهدف"
 
-#: ../app/tools/gimpaligntool.c:838
+#: ../app/tools/gimpalignoptions.c:321
 msgid "Distribute"
 msgstr "وزّع"
 
-#: ../app/tools/gimpaligntool.c:852
+#: ../app/tools/gimpalignoptions.c:335
 msgid "Distribute left edges of targets"
 msgstr "وزّع الحافة اليسرى للأهداف"
 
-#: ../app/tools/gimpaligntool.c:859
+#: ../app/tools/gimpalignoptions.c:339
 msgid "Distribute horizontal centers of targets"
 msgstr "وزّع المراكز الأفقية للأهداف"
 
-#: ../app/tools/gimpaligntool.c:866
+#: ../app/tools/gimpalignoptions.c:343
 msgid "Distribute right edges of targets"
 msgstr "وزّع الحافة اليمنى للأهداف"
 
-#: ../app/tools/gimpaligntool.c:876
+#: ../app/tools/gimpalignoptions.c:351
 msgid "Distribute top edges of targets"
 msgstr "وزّع الحافة العليا للأهداف"
 
-#: ../app/tools/gimpaligntool.c:883
+#: ../app/tools/gimpalignoptions.c:355
 msgid "Distribute vertical centers of targets"
 msgstr "وزّع المراكز الرأسية للأهداف"
 
-#: ../app/tools/gimpaligntool.c:889
+#: ../app/tools/gimpalignoptions.c:359
 msgid "Distribute bottoms of targets"
 msgstr "وزّع قيعان الأهداف"
 
-#: ../app/tools/gimpaligntool.c:897
+#: ../app/tools/gimpalignoptions.c:365
 msgid "Offset:"
 msgstr "الإزاحة:"
 
-#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:331
+#: ../app/tools/gimpaligntool.c:125
+msgid "Alignment Tool: Align or arrange layers and other objects"
+msgstr "أداة المحاذاة: حاذ أو رتب الطبقات والكائنات الأخرى"
+
+#: ../app/tools/gimpaligntool.c:126
+msgid "_Align"
+msgstr "حا_ذ"
+
+#: ../app/tools/gimpaligntool.c:542
+msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
+msgstr "انقر على طبقة أو مسار أو دليل، أو انقر واسحب لالتقاط عدة طبقات"
+
+#: ../app/tools/gimpaligntool.c:550
+msgid "Click to pick this layer as first item"
+msgstr "انقر لأخذ هذه الطبقة كأول عنصر"
+
+#: ../app/tools/gimpaligntool.c:557
+msgid "Click to add this layer to the list"
+msgstr "انقر لإضافة هذه الطبقة إلى القائمة"
+
+#: ../app/tools/gimpaligntool.c:561
+msgid "Click to pick this guide as first item"
+msgstr "انقر لأخذ هذا الدليل كأول عنصر"
+
+#: ../app/tools/gimpaligntool.c:568
+msgid "Click to add this guide to the list"
+msgstr "انقر لإضافة هذا الدليل إلى القائمة"
+
+#: ../app/tools/gimpaligntool.c:572
+msgid "Click to pick this path as first item"
+msgstr "انقر لأخذ هذا المسار كأول عنصر"
+
+#: ../app/tools/gimpaligntool.c:579
+msgid "Click to add this path to the list"
+msgstr "انقر لإضافة هذا المسار إلى القائمة"
+
+#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:337
 msgid "Gradient"
 msgstr "تدرج"
 
-#: ../app/tools/gimpblendoptions.c:230 ../app/widgets/gimpbrusheditor.c:143
+#: ../app/tools/gimpblendoptions.c:231 ../app/widgets/gimpbrusheditor.c:143
 msgid "Shape:"
 msgstr "الشكل:"
 
-#: ../app/tools/gimpblendoptions.c:237 ../app/tools/gimppaintoptions-gui.c:315
+#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:321
 msgid "Repeat:"
 msgstr "التكرار:"
 
-#: ../app/tools/gimpblendoptions.c:260
+#: ../app/tools/gimpblendoptions.c:261
 msgid "Adaptive supersampling"
 msgstr "نمذجة عالية تكيفي_ة"
 
-#: ../app/tools/gimpblendoptions.c:267
+#: ../app/tools/gimpblendoptions.c:268
 msgid "Max depth"
 msgstr "العمق الأقصى"
 
-#: ../app/tools/gimpblendtool.c:106
+#: ../app/tools/gimpblendtool.c:109
 msgid "Blend"
 msgstr "امزج"
 
-#: ../app/tools/gimpblendtool.c:107
+#: ../app/tools/gimpblendtool.c:110
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "أداة المزج: املأ المناطق المحددة بتدرج لوني"
 
-#: ../app/tools/gimpblendtool.c:108
+#: ../app/tools/gimpblendtool.c:111
 msgid "Blen_d"
 msgstr "ا_مزج"
 
-#: ../app/tools/gimpblendtool.c:164
+#: ../app/tools/gimpblendtool.c:166
 msgid "Blend does not operate on indexed layers."
 msgstr "المزج لا يعمل على الطبقات المفهرسة."
 
-#: ../app/tools/gimpblendtool.c:417 ../app/tools/gimppainttool.c:627
+#: ../app/tools/gimpblendtool.c:187
+msgid "No gradient available for use with this tool."
+msgstr "لا تدرّجات متوفرة للاستخدام مع هذه الأداة."
+
+#: ../app/tools/gimpblendtool.c:441 ../app/tools/gimppainttool.c:621
 #, c-format
 msgid "%s for constrained angles"
 msgstr ""
 
-#: ../app/tools/gimpblendtool.c:418
+#: ../app/tools/gimpblendtool.c:442
 #, c-format
 msgid "%s to move the whole line"
 msgstr "‏%s لنقل كل السطر"
 
-#: ../app/tools/gimpblendtool.c:422
+#: ../app/tools/gimpblendtool.c:446
 msgid "Blend: "
 msgstr "امزج: "
 
@@ -11479,15 +11469,15 @@ msgstr "صدّر إعدادات السطوع التباين"
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "السطوع والتباين لا يعمل على الطبقات المفهرسة."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:319
+#: ../app/tools/gimpbrightnesscontrasttool.c:314
 msgid "_Brightness:"
 msgstr "ال_سطوع:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:332
+#: ../app/tools/gimpbrightnesscontrasttool.c:327
 msgid "Con_trast:"
 msgstr "ال_تباين:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:344
+#: ../app/tools/gimpbrightnesscontrasttool.c:339
 msgid "Edit these Settings as Levels"
 msgstr "حرّر هذه الإعدادات كمستويات"
 
@@ -11534,7 +11524,7 @@ msgstr "املأ المناطق الشفافة"
 
 #: ../app/tools/gimpbucketfilloptions.c:278 ../app/tools/gimpclonetool.c:113
 #: ../app/tools/gimpcolorpickeroptions.c:150 ../app/tools/gimphealtool.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:944
+#: ../app/tools/gimpperspectiveclonetool.c:897
 #: ../app/tools/gimpregionselectoptions.c:208
 msgid "Sample merged"
 msgstr "عينة مدموجة"
@@ -11576,30 +11566,29 @@ msgstr "حدّد باللون"
 msgid "Fill from first point"
 msgstr "املأ من النقطة الأولى"
 
-#: ../app/tools/gimpcagetool.c:136
-#, fuzzy
+#: ../app/tools/gimpcagetool.c:149 ../app/tools/gimpcagetool.c:1049
 msgid "Cage Transform"
-msgstr "حوّل"
+msgstr "تحويل القفص"
 
-#: ../app/tools/gimpcagetool.c:137
+#: ../app/tools/gimpcagetool.c:150
 msgid "Cage Transform: Deform a selection with a cage"
-msgstr ""
+msgstr "تحويل القفص: شوّه التحديد باستخدام قفص"
 
-#: ../app/tools/gimpcagetool.c:138
+#: ../app/tools/gimpcagetool.c:151
 msgid "_Cage Transform"
-msgstr ""
+msgstr "تحويل ال_قفص"
 
-#: ../app/tools/gimpcagetool.c:402
+#: ../app/tools/gimpcagetool.c:347
 msgid "Press ENTER to commit the transform"
-msgstr ""
+msgstr "اضغط ENTER لتنفيذ التحويل"
 
-#: ../app/tools/gimpcagetool.c:680
-msgid "Coefficient computation"
-msgstr ""
+#: ../app/tools/gimpcagetool.c:990
+msgid "Computing Cage Coefficients"
+msgstr "يحسِب مُعامِلات القفص"
 
-#: ../app/tools/gimpcagetool.c:783
+#: ../app/tools/gimpcagetool.c:1167
 msgid "Cage transform"
-msgstr ""
+msgstr "تحويل القفص"
 
 #: ../app/tools/gimpclonetool.c:61
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -11623,12 +11612,12 @@ msgid "Click to set a new clone source"
 msgstr "انقر لتحدد مصدر استنساخ جديد"
 
 #: ../app/tools/gimpclonetool.c:108
-#: ../app/tools/gimpperspectiveclonetool.c:939
+#: ../app/tools/gimpperspectiveclonetool.c:892
 msgid "Source"
 msgstr "المصدر"
 
 #: ../app/tools/gimpclonetool.c:130 ../app/tools/gimphealtool.c:110
-#: ../app/tools/gimpperspectiveclonetool.c:961
+#: ../app/tools/gimpperspectiveclonetool.c:914
 msgid "Alignment:"
 msgstr "المحاذاة:"
 
@@ -11779,52 +11768,51 @@ msgstr "نمط الالتقاط  (%s)"
 msgid "Use info window  (%s)"
 msgstr "نافذة معلومات الاستخدام (%s)"
 
-#: ../app/tools/gimpcolorpickertool.c:94
+#: ../app/tools/gimpcolorpickertool.c:93
 msgid "Color Picker"
 msgstr "لاقط الألوان"
 
-#: ../app/tools/gimpcolorpickertool.c:95
+#: ../app/tools/gimpcolorpickertool.c:94
 msgid "Color Picker Tool: Set colors from image pixels"
 msgstr "أداة لاقط الألوان: اضبط الألوان من بكسلات الصورة"
 
-#: ../app/tools/gimpcolorpickertool.c:96
+#: ../app/tools/gimpcolorpickertool.c:95
 msgid "C_olor Picker"
 msgstr "لاقط الأ_لون"
 
-#: ../app/tools/gimpcolorpickertool.c:234
+#: ../app/tools/gimpcolorpickertool.c:225
 msgid "Click in any image to view its color"
 msgstr "انقر أي صورة لعرض لونها"
 
-#: ../app/tools/gimpcolorpickertool.c:241 ../app/tools/gimppainttool.c:483
+#: ../app/tools/gimpcolorpickertool.c:232 ../app/tools/gimppainttool.c:477
 msgid "Click in any image to pick the foreground color"
 msgstr "انقر أي صورة لأخذ لون المقدمة"
 
-#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:489
+#: ../app/tools/gimpcolorpickertool.c:240 ../app/tools/gimppainttool.c:483
 msgid "Click in any image to pick the background color"
 msgstr "انقر أي صورة لأخذ لون الخلفية"
 
-#: ../app/tools/gimpcolorpickertool.c:257
+#: ../app/tools/gimpcolorpickertool.c:248
 msgid "Click in any image to add the color to the palette"
 msgstr "انقر على أي صورة لإضافة اللون إلى اللوح"
 
-#. tool->display->shell
-#: ../app/tools/gimpcolorpickertool.c:310
+#: ../app/tools/gimpcolorpickertool.c:303
 msgid "Color Picker Information"
 msgstr "معلومات لاقط اللون"
 
-#: ../app/tools/gimpcolortool.c:228 ../app/tools/gimpcolortool.c:401
+#: ../app/tools/gimpcolortool.c:229 ../app/tools/gimpcolortool.c:402
 msgid "Move Sample Point: "
 msgstr "انقل عينة نقطة: "
 
-#: ../app/tools/gimpcolortool.c:393
+#: ../app/tools/gimpcolortool.c:394
 msgid "Remove Sample Point"
 msgstr "احذف عينة نقطة"
 
-#: ../app/tools/gimpcolortool.c:394
+#: ../app/tools/gimpcolortool.c:395
 msgid "Cancel Sample Point"
 msgstr "ألغِ عينة نقطة"
 
-#: ../app/tools/gimpcolortool.c:402
+#: ../app/tools/gimpcolortool.c:403
 msgid "Add Sample Point: "
 msgstr "أضِف عينة نقطة: "
 
@@ -11840,34 +11828,34 @@ msgstr ""
 msgid "Bl_ur / Sharpen"
 msgstr "_نعّم \\ أظهر"
 
-#: ../app/tools/gimpconvolvetool.c:170
+#: ../app/tools/gimpconvolvetool.c:181
 msgid "Click to blur"
 msgstr "انقر للتنعيم"
 
-#: ../app/tools/gimpconvolvetool.c:171
+#: ../app/tools/gimpconvolvetool.c:182
 msgid "Click to blur the line"
 msgstr "انقر لتنعيم السطر"
 
-#: ../app/tools/gimpconvolvetool.c:172
+#: ../app/tools/gimpconvolvetool.c:183
 #, c-format
 msgid "%s to sharpen"
 msgstr "%s للإظهار"
 
-#: ../app/tools/gimpconvolvetool.c:176
+#: ../app/tools/gimpconvolvetool.c:187
 msgid "Click to sharpen"
 msgstr "انقر للإظهار"
 
-#: ../app/tools/gimpconvolvetool.c:177
+#: ../app/tools/gimpconvolvetool.c:188
 msgid "Click to sharpen the line"
 msgstr "انقر لإظهار السطر"
 
-#: ../app/tools/gimpconvolvetool.c:178
+#: ../app/tools/gimpconvolvetool.c:189
 #, c-format
 msgid "%s to blur"
 msgstr "‏%s للتنعيم"
 
 #. the type radio box
-#: ../app/tools/gimpconvolvetool.c:199
+#: ../app/tools/gimpconvolvetool.c:210
 #, c-format
 msgid "Convolve Type  (%s)"
 msgstr "نوع التجديل (%s)"
@@ -11880,23 +11868,23 @@ msgstr "الطبقة الحالية فقط"
 msgid "Allow growing"
 msgstr "اسمح بالنمو"
 
-#: ../app/tools/gimpcroptool.c:130
+#: ../app/tools/gimpcroptool.c:117
 msgid "Crop"
 msgstr "قصّر"
 
-#: ../app/tools/gimpcroptool.c:131
+#: ../app/tools/gimpcroptool.c:118
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "أداة التقصير: احذف مناطق الحافة من صورة أو طبقة"
 
-#: ../app/tools/gimpcroptool.c:132
+#: ../app/tools/gimpcroptool.c:119
 msgid "_Crop"
 msgstr "_قصّر"
 
-#: ../app/tools/gimpcroptool.c:266
+#: ../app/tools/gimpcroptool.c:253
 msgid "Click or press Enter to crop"
 msgstr "انقر أو اضغط إدخال لتقصيرها"
 
-#: ../app/tools/gimpcroptool.c:329
+#: ../app/tools/gimpcroptool.c:318
 msgid "There is no active layer to crop."
 msgstr "لا يوجد طبقة نشطة للقص منها."
 
@@ -11993,70 +11981,70 @@ msgstr ""
 msgid "Dod_ge / Burn"
 msgstr "_تمويه \\ حرق"
 
-#: ../app/tools/gimpdodgeburntool.c:173
+#: ../app/tools/gimpdodgeburntool.c:184
 msgid "Click to dodge"
 msgstr "انقر للتمويه"
 
-#: ../app/tools/gimpdodgeburntool.c:174
+#: ../app/tools/gimpdodgeburntool.c:185
 msgid "Click to dodge the line"
 msgstr "انقر لتمويه السطر"
 
-#: ../app/tools/gimpdodgeburntool.c:175
+#: ../app/tools/gimpdodgeburntool.c:186
 #, c-format
 msgid "%s to burn"
 msgstr "‏%s للحرق"
 
-#: ../app/tools/gimpdodgeburntool.c:179
+#: ../app/tools/gimpdodgeburntool.c:190
 msgid "Click to burn"
 msgstr "انقر للحرق"
 
-#: ../app/tools/gimpdodgeburntool.c:180
+#: ../app/tools/gimpdodgeburntool.c:191
 msgid "Click to burn the line"
 msgstr "انقر لحرق الخط"
 
-#: ../app/tools/gimpdodgeburntool.c:181
+#: ../app/tools/gimpdodgeburntool.c:192
 #, c-format
 msgid "%s to dodge"
 msgstr "%s للتمويه"
 
 #. the type (dodge or burn)
-#: ../app/tools/gimpdodgeburntool.c:202
+#: ../app/tools/gimpdodgeburntool.c:213
 #, c-format
 msgid "Type  (%s)"
 msgstr "النوع (%s)"
 
 #. mode (highlights, midtones, or shadows)
-#: ../app/tools/gimpdodgeburntool.c:213
+#: ../app/tools/gimpdodgeburntool.c:224
 msgid "Range"
 msgstr "المدى"
 
-#: ../app/tools/gimpdodgeburntool.c:219
+#: ../app/tools/gimpdodgeburntool.c:230
 msgid "Exposure"
 msgstr "التعرض"
 
-#: ../app/tools/gimpeditselectiontool.c:239
+#: ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
 msgstr "انقل التحديد"
 
-#: ../app/tools/gimpeditselectiontool.c:243
-#: ../app/tools/gimpeditselectiontool.c:1235
+#: ../app/tools/gimpeditselectiontool.c:246
+#: ../app/tools/gimpeditselectiontool.c:1240
 msgid "Move Floating Selection"
 msgstr "انقل التحديد الحر"
 
-#: ../app/tools/gimpeditselectiontool.c:452
-#: ../app/tools/gimpeditselectiontool.c:727
+#: ../app/tools/gimpeditselectiontool.c:455
+#: ../app/tools/gimpeditselectiontool.c:732
 msgid "Move: "
 msgstr "انقل: "
 
-#: ../app/tools/gimpellipseselecttool.c:68
+#: ../app/tools/gimpellipseselecttool.c:66
 msgid "Ellipse Select"
 msgstr "تحديد بيضاوي"
 
-#: ../app/tools/gimpellipseselecttool.c:69
+#: ../app/tools/gimpellipseselecttool.c:67
 msgid "Ellipse Select Tool: Select an elliptical region"
 msgstr "أداة التحديد البيضاوي: حدد منطقة بيضاوية"
 
-#: ../app/tools/gimpellipseselecttool.c:70
+#: ../app/tools/gimpellipseselecttool.c:68
 msgid "_Ellipse Select"
 msgstr "_تحديد بيضاوي"
 
@@ -12097,20 +12085,20 @@ msgstr "التأثير:"
 msgid "Flip Type  (%s)"
 msgstr "نوع القلب (%s)"
 
-#: ../app/tools/gimpfliptool.c:79
+#: ../app/tools/gimpfliptool.c:82
 msgid "Flip"
 msgstr "اقلب"
 
-#: ../app/tools/gimpfliptool.c:80
+#: ../app/tools/gimpfliptool.c:83
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr "أداة القلب: اقلب الطبقة، أو التحديد أو المسار أفقا أو رأسيا"
 
-#: ../app/tools/gimpfliptool.c:82
+#: ../app/tools/gimpfliptool.c:85
 msgid "_Flip"
 msgstr "ا_قلب"
 
-#: ../app/tools/gimpfliptool.c:116
+#: ../app/tools/gimpfliptool.c:119
 msgctxt "command"
 msgid "Flip"
 msgstr "اقلب"
@@ -12193,50 +12181,50 @@ msgstr "أداة تحديد المقدمة: حدد منطقة تحتوي كائ�
 msgid "F_oreground Select"
 msgstr "تحديد ال_مقدمة"
 
-#: ../app/tools/gimpforegroundselecttool.c:306
+#: ../app/tools/gimpforegroundselecttool.c:301
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr "أضف ضربات جديدة أو انقر إدخال (Enter) لتقبل التحديد"
 
-#: ../app/tools/gimpforegroundselecttool.c:308
+#: ../app/tools/gimpforegroundselecttool.c:303
 msgid "Mark foreground by painting on the object to extract"
 msgstr "علم الخلفية بالرسم على الكائن الذي سيُستخرج"
 
-#: ../app/tools/gimpforegroundselecttool.c:319
+#: ../app/tools/gimpforegroundselecttool.c:308
 msgid "Roughly outline the object to extract"
 msgstr "حدد بشكل عام الكائن الذي سيُستخرج"
 
-#: ../app/tools/gimpforegroundselecttool.c:771
+#: ../app/tools/gimpforegroundselecttool.c:750
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "تحديد المقدمة"
 
-#: ../app/tools/gimpfreeselecttool.c:199
+#: ../app/tools/gimpfreeselecttool.c:196
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr "أداة التحديد الحر: حدد منطقة مرسومة يدويا بقطع حرة ومضلعة"
 
-#: ../app/tools/gimpfreeselecttool.c:200
+#: ../app/tools/gimpfreeselecttool.c:197
 msgid "_Free Select"
 msgstr "تحديد _حر"
 
-#: ../app/tools/gimpfreeselecttool.c:1119
+#: ../app/tools/gimpfreeselecttool.c:1086
 msgid "Click to complete selection"
 msgstr "انقر لإكمال التحديد"
 
-#: ../app/tools/gimpfreeselecttool.c:1123
+#: ../app/tools/gimpfreeselecttool.c:1090
 msgid "Click-Drag to move segment vertex"
 msgstr "انقر واسحب لنقل قمة النقطة"
 
-#: ../app/tools/gimpfreeselecttool.c:1128
+#: ../app/tools/gimpfreeselecttool.c:1095
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "إدخال (Enter) يودع، و تجاهل (Escape) يُلغي، و تراجع (Backspace) يحذف آخر قطعة"
 
-#: ../app/tools/gimpfreeselecttool.c:1132
+#: ../app/tools/gimpfreeselecttool.c:1099
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "النقر والسحب يضيف قطعة جديدة، النقر يضيف قطعة مضلعة"
 
-#: ../app/tools/gimpfreeselecttool.c:1633
+#: ../app/tools/gimpfreeselecttool.c:1608
 msgctxt "command"
 msgid "Free Select"
 msgstr "تحديد حر"
@@ -12274,16 +12262,16 @@ msgstr "عمليات _جي.إي.جي.إل..."
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "عمليات جي.إي.جي.إل لا تعمل على الطبقات المفهرسة."
 
-#: ../app/tools/gimpgegltool.c:370
+#: ../app/tools/gimpgegltool.c:372
 msgid "_Operation:"
 msgstr "ال_عملية:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:429
+#: ../app/tools/gimpgegltool.c:431
 msgid "Operation Settings"
 msgstr "إعدادات العملية"
 
-#: ../app/tools/gimpgegltool.c:434
+#: ../app/tools/gimpgegltool.c:436
 msgid "Select an operation from the list above"
 msgstr "احذف كل العمليات من القائمة أعلاه"
 
@@ -12384,11 +12372,11 @@ msgstr "اضبط اللون المختار"
 msgid "R_eset Color"
 msgstr "_صفّر الألوان"
 
-#: ../app/tools/gimpimagemaptool-settings.c:80
+#: ../app/tools/gimpimagemaptool-settings.c:81
 msgid "Pre_sets:"
 msgstr "الم_حفوظات:"
 
-#: ../app/tools/gimpimagemaptool-settings.c:222
+#: ../app/tools/gimpimagemaptool-settings.c:223
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "حُفِظت الإعدادات في '%s'"
@@ -12403,12 +12391,12 @@ msgid "Adjustment"
 msgstr "الضبط"
 
 #: ../app/tools/gimpinkoptions-gui.c:64 ../app/tools/gimpinkoptions-gui.c:87
-#: ../app/tools/gimppaintoptions-gui.c:133
+#: ../app/tools/gimppaintoptions-gui.c:134
 msgid "Size"
 msgstr "الحجم"
 
 #: ../app/tools/gimpinkoptions-gui.c:71
-#: ../app/tools/gimppaintoptions-gui.c:181
+#: ../app/tools/gimppaintoptions-gui.c:182
 msgid "Angle"
 msgstr "الزاوية"
 
@@ -12444,44 +12432,44 @@ msgstr "_حبر"
 msgid "Interactive boundary"
 msgstr "حد تفاعلي"
 
-#: ../app/tools/gimpiscissorstool.c:277
+#: ../app/tools/gimpiscissorstool.c:275
 msgid "Scissors"
 msgstr "مقص"
 
-#: ../app/tools/gimpiscissorstool.c:278
+#: ../app/tools/gimpiscissorstool.c:276
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr "أداة المقص للتحديد: حدد الأشكال باستخدام تطابق ذكي للحواف"
 
-#: ../app/tools/gimpiscissorstool.c:279
+#: ../app/tools/gimpiscissorstool.c:277
 msgid "Intelligent _Scissors"
 msgstr "_مقص ذكي"
 
-#: ../app/tools/gimpiscissorstool.c:931 ../app/tools/gimpmeasuretool.c:609
+#: ../app/tools/gimpiscissorstool.c:900 ../app/tools/gimpmeasuretool.c:600
 msgid "Click-Drag to move this point"
 msgstr "انقر واسحب لنقل هذه النقطة"
 
-#: ../app/tools/gimpiscissorstool.c:933 ../app/tools/gimpiscissorstool.c:998
+#: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpiscissorstool.c:967
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr ""
 
-#: ../app/tools/gimpiscissorstool.c:950
+#: ../app/tools/gimpiscissorstool.c:919
 msgid "Click to close the curve"
 msgstr "انقر لإغلاق المنحنى"
 
-#: ../app/tools/gimpiscissorstool.c:956
+#: ../app/tools/gimpiscissorstool.c:925
 msgid "Click to add a point on this segment"
 msgstr "انقر لإضافة نقطة على هذه القطعة"
 
-#: ../app/tools/gimpiscissorstool.c:970
+#: ../app/tools/gimpiscissorstool.c:939
 msgid "Click or press Enter to convert to a selection"
 msgstr "انقر أو اضغط إدخال (Enter) للتحويلها إلى تحديد"
 
-#: ../app/tools/gimpiscissorstool.c:980
+#: ../app/tools/gimpiscissorstool.c:949
 msgid "Press Enter to convert to a selection"
 msgstr "اضغط إدخال (Enter) لتحويلها إلى تحديد"
 
-#: ../app/tools/gimpiscissorstool.c:995
+#: ../app/tools/gimpiscissorstool.c:964
 msgid "Click or Click-Drag to add a point"
 msgstr "انقر أو انقر واسحب لإضافة نقطة"
 
@@ -12562,15 +12550,15 @@ msgstr "غيّر حجم النافذة تلقائيا"
 msgid "Tool Toggle  (%s)"
 msgstr "بدّل الأداة  (%s)"
 
-#: ../app/tools/gimpmagnifytool.c:87
+#: ../app/tools/gimpmagnifytool.c:90
 msgid "Zoom"
 msgstr "قرّب"
 
-#: ../app/tools/gimpmagnifytool.c:88
+#: ../app/tools/gimpmagnifytool.c:91
 msgid "Zoom Tool: Adjust the zoom level"
 msgstr "أداة التقريب: اضبط مستوى التقريب"
 
-#: ../app/tools/gimpmagnifytool.c:89
+#: ../app/tools/gimpmagnifytool.c:92
 msgctxt "tool"
 msgid "_Zoom"
 msgstr "_قرّب"
@@ -12579,58 +12567,61 @@ msgstr "_قرّب"
 msgid "Use info window"
 msgstr "استخدام نافذة المعلومات"
 
-#: ../app/tools/gimpmeasuretool.c:124
+#: ../app/tools/gimpmeasuretool.c:127
 msgid "Measure"
 msgstr "قِس"
 
-#: ../app/tools/gimpmeasuretool.c:125
+#: ../app/tools/gimpmeasuretool.c:128
 msgid "Measure Tool: Measure distances and angles"
 msgstr "أداة القياس: لقياس المسافات والزوايا"
 
-#: ../app/tools/gimpmeasuretool.c:126
+#: ../app/tools/gimpmeasuretool.c:129
 msgid "_Measure"
 msgstr "_قِس"
 
-#: ../app/tools/gimpmeasuretool.c:247
+#: ../app/tools/gimpmeasuretool.c:245
 msgid "Add Guides"
 msgstr "أضِف أدلة"
 
-#: ../app/tools/gimpmeasuretool.c:560
+#: ../app/tools/gimpmeasuretool.c:311
+msgid "Drag to create a line"
+msgstr "اسحب لإنشاء خط"
+
+#: ../app/tools/gimpmeasuretool.c:555
 msgid "Click to place vertical and horizontal guides"
 msgstr "انقر لوضع دليلا أفقيا ورأسيا"
 
-#: ../app/tools/gimpmeasuretool.c:569
+#: ../app/tools/gimpmeasuretool.c:563
 msgid "Click to place a horizontal guide"
 msgstr "انقر لوضع دليلا أفقي"
 
-#: ../app/tools/gimpmeasuretool.c:584
+#: ../app/tools/gimpmeasuretool.c:577
 msgid "Click to place a vertical guide"
 msgstr "انقر لوضع دليلا رأسي"
 
-#: ../app/tools/gimpmeasuretool.c:598
+#: ../app/tools/gimpmeasuretool.c:590
 msgid "Click-Drag to add a new point"
 msgstr "انقر واسحب لإضافة نقطة جديدة"
 
-#: ../app/tools/gimpmeasuretool.c:629
+#: ../app/tools/gimpmeasuretool.c:619
 msgid "Click-Drag to move all points"
 msgstr "انقر واسحب لنقل جميع النقاط"
 
-#: ../app/tools/gimpmeasuretool.c:886 ../app/tools/gimpmeasuretool.c:1031
-#: ../app/tools/gimpmeasuretool.c:1087 ../app/tools/gimpmeasuretool.c:1115
-#: ../app/tools/gimppainttool.c:636
+#: ../app/tools/gimpmeasuretool.c:932 ../app/tools/gimpmeasuretool.c:1077
+#: ../app/tools/gimpmeasuretool.c:1133 ../app/tools/gimpmeasuretool.c:1161
+#: ../app/tools/gimppainttool.c:630
 msgid "pixels"
 msgstr "بكسل"
 
-#. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:999
+#: ../app/tools/gimpmeasuretool.c:1045
 msgid "Measure Distances and Angles"
 msgstr "قِس المسافات والزوايا"
 
-#: ../app/tools/gimpmeasuretool.c:1020
+#: ../app/tools/gimpmeasuretool.c:1066
 msgid "Distance:"
 msgstr "المسافة:"
 
-#: ../app/tools/gimpmeasuretool.c:1048 ../app/widgets/gimpbrusheditor.c:205
+#: ../app/tools/gimpmeasuretool.c:1094 ../app/widgets/gimpbrusheditor.c:205
 msgid "Angle:"
 msgstr "الزاوية:"
 
@@ -12658,32 +12649,32 @@ msgstr "انقل المسار النشط"
 msgid "Move:"
 msgstr "انقل:"
 
-#: ../app/tools/gimpmovetool.c:128
+#: ../app/tools/gimpmovetool.c:126
 msgctxt "tool"
 msgid "Move"
 msgstr "انقل"
 
-#: ../app/tools/gimpmovetool.c:129
+#: ../app/tools/gimpmovetool.c:127
 msgid "Move Tool: Move layers, selections, and other objects"
 msgstr "أداة النقل: انقل الطبقات والتحديدات والكائنات الأخرى"
 
-#: ../app/tools/gimpmovetool.c:130
+#: ../app/tools/gimpmovetool.c:128
 msgid "_Move"
 msgstr "ا_نقل"
 
-#: ../app/tools/gimpmovetool.c:247 ../app/tools/gimpmovetool.c:538
+#: ../app/tools/gimpmovetool.c:246 ../app/tools/gimpmovetool.c:551
 msgid "Move Guide: "
 msgstr "انقل الدليل: "
 
-#: ../app/tools/gimpmovetool.c:532
+#: ../app/tools/gimpmovetool.c:545
 msgid "Remove Guide"
 msgstr "احذف الدليل"
 
-#: ../app/tools/gimpmovetool.c:532
+#: ../app/tools/gimpmovetool.c:545
 msgid "Cancel Guide"
 msgstr "ألغِ الدليل"
 
-#: ../app/tools/gimpmovetool.c:538
+#: ../app/tools/gimpmovetool.c:551
 msgid "Add Guide: "
 msgstr "أضِف دليلا: "
 
@@ -12705,68 +12696,65 @@ msgstr "النمط:"
 msgid "Brush"
 msgstr "فرشاة"
 
-#: ../app/tools/gimppaintoptions-gui.c:150
+#: ../app/tools/gimppaintoptions-gui.c:151
 msgid "Reset size to brush's native size"
-msgstr "صفر حجم الفرشاة الطبيعي"
+msgstr "صفّر حجم الفرشاة لقيمته الطبيعية"
 
-#: ../app/tools/gimppaintoptions-gui.c:157
+#: ../app/tools/gimppaintoptions-gui.c:158
 msgid "Aspect Ratio"
 msgstr "نسبة الارتفاع"
 
-#: ../app/tools/gimppaintoptions-gui.c:174
-#, fuzzy
+#: ../app/tools/gimppaintoptions-gui.c:175
 msgid "Reset aspect ratio to brush's native"
-msgstr "صفر حجم الفرشاة الطبيعي"
+msgstr "صفّر نسبة ارتفاع الفرشاة لقيمتها الطبيعية"
 
-#: ../app/tools/gimppaintoptions-gui.c:198
-#, fuzzy
+#: ../app/tools/gimppaintoptions-gui.c:199
 msgid "Reset angle to zero"
-msgstr "صفّر كل المرشحات"
+msgstr "صفّر الزاوية"
 
-#: ../app/tools/gimppaintoptions-gui.c:228
+#: ../app/tools/gimppaintoptions-gui.c:234
 msgid "Incremental"
 msgstr "تزايدي"
 
-#: ../app/tools/gimppaintoptions-gui.c:244
+#: ../app/tools/gimppaintoptions-gui.c:250
 msgid "Hard edge"
 msgstr "حافة قاسية"
 
-#: ../app/tools/gimppaintoptions-gui.c:273
+#: ../app/tools/gimppaintoptions-gui.c:279
 msgid "Dynamics Options"
 msgstr "خيارات الحركيات"
 
-#: ../app/tools/gimppaintoptions-gui.c:279
+#: ../app/tools/gimppaintoptions-gui.c:285
 msgid "Fade Options"
 msgstr "خيارات الإبهات"
 
-#: ../app/tools/gimppaintoptions-gui.c:293
+#: ../app/tools/gimppaintoptions-gui.c:299
 msgid "Fade length"
 msgstr "طول الإبهات"
 
-#: ../app/tools/gimppaintoptions-gui.c:319
-#: ../app/widgets/gimpviewablebox.c:288
+#: ../app/tools/gimppaintoptions-gui.c:325
+#: ../app/widgets/gimpviewablebox.c:310
 msgid "Reverse"
 msgstr "اعكس"
 
-#: ../app/tools/gimppaintoptions-gui.c:326
+#: ../app/tools/gimppaintoptions-gui.c:332
 msgid "Color Options"
 msgstr "خيارات الألوان"
 
-#: ../app/tools/gimppaintoptions-gui.c:351
+#: ../app/tools/gimppaintoptions-gui.c:358
 msgid "Amount"
 msgstr "المقدار"
 
-#: ../app/tools/gimppaintoptions-gui.c:355
+#: ../app/tools/gimppaintoptions-gui.c:362
 msgid "Apply Jitter"
 msgstr "طبّق النفّاض"
 
-#: ../app/tools/gimppaintoptions-gui.c:373
+#: ../app/tools/gimppaintoptions-gui.c:380
 #, fuzzy
 msgid "Smooth stroke"
 msgstr "أزِل الطفيلي"
 
-#: ../app/tools/gimppaintoptions-gui.c:383
-#, fuzzy
+#: ../app/tools/gimppaintoptions-gui.c:390
 msgid "Factor"
 msgstr "المعامل"
 
@@ -12783,11 +12771,11 @@ msgstr "انقر لرسم السطر"
 msgid "%s to pick a color"
 msgstr "‏%s لتلتقط لونا"
 
-#: ../app/tools/gimppainttool.c:268
+#: ../app/tools/gimppainttool.c:262
 msgid "Cannot paint on layer groups."
 msgstr "لا يمكن الرسم على مجموعات الطبقات."
 
-#: ../app/tools/gimppainttool.c:682
+#: ../app/tools/gimppainttool.c:676
 #, c-format
 msgid "%s for a straight line"
 msgstr "‏%s لترسم سطرا مستقيما"
@@ -12800,38 +12788,38 @@ msgstr "أداة القلم: رسم حاد الحواف باستخدام فرش�
 msgid "Pe_ncil"
 msgstr "_قلم"
 
-#: ../app/tools/gimpperspectiveclonetool.c:123
+#: ../app/tools/gimpperspectiveclonetool.c:133
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
 msgstr ""
 
-#: ../app/tools/gimpperspectiveclonetool.c:125
+#: ../app/tools/gimpperspectiveclonetool.c:135
 msgid "_Perspective Clone"
 msgstr "ا_ستنساخ منظوري"
 
-#: ../app/tools/gimpperspectiveclonetool.c:692
+#: ../app/tools/gimpperspectiveclonetool.c:671
 msgid "Ctrl-Click to set a clone source"
 msgstr "انقر مع ضغط Ctrl لتحدد مصدر الاستنساخ"
 
-#: ../app/tools/gimpperspectivetool.c:70
+#: ../app/tools/gimpperspectivetool.c:81
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
 msgstr ""
 
-#: ../app/tools/gimpperspectivetool.c:72
+#: ../app/tools/gimpperspectivetool.c:83
 msgid "_Perspective"
 msgstr "_منظوري"
 
-#: ../app/tools/gimpperspectivetool.c:99
+#: ../app/tools/gimpperspectivetool.c:110
 msgctxt "command"
 msgid "Perspective"
 msgstr "منظوري"
 
-#: ../app/tools/gimpperspectivetool.c:100
+#: ../app/tools/gimpperspectivetool.c:111
 msgid "Perspective transformation"
 msgstr "تحويل منظوري"
 
-#: ../app/tools/gimpperspectivetool.c:115
+#: ../app/tools/gimpperspectivetool.c:129
 msgid "Transformation Matrix"
 msgstr "مصفوفة التحويل"
 
@@ -12872,24 +12860,24 @@ msgstr "مدد من المركز"
 msgid "Fixed:"
 msgstr "ثابت:"
 
-#: ../app/tools/gimprectangleoptions.c:979
+#: ../app/tools/gimprectangleoptions.c:994
 msgid "Position:"
 msgstr "الموضع:"
 
-#: ../app/tools/gimprectangleoptions.c:989 ../app/tools/gimptextoptions.c:489
+#: ../app/tools/gimprectangleoptions.c:1004 ../app/tools/gimptextoptions.c:523
 msgid "Size:"
 msgstr "الحجم:"
 
-#: ../app/tools/gimprectangleoptions.c:997
+#: ../app/tools/gimprectangleoptions.c:1012
 msgid "Highlight"
 msgstr "أبرِز"
 
 #. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1007
+#: ../app/tools/gimprectangleoptions.c:1022
 msgid "Auto Shrink"
 msgstr "تقليص تلقائي"
 
-#: ../app/tools/gimprectangleoptions.c:1014
+#: ../app/tools/gimprectangleoptions.c:1032
 msgid "Shrink merged"
 msgstr "قلّص المدموج"
 
@@ -12909,7 +12897,7 @@ msgstr "أداة التحديد المستطيل: حدد منطقة مستطيل
 msgid "_Rectangle Select"
 msgstr "تحديد _مستطيل"
 
-#: ../app/tools/gimprectangletool.c:1167 ../app/tools/gimprectangletool.c:2163
+#: ../app/tools/gimprectangletool.c:1163 ../app/tools/gimprectangletool.c:2159
 msgid "Rectangle: "
 msgstr "مستطيل: "
 
@@ -12962,24 +12950,24 @@ msgstr "وسط _س:"
 msgid "Center _Y:"
 msgstr "وسط _ص:"
 
-#: ../app/tools/gimpscaletool.c:77
+#: ../app/tools/gimpscaletool.c:88
 msgid "Scale"
 msgstr "حجّم"
 
-#: ../app/tools/gimpscaletool.c:78
+#: ../app/tools/gimpscaletool.c:89
 msgid "Scale Tool: Scale the layer, selection or path"
 msgstr "أداة التحجيم: حجّم الطبقة المحددة أو المسار"
 
-#: ../app/tools/gimpscaletool.c:79
+#: ../app/tools/gimpscaletool.c:90
 msgid "_Scale"
 msgstr "_حجّم"
 
-#: ../app/tools/gimpscaletool.c:105
+#: ../app/tools/gimpscaletool.c:116
 msgctxt "command"
 msgid "Scale"
 msgstr "حجّم"
 
-#: ../app/tools/gimpselectionoptions.c:257 ../app/tools/gimptextoptions.c:502
+#: ../app/tools/gimpselectionoptions.c:257 ../app/tools/gimptextoptions.c:536
 msgid "Antialiasing"
 msgstr "التنعيم"
 
@@ -12987,39 +12975,39 @@ msgstr "التنعيم"
 msgid "Feather edges"
 msgstr "نعّم الحواف"
 
-#: ../app/tools/gimpselectiontool.c:253
+#: ../app/tools/gimpselectiontool.c:252
 msgid "Click-Drag to replace the current selection"
 msgstr "انقر واسحب لتبديل التحديد الحالي"
 
-#: ../app/tools/gimpselectiontool.c:261
+#: ../app/tools/gimpselectiontool.c:260
 msgid "Click-Drag to create a new selection"
 msgstr "انقر واسحب لإنشاء تحديد جديد"
 
-#: ../app/tools/gimpselectiontool.c:266
+#: ../app/tools/gimpselectiontool.c:265
 msgid "Click-Drag to add to the current selection"
 msgstr "انقر واسحب للإضافة إلى التحديد الحالي"
 
-#: ../app/tools/gimpselectiontool.c:275
+#: ../app/tools/gimpselectiontool.c:274
 msgid "Click-Drag to subtract from the current selection"
 msgstr "انقر واسحب للطرح من التحديد الحالي"
 
-#: ../app/tools/gimpselectiontool.c:284
+#: ../app/tools/gimpselectiontool.c:283
 msgid "Click-Drag to intersect with the current selection"
 msgstr "انقر واسحب للتقاطع مع التحديد الحالي"
 
-#: ../app/tools/gimpselectiontool.c:294
+#: ../app/tools/gimpselectiontool.c:293
 msgid "Click-Drag to move the selection mask"
 msgstr "انقر واسحب لنقل قتاع التحديد"
 
-#: ../app/tools/gimpselectiontool.c:302
+#: ../app/tools/gimpselectiontool.c:301
 msgid "Click-Drag to move the selected pixels"
 msgstr "انقر واسحب لنقل البكسلات المحددة"
 
-#: ../app/tools/gimpselectiontool.c:306
+#: ../app/tools/gimpselectiontool.c:305
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "انقر واسحب لنقل نسخة من البكسلات المحددة"
 
-#: ../app/tools/gimpselectiontool.c:310
+#: ../app/tools/gimpselectiontool.c:309
 msgid "Click to anchor the floating selection"
 msgstr "انقر لربط التحديد الحر"
 
@@ -13064,95 +13052,95 @@ msgstr "انقر للتضبيب"
 msgid "Click to smudge the line"
 msgstr "انقر لتضبيب السطر"
 
-#: ../app/tools/gimptextoptions.c:137
+#: ../app/tools/gimptextoptions.c:143
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr "التلميح يعدل حدود الخط الخارجية لينتج صورة نقطية نضرة بحجم صغير"
 
-#: ../app/tools/gimptextoptions.c:145
+#: ../app/tools/gimptextoptions.c:151
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "قد تؤثر لغة النص على كيفية عرضه."
 
-#: ../app/tools/gimptextoptions.c:161
+#: ../app/tools/gimptextoptions.c:167
 msgid "Indentation of the first line"
 msgstr "مسافة بادئة في أول سطر"
 
-#: ../app/tools/gimptextoptions.c:167
+#: ../app/tools/gimptextoptions.c:173
 msgid "Adjust line spacing"
 msgstr "اضبط تباعد السطر"
 
-#: ../app/tools/gimptextoptions.c:173
+#: ../app/tools/gimptextoptions.c:179
 msgid "Adjust letter spacing"
 msgstr "اضبط تباعد الحروف"
 
-#: ../app/tools/gimptextoptions.c:179
+#: ../app/tools/gimptextoptions.c:185
 msgid "Text box resize mode"
 msgstr "نمط تحجيم صندوق النص"
 
-#: ../app/tools/gimptextoptions.c:186
+#: ../app/tools/gimptextoptions.c:192
 msgid ""
 "Use an external editor window for text entry, instead of direct-on-canvas "
 "editing"
 msgstr ""
 "استخدم نافذة محرر خارجية لإدخال النصوص بدلا من التحرير المباشر على الرقعة"
 
-#: ../app/tools/gimptextoptions.c:474
+#: ../app/tools/gimptextoptions.c:508
 msgid "Font"
 msgstr "الخط"
 
-#: ../app/tools/gimptextoptions.c:498
+#: ../app/tools/gimptextoptions.c:532
 msgid "Use editor"
 msgstr "استخدم المحرر"
 
-#: ../app/tools/gimptextoptions.c:518
+#: ../app/tools/gimptextoptions.c:552
 msgid "Hinting:"
 msgstr "التلميح:"
 
-#: ../app/tools/gimptextoptions.c:522
+#: ../app/tools/gimptextoptions.c:556
 msgid "Text Color"
 msgstr "لون النص"
 
-#: ../app/tools/gimptextoptions.c:527
+#: ../app/tools/gimptextoptions.c:561
 msgid "Color:"
 msgstr "اللون:"
 
-#: ../app/tools/gimptextoptions.c:533
+#: ../app/tools/gimptextoptions.c:567
 msgid "Justify:"
 msgstr "المساواة:"
 
-#: ../app/tools/gimptextoptions.c:556
+#: ../app/tools/gimptextoptions.c:590
 msgid "Box:"
 msgstr "الصندوق:"
 
-#: ../app/tools/gimptextoptions.c:570
+#: ../app/tools/gimptextoptions.c:604
 msgid "Language:"
 msgstr "اللغة:"
 
-#: ../app/tools/gimptexttool.c:192
+#: ../app/tools/gimptexttool.c:189
 msgid "Text"
 msgstr "نص"
 
-#: ../app/tools/gimptexttool.c:193
+#: ../app/tools/gimptexttool.c:190
 msgid "Text Tool: Create or edit text layers"
 msgstr "أداة النصوص: أنشئ أو عدّل الطبقات النصية"
 
-#: ../app/tools/gimptexttool.c:194
+#: ../app/tools/gimptexttool.c:191
 msgid "Te_xt"
 msgstr "_نص"
 
-#: ../app/tools/gimptexttool.c:949
+#: ../app/tools/gimptexttool.c:943
 msgid "Reshape Text Layer"
 msgstr "غيّر شكل الطبقة النصية"
 
-#: ../app/tools/gimptexttool.c:1496 ../app/tools/gimptexttool.c:1499
+#: ../app/tools/gimptexttool.c:1478 ../app/tools/gimptexttool.c:1481
 msgid "Confirm Text Editing"
 msgstr "أكّد تحرير النص"
 
-#: ../app/tools/gimptexttool.c:1503
+#: ../app/tools/gimptexttool.c:1485
 msgid "Create _New Layer"
 msgstr "أنشئ _طبقة جديدة"
 
-#: ../app/tools/gimptexttool.c:1527
+#: ../app/tools/gimptexttool.c:1509
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13160,8 +13148,12 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"الطبقة التي حددتها طبقة نصية لكن جرى تعديلها بأدوات أخرى. تحرير هذه الطبقة "
+"بأداة النصوص سيمحو تلك التعديلات.\n"
+"\n"
+"يمكنك تحرير الطبقة أو إنشاء طبقة نصية أخرى من خصائص نصها."
 
-#: ../app/tools/gimptexttool-editor.c:1158
+#: ../app/tools/gimptexttool-editor.c:1159
 msgid "GIMP Text Editor"
 msgstr "محرر نصوص جمب"
 
@@ -13193,7 +13185,7 @@ msgstr "العتبة لا تعمل على الطبقات المفهرسة."
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr ""
 
-#: ../app/tools/gimptool.c:917
+#: ../app/tools/gimptool.c:974
 msgid "Can't work on an empty image, add a layer first"
 msgstr "لا يمكن العمل على صورة خالية، أضف طبقة أولا"
 
@@ -13212,37 +13204,43 @@ msgstr "الاتجاه"
 msgid "Interpolation:"
 msgstr "الزيادة:"
 
-#: ../app/tools/gimptransformoptions.c:300
+#. the clipping menu
+#: ../app/tools/gimptransformoptions.c:296
 msgid "Clipping:"
 msgstr "التقصير:"
 
-#: ../app/tools/gimptransformoptions.c:318
+#. the preview frame
+#: ../app/tools/gimptransformoptions.c:305
 msgid "Preview:"
 msgstr "معاينة:"
 
-#: ../app/tools/gimptransformoptions.c:364
+#: ../app/tools/gimptransformoptions.c:319
+msgid "Image opacity"
+msgstr "إعتام الصورة"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 درجة  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:368
+#: ../app/tools/gimptransformoptions.c:355
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "أبقِ الجانب (%s)"
 
-#: ../app/tools/gimptransformtool.c:235
+#: ../app/tools/gimptransformtool.c:213
 msgid "Transforming"
 msgstr "التحويل"
 
-#: ../app/tools/gimptransformtool.c:1250
+#: ../app/tools/gimptransformtool.c:1104
 msgid "There is no layer to transform."
 msgstr "لا يوجد طبقة لتحويلها."
 
-#: ../app/tools/gimptransformtool.c:1263
+#: ../app/tools/gimptransformtool.c:1117
 msgid "There is no path to transform."
 msgstr "لا يوجد مسار لتحويله."
 
-#: ../app/tools/gimptransformtool.c:1264
+#: ../app/tools/gimptransformtool.c:1118
 msgid "The active path's strokes are locked."
 msgstr "بكسلات المسار النشط موصدة."
 
@@ -13276,144 +13274,144 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "التحديد من المسار"
 
-#: ../app/tools/gimpvectortool.c:161
+#: ../app/tools/gimpvectortool.c:160
 msgid "Paths Tool: Create and edit paths"
 msgstr "أداة المسارات: أنشئ وحرّر المسارات"
 
-#: ../app/tools/gimpvectortool.c:162
+#: ../app/tools/gimpvectortool.c:161
 msgid "Pat_hs"
 msgstr "ال_مسارات"
 
-#: ../app/tools/gimpvectortool.c:252
+#: ../app/tools/gimpvectortool.c:250
 msgid "The active path is locked."
 msgstr "المسار النشط موصد."
 
-#: ../app/tools/gimpvectortool.c:342
+#: ../app/tools/gimpvectortool.c:340
 msgid "Add Stroke"
 msgstr "أضِف ضربة"
 
-#: ../app/tools/gimpvectortool.c:366
+#: ../app/tools/gimpvectortool.c:364
 msgid "Add Anchor"
 msgstr "أضِف مربط"
 
-#: ../app/tools/gimpvectortool.c:392
+#: ../app/tools/gimpvectortool.c:390
 msgid "Insert Anchor"
 msgstr "أدرج مربط"
 
-#: ../app/tools/gimpvectortool.c:423
+#: ../app/tools/gimpvectortool.c:421
 msgid "Drag Handle"
 msgstr "اسحب المناول"
 
-#: ../app/tools/gimpvectortool.c:454
+#: ../app/tools/gimpvectortool.c:452
 msgid "Drag Anchor"
 msgstr "اسحب المربط"
 
-#: ../app/tools/gimpvectortool.c:472
+#: ../app/tools/gimpvectortool.c:470
 msgid "Drag Anchors"
 msgstr "اسحب المرابط"
 
-#: ../app/tools/gimpvectortool.c:495
+#: ../app/tools/gimpvectortool.c:493
 msgid "Drag Curve"
 msgstr "اسحب المنحنى"
 
-#: ../app/tools/gimpvectortool.c:524
+#: ../app/tools/gimpvectortool.c:522
 msgid "Connect Strokes"
 msgstr ""
 
-#: ../app/tools/gimpvectortool.c:556
+#: ../app/tools/gimpvectortool.c:554
 msgid "Drag Path"
 msgstr "اسحب المسار"
 
-#: ../app/tools/gimpvectortool.c:567
+#: ../app/tools/gimpvectortool.c:565
 msgid "Convert Edge"
 msgstr "حوّل الحافة"
 
-#: ../app/tools/gimpvectortool.c:598
+#: ../app/tools/gimpvectortool.c:596
 msgid "Delete Anchor"
 msgstr "احذف المربط"
 
-#: ../app/tools/gimpvectortool.c:621
+#: ../app/tools/gimpvectortool.c:619
 msgid "Delete Segment"
 msgstr "احذف القطعة"
 
-#: ../app/tools/gimpvectortool.c:840
+#: ../app/tools/gimpvectortool.c:838
 msgid "Move Anchors"
 msgstr "انقل المربط"
 
-#: ../app/tools/gimpvectortool.c:1203
+#: ../app/tools/gimpvectortool.c:1201
 msgid "Click to pick path to edit"
 msgstr "انقر لأخذ المسار للتعديل"
 
-#: ../app/tools/gimpvectortool.c:1207
+#: ../app/tools/gimpvectortool.c:1205
 msgid "Click to create a new path"
 msgstr "انقر لإنشاء مسار جديد"
 
-#: ../app/tools/gimpvectortool.c:1211
+#: ../app/tools/gimpvectortool.c:1209
 msgid "Click to create a new component of the path"
 msgstr "انقر لإضافة مكون جديد للمسار"
 
-#: ../app/tools/gimpvectortool.c:1215
+#: ../app/tools/gimpvectortool.c:1213
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "انقر أو انقر واسحب لإنشاء مربط جديد"
 
-#: ../app/tools/gimpvectortool.c:1225 ../app/tools/gimpvectortool.c:1232
+#: ../app/tools/gimpvectortool.c:1223 ../app/tools/gimpvectortool.c:1230
 msgid "Click-Drag to move the anchor around"
 msgstr "انقر واسحب لنقل المربط"
 
-#: ../app/tools/gimpvectortool.c:1236 ../app/tools/gimpvectortool.c:1259
+#: ../app/tools/gimpvectortool.c:1234 ../app/tools/gimpvectortool.c:1257
 msgid "Click-Drag to move the anchors around"
 msgstr "انقر واسحب لنقل المرابط"
 
-#: ../app/tools/gimpvectortool.c:1242
+#: ../app/tools/gimpvectortool.c:1240
 msgid "Click-Drag to move the handle around"
 msgstr "انقر واسحب لنقل المناول"
 
-#: ../app/tools/gimpvectortool.c:1249
+#: ../app/tools/gimpvectortool.c:1247
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "انقر واسحب لنقل المناول بشكل متساو"
 
-#: ../app/tools/gimpvectortool.c:1264
+#: ../app/tools/gimpvectortool.c:1262
 msgid "Click-Drag to change the shape of the curve"
 msgstr "انقر واسحب لتغيير شكل المنحنى"
 
-#: ../app/tools/gimpvectortool.c:1267
+#: ../app/tools/gimpvectortool.c:1265
 #, c-format
 msgid "%s: symmetrical"
 msgstr "‏%s: متماثل"
 
-#: ../app/tools/gimpvectortool.c:1272
+#: ../app/tools/gimpvectortool.c:1270
 msgid "Click-Drag to move the component around"
 msgstr "انقر واسحب لنقل المكون"
 
-#: ../app/tools/gimpvectortool.c:1280
+#: ../app/tools/gimpvectortool.c:1278
 msgid "Click-Drag to move the path around"
 msgstr "انقر واسحب لنقل المسار"
 
-#: ../app/tools/gimpvectortool.c:1284
+#: ../app/tools/gimpvectortool.c:1282
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "انقر واسحب لإدراج مربط في المسار"
 
-#: ../app/tools/gimpvectortool.c:1292
+#: ../app/tools/gimpvectortool.c:1290
 msgid "Click to delete this anchor"
 msgstr "انقر لحذف هذا المربط"
 
-#: ../app/tools/gimpvectortool.c:1296
+#: ../app/tools/gimpvectortool.c:1294
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "انقر لربط هذا المربط بنقطة النهاية المحدد"
 
-#: ../app/tools/gimpvectortool.c:1301
+#: ../app/tools/gimpvectortool.c:1299
 msgid "Click to open up the path"
 msgstr "انقر لفتح المسار"
 
-#: ../app/tools/gimpvectortool.c:1305
+#: ../app/tools/gimpvectortool.c:1303
 msgid "Click to make this node angular"
 msgstr "انقر لجعل هذه العقدة مدببة"
 
-#: ../app/tools/gimpvectortool.c:1805
+#: ../app/tools/gimpvectortool.c:1803
 msgid "Delete Anchors"
 msgstr "احذف المرابط"
 
-#: ../app/tools/gimpvectortool.c:1976
+#: ../app/tools/gimpvectortool.c:1974
 msgid "There is no active layer or channel to stroke to"
 msgstr "لا توجد طبقة أو قناة نشطة لرسم الحواف بها"
 
@@ -13620,19 +13618,19 @@ msgstr "لا يمكن رفع المسار أعلى."
 msgid "Path cannot be lowered more."
 msgstr "لا يمكن خفض المسار أكثر."
 
-#: ../app/vectors/gimpvectors.c:365
+#: ../app/vectors/gimpvectors.c:364
 msgid "Move Path"
 msgstr "انقل مسار"
 
-#: ../app/vectors/gimpvectors.c:464
+#: ../app/vectors/gimpvectors.c:463
 msgid "Flip Path"
 msgstr "اقلب المسار"
 
-#: ../app/vectors/gimpvectors.c:495
+#: ../app/vectors/gimpvectors.c:494
 msgid "Rotate Path"
 msgstr "دوّر المسار"
 
-#: ../app/vectors/gimpvectors.c:525
+#: ../app/vectors/gimpvectors.c:524
 msgid "Transform Path"
 msgstr "حوّل المسار"
 
@@ -13745,8 +13743,8 @@ msgstr "النسبة من عرض الفرشاة"
 msgid "Opacity:"
 msgstr "الإعتام:"
 
-#: ../app/widgets/gimpbufferview.c:173 ../app/widgets/gimpbufferview.c:257
-#: ../app/widgets/gimpeditor.c:729
+#: ../app/widgets/gimpbufferview.c:173 ../app/widgets/gimpbufferview.c:258
+#: ../app/widgets/gimpeditor.c:748
 msgid "(None)"
 msgstr "(لا شيء)"
 
@@ -13788,7 +13786,7 @@ msgstr "احذف '%s' من قائمة المرشحات النشطة"
 msgid "No filter selected"
 msgstr "لم يحدد أي مرشح"
 
-#: ../app/widgets/gimpcoloreditor.c:259
+#: ../app/widgets/gimpcoloreditor.c:258
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -13972,72 +13970,80 @@ msgid "Keyboard Events"
 msgstr "أحداث لوحة المفاتيح"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:217
+#: ../app/widgets/gimpcontrollermouse.c:245
 #: ../app/widgets/gimpcontrollerwheel.c:219
 msgid "Ready"
 msgstr "جاهز"
 
-#: ../app/widgets/gimpcontrollerlist.c:181
+#: ../app/widgets/gimpcontrollerlist.c:182
 msgid "Available Controllers"
 msgstr "الضابطات المتوفرة"
 
-#: ../app/widgets/gimpcontrollerlist.c:273
+#: ../app/widgets/gimpcontrollerlist.c:274
 msgid "Active Controllers"
 msgstr "الضابطات النشطة"
 
-#: ../app/widgets/gimpcontrollerlist.c:289
+#: ../app/widgets/gimpcontrollerlist.c:290
 msgid "Configure the selected controller"
 msgstr "اضبط الضابط المحدد"
 
-#: ../app/widgets/gimpcontrollerlist.c:297
+#: ../app/widgets/gimpcontrollerlist.c:298
 msgid "Move the selected controller up"
 msgstr "انقل الضابط المحدد نحو الأعلى"
 
-#: ../app/widgets/gimpcontrollerlist.c:305
+#: ../app/widgets/gimpcontrollerlist.c:306
 msgid "Move the selected controller down"
 msgstr "انقل الضابط المحدد نحو الأسفل"
 
-#: ../app/widgets/gimpcontrollerlist.c:423
+#: ../app/widgets/gimpcontrollerlist.c:424
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "أضف '%s' إلى قائمة الضابطات النشطة"
 
-#: ../app/widgets/gimpcontrollerlist.c:474
+#: ../app/widgets/gimpcontrollerlist.c:475
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "احذف '%s' من قائمة الضابطات النشطة"
 
-#: ../app/widgets/gimpcontrollerlist.c:508
+#: ../app/widgets/gimpcontrollerlist.c:509
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
 "You already have a keyboard controller in your list of active controllers."
 msgstr ""
 
-#: ../app/widgets/gimpcontrollerlist.c:519
+#: ../app/widgets/gimpcontrollerlist.c:520
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
 "You already have a wheel controller in your list of active controllers."
 msgstr ""
 
-#: ../app/widgets/gimpcontrollerlist.c:545
+#: ../app/widgets/gimpcontrollerlist.c:531
+msgid ""
+"There can only be one active mouse controller.\n"
+"\n"
+"You already have a mouse controller in your list of active controllers."
+msgstr ""
+
+#: ../app/widgets/gimpcontrollerlist.c:557
 msgid "Remove Controller?"
 msgstr "أأحذف الضابط؟"
 
-#: ../app/widgets/gimpcontrollerlist.c:550
+#: ../app/widgets/gimpcontrollerlist.c:562
 msgid "Disable Controller"
 msgstr "عطّل الضابط"
 
-#: ../app/widgets/gimpcontrollerlist.c:552
+#: ../app/widgets/gimpcontrollerlist.c:564
 msgid "Remove Controller"
 msgstr "احذف الضابط"
 
-#: ../app/widgets/gimpcontrollerlist.c:564
+#: ../app/widgets/gimpcontrollerlist.c:576
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "أأحذف الضابط '%s'؟"
 
-#: ../app/widgets/gimpcontrollerlist.c:568
+#: ../app/widgets/gimpcontrollerlist.c:580
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -14046,9 +14052,72 @@ msgid ""
 "removing it."
 msgstr ""
 
-#: ../app/widgets/gimpcontrollerlist.c:620
+#: ../app/widgets/gimpcontrollerlist.c:632
 msgid "Configure Input Controller"
 msgstr "اضبط ضابط الإدخال"
+
+#: ../app/widgets/gimpcontrollermouse.c:70
+#: ../app/widgets/gimpcontrollermouse.c:73
+#: ../app/widgets/gimpcontrollermouse.c:76
+#: ../app/widgets/gimpcontrollermouse.c:79
+#: ../app/widgets/gimpcontrollermouse.c:82
+#: ../app/widgets/gimpcontrollermouse.c:85
+#: ../app/widgets/gimpcontrollermouse.c:88
+#: ../app/widgets/gimpcontrollermouse.c:91
+msgid "Button 8"
+msgstr "الزر 8"
+
+#: ../app/widgets/gimpcontrollermouse.c:95
+#: ../app/widgets/gimpcontrollermouse.c:98
+#: ../app/widgets/gimpcontrollermouse.c:101
+#: ../app/widgets/gimpcontrollermouse.c:104
+#: ../app/widgets/gimpcontrollermouse.c:107
+#: ../app/widgets/gimpcontrollermouse.c:110
+#: ../app/widgets/gimpcontrollermouse.c:113
+#: ../app/widgets/gimpcontrollermouse.c:116
+msgid "Button 9"
+msgstr "الزر 9"
+
+#: ../app/widgets/gimpcontrollermouse.c:120
+#: ../app/widgets/gimpcontrollermouse.c:123
+#: ../app/widgets/gimpcontrollermouse.c:126
+#: ../app/widgets/gimpcontrollermouse.c:129
+#: ../app/widgets/gimpcontrollermouse.c:132
+#: ../app/widgets/gimpcontrollermouse.c:135
+#: ../app/widgets/gimpcontrollermouse.c:138
+#: ../app/widgets/gimpcontrollermouse.c:141
+msgid "Button 10"
+msgstr "الزر 10"
+
+#: ../app/widgets/gimpcontrollermouse.c:145
+#: ../app/widgets/gimpcontrollermouse.c:148
+#: ../app/widgets/gimpcontrollermouse.c:151
+#: ../app/widgets/gimpcontrollermouse.c:154
+#: ../app/widgets/gimpcontrollermouse.c:157
+#: ../app/widgets/gimpcontrollermouse.c:160
+#: ../app/widgets/gimpcontrollermouse.c:163
+#: ../app/widgets/gimpcontrollermouse.c:166
+msgid "Button 11"
+msgstr "الزر 11"
+
+#: ../app/widgets/gimpcontrollermouse.c:170
+#: ../app/widgets/gimpcontrollermouse.c:173
+#: ../app/widgets/gimpcontrollermouse.c:176
+#: ../app/widgets/gimpcontrollermouse.c:179
+#: ../app/widgets/gimpcontrollermouse.c:182
+#: ../app/widgets/gimpcontrollermouse.c:185
+#: ../app/widgets/gimpcontrollermouse.c:188
+#: ../app/widgets/gimpcontrollermouse.c:191
+msgid "Button 12"
+msgstr "الزر 12"
+
+#: ../app/widgets/gimpcontrollermouse.c:203
+msgid "Mouse Buttons"
+msgstr "أزرار الفأرة"
+
+#: ../app/widgets/gimpcontrollermouse.c:244
+msgid "Mouse Button Events"
+msgstr "أحداث أزرار الفأرة"
 
 #: ../app/widgets/gimpcontrollerwheel.c:69
 #: ../app/widgets/gimpcontrollerwheel.c:72
@@ -14115,20 +14184,20 @@ msgstr "اعكس"
 msgid "%s (read only)"
 msgstr "‏%s (للقراءة فقط)"
 
-#: ../app/widgets/gimpdeviceeditor.c:164
+#: ../app/widgets/gimpdeviceeditor.c:165
 msgid "Delete the selected device"
 msgstr "احذف الجهاز المختار"
 
-#: ../app/widgets/gimpdeviceeditor.c:499
+#: ../app/widgets/gimpdeviceeditor.c:502
 msgid "Delete Device Settings"
 msgstr "احذف إعدادات الجهاز"
 
-#: ../app/widgets/gimpdeviceeditor.c:520
+#: ../app/widgets/gimpdeviceeditor.c:523
 #, c-format
 msgid "Delete \"%s\"?"
 msgstr "أأحذف \"%s\"؟"
 
-#: ../app/widgets/gimpdeviceeditor.c:523
+#: ../app/widgets/gimpdeviceeditor.c:526
 msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
@@ -14185,7 +14254,7 @@ msgstr "_صفّر المنحنى"
 msgid "The axis '%s' has no curve"
 msgstr "ليس للمحور '%s' منحنيات"
 
-#: ../app/widgets/gimpdevicestatus.c:134
+#: ../app/widgets/gimpdevicestatus.c:136
 msgid "Save device status"
 msgstr "احفظ حالة الجهاز"
 
@@ -14313,11 +14382,11 @@ msgstr "كل الصور"
 msgid "Select File _Type (%s)"
 msgstr "اختر _نوع الملف (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:186
+#: ../app/widgets/gimpfileprocview.c:185
 msgid "File Type"
 msgstr "نوع الملف"
 
-#: ../app/widgets/gimpfileprocview.c:198
+#: ../app/widgets/gimpfileprocview.c:197
 msgid "Extensions"
 msgstr "الامتدادات"
 
@@ -14598,7 +14667,7 @@ msgid "None"
 msgstr "بدون"
 
 #: ../app/widgets/gimpimagepropview.c:462
-#: ../app/widgets/gimptemplateeditor.c:304
+#: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "بكسل/%s"
@@ -14666,51 +14735,51 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "‏UTF-8 غير صالح"
 
-#: ../app/widgets/gimpsettingsbox.c:238
+#: ../app/widgets/gimpsettingsbox.c:269
 msgid "Pick a setting from the list"
 msgstr "انتقِ إعدادا من القائمة"
 
-#: ../app/widgets/gimpsettingsbox.c:259
+#: ../app/widgets/gimpsettingsbox.c:290
 msgid "Add settings to favorites"
 msgstr "أضِف الإعدادات إلى المفضلة"
 
-#: ../app/widgets/gimpsettingsbox.c:287
+#: ../app/widgets/gimpsettingsbox.c:318
 msgid "_Import Settings from File..."
 msgstr "ا_ستورد الإعدادات من ملف..."
 
-#: ../app/widgets/gimpsettingsbox.c:293
+#: ../app/widgets/gimpsettingsbox.c:324
 msgid "_Export Settings to File..."
 msgstr "_صدّر الإعدادات إلى ملف..."
 
-#: ../app/widgets/gimpsettingsbox.c:300
+#: ../app/widgets/gimpsettingsbox.c:331
 msgid "_Manage Settings..."
 msgstr "أدِر الإ_عدادت..."
 
-#: ../app/widgets/gimpsettingsbox.c:585
+#: ../app/widgets/gimpsettingsbox.c:624
 msgid "Add Settings to Favorites"
 msgstr "أضِف الإعدادات للمفضلة"
 
-#: ../app/widgets/gimpsettingsbox.c:588
+#: ../app/widgets/gimpsettingsbox.c:627
 msgid "Enter a name for the settings"
 msgstr "أدخل اسما للإعدادات"
 
-#: ../app/widgets/gimpsettingsbox.c:589
+#: ../app/widgets/gimpsettingsbox.c:628
 msgid "Saved Settings"
 msgstr "الإعدادات المحفوظة"
 
-#: ../app/widgets/gimpsettingsbox.c:625
+#: ../app/widgets/gimpsettingsbox.c:669
 msgid "Manage Saved Settings"
 msgstr "أدِر الإعدادات المحفوظة"
 
-#: ../app/widgets/gimpsettingseditor.c:171
+#: ../app/widgets/gimpsettingseditor.c:194
 msgid "Import settings from a file"
 msgstr "استورد الإعدادات من ملف"
 
-#: ../app/widgets/gimpsettingseditor.c:180
+#: ../app/widgets/gimpsettingseditor.c:203
 msgid "Export the selected settings to a file"
 msgstr "صدّر الإعدادات المختارة إلى ملف"
 
-#: ../app/widgets/gimpsettingseditor.c:189
+#: ../app/widgets/gimpsettingseditor.c:212
 msgid "Delete the selected settings"
 msgstr "احذف الإعدادات المختارة"
 
@@ -14765,45 +14834,45 @@ msgstr "أدخِل الوسوم"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1716
+#: ../app/widgets/gimptagentry.c:1719
 msgid ","
 msgstr "،"
 
-#: ../app/widgets/gimptemplateeditor.c:176
+#: ../app/widgets/gimptemplateeditor.c:201
 #, c-format
 msgid "%p"
 msgstr "%p"
 
-#: ../app/widgets/gimptemplateeditor.c:251
+#: ../app/widgets/gimptemplateeditor.c:276
 msgid "_Advanced Options"
 msgstr "_خيارات متقدمة"
 
-#: ../app/widgets/gimptemplateeditor.c:358
+#: ../app/widgets/gimptemplateeditor.c:387
 msgid "Color _space:"
 msgstr "م_ساحة اللون:"
 
-#: ../app/widgets/gimptemplateeditor.c:366
+#: ../app/widgets/gimptemplateeditor.c:395
 msgid "_Fill with:"
 msgstr "ا_ملأ بـ:"
 
-#: ../app/widgets/gimptemplateeditor.c:376
+#: ../app/widgets/gimptemplateeditor.c:405
 msgid "Comme_nt:"
 msgstr "ال_تعليق:"
 
-#: ../app/widgets/gimptemplateeditor.c:524
+#: ../app/widgets/gimptemplateeditor.c:513
 msgid "_Name:"
 msgstr "الا_سم:"
 
-#: ../app/widgets/gimptemplateeditor.c:537
+#: ../app/widgets/gimptemplateeditor.c:522
 msgid "_Icon:"
 msgstr "أي_قونة:"
 
-#: ../app/widgets/gimptemplateeditor.c:665
+#: ../app/widgets/gimptemplateeditor.c:686
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "‏%Id × %Id نقطة في البوصة، %s"
 
-#: ../app/widgets/gimptemplateeditor.c:667
+#: ../app/widgets/gimptemplateeditor.c:688
 #, c-format
 msgid "%d ppi, %s"
 msgstr "‏%Id نقطة في البوصة، %s"
@@ -14823,29 +14892,50 @@ msgstr "العنصر العلوي في نص يجب أن يكون <markup> و ل�
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "بيانات UTF-8 غير صحيحة في الملف '%s'."
 
-#: ../app/widgets/gimptexteditor.c:205
+#: ../app/widgets/gimptexteditor.c:222
 msgid "_Use selected font"
 msgstr "استخدم ال_خط المختار"
 
-#: ../app/widgets/gimptextstyleeditor.c:201
+#: ../app/widgets/gimptextstyleeditor.c:206
+msgid "Change font of selected text"
+msgstr "غيّر خط النص المحدد"
+
+#: ../app/widgets/gimptextstyleeditor.c:217
 msgid "Change size of selected text"
 msgstr "غيّر حجم النص المحدد"
 
-#: ../app/widgets/gimptextstyleeditor.c:208
-msgid "Change color of selected text"
-msgstr "غيّر لون النص المحدد"
-
-#: ../app/widgets/gimptextstyleeditor.c:233
+#: ../app/widgets/gimptextstyleeditor.c:236
 msgid "Clear style of selected text"
 msgstr "امسح طراز النص المحدد"
 
-#: ../app/widgets/gimptextstyleeditor.c:253
+#: ../app/widgets/gimptextstyleeditor.c:247
+#: ../app/widgets/gimptextstyleeditor.c:256
+msgid "Change color of selected text"
+msgstr "غيّر لون النص المحدد"
+
+#: ../app/widgets/gimptextstyleeditor.c:272
 msgid "Change kerning of selected text"
 msgstr "غيّر تآلف النص المحدد"
 
-#: ../app/widgets/gimptextstyleeditor.c:269
+#: ../app/widgets/gimptextstyleeditor.c:288
 msgid "Change baseline of selected text"
 msgstr "غيّر سطر كتابة النص المحدد"
+
+#: ../app/widgets/gimptextstyleeditor.c:325
+msgid "Bold"
+msgstr "عريض"
+
+#: ../app/widgets/gimptextstyleeditor.c:328
+msgid "Italic"
+msgstr "مائل"
+
+#: ../app/widgets/gimptextstyleeditor.c:331
+msgid "Underline"
+msgstr "تسطير"
+
+#: ../app/widgets/gimptextstyleeditor.c:334
+msgid "Strikethrough"
+msgstr "شطب"
 
 #: ../app/widgets/gimpthumbbox.c:330
 #, c-format
@@ -14860,7 +14950,7 @@ msgstr ""
 msgid "Pr_eview"
 msgstr "معاي_نة"
 
-#: ../app/widgets/gimpthumbbox.c:403 ../app/widgets/gimpthumbbox.c:467
+#: ../app/widgets/gimpthumbbox.c:404 ../app/widgets/gimpthumbbox.c:468
 msgid "No selection"
 msgstr "لا تحديد"
 
@@ -14950,50 +15040,54 @@ msgstr "اخفض هذه الأداة إلى القاع"
 msgid "Reset tool order and visibility"
 msgstr "أعِد ضبط ترتيب و رؤية الأداة"
 
-#: ../app/widgets/gimptooloptionseditor.c:213
-msgid "Save options to..."
-msgstr "احفظ الخيارات في..."
+#: ../app/widgets/gimptooloptionseditor.c:202
+msgid "Save Tool Preset..."
+msgstr "احفظ محفوظة الخيارات..."
 
-#: ../app/widgets/gimptooloptionseditor.c:221
-msgid "Restore options from..."
-msgstr "استرجع الخيارات من..."
+#: ../app/widgets/gimptooloptionseditor.c:210
+msgid "Restore Tool Preset..."
+msgstr "استعد محفوظة الخيارات..."
 
-#: ../app/widgets/gimptooloptionseditor.c:229
-msgid "Delete saved options..."
-msgstr "احذف الخيارات المحفوظة..."
+#: ../app/widgets/gimptooloptionseditor.c:218
+msgid "Delete Tool Preset..."
+msgstr "احذف محفوظة الخيارات..."
 
-#: ../app/widgets/gimptooloptionseditor.c:583
-#, c-format
-msgid "Error saving tool options presets: %s"
-msgstr "خطأ أثناء حفظ محفوظات خيارات الأدوات: %s"
+#: ../app/widgets/gimptoolpreseteditor.c:125
+msgid "Icon:"
+msgstr "الأيقونة:"
 
-#: ../app/widgets/gimptoolpreseteditor.c:102
+#: ../app/widgets/gimptoolpreseteditor.c:135
 msgid "Apply stored FG/BG"
 msgstr "طبق الخلفية أو الواجهة المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:108
+#: ../app/widgets/gimptoolpreseteditor.c:140
 msgid "Apply stored brush"
 msgstr "طبّق الفرشاة المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:114
+#: ../app/widgets/gimptoolpreseteditor.c:145
 msgid "Apply stored dynamics"
 msgstr "طبّق الحركيات المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:120
+#: ../app/widgets/gimptoolpreseteditor.c:150
 msgid "Apply stored gradient"
 msgstr "طبّق التدرجات المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:126
+#: ../app/widgets/gimptoolpreseteditor.c:155
 msgid "Apply stored pattern"
 msgstr "طبّق الأنماط المحفوظة"
 
-#: ../app/widgets/gimptoolpreseteditor.c:132
+#: ../app/widgets/gimptoolpreseteditor.c:160
 msgid "Apply stored palette"
 msgstr "طبّق لوح الألوان المحفوظ"
 
-#: ../app/widgets/gimptoolpreseteditor.c:138
+#: ../app/widgets/gimptoolpreseteditor.c:165
 msgid "Apply stored font"
 msgstr "طبّق الخط المحفوظ"
+
+#: ../app/widgets/gimptoolpreseteditor.c:222
+#, c-format
+msgid "%s Preset"
+msgstr "محفوظات %s"
 
 #: ../app/widgets/gimptranslationstore.c:100
 msgid "System Language"
@@ -15024,27 +15118,27 @@ msgstr "[ الصورة الأساسية ]"
 msgid "Lock path strokes"
 msgstr ""
 
-#: ../app/widgets/gimpviewablebox.c:82
+#: ../app/widgets/gimpviewablebox.c:86
 msgid "Open the brush selection dialog"
 msgstr "افتح حوار اختيار الفرشاة"
 
-#: ../app/widgets/gimpviewablebox.c:141
+#: ../app/widgets/gimpviewablebox.c:150
 msgid "Open the dynamics selection dialog"
 msgstr "افتح حوار اختيار الحركيات"
 
-#: ../app/widgets/gimpviewablebox.c:202
+#: ../app/widgets/gimpviewablebox.c:215
 msgid "Open the pattern selection dialog"
 msgstr "افتح حوار اختيار النمط"
 
-#: ../app/widgets/gimpviewablebox.c:268
+#: ../app/widgets/gimpviewablebox.c:283
 msgid "Open the gradient selection dialog"
 msgstr "افتح حوار اختيار التدريج"
 
-#: ../app/widgets/gimpviewablebox.c:373
+#: ../app/widgets/gimpviewablebox.c:400
 msgid "Open the palette selection dialog"
 msgstr "افتح حوار اختيار لوح الألوان"
 
-#: ../app/widgets/gimpviewablebox.c:434
+#: ../app/widgets/gimpviewablebox.c:465
 msgid "Open the font selection dialog"
 msgstr "افتح حوار اختيار الخط"
 
@@ -15275,6 +15369,53 @@ msgstr "رجاء تأكد من أن صندوق الأدوات ظاهر!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "لا يمكن بدء: '%s'‏: %s"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "_Save Options To"
+#~ msgstr "ا_حفظ الخيارات في"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "_Restore Options From"
+#~ msgstr "اس_ترجع الخيارات من"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "Re_name Saved Options"
+#~ msgstr "_غيّر اسم الخيارات المحفوظة"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "_Delete Saved Options"
+#~ msgstr "اح_ذف الخيارات المحفوظة"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "_New Entry..."
+#~ msgstr "مد_خلة جديد..."
+
+#~ msgid "Save Tool Options"
+#~ msgstr "احفظ خيارات الأدوات"
+
+#~ msgid "Enter a name for the saved options"
+#~ msgstr "أدخل اسما للخيارات المحفوظة"
+
+#~ msgid "Saved Options"
+#~ msgstr "الخيارات المحفوظة"
+
+#~ msgid "Rename Saved Tool Options"
+#~ msgstr "غيّر اسم خيارات الأدوات المحفوظة"
+
+#~ msgid "Enter a new name for the saved options"
+#~ msgstr "أدخل اسما جديدا للخيارات المحفوظة"
+
+#~ msgid "Save options to..."
+#~ msgstr "احفظ الخيارات في..."
+
+#~ msgid "Restore options from..."
+#~ msgstr "استرجع الخيارات من..."
+
+#~ msgid "Delete saved options..."
+#~ msgstr "احذف الخيارات المحفوظة..."
+
+#~ msgid "Error saving tool options presets: %s"
+#~ msgstr "خطأ أثناء حفظ محفوظات خيارات الأدوات: %s"
 
 #~ msgid "Instant update"
 #~ msgstr "تحديث آني"
