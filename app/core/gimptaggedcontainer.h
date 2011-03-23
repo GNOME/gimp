@@ -22,7 +22,7 @@
 #define __GIMP_TAGGED_CONTAINER_H__
 
 
-#include "gimplist.h"
+#include "gimpfilteredcontainer.h"
 
 
 #define GIMP_TYPE_TAGGED_CONTAINER            (gimp_tagged_container_get_type ())
@@ -37,17 +37,17 @@ typedef struct _GimpTaggedContainerClass GimpTaggedContainerClass;
 
 struct _GimpTaggedContainer
 {
-  GimpList       parent_instance;
+  GimpFilteredContainer  parent_instance;
 
-  GimpContainer *src_container;
-  GList         *filter;
-  GHashTable    *tag_ref_counts;
-  gint           tag_count;
+  GimpContainer         *src_container;
+  GList                 *filter;
+  GHashTable            *tag_ref_counts;
+  gint                   tag_count;
 };
 
 struct _GimpTaggedContainerClass
 {
-  GimpListClass  parent_class;
+  GimpFilteredContainerClass  parent_class;
 
   void (* tag_count_changed) (GimpTaggedContainer *container,
                               gint                   count);

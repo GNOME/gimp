@@ -48,6 +48,13 @@ struct _GimpFilteredContainer
 struct _GimpFilteredContainerClass
 {
   GimpContainerClass  parent_class;
+
+  void (* src_add)    (GimpFilteredContainer *filtered_container,
+                       GimpObject            *object);
+  void (* src_remove) (GimpFilteredContainer *filtered_container,
+                       GimpObject            *object);
+  void (* src_freeze) (GimpFilteredContainer *filtered_container);
+  void (* src_thaw)   (GimpFilteredContainer *filtered_container);
 };
 
 

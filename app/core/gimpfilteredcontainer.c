@@ -37,28 +37,35 @@ enum
 };
 
 
-static void   gimp_filtered_container_constructed  (GObject               *object);
-static void   gimp_filtered_container_dispose      (GObject               *object);
-static void   gimp_filtered_container_set_property (GObject               *object,
-                                                    guint                  property_id,
-                                                    const GValue          *value,
-                                                    GParamSpec            *pspec);
-static void   gimp_filtered_container_get_property (GObject               *object,
-                                                    guint                  property_id,
-                                                    GValue                *value,
-                                                    GParamSpec            *pspec);
+static void   gimp_filtered_container_constructed     (GObject               *object);
+static void   gimp_filtered_container_dispose         (GObject               *object);
+static void   gimp_filtered_container_set_property    (GObject               *object,
+                                                       guint                  property_id,
+                                                       const GValue          *value,
+                                                       GParamSpec            *pspec);
+static void   gimp_filtered_container_get_property    (GObject               *object,
+                                                       guint                  property_id,
+                                                       GValue                *value,
+                                                       GParamSpec            *pspec);
 
-static void   gimp_filtered_container_filter       (GimpFilteredContainer *filtered_container);
-static void   gimp_filtered_container_src_add      (GimpContainer         *src_container,
-                                                    GimpObject            *obj,
-                                                    GimpFilteredContainer *filtered_container);
-static void   gimp_filtered_container_src_remove   (GimpContainer         *src_container,
-                                                    GimpObject            *obj,
-                                                    GimpFilteredContainer *filtered_container);
-static void   gimp_filtered_container_src_freeze   (GimpContainer         *src_container,
-                                                    GimpFilteredContainer *filtered_container);
-static void   gimp_filtered_container_src_thaw     (GimpContainer         *src_container,
-                                                    GimpFilteredContainer *filtered_container);
+static void   gimp_filtered_container_real_src_add    (GimpFilteredContainer *filtered_container,
+                                                       GimpObject            *object);
+static void   gimp_filtered_container_real_src_remove (GimpFilteredContainer *filtered_container,
+                                                       GimpObject            *object);
+static void   gimp_filtered_container_real_src_freeze (GimpFilteredContainer *filtered_container);
+static void   gimp_filtered_container_real_src_thaw   (GimpFilteredContainer *filtered_container);
+
+static void   gimp_filtered_container_filter          (GimpFilteredContainer *filtered_container);
+static void   gimp_filtered_container_src_add         (GimpContainer         *src_container,
+                                                       GimpObject            *obj,
+                                                       GimpFilteredContainer *filtered_container);
+static void   gimp_filtered_container_src_remove      (GimpContainer         *src_container,
+                                                       GimpObject            *obj,
+                                                       GimpFilteredContainer *filtered_container);
+static void   gimp_filtered_container_src_freeze      (GimpContainer         *src_container,
+                                                       GimpFilteredContainer *filtered_container);
+static void   gimp_filtered_container_src_thaw        (GimpContainer         *src_container,
+                                                       GimpFilteredContainer *filtered_container);
 
 
 G_DEFINE_TYPE (GimpFilteredContainer, gimp_filtered_container, GIMP_TYPE_LIST)
@@ -69,12 +76,18 @@ G_DEFINE_TYPE (GimpFilteredContainer, gimp_filtered_container, GIMP_TYPE_LIST)
 static void
 gimp_filtered_container_class_init (GimpFilteredContainerClass *klass)
 {
-  GObjectClass *g_object_class = G_OBJECT_CLASS (klass);
+  GObjectClass               *g_object_class = G_OBJECT_CLASS (klass);
+  GimpFilteredContainerClass *filtered_class = GIMP_FILTERED_CONTAINER_CLASS (klass);
 
   g_object_class->constructed  = gimp_filtered_container_constructed;
   g_object_class->dispose      = gimp_filtered_container_dispose;
   g_object_class->set_property = gimp_filtered_container_set_property;
   g_object_class->get_property = gimp_filtered_container_get_property;
+
+  filtered_class->src_add      = gimp_filtered_container_real_src_add;
+  filtered_class->src_remove   = gimp_filtered_container_real_src_remove;
+  filtered_class->src_freeze   = gimp_filtered_container_real_src_freeze;
+  filtered_class->src_thaw     = gimp_filtered_container_real_src_thaw;
 
   g_object_class_install_property (g_object_class, PROP_SRC_CONTAINER,
                                    g_param_spec_object ("src-container",
@@ -110,10 +123,18 @@ gimp_filtered_container_constructed (GObject *object)
     G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CONTAINER (filtered_container->src_container));
-  g_assert (filtered_container->filter_func != NULL);
 
   if (! gimp_container_frozen (filtered_container->src_container))
-    gimp_filtered_container_filter (filtered_container);
+    {
+      /*  a freeze/thaw can't hurt on a newly created container because
+       *  we can't have any views yet. This way we get away without
+       *  having a virtual function for initializing the container.
+       */
+      gimp_filtered_container_src_freeze (filtered_container->src_container,
+                                          filtered_container);
+      gimp_filtered_container_src_thaw (filtered_container->src_container,
+                                        filtered_container);
+    }
 }
 
 static void
@@ -212,6 +233,40 @@ gimp_filtered_container_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_filtered_container_real_src_add (GimpFilteredContainer *filtered_container,
+                                      GimpObject            *object)
+{
+  if (! filtered_container->filter_func ||
+      filtered_container->filter_func (object, filtered_container->filter_data))
+    {
+      gimp_container_add (GIMP_CONTAINER (filtered_container), object);
+    }
+}
+
+static void
+gimp_filtered_container_real_src_remove (GimpFilteredContainer *filtered_container,
+                                         GimpObject            *object)
+{
+  if (! filtered_container->filter_func ||
+      filtered_container->filter_func (object, filtered_container->filter_data))
+    {
+      gimp_container_remove (GIMP_CONTAINER (filtered_container), object);
+    }
+}
+
+static void
+gimp_filtered_container_real_src_freeze (GimpFilteredContainer *filtered_container)
+{
+  gimp_container_clear (GIMP_CONTAINER (filtered_container));
+}
+
+static void
+gimp_filtered_container_real_src_thaw (GimpFilteredContainer *filtered_container)
+{
+  gimp_filtered_container_filter (filtered_container);
+}
+
 /**
  * gimp_filtered_container_new:
  * @src_container: container to be filtered.
@@ -232,7 +287,6 @@ gimp_filtered_container_new (GimpContainer        *src_container,
   GCompareFunc sort_func;
 
   g_return_val_if_fail (GIMP_IS_LIST (src_container), NULL);
-  g_return_val_if_fail (filter_func != NULL, NULL);
 
   children_type = gimp_container_get_children_type (src_container);
   sort_func     = GIMP_LIST (src_container)->sort_func;
@@ -259,7 +313,8 @@ gimp_filtered_container_filter (GimpFilteredContainer *filtered_container)
     {
       GimpObject *child = list->data;
 
-      if (filtered_container->filter_func (child,
+      if (! filtered_container->filter_func ||
+          filtered_container->filter_func (child,
                                            filtered_container->filter_data))
         {
           gimp_container_add (GIMP_CONTAINER (filtered_container), child);
@@ -269,25 +324,25 @@ gimp_filtered_container_filter (GimpFilteredContainer *filtered_container)
 
 static void
 gimp_filtered_container_src_add (GimpContainer         *src_container,
-                                 GimpObject            *obj,
+                                 GimpObject            *object,
                                  GimpFilteredContainer *filtered_container)
 {
-  if (! gimp_container_frozen (src_container) &&
-      filtered_container->filter_func (obj, filtered_container->filter_data))
+  if (! gimp_container_frozen (filtered_container->src_container))
     {
-      gimp_container_add (GIMP_CONTAINER (filtered_container), obj);
+      GIMP_FILTERED_CONTAINER_GET_CLASS (filtered_container)->src_add (filtered_container,
+                                                                       object);
     }
 }
 
 static void
 gimp_filtered_container_src_remove (GimpContainer         *src_container,
-                                    GimpObject            *obj,
+                                    GimpObject            *object,
                                     GimpFilteredContainer *filtered_container)
 {
-  if (! gimp_container_frozen (src_container) &&
-      filtered_container->filter_func (obj, filtered_container->filter_data))
+  if (! gimp_container_frozen (filtered_container->src_container))
     {
-      gimp_container_remove (GIMP_CONTAINER (filtered_container), obj);
+      GIMP_FILTERED_CONTAINER_GET_CLASS (filtered_container)->src_remove (filtered_container,
+                                                                          object);
     }
 }
 
@@ -296,13 +351,15 @@ gimp_filtered_container_src_freeze (GimpContainer         *src_container,
                                     GimpFilteredContainer *filtered_container)
 {
   gimp_container_freeze (GIMP_CONTAINER (filtered_container));
-  gimp_container_clear (GIMP_CONTAINER (filtered_container));
+
+  GIMP_FILTERED_CONTAINER_GET_CLASS (filtered_container)->src_freeze (filtered_container);
 }
 
 static void
 gimp_filtered_container_src_thaw (GimpContainer         *src_container,
                                   GimpFilteredContainer *filtered_container)
 {
-  gimp_filtered_container_filter (filtered_container);
+  GIMP_FILTERED_CONTAINER_GET_CLASS (filtered_container)->src_thaw (filtered_container);
+
   gimp_container_thaw (GIMP_CONTAINER (filtered_container));
 }
