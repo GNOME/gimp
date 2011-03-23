@@ -220,8 +220,8 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   /* pre-fill the out buffer with no-displacement coordinate */
   it = gegl_buffer_iterator_new (out_buf, roi, NULL, GEGL_BUFFER_WRITE);
 
-  plain_color.x = (gint) config->cage_vertices[0].x;
-  plain_color.y = (gint) config->cage_vertices[0].y;
+  plain_color.x = (gint) config->cage_points[0].src_point.x;
+  plain_color.y = (gint) config->cage_points[0].src_point.y;
 
   while (gegl_buffer_iterator_next (it))
     {
@@ -507,14 +507,14 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
 
   for (i = 0; i < cvn; i++)
     {
-      pos_x += coef[i] * config->cage_vertices_d[i].x;
-      pos_y += coef[i] * config->cage_vertices_d[i].y;
+      pos_x += coef[i] * config->cage_points[i].dest_point.x;
+      pos_y += coef[i] * config->cage_points[i].dest_point.y;
     }
 
   for (i = 0; i < cvn; i++)
     {
-      pos_x += coef[i + cvn] * config->scaling_factor[i] * config->normal_d[i].x;
-      pos_y += coef[i + cvn] * config->scaling_factor[i] * config->normal_d[i].y;
+      pos_x += coef[i + cvn] * config->cage_points[i].edge_scaling_factor * config->cage_points[i].edge_normal.x;
+      pos_y += coef[i + cvn] * config->cage_points[i].edge_scaling_factor * config->cage_points[i].edge_normal.y;
     }
 
   result.x = pos_x;

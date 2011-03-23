@@ -44,15 +44,31 @@ struct _GimpCageTool
 
   GimpCageConfig *config;
 
-  gdouble         cursor_x;
-  gdouble         cursor_y;
-  gint            hovering_handle;
-  gint            moving_handle;
-  gboolean        cage_complete;
+  gint            offset_x; /* used to convert the cage point coords */
+  gint            offset_y; /* to drawable coords */
 
-  GeglBuffer     *coef;
+  gdouble         cursor_x; /* Hold the cursor x position */
+  gdouble         cursor_y; /* Hold the cursor y position */
 
-  GimpImageMap   *image_map;
+  gdouble         movement_start_x; /* Where the movement started */
+  gdouble         movement_start_y; /* Where the movement started */
+
+  gdouble         selection_start_x; /* Where the selection started */
+  gdouble         selection_start_y; /* Where the selection started */
+
+  gint            hovering_handle; /* Handle which the cursor is above */
+  gboolean        cage_complete; /* Cage closed or not */
+
+  GeglBuffer     *coef; /* Gegl where the coefficient of the transformation are stored */
+  gboolean        dirty_coef; /* Indicate if the coef are still valid */
+
+  GeglNode       *render_node; /* Gegl node graph to render the transfromation */
+  GeglNode       *cage_node; /* Gegl node that compute the cage transform */
+  GeglNode       *coef_node; /* Gegl node that read in the coef buffer */
+
+  gint            tool_state; /* Current state in statemachine */
+
+  GimpImageMap   *image_map; /* For preview */
 };
 
 struct _GimpCageToolClass
