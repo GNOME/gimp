@@ -414,7 +414,7 @@
 #define GIMP_HELP_TOOL_OPTIONS_DIALOG             "gimp-tool-options-dialog"
 #define GIMP_HELP_TOOL_OPTIONS_SAVE               "gimp-tool-options-save"
 #define GIMP_HELP_TOOL_OPTIONS_RESTORE            "gimp-tool-options-restore"
-#define GIMP_HELP_TOOL_OPTIONS_RENAME             "gimp-tool-options-rename"
+#define GIMP_HELP_TOOL_OPTIONS_EDIT               "gimp-tool-options-edit"
 #define GIMP_HELP_TOOL_OPTIONS_DELETE             "gimp-tool-options-delete"
 #define GIMP_HELP_TOOL_OPTIONS_RESET              "gimp-tool-options-reset"
 

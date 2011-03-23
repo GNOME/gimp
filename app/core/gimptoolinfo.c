@@ -29,13 +29,12 @@
 #include "base/temp-buf.h"
 
 #include "gimp.h"
-#include "gimpcontainer.h"
-#include "gimpcontext.h"
-#include "gimplist.h"
+#include "gimpdatafactory.h"
+#include "gimpfilteredcontainer.h"
 #include "gimppaintinfo.h"
 #include "gimptoolinfo.h"
 #include "gimptooloptions.h"
-#include "gimptoolpresets.h"
+#include "gimptoolpreset.h"
 
 
 enum
@@ -214,6 +213,16 @@ gimp_tool_info_get_description (GimpViewable  *viewable,
   return g_strdup (tool_info->blurb);
 }
 
+static gboolean
+gimp_tool_info_filter_preset (const GimpObject *object,
+                              gpointer          user_data)
+{
+  GimpToolPreset *preset    = GIMP_TOOL_PRESET (object);
+  GimpToolInfo   *tool_info = user_data;
+
+  return preset->tool_options->tool_info == tool_info;
+}
+
 GimpToolInfo *
 gimp_tool_info_new (Gimp                *gimp,
                     GType                tool_type,
@@ -294,7 +303,14 @@ gimp_tool_info_new (Gimp                *gimp,
 
   if (tool_info->tool_options_type != GIMP_TYPE_TOOL_OPTIONS)
     {
-      tool_info->presets = gimp_tool_presets_new (tool_info);
+      GimpContainer *presets;
+
+      presets = gimp_data_factory_get_container (gimp->tool_preset_factory);
+
+      tool_info->presets =
+        gimp_filtered_container_new (presets,
+                                     gimp_tool_info_filter_preset,
+                                     tool_info);
     }
 
   return tool_info;

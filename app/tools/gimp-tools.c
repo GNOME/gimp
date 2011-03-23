@@ -30,9 +30,9 @@
 
 #include "core/gimp.h"
 #include "core/gimp-contexts.h"
+#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
-#include "core/gimptoolpresets.h"
 
 #include "gimp-tools.h"
 #include "gimptooloptions-gui.h"
@@ -359,9 +359,6 @@ gimp_tools_restore (Gimp *gimp)
 
       gimp_tools_set_tool_options_gui (tool_info->tool_options,
                                        g_object_ref_sink (options_gui));
-
-      if (tool_info->presets)
-        gimp_tool_presets_load (tool_info->presets, NULL);
     }
 }
 

@@ -3,13 +3,13 @@
 
 <ui>
   <popup action="tool-options-popup">
-    <menu action="tool-options-save-menu" name="Save">
-      <menuitem action="tool-options-save-new" />
+    <menu action="tool-options-save-preset-menu" name="Save">
+      <menuitem action="tool-options-save-new-preset" />
       <separator />
     </menu>
-    <menu action="tool-options-restore-menu" name="Restore" />
-    <menu action="tool-options-rename-menu" name="Rename" />
-    <menu action="tool-options-delete-menu" name="Delete" />
+    <menu action="tool-options-restore-preset-menu" name="Restore" />
+    <menu action="tool-options-edit-preset-menu" name="Edit" />
+    <menu action="tool-options-delete-preset-menu" name="Delete" />
     <separator />
     <menuitem action="tool-options-reset" />
     <menuitem action="tool-options-reset-all" />

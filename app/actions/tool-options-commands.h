@@ -19,26 +19,26 @@
 #define __TOOL_OPTIONS_COMMANDS_H__
 
 
-void   tool_options_save_new_cmd_callback     (GtkAction *action,
-                                               gpointer   data);
+void   tool_options_save_new_preset_cmd_callback (GtkAction *action,
+                                                  gpointer   data);
 
-void   tool_options_save_to_cmd_callback      (GtkAction *action,
-                                               gint       value,
-                                               gpointer   data);
-void   tool_options_restore_from_cmd_callback (GtkAction *action,
-                                               gint       value,
-                                               gpointer   data);
-void   tool_options_rename_saved_cmd_callback (GtkAction *action,
-                                               gint       value,
-                                               gpointer   data);
-void   tool_options_delete_saved_cmd_callback (GtkAction *action,
-                                               gint       value,
-                                               gpointer   data);
+void   tool_options_save_preset_cmd_callback     (GtkAction *action,
+                                                  gint       value,
+                                                  gpointer   data);
+void   tool_options_restore_preset_cmd_callback  (GtkAction *action,
+                                                  gint       value,
+                                                  gpointer   data);
+void   tool_options_edit_preset_cmd_callback     (GtkAction *action,
+                                                  gint       value,
+                                                  gpointer   data);
+void   tool_options_delete_preset_cmd_callback   (GtkAction *action,
+                                                  gint       value,
+                                                  gpointer   data);
 
-void   tool_options_reset_cmd_callback        (GtkAction *action,
-                                               gpointer   data);
-void   tool_options_reset_all_cmd_callback    (GtkAction *action,
-                                               gpointer   data);
+void   tool_options_reset_cmd_callback           (GtkAction *action,
+                                                  gpointer   data);
+void   tool_options_reset_all_cmd_callback       (GtkAction *action,
+                                                  gpointer   data);
 
 
 #endif /* __TOOL_OPTIONS_COMMANDS_H__ */

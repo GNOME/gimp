@@ -42,7 +42,6 @@
 static void tool_options_actions_update_presets (GimpActionGroup *group,
                                                  const gchar     *action_prefix,
                                                  GCallback        callback,
-                                                 const gchar     *stock_id,
                                                  const gchar     *help_id,
                                                  GimpContainer   *presets);
 
@@ -55,25 +54,25 @@ static const GimpActionEntry tool_options_actions[] =
     NC_("tool-options-action", "Tool Options Menu"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DIALOG },
 
-  { "tool-options-save-menu", GTK_STOCK_SAVE,
-    NC_("tool-options-action", "_Save Options To"), "", NULL, NULL,
+  { "tool-options-save-preset-menu", GTK_STOCK_SAVE,
+    NC_("tool-options-action", "_Save Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_SAVE },
 
-  { "tool-options-restore-menu", GTK_STOCK_REVERT_TO_SAVED,
-    NC_("tool-options-action", "_Restore Options From"), "", NULL, NULL,
+  { "tool-options-restore-preset-menu", GTK_STOCK_REVERT_TO_SAVED,
+    NC_("tool-options-action", "_Restore Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_RESTORE },
 
-  { "tool-options-rename-menu", GTK_STOCK_EDIT,
-    NC_("tool-options-action", "Re_name Saved Options"), NULL, NULL, NULL,
-    GIMP_HELP_TOOL_OPTIONS_RENAME },
+  { "tool-options-edit-preset-menu", GTK_STOCK_EDIT,
+    NC_("tool-options-action", "E_dit Tool Preset"), NULL, NULL, NULL,
+    GIMP_HELP_TOOL_OPTIONS_EDIT },
 
-  { "tool-options-delete-menu", GTK_STOCK_DELETE,
-    NC_("tool-options-action", "_Delete Saved Options"), "", NULL, NULL,
+  { "tool-options-delete-preset-menu", GTK_STOCK_DELETE,
+    NC_("tool-options-action", "_Delete Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DELETE },
 
-  { "tool-options-save-new", GTK_STOCK_NEW,
-    NC_("tool-options-action", "_New Entry..."), "", NULL,
-    G_CALLBACK (tool_options_save_new_cmd_callback),
+  { "tool-options-save-new-preset", GTK_STOCK_NEW,
+    NC_("tool-options-action", "_New Tool Preset..."), "", NULL,
+    G_CALLBACK (tool_options_save_new_preset_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_SAVE },
 
   { "tool-options-reset", GIMP_STOCK_RESET,
@@ -104,9 +103,9 @@ tool_options_actions_setup (GimpActionGroup *group)
                                  tool_options_actions,
                                  G_N_ELEMENTS (tool_options_actions));
 
-  SET_HIDE_EMPTY ("tool-options-restore-menu", FALSE);
-  SET_HIDE_EMPTY ("tool-options-rename-menu",  FALSE);
-  SET_HIDE_EMPTY ("tool-options-delete-menu",  FALSE);
+  SET_HIDE_EMPTY ("tool-options-restore-preset-menu", FALSE);
+  SET_HIDE_EMPTY ("tool-options-edit-preset-menu",    FALSE);
+  SET_HIDE_EMPTY ("tool-options-delete-preset-menu",  FALSE);
 }
 
 void
@@ -116,34 +115,30 @@ tool_options_actions_update (GimpActionGroup *group,
   GimpContext  *context   = gimp_get_user_context (group->gimp);
   GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
-  SET_VISIBLE ("tool-options-save-menu",    tool_info->presets);
-  SET_VISIBLE ("tool-options-restore-menu", tool_info->presets);
-  SET_VISIBLE ("tool-options-rename-menu",  tool_info->presets);
-  SET_VISIBLE ("tool-options-delete-menu",  tool_info->presets);
+  SET_VISIBLE ("tool-options-save-preset-menu",    tool_info->presets);
+  SET_VISIBLE ("tool-options-restore-preset-menu", tool_info->presets);
+  SET_VISIBLE ("tool-options-edit-preset-menu",    tool_info->presets);
+  SET_VISIBLE ("tool-options-delete-preset-menu",  tool_info->presets);
 
-  tool_options_actions_update_presets (group, "tool-options-save-",
-                                       G_CALLBACK (tool_options_save_to_cmd_callback),
-                                       GTK_STOCK_SAVE,
+  tool_options_actions_update_presets (group, "tool-options-save-preset",
+                                       G_CALLBACK (tool_options_save_preset_cmd_callback),
                                        GIMP_HELP_TOOL_OPTIONS_SAVE,
-                                       GIMP_CONTAINER (tool_info->presets));
+                                       tool_info->presets);
 
-  tool_options_actions_update_presets (group, "tool-options-restore-",
-                                       G_CALLBACK (tool_options_restore_from_cmd_callback),
-                                       GTK_STOCK_REVERT_TO_SAVED,
+  tool_options_actions_update_presets (group, "tool-options-restore-preset",
+                                       G_CALLBACK (tool_options_restore_preset_cmd_callback),
                                        GIMP_HELP_TOOL_OPTIONS_RESTORE,
-                                       GIMP_CONTAINER (tool_info->presets));
+                                       tool_info->presets);
 
-  tool_options_actions_update_presets (group, "tool-options-rename-",
-                                       G_CALLBACK (tool_options_rename_saved_cmd_callback),
-                                       GTK_STOCK_EDIT,
-                                       GIMP_HELP_TOOL_OPTIONS_RENAME,
-                                       GIMP_CONTAINER (tool_info->presets));
+  tool_options_actions_update_presets (group, "tool-options-edit-preset",
+                                       G_CALLBACK (tool_options_edit_preset_cmd_callback),
+                                       GIMP_HELP_TOOL_OPTIONS_EDIT,
+                                       tool_info->presets);
 
-  tool_options_actions_update_presets (group, "tool-options-delete-",
-                                       G_CALLBACK (tool_options_delete_saved_cmd_callback),
-                                       GTK_STOCK_DELETE,
+  tool_options_actions_update_presets (group, "tool-options-delete-preset",
+                                       G_CALLBACK (tool_options_delete_preset_cmd_callback),
                                        GIMP_HELP_TOOL_OPTIONS_DELETE,
-                                       GIMP_CONTAINER (tool_info->presets));
+                                       tool_info->presets);
 }
 
 
@@ -153,7 +148,6 @@ static void
 tool_options_actions_update_presets (GimpActionGroup *group,
                                      const gchar     *action_prefix,
                                      GCallback        callback,
-                                     const gchar     *stock_id,
                                      const gchar     *help_id,
                                      GimpContainer   *presets)
 {
@@ -166,7 +160,7 @@ tool_options_actions_update_presets (GimpActionGroup *group,
       gchar     *action_name;
       GtkAction *action;
 
-      action_name = g_strdup_printf ("%s%03d", action_prefix, i);
+      action_name = g_strdup_printf ("%s-%03d", action_prefix, i);
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                             action_name);
       g_free (action_name);
@@ -185,7 +179,6 @@ tool_options_actions_update_presets (GimpActionGroup *group,
       GimpEnumActionEntry entry;
 
       entry.name           = NULL;
-      entry.stock_id       = stock_id;
       entry.label          = NULL;
       entry.accelerator    = "";
       entry.tooltip        = NULL;
@@ -197,11 +190,12 @@ tool_options_actions_update_presets (GimpActionGroup *group,
            list;
            list = g_list_next (list), i++)
         {
-          GimpToolOptions *options = list->data;
+          GimpObject *options = list->data;
 
-          entry.name  = g_strdup_printf ("%s%03d", action_prefix, i);
-          entry.label = gimp_object_get_name (options);
-          entry.value = i;
+          entry.name     = g_strdup_printf ("%s-%03d", action_prefix, i);
+          entry.label    = gimp_object_get_name (options);
+          entry.stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (options));
+          entry.value    = i;
 
           gimp_action_group_add_enum_actions (group, NULL, &entry, 1, callback);
 

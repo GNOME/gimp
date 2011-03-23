@@ -367,8 +367,6 @@ libappcore_a_sources = \
 	gimptoolpreset-load.h			\
 	gimptoolpreset-save.c			\
 	gimptoolpreset-save.h			\
-	gimptoolpresets.c			\
-	gimptoolpresets.h			\
 	gimptreehandler.c			\
 	gimptreehandler.h			\
 	gimpunit.c				\

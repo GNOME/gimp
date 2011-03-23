@@ -110,19 +110,19 @@ tool_options_menu_update_after (GimpUIManager *manager,
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
                                     "Save", "save",
-                                    GIMP_CONTAINER (tool_info->presets));
+                                    tool_info->presets);
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
                                     "Restore", "restore",
-                                    GIMP_CONTAINER (tool_info->presets));
+                                    tool_info->presets);
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
-                                    "Rename", "rename",
-                                    GIMP_CONTAINER (tool_info->presets));
+                                    "Edit", "edit",
+                                    tool_info->presets);
 
   tool_options_menu_update_presets (manager, merge_id, ui_path,
                                     "Delete", "delete",
-                                    GIMP_CONTAINER (tool_info->presets));
+                                    tool_info->presets);
 
   gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
 }
@@ -145,7 +145,8 @@ tool_options_menu_update_presets (GimpUIManager *manager,
       gchar *action_name;
       gchar *path;
 
-      action_name = g_strdup_printf ("tool-options-%s-%03d", which_action, i);
+      action_name = g_strdup_printf ("tool-options-%s-preset-%03d",
+                                     which_action, i);
       path        = g_strdup_printf ("%s/%s", ui_path, menu_path);
 
       gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,

@@ -27,10 +27,14 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
-#include "core/gimptoolpresets.h"
+#include "core/gimptoolpreset.h"
 
+#include "widgets/gimpdataeditor.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpeditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
@@ -45,123 +49,109 @@
 
 /*  local function prototypes  */
 
-static void   tool_options_save_callback   (GtkWidget   *widget,
-                                            const gchar *name,
-                                            gpointer     data);
-static void   tool_options_rename_callback (GtkWidget   *widget,
-                                            const gchar *name,
-                                            gpointer     data);
+static void   tool_options_show_preset_editor (GimpEditor     *editor,
+                                               GimpToolPreset *preset);
 
 
 /*  public functions  */
 
 void
-tool_options_save_new_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+tool_options_save_new_preset_cmd_callback (GtkAction *action,
+                                           gpointer   user_data)
 {
-  GimpEditor   *editor    = GIMP_EDITOR (data);
-  GimpContext  *context   = gimp_get_user_context (editor->ui_manager->gimp);
-  GimpToolInfo *tool_info = gimp_context_get_tool (context);
-  GtkWidget    *dialog;
+  GimpEditor  *editor  = GIMP_EDITOR (user_data);
+  GimpContext *context = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpData    *data;
 
-  context   = gimp_get_user_context (editor->ui_manager->gimp);
-  tool_info = gimp_context_get_tool (context);
+  data = gimp_data_factory_data_new (context->gimp->tool_preset_factory,
+                                     context, _("Untitled"));
 
-  dialog = gimp_query_string_box (_("Save Tool Options"),
-                                  gtk_widget_get_toplevel (GTK_WIDGET (editor)),
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_TOOL_OPTIONS_DIALOG,
-                                  _("Enter a name for the saved options"),
-                                  _("Saved Options"),
-                                  NULL, NULL,
-                                  tool_options_save_callback, tool_info);
-  gtk_widget_show (dialog);
+  tool_options_show_preset_editor (editor, GIMP_TOOL_PRESET (data));
 }
 
 void
-tool_options_save_to_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+tool_options_save_preset_cmd_callback (GtkAction *action,
+                                       gint       value,
+                                       gpointer   data)
 {
-  GimpEditor      *editor    = GIMP_EDITOR (data);
-  GimpContext     *context   = gimp_get_user_context (editor->ui_manager->gimp);
-  GimpToolInfo    *tool_info = gimp_context_get_tool (context);
-  GimpToolOptions *options;
+  GimpEditor     *editor    = GIMP_EDITOR (data);
+  GimpContext    *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo   *tool_info = gimp_context_get_tool (context);
+  GimpToolPreset *preset;
 
-  options = gimp_tool_presets_get_options (tool_info->presets, value);
+  preset = (GimpToolPreset *)
+    gimp_container_get_child_by_index (tool_info->presets, value);
 
-  if (options)
+  if (preset)
     {
-      gchar *name = g_strdup (gimp_object_get_name (options));
-
       gimp_config_sync (G_OBJECT (tool_info->tool_options),
-                        G_OBJECT (options),
-                        GIMP_CONFIG_PARAM_SERIALIZE);
-      gimp_object_take_name (GIMP_OBJECT (options), name);
+                        G_OBJECT (preset->tool_options), 0);
+
+      tool_options_show_preset_editor (editor, preset);
     }
 }
 
 void
-tool_options_restore_from_cmd_callback (GtkAction *action,
-                                        gint       value,
-                                        gpointer   data)
+tool_options_restore_preset_cmd_callback (GtkAction *action,
+                                          gint       value,
+                                          gpointer   data)
 {
-  GimpEditor      *editor    = GIMP_EDITOR (data);
-  GimpContext     *context   = gimp_get_user_context (editor->ui_manager->gimp);
-  GimpToolInfo    *tool_info = gimp_context_get_tool (context);
-  GimpToolOptions *options;
+  GimpEditor     *editor    = GIMP_EDITOR (data);
+  GimpContext    *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo   *tool_info = gimp_context_get_tool (context);
+  GimpToolPreset *preset;
 
-  options = gimp_tool_presets_get_options (tool_info->presets, value);
+  preset = (GimpToolPreset *)
+    gimp_container_get_child_by_index (tool_info->presets, value);
 
-  if (options)
-    gimp_config_sync (G_OBJECT (options),
-                      G_OBJECT (tool_info->tool_options),
-                      GIMP_CONFIG_PARAM_SERIALIZE);
-}
-
-void
-tool_options_rename_saved_cmd_callback (GtkAction *action,
-                                        gint       value,
-                                        gpointer   data)
-{
-  GimpEditor      *editor    = GIMP_EDITOR (data);
-  GimpContext     *context   = gimp_get_user_context (editor->ui_manager->gimp);
-  GimpToolInfo    *tool_info = gimp_context_get_tool (context);
-  GimpToolOptions *options;
-
-  options = gimp_tool_presets_get_options (tool_info->presets, value);
-
-  if (options)
+  if (preset)
     {
-      GtkWidget *dialog;
-
-      dialog = gimp_query_string_box (_("Rename Saved Tool Options"),
-                                      gtk_widget_get_toplevel (GTK_WIDGET (editor)),
-                                      gimp_standard_help_func,
-                                      GIMP_HELP_TOOL_OPTIONS_DIALOG,
-                                      _("Enter a new name for the saved options"),
-                                      gimp_object_get_name (options),
-                                      NULL, NULL,
-                                      tool_options_rename_callback, options);
-      gtk_widget_show (dialog);
+      if (gimp_context_get_tool_preset (context) != preset)
+        gimp_context_set_tool_preset (context, preset);
+      else
+        gimp_context_tool_preset_changed (context);
     }
 }
 
 void
-tool_options_delete_saved_cmd_callback (GtkAction *action,
-                                        gint       value,
-                                        gpointer   data)
+tool_options_edit_preset_cmd_callback (GtkAction *action,
+                                       gint       value,
+                                       gpointer   data)
 {
-  GimpEditor      *editor    = GIMP_EDITOR (data);
-  GimpContext     *context   = gimp_get_user_context (editor->ui_manager->gimp);
-  GimpToolInfo    *tool_info = gimp_context_get_tool (context);
-  GimpToolOptions *options;
+  GimpEditor     *editor    = GIMP_EDITOR (data);
+  GimpContext    *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo   *tool_info = gimp_context_get_tool (context);
+  GimpToolPreset *preset;
 
-  options = gimp_tool_presets_get_options (tool_info->presets, value);
+  preset = (GimpToolPreset *)
+    gimp_container_get_child_by_index (tool_info->presets, value);
 
-  if (options)
-    gimp_container_remove (GIMP_CONTAINER (tool_info->presets),
-                           GIMP_OBJECT (options));
+  if (preset)
+    {
+      tool_options_show_preset_editor (editor, preset);
+    }
+}
+
+void
+tool_options_delete_preset_cmd_callback (GtkAction *action,
+                                         gint       value,
+                                         gpointer   data)
+{
+  GimpEditor     *editor    = GIMP_EDITOR (data);
+  GimpContext    *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpToolInfo   *tool_info = gimp_context_get_tool (context);
+  GimpToolPreset *preset;
+
+  preset = (GimpToolPreset *)
+    gimp_container_get_child_by_index (tool_info->presets, value);
+
+  if (preset)
+    {
+      GimpDataFactory *preset_factory = context->gimp->tool_preset_factory;
+
+      gimp_container_remove (gimp_data_factory_get_container (preset_factory),
+                             GIMP_OBJECT (preset));
+    }
 }
 
 void
@@ -230,34 +220,16 @@ tool_options_reset_all_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-tool_options_save_callback (GtkWidget   *widget,
-                            const gchar *name,
-                            gpointer     data)
+tool_options_show_preset_editor (GimpEditor     *editor,
+                                 GimpToolPreset *preset)
 {
-  GimpToolInfo *tool_info = GIMP_TOOL_INFO (data);
-  GimpConfig   *copy;
+  GtkWidget *dockable;
 
-  copy = gimp_config_duplicate (GIMP_CONFIG (tool_info->tool_options));
+  dockable =
+    gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
+                                      gtk_widget_get_screen (GTK_WIDGET (editor)),
+                                      "gimp-tool-preset-editor", -1);
 
-  if (name && strlen (name))
-    gimp_object_set_name (GIMP_OBJECT (copy), name);
-  else
-    gimp_object_set_static_name (GIMP_OBJECT (copy), _("Saved Options"));
-
-  gimp_container_insert (GIMP_CONTAINER (tool_info->presets),
-                         GIMP_OBJECT (copy), -1);
-  g_object_unref (copy);
-}
-
-static void
-tool_options_rename_callback (GtkWidget   *widget,
-                              const gchar *name,
-                              gpointer     data)
-{
-  GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
-
-  if (name && strlen (name))
-    gimp_object_set_name (GIMP_OBJECT (options), name);
-  else
-    gimp_object_set_static_name (GIMP_OBJECT (options), _("Saved Options"));
+  gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
+                             GIMP_DATA (preset));
 }
