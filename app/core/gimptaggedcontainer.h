@@ -47,7 +47,7 @@ struct _GimpTaggedContainer
 
 struct _GimpTaggedContainerClass
 {
-  GimpContainerClass  parent_class;
+  GimpListClass  parent_class;
 
   void (* tag_count_changed) (GimpTaggedContainer *container,
                               gint                   count);
@@ -56,8 +56,7 @@ struct _GimpTaggedContainerClass
 
 GType           gimp_tagged_container_get_type      (void) G_GNUC_CONST;
 
-GimpContainer * gimp_tagged_container_new           (GimpContainer       *src_container,
-                                                     GCompareFunc         sort_func);
+GimpContainer * gimp_tagged_container_new           (GimpContainer       *src_container);
 
 void            gimp_tagged_container_set_filter    (GimpTaggedContainer *tagged_container,
                                                      GList               *tags);

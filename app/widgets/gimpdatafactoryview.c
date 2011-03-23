@@ -242,8 +242,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   factory_view->priv->factory = factory;
 
   factory_view->priv->tagged_container =
-    gimp_tagged_container_new (gimp_data_factory_get_container (factory),
-                               (GCompareFunc) gimp_data_compare);
+    gimp_tagged_container_new (gimp_data_factory_get_container (factory));
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
