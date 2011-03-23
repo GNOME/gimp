@@ -128,7 +128,7 @@ gimp_operation_cage_transform_init (GimpOperationCageTransform *self)
 }
 
 static void
-gimp_operation_cage_transform_finalize  (GObject  *object)
+gimp_operation_cage_transform_finalize (GObject *object)
 {
   GimpOperationCageTransform *self = GIMP_OPERATION_CAGE_TRANSFORM (object);
 
@@ -190,7 +190,7 @@ gimp_operation_cage_transform_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_cage_transform_prepare (GeglOperation  *operation)
+gimp_operation_cage_transform_prepare (GeglOperation *operation)
 {
   GimpOperationCageTransform *oct    = GIMP_OPERATION_CAGE_TRANSFORM (operation);
   GimpCageConfig             *config = GIMP_CAGE_CONFIG (oct->config);

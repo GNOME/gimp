@@ -21,11 +21,11 @@
 
 #include <gegl.h>
 
-#include "gimp-gegl-types.h"
-
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+
+#include "gimp-gegl-types.h"
 
 #include "gimpcageconfig.h"
 
@@ -52,6 +52,7 @@ static void   gimp_cage_config_set_property           (GObject        *object,
 static void   gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc);
 static void   gimp_cage_config_compute_edges_normal   (GimpCageConfig *gcc);
 
+
 G_DEFINE_TYPE_WITH_CODE (GimpCageConfig, gimp_cage_config,
                          GIMP_TYPE_IMAGE_MAP_CONFIG,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
@@ -59,31 +60,34 @@ G_DEFINE_TYPE_WITH_CODE (GimpCageConfig, gimp_cage_config,
 
 #define parent_class gimp_cage_config_parent_class
 
+
 #ifdef DEBUG_CAGE
 static void
 print_cage (GimpCageConfig *gcc)
 {
   gint i;
   GeglRectangle bounding_box;
+
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
 
   bounding_box = gimp_cage_config_get_bounding_box (gcc);
 
   for (i = 0; i < gcc->n_cage_vertices; i++)
     {
-      printf("cgx: %.0f    cgy: %.0f    cvdx: %.0f    cvdy: %.0f  sf: %.2f  normx: %.2f  normy: %.2f %s\n",
-             gcc->cage_points[i].src_point.x + ((gcc->cage_mode==GIMP_CAGE_MODE_CAGE_CHANGE)?gcc->displacement_x:0),
-             gcc->cage_points[i].src_point.y + ((gcc->cage_mode==GIMP_CAGE_MODE_CAGE_CHANGE)?gcc->displacement_y:0),
-             gcc->cage_points[i].dest_point.x + ((gcc->cage_mode==GIMP_CAGE_MODE_DEFORM)?gcc->displacement_x:0),
-             gcc->cage_points[i].dest_point.y + ((gcc->cage_mode==GIMP_CAGE_MODE_DEFORM)?gcc->displacement_y:0),
-             gcc->cage_points[i].edge_scaling_factor,
-             gcc->cage_points[i].edge_normal.x,
-             gcc->cage_points[i].edge_normal.y,
-             ((gcc->cage_points[i].selected) ? "S" : "NS"));
+      g_printerr ("cgx: %.0f    cgy: %.0f    cvdx: %.0f    cvdy: %.0f  sf: %.2f  normx: %.2f  normy: %.2f %s\n",
+                  gcc->cage_points[i].src_point.x + ((gcc->cage_mode==GIMP_CAGE_MODE_CAGE_CHANGE)?gcc->displacement_x:0),
+                  gcc->cage_points[i].src_point.y + ((gcc->cage_mode==GIMP_CAGE_MODE_CAGE_CHANGE)?gcc->displacement_y:0),
+                  gcc->cage_points[i].dest_point.x + ((gcc->cage_mode==GIMP_CAGE_MODE_DEFORM)?gcc->displacement_x:0),
+                  gcc->cage_points[i].dest_point.y + ((gcc->cage_mode==GIMP_CAGE_MODE_DEFORM)?gcc->displacement_y:0),
+                  gcc->cage_points[i].edge_scaling_factor,
+                  gcc->cage_points[i].edge_normal.x,
+                  gcc->cage_points[i].edge_normal.y,
+                  ((gcc->cage_points[i].selected) ? "S" : "NS"));
     }
-  printf("bounding box: x: %d  y: %d  width: %d  height: %d\n", bounding_box.x, bounding_box.y, bounding_box.width, bounding_box.height);
-  printf("disp x: %f  disp y: %f\n", gcc->displacement_x, gcc->displacement_y);
-  printf("done\n");
+
+  g_printerr ("bounding box: x: %d  y: %d  width: %d  height: %d\n", bounding_box.x, bounding_box.y, bounding_box.width, bounding_box.height);
+  g_printerr ("disp x: %f  disp y: %f\n", gcc->displacement_x, gcc->displacement_y);
+  g_printerr ("done\n");
 }
 #endif
 
@@ -110,7 +114,7 @@ gimp_cage_config_init (GimpCageConfig *self)
 static void
 gimp_cage_config_finalize (GObject *object)
 {
-  GimpCageConfig  *gcc = GIMP_CAGE_CONFIG (object);
+  GimpCageConfig *gcc = GIMP_CAGE_CONFIG (object);
 
   g_free (gcc->cage_points);
 
@@ -210,11 +214,11 @@ gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
  * Returns: the real position of the given point, as a GimpVector2
  */
 GimpVector2
-gimp_cage_config_get_point_coordinate  (GimpCageConfig  *gcc,
-                                        GimpCageMode     mode,
-                                        gint             point_number)
+gimp_cage_config_get_point_coordinate (GimpCageConfig *gcc,
+                                       GimpCageMode    mode,
+                                       gint            point_number)
 {
-  GimpVector2 point = {0.0, 0.0};
+  GimpVector2 point = { 0.0, 0.0 };
 
   g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), point);
   g_return_val_if_fail (point_number < gcc->n_cage_vertices, point);
@@ -262,10 +266,10 @@ gimp_cage_config_get_point_coordinate  (GimpCageConfig  *gcc,
  * This displacement need to be commited to become effective.
  */
 void
-gimp_cage_config_add_displacement (GimpCageConfig  *gcc,
-                                   GimpCageMode     mode,
-                                   gdouble          x,
-                                   gdouble          y)
+gimp_cage_config_add_displacement (GimpCageConfig *gcc,
+                                   GimpCageMode    mode,
+                                   gdouble         x,
+                                   gdouble         y)
 {
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
 
@@ -285,7 +289,7 @@ gimp_cage_config_add_displacement (GimpCageConfig  *gcc,
  * Apply the displacement to the cage
  */
 void
-gimp_cage_config_commit_displacement  (GimpCageConfig *gcc)
+gimp_cage_config_commit_displacement (GimpCageConfig *gcc)
 {
   gint  i;
 
@@ -309,6 +313,7 @@ gimp_cage_config_commit_displacement  (GimpCageConfig *gcc)
             }
         }
     }
+
   gimp_cage_config_compute_scaling_factor (gcc);
   gimp_cage_config_compute_edges_normal (gcc);
   gimp_cage_config_reset_displacement (gcc);
@@ -321,7 +326,7 @@ gimp_cage_config_commit_displacement  (GimpCageConfig *gcc)
  * Set the displacement to zero.
  */
 void
-gimp_cage_config_reset_displacement (GimpCageConfig  *gcc)
+gimp_cage_config_reset_displacement (GimpCageConfig *gcc)
 {
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
 
@@ -338,7 +343,7 @@ gimp_cage_config_reset_displacement (GimpCageConfig  *gcc)
  * Returns: the bounding box of the source cage, as a GeglRectangle
  */
 GeglRectangle
-gimp_cage_config_get_bounding_box (GimpCageConfig  *gcc)
+gimp_cage_config_get_bounding_box (GimpCageConfig *gcc)
 {
   GeglRectangle bounding_box = { 0, };
   gint          i;
@@ -629,9 +634,9 @@ gimp_cage_config_select_area  (GimpCageConfig  *gcc,
  * Select cage's point inside the given area. Already selected point stay selected.
  */
 void
-gimp_cage_config_select_add_area  (GimpCageConfig  *gcc,
-                                   GimpCageMode     mode,
-                                   GeglRectangle    area)
+gimp_cage_config_select_add_area (GimpCageConfig *gcc,
+                                  GimpCageMode    mode,
+                                  GeglRectangle   area)
 {
   gint  i;
 
@@ -670,8 +675,8 @@ gimp_cage_config_select_add_area  (GimpCageConfig  *gcc,
  * Toggle the selection of the given cage point
  */
 void
-gimp_cage_config_toggle_point_selection (GimpCageConfig  *gcc,
-                                         gint             point_number)
+gimp_cage_config_toggle_point_selection (GimpCageConfig *gcc,
+                                         gint            point_number)
 {
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
   g_return_if_fail (point_number < gcc->n_cage_vertices);
@@ -687,7 +692,7 @@ gimp_cage_config_toggle_point_selection (GimpCageConfig  *gcc,
  * Deselect all cage points.
  */
 void
-gimp_cage_config_deselect_points (GimpCageConfig  *gcc)
+gimp_cage_config_deselect_points (GimpCageConfig *gcc)
 {
   gint  i;
 

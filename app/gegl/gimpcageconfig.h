@@ -86,4 +86,5 @@ void            gimp_cage_config_toggle_point_selection (GimpCageConfig  *gcc,
                                                          gint             point_number);
 void            gimp_cage_config_deselect_points        (GimpCageConfig  *gcc);
 
+
 #endif /* __GIMP_CAGE_CONFIG_H__ */
