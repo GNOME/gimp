@@ -116,6 +116,13 @@ gimp_tagged_container_dispose (GObject *object)
 {
   GimpTaggedContainer *tagged_container = GIMP_TAGGED_CONTAINER (object);
 
+  if (tagged_container->filter)
+    {
+      g_list_free_full (tagged_container->filter,
+                        (GDestroyNotify) gimp_tag_or_null_unref);
+      tagged_container->filter = NULL;
+    }
+
   if (tagged_container->tag_ref_counts)
     {
       g_hash_table_unref (tagged_container->tag_ref_counts);
@@ -251,7 +258,7 @@ gimp_tagged_container_new (GimpContainer *src_container)
 /**
  * gimp_tagged_container_set_filter:
  * @tagged_container: a #GimpTaggedContainer object.
- * @tags:               list of #GimpTag objects.
+ * @tags:             list of #GimpTag objects.
  *
  * Sets list of tags to be used for filtering. Only objects which have
  * all of the tags assigned match filtering criteria.
@@ -260,14 +267,30 @@ void
 gimp_tagged_container_set_filter (GimpTaggedContainer *tagged_container,
                                   GList               *tags)
 {
+  GList *new_filter;
+
   g_return_if_fail (GIMP_IS_TAGGED_CONTAINER (tagged_container));
+
+  if (tags)
+    {
+      GList *list;
+
+      for (list = tags; list; list = g_list_next (list))
+        g_return_if_fail (list->data == NULL || GIMP_IS_TAG (list->data));
+    }
 
   if (! gimp_container_frozen (GIMP_FILTERED_CONTAINER (tagged_container)->src_container))
     {
       gimp_tagged_container_src_freeze (GIMP_FILTERED_CONTAINER (tagged_container));
     }
 
-  tagged_container->filter = tags;
+  /*  ref new tags first, they could be the same as the old ones  */
+  new_filter = g_list_copy (tags);
+  g_list_foreach (new_filter, (GFunc) gimp_tag_or_null_ref, NULL);
+
+  g_list_free_full (tagged_container->filter,
+                    (GDestroyNotify) gimp_tag_or_null_unref);
+  tagged_container->filter = new_filter;
 
   if (! gimp_container_frozen (GIMP_FILTERED_CONTAINER (tagged_container)->src_container))
     {
@@ -283,7 +306,7 @@ gimp_tagged_container_set_filter (GimpTaggedContainer *tagged_container,
  * must be contained by each object matching filter criteria.
  *
  * Return value: a list of GimpTag objects used as filter. This value should
- * not be modified or freed.
+ *               not be modified or freed.
  **/
 const GList *
 gimp_tagged_container_get_filter (GimpTaggedContainer *tagged_container)

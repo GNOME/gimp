@@ -335,3 +335,37 @@ gimp_tag_is_tag_separator (gunichar c)
       return FALSE;
     }
 }
+
+/**
+ * gimp_tag_or_null_ref:
+ * @tag: a #GimpTag
+ *
+ * A simple wrapper around g_object_ref() that silently accepts #NULL.
+ **/
+void
+gimp_tag_or_null_ref (GimpTag *tag_or_null)
+{
+  if (tag_or_null)
+    {
+      g_return_if_fail (GIMP_IS_TAG (tag_or_null));
+
+      g_object_ref (tag_or_null);
+    }
+}
+
+/**
+ * gimp_tag_or_null_unref:
+ * @tag: a #GimpTag
+ *
+ * A simple wrapper around g_object_unref() that silently accepts #NULL.
+ **/
+void
+gimp_tag_or_null_unref (GimpTag *tag_or_null)
+{
+  if (tag_or_null)
+    {
+      g_return_if_fail (GIMP_IS_TAG (tag_or_null));
+
+      g_object_unref (tag_or_null);
+    }
+}

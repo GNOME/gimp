@@ -623,6 +623,8 @@ gimp_tag_entry_query_tag (GimpTagEntry *entry)
   gimp_tagged_container_set_filter (GIMP_TAGGED_CONTAINER (entry->container),
                                     query_list);
 
+  g_list_free_full (query_list, (GDestroyNotify) gimp_tag_or_null_unref);
+
   if (has_invalid_tags != entry->has_invalid_tags)
     {
       entry->has_invalid_tags = has_invalid_tags;

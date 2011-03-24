@@ -64,5 +64,8 @@ gint          gimp_tag_compare_with_string (GimpTag        *tag,
 gchar       * gimp_tag_string_make_valid   (const gchar    *tag_string);
 gboolean      gimp_tag_is_tag_separator    (gunichar        c);
 
+void          gimp_tag_or_null_ref         (GimpTag        *tag_or_null);
+void          gimp_tag_or_null_unref       (GimpTag        *tag_or_null);
+
 
 #endif /* __GIMP_TAG_H__ */
