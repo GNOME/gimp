@@ -250,6 +250,12 @@ gimp_tag_entry_dispose (GObject *object)
       entry->mask = NULL;
     }
 
+  if (entry->tag_query_idle_id)
+    {
+      g_source_remove (entry->tag_query_idle_id);
+      entry->tag_query_idle_id = 0;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -423,12 +429,12 @@ gimp_tag_entry_changed (GtkEntry *entry)
 
   g_free (text);
 
-  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY
-      && ! tag_entry->suppress_tag_query
-      && ! tag_entry->tag_query_pending)
+  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY &&
+      ! tag_entry->suppress_tag_query              &&
+      ! tag_entry->tag_query_idle_id)
     {
-      tag_entry->tag_query_pending = TRUE;
-      g_idle_add ((GSourceFunc) gimp_tag_entry_query_tag, entry);
+      tag_entry->tag_query_idle_id =
+        g_idle_add ((GSourceFunc) gimp_tag_entry_query_tag, entry);
     }
 }
 
@@ -591,12 +597,10 @@ gimp_tag_entry_query_tag (GimpTagEntry *entry)
   GList     *query_list = NULL;
   gboolean   has_invalid_tags;
 
-  if (entry->suppress_tag_query)
-    {
-      entry->tag_query_pending = FALSE;
+  entry->tag_query_idle_id = 0;
 
-      return FALSE;
-    }
+  if (entry->suppress_tag_query)
+    return FALSE;
 
   has_invalid_tags = FALSE;
 
@@ -625,8 +629,6 @@ gimp_tag_entry_query_tag (GimpTagEntry *entry)
       gtk_widget_queue_draw (GTK_WIDGET (entry));
     }
 
-  entry->tag_query_pending = FALSE;
-
   return FALSE;
 }
 
@@ -648,8 +650,8 @@ gimp_tag_entry_auto_complete (GimpTagEntry *tag_entry)
       /* tag query was suppressed until we got to auto completion (here),
        * now queue tag query
        */
-      tag_entry->tag_query_pending = TRUE;
-      g_idle_add ((GSourceFunc) gimp_tag_entry_query_tag, tag_entry);
+      tag_entry->tag_query_idle_id =
+        g_idle_add ((GSourceFunc) gimp_tag_entry_query_tag, tag_entry);
     }
 
   if (tag_entry->tab_completion_index >= 0)

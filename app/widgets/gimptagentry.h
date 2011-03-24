@@ -60,7 +60,7 @@ struct _GimpTagEntry
   GimpTagEntryMode     mode;
   gboolean             description_shown;
   gboolean             has_invalid_tags;
-  gboolean             tag_query_pending;
+  guint                tag_query_idle_id;
 };
 
 struct _GimpTagEntryClass
