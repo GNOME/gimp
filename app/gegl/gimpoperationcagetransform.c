@@ -220,6 +220,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   GimpVector2                 plain_color;
   GeglBufferIterator         *it;
   gint                        x, y;
+  gboolean                    output_set;
 
   /* pre-fill the out buffer with no-displacement coordinate */
   it      = gegl_buffer_iterator_new (out_buf, roi, NULL, GEGL_BUFFER_WRITE);
@@ -239,13 +240,23 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
       while (n_pixels--)
         {
-          if (oct->fill_plain_color &&
-              gimp_cage_config_point_inside (config, x, y))
+          output_set = FALSE;
+          if (oct->fill_plain_color)
             {
-              output[0] = plain_color.x;
-              output[1] = plain_color.y;
+              if (x > cage_bb.x &&
+                  y > cage_bb.y &&
+                  x < cage_bb.x + cage_bb.width &&
+                  y < cage_bb.y + cage_bb.height)
+                {
+                  if (gimp_cage_config_point_inside (config, x, y))
+                    {
+                      output[0] = plain_color.x;
+                      output[1] = plain_color.y;
+                      output_set = TRUE;
+                    }
+                }
             }
-          else
+          if (!output_set)
             {
               output[0] = x;
               output[1] = y;
