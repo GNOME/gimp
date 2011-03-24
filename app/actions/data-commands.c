@@ -40,27 +40,12 @@
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 
+#include "dialogs/data-delete-dialog.h"
+
 #include "actions.h"
 #include "data-commands.h"
 
 #include "gimp-intl.h"
-
-
-typedef struct _GimpDataDeleteData GimpDataDeleteData;
-
-struct _GimpDataDeleteData
-{
-  GimpContext         *context;
-  GimpDataFactoryView *view;
-  GimpData            *data;
-};
-
-
-/*  local function prototypes  */
-
-static void  data_delete_confirm_response (GtkWidget          *dialog,
-                                           gint                response_id,
-                                           GimpDataDeleteData *delete_data);
 
 
 /*  public functions  */
@@ -225,45 +210,13 @@ data_delete_cmd_callback (GtkAction *action,
       gimp_data_factory_view_have (view,
                                    GIMP_OBJECT (data)))
     {
-      GimpDataDeleteData *delete_data;
-      GtkWidget          *dialog;
+      GimpDataFactory *factory;
+      GtkWidget       *dialog;
 
-      delete_data = g_slice_new0 (GimpDataDeleteData);
+      factory = gimp_data_factory_view_get_data_factory (view);
 
-      delete_data->context = context;
-      delete_data->view    = view;
-      delete_data->data    = data;
-
-      dialog = gimp_message_dialog_new (_("Delete Object"), GTK_STOCK_DELETE,
-                                        GTK_WIDGET (view), 0,
-                                        gimp_standard_help_func, NULL,
-
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_DELETE, GTK_RESPONSE_OK,
-
-                                        NULL);
-
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      g_signal_connect_object (data, "disconnect",
-                               G_CALLBACK (gtk_widget_destroy),
-                               dialog, G_CONNECT_SWAPPED);
-
-      g_signal_connect (dialog, "response",
-                        G_CALLBACK (data_delete_confirm_response),
-                        delete_data);
-
-      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                         _("Delete '%s'?"),
-                                         gimp_object_get_name (data));
-      gimp_message_box_set_text(GIMP_MESSAGE_DIALOG (dialog)->box,
-                                _("Are you sure you want to remove '%s' "
-                                  "from the list and delete it on disk?"),
-                                gimp_object_get_name (data));
-
+      dialog = data_delete_dialog_new (factory, data, context,
+                                       GTK_WIDGET (view));
       gtk_widget_show (dialog);
     }
 }
@@ -309,50 +262,4 @@ data_edit_cmd_callback (GtkAction   *action,
       gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
                                  data);
     }
-}
-
-
-/*  private functions  */
-
-static void
-data_delete_confirm_response (GtkWidget          *dialog,
-                              gint                response_id,
-                              GimpDataDeleteData *delete_data)
-{
-  gtk_widget_destroy (dialog);
-
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      GimpDataFactory *factory;
-      GimpContainer   *container;
-      GimpData        *data       = delete_data->data;
-      GimpObject      *new_active = NULL;
-      GError          *error      = NULL;
-
-      factory    = gimp_data_factory_view_get_data_factory (delete_data->view);
-      container  = gimp_data_factory_get_container (factory);
-
-      if (GIMP_OBJECT (data) ==
-          gimp_context_get_by_type (delete_data->context,
-                                    gimp_container_get_children_type (container)))
-        {
-          new_active = gimp_container_get_neighbor_of (container,
-                                                       GIMP_OBJECT (data));
-        }
-
-      if (! gimp_data_factory_data_delete (factory, data, TRUE, &error))
-        {
-          gimp_message (gimp_data_factory_get_gimp (factory),
-                        G_OBJECT (delete_data->view), GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
-          g_clear_error (&error);
-        }
-
-      if (new_active)
-        gimp_context_set_by_type (delete_data->context,
-                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory)),
-                                  new_active);
-    }
-
-  g_slice_free (GimpDataDeleteData, delete_data);
 }

@@ -176,6 +176,7 @@ app/core/gimpunit.c
 app/dialogs/about-dialog.c
 app/dialogs/channel-options-dialog.c
 app/dialogs/convert-dialog.c
+app/dialogs/data-delete-dialog.c
 app/dialogs/dialogs-constructors.c
 app/dialogs/dialogs.c
 app/dialogs/fade-dialog.c
