@@ -219,9 +219,9 @@ gimp_tagged_container_src_thaw (GimpFilteredContainer *filtered_container)
  * @src_container: container to be filtered.
  *
  * Creates a new #GimpTaggedContainer object which creates filtered
- * data view of #GimpTagged objects. It filters @src_container for objects
- * containing all of the filtering tags. Syncronization with @src_container
- * data is performed automatically.
+ * data view of #GimpTagged objects. It filters @src_container for
+ * objects containing all of the filtering tags. Syncronization with
+ * @src_container data is performed automatically.
  *
  * Return value: a new #GimpTaggedContainer object.
  **/
@@ -253,8 +253,8 @@ gimp_tagged_container_new (GimpContainer *src_container)
  * @tagged_container: a #GimpTaggedContainer object.
  * @tags:               list of #GimpTag objects.
  *
- * Sets list of tags to be used for filtering. Only objects which have all of
- * the tags assigned match filtering criteria.
+ * Sets list of tags to be used for filtering. Only objects which have
+ * all of the tags assigned match filtering criteria.
  **/
 void
 gimp_tagged_container_set_filter (GimpTaggedContainer *tagged_container,
@@ -265,9 +265,12 @@ gimp_tagged_container_set_filter (GimpTaggedContainer *tagged_container,
   if (! gimp_container_frozen (GIMP_FILTERED_CONTAINER (tagged_container)->src_container))
     {
       gimp_tagged_container_src_freeze (GIMP_FILTERED_CONTAINER (tagged_container));
+    }
 
-      tagged_container->filter = tags;
+  tagged_container->filter = tags;
 
+  if (! gimp_container_frozen (GIMP_FILTERED_CONTAINER (tagged_container)->src_container))
+    {
       gimp_tagged_container_src_thaw (GIMP_FILTERED_CONTAINER (tagged_container));
     }
 }
@@ -300,27 +303,14 @@ gimp_tagged_container_object_matches (GimpTaggedContainer *tagged_container,
        filter_tags;
        filter_tags = g_list_next (filter_tags))
     {
-      GList *object_tags;
-
       if (! filter_tags->data)
         {
           /* invalid tag - does not match */
           return FALSE;
         }
 
-      for (object_tags = gimp_tagged_get_tags (GIMP_TAGGED (object));
-           object_tags;
-           object_tags = g_list_next (object_tags))
-        {
-          if (gimp_tag_equals (object_tags->data,
-                               filter_tags->data))
-            {
-              /* found match for the tag */
-              break;
-            }
-        }
-
-      if (! object_tags)
+      if (! gimp_tagged_has_tag (GIMP_TAGGED (object),
+                                 filter_tags->data))
         {
           /* match for the tag was not found.
            * since query is of type AND, it whole fails.

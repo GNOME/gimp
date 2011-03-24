@@ -50,7 +50,7 @@ struct _GimpTaggedContainerClass
   GimpFilteredContainerClass  parent_class;
 
   void (* tag_count_changed) (GimpTaggedContainer *container,
-                              gint                   count);
+                              gint                 count);
 };
 
 
