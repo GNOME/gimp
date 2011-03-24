@@ -2018,7 +2018,7 @@ loadit (const gchar * fn)
 
   s.com.numtexture = 0;
 
-  snprintf (fmt_str, sizeof (fmt_str), "%%d %%d %%%zus", sizeof (endbuf) - 1);
+  snprintf (fmt_str, sizeof (fmt_str), "%%d %%d %%%" G_GSIZE_FORMAT "s", sizeof (endbuf) - 1);
 
   while (!feof (f))
     {
