@@ -280,27 +280,27 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   format_coef = babl_format_n (babl_type ("float"), 2 * config->n_cage_vertices);
 
   /* compute, reverse and interpolate the transformation */
-  for (x = cage_bb.x; x < cage_bb.x + cage_bb.width - 1; x++)
+  for (y = cage_bb.y; y < cage_bb.y + cage_bb.height - 1; y++)
     {
       GimpVector2 p1_d, p2_d, p3_d, p4_d;
       GimpVector2 p1_s, p2_s, p3_s, p4_s;
 
-      p1_s.x = x;
-      p2_s.x = x+1;
-      p3_s.x = x+1;
-      p3_s.y = cage_bb.y;
-      p4_s.x = x;
-      p4_s.y = cage_bb.y;
+      p1_s.y = y;
+      p2_s.y = y+1;
+      p3_s.y = y+1;
+      p3_s.x = cage_bb.x;
+      p4_s.y = y;
+      p4_s.x = cage_bb.x;
 
       p3_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p3_s);
       p4_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p4_s);
 
-      for (y = cage_bb.y; y < cage_bb.y + cage_bb.height - 1; y++)
+      for (x = cage_bb.x; x < cage_bb.x + cage_bb.width - 1; x++)
         {
           p1_s = p4_s;
           p2_s = p3_s;
-          p3_s.y = y+1;
-          p4_s.y = y+1;
+          p3_s.x = x+1;
+          p4_s.x = x+1;
 
           p1_d = p4_d;
           p2_d = p3_d;
