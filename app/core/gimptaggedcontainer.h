@@ -39,7 +39,6 @@ struct _GimpTaggedContainer
 {
   GimpFilteredContainer  parent_instance;
 
-  GimpContainer         *src_container;
   GList                 *filter;
   GHashTable            *tag_ref_counts;
   gint                   tag_count;
