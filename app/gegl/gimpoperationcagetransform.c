@@ -515,10 +515,7 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
     {
       pos_x += coef[i] * config->cage_points[i].dest_point.x;
       pos_y += coef[i] * config->cage_points[i].dest_point.y;
-    }
 
-  for (i = 0; i < cvn; i++)
-    {
       pos_x += coef[i + cvn] * config->cage_points[i].edge_scaling_factor * config->cage_points[i].edge_normal.x;
       pos_y += coef[i + cvn] * config->cage_points[i].edge_scaling_factor * config->cage_points[i].edge_normal.y;
     }
