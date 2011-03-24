@@ -68,6 +68,7 @@ static void         gimp_operation_cage_transform_interpolate_source_coords_recu
                                                                            gfloat              *coords);
 static GimpVector2  gimp_cage_transform_compute_destination               (GimpCageConfig      *config,
                                                                            gfloat              *coef,
+                                                                           Babl                *format_coef,
                                                                            GeglBuffer          *coef_buf,
                                                                            GimpVector2          coords);
 GeglRectangle       gimp_operation_cage_transform_get_cached_region       (GeglOperation       *operation,
@@ -215,12 +216,14 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   GeglRectangle               cage_bb;
   gfloat                     *coords;
   gfloat                     *coef;
+  Babl                       *format_coef;
   GimpVector2                 plain_color;
   GeglBufferIterator         *it;
   gint                        x, y;
 
   /* pre-fill the out buffer with no-displacement coordinate */
-  it = gegl_buffer_iterator_new (out_buf, roi, NULL, GEGL_BUFFER_WRITE);
+  it      = gegl_buffer_iterator_new (out_buf, roi, NULL, GEGL_BUFFER_WRITE);
+  cage_bb = gimp_cage_config_get_bounding_box (config);
 
   plain_color.x = (gint) config->cage_points[0].src_point.x;
   plain_color.y = (gint) config->cage_points[0].src_point.y;
@@ -260,11 +263,12 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
         }
     }
 
-  /* compute, reverse and interpolate the transformation */
-  cage_bb = gimp_cage_config_get_bounding_box (config);
-  coords  = g_slice_alloc (2 * sizeof (gfloat));
-  coef = g_malloc (config->n_cage_vertices * 2 * sizeof (gfloat));
+  /* pre-allocate memory outside of the loop */
+  coords      = g_slice_alloc (2 * sizeof (gfloat));
+  coef        = g_malloc (config->n_cage_vertices * 2 * sizeof (gfloat));
+  format_coef = babl_format_n (babl_type ("float"), 2 * config->n_cage_vertices);
 
+  /* compute, reverse and interpolate the transformation */
   for (x = cage_bb.x; x < cage_bb.x + cage_bb.width - 1; x++)
     {
       GimpVector2 p1_d, p2_d, p3_d, p4_d;
@@ -277,8 +281,8 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
       p4_s.x = x;
       p4_s.y = cage_bb.y;
 
-      p3_d = gimp_cage_transform_compute_destination (config, coef, aux_buf, p3_s);
-      p4_d = gimp_cage_transform_compute_destination (config, coef, aux_buf, p4_s);
+      p3_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p3_s);
+      p4_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p4_s);
 
       for (y = cage_bb.y; y < cage_bb.y + cage_bb.height - 1; y++)
         {
@@ -289,8 +293,8 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
           p1_d = p4_d;
           p2_d = p3_d;
-          p3_d = gimp_cage_transform_compute_destination (config, coef, aux_buf, p3_s);
-          p4_d = gimp_cage_transform_compute_destination (config, coef, aux_buf, p4_s);
+          p3_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p3_s);
+          p4_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p4_s);
 
           if (gimp_cage_config_point_inside (config, x, y))
             {
@@ -487,6 +491,7 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
 static GimpVector2
 gimp_cage_transform_compute_destination (GimpCageConfig *config,
                                          gfloat         *coef,
+                                         Babl           *format_coef,
                                          GeglBuffer     *coef_buf,
                                          GimpVector2     coords)
 {
@@ -494,7 +499,6 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   GeglRectangle  rect;
   GimpVector2    result;
   gint           cvn = config->n_cage_vertices;
-  Babl          *format_coef = babl_format_n (babl_type ("float"), 2 * cvn);
   gint           i;
 
   rect.height = 1;
