@@ -110,6 +110,7 @@ gimp_tagged_add_tag (GimpTagged *tagged,
                      GimpTag    *tag)
 {
   g_return_if_fail (GIMP_IS_TAGGED (tagged));
+  g_return_if_fail (GIMP_IS_TAG (tag));
 
   if (GIMP_TAGGED_GET_INTERFACE (tagged)->add_tag (tagged, tag))
     {
@@ -130,22 +131,27 @@ void
 gimp_tagged_remove_tag (GimpTagged *tagged,
                         GimpTag    *tag)
 {
-  GList        *tag_iter;
+  GList *tag_iter;
 
   g_return_if_fail (GIMP_IS_TAGGED (tagged));
+  g_return_if_fail (GIMP_IS_TAG (tag));
 
-  for (tag_iter = gimp_tagged_get_tags (tagged); tag_iter;
+  for (tag_iter = gimp_tagged_get_tags (tagged);
+       tag_iter;
        tag_iter = g_list_next (tag_iter))
     {
-      GimpTag *tag_ref = GIMP_TAG (tag_iter->data);
+      GimpTag *tag_ref = tag_iter->data;
 
       if (gimp_tag_equals (tag_ref, tag))
         {
           g_object_ref (tag_ref);
+
           if (GIMP_TAGGED_GET_INTERFACE (tagged)->remove_tag (tagged, tag_ref))
             {
-              g_signal_emit (tagged, gimp_tagged_signals[TAG_REMOVED], 0, tag_ref);
+              g_signal_emit (tagged, gimp_tagged_signals[TAG_REMOVED], 0,
+                             tag_ref);
             }
+
           g_object_unref (tag_ref);
         }
     }
@@ -154,7 +160,7 @@ gimp_tagged_remove_tag (GimpTagged *tagged,
 /**
  * gimp_tagged_set_tags:
  * @tagged: an object that implements the %GimpTagged interface
- * @tags: a list of tags
+ * @tags:   a list of tags
  *
  * Sets the list of tags assigned to this object. The passed list of
  * tags is copied and should be freed by the caller.
@@ -244,4 +250,31 @@ gimp_tagged_get_checksum (GimpTagged *tagged)
   g_return_val_if_fail (GIMP_IS_TAGGED (tagged), FALSE);
 
   return GIMP_TAGGED_GET_INTERFACE (tagged)->get_checksum (tagged);
+}
+
+/**
+ * gimp_tagged_has_tag:
+ * @tagged: an object that implements the %GimpTagged interface
+ * @tag:    a %GimpTag
+ *
+ * Return value: #TRUE if the object has @tag, #FALSE otherwise.
+ **/
+gboolean
+gimp_tagged_has_tag (GimpTagged *tagged,
+                     GimpTag    *tag)
+{
+  GList *tag_iter;
+
+  g_return_val_if_fail (GIMP_IS_TAGGED (tagged), FALSE);
+  g_return_val_if_fail (GIMP_IS_TAG (tag), FALSE);
+
+  for (tag_iter = gimp_tagged_get_tags (tagged);
+       tag_iter;
+       tag_iter = g_list_next (tag_iter))
+    {
+      if (gimp_tag_equals (tag_iter->data, tag))
+        return TRUE;
+    }
+
+  return FALSE;
 }

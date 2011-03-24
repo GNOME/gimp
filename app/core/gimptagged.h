@@ -65,5 +65,8 @@ GList    * gimp_tagged_get_tags           (GimpTagged *tagged);
 gchar    * gimp_tagged_get_identifier     (GimpTagged *tagged);
 gchar    * gimp_tagged_get_checksum       (GimpTagged *tagged);
 
+gboolean   gimp_tagged_has_tag            (GimpTagged *tagged,
+                                           GimpTag    *tag);
+
 
 #endif  /* __GIMP_TAGGED_H__ */
