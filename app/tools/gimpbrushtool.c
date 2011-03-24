@@ -236,22 +236,28 @@ gimp_brush_tool_cursor_update (GimpTool         *tool,
                                GimpDisplay      *display)
 {
   GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (tool);
+  GimpBrushCore *brush_core = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
 
-  if (! brush_tool->show_cursor &&
-      ! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
-      gimp_tool_control_get_cursor_modifier (tool->control) !=
-      GIMP_CURSOR_MODIFIER_BAD)
+  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
-      gimp_tool_set_cursor (tool, display,
-                            GIMP_CURSOR_NONE,
-                            GIMP_TOOL_CURSOR_NONE,
-                            GIMP_CURSOR_MODIFIER_NONE);
+      if (! brush_core->main_brush || ! brush_core->dynamics)
+        {
+          gimp_tool_control_set_cursor_modifier (tool->control,
+                                                 GIMP_CURSOR_MODIFIER_BAD);
+        }
+      else if (! brush_tool->show_cursor &&
+               gimp_tool_control_get_cursor_modifier (tool->control) !=
+               GIMP_CURSOR_MODIFIER_BAD)
+        {
+          gimp_tool_set_cursor (tool, display,
+                                GIMP_CURSOR_NONE,
+                                GIMP_TOOL_CURSOR_NONE,
+                                GIMP_CURSOR_MODIFIER_NONE);
+          return;
+        }
     }
-  else
-    {
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,
-                                                     coords, state, display);
-    }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,  coords, state, display);
 }
 
 static void
@@ -307,7 +313,10 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   brush_core = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
   options    = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
 
-  if (! brush_core->brush_bound_segs && brush_core->main_brush)
+  if (! brush_core->main_brush || ! brush_core->dynamics)
+    return;
+
+  if (! brush_core->brush_bound_segs)
     gimp_brush_core_create_boundary (brush_core, options);
 
   if (brush_core->brush_bound_segs &&
