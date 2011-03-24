@@ -67,6 +67,7 @@ static void         gimp_operation_cage_transform_interpolate_source_coords_recu
                                                                            gint                 recursion_depth,
                                                                            gfloat              *coords);
 static GimpVector2  gimp_cage_transform_compute_destination               (GimpCageConfig      *config,
+                                                                           gfloat              *coef,
                                                                            GeglBuffer          *coef_buf,
                                                                            GimpVector2          coords);
 GeglRectangle       gimp_operation_cage_transform_get_cached_region       (GeglOperation       *operation,
@@ -213,6 +214,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   GimpCageConfig             *config = GIMP_CAGE_CONFIG (oct->config);
   GeglRectangle               cage_bb;
   gfloat                     *coords;
+  gfloat                     *coef;
   GimpVector2                 plain_color;
   GeglBufferIterator         *it;
   gint                        x, y;
@@ -261,6 +263,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   /* compute, reverse and interpolate the transformation */
   cage_bb = gimp_cage_config_get_bounding_box (config);
   coords  = g_slice_alloc (2 * sizeof (gfloat));
+  coef = g_malloc (config->n_cage_vertices * 2 * sizeof (gfloat));
 
   for (x = cage_bb.x; x < cage_bb.x + cage_bb.width - 1; x++)
     {
@@ -274,8 +277,8 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
       p4_s.x = x;
       p4_s.y = cage_bb.y;
 
-      p3_d = gimp_cage_transform_compute_destination (config, aux_buf, p3_s);
-      p4_d = gimp_cage_transform_compute_destination (config, aux_buf, p4_s);
+      p3_d = gimp_cage_transform_compute_destination (config, coef, aux_buf, p3_s);
+      p4_d = gimp_cage_transform_compute_destination (config, coef, aux_buf, p4_s);
 
       for (y = cage_bb.y; y < cage_bb.y + cage_bb.height - 1; y++)
         {
@@ -286,8 +289,8 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
           p1_d = p4_d;
           p2_d = p3_d;
-          p3_d = gimp_cage_transform_compute_destination (config, aux_buf, p3_s);
-          p4_d = gimp_cage_transform_compute_destination (config, aux_buf, p4_s);
+          p3_d = gimp_cage_transform_compute_destination (config, coef, aux_buf, p3_s);
+          p4_d = gimp_cage_transform_compute_destination (config, coef, aux_buf, p4_s);
 
           if (gimp_cage_config_point_inside (config, x, y))
             {
@@ -312,6 +315,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
         }
     }
 
+  g_free (coef);
   g_slice_free1 (2 * sizeof (gfloat), coords);
 
   return TRUE;
@@ -482,10 +486,10 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
 
 static GimpVector2
 gimp_cage_transform_compute_destination (GimpCageConfig *config,
+                                         gfloat         *coef,
                                          GeglBuffer     *coef_buf,
                                          GimpVector2     coords)
 {
-  gfloat        *coef;
   gdouble        pos_x, pos_y;
   GeglRectangle  rect;
   GimpVector2    result;
@@ -497,8 +501,6 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   rect.width  = 1;
   rect.x      = coords.x;
   rect.y      = coords.y;
-
-  coef = g_malloc (config->n_cage_vertices * 2 * sizeof(gfloat));
 
   gegl_buffer_get (coef_buf, 1, &rect, format_coef, coef, GEGL_AUTO_ROWSTRIDE);
 
@@ -519,8 +521,6 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
 
   result.x = pos_x;
   result.y = pos_y;
-
-  g_free (coef);
 
   return result;
 }
