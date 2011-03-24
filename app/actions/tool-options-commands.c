@@ -42,6 +42,8 @@
 #include "widgets/gimptooloptionseditor.h"
 #include "widgets/gimpuimanager.h"
 
+#include "dialogs/data-delete-dialog.h"
+
 #include "tool-options-commands.h"
 
 #include "gimp-intl.h"
@@ -145,12 +147,15 @@ tool_options_delete_preset_cmd_callback (GtkAction *action,
   preset = (GimpToolPreset *)
     gimp_container_get_child_by_index (tool_info->presets, value);
 
-  if (preset)
+  if (preset &&
+      gimp_data_is_deletable (GIMP_DATA (preset)))
     {
-      GimpDataFactory *preset_factory = context->gimp->tool_preset_factory;
+      GimpDataFactory *factory = context->gimp->tool_preset_factory;
+      GtkWidget       *dialog;
 
-      gimp_container_remove (gimp_data_factory_get_container (preset_factory),
-                             GIMP_OBJECT (preset));
+      dialog = data_delete_dialog_new (factory, GIMP_DATA (preset), NULL,
+                                       GTK_WIDGET (editor));
+      gtk_widget_show (dialog);
     }
 }
 

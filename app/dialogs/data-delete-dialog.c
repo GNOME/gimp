@@ -68,7 +68,7 @@ data_delete_dialog_new (GimpDataFactory *factory,
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
   delete_data = g_slice_new0 (DataDeleteDialog);
@@ -150,7 +150,7 @@ data_delete_dialog_response (GtkWidget        *dialog,
 
       if (new_active)
         gimp_context_set_by_type (delete_data->context,
-                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory)),
+                                  gimp_container_get_children_type (container),
                                   new_active);
     }
 
