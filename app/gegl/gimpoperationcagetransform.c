@@ -35,7 +35,8 @@ enum
 {
   PROP_0,
   PROP_CONFIG,
-  PROP_FILL
+  PROP_FILL,
+  PROP_PROGRESS
 };
 
 
@@ -121,6 +122,13 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
                                                          "Fill the original position of the cage with a plain color",
                                                          FALSE,
                                                          G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_PROGRESS,
+                                   g_param_spec_double ("progress",
+                                                        "Progress",
+                                                        "Progress indicator, and a bad hack",
+                                                        0.0, 1.0, 0.0,
+                                                        G_PARAM_READABLE));
 }
 
 static void
@@ -158,6 +166,9 @@ gimp_operation_cage_transform_get_property (GObject    *object,
       break;
     case PROP_FILL:
       g_value_set_boolean (value, self->fill_plain_color);
+      break;
+    case PROP_PROGRESS:
+      g_value_set_double (value, self->progress);
       break;
 
     default:
@@ -274,6 +285,9 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
         }
     }
 
+  oct->progress = 0.0;
+  g_object_notify (G_OBJECT (oct), "progress");
+
   /* pre-allocate memory outside of the loop */
   coords      = g_slice_alloc (2 * sizeof (gfloat));
   coef        = g_malloc (config->n_cage_vertices * 2 * sizeof (gfloat));
@@ -328,10 +342,26 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
                                                                               coords);
             }
         }
+
+      if ((y - cage_bb.y) % 20 == 0)
+        {
+          gdouble fraction = ((gdouble) (y - cage_bb.y) /
+                              (gdouble) (cage_bb.height));
+
+          /*  0.0 and 1.0 indicate progress start/end, so avoid them  */
+          if (fraction > 0.0 && fraction < 1.0)
+            {
+              oct->progress = fraction;
+              g_object_notify (G_OBJECT (oct), "progress");
+            }
+        }
     }
 
   g_free (coef);
   g_slice_free1 (2 * sizeof (gfloat), coords);
+
+  oct->progress = 1.0;
+  g_object_notify (G_OBJECT (oct), "progress");
 
   return TRUE;
 }

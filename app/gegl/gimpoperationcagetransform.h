@@ -43,6 +43,8 @@ struct _GimpOperationCageTransform
   gboolean               fill_plain_color;
 
   Babl                  *format_coords;
+
+  gdouble                progress; /* bad hack */
 };
 
 struct _GimpOperationCageTransformClass
