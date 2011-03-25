@@ -1150,7 +1150,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   GimpProgress         *progress;
   TileManager          *ret  = NULL;
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display),
+  progress = gimp_progress_start (GIMP_PROGRESS (tool),
                                   tr_tool->progress_text, FALSE);
 
   if (gimp_item_get_linked (active_item))
