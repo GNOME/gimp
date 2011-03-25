@@ -28,6 +28,7 @@
 #include "config/gimpcoreconfig.h"
 #include "core/gimp-transform-utils.h"
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -76,12 +77,19 @@ drawable_transform_flip_simple_invoker (GimpProcedure      *procedure,
           gimp_transform_get_flip_axis (x, y, width, height,
                                         flip_type, auto_center, &axis);
 
-          if (! gimp_drawable_transform_flip (drawable, context,
-                                              flip_type,
-                                              axis,
-                                              clip_result))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_flip (drawable, context,
+                                                  flip_type, axis, clip_result))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_flip (GIMP_ITEM (drawable), context,
+                              flip_type, axis, clip_result);
             }
         }
     }
@@ -152,12 +160,23 @@ drawable_transform_flip_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Flipping"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, transform_direction,
-                                                interpolation, recursion_level,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, transform_direction,
+                                                    interpolation, recursion_level,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   transform_direction,
+                                   interpolation, recursion_level,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -229,12 +248,23 @@ drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Flipping"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, 3,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   GIMP_TRANSFORM_FORWARD,
+                                   interpolation_type, 3,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -318,12 +348,23 @@ drawable_transform_perspective_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Perspective"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, transform_direction,
-                                                interpolation, recursion_level,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, transform_direction,
+                                                    interpolation, recursion_level,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   transform_direction,
+                                   interpolation, recursion_level,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -405,12 +446,23 @@ drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Perspective"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, 3,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   GIMP_TRANSFORM_FORWARD,
+                                   interpolation_type, 3,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -466,12 +518,21 @@ drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
           gimp_transform_get_rotate_center (x, y, width, height,
                                             auto_center, &cx, &cy);
 
-          if (! gimp_drawable_transform_rotate (drawable, context,
-                                                rotate_type,
-                                                cx, cy,
-                                                clip_result))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_rotate (drawable, context,
+                                                    rotate_type, cx, cy,
+                                                    clip_result))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_rotate (GIMP_ITEM (drawable), context,
+                                rotate_type, cx, cy,
+                                clip_result);
             }
         }
     }
@@ -546,12 +607,23 @@ drawable_transform_rotate_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Rotating"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, transform_direction,
-                                                interpolation, recursion_level,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, transform_direction,
+                                                    interpolation, recursion_level,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   transform_direction,
+                                   interpolation, recursion_level,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -627,12 +699,23 @@ drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Rotating"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, 3,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   GIMP_TRANSFORM_FORWARD,
+                                   interpolation_type, 3,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -707,12 +790,23 @@ drawable_transform_scale_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, transform_direction,
-                                                interpolation, recursion_level,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, transform_direction,
+                                                    interpolation, recursion_level,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   transform_direction,
+                                   interpolation, recursion_level,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -785,12 +879,23 @@ drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, 3,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   GIMP_TRANSFORM_FORWARD,
+                                   interpolation_type, 3,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -861,12 +966,23 @@ drawable_transform_shear_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Shearing"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, transform_direction,
-                                                interpolation, recursion_level,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, transform_direction,
+                                                    interpolation, recursion_level,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   transform_direction,
+                                   interpolation, recursion_level,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -935,12 +1051,23 @@ drawable_transform_shear_default_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Shearing"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, 3,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   GIMP_TRANSFORM_FORWARD,
+                                   interpolation_type, 3,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -1022,12 +1149,23 @@ drawable_transform_2d_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("2D Transform"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, transform_direction,
-                                                interpolation, recursion_level,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, transform_direction,
+                                                    interpolation, recursion_level,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   transform_direction,
+                                   interpolation, recursion_level,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -1107,12 +1245,23 @@ drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("2D Transforming"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, 3,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   GIMP_TRANSFORM_FORWARD,
+                                   interpolation_type, 3,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -1202,12 +1351,23 @@ drawable_transform_matrix_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("2D Transforming"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, transform_direction,
-                                                interpolation, recursion_level,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, transform_direction,
+                                                    interpolation, recursion_level,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   transform_direction,
+                                   interpolation, recursion_level,
+                                   clip_result, progress);
             }
 
           if (progress)
@@ -1295,12 +1455,23 @@ drawable_transform_matrix_default_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("2D Transforming"), FALSE);
 
-          if (! gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
-                                                clip_result, progress))
+          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
             {
-              success = FALSE;
+              if (! gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, GIMP_TRANSFORM_FORWARD,
+                                                    interpolation_type, 3,
+                                                    clip_result, progress))
+                {
+                  success = FALSE;
+                }
+            }
+          else
+            {
+              gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                                   GIMP_TRANSFORM_FORWARD,
+                                   interpolation_type, 3,
+                                   clip_result, progress);
             }
 
           if (progress)

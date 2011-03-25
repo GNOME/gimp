@@ -54,12 +54,23 @@ $assemble_matrix
       if (progress)
         gimp_progress_start (progress, _(\"$progress_text\"), FALSE);
 
-      if (! gimp_drawable_transform_affine (drawable, context,
-                                            &matrix, transform_direction,
-                                            interpolation, recursion_level,
-                                            clip_result, progress))
+      if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+          ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
         {
-          success = FALSE;
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix, transform_direction,
+                                                interpolation, recursion_level,
+                                                clip_result, progress))
+            {
+              success = FALSE;
+            }
+        }
+      else
+        {
+          gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                               transform_direction,
+                               interpolation, recursion_level,
+                               clip_result, progress);
         }
 
       if (progress)
@@ -106,14 +117,25 @@ $assemble_matrix
       if (progress)
         gimp_progress_start (progress, _(\"$progress_text\"), FALSE);
 
-      if (! gimp_drawable_transform_affine (drawable, context,
-                                            &matrix, GIMP_TRANSFORM_FORWARD,
-                                            interpolation_type, 3,
-                                            clip_result, progress))
+      if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+          ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
         {
-          success = FALSE;
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix, GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                clip_result, progress))
+            {
+              success = FALSE;
+            }
         }
-
+      else
+        {
+          gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
+                               GIMP_TRANSFORM_FORWARD,
+                               interpolation_type, 3,
+                               clip_result, progress);
+        }
+    
       if (progress)
         gimp_progress_end (progress);
     }
@@ -161,12 +183,19 @@ sub drawable_transform_flip_simple {
       gimp_transform_get_flip_axis (x, y, width, height,
                                     flip_type, auto_center, &axis);
 
-      if (! gimp_drawable_transform_flip (drawable, context,
-                                          flip_type,
-                                          axis,
-                                          clip_result))
+      if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+          ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
         {
-          success = FALSE;
+          if (! gimp_drawable_transform_flip (drawable, context,
+                                              flip_type, axis, clip_result))
+            {
+              success = FALSE;
+            }
+        }
+      else
+        {
+          gimp_item_flip (GIMP_ITEM (drawable), context,
+                          flip_type, axis, clip_result);
         }
     }
 }
@@ -399,12 +428,21 @@ sub drawable_transform_rotate_simple {
       gimp_transform_get_rotate_center (x, y, width, height,
                                         auto_center, &cx, &cy);
 
-      if (! gimp_drawable_transform_rotate (drawable, context,
-                                            rotate_type,
-                                            cx, cy,
-                                            clip_result))
+      if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+          ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
         {
-          success = FALSE;
+          if (! gimp_drawable_transform_rotate (drawable, context,
+                                                rotate_type, cx, cy,
+                                                clip_result))
+            {
+              success = FALSE;
+            }
+        }
+      else
+        {
+          gimp_item_rotate (GIMP_ITEM (drawable), context,
+                            rotate_type, cx, cy,
+                            clip_result);
         }
     }
 }
@@ -848,6 +886,7 @@ CODE
               "config/gimpcoreconfig.h"
               "core/gimp.h"
               "core/gimp-transform-utils.h"
+              "core/gimpchannel.h"
               "core/gimpimage.h"
               "core/gimpdrawable.h"
               "core/gimpdrawable-transform.h"
