@@ -17,7 +17,7 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub flip {
-    &std_pdb_deprecated ('gimp-drawable-transform-flip-simple');
+    &std_pdb_deprecated ('gimp-item-transform-flip-simple');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -59,7 +59,7 @@ CODE
 }
 
 sub perspective {
-    &std_pdb_deprecated ('gimp-drawable-transform-perspective-default');
+    &std_pdb_deprecated ('gimp-item-transform-perspective');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -147,7 +147,7 @@ CODE
 }
 
 sub rotate {
-    &std_pdb_deprecated ('gimp-drawable-transform-rotate-default');
+    &std_pdb_deprecated ('gimp-item-transform-rotate');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -212,7 +212,7 @@ CODE
 }
 
 sub scale {
-    &std_pdb_deprecated ('gimp-drawable-transform-scale-default');
+    &std_pdb_deprecated ('gimp-item-transform-scale');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -288,7 +288,7 @@ CODE
 }
 
 sub shear {
-    &std_pdb_deprecated ('gimp-drawable-transform-shear-default');
+    &std_pdb_deprecated ('gimp-item-transform-shear');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -356,7 +356,7 @@ CODE
 }
 
 sub transform_2d {
-    &std_pdb_deprecated ('gimp-drawable-transform-2d-default');
+    &std_pdb_deprecated ('gimp-item-transform-2d');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',

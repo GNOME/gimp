@@ -42,7 +42,7 @@
  * @drawable_ID: The affected drawable.
  * @flip_type: Type of flip.
  *
- * Deprecated: Use gimp_drawable_transform_flip_simple() instead.
+ * Deprecated: Use gimp_item_transform_flip_simple() instead.
  *
  * Returns: The flipped drawable.
  **/
@@ -81,8 +81,7 @@ gimp_flip (gint32              drawable_ID,
  * @x3: The new x coordinate of lower-right corner of original bounding box.
  * @y3: The new y coordinate of lower-right corner of original bounding box.
  *
- * Deprecated: Use gimp_drawable_transform_perspective_default()
- * instead.
+ * Deprecated: Use gimp_item_transform_perspective() instead.
  *
  * Returns: The newly mapped drawable.
  **/
@@ -130,7 +129,7 @@ gimp_perspective (gint32   drawable_ID,
  * @interpolation: Whether to use interpolation.
  * @angle: The angle of rotation (radians).
  *
- * Deprecated: Use gimp_drawable_transform_rotate_default() instead.
+ * Deprecated: Use gimp_item_transform_rotate() instead.
  *
  * Returns: The rotated drawable.
  **/
@@ -167,7 +166,7 @@ gimp_rotate (gint32   drawable_ID,
  * @x1: The new x coordinate of the lower-right corner of the scaled region.
  * @y1: The new y coordinate of the lower-right corner of the scaled region.
  *
- * Deprecated: Use gimp_drawable_transform_scale_default() instead.
+ * Deprecated: Use gimp_item_transform_scale() instead.
  *
  * Returns: The scaled drawable.
  **/
@@ -208,7 +207,7 @@ gimp_scale (gint32   drawable_ID,
  * @shear_type: Type of shear.
  * @magnitude: The magnitude of the shear.
  *
- * Deprecated: Use gimp_drawable_transform_shear_default() instead.
+ * Deprecated: Use gimp_item_transform_shear() instead.
  *
  * Returns: The sheared drawable.
  **/
@@ -250,7 +249,7 @@ gimp_shear (gint32              drawable_ID,
  * @dest_x: X coordinate of where the centre goes.
  * @dest_y: Y coordinate of where the centre goes.
  *
- * Deprecated: Use gimp_drawable_transform_2d_default() instead.
+ * Deprecated: Use gimp_item_transform_2d() instead.
  *
  * Returns: The transformed drawable.
  **/

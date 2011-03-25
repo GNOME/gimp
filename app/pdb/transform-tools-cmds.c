@@ -487,12 +487,12 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-flip");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-flip",
-                                     "Deprecated: Use 'gimp-drawable-transform-flip-simple' instead.",
-                                     "Deprecated: Use 'gimp-drawable-transform-flip-simple' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-flip-simple' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-flip-simple' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-drawable-transform-flip-simple");
+                                     "gimp-item-transform-flip-simple");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -525,12 +525,12 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-perspective");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-perspective",
-                                     "Deprecated: Use 'gimp-drawable-transform-perspective-default' instead.",
-                                     "Deprecated: Use 'gimp-drawable-transform-perspective-default' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-perspective' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-perspective' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-drawable-transform-perspective-default");
+                                     "gimp-item-transform-perspective");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -608,12 +608,12 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-rotate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-rotate",
-                                     "Deprecated: Use 'gimp-drawable-transform-rotate-default' instead.",
-                                     "Deprecated: Use 'gimp-drawable-transform-rotate-default' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-rotate' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-rotate' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-drawable-transform-rotate-default");
+                                     "gimp-item-transform-rotate");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -649,12 +649,12 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-scale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-scale",
-                                     "Deprecated: Use 'gimp-drawable-transform-scale-default' instead.",
-                                     "Deprecated: Use 'gimp-drawable-transform-scale-default' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-scale' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-scale' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-drawable-transform-scale-default");
+                                     "gimp-item-transform-scale");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -708,12 +708,12 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-shear");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-shear",
-                                     "Deprecated: Use 'gimp-drawable-transform-shear-default' instead.",
-                                     "Deprecated: Use 'gimp-drawable-transform-shear-default' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-shear' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-shear' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-drawable-transform-shear-default");
+                                     "gimp-item-transform-shear");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -758,12 +758,12 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-transform-2d");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-transform-2d",
-                                     "Deprecated: Use 'gimp-drawable-transform-2d-default' instead.",
-                                     "Deprecated: Use 'gimp-drawable-transform-2d-default' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-2d' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-2d' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-drawable-transform-2d-default");
+                                     "gimp-item-transform-2d");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
