@@ -244,8 +244,6 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
 
       if (gimp_display_get_image (shell->display))
         {
-          gimp_display_shell_pause (shell);
-
           if (gimp_display_shell_is_double_buffered (shell))
             gdk_window_begin_paint_region (eevent->window, eevent->region);
         }
@@ -288,8 +286,6 @@ gimp_display_shell_canvas_expose_after (GtkWidget        *widget,
         {
           if (gimp_display_shell_is_double_buffered (shell))
             gdk_window_end_paint (eevent->window);
-
-          gimp_display_shell_resume (shell);
         }
     }
 
