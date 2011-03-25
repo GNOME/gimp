@@ -251,12 +251,5 @@ void          gimp_tool_set_cursor          (GimpTool            *tool,
                                              GimpToolCursorType   tool_cursor,
                                              GimpCursorModifier   modifier);
 
-void          gimp_tool_progress_start      (GimpTool            *tool,
-                                             GimpDisplay         *display,
-                                             const gchar         *text);
-void          gimp_tool_progress_set_value  (GimpTool            *tool,
-                                             gdouble              value);
-void          gimp_tool_progress_end        (GimpTool            *tool);
-
 
 #endif  /*  __GIMP_TOOL_H__  */

@@ -180,6 +180,8 @@ libapptools_a_sources = \
 	gimpthresholdtool.h		\
 	gimptool.c			\
 	gimptool.h			\
+	gimptool-progress.c		\
+	gimptool-progress.h		\
 	gimptoolcontrol.c		\
 	gimptoolcontrol.h		\
 	gimptooloptions-gui.c		\

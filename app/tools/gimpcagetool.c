@@ -40,6 +40,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 #include "core/gimplayer.h"
+#include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
 #include "gegl/gimpcageconfig.h"
@@ -950,6 +951,7 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
                              GimpDisplay  *display)
 {
   GimpCageConfig *config = ct->config;
+  GimpProgress   *progress;
   Babl           *format;
   GeglNode       *gegl;
   GeglNode       *input;
@@ -958,8 +960,8 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
   GeglBuffer     *buffer;
   gdouble         value;
 
-  gimp_tool_progress_start (GIMP_TOOL (ct), display,
-                            _("Coefficient computation..."));
+  progress = gimp_progress_start (GIMP_PROGRESS (ct),
+                                  _("Coefficient computation"), FALSE);
 
   if (ct->coef)
     {
@@ -991,10 +993,12 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
 
   while (gegl_processor_work (processor, &value))
     {
-      gimp_tool_progress_set_value (GIMP_TOOL (ct), value);
+      if (progress)
+        gimp_progress_set_value (progress, value);
     }
 
-  gimp_tool_progress_end (GIMP_TOOL (ct));
+  if (progress)
+    gimp_progress_end (progress);
 
   gegl_processor_destroy (processor);
 
