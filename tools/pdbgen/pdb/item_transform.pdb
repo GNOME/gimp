@@ -53,7 +53,8 @@ $assemble_matrix
         gimp_progress_start (progress, _(\"$progress_text\"), FALSE);
 
       if (GIMP_IS_DRAWABLE (item) &&
-          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
+          ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
         {
           GimpDrawable *drawable;
 
@@ -150,7 +151,8 @@ HELP
                                     flip_type, auto_center, &axis);
 
       if (GIMP_IS_DRAWABLE (item) &&
-          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
+          ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
         {
           GimpDrawable *drawable;
 
@@ -356,7 +358,8 @@ HELP
                                         auto_center, &center_x, &center_y);
 
       if (GIMP_IS_DRAWABLE (item) &&
-          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+          ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
+          ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
         {
           GimpDrawable *drawable;
 
@@ -657,8 +660,10 @@ CODE
 
 @headers = qw("libgimpmath/gimpmath.h"
               "core/gimp-transform-utils.h"
+              "core/gimpchannel.h"
               "core/gimpdrawable.h"
               "core/gimpdrawable-transform.h"
+              "core/gimpimage.h"
               "core/gimpprogress.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h"
