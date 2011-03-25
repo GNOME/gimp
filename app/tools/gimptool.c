@@ -27,11 +27,17 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
+#include "display/gimpcanvasprogress.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-cursor.h"
+#include "display/gimpdisplayshell-items.h"
+#include "display/gimpdisplayshell-transform.h"
 #include "display/gimpstatusbar.h"
 
 #include "gimptool.h"
@@ -1125,6 +1131,66 @@ gimp_tool_set_cursor (GimpTool           *tool,
 
   gimp_display_shell_set_cursor (gimp_display_get_shell (display),
                                  cursor, tool_cursor, modifier);
+}
+
+void
+gimp_tool_progress_start (GimpTool    *tool,
+                          GimpDisplay *display,
+                          const gchar *text)
+{
+  GimpDisplayShell *shell;
+  gint              x, y, w, h;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (tool->progress == NULL);
+
+  shell = gimp_display_get_shell (display);
+
+  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+
+  tool->progress = gimp_canvas_progress_new (shell, GIMP_HANDLE_ANCHOR_CENTER,
+                                             x + w / 2, y + h / 2);
+  gimp_display_shell_add_item (shell, tool->progress);
+  g_object_unref (tool->progress);
+
+  gimp_progress_start (GIMP_PROGRESS (tool->progress),
+                       text, FALSE);
+  gimp_widget_flush_expose (shell->canvas);
+
+  tool->progress_display = display;
+}
+
+void
+gimp_tool_progress_set_value (GimpTool *tool,
+                              gdouble  value)
+{
+  GimpDisplayShell *shell;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_PROGRESS (tool->progress));
+
+  shell = gimp_display_get_shell (tool->progress_display);
+
+  gimp_progress_set_value (GIMP_PROGRESS (tool->progress), value);
+  gimp_widget_flush_expose (shell->canvas);
+}
+
+void
+gimp_tool_progress_end (GimpTool *tool)
+{
+  GimpDisplayShell *shell;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_PROGRESS (tool->progress));
+
+  shell = gimp_display_get_shell (tool->progress_display);
+
+  gimp_progress_end (GIMP_PROGRESS (tool->progress));
+  gimp_display_shell_remove_item (shell, tool->progress);
+
+  tool->progress         = NULL;
+  tool->progress_display = NULL;
 }
 
 

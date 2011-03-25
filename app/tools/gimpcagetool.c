@@ -40,18 +40,14 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 #include "core/gimplayer.h"
-#include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
 #include "gegl/gimpcageconfig.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
 
-#include "display/gimpcanvasprogress.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-items.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimpcagetool.h"
@@ -944,33 +940,17 @@ static void
 gimp_cage_tool_compute_coef (GimpCageTool *ct,
                              GimpDisplay  *display)
 {
-  GimpDisplayShell *shell  = gimp_display_get_shell (display);
-  GimpCageConfig   *config = ct->config;
-  Babl             *format;
-  GeglNode         *gegl;
-  GeglNode         *input;
-  GeglNode         *output;
-  GeglProcessor    *processor;
-  GimpCanvasItem   *p;
-  GimpProgress     *progress;
-  GeglBuffer       *buffer;
-  gdouble           value;
+  GimpCageConfig *config = ct->config;
+  Babl           *format;
+  GeglNode       *gegl;
+  GeglNode       *input;
+  GeglNode       *output;
+  GeglProcessor  *processor;
+  GeglBuffer     *buffer;
+  gdouble         value;
 
-  {
-    gint x, y, w, h;
-
-    gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
-
-    p = gimp_canvas_progress_new (shell, GIMP_HANDLE_ANCHOR_CENTER,
-                                  x + w / 2, y + h / 2);
-    gimp_display_shell_add_item (shell, p);
-    g_object_unref (p);
-  }
-
-  progress = gimp_progress_start (GIMP_PROGRESS (p),
-                                  _("Coefficient computation"),
-                                  FALSE);
-  gimp_widget_flush_expose (shell->canvas);
+  gimp_tool_progress_start (GIMP_TOOL (ct), display,
+                            _("Coefficient computation..."));
 
   if (ct->coef)
     {
@@ -1002,11 +982,10 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
 
   while (gegl_processor_work (processor, &value))
     {
-      gimp_progress_set_value (progress, value);
-      gimp_widget_flush_expose (shell->canvas);
+      gimp_tool_progress_set_value (GIMP_TOOL (ct), value);
     }
 
-  gimp_progress_end (progress);
+  gimp_tool_progress_end (GIMP_TOOL (ct));
 
   gegl_processor_destroy (processor);
 
@@ -1014,8 +993,6 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
   g_object_unref (gegl);
 
   ct->dirty_coef = FALSE;
-
-  gimp_display_shell_remove_item (shell, p);
 }
 
 static void

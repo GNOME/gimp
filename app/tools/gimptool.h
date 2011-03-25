@@ -67,6 +67,10 @@ struct _GimpTool
   /*  private list of displays which have a status message from this tool
    */
   GList           *status_displays;
+
+  /*  on-canvas progress  */
+  GimpCanvasItem  *progress;
+  GimpDisplay     *progress_display;
 };
 
 struct _GimpToolClass
@@ -246,6 +250,13 @@ void          gimp_tool_set_cursor          (GimpTool            *tool,
                                              GimpCursorType       cursor,
                                              GimpToolCursorType   tool_cursor,
                                              GimpCursorModifier   modifier);
+
+void          gimp_tool_progress_start      (GimpTool            *tool,
+                                             GimpDisplay         *display,
+                                             const gchar         *text);
+void          gimp_tool_progress_set_value  (GimpTool            *tool,
+                                             gdouble              value);
+void          gimp_tool_progress_end        (GimpTool            *tool);
 
 
 #endif  /*  __GIMP_TOOL_H__  */
