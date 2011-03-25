@@ -124,7 +124,6 @@ static void      gimp_transform_tool_dialog_update          (GimpTransformTool  
 static TileManager *
                  gimp_transform_tool_real_transform         (GimpTransformTool     *tr_tool,
                                                              GimpItem              *item,
-                                                             gboolean               mask_empty,
                                                              GimpDisplay           *display);
 
 static void      gimp_transform_tool_halt                   (GimpTransformTool     *tr_tool);
@@ -1141,7 +1140,6 @@ gimp_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 static TileManager *
 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpItem          *active_item,
-                                    gboolean           mask_empty,
                                     GimpDisplay       *display)
 {
   GimpTool             *tool    = GIMP_TOOL (tr_tool);
@@ -1161,21 +1159,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                 options->recursion_level,
                                 options->clip,
                                 progress);
-
-  if (GIMP_IS_LAYER (active_item) &&
-      gimp_layer_get_mask (GIMP_LAYER (active_item)) &&
-      mask_empty)
-    {
-      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (active_item));
-
-      gimp_item_transform (GIMP_ITEM (mask), context,
-                           &tr_tool->transform,
-                           options->direction,
-                           options->interpolation,
-                           options->recursion_level,
-                           options->clip,
-                           progress);
-    }
 
   if (tr_tool->original)
     {
@@ -1234,7 +1217,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   const gchar          *null_message   = NULL;
   const gchar          *locked_message = NULL;
   gboolean              new_layer;
-  gboolean              mask_empty;
 
   switch (options->type)
     {
@@ -1275,8 +1257,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   if (tr_tool->dialog)
     gimp_dialog_factory_hide_dialog (tr_tool->dialog);
 
-  mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
-
   gimp_set_busy (display->gimp);
 
   /* undraw the tool before we muck around with the transform matrix */
@@ -1303,7 +1283,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      if (! gimp_viewable_get_children (GIMP_VIEWABLE (tool->drawable)))
+      if (! gimp_viewable_get_children (GIMP_VIEWABLE (tool->drawable)) &&
+          ! gimp_channel_is_empty (gimp_image_get_mask (image)))
         tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
                                                          context,
                                                          &new_layer);
@@ -1322,7 +1303,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
    */
   new_tiles = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (tr_tool,
                                                                   active_item,
-                                                                  mask_empty,
                                                                   display);
 
   switch (options->type)

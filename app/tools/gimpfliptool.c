@@ -58,7 +58,6 @@ static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
 
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
                                                    GimpItem          *item,
-                                                   gboolean           mask_empty,
                                                    GimpDisplay       *display);
 
 
@@ -176,7 +175,6 @@ gimp_flip_tool_cursor_update (GimpTool         *tool,
 static TileManager *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           GimpItem          *active_item,
-                          gboolean           mask_empty,
                           GimpDisplay       *display)
 {
   GimpFlipOptions *options = GIMP_FLIP_TOOL_GET_OPTIONS (trans_tool);
@@ -203,16 +201,6 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
   if (gimp_item_get_linked (active_item))
     gimp_item_linked_flip (active_item, context, options->flip_type, axis,
                            FALSE);
-
-  if (GIMP_IS_LAYER (active_item) &&
-      gimp_layer_get_mask (GIMP_LAYER (active_item)) &&
-      mask_empty)
-    {
-      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (active_item));
-
-      gimp_item_flip (GIMP_ITEM (mask), context,
-                      options->flip_type, axis, FALSE);
-    }
 
   if (trans_tool->original)
     {
