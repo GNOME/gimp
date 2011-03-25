@@ -1150,9 +1150,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   GimpProgress         *progress;
   TileManager          *ret  = NULL;
 
-  if (tr_tool->dialog)
-    gtk_widget_set_sensitive (tr_tool->dialog, FALSE);
-
   progress = gimp_progress_start (GIMP_PROGRESS (display),
                                   tr_tool->progress_text, FALSE);
 
@@ -1231,7 +1228,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GimpTool             *tool           = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options        = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpContext          *context        = GIMP_CONTEXT (options);
-  GimpDisplayShell     *shell          = gimp_display_get_shell (display);
   GimpImage            *image          = gimp_display_get_image (display);
   GimpItem             *active_item    = NULL;
   TileManager          *new_tiles;
@@ -1329,10 +1325,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
                                                                   mask_empty,
                                                                   display);
 
-  gimp_transform_tool_bounds (tr_tool, display);
-  gimp_transform_tool_prepare (tr_tool, display);
-  gimp_transform_tool_recalc (tr_tool, display);
-
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
@@ -1368,11 +1360,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
       break;
     }
 
-  /*  Make a note of the new current drawable (since we may have
-   *  a floating selection, etc now.
-   */
-  tool->drawable = gimp_image_get_active_drawable (image);
-
   gimp_image_undo_push (image, GIMP_TYPE_TRANSFORM_TOOL_UNDO,
                         GIMP_UNDO_TRANSFORM, NULL,
                         0,
@@ -1387,19 +1374,11 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
    */
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
-  if (gimp_display_shell_get_show_transform (shell))
-    {
-      gimp_display_shell_set_show_transform (shell, FALSE);
-
-      /* get rid of preview artifacts left outside the drawable's area */
-      gtk_widget_queue_draw (shell->canvas);
-    }
+  gimp_transform_tool_halt (tr_tool);
 
   gimp_unset_busy (display->gimp);
 
   gimp_image_flush (image);
-
-  gimp_transform_tool_halt (tr_tool);
 }
 
 static void
@@ -1545,6 +1524,8 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
           /* get rid of preview artifacts left outside the drawable's area */
           gimp_transform_tool_expose_preview (tr_tool);
         }
+
+      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
     }
 
   if (tr_tool->original)
@@ -1555,9 +1536,6 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 
   /*  inactivate the tool  */
   tr_tool->function = TRANSFORM_CREATING;
-
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
 
   if (tr_tool->dialog)
     gimp_dialog_factory_hide_dialog (tr_tool->dialog);
@@ -1813,8 +1791,6 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
                                          GIMP_CONTEXT (options));
       gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (tr_tool->dialog),
                                   gimp_display_get_shell (display));
-
-      gtk_widget_set_sensitive (tr_tool->dialog, TRUE);
     }
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare)
