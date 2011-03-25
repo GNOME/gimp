@@ -244,6 +244,8 @@ gimp_cage_tool_start (GimpCageTool *ct,
   gint          off_x;
   gint          off_y;
 
+  gimp_cage_tool_halt (ct);
+
   gimp_tool_control_activate (tool->control);
 
   tool->display = display;
@@ -301,6 +303,9 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
 
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
+  if (! tool->display)
+    return;
+
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   if (strcmp (pspec->name, "cage-mode") == 0)
@@ -327,15 +332,15 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
               gimp_cage_tool_compute_coef (ct, tool->display);
             }
 
-          if (!ct->render_node)
+          if (! ct->render_node)
             {
               gimp_cage_tool_create_render_node (ct);
             }
 
-          if (!ct->image_map)
+          if (! ct->image_map)
             {
-              GimpImage       *image    = gimp_display_get_image (tool->display);
-              GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
+              GimpImage    *image    = gimp_display_get_image (tool->display);
+              GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
               gimp_cage_tool_create_image_map (ct, drawable);
             }
@@ -346,8 +351,13 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
         {
           /* switch to edit mode */
 
-          gimp_image_map_clear (ct->image_map);
-          gimp_image_flush (gimp_display_get_image (tool->display));
+          if (ct->image_map)
+            {
+              gimp_image_map_abort (ct->image_map);
+              g_object_unref (ct->image_map);
+              ct->image_map = NULL;
+            }
+
           gimp_tool_pop_status (tool, tool->display);
           ct->tool_state = CAGE_STATE_WAIT;
         }
@@ -480,12 +490,12 @@ gimp_cage_tool_button_press (GimpTool            *tool,
     gimp_cage_tool_start (ct, display);
 
   if (ct->config)
-      handle = gimp_cage_tool_is_on_handle (ct,
-                                            draw_tool,
-                                            display,
-                                            coords->x,
-                                            coords->y,
-                                            GIMP_TOOL_HANDLE_SIZE_CIRCLE);
+    handle = gimp_cage_tool_is_on_handle (ct,
+                                          draw_tool,
+                                          display,
+                                          coords->x,
+                                          coords->y,
+                                          GIMP_TOOL_HANDLE_SIZE_CIRCLE);
   ct->movement_start_x = coords->x;
   ct->movement_start_y = coords->y;
 
@@ -513,11 +523,11 @@ gimp_cage_tool_button_press (GimpTool            *tool,
                 gimp_cage_config_add_cage_point (ct->config,
                                                  coords->x - ct->offset_x,
                                                  coords->y - ct->offset_y);
-                gimp_cage_config_select_point (ct->config, ct->config->n_cage_vertices - 1);
+                gimp_cage_config_select_point (ct->config,
+                                               ct->config->n_cage_vertices - 1);
                 ct->tool_state = CAGE_STATE_MOVE_HANDLE;
               }
-
-            if (handle == 0 && ct->config->n_cage_vertices > 2)
+            else if (handle == 0 && ct->config->n_cage_vertices > 2)
               {
                 /* User clicked on the first handle, we wait for
                  * release for closing the cage and switching to
@@ -526,8 +536,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
                 gimp_cage_config_select_point (ct->config, 0);
                 ct->tool_state = CAGE_STATE_CLOSING;
               }
-
-            if (handle > 0)
+            else if (handle > 0)
               {
                 /* User clicked on a handle, so we move it */
 
@@ -798,7 +807,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
       GimpVector2 last_point;
 
       last_point = gimp_cage_config_get_point_coordinate (ct->config,
-                                                          GIMP_CAGE_MODE_CAGE_CHANGE,
+                                                          options->cage_mode,
                                                           n_vertices - 1);
 
       gimp_draw_tool_add_line (draw_tool,
@@ -863,12 +872,12 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
       if (ct->config->cage_points[i].selected)
         {
           gimp_draw_tool_add_handle (draw_tool,
-                           GIMP_HANDLE_SQUARE,
-                           point1.x,
-                           point1.y,
-                           GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                           GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                           GIMP_HANDLE_ANCHOR_CENTER);
+                                     GIMP_HANDLE_SQUARE,
+                                     point1.x,
+                                     point1.y,
+                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 
@@ -1184,5 +1193,9 @@ gimp_cage_tool_halt (GimpCageTool *ct)
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
 
-  tool->display  = NULL;
+  tool->display = NULL;
+
+  g_object_set (gimp_tool_get_options (tool),
+                "cage-mode", GIMP_CAGE_MODE_CAGE_CHANGE,
+                NULL);
 }
