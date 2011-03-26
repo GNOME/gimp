@@ -746,12 +746,14 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
     {
       GimpTransformOptions *tr_options = GIMP_TRANSFORM_OPTIONS (options);
 
+      if (tr_tool->function != TRANSFORM_CREATING)
+        {
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+        }
+
       if (! strcmp (pspec->name, "type") ||
           ! strcmp (pspec->name, "direction"))
         {
-          if (tr_tool->function != TRANSFORM_CREATING)
-            gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
           tr_tool->type      = tr_options->type;
           tr_tool->direction = tr_options->direction;
 
@@ -765,8 +767,6 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
                   /*  recalculate the tool's transformation matrix  */
                   gimp_transform_tool_recalc (tr_tool, tool->display);
                 }
-
-              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
             }
         }
 
@@ -799,16 +799,6 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
                   gimp_display_shell_set_show_transform (shell, FALSE);
                   gimp_transform_tool_force_expose_preview (tr_tool);
                 }
-
-              if (tr_tool->function != TRANSFORM_CREATING)
-                {
-                  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
-                  gimp_transform_tool_grid_recalc (tr_tool);
-                  gimp_transform_tool_transform_bounding_box (tr_tool);
-
-                  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
-                }
               break;
 
             case GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE:
@@ -835,18 +825,16 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
 
                   gimp_transform_tool_force_expose_preview (tr_tool);
                 }
-
-              if (tr_tool->function != TRANSFORM_CREATING)
-                {
-                  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
-                  gimp_transform_tool_grid_recalc (tr_tool);
-                  gimp_transform_tool_transform_bounding_box (tr_tool);
-
-                  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
-                }
               break;
             }
+        }
+
+      if (tr_tool->function != TRANSFORM_CREATING)
+        {
+          gimp_transform_tool_grid_recalc (tr_tool);
+          gimp_transform_tool_transform_bounding_box (tr_tool);
+
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
         }
     }
 
