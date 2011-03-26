@@ -125,6 +125,9 @@ static TileManager *
                  gimp_transform_tool_real_transform         (GimpTransformTool     *tr_tool,
                                                              GimpItem              *item,
                                                              GimpDisplay           *display,
+                                                             TileManager           *orig_tiles,
+                                                             gint                   orig_offset_x,
+                                                             gint                   orig_offset_y,
                                                              gint                  *new_offset_x,
                                                              gint                  *new_offset_y);
 
@@ -204,7 +207,6 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
                                      GIMP_CURSOR_PRECISION_SUBPIXEL);
 
   tr_tool->function = TRANSFORM_CREATING;
-  tr_tool->original = NULL;
 
   for (i = 0; i < TRANS_INFO_SIZE; i++)
     {
@@ -258,12 +260,6 @@ static void
 gimp_transform_tool_finalize (GObject *object)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (object);
-
-  if (tr_tool->original)
-    {
-      tile_manager_unref (tr_tool->original);
-      tr_tool->original = NULL;
-    }
 
   if (tr_tool->dialog)
     {
@@ -1143,6 +1139,9 @@ static TileManager *
 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpItem          *active_item,
                                     GimpDisplay       *display,
+                                    TileManager       *orig_tiles,
+                                    gint               orig_offset_x,
+                                    gint               orig_offset_y,
                                     gint              *new_offset_x,
                                     gint              *new_offset_y)
 {
@@ -1164,7 +1163,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                 options->clip,
                                 progress);
 
-  if (tr_tool->original)
+  if (orig_tiles)
     {
       /*  this happens when transforming a normal drawable or the
        *  selection
@@ -1176,14 +1175,14 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
        *  so they keep their size
        */
       if (GIMP_IS_CHANNEL (active_item) &&
-          tile_manager_bpp (tr_tool->original) == 1)
+          tile_manager_bpp (orig_tiles) == 1)
         clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
       ret = gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
                                                   context,
-                                                  tr_tool->original,
-                                                  tr_tool->original_offset_x,
-                                                  tr_tool->original_offset_y,
+                                                  orig_tiles,
+                                                  orig_offset_x,
+                                                  orig_offset_y,
                                                   &tr_tool->transform,
                                                   options->direction,
                                                   options->interpolation,
@@ -1221,6 +1220,9 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GimpContext          *context        = GIMP_CONTEXT (options);
   GimpImage            *image          = gimp_display_get_image (display);
   GimpItem             *active_item    = NULL;
+  TileManager          *orig_tiles;
+  gint                  orig_offset_x;
+  gint                  orig_offset_y;
   TileManager          *new_tiles;
   gint                  new_offset_x;
   gint                  new_offset_y;
@@ -1275,19 +1277,9 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   /*  We're going to dirty this image, but we want to keep the tool around  */
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
-  /*  Start a transform undo group  */
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                tr_tool->undo_desc);
 
-  /* With the old UI, if original is NULL, then this is the
-   * first transformation. In the new UI, it is always so, right?
-   */
-  g_assert (tr_tool->original == NULL);
-
-  /*  Copy the current selection to the transform tool's private
-   *  selection pointer, so that the original source can be repeatedly
-   *  modified.
-   */
   tool->drawable = gimp_image_get_active_drawable (image);
 
   switch (options->type)
@@ -1296,16 +1288,18 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
       if (! gimp_viewable_get_children (GIMP_VIEWABLE (tool->drawable)) &&
           ! gimp_channel_is_empty (gimp_image_get_mask (image)))
         {
-          tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
-                                                           context,
-                                                           &tr_tool->original_offset_x,
-                                                           &tr_tool->original_offset_y,
-                                                           &new_layer);
+          orig_tiles = gimp_drawable_transform_cut (tool->drawable,
+                                                    context,
+                                                    &orig_offset_x,
+                                                    &orig_offset_y,
+                                                    &new_layer);
         }
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      tr_tool->original = tile_manager_ref (gimp_drawable_get_tiles (GIMP_DRAWABLE (active_item)));
+      orig_tiles = tile_manager_ref (gimp_drawable_get_tiles (GIMP_DRAWABLE (active_item)));
+      orig_offset_x = 0;
+      orig_offset_y = 0;
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
@@ -1317,8 +1311,13 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   new_tiles = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (tr_tool,
                                                                   active_item,
                                                                   display,
+                                                                  orig_tiles,
+                                                                  orig_offset_x,
+                                                                  orig_offset_y,
                                                                   &new_offset_x,
                                                                   &new_offset_y);
+
+  tile_manager_unref (orig_tiles);
 
   switch (options->type)
     {
@@ -1346,9 +1345,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
                                    gimp_drawable_type (GIMP_DRAWABLE (active_item)));
           tile_manager_unref (new_tiles);
         }
-
-      tile_manager_unref (tr_tool->original);
-      tr_tool->original = NULL;
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
@@ -1362,7 +1358,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
                         "transform-tool", tr_tool,
                         NULL);
 
-  /*  push the undo group end  */
   gimp_image_undo_group_end (image);
 
   /*  We're done dirtying the image, and would like to be restarted
@@ -1524,12 +1519,6 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
     }
 
-  if (tr_tool->original)
-    {
-      tile_manager_unref (tr_tool->original);
-      tr_tool->original = NULL;
-    }
-
   /*  inactivate the tool  */
   tr_tool->function = TRANSFORM_CREATING;
 
@@ -1548,44 +1537,34 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
   GimpImage            *image   = gimp_display_get_image (display);
 
   /*  find the boundaries  */
-  if (tr_tool->original)
+  switch (options->type)
     {
-      tr_tool->x1 = tr_tool->original_offset_x;
-      tr_tool->y1 = tr_tool->original_offset_y;
-      tr_tool->x2 = tr_tool->x1 + tile_manager_width (tr_tool->original);
-      tr_tool->y2 = tr_tool->y1 + tile_manager_height (tr_tool->original);
-    }
-  else
-    {
-      switch (options->type)
-        {
-        case GIMP_TRANSFORM_TYPE_LAYER:
-          {
-            GimpDrawable *drawable;
-            gint          offset_x;
-            gint          offset_y;
+    case GIMP_TRANSFORM_TYPE_LAYER:
+      {
+        GimpDrawable *drawable;
+        gint          offset_x;
+        gint          offset_y;
 
-            drawable = gimp_image_get_active_drawable (image);
+        drawable = gimp_image_get_active_drawable (image);
 
-            gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
+        gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
-            gimp_item_mask_bounds (GIMP_ITEM (drawable),
-                                   &tr_tool->x1, &tr_tool->y1,
-                                   &tr_tool->x2, &tr_tool->y2);
-            tr_tool->x1 += offset_x;
-            tr_tool->y1 += offset_y;
-            tr_tool->x2 += offset_x;
-            tr_tool->y2 += offset_y;
-          }
-          break;
-
-        case GIMP_TRANSFORM_TYPE_SELECTION:
-        case GIMP_TRANSFORM_TYPE_PATH:
-          gimp_channel_bounds (gimp_image_get_mask (image),
+        gimp_item_mask_bounds (GIMP_ITEM (drawable),
                                &tr_tool->x1, &tr_tool->y1,
                                &tr_tool->x2, &tr_tool->y2);
-          break;
-        }
+        tr_tool->x1 += offset_x;
+        tr_tool->y1 += offset_y;
+        tr_tool->x2 += offset_x;
+        tr_tool->y2 += offset_y;
+      }
+      break;
+
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+    case GIMP_TRANSFORM_TYPE_PATH:
+      gimp_channel_bounds (gimp_image_get_mask (image),
+                           &tr_tool->x1, &tr_tool->y1,
+                           &tr_tool->x2, &tr_tool->y2);
+      break;
     }
 
   tr_tool->cx = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;

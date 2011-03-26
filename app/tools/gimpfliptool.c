@@ -59,6 +59,9 @@ static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
                                                    GimpItem          *item,
                                                    GimpDisplay       *display,
+                                                   TileManager       *orig_tiles,
+                                                   gint               orig_offset_x,
+                                                   gint               orig_offset_y,
                                                    gint              *new_offset_x,
                                                    gint              *new_offset_y);
 
@@ -178,6 +181,9 @@ static TileManager *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           GimpItem          *active_item,
                           GimpDisplay       *display,
+                          TileManager       *orig_tiles,
+                          gint               orig_offset_x,
+                          gint               orig_offset_y,
                           gint              *new_offset_x,
                           gint              *new_offset_y)
 {
@@ -206,7 +212,7 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
     gimp_item_linked_flip (active_item, context, options->flip_type, axis,
                            FALSE);
 
-  if (trans_tool->original)
+  if (orig_tiles)
     {
       /*  this happens when transforming a normal drawable or the
        *  selection
@@ -214,9 +220,9 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
 
       ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
                                                 context,
-                                                trans_tool->original,
-                                                trans_tool->original_offset_x,
-                                                trans_tool->original_offset_y,
+                                                orig_tiles,
+                                                orig_offset_x,
+                                                orig_offset_y,
                                                 options->flip_type, axis,
                                                 FALSE,
                                                 new_offset_x,

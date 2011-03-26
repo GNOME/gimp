@@ -95,7 +95,7 @@ gimp_transform_tool_undo_constructed (GObject *object)
 
   g_assert (GIMP_IS_TRANSFORM_TOOL (transform_tool_undo->transform_tool));
 
-  transform_tool = GIMP_TRANSFORM_TOOL (transform_tool_undo->transform_tool);
+  transform_tool = transform_tool_undo->transform_tool;
 
   for (i = 0; i < TRANS_INFO_SIZE; i++)
     transform_tool_undo->trans_info[i] = transform_tool->old_trans_info[i];
@@ -161,7 +161,9 @@ gimp_transform_tool_undo_pop (GimpUndo              *undo,
   if (transform_tool_undo->transform_tool)
     {
       GimpTransformTool *transform_tool;
+#if 0
       TileManager       *temp;
+#endif
       gdouble            d;
       gint               i;
 
@@ -175,12 +177,15 @@ gimp_transform_tool_undo_pop (GimpUndo              *undo,
           transform_tool->trans_info[i] = d;
         }
 
+#if 0
       /*  swap the original buffer--the source buffer for repeated transforms
        */
       temp                          = transform_tool_undo->original;
       transform_tool_undo->original = transform_tool->original;
       transform_tool->original      = temp;
+#endif
 
+#if 0
       /*  If we're re-implementing the first transform, reactivate tool  */
       if (undo_mode == GIMP_UNDO_MODE_REDO && transform_tool->original)
         {
@@ -188,6 +193,7 @@ gimp_transform_tool_undo_pop (GimpUndo              *undo,
 
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (transform_tool));
         }
+#endif
     }
  }
 
@@ -204,11 +210,13 @@ gimp_transform_tool_undo_free (GimpUndo     *undo,
       transform_tool_undo->transform_tool = NULL;
     }
 
+#if 0
   if (transform_tool_undo->original)
     {
       tile_manager_unref (transform_tool_undo->original);
       transform_tool_undo->original = NULL;
     }
+#endif
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }
