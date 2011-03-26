@@ -59,15 +59,15 @@ enum
 
 struct _GimpDialogFactoryPrivate
 {
-  GimpContext           *context;
-  GimpMenuFactory       *menu_factory;
+  GimpContext      *context;
+  GimpMenuFactory  *menu_factory;
 
-  GList                 *open_dialogs;
-  GList                 *session_infos;
+  GList            *open_dialogs;
+  GList            *session_infos;
 
-  GList                 *registered_dialogs;
+  GList            *registered_dialogs;
 
-  GimpDialogsState       dialog_state;
+  GimpDialogsState  dialog_state;
 };
 
 
@@ -254,7 +254,7 @@ gimp_dialog_factory_new (const gchar           *name,
   g_signal_connect_object (config, "notify::hide-docks",
                            G_CALLBACK (gimp_dialog_factory_config_notify),
                            factory, G_CONNECT_SWAPPED);
-  
+
   return factory;
 }
 
@@ -826,8 +826,10 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   toplevel = gtk_widget_is_toplevel (dialog);
 
-  if (entry) /* dialog is a toplevel (but not a GimpDockWindow) or a GimpDockable */
+  if (entry)
     {
+      /* dialog is a toplevel (but not a GimpDockWindow) or a GimpDockable */
+
       GIMP_LOG (DIALOG_FACTORY, "adding %s \"%s\"",
                 toplevel ? "toplevel" : "dockable",
                 entry->identifier);
@@ -860,7 +862,8 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
               GIMP_LOG (DIALOG_FACTORY,
                         "updating session info %p (widget %p) for %s \"%s\"",
-                        current_info,  gimp_session_info_get_widget (current_info),
+                        current_info,
+                        gimp_session_info_get_widget (current_info),
                         toplevel ? "toplevel" : "dockable",
                         entry->identifier);
 
@@ -884,7 +887,8 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
           GIMP_LOG (DIALOG_FACTORY,
                     "creating session info %p (widget %p) for %s \"%s\"",
-                    info, gimp_session_info_get_widget (info),
+                    info,
+                    gimp_session_info_get_widget (info),
                     toplevel ? "toplevel" : "dockable",
                     entry->identifier);
 
@@ -900,6 +904,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                */
               GIMP_LOG (WM, "setting GTK_WIN_POS_MOUSE for %p (\"%s\")\n",
                         dialog, entry->identifier);
+
               gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
               g_signal_connect (dialog, "configure-event",
                                 G_CALLBACK (gimp_dialog_factory_set_user_pos),
@@ -1035,7 +1040,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
             {
               /*  don't save session info for empty docks  */
               factory->p->session_infos = g_list_remove (factory->p->session_infos,
-                                                      session_info);
+                                                         session_info);
               g_object_unref (session_info);
 
               g_signal_emit (factory, factory_signals[DOCK_WINDOW_REMOVED], 0,
@@ -1167,7 +1172,6 @@ gimp_dialog_factory_get_has_min_size (GtkWindow *window)
 /*  private functions  */
 
 static GtkWidget *
-
 gimp_dialog_factory_constructor (GimpDialogFactory      *factory,
                                  GimpDialogFactoryEntry *entry,
                                  GimpContext            *context,
@@ -1206,8 +1210,8 @@ gimp_dialog_factory_config_notify (GimpDialogFactory *factory,
                                    GParamSpec        *pspec,
                                    GimpGuiConfig     *config)
 {
-  GimpDialogsState   state     = gimp_dialog_factory_get_state (factory);
-  GimpDialogsState   new_state = state;
+  GimpDialogsState state     = gimp_dialog_factory_get_state (factory);
+  GimpDialogsState new_state = state;
 
   /* Make sure the state and config are in sync */
   if (config->hide_docks && state == GIMP_DIALOGS_SHOWN)
@@ -1220,9 +1224,9 @@ gimp_dialog_factory_config_notify (GimpDialogFactory *factory,
 }
 
 static void
-gimp_dialog_factory_set_widget_data (GtkWidget               *dialog,
-                                     GimpDialogFactory       *factory,
-                                     GimpDialogFactoryEntry  *entry)
+gimp_dialog_factory_set_widget_data (GtkWidget              *dialog,
+                                     GimpDialogFactory      *factory,
+                                     GimpDialogFactoryEntry *entry)
 {
   g_return_if_fail (GTK_IS_WIDGET (dialog));
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
@@ -1397,8 +1401,8 @@ gimp_dialog_factory_hide (GimpDialogFactory *factory)
 
       if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
-          GimpDialogFactoryEntry   *entry      = NULL;
-          GimpDialogVisibilityState visibility = GIMP_DIALOG_VISIBILITY_UNKNOWN;
+          GimpDialogFactoryEntry    *entry      = NULL;
+          GimpDialogVisibilityState  visibility = GIMP_DIALOG_VISIBILITY_UNKNOWN;
 
           gimp_dialog_factory_from_widget (widget, &entry);
           if (! entry->hideable)
