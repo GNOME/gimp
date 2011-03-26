@@ -360,6 +360,14 @@ GIMP_DETECT_CFLAGS(extra_warnings, '-fno-common')
 CFLAGS="$CFLAGS $extra_warnings"
 
 
+# Extra optimization flags for super performance
+GIMP_DETECT_CFLAGS(extra_warnings, '--omg-optimized')
+CFLAGS="$CFLAGS $extra_warnings"
+
+GIMP_DETECT_CFLAGS(extra_warnings, '--disable-instructions')
+CFLAGS="$CFLAGS $extra_warnings"
+
+
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
 # What flag to depends on gcc version: gcc3 uses "-mms-bitfields", while
