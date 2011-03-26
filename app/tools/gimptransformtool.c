@@ -228,7 +228,6 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tr_tool->ngx              = 0;
   tr_tool->ngy              = 0;
   tr_tool->grid_coords      = NULL;
-  tr_tool->tgrid_coords     = NULL;
 
   tr_tool->type             = GIMP_TRANSFORM_TYPE_LAYER;
   tr_tool->direction        = GIMP_TRANSFORM_FORWARD;
@@ -271,12 +270,6 @@ gimp_transform_tool_finalize (GObject *object)
     {
       g_free (tr_tool->grid_coords);
       tr_tool->grid_coords = NULL;
-    }
-
-  if (tr_tool->tgrid_coords)
-    {
-      g_free (tr_tool->tgrid_coords);
-      tr_tool->tgrid_coords = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -874,22 +867,27 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
             (tr_tool->tx1 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2));
 
       /*  draw the grid  */
-      if (tr_tool->grid_coords  &&
-          tr_tool->tgrid_coords &&
-          z1 * z2 > 0           &&
+      if (tr_tool->grid_coords &&
+          z1 * z2 > 0          &&
           z3 * z4 > 0)
         {
-          gint gci, i, k;
-
-          k = tr_tool->ngx + tr_tool->ngy;
+          gint k = tr_tool->ngx + tr_tool->ngy;
+          gint i, gci;
 
           for (i = 0, gci = 0; i < k; i++, gci += 4)
             {
-              gimp_draw_tool_add_line (draw_tool,
-                                       tr_tool->tgrid_coords[gci],
-                                       tr_tool->tgrid_coords[gci + 1],
-                                       tr_tool->tgrid_coords[gci + 2],
-                                       tr_tool->tgrid_coords[gci + 3]);
+              gdouble x1, y1, x2, y2;
+
+              gimp_matrix3_transform_point (&tr_tool->transform,
+                                            tr_tool->grid_coords[gci],
+                                            tr_tool->grid_coords[gci + 1],
+                                            &x1, &y1);
+              gimp_matrix3_transform_point (&tr_tool->transform,
+                                            tr_tool->grid_coords[gci + 2],
+                                            tr_tool->grid_coords[gci + 3],
+                                            &x2, &y2);
+
+              gimp_draw_tool_add_line (draw_tool, x1, y1, x2, y2);
             }
         }
 
@@ -1381,25 +1379,6 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
   gimp_matrix3_transform_point (&tr_tool->transform,
                                 tr_tool->cx, tr_tool->cy,
                                 &tr_tool->tcx, &tr_tool->tcy);
-
-  if (tr_tool->grid_coords && tr_tool->tgrid_coords)
-    {
-      gint i, k;
-      gint gci;
-
-      gci = 0;
-      k   = (tr_tool->ngx + tr_tool->ngy) * 2;
-
-      for (i = 0; i < k; i++)
-        {
-          gimp_matrix3_transform_point (&tr_tool->transform,
-                                        tr_tool->grid_coords[gci],
-                                        tr_tool->grid_coords[gci + 1],
-                                        &tr_tool->tgrid_coords[gci],
-                                        &tr_tool->tgrid_coords[gci + 1]);
-          gci += 2;
-        }
-    }
 }
 
 void
@@ -1577,12 +1556,6 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
       tr_tool->grid_coords = NULL;
     }
 
-  if (tr_tool->tgrid_coords != NULL)
-    {
-      g_free (tr_tool->tgrid_coords);
-      tr_tool->tgrid_coords = NULL;
-    }
-
   if (options->preview_type != GIMP_TRANSFORM_PREVIEW_TYPE_GRID &&
       options->preview_type != GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID)
     return;
@@ -1624,9 +1597,6 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
           }
 
         tr_tool->grid_coords = coords =
-          g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
-
-        tr_tool->tgrid_coords =
           g_new (gdouble, (tr_tool->ngx + tr_tool->ngy) * 4);
 
         gci = 0;

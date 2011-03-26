@@ -84,7 +84,6 @@ struct _GimpTransformTool
                                     *  endpoints (a total of (ngx+ngy)*2
                                     *  coordinate pairs)
                                     */
-  gdouble        *tgrid_coords;    /*  transformed grid_coords           */
 
   GimpTransformType       type;
   GimpTransformDirection  direction;
