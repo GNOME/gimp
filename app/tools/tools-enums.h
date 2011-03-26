@@ -204,21 +204,5 @@ typedef enum /*< skip >*/
   GIMP_MOTION_MODE_COMPRESS
 } GimpMotionMode;
 
-/*  Possible transform functions  */
-typedef enum /*< skip >*/
-{
-  TRANSFORM_CREATING,
-  TRANSFORM_HANDLE_NONE,
-  TRANSFORM_HANDLE_NW, /* north west */
-  TRANSFORM_HANDLE_NE, /* north east */
-  TRANSFORM_HANDLE_SW, /* south west */
-  TRANSFORM_HANDLE_SE, /* south east */
-  TRANSFORM_HANDLE_N,  /* north      */
-  TRANSFORM_HANDLE_S,  /* south      */
-  TRANSFORM_HANDLE_E,  /* east       */
-  TRANSFORM_HANDLE_W,  /* west       */
-  TRANSFORM_HANDLE_CENTER
-} TransformAction;
-
 
 #endif /* __TOOLS_ENUMS_H__ */
