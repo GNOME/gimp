@@ -72,6 +72,8 @@ static gboolean  gimp_session_info_deserialize        (GimpConfig          *conf
                                                        gint                 nest_level,
                                                        gpointer             data);
 static gboolean  gimp_session_info_is_for_dock_window (GimpSessionInfo     *info);
+static void      gimp_session_info_dialog_show        (GtkWidget           *widget,
+                                                       GimpSessionInfo     *info);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpSessionInfo, gimp_session_info, GIMP_TYPE_OBJECT,
@@ -116,6 +118,8 @@ gimp_session_info_finalize (GObject *object)
   GimpSessionInfo *info = GIMP_SESSION_INFO (object);
 
   gimp_session_info_clear_info (info);
+
+  gimp_session_info_set_widget (info, NULL);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -432,6 +436,14 @@ gimp_session_info_is_for_dock_window (GimpSessionInfo *info)
   return entry_state_for_dock && widget_state_for_dock;
 }
 
+static void
+gimp_session_info_dialog_show (GtkWidget       *widget,
+                               GimpSessionInfo *info)
+{
+  gtk_window_move (GTK_WINDOW (widget),
+                   info->p->x, info->p->y);
+}
+
 
 /*  public functions  */
 
@@ -616,6 +628,18 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info)
   if (use_size)
     gtk_window_set_default_size (GTK_WINDOW (info->p->widget),
                                  info->p->width, info->p->height);
+
+  /*  Window managers and windowing systems suck. They have their own
+   *  ideas about WM standards and when it's appropriate to honor
+   *  user/application-set window positions and when not. Therefore,
+   *  use brute force and "manually" position dialogs whenever they
+   *  are shown. This is important especially for transient dialog,
+   *  because window managers behave even "smarter" then...
+   */
+  if (GTK_IS_DIALOG (info->p->widget))
+    g_signal_connect (info->p->widget, "show",
+                      G_CALLBACK (gimp_session_info_dialog_show),
+                      info);
 }
 
 /**
@@ -745,12 +769,12 @@ gimp_session_info_clear_info (GimpSessionInfo *info)
       info->p->aux_info = NULL;
     }
 
-   if (info->p->docks)
-     {
-       g_list_free_full (info->p->docks,
-                         (GDestroyNotify) gimp_session_info_dock_free);
-       info->p->docks = NULL;
-     }
+  if (info->p->docks)
+    {
+      g_list_free_full (info->p->docks,
+                        (GDestroyNotify) gimp_session_info_dock_free);
+      info->p->docks = NULL;
+    }
 }
 
 gboolean
@@ -807,6 +831,11 @@ gimp_session_info_set_widget (GimpSessionInfo *info,
                               GtkWidget       *widget)
 {
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
+
+  if (GTK_IS_DIALOG (info->p->widget))
+    g_signal_handlers_disconnect_by_func (info->p->widget,
+                                          gimp_session_info_dialog_show,
+                                          info);
 
   info->p->widget = widget;
 }
