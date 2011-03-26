@@ -380,8 +380,6 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
 
   orig_tiles = tile_manager_new (xmax - xmin, ymax - ymin, bytes);
 
-  tile_manager_set_offsets (orig_tiles, xmin, ymin);
-
   pixel_region_init (&destPR, orig_tiles,
                      0, 0, xmax - xmin, ymax - ymin,
                      TRUE);
@@ -405,6 +403,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   gimp_transform_region (src_pickable,
                          GIMP_CONTEXT (paint_options),
                          orig_tiles,
+                         xmin, ymin,
                          &destPR,
                          x1d, y1d, x2d, y2d,
                          &matrix,

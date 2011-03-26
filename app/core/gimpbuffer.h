@@ -37,6 +37,8 @@ struct _GimpBuffer
   GimpViewable  parent_instance;
 
   TileManager  *tiles;
+  gint          offset_x;
+  gint          offset_y;
 };
 
 struct _GimpBufferClass
@@ -49,9 +51,13 @@ GType           gimp_buffer_get_type        (void) G_GNUC_CONST;
 
 GimpBuffer    * gimp_buffer_new             (TileManager      *tiles,
                                              const gchar      *name,
+                                             gint              offset_x,
+                                             gint              offset_y,
                                              gboolean          copy_pixels);
 GimpBuffer    * gimp_buffer_new_from_pixbuf (GdkPixbuf        *pixbuf,
-                                             const gchar      *name);
+                                             const gchar      *name,
+                                             gint              offset_x,
+                                             gint              offset_y);
 
 gint            gimp_buffer_get_width       (const GimpBuffer *buffer);
 gint            gimp_buffer_get_height      (const GimpBuffer *buffer);

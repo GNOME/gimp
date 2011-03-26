@@ -216,6 +216,8 @@ gimp_buffer_get_description (GimpViewable  *viewable,
 GimpBuffer *
 gimp_buffer_new (TileManager *tiles,
                  const gchar *name,
+                 gint         offset_x,
+                 gint         offset_y,
                  gboolean     copy_pixels)
 {
   GimpBuffer *buffer;
@@ -236,12 +238,17 @@ gimp_buffer_new (TileManager *tiles,
   else
     buffer->tiles = tile_manager_ref (tiles);
 
+  buffer->offset_x = offset_x;
+  buffer->offset_y = offset_y;
+
   return buffer;
 }
 
 GimpBuffer *
 gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
-                             const gchar *name)
+                             const gchar *name,
+                             gint         offset_x,
+                             gint         offset_y)
 {
   GimpBuffer  *buffer;
   TileManager *tiles;
@@ -272,7 +279,7 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
       pixel_region_set_row (&destPR, 0, y, width, pixels);
    }
 
-  buffer = gimp_buffer_new (tiles, name, FALSE);
+  buffer = gimp_buffer_new (tiles, name, offset_x, offset_y, FALSE);
 
   tile_manager_unref (tiles);
 

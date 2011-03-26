@@ -342,7 +342,8 @@ gimp_clipboard_get_buffer (Gimp *gimp)
 
           if (pixbuf)
             {
-              buffer = gimp_buffer_new_from_pixbuf (pixbuf, _("Clipboard"));
+              buffer = gimp_buffer_new_from_pixbuf (pixbuf, _("Clipboard"),
+                                                    0, 0);
               g_object_unref (pixbuf);
             }
         }

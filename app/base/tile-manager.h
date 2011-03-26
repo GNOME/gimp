@@ -98,13 +98,6 @@ gint          tile_manager_bpp               (const TileManager *tm);
 gint          tile_manager_tiles_per_col     (const TileManager *tm);
 gint          tile_manager_tiles_per_row     (const TileManager *tm);
 
-void          tile_manager_get_offsets       (const TileManager *tm,
-                                              gint              *x,
-                                              gint              *y);
-void          tile_manager_set_offsets       (TileManager       *tm,
-                                              gint               x,
-                                              gint               y);
-
 gint64        tile_manager_get_memsize       (const TileManager *tm,
                                               gboolean           sparse);
 

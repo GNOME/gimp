@@ -64,6 +64,8 @@ TileManager * gimp_selection_extract       (GimpSelection *selection,
                                             gboolean       cut_image,
                                             gboolean       keep_indexed,
                                             gboolean       add_alpha,
+                                            gint          *offset_x,
+                                            gint          *offset_y,
                                             GError       **error);
 
 GimpLayer   * gimp_selection_float         (GimpSelection *selection,

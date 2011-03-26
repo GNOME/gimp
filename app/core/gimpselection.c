@@ -627,6 +627,8 @@ gimp_selection_extract (GimpSelection *selection,
                         gboolean       cut_image,
                         gboolean       keep_indexed,
                         gboolean       add_alpha,
+                        gint          *offset_x,
+                        gint          *offset_y,
                         GError       **error)
 {
   GimpImage         *image;
@@ -736,7 +738,6 @@ gimp_selection_extract (GimpSelection *selection,
 
   /*  Allocate the temp buffer  */
   tiles = tile_manager_new (x2 - x1, y2 - y1, bytes);
-  tile_manager_set_offsets (tiles, x1 + off_x, y1 + off_y);
 
   /* configure the pixel regions  */
   pixel_region_init (&srcPR, gimp_pickable_get_tiles (pickable),
@@ -809,6 +810,9 @@ gimp_selection_extract (GimpSelection *selection,
         }
     }
 
+  *offset_x = x1 + off_x;
+  *offset_y = y1 + off_y;
+
   return tiles;
 }
 
@@ -851,7 +855,7 @@ gimp_selection_float (GimpSelection *selection,
 
   /*  Cut or copy the selected region  */
   tiles = gimp_selection_extract (selection, GIMP_PICKABLE (drawable), context,
-                                  cut_image, FALSE, TRUE, NULL);
+                                  cut_image, FALSE, TRUE, &x1, &y1, NULL);
 
   /*  Clear the selection  */
   gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);
@@ -867,8 +871,6 @@ gimp_selection_float (GimpSelection *selection,
                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   /*  Set the offsets  */
-  tile_manager_get_offsets (tiles, &x1, &y1);
-
   gimp_item_set_offset (GIMP_ITEM (layer), x1 + off_x, y1 + off_y);
 
   /*  Free the temp buffer  */

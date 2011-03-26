@@ -73,6 +73,8 @@ struct _GimpTransformTool
   TransInfo       prev_trans_info; /*  for cancelling a drag operation   */
 
   TileManager    *original;        /*  pointer to original tiles         */
+  gint            original_offset_x;
+  gint            original_offset_y;
 
   TransformAction function;        /*  current tool activity             */
 
@@ -117,7 +119,9 @@ struct _GimpTransformToolClass
                                    GimpDisplay       *display);
   TileManager * (* transform)     (GimpTransformTool *tool,
                                    GimpItem          *item,
-                                   GimpDisplay       *display);
+                                   GimpDisplay       *display,
+                                   gint              *new_offset_x,
+                                   gint              *new_offset_y);
 };
 
 

@@ -169,6 +169,8 @@ void
 gimp_transform_region (GimpPickable          *pickable,
                        GimpContext           *context,
                        TileManager           *orig_tiles,
+                       gint                   orig_offset_x,
+                       gint                   orig_offset_y,
                        PixelRegion           *destPR,
                        gint                   dest_x1,
                        gint                   dest_y1,
@@ -187,8 +189,8 @@ gimp_transform_region (GimpPickable          *pickable,
 
   g_return_if_fail (GIMP_IS_PICKABLE (pickable));
 
-  tile_manager_get_offsets (orig_tiles, &u1, &v1);
-
+  u1 = orig_offset_x;
+  v1 = orig_offset_y;
   u2 = u1 + tile_manager_width (orig_tiles);
   v2 = v1 + tile_manager_height (orig_tiles);
 

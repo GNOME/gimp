@@ -124,7 +124,9 @@ static void      gimp_transform_tool_dialog_update          (GimpTransformTool  
 static TileManager *
                  gimp_transform_tool_real_transform         (GimpTransformTool     *tr_tool,
                                                              GimpItem              *item,
-                                                             GimpDisplay           *display);
+                                                             GimpDisplay           *display,
+                                                             gint                  *new_offset_x,
+                                                             gint                  *new_offset_y);
 
 static void      gimp_transform_tool_halt                   (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_bounds                 (GimpTransformTool     *tr_tool,
@@ -1140,7 +1142,9 @@ gimp_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 static TileManager *
 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpItem          *active_item,
-                                    GimpDisplay       *display)
+                                    GimpDisplay       *display,
+                                    gint              *new_offset_x,
+                                    gint              *new_offset_y)
 {
   GimpTool             *tool    = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
@@ -1178,11 +1182,15 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
       ret = gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
                                                   context,
                                                   tr_tool->original,
+                                                  tr_tool->original_offset_x,
+                                                  tr_tool->original_offset_y,
                                                   &tr_tool->transform,
                                                   options->direction,
                                                   options->interpolation,
                                                   options->recursion_level,
                                                   clip_result,
+                                                  new_offset_x,
+                                                  new_offset_y,
                                                   progress);
     }
   else
@@ -1214,6 +1222,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GimpImage            *image          = gimp_display_get_image (display);
   GimpItem             *active_item    = NULL;
   TileManager          *new_tiles;
+  gint                  new_offset_x;
+  gint                  new_offset_y;
   const gchar          *null_message   = NULL;
   const gchar          *locked_message = NULL;
   gboolean              new_layer;
@@ -1285,14 +1295,17 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
     case GIMP_TRANSFORM_TYPE_LAYER:
       if (! gimp_viewable_get_children (GIMP_VIEWABLE (tool->drawable)) &&
           ! gimp_channel_is_empty (gimp_image_get_mask (image)))
-        tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
-                                                         context,
-                                                         &new_layer);
+        {
+          tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
+                                                           context,
+                                                           &tr_tool->original_offset_x,
+                                                           &tr_tool->original_offset_y,
+                                                           &new_layer);
+        }
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       tr_tool->original = tile_manager_ref (gimp_drawable_get_tiles (GIMP_DRAWABLE (active_item)));
-      tile_manager_set_offsets (tr_tool->original, 0, 0);
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
@@ -1303,7 +1316,9 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
    */
   new_tiles = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (tr_tool,
                                                                   active_item,
-                                                                  display);
+                                                                  display,
+                                                                  &new_offset_x,
+                                                                  &new_offset_y);
 
   switch (options->type)
     {
@@ -1315,6 +1330,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
            */
           gimp_drawable_transform_paste (tool->drawable,
                                          new_tiles,
+                                         new_offset_x, new_offset_y,
                                          new_layer);
           tile_manager_unref (new_tiles);
         }
@@ -1534,8 +1550,8 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
   /*  find the boundaries  */
   if (tr_tool->original)
     {
-      tile_manager_get_offsets (tr_tool->original, &tr_tool->x1, &tr_tool->y1);
-
+      tr_tool->x1 = tr_tool->original_offset_x;
+      tr_tool->y1 = tr_tool->original_offset_y;
       tr_tool->x2 = tr_tool->x1 + tile_manager_width (tr_tool->original);
       tr_tool->y2 = tr_tool->y1 + tile_manager_height (tr_tool->original);
     }

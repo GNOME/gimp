@@ -58,7 +58,9 @@ static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
 
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
                                                    GimpItem          *item,
-                                                   GimpDisplay       *display);
+                                                   GimpDisplay       *display,
+                                                   gint              *new_offset_x,
+                                                   gint              *new_offset_y);
 
 
 G_DEFINE_TYPE (GimpFlipTool, gimp_flip_tool, GIMP_TYPE_TRANSFORM_TOOL)
@@ -175,7 +177,9 @@ gimp_flip_tool_cursor_update (GimpTool         *tool,
 static TileManager *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           GimpItem          *active_item,
-                          GimpDisplay       *display)
+                          GimpDisplay       *display,
+                          gint              *new_offset_x,
+                          gint              *new_offset_y)
 {
   GimpFlipOptions *options = GIMP_FLIP_TOOL_GET_OPTIONS (trans_tool);
   GimpContext     *context = GIMP_CONTEXT (options);
@@ -211,8 +215,12 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
       ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
                                                 context,
                                                 trans_tool->original,
+                                                trans_tool->original_offset_x,
+                                                trans_tool->original_offset_y,
                                                 options->flip_type, axis,
-                                                FALSE);
+                                                FALSE,
+                                                new_offset_x,
+                                                new_offset_y);
     }
   else
     {

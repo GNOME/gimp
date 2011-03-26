@@ -22,6 +22,8 @@
 void   gimp_transform_region (GimpPickable          *pickable,
                               GimpContext           *context,
                               TileManager           *orig_tiles,
+                              gint                   orig_offset_x,
+                              gint                   orig_offset_y,
                               PixelRegion           *destPR,
                               gint                   dest_x1,
                               gint                   dest_y1,

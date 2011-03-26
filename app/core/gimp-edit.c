@@ -495,6 +495,8 @@ gimp_edit_extract (GimpImage     *image,
                    GError       **error)
 {
   TileManager *tiles;
+  gint         offset_x;
+  gint         offset_y;
 
   if (cut_pixels)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, C_("undo-type", "Cut"));
@@ -502,14 +504,16 @@ gimp_edit_extract (GimpImage     *image,
   /*  Cut/copy the mask portion from the image  */
   tiles = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
                                   pickable, context,
-                                  cut_pixels, FALSE, FALSE, error);
+                                  cut_pixels, FALSE, FALSE,
+                                  &offset_x, &offset_y, error);
 
   if (cut_pixels)
     gimp_image_undo_group_end (image);
 
   if (tiles)
     {
-      GimpBuffer *buffer = gimp_buffer_new (tiles, _("Global Buffer"), FALSE);
+      GimpBuffer *buffer = gimp_buffer_new (tiles, _("Global Buffer"),
+                                            offset_x, offset_y, FALSE);
 
       tile_manager_unref (tiles);
 

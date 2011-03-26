@@ -591,29 +591,6 @@ tile_manager_tiles_per_row (const TileManager *tm)
   return tm->ntile_rows;
 }
 
-void
-tile_manager_get_offsets (const TileManager *tm,
-                          gint              *x,
-                          gint              *y)
-{
-  g_return_if_fail (tm != NULL);
-  g_return_if_fail (x != NULL && y != NULL);
-
-  *x = tm->x;
-  *y = tm->y;
-}
-
-void
-tile_manager_set_offsets (TileManager *tm,
-                          gint         x,
-                          gint         y)
-{
-  g_return_if_fail (tm != NULL);
-
-  tm->x = x;
-  tm->y = y;
-}
-
 gint64
 tile_manager_get_memsize (const TileManager *tm,
                           gboolean           sparse)

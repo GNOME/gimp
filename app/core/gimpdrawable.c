@@ -611,26 +611,21 @@ gimp_drawable_flip (GimpItem            *item,
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   TileManager  *tiles;
   gint          off_x, off_y;
-  gint          old_off_x, old_off_y;
+  gint          new_off_x, new_off_y;
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
-  tile_manager_get_offsets (gimp_drawable_get_tiles (drawable),
-                            &old_off_x, &old_off_y);
-  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
-                            off_x, off_y);
-
   tiles = gimp_drawable_transform_tiles_flip (drawable, context,
                                               gimp_drawable_get_tiles (drawable),
+                                              off_x, off_y,
                                               flip_type, axis,
-                                              clip_result);
-
-  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
-                            old_off_x, old_off_y);
+                                              clip_result,
+                                              &new_off_x, &new_off_y);
 
   if (tiles)
     {
-      gimp_drawable_transform_paste (drawable, tiles, FALSE);
+      gimp_drawable_transform_paste (drawable, tiles,
+                                     new_off_x, new_off_y, FALSE);
       tile_manager_unref (tiles);
     }
 }
@@ -646,26 +641,21 @@ gimp_drawable_rotate (GimpItem         *item,
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   TileManager  *tiles;
   gint          off_x, off_y;
-  gint          old_off_x, old_off_y;
+  gint          new_off_x, new_off_y;
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
-  tile_manager_get_offsets (gimp_drawable_get_tiles (drawable),
-                            &old_off_x, &old_off_y);
-  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
-                            off_x, off_y);
-
   tiles = gimp_drawable_transform_tiles_rotate (drawable, context,
                                                 gimp_drawable_get_tiles (drawable),
+                                                off_x, off_y,
                                                 rotate_type, center_x, center_y,
-                                                clip_result);
-
-  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
-                            old_off_x, old_off_y);
+                                                clip_result,
+                                                &new_off_x, &new_off_y);
 
   if (tiles)
     {
-      gimp_drawable_transform_paste (drawable, tiles, FALSE);
+      gimp_drawable_transform_paste (drawable, tiles,
+                                     new_off_x, new_off_y, FALSE);
       tile_manager_unref (tiles);
     }
 }
@@ -683,29 +673,24 @@ gimp_drawable_transform (GimpItem               *item,
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   TileManager  *tiles;
   gint          off_x, off_y;
-  gint          old_off_x, old_off_y;
+  gint          new_off_x, new_off_y;
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
-  tile_manager_get_offsets (gimp_drawable_get_tiles (drawable),
-                            &old_off_x, &old_off_y);
-  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
-                            off_x, off_y);
-
   tiles = gimp_drawable_transform_tiles_affine (drawable, context,
                                                 gimp_drawable_get_tiles (drawable),
+                                                off_x, off_y,
                                                 matrix, direction,
                                                 interpolation_type,
                                                 recursion_level,
                                                 clip_result,
+                                                &new_off_x, &new_off_y,
                                                 progress);
-
-  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
-                            old_off_x, old_off_y);
 
   if (tiles)
     {
-      gimp_drawable_transform_paste (drawable, tiles, FALSE);
+      gimp_drawable_transform_paste (drawable, tiles,
+                                     new_off_y, new_off_y, FALSE);
       tile_manager_unref (tiles);
     }
 }

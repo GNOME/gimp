@@ -35,26 +35,38 @@ typedef enum
 TileManager  * gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                                      GimpContext            *context,
                                                      TileManager            *orig_tiles,
+                                                     gint                    orig_offset_x,
+                                                     gint                    orig_offset_y,
                                                      const GimpMatrix3      *matrix,
                                                      GimpTransformDirection  direction,
                                                      GimpInterpolationType   interpolation_type,
                                                      gint                    recursion_level,
                                                      GimpTransformResize     clip_result,
+                                                     gint                   *new_offset_x,
+                                                     gint                   *new_offset_y,
                                                      GimpProgress           *progress);
 TileManager  * gimp_drawable_transform_tiles_flip   (GimpDrawable           *drawable,
                                                      GimpContext            *context,
                                                      TileManager            *orig_tiles,
+                                                     gint                    orig_offset_x,
+                                                     gint                    orig_offset_y,
                                                      GimpOrientationType     flip_type,
                                                      gdouble                 axis,
-                                                     gboolean                clip_result);
+                                                     gboolean                clip_result,
+                                                     gint                   *new_offset_x,
+                                                     gint                   *new_offset_y);
 
 TileManager  * gimp_drawable_transform_tiles_rotate (GimpDrawable           *drawable,
                                                      GimpContext            *context,
                                                      TileManager            *orig_tiles,
+                                                     gint                    orig_offset_x,
+                                                     gint                    orig_offset_y,
                                                      GimpRotationType        rotate_type,
                                                      gdouble                 center_x,
                                                      gdouble                 center_y,
-                                                     gboolean                clip_result);
+                                                     gboolean                clip_result,
+                                                     gint                   *new_offset_x,
+                                                     gint                   *new_offset_y);
 
 GimpDrawable * gimp_drawable_transform_affine       (GimpDrawable           *drawable,
                                                      GimpContext            *context,
@@ -80,9 +92,13 @@ GimpDrawable * gimp_drawable_transform_rotate       (GimpDrawable           *dra
 
 TileManager  * gimp_drawable_transform_cut          (GimpDrawable           *drawable,
                                                      GimpContext            *context,
+                                                     gint                   *offset_x,
+                                                     gint                   *offset_y,
                                                      gboolean               *new_layer);
 GimpDrawable * gimp_drawable_transform_paste        (GimpDrawable           *drawable,
                                                      TileManager            *tiles,
+                                                     gint                    offset_x,
+                                                     gint                    offset_y,
                                                      gboolean                new_layer);
 
 
