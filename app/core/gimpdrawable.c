@@ -690,7 +690,7 @@ gimp_drawable_transform (GimpItem               *item,
   if (tiles)
     {
       gimp_drawable_transform_paste (drawable, tiles,
-                                     new_off_y, new_off_y, FALSE);
+                                     new_off_x, new_off_y, FALSE);
       tile_manager_unref (tiles);
     }
 }
