@@ -577,10 +577,8 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 {
   GimpImage    *image;
   TileManager  *orig_tiles;
-  gint          offset_x;
-  gint          offset_y;
-  gint          new_offset_x;
-  gint          new_offset_y;
+  gint          orig_offset_x;
+  gint          orig_offset_y;
   gboolean      new_layer;
   GimpDrawable *result = NULL;
 
@@ -599,11 +597,14 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context,
-                                            &offset_x, &offset_y, &new_layer);
+                                            &orig_offset_x, &orig_offset_y,
+                                            &new_layer);
 
   if (orig_tiles)
     {
       TileManager *new_tiles;
+      gint         new_offset_x;
+      gint         new_offset_y;
 
       /*  always clip unfloated tiles so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
@@ -628,7 +629,8 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
       /* transform the buffer */
       new_tiles = gimp_drawable_transform_tiles_affine (drawable, context,
                                                         orig_tiles,
-                                                        offset_x, offset_y,
+                                                        orig_offset_x,
+                                                        orig_offset_y,
                                                         matrix,
                                                         direction,
                                                         interpolation_type,
@@ -665,10 +667,8 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
 {
   GimpImage    *image;
   TileManager  *orig_tiles;
-  gint          offset_x;
-  gint          offset_y;
-  gint          new_offset_x;
-  gint          new_offset_y;
+  gint          orig_offset_x;
+  gint          orig_offset_y;
   gboolean      new_layer;
   GimpDrawable *result = NULL;
 
@@ -685,11 +685,14 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context,
-                                            &offset_x, &offset_y, &new_layer);
+                                            &orig_offset_x, &orig_offset_y,
+                                            &new_layer);
 
   if (orig_tiles)
     {
       TileManager *new_tiles = NULL;
+      gint         new_offset_x;
+      gint         new_offset_y;
 
       /*  always clip unfloated tiles so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
@@ -713,8 +716,8 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
         {
           new_tiles = gimp_drawable_transform_tiles_flip (drawable, context,
                                                           orig_tiles,
-                                                          offset_x,
-                                                          offset_y,
+                                                          orig_offset_x,
+                                                          orig_offset_y,
                                                           flip_type, axis,
                                                           clip_result,
                                                           &new_offset_x,
@@ -749,10 +752,8 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
 {
   GimpImage    *image;
   TileManager  *orig_tiles;
-  gint          offset_x;
-  gint          offset_y;
-  gint          new_offset_x;
-  gint          new_offset_y;
+  gint          orig_offset_x;
+  gint          orig_offset_y;
   gboolean      new_layer;
   GimpDrawable *result = NULL;
 
@@ -769,11 +770,14 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context,
-                                            &offset_x, &offset_y, &new_layer);
+                                            &orig_offset_x, &orig_offset_y,
+                                            &new_layer);
 
   if (orig_tiles)
     {
       TileManager *new_tiles;
+      gint         new_offset_x;
+      gint         new_offset_y;
 
       /*  always clip unfloated tiles so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
@@ -796,8 +800,8 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
       /* transform the buffer */
       new_tiles = gimp_drawable_transform_tiles_rotate (drawable, context,
                                                         orig_tiles,
-                                                        offset_x,
-                                                        offset_y,
+                                                        orig_offset_x,
+                                                        orig_offset_y,
                                                         rotate_type,
                                                         center_x, center_y,
                                                         clip_result,
