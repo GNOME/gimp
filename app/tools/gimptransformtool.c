@@ -382,8 +382,8 @@ gimp_transform_tool_button_press (GimpTool            *tool,
   if (tr_tool->function == TRANSFORM_CREATING)
     gimp_transform_tool_oper_update (tool, coords, state, TRUE, display);
 
-  tr_tool->lastx = tr_tool->startx = coords->x;
-  tr_tool->lasty = tr_tool->starty = coords->y;
+  tr_tool->lastx = coords->x;
+  tr_tool->lasty = coords->y;
 
   gimp_tool_control_activate (tool->control);
 }
@@ -454,9 +454,8 @@ gimp_transform_tool_motion (GimpTool         *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  tr_tool->curx  = coords->x;
-  tr_tool->cury  = coords->y;
-  tr_tool->state = state;
+  tr_tool->curx = coords->x;
+  tr_tool->cury = coords->y;
 
   /*  recalculate the tool's transformation matrix  */
   tr_tool_class = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool);

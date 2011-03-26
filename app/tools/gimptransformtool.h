@@ -45,16 +45,11 @@ struct _GimpTransformTool
 {
   GimpDrawTool    parent_instance;
 
-  gdouble         startx;          /*  starting x coord                  */
-  gdouble         starty;          /*  starting y coord                  */
-
   gdouble         curx;            /*  current x coord                   */
   gdouble         cury;            /*  current y coord                   */
 
   gdouble         lastx;           /*  last x coord                      */
   gdouble         lasty;           /*  last y coord                      */
-
-  GdkModifierType state;           /*  state of buttons and keys         */
 
   gint            x1, y1;          /*  upper left hand coordinate        */
   gint            x2, y2;          /*  lower right hand coords           */
