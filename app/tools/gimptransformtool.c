@@ -1317,7 +1317,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
                                                                   &new_offset_x,
                                                                   &new_offset_y);
 
-  tile_manager_unref (orig_tiles);
+  if (orig_tiles)
+    tile_manager_unref (orig_tiles);
 
   switch (options->type)
     {
