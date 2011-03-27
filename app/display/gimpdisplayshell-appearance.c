@@ -284,23 +284,6 @@ gimp_display_shell_get_show_layer (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_set_show_transform (GimpDisplayShell *shell,
-                                       gboolean          show)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  shell->show_transform_preview = show;
-}
-
-gboolean
-gimp_display_shell_get_show_transform (GimpDisplayShell *shell)
-{
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-
-  return shell->show_transform_preview;
-}
-
-void
 gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
                                     gboolean          show)
 {

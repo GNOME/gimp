@@ -132,11 +132,10 @@ struct _GimpTransformToolClass
 };
 
 
-GType   gimp_transform_tool_get_type       (void) G_GNUC_CONST;
+GType   gimp_transform_tool_get_type (void) G_GNUC_CONST;
 
-void    gimp_transform_tool_recalc         (GimpTransformTool *tr_tool,
-                                            GimpDisplay       *display);
-void    gimp_transform_tool_expose_preview (GimpTransformTool *tr_tool);
+void    gimp_transform_tool_recalc   (GimpTransformTool *tr_tool,
+                                      GimpDisplay       *display);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */

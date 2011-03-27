@@ -1,6 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpcanvastransformpreview.c
+ * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -20,26 +23,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "display-types.h"
-#include "tools/tools-types.h"
-
-#include "core/gimpchannel.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
+#include "tools/tools-types.h" /* eek */
 
 #include "base/tile-manager.h"
 
-#include "tools/gimpperspectivetool.h"
-#include "tools/gimptransformtool.h"
-#include "tools/tool_manager.h"
+#include "core/gimpchannel.h"
+#include "core/gimpimage.h"
 
-#include "gimpdisplay.h"
+#include "tools/gimpperspectivetool.h"
+
+#include "gimpcanvas.h"
+#include "gimpcanvastransformpreview.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-preview.h"
 #include "gimpdisplayshell-transform.h"
 
 
@@ -51,101 +48,208 @@
 #define MAX_SUB_COLS 6     /* number of columns and  */
 #define MAX_SUB_ROWS 6     /* rows to use in perspective preview subdivision */
 
+
+enum
+{
+  PROP_0,
+  PROP_TRANSFORM_TOOL,
+  PROP_OPACITY
+};
+
+
+typedef struct _GimpCanvasTransformPreviewPrivate GimpCanvasTransformPreviewPrivate;
+
+struct _GimpCanvasTransformPreviewPrivate
+{
+  GimpTransformTool *transform_tool;
+  gdouble            opacity;
+};
+
+#define GET_PRIVATE(transform_preview) \
+        G_TYPE_INSTANCE_GET_PRIVATE (transform_preview, \
+                                     GIMP_TYPE_CANVAS_TRANSFORM_PREVIEW, \
+                                     GimpCanvasTransformPreviewPrivate)
+
+
 /*  local function prototypes  */
 
-static void    gimp_display_shell_draw_quad          (GimpDrawable    *texture,
-                                                      cairo_t         *cr,
-                                                      GimpChannel     *mask,
-                                                      gint             mask_offx,
-                                                      gint             mask_offy,
-                                                      gint            *x,
-                                                      gint            *y,
-                                                      gfloat          *u,
-                                                      gfloat          *v,
-                                                      guchar           opacity);
-static void    gimp_display_shell_draw_tri           (GimpDrawable    *texture,
-                                                      cairo_t         *cr,
-                                                      cairo_surface_t *area,
-                                                      gint             area_offx,
-                                                      gint             area_offy,
-                                                      GimpChannel     *mask,
-                                                      gint             mask_offx,
-                                                      gint             mask_offy,
-                                                      gint            *x,
-                                                      gint            *y,
-                                                      gfloat          *u,
-                                                      gfloat          *v,
-                                                      guchar           opacity);
-static void    gimp_display_shell_draw_tri_row       (GimpDrawable    *texture,
-                                                      cairo_t         *cr,
-                                                      cairo_surface_t *area,
-                                                      gint             area_offx,
-                                                      gint             area_offy,
-                                                      gint             x1,
-                                                      gfloat           u1,
-                                                      gfloat           v1,
-                                                      gint             x2,
-                                                      gfloat           u2,
-                                                      gfloat           v2,
-                                                      gint             y,
-                                                      guchar           opacity);
-static void    gimp_display_shell_draw_tri_row_mask  (GimpDrawable    *texture,
-                                                      cairo_t         *cr,
-                                                      cairo_surface_t *area,
-                                                      gint             area_offx,
-                                                      gint             area_offy,
-                                                      GimpChannel     *mask,
-                                                      gint             mask_offx,
-                                                      gint             mask_offy,
-                                                      gint             x1,
-                                                      gfloat           u1,
-                                                      gfloat           v1,
-                                                      gint             x2,
-                                                      gfloat           u2,
-                                                      gfloat           v2,
-                                                      gint             y,
-                                                      guchar           opacity);
-static void    gimp_display_shell_trace_tri_edge     (gint            *dest,
-                                                      gint             x1,
-                                                      gint             y1,
-                                                      gint             x2,
-                                                      gint             y2);
+static void             gimp_canvas_transform_preview_set_property (GObject          *object,
+                                                                    guint             property_id,
+                                                                    const GValue     *value,
+                                                                    GParamSpec       *pspec);
+static void             gimp_canvas_transform_preview_get_property (GObject          *object,
+                                                                    guint             property_id,
+                                                                    GValue           *value,
+                                                                    GParamSpec       *pspec);
+static void             gimp_canvas_transform_preview_draw         (GimpCanvasItem   *item,
+                                                                    GimpDisplayShell *shell,
+                                                                    cairo_t          *cr);
+static cairo_region_t * gimp_canvas_transform_preview_get_extents  (GimpCanvasItem   *item,
+                                                                    GimpDisplayShell *shell);
 
-/*  public functions  */
 
-/**
- * gimp_display_shell_preview_transform:
- * @shell: the #GimpDisplayShell
- *
- * If the active tool as reported by tool_manager_get_active() is a
- * #GimpTransformTool and the tool has a valid drawable, and the tool
- * has use_grid true (which, incidentally, is not the same thing as
- * the preview type), and the area of the transformed preview is
- * convex, then proceed with drawing the preview.
- *
- * The preview area is divided into 1 or more quadrilaterals, and
- * drawn with gimp_display_shell_draw_quad(), which in turn breaks it
- * down into 2 triangles, and draws row by row. If the tool is the
- * Perspective tool, then more small quadrilaterals are used to
- * compensate for the little rectangles not being the same size. In
- * other words, all the transform tools are affine transformations
- * except perspective, so approximate it with a few subdivisions.
- **/
-void
-gimp_display_shell_preview_transform (GimpDisplayShell *shell,
-                                      cairo_t          *cr)
+/*  local function prototypes  */
+
+static void   gimp_canvas_transform_preview_draw_quad         (GimpDrawable    *texture,
+                                                               cairo_t         *cr,
+                                                               GimpChannel     *mask,
+                                                               gint             mask_offx,
+                                                               gint             mask_offy,
+                                                               gint            *x,
+                                                               gint            *y,
+                                                               gfloat          *u,
+                                                               gfloat          *v,
+                                                               guchar           opacity);
+static void   gimp_canvas_transform_preview_draw_tri          (GimpDrawable    *texture,
+                                                               cairo_t         *cr,
+                                                               cairo_surface_t *area,
+                                                               gint             area_offx,
+                                                               gint             area_offy,
+                                                               GimpChannel     *mask,
+                                                               gint             mask_offx,
+                                                               gint             mask_offy,
+                                                               gint            *x,
+                                                               gint            *y,
+                                                               gfloat          *u,
+                                                               gfloat          *v,
+                                                               guchar           opacity);
+static void   gimp_canvas_transform_preview_draw_tri_row      (GimpDrawable    *texture,
+                                                               cairo_t         *cr,
+                                                               cairo_surface_t *area,
+                                                               gint             area_offx,
+                                                               gint             area_offy,
+                                                               gint             x1,
+                                                               gfloat           u1,
+                                                               gfloat           v1,
+                                                               gint             x2,
+                                                               gfloat           u2,
+                                                               gfloat           v2,
+                                                               gint             y,
+                                                               guchar           opacity);
+static void   gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
+                                                               cairo_t         *cr,
+                                                               cairo_surface_t *area,
+                                                               gint             area_offx,
+                                                               gint             area_offy,
+                                                               GimpChannel     *mask,
+                                                               gint             mask_offx,
+                                                               gint             mask_offy,
+                                                               gint             x1,
+                                                               gfloat           u1,
+                                                               gfloat           v1,
+                                                               gint             x2,
+                                                               gfloat           u2,
+                                                               gfloat           v2,
+                                                               gint             y,
+                                                               guchar           opacity);
+static void   gimp_canvas_transform_preview_trace_tri_edge    (gint            *dest,
+                                                               gint             x1,
+                                                               gint             y1,
+                                                               gint             x2,
+                                                               gint             y2);
+
+
+G_DEFINE_TYPE (GimpCanvasTransformPreview, gimp_canvas_transform_preview,
+               GIMP_TYPE_CANVAS_ITEM)
+
+#define parent_class gimp_canvas_transform_preview_parent_class
+
+
+static void
+gimp_canvas_transform_preview_class_init (GimpCanvasTransformPreviewClass *klass)
 {
-  GimpTool          *tool;
-  GimpTransformTool *tr_tool;
-  gdouble            z1, z2, z3, z4;
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
+  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
 
-  GimpChannel *mask;
-  gint         mask_x1, mask_y1;
-  gint         mask_x2, mask_y2;
-  gint         mask_offx, mask_offy;
+  object_class->set_property = gimp_canvas_transform_preview_set_property;
+  object_class->get_property = gimp_canvas_transform_preview_get_property;
 
-  gint         columns, rows;
-  gint         j, k, sub;
+  item_class->draw           = gimp_canvas_transform_preview_draw;
+  item_class->get_extents    = gimp_canvas_transform_preview_get_extents;
+
+  g_object_class_install_property (object_class, PROP_TRANSFORM_TOOL,
+                                   g_param_spec_object ("transform-tool",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_TRANSFORM_TOOL,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_OPACITY,
+                                   g_param_spec_double ("opacity",
+                                                        NULL, NULL,
+                                                        0.0, 1.0, 1.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_type_class_add_private (klass, sizeof (GimpCanvasTransformPreviewPrivate));
+}
+
+static void
+gimp_canvas_transform_preview_init (GimpCanvasTransformPreview *transform_preview)
+{
+}
+
+static void
+gimp_canvas_transform_preview_set_property (GObject      *object,
+                                            guint         property_id,
+                                            const GValue *value,
+                                            GParamSpec   *pspec)
+{
+  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_TRANSFORM_TOOL:
+      private->transform_tool = g_value_get_object (value); /* don't ref */
+      break;
+    case PROP_OPACITY:
+      private->opacity = g_value_get_double (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_canvas_transform_preview_get_property (GObject    *object,
+                                            guint       property_id,
+                                            GValue     *value,
+                                            GParamSpec *pspec)
+{
+  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_TRANSFORM_TOOL:
+      g_value_set_object (value, private->transform_tool);
+      break;
+    case PROP_OPACITY:
+      g_value_set_double (value, private->opacity);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
+                                    GimpDisplayShell *shell,
+                                    cairo_t          *cr)
+{
+  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
+  GimpTransformTool                 *tr_tool;
+  gdouble                            z1, z2, z3, z4;
+
+  GimpDrawable *drawable;
+  GimpChannel  *mask;
+  gint          mask_x1, mask_y1;
+  gint          mask_x2, mask_y2;
+  gint          mask_offx, mask_offy;
+
+  gint          columns, rows;
+  gint          j, k, sub;
 
    /* x and y get filled with the screen coordinates of each corner of
     * each quadrilateral subdivision of the transformed area. u and v
@@ -158,22 +262,8 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell,
                v[MAX_SUB_COLS * MAX_SUB_ROWS][4];
   guchar       opacity = 255;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (cr != NULL);
-
-  if (! gimp_display_shell_get_show_transform (shell) || ! shell->canvas)
-    return;
-
-  tool = tool_manager_get_active (shell->display->gimp);
-
-  if (! GIMP_IS_TRANSFORM_TOOL (tool) ||
-      ! GIMP_IS_DRAWABLE (tool->drawable))
-    return;
-
-  tr_tool = GIMP_TRANSFORM_TOOL (tool);
-
-  if (! tr_tool->use_grid)
-    return;
+  tr_tool = private->transform_tool;
+  opacity = private->opacity * 255.999;
 
   z1 = ((tr_tool->tx2 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1) -
         (tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty2 - tr_tool->ty1));
@@ -189,28 +279,18 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell,
   if (! ((z1 * z2 > 0) && (z3 * z4 > 0)))
     return;
 
-  /* take opacity from the tool options */
-  {
-    gdouble value;
-
-    g_object_get (gimp_tool_get_options (tool),
-                  "preview-opacity", &value,
-                  NULL);
-
-    opacity = value * 255.999;
-  }
-
   mask = NULL;
   mask_offx = mask_offy = 0;
 
-  if (gimp_item_mask_bounds (GIMP_ITEM (tool->drawable),
+  drawable = GIMP_TOOL (tr_tool)->drawable;
+
+  if (gimp_item_mask_bounds (GIMP_ITEM (drawable),
                              &mask_x1, &mask_y1,
                              &mask_x2, &mask_y2))
     {
-      mask = gimp_image_get_mask (gimp_display_get_image (shell->display));
+      mask = gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)));
 
-      gimp_item_get_offset (GIMP_ITEM (tool->drawable),
-                            &mask_offx, &mask_offy);
+      gimp_item_get_offset (GIMP_ITEM (drawable), &mask_offx, &mask_offy);
     }
 
   if (GIMP_IS_PERSPECTIVE_TOOL (tr_tool))
@@ -319,36 +399,95 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell,
 
   k = columns * rows;
   for (j = 0; j < k; j++)
-    gimp_display_shell_draw_quad (tool->drawable, cr,
-                                  mask, mask_offx, mask_offy,
-                                  x[j], y[j], u[j], v[j],
-                                  opacity);
+    gimp_canvas_transform_preview_draw_quad (drawable, cr,
+                                             mask, mask_offx, mask_offy,
+                                             x[j], y[j], u[j], v[j],
+                                             opacity);
+}
+
+static cairo_region_t *
+gimp_canvas_transform_preview_get_extents (GimpCanvasItem   *item,
+                                           GimpDisplayShell *shell)
+{
+  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
+  GimpTransformTool                 *tr_tool;
+  gdouble                            dx[4], dy[4];
+  GdkRectangle                       rectangle;
+  gint                               i;
+
+  tr_tool = private->transform_tool;
+
+  gimp_display_shell_transform_xy_f (shell, tr_tool->tx1, tr_tool->ty1,
+                                     dx + 0, dy + 0);
+  gimp_display_shell_transform_xy_f (shell, tr_tool->tx2, tr_tool->ty2,
+                                     dx + 1, dy + 1);
+  gimp_display_shell_transform_xy_f (shell, tr_tool->tx3, tr_tool->ty3,
+                                     dx + 2, dy + 2);
+  gimp_display_shell_transform_xy_f (shell, tr_tool->tx4, tr_tool->ty4,
+                                     dx + 3, dy + 3);
+
+  /* find bounding box around preview */
+  rectangle.x = rectangle.width  = (gint) dx[0];
+  rectangle.y = rectangle.height = (gint) dy[0];
+
+  for (i = 1; i < 4; i++)
+    {
+      if (dx[i] < rectangle.x)
+        rectangle.x = (gint) dx[i];
+      else if (dx[i] > rectangle.width)
+        rectangle.width = (gint) dx[i];
+
+      if (dy[i] < rectangle.y)
+        rectangle.y = (gint) dy[i];
+      else if (dy[i] > rectangle.height)
+        rectangle.height = (gint) dy[i];
+    }
+
+  rectangle.width  -= rectangle.x;
+  rectangle.height -= rectangle.y;
+
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+}
+
+GimpCanvasItem *
+gimp_canvas_transform_preview_new (GimpDisplayShell  *shell,
+                                   GimpTransformTool *transform_tool,
+                                   gdouble            opacity)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (transform_tool), NULL);
+
+  return g_object_new (GIMP_TYPE_CANVAS_TRANSFORM_PREVIEW,
+                       "shell",          shell,
+                       "transform-tool", transform_tool,
+                       "opacity",        CLAMP (opacity, 0.0, 1.0),
+                       NULL);
 }
 
 
 /*  private functions  */
 
 /**
- * gimp_display_shell_draw_quad:
+ * gimp_canvas_transform_preview_draw_quad:
  * @texture:   the #GimpDrawable to be previewed
  * @cr:        the #cairo_t to draw to
  * @mask:      a #GimpChannel
  * @opacity:   the opacity of the preview
  *
  * Take a quadrilateral, divide it into two triangles, and draw those
- * with gimp_display_shell_draw_tri().
+ * with gimp_canvas_transform_preview_draw_tri().
  **/
 static void
-gimp_display_shell_draw_quad (GimpDrawable *texture,
-                              cairo_t      *cr,
-                              GimpChannel  *mask,
-                              gint          mask_offx,
-                              gint          mask_offy,
-                              gint         *x,
-                              gint         *y,
-                              gfloat       *u,
-                              gfloat       *v,
-                              guchar        opacity)
+gimp_canvas_transform_preview_draw_quad (GimpDrawable *texture,
+                                         cairo_t      *cr,
+                                         GimpChannel  *mask,
+                                         gint          mask_offx,
+                                         gint          mask_offy,
+                                         gint         *x,
+                                         gint         *y,
+                                         gfloat       *u,
+                                         gfloat       *v,
+                                         guchar        opacity)
 {
   gint    x2[3], y2[3];
   gfloat  u2[3], v2[3];
@@ -393,19 +532,19 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
 
       g_return_if_fail (area != NULL);
 
-      gimp_display_shell_draw_tri (texture, cr, area, minx, miny,
-                                   mask, mask_offx, mask_offy,
-                                   x, y, u, v, opacity);
-      gimp_display_shell_draw_tri (texture, cr, area, minx, miny,
-                                   mask, mask_offx, mask_offy,
-                                   x2, y2, u2, v2, opacity);
+      gimp_canvas_transform_preview_draw_tri (texture, cr, area, minx, miny,
+                                              mask, mask_offx, mask_offy,
+                                              x, y, u, v, opacity);
+      gimp_canvas_transform_preview_draw_tri (texture, cr, area, minx, miny,
+                                              mask, mask_offx, mask_offy,
+                                              x2, y2, u2, v2, opacity);
 
       cairo_surface_destroy (area);
     }
 }
 
 /**
- * gimp_display_shell_draw_tri:
+ * gimp_canvas_transform_preview_draw_tri:
  * @texture:   the thing being transformed
  * @cr:        the #cairo_t to draw to
  * @area:      has prefetched pixel data of dest
@@ -414,24 +553,25 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
  * @x:         Array of the three x coords of triangle
  * @y:         Array of the three y coords of triangle
  *
- * This draws a triangle onto dest by breaking it down into pixel rows, and
- * then calling gimp_display_shell_draw_tri_row() and
- * gimp_display_shell_draw_tri_row_mask() to do the actual pixel changing.
+ * This draws a triangle onto dest by breaking it down into pixel
+ * rows, and then calling gimp_canvas_transform_preview_draw_tri_row()
+ * and gimp_canvas_transform_preview_draw_tri_row_mask() to do the
+ * actual pixel changing.
  **/
 static void
-gimp_display_shell_draw_tri (GimpDrawable    *texture,
-                             cairo_t         *cr,
-                             cairo_surface_t *area,
-                             gint             area_offx,
-                             gint             area_offy,
-                             GimpChannel     *mask,
-                             gint             mask_offx,
-                             gint             mask_offy,
-                             gint            *x,
-                             gint            *y,
-                             gfloat          *u, /* texture coords */
-                             gfloat          *v, /* 0.0 ... tex width, height */
-                             guchar           opacity)
+gimp_canvas_transform_preview_draw_tri (GimpDrawable    *texture,
+                                        cairo_t         *cr,
+                                        cairo_surface_t *area,
+                                        gint             area_offx,
+                                        gint             area_offy,
+                                        GimpChannel     *mask,
+                                        gint             mask_offx,
+                                        gint             mask_offy,
+                                        gint            *x,
+                                        gint            *y,
+                                        gfloat          *u, /* texture coords */
+                                        gfloat          *v, /* 0.0 ... tex width, height */
+                                        guchar           opacity)
 {
   gdouble      clip_x1, clip_y1, clip_x2, clip_y2;
   gint         j, k;
@@ -475,7 +615,7 @@ gimp_display_shell_draw_tri (GimpDrawable    *texture,
 
   /* draw the triangle */
 
-  gimp_display_shell_trace_tri_edge (l_edge, x[0], y[0], x[2], y[2]);
+  gimp_canvas_transform_preview_trace_tri_edge (l_edge, x[0], y[0], x[2], y[2]);
 
   left = l_edge;
   dul  = (u[2] - u[0]) / (y[2] - y[0]);
@@ -485,7 +625,7 @@ gimp_display_shell_draw_tri (GimpDrawable    *texture,
 
   if (y[0] != y[1])
     {
-      gimp_display_shell_trace_tri_edge (r_edge, x[0], y[0], x[1], y[1]);
+      gimp_canvas_transform_preview_trace_tri_edge (r_edge, x[0], y[0], x[1], y[1]);
 
       right = r_edge;
       dur   = (u[1] - u[0]) / (y[1] - y[0]);
@@ -497,13 +637,13 @@ gimp_display_shell_draw_tri (GimpDrawable    *texture,
         for (ry = y[0]; ry < y[1]; ry++)
           {
             if (ry >= clip_y1 && ry < clip_y2)
-              gimp_display_shell_draw_tri_row_mask (texture, cr,
-                                                    area, area_offx, area_offy,
-                                                    mask, mask_offx, mask_offy,
-                                                    *left, u_l, v_l,
-                                                    *right, u_r, v_r,
-                                                    ry,
-                                                    opacity);
+              gimp_canvas_transform_preview_draw_tri_row_mask (texture, cr,
+                                                               area, area_offx, area_offy,
+                                                               mask, mask_offx, mask_offy,
+                                                               *left, u_l, v_l,
+                                                               *right, u_r, v_r,
+                                                               ry,
+                                                               opacity);
             left ++;      right ++;
             u_l += dul;   v_l += dvl;
             u_r += dur;   v_r += dvr;
@@ -512,12 +652,12 @@ gimp_display_shell_draw_tri (GimpDrawable    *texture,
         for (ry = y[0]; ry < y[1]; ry++)
           {
             if (ry >= clip_y1 && ry < clip_y2)
-              gimp_display_shell_draw_tri_row (texture, cr,
-                                               area, area_offx, area_offy,
-                                               *left, u_l, v_l,
-                                               *right, u_r, v_r,
-                                               ry,
-                                               opacity);
+              gimp_canvas_transform_preview_draw_tri_row (texture, cr,
+                                                          area, area_offx, area_offy,
+                                                          *left, u_l, v_l,
+                                                          *right, u_r, v_r,
+                                                          ry,
+                                                          opacity);
             left ++;      right ++;
             u_l += dul;   v_l += dvl;
             u_r += dur;   v_r += dvr;
@@ -526,7 +666,7 @@ gimp_display_shell_draw_tri (GimpDrawable    *texture,
 
   if (y[1] != y[2])
     {
-      gimp_display_shell_trace_tri_edge (r_edge, x[1], y[1], x[2], y[2]);
+      gimp_canvas_transform_preview_trace_tri_edge (r_edge, x[1], y[1], x[2], y[2]);
 
       right = r_edge;
       dur   = (u[2] - u[1]) / (y[2] - y[1]);
@@ -538,13 +678,13 @@ gimp_display_shell_draw_tri (GimpDrawable    *texture,
         for (ry = y[1]; ry < y[2]; ry++)
           {
             if (ry >= clip_y1 && ry < clip_y2)
-              gimp_display_shell_draw_tri_row_mask (texture, cr,
-                                                    area, area_offx, area_offy,
-                                                    mask, mask_offx, mask_offy,
-                                                    *left,  u_l, v_l,
-                                                    *right, u_r, v_r,
-                                                    ry,
-                                                    opacity);
+              gimp_canvas_transform_preview_draw_tri_row_mask (texture, cr,
+                                                               area, area_offx, area_offy,
+                                                               mask, mask_offx, mask_offy,
+                                                               *left,  u_l, v_l,
+                                                               *right, u_r, v_r,
+                                                               ry,
+                                                               opacity);
             left ++;      right ++;
             u_l += dul;   v_l += dvl;
             u_r += dur;   v_r += dvr;
@@ -553,12 +693,12 @@ gimp_display_shell_draw_tri (GimpDrawable    *texture,
         for (ry = y[1]; ry < y[2]; ry++)
           {
             if (ry >= clip_y1 && ry < clip_y2)
-              gimp_display_shell_draw_tri_row (texture, cr,
-                                               area, area_offx, area_offy,
-                                               *left,  u_l, v_l,
-                                               *right, u_r, v_r,
-                                               ry,
-                                               opacity);
+              gimp_canvas_transform_preview_draw_tri_row (texture, cr,
+                                                          area, area_offx, area_offy,
+                                                          *left,  u_l, v_l,
+                                                          *right, u_r, v_r,
+                                                          ry,
+                                                          opacity);
             left ++;      right ++;
             u_l += dul;   v_l += dvl;
             u_r += dur;   v_r += dvr;
@@ -570,29 +710,30 @@ gimp_display_shell_draw_tri (GimpDrawable    *texture,
 }
 
 /**
- * gimp_display_shell_draw_tri_row:
+ * gimp_canvas_transform_preview_draw_tri_row:
  * @texture: the thing being transformed
  * @cr:      the #cairo_t to draw to
  * @area:    has prefetched pixel data of dest
  *
- * Called from gimp_display_shell_draw_tri(), this draws a single row of a
- * triangle onto dest when there is not a mask. The run (x1,y) to (x2,y) in
- * dest corresponds to the run (u1,v1) to (u2,v2) in texture.
+ * Called from gimp_canvas_transform_preview_draw_tri(), this draws a
+ * single row of a triangle onto dest when there is not a mask. The
+ * run (x1,y) to (x2,y) in dest corresponds to the run (u1,v1) to
+ * (u2,v2) in texture.
  **/
 static void
-gimp_display_shell_draw_tri_row (GimpDrawable    *texture,
-                                 cairo_t         *cr,
-                                 cairo_surface_t *area,
-                                 gint             area_offx,
-                                 gint             area_offy,
-                                 gint             x1,
-                                 gfloat           u1,
-                                 gfloat           v1,
-                                 gint             x2,
-                                 gfloat           u2,
-                                 gfloat           v2,
-                                 gint             y,
-                                 guchar           opacity)
+gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
+                                            cairo_t         *cr,
+                                            cairo_surface_t *area,
+                                            gint             area_offx,
+                                            gint             area_offy,
+                                            gint             x1,
+                                            gfloat           u1,
+                                            gfloat           v1,
+                                            gint             x2,
+                                            gfloat           u2,
+                                            gfloat           v2,
+                                            gint             y,
+                                            guchar           opacity)
 {
   TileManager  *tiles;     /* used to get the source texture colors   */
   guchar       *pptr;      /* points into the pixels of a row of area */
@@ -801,28 +942,28 @@ gimp_display_shell_draw_tri_row (GimpDrawable    *texture,
 }
 
 /**
- * gimp_display_shell_draw_tri_row_mask:
+ * gimp_canvas_transform_preview_draw_tri_row_mask:
  *
- * Called from gimp_display_shell_draw_tri(), this draws a single row of a
- * triangle onto dest, when there is a mask.
+ * Called from gimp_canvas_transform_preview_draw_tri(), this draws a
+ * single row of a triangle onto dest, when there is a mask.
  **/
 static void
-gimp_display_shell_draw_tri_row_mask (GimpDrawable    *texture,
-                                      cairo_t         *cr,
-                                      cairo_surface_t *area,
-                                      gint             area_offx,
-                                      gint             area_offy,
-                                      GimpChannel     *mask,
-                                      gint             mask_offx,
-                                      gint             mask_offy,
-                                      gint             x1,
-                                      gfloat           u1,
-                                      gfloat           v1,
-                                      gint             x2,
-                                      gfloat           u2,
-                                      gfloat           v2,
-                                      gint             y,
-                                      guchar           opacity)
+gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
+                                                 cairo_t         *cr,
+                                                 cairo_surface_t *area,
+                                                 gint             area_offx,
+                                                 gint             area_offy,
+                                                 GimpChannel     *mask,
+                                                 gint             mask_offx,
+                                                 gint             mask_offy,
+                                                 gint             x1,
+                                                 gfloat           u1,
+                                                 gfloat           v1,
+                                                 gint             x2,
+                                                 gfloat           u2,
+                                                 gfloat           v2,
+                                                 gint             y,
+                                                 guchar           opacity)
 {
 
   TileManager  *tiles, *masktiles; /* used to get the source texture colors */
@@ -1071,19 +1212,19 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable    *texture,
 }
 
 /**
- * gimp_display_shell_trace_tri_edge:
+ * gimp_canvas_transform_preview_trace_tri_edge:
  * @dest: x coordinates are placed in this array
  *
- * Find the x coordinates for a line that runs from (x1,y1) to (x2,y2),
- * corresponding to the y coordinates y1 to y2-1. So
- * dest must be large enough to hold y2-y1 values.
+ * Find the x coordinates for a line that runs from (x1,y1) to
+ * (x2,y2), corresponding to the y coordinates y1 to y2-1. So dest
+ * must be large enough to hold y2-y1 values.
  **/
 static void
-gimp_display_shell_trace_tri_edge (gint *dest,
-                                   gint  x1,
-                                   gint  y1,
-                                   gint  x2,
-                                   gint  y2)
+gimp_canvas_transform_preview_trace_tri_edge (gint *dest,
+                                              gint  x1,
+                                              gint  y1,
+                                              gint  x2,
+                                              gint  y2)
 {
   const gint  dy = y2 - y1;
   gint        dx;

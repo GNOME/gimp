@@ -381,8 +381,6 @@ rotate_angle_changed (GtkAdjustment     *adj,
 
       gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
 
-      gimp_transform_tool_expose_preview (tr_tool);
-
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 
@@ -407,8 +405,6 @@ rotate_center_changed (GtkWidget         *widget,
       tr_tool->cy = cy;
 
       gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
-
-      gimp_transform_tool_expose_preview (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }

@@ -38,7 +38,6 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-draw.h"
-#include "gimpdisplayshell-preview.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
@@ -530,11 +529,6 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
 
   /*  finally, draw all the remaining image window stuff on top
    */
-
-  /* draw the transform tool preview */
-  cairo_save (cr);
-  gimp_display_shell_preview_transform (shell, cr);
-  cairo_restore (cr);
 
   /* draw canvas items */
   gimp_canvas_item_draw (shell->canvas_item, cr);

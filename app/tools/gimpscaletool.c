@@ -351,8 +351,6 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
 
           gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
 
-          gimp_transform_tool_expose_preview (tr_tool);
-
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
         }
     }

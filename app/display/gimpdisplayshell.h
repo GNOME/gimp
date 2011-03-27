@@ -179,7 +179,6 @@ struct _GimpDisplayShell
   GimpTreeHandler   *vectors_visible_handler;
 
   gboolean           zoom_on_resize;
-  gboolean           show_transform_preview;
 
   gboolean           size_allocate_from_configure_event;
 

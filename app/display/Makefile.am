@@ -61,6 +61,8 @@ libappdisplay_a_sources = \
 	gimpcanvassamplepoint.h			\
 	gimpcanvastextcursor.c			\
 	gimpcanvastextcursor.h			\
+	gimpcanvastransformpreview.c		\
+	gimpcanvastransformpreview.h		\
 	gimpcursorview.c			\
 	gimpcursorview.h			\
 	gimpdisplay.c				\
@@ -103,8 +105,6 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-icon.h			\
 	gimpdisplayshell-items.c		\
 	gimpdisplayshell-items.h		\
-	gimpdisplayshell-preview.c		\
-	gimpdisplayshell-preview.h		\
 	gimpdisplayshell-progress.c		\
 	gimpdisplayshell-progress.h		\
 	gimpdisplayshell-render.c		\

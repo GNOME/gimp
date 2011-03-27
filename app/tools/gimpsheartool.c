@@ -261,8 +261,6 @@ shear_x_mag_changed (GtkAdjustment     *adj,
 
       gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
 
-      gimp_transform_tool_expose_preview (tr_tool);
-
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 }
@@ -283,8 +281,6 @@ shear_y_mag_changed (GtkAdjustment     *adj,
       tr_tool->trans_info[YSHEAR] = value;
 
       gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
-
-      gimp_transform_tool_expose_preview (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
