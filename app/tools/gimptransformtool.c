@@ -58,6 +58,7 @@
 #include "display/gimptooldialog.h"
 
 #include "gimptoolcontrol.h"
+#include "gimpperspectivetool.h"
 #include "gimptransformoptions.h"
 #include "gimptransformtool.h"
 #include "gimptransformtoolundo.h"
@@ -759,7 +760,13 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       GimpCanvasItem *item;
 
       item = gimp_canvas_transform_preview_new (gimp_display_get_shell (draw_tool->display),
-                                                tr_tool,
+                                                tool->drawable,
+                                                &tr_tool->transform,
+                                                tr_tool->x1,
+                                                tr_tool->y1,
+                                                tr_tool->x2,
+                                                tr_tool->y2,
+                                                GIMP_IS_PERSPECTIVE_TOOL (tr_tool),
                                                 options->preview_opacity);
       gimp_draw_tool_add_item (draw_tool, item);
       g_object_unref (item);

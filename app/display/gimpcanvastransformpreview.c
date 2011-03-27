@@ -23,17 +23,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools/tools-types.h" /* eek */
+#include "display/display-types.h"
 
 #include "base/tile-manager.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-
-#include "tools/gimpperspectivetool.h"
 
 #include "gimpcanvas.h"
 #include "gimpcanvastransformpreview.h"
@@ -55,7 +54,13 @@
 enum
 {
   PROP_0,
-  PROP_TRANSFORM_TOOL,
+  PROP_DRAWABLE,
+  PROP_TRANSFORM,
+  PROP_X1,
+  PROP_Y1,
+  PROP_X2,
+  PROP_Y2,
+  PROP_PERSPECTIVE,
   PROP_OPACITY
 };
 
@@ -64,7 +69,11 @@ typedef struct _GimpCanvasTransformPreviewPrivate GimpCanvasTransformPreviewPriv
 
 struct _GimpCanvasTransformPreviewPrivate
 {
-  GimpTransformTool *transform_tool;
+  GimpDrawable      *drawable;
+  GimpMatrix3        transform;
+  gdouble            x1, y1;
+  gdouble            x2, y2;
+  gboolean           perspective;
   gdouble            opacity;
 };
 
@@ -168,11 +177,55 @@ gimp_canvas_transform_preview_class_init (GimpCanvasTransformPreviewClass *klass
   item_class->draw           = gimp_canvas_transform_preview_draw;
   item_class->get_extents    = gimp_canvas_transform_preview_get_extents;
 
-  g_object_class_install_property (object_class, PROP_TRANSFORM_TOOL,
-                                   g_param_spec_object ("transform-tool",
+  g_object_class_install_property (object_class, PROP_DRAWABLE,
+                                   g_param_spec_object ("drawable",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_TRANSFORM_TOOL,
+                                                        GIMP_TYPE_DRAWABLE,
                                                         GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_TRANSFORM,
+                                   gimp_param_spec_matrix3 ("transform",
+                                                            NULL, NULL,
+                                                            NULL,
+                                                            GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_X1,
+                                   g_param_spec_double ("x1",
+                                                        NULL, NULL,
+                                                        -GIMP_MAX_IMAGE_SIZE,
+                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_Y1,
+                                   g_param_spec_double ("y1",
+                                                        NULL, NULL,
+                                                        -GIMP_MAX_IMAGE_SIZE,
+                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_X2,
+                                   g_param_spec_double ("x2",
+                                                        NULL, NULL,
+                                                        -GIMP_MAX_IMAGE_SIZE,
+                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_Y2,
+                                   g_param_spec_double ("y2",
+                                                        NULL, NULL,
+                                                        -GIMP_MAX_IMAGE_SIZE,
+                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_PERSPECTIVE,
+                                   g_param_spec_boolean ("perspective",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_OPACITY,
                                    g_param_spec_double ("opacity",
@@ -198,8 +251,39 @@ gimp_canvas_transform_preview_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_TRANSFORM_TOOL:
-      private->transform_tool = g_value_get_object (value); /* don't ref */
+    case PROP_DRAWABLE:
+      private->drawable = g_value_get_object (value); /* don't ref */
+      break;
+
+    case PROP_TRANSFORM:
+      {
+        GimpMatrix3 *transform = g_value_get_boxed (value);
+
+        if (transform)
+          private->transform = *transform;
+        else
+          gimp_matrix3_identity (&private->transform);
+      }
+      break;
+
+    case PROP_X1:
+      private->x1 = g_value_get_double (value);
+      break;
+
+    case PROP_Y1:
+      private->y1 = g_value_get_double (value);
+      break;
+
+    case PROP_X2:
+      private->x2 = g_value_get_double (value);
+      break;
+
+    case PROP_Y2:
+      private->y2 = g_value_get_double (value);
+      break;
+
+    case PROP_PERSPECTIVE:
+      private->perspective = g_value_get_boolean (value);
       break;
 
     case PROP_OPACITY:
@@ -222,8 +306,32 @@ gimp_canvas_transform_preview_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_TRANSFORM_TOOL:
-      g_value_set_object (value, private->transform_tool);
+    case PROP_DRAWABLE:
+      g_value_set_object (value, private->drawable);
+      break;
+
+    case PROP_TRANSFORM:
+      g_value_set_boxed (value, &private->transform);
+      break;
+
+    case PROP_PERSPECTIVE:
+      g_value_set_boolean (value, private->perspective);
+      break;
+
+    case PROP_X1:
+      g_value_set_double (value, private->x1);
+      break;
+
+    case PROP_Y1:
+      g_value_set_double (value, private->y1);
+      break;
+
+    case PROP_X2:
+      g_value_set_double (value, private->x2);
+      break;
+
+    case PROP_Y2:
+      g_value_set_double (value, private->y2);
       break;
 
     case PROP_OPACITY:
@@ -236,16 +344,82 @@ gimp_canvas_transform_preview_get_property (GObject    *object,
     }
 }
 
+static gboolean
+gimp_canvas_transform_preview_transform (GimpCanvasItem   *item,
+                                         GimpDisplayShell *shell,
+                                         GdkRectangle     *extents)
+{
+  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
+  gdouble                            tx1, ty1;
+  gdouble                            tx2, ty2;
+  gdouble                            tx3, ty3;
+  gdouble                            tx4, ty4;
+  gdouble                            z1, z2, z3, z4;
+
+  gimp_matrix3_transform_point (&private->transform,
+                                private->x1, private->y1,
+                                &tx1, &ty1);
+  gimp_matrix3_transform_point (&private->transform,
+                                private->x2, private->y1,
+                                &tx2, &ty2);
+  gimp_matrix3_transform_point (&private->transform,
+                                private->x1, private->y2,
+                                &tx3, &ty3);
+  gimp_matrix3_transform_point (&private->transform,
+                                private->x2, private->y2,
+                                &tx4, &ty4);
+
+  z1 = ((tx2 - tx1) * (ty4 - ty1) -
+        (tx4 - tx1) * (ty2 - ty1));
+  z2 = ((tx4 - tx1) * (ty3 - ty1) -
+        (tx3 - tx1) * (ty4 - ty1));
+  z3 = ((tx4 - tx2) * (ty3 - ty2) -
+        (tx3 - tx2) * (ty4 - ty2));
+  z4 = ((tx3 - tx2) * (ty1 - ty2) -
+        (tx1 - tx2) * (ty3 - ty2));
+
+  if (! ((z1 * z2 > 0) && (z3 * z4 > 0)))
+    return FALSE;
+
+  if (extents)
+    {
+      gdouble dx1, dy1;
+      gdouble dx2, dy2;
+      gdouble dx3, dy3;
+      gdouble dx4, dy4;
+
+      gimp_display_shell_transform_xy_f (shell,
+                                         tx1, ty1,
+                                         &dx1, &dy1);
+      gimp_display_shell_transform_xy_f (shell,
+                                         tx2, ty2,
+                                         &dx2, &dy2);
+      gimp_display_shell_transform_xy_f (shell,
+                                         tx3, ty3,
+                                         &dx3, &dy3);
+      gimp_display_shell_transform_xy_f (shell,
+                                         tx4, ty4,
+                                         &dx4, &dy4);
+
+      extents->x      = (gint) floor (MIN4 (dx1, dx2, dx3, dx4));
+      extents->y      = (gint) floor (MIN4 (dy1, dy2, dy3, dy4));
+      extents->width  = (gint) ceil (MAX4 (dx1, dx2, dx3, dx4));
+      extents->height = (gint) ceil (MAX4 (dy1, dy2, dy3, dy4));
+
+      extents->width  -= extents->x;
+      extents->height -= extents->y;
+    }
+
+  return TRUE;
+}
+
 static void
 gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
                                     GimpDisplayShell *shell,
                                     cairo_t          *cr)
 {
   GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
-  GimpTransformTool                 *tr_tool;
-  GimpDrawable                      *drawable;
   GimpChannel                       *mask;
-  gdouble                            z1, z2, z3, z4;
   gint                               mask_x1, mask_y1;
   gint                               mask_x2, mask_y2;
   gint                               mask_offx, mask_offy;
@@ -263,38 +437,29 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
   gfloat                             v[MAX_SUB_COLS * MAX_SUB_ROWS][4];
   guchar                             opacity;
 
-  tr_tool = private->transform_tool;
   opacity = private->opacity * 255.999;
 
-  z1 = ((tr_tool->tx2 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1) -
-        (tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty2 - tr_tool->ty1));
-  z2 = ((tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty3 - tr_tool->ty1) -
-        (tr_tool->tx3 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1));
-  z3 = ((tr_tool->tx4 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2) -
-        (tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty4 - tr_tool->ty2));
-  z4 = ((tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty1 - tr_tool->ty2) -
-        (tr_tool->tx1 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2));
-
   /* only draw convex polygons */
-
-  if (! ((z1 * z2 > 0) && (z3 * z4 > 0)))
+  if (! gimp_canvas_transform_preview_transform (item, shell, NULL))
     return;
 
-  mask = NULL;
-  mask_offx = mask_offy = 0;
+  mask      = NULL;
+  mask_offx = 0;
+  mask_offy = 0;
 
-  drawable = GIMP_TOOL (tr_tool)->drawable;
-
-  if (gimp_item_mask_bounds (GIMP_ITEM (drawable),
+  if (gimp_item_mask_bounds (GIMP_ITEM (private->drawable),
                              &mask_x1, &mask_y1,
                              &mask_x2, &mask_y2))
     {
-      mask = gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)));
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (private->drawable));
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &mask_offx, &mask_offy);
+      mask = gimp_image_get_mask (image);
+
+      gimp_item_get_offset (GIMP_ITEM (private->drawable),
+                            &mask_offx, &mask_offy);
     }
 
-  if (GIMP_IS_PERSPECTIVE_TOOL (tr_tool))
+  if (private->perspective)
     {
       /* approximate perspective transform by subdivision
        *
@@ -311,8 +476,8 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
       rows    = 1;
     }
 
-  dx = (tr_tool->x2 - tr_tool->x1) / ((gfloat) columns);
-  dy = (tr_tool->y2 - tr_tool->y1) / ((gfloat) rows);
+  dx = (private->x2 - private->x1) / ((gfloat) columns);
+  dy = (private->y2 - private->y1) / ((gfloat) rows);
 
   du = (mask_x2 - mask_x1) / ((gfloat) columns);
   dv = (mask_y2 - mask_y1) / ((gfloat) rows);
@@ -322,10 +487,10 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
     gdouble tx1, ty1;                                           \
     gdouble tx2, ty2;                                           \
                                                                 \
-    u[sub][index] = tr_tool->x1 + (dx * (col + (index & 1)));   \
-    v[sub][index] = tr_tool->y1 + (dy * (row + (index >> 1)));  \
+    u[sub][index] = private->x1 + (dx * (col + (index & 1)));   \
+    v[sub][index] = private->y1 + (dy * (row + (index >> 1)));  \
                                                                 \
-    gimp_matrix3_transform_point (&tr_tool->transform,          \
+    gimp_matrix3_transform_point (&private->transform,          \
                                   u[sub][index], v[sub][index], \
                                   &tx1, &ty1);                  \
                                                                 \
@@ -400,7 +565,7 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
 
   k = columns * rows;
   for (j = 0; j < k; j++)
-    gimp_canvas_transform_preview_draw_quad (drawable, cr,
+    gimp_canvas_transform_preview_draw_quad (private->drawable, cr,
                                              mask, mask_offx, mask_offy,
                                              x[j], y[j], u[j], v[j],
                                              opacity);
@@ -410,52 +575,39 @@ static cairo_region_t *
 gimp_canvas_transform_preview_get_extents (GimpCanvasItem   *item,
                                            GimpDisplayShell *shell)
 {
-  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
-  GimpTransformTool                 *tr_tool;
-  gdouble                            dx1, dy1;
-  gdouble                            dx2, dy2;
-  gdouble                            dx3, dy3;
-  gdouble                            dx4, dy4;
-  GdkRectangle                       rectangle;
+  GdkRectangle rectangle;
 
-  tr_tool = private->transform_tool;
+  if (gimp_canvas_transform_preview_transform (item, shell, &rectangle))
+    return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     tr_tool->tx1, tr_tool->ty1,
-                                     &dx1, &dy1);
-  gimp_display_shell_transform_xy_f (shell,
-                                     tr_tool->tx2, tr_tool->ty2,
-                                     &dx2, &dy2);
-  gimp_display_shell_transform_xy_f (shell,
-                                     tr_tool->tx3, tr_tool->ty3,
-                                     &dx3, &dy3);
-  gimp_display_shell_transform_xy_f (shell,
-                                     tr_tool->tx4, tr_tool->ty4,
-                                     &dx4, &dy4);
-
-  rectangle.x      = (gint) floor (MIN4 (dx1, dx2, dx3, dx4));
-  rectangle.y      = (gint) floor (MIN4 (dy1, dy2, dy3, dy4));
-  rectangle.width  = (gint) ceil (MAX4 (dx1, dx2, dx3, dx4));
-  rectangle.height = (gint) ceil (MAX4 (dy1, dy2, dy3, dy4));
-
-  rectangle.width  -= rectangle.x;
-  rectangle.height -= rectangle.y;
-
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return NULL;
 }
 
 GimpCanvasItem *
 gimp_canvas_transform_preview_new (GimpDisplayShell  *shell,
-                                   GimpTransformTool *transform_tool,
+                                   GimpDrawable      *drawable,
+                                   const GimpMatrix3 *transform,
+                                   gdouble            x1,
+                                   gdouble            y1,
+                                   gdouble            x2,
+                                   gdouble            y2,
+                                   gboolean           perspective,
                                    gdouble            opacity)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-  g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (transform_tool), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (transform != NULL, NULL);
 
   return g_object_new (GIMP_TYPE_CANVAS_TRANSFORM_PREVIEW,
-                       "shell",          shell,
-                       "transform-tool", transform_tool,
-                       "opacity",        CLAMP (opacity, 0.0, 1.0),
+                       "shell",       shell,
+                       "drawable",    drawable,
+                       "transform",   transform,
+                       "x1",          x1,
+                       "y1",          y1,
+                       "x2",          x2,
+                       "y2",          y2,
+                       "perspective", perspective,
+                       "opacity",     CLAMP (opacity, 0.0, 1.0),
                        NULL);
 }
 

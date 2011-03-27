@@ -50,7 +50,13 @@ struct _GimpCanvasTransformPreviewClass
 GType            gimp_canvas_transform_preview_get_type (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_transform_preview_new      (GimpDisplayShell  *shell,
-                                                         GimpTransformTool *transform_tool,
+                                                         GimpDrawable      *drawable,
+                                                         const GimpMatrix3 *transform,
+                                                         gdouble            x1,
+                                                         gdouble            y1,
+                                                         gdouble            x2,
+                                                         gdouble            y2,
+                                                         gboolean           perspective,
                                                          gdouble            opacity);
 
 
