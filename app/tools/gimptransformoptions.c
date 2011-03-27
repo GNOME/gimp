@@ -293,10 +293,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   /*  the clipping menu  */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   frame = gimp_frame_new (_("Clipping:"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -306,30 +302,21 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   /*  the preview frame  */
-  frame = gimp_frame_new (NULL);
+  frame = gimp_frame_new (_("Preview:"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  /*  the preview type menu  */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Preview:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  combo = gimp_prop_enum_combo_box_new (config, "preview-type", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
 
   preview_box = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), preview_box);
   gtk_widget_show (preview_box);
 
+  combo = gimp_prop_enum_combo_box_new (config, "preview-type", 0, 0);
+  gtk_box_pack_start (GTK_BOX (preview_box), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
   /*  the preview opacity scale  */
   scale = gimp_prop_opacity_spin_scale_new (config, "preview-opacity",
-                                            _("Opacity"));
+                                            _("Image opacity"));
   gtk_box_pack_start (GTK_BOX (preview_box), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
