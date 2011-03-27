@@ -131,6 +131,8 @@ static TileManager *
                                                              gint                  *new_offset_x,
                                                              gint                  *new_offset_y);
 
+static void      gimp_transform_tool_set_function           (GimpTransformTool *tr_tool,
+                                                             TransformAction    function);
 static void      gimp_transform_tool_halt                   (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_bounds                 (GimpTransformTool     *tr_tool,
                                                              GimpDisplay           *display);
@@ -495,11 +497,13 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
 {
   GimpTransformTool *tr_tool   = GIMP_TRANSFORM_TOOL (tool);
   GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
-
-  tr_tool->function = TRANSFORM_HANDLE_NONE;
+  TransformAction    function  = TRANSFORM_HANDLE_NONE;
 
   if (display != tool->display)
-    return;
+    {
+      gimp_transform_tool_set_function (tr_tool, function);
+      return;
+    }
 
   if (tr_tool->use_handles)
     {
@@ -510,7 +514,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                                   coords->x, coords->y,
                                                   tr_tool->tx1, tr_tool->ty1);
       closest_dist = dist;
-      tr_tool->function = TRANSFORM_HANDLE_NW;
+      function = TRANSFORM_HANDLE_NW;
 
       dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
                                                   coords->x, coords->y,
@@ -518,7 +522,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
       if (dist < closest_dist)
         {
           closest_dist = dist;
-          tr_tool->function = TRANSFORM_HANDLE_NE;
+          function = TRANSFORM_HANDLE_NE;
         }
 
       dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
@@ -527,7 +531,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
       if (dist < closest_dist)
         {
           closest_dist = dist;
-          tr_tool->function = TRANSFORM_HANDLE_SW;
+          function = TRANSFORM_HANDLE_SW;
         }
 
       dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
@@ -536,7 +540,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
       if (dist < closest_dist)
         {
           closest_dist = dist;
-          tr_tool->function = TRANSFORM_HANDLE_SE;
+          function = TRANSFORM_HANDLE_SE;
         }
 
       if (tr_tool->use_mid_handles)
@@ -553,7 +557,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                         tr_tool->handle_w, tr_tool->handle_h,
                                         GIMP_HANDLE_ANCHOR_CENTER))
             {
-              tr_tool->function = TRANSFORM_HANDLE_N;
+              function = TRANSFORM_HANDLE_N;
             }
 
           x = (tr_tool->tx2 + tr_tool->tx4) / 2.0;
@@ -566,7 +570,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                         tr_tool->handle_w, tr_tool->handle_h,
                                         GIMP_HANDLE_ANCHOR_CENTER))
             {
-              tr_tool->function = TRANSFORM_HANDLE_E;
+              function = TRANSFORM_HANDLE_E;
             }
 
           x = (tr_tool->tx3 + tr_tool->tx4) / 2.0;
@@ -579,7 +583,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                         tr_tool->handle_w, tr_tool->handle_h,
                                         GIMP_HANDLE_ANCHOR_CENTER))
             {
-              tr_tool->function = TRANSFORM_HANDLE_S;
+              function = TRANSFORM_HANDLE_S;
             }
 
           x = (tr_tool->tx3 + tr_tool->tx1) / 2.0;
@@ -592,7 +596,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                         tr_tool->handle_w, tr_tool->handle_h,
                                         GIMP_HANDLE_ANCHOR_CENTER))
             {
-              tr_tool->function = TRANSFORM_HANDLE_W;
+              function = TRANSFORM_HANDLE_W;
             }
         }
     }
@@ -606,8 +610,10 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                 MIN (tr_tool->handle_w, tr_tool->handle_h),
                                 GIMP_HANDLE_ANCHOR_CENTER))
     {
-      tr_tool->function = TRANSFORM_HANDLE_CENTER;
+      function = TRANSFORM_HANDLE_CENTER;
     }
+
+  gimp_transform_tool_set_function (tr_tool, function);
 }
 
 static void
@@ -1271,6 +1277,18 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   gimp_unset_busy (display->gimp);
 
   gimp_image_flush (image);
+}
+
+static void
+gimp_transform_tool_set_function (GimpTransformTool *tr_tool,
+                                  TransformAction    function)
+{
+  if (function != tr_tool->function)
+    {
+      /* TODO: highlight the right handle */
+
+      tr_tool->function = function;
+    }
 }
 
 static void
