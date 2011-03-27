@@ -99,6 +99,8 @@ struct _GimpTransformTool
                                     *  coordinate pairs)
                                     */
 
+  GimpCanvasItem *handles[TRANSFORM_HANDLE_CENTER + 1];
+
   const gchar    *undo_desc;
   const gchar    *progress_text;
 
