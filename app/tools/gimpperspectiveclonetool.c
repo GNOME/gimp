@@ -733,31 +733,34 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_draw_tool_pop_group (draw_tool);
 
-  /*  draw the tool handles  */
-  gimp_draw_tool_add_handle (draw_tool,
-                             GIMP_HANDLE_SQUARE,
-                             clone_tool->tx1, clone_tool->ty1,
-                             GIMP_TOOL_HANDLE_SIZE_LARGE,
-                             GIMP_TOOL_HANDLE_SIZE_LARGE,
-                             GIMP_HANDLE_ANCHOR_CENTER);
-  gimp_draw_tool_add_handle (draw_tool,
-                             GIMP_HANDLE_SQUARE,
-                             clone_tool->tx2, clone_tool->ty2,
-                             GIMP_TOOL_HANDLE_SIZE_LARGE,
-                             GIMP_TOOL_HANDLE_SIZE_LARGE,
-                             GIMP_HANDLE_ANCHOR_CENTER);
-  gimp_draw_tool_add_handle (draw_tool,
-                             GIMP_HANDLE_SQUARE,
-                             clone_tool->tx3, clone_tool->ty3,
-                             GIMP_TOOL_HANDLE_SIZE_LARGE,
-                             GIMP_TOOL_HANDLE_SIZE_LARGE,
-                             GIMP_HANDLE_ANCHOR_CENTER);
-  gimp_draw_tool_add_handle (draw_tool,
-                             GIMP_HANDLE_SQUARE,
-                             clone_tool->tx4, clone_tool->ty4,
-                             GIMP_TOOL_HANDLE_SIZE_LARGE,
-                             GIMP_TOOL_HANDLE_SIZE_LARGE,
-                             GIMP_HANDLE_ANCHOR_CENTER);
+  /*  draw the tool handles only when they can be used  */
+  if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
+    {
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_SQUARE,
+                                 clone_tool->tx1, clone_tool->ty1,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_HANDLE_ANCHOR_CENTER);
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_SQUARE,
+                                 clone_tool->tx2, clone_tool->ty2,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_HANDLE_ANCHOR_CENTER);
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_SQUARE,
+                                 clone_tool->tx3, clone_tool->ty3,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_HANDLE_ANCHOR_CENTER);
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_SQUARE,
+                                 clone_tool->tx4, clone_tool->ty4,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_HANDLE_ANCHOR_CENTER);
+    }
 
   if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
       source_core->src_drawable && clone_tool->src_display)
@@ -830,6 +833,8 @@ gimp_perspective_clone_tool_mode_notify (GimpPerspectiveCloneOptions *options,
 
   clone = GIMP_PERSPECTIVE_CLONE (GIMP_PAINT_TOOL (clone_tool)->core);
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (clone_tool));
+
   if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_PAINT)
     {
       /* GimpPaintTool's notify callback will set the right precision */
@@ -852,6 +857,8 @@ gimp_perspective_clone_tool_mode_notify (GimpPerspectiveCloneOptions *options,
       if (tool->display)
         gimp_draw_tool_start (GIMP_DRAW_TOOL (clone_tool), tool->display);
     }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (clone_tool));
 }
 
 
