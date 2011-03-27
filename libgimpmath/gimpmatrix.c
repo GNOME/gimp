@@ -264,6 +264,183 @@ gimp_matrix2_mult (const GimpMatrix2 *matrix1,
   *matrix2 = tmp;
 }
 
+
+static GimpMatrix3 * matrix3_copy                  (const GimpMatrix3 *matrix);
+
+/**
+ * gimp_matrix3_get_type:
+ *
+ * Reveals the object type
+ *
+ * Returns: the #GType for Matrix3 objects
+ *
+ * Since: GIMP 2.8
+ **/
+GType
+gimp_matrix3_get_type (void)
+{
+  static GType matrix_type = 0;
+
+  if (!matrix_type)
+    matrix_type = g_boxed_type_register_static ("GimpMatrix3",
+                                               (GBoxedCopyFunc) matrix3_copy,
+                                               (GBoxedFreeFunc) g_free);
+
+  return matrix_type;
+}
+
+
+/*
+ * GIMP_TYPE_PARAM_MATRIX3
+ */
+
+#define GIMP_PARAM_SPEC_MATRIX3(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_MATRIX3, GimpParamSpecMatrix3))
+
+static void   gimp_param_matrix3_class_init  (GParamSpecClass *class);
+static void   gimp_param_matrix3_init        (GParamSpec      *pspec);
+static void   gimp_param_matrix3_set_default (GParamSpec      *pspec,
+                                              GValue          *value);
+static gint   gimp_param_matrix3_values_cmp  (GParamSpec      *pspec,
+                                              const GValue    *value1,
+                                              const GValue    *value2);
+
+typedef struct _GimpParamSpecMatrix3 GimpParamSpecMatrix3;
+
+struct _GimpParamSpecMatrix3
+{
+  GParamSpecBoxed      parent_instance;
+
+  GimpMatrix3          default_value;
+};
+
+/**
+ * gimp_param_matrix3_get_type:
+ *
+ * Reveals the object type
+ *
+ * Returns: the #GType for a GimpMatrix3 object
+ *
+ * Since: GIMP 2.8
+ **/
+GType
+gimp_param_matrix3_get_type (void)
+{
+  static GType spec_type = 0;
+
+  if (!spec_type)
+    {
+      static const GTypeInfo type_info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_matrix3_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecMatrix3),
+        0,
+        (GInstanceInitFunc) gimp_param_matrix3_init
+      };
+
+      spec_type = g_type_register_static (G_TYPE_PARAM_BOXED,
+                                          "GimpParamMatrix3",
+                                          &type_info, 0);
+    }
+
+  return spec_type;
+}
+
+static void
+gimp_param_matrix3_class_init (GParamSpecClass *class)
+{
+  class->value_type        = GIMP_TYPE_MATRIX3;
+  class->value_set_default = gimp_param_matrix3_set_default;
+  class->values_cmp        = gimp_param_matrix3_values_cmp;
+}
+
+static void
+gimp_param_matrix3_init (GParamSpec *pspec)
+{
+  GimpParamSpecMatrix3 *cspec = GIMP_PARAM_SPEC_MATRIX3 (pspec);
+
+  gimp_matrix3_identity (&cspec->default_value);
+}
+
+static void
+gimp_param_matrix3_set_default (GParamSpec *pspec,
+                                GValue     *value)
+{
+  GimpParamSpecMatrix3 *cspec = GIMP_PARAM_SPEC_MATRIX3 (pspec);
+
+  g_value_set_static_boxed (value, &cspec->default_value);
+}
+
+static gint
+gimp_param_matrix3_values_cmp (GParamSpec   *pspec,
+                               const GValue *value1,
+                               const GValue *value2)
+{
+  GimpMatrix3 *matrix1;
+  GimpMatrix3 *matrix2;
+  gint         i, j;
+
+  matrix1 = value1->data[0].v_pointer;
+  matrix2 = value2->data[0].v_pointer;
+
+  /*  try to return at least *something*, it's useless anyway...  */
+
+  if (! matrix1)
+    return matrix2 != NULL ? -1 : 0;
+  else if (! matrix2)
+    return matrix1 != NULL;
+
+  for (i = 0; i < 3; i++)
+    for (j = 0; j < 3; j++)
+      if (matrix1->coeff[i][j] != matrix2->coeff[i][j])
+        return 1;
+
+  return 0;
+}
+
+/**
+ * gimp_param_spec_matrix3:
+ * @name:          Canonical name of the param
+ * @nick:          Nickname of the param
+ * @blurb:         Brief desciption of param.
+ * @default_value: Value to use if none is assigned.
+ * @flags:         a combination of #GParamFlags
+ *
+ * Creates a param spec to hold a #GimpMatrix3 value.
+ * See g_param_spec_internal() for more information.
+ *
+ * Returns: a newly allocated #GParamSpec instance
+ *
+ * Since: GIMP 2.8
+ **/
+GParamSpec *
+gimp_param_spec_matrix3 (const gchar       *name,
+                         const gchar       *nick,
+                         const gchar       *blurb,
+                         const GimpMatrix3 *default_value,
+                         GParamFlags        flags)
+{
+  GimpParamSpecMatrix3 *cspec;
+
+  cspec = g_param_spec_internal (GIMP_TYPE_PARAM_MATRIX3,
+                                 name, nick, blurb, flags);
+
+  if (default_value)
+    cspec->default_value = *default_value;
+
+  return G_PARAM_SPEC (cspec);
+}
+
+
+static GimpMatrix3 *
+matrix3_copy (const GimpMatrix3 *matrix)
+{
+  return (GimpMatrix3 *) g_memdup (matrix, sizeof (GimpMatrix3));
+}
+
+
 /**
  * gimp_matrix3_identity:
  * @matrix: A matrix.
