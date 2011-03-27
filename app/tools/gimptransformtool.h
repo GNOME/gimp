@@ -99,9 +99,6 @@ struct _GimpTransformTool
                                     *  coordinate pairs)
                                     */
 
-  GimpTransformType       type;
-  GimpTransformDirection  direction;
-
   const gchar    *undo_desc;
   const gchar    *progress_text;
 

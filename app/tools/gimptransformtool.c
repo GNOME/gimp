@@ -34,6 +34,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
@@ -41,8 +42,6 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
-#include "core/gimplayermask.h"
-#include "core/gimppickable.h"
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
@@ -67,9 +66,10 @@
 
 
 #define MIN_HANDLE_SIZE 6
+#define MIN4(a,b,c,d)   MIN(MIN((a),(b)),MIN((c),(d)))
+#define MAX4(a,b,c,d)   MAX(MAX((a),(b)),MAX((c),(d)))
 
 
-static void      gimp_transform_tool_constructed            (GObject               *object);
 static void      gimp_transform_tool_finalize               (GObject               *object);
 
 static gboolean  gimp_transform_tool_initialize             (GimpTool              *tool,
@@ -160,7 +160,6 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   GimpToolClass     *tool_class   = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructed       = gimp_transform_tool_constructed;
   object_class->finalize          = gimp_transform_tool_finalize;
 
   tool_class->initialize          = gimp_transform_tool_initialize;
@@ -226,30 +225,10 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tr_tool->ngy              = 0;
   tr_tool->grid_coords      = NULL;
 
-  tr_tool->type             = GIMP_TRANSFORM_TYPE_LAYER;
-  tr_tool->direction        = GIMP_TRANSFORM_FORWARD;
-
   tr_tool->undo_desc        = NULL;
 
   tr_tool->progress_text    = _("Transforming");
   tr_tool->dialog           = NULL;
-}
-
-static void
-gimp_transform_tool_constructed (GObject *object)
-{
-  GimpTool             *tool    = GIMP_TOOL (object);
-  GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (object);
-  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
-
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
-
-  if (tr_tool->use_grid)
-    {
-      tr_tool->type      = options->type;
-      tr_tool->direction = options->direction;
-    }
 }
 
 static void
@@ -727,8 +706,6 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
 
   if (tr_tool->use_grid)
     {
-      GimpTransformOptions *tr_options = GIMP_TRANSFORM_OPTIONS (options);
-
       if (tr_tool->function != TRANSFORM_CREATING)
         {
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
@@ -737,9 +714,6 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
       if (! strcmp (pspec->name, "type") ||
           ! strcmp (pspec->name, "direction"))
         {
-          tr_tool->type      = tr_options->type;
-          tr_tool->direction = tr_options->direction;
-
           if (tr_tool->function != TRANSFORM_CREATING)
             {
               if (tool->display)
@@ -939,7 +913,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                  GIMP_HANDLE_ANCHOR_CENTER);
     }
 
-  if (tr_tool->type == GIMP_TRANSFORM_TYPE_SELECTION)
+  if (options->type == GIMP_TRANSFORM_TYPE_SELECTION)
     {
       GimpMatrix3     matrix = tr_tool->transform;
       const BoundSeg *orig_in;
@@ -1010,7 +984,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
           g_free (segs_out);
         }
     }
-  else if (tr_tool->type == GIMP_TRANSFORM_TYPE_PATH)
+  else if (options->type == GIMP_TRANSFORM_TYPE_PATH)
     {
       GimpVectors *vectors;
       GimpStroke  *stroke = NULL;
@@ -1020,7 +994,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
       if (vectors)
         {
-          if (tr_tool->direction == GIMP_TRANSFORM_BACKWARD)
+          if (options->direction == GIMP_TRANSFORM_BACKWARD)
             gimp_matrix3_invert (&matrix);
 
           while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
@@ -1414,15 +1388,12 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
     case GIMP_TRANSFORM_GRID_TYPE_N_LINES:
     case GIMP_TRANSFORM_GRID_TYPE_SPACING:
       {
-        GimpTool *tool;
-        gint      i, gci;
-        gdouble  *coords;
-        gint      width, height;
+        gint     i, gci;
+        gdouble *coords;
+        gint     width, height;
 
         width  = MAX (1, tr_tool->x2 - tr_tool->x1);
         height = MAX (1, tr_tool->y2 - tr_tool->y1);
-
-        tool = GIMP_TOOL (tr_tool);
 
         if (options->grid_type == GIMP_TRANSFORM_GRID_TYPE_N_LINES)
           {
@@ -1502,10 +1473,10 @@ gimp_transform_tool_handles_recalc (GimpTransformTool *tr_tool,
                                    tr_tool->tx4, tr_tool->ty4,
                                    &dx4, &dy4);
 
-  x1 = MIN (MIN (dx1, dx2), MIN (dx3, dx4));
-  y1 = MIN (MIN (dy1, dy2), MIN (dy3, dy4));
-  x2 = MAX (MAX (dx1, dx2), MAX (dx3, dx4));
-  y2 = MAX (MAX (dy1, dy2), MAX (dy3, dy4));
+  x1 = MIN4 (dx1, dx2, dx3, dx4);
+  y1 = MIN4 (dy1, dy2, dy3, dy4);
+  x2 = MAX4 (dx1, dx2, dx3, dx4);
+  y2 = MAX4 (dy1, dy2, dy3, dy4);
 
   tr_tool->handle_w = CLAMP ((x2 - x1) / 3,
                              MIN_HANDLE_SIZE, GIMP_TOOL_HANDLE_SIZE_LARGE);
@@ -1551,12 +1522,11 @@ static void
 gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
                              GimpDisplay       *display)
 {
-  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-  GimpImage            *image   = gimp_display_get_image (display);
-
   if (tr_tool->dialog)
     {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+      GimpTransformOptions *options  = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+      GimpImage            *image    = gimp_display_get_image (display);
+      GimpDrawable         *drawable = gimp_image_get_active_drawable (image);
 
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->dialog),
                                          GIMP_VIEWABLE (drawable),
@@ -1573,6 +1543,7 @@ void
 gimp_transform_tool_recalc (GimpTransformTool *tr_tool,
                             GimpDisplay       *display)
 {
+  g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc)
