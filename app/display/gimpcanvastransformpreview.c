@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools/tools-types.h" /* eek */
@@ -40,13 +41,15 @@
 #include "gimpdisplayshell-transform.h"
 
 
-#define INT_MULT(a,b,t)     ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
-#define INT_MULT3(a,b,c,t)  ((t) = (a) * (b) * (c) + 0x7F5B, \
-                            ((((t) >> 7) + (t)) >> 16))
+#define INT_MULT(a,b,t)    ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
+#define INT_MULT3(a,b,c,t) ((t) = (a) * (b) * (c) + 0x7F5B, \
+                           ((((t) >> 7) + (t)) >> 16))
 
+#define MIN4(a,b,c,d)      MIN(MIN(a,b),MIN(c,d))
+#define MAX4(a,b,c,d)      MAX(MAX(a,b),MAX(c,d))
 
-#define MAX_SUB_COLS 6     /* number of columns and  */
-#define MAX_SUB_ROWS 6     /* rows to use in perspective preview subdivision */
+#define MAX_SUB_COLS       6 /* number of columns and  */
+#define MAX_SUB_ROWS       6 /* rows to use in perspective preview subdivision */
 
 
 enum
@@ -81,14 +84,12 @@ static void             gimp_canvas_transform_preview_get_property (GObject     
                                                                     guint             property_id,
                                                                     GValue           *value,
                                                                     GParamSpec       *pspec);
+
 static void             gimp_canvas_transform_preview_draw         (GimpCanvasItem   *item,
                                                                     GimpDisplayShell *shell,
                                                                     cairo_t          *cr);
 static cairo_region_t * gimp_canvas_transform_preview_get_extents  (GimpCanvasItem   *item,
                                                                     GimpDisplayShell *shell);
-
-
-/*  local function prototypes  */
 
 static void   gimp_canvas_transform_preview_draw_quad         (GimpDrawable    *texture,
                                                                cairo_t         *cr,
@@ -200,6 +201,7 @@ gimp_canvas_transform_preview_set_property (GObject      *object,
     case PROP_TRANSFORM_TOOL:
       private->transform_tool = g_value_get_object (value); /* don't ref */
       break;
+
     case PROP_OPACITY:
       private->opacity = g_value_get_double (value);
       break;
@@ -223,6 +225,7 @@ gimp_canvas_transform_preview_get_property (GObject    *object,
     case PROP_TRANSFORM_TOOL:
       g_value_set_object (value, private->transform_tool);
       break;
+
     case PROP_OPACITY:
       g_value_set_double (value, private->opacity);
       break;
@@ -240,27 +243,25 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem   *item,
 {
   GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
   GimpTransformTool                 *tr_tool;
+  GimpDrawable                      *drawable;
+  GimpChannel                       *mask;
   gdouble                            z1, z2, z3, z4;
-
-  GimpDrawable *drawable;
-  GimpChannel  *mask;
-  gint          mask_x1, mask_y1;
-  gint          mask_x2, mask_y2;
-  gint          mask_offx, mask_offy;
-
-  gint          columns, rows;
-  gint          j, k, sub;
+  gint                               mask_x1, mask_y1;
+  gint                               mask_x2, mask_y2;
+  gint                               mask_offx, mask_offy;
+  gint                               columns, rows;
+  gint                               j, k, sub;
 
    /* x and y get filled with the screen coordinates of each corner of
     * each quadrilateral subdivision of the transformed area. u and v
     * are the corresponding points in the mask
     */
-  gfloat       du, dv, dx, dy;
-  gint         x[MAX_SUB_COLS * MAX_SUB_ROWS][4],
-               y[MAX_SUB_COLS * MAX_SUB_ROWS][4];
-  gfloat       u[MAX_SUB_COLS * MAX_SUB_ROWS][4],
-               v[MAX_SUB_COLS * MAX_SUB_ROWS][4];
-  guchar       opacity = 255;
+  gfloat                             du, dv, dx, dy;
+  gint                               x[MAX_SUB_COLS * MAX_SUB_ROWS][4];
+  gint                               y[MAX_SUB_COLS * MAX_SUB_ROWS][4];
+  gfloat                             u[MAX_SUB_COLS * MAX_SUB_ROWS][4];
+  gfloat                             v[MAX_SUB_COLS * MAX_SUB_ROWS][4];
+  guchar                             opacity;
 
   tr_tool = private->transform_tool;
   opacity = private->opacity * 255.999;
@@ -411,37 +412,31 @@ gimp_canvas_transform_preview_get_extents (GimpCanvasItem   *item,
 {
   GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
   GimpTransformTool                 *tr_tool;
-  gdouble                            dx[4], dy[4];
+  gdouble                            dx1, dy1;
+  gdouble                            dx2, dy2;
+  gdouble                            dx3, dy3;
+  gdouble                            dx4, dy4;
   GdkRectangle                       rectangle;
-  gint                               i;
 
   tr_tool = private->transform_tool;
 
-  gimp_display_shell_transform_xy_f (shell, tr_tool->tx1, tr_tool->ty1,
-                                     dx + 0, dy + 0);
-  gimp_display_shell_transform_xy_f (shell, tr_tool->tx2, tr_tool->ty2,
-                                     dx + 1, dy + 1);
-  gimp_display_shell_transform_xy_f (shell, tr_tool->tx3, tr_tool->ty3,
-                                     dx + 2, dy + 2);
-  gimp_display_shell_transform_xy_f (shell, tr_tool->tx4, tr_tool->ty4,
-                                     dx + 3, dy + 3);
+  gimp_display_shell_transform_xy_f (shell,
+                                     tr_tool->tx1, tr_tool->ty1,
+                                     &dx1, &dy1);
+  gimp_display_shell_transform_xy_f (shell,
+                                     tr_tool->tx2, tr_tool->ty2,
+                                     &dx2, &dy2);
+  gimp_display_shell_transform_xy_f (shell,
+                                     tr_tool->tx3, tr_tool->ty3,
+                                     &dx3, &dy3);
+  gimp_display_shell_transform_xy_f (shell,
+                                     tr_tool->tx4, tr_tool->ty4,
+                                     &dx4, &dy4);
 
-  /* find bounding box around preview */
-  rectangle.x = rectangle.width  = (gint) dx[0];
-  rectangle.y = rectangle.height = (gint) dy[0];
-
-  for (i = 1; i < 4; i++)
-    {
-      if (dx[i] < rectangle.x)
-        rectangle.x = (gint) dx[i];
-      else if (dx[i] > rectangle.width)
-        rectangle.width = (gint) dx[i];
-
-      if (dy[i] < rectangle.y)
-        rectangle.y = (gint) dy[i];
-      else if (dy[i] > rectangle.height)
-        rectangle.height = (gint) dy[i];
-    }
+  rectangle.x      = (gint) floor (MIN4 (dx1, dx2, dx3, dx4));
+  rectangle.y      = (gint) floor (MIN4 (dy1, dy2, dy3, dy4));
+  rectangle.width  = (gint) ceil (MAX4 (dx1, dx2, dx3, dx4));
+  rectangle.height = (gint) ceil (MAX4 (dy1, dy2, dy3, dy4));
 
   rectangle.width  -= rectangle.x;
   rectangle.height -= rectangle.y;

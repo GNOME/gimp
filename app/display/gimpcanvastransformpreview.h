@@ -22,8 +22,6 @@
 #define __GIMP_CANVAS_TRANSFORM_PREVIEW_H__
 
 
-#include "tools/tools-types.h" /* eek */
-
 #include "gimpcanvasitem.h"
 
 
