@@ -537,17 +537,23 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
                                          GimpVector2     coords)
 {
   gdouble        pos_x, pos_y;
-  GeglRectangle  rect;
   GimpVector2    result;
   gint           cvn = config->n_cage_vertices;
   gint           i;
 
-  rect.height = 1;
-  rect.width  = 1;
-  rect.x      = coords.x;
-  rect.y      = coords.y;
+  /* When Gegl bug #645810 will be solved, this should be a good optimisation */
+  #ifdef GEGL_BUG_645810_SOLVED
+    gegl_buffer_sample (coef_buf, coords.x, coords.y, 1.0, coef, format_coef, GEGL_INTERPOLATION_LANCZOS);
+  #else
+    GeglRectangle  rect;
 
-  gegl_buffer_get (coef_buf, 1, &rect, format_coef, coef, GEGL_AUTO_ROWSTRIDE);
+    rect.height = 1;
+    rect.width  = 1;
+    rect.x      = coords.x;
+    rect.y      = coords.y;
+
+    gegl_buffer_get (coef_buf, 1, &rect, format_coef, coef, GEGL_AUTO_ROWSTRIDE);
+  #endif
 
   pos_x = 0;
   pos_y = 0;
