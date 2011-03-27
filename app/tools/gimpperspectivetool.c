@@ -105,14 +105,16 @@ static void
 gimp_perspective_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpPerspectiveTool *perspective = GIMP_PERSPECTIVE_TOOL (tr_tool);
+  GtkWidget           *content_area;
   GtkWidget           *frame;
   GtkWidget           *table;
   gint                 x, y;
 
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (tr_tool->dialog));
+
   frame = gimp_frame_new (_("Transformation Matrix"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (tr_tool->dialog))),
-                      frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (content_area), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
@@ -126,7 +128,7 @@ gimp_perspective_tool_dialog (GimpTransformTool *tr_tool)
       {
         GtkWidget *label = gtk_label_new (" ");
 
-        gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.0);
         gtk_label_set_width_chars (GTK_LABEL (label), 12);
         gtk_table_attach (GTK_TABLE (table), label,
                           x, x + 1, y, y + 1, GTK_EXPAND, GTK_FILL, 0, 0);
