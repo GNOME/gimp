@@ -69,8 +69,7 @@ struct _GimpPerspectiveCloneTool
 
 struct _GimpPerspectiveCloneToolClass
 {
-  GimpBrushToolClass parent_class;
-
+  GimpBrushToolClass  parent_class;
 };
 
 

@@ -191,7 +191,6 @@ static void
 gimp_transform_tool_init (GimpTransformTool *tr_tool)
 {
   GimpTool *tool = GIMP_TOOL (tr_tool);
-  gint      i;
 
   gimp_tool_control_set_action_value_1 (tool->control,
                                         "tools/tools-transform-preview-opacity-set");
@@ -205,33 +204,14 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   gimp_tool_control_set_precision   (tool->control,
                                      GIMP_CURSOR_PRECISION_SUBPIXEL);
 
-  tr_tool->function = TRANSFORM_CREATING;
-
-  for (i = 0; i < TRANS_INFO_SIZE; i++)
-    {
-      tr_tool->trans_info[i]      = 0.0;
-      tr_tool->old_trans_info[i]  = 0.0;
-      tr_tool->prev_trans_info[i] = 0.0;
-    }
+  tr_tool->function      = TRANSFORM_CREATING;
 
   gimp_matrix3_identity (&tr_tool->transform);
 
-  tr_tool->use_grid         = FALSE;
-  tr_tool->use_handles      = FALSE;
-  tr_tool->use_center       = FALSE;
-  tr_tool->use_mid_handles  = FALSE;
+  tr_tool->handle_w      = GIMP_TOOL_HANDLE_SIZE_LARGE;
+  tr_tool->handle_h      = GIMP_TOOL_HANDLE_SIZE_LARGE;
 
-  tr_tool->handle_w         = GIMP_TOOL_HANDLE_SIZE_LARGE;
-  tr_tool->handle_h         = GIMP_TOOL_HANDLE_SIZE_LARGE;
-
-  tr_tool->ngx              = 0;
-  tr_tool->ngy              = 0;
-  tr_tool->grid_coords      = NULL;
-
-  tr_tool->undo_desc        = NULL;
-
-  tr_tool->progress_text    = _("Transforming");
-  tr_tool->dialog           = NULL;
+  tr_tool->progress_text = _("Transforming");
 }
 
 static void
@@ -1370,7 +1350,6 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   GimpImage            *image   = gimp_display_get_image (display);
 
-  /*  find the boundaries  */
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:

@@ -25,9 +25,7 @@
 #include "tools-types.h"
 
 #include "core/gimp-transform-utils.h"
-#include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
-#include "core/gimpitem.h"
 
 #include "paint/gimpperspectiveclone.h"
 #include "paint/gimpperspectivecloneoptions.h"
@@ -166,16 +164,9 @@ static void
 gimp_perspective_clone_tool_init (GimpPerspectiveCloneTool *clone_tool)
 {
   GimpTool *tool = GIMP_TOOL (clone_tool);
-  gint      i;
 
   gimp_tool_control_set_action_object_2 (tool->control,
                                          "context/context-pattern-select-set");
-
-  for (i = 0; i < TRANS_INFO_SIZE; i++)
-    {
-      clone_tool->trans_info[i]     = 0.0;
-      clone_tool->old_trans_info[i] = 0.0;
-    }
 
   gimp_matrix3_identity (&clone_tool->transform);
 }
@@ -217,7 +208,6 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
       GimpImage *image = gimp_display_get_image (display);
       gint       i;
 
-      /*  Set the pointer to the active display  */
       tool->display  = display;
       tool->drawable = gimp_image_get_active_drawable (image);
 
@@ -822,11 +812,7 @@ static void
 gimp_perspective_clone_tool_bounds (GimpPerspectiveCloneTool *tool,
                                     GimpDisplay              *display)
 {
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
-
-  image = gimp_display_get_image (display);
+  GimpImage *image = gimp_display_get_image (display);
 
   tool->x1 = 0;
   tool->y1 = 0;
