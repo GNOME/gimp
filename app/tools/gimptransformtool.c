@@ -181,7 +181,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   klass->dialog_update            = NULL;
   klass->prepare                  = NULL;
   klass->motion                   = NULL;
-  klass->recalc                   = NULL;
+  klass->recalc_matrix            = NULL;
   klass->transform                = gimp_transform_tool_real_transform;
 }
 
@@ -294,7 +294,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       gimp_transform_tool_prepare (tr_tool, display);
 
       /*  Recalculate the transform tool  */
-      gimp_transform_tool_recalc (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool);
 
       /*  start drawing the bounding box and handles...  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
@@ -326,7 +326,7 @@ gimp_transform_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_RESUME:
       gimp_transform_tool_bounds (tr_tool, display);
-      gimp_transform_tool_recalc (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -395,7 +395,7 @@ gimp_transform_tool_button_release (GimpTool              *tool,
       gimp_transform_tool_bounds (tr_tool, display);
 
       /*  recalculate the tool's transformation matrix  */
-      gimp_transform_tool_recalc (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
@@ -429,7 +429,7 @@ gimp_transform_tool_motion (GimpTool         *tool,
     {
       tr_tool_class->motion (tr_tool);
 
-      gimp_transform_tool_recalc (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool);
     }
 
   tr_tool->lastx = tr_tool->curx;
@@ -723,7 +723,7 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
                   gimp_transform_tool_bounds (tr_tool, tool->display);
 
                   /*  recalculate the tool's transformation matrix  */
-                  gimp_transform_tool_recalc (tr_tool);
+                  gimp_transform_tool_recalc_matrix (tr_tool);
                 }
             }
         }
@@ -1535,12 +1535,12 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
 }
 
 void
-gimp_transform_tool_recalc (GimpTransformTool *tr_tool)
+gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
 
-  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc)
-    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc (tr_tool);
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix)
+    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix (tr_tool);
 
   gimp_transform_tool_transform_bounding_box (tr_tool);
 
@@ -1573,7 +1573,7 @@ gimp_transform_tool_response (GtkWidget         *widget,
         gimp_transform_tool_bounds (tr_tool, tool->display);
 
         /*  recalculate the tool's transformation matrix  */
-        gimp_transform_tool_recalc (tr_tool);
+        gimp_transform_tool_recalc_matrix (tr_tool);
 
         gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
       }

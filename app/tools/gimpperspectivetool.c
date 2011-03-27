@@ -47,7 +47,7 @@ static void   gimp_perspective_tool_dialog        (GimpTransformTool *tr_tool);
 static void   gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool);
 static void   gimp_perspective_tool_prepare       (GimpTransformTool *tr_tool);
 static void   gimp_perspective_tool_motion        (GimpTransformTool *tr_tool);
-static void   gimp_perspective_tool_recalc        (GimpTransformTool *tr_tool);
+static void   gimp_perspective_tool_recalc_matrix (GimpTransformTool *tr_tool);
 
 
 G_DEFINE_TYPE (GimpPerspectiveTool, gimp_perspective_tool,
@@ -81,7 +81,7 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
   trans_class->dialog_update = gimp_perspective_tool_dialog_update;
   trans_class->prepare       = gimp_perspective_tool_prepare;
   trans_class->motion        = gimp_perspective_tool_motion;
-  trans_class->recalc        = gimp_perspective_tool_recalc;
+  trans_class->recalc_matrix = gimp_perspective_tool_recalc_matrix;
 }
 
 static void
@@ -209,7 +209,7 @@ gimp_perspective_tool_motion (GimpTransformTool *transform_tool)
 }
 
 static void
-gimp_perspective_tool_recalc (GimpTransformTool *tr_tool)
+gimp_perspective_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
   gimp_matrix3_identity (&tr_tool->transform);
   gimp_transform_matrix_perspective (&tr_tool->transform,

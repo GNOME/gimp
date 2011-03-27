@@ -50,7 +50,7 @@ static void   gimp_scale_tool_dialog        (GimpTransformTool  *tr_tool);
 static void   gimp_scale_tool_dialog_update (GimpTransformTool  *tr_tool);
 static void   gimp_scale_tool_prepare       (GimpTransformTool  *tr_tool);
 static void   gimp_scale_tool_motion        (GimpTransformTool  *tr_tool);
-static void   gimp_scale_tool_recalc        (GimpTransformTool  *tr_tool);
+static void   gimp_scale_tool_recalc_matrix (GimpTransformTool  *tr_tool);
 
 static void   gimp_scale_tool_size_notify   (GtkWidget          *box,
                                              GParamSpec         *pspec,
@@ -88,7 +88,7 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
   trans_class->dialog_update = gimp_scale_tool_dialog_update;
   trans_class->prepare       = gimp_scale_tool_prepare;
   trans_class->motion        = gimp_scale_tool_motion;
-  trans_class->recalc        = gimp_scale_tool_recalc;
+  trans_class->recalc_matrix = gimp_scale_tool_recalc_matrix;
 }
 
 static void
@@ -300,7 +300,7 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_scale_tool_recalc (GimpTransformTool *tr_tool)
+gimp_scale_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
   gimp_matrix3_identity (&tr_tool->transform);
   gimp_transform_matrix_scale (&tr_tool->transform,
@@ -344,7 +344,7 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
           tr_tool->trans_info[X1] = tr_tool->trans_info[X0] + width;
           tr_tool->trans_info[Y1] = tr_tool->trans_info[Y0] + height;
 
-          gimp_transform_tool_recalc (tr_tool);
+          gimp_transform_tool_recalc_matrix (tr_tool);
 
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
         }

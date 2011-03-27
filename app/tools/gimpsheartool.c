@@ -55,7 +55,7 @@ static void   gimp_shear_tool_dialog_update (GimpTransformTool  *tr_tool);
 
 static void   gimp_shear_tool_prepare       (GimpTransformTool  *tr_tool);
 static void   gimp_shear_tool_motion        (GimpTransformTool  *tr_tool);
-static void   gimp_shear_tool_recalc        (GimpTransformTool  *tr_tool);
+static void   gimp_shear_tool_recalc_matrix (GimpTransformTool  *tr_tool);
 
 static void   shear_x_mag_changed           (GtkAdjustment      *adj,
                                              GimpTransformTool  *tr_tool);
@@ -92,7 +92,7 @@ gimp_shear_tool_class_init (GimpShearToolClass *klass)
   trans_class->dialog_update = gimp_shear_tool_dialog_update;
   trans_class->prepare       = gimp_shear_tool_prepare;
   trans_class->motion        = gimp_shear_tool_motion;
-  trans_class->recalc        = gimp_shear_tool_recalc;
+  trans_class->recalc_matrix = gimp_shear_tool_recalc_matrix;
 }
 
 static void
@@ -213,7 +213,7 @@ gimp_shear_tool_motion (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_shear_tool_recalc (GimpTransformTool *tr_tool)
+gimp_shear_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
   gdouble amount;
 
@@ -253,7 +253,7 @@ shear_x_mag_changed (GtkAdjustment     *adj,
 
       tr_tool->trans_info[XSHEAR] = value;
 
-      gimp_transform_tool_recalc (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
@@ -274,7 +274,7 @@ shear_y_mag_changed (GtkAdjustment     *adj,
 
       tr_tool->trans_info[YSHEAR] = value;
 
-      gimp_transform_tool_recalc (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }

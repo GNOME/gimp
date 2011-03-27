@@ -114,7 +114,7 @@ struct _GimpTransformToolClass
   void          (* dialog_update) (GimpTransformTool *tool);
   void          (* prepare)       (GimpTransformTool *tool);
   void          (* motion)        (GimpTransformTool *tool);
-  void          (* recalc)        (GimpTransformTool *tool);
+  void          (* recalc_matrix) (GimpTransformTool *tool);
   TileManager * (* transform)     (GimpTransformTool *tool,
                                    GimpItem          *item,
                                    TileManager       *orig_tiles,
@@ -125,9 +125,9 @@ struct _GimpTransformToolClass
 };
 
 
-GType   gimp_transform_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_transform_tool_get_type      (void) G_GNUC_CONST;
 
-void    gimp_transform_tool_recalc   (GimpTransformTool *tr_tool);
+void    gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */
