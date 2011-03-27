@@ -44,10 +44,13 @@
 
 
 /*  index into trans_info array  */
-#define ANGLE        0
-#define REAL_ANGLE   1
-#define CENTER_X     2
-#define CENTER_Y     3
+enum
+{
+  ANGLE,
+  REAL_ANGLE,
+  CENTER_X,
+  CENTER_Y
+};
 
 #define FIFTEEN_DEG  (G_PI / 12.0)
 

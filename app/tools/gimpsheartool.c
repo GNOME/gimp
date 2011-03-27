@@ -38,9 +38,12 @@
 
 
 /*  index into trans_info array  */
-#define HORZ_OR_VERT 0
-#define XSHEAR       1
-#define YSHEAR       2
+enum
+{
+  HORZ_OR_VERT,
+  XSHEAR,
+  YSHEAR
+};
 
 /*  the minimum movement before direction of shear can be determined (pixels) */
 #define MIN_MOVE     5

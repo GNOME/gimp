@@ -46,6 +46,20 @@
 #include "gimp-intl.h"
 
 
+/*  index into trans_info array  */
+enum
+{
+  X0,
+  Y0,
+  X1,
+  Y1,
+  X2,
+  Y2,
+  X3,
+  Y3
+};
+
+
 static void          gimp_perspective_clone_tool_constructed   (GObject          *object);
 
 static gboolean      gimp_perspective_clone_tool_initialize    (GimpTool         *tool,

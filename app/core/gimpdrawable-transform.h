@@ -19,19 +19,6 @@
 #define __GIMP_DRAWABLE_TRANSFORM_H__
 
 
-typedef enum
-{
-  X0,
-  Y0,
-  X1,
-  Y1,
-  X2,
-  Y2,
-  X3,
-  Y3
-} GimpTransformBoundingBox;
-
-
 TileManager  * gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                                      GimpContext            *context,
                                                      TileManager            *orig_tiles,

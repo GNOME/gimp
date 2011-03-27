@@ -44,6 +44,20 @@
 #include "gimp-intl.h"
 
 
+/*  index into trans_info array  */
+enum
+{
+  X0,
+  Y0,
+  X1,
+  Y1,
+  X2,
+  Y2,
+  X3,
+  Y3
+};
+
+
 /*  local function prototypes  */
 
 static void   gimp_scale_tool_dialog        (GimpTransformTool  *tr_tool);
