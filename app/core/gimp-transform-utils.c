@@ -327,3 +327,30 @@ gimp_transform_matrix_perspective (GimpMatrix3 *matrix,
 
   gimp_matrix3_mult (&trafo, matrix);
 }
+
+gboolean
+gimp_transform_polygon_is_convex (gdouble x1,
+                                  gdouble y1,
+                                  gdouble x2,
+                                  gdouble y2,
+                                  gdouble x3,
+                                  gdouble y3,
+                                  gdouble x4,
+                                  gdouble y4)
+{
+  gdouble z1, z2, z3, z4;
+
+  /* We test if the transformed polygon is convex.  if z1 and z2 have
+   * the same sign as well as z3 and z4 the polygon is convex.
+   */
+  z1 = ((x2 - x1) * (y4 - y1) -
+        (x4 - x1) * (y2 - y1));
+  z2 = ((x4 - x1) * (y3 - y1) -
+        (x3 - x1) * (y4 - y1));
+  z3 = ((x4 - x2) * (y3 - y2) -
+        (x3 - x2) * (y4 - y2));
+  z4 = ((x3 - x2) * (y1 - y2) -
+        (x1 - x2) * (y3 - y2));
+
+  return (z1 * z2 > 0) && (z3 * z4 > 0);
+}

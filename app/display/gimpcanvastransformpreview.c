@@ -33,6 +33,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "core/gimp-transform-utils.h"
 
 #include "gimpcanvas.h"
 #include "gimpcanvastransformpreview.h"
@@ -354,7 +355,6 @@ gimp_canvas_transform_preview_transform (GimpCanvasItem   *item,
   gdouble                            tx2, ty2;
   gdouble                            tx3, ty3;
   gdouble                            tx4, ty4;
-  gdouble                            z1, z2, z3, z4;
 
   gimp_matrix3_transform_point (&private->transform,
                                 private->x1, private->y1,
@@ -369,16 +369,10 @@ gimp_canvas_transform_preview_transform (GimpCanvasItem   *item,
                                 private->x2, private->y2,
                                 &tx4, &ty4);
 
-  z1 = ((tx2 - tx1) * (ty4 - ty1) -
-        (tx4 - tx1) * (ty2 - ty1));
-  z2 = ((tx4 - tx1) * (ty3 - ty1) -
-        (tx3 - tx1) * (ty4 - ty1));
-  z3 = ((tx4 - tx2) * (ty3 - ty2) -
-        (tx3 - tx2) * (ty4 - ty2));
-  z4 = ((tx3 - tx2) * (ty1 - ty2) -
-        (tx1 - tx2) * (ty3 - ty2));
-
-  if (! ((z1 * z2 > 0) && (z3 * z4 > 0)))
+  if (! gimp_transform_polygon_is_convex (tx1, ty1,
+                                          tx2, ty2,
+                                          tx3, ty3,
+                                          tx4, ty4))
     return FALSE;
 
   if (extents)

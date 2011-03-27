@@ -44,6 +44,7 @@
 #include "core/gimplayer.h"
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimp-transform-utils.h"
 
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpstroke.h"
@@ -754,7 +755,6 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   if (tr_tool->use_grid)
     {
       GimpCanvasGroup *stroke_group;
-      gdouble          z1, z2, z3, z4;
 
       if (gimp_transform_options_show_preview (options))
         {
@@ -777,23 +777,12 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
       gimp_draw_tool_push_group (draw_tool, stroke_group);
 
-      /* We test if the transformed polygon is convex.
-       * if z1 and z2 have the same sign as well as z3 and z4
-       * the polygon is convex.
-       */
-      z1 = ((tr_tool->tx2 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1) -
-            (tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty2 - tr_tool->ty1));
-      z2 = ((tr_tool->tx4 - tr_tool->tx1) * (tr_tool->ty3 - tr_tool->ty1) -
-            (tr_tool->tx3 - tr_tool->tx1) * (tr_tool->ty4 - tr_tool->ty1));
-      z3 = ((tr_tool->tx4 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2) -
-            (tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty4 - tr_tool->ty2));
-      z4 = ((tr_tool->tx3 - tr_tool->tx2) * (tr_tool->ty1 - tr_tool->ty2) -
-            (tr_tool->tx1 - tr_tool->tx2) * (tr_tool->ty3 - tr_tool->ty2));
-
       /*  draw the grid  */
       if (tr_tool->grid_coords &&
-          z1 * z2 > 0          &&
-          z3 * z4 > 0)
+          gimp_transform_polygon_is_convex (tr_tool->tx1, tr_tool->ty1,
+                                            tr_tool->tx2, tr_tool->ty2,
+                                            tr_tool->tx3, tr_tool->ty3,
+                                            tr_tool->tx4, tr_tool->ty4))
         {
           gint k = tr_tool->ngx + tr_tool->ngy;
           gint i, gci;
