@@ -45,20 +45,14 @@ struct _GimpPerspectiveCloneTool
   gint            src_x;
   gint            src_y;
 
-  gdouble         startx;         /*  starting x coord                 */
-  gdouble         starty;         /*  starting y coord                 */
-
   gdouble         curx;           /*  current x coord                  */
   gdouble         cury;           /*  current y coord                  */
 
   gdouble         lastx;          /*  last x coord                     */
   gdouble         lasty;          /*  last y coord                     */
 
-  GdkModifierType state;          /*  state of buttons and keys        */
-
   GimpMatrix3     transform;      /*  transformation matrix            */
   TransInfo       trans_info;     /*  transformation info              */
-
   TransInfo       old_trans_info; /*  for cancelling a drag operation  */
 
   gint            x1, y1;         /*  upper left hand coordinate       */
@@ -70,21 +64,7 @@ struct _GimpPerspectiveCloneTool
   gdouble         tx4, ty4;
   gdouble         tcx, tcy;
 
-  gboolean        use_grid;       /*  does the tool use the grid       */
-  gboolean        use_handles;    /*  uses the corner handles          */
-
   TransformAction function;       /*  current tool activity            */
-
-  /*gint            ngx, ngy;*/       /*  number of grid lines in original
-                                   *  x and y directions
-                                   */
-
-  /*gdouble        *grid_coords;*/    /*  x and y coordinates of the grid
-                                   *  endpoints (a total of (ngx+ngy)*2
-                                   *  coordinate pairs)
-                                  */
-  /*gdouble        *tgrid_coords;*/   /*  transformed grid_coords          */
-
 };
 
 struct _GimpPerspectiveCloneToolClass
