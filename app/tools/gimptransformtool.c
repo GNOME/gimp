@@ -750,31 +750,28 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpImage            *image   = gimp_display_get_image (tool->display);
-  gdouble               z1, z2, z3, z4;
-
-  if ((options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
-       options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID) &&
-      options->type         == GIMP_TRANSFORM_TYPE_LAYER &&
-      options->direction    == GIMP_TRANSFORM_FORWARD)
-    {
-      GimpCanvasItem *item;
-
-      item = gimp_canvas_transform_preview_new (gimp_display_get_shell (draw_tool->display),
-                                                tool->drawable,
-                                                &tr_tool->transform,
-                                                tr_tool->x1,
-                                                tr_tool->y1,
-                                                tr_tool->x2,
-                                                tr_tool->y2,
-                                                GIMP_IS_PERSPECTIVE_TOOL (tr_tool),
-                                                options->preview_opacity);
-      gimp_draw_tool_add_item (draw_tool, item);
-      g_object_unref (item);
-    }
 
   if (tr_tool->use_grid)
     {
       GimpCanvasGroup *stroke_group;
+      gdouble          z1, z2, z3, z4;
+
+      if (gimp_transform_options_show_preview (options))
+        {
+          GimpCanvasItem *item;
+
+          item = gimp_canvas_transform_preview_new (gimp_display_get_shell (draw_tool->display),
+                                                    tool->drawable,
+                                                    &tr_tool->transform,
+                                                    tr_tool->x1,
+                                                    tr_tool->y1,
+                                                    tr_tool->x2,
+                                                    tr_tool->y2,
+                                                    GIMP_IS_PERSPECTIVE_TOOL (tr_tool),
+                                                    options->preview_opacity);
+          gimp_draw_tool_add_item (draw_tool, item);
+          g_object_unref (item);
+        }
 
       stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
 
@@ -906,7 +903,12 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   /*  draw the center  */
   if (tr_tool->use_center)
     {
-      gint d = MIN (tr_tool->handle_w, tr_tool->handle_h);
+      GimpCanvasGroup *stroke_group;
+      gint             d = MIN (tr_tool->handle_w, tr_tool->handle_h);
+
+      stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
+
+      gimp_draw_tool_push_group (draw_tool, stroke_group);
 
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_CIRCLE,
@@ -918,6 +920,8 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                  tr_tool->tcx, tr_tool->tcy,
                                  d, d,
                                  GIMP_HANDLE_ANCHOR_CENTER);
+
+      gimp_draw_tool_pop_group (draw_tool);
     }
 
   if (options->type == GIMP_TRANSFORM_TYPE_SELECTION)

@@ -386,6 +386,17 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   return vbox;
 }
 
+gboolean
+gimp_transform_options_show_preview (GimpTransformOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_TRANSFORM_OPTIONS (options), FALSE);
+
+  return ((options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
+           options->preview_type == GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID) &&
+          options->type         == GIMP_TRANSFORM_TYPE_LAYER &&
+          options->direction    == GIMP_TRANSFORM_FORWARD);
+}
+
 
 /*  private functions  */
 
