@@ -53,12 +53,9 @@
 static void   gimp_shear_tool_dialog        (GimpTransformTool  *tr_tool);
 static void   gimp_shear_tool_dialog_update (GimpTransformTool  *tr_tool);
 
-static void   gimp_shear_tool_prepare       (GimpTransformTool  *tr_tool,
-                                             GimpDisplay        *display);
-static void   gimp_shear_tool_motion        (GimpTransformTool  *tr_tool,
-                                             GimpDisplay        *display);
-static void   gimp_shear_tool_recalc        (GimpTransformTool  *tr_tool,
-                                             GimpDisplay        *display);
+static void   gimp_shear_tool_prepare       (GimpTransformTool  *tr_tool);
+static void   gimp_shear_tool_motion        (GimpTransformTool  *tr_tool);
+static void   gimp_shear_tool_recalc        (GimpTransformTool  *tr_tool);
 
 static void   shear_x_mag_changed           (GtkAdjustment      *adj,
                                              GimpTransformTool  *tr_tool);
@@ -158,8 +155,7 @@ gimp_shear_tool_dialog_update (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_shear_tool_prepare (GimpTransformTool *tr_tool,
-                         GimpDisplay       *display)
+gimp_shear_tool_prepare (GimpTransformTool *tr_tool)
 {
   tr_tool->trans_info[HORZ_OR_VERT] = GIMP_ORIENTATION_UNKNOWN;
   tr_tool->trans_info[XSHEAR]       = 0.0;
@@ -167,8 +163,7 @@ gimp_shear_tool_prepare (GimpTransformTool *tr_tool,
 }
 
 static void
-gimp_shear_tool_motion (GimpTransformTool *tr_tool,
-                        GimpDisplay       *display)
+gimp_shear_tool_motion (GimpTransformTool *tr_tool)
 {
   gdouble diffx = tr_tool->curx - tr_tool->lastx;
   gdouble diffy = tr_tool->cury - tr_tool->lasty;
@@ -218,8 +213,7 @@ gimp_shear_tool_motion (GimpTransformTool *tr_tool,
 }
 
 static void
-gimp_shear_tool_recalc (GimpTransformTool *tr_tool,
-                        GimpDisplay       *display)
+gimp_shear_tool_recalc (GimpTransformTool *tr_tool)
 {
   gdouble amount;
 
@@ -259,7 +253,7 @@ shear_x_mag_changed (GtkAdjustment     *adj,
 
       tr_tool->trans_info[XSHEAR] = value;
 
-      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
+      gimp_transform_tool_recalc (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
@@ -280,7 +274,7 @@ shear_y_mag_changed (GtkAdjustment     *adj,
 
       tr_tool->trans_info[YSHEAR] = value;
 
-      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
+      gimp_transform_tool_recalc (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }

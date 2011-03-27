@@ -125,7 +125,6 @@ static void      gimp_transform_tool_dialog_update          (GimpTransformTool  
 static TileManager *
                  gimp_transform_tool_real_transform         (GimpTransformTool     *tr_tool,
                                                              GimpItem              *item,
-                                                             GimpDisplay           *display,
                                                              TileManager           *orig_tiles,
                                                              gint                   orig_offset_x,
                                                              gint                   orig_offset_y,
@@ -295,7 +294,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       gimp_transform_tool_prepare (tr_tool, display);
 
       /*  Recalculate the transform tool  */
-      gimp_transform_tool_recalc (tr_tool, display);
+      gimp_transform_tool_recalc (tr_tool);
 
       /*  start drawing the bounding box and handles...  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
@@ -327,7 +326,7 @@ gimp_transform_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_RESUME:
       gimp_transform_tool_bounds (tr_tool, display);
-      gimp_transform_tool_recalc (tr_tool, display);
+      gimp_transform_tool_recalc (tr_tool);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -396,7 +395,7 @@ gimp_transform_tool_button_release (GimpTool              *tool,
       gimp_transform_tool_bounds (tr_tool, display);
 
       /*  recalculate the tool's transformation matrix  */
-      gimp_transform_tool_recalc (tr_tool, display);
+      gimp_transform_tool_recalc (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
@@ -428,9 +427,9 @@ gimp_transform_tool_motion (GimpTool         *tool,
 
   if (tr_tool_class->motion)
     {
-      tr_tool_class->motion (tr_tool, display);
+      tr_tool_class->motion (tr_tool);
 
-      gimp_transform_tool_recalc (tr_tool, display);
+      gimp_transform_tool_recalc (tr_tool);
     }
 
   tr_tool->lastx = tr_tool->curx;
@@ -724,7 +723,7 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
                   gimp_transform_tool_bounds (tr_tool, tool->display);
 
                   /*  recalculate the tool's transformation matrix  */
-                  gimp_transform_tool_recalc (tr_tool, tool->display);
+                  gimp_transform_tool_recalc (tr_tool);
                 }
             }
         }
@@ -1043,7 +1042,6 @@ gimp_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 static TileManager *
 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpItem          *active_item,
-                                    GimpDisplay       *display,
                                     TileManager       *orig_tiles,
                                     gint               orig_offset_x,
                                     gint               orig_offset_y,
@@ -1185,8 +1183,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                tr_tool->undo_desc);
 
-  tool->drawable = gimp_image_get_active_drawable (image);
-
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
@@ -1215,7 +1211,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
    */
   new_tiles = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (tr_tool,
                                                                   active_item,
-                                                                  display,
                                                                   orig_tiles,
                                                                   orig_offset_x,
                                                                   orig_offset_y,
@@ -1536,18 +1531,16 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
     }
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare)
-    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare (tr_tool, display);
+    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare (tr_tool);
 }
 
 void
-gimp_transform_tool_recalc (GimpTransformTool *tr_tool,
-                            GimpDisplay       *display)
+gimp_transform_tool_recalc (GimpTransformTool *tr_tool)
 {
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc)
-    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc (tr_tool, display);
+    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc (tr_tool);
 
   gimp_transform_tool_transform_bounding_box (tr_tool);
 
@@ -1580,7 +1573,7 @@ gimp_transform_tool_response (GtkWidget         *widget,
         gimp_transform_tool_bounds (tr_tool, tool->display);
 
         /*  recalculate the tool's transformation matrix  */
-        gimp_transform_tool_recalc (tr_tool, tool->display);
+        gimp_transform_tool_recalc (tr_tool);
 
         gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
       }

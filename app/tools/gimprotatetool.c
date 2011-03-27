@@ -61,12 +61,9 @@ static gboolean gimp_rotate_tool_key_press     (GimpTool            *tool,
                                                 GimpDisplay         *display);
 static void     gimp_rotate_tool_dialog        (GimpTransformTool   *tr_tool);
 static void     gimp_rotate_tool_dialog_update (GimpTransformTool   *tr_tool);
-static void     gimp_rotate_tool_prepare       (GimpTransformTool   *tr_tool,
-                                                GimpDisplay         *display);
-static void     gimp_rotate_tool_motion        (GimpTransformTool   *tr_tool,
-                                                GimpDisplay         *display);
-static void     gimp_rotate_tool_recalc        (GimpTransformTool   *tr_tool,
-                                                GimpDisplay         *display);
+static void     gimp_rotate_tool_prepare       (GimpTransformTool   *tr_tool);
+static void     gimp_rotate_tool_motion        (GimpTransformTool   *tr_tool);
+static void     gimp_rotate_tool_recalc        (GimpTransformTool   *tr_tool);
 static void     rotate_angle_changed           (GtkAdjustment       *adj,
                                                 GimpTransformTool   *tr_tool);
 static void     rotate_center_changed          (GtkWidget           *entry,
@@ -241,11 +238,11 @@ gimp_rotate_tool_dialog_update (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
-                          GimpDisplay       *display)
+gimp_rotate_tool_prepare (GimpTransformTool *tr_tool)
 {
-  GimpRotateTool *rotate = GIMP_ROTATE_TOOL (tr_tool);
-  GimpImage      *image  = gimp_display_get_image (display);
+  GimpRotateTool *rotate  = GIMP_ROTATE_TOOL (tr_tool);
+  GimpDisplay    *display = GIMP_TOOL (tr_tool)->display;
+  GimpImage      *image   = gimp_display_get_image (display);
   gdouble         xres;
   gdouble         yres;
 
@@ -288,8 +285,7 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
 }
 
 static void
-gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
-                         GimpDisplay       *display)
+gimp_rotate_tool_motion (GimpTransformTool *tr_tool)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   gdouble               angle1, angle2, angle;
@@ -352,8 +348,7 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
 }
 
 static void
-gimp_rotate_tool_recalc (GimpTransformTool *tr_tool,
-                         GimpDisplay       *display)
+gimp_rotate_tool_recalc (GimpTransformTool *tr_tool)
 {
   tr_tool->cx = tr_tool->trans_info[CENTER_X];
   tr_tool->cy = tr_tool->trans_info[CENTER_Y];
@@ -379,7 +374,7 @@ rotate_angle_changed (GtkAdjustment     *adj,
 
       tr_tool->trans_info[REAL_ANGLE] = tr_tool->trans_info[ANGLE] = value;
 
-      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
+      gimp_transform_tool_recalc (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
@@ -404,7 +399,7 @@ rotate_center_changed (GtkWidget         *widget,
       tr_tool->cx = cx;
       tr_tool->cy = cy;
 
-      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
+      gimp_transform_tool_recalc (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }

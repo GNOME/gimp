@@ -48,12 +48,9 @@
 
 static void   gimp_scale_tool_dialog        (GimpTransformTool  *tr_tool);
 static void   gimp_scale_tool_dialog_update (GimpTransformTool  *tr_tool);
-static void   gimp_scale_tool_prepare       (GimpTransformTool  *tr_tool,
-                                             GimpDisplay        *display);
-static void   gimp_scale_tool_motion        (GimpTransformTool  *tr_tool,
-                                             GimpDisplay        *display);
-static void   gimp_scale_tool_recalc        (GimpTransformTool  *tr_tool,
-                                             GimpDisplay        *display);
+static void   gimp_scale_tool_prepare       (GimpTransformTool  *tr_tool);
+static void   gimp_scale_tool_motion        (GimpTransformTool  *tr_tool);
+static void   gimp_scale_tool_recalc        (GimpTransformTool  *tr_tool);
 
 static void   gimp_scale_tool_size_notify   (GtkWidget          *box,
                                              GParamSpec         *pspec,
@@ -132,11 +129,11 @@ gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
-                         GimpDisplay       *display)
+gimp_scale_tool_prepare (GimpTransformTool *tr_tool)
 {
   GimpScaleTool        *scale   = GIMP_SCALE_TOOL (tr_tool);
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpDisplay          *display = GIMP_TOOL (tr_tool)->display;
   gdouble               xres;
   gdouble               yres;
 
@@ -180,8 +177,7 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
 }
 
 static void
-gimp_scale_tool_motion (GimpTransformTool *tr_tool,
-                        GimpDisplay       *display)
+gimp_scale_tool_motion (GimpTransformTool *tr_tool)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   gdouble              *x1;
@@ -304,8 +300,7 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
 }
 
 static void
-gimp_scale_tool_recalc (GimpTransformTool *tr_tool,
-                        GimpDisplay       *display)
+gimp_scale_tool_recalc (GimpTransformTool *tr_tool)
 {
   gimp_matrix3_identity (&tr_tool->transform);
   gimp_transform_matrix_scale (&tr_tool->transform,
@@ -349,7 +344,7 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
           tr_tool->trans_info[X1] = tr_tool->trans_info[X0] + width;
           tr_tool->trans_info[Y1] = tr_tool->trans_info[Y0] + height;
 
-          gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
+          gimp_transform_tool_recalc (tr_tool);
 
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
         }

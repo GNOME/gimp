@@ -112,15 +112,11 @@ struct _GimpTransformToolClass
   /*  virtual functions  */
   void          (* dialog)        (GimpTransformTool *tool);
   void          (* dialog_update) (GimpTransformTool *tool);
-  void          (* prepare)       (GimpTransformTool *tool,
-                                   GimpDisplay       *display);
-  void          (* motion)        (GimpTransformTool *tool,
-                                   GimpDisplay       *display);
-  void          (* recalc)        (GimpTransformTool *tool,
-                                   GimpDisplay       *display);
+  void          (* prepare)       (GimpTransformTool *tool);
+  void          (* motion)        (GimpTransformTool *tool);
+  void          (* recalc)        (GimpTransformTool *tool);
   TileManager * (* transform)     (GimpTransformTool *tool,
                                    GimpItem          *item,
-                                   GimpDisplay       *display,
                                    TileManager       *orig_tiles,
                                    gint               orig_offset_x,
                                    gint               orig_offset_y,
@@ -131,8 +127,7 @@ struct _GimpTransformToolClass
 
 GType   gimp_transform_tool_get_type (void) G_GNUC_CONST;
 
-void    gimp_transform_tool_recalc   (GimpTransformTool *tr_tool,
-                                      GimpDisplay       *display);
+void    gimp_transform_tool_recalc   (GimpTransformTool *tr_tool);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */

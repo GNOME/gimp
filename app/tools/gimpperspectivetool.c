@@ -45,12 +45,9 @@
 
 static void   gimp_perspective_tool_dialog        (GimpTransformTool *tr_tool);
 static void   gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool);
-static void   gimp_perspective_tool_prepare       (GimpTransformTool *tr_tool,
-                                                   GimpDisplay       *display);
-static void   gimp_perspective_tool_motion        (GimpTransformTool *tr_tool,
-                                                   GimpDisplay       *display);
-static void   gimp_perspective_tool_recalc        (GimpTransformTool *tr_tool,
-                                                   GimpDisplay       *display);
+static void   gimp_perspective_tool_prepare       (GimpTransformTool *tr_tool);
+static void   gimp_perspective_tool_motion        (GimpTransformTool *tr_tool);
+static void   gimp_perspective_tool_recalc        (GimpTransformTool *tr_tool);
 
 
 G_DEFINE_TYPE (GimpPerspectiveTool, gimp_perspective_tool,
@@ -158,8 +155,7 @@ gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_perspective_tool_prepare (GimpTransformTool  *tr_tool,
-                               GimpDisplay        *display)
+gimp_perspective_tool_prepare (GimpTransformTool  *tr_tool)
 {
   tr_tool->trans_info[X0] = (gdouble) tr_tool->x1;
   tr_tool->trans_info[Y0] = (gdouble) tr_tool->y1;
@@ -172,8 +168,7 @@ gimp_perspective_tool_prepare (GimpTransformTool  *tr_tool,
 }
 
 static void
-gimp_perspective_tool_motion (GimpTransformTool *transform_tool,
-                              GimpDisplay       *display)
+gimp_perspective_tool_motion (GimpTransformTool *transform_tool)
 {
   gdouble diff_x, diff_y;
 
@@ -214,8 +209,7 @@ gimp_perspective_tool_motion (GimpTransformTool *transform_tool,
 }
 
 static void
-gimp_perspective_tool_recalc (GimpTransformTool *tr_tool,
-                              GimpDisplay       *display)
+gimp_perspective_tool_recalc (GimpTransformTool *tr_tool)
 {
   gimp_matrix3_identity (&tr_tool->transform);
   gimp_transform_matrix_perspective (&tr_tool->transform,
