@@ -212,15 +212,8 @@ gimp_measure_tool_button_press (GimpTool            *tool,
        */
       for (i = 0; i < measure->num_points; i++)
         {
-          if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), display,
-                                        coords->x,
-                                        coords->y,
-                                        GIMP_HANDLE_CIRCLE,
-                                        measure->x[i],
-                                        measure->y[i],
-                                        GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                        GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                        GIMP_HANDLE_ANCHOR_CENTER))
+          if (gimp_canvas_item_hit (measure->handles[i],
+                                    coords->x, coords->y))
             {
               if (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
                 {
@@ -538,20 +531,12 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
   gchar             *status    = NULL;
   gint               i;
 
-
   if (gimp_tool_control_is_active (tool->control) && tool->display == display)
     {
       for (i = 0; i < measure->num_points; i++)
         {
-          if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), display,
-                                        coords->x,
-                                        coords->y,
-                                        GIMP_HANDLE_CIRCLE,
-                                        measure->x[i],
-                                        measure->y[i],
-                                        GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                        GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                        GIMP_HANDLE_ANCHOR_CENTER))
+          if (gimp_canvas_item_hit (measure->handles[i],
+                                    coords->x, coords->y))
             {
               in_handle = TRUE;
 
@@ -663,29 +648,34 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
   gint             i;
   gint             draw_arc = 0;
 
+  for (i = 0; i < 3; i++)
+    measure->handles[i] = 0;
+
   stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
 
   for (i = 0; i < measure->num_points; i++)
     {
       if (i == 0 && measure->num_points == 3)
         {
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CIRCLE,
-                                     measure->x[i],
-                                     measure->y[i],
-                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+          measure->handles[i] =
+            gimp_draw_tool_add_handle (draw_tool,
+                                       GIMP_HANDLE_CIRCLE,
+                                       measure->x[i],
+                                       measure->y[i],
+                                       GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                       GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                       GIMP_HANDLE_ANCHOR_CENTER);
         }
       else
         {
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CROSS,
-                                     measure->x[i],
-                                     measure->y[i],
-                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+          measure->handles[i] =
+            gimp_draw_tool_add_handle (draw_tool,
+                                       GIMP_HANDLE_CROSS,
+                                       measure->x[i],
+                                       measure->y[i],
+                                       GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                       GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                       GIMP_HANDLE_ANCHOR_CENTER);
         }
 
       if (i > 0)

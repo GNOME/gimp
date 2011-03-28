@@ -64,6 +64,8 @@ struct _GimpMeasureTool
   gdouble          angle2;      /*  second angle               */
   gboolean         status_help; /*  help is currently in s.bar */
 
+  GimpCanvasItem  *handles[3];
+
   GtkWidget       *dialog;
   GtkWidget       *distance_label[2];
   GtkWidget       *angle_label[2];
