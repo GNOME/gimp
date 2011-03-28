@@ -522,56 +522,23 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
 
       if (tr_tool->use_mid_handles)
         {
-          gdouble x, y;
-
-          x = (tr_tool->tx1 + tr_tool->tx2) / 2.0;
-          y = (tr_tool->ty1 + tr_tool->ty2) / 2.0;
-
-          if (gimp_draw_tool_on_handle (draw_tool, display,
-                                        coords->x, coords->y,
-                                        GIMP_HANDLE_SQUARE,
-                                        x, y,
-                                        tr_tool->handle_w, tr_tool->handle_h,
-                                        GIMP_HANDLE_ANCHOR_CENTER))
+          if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_N],
+                                    coords->x, coords->y))
             {
               function = TRANSFORM_HANDLE_N;
             }
-
-          x = (tr_tool->tx2 + tr_tool->tx4) / 2.0;
-          y = (tr_tool->ty2 + tr_tool->ty4) / 2.0;
-
-          if (gimp_draw_tool_on_handle (draw_tool, display,
-                                        coords->x, coords->y,
-                                        GIMP_HANDLE_SQUARE,
-                                        x, y,
-                                        tr_tool->handle_w, tr_tool->handle_h,
-                                        GIMP_HANDLE_ANCHOR_CENTER))
+          else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_E],
+                                         coords->x, coords->y))
             {
               function = TRANSFORM_HANDLE_E;
             }
-
-          x = (tr_tool->tx3 + tr_tool->tx4) / 2.0;
-          y = (tr_tool->ty3 + tr_tool->ty4) / 2.0;
-
-          if (gimp_draw_tool_on_handle (draw_tool, display,
-                                        coords->x, coords->y,
-                                        GIMP_HANDLE_SQUARE,
-                                        x, y,
-                                        tr_tool->handle_w, tr_tool->handle_h,
-                                        GIMP_HANDLE_ANCHOR_CENTER))
+          else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_S],
+                                         coords->x, coords->y))
             {
               function = TRANSFORM_HANDLE_S;
             }
-
-          x = (tr_tool->tx3 + tr_tool->tx1) / 2.0;
-          y = (tr_tool->ty3 + tr_tool->ty1) / 2.0;
-
-          if (gimp_draw_tool_on_handle (draw_tool, display,
-                                        coords->x, coords->y,
-                                        GIMP_HANDLE_SQUARE,
-                                        x, y,
-                                        tr_tool->handle_w, tr_tool->handle_h,
-                                        GIMP_HANDLE_ANCHOR_CENTER))
+          else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_W],
+                                         coords->x, coords->y))
             {
               function = TRANSFORM_HANDLE_W;
             }
@@ -579,13 +546,8 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
     }
 
   if (tr_tool->use_center &&
-      gimp_draw_tool_on_handle (draw_tool, display,
-                                coords->x, coords->y,
-                                GIMP_HANDLE_CIRCLE,
-                                tr_tool->tcx, tr_tool->tcy,
-                                MIN (tr_tool->handle_w, tr_tool->handle_h),
-                                MIN (tr_tool->handle_w, tr_tool->handle_h),
-                                GIMP_HANDLE_ANCHOR_CENTER))
+      gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_CENTER],
+                            coords->x, coords->y))
     {
       function = TRANSFORM_HANDLE_CENTER;
     }
