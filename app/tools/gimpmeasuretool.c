@@ -737,8 +737,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                             ARC_RADIUS * 2 + 1,
                                             GIMP_HANDLE_ANCHOR_CENTER);
 
-          gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item),
-                                         angle1, angle2);
+          gimp_canvas_handle_set_angles (item, angle1, angle2);
 
           if (measure->num_points == 2)
             {

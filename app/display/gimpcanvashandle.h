@@ -57,10 +57,10 @@ GimpCanvasItem * gimp_canvas_handle_new          (GimpDisplayShell *shell,
                                                   gint              width,
                                                   gint              height);
 
-void             gimp_canvas_handle_set_position (GimpCanvasHandle *handle,
+void             gimp_canvas_handle_set_position (GimpCanvasItem   *handle,
                                                   gdouble           x,
                                                   gdouble           y);
-void             gimp_canvas_handle_set_angles   (GimpCanvasHandle *handle,
+void             gimp_canvas_handle_set_angles   (GimpCanvasItem   *handle,
                                                   gdouble           start_handle,
                                                   gdouble           slice_handle);
 

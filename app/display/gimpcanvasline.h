@@ -55,7 +55,7 @@ GimpCanvasItem * gimp_canvas_line_new      (GimpDisplayShell *shell,
                                             gdouble           x2,
                                             gdouble           y2);
 
-void             gimp_canvas_line_set      (GimpCanvasLine   *line,
+void             gimp_canvas_line_set      (GimpCanvasItem   *line,
                                             gdouble           x1,
                                             gdouble           y1,
                                             gdouble           x2,
