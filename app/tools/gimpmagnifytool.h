@@ -37,10 +37,12 @@ typedef struct _GimpMagnifyToolClass GimpMagnifyToolClass;
 
 struct _GimpMagnifyTool
 {
-  GimpDrawTool  parent_instance;
+  GimpDrawTool    parent_instance;
 
-  gdouble       x, y;  /*  upper left hand coordinate  */
-  gdouble       w, h;  /*  width and height            */
+  gdouble         x, y;  /*  upper left hand coordinate  */
+  gdouble         w, h;  /*  width and height            */
+
+  GimpCanvasItem *rectangle;
 };
 
 struct _GimpMagnifyToolClass

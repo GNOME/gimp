@@ -56,5 +56,11 @@ GimpCanvasItem * gimp_canvas_rectangle_new      (GimpDisplayShell *shell,
                                                  gdouble           height,
                                                  gboolean          filled);
 
+void             gimp_canvas_rectangle_set      (GimpCanvasItem   *rectangle,
+                                                 gdouble           x,
+                                                 gdouble           y,
+                                                 gdouble           width,
+                                                 gdouble           height);
+
 
 #endif /* __GIMP_CANVAS_RECTANGLE_H__ */

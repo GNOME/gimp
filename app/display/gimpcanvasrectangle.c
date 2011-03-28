@@ -340,3 +340,24 @@ gimp_canvas_rectangle_new (GimpDisplayShell *shell,
                        "filled", filled,
                        NULL);
 }
+
+void
+gimp_canvas_rectangle_set (GimpCanvasItem *rectangle,
+                           gdouble         x,
+                           gdouble         y,
+                           gdouble         width,
+                           gdouble         height)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_RECTANGLE (rectangle));
+
+  gimp_canvas_item_begin_change (rectangle);
+
+  g_object_set (rectangle,
+                "x",      x,
+                "y",      y,
+                "width",  width,
+                "height", height,
+                NULL);
+
+  gimp_canvas_item_end_change (rectangle);
+}
