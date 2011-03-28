@@ -88,6 +88,11 @@ static void gimp_measure_tool_active_modifier_key (GimpTool              *tool,
                                                    gboolean               press,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
+static void     gimp_measure_tool_oper_update     (GimpTool              *tool,
+                                                   const GimpCoords      *coords,
+                                                   GdkModifierType        state,
+                                                   gboolean               proximity,
+                                                   GimpDisplay           *display);
 static void     gimp_measure_tool_cursor_update   (GimpTool              *tool,
                                                    const GimpCoords      *coords,
                                                    GdkModifierType        state,
@@ -141,6 +146,7 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
   tool_class->motion              = gimp_measure_tool_motion;
   tool_class->key_press           = gimp_measure_tool_key_press;
   tool_class->active_modifier_key = gimp_measure_tool_active_modifier_key;
+  tool_class->oper_update         = gimp_measure_tool_oper_update;
   tool_class->cursor_update       = gimp_measure_tool_cursor_update;
 
   draw_tool_class->draw           = gimp_measure_tool_draw;
@@ -157,8 +163,9 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_MEASURE);
 
-  measure_tool->function    = CREATING;
-  measure_tool->status_help = TRUE;
+  measure_tool->function      = CREATING;
+  measure_tool->status_help   = TRUE;
+  measure_tool->active_handle = -1;
 }
 
 static void
@@ -519,32 +526,31 @@ gimp_measure_tool_active_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_measure_tool_cursor_update (GimpTool         *tool,
-                                 const GimpCoords *coords,
-                                 GdkModifierType   state,
-                                 GimpDisplay      *display)
+gimp_measure_tool_oper_update (GimpTool         *tool,
+                               const GimpCoords *coords,
+                               GdkModifierType   state,
+                               gboolean          proximity,
+                               GimpDisplay      *display)
 {
-  GimpMeasureTool   *measure   = GIMP_MEASURE_TOOL (tool);
-  gboolean           in_handle = FALSE;
-  GimpCursorType     cursor    = GIMP_CURSOR_CROSSHAIR_SMALL;
-  GimpCursorModifier modifier  = GIMP_CURSOR_MODIFIER_NONE;
-  gchar             *status    = NULL;
-  gint               i;
+  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
+  gchar           *status  = NULL;
+  gint             i;
 
   if (gimp_tool_control_is_active (tool->control) && tool->display == display)
     {
+      gint active_handle = -1;
+
       for (i = 0; i < measure->num_points; i++)
         {
           if (gimp_canvas_item_hit (measure->handles[i],
                                     coords->x, coords->y))
             {
-              in_handle = TRUE;
+              active_handle = i;
 
               if (state & GDK_CONTROL_MASK)
                 {
                   if (state & GDK_MOD1_MASK)
                     {
-                      cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
                       status = gimp_suggest_modifiers (_("Click to place "
                                                          "vertical and "
                                                          "horizontal guides"),
@@ -553,7 +559,6 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
                     }
                   else
                     {
-                      cursor = GIMP_CURSOR_SIDE_BOTTOM;
                       status = gimp_suggest_modifiers (_("Click to place a "
                                                          "horizontal guide"),
                                                        GDK_MOD1_MASK & ~state,
@@ -568,7 +573,6 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
 
               if (state & GDK_MOD1_MASK)
                 {
-                  cursor = GIMP_CURSOR_SIDE_RIGHT;
                   status = gimp_suggest_modifiers (_("Click to place a "
                                                      "vertical guide"),
                                                    GDK_CONTROL_MASK & ~state,
@@ -582,7 +586,6 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
               if ((state & GDK_SHIFT_MASK)
                   && ! ((i == 0) && (measure->num_points == 3)))
                 {
-                  modifier = GIMP_CURSOR_MODIFIER_PLUS;
                   status = gimp_suggest_modifiers (_("Click-Drag to add a "
                                                      "new point"),
                                                    (GDK_CONTROL_MASK
@@ -591,7 +594,6 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
                 }
               else
                 {
-                  modifier = GIMP_CURSOR_MODIFIER_MOVE;
                   if ((i == 0) && (measure->num_points == 3))
                     state |= GDK_SHIFT_MASK;
                   status = gimp_suggest_modifiers (_("Click-Drag to move this "
@@ -609,11 +611,10 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
             }
         }
 
-      if (! in_handle)
+      if (active_handle == -1)
         {
           if ((measure->num_points > 1) && (state & GDK_MOD1_MASK))
             {
-              modifier = GIMP_CURSOR_MODIFIER_MOVE;
               gimp_tool_replace_status (tool, display, _("Click-Drag to move "
                                                          "all points"));
               measure->status_help = TRUE;
@@ -629,6 +630,71 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
                 {
                   gimp_tool_replace_status (tool, display, " ");
                 }
+            }
+        }
+
+      if (active_handle != measure->active_handle)
+        {
+          if (measure->active_handle != -1 &&
+              measure->handles[measure->active_handle])
+            {
+              gimp_canvas_item_set_highlight (measure->handles[measure->active_handle],
+                                              FALSE);
+            }
+
+          measure->active_handle = active_handle;
+
+          if (measure->active_handle != -1 &&
+              measure->handles[measure->active_handle])
+            {
+              gimp_canvas_item_set_highlight (measure->handles[measure->active_handle],
+                                              TRUE);
+            }
+        }
+    }
+}
+
+static void
+gimp_measure_tool_cursor_update (GimpTool         *tool,
+                                 const GimpCoords *coords,
+                                 GdkModifierType   state,
+                                 GimpDisplay      *display)
+{
+  GimpMeasureTool   *measure  = GIMP_MEASURE_TOOL (tool);
+  GimpCursorType     cursor   = GIMP_CURSOR_CROSSHAIR_SMALL;
+  GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_NONE;
+
+  if (gimp_tool_control_is_active (tool->control) && tool->display == display)
+    {
+      if (measure->active_handle != -1)
+        {
+          if (state & GDK_CONTROL_MASK)
+            {
+              if (state & GDK_MOD1_MASK)
+                cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
+              else
+                cursor = GIMP_CURSOR_SIDE_BOTTOM;
+            }
+          else if (state & GDK_MOD1_MASK)
+            {
+              cursor = GIMP_CURSOR_SIDE_RIGHT;
+            }
+          else if ((state & GDK_SHIFT_MASK) &&
+                   ! ((measure->active_handle == 0) &&
+                      (measure->num_points == 3)))
+            {
+              modifier = GIMP_CURSOR_MODIFIER_PLUS;
+            }
+          else
+            {
+              modifier = GIMP_CURSOR_MODIFIER_MOVE;
+            }
+        }
+      else
+        {
+          if ((measure->num_points > 1) && (state & GDK_MOD1_MASK))
+            {
+              modifier = GIMP_CURSOR_MODIFIER_MOVE;
             }
         }
     }
