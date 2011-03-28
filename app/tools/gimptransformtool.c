@@ -272,6 +272,9 @@ gimp_transform_tool_initialize (GimpTool     *tool,
        */
       gimp_transform_tool_bounds (tr_tool, display);
 
+      /*  Inizialize the tool-specific trans_info, and adjust the
+       *  tool dialog
+       */
       gimp_transform_tool_prepare (tr_tool, display);
 
       /*  Recalculate the transform tool  */
@@ -727,6 +730,10 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpImage            *image   = gimp_display_get_image (tool->display);
+  gint                  i;
+
+  for (i = 0; i < G_N_ELEMENTS (tr_tool->handles); i++)
+    tr_tool->handles[i] = NULL;
 
   if (tr_tool->use_grid)
     {
@@ -913,7 +920,6 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       BoundSeg       *segs_out;
       gint            num_segs_in;
       gint            num_segs_out;
-      gint            i;
 
       gimp_channel_boundary (gimp_image_get_mask (image),
                              &orig_in, &orig_out,
@@ -1060,8 +1066,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
 
   if (orig_tiles)
     {
-      /*  this happens when transforming a normal drawable or the
-       *  selection
+      /*  this happens when transforming a selection cut out of a
+       *  normal drawable, or the selection
        */
 
       GimpTransformResize clip_result = options->clip;
@@ -1089,7 +1095,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
     }
   else
     {
-      /*  this happens for paths and layer groups  */
+      /*  this happens for entire drawables, paths and layer groups  */
 
       gimp_item_transform (active_item, context,
                            &tr_tool->transform,
@@ -1253,8 +1259,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
 
   gimp_image_undo_group_end (image);
 
-  /*  We're done dirtying the image, and would like to be restarted
-   *  if the image gets dirty while the tool exists
+  /*  We're done dirtying the image, and would like to be restarted if
+   *  the image gets dirty while the tool exists
    */
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
