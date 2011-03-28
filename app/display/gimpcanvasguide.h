@@ -54,5 +54,9 @@ GimpCanvasItem * gimp_canvas_guide_new      (GimpDisplayShell    *shell,
                                              gint                 position,
                                              gboolean             guide_style);
 
+void             gimp_canvas_guide_set      (GimpCanvasItem      *guide,
+                                             GimpOrientationType  orientation,
+                                             gint                 position);
+
 
 #endif /* __GIMP_CANVAS_GUIDE_H__ */

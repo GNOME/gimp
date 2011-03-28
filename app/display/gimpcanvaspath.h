@@ -50,9 +50,12 @@ struct _GimpCanvasPathClass
 GType            gimp_canvas_path_get_type (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_path_new      (GimpDisplayShell     *shell,
-                                            const GimpBezierDesc *path,
+                                            const GimpBezierDesc *bezier,
                                             gboolean              filled,
                                             gboolean              path_style);
+
+void             gimp_canvas_path_set      (GimpCanvasItem       *path,
+                                            const GimpBezierDesc *bezier);
 
 
 #endif /* __GIMP_CANVAS_PATH_H__ */

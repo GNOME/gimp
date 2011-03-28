@@ -47,13 +47,13 @@ struct _GimpCanvasCursorClass
 };
 
 
-GType            gimp_canvas_cursor_get_type   (void) G_GNUC_CONST;
+GType            gimp_canvas_cursor_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_cursor_new        (GimpDisplayShell *shell);
+GimpCanvasItem * gimp_canvas_cursor_new      (GimpDisplayShell *shell);
 
-void             gimp_canvas_cursor_set_coords (GimpCanvasCursor *cursor,
-                                                gdouble           x,
-                                                gdouble           y);
+void             gimp_canvas_cursor_set      (GimpCanvasItem   *cursor,
+                                              gdouble           x,
+                                              gdouble           y);
 
 
 #endif /* __GIMP_CANVAS_CURSOR_H__ */

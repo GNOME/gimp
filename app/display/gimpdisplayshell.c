@@ -1742,24 +1742,24 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_canvas_item_begin_change (shell->passe_partout);
-
   if (highlight)
     {
-      g_object_set (shell->passe_partout,
-                    "visible", TRUE,
-                    "x",       (gdouble) highlight->x,
-                    "y",       (gdouble) highlight->y,
-                    "width",   (gdouble) highlight->width,
-                    "height",  (gdouble) highlight->height,
-                    NULL);
+      gimp_canvas_item_begin_change (shell->passe_partout);
+
+      gimp_canvas_rectangle_set (shell->passe_partout,
+                                 highlight->x,
+                                 highlight->y,
+                                 highlight->width,
+                                 highlight->height);
+
+      gimp_canvas_item_set_visible (shell->passe_partout, TRUE);
+
+      gimp_canvas_item_end_change (shell->passe_partout);
     }
   else
     {
       gimp_canvas_item_set_visible (shell->passe_partout, FALSE);
     }
-
-  gimp_canvas_item_end_change (shell->passe_partout);
 }
 
 /**

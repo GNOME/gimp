@@ -213,9 +213,9 @@ gimp_canvas_cursor_new (GimpDisplayShell *shell)
 }
 
 void
-gimp_canvas_cursor_set_coords (GimpCanvasCursor *cursor,
-                               gdouble           x,
-                               gdouble           y)
+gimp_canvas_cursor_set (GimpCanvasItem *cursor,
+                        gdouble         x,
+                        gdouble         y)
 {
   GimpCanvasCursorPrivate *private;
 
@@ -225,11 +225,13 @@ gimp_canvas_cursor_set_coords (GimpCanvasCursor *cursor,
 
   if (private->x != x || private->y != y)
     {
-      gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (cursor));
+      gimp_canvas_item_begin_change (cursor);
+
       g_object_set (cursor,
                     "x", x,
                     "y", y,
                     NULL);
-      gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (cursor));
+
+      gimp_canvas_item_end_change (cursor);
     }
 }

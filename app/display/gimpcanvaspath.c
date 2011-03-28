@@ -289,7 +289,7 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
 
 GimpCanvasItem *
 gimp_canvas_path_new (GimpDisplayShell     *shell,
-                      const GimpBezierDesc *path,
+                      const GimpBezierDesc *bezier,
                       gboolean              filled,
                       gboolean              path_style)
 {
@@ -297,8 +297,23 @@ gimp_canvas_path_new (GimpDisplayShell     *shell,
 
   return g_object_new (GIMP_TYPE_CANVAS_PATH,
                        "shell",      shell,
-                       "path",       path,
+                       "path",       bezier,
                        "filled",     filled,
                        "path-style", path_style,
                        NULL);
+}
+
+void
+gimp_canvas_path_set (GimpCanvasItem       *path,
+                      const GimpBezierDesc *bezier)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_PATH (path));
+
+  gimp_canvas_item_begin_change (path);
+
+  g_object_set (path,
+                "path", bezier,
+                NULL);
+
+  gimp_canvas_item_end_change (path);
 }

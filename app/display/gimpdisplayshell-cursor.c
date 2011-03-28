@@ -139,9 +139,9 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
     {
       gimp_canvas_item_begin_change (shell->cursor);
 
-      gimp_canvas_cursor_set_coords (GIMP_CANVAS_CURSOR (shell->cursor),
-                                     display_x,
-                                     display_y);
+      gimp_canvas_cursor_set (shell->cursor,
+                              display_x,
+                              display_y);
       gimp_canvas_item_set_visible (shell->cursor, TRUE);
 
       gimp_canvas_item_end_change (shell->cursor);

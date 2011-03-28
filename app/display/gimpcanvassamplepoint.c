@@ -339,3 +339,20 @@ gimp_canvas_sample_point_new (GimpDisplayShell *shell,
                        "sample-point-style", sample_point_style,
                        NULL);
 }
+
+void
+gimp_canvas_sample_point_set (GimpCanvasItem *sample_point,
+                              gdouble         x,
+                              gdouble         y)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_SAMPLE_POINT (sample_point));
+
+  gimp_canvas_item_begin_change (sample_point);
+
+  g_object_set (sample_point,
+                "x", x,
+                "y", y,
+                NULL);
+
+  gimp_canvas_item_end_change (sample_point);
+}

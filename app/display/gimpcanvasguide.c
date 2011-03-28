@@ -279,3 +279,20 @@ gimp_canvas_guide_new (GimpDisplayShell    *shell,
                        "guide-style", guide_style,
                        NULL);
 }
+
+void
+gimp_canvas_guide_set (GimpCanvasItem      *guide,
+                       GimpOrientationType  orientation,
+                       gint                 position)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_GUIDE (guide));
+
+  gimp_canvas_item_begin_change (guide);
+
+  g_object_set (guide,
+                "orientation", orientation,
+                "position",    position,
+                NULL);
+
+  gimp_canvas_item_end_change (guide);
+}
