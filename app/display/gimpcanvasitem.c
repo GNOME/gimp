@@ -376,7 +376,7 @@ gimp_canvas_item_hit (GimpCanvasItem   *item,
 {
   GimpCanvasItemPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
+  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
 
   private = GET_PRIVATE (item);
 
