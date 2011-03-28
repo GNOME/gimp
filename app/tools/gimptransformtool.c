@@ -67,6 +67,7 @@
 #include "gimp-intl.h"
 
 
+#define RESPONSE_RESET  1
 #define MIN_HANDLE_SIZE 6
 #define MIN4(a,b,c,d)   MIN(MIN((a),(b)),MIN((c),(d)))
 #define MAX4(a,b,c,d)   MAX(MAX((a),(b)),MAX((c),(d)))
@@ -268,8 +269,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
         gimp_transform_tool_dialog (tr_tool);
 
       /*  Find the transform bounds for some tools (like scale,
-       *  perspective) that actually need the bounds for
-       *  initializing
+       *  perspective) that actually need the bounds for initializing
        */
       gimp_transform_tool_bounds (tr_tool, display);
 
@@ -361,7 +361,7 @@ gimp_transform_tool_button_release (GimpTool              *tool,
           gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
         }
 
-      /*  Restore the previous transformation info  */
+      /*  Store current trans_info  */
       for (i = 0; i < TRANS_INFO_SIZE; i++)
         tr_tool->prev_trans_info[i] = tr_tool->trans_info[i];
     }
@@ -369,7 +369,7 @@ gimp_transform_tool_button_release (GimpTool              *tool,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      /*  Restore the previous transformation info  */
+      /*  Restore the previous trans_info  */
       for (i = 0; i < TRANS_INFO_SIZE; i++)
         tr_tool->trans_info[i] = tr_tool->prev_trans_info[i];
 
@@ -392,8 +392,7 @@ gimp_transform_tool_motion (GimpTool         *tool,
                             GdkModifierType   state,
                             GimpDisplay      *display)
 {
-  GimpTransformTool      *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpTransformToolClass *tr_tool_class;
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   /*  if we are creating, there is nothing to be done so exit.  */
   if (tr_tool->function == TRANSFORM_CREATING || ! tr_tool->use_grid)
@@ -405,11 +404,9 @@ gimp_transform_tool_motion (GimpTool         *tool,
   tr_tool->cury = coords->y;
 
   /*  recalculate the tool's transformation matrix  */
-  tr_tool_class = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool);
-
-  if (tr_tool_class->motion)
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->motion)
     {
-      tr_tool_class->motion (tr_tool);
+      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->motion (tr_tool);
 
       gimp_transform_tool_recalc_matrix (tr_tool);
     }
@@ -419,8 +416,6 @@ gimp_transform_tool_motion (GimpTool         *tool,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
-
-#define RESPONSE_RESET 1
 
 static gboolean
 gimp_transform_tool_key_press (GimpTool    *tool,
@@ -693,10 +688,7 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
 
   if (tr_tool->use_grid)
     {
-      if (tr_tool->function != TRANSFORM_CREATING)
-        {
-          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-        }
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
       if (! strcmp (pspec->name, "type") ||
           ! strcmp (pspec->name, "direction"))
@@ -718,9 +710,9 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
         {
           gimp_transform_tool_grid_recalc (tr_tool);
           gimp_transform_tool_transform_bounding_box (tr_tool);
-
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
         }
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 
   if (! strcmp (pspec->name, "constrain"))
