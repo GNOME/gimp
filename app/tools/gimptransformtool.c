@@ -52,7 +52,6 @@
 #include "widgets/gimpdialogfactory.h"
 
 #include "display/gimpcanvasgroup.h"
-#include "display/gimpcanvastransformpreview.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -735,19 +734,15 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
       if (gimp_transform_options_show_preview (options))
         {
-          GimpCanvasItem *item;
-
-          item = gimp_canvas_transform_preview_new (gimp_display_get_shell (draw_tool->display),
-                                                    tool->drawable,
-                                                    &tr_tool->transform,
-                                                    tr_tool->x1,
-                                                    tr_tool->y1,
-                                                    tr_tool->x2,
-                                                    tr_tool->y2,
-                                                    GIMP_IS_PERSPECTIVE_TOOL (tr_tool),
-                                                    options->preview_opacity);
-          gimp_draw_tool_add_item (draw_tool, item);
-          g_object_unref (item);
+          gimp_draw_tool_add_transform_preview (draw_tool,
+                                                tool->drawable,
+                                                &tr_tool->transform,
+                                                tr_tool->x1,
+                                                tr_tool->y1,
+                                                tr_tool->x2,
+                                                tr_tool->y2,
+                                                GIMP_IS_PERSPECTIVE_TOOL (tr_tool),
+                                                options->preview_opacity);
         }
 
       stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);

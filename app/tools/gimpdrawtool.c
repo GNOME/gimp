@@ -26,6 +26,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
 #include "vectors/gimpanchor.h"
@@ -47,6 +48,7 @@
 #include "display/gimpcanvasrectangle.h"
 #include "display/gimpcanvassamplepoint.h"
 #include "display/gimpcanvastextcursor.h"
+#include "display/gimpcanvastransformpreview.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-items.h"
@@ -829,6 +831,34 @@ gimp_draw_tool_add_text_cursor (GimpDrawTool   *draw_tool,
 
   item = gimp_canvas_text_cursor_new (gimp_display_get_shell (draw_tool->display),
                                       cursor, overwrite);
+
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_draw_tool_add_transform_preview (GimpDrawTool      *draw_tool,
+                                      GimpDrawable      *drawable,
+                                      const GimpMatrix3 *transform,
+                                      gdouble            x1,
+                                      gdouble            y1,
+                                      gdouble            x2,
+                                      gdouble            y2,
+                                      gboolean           perspective,
+                                      gdouble            opacity)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (transform != NULL, NULL);
+
+  item = gimp_canvas_transform_preview_new (gimp_display_get_shell (draw_tool->display),
+                                            drawable, transform,
+                                            x1, y1, x2, y2,
+                                            perspective, opacity);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);

@@ -129,6 +129,15 @@ GimpCanvasItem * gimp_draw_tool_add_arc              (GimpDrawTool     *draw_too
                                                       gdouble           height,
                                                       gdouble           start_angle,
                                                       gdouble           slice_angle);
+GimpCanvasItem * gimp_draw_tool_add_transform_preview(GimpDrawTool     *draw_tool,
+                                                      GimpDrawable     *drawable,
+                                                      const GimpMatrix3 *transform,
+                                                      gdouble           x1,
+                                                      gdouble           y1,
+                                                      gdouble           x2,
+                                                      gdouble           y2,
+                                                      gboolean          perspective,
+                                                      gdouble            opacity);
 
 GimpCanvasItem * gimp_draw_tool_add_handle           (GimpDrawTool     *draw_tool,
                                                       GimpHandleType    type,
