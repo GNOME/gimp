@@ -267,3 +267,24 @@ gimp_canvas_line_new (GimpDisplayShell *shell,
                        "y2",    y2,
                        NULL);
 }
+
+void
+gimp_canvas_line_set (GimpCanvasLine *line,
+                      gdouble         x1,
+                      gdouble         y1,
+                      gdouble         x2,
+                      gdouble         y2)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_LINE (line));
+
+  gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (line));
+
+  g_object_set (line,
+                "x1", x1,
+                "y1", y1,
+                "x2", x2,
+                "y2", y2,
+                NULL);
+
+  gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (line));
+}

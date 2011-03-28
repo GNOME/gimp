@@ -37,17 +37,21 @@ typedef struct _GimpBlendToolClass GimpBlendToolClass;
 
 struct _GimpBlendTool
 {
-  GimpDrawTool  parent_instance;
+  GimpDrawTool    parent_instance;
 
-  gdouble       start_x;    /*  starting x coord  */
-  gdouble       start_y;    /*  starting y coord  */
-  gdouble       end_x;      /*  ending x coord    */
-  gdouble       end_y;      /*  ending y coord    */
+  gdouble         start_x;    /*  starting x coord  */
+  gdouble         start_y;    /*  starting y coord  */
+  gdouble         end_x;      /*  ending x coord    */
+  gdouble         end_y;      /*  ending y coord    */
 
-  gdouble       last_x;     /*  last x coord      */
-  gdouble       last_y;     /*  last y coord      */
-  gdouble       mouse_x;    /*  pointer x coord   */
-  gdouble       mouse_y;    /*  pointer y coord   */
+  gdouble         last_x;     /*  last x coord      */
+  gdouble         last_y;     /*  last y coord      */
+  gdouble         mouse_x;    /*  pointer x coord   */
+  gdouble         mouse_y;    /*  pointer y coord   */
+
+  GimpCanvasItem *start_handle;
+  GimpCanvasItem *line;
+  GimpCanvasItem *end_handle;
 };
 
 struct _GimpBlendToolClass

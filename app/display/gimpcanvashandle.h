@@ -47,18 +47,22 @@ struct _GimpCanvasHandleClass
 };
 
 
-GType            gimp_canvas_handle_get_type   (void) G_GNUC_CONST;
+GType            gimp_canvas_handle_get_type     (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_handle_new        (GimpDisplayShell *shell,
-                                                GimpHandleType    type,
-                                                GimpHandleAnchor  anchor,
-                                                gdouble           x,
-                                                gdouble           y,
-                                                gint              width,
-                                                gint              height);
-void             gimp_canvas_handle_set_angles (GimpCanvasHandle *handle,
-                                                gdouble           start_handle,
-                                                gdouble           slice_handle);
+GimpCanvasItem * gimp_canvas_handle_new          (GimpDisplayShell *shell,
+                                                  GimpHandleType    type,
+                                                  GimpHandleAnchor  anchor,
+                                                  gdouble           x,
+                                                  gdouble           y,
+                                                  gint              width,
+                                                  gint              height);
+
+void             gimp_canvas_handle_set_position (GimpCanvasHandle *handle,
+                                                  gdouble           x,
+                                                  gdouble           y);
+void             gimp_canvas_handle_set_angles   (GimpCanvasHandle *handle,
+                                                  gdouble           start_handle,
+                                                  gdouble           slice_handle);
 
 
 #endif /* __GIMP_CANVAS_HANDLE_H__ */

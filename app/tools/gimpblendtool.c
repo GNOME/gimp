@@ -37,6 +37,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvashandle.h"
+#include "display/gimpcanvasline.h"
 #include "display/gimpdisplay.h"
 
 #include "gimpblendoptions.h"
@@ -79,6 +81,7 @@ static void   gimp_blend_tool_cursor_update       (GimpTool              *tool,
                                                    GimpDisplay           *display);
 
 static void   gimp_blend_tool_draw                (GimpDrawTool          *draw_tool);
+static void   gimp_blend_tool_update_items        (GimpBlendTool         *blend_tool);
 
 static void   gimp_blend_tool_push_status         (GimpBlendTool         *blend_tool,
                                                    GdkModifierType        state,
@@ -279,8 +282,6 @@ gimp_blend_tool_motion (GimpTool         *tool,
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
   blend_tool->mouse_x = coords->x;
   blend_tool->mouse_y = coords->y;
 
@@ -312,10 +313,10 @@ gimp_blend_tool_motion (GimpTool         *tool,
   gimp_tool_pop_status (tool, display);
   gimp_blend_tool_push_status (blend_tool, state, display);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
   blend_tool->last_x = coords->x;
   blend_tool->last_y = coords->y;
+
+  gimp_blend_tool_update_items (blend_tool);
 }
 
 static void
@@ -329,8 +330,6 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
 
   if (key == GDK_CONTROL_MASK)
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
       blend_tool->end_x = blend_tool->mouse_x;
       blend_tool->end_y = blend_tool->mouse_y;
 
@@ -345,7 +344,7 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
       gimp_tool_pop_status (tool, display);
       gimp_blend_tool_push_status (blend_tool, state, display);
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      gimp_blend_tool_update_items (blend_tool);
     }
 }
 
@@ -376,30 +375,49 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
-  /*  Draw the line between the start and end coords  */
-  gimp_draw_tool_add_line (draw_tool,
-                           blend_tool->start_x,
-                           blend_tool->start_y,
-                           blend_tool->end_x,
-                           blend_tool->end_y);
-
   /*  Draw start target  */
-  gimp_draw_tool_add_handle (draw_tool,
-                             GIMP_HANDLE_CROSS,
+  blend_tool->start_handle =
+    gimp_draw_tool_add_handle (draw_tool,
+                               GIMP_HANDLE_CROSS,
+                               blend_tool->start_x,
+                               blend_tool->start_y,
+                               GIMP_TOOL_HANDLE_SIZE_CROSS,
+                               GIMP_TOOL_HANDLE_SIZE_CROSS,
+                               GIMP_HANDLE_ANCHOR_CENTER);
+
+  /*  Draw the line between the start and end coords  */
+  blend_tool->line =
+    gimp_draw_tool_add_line (draw_tool,
                              blend_tool->start_x,
                              blend_tool->start_y,
-                             GIMP_TOOL_HANDLE_SIZE_CROSS,
-                             GIMP_TOOL_HANDLE_SIZE_CROSS,
-                             GIMP_HANDLE_ANCHOR_CENTER);
+                             blend_tool->end_x,
+                             blend_tool->end_y);
 
   /*  Draw end target  */
-  gimp_draw_tool_add_handle (draw_tool,
-                             GIMP_HANDLE_CROSS,
-                             blend_tool->end_x,
-                             blend_tool->end_y,
-                             GIMP_TOOL_HANDLE_SIZE_CROSS,
-                             GIMP_TOOL_HANDLE_SIZE_CROSS,
-                             GIMP_HANDLE_ANCHOR_CENTER);
+  blend_tool->end_handle =
+    gimp_draw_tool_add_handle (draw_tool,
+                               GIMP_HANDLE_CROSS,
+                               blend_tool->end_x,
+                               blend_tool->end_y,
+                               GIMP_TOOL_HANDLE_SIZE_CROSS,
+                               GIMP_TOOL_HANDLE_SIZE_CROSS,
+                               GIMP_HANDLE_ANCHOR_CENTER);
+}
+
+static void
+gimp_blend_tool_update_items (GimpBlendTool *blend_tool)
+{
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
+    {
+      gimp_canvas_line_set (GIMP_CANVAS_LINE (blend_tool->line),
+                            blend_tool->start_x,
+                            blend_tool->start_y,
+                            blend_tool->end_x,
+                            blend_tool->end_y);
+      gimp_canvas_handle_set_position (GIMP_CANVAS_HANDLE (blend_tool->end_handle),
+                                       blend_tool->end_x,
+                                       blend_tool->end_y);
+    }
 }
 
 static void

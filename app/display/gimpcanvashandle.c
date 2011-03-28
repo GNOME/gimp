@@ -403,14 +403,35 @@ gimp_canvas_handle_new (GimpDisplayShell *shell,
 }
 
 void
+gimp_canvas_handle_set_position (GimpCanvasHandle *handle,
+                                 gdouble           x,
+                                 gdouble           y)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_HANDLE (handle));
+
+  gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (handle));
+
+  g_object_set (handle,
+                "x", x,
+                "y", y,
+                NULL);
+
+  gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (handle));
+}
+
+void
 gimp_canvas_handle_set_angles (GimpCanvasHandle *handle,
                                gdouble           start_angle,
                                gdouble           slice_angle)
 {
   g_return_if_fail (GIMP_IS_CANVAS_HANDLE (handle));
 
+  gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (handle));
+
   g_object_set (handle,
                 "start-angle", start_angle,
                 "slice-angle", slice_angle,
                 NULL);
+
+  gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (handle));
 }
