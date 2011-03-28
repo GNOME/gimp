@@ -85,6 +85,10 @@ static void             gimp_canvas_handle_draw         (GimpCanvasItem   *item,
                                                          cairo_t          *cr);
 static cairo_region_t * gimp_canvas_handle_get_extents  (GimpCanvasItem   *item,
                                                          GimpDisplayShell *shell);
+static gboolean         gimp_canvas_handle_hit          (GimpCanvasItem   *item,
+                                                         GimpDisplayShell *shell,
+                                                         gdouble           x,
+                                                         gdouble           y);
 
 
 G_DEFINE_TYPE (GimpCanvasHandle, gimp_canvas_handle,
@@ -104,6 +108,7 @@ gimp_canvas_handle_class_init (GimpCanvasHandleClass *klass)
 
   item_class->draw           = gimp_canvas_handle_draw;
   item_class->get_extents    = gimp_canvas_handle_get_extents;
+  item_class->hit            = gimp_canvas_handle_hit;
 
   g_object_class_install_property (object_class, PROP_TYPE,
                                    g_param_spec_enum ("type", NULL, NULL,
@@ -378,6 +383,50 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
     }
 
   return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+}
+
+static gboolean
+gimp_canvas_handle_hit (GimpCanvasItem   *item,
+                        GimpDisplayShell *shell,
+                        gdouble           x,
+                        gdouble           y)
+{
+  GimpCanvasHandlePrivate *private = GET_PRIVATE (item);
+  gdouble                  handle_tx, handle_ty;
+  gdouble                  tx, ty;
+
+  gimp_canvas_handle_transform (item, shell, &handle_tx, &handle_ty);
+
+  gimp_display_shell_transform_xy_f (shell,
+                                     x, y,
+                                     &tx, &ty);
+
+  switch (private->type)
+    {
+    case GIMP_HANDLE_SQUARE:
+    case GIMP_HANDLE_FILLED_SQUARE:
+     return (tx == CLAMP (tx, handle_tx, handle_tx + private->width) &&
+              ty == CLAMP (ty, handle_ty, handle_ty + private->height));
+
+    case GIMP_HANDLE_CIRCLE:
+    case GIMP_HANDLE_FILLED_CIRCLE:
+    case GIMP_HANDLE_CROSS:
+      {
+        gint width = private->width;
+
+        if (width != private->height)
+          width = (width + private->height) / 2;
+
+        width /= 2;
+
+        return ((SQR (handle_tx - tx) + SQR (handle_ty - ty)) < SQR (width));
+      }
+
+    default:
+      break;
+    }
+
+  return FALSE;
 }
 
 GimpCanvasItem *

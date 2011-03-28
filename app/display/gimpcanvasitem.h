@@ -61,6 +61,11 @@ struct _GimpCanvasItemClass
   void             (* fill)        (GimpCanvasItem   *item,
                                     GimpDisplayShell *shell,
                                     cairo_t          *cr);
+
+  gboolean         (* hit)         (GimpCanvasItem   *item,
+                                    GimpDisplayShell *shell,
+                                    gdouble           x,
+                                    gdouble           y);
 };
 
 
@@ -69,6 +74,10 @@ GType            gimp_canvas_item_get_type         (void) G_GNUC_CONST;
 void             gimp_canvas_item_draw             (GimpCanvasItem   *item,
                                                     cairo_t          *cr);
 cairo_region_t * gimp_canvas_item_get_extents      (GimpCanvasItem   *item);
+
+gboolean         gimp_canvas_item_hit              (GimpCanvasItem   *item,
+                                                    gdouble           x,
+                                                    gdouble           y);
 
 void             gimp_canvas_item_set_visible      (GimpCanvasItem   *item,
                                                     gboolean          visible);

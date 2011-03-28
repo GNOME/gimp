@@ -72,6 +72,11 @@ static void             gimp_canvas_group_draw         (GimpCanvasItem   *item,
                                                         cairo_t          *cr);
 static cairo_region_t * gimp_canvas_group_get_extents  (GimpCanvasItem   *item,
                                                         GimpDisplayShell *shell);
+static gboolean         gimp_canvas_group_hit          (GimpCanvasItem   *item,
+                                                        GimpDisplayShell *shell,
+                                                        gdouble           x,
+                                                        gdouble           y);
+
 static void             gimp_canvas_group_child_update (GimpCanvasItem   *item,
                                                         cairo_region_t   *region,
                                                         GimpCanvasGroup  *group);
@@ -94,6 +99,7 @@ gimp_canvas_group_class_init (GimpCanvasGroupClass *klass)
 
   item_class->draw           = gimp_canvas_group_draw;
   item_class->get_extents    = gimp_canvas_group_get_extents;
+  item_class->hit            = gimp_canvas_group_hit;
 
   g_object_class_install_property (object_class, PROP_GROUP_STROKING,
                                    g_param_spec_boolean ("group-stroking",
@@ -222,6 +228,24 @@ gimp_canvas_group_get_extents (GimpCanvasItem   *item,
     }
 
   return region;
+}
+
+static gboolean
+gimp_canvas_group_hit (GimpCanvasItem   *item,
+                       GimpDisplayShell *shell,
+                       gdouble           x,
+                       gdouble           y)
+{
+  GimpCanvasGroupPrivate *private = GET_PRIVATE (item);
+  GList                  *list;
+
+  for (list = private->items; list; list = g_list_next (list))
+    {
+      if (gimp_canvas_item_hit (list->data, x, y))
+        return TRUE;
+    }
+
+  return FALSE;
 }
 
 static void

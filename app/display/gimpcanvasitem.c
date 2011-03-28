@@ -96,6 +96,10 @@ static void             gimp_canvas_item_real_stroke      (GimpCanvasItem   *ite
 static void             gimp_canvas_item_real_fill        (GimpCanvasItem   *item,
                                                            GimpDisplayShell *shell,
                                                            cairo_t          *cr);
+static gboolean         gimp_canvas_item_real_hit         (GimpCanvasItem   *item,
+                                                           GimpDisplayShell *shell,
+                                                           gdouble           x,
+                                                           gdouble           y);
 
 
 G_DEFINE_TYPE (GimpCanvasItem, gimp_canvas_item,
@@ -121,6 +125,7 @@ gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
   klass->get_extents                        = gimp_canvas_item_real_get_extents;
   klass->stroke                             = gimp_canvas_item_real_stroke;
   klass->fill                               = gimp_canvas_item_real_fill;
+  klass->hit                                = gimp_canvas_item_real_hit;
 
   item_signals[UPDATE] =
     g_signal_new ("update",
@@ -318,6 +323,15 @@ gimp_canvas_item_real_fill (GimpCanvasItem   *item,
   cairo_fill (cr);
 }
 
+static gboolean
+gimp_canvas_item_real_hit (GimpCanvasItem   *item,
+                           GimpDisplayShell *shell,
+                           gdouble           x,
+                           gdouble           y)
+{
+  return FALSE;
+}
+
 
 /*  public functions  */
 
@@ -353,6 +367,20 @@ gimp_canvas_item_get_extents (GimpCanvasItem *item)
     return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item, private->shell);
 
   return NULL;
+}
+
+gboolean
+gimp_canvas_item_hit (GimpCanvasItem   *item,
+                      gdouble           x,
+                      gdouble           y)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
+
+  private = GET_PRIVATE (item);
+
+  return GIMP_CANVAS_ITEM_GET_CLASS (item)->hit (item, private->shell, x, y);
 }
 
 void
