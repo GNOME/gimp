@@ -62,6 +62,48 @@ gimp_image_pick_layer (const GimpImage *image,
   return NULL;
 }
 
+GimpLayer *
+gimp_image_pick_layer_by_bounds (const GimpImage *image,
+                                 gint             x,
+                                 gint             y)
+{
+  GList *all_layers;
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  all_layers = gimp_image_get_layer_list (image);
+
+  for (list = all_layers; list; list = g_list_next (list))
+    {
+      GimpLayer *layer = list->data;
+
+      if (gimp_item_get_visible (GIMP_ITEM (layer)))
+        {
+          gint off_x, off_y;
+          gint width, height;
+
+          gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+          width  = gimp_item_get_width  (GIMP_ITEM (layer));
+          height = gimp_item_get_height (GIMP_ITEM (layer));
+
+          if (x >= off_x        &&
+              y >= off_y        &&
+              x < off_x + width &&
+              y < off_y + height)
+            {
+              g_list_free (all_layers);
+
+              return layer;
+            }
+        }
+    }
+
+  g_list_free (all_layers);
+
+  return NULL;
+}
+
 GimpTextLayer *
 gimp_image_pick_text_layer (const GimpImage *image,
                             gint             x,

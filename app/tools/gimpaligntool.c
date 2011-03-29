@@ -32,6 +32,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-arrange.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-pick-layer.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 
@@ -50,7 +51,8 @@
 
 #include "gimp-intl.h"
 
-#define EPSILON      3   /* move distance after which we do a box-select */
+
+#define EPSILON  3   /* move distance after which we do a box-select */
 
 
 /*  local function prototypes  */
@@ -97,15 +99,13 @@ static void   gimp_align_tool_cursor_update  (GimpTool              *tool,
 
 static void   gimp_align_tool_draw           (GimpDrawTool          *draw_tool);
 
+static void   gimp_align_tool_halt           (GimpAlignTool         *align_tool);
 static void   gimp_align_tool_align          (GimpAlignTool         *align_tool,
                                               GimpAlignmentType      align_type);
 
 static void   clear_selected_object          (GObject               *object,
                                               GimpAlignTool         *align_tool);
 static void   clear_all_selected_objects     (GimpAlignTool         *align_tool);
-static GimpLayer * select_layer_by_coords    (GimpImage             *image,
-                                              gint                   x,
-                                              gint                   y);
 
 
 G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL)
@@ -186,13 +186,7 @@ gimp_align_tool_constructed (GObject *object)
 static void
 gimp_align_tool_dispose (GObject *object)
 {
-  GimpTool *tool = GIMP_TOOL (object);
-
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (object)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (object));
-
-  if (gimp_tool_control_is_active (tool->control))
-    gimp_tool_control_halt (tool->control);
+  gimp_align_tool_halt (GIMP_ALIGN_TOOL (object));
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -223,7 +217,7 @@ gimp_align_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      clear_all_selected_objects (align_tool);
+      gimp_align_tool_halt (align_tool);
       break;
     }
 
@@ -245,18 +239,11 @@ gimp_align_tool_button_press (GimpTool            *tool,
   /*  If the tool was being used in another image... reset it  */
 
   if (display != tool->display)
-    {
-      if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
-        gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-
-      gimp_tool_pop_status (tool, display);
-      clear_all_selected_objects (align_tool);
-    }
-
-  if (! gimp_tool_control_is_active (tool->control))
-    gimp_tool_control_activate (tool->control);
+    gimp_align_tool_halt (align_tool);
 
   tool->display = display;
+
+  gimp_tool_control_activate (tool->control);
 
   align_tool->x1 = align_tool->x0 = coords->x;
   align_tool->y1 = align_tool->y0 = coords->y;
@@ -331,8 +318,8 @@ gimp_align_tool_button_release (GimpTool              *tool,
         }
       else
         {
-          if ((layer = select_layer_by_coords (image,
-                                               coords->x, coords->y)))
+          if ((layer = gimp_image_pick_layer_by_bounds (image,
+                                                        coords->x, coords->y)))
             {
               object = G_OBJECT (layer);
             }
@@ -461,8 +448,8 @@ gimp_align_tool_oper_update (GimpTool         *tool,
     }
   else
     {
-      GimpLayer *layer = select_layer_by_coords (image,
-                                                 coords->x, coords->y);
+      GimpLayer *layer = gimp_image_pick_layer_by_bounds (image,
+                                                          coords->x, coords->y);
 
       if (layer)
         {
@@ -723,6 +710,25 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
+gimp_align_tool_halt (GimpAlignTool *align_tool)
+{
+  GimpTool *tool = GIMP_TOOL (align_tool);
+
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (align_tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (align_tool));
+
+  if (gimp_tool_control_is_active (tool->control))
+    gimp_tool_control_halt (tool->control);
+
+  clear_all_selected_objects (align_tool);
+
+  if (tool->display)
+    gimp_tool_pop_status (tool, tool->display);
+
+  tool->display = NULL;
+}
+
+static void
 gimp_align_tool_align (GimpAlignTool     *align_tool,
                        GimpAlignmentType  align_type)
 {
@@ -844,10 +850,7 @@ clear_selected_object (GObject       *object,
 static void
 clear_all_selected_objects (GimpAlignTool *align_tool)
 {
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (align_tool);
-
-  if (gimp_draw_tool_is_active (draw_tool))
-    gimp_draw_tool_pause (draw_tool);
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 
   while (align_tool->selected_objects)
     {
@@ -861,45 +864,5 @@ clear_all_selected_objects (GimpAlignTool *align_tool)
                                                     object);
     }
 
-  if (gimp_draw_tool_is_active (draw_tool))
-    gimp_draw_tool_resume (draw_tool);
-}
-
-static GimpLayer *
-select_layer_by_coords (GimpImage *image,
-                        gint       x,
-                        gint       y)
-{
-  GList *all_layers;
-  GList *list;
-
-  all_layers = gimp_image_get_layer_list (image);
-
-  for (list = all_layers; list; list = g_list_next (list))
-    {
-      GimpLayer *layer = list->data;
-      gint       off_x, off_y;
-      gint       width, height;
-
-      if (! gimp_item_get_visible (GIMP_ITEM (layer)))
-        continue;
-
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-      width  = gimp_item_get_width  (GIMP_ITEM (layer));
-      height = gimp_item_get_height (GIMP_ITEM (layer));
-
-      if (off_x <= x &&
-          off_y <= y &&
-          x < off_x + width &&
-          y < off_y + height)
-        {
-          g_list_free (all_layers);
-
-          return layer;
-        }
-    }
-
-  g_list_free (all_layers);
-
-  return NULL;
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 }
