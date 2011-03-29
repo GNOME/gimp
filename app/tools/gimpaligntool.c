@@ -57,12 +57,9 @@
 
 /*  local function prototypes  */
 
-static void     gimp_align_tool_constructed  (GObject               *object);
-static void     gimp_align_tool_dispose      (GObject               *object);
+static void   gimp_align_tool_constructed    (GObject               *object);
+static void   gimp_align_tool_dispose        (GObject               *object);
 
-static gboolean gimp_align_tool_initialize   (GimpTool              *tool,
-                                              GimpDisplay           *display,
-                                              GError               **error);
 static void   gimp_align_tool_control        (GimpTool              *tool,
                                               GimpToolAction         action,
                                               GimpDisplay           *display);
@@ -140,7 +137,6 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
   object_class->constructed  = gimp_align_tool_constructed;
   object_class->dispose      = gimp_align_tool_dispose;
 
-  tool_class->initialize     = gimp_align_tool_initialize;
   tool_class->control        = gimp_align_tool_control;
   tool_class->button_press   = gimp_align_tool_button_press;
   tool_class->button_release = gimp_align_tool_button_release;
@@ -189,18 +185,6 @@ gimp_align_tool_dispose (GObject *object)
   gimp_align_tool_halt (GIMP_ALIGN_TOOL (object));
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static gboolean
-gimp_align_tool_initialize (GimpTool     *tool,
-                            GimpDisplay  *display,
-                            GError      **error)
-{
-  if (tool->display != display)
-    {
-    }
-
-  return TRUE;
 }
 
 static void
