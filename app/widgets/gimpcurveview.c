@@ -946,7 +946,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
 
       switch (kevent->keyval)
         {
-        case GDK_Left:
+        case GDK_KEY_Left:
           for (i = i - 1; i >= 0 && ! handled; i--)
             {
               gimp_curve_get_point (curve, i, &x, NULL);
@@ -960,7 +960,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
             }
           break;
 
-        case GDK_Right:
+        case GDK_KEY_Right:
           for (i = i + 1; i < curve->n_points && ! handled; i++)
             {
               gimp_curve_get_point (curve, i, &x, NULL);
@@ -974,7 +974,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
             }
           break;
 
-        case GDK_Up:
+        case GDK_KEY_Up:
           if (y < 1.0)
             {
               y = y + (kevent->state & GDK_SHIFT_MASK ?
@@ -986,7 +986,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
             }
           break;
 
-        case GDK_Down:
+        case GDK_KEY_Down:
           if (y > 0)
             {
               y = y - (kevent->state & GDK_SHIFT_MASK ?
@@ -998,7 +998,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
             }
           break;
 
-        case GDK_Delete:
+        case GDK_KEY_Delete:
           gimp_curve_delete_point (curve, i);
           break;
 

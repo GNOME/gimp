@@ -58,6 +58,8 @@
 #define GDK_KEY_v GDK_v
 #define GDK_KEY_plus GDK_plus
 #define GDK_KEY_minus GDK_minus
+#define GDK_KEY_Delete GDK_Delete
+#define GDK_KEY_plus GDK_plus
 #endif
 
 

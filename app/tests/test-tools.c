@@ -410,7 +410,7 @@ crop_tool_can_crop (GimpTestFixture *fixture,
                                                   0 /*modifiers*/);
 
   /* Crop */
-  gimp_test_utils_synthesize_key_event (GTK_WIDGET (shell), GDK_Return);
+  gimp_test_utils_synthesize_key_event (GTK_WIDGET (shell), GDK_KEY_Return);
   gimp_test_run_mainloop_until_idle ();
 
   /* Make sure the new image has the expected size */
