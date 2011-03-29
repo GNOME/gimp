@@ -56,7 +56,7 @@
 /*  local function prototypes  */
 
 static void     gimp_align_tool_constructed  (GObject               *object);
-static void     gimp_align_tool_finalize     (GObject               *object);
+static void     gimp_align_tool_dispose      (GObject               *object);
 
 static gboolean gimp_align_tool_initialize   (GimpTool              *tool,
                                               GimpDisplay           *display,
@@ -97,23 +97,15 @@ static void   gimp_align_tool_cursor_update  (GimpTool              *tool,
 
 static void   gimp_align_tool_draw           (GimpDrawTool          *draw_tool);
 
-static GtkWidget * button_with_stock         (GimpAlignmentType      action,
-                                              GimpAlignTool         *align_tool);
-static GtkWidget * gimp_align_tool_controls  (GimpAlignTool         *align_tool);
-static void   do_alignment                   (GtkWidget             *widget,
-                                              gpointer               data);
+static void   gimp_align_tool_align          (GimpAlignTool         *align_tool,
+                                              GimpAlignmentType      align_type);
+
 static void   clear_selected_object          (GObject               *object,
                                               GimpAlignTool         *align_tool);
 static void   clear_all_selected_objects     (GimpAlignTool         *align_tool);
 static GimpLayer * select_layer_by_coords    (GimpImage             *image,
                                               gint                   x,
                                               gint                   y);
-void          gimp_image_arrange_objects     (GimpImage             *image,
-                                              GList                 *list,
-                                              GimpAlignmentType      alignment,
-                                              GObject               *reference,
-                                              GimpAlignmentType      reference_alignment,
-                                              gint                   offset);
 
 
 G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL)
@@ -145,8 +137,8 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->finalize     = gimp_align_tool_finalize;
   object_class->constructed  = gimp_align_tool_constructed;
+  object_class->dispose      = gimp_align_tool_dispose;
 
   tool_class->initialize     = gimp_align_tool_initialize;
   tool_class->control        = gimp_align_tool_control;
@@ -164,15 +156,10 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
 {
   GimpTool *tool = GIMP_TOOL (align_tool);
 
-  align_tool->controls         = NULL;
-
   align_tool->function         = ALIGN_TOOL_IDLE;
   align_tool->selected_objects = NULL;
 
   align_tool->align_type  = GIMP_ALIGN_LEFT;
-
-  align_tool->horz_offset = 0;
-  align_tool->vert_offset = 0;
 
   gimp_tool_control_set_snap_to     (tool->control, FALSE);
   gimp_tool_control_set_precision   (tool->control,
@@ -183,33 +170,23 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
 static void
 gimp_align_tool_constructed (GObject *object)
 {
-  GimpTool      *tool       = GIMP_TOOL (object);
-  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
-  GObject       *options    = G_OBJECT (gimp_tool_get_options (tool));
-  GtkContainer  *container;
+  GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (object);
+  GimpAlignOptions *options;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  /* This line of code is evil because it relies on that the 'options'
-   * object is fully constructed before we get here, which is not
-   * guaranteed
-   */
-  container = g_object_get_data (options, "controls-container");
+  options = GIMP_ALIGN_TOOL_GET_OPTIONS (align_tool);
 
-  if (container)
-    {
-      align_tool->controls = gimp_align_tool_controls (align_tool);
-      gtk_container_add (container, align_tool->controls);
-      gtk_widget_show (align_tool->controls);
-    }
+  g_signal_connect_object (options, "align-button-clicked",
+                           G_CALLBACK (gimp_align_tool_align),
+                           align_tool, G_CONNECT_SWAPPED);
 }
 
 static void
-gimp_align_tool_finalize (GObject *object)
+gimp_align_tool_dispose (GObject *object)
 {
-  GimpTool      *tool       = GIMP_TOOL (object);
-  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
+  GimpTool *tool = GIMP_TOOL (object);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (object)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (object));
@@ -217,13 +194,7 @@ gimp_align_tool_finalize (GObject *object)
   if (gimp_tool_control_is_active (tool->control))
     gimp_tool_control_halt (tool->control);
 
-  if (align_tool->controls)
-    {
-      gtk_widget_destroy (align_tool->controls);
-      align_tool->controls = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static gboolean
@@ -311,6 +282,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
                                 GimpDisplay           *display)
 {
   GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
+  GimpAlignOptions *options    = GIMP_ALIGN_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell *shell      = gimp_display_get_shell (display);
   GObject          *object     = NULL;
   GimpImage        *image      = gimp_display_get_image (display);
@@ -425,13 +397,11 @@ gimp_align_tool_button_release (GimpTool              *tool,
       g_list_free (all_layers);
     }
 
-  for (i = 0; i < ALIGN_TOOL_NUM_BUTTONS; i++)
+  for (i = 0; i < ALIGN_OPTIONS_N_BUTTONS; i++)
     {
-      if (align_tool->button[i])
-        {
-          gtk_widget_set_sensitive (align_tool->button[i],
-                                    (align_tool->selected_objects != NULL));
-        }
+      if (options->button[i])
+        gtk_widget_set_sensitive (options->button[i],
+                                  align_tool->selected_objects != NULL);
     }
 
   align_tool->x1 = align_tool->x0;
@@ -752,184 +722,23 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
     }
 }
 
-static GtkWidget *
-gimp_align_tool_controls (GimpAlignTool *align_tool)
-{
-  GtkWidget *main_vbox;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *label;
-  GtkWidget *button;
-  GtkWidget *spinbutton;
-  GtkWidget *combo;
-  gint       n = 0;
-
-  main_vbox = gtk_vbox_new (FALSE, 12);
-
-  frame = gimp_frame_new (_("Align"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  frame = gimp_frame_new (_("Relative to:"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  combo = gimp_enum_combo_box_new (GIMP_TYPE_ALIGN_REFERENCE);
-  gtk_container_add (GTK_CONTAINER (frame), combo);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              GIMP_ALIGN_REFERENCE_FIRST,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &align_tool->align_reference_type);
-  gtk_widget_show (combo);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = button_with_stock (GIMP_ALIGN_LEFT, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button, _("Align left edge of target"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = button_with_stock (GIMP_ALIGN_HCENTER, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button, _("Align center of target"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = button_with_stock (GIMP_ALIGN_RIGHT, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button, _("Align right edge of target"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = button_with_stock (GIMP_ALIGN_TOP, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button, _("Align top edge of target"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = button_with_stock (GIMP_ALIGN_VCENTER, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button, _("Align middle of target"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = button_with_stock (GIMP_ALIGN_BOTTOM, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button, _("Align bottom of target"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  frame = gimp_frame_new (_("Distribute"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = button_with_stock (GIMP_ARRANGE_LEFT, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button, _("Distribute left edges of targets"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = button_with_stock (GIMP_ARRANGE_HCENTER, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button,
-                           _("Distribute horizontal centers of targets"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = button_with_stock (GIMP_ARRANGE_RIGHT, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button,
-                           _("Distribute right edges of targets"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = button_with_stock (GIMP_ARRANGE_TOP, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button, _("Distribute top edges of targets"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = button_with_stock (GIMP_ARRANGE_VCENTER, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button,
-                           _("Distribute vertical centers of targets"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = button_with_stock (GIMP_ARRANGE_BOTTOM, align_tool);
-  align_tool->button[n++] = button;
-  gimp_help_set_help_data (button, _("Distribute bottoms of targets"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Offset:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  spinbutton = gimp_spin_button_new ((GtkObject **) &align_tool->horz_offset_adjustment,
-                                     0,
-                                     -100000,
-                                     100000,
-                                     1, 20, 0, 1, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  g_signal_connect (align_tool->horz_offset_adjustment, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &align_tool->horz_offset);
-
-  return main_vbox;
-}
-
-
 static void
-do_alignment (GtkWidget *widget,
-              gpointer   data)
+gimp_align_tool_align (GimpAlignTool     *align_tool,
+                       GimpAlignmentType  align_type)
 {
-  GimpAlignTool     *align_tool       = GIMP_ALIGN_TOOL (data);
-  GimpImage         *image;
-  GimpAlignmentType  action;
-  GObject           *reference_object = NULL;
-  GList             *list;
-  gint               offset;
+  GimpAlignOptions *options = GIMP_ALIGN_TOOL_GET_OPTIONS (align_tool);
+  GimpImage        *image;
+  GObject          *reference_object = NULL;
+  GList            *list;
+  gint              offset = 0;
+
+  /* if nothing is selected, just return */
+  if (! align_tool->selected_objects)
+    return;
 
   image  = gimp_display_get_image (GIMP_TOOL (align_tool)->display);
-  action = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "action"));
-  offset = align_tool->horz_offset;
 
-  switch (action)
+  switch (align_type)
     {
     case GIMP_ALIGN_LEFT:
     case GIMP_ALIGN_HCENTER:
@@ -939,19 +748,16 @@ do_alignment (GtkWidget *widget,
     case GIMP_ALIGN_BOTTOM:
       offset = 0;
       break;
+
     case GIMP_ARRANGE_LEFT:
     case GIMP_ARRANGE_HCENTER:
     case GIMP_ARRANGE_RIGHT:
     case GIMP_ARRANGE_TOP:
     case GIMP_ARRANGE_VCENTER:
     case GIMP_ARRANGE_BOTTOM:
-      offset = align_tool->horz_offset;
+      offset = options->offset_x;
       break;
     }
-
-  /* if nothing is selected, just return */
-  if (g_list_length (align_tool->selected_objects) == 0)
-    return;
 
   /* if only one object is selected, use the image as reference
    * if multiple objects are selected, use the first one as reference if
@@ -960,14 +766,14 @@ do_alignment (GtkWidget *widget,
 
   list = align_tool->selected_objects;
 
-  switch (align_tool->align_reference_type)
+  switch (options->align_reference)
     {
     case GIMP_ALIGN_REFERENCE_IMAGE:
       reference_object = G_OBJECT (image);
       break;
 
     case GIMP_ALIGN_REFERENCE_FIRST:
-      if (g_list_length (align_tool->selected_objects) == 1)
+      if (g_list_length (list) == 1)
         {
           reference_object = G_OBJECT (image);
         }
@@ -975,8 +781,8 @@ do_alignment (GtkWidget *widget,
         {
           if (align_tool->set_reference)
             {
-              reference_object = G_OBJECT (align_tool->selected_objects->data);
-              list = g_list_next (align_tool->selected_objects);
+              reference_object = G_OBJECT (list->data);
+              list = g_list_next (list);
             }
           else
             {
@@ -1008,82 +814,14 @@ do_alignment (GtkWidget *widget,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 
   gimp_image_arrange_objects (image, list,
-                              action,
+                              align_type,
                               reference_object,
-                              action,
+                              align_type,
                               offset);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 
   gimp_image_flush (image);
-}
-
-static GtkWidget *
-button_with_stock (GimpAlignmentType  action,
-                   GimpAlignTool     *align_tool)
-{
-  GtkWidget   *button;
-  GtkWidget   *image;
-  const gchar *stock_id = NULL;
-
-  switch (action)
-    {
-    case GIMP_ALIGN_LEFT:
-      stock_id = GIMP_STOCK_GRAVITY_WEST;
-      break;
-    case GIMP_ALIGN_HCENTER:
-      stock_id = GIMP_STOCK_HCENTER;
-      break;
-    case GIMP_ALIGN_RIGHT:
-      stock_id = GIMP_STOCK_GRAVITY_EAST;
-      break;
-    case GIMP_ALIGN_TOP:
-      stock_id = GIMP_STOCK_GRAVITY_NORTH;
-      break;
-    case GIMP_ALIGN_VCENTER:
-      stock_id = GIMP_STOCK_VCENTER;
-      break;
-    case GIMP_ALIGN_BOTTOM:
-      stock_id = GIMP_STOCK_GRAVITY_SOUTH;
-      break;
-    case GIMP_ARRANGE_LEFT:
-      stock_id = GIMP_STOCK_GRAVITY_WEST;
-      break;
-    case GIMP_ARRANGE_HCENTER:
-      stock_id = GIMP_STOCK_HCENTER;
-      break;
-    case GIMP_ARRANGE_RIGHT:
-      stock_id = GIMP_STOCK_GRAVITY_EAST;
-      break;
-    case GIMP_ARRANGE_TOP:
-      stock_id = GIMP_STOCK_GRAVITY_NORTH;
-      break;
-    case GIMP_ARRANGE_VCENTER:
-      stock_id = GIMP_STOCK_VCENTER;
-      break;
-    case GIMP_ARRANGE_BOTTOM:
-      stock_id = GIMP_STOCK_GRAVITY_SOUTH;
-      break;
-    default:
-      g_return_val_if_reached (NULL);
-      break;
-    }
-
-  button = gtk_button_new ();
-  g_object_set_data (G_OBJECT (button), "action", GINT_TO_POINTER (action));
-  gtk_widget_set_sensitive (button, FALSE);
-  gtk_widget_show (button);
-
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-  gtk_misc_set_padding (GTK_MISC (image), 2, 2);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (do_alignment),
-                    align_tool);
-
-  return button;
 }
 
 static void

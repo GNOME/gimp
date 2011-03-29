@@ -21,6 +21,7 @@
 
 #include "gimpdrawtool.h"
 
+
 /*  tool function/operation/state/mode  */
 typedef enum
 {
@@ -42,7 +43,8 @@ typedef enum
 #define GIMP_IS_ALIGN_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ALIGN_TOOL))
 #define GIMP_ALIGN_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ALIGN_TOOL, GimpAlignToolClass))
 
-#define ALIGN_TOOL_NUM_BUTTONS 12
+#define GIMP_ALIGN_TOOL_GET_OPTIONS(t)  (GIMP_ALIGN_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpAlignTool      GimpAlignTool;
 typedef struct _GimpAlignToolClass GimpAlignToolClass;
@@ -51,19 +53,10 @@ struct _GimpAlignTool
 {
   GimpDrawTool           parent_instance;
 
-  GtkWidget             *controls;
-  GtkWidget             *button[ALIGN_TOOL_NUM_BUTTONS];
-
   GimpAlignToolFunction  function;
   GList                 *selected_objects;
 
   GimpAlignmentType      align_type;
-  GimpAlignReferenceType align_reference_type;
-  gdouble                horz_offset;
-  gdouble                vert_offset;
-
-  GtkAdjustment         *horz_offset_adjustment;
-  GtkAdjustment         *vert_offset_adjustment;
 
   gint                   x0, y0, x1, y1;   /* rubber-band rectangle */
 

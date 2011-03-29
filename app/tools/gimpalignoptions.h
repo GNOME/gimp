@@ -22,6 +22,9 @@
 #include "core/gimptooloptions.h"
 
 
+#define ALIGN_OPTIONS_N_BUTTONS 12
+
+
 #define GIMP_TYPE_ALIGN_OPTIONS            (gimp_align_options_get_type ())
 #define GIMP_ALIGN_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ALIGN_OPTIONS, GimpAlignOptions))
 #define GIMP_ALIGN_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ALIGN_OPTIONS, GimpAlignOptionsClass))
@@ -31,11 +34,25 @@
 
 
 typedef struct _GimpAlignOptions      GimpAlignOptions;
-typedef struct _GimpToolOptionsClass GimpAlignOptionsClass;
+typedef struct _GimpAlignOptionsClass GimpAlignOptionsClass;
 
 struct _GimpAlignOptions
 {
-  GimpToolOptions    parent_instence;
+  GimpToolOptions         parent_instence;
+
+  GimpAlignReferenceType  align_reference;
+  gdouble                 offset_x;
+  gdouble                 offset_y;
+
+  GtkWidget              *button[ALIGN_OPTIONS_N_BUTTONS];
+};
+
+struct _GimpAlignOptionsClass
+{
+  GimpToolOptionsClass  parent_class;
+
+  void (* align_button_clicked) (GimpAlignOptions  *options,
+                                 GimpAlignmentType  align_type);
 };
 
 
