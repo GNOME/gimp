@@ -396,13 +396,13 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
     {
       switch (kevent->keyval)
         {
-        case GDK_Return:
-        case GDK_KP_Enter:
-        case GDK_ISO_Enter:
+        case GDK_KEY_Return:
+        case GDK_KEY_KP_Enter:
+        case GDK_KEY_ISO_Enter:
           gimp_foreground_select_tool_apply (fg_select, display);
           return TRUE;
 
-        case GDK_Escape:
+        case GDK_KEY_Escape:
           gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
           return TRUE;
 

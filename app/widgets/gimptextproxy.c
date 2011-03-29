@@ -105,24 +105,24 @@ gimp_text_proxy_class_init (GimpTextProxyClass *klass)
 
   binding_set = gtk_binding_set_by_class (klass);
 
-  gtk_binding_entry_add_signal (binding_set, GDK_plus, GDK_MOD1_MASK,
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_plus, GDK_MOD1_MASK,
 				"change-size", 1,
                                 G_TYPE_DOUBLE, 1.0);
-  gtk_binding_entry_add_signal (binding_set, GDK_minus, GDK_MOD1_MASK,
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_minus, GDK_MOD1_MASK,
 				"change-size", 1,
                                 G_TYPE_DOUBLE, -1.0);
 
-  gtk_binding_entry_add_signal (binding_set, GDK_Up, GDK_MOD1_MASK,
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Up, GDK_MOD1_MASK,
 				"change-baseline", 1,
                                 G_TYPE_DOUBLE, 1.0);
-  gtk_binding_entry_add_signal (binding_set, GDK_Down, GDK_MOD1_MASK,
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Down, GDK_MOD1_MASK,
 				"change-baseline", 1,
                                 G_TYPE_DOUBLE, -1.0);
 
-  gtk_binding_entry_add_signal (binding_set, GDK_Left, GDK_MOD1_MASK,
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Left, GDK_MOD1_MASK,
 				"change-kerning", 1,
                                 G_TYPE_DOUBLE, -1.0);
-  gtk_binding_entry_add_signal (binding_set, GDK_Right, GDK_MOD1_MASK,
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Right, GDK_MOD1_MASK,
 				"change-kerning", 1,
                                 G_TYPE_DOUBLE, 1.0);
 }

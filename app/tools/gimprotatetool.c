@@ -139,19 +139,19 @@ gimp_rotate_tool_key_press (GimpTool    *tool,
 
       switch (kevent->keyval)
         {
-        case GDK_Up:
+        case GDK_KEY_Up:
           gtk_spin_button_spin (angle_spin, GTK_SPIN_STEP_FORWARD, 0.0);
           return TRUE;
 
-        case GDK_Down:
+        case GDK_KEY_Down:
           gtk_spin_button_spin (angle_spin, GTK_SPIN_STEP_BACKWARD, 0.0);
           return TRUE;
 
-        case GDK_Left:
+        case GDK_KEY_Left:
           gtk_spin_button_spin (angle_spin, GTK_SPIN_PAGE_FORWARD, 0.0);
           return TRUE;
 
-        case GDK_Right:
+        case GDK_KEY_Right:
           gtk_spin_button_spin (angle_spin, GTK_SPIN_PAGE_BACKWARD, 0.0);
           return TRUE;
 

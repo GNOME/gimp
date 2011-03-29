@@ -1435,17 +1435,17 @@ gimp_free_select_tool_key_press (GimpTool    *tool,
 
   switch (kevent->keyval)
     {
-    case GDK_BackSpace:
+    case GDK_KEY_BackSpace:
       gimp_free_select_tool_remove_last_segment (fst);
       return TRUE;
 
-    case GDK_Return:
-    case GDK_KP_Enter:
-    case GDK_ISO_Enter:
+    case GDK_KEY_Return:
+    case GDK_KEY_KP_Enter:
+    case GDK_KEY_ISO_Enter:
       gimp_free_select_tool_commit (fst, display);
       return TRUE;
 
-    case GDK_Escape:
+    case GDK_KEY_Escape:
       gimp_free_select_tool_halt (fst);
       return TRUE;
 

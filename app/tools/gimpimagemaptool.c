@@ -442,21 +442,21 @@ gimp_image_map_tool_key_press (GimpTool    *tool,
     {
       switch (kevent->keyval)
         {
-        case GDK_Return:
-        case GDK_KP_Enter:
-        case GDK_ISO_Enter:
+        case GDK_KEY_Return:
+        case GDK_KEY_KP_Enter:
+        case GDK_KEY_ISO_Enter:
           gimp_image_map_tool_response (image_map_tool->dialog,
                                         GTK_RESPONSE_OK,
                                         image_map_tool);
           return TRUE;
 
-        case GDK_BackSpace:
+        case GDK_KEY_BackSpace:
           gimp_image_map_tool_response (image_map_tool->dialog,
                                         RESPONSE_RESET,
                                         image_map_tool);
           return TRUE;
 
-        case GDK_Escape:
+        case GDK_KEY_Escape:
           gimp_image_map_tool_response (image_map_tool->dialog,
                                         GTK_RESPONSE_CANCEL,
                                         image_map_tool);

@@ -1341,9 +1341,9 @@ gimp_tag_entry_key_press (GtkWidget   *widget,
 
   switch (event->keyval)
     {
-    case GDK_Tab:
-    case GDK_KP_Tab:
-    case GDK_ISO_Left_Tab:
+    case GDK_KEY_Tab:
+    case GDK_KEY_KP_Tab:
+    case GDK_KEY_ISO_Left_Tab:
       /*  allow to leave the widget with Ctrl+Tab  */
       if (! (event->state & GDK_CONTROL_MASK))
         {
@@ -1360,21 +1360,21 @@ gimp_tag_entry_key_press (GtkWidget   *widget,
         }
       return TRUE;
 
-    case GDK_Return:
+    case GDK_KEY_Return:
       gimp_tag_entry_commit_tags (entry);
       break;
 
-    case GDK_Left:
+    case GDK_KEY_Left:
       gimp_tag_entry_previous_tag (entry,
                                    (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE);
       return TRUE;
 
-    case GDK_Right:
+    case GDK_KEY_Right:
       gimp_tag_entry_next_tag (entry,
                                (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE);
       return TRUE;
 
-    case GDK_BackSpace:
+    case GDK_KEY_BackSpace:
       {
         gint selection_start;
         gint selection_end;
@@ -1397,7 +1397,7 @@ gimp_tag_entry_key_press (GtkWidget   *widget,
       }
       break;
 
-    case GDK_Delete:
+    case GDK_KEY_Delete:
       {
         gint selection_start;
         gint selection_end;
@@ -1420,8 +1420,8 @@ gimp_tag_entry_key_press (GtkWidget   *widget,
       }
       break;
 
-    case GDK_Up:
-    case GDK_Down:
+    case GDK_KEY_Up:
+    case GDK_KEY_Down:
       if (entry->recent_list != NULL)
         {
           gchar *recent_item;
@@ -1431,7 +1431,7 @@ gimp_tag_entry_key_press (GtkWidget   *widget,
           gimp_tag_entry_add_to_recent (entry, very_recent_item, TRUE);
           g_free (very_recent_item);
 
-          if (event->keyval == GDK_Up)
+          if (event->keyval == GDK_KEY_Up)
             {
               recent_item = (gchar *) g_list_first (entry->recent_list)->data;
               entry->recent_list = g_list_remove (entry->recent_list, recent_item);

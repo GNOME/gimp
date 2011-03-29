@@ -111,7 +111,7 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
                   G_TYPE_NONE, 0);
 
   gtk_binding_entry_add_signal (gtk_binding_set_by_class (klass),
-                                GDK_Escape, 0, "close", 0);
+                                GDK_KEY_Escape, 0, "close", 0);
 }
 
 static void

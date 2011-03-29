@@ -818,21 +818,21 @@ gimp_vector_tool_key_press (GimpTool     *tool,
 
   switch (kevent->keyval)
     {
-    case GDK_Return:
-    case GDK_KP_Enter:
-    case GDK_ISO_Enter:
+    case GDK_KEY_Return:
+    case GDK_KEY_KP_Enter:
+    case GDK_KEY_ISO_Enter:
       gimp_vector_tool_to_selection_extended (vector_tool, kevent->state);
       break;
 
-    case GDK_BackSpace:
-    case GDK_Delete:
+    case GDK_KEY_BackSpace:
+    case GDK_KEY_Delete:
       gimp_vector_tool_delete_selected_anchors (vector_tool);
       break;
 
-    case GDK_Left:
-    case GDK_Right:
-    case GDK_Up:
-    case GDK_Down:
+    case GDK_KEY_Left:
+    case GDK_KEY_Right:
+    case GDK_KEY_Up:
+    case GDK_KEY_Down:
       xdist = FUNSCALEX (shell, pixels);
       ydist = FUNSCALEY (shell, pixels);
 
@@ -842,19 +842,19 @@ gimp_vector_tool_key_press (GimpTool     *tool,
 
       switch (kevent->keyval)
         {
-        case GDK_Left:
+        case GDK_KEY_Left:
           gimp_vector_tool_move_selected_anchors (vector_tool, -xdist, 0);
           break;
 
-        case GDK_Right:
+        case GDK_KEY_Right:
           gimp_vector_tool_move_selected_anchors (vector_tool, xdist, 0);
           break;
 
-        case GDK_Up:
+        case GDK_KEY_Up:
           gimp_vector_tool_move_selected_anchors (vector_tool, 0, -ydist);
           break;
 
-        case GDK_Down:
+        case GDK_KEY_Down:
           gimp_vector_tool_move_selected_anchors (vector_tool, 0, ydist);
           break;
 
@@ -866,7 +866,7 @@ gimp_vector_tool_key_press (GimpTool     *tool,
       vector_tool->have_undo = FALSE;
       break;
 
-    case GDK_Escape:
+    case GDK_KEY_Escape:
       if (options->edit_mode != GIMP_VECTOR_MODE_DESIGN)
         g_object_set (options, "vectors-edit-mode",
                       GIMP_VECTOR_MODE_DESIGN, NULL);

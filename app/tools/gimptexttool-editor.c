@@ -446,21 +446,21 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
 
   switch (kevent->keyval)
     {
-    case GDK_Return:
-    case GDK_KP_Enter:
-    case GDK_ISO_Enter:
+    case GDK_KEY_Return:
+    case GDK_KEY_KP_Enter:
+    case GDK_KEY_ISO_Enter:
       gimp_text_tool_reset_im_context (text_tool);
       gimp_text_tool_enter_text (text_tool, "\n");
       break;
 
-    case GDK_Tab:
-    case GDK_KP_Tab:
-    case GDK_ISO_Left_Tab:
+    case GDK_KEY_Tab:
+    case GDK_KEY_KP_Tab:
+    case GDK_KEY_ISO_Left_Tab:
       gimp_text_tool_reset_im_context (text_tool);
       gimp_text_tool_enter_text (text_tool, "\t");
       break;
 
-    case GDK_Escape:
+    case GDK_KEY_Escape:
       gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (text_tool));
       gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
                          GIMP_TOOL (text_tool)->display);

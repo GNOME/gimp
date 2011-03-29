@@ -558,7 +558,7 @@ gimp_data_editor_name_key_press (GtkWidget      *widget,
                                  GdkEventKey    *kevent,
                                  GimpDataEditor *editor)
 {
-  if (kevent->keyval == GDK_Escape)
+  if (kevent->keyval == GDK_KEY_Escape)
     {
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
                           gimp_object_get_name (editor->data));

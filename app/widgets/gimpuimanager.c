@@ -1005,7 +1005,7 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
    *  standard GtkMenuShell callback and assign a new shortcut, but
    *  don't assign a shortcut to the help menu entries ...
    */
-  if (kevent->keyval != GDK_F1)
+  if (kevent->keyval != GDK_KEY_F1)
     {
       if (help_id                                   &&
           gtk_accelerator_valid (kevent->keyval, 0) &&

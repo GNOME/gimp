@@ -1453,27 +1453,27 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 
   switch (kevent->keyval)
     {
-    case GDK_Up:
+    case GDK_KEY_Up:
       dy = -1;
       break;
-    case GDK_Left:
+    case GDK_KEY_Left:
       dx = -1;
       break;
-    case GDK_Right:
+    case GDK_KEY_Right:
       dx = 1;
       break;
-    case GDK_Down:
+    case GDK_KEY_Down:
       dy = 1;
       break;
 
-    case GDK_Return:
-    case GDK_KP_Enter:
-    case GDK_ISO_Enter:
+    case GDK_KEY_Return:
+    case GDK_KEY_KP_Enter:
+    case GDK_KEY_ISO_Enter:
       if (gimp_rectangle_tool_execute (rect_tool))
         gimp_rectangle_tool_halt (rect_tool);
       return TRUE;
 
-    case GDK_Escape:
+    case GDK_KEY_Escape:
       gimp_rectangle_tool_cancel (rect_tool);
       gimp_rectangle_tool_halt (rect_tool);
       return TRUE;

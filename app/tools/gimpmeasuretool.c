@@ -481,7 +481,7 @@ gimp_measure_tool_key_press (GimpTool    *tool,
     {
       switch (kevent->keyval)
         {
-        case GDK_Escape:
+        case GDK_KEY_Escape:
           gimp_measure_tool_halt (GIMP_MEASURE_TOOL (tool));
           return TRUE;
 

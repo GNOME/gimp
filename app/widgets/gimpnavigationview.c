@@ -404,19 +404,19 @@ gimp_navigation_view_key_press (GtkWidget   *widget,
 
   switch (kevent->keyval)
     {
-    case GDK_Up:
+    case GDK_KEY_Up:
       scroll_y = -1;
       break;
 
-    case GDK_Left:
+    case GDK_KEY_Left:
       scroll_x = -1;
       break;
 
-    case GDK_Right:
+    case GDK_KEY_Right:
       scroll_x = 1;
       break;
 
-    case GDK_Down:
+    case GDK_KEY_Down:
       scroll_y = 1;
       break;
 

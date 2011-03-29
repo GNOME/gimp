@@ -338,7 +338,7 @@ gimp_scale_combo_box_entry_key_press (GtkWidget         *entry,
                                       GdkEventKey       *event,
                                       GimpScaleComboBox *combo_box)
 {
-  if (event->keyval == GDK_Escape)
+  if (event->keyval == GDK_KEY_Escape)
     {
       gimp_scale_combo_box_set_scale (combo_box, combo_box->scale);
 
@@ -347,9 +347,9 @@ gimp_scale_combo_box_entry_key_press (GtkWidget         *entry,
       return TRUE;
     }
 
-  if (event->keyval == GDK_Tab    ||
-      event->keyval == GDK_KP_Tab ||
-      event->keyval == GDK_ISO_Left_Tab)
+  if (event->keyval == GDK_KEY_Tab    ||
+      event->keyval == GDK_KEY_KP_Tab ||
+      event->keyval == GDK_KEY_ISO_Left_Tab)
     {
       gimp_scale_combo_box_entry_activate (entry, combo_box);
 

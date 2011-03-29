@@ -1127,10 +1127,10 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
 
   /* bail out early if it is not an arrow key event */
 
-  if (kevent->keyval != GDK_Left &&
-      kevent->keyval != GDK_Right &&
-      kevent->keyval != GDK_Up &&
-      kevent->keyval != GDK_Down)
+  if (kevent->keyval != GDK_KEY_Left &&
+      kevent->keyval != GDK_KEY_Right &&
+      kevent->keyval != GDK_KEY_Up &&
+      kevent->keyval != GDK_KEY_Down)
     return FALSE;
 
   /*  adapt arrow velocity to the zoom factor when holding <shift>  */
@@ -1143,38 +1143,38 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
    *  them.
    */
   inc_x = process_event_queue_keys (kevent,
-                                    GDK_Left,
+                                    GDK_KEY_Left,
                                     kevent->state | GDK_SHIFT_MASK,
                                     -1 * velocity,
 
-                                    GDK_Left,
+                                    GDK_KEY_Left,
                                     kevent->state & ~GDK_SHIFT_MASK,
                                     -1,
 
-                                    GDK_Right,
+                                    GDK_KEY_Right,
                                     kevent->state | GDK_SHIFT_MASK,
                                     1 * velocity,
 
-                                    GDK_Right,
+                                    GDK_KEY_Right,
                                     kevent->state & ~GDK_SHIFT_MASK,
                                     1,
 
                                     0);
 
   inc_y = process_event_queue_keys (kevent,
-                                    GDK_Up,
+                                    GDK_KEY_Up,
                                     kevent->state | GDK_SHIFT_MASK,
                                     -1 * velocity,
 
-                                    GDK_Up,
+                                    GDK_KEY_Up,
                                     kevent->state & ~GDK_SHIFT_MASK,
                                     -1,
 
-                                    GDK_Down,
+                                    GDK_KEY_Down,
                                     kevent->state | GDK_SHIFT_MASK,
                                     1 * velocity,
 
-                                    GDK_Down,
+                                    GDK_KEY_Down,
                                     kevent->state & ~GDK_SHIFT_MASK,
                                     1,
 

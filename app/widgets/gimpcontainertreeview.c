@@ -161,7 +161,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 
   binding_set = gtk_binding_set_by_class (klass);
 
-  gtk_binding_entry_add_signal (binding_set, GDK_F2, 0,
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_F2, 0,
                                 "edit-name", 0);
 
   g_type_class_add_private (klass, sizeof (GimpContainerTreeViewPriv));

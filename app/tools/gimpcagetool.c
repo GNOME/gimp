@@ -381,14 +381,14 @@ gimp_cage_tool_key_press (GimpTool    *tool,
 
   switch (kevent->keyval)
     {
-    case GDK_BackSpace:
+    case GDK_KEY_BackSpace:
       if (! ct->cage_complete && ct->tool_state == CAGE_STATE_WAIT)
         gimp_cage_tool_remove_last_handle (ct);
       return TRUE;
 
-    case GDK_Return:
-    case GDK_KP_Enter:
-    case GDK_ISO_Enter:
+    case GDK_KEY_Return:
+    case GDK_KEY_KP_Enter:
+    case GDK_KEY_ISO_Enter:
       if (ct->tool_state == DEFORM_STATE_WAIT)
         {
           gimp_tool_control_set_preserve (tool->control, TRUE);
@@ -405,7 +405,7 @@ gimp_cage_tool_key_press (GimpTool    *tool,
         }
       return TRUE;
 
-    case GDK_Escape:
+    case GDK_KEY_Escape:
       gimp_cage_tool_halt (ct);
       return TRUE;
 

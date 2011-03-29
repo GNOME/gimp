@@ -41,29 +41,6 @@
 #endif
 
 
-#if ! GTK_CHECK_VERSION (2, 22, 0)
-#define GDK_KEY_Shift_L GDK_Shift_L
-#define GDK_KEY_Shift_R GDK_Shift_R
-#define GDK_KEY_Control_L GDK_Control_L
-#define GDK_KEY_Control_R GDK_Control_R
-#define GDK_KEY_Alt_L GDK_Alt_L
-#define GDK_KEY_Alt_R GDK_Alt_R
-#define GDK_KEY_Left GDK_Left
-#define GDK_KEY_Right GDK_Right
-#define GDK_KEY_Up GDK_Up
-#define GDK_KEY_Down GDK_Down
-#define GDK_KEY_Tab GDK_Tab
-#define GDK_KEY_ISO_Left_Tab GDK_ISO_Left_Tab
-#define GDK_KEY_space GDK_space
-#define GDK_KEY_KP_Space GDK_KP_Space
-#define GDK_KEY_Return GDK_Return
-#define GDK_KEY_KP_Enter GDK_KP_Enter
-#define GDK_KEY_ISO_Enter GDK_ISO_Enter
-#define GDK_KEY_BackSpace GDK_BackSpace
-#define GDK_KEY_Escape GDK_Escape
-#endif
-
-
 typedef struct _GimpCanvas            GimpCanvas;
 typedef struct _GimpCanvasItem        GimpCanvasItem;
 typedef struct _GimpCanvasGroup       GimpCanvasGroup;
