@@ -65,7 +65,6 @@ struct _GimpMeasureTool
   gboolean         status_help; /*  help is currently in s.bar */
 
   GimpCanvasItem  *handles[3];
-  gint             active_handle;
 
   GtkWidget       *dialog;
   GtkWidget       *distance_label[2];
