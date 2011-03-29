@@ -56,9 +56,7 @@ struct _GimpAlignTool
   GimpAlignToolFunction  function;
   GList                 *selected_objects;
 
-  GimpAlignmentType      align_type;
-
-  gint                   x0, y0, x1, y1;   /* rubber-band rectangle */
+  gint                   x1, y1, x2, y2;   /* rubber-band rectangle */
 
   gboolean               set_reference;
 };

@@ -19,6 +19,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -57,52 +58,55 @@
 
 /*  local function prototypes  */
 
-static void   gimp_align_tool_constructed    (GObject               *object);
-static void   gimp_align_tool_dispose        (GObject               *object);
+static void     gimp_align_tool_constructed    (GObject               *object);
+static void     gimp_align_tool_dispose        (GObject               *object);
 
-static void   gimp_align_tool_control        (GimpTool              *tool,
-                                              GimpToolAction         action,
-                                              GimpDisplay           *display);
-static void   gimp_align_tool_button_press   (GimpTool              *tool,
-                                              const GimpCoords      *coords,
-                                              guint32                time,
-                                              GdkModifierType        state,
-                                              GimpButtonPressType    press_type,
-                                              GimpDisplay           *display);
-static void   gimp_align_tool_button_release (GimpTool              *tool,
-                                              const GimpCoords      *coords,
-                                              guint32                time,
-                                              GdkModifierType        state,
-                                              GimpButtonReleaseType  release_type,
-                                              GimpDisplay           *display);
-static void   gimp_align_tool_motion         (GimpTool              *tool,
-                                              const GimpCoords      *coords,
-                                              guint32                time,
-                                              GdkModifierType        state,
-                                              GimpDisplay           *display);
-static void   gimp_align_tool_oper_update    (GimpTool              *tool,
-                                              const GimpCoords      *coords,
-                                              GdkModifierType        state,
-                                              gboolean               proximity,
-                                              GimpDisplay           *display);
-static void   gimp_align_tool_status_update  (GimpTool              *tool,
-                                              GimpDisplay           *display,
-                                              GdkModifierType        state,
-                                              gboolean               proximity);
-static void   gimp_align_tool_cursor_update  (GimpTool              *tool,
-                                              const GimpCoords      *coords,
-                                              GdkModifierType        state,
-                                              GimpDisplay           *display);
+static void     gimp_align_tool_control        (GimpTool              *tool,
+                                                GimpToolAction         action,
+                                                GimpDisplay           *display);
+static void     gimp_align_tool_button_press   (GimpTool              *tool,
+                                                const GimpCoords      *coords,
+                                                guint32                time,
+                                                GdkModifierType        state,
+                                                GimpButtonPressType    press_type,
+                                                GimpDisplay           *display);
+static void     gimp_align_tool_button_release (GimpTool              *tool,
+                                                const GimpCoords      *coords,
+                                                guint32                time,
+                                                GdkModifierType        state,
+                                                GimpButtonReleaseType  release_type,
+                                                GimpDisplay           *display);
+static void     gimp_align_tool_motion         (GimpTool              *tool,
+                                                const GimpCoords      *coords,
+                                                guint32                time,
+                                                GdkModifierType        state,
+                                                GimpDisplay           *display);
+static gboolean gimp_align_tool_key_press      (GimpTool              *tool,
+                                                GdkEventKey           *kevent,
+                                                GimpDisplay           *display);
+static void     gimp_align_tool_oper_update    (GimpTool              *tool,
+                                                const GimpCoords      *coords,
+                                                GdkModifierType        state,
+                                                gboolean               proximity,
+                                                GimpDisplay           *display);
+static void     gimp_align_tool_status_update  (GimpTool              *tool,
+                                                GimpDisplay           *display,
+                                                GdkModifierType        state,
+                                                gboolean               proximity);
+static void     gimp_align_tool_cursor_update  (GimpTool              *tool,
+                                                const GimpCoords      *coords,
+                                                GdkModifierType        state,
+                                                GimpDisplay           *display);
 
-static void   gimp_align_tool_draw           (GimpDrawTool          *draw_tool);
+static void     gimp_align_tool_draw           (GimpDrawTool          *draw_tool);
 
-static void   gimp_align_tool_halt           (GimpAlignTool         *align_tool);
-static void   gimp_align_tool_align          (GimpAlignTool         *align_tool,
-                                              GimpAlignmentType      align_type);
+static void     gimp_align_tool_halt           (GimpAlignTool         *align_tool);
+static void     gimp_align_tool_align          (GimpAlignTool         *align_tool,
+                                                GimpAlignmentType      align_type);
 
-static void   gimp_align_tool_object_removed (GObject               *object,
-                                              GimpAlignTool         *align_tool);
-static void   gimp_align_tool_clear_selected (GimpAlignTool         *align_tool);
+static void     gimp_align_tool_object_removed (GObject               *object,
+                                                GimpAlignTool         *align_tool);
+static void     gimp_align_tool_clear_selected (GimpAlignTool         *align_tool);
 
 
 G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL)
@@ -141,6 +145,7 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
   tool_class->button_press   = gimp_align_tool_button_press;
   tool_class->button_release = gimp_align_tool_button_release;
   tool_class->motion         = gimp_align_tool_motion;
+  tool_class->key_press      = gimp_align_tool_key_press;
   tool_class->oper_update    = gimp_align_tool_oper_update;
   tool_class->cursor_update  = gimp_align_tool_cursor_update;
 
@@ -152,10 +157,7 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
 {
   GimpTool *tool = GIMP_TOOL (align_tool);
 
-  align_tool->function         = ALIGN_TOOL_IDLE;
-  align_tool->selected_objects = NULL;
-
-  align_tool->align_type  = GIMP_ALIGN_LEFT;
+  align_tool->function = ALIGN_TOOL_IDLE;
 
   gimp_tool_control_set_snap_to     (tool->control, FALSE);
   gimp_tool_control_set_precision   (tool->control,
@@ -228,8 +230,8 @@ gimp_align_tool_button_press (GimpTool            *tool,
 
   gimp_tool_control_activate (tool->control);
 
-  align_tool->x1 = align_tool->x0 = coords->x;
-  align_tool->y1 = align_tool->y0 = coords->y;
+  align_tool->x2 = align_tool->x1 = coords->x;
+  align_tool->y2 = align_tool->y1 = coords->y;
 
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
@@ -264,8 +266,8 @@ gimp_align_tool_button_release (GimpTool              *tool,
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
-      align_tool->x1 = align_tool->x0;
-      align_tool->y1 = align_tool->y0;
+      align_tool->x2 = align_tool->x1;
+      align_tool->y2 = align_tool->y1;
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
       return;
@@ -280,8 +282,8 @@ gimp_align_tool_button_release (GimpTool              *tool,
   /* if mouse has moved less than EPSILON pixels since button press,
    * select the nearest thing, otherwise make a rubber-band rectangle
    */
-  if (hypot (coords->x - align_tool->x0,
-             coords->y - align_tool->y0) < EPSILON)
+  if (hypot (coords->x - align_tool->x1,
+             coords->y - align_tool->y1) < EPSILON)
     {
       GimpVectors *vectors;
       GimpGuide   *guide;
@@ -333,10 +335,10 @@ gimp_align_tool_button_release (GimpTool              *tool,
     }
   else  /* FIXME: look for vectors too */
     {
-      gint   X0 = MIN (coords->x, align_tool->x0);
-      gint   X1 = MAX (coords->x, align_tool->x0);
-      gint   Y0 = MIN (coords->y, align_tool->y0);
-      gint   Y1 = MAX (coords->y, align_tool->y0);
+      gint   X0 = MIN (coords->x, align_tool->x1);
+      gint   X1 = MAX (coords->x, align_tool->x1);
+      gint   Y0 = MIN (coords->y, align_tool->y1);
+      gint   Y1 = MAX (coords->y, align_tool->y1);
       GList *all_layers;
       GList *list;
 
@@ -378,8 +380,8 @@ gimp_align_tool_button_release (GimpTool              *tool,
                                   align_tool->selected_objects != NULL);
     }
 
-  align_tool->x1 = align_tool->x0;
-  align_tool->y1 = align_tool->y0;
+  align_tool->x2 = align_tool->x1;
+  align_tool->y2 = align_tool->y1;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -395,10 +397,31 @@ gimp_align_tool_motion (GimpTool         *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  align_tool->x1 = coords->x;
-  align_tool->y1 = coords->y;
+  align_tool->x2 = coords->x;
+  align_tool->y2 = coords->y;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+static gboolean
+gimp_align_tool_key_press (GimpTool    *tool,
+                           GdkEventKey *kevent,
+                           GimpDisplay *display)
+{
+  if (display == tool->display)
+    {
+      switch (kevent->keyval)
+        {
+        case GDK_KEY_Escape:
+          gimp_align_tool_halt (GIMP_ALIGN_TOOL (tool));
+          return TRUE;
+
+        default:
+          break;
+        }
+    }
+
+  return FALSE;
 }
 
 static void
@@ -587,10 +610,10 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
   gint           x, y, w, h;
 
   /* draw rubber-band rectangle */
-  x = MIN (align_tool->x1, align_tool->x0);
-  y = MIN (align_tool->y1, align_tool->y0);
-  w = MAX (align_tool->x1, align_tool->x0) - x;
-  h = MAX (align_tool->y1, align_tool->y0) - y;
+  x = MIN (align_tool->x2, align_tool->x1);
+  y = MIN (align_tool->y2, align_tool->y1);
+  w = MAX (align_tool->x2, align_tool->x1) - x;
+  h = MAX (align_tool->y2, align_tool->y1) - y;
 
   gimp_draw_tool_add_rectangle (draw_tool, FALSE, x, y, w, h);
 
