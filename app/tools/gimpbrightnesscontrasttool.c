@@ -274,8 +274,6 @@ gimp_brightness_contrast_tool_motion (GimpTool         *tool,
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
 
-  gimp_tool_control_pause (tool->control);
-
   bc_tool->dx =   (coords->x - bc_tool->x);
   bc_tool->dy = - (coords->y - bc_tool->y);
 
@@ -283,8 +281,6 @@ gimp_brightness_contrast_tool_motion (GimpTool         *tool,
                 "brightness", CLAMP (bc_tool->dy, -127.0, 127.0) / 127.0,
                 "contrast",   CLAMP (bc_tool->dx, -127.0, 127.0) / 127.0,
                 NULL);
-
-  gimp_tool_control_resume (tool->control);
 }
 
 
