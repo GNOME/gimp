@@ -252,6 +252,8 @@ gimp_crop_tool_button_press (GimpTool            *tool,
   if (tool->display && display != tool->display)
     gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
 
+  gimp_tool_control_activate (tool->control);
+
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
 }
 
@@ -271,6 +273,8 @@ gimp_crop_tool_button_release (GimpTool              *tool,
                                       state,
                                       release_type,
                                       display);
+
+  gimp_tool_control_halt (tool->control);
 }
 
 static void

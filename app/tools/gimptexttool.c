@@ -372,6 +372,8 @@ gimp_text_tool_button_press (GimpTool            *tool,
 
   if (press_type == GIMP_BUTTON_PRESS_NORMAL)
     {
+      gimp_tool_control_activate (tool->control);
+
       gimp_text_tool_reset_im_context (text_tool);
 
       text_tool->selecting = FALSE;
@@ -382,7 +384,6 @@ gimp_text_tool_button_press (GimpTool            *tool,
           ! text_tool->moving)
         {
           gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_DEAD);
-          gimp_tool_control_activate (tool->control);
         }
       else
         {
@@ -513,6 +514,8 @@ gimp_text_tool_button_release (GimpTool              *tool,
 {
   GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
   GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
+
+  gimp_tool_control_halt (tool->control);
 
   if (text_tool->selecting)
     {

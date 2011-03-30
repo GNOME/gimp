@@ -353,19 +353,12 @@ gimp_rectangle_select_tool_delegate_button_press (GimpRectangleSelectTool *rect_
   GimpDisplay *old_display            = tool->display;
 
   tool->display = display;
-  if (! gimp_tool_control_is_active (tool->control))
-    {
-      gimp_tool_control_activate (tool->control);
-    }
+  gimp_tool_control_activate (tool->control);
 
-  button_press_delegated
-    = gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (tool),
-                                      coords);
+  button_press_delegated =
+    gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (tool), coords);
 
-  if (gimp_tool_control_is_active (tool->control))
-    {
-      gimp_tool_control_halt (tool->control);
-    }
+  gimp_tool_control_halt (tool->control);
   tool->display = old_display;
 
   return button_press_delegated;
@@ -408,6 +401,8 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
                                                          TRUE);
       return;
     }
+
+  gimp_tool_control_activate (tool->control);
 
   function = gimp_rectangle_tool_get_function (rectangle);
 
@@ -483,6 +478,8 @@ gimp_rectangle_select_tool_button_release (GimpTool              *tool,
   priv          = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
   image = gimp_display_get_image (tool->display);
+
+  gimp_tool_control_halt (tool->control);
 
   gimp_tool_pop_status (tool, display);
   gimp_display_shell_set_show_selection (gimp_display_get_shell (display),

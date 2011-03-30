@@ -915,8 +915,6 @@ gimp_rectangle_tool_button_press (GimpTool         *tool,
 
   gimp_draw_tool_pause (draw_tool);
 
-  gimp_tool_control_activate (tool->control);
-
   GIMP_LOG (RECTANGLE_TOOL, "coords->x = %f, coords->y = %f",
             coords->x, coords->y);
 
@@ -1030,8 +1028,6 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
   options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  gimp_tool_control_halt (tool->control);
 
   GIMP_LOG (RECTANGLE_TOOL, "coords->x = %f, coords->y = %f",
             coords->x, coords->y);
