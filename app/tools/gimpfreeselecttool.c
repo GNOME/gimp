@@ -1358,9 +1358,6 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
   GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
 
-  if (tool->display != display)
-    return;
-
   gimp_tool_control_halt (tool->control);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (fst));
@@ -1410,9 +1407,6 @@ gimp_free_select_tool_motion (GimpTool         *tool,
   GimpFreeSelectTool        *fst       = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv      = GET_PRIVATE (fst);
   GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
-
-  if (tool->display != display)
-    return;
 
   gimp_draw_tool_pause (draw_tool);
 
