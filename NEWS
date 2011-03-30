@@ -13,6 +13,72 @@ Changes in GIMP 2.7.1
 
 UI:
 
+ - A lot of undeprecations due to GTK+ 2.22 and 2.24
+ - Lots and lots of cairo porting, calls to gdk_draw_* are gone
+ - Merge the cage transform tool from GSoC
+ - Remove the old bitmap cursors completely and always use RGBA cursors
+   also for compat cursors for old X servers
+ - Add new GimpCanvasItem infrastructure with subclasses for everything
+   that needs to be drawn on the canvas and port all tools to canvas items
+
+Core:
+
+ - Add uniform API to turn any GimpItem's outline into a selection
+ - Add operators and gegl infrastructure for the cage tool
+ - Add support for color tags in text layers
+
+
+GEGL:
+
+ - 
+
+
+Libgimp:
+
+ - Introduce an "item" type in the PDB and libgimp and deprecate
+   lots of old API in favor of item API
+ - Add procedures to create, traverse and manipulate layer trees
+ - Add more state to the context API, and deprecate functions with
+   too many parameters in favor of simpler ones that use context states
+
+
+Plug-ins:
+
+ - Make script-fu server IPv6 aware
+ - Follow libgimp deprecations in plug-ins and scripts
+ - Add PDF export plugin
+ - Lots of cairo porting here too
+ - UTF-8 fixes in script-fu
+
+
+Data:
+
+ - Remove "Untitled" from palette names entries
+
+
+Developer documentation:
+
+ - Move libgimp documentation from templates to inline comments
+ - Generate standard deprecated sections
+
+
+Source and build system:
+
+ - Add more code documentation
+ - Add more unit tests
+ - Add a manifest to executables (app and plug-ins, Win32)
+ - Depend on GLib 2.28.0
+ - Plug memory leaks
+ - Lots of bug fixes and cleanup
+ - Lots of translation updates
+
+
+Changes in GIMP 2.7.1
+=====================
+
+
+UI:
+
  - Add "lock content" button to the layers, channels and paths dialogs,
    make the lock buttons more compact
  - Refuse to edit locked items
