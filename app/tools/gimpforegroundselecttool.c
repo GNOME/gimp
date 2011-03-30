@@ -282,54 +282,26 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
                                          GimpDisplay      *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-  GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
   const gchar              *status    = NULL;
-
-  if (fg_select->mask && gimp_draw_tool_is_active (draw_tool))
-    gimp_draw_tool_stop (draw_tool);
-
-  fg_select->last_coords = *coords;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 
-  if (fg_select->mask)
+  if (fg_select->mask && display == tool->display)
     {
-      switch (GIMP_SELECTION_TOOL (tool)->function)
-        {
-        case SELECTION_SELECT:
-        case SELECTION_MOVE_MASK:
-        case SELECTION_MOVE:
-        case SELECTION_MOVE_COPY:
-        case SELECTION_ANCHOR:
-          if (fg_select->strokes)
-            status = _("Add more strokes or press Enter to accept the selection");
-          else
-            status = _("Mark foreground by painting on the object to extract");
-          break;
-        default:
-          break;
-        }
+      if (fg_select->strokes)
+        status = _("Add more strokes or press Enter to accept the selection");
+      else
+        status = _("Mark foreground by painting on the object to extract");
     }
   else
     {
-      switch (GIMP_SELECTION_TOOL (tool)->function)
-        {
-        case SELECTION_SELECT:
-          status = _("Roughly outline the object to extract");
-          break;
-        default:
-          break;
-        }
+      if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_SELECT)
+        status = _("Roughly outline the object to extract");
     }
 
-  if (proximity)
-    {
-      if (status)
-        gimp_tool_replace_status (tool, display, "%s", status);
-
-      gimp_draw_tool_start (draw_tool, display);
-    }
+  if (proximity && status)
+    gimp_tool_replace_status (tool, display, "%s", status);
 }
 
 static void
