@@ -141,5 +141,6 @@ video_RC = video.rc.o
 warp_RC = warp.rc.o
 waves_RC = waves.rc.o
 web_browser_RC = web-browser.rc.o
+web_page_RC = web-page.rc.o
 whirl_pinch_RC = whirl-pinch.rc.o
 wind_RC = wind.rc.o

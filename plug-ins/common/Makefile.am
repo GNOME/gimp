@@ -186,6 +186,7 @@ libexec_PROGRAMS = \
 	warp \
 	waves \
 	web-browser \
+	$(WEB_PAGE) \
 	whirl-pinch \
 	wind
 
@@ -205,7 +206,8 @@ EXTRA_PROGRAMS = \
 	file-xpm \
 	lcms \
 	mail \
-	screenshot
+	screenshot \
+	web-page
 
 install-%: %
 	@$(NORMAL_INSTALL)
@@ -2622,6 +2624,26 @@ web_browser_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(web_browser_RC)
+
+web_page_CFLAGS = $(WEBKIT_CFLAGS)
+
+web_page_SOURCES = \
+	web-page.c
+
+web_page_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(WEBKIT_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(web_page_RC)
 
 whirl_pinch_SOURCES = \
 	whirl-pinch.c

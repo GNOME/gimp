@@ -142,6 +142,7 @@
     'warp' => { ui => 1 },
     'waves' => { ui => 1 },
     'web-browser' => { ui => 1 },
+    'web-page' => { ui => 1, optional => 1, libs => 'WEBKIT_LIBS', cflags => 'WEBKIT_CFLAGS' },
     'whirl-pinch' => { ui => 1 },
     'wind' => { ui => 1 }
 );

@@ -1278,12 +1278,14 @@ AC_ARG_WITH(webkit, [  --without-webkit        don't build the help-browser plug
 have_webkit=no
 if test "x$with_webkit" != xno; then
   PKG_CHECK_MODULES(WEBKIT, webkit-1.0 >= webkit_required_version,
+    WEB_PAGE='web-page$(EXEEXT)'
     have_webkit=yes,
     have_webkit="no (WebKit not found)")
 else
   have_webkit="no (WebKit support disabled)"
 fi
 
+AC_SUBST(WEB_PAGE)
 AM_CONDITIONAL(HAVE_WEBKIT, test "x$have_webkit" = xyes)
 
 
@@ -2265,7 +2267,8 @@ Optional Plug-Ins:
   TWAIN (MacOS X):     $mac_twain_ok
   TWAIN (Win32):       $os_win32
   URI:                 $uri_plugin
-  Windows ICO          $have_libpng
+  Webpage:             $have_webkit
+  Windows ICO:         $have_libpng
   WMF:                 $have_libwmf
   XJT:                 $have_xjt
   X11 Mouse Cursor:    $have_xmc
