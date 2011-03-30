@@ -473,6 +473,8 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
 
   gimp_tool_pop_status (tool, display);
 
+  gimp_tool_control_halt (tool->control);
+
   /*  Stop and free the selection core  */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (edit_select));
 
