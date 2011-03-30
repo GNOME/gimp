@@ -189,15 +189,17 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
 {
   GimpBrushTool    *brush_tool    = GIMP_BRUSH_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpDrawable     *drawable      = gimp_image_get_active_drawable (gimp_display_get_image (display));
+  GimpDrawable     *drawable;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                proximity, display);
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool))             &&
-        drawable && proximity)
+  drawable = gimp_image_get_active_drawable (gimp_display_get_image (display));
+
+  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
+      drawable && proximity)
     {
       GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
       GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
@@ -242,8 +244,11 @@ gimp_brush_tool_cursor_update (GimpTool         *tool,
     {
       if (! brush_core->main_brush || ! brush_core->dynamics)
         {
-          gimp_tool_control_set_cursor_modifier (tool->control,
-                                                 GIMP_CURSOR_MODIFIER_BAD);
+          gimp_tool_set_cursor (tool, display,
+                                gimp_tool_control_get_cursor (tool->control),
+                                gimp_tool_control_get_tool_cursor (tool->control),
+                                GIMP_CURSOR_MODIFIER_BAD);
+          return;
         }
       else if (! brush_tool->show_cursor &&
                gimp_tool_control_get_cursor_modifier (tool->control) !=
