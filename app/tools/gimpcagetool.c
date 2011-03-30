@@ -200,10 +200,6 @@ gimp_cage_tool_init (GimpCageTool *self)
   self->coef_node       = NULL;
   self->cage_node       = NULL;
   self->image_map       = NULL;
-
-  gimp_tool_control_set_wants_click (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_PERSPECTIVE);
 }
 
 static void
@@ -246,8 +242,6 @@ gimp_cage_tool_start (GimpCageTool *ct,
   gint          off_y;
 
   gimp_cage_tool_halt (ct);
-
-  gimp_tool_control_activate (tool->control);
 
   tool->display = display;
 
@@ -490,6 +484,8 @@ gimp_cage_tool_button_press (GimpTool            *tool,
   if (display != tool->display)
     gimp_cage_tool_start (ct, display);
 
+  gimp_tool_control_activate (tool->control);
+
   if (ct->config)
     handle = gimp_cage_tool_is_on_handle (ct,
                                           draw_tool,
@@ -648,6 +644,8 @@ gimp_cage_tool_button_release (GimpTool              *tool,
   GimpCageOptions *options = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
+
+  gimp_tool_control_halt (tool->control);
 
   if (state & GDK_BUTTON3_MASK)
     {
