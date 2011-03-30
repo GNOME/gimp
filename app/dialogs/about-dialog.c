@@ -108,7 +108,7 @@ about_dialog_create (GimpContext *context)
       copyright = g_strdup_printf (GIMP_COPYRIGHT, GIMP_GIT_LAST_COMMIT_YEAR);
 
       widget = g_object_new (GTK_TYPE_ABOUT_DIALOG,
-                             "role",               "about-dialog",
+                             "role",               "gimp-about",
                              "window-position",    GTK_WIN_POS_CENTER,
                              "title",              _("About GIMP"),
                              "program-name",       GIMP_ACRONYM,
