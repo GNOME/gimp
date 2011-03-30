@@ -71,9 +71,6 @@ static void   gimp_brush_tool_brush_changed   (GimpContext       *context,
 static void   gimp_brush_tool_set_brush       (GimpBrushCore     *brush_core,
                                                GimpBrush         *brush,
                                                GimpBrushTool     *brush_tool);
-static void   gimp_brush_tool_set_brush_after (GimpBrushCore     *brush_core,
-                                               GimpBrush         *brush,
-                                               GimpBrushTool     *brush_tool);
 static void   gimp_brush_tool_notify_brush    (GimpDisplayConfig *config,
                                                GParamSpec        *pspec,
                                                GimpBrushTool     *brush_tool);
@@ -153,9 +150,6 @@ gimp_brush_tool_constructed (GObject *object)
   g_signal_connect (paint_tool->core, "set-brush",
                     G_CALLBACK (gimp_brush_tool_set_brush),
                     brush_tool);
-  g_signal_connect_after (paint_tool->core, "set-brush",
-                          G_CALLBACK (gimp_brush_tool_set_brush_after),
-                          brush_tool);
 }
 
 static void
@@ -393,13 +387,7 @@ gimp_brush_tool_set_brush (GimpBrushCore *brush_core,
                                                GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool),
                                                &paint_core->cur_coords);
     }
-}
 
-static void
-gimp_brush_tool_set_brush_after (GimpBrushCore *brush_core,
-                                 GimpBrush     *brush,
-                                 GimpBrushTool *brush_tool)
-{
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (brush_tool));
 }
 
