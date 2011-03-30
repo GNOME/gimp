@@ -412,21 +412,13 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
   iscissors->y = RINT (coords->y);
 
   /*  If the tool was being used in another image...reset it  */
-
-  if (gimp_tool_control_is_active (tool->control))
+  if (display != tool->display)
     {
-      if (display != tool->display)
-        {
-          gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-          gimp_iscissors_tool_reset (iscissors);
-          gimp_tool_control_activate (tool->control);
-        }
-    }
-  else
-    {
-      gimp_tool_control_activate (tool->control);
+      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+      gimp_iscissors_tool_reset (iscissors);
     }
 
+  gimp_tool_control_activate (tool->control);
   tool->display = display;
 
   switch (iscissors->state)
@@ -563,6 +555,8 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
+
+  gimp_tool_control_halt (tool->control);
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do
@@ -1110,8 +1104,6 @@ gimp_iscissors_tool_apply (GimpIscissorsTool *iscissors,
   GimpImage            *image   = gimp_display_get_image (display);
 
   /*  Undraw the curve  */
-  gimp_tool_control_halt (tool->control);
-
   iscissors->draw = DRAW_CURVE;
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
