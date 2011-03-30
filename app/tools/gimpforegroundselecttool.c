@@ -289,6 +289,14 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
 
   if (fg_select->mask && display == tool->display)
     {
+      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+      gimp_draw_tool_pause (draw_tool);
+
+      fg_select->last_coords = *coords;
+
+      gimp_draw_tool_resume (draw_tool);
+
       if (fg_select->strokes)
         status = _("Add more strokes or press Enter to accept the selection");
       else
@@ -645,7 +653,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                                options->smoothness,
                                                options->sensitivity,
                                                ! options->contiguous,
-                                               GIMP_PROGRESS (display));
+                                               GIMP_PROGRESS (fg_select));
 
       fg_select->refinement = SIOX_REFINEMENT_NO_CHANGE;
 
