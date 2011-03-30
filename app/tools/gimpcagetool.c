@@ -647,7 +647,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  if (state & GDK_BUTTON3_MASK)
+  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
       /* Cancelling */
 
@@ -687,7 +687,9 @@ gimp_cage_tool_button_release (GimpTool              *tool,
         case CAGE_STATE_CLOSING:
           ct->dirty_coef = TRUE;
           gimp_cage_config_commit_displacement (ct->config);
-          g_object_set (options, "cage-mode", GIMP_CAGE_MODE_DEFORM, NULL);
+
+          if (release_type == GIMP_BUTTON_RELEASE_CLICK)
+            g_object_set (options, "cage-mode", GIMP_CAGE_MODE_DEFORM, NULL);
           break;
 
         case CAGE_STATE_MOVE_HANDLE:
