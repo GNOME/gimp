@@ -108,11 +108,22 @@ gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
                                    GdkModifierType  state,
                                    GimpDisplay     *display)
 {
-  GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
+  GimpDodgeBurnTool    *dodgeburn = GIMP_DODGE_BURN_TOOL (tool);
+  GimpDodgeBurnOptions *options   = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
 
-  if (key == GDK_CONTROL_MASK &&
-      ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
+  if ((key == GDK_CONTROL_MASK   &&
+      ! (state & GDK_SHIFT_MASK) && /* leave stuff untouched in line draw mode */
+       press != dodgeburn->toggled)
+
+      ||
+
+      (key == GDK_SHIFT_MASK && /* toggle back after keypresses CTRL(hold)->  */
+       ! press               && /* SHIFT(hold)->CTRL(release)->SHIFT(release) */
+       dodgeburn->toggled    &&
+       ! (state & GDK_CONTROL_MASK)))
     {
+      dodgeburn->toggled = press;
+
       switch (options->type)
         {
         case GIMP_DODGE:

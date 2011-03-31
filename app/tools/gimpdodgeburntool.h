@@ -37,6 +37,8 @@ typedef struct _GimpDodgeBurnToolClass GimpDodgeBurnToolClass;
 struct _GimpDodgeBurnTool
 {
   GimpBrushTool parent_instance;
+
+  gboolean      toggled;
 };
 
 struct _GimpDodgeBurnToolClass

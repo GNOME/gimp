@@ -38,6 +38,8 @@ typedef struct _GimpConvolveToolClass GimpConvolveToolClass;
 struct _GimpConvolveTool
 {
   GimpBrushTool parent_instance;
+
+  gboolean      toggled;
 };
 
 struct _GimpConvolveToolClass
