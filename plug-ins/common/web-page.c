@@ -53,6 +53,7 @@ static WebpageVals webpagevals =
   };
 
 static GdkPixbuf *webpixbuf;
+static GError *weberror;
 
 static void     query           (void);
 static void     run             (const gchar      *name,
@@ -162,19 +163,27 @@ run (const gchar      *name,
       image_id = webpage_capture ();
 
       if (image_id == -1)
-        status = GIMP_PDB_EXECUTION_ERROR;
-    };
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_display_new (image_id);
+          if (weberror)
+            {
+              *nreturn_vals = 2;
 
-      /* set return values */
-      *nreturn_vals = 2;
+              values[1].type = GIMP_PDB_STRING;
+              values[1].data.d_string = weberror->message;
+            }
+        }
+      else
+        {
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_display_new (image_id);
 
-      values[1].type         = GIMP_PDB_IMAGE;
-      values[1].data.d_image = image_id;
+          *nreturn_vals = 2;
+
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_id;
+        }
     }
 
   values[0].data.d_status = status;
@@ -300,30 +309,66 @@ notify_progress_cb (WebKitWebView  *view,
     }
 }
 
-static void
-load_finished_cb (WebKitWebView  *view,
-                  WebKitWebFrame *frame,
-                  gpointer        user_data)
+static gboolean
+load_error_cb (WebKitWebView  *view,
+               WebKitWebFrame *web_frame,
+               gchar          *uri,
+               gpointer        web_error,
+               gpointer        user_data)
 {
-  GtkWidget *window = GTK_WIDGET (user_data);
-
-  webpixbuf = gtk_offscreen_window_get_pixbuf (GTK_OFFSCREEN_WINDOW (window));
+  weberror = g_error_copy ((GError *) web_error);
 
   gtk_main_quit ();
+
+  return TRUE;
+}
+
+static void
+notify_load_status_cb (WebKitWebView  *view,
+                       GParamSpec     *pspec,
+                       gpointer        user_data)
+{
+  WebKitLoadStatus status;
+
+  g_object_get (view,
+                "load-status", &status,
+                NULL);
+
+  if (status == WEBKIT_LOAD_FINISHED)
+    {
+      if (!weberror)
+        {
+          webpixbuf = gtk_offscreen_window_get_pixbuf
+            (GTK_OFFSCREEN_WINDOW (user_data));
+        }
+
+      gtk_main_quit ();
+    }
 }
 
 static gint32
 webpage_capture (void)
 {
   gint32 image = -1;
+  gchar *scheme;
   GtkWidget *window;
   GtkWidget *view;
-  gchar *scheme;
 
-  if ((! webpagevals.url) ||
+  if (webpixbuf)
+    {
+      g_object_unref (webpixbuf);
+      webpixbuf = NULL;
+    }
+  if (weberror)
+    {
+      g_error_free (weberror);
+      weberror = NULL;
+    }
+
+  if ((!webpagevals.url) ||
       (strlen (webpagevals.url) == 0))
     {
-      g_warning ("No URI was provided.");
+      g_set_error (&weberror, 0, 0, _("No URL was specified"));
       return -1;
     }
 
@@ -337,8 +382,9 @@ webpage_capture (void)
       url = g_strconcat ("http://", webpagevals.url, NULL);
       g_free (webpagevals.url);
       webpagevals.url = url;
+
+      g_free (scheme);
     }
-  g_free (scheme);
 
   if (webpagevals.width < 32)
     {
@@ -353,12 +399,6 @@ webpage_capture (void)
       webpagevals.width = 8192;
     }
 
-  if (webpixbuf)
-    {
-      g_object_unref (webpixbuf);
-      webpixbuf = NULL;
-    }
-
   window = gtk_offscreen_window_new ();
   gtk_widget_show (window);
 
@@ -371,8 +411,11 @@ webpage_capture (void)
   g_signal_connect (view, "notify::progress",
                     G_CALLBACK (notify_progress_cb),
                     window);
-  g_signal_connect (view, "load-finished",
-                    G_CALLBACK (load_finished_cb),
+  g_signal_connect (view, "load-error",
+                    G_CALLBACK (load_error_cb),
+                    window);
+  g_signal_connect (view, "notify::load-status",
+                    G_CALLBACK (notify_load_status_cb),
                     window);
 
   gimp_progress_init_printf (_("Downloading webpage `%s'"), webpagevals.url);
