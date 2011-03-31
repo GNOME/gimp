@@ -22,7 +22,6 @@
  *
  * TODO:
  * - Add a font scale combo: default, larger, smaller etc.
- * - Save/restore URL and width
  * - Set GIMP as user agent
  */
 
@@ -38,6 +37,7 @@
 /* Defines */
 #define PLUG_IN_PROC   "plug-in-web-page"
 #define PLUG_IN_BINARY "web-page"
+#define MAX_URL_LEN   256
 
 typedef struct
 {
@@ -45,11 +45,13 @@ typedef struct
   gint32  width;
 } WebpageVals;
 
-static WebpageVals webpagevals =
-  {
-    NULL,
-    1024
-  };
+static WebpageVals webpagevals;
+
+typedef struct
+{
+  char		url[MAX_URL_LEN];
+  gint32	width;
+} WebpageSaveVals;
 
 static GdkPixbuf *webpixbuf;
 static GError *weberror;
@@ -120,8 +122,8 @@ run (const gchar      *name,
   GimpRunMode        run_mode = param[0].data.d_int32;
   GimpPDBStatusType  status   = GIMP_PDB_EXECUTION_ERROR;
   gint32             image_id = -1;
-
   static GimpParam   values[2];
+  WebpageSaveVals    save = {"http://www.gimp.org/", 1024};
 
   INIT_I18N ();
 
@@ -132,6 +134,11 @@ run (const gchar      *name,
 
   /* MUST call this before any RSVG funcs */
   g_type_init ();
+
+  gimp_get_data (PLUG_IN_PROC, &save);
+
+  webpagevals.url = g_strdup (save.url);
+  webpagevals.width = save.width;
 
   /* how are we running today? */
   switch (run_mode)
@@ -175,6 +182,20 @@ run (const gchar      *name,
         }
       else
         {
+	  save.width = webpagevals.width;
+
+	  if (strlen (webpagevals.url) < MAX_URL_LEN)
+	    {
+	      strncpy (save.url, webpagevals.url, MAX_URL_LEN);
+	      save.url[MAX_URL_LEN - 1] = 0;
+	    }
+	  else
+	    {
+	      memset (save.url, 0, MAX_URL_LEN);
+	    }
+
+	  gimp_set_data (PLUG_IN_PROC, &save, sizeof save);
+
           if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_display_new (image_id);
 
@@ -250,10 +271,6 @@ webpage_dialog (void)
   if (webpagevals.url)
     gtk_entry_set_text (GTK_ENTRY (entry),
                         webpagevals.url);
-  else
-    gtk_entry_set_text (GTK_ENTRY (entry),
-                        "http://www.gimp.org/");
-
   gtk_widget_show (entry);
 
   hbox = gtk_hbox_new (FALSE, 6);
