@@ -49,8 +49,8 @@ static WebpageVals webpagevals;
 
 typedef struct
 {
-  char		url[MAX_URL_LEN];
-  gint32	width;
+  char          url[MAX_URL_LEN];
+  gint32        width;
 } WebpageSaveVals;
 
 static GdkPixbuf *webpixbuf;
@@ -182,19 +182,19 @@ run (const gchar      *name,
         }
       else
         {
-	  save.width = webpagevals.width;
+          save.width = webpagevals.width;
 
-	  if (strlen (webpagevals.url) < MAX_URL_LEN)
-	    {
-	      strncpy (save.url, webpagevals.url, MAX_URL_LEN);
-	      save.url[MAX_URL_LEN - 1] = 0;
-	    }
-	  else
-	    {
-	      memset (save.url, 0, MAX_URL_LEN);
-	    }
+          if (strlen (webpagevals.url) < MAX_URL_LEN)
+            {
+              strncpy (save.url, webpagevals.url, MAX_URL_LEN);
+              save.url[MAX_URL_LEN - 1] = 0;
+            }
+          else
+            {
+              memset (save.url, 0, MAX_URL_LEN);
+            }
 
-	  gimp_set_data (PLUG_IN_PROC, &save, sizeof save);
+          gimp_set_data (PLUG_IN_PROC, &save, sizeof save);
 
           if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_display_new (image_id);
