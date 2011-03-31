@@ -311,6 +311,7 @@ app/text/text-enums.c
 
 app/tools/gimp-tools.c
 app/tools/gimpairbrushtool.c
+app/tools/gimpalignoptions.c
 app/tools/gimpaligntool.c
 app/tools/gimpblendoptions.c
 app/tools/gimpblendtool.c
