@@ -22,6 +22,9 @@
  *
  * TODO:
  * - Add progress bar
+ * - Add a font scale combo: default, larger, smaller etc.
+ * - Try adding http:// itself if it was not provided
+ * - Save/restore URL and width
  * - Set GIMP as user agent
  */
 
