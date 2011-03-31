@@ -387,13 +387,13 @@ webpage_capture (void)
 
   if (webpagevals.width < 32)
     {
-      g_warning ("Width `%d' is too small. Clamped to 32.",
+      g_warning ("Width '%d' is too small. Clamped to 32.",
                  webpagevals.width);
       webpagevals.width = 32;
     }
   else if (webpagevals.width > 8192)
     {
-      g_warning ("Width `%d' is too large. Clamped to 8192.",
+      g_warning ("Width '%d' is too large. Clamped to 8192.",
                  webpagevals.width);
       webpagevals.width = 8192;
     }
@@ -417,7 +417,7 @@ webpage_capture (void)
                     G_CALLBACK (notify_load_status_cb),
                     window);
 
-  gimp_progress_init_printf (_("Downloading webpage `%s'"), webpagevals.url);
+  gimp_progress_init_printf (_("Downloading webpage '%s'"), webpagevals.url);
 
   webkit_web_view_open (WEBKIT_WEB_VIEW (view),
                         webpagevals.url);
@@ -432,7 +432,7 @@ webpage_capture (void)
       gint height;
       gint32 layer;
 
-      gimp_progress_init_printf (_("Transferring webpage image for `%s'"),
+      gimp_progress_init_printf (_("Transferring webpage image for '%s'"),
                                  webpagevals.url);
 
       width  = gdk_pixbuf_get_width (webpixbuf);
