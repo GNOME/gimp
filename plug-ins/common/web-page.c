@@ -83,9 +83,9 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_INT32, "url",       "URL of the webpage to screenshot"                             },
-    { GIMP_PDB_INT32, "width",     "The width of the screenshot"                                  }
+    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_STRING, "url",      "URL of the webpage to screenshot"                             },
+    { GIMP_PDB_INT32,  "width",    "The width of the screenshot"                                  }
   };
 
   static const GimpParamDef return_vals[] =
