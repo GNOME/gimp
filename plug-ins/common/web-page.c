@@ -446,8 +446,6 @@ webpage_capture (void)
       gimp_image_insert_layer (image, layer, -1, 0);
       gimp_image_undo_enable (image);
 
-      gimp_image_clean_all (image);
-
       g_object_unref (webpixbuf);
       webpixbuf = NULL;
     }
