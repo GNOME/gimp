@@ -22,6 +22,7 @@
  *
  * TODO:
  * - Add progress bar
+ * - Report failures when loading URLs
  * - Add a font scale combo: default, larger, smaller etc.
  * - Save/restore URL and width
  * - Set GIMP as user agent
