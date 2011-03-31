@@ -141,6 +141,8 @@ static GtkWidget      *fill_type_notebook;
 static GtkActionGroup *gfig_actions    = NULL;
 
 
+static void       gfig_destroy               (GtkWidget *widget,
+                                              gpointer   data);
 static void       gfig_response              (GtkWidget *widget,
                                               gint       response_id,
                                               gpointer   data);
@@ -300,7 +302,7 @@ gfig_dialog (void)
                     G_CALLBACK (gfig_response),
                     top_level_dlg);
   g_signal_connect (top_level_dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
+                    G_CALLBACK (gfig_destroy),
                     NULL);
 
   /* build the menu */
@@ -538,6 +540,14 @@ gfig_dialog (void)
 
   /* FIXME */
   return TRUE;
+}
+
+static void
+gfig_destroy (GtkWidget *widget,
+              gpointer data)
+{
+  gfig_response (widget, GTK_RESPONSE_CANCEL, data);
+  gtk_main_quit ();
 }
 
 static void
