@@ -188,7 +188,8 @@ webpage_dialog (void)
   GtkWidget *image;
   GtkWidget *label;
   GtkWidget *entry;
-  gboolean status;
+  gint status;
+  gboolean ret = FALSE;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -249,11 +250,13 @@ webpage_dialog (void)
     {
       g_free (webpagevals.url);
       webpagevals.url = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+
+      ret = TRUE;
     }
 
   gtk_widget_destroy (dialog);
 
-  return status;
+  return ret;
 }
 
 static void
