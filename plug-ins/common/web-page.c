@@ -21,7 +21,6 @@
  * file-open-location-dialog.c code.
  *
  * TODO:
- * - Add progress bar
  * - Report failures when loading URLs
  * - Add a font scale combo: default, larger, smaller etc.
  * - Save/restore URL and width
@@ -283,6 +282,20 @@ webpage_dialog (void)
 }
 
 static void
+notify_progress_cb (WebKitWebView  *view,
+                    GParamSpec     *pspec,
+                    gpointer        user_data)
+{
+  gdouble progress;
+
+  g_object_get (view,
+                "progress", &progress,
+                NULL);
+
+  gimp_progress_update (progress);
+}
+
+static void
 load_finished_cb (WebKitWebView  *view,
                   WebKitWebFrame *frame,
                   gpointer        user_data)
@@ -350,9 +363,14 @@ webpage_capture (void)
   gtk_widget_set_size_request (view, webpagevals.width, -1);
   gtk_container_add (GTK_CONTAINER (window), view);
 
+  g_signal_connect (view, "notify::progress",
+                    G_CALLBACK (notify_progress_cb),
+                    window);
   g_signal_connect (view, "load-finished",
                     G_CALLBACK (load_finished_cb),
                     window);
+
+  gimp_progress_init_printf (_("Downloading webpage '%s'"), webpagevals.url);
 
   webkit_web_view_open (WEBKIT_WEB_VIEW (view),
                         webpagevals.url);
@@ -367,7 +385,8 @@ webpage_capture (void)
       gint height;
       gint32 layer;
 
-      gimp_progress_init (_("Preparing webpage"));
+      gimp_progress_init_printf (_("Transferring webpage image for '%s'"),
+                                 webpagevals.url);
 
       width  = gdk_pixbuf_get_width (webpixbuf);
       height = gdk_pixbuf_get_height (webpixbuf);
