@@ -37,7 +37,7 @@
 /* Defines */
 #define PLUG_IN_PROC   "plug-in-web-page"
 #define PLUG_IN_BINARY "web-page"
-#define MAX_URL_LEN   256
+#define MAX_URL_LEN    1024
 
 typedef struct
 {
