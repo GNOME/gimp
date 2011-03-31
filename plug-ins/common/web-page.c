@@ -21,7 +21,6 @@
  * file-open-location-dialog.c code.
  *
  * TODO:
- * - Report failures when loading URLs
  * - Add a font scale combo: default, larger, smaller etc.
  * - Save/restore URL and width
  * - Set GIMP as user agent
