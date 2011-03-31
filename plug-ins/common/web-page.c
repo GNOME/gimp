@@ -169,7 +169,7 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_display_new (image_id);
+        gimp_display_new (image_id);
 
       /* set return values */
       *nreturn_vals = 2;
@@ -260,8 +260,8 @@ webpage_dialog (void)
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&adjustment, webpagevals.width,
-				     1, 8192,
-				     1, 10, 0, 1, 0);
+                                     1, 8192,
+                                     1, 10, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -272,7 +272,7 @@ webpage_dialog (void)
       webpagevals.url = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
 
       webpagevals.width = (gint) gtk_adjustment_get_value
-	(GTK_ADJUSTMENT (adjustment));
+        (GTK_ADJUSTMENT (adjustment));
 
       ret = TRUE;
     }
