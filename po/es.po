@@ -6,6 +6,7 @@
 #
 #
 #
+#
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Alonso Lara <keko@khor-ha.net>, 2005.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003, 2004, 2005, 2006.
@@ -20,8 +21,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-03-28 10:25+0000\n"
-"PO-Revision-Date: 2011-03-28 12:40+0200\n"
+"POT-Creation-Date: 2011-03-31 09:24+0000\n"
+"PO-Revision-Date: 2011-03-31 12:57+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1411,7 +1412,7 @@ msgstr "Menú de diálogos"
 #: ../app/actions/dockable-actions.c:53
 msgctxt "dockable-action"
 msgid "_Add Tab"
-msgstr "_Añadir solapa"
+msgstr "_Añadir pestaña"
 
 #: ../app/actions/dockable-actions.c:55
 msgctxt "dockable-action"
@@ -1421,17 +1422,17 @@ msgstr "Tamaño de la vista _previa"
 #: ../app/actions/dockable-actions.c:57
 msgctxt "dockable-action"
 msgid "_Tab Style"
-msgstr "Es_tilo de solapa"
+msgstr "Es_tilo de pestaña"
 
 #: ../app/actions/dockable-actions.c:60
 msgctxt "dockable-action"
 msgid "_Close Tab"
-msgstr "_Cerrar solapa"
+msgstr "_Cerrar pestaña"
 
 #: ../app/actions/dockable-actions.c:65
 msgctxt "dockable-action"
 msgid "_Detach Tab"
-msgstr "_Desprender solapa"
+msgstr "_Desprender pestaña"
 
 #: ../app/actions/dockable-actions.c:84
 msgctxt "preview-size"
@@ -6428,7 +6429,7 @@ msgid ""
 msgstr ""
 "Cuando está activado puede cambiar las combinaciones de teclas de los "
 "elementos del menú presionando una combinación de teclas mientras el "
-"elemento del menú está seleccionado."
+"elemento del menú está resaltado."
 
 #: ../app/config/gimprc-blurbs.h:389
 msgid "Save changed keyboard shortcuts when GIMP exits."
@@ -9295,12 +9296,12 @@ msgstr "_Nombre de la capa:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1078
+#: ../app/tools/gimpmeasuretool.c:1140
 msgid "Width:"
 msgstr "Anchura:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1106
+#: ../app/tools/gimpmeasuretool.c:1168
 msgid "Height:"
 msgstr "Altura:"
 
@@ -10638,9 +10639,9 @@ msgstr "No se pueden modificar píxeles de los grupos de capas."
 
 #: ../app/display/gimpdisplayshell-dnd.c:355
 #: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:181
-#: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:336
+#: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:340
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:275
-#: ../app/tools/gimptransformtool.c:254 ../app/tools/gimptransformtool.c:1139
+#: ../app/tools/gimptransformtool.c:254 ../app/tools/gimptransformtool.c:1101
 msgid "The active layer's pixels are locked."
 msgstr "Los píxeles de la capa activa están bloqueados."
 
@@ -10663,12 +10664,12 @@ msgstr "Filtros de pantalla de color"
 msgid "Configure Color Display Filters"
 msgstr "Configuración de los filtros de colores de la pantalla"
 
-#: ../app/display/gimpdisplayshell-handlers.c:804
+#: ../app/display/gimpdisplayshell-handlers.c:796
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Imagen guardada en «%s»"
 
-#: ../app/display/gimpdisplayshell-handlers.c:818
+#: ../app/display/gimpdisplayshell-handlers.c:810
 #, c-format
 msgid "Image exported to '%s'"
 msgstr "Imagen exportada en «%s»"
@@ -11476,7 +11477,7 @@ msgstr ""
 "El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el "
 "saxofón detrás del palenque de paja."
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1389
+#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1392
 msgid "Add Text Layer"
 msgstr "Añadir una capa de texto"
 
@@ -11581,105 +11582,105 @@ msgstr "Tasa"
 msgid "Flow"
 msgstr "Flujo"
 
-#: ../app/tools/gimpaligntool.c:133 ../app/tools/gimpaligntool.c:770
-msgid "Align"
-msgstr "Alineado"
-
-#: ../app/tools/gimpaligntool.c:134
-msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr "Herramienta de alineación:Alinee o coloque capas y otros objetos"
-
-#: ../app/tools/gimpaligntool.c:135
-msgid "_Align"
-msgstr "_Alineado"
-
-#: ../app/tools/gimpaligntool.c:589
-msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
-msgstr "Pulse sobre una capa, ruta o guía, o arrastre para elegir varias capas"
-
-#: ../app/tools/gimpaligntool.c:598
-msgid "Click to pick this layer as first item"
-msgstr "Pulse para elegir esta capa como primer elemento"
-
-#: ../app/tools/gimpaligntool.c:606
-msgid "Click to add this layer to the list"
-msgstr "Pulse para añadir esta capa a la lista"
-
-#: ../app/tools/gimpaligntool.c:610
-msgid "Click to pick this guide as first item"
-msgstr "Pulse para elegir esta guía como primer elemento"
-
-#: ../app/tools/gimpaligntool.c:618
-msgid "Click to add this guide to the list"
-msgstr "Pulse para añadir esta guía a la lista"
-
-#: ../app/tools/gimpaligntool.c:622
-msgid "Click to pick this path as first item"
-msgstr "Pulse para elegir esta ruta como primer elemento"
-
-#: ../app/tools/gimpaligntool.c:630
-msgid "Click to add this path to the list"
-msgstr "Pulse para añadir esta ruta a la lista"
-
-#: ../app/tools/gimpaligntool.c:782
-msgid "Relative to:"
-msgstr "Relativo a:"
-
-#: ../app/tools/gimpaligntool.c:800
+#: ../app/tools/gimpalignoptions.c:244 ../app/tools/gimpalignoptions.c:295
 msgid "Align left edge of target"
 msgstr "Alinear al borde izquierdo del objetivo"
 
-#: ../app/tools/gimpaligntool.c:806
+#: ../app/tools/gimpalignoptions.c:269 ../app/tools/gimpaligntool.c:126
+msgid "Align"
+msgstr "Alineado"
+
+#: ../app/tools/gimpalignoptions.c:281
+msgid "Relative to:"
+msgstr "Relativo a:"
+
+#: ../app/tools/gimpalignoptions.c:299
 msgid "Align center of target"
 msgstr "Alinear al centro del objetivo"
 
-#: ../app/tools/gimpaligntool.c:812
+#: ../app/tools/gimpalignoptions.c:303
 msgid "Align right edge of target"
 msgstr "Alinear al borde derecho del objetivo"
 
-#: ../app/tools/gimpaligntool.c:822
+#: ../app/tools/gimpalignoptions.c:311
 msgid "Align top edge of target"
 msgstr "Alinear al borde superior del objetivo"
 
-#: ../app/tools/gimpaligntool.c:828
+#: ../app/tools/gimpalignoptions.c:315
 msgid "Align middle of target"
 msgstr "Alinear a la mitad del objetivo"
 
-#: ../app/tools/gimpaligntool.c:834
+#: ../app/tools/gimpalignoptions.c:319
 msgid "Align bottom of target"
 msgstr "Alinear a la parte inferior del objetivo"
 
-#: ../app/tools/gimpaligntool.c:838
+#: ../app/tools/gimpalignoptions.c:321
 msgid "Distribute"
 msgstr "Distribuir"
 
-#: ../app/tools/gimpaligntool.c:852
+#: ../app/tools/gimpalignoptions.c:335
 msgid "Distribute left edges of targets"
 msgstr "Distribuir los bordes izquierdos de los objetivos"
 
-#: ../app/tools/gimpaligntool.c:859
+#: ../app/tools/gimpalignoptions.c:339
 msgid "Distribute horizontal centers of targets"
 msgstr "Distribuir horizontalmente los centros de los objetivos"
 
-#: ../app/tools/gimpaligntool.c:866
+#: ../app/tools/gimpalignoptions.c:343
 msgid "Distribute right edges of targets"
 msgstr "Distribuir los bordes derechos de los objetivos"
 
-#: ../app/tools/gimpaligntool.c:876
+#: ../app/tools/gimpalignoptions.c:351
 msgid "Distribute top edges of targets"
 msgstr "Distribuir los bordes superiores de los objetivos"
 
-#: ../app/tools/gimpaligntool.c:883
+#: ../app/tools/gimpalignoptions.c:355
 msgid "Distribute vertical centers of targets"
 msgstr "Distribuir los centros verticales de los objetivos"
 
-#: ../app/tools/gimpaligntool.c:889
+#: ../app/tools/gimpalignoptions.c:359
 msgid "Distribute bottoms of targets"
 msgstr "Distribuir las partes inferiores de los objetivos"
 
-#: ../app/tools/gimpaligntool.c:897
+#: ../app/tools/gimpalignoptions.c:365
 msgid "Offset:"
 msgstr "Desplazamiento:"
+
+#: ../app/tools/gimpaligntool.c:127
+msgid "Alignment Tool: Align or arrange layers and other objects"
+msgstr "Herramienta de alineación:Alinee o coloque capas y otros objetos"
+
+#: ../app/tools/gimpaligntool.c:128
+msgid "_Align"
+msgstr "_Alineado"
+
+#: ../app/tools/gimpaligntool.c:553
+msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
+msgstr "Pulse sobre una capa, ruta o guía, o arrastre para elegir varias capas"
+
+#: ../app/tools/gimpaligntool.c:561
+msgid "Click to pick this layer as first item"
+msgstr "Pulse para elegir esta capa como primer elemento"
+
+#: ../app/tools/gimpaligntool.c:568
+msgid "Click to add this layer to the list"
+msgstr "Pulse para añadir esta capa a la lista"
+
+#: ../app/tools/gimpaligntool.c:572
+msgid "Click to pick this guide as first item"
+msgstr "Pulse para elegir esta guía como primer elemento"
+
+#: ../app/tools/gimpaligntool.c:579
+msgid "Click to add this guide to the list"
+msgstr "Pulse para añadir esta guía a la lista"
+
+#: ../app/tools/gimpaligntool.c:583
+msgid "Click to pick this path as first item"
+msgstr "Pulse para elegir esta ruta como primer elemento"
+
+#: ../app/tools/gimpaligntool.c:590
+msgid "Click to add this path to the list"
+msgstr "Pulse para añadir esta ruta a la lista"
 
 #: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:335
 msgid "Gradient"
@@ -11761,15 +11762,15 @@ msgstr "Exportar los ajustes de Brillo y contraste"
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Brillo-Contraste no funciona sobre capas indexadas."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:319
+#: ../app/tools/gimpbrightnesscontrasttool.c:315
 msgid "_Brightness:"
 msgstr "_Brillo:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:332
+#: ../app/tools/gimpbrightnesscontrasttool.c:328
 msgid "Con_trast:"
 msgstr "Con_traste:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:344
+#: ../app/tools/gimpbrightnesscontrasttool.c:340
 msgid "Edit these Settings as Levels"
 msgstr "Editar estos ajustes como niveles"
 
@@ -11873,7 +11874,7 @@ msgstr "Transformar rejilla: deformar una selección con una rejilla"
 msgid "_Cage Transform"
 msgstr "_Transformar rejilla"
 
-#: ../app/tools/gimpcagetool.c:328
+#: ../app/tools/gimpcagetool.c:322
 msgid "Press ENTER to commit the transform"
 msgstr "Pulse INTRO para realizar la transformación"
 
@@ -12180,11 +12181,11 @@ msgstr "Herramienta de recorte: quitar zonas del borde de la capa o imagen"
 msgid "_Crop"
 msgstr "_Recortar"
 
-#: ../app/tools/gimpcroptool.c:266
+#: ../app/tools/gimpcroptool.c:268
 msgid "Click or press Enter to crop"
 msgstr "Pulse o presione «Retorno» para recortar"
 
-#: ../app/tools/gimpcroptool.c:329
+#: ../app/tools/gimpcroptool.c:333
 msgid "There is no active layer to crop."
 msgstr "No hay una capa activa que cortar."
 
@@ -12331,12 +12332,12 @@ msgid "Move Selection"
 msgstr "Mover la selección"
 
 #: ../app/tools/gimpeditselectiontool.c:243
-#: ../app/tools/gimpeditselectiontool.c:1235
+#: ../app/tools/gimpeditselectiontool.c:1237
 msgid "Move Floating Selection"
 msgstr "Mover la selección flotante"
 
 #: ../app/tools/gimpeditselectiontool.c:452
-#: ../app/tools/gimpeditselectiontool.c:727
+#: ../app/tools/gimpeditselectiontool.c:729
 msgid "Move: "
 msgstr "Mover: "
 
@@ -12493,20 +12494,20 @@ msgstr ""
 msgid "F_oreground Select"
 msgstr "Selección del _frente"
 
-#: ../app/tools/gimpforegroundselecttool.c:306
+#: ../app/tools/gimpforegroundselecttool.c:301
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr ""
 "Añada más pulsaciones de tecla o presione «Retorno» para aceptar la selección"
 
-#: ../app/tools/gimpforegroundselecttool.c:308
+#: ../app/tools/gimpforegroundselecttool.c:303
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Marque el frente pintando sobre el objeto que quiere extraer"
 
-#: ../app/tools/gimpforegroundselecttool.c:319
+#: ../app/tools/gimpforegroundselecttool.c:308
 msgid "Roughly outline the object to extract"
 msgstr "Dibuje un círculo aproximado alrededor del objeto que quiere extraer"
 
-#: ../app/tools/gimpforegroundselecttool.c:771
+#: ../app/tools/gimpforegroundselecttool.c:750
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Selección del frente"
@@ -12541,7 +12542,7 @@ msgstr ""
 "Pulse y arrastre para añadir un segmento libre, pulse para añadir un "
 "segmento poligonal"
 
-#: ../app/tools/gimpfreeselecttool.c:1638
+#: ../app/tools/gimpfreeselecttool.c:1632
 msgctxt "command"
 msgid "Free Select"
 msgstr "Selección libre"
@@ -12767,32 +12768,32 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "Tijeras _inteligentes"
 
-#: ../app/tools/gimpiscissorstool.c:931 ../app/tools/gimpmeasuretool.c:612
+#: ../app/tools/gimpiscissorstool.c:925 ../app/tools/gimpmeasuretool.c:599
 msgid "Click-Drag to move this point"
 msgstr "Pulse y arrastre para mover este punto"
 
-#: ../app/tools/gimpiscissorstool.c:933 ../app/tools/gimpiscissorstool.c:998
+#: ../app/tools/gimpiscissorstool.c:927 ../app/tools/gimpiscissorstool.c:992
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: desactivar el autoajuste"
 
-#: ../app/tools/gimpiscissorstool.c:950
+#: ../app/tools/gimpiscissorstool.c:944
 msgid "Click to close the curve"
 msgstr "Pulse para cerrar la curva"
 
-#: ../app/tools/gimpiscissorstool.c:956
+#: ../app/tools/gimpiscissorstool.c:950
 msgid "Click to add a point on this segment"
 msgstr "Pulse para añadir un punto sobre este segmento"
 
-#: ../app/tools/gimpiscissorstool.c:970
+#: ../app/tools/gimpiscissorstool.c:964
 msgid "Click or press Enter to convert to a selection"
 msgstr "Pulse con el ratón o presione «Retorno» para convertir a una selección"
 
-#: ../app/tools/gimpiscissorstool.c:980
+#: ../app/tools/gimpiscissorstool.c:974
 msgid "Press Enter to convert to a selection"
 msgstr "Presione «Retorno» para convertir a una selección"
 
-#: ../app/tools/gimpiscissorstool.c:995
+#: ../app/tools/gimpiscissorstool.c:989
 msgid "Click or Click-Drag to add a point"
 msgstr "Pulse o arrastre para añadir un punto"
 
@@ -12890,57 +12891,61 @@ msgstr "_Ampliación"
 msgid "Use info window"
 msgstr "Usar la ventana de información"
 
-#: ../app/tools/gimpmeasuretool.c:124
+#: ../app/tools/gimpmeasuretool.c:129
 msgid "Measure"
 msgstr "Medir"
 
-#: ../app/tools/gimpmeasuretool.c:125
+#: ../app/tools/gimpmeasuretool.c:130
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Herramienta de medida: medir distancias y ángulos"
 
-#: ../app/tools/gimpmeasuretool.c:126
+#: ../app/tools/gimpmeasuretool.c:131
 msgid "_Measure"
 msgstr "_Medir"
 
-#: ../app/tools/gimpmeasuretool.c:247
+#: ../app/tools/gimpmeasuretool.c:244
 msgid "Add Guides"
 msgstr "Añadir guías"
 
-#: ../app/tools/gimpmeasuretool.c:563
+#: ../app/tools/gimpmeasuretool.c:310
+msgid "Drag to create a line"
+msgstr "Arrastre para crear una línea"
+
+#: ../app/tools/gimpmeasuretool.c:554
 msgid "Click to place vertical and horizontal guides"
 msgstr "Pulse para colocar guías verticales y horizontales"
 
-#: ../app/tools/gimpmeasuretool.c:572
+#: ../app/tools/gimpmeasuretool.c:562
 msgid "Click to place a horizontal guide"
 msgstr "Pulse para colocar una guía horizontal"
 
-#: ../app/tools/gimpmeasuretool.c:587
+#: ../app/tools/gimpmeasuretool.c:576
 msgid "Click to place a vertical guide"
 msgstr "Pulse para colocar una guía vertical"
 
-#: ../app/tools/gimpmeasuretool.c:601
+#: ../app/tools/gimpmeasuretool.c:589
 msgid "Click-Drag to add a new point"
 msgstr "Pulse y arrastre para añadir un punto nuevo"
 
-#: ../app/tools/gimpmeasuretool.c:632
+#: ../app/tools/gimpmeasuretool.c:618
 msgid "Click-Drag to move all points"
 msgstr "Pulse y arrastre para mover todos los puntos"
 
-#: ../app/tools/gimpmeasuretool.c:888 ../app/tools/gimpmeasuretool.c:1033
-#: ../app/tools/gimpmeasuretool.c:1089 ../app/tools/gimpmeasuretool.c:1117
+#: ../app/tools/gimpmeasuretool.c:950 ../app/tools/gimpmeasuretool.c:1095
+#: ../app/tools/gimpmeasuretool.c:1151 ../app/tools/gimpmeasuretool.c:1179
 #: ../app/tools/gimppainttool.c:636
 msgid "pixels"
 msgstr "píxeles"
 
-#: ../app/tools/gimpmeasuretool.c:1001
+#: ../app/tools/gimpmeasuretool.c:1063
 msgid "Measure Distances and Angles"
 msgstr "Medida de distancias y ángulos"
 
-#: ../app/tools/gimpmeasuretool.c:1022
+#: ../app/tools/gimpmeasuretool.c:1084
 msgid "Distance:"
 msgstr "Distancia:"
 
-#: ../app/tools/gimpmeasuretool.c:1050 ../app/widgets/gimpbrusheditor.c:205
+#: ../app/tools/gimpmeasuretool.c:1112 ../app/widgets/gimpbrusheditor.c:205
 msgid "Angle:"
 msgstr "Ángulo:"
 
@@ -12968,32 +12973,32 @@ msgstr "Mover la ruta activa"
 msgid "Move:"
 msgstr "Mover:"
 
-#: ../app/tools/gimpmovetool.c:128
+#: ../app/tools/gimpmovetool.c:127
 msgctxt "tool"
 msgid "Move"
 msgstr "Mover"
 
-#: ../app/tools/gimpmovetool.c:129
+#: ../app/tools/gimpmovetool.c:128
 msgid "Move Tool: Move layers, selections, and other objects"
 msgstr "Herramienta mover: mover capas, selecciones y otros objetos"
 
-#: ../app/tools/gimpmovetool.c:130
+#: ../app/tools/gimpmovetool.c:129
 msgid "_Move"
 msgstr "_Mover"
 
-#: ../app/tools/gimpmovetool.c:247 ../app/tools/gimpmovetool.c:538
+#: ../app/tools/gimpmovetool.c:246 ../app/tools/gimpmovetool.c:537
 msgid "Move Guide: "
 msgstr "Mover la guía: "
 
-#: ../app/tools/gimpmovetool.c:532
+#: ../app/tools/gimpmovetool.c:531
 msgid "Remove Guide"
 msgstr "Eliminar la guía"
 
-#: ../app/tools/gimpmovetool.c:532
+#: ../app/tools/gimpmovetool.c:531
 msgid "Cancel Guide"
 msgstr "Cancelar la guía"
 
-#: ../app/tools/gimpmovetool.c:538
+#: ../app/tools/gimpmovetool.c:537
 msgid "Add Guide: "
 msgstr "Añadir guía: "
 
@@ -13193,7 +13198,7 @@ msgstr "Tamaño:"
 
 #: ../app/tools/gimprectangleoptions.c:997
 msgid "Highlight"
-msgstr "Selección"
+msgstr "Resaltado"
 
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:1007
@@ -13221,7 +13226,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "Selección _rectangular"
 
-#: ../app/tools/gimprectangletool.c:1167 ../app/tools/gimprectangletool.c:2163
+#: ../app/tools/gimprectangletool.c:1163 ../app/tools/gimprectangletool.c:2159
 msgid "Rectangle: "
 msgstr "Rectángulo: "
 
@@ -13299,39 +13304,39 @@ msgstr "Alisado"
 msgid "Feather edges"
 msgstr "Difuminar los bordes"
 
-#: ../app/tools/gimpselectiontool.c:253
+#: ../app/tools/gimpselectiontool.c:252
 msgid "Click-Drag to replace the current selection"
 msgstr "Pulse y arrastre para sustituir la selección actual"
 
-#: ../app/tools/gimpselectiontool.c:261
+#: ../app/tools/gimpselectiontool.c:260
 msgid "Click-Drag to create a new selection"
 msgstr "Pulse y arrastre para crear una nueva selección"
 
-#: ../app/tools/gimpselectiontool.c:266
+#: ../app/tools/gimpselectiontool.c:265
 msgid "Click-Drag to add to the current selection"
 msgstr "Pulse y arrastre para añadir a la selección actual"
 
-#: ../app/tools/gimpselectiontool.c:275
+#: ../app/tools/gimpselectiontool.c:274
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Pulse y arrastre para sustraer de la selección actual"
 
-#: ../app/tools/gimpselectiontool.c:284
+#: ../app/tools/gimpselectiontool.c:283
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Pulse y arrastre para intersectar con la selección actual"
 
-#: ../app/tools/gimpselectiontool.c:294
+#: ../app/tools/gimpselectiontool.c:293
 msgid "Click-Drag to move the selection mask"
 msgstr "Pulse y arrastre para mover la máscara de selección"
 
-#: ../app/tools/gimpselectiontool.c:302
+#: ../app/tools/gimpselectiontool.c:301
 msgid "Click-Drag to move the selected pixels"
 msgstr "Pulse y arrastre para mover los píxeles seleccionados"
 
-#: ../app/tools/gimpselectiontool.c:306
+#: ../app/tools/gimpselectiontool.c:305
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Pulse y arrastre para mover una copia de los píxeles seleccionados"
 
-#: ../app/tools/gimpselectiontool.c:310
+#: ../app/tools/gimpselectiontool.c:309
 msgid "Click to anchor the floating selection"
 msgstr "Pulse para anclar la selección flotante"
 
@@ -13459,19 +13464,19 @@ msgstr "Herramienta de texto: crear o editar capas de texto"
 msgid "Te_xt"
 msgstr "Te_xto"
 
-#: ../app/tools/gimptexttool.c:953
+#: ../app/tools/gimptexttool.c:956
 msgid "Reshape Text Layer"
 msgstr "Cambiar forma de la capa de texto"
 
-#: ../app/tools/gimptexttool.c:1500 ../app/tools/gimptexttool.c:1503
+#: ../app/tools/gimptexttool.c:1503 ../app/tools/gimptexttool.c:1506
 msgid "Confirm Text Editing"
 msgstr "Confirmar la edición del texto"
 
-#: ../app/tools/gimptexttool.c:1507
+#: ../app/tools/gimptexttool.c:1510
 msgid "Create _New Layer"
 msgstr "Crear una capa _nueva"
 
-#: ../app/tools/gimptexttool.c:1531
+#: ../app/tools/gimptexttool.c:1534
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13549,8 +13554,6 @@ msgid "Preview:"
 msgstr "Vista previa:"
 
 #: ../app/tools/gimptransformoptions.c:319
-#| msgctxt "undo-type"
-#| msgid "Image type"
 msgid "Image opacity"
 msgstr "Opacidad de la imagen"
 
@@ -13568,15 +13571,15 @@ msgstr "Mantener proporción  (%s)"
 msgid "Transforming"
 msgstr "Transformando"
 
-#: ../app/tools/gimptransformtool.c:1138
+#: ../app/tools/gimptransformtool.c:1100
 msgid "There is no layer to transform."
 msgstr "No hay ninguna capa que transformar."
 
-#: ../app/tools/gimptransformtool.c:1151
+#: ../app/tools/gimptransformtool.c:1113
 msgid "There is no path to transform."
 msgstr "No hay ninguna ruta que transformar."
 
-#: ../app/tools/gimptransformtool.c:1152
+#: ../app/tools/gimptransformtool.c:1114
 msgid "The active path's strokes are locked."
 msgstr "Los trazos de la ruta activa están bloqueados"
 
@@ -14123,7 +14126,7 @@ msgstr "Quitar «%s» de la lista de filtros activos"
 msgid "No filter selected"
 msgstr "No hay ningún filtro seleccionado"
 
-#: ../app/widgets/gimpcoloreditor.c:259
+#: ../app/widgets/gimpcoloreditor.c:258
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -14596,7 +14599,7 @@ msgstr " | "
 
 #: ../app/widgets/gimpdockbook.c:290
 msgid "Configure this tab"
-msgstr "Configurar esta solapa"
+msgstr "Configurar esta pestaña"
 
 #. Auto button
 #: ../app/widgets/gimpdockwindow.c:349
