@@ -375,7 +375,7 @@ webpage_capture (void)
                     G_CALLBACK (load_finished_cb),
                     window);
 
-  gimp_progress_init_printf (_("Downloading webpage '%s'"), webpagevals.url);
+  gimp_progress_init_printf (_("Downloading webpage `%s'"), webpagevals.url);
 
   webkit_web_view_open (WEBKIT_WEB_VIEW (view),
                         webpagevals.url);
@@ -390,7 +390,7 @@ webpage_capture (void)
       gint height;
       gint32 layer;
 
-      gimp_progress_init_printf (_("Transferring webpage image for '%s'"),
+      gimp_progress_init_printf (_("Transferring webpage image for `%s'"),
                                  webpagevals.url);
 
       width  = gdk_pixbuf_get_width (webpixbuf);
