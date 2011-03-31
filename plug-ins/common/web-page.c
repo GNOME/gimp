@@ -286,13 +286,18 @@ notify_progress_cb (WebKitWebView  *view,
                     GParamSpec     *pspec,
                     gpointer        user_data)
 {
+  static gdouble old_progress = 0.0;
   gdouble progress;
 
   g_object_get (view,
                 "progress", &progress,
                 NULL);
 
-  gimp_progress_update (progress);
+  if ((progress - old_progress) > 0.01)
+    {
+      gimp_progress_update (progress);
+      old_progress = progress;
+    }
 }
 
 static void
