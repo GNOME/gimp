@@ -637,7 +637,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                               display);
           }
 
-        return_val = TRUE;
+        /*  don't update the cursor again on double click  */
+        return TRUE;
       }
       break;
 
@@ -663,7 +664,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                               display);
           }
 
-        return_val = TRUE;
+        /*  don't update the cursor again on triple click  */
+        return TRUE;
       }
       break;
 
