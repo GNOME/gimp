@@ -23,7 +23,6 @@
  * TODO:
  * - Add progress bar
  * - Add a font scale combo: default, larger, smaller etc.
- * - Try adding http:// itself if it was not provided
  * - Save/restore URL and width
  * - Set GIMP as user agent
  */
@@ -300,6 +299,7 @@ webpage_capture (void)
   gint32 image = -1;
   GtkWidget *window;
   GtkWidget *view;
+  gchar *scheme;
 
   if ((! webpagevals.url) ||
       (strlen (webpagevals.url) == 0))
@@ -307,6 +307,19 @@ webpage_capture (void)
       g_warning ("No URI was provided.");
       return -1;
     }
+
+  scheme = g_uri_parse_scheme (webpagevals.url);
+  if (!scheme)
+    {
+      char *url;
+
+      /* If we were not given a well-formed URL, make one. */
+
+      url = g_strconcat ("http://", webpagevals.url, NULL);
+      g_free (webpagevals.url);
+      webpagevals.url = url;
+    }
+  g_free (scheme);
 
   if (webpagevals.width < 32)
     {
