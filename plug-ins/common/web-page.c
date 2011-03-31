@@ -22,7 +22,6 @@
  *
  * TODO:
  * - Add progress bar
- * - Add width entry widget
  * - Set GIMP as user agent
  */
 
@@ -188,6 +187,8 @@ webpage_dialog (void)
   GtkWidget *image;
   GtkWidget *label;
   GtkWidget *entry;
+  GtkObject *adjustment;
+  GtkWidget *spinbutton;
   gint status;
   gboolean ret = FALSE;
 
@@ -245,11 +246,30 @@ webpage_dialog (void)
 
   gtk_widget_show (entry);
 
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Width (pixels):"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_spin_button_new (&adjustment, webpagevals.width,
+				     1, 8192,
+				     1, 10, 0, 1, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
   status = gimp_dialog_run (GIMP_DIALOG (dialog));
   if (status == GTK_RESPONSE_OK)
     {
       g_free (webpagevals.url);
       webpagevals.url = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+
+      webpagevals.width = (gint) gtk_adjustment_get_value
+	(GTK_ADJUSTMENT (adjustment));
 
       ret = TRUE;
     }
