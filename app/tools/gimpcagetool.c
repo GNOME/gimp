@@ -408,7 +408,13 @@ gimp_cage_tool_key_press (GimpTool    *tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      if (ct->tool_state == DEFORM_STATE_WAIT)
+      if (! ct->cage_complete)
+        {
+          g_object_set (gimp_tool_get_options (tool),
+                        "cage-mode", GIMP_CAGE_MODE_DEFORM,
+                        NULL);
+        }
+      else if (ct->tool_state == DEFORM_STATE_WAIT)
         {
           gimp_tool_control_set_preserve (tool->control, TRUE);
 
@@ -419,8 +425,10 @@ gimp_cage_tool_key_press (GimpTool    *tool,
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
           gimp_image_flush (gimp_display_get_image (display));
+
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
         }
-      /* don't break */
+      break;
 
     case GDK_KEY_Escape:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
@@ -824,7 +832,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_draw_tool_push_group (draw_tool, stroke_group);
 
-  /* If needed, draw ligne to the cursor. */
+  /* If needed, draw line to the cursor. */
   if (! ct->cage_complete)
     {
       GimpVector2 last_point;
