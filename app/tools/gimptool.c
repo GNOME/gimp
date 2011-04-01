@@ -51,6 +51,7 @@ enum
 
 
 static void       gimp_tool_constructed         (GObject               *object);
+static void       gimp_tool_dispose             (GObject               *object);
 static void       gimp_tool_finalize            (GObject               *object);
 static void       gimp_tool_set_property        (GObject               *object,
                                                  guint                  property_id,
@@ -143,6 +144,7 @@ gimp_tool_class_init (GimpToolClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed  = gimp_tool_constructed;
+  object_class->dispose      = gimp_tool_dispose;
   object_class->finalize     = gimp_tool_finalize;
   object_class->set_property = gimp_tool_set_property;
   object_class->get_property = gimp_tool_get_property;
@@ -202,6 +204,16 @@ gimp_tool_constructed (GObject *object)
 }
 
 static void
+gimp_tool_dispose (GObject *object)
+{
+  GimpTool *tool = GIMP_TOOL (object);
+
+  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_tool_finalize (GObject *object)
 {
   GimpTool *tool = GIMP_TOOL (object);
@@ -216,12 +228,6 @@ gimp_tool_finalize (GObject *object)
     {
       g_object_unref (tool->control);
       tool->control = NULL;
-    }
-
-  if (tool->status_displays)
-    {
-      g_list_free (tool->status_displays);
-      tool->status_displays = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -1195,18 +1201,8 @@ gimp_tool_options_notify (GimpToolOptions  *options,
 static void
 gimp_tool_clear_status (GimpTool *tool)
 {
-  GList *list;
-
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  list = tool->status_displays;
-  while (list)
-    {
-      GimpDisplay *display = list->data;
-
-      /*  get next element early because we modify the list  */
-      list = g_list_next (list);
-
-      gimp_tool_pop_status (tool, display);
-    }
+  while (tool->status_displays)
+    gimp_tool_pop_status (tool, tool->status_displays->data);
 }
