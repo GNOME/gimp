@@ -133,7 +133,6 @@ static TileManager *
 
 static void      gimp_transform_tool_set_function           (GimpTransformTool *tr_tool,
                                                              TransformAction    function);
-static void      gimp_transform_tool_halt                   (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_bounds                 (GimpTransformTool     *tr_tool,
                                                              GimpDisplay           *display);
 static void      gimp_transform_tool_dialog                 (GimpTransformTool     *tr_tool);
@@ -314,7 +313,12 @@ gimp_transform_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_transform_tool_halt (tr_tool);
+      tr_tool->function = TRANSFORM_CREATING;
+
+      if (tr_tool->dialog)
+        gimp_dialog_factory_hide_dialog (tr_tool->dialog);
+
+      tool->drawable = NULL;
       break;
     }
 
@@ -1118,14 +1122,14 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   if (! active_item)
     {
       gimp_tool_message_literal (tool, display, null_message);
-      gimp_transform_tool_halt (tr_tool);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return;
     }
 
   if (gimp_item_is_content_locked (active_item))
     {
       gimp_tool_message_literal (tool, display, locked_message);
-      gimp_transform_tool_halt (tr_tool);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return;
     }
 
@@ -1226,7 +1230,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
    */
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
-  gimp_transform_tool_halt (tr_tool);
+  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   gimp_unset_busy (display->gimp);
 
@@ -1278,24 +1282,6 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
   gimp_matrix3_transform_point (&tr_tool->transform,
                                 tr_tool->cx, tr_tool->cy,
                                 &tr_tool->tcx, &tr_tool->tcy);
-}
-
-static void
-gimp_transform_tool_halt (GimpTransformTool *tr_tool)
-{
-  GimpTool *tool = GIMP_TOOL (tr_tool);
-
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
-
-  /*  inactivate the tool  */
-  tr_tool->function = TRANSFORM_CREATING;
-
-  if (tr_tool->dialog)
-    gimp_dialog_factory_hide_dialog (tr_tool->dialog);
-
-  tool->display  = NULL;
-  tool->drawable = NULL;
 }
 
 static void
@@ -1568,7 +1554,7 @@ gimp_transform_tool_response (GtkWidget         *widget,
       break;
 
     default:
-      gimp_transform_tool_halt (tr_tool);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
       break;
     }
 }
