@@ -59,7 +59,6 @@
 /*  local function prototypes  */
 
 static void     gimp_align_tool_constructed    (GObject               *object);
-static void     gimp_align_tool_dispose        (GObject               *object);
 
 static void     gimp_align_tool_control        (GimpTool              *tool,
                                                 GimpToolAction         action,
@@ -100,7 +99,6 @@ static void     gimp_align_tool_cursor_update  (GimpTool              *tool,
 
 static void     gimp_align_tool_draw           (GimpDrawTool          *draw_tool);
 
-static void     gimp_align_tool_halt           (GimpAlignTool         *align_tool);
 static void     gimp_align_tool_align          (GimpAlignTool         *align_tool,
                                                 GimpAlignmentType      align_type);
 
@@ -139,7 +137,6 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   object_class->constructed  = gimp_align_tool_constructed;
-  object_class->dispose      = gimp_align_tool_dispose;
 
   tool_class->control        = gimp_align_tool_control;
   tool_class->button_press   = gimp_align_tool_button_press;
@@ -182,14 +179,6 @@ gimp_align_tool_constructed (GObject *object)
 }
 
 static void
-gimp_align_tool_dispose (GObject *object)
-{
-  gimp_align_tool_halt (GIMP_ALIGN_TOOL (object));
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
 gimp_align_tool_control (GimpTool       *tool,
                          GimpToolAction  action,
                          GimpDisplay    *display)
@@ -203,7 +192,7 @@ gimp_align_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_align_tool_halt (align_tool);
+      gimp_align_tool_clear_selected (align_tool);
       break;
     }
 
@@ -224,7 +213,7 @@ gimp_align_tool_button_press (GimpTool            *tool,
 
   /*  If the tool was being used in another image... reset it  */
   if (display != tool->display)
-    gimp_align_tool_halt (align_tool);
+    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   tool->display = display;
 
@@ -413,7 +402,7 @@ gimp_align_tool_key_press (GimpTool    *tool,
       switch (kevent->keyval)
         {
         case GDK_KEY_Escape:
-          gimp_align_tool_halt (GIMP_ALIGN_TOOL (tool));
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
           return TRUE;
 
         default:
@@ -710,25 +699,6 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
             }
         }
     }
-}
-
-static void
-gimp_align_tool_halt (GimpAlignTool *align_tool)
-{
-  GimpTool *tool = GIMP_TOOL (align_tool);
-
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (align_tool)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (align_tool));
-
-  if (gimp_tool_control_is_active (tool->control))
-    gimp_tool_control_halt (tool->control);
-
-  gimp_align_tool_clear_selected (align_tool);
-
-  if (tool->display)
-    gimp_tool_pop_status (tool, tool->display);
-
-  tool->display = NULL;
 }
 
 static void
