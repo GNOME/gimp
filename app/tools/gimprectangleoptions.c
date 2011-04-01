@@ -875,6 +875,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     g_object_unref (size_group);
     /* don't show */
 
+    g_object_add_weak_pointer (G_OBJECT (private->fixed_aspect_hbox),
+                               (gpointer) &private->fixed_aspect_hbox);
+
     entry = gimp_prop_number_pair_entry_new (config,
                                              "aspect-numerator",
                                              "aspect-denominator",
@@ -907,6 +910,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                         private->aspect_button_box, FALSE, FALSE, 0);
     gtk_widget_show (private->aspect_button_box);
 
+    g_object_add_weak_pointer (G_OBJECT (private->aspect_button_box),
+                               (gpointer) &private->aspect_button_box);
+
     /* hide "square" */
     children =
       gtk_container_get_children (GTK_CONTAINER (private->aspect_button_box));
@@ -923,6 +929,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_size_group_add_widget (size_group, private->fixed_width_entry);
     /* don't show */
 
+    g_object_add_weak_pointer (G_OBJECT (private->fixed_width_entry),
+                               (gpointer) &private->fixed_width_entry);
+
     /* Fixed height entry */
     private->fixed_height_entry =
       gimp_prop_size_entry_new (config,
@@ -933,12 +942,18 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_size_group_add_widget (size_group, private->fixed_height_entry);
     /* don't show */
 
+    g_object_add_weak_pointer (G_OBJECT (private->fixed_height_entry),
+                               (gpointer) &private->fixed_height_entry);
+
     /* Fixed size entry */
     private->fixed_size_hbox = gtk_hbox_new (FALSE, 2);
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_size_hbox,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_size_hbox);
     /* don't show */
+
+    g_object_add_weak_pointer (G_OBJECT (private->fixed_size_hbox),
+                               (gpointer) &private->fixed_size_hbox);
 
     entry = gimp_prop_number_pair_entry_new (config,
                                              "desired-fixed-size-width",
@@ -1009,6 +1024,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                       FALSE, FALSE, 0);
   gtk_widget_set_sensitive (private->auto_shrink_button, FALSE);
   gtk_widget_show (private->auto_shrink_button);
+
+  g_object_add_weak_pointer (G_OBJECT (private->auto_shrink_button),
+                             (gpointer) &private->auto_shrink_button);
 
   button = gimp_prop_check_button_new (config, "shrink-merged",
                                        _("Shrink merged"));
