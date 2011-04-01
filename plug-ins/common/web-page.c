@@ -22,7 +22,6 @@
  *
  * TODO:
  * - Add a font scale combo: default, larger, smaller etc.
- * - Set GIMP as user agent
  */
 
 #include "config.h"
@@ -369,6 +368,9 @@ webpage_capture (void)
   gchar *scheme;
   GtkWidget *window;
   GtkWidget *view;
+  WebKitWebSettings *settings;
+  char *ua_old;
+  char *ua;
 
   if (webpixbuf)
     {
@@ -423,6 +425,18 @@ webpage_capture (void)
 
   gtk_widget_set_size_request (view, webpagevals.width, -1);
   gtk_container_add (GTK_CONTAINER (window), view);
+
+  /* Append "GIMP/<GIMP_VERSION>" to the user agent string */
+  settings = webkit_web_view_get_settings (WEBKIT_WEB_VIEW (view));
+  g_object_get (settings,
+                "user-agent", &ua_old,
+                NULL);
+  ua = g_strdup_printf ("%s GIMP/%s", ua_old, GIMP_VERSION);
+  g_object_set (settings,
+                "user-agent", ua,
+                NULL);
+  g_free (ua_old);
+  g_free (ua);
 
   g_signal_connect (view, "notify::progress",
                     G_CALLBACK (notify_progress_cb),
