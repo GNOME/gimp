@@ -40,8 +40,10 @@
 
 typedef struct
 {
-  char   *url;
-  gint32  width;
+  char		*url;
+  gint32	 width;
+  GdkPixbuf	*pixbuf;
+  GError	*error;
 } WebpageVals;
 
 static WebpageVals webpagevals;
@@ -51,9 +53,6 @@ typedef struct
   char          url[MAX_URL_LEN];
   gint32        width;
 } WebpageSaveVals;
-
-static GdkPixbuf *webpixbuf;
-static GError *weberror;
 
 static void     query           (void);
 static void     run             (const gchar      *name,
@@ -171,12 +170,12 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
 
-          if (weberror)
+          if (webpagevals.error)
             {
               *nreturn_vals = 2;
 
               values[1].type = GIMP_PDB_STRING;
-              values[1].data.d_string = weberror->message;
+              values[1].data.d_string = webpagevals.error->message;
             }
         }
       else
@@ -331,7 +330,7 @@ load_error_cb (WebKitWebView  *view,
                gpointer        web_error,
                gpointer        user_data)
 {
-  weberror = g_error_copy ((GError *) web_error);
+  webpagevals.error = g_error_copy ((GError *) web_error);
 
   gtk_main_quit ();
 
@@ -351,9 +350,9 @@ notify_load_status_cb (WebKitWebView  *view,
 
   if (status == WEBKIT_LOAD_FINISHED)
     {
-      if (!weberror)
+      if (!webpagevals.error)
         {
-          webpixbuf = gtk_offscreen_window_get_pixbuf
+          webpagevals.pixbuf = gtk_offscreen_window_get_pixbuf
             (GTK_OFFSCREEN_WINDOW (user_data));
         }
 
@@ -372,21 +371,21 @@ webpage_capture (void)
   char *ua_old;
   char *ua;
 
-  if (webpixbuf)
+  if (webpagevals.pixbuf)
     {
-      g_object_unref (webpixbuf);
-      webpixbuf = NULL;
+      g_object_unref (webpagevals.pixbuf);
+      webpagevals.pixbuf = NULL;
     }
-  if (weberror)
+  if (webpagevals.error)
     {
-      g_error_free (weberror);
-      weberror = NULL;
+      g_error_free (webpagevals.error);
+      webpagevals.error = NULL;
     }
 
   if ((!webpagevals.url) ||
       (strlen (webpagevals.url) == 0))
     {
-      g_set_error (&weberror, 0, 0, _("No URL was specified"));
+      g_set_error (&webpagevals.error, 0, 0, _("No URL was specified"));
       return -1;
     }
 
@@ -457,7 +456,7 @@ webpage_capture (void)
 
   gtk_widget_destroy (window);
 
-  if (webpixbuf)
+  if (webpagevals.pixbuf)
     {
       gint width;
       gint height;
@@ -466,19 +465,19 @@ webpage_capture (void)
       gimp_progress_init_printf (_("Transferring webpage image for '%s'"),
                                  webpagevals.url);
 
-      width  = gdk_pixbuf_get_width (webpixbuf);
-      height = gdk_pixbuf_get_height (webpixbuf);
+      width  = gdk_pixbuf_get_width (webpagevals.pixbuf);
+      height = gdk_pixbuf_get_height (webpagevals.pixbuf);
 
       image = gimp_image_new (width, height, GIMP_RGB);
 
       gimp_image_undo_disable (image);
-      layer = gimp_layer_new_from_pixbuf (image, _("Webpage"), webpixbuf,
+      layer = gimp_layer_new_from_pixbuf (image, _("Webpage"), webpagevals.pixbuf,
                                           100, GIMP_NORMAL_MODE, 0.0, 1.0);
       gimp_image_insert_layer (image, layer, -1, 0);
       gimp_image_undo_enable (image);
 
-      g_object_unref (webpixbuf);
-      webpixbuf = NULL;
+      g_object_unref (webpagevals.pixbuf);
+      webpagevals.pixbuf = NULL;
     }
 
   return image;
