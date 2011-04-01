@@ -644,6 +644,9 @@ gimp_tool_button_release (GimpTool         *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+#ifdef STRICT_TOOL_CHECKS
+  g_return_if_fail (gimp_tool_control_is_active (tool->control) == TRUE);
+#endif
 
   g_object_ref (tool);
 
@@ -676,8 +679,22 @@ gimp_tool_button_release (GimpTool         *tool,
   GIMP_TOOL_GET_CLASS (tool)->button_release (tool, &my_coords, time, state,
                                               release_type, display);
 
+#ifdef STRICT_TOOL_CHECKS
+  g_warn_if_fail (gimp_tool_control_is_active (tool->control) == FALSE);
+#endif
+
   if (tool->active_modifier_state != 0)
-    gimp_tool_set_active_modifier_state (tool, 0, display);
+    {
+#ifdef STRICT_TOOL_CHECKS
+      gimp_tool_control_activate (tool->control);
+#endif
+
+      gimp_tool_set_active_modifier_state (tool, 0, display);
+
+#ifdef STRICT_TOOL_CHECKS
+      gimp_tool_control_halt (tool->control);
+#endif
+    }
 
   tool->button_press_state = 0;
 
@@ -694,7 +711,7 @@ gimp_tool_motion (GimpTool         *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (gimp_tool_control_is_active (tool->control));
+  g_return_if_fail (gimp_tool_control_is_active (tool->control) == TRUE);
 
   tool->got_motion_event = TRUE;
   gimp_tool_check_click_distance (tool, coords, time, display);
@@ -708,6 +725,9 @@ gimp_tool_set_focus_display (GimpTool    *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (display == NULL || GIMP_IS_DISPLAY (display));
+#ifdef STRICT_TOOL_CHECKS
+  g_return_if_fail (gimp_tool_control_is_active (tool->control) == FALSE);
+#endif
 
   GIMP_LOG (TOOL_FOCUS, "tool: %p  focus_display: %p  tool->focus_display: %p",
             tool, display, tool->focus_display);
@@ -717,7 +737,17 @@ gimp_tool_set_focus_display (GimpTool    *tool,
       if (tool->focus_display)
         {
           if (tool->active_modifier_state != 0)
-            gimp_tool_set_active_modifier_state (tool, 0, tool->focus_display);
+            {
+#ifdef STRICT_TOOL_CHECKS
+              gimp_tool_control_activate (tool->control);
+#endif
+
+              gimp_tool_set_active_modifier_state (tool, 0, tool->focus_display);
+
+#ifdef STRICT_TOOL_CHECKS
+              gimp_tool_control_halt (tool->control);
+#endif
+            }
 
           if (tool->modifier_state != 0)
             gimp_tool_set_modifier_state (tool, 0, tool->focus_display);
@@ -735,6 +765,10 @@ gimp_tool_key_press (GimpTool    *tool,
   g_return_val_if_fail (GIMP_IS_TOOL (tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
   g_return_val_if_fail (display == tool->focus_display, FALSE);
+#ifdef STRICT_TOOL_CHECKS
+  g_return_val_if_fail (gimp_tool_control_is_active (tool->control) == FALSE,
+                        FALSE);
+#endif
 
   return GIMP_TOOL_GET_CLASS (tool)->key_press (tool, kevent, display);
 }
@@ -747,6 +781,10 @@ gimp_tool_key_release (GimpTool    *tool,
   g_return_val_if_fail (GIMP_IS_TOOL (tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
   g_return_val_if_fail (display == tool->focus_display, FALSE);
+#ifdef STRICT_TOOL_CHECKS
+  g_return_val_if_fail (gimp_tool_control_is_active (tool->control) == FALSE,
+                        FALSE);
+#endif
 
   return GIMP_TOOL_GET_CLASS (tool)->key_release (tool, kevent, display);
 }
@@ -772,6 +810,9 @@ gimp_tool_set_modifier_state (GimpTool        *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+#ifdef STRICT_TOOL_CHECKS
+  g_return_if_fail (gimp_tool_control_is_active (tool->control) == FALSE);
+#endif
 
   GIMP_LOG (TOOL_FOCUS, "tool: %p  display: %p  tool->focus_display: %p",
             tool, display, tool->focus_display);
@@ -824,6 +865,9 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+#ifdef STRICT_TOOL_CHECKS
+  g_return_if_fail (gimp_tool_control_is_active (tool->control) == TRUE);
+#endif
 
   GIMP_LOG (TOOL_FOCUS, "tool: %p  display: %p  tool->focus_display: %p",
             tool, display, tool->focus_display);
@@ -909,6 +953,9 @@ gimp_tool_oper_update (GimpTool         *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+#ifdef STRICT_TOOL_CHECKS
+  g_return_if_fail (gimp_tool_control_is_active (tool->control) == FALSE);
+#endif
 
   GIMP_TOOL_GET_CLASS (tool)->oper_update (tool, coords, state, proximity,
                                            display);
@@ -932,6 +979,9 @@ gimp_tool_cursor_update (GimpTool         *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+#ifdef STRICT_TOOL_CHECKS
+  g_return_if_fail (gimp_tool_control_is_active (tool->control) == FALSE);
+#endif
 
   GIMP_TOOL_GET_CLASS (tool)->cursor_update (tool, coords, state, display);
 }

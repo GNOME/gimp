@@ -164,7 +164,8 @@ gimp_draw_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_draw_tool_stop (draw_tool);
+      if (gimp_draw_tool_is_active (draw_tool))
+        gimp_draw_tool_stop (draw_tool);
       break;
     }
 
@@ -239,8 +240,12 @@ gimp_draw_tool_start (GimpDrawTool *draw_tool,
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+#ifdef STRICT_TOOL_CHECKS
+  g_return_if_fail (gimp_draw_tool_is_active (draw_tool) == FALSE);
+#else
 
   gimp_draw_tool_stop (draw_tool);
+#endif
 
   draw_tool->display = display;
 
@@ -251,6 +256,9 @@ void
 gimp_draw_tool_stop (GimpDrawTool *draw_tool)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+#ifdef STRICT_TOOL_CHECKS
+  g_return_if_fail (gimp_draw_tool_is_active (draw_tool) == TRUE);
+#endif
 
   gimp_draw_tool_undraw (draw_tool);
 

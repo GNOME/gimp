@@ -107,7 +107,7 @@ void
 gimp_tool_control_activate (GimpToolControl *control)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
-#ifdef GIMP_UNSTABLE
+#ifdef STRICT_TOOL_CHECKS
   g_return_if_fail (control->active == FALSE);
 #endif
 
@@ -118,7 +118,7 @@ void
 gimp_tool_control_halt (GimpToolControl *control)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
-#ifdef GIMP_UNSTABLE
+#ifdef STRICT_TOOL_CHECKS
   g_return_if_fail (control->active == TRUE);
 #endif
 
