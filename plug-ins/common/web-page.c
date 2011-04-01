@@ -19,9 +19,6 @@
  * Copyright (C) 2011 Mukund Sivaraman <muks@banu.com>.
  * Portions are copyright of the author of the
  * file-open-location-dialog.c code.
- *
- * TODO:
- * - Add a font scale combo: default, larger, smaller etc.
  */
 
 #include "config.h"
@@ -40,18 +37,20 @@
 
 typedef struct
 {
-  char		*url;
-  gint32	 width;
-  GdkPixbuf	*pixbuf;
-  GError	*error;
+  char      *url;
+  gint32     width;
+  gint       font_size;
+  GdkPixbuf *pixbuf;
+  GError    *error;
 } WebpageVals;
 
 static WebpageVals webpagevals;
 
 typedef struct
 {
-  char          url[MAX_URL_LEN];
-  gint32        width;
+  char   url[MAX_URL_LEN];
+  gint32 width;
+  gint   font_size;
 } WebpageSaveVals;
 
 static void     query           (void);
@@ -83,9 +82,10 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "url",      "URL of the webpage to screenshot"                             },
-    { GIMP_PDB_INT32,  "width",    "The width of the screenshot"                                  }
+    { GIMP_PDB_INT32,  "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_STRING, "url",       "URL of the webpage to screenshot"                             },
+    { GIMP_PDB_INT32,  "width",     "The width of the screenshot (in pixels)"                      },
+    { GIMP_PDB_INT32,  "font-size", "The font size to use in the page (in pt)"                     }
   };
 
   static const GimpParamDef return_vals[] =
@@ -121,7 +121,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status   = GIMP_PDB_EXECUTION_ERROR;
   gint32             image_id = -1;
   static GimpParam   values[2];
-  WebpageSaveVals    save = {"http://www.gimp.org/", 1024};
+  WebpageSaveVals    save = {"http://www.gimp.org/", 1024, 12};
 
   INIT_I18N ();
 
@@ -137,6 +137,7 @@ run (const gchar      *name,
 
   webpagevals.url = g_strdup (save.url);
   webpagevals.width = save.width;
+  webpagevals.font_size = save.font_size;
 
   /* how are we running today? */
   switch (run_mode)
@@ -155,6 +156,7 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       webpagevals.url = param[1].data.d_string;
       webpagevals.width = param[2].data.d_int32;
+      webpagevals.font_size = param[3].data.d_int32;
       status = GIMP_PDB_SUCCESS;
       break;
 
@@ -181,6 +183,7 @@ run (const gchar      *name,
       else
         {
           save.width = webpagevals.width;
+          save.font_size = webpagevals.font_size;
 
           if (strlen (webpagevals.url) < MAX_URL_LEN)
             {
@@ -218,6 +221,8 @@ webpage_dialog (void)
   GtkWidget *entry;
   GtkObject *adjustment;
   GtkWidget *spinbutton;
+  GtkWidget *combo;
+  gint active;
   gint status;
   gboolean ret = FALSE;
 
@@ -271,6 +276,7 @@ webpage_dialog (void)
                         webpagevals.url);
   gtk_widget_show (entry);
 
+  /* Width */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox),
                       hbox, FALSE, FALSE, 0);
@@ -287,6 +293,56 @@ webpage_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
+  /* Font size */
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Font size:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  combo = gtk_combo_box_new_text ();
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
+                             _("Huge"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
+                             _("Large"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
+                             _("Default"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
+                             _("Small"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
+                             _("Tiny"));
+
+  switch (webpagevals.font_size)
+    {
+    case 16:
+      active = 0;
+      break;
+    case 14:
+      active = 1;
+      break;
+    case 12:
+      active = 2;
+      break;
+    case 10:
+      active = 3;
+      break;
+    case 8:
+      active = 4;
+      break;
+    default:
+      active = 2;
+      break;
+    }
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), active);
+
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
   status = gimp_dialog_run (GIMP_DIALOG (dialog));
   if (status == GTK_RESPONSE_OK)
     {
@@ -295,6 +351,28 @@ webpage_dialog (void)
 
       webpagevals.width = (gint) gtk_adjustment_get_value
         (GTK_ADJUSTMENT (adjustment));
+
+      active = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+      switch (active)
+        {
+        case 0:
+          webpagevals.font_size = 16;
+          break;
+        case 1:
+          webpagevals.font_size = 14;
+          break;
+        case 2:
+          webpagevals.font_size = 12;
+          break;
+        case 3:
+          webpagevals.font_size = 10;
+          break;
+        case 4:
+          webpagevals.font_size = 8;
+          break;
+        default:
+          webpagevals.font_size = 12;
+        }
 
       ret = TRUE;
     }
@@ -436,6 +514,11 @@ webpage_capture (void)
                 NULL);
   g_free (ua_old);
   g_free (ua);
+
+  /* Set font size */
+  g_object_set (settings,
+                "default-font-size", webpagevals.font_size,
+                NULL);
 
   g_signal_connect (view, "notify::progress",
                     G_CALLBACK (notify_progress_cb),
