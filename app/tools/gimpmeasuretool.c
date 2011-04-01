@@ -100,8 +100,6 @@ static void     gimp_measure_tool_cursor_update   (GimpTool              *tool,
 
 static void     gimp_measure_tool_draw            (GimpDrawTool          *draw_tool);
 
-static void     gimp_measure_tool_halt            (GimpMeasureTool       *measure);
-
 static gdouble  gimp_measure_tool_get_angle       (gint                   dx,
                                                    gint                   dy,
                                                    gdouble                xres,
@@ -173,6 +171,8 @@ gimp_measure_tool_control (GimpTool       *tool,
                            GimpToolAction  action,
                            GimpDisplay    *display)
 {
+  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
+
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
@@ -180,7 +180,8 @@ gimp_measure_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_measure_tool_halt (GIMP_MEASURE_TOOL (tool));
+      if (measure->dialog)
+        gtk_widget_destroy (measure->dialog);
       break;
     }
 
@@ -482,7 +483,7 @@ gimp_measure_tool_key_press (GimpTool    *tool,
       switch (kevent->keyval)
         {
         case GDK_KEY_Escape:
-          gimp_measure_tool_halt (GIMP_MEASURE_TOOL (tool));
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
           return TRUE;
 
         default:
@@ -822,25 +823,6 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
           gimp_draw_tool_pop_group (draw_tool);
         }
     }
-}
-
-static void
-gimp_measure_tool_halt (GimpMeasureTool *measure)
-{
-  GimpTool *tool = GIMP_TOOL (measure);
-
-  if (measure->dialog)
-    gtk_widget_destroy (measure->dialog);
-
-  gimp_tool_pop_status (tool, tool->display);
-
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (measure)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
-
-  if (gimp_tool_control_is_active (tool->control))
-    gimp_tool_control_halt (tool->control);
-
-  tool->display = NULL;
 }
 
 static gdouble
