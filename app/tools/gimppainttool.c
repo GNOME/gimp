@@ -215,8 +215,6 @@ gimp_paint_tool_control (GimpTool       *tool,
                          GimpDisplay    *display)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpImage     *image      = gimp_display_get_image (display);
-  GimpDrawable  *drawable   = gimp_image_get_active_drawable (image);
 
   switch (action)
     {
@@ -225,10 +223,6 @@ gimp_paint_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_paint_core_paint (paint_tool->core,
-                             drawable,
-                             GIMP_PAINT_TOOL_GET_OPTIONS (tool),
-                             GIMP_PAINT_STATE_FINISH, 0);
       gimp_paint_core_cleanup (paint_tool->core);
       break;
     }
