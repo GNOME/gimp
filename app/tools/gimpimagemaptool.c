@@ -421,10 +421,22 @@ gimp_image_map_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      if (image_map_tool->dialog)
-        gimp_image_map_tool_response (image_map_tool->dialog,
-                                      GTK_RESPONSE_CANCEL,
-                                      image_map_tool);
+      gimp_image_map_tool_dialog_hide (image_map_tool);
+
+      if (image_map_tool->image_map)
+        {
+          gimp_tool_control_set_preserve (tool->control, TRUE);
+
+          gimp_image_map_abort (image_map_tool->image_map);
+          g_object_unref (image_map_tool->image_map);
+          image_map_tool->image_map = NULL;
+
+          gimp_tool_control_set_preserve (tool->control, FALSE);
+
+          gimp_image_flush (gimp_display_get_image (tool->display));
+        }
+
+      tool->drawable = NULL;
       break;
     }
 
@@ -670,23 +682,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       break;
 
     default:
-      gimp_image_map_tool_dialog_hide (image_map_tool);
-
-      if (image_map_tool->image_map)
-        {
-          gimp_tool_control_set_preserve (tool->control, TRUE);
-
-          gimp_image_map_abort (image_map_tool->image_map);
-          g_object_unref (image_map_tool->image_map);
-          image_map_tool->image_map = NULL;
-
-          gimp_tool_control_set_preserve (tool->control, FALSE);
-
-          gimp_image_flush (gimp_display_get_image (tool->display));
-        }
-
-      tool->display  = NULL;
-      tool->drawable = NULL;
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
       break;
     }
 }
