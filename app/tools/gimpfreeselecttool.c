@@ -440,27 +440,6 @@ gimp_free_select_tool_handle_segment_selection (GimpFreeSelectTool *fst,
 }
 
 static void
-gimp_free_select_tool_halt (GimpFreeSelectTool *fst)
-{
-  GimpTool                  *tool      = GIMP_TOOL (fst);
-  GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (fst);
-  GimpFreeSelectToolPrivate *priv      = GET_PRIVATE (fst);
-
-  if (gimp_draw_tool_is_active (draw_tool))
-    gimp_draw_tool_stop (draw_tool);
-
-  if (gimp_tool_control_is_active (tool->control))
-    gimp_tool_control_halt (tool->control);
-
-  priv->grabbed_segment_index = INVALID_INDEX;
-  priv->show_pending_point    = FALSE;
-  priv->n_points              = 0;
-  priv->n_segment_indices     = 0;
-
-  tool->display              = NULL;
-}
-
-static void
 gimp_free_select_tool_revert_to_last_segment (GimpFreeSelectTool *fst)
 {
   GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
@@ -490,7 +469,8 @@ gimp_free_select_tool_remove_last_segment (GimpFreeSelectTool *fst)
 
   if (priv->n_segment_indices <= 0)
     {
-      gimp_free_select_tool_halt (fst);
+      gimp_tool_control (GIMP_TOOL (fst), GIMP_TOOL_ACTION_HALT,
+                         GIMP_TOOL (fst)->display);
     }
   else
     {
@@ -559,7 +539,7 @@ gimp_free_select_tool_start (GimpFreeSelectTool *fst,
   GimpSelectionOptions      *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (fst);
   GimpFreeSelectToolPrivate *priv      = GET_PRIVATE (fst);
 
-  gimp_free_select_tool_halt (fst);
+  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   gimp_tool_control_activate (tool->control);
 
@@ -854,7 +834,8 @@ gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
   if (gimp_image_get_floating_selection (image))
     {
       floating_sel_anchor (gimp_image_get_floating_selection (image));
-      gimp_free_select_tool_halt (fst);
+
+      gimp_tool_control (GIMP_TOOL (fst), GIMP_TOOL_ACTION_HALT, display);
     }
   else
     {
@@ -1144,6 +1125,9 @@ gimp_free_select_tool_control (GimpTool       *tool,
                                GimpToolAction  action,
                                GimpDisplay    *display)
 {
+  GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
+  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
+
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
@@ -1151,7 +1135,10 @@ gimp_free_select_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_free_select_tool_halt (GIMP_FREE_SELECT_TOOL (tool));
+      priv->grabbed_segment_index = INVALID_INDEX;
+      priv->show_pending_point    = FALSE;
+      priv->n_points              = 0;
+      priv->n_segment_indices     = 0;
       break;
     }
 
@@ -1440,7 +1427,7 @@ gimp_free_select_tool_key_press (GimpTool    *tool,
       return TRUE;
 
     case GDK_KEY_Escape:
-      gimp_free_select_tool_halt (fst);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return TRUE;
 
     default:
@@ -1639,7 +1626,7 @@ gimp_free_select_tool_real_select (GimpFreeSelectTool *fst,
                                options->feather_radius,
                                TRUE);
 
-  gimp_free_select_tool_halt (fst);
+  gimp_tool_control (GIMP_TOOL (fst), GIMP_TOOL_ACTION_HALT, display);
 }
 
 void
