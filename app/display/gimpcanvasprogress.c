@@ -261,8 +261,8 @@ gimp_canvas_progress_transform (GimpCanvasItem   *item,
                                         *height,
                                         x, y);
 
-  *x = floor (*x) + 0.5;
-  *y = floor (*y) + 0.5;
+  *x = floor (*x);
+  *y = floor (*y);
 
   return layout;
 }
@@ -284,6 +284,7 @@ gimp_canvas_progress_draw (GimpCanvasItem   *item,
   cairo_line_to (cr, x + 2 * BORDER + 2 * RADIUS, y + height - BORDER - 2 * RADIUS);
   cairo_arc (cr, x + BORDER + RADIUS, y + height - BORDER - RADIUS,
              BORDER + RADIUS, 0, G_PI);
+  cairo_close_path (cr);
 
   _gimp_canvas_item_fill (item, cr);
 
@@ -315,10 +316,11 @@ gimp_canvas_progress_get_extents (GimpCanvasItem   *item,
 
   gimp_canvas_progress_transform (item, shell, &x, &y, &width, &height);
 
-  rectangle.x      = x;
-  rectangle.y      = y;
-  rectangle.width  = width;
-  rectangle.height = height;
+  /*  add 1px on each side because fill()'s default impl does the same  */
+  rectangle.x      = (gint) x - 1;
+  rectangle.y      = (gint) y - 1;
+  rectangle.width  = width  + 2;
+  rectangle.height = height + 2;
 
   return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
 }
