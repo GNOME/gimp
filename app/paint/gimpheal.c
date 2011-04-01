@@ -553,11 +553,11 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                               paint_area_offset_x, paint_area_offset_y,
                               paint_area_width, paint_area_height);
 
-  /* check that srcPR, tempPR, destPR, and mask_buf are the same size */
+  /* check that srcPR, tempPR and destPR are the same size and tempPR is inside of layer */
   if ((srcPR->w != tempPR.w) || (srcPR->w != destPR.w) ||
       (srcPR->h != tempPR.h) || (srcPR->h != destPR.h) ||
-      (srcPR->h != mask_buf->height) ||
-      (srcPR->w != mask_buf->width))
+      (tempPR.w <= 0) ||
+      (tempPR.h <= 0))
     {
       /* this generally means that the source point has hit the edge of the
          layer, so it is not an error and we should not complain, just
