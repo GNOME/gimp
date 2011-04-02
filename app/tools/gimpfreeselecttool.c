@@ -1566,12 +1566,19 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
             handle_type = GIMP_HANDLE_CIRCLE;
 
           if (handle_type != -1)
-            gimp_draw_tool_add_handle (draw_tool, handle_type,
-                                       point->x,
-                                       point->y,
-                                       GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                       GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                       GIMP_HANDLE_ANCHOR_CENTER);
+            {
+              GimpCanvasItem *item;
+
+              item = gimp_draw_tool_add_handle (draw_tool, handle_type,
+                                                point->x,
+                                                point->y,
+                                                GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                                GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                                GIMP_HANDLE_ANCHOR_CENTER);
+
+              if (dist < POINT_GRAB_THRESHOLD_SQ)
+                gimp_canvas_item_set_highlight (item, TRUE);
+            }
         }
     }
 
