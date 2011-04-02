@@ -150,7 +150,6 @@ static gboolean gimp_iscissors_tool_key_press    (GimpTool              *tool,
 
 static void   gimp_iscissors_tool_apply          (GimpIscissorsTool     *iscissors,
                                                   GimpDisplay           *display);
-static void   gimp_iscissors_tool_reset          (GimpIscissorsTool     *iscissors);
 static void   gimp_iscissors_tool_draw           (GimpDrawTool          *draw_tool);
 
 
@@ -174,7 +173,6 @@ static void          calculate_curve           (GimpIscissorsTool *iscissors,
                                                 ICurve            *curve);
 static void          iscissors_draw_curve      (GimpDrawTool      *draw_tool,
                                                 ICurve            *curve);
-static void          iscissors_free_icurves    (GQueue            *curves);
 
 static gint          mouse_over_vertex         (GimpIscissorsTool *iscissors,
                                                 gdouble            x,
@@ -327,29 +325,21 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
 {
   GimpTool *tool = GIMP_TOOL (iscissors);
 
-  iscissors->op           = ISCISSORS_OP_NONE;
-  iscissors->dp_buf       = NULL;
-  iscissors->curves       = g_queue_new ();
-  iscissors->state        = NO_ACTION;
-  iscissors->mask         = NULL;
-  iscissors->gradient_map = NULL;
-  iscissors->livewire     = NULL;
-
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_snap_to     (tool->control, FALSE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_dirty_mask  (tool->control, GIMP_DIRTY_IMAGE_SIZE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_ISCISSORS);
 
-  gimp_iscissors_tool_reset (iscissors);
+  iscissors->op     = ISCISSORS_OP_NONE;
+  iscissors->curves = g_queue_new ();
+  iscissors->state  = NO_ACTION;
 }
 
 static void
 gimp_iscissors_tool_finalize (GObject *object)
 {
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (object);
-
-  gimp_iscissors_tool_reset (iscissors);
 
   g_queue_free (iscissors->curves);
 
@@ -370,7 +360,50 @@ gimp_iscissors_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_iscissors_tool_reset (iscissors);
+      /*  Free and reset the curve list  */
+      while (! g_queue_is_empty (iscissors->curves))
+        {
+          ICurve *curve = g_queue_pop_head (iscissors->curves);
+
+          if (curve->points)
+            g_ptr_array_free (curve->points, TRUE);
+
+          g_slice_free (ICurve, curve);
+        }
+
+      /*  free mask  */
+      if (iscissors->mask)
+        {
+          g_object_unref (iscissors->mask);
+          iscissors->mask = NULL;
+        }
+
+      /* free the gradient map */
+      if (iscissors->gradient_map)
+        {
+          /* release any tile we were using */
+          if (cur_tile)
+            {
+              tile_release (cur_tile, FALSE);
+              cur_tile = NULL;
+            }
+
+          tile_manager_unref (iscissors->gradient_map);
+          iscissors->gradient_map = NULL;
+        }
+
+      iscissors->curve1      = NULL;
+      iscissors->curve2      = NULL;
+      iscissors->first_point = TRUE;
+      iscissors->connected   = FALSE;
+      iscissors->state       = NO_ACTION;
+
+      /*  Reset the dp buffers  */
+      if (iscissors->dp_buf)
+        {
+          temp_buf_free (iscissors->dp_buf);
+          iscissors->dp_buf = NULL;
+        }
       break;
     }
 
@@ -393,10 +426,7 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
 
   /*  If the tool was being used in another image...reset it  */
   if (display != tool->display)
-    {
-      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-      gimp_iscissors_tool_reset (iscissors);
-    }
+    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   gimp_tool_control_activate (tool->control);
   tool->display = display;
@@ -1059,65 +1089,9 @@ gimp_iscissors_tool_apply (GimpIscissorsTool *iscissors,
                                options->feather_radius,
                                options->feather_radius);
 
-  gimp_iscissors_tool_reset (iscissors);
+  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   gimp_image_flush (image);
-}
-
-static void
-gimp_iscissors_tool_reset (GimpIscissorsTool *iscissors)
-{
-  /*  Free and reset the curve list  */
-  iscissors_free_icurves (iscissors->curves);
-
-  /*  free mask  */
-  if (iscissors->mask)
-    {
-      g_object_unref (iscissors->mask);
-      iscissors->mask = NULL;
-    }
-
-  /* free the gradient map */
-  if (iscissors->gradient_map)
-    {
-      /* release any tile we were using */
-      if (cur_tile)
-        {
-          tile_release (cur_tile, FALSE);
-          cur_tile = NULL;
-        }
-
-      tile_manager_unref (iscissors->gradient_map);
-      iscissors->gradient_map = NULL;
-    }
-
-  iscissors->curve1      = NULL;
-  iscissors->curve2      = NULL;
-  iscissors->first_point = TRUE;
-  iscissors->connected   = FALSE;
-  iscissors->state       = NO_ACTION;
-
-  /*  Reset the dp buffers  */
-  if (iscissors->dp_buf)
-    {
-      temp_buf_free (iscissors->dp_buf);
-      iscissors->dp_buf = NULL;
-    }
-}
-
-
-static void
-iscissors_free_icurves (GQueue *curves)
-{
-  while (! g_queue_is_empty (curves))
-    {
-      ICurve *curve = g_queue_pop_head (curves);
-
-      if (curve->points)
-        g_ptr_array_free (curve->points, TRUE);
-
-      g_slice_free (ICurve, curve);
-    }
 }
 
 
