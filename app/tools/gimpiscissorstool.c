@@ -170,7 +170,7 @@ static void          find_max_gradient         (GimpIscissorsTool *iscissors,
                                                 GimpImage         *image,
                                                 gint              *x,
                                                 gint              *y);
-static void          calculate_curve           (GimpTool          *tool,
+static void          calculate_curve           (GimpIscissorsTool *iscissors,
                                                 ICurve            *curve);
 static void          iscissors_draw_curve      (GimpDrawTool      *draw_tool,
                                                 ICurve            *curve);
@@ -330,7 +330,6 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
   iscissors->op           = ISCISSORS_OP_NONE;
   iscissors->dp_buf       = NULL;
   iscissors->curves       = g_queue_new ();
-  iscissors->draw         = DRAW_NOTHING;
   iscissors->state        = NO_ACTION;
   iscissors->mask         = NULL;
   iscissors->gradient_map = NULL;
@@ -363,26 +362,6 @@ gimp_iscissors_tool_control (GimpTool       *tool,
                              GimpDisplay    *display)
 {
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  IscissorsDraw      draw;
-
-  switch (iscissors->state)
-    {
-    case SEED_PLACEMENT:
-      draw = DRAW_CURVE | DRAW_CURRENT_SEED;
-      break;
-
-    case SEED_ADJUSTMENT:
-      draw = DRAW_CURVE | DRAW_ACTIVE_CURVE;
-      break;
-
-    default:
-      draw = DRAW_CURVE;
-      break;
-    }
-
-  iscissors->draw = draw;
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 
   switch (action)
     {
@@ -394,6 +373,8 @@ gimp_iscissors_tool_control (GimpTool       *tool,
       gimp_iscissors_tool_reset (iscissors);
       break;
     }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -404,9 +385,8 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
                                   GimpButtonPressType  press_type,
                                   GimpDisplay         *display)
 {
-  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
-  GimpImage            *image     = gimp_display_get_image (display);
+  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+  GimpImage         *image     = gimp_display_get_image (display);
 
   iscissors->x = RINT (coords->x);
   iscissors->y = RINT (coords->y);
@@ -425,7 +405,6 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
     {
     case NO_ACTION:
       iscissors->state = SEED_PLACEMENT;
-      iscissors->draw  = DRAW_CURRENT_SEED;
 
       if (! (state & GDK_SHIFT_MASK))
         find_max_gradient (iscissors, image,
@@ -450,7 +429,6 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
           iscissors->ny    = iscissors->y;
           iscissors->state = SEED_ADJUSTMENT;
 
-          iscissors->draw = DRAW_CURVE | DRAW_ACTIVE_CURVE;
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
         }
       /*  If the iscissors is connected, check if the click was inside  */
@@ -465,15 +443,9 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
         {
           /*  if we're not connected, we're adding a new point  */
 
-          /*  pause the tool, but undraw nothing  */
-          iscissors->draw = DRAW_NOTHING;
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
           iscissors->state = SEED_PLACEMENT;
-          iscissors->draw  = DRAW_CURRENT_SEED;
-
-          if (options->interactive)
-            iscissors->draw |= DRAW_LIVEWIRE;
 
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
         }
@@ -553,8 +525,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
                                     GimpButtonReleaseType  release_type,
                                     GimpDisplay           *display)
 {
-  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
+  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
 
   gimp_tool_control_halt (tool->control);
 
@@ -563,21 +534,6 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
    */
   if (iscissors->state == WAITING)
     return;
-
-  /*  Undraw everything  */
-  switch (iscissors->state)
-    {
-    case SEED_PLACEMENT:
-      iscissors->draw = DRAW_CURVE | DRAW_CURRENT_SEED;
-      if (options->interactive)
-        iscissors->draw |= DRAW_LIVEWIRE;
-      break;
-    case SEED_ADJUSTMENT:
-      iscissors->draw = DRAW_CURVE | DRAW_ACTIVE_CURVE;
-      break;
-    default:
-      break;
-    }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -623,7 +579,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
 
                   g_queue_push_tail (iscissors->curves, curve);
 
-                  calculate_curve (tool, curve);
+                  calculate_curve (iscissors, curve);
                 }
             }
           else /* this was our first point */
@@ -638,13 +594,16 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
             {
               iscissors->curve1->x1 = iscissors->nx;
               iscissors->curve1->y1 = iscissors->ny;
-              calculate_curve (tool, iscissors->curve1);
+
+              calculate_curve (iscissors, iscissors->curve1);
             }
+
           if (iscissors->curve2)
             {
               iscissors->curve2->x2 = iscissors->nx;
               iscissors->curve2->y2 = iscissors->ny;
-              calculate_curve (tool, iscissors->curve2);
+
+              calculate_curve (iscissors, iscissors->curve2);
             }
           break;
 
@@ -655,8 +614,6 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
 
   iscissors->state = WAITING;
 
-  /*  Draw only the boundary  */
-  iscissors->draw = DRAW_CURVE;
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   /*  convert the curves into a region  */
@@ -671,24 +628,11 @@ gimp_iscissors_tool_motion (GimpTool         *tool,
                             GdkModifierType   state,
                             GimpDisplay      *display)
 {
-  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
-  GimpImage            *image     = gimp_display_get_image (display);
+  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+  GimpImage         *image     = gimp_display_get_image (display);
 
   if (iscissors->state == NO_ACTION)
     return;
-
-  if (iscissors->state == SEED_PLACEMENT)
-    {
-      iscissors->draw = DRAW_CURRENT_SEED;
-
-      if (options->interactive)
-        iscissors->draw |= DRAW_LIVEWIRE;
-    }
-  else if (iscissors->state == SEED_ADJUSTMENT)
-    {
-      iscissors->draw = DRAW_ACTIVE_CURVE;
-    }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -736,12 +680,12 @@ gimp_iscissors_tool_motion (GimpTool         *tool,
 static void
 gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool          *tool      = GIMP_TOOL (draw_tool);
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (draw_tool);
+  GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (draw_tool);
+  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (draw_tool);
 
-  /*  Draw the crosshairs target if we're placing a seed  */
-  if (iscissors->draw & DRAW_CURRENT_SEED)
+  if (iscissors->state == SEED_PLACEMENT)
     {
+      /*  Draw the crosshairs target if we're placing a seed  */
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_CROSS,
                                  iscissors->x, iscissors->y,
@@ -750,52 +694,53 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                                  GIMP_HANDLE_ANCHOR_CENTER);
 
       /* Draw a line boundary */
-      if (! iscissors->first_point && ! (iscissors->draw & DRAW_LIVEWIRE))
+      if (! iscissors->first_point)
         {
-          gimp_draw_tool_add_line (draw_tool,
-                                   iscissors->ix, iscissors->iy,
-                                   iscissors->x, iscissors->y);
-        }
-    }
-
-  /* Draw the livewire boundary */
-  if ((iscissors->draw & DRAW_LIVEWIRE) && ! iscissors->first_point)
-    {
-      /* See if the mouse has moved.  If so, create a new segment... */
-      if (! iscissors->livewire ||
-          (iscissors->livewire &&
-           (iscissors->ix != iscissors->livewire->x1 ||
-            iscissors->x  != iscissors->livewire->x2  ||
-            iscissors->iy != iscissors->livewire->y1 ||
-            iscissors->y  != iscissors->livewire->y2)))
-        {
-          ICurve *curve = g_slice_new (ICurve);
-
-          curve->x1 = iscissors->ix;
-          curve->y1 = iscissors->iy;
-          curve->x2 = iscissors->x;
-          curve->y2 = iscissors->y;
-          curve->points = NULL;
-
-          if (iscissors->livewire)
+          if (! options->interactive)
             {
-              if (iscissors->livewire->points)
-                g_ptr_array_free (iscissors->livewire->points, TRUE);
-
-              g_slice_free (ICurve, iscissors->livewire);
-
-              iscissors->livewire = NULL;
+              gimp_draw_tool_add_line (draw_tool,
+                                       iscissors->ix, iscissors->iy,
+                                       iscissors->x, iscissors->y);
             }
+          else
+            {
+              /* See if the mouse has moved.  If so, create a new segment... */
+              if (! iscissors->livewire ||
+                  (iscissors->livewire &&
+                   (iscissors->ix != iscissors->livewire->x1 ||
+                    iscissors->x  != iscissors->livewire->x2  ||
+                    iscissors->iy != iscissors->livewire->y1 ||
+                    iscissors->y  != iscissors->livewire->y2)))
+                {
+                  ICurve *curve = g_slice_new (ICurve);
 
-          iscissors->livewire = curve;
-          calculate_curve (tool, curve);
+                  curve->x1 = iscissors->ix;
+                  curve->y1 = iscissors->iy;
+                  curve->x2 = iscissors->x;
+                  curve->y2 = iscissors->y;
+                  curve->points = NULL;
+
+                  if (iscissors->livewire)
+                    {
+                      if (iscissors->livewire->points)
+                        g_ptr_array_free (iscissors->livewire->points, TRUE);
+
+                      g_slice_free (ICurve, iscissors->livewire);
+
+                      iscissors->livewire = NULL;
+                    }
+
+                  iscissors->livewire = curve;
+                  calculate_curve (iscissors, curve);
+                }
+
+              /*  plot the curve  */
+              iscissors_draw_curve (draw_tool, iscissors->livewire);
+            }
         }
-
-      /*  plot the curve  */
-      iscissors_draw_curve (draw_tool, iscissors->livewire);
     }
 
-  if ((iscissors->draw & DRAW_CURVE) && ! iscissors->first_point)
+  if (! iscissors->first_point)
     {
       GList *list;
 
@@ -818,7 +763,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
         {
           ICurve *curve = list->data;
 
-          if (iscissors->draw & DRAW_ACTIVE_CURVE)
+          if (iscissors->state == SEED_ADJUSTMENT)
             {
               /*  don't draw curve1 at all  */
               if (curve == iscissors->curve1)
@@ -833,7 +778,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                      GIMP_HANDLE_ANCHOR_CENTER);
 
-          if (iscissors->draw & DRAW_ACTIVE_CURVE)
+          if (iscissors->state == SEED_ADJUSTMENT)
             {
               /*  draw only the start handle of curve2  */
               if (curve == iscissors->curve2)
@@ -845,7 +790,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
         }
     }
 
-  if (iscissors->draw & DRAW_ACTIVE_CURVE)
+  if (iscissors->state == SEED_ADJUSTMENT)
     {
       /*  plot both curves, and the control point between them  */
       if (iscissors->curve1)
@@ -1103,8 +1048,6 @@ gimp_iscissors_tool_apply (GimpIscissorsTool *iscissors,
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpImage            *image   = gimp_display_get_image (display);
 
-  /*  Undraw the curve  */
-  iscissors->draw = DRAW_CURVE;
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   gimp_channel_select_channel (gimp_image_get_mask (image),
@@ -1152,7 +1095,6 @@ gimp_iscissors_tool_reset (GimpIscissorsTool *iscissors)
   iscissors->curve2      = NULL;
   iscissors->first_point = TRUE;
   iscissors->connected   = FALSE;
-  iscissors->draw        = DRAW_NOTHING;
   iscissors->state       = NO_ACTION;
 
   /*  Reset the dp buffers  */
@@ -1246,8 +1188,6 @@ clicked_on_vertex (GimpIscissorsTool *iscissors,
 
   if (curves_found > 1)
     {
-      /*  undraw the curve  */
-      iscissors->draw = DRAW_CURVE;
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (iscissors));
 
       return TRUE;
@@ -1326,8 +1266,6 @@ clicked_on_curve (GimpIscissorsTool *iscissors,
       ICurve *curve = list->data;
       ICurve *new_curve;
 
-      /*  undraw the curve  */
-      iscissors->draw = DRAW_CURVE;
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (iscissors));
 
       /*  Create the new curve  */
@@ -1353,17 +1291,16 @@ clicked_on_curve (GimpIscissorsTool *iscissors,
 
 
 static void
-calculate_curve (GimpTool *tool,
-                 ICurve   *curve)
+calculate_curve (GimpIscissorsTool *iscissors,
+                 ICurve            *curve)
 {
-  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpDisplay       *display   = tool->display;
-  GimpImage         *image     = gimp_display_get_image (display);
-  gint               x, y, dir;
-  gint               xs, ys, xe, ye;
-  gint               x1, y1, x2, y2;
-  gint               width, height;
-  gint               ewidth, eheight;
+  GimpDisplay *display   = GIMP_TOOL (iscissors)->display;
+  GimpImage   *image     = gimp_display_get_image (display);
+  gint         x, y, dir;
+  gint         xs, ys, xe, ye;
+  gint         x1, y1, x2, y2;
+  gint         width, height;
+  gint         ewidth, eheight;
 
   /*  Calculate the lowest cost path from one vertex to the next as specified
    *  by the parameter "curve".

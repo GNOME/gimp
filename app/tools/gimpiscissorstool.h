@@ -31,16 +31,6 @@ typedef enum
   WAITING
 } IscissorsState;
 
-/*  The possible drawing states...  */
-typedef enum
-{
-  DRAW_NOTHING      = 0x0,
-  DRAW_CURRENT_SEED = 0x1,
-  DRAW_CURVE        = 0x2,
-  DRAW_ACTIVE_CURVE = 0x4,
-  DRAW_LIVEWIRE     = 0x8
-} IscissorsDraw;
-
 /*  For oper_update & cursor_update  */
 typedef enum
 {
@@ -91,7 +81,6 @@ struct _GimpIscissorsTool
   gboolean        connected;    /*  is the region closed?                 */
 
   IscissorsState  state;        /*  state of iscissors                    */
-  IscissorsDraw   draw;         /*  items to draw on a draw request       */
 
   /* XXX might be useful */
   GimpChannel    *mask;         /*  selection mask                        */
