@@ -175,6 +175,14 @@ gimp_tool_preset_constructed (GObject *object)
     G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (preset->gimp));
+
+  /*  initialize the tool options with sane default values, so that if
+   *  deserializing wants to set non-existant brushe, pattern etc.,
+   *  the previously set default object will be used instead.
+   */
+  gimp_context_copy_properties (gimp_get_user_context (preset->gimp),
+                                GIMP_CONTEXT (preset->tool_options),
+                                GIMP_CONTEXT_ALL_PROPS_MASK);
 }
 
 static void
