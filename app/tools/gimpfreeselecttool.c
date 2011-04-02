@@ -65,9 +65,6 @@ typedef struct
   /* Index of grabbed segment index. */
   gint               grabbed_segment_index;
 
-  /* Wether or not button 1 is down. */
-  gboolean           button1_down;
-
   /* We need to keep track of a number of points when we move a
    * segment vertex
    */
@@ -243,8 +240,6 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 
   priv->grabbed_segment_index             = INVALID_INDEX;
-
-  priv->button1_down                      = FALSE;
 
   priv->saved_points_lower_segment        = NULL;
   priv->saved_points_higher_segment       = NULL;
@@ -445,15 +440,6 @@ gimp_free_select_tool_revert_to_last_segment (GimpFreeSelectTool *fst)
   GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
 
   priv->n_points = priv->segment_indices[priv->n_segment_indices - 1] + 1;
-}
-
-static void
-gimp_free_select_tool_update_button_state (GimpFreeSelectTool *fst,
-                                           GdkModifierType     state)
-{
-  GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
-
-  priv->button1_down = state & GDK_BUTTON1_MASK ? TRUE : FALSE;
 }
 
 static void
@@ -1288,8 +1274,6 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
 
   gimp_draw_tool_pause (draw_tool);
 
-  gimp_free_select_tool_update_button_state (fst, state);
-
   if (display != tool->display)
     {
       gimp_free_select_tool_start (fst,
@@ -1348,8 +1332,6 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
   gimp_tool_control_halt (tool->control);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (fst));
-
-  gimp_free_select_tool_update_button_state (fst, state);
 
   switch (release_type)
     {
@@ -1543,7 +1525,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
    * feedback for
    */
   handles_wants_to_show = (hovering_first_point ||
-                           ! priv->button1_down);
+                           ! gimp_tool_control_is_active (tool->control));
 
   if (handles_wants_to_show &&
       ! priv->supress_handles)
@@ -1555,7 +1537,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
        * only draw the first handle, the other handles are not
        * relevant (see comment a few lines up)
        */
-      if (priv->button1_down && hovering_first_point)
+      if (gimp_tool_control_is_active (tool->control) && hovering_first_point)
         n = MIN (priv->n_segment_indices, 1);
       else
         n = priv->n_segment_indices;
