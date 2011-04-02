@@ -200,6 +200,9 @@ void          gimp_action_group_set_action_viewable   (GimpActionGroup *group,
 void          gimp_action_group_set_action_hide_empty (GimpActionGroup *group,
                                                        const gchar     *action_name,
                                                        gboolean         hide_empty);
+void   gimp_action_group_set_action_always_show_image (GimpActionGroup *group,
+                                                       const gchar     *action_name,
+                                                       gboolean         always_show_image);
 
 
 

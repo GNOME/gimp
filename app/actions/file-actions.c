@@ -207,6 +207,8 @@ file_actions_setup (GimpActionGroup *group)
       GtkAction *action;
 
       gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
+      gimp_action_group_set_action_always_show_image (group, entries[i].name,
+                                                      TRUE);
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                             entries[i].name);

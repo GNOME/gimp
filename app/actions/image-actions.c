@@ -213,6 +213,15 @@ image_actions_setup (GimpActionGroup *group)
                                       image_rotate_actions,
                                       G_N_ELEMENTS (image_rotate_actions),
                                       G_CALLBACK (image_rotate_cmd_callback));
+
+#define SET_ALWAYS_SHOW_IMAGE(action,show) \
+        gimp_action_group_set_action_always_show_image (group, action, show)
+
+  SET_ALWAYS_SHOW_IMAGE ("image-rotate-90",  TRUE);
+  SET_ALWAYS_SHOW_IMAGE ("image-rotate-180", TRUE);
+  SET_ALWAYS_SHOW_IMAGE ("image-rotate-270", TRUE);
+
+#undef SET_ALWAYS_SHOW_IMAGE
 }
 
 void

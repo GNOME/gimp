@@ -149,6 +149,15 @@ drawable_actions_setup (GimpActionGroup *group)
                                       drawable_rotate_actions,
                                       G_N_ELEMENTS (drawable_rotate_actions),
                                       G_CALLBACK (drawable_rotate_cmd_callback));
+
+#define SET_ALWAYS_SHOW_IMAGE(action,show) \
+        gimp_action_group_set_action_always_show_image (group, action, show)
+
+  SET_ALWAYS_SHOW_IMAGE ("drawable-rotate-90",  TRUE);
+  SET_ALWAYS_SHOW_IMAGE ("drawable-rotate-180", TRUE);
+  SET_ALWAYS_SHOW_IMAGE ("drawable-rotate-270", TRUE);
+
+#undef SET_ALWAYS_SHOW_IMAGE
 }
 
 void
