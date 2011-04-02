@@ -153,8 +153,9 @@ gimp_blend_tool_initialize (GimpTool     *tool,
                             GimpDisplay  *display,
                             GError      **error)
 {
-  GimpImage    *image    = gimp_display_get_image (display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GimpImage        *image    = gimp_display_get_image (display);
+  GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
+  GimpBlendOptions *options  = GIMP_BLEND_TOOL_GET_OPTIONS (tool);
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -179,6 +180,13 @@ gimp_blend_tool_initialize (GimpTool     *tool,
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			   _("The active layer's pixels are locked."));
+      return FALSE;
+    }
+
+  if (! gimp_context_get_gradient (GIMP_CONTEXT (options)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("No gradient available for use with this tool."));
       return FALSE;
     }
 
