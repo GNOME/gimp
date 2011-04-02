@@ -77,7 +77,6 @@
 static void gimp_text_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
 static void      gimp_text_tool_constructed     (GObject           *object);
-static void      gimp_text_tool_dispose         (GObject           *object);
 static void      gimp_text_tool_finalize        (GObject           *object);
 
 static void      gimp_text_tool_control         (GimpTool          *tool,
@@ -128,8 +127,6 @@ static void      gimp_text_tool_frame_item      (GimpTextTool      *text_tool);
 
 static gboolean  gimp_text_tool_rectangle_change_complete
                                                 (GimpRectangleTool *rect_tool);
-
-static void      gimp_text_tool_halt            (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_connect         (GimpTextTool      *text_tool,
                                                  GimpTextLayer     *layer,
@@ -205,7 +202,6 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   object_class->constructed    = gimp_text_tool_constructed;
-  object_class->dispose        = gimp_text_tool_dispose;
   object_class->finalize       = gimp_text_tool_finalize;
   object_class->set_property   = gimp_rectangle_tool_set_property;
   object_class->get_property   = gimp_rectangle_tool_get_property;
@@ -298,16 +294,6 @@ gimp_text_tool_constructed (GObject *object)
 }
 
 static void
-gimp_text_tool_dispose (GObject *object)
-{
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
-
-  gimp_text_tool_halt (text_tool);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
 gimp_text_tool_finalize (GObject *object)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
@@ -343,7 +329,8 @@ gimp_text_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_text_tool_halt (text_tool);
+      gimp_text_tool_editor_halt (text_tool);
+      gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
       break;
     }
 
@@ -368,7 +355,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   if (tool->display && tool->display != display)
-    gimp_text_tool_halt (text_tool);
+    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   if (press_type == GIMP_BUTTON_PRESS_NORMAL)
     {
@@ -969,18 +956,6 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 }
 
 static void
-gimp_text_tool_halt (GimpTextTool *text_tool)
-{
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
-
-  gimp_text_tool_editor_halt (text_tool);
-
-  gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
-}
-
-static void
 gimp_text_tool_connect (GimpTextTool  *text_tool,
                         GimpTextLayer *layer,
                         GimpText      *text)
@@ -1078,17 +1053,17 @@ gimp_text_tool_layer_notify (GimpTextLayer    *layer,
                              const GParamSpec *pspec,
                              GimpTextTool     *text_tool)
 {
+  GimpTool *tool = GIMP_TOOL (text_tool);
+
   if (! strcmp (pspec->name, "modified"))
     {
       if (layer->modified)
-        gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
-                           GIMP_TOOL (text_tool)->display);
+        gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
     }
   else if (! strcmp (pspec->name, "text"))
     {
       if (! layer->text)
-        gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
-                           GIMP_TOOL (text_tool)->display);
+        gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
     }
 }
 
