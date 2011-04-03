@@ -410,9 +410,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /*  press modifier keys when the canvas gets the focus
              *
              *  in "click to focus" mode, we did this on BUTTON_PRESS, so
-             *  do it here only if button_press_before_focus is FALSE
+             *  do it here only if the mouse is not grabbed (which happens
+             *  on BUTTON_PRESS.
              */
-            if (! shell->button_press_before_focus)
+            if (! shell->pointer_grabbed)
               {
                 gimp_display_shell_update_focus (shell, &image_coords, state);
               }
@@ -421,11 +422,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             if (G_UNLIKELY (gtk_widget_has_focus (canvas)))
               g_warning ("%s: FOCUS_OUT but canvas has focus", G_STRFUNC);
-
-            /*  reset it here to be prepared for the next
-             *  FOCUS_IN / BUTTON_PRESS confusion
-             */
-            shell->button_press_before_focus = FALSE;
 
             /*  release modifier keys when the canvas loses the focus  */
             tool_manager_focus_display_active (gimp, NULL);
@@ -454,26 +450,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         /*  if the toplevel window didn't have focus, the above
          *  gtk_widget_grab_focus() didn't set the canvas' HAS_FOCUS
-         *  flags, so check for it here again.
-         *
-         *  this happens in "click to focus" mode.
+         *  flags, and didn't trigger a FOCUS_IN, but the tool needs
+         *  to be set up correctly regardless, so simply do the
+         *  same things here, it's safe to do them redundantly.
          */
-        if (! gtk_widget_has_focus (canvas))
-          {
-            /*  do the things a FOCUS_IN event would do and set a flag
-             *  preventing it from doing the same.
-             */
-            gimp_display_shell_update_focus (shell, &image_coords, state);
-            gimp_display_shell_update_cursor (shell, &display_coords,
-                                              &image_coords, state, FALSE);
-
-            shell->button_press_before_focus = TRUE;
-
-            /*  we expect a FOCUS_IN event to follow, but can't rely
-             *  on it, so force one
-             */
-            gdk_window_focus (gtk_widget_get_window (canvas), time);
-          }
+        gimp_display_shell_update_focus (shell, &image_coords, state);
+        gimp_display_shell_update_cursor (shell, &display_coords,
+                                          &image_coords, state, FALSE);
 
         /*  ignore new mouse events  */
         if (gimp->busy || shell->scrolling)
@@ -1255,32 +1238,15 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
                                           "gimp-move-tool");
 
           if (tool_info)
-            {
-              gimp_context_set_tool (gimp_get_user_context (display->gimp),
-                                     tool_info);
-
-              /*  make sure the newly created tool has the right state
-               */
-              gimp_display_shell_update_focus (shell, NULL, event->state);
-            }
+            gimp_context_set_tool (gimp_get_user_context (display->gimp),
+                                   tool_info);
         }
 
       active_tool = tool_manager_get_active (display->gimp);
 
       if (active_tool)
         {
-          if (! gtk_widget_has_focus (shell->canvas))
-            {
-              gimp_display_shell_update_focus (shell, NULL, event->state);
-
-              shell->button_press_before_focus = TRUE;
-
-              /*  we expect a FOCUS_IN event to follow, but can't rely
-               *  on it, so force one
-               */
-              gdk_window_focus (gtk_widget_get_window (shell->canvas),
-                                gdk_event_get_time ((GdkEvent *) event));
-            }
+          gimp_display_shell_update_focus (shell, NULL, event->state);
 
           if (gimp_display_shell_pointer_grab (shell,
                                                (GdkEvent *) event,
