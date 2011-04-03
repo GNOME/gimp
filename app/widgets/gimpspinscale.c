@@ -61,29 +61,31 @@ struct _GimpSpinScalePrivate
                                                        GimpSpinScalePrivate))
 
 
-static void       gimp_spin_scale_dispose        (GObject        *object);
-static void       gimp_spin_scale_finalize       (GObject        *object);
-static void       gimp_spin_scale_set_property   (GObject        *object,
-                                                  guint           property_id,
-                                                  const GValue   *value,
-                                                  GParamSpec     *pspec);
-static void       gimp_spin_scale_get_property   (GObject        *object,
-                                                  guint           property_id,
-                                                  GValue         *value,
-                                                  GParamSpec     *pspec);
+static void       gimp_spin_scale_dispose        (GObject          *object);
+static void       gimp_spin_scale_finalize       (GObject          *object);
+static void       gimp_spin_scale_set_property   (GObject          *object,
+                                                  guint             property_id,
+                                                  const GValue     *value,
+                                                  GParamSpec       *pspec);
+static void       gimp_spin_scale_get_property   (GObject          *object,
+                                                  guint             property_id,
+                                                  GValue           *value,
+                                                  GParamSpec       *pspec);
 
-static void       gimp_spin_scale_style_set      (GtkWidget      *widget,
-                                                  GtkStyle       *prev_style);
-static gboolean   gimp_spin_scale_expose         (GtkWidget      *widget,
-                                                  GdkEventExpose *event);
-static gboolean   gimp_spin_scale_button_press   (GtkWidget      *widget,
-                                                  GdkEventButton *event);
-static gboolean   gimp_spin_scale_button_release (GtkWidget      *widget,
-                                                  GdkEventButton *event);
-static gboolean   gimp_spin_scale_button_motion  (GtkWidget      *widget,
-                                                  GdkEventMotion *event);
+static void       gimp_spin_scale_style_set      (GtkWidget        *widget,
+                                                  GtkStyle         *prev_style);
+static gboolean   gimp_spin_scale_expose         (GtkWidget        *widget,
+                                                  GdkEventExpose   *event);
+static gboolean   gimp_spin_scale_button_press   (GtkWidget        *widget,
+                                                  GdkEventButton   *event);
+static gboolean   gimp_spin_scale_button_release (GtkWidget        *widget,
+                                                  GdkEventButton   *event);
+static gboolean   gimp_spin_scale_motion_notify  (GtkWidget        *widget,
+                                                  GdkEventMotion   *event);
+static gboolean   gimp_spin_scale_leave_notify   (GtkWidget        *widget,
+                                                  GdkEventCrossing *event);
 
-static void       gimp_spin_scale_value_changed  (GtkSpinButton  *spin_button);
+static void       gimp_spin_scale_value_changed  (GtkSpinButton    *spin_button);
 
 
 G_DEFINE_TYPE (GimpSpinScale, gimp_spin_scale, GTK_TYPE_SPIN_BUTTON);
@@ -107,7 +109,8 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
   widget_class->expose_event         = gimp_spin_scale_expose;
   widget_class->button_press_event   = gimp_spin_scale_button_press;
   widget_class->button_release_event = gimp_spin_scale_button_release;
-  widget_class->motion_notify_event  = gimp_spin_scale_button_motion;
+  widget_class->motion_notify_event  = gimp_spin_scale_motion_notify;
+  widget_class->leave_notify_event   = gimp_spin_scale_leave_notify;
 
   spin_button_class->value_changed   = gimp_spin_scale_value_changed;
 
@@ -424,7 +427,7 @@ gimp_spin_scale_button_release (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_spin_scale_button_motion (GtkWidget      *widget,
+gimp_spin_scale_motion_notify (GtkWidget      *widget,
                                GdkEventMotion *event)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
@@ -465,6 +468,15 @@ gimp_spin_scale_button_motion (GtkWidget      *widget,
     }
 
   return FALSE;
+}
+
+static gboolean
+gimp_spin_scale_leave_notify (GtkWidget        *widget,
+                              GdkEventCrossing *event)
+{
+  gdk_window_set_cursor (event->window, NULL);
+
+  return GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
 }
 
 static void
