@@ -282,10 +282,10 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
 
     screen_click_x = x_origin + click_x;
     screen_click_y = y_origin + click_y;
-    border_width   = style->xthickness * 4;
-    border_height  = style->ythickness * 4;
-    popup_width    = GIMP_VIEW (view)->renderer->width  - border_width;
-    popup_height   = GIMP_VIEW (view)->renderer->height - border_height;
+    border_width   = 2 * style->xthickness;
+    border_height  = 2 * style->ythickness;
+    popup_width    = GIMP_VIEW (view)->renderer->width  - 2 * border_width;
+    popup_height   = GIMP_VIEW (view)->renderer->height - 2 * border_height;
 
     x = screen_click_x -
         border_width -
