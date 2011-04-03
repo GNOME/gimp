@@ -58,31 +58,37 @@ enum
 };
 
 
-static void        gimp_tool_preset_config_iface_init (GimpConfigInterface *iface);
+static void          gimp_tool_preset_config_iface_init    (GimpConfigInterface *iface);
 
-static void            gimp_tool_preset_constructed   (GObject      *object);
-static void            gimp_tool_preset_finalize      (GObject      *object);
-static void            gimp_tool_preset_set_property  (GObject      *object,
-                                                       guint         property_id,
-                                                       const GValue *value,
-                                                       GParamSpec   *pspec);
-static void            gimp_tool_preset_get_property  (GObject      *object,
-                                                       guint         property_id,
-                                                       GValue       *value,
-                                                       GParamSpec   *pspec);
+static void          gimp_tool_preset_constructed          (GObject          *object);
+static void          gimp_tool_preset_finalize             (GObject          *object);
+static void          gimp_tool_preset_set_property         (GObject          *object,
+                                                            guint             property_id,
+                                                            const GValue     *value,
+                                                            GParamSpec       *pspec);
+static void          gimp_tool_preset_get_property         (GObject          *object,
+                                                            guint             property_id,
+                                                            GValue           *value,
+                                                            GParamSpec       *pspec);
 static void
-         gimp_tool_preset_dispatch_properties_changed (GObject      *object,
-                                                       guint         n_pspecs,
-                                                       GParamSpec  **pspecs);
+             gimp_tool_preset_dispatch_properties_changed  (GObject          *object,
+                                                            guint             n_pspecs,
+                                                            GParamSpec      **pspecs);
 
-static const gchar   * gimp_tool_preset_get_extension (GimpData     *data);
+static const gchar * gimp_tool_preset_get_extension        (GimpData         *data);
 
-static gboolean gimp_tool_preset_deserialize_property (GimpConfig   *config,
-                                                       guint         property_id,
-                                                       GValue       *value,
-                                                       GParamSpec   *pspec,
-                                                       GScanner     *scanner,
-                                                       GTokenType   *expected);
+static gboolean      gimp_tool_preset_deserialize_property (GimpConfig       *config,
+                                                            guint             property_id,
+                                                            GValue           *value,
+                                                            GParamSpec       *pspec,
+                                                            GScanner         *scanner,
+                                                            GTokenType       *expected);
+
+static void          gimp_tool_preset_set_options          (GimpToolPreset   *preset,
+                                                            GimpToolOptions  *options);
+static void          gimp_tool_preset_options_notify       (GObject          *tool_options,
+                                                            const GParamSpec *pspec,
+                                                            GimpToolPreset   *preset);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpToolPreset, gimp_tool_preset, GIMP_TYPE_DATA,
@@ -182,11 +188,7 @@ gimp_tool_preset_finalize (GObject *object)
 {
   GimpToolPreset *tool_preset = GIMP_TOOL_PRESET (object);
 
-  if (tool_preset->tool_options)
-    {
-      g_object_unref (tool_preset->tool_options);
-      tool_preset->tool_options = NULL;
-    }
+  gimp_tool_preset_set_options (tool_preset, NULL);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -211,10 +213,8 @@ gimp_tool_preset_set_property (GObject      *object,
       break;
 
     case PROP_TOOL_OPTIONS:
-      if (tool_preset->tool_options)
-        g_object_unref (tool_preset->tool_options);
-      tool_preset->tool_options =
-        gimp_config_duplicate (g_value_get_object (value));
+      gimp_tool_preset_set_options (tool_preset,
+                                    GIMP_TOOL_OPTIONS (g_value_get_object (value)));
       break;
 
     case PROP_USE_FG_BG:
@@ -395,6 +395,41 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
     }
 
   return TRUE;
+}
+
+static void
+gimp_tool_preset_set_options (GimpToolPreset  *preset,
+                              GimpToolOptions *options)
+{
+  if (preset->tool_options)
+    {
+      g_signal_handlers_disconnect_by_func (preset->tool_options,
+                                            gimp_tool_preset_options_notify,
+                                            preset);
+
+      g_object_unref (preset->tool_options);
+      preset->tool_options = NULL;
+    }
+
+  if (options)
+    {
+      preset->tool_options =
+        GIMP_TOOL_OPTIONS (gimp_config_duplicate (GIMP_CONFIG (options)));
+
+      g_signal_connect (preset->tool_options, "notify",
+                        G_CALLBACK (gimp_tool_preset_options_notify),
+                        preset);
+    }
+
+  g_object_notify (G_OBJECT (preset), "tool-options");
+}
+
+static void
+gimp_tool_preset_options_notify (GObject          *tool_options,
+                                 const GParamSpec *pspec,
+                                 GimpToolPreset   *preset)
+{
+  g_object_notify (G_OBJECT (preset), "tool-options");
 }
 
 
