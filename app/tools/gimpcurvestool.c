@@ -87,7 +87,7 @@ static void       gimp_curves_tool_oper_update    (GimpTool             *tool,
 static void       gimp_curves_tool_color_picked   (GimpColorTool        *color_tool,
                                                    GimpColorPickState    pick_state,
                                                    GimpImageType         sample_type,
-                                                   GimpRGB              *color,
+                                                   const GimpRGB        *color,
                                                    gint                  color_index);
 static GeglNode * gimp_curves_tool_get_operation  (GimpImageMapTool     *image_map_tool,
                                                    GObject             **config);
@@ -359,7 +359,7 @@ static void
 gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
                                GimpColorPickState  pick_state,
                                GimpImageType       sample_type,
-                               GimpRGB            *color,
+                               const GimpRGB      *color,
                                gint                color_index)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (color_tool);

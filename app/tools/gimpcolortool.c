@@ -113,7 +113,7 @@ static void   gimp_color_tool_pick           (GimpColorTool         *tool,
 static void   gimp_color_tool_real_picked    (GimpColorTool         *color_tool,
                                               GimpColorPickState     pick_state,
                                               GimpImageType          sample_type,
-                                              GimpRGB               *color,
+                                              const GimpRGB         *color,
                                               gint                   color_index);
 
 
@@ -597,7 +597,7 @@ static void
 gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                              GimpColorPickState  pick_state,
                              GimpImageType       sample_type,
-                             GimpRGB            *color,
+                             const GimpRGB      *color,
                              gint                color_index)
 {
   GimpTool          *tool = GIMP_TOOL (color_tool);

@@ -67,7 +67,7 @@ struct _GimpColorToolClass
   void     (* picked) (GimpColorTool      *tool,
                        GimpColorPickState  pick_state,
                        GimpImageType       sample_type,
-                       GimpRGB            *color,
+                       const GimpRGB      *color,
                        gint                color_index);
 };
 

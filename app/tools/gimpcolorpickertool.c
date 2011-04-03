@@ -62,7 +62,7 @@ static void   gimp_color_picker_tool_oper_update   (GimpTool            *tool,
 static void   gimp_color_picker_tool_picked        (GimpColorTool       *color_tool,
                                                     GimpColorPickState   pick_state,
                                                     GimpImageType        sample_type,
-                                                    GimpRGB             *color,
+                                                    const GimpRGB       *color,
                                                     gint                 color_index);
 
 static void   gimp_color_picker_tool_info_create   (GimpColorPickerTool *picker_tool);
@@ -71,7 +71,7 @@ static void   gimp_color_picker_tool_info_response (GtkWidget           *widget,
                                                     GimpColorPickerTool *picker_tool);
 static void   gimp_color_picker_tool_info_update   (GimpColorPickerTool *picker_tool,
                                                     GimpImageType        sample_type,
-                                                    GimpRGB             *color,
+                                                    const GimpRGB       *color,
                                                     gint                 color_index);
 
 
@@ -267,7 +267,7 @@ static void
 gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
                                GimpColorPickState  pick_state,
                                GimpImageType       sample_type,
-                               GimpRGB            *color,
+                               const GimpRGB      *color,
                                gint                color_index)
 {
   GimpColorPickerTool    *picker_tool = GIMP_COLOR_PICKER_TOOL (color_tool);
@@ -369,7 +369,7 @@ gimp_color_picker_tool_info_response (GtkWidget           *widget,
 static void
 gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
                                     GimpImageType        sample_type,
-                                    GimpRGB             *color,
+                                    const GimpRGB       *color,
                                     gint                 color_index)
 {
   gimp_color_area_set_color (GIMP_COLOR_AREA (picker_tool->color_area),

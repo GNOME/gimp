@@ -77,7 +77,7 @@ static gboolean   gimp_levels_tool_initialize     (GimpTool          *tool,
 static void       gimp_levels_tool_color_picked   (GimpColorTool     *color_tool,
                                                    GimpColorPickState pick_state,
                                                    GimpImageType      sample_type,
-                                                   GimpRGB           *color,
+                                                   const GimpRGB     *color,
                                                    gint               color_index);
 
 static GeglNode * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool,
@@ -1197,7 +1197,7 @@ static void
 gimp_levels_tool_color_picked (GimpColorTool      *color_tool,
                                GimpColorPickState  pick_state,
                                GimpImageType       sample_type,
-                               GimpRGB            *color,
+                               const GimpRGB      *color,
                                gint                color_index)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (color_tool);
