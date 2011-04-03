@@ -342,8 +342,8 @@ gimp_canvas_sample_point_new (GimpDisplayShell *shell,
 
 void
 gimp_canvas_sample_point_set (GimpCanvasItem *sample_point,
-                              gdouble         x,
-                              gdouble         y)
+                              gint            x,
+                              gint            y)
 {
   g_return_if_fail (GIMP_IS_CANVAS_SAMPLE_POINT (sample_point));
 

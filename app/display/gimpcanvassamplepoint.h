@@ -56,8 +56,8 @@ GimpCanvasItem * gimp_canvas_sample_point_new      (GimpDisplayShell *shell,
                                                     gboolean          sample_point_style);
 
 void             gimp_canvas_sample_point_set      (GimpCanvasItem   *sample_point,
-                                                    gdouble           x,
-                                                    gdouble           y);
+                                                    gint              x,
+                                                    gint              y);
 
 
 #endif /* __GIMP_CANVAS_SAMPLE_POINT_H__ */
