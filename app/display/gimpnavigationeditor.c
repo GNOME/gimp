@@ -233,7 +233,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
                               gint              click_x,
                               gint              click_y)
 {
-  GtkStyle             *style = gtk_widget_get_style (widget);
+  GtkStyleContext      *style = gtk_widget_get_style_context (widget);
   GimpNavigationEditor *editor;
   GimpNavigationView   *view;
   GdkScreen            *screen;
@@ -285,18 +285,22 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
                                          &view_marker_height);
   /* Position the popup */
   {
-    gint x_origin, y_origin;
-    gint popup_width, popup_height;
-    gint border_width, border_height;
-    gint screen_click_x, screen_click_y;
+    GtkBorder border;
+    gint      x_origin, y_origin;
+    gint      popup_width, popup_height;
+    gint      border_width, border_height;
+    gint      screen_click_x, screen_click_y;
 
     gdk_window_get_origin (gtk_widget_get_window (widget),
                            &x_origin, &y_origin);
 
+    gtk_style_context_get_border (style, gtk_widget_get_state_flags (widget),
+                                  &border);
+
     screen_click_x = x_origin + click_x;
     screen_click_y = y_origin + click_y;
-    border_width   = 2 * style->xthickness;
-    border_height  = 2 * style->ythickness;
+    border_width   = 2 * border.left;
+    border_height  = 2 * border.top;
     popup_width    = GIMP_VIEW (view)->renderer->width  - 2 * border_width;
     popup_height   = GIMP_VIEW (view)->renderer->height - 2 * border_height;
 
