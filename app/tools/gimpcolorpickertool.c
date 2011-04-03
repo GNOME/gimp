@@ -44,7 +44,6 @@
 /*  local function prototypes  */
 
 static void   gimp_color_picker_tool_constructed   (GObject             *object);
-static void   gimp_color_picker_tool_finalize      (GObject             *object);
 
 static void   gimp_color_picker_tool_control       (GimpTool            *tool,
                                                     GimpToolAction       action,
@@ -107,7 +106,6 @@ gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
   GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
 
   object_class->constructed = gimp_color_picker_tool_constructed;
-  object_class->finalize    = gimp_color_picker_tool_finalize;
 
   tool_class->control       = gimp_color_picker_tool_control;
   tool_class->modifier_key  = gimp_color_picker_tool_modifier_key;
@@ -137,18 +135,6 @@ gimp_color_picker_tool_constructed (GObject *object)
 }
 
 static void
-gimp_color_picker_tool_finalize (GObject *object)
-{
-  GimpColorPickerTool *picker_tool = GIMP_COLOR_PICKER_TOOL (object);
-
-  if (picker_tool->dialog)
-    gimp_color_picker_tool_info_response (NULL, GTK_RESPONSE_CLOSE,
-                                          picker_tool);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
 gimp_color_picker_tool_control (GimpTool       *tool,
                                 GimpToolAction  action,
                                 GimpDisplay    *display)
@@ -163,8 +149,14 @@ gimp_color_picker_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       if (picker_tool->dialog)
-        gimp_color_picker_tool_info_response (NULL, GTK_RESPONSE_CLOSE,
-                                              picker_tool);
+        {
+          gtk_widget_destroy (picker_tool->dialog);
+
+          picker_tool->dialog       = NULL;
+          picker_tool->color_area   = NULL;
+          picker_tool->color_frame1 = NULL;
+          picker_tool->color_frame2 = NULL;
+        }
       break;
     }
 
@@ -369,12 +361,9 @@ gimp_color_picker_tool_info_response (GtkWidget           *widget,
                                       gint                 response_id,
                                       GimpColorPickerTool *picker_tool)
 {
-  gtk_widget_destroy (picker_tool->dialog);
+  GimpTool *tool = GIMP_TOOL (picker_tool);
 
-  picker_tool->dialog       = NULL;
-  picker_tool->color_area   = NULL;
-  picker_tool->color_frame1 = NULL;
-  picker_tool->color_frame2 = NULL;
+  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
 }
 
 static void
