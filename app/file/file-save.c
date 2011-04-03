@@ -177,6 +177,12 @@ file_save (Gimp                *gimp,
            */
           gimp_image_set_exported_uri (image, uri);
 
+          /* An image can not be considered both exported and imported
+           * at the same time, so stop consider it as imported now
+           * that we consider it exported.
+           */
+          gimp_image_set_imported_uri (image, NULL);
+
           gimp_image_export_clean_all (image);
         }
 

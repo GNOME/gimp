@@ -291,6 +291,72 @@ exported_file_uris (GimpTestFixture *fixture,
   g_unlink (save_filename);
 }
 
+/**
+ * clear_import_uri_after_export:
+ * @fixture:
+ * @data:
+ *
+ * Tests that after a XCF file that was imported has been exported,
+ * the import URI is cleared. An image can not be considered both
+ * imported and exported at the same time.
+ **/
+static void
+clear_import_uri_after_export (GimpTestFixture *fixture,
+                               gconstpointer    data)
+{
+  Gimp                *gimp = GIMP (data);
+  GimpImage           *image;
+  gchar               *uri;
+  gchar               *filename;
+  gchar               *save_uri;
+  gchar               *save_filename;
+  GimpPlugInProcedure *proc;
+  GimpPDBStatusType    status;
+
+  filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                               "desktop/64x64/gimp.png",
+                               NULL);
+  uri = g_filename_to_uri (filename, NULL, NULL);
+
+  image = file_open_image (gimp,
+                           gimp_get_user_context (gimp),
+                           NULL /*progress*/,
+                           uri,
+                           filename,
+                           FALSE /*as_new*/,
+                           NULL /*file_proc*/,
+                           GIMP_RUN_NONINTERACTIVE,
+                           &status,
+                           NULL /*mime_type*/,
+                           NULL /*error*/);
+
+  g_assert (gimp_image_get_uri (image) == NULL);
+  g_assert_cmpstr (gimp_image_get_imported_uri (image), ==, uri);
+  g_assert (gimp_image_get_exported_uri (image) == NULL);
+
+  save_filename = g_build_filename (g_get_tmp_dir (), "gimp-test.png", NULL);
+  save_uri = g_filename_to_uri (save_filename, NULL, NULL);
+
+  proc = file_procedure_find (image->gimp->plug_in_manager->export_procs,
+                              save_uri,
+                              NULL /*error*/);
+  file_save (gimp,
+             image,
+             NULL /*progress*/,
+             save_uri,
+             proc,
+             GIMP_RUN_NONINTERACTIVE,
+             FALSE /*change_saved_state*/,
+             TRUE /*export*/,
+             NULL /*error*/);
+
+  g_assert (gimp_image_get_uri (image) == NULL);
+  g_assert (gimp_image_get_imported_uri (image) == NULL);
+  g_assert_cmpstr (gimp_image_get_exported_uri (image), ==, save_uri);
+
+  g_unlink (save_filename);
+}
+
 int main(int argc, char **argv)
 {
   Gimp *gimp   = NULL;
@@ -312,6 +378,7 @@ int main(int argc, char **argv)
   ADD_TEST (imported_file_uris);
   ADD_TEST (saved_imported_file_uris);
   ADD_TEST (exported_file_uris);
+  ADD_TEST (clear_import_uri_after_export);
 
   /* Run the tests and return status */
   result = g_test_run ();
