@@ -1450,8 +1450,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
 
         gdk_event_get_state (event, &state);
 
-        tool_manager_focus_display_active (gimp, shell->display);
-        tool_manager_modifier_state_active (gimp, state, shell->display);
+        gimp_display_shell_update_focus (shell, NULL, state);
       }
       break;
     }
@@ -1489,8 +1488,7 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 
         gdk_event_get_state (event, &state);
 
-        tool_manager_focus_display_active (gimp, shell->display);
-        tool_manager_modifier_state_active (gimp, state, shell->display);
+        gimp_display_shell_update_focus (shell, NULL, state);
       }
       break;
     }
