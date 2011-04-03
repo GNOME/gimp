@@ -91,6 +91,10 @@ static void       gimp_display_shell_update_cursor            (GimpDisplayShell 
                                                                GdkModifierType   state,
                                                                gboolean          update_software_cursor);
 
+static gboolean   gimp_display_shell_initialize_tool          (GimpDisplayShell *shell,
+                                                               const GimpCoords *image_coords,
+                                                               GdkModifierType   state);
+
 static void       gimp_display_shell_get_event_coords         (GimpDisplayShell *shell,
                                                                GdkEvent         *event,
                                                                GimpCoords       *display_coords,
@@ -515,61 +519,33 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   return TRUE;
                 }
 
-            if (active_tool &&
-                (! gimp_image_is_empty (image) ||
-                 gimp_tool_control_get_handle_empty_image (active_tool->control)))
+            if (gimp_display_shell_initialize_tool (shell,
+                                                    &image_coords, state))
               {
-                gboolean initialized = TRUE;
-
-                /*  initialize the current tool if it has no drawable
+                /* Use the last evaluated dynamic axes instead of the
+                 * button_press event's ones because the click is
+                 * usually at the same spot as the last motion event
+                 * which would give us bogus dynamics.
                  */
-                if (! active_tool->drawable)
-                  {
-                    initialized = tool_manager_initialize_active (gimp,
-                                                                  display);
-                  }
-                else if ((active_tool->drawable !=
-                          gimp_image_get_active_drawable (image)) &&
-                         ! gimp_tool_control_get_preserve (active_tool->control))
-                  {
-                    /*  create a new one, deleting the current
-                     */
-                    gimp_context_tool_changed (gimp_get_user_context (gimp));
+                GimpCoords tmp_coords;
 
-                    /*  make sure the newly created tool has the right state
-                     */
-                    gimp_display_shell_update_focus (shell, &image_coords, state);
+                tmp_coords = shell->last_coords;
 
-                    initialized = tool_manager_initialize_active (gimp, display);
-                  }
+                tmp_coords.x        = image_coords.x;
+                tmp_coords.y        = image_coords.y;
+                tmp_coords.pressure = image_coords.pressure;
+                tmp_coords.xtilt    = image_coords.xtilt;
+                tmp_coords.ytilt    = image_coords.ytilt;
 
-                if (initialized)
-                  {
-                    /* Use the last evaluated dynamic axes instead of
-                     * the button_press event's ones because the click
-                     * is usually at the same spot as the last motion
-                     * event which would give us bogus dynamics.
-                     */
-                    GimpCoords tmp_coords;
+                image_coords = tmp_coords;
 
-                    tmp_coords = shell->last_coords;
+                tool_manager_button_press_active (gimp,
+                                                  &image_coords,
+                                                  time, state,
+                                                  GIMP_BUTTON_PRESS_NORMAL,
+                                                  display);
 
-                    tmp_coords.x        = image_coords.x;
-                    tmp_coords.y        = image_coords.y;
-                    tmp_coords.pressure = image_coords.pressure;
-                    tmp_coords.xtilt    = image_coords.xtilt;
-                    tmp_coords.ytilt    = image_coords.ytilt;
-
-                    image_coords = tmp_coords;
-
-                    tool_manager_button_press_active (gimp,
-                                                      &image_coords,
-                                                      time, state,
-                                                      GIMP_BUTTON_PRESS_NORMAL,
-                                                      display);
-
-                    shell->last_read_motion_time = bevent->time;
-                  }
+                shell->last_read_motion_time = bevent->time;
               }
             break;
 
@@ -1636,6 +1612,47 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
                                                  image_coords->x,
                                                  image_coords->y);
     }
+}
+
+static gboolean
+gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
+                                    const GimpCoords *image_coords,
+                                    GdkModifierType   state)
+{
+  GimpDisplay *display     = shell->display;
+  GimpImage   *image       = gimp_display_get_image (display);
+  Gimp        *gimp        = gimp_display_get_gimp (display);
+  gboolean     initialized = FALSE;
+  GimpTool    *active_tool;
+
+  active_tool = tool_manager_get_active (gimp);
+
+  if (active_tool &&
+      (! gimp_image_is_empty (image) ||
+       gimp_tool_control_get_handle_empty_image (active_tool->control)))
+    {
+      initialized = TRUE;
+
+      /*  initialize the current tool if it has no drawable  */
+      if (! active_tool->drawable)
+        {
+          initialized = tool_manager_initialize_active (gimp, display);
+        }
+      else if ((active_tool->drawable !=
+                gimp_image_get_active_drawable (image)) &&
+               ! gimp_tool_control_get_preserve (active_tool->control))
+        {
+          /*  create a new one, deleting the current  */
+          gimp_context_tool_changed (gimp_get_user_context (gimp));
+
+          /*  make sure the newly created tool has the right state  */
+          gimp_display_shell_update_focus (shell, image_coords, state);
+
+          initialized = tool_manager_initialize_active (gimp, display);
+        }
+    }
+
+  return initialized;
 }
 
 static void
