@@ -4677,7 +4677,7 @@ msgstr "_S முன்னமைத்த கருவிகளை சேமி"
 #: ../app/actions/tool-options-actions.c:62
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr "__R முன்னமைத்த கருவிகளை மீட்டு அமை"
+msgstr "_R முன்னமைத்த கருவிகளை மீட்டு அமை"
 
 #: ../app/actions/tool-options-actions.c:66
 msgctxt "tool-options-action"
@@ -10912,7 +10912,7 @@ msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"உருப்படி '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அது உருப்படி மரத்தின் நேரடி சேய் "
+"உருப்படி '%s' (%d) மற்றும்  '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அது உருப்படி மரத்தின் நேரடி சேய் "
 "அல்ல."
 
 #: ../app/pdb/gimppdb-utils.c:410
