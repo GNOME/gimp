@@ -223,7 +223,6 @@ gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
                                  gimp_drawable_bytes (im_tool->drawable));
 }
 
-
 static void
 gimp_brightness_contrast_tool_button_press (GimpTool            *tool,
                                             const GimpCoords    *coords,

@@ -133,6 +133,6 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                                   options->select_transparent,
                                                   options->select_criterion,
                                                   &color);
-  else
-    return NULL;
+
+  return NULL;
 }

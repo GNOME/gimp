@@ -147,9 +147,9 @@ gimp_brush_tool_constructed (GObject *object)
                            G_CALLBACK (gimp_brush_tool_brush_changed),
                            brush_tool, 0);
 
-  g_signal_connect (paint_tool->core, "set-brush",
-                    G_CALLBACK (gimp_brush_tool_set_brush),
-                    brush_tool);
+  g_signal_connect_object (paint_tool->core, "set-brush",
+                           G_CALLBACK (gimp_brush_tool_set_brush),
+                           brush_tool, 0);
 }
 
 static void

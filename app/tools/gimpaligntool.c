@@ -154,12 +154,12 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
 {
   GimpTool *tool = GIMP_TOOL (align_tool);
 
-  align_tool->function = ALIGN_TOOL_IDLE;
-
   gimp_tool_control_set_snap_to     (tool->control, FALSE);
   gimp_tool_control_set_precision   (tool->control,
                                      GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_MOVE);
+
+  align_tool->function = ALIGN_TOOL_IDLE;
 }
 
 static void

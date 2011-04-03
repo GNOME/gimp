@@ -138,8 +138,6 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
   gimp_tool_control_set_scroll_lock     (tool->control, TRUE);
   gimp_tool_control_set_precision       (tool->control,
                                          GIMP_CURSOR_PRECISION_SUBPIXEL);
-  gimp_tool_control_set_cursor          (tool->control,
-                                         GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor     (tool->control,
                                          GIMP_TOOL_CURSOR_BLEND);
   gimp_tool_control_set_action_value_1  (tool->control,

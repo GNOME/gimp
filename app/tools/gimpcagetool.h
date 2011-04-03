@@ -22,7 +22,6 @@
 
 
 #include "gimpdrawtool.h"
-#include "libgimpmath/gimpvector.h"
 
 
 #define GIMP_TYPE_CAGE_TOOL            (gimp_cage_tool_get_type ())

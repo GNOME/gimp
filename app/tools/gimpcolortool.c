@@ -790,7 +790,7 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
   gimp_tool_control_activate (tool->control);
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
-  if (gimp_draw_tool_is_active  (GIMP_DRAW_TOOL (tool)))
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   color_tool->sample_point        = NULL;
