@@ -594,12 +594,22 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
 
-  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
+  if (! view->grab_device &&
+      bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      GtkAllocation allocation;
-      gint          width;
+      GdkDevice     *device = gdk_event_get_device ((GdkEvent *) bevent);
+      GtkAllocation  allocation;
+      gint           width;
 
-      gtk_grab_add (widget);
+      if (gdk_device_grab (device, gtk_widget_get_window (widget),
+                           GDK_OWNERSHIP_WINDOW, FALSE,
+                           GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
+                           NULL, bevent->time) != GDK_GRAB_SUCCESS)
+        {
+          return TRUE;
+        }
+
+      view->grab_device = device;
 
       gtk_widget_get_allocation (widget, &allocation);
 
@@ -621,11 +631,12 @@ gimp_histogram_view_button_release (GtkWidget      *widget,
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
 
-  if (bevent->button == 1)
+  if (gdk_event_get_device ((GdkEvent *) bevent) == view->grab_device &&
+      bevent->button == 1)
     {
       gint start, end;
 
-      gtk_grab_remove (widget);
+      gdk_device_ungrab (view->grab_device, bevent->time);
 
       start = view->start;
       end   = view->end;
@@ -648,14 +659,17 @@ gimp_histogram_view_motion_notify (GtkWidget      *widget,
   GtkAllocation      allocation;
   gint               width;
 
-  gtk_widget_get_allocation (widget, &allocation);
+  if (gdk_event_get_device ((GdkEvent *) mevent) == view->grab_device)
+    {
+      gtk_widget_get_allocation (widget, &allocation);
 
-  width = allocation.width - 2 * view->border_width;
+      width = allocation.width - 2 * view->border_width;
 
-  view->start = CLAMP (((mevent->x - view->border_width) * view->n_bins) / width,
-                       0, view->n_bins - 1);
+      view->start = CLAMP (((mevent->x - view->border_width) * view->n_bins) / width,
+                           0, view->n_bins - 1);
 
-  gtk_widget_queue_draw (widget);
+      gtk_widget_queue_draw (widget);
+    }
 
   return TRUE;
 }
