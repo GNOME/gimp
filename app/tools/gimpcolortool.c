@@ -221,7 +221,8 @@ gimp_color_tool_button_press (GimpTool            *tool,
 
       gimp_display_shell_selection_pause (shell);
 
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+      if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
+        gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
       gimp_tool_push_status_coords (tool, display,
                                     gimp_tool_control_get_precision (tool->control),
@@ -432,12 +433,11 @@ gimp_color_tool_oper_update (GimpTool         *tool,
   GimpImage        *image        = gimp_display_get_image (display);
   GimpSamplePoint  *sample_point = NULL;
 
-  if (color_tool->enabled &&
-      gimp_display_shell_get_show_sample_points (shell) && proximity)
+  if (color_tool->enabled                               &&
+      gimp_display_shell_get_show_sample_points (shell) &&
+      proximity)
     {
-      gint snap_distance;
-
-      snap_distance = GIMP_DISPLAY_CONFIG (display->gimp->config)->snap_distance;
+      gint snap_distance = display->config->snap_distance;
 
       sample_point =
         gimp_image_find_sample_point (image,
@@ -566,8 +566,6 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
                                         2 * radius + 1);
         }
     }
-
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
 static gboolean

@@ -239,7 +239,8 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
               gimp_display_shell_selection_pause (shell);
 
-              gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+              if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
+                gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
               gimp_tool_push_status_length (tool, display,
                                             _("Move Guide: "),
@@ -626,7 +627,7 @@ gimp_move_tool_oper_update (GimpTool         *tool,
       gimp_display_shell_get_show_guides (shell)      &&
       proximity)
     {
-      const gint snap_distance = display->config->snap_distance;
+      gint snap_distance = display->config->snap_distance;
 
       guide = gimp_image_find_guide (image, coords->x, coords->y,
                                      FUNSCALEX (shell, snap_distance),
