@@ -531,6 +531,18 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
                                                          angle, hardness);
 }
 
+GimpBezierDesc *
+gimp_brush_transform_boundary (GimpBrush *brush,
+                               gdouble    scale,
+                               gdouble    aspect_ratio,
+                               gdouble    angle,
+                               gdouble    hardness)
+{
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+
+  return NULL;
+}
+
 gdouble
 gimp_brush_clamp_scale (GimpBrush *brush,
                         gdouble    scale)
