@@ -82,14 +82,6 @@ struct _GimpBrushCore
   gdouble        jitter_lut_y[BRUSH_CORE_JITTER_LUTSIZE];
 
   GRand         *rand;
-
-  /*  don't use these...  */
-  BoundSeg      *brush_bound_segs;
-  gint           n_brush_bound_segs;
-  gint           brush_bound_width;
-  gint           brush_bound_height;
-  gint           transformed_brush_bound_width;
-  gint           transformed_brush_bound_height;
 };
 
 struct _GimpBrushCoreClass
@@ -118,11 +110,6 @@ void    gimp_brush_core_set_brush      (GimpBrushCore            *core,
 
 void    gimp_brush_core_set_dynamics   (GimpBrushCore            *core,
                                         GimpDynamics             *dynamics);
-
-void    gimp_brush_core_create_boundary(GimpBrushCore            *core,
-                                        GimpPaintOptions         *options);
-gboolean gimp_brush_core_get_transform (GimpBrushCore            *core,
-                                        GimpMatrix3              *matrix);
 
 void    gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,

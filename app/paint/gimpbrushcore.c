@@ -25,28 +25,23 @@
 
 #include "paint-types.h"
 
-#include "base/boundary.h"
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpbrush.h"
-#include "core/gimpbrushgenerated.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpdynamicsoutput.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
-#include "core/gimpbrush-transform.h"
 
 #include "gimpbrushcore.h"
 #include "gimpbrushcore-kernels.h"
 
-
 #include "gimppaintoptions.h"
-
 
 #include "gimp-intl.h"
 
@@ -216,11 +211,6 @@ gimp_brush_core_init (GimpBrushCore *core)
 
   core->rand                         = g_rand_new ();
 
-  core->brush_bound_segs             = NULL;
-  core->n_brush_bound_segs           = 0;
-  core->brush_bound_width            = 0;
-  core->brush_bound_height           = 0;
-
   for (i = 0; i < BRUSH_CORE_SOLID_SUBSAMPLE; i++)
     {
       for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
@@ -308,15 +298,6 @@ gimp_brush_core_finalize (GObject *object)
     {
       g_object_unref (core->dynamics);
       core->dynamics = NULL;
-    }
-
-  if (core->brush_bound_segs)
-    {
-      g_free (core->brush_bound_segs);
-      core->brush_bound_segs   = NULL;
-      core->n_brush_bound_segs = 0;
-      core->brush_bound_width  = 0;
-      core->brush_bound_height = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -894,15 +875,6 @@ gimp_brush_core_real_set_brush (GimpBrushCore *core,
       core->main_brush = NULL;
     }
 
-  if (core->brush_bound_segs)
-    {
-      g_free (core->brush_bound_segs);
-      core->brush_bound_segs   = NULL;
-      core->n_brush_bound_segs = 0;
-      core->brush_bound_width  = 0;
-      core->brush_bound_height = 0;
-    }
-
   core->main_brush = brush;
 
   if (core->main_brush)
@@ -945,153 +917,6 @@ gimp_brush_core_set_dynamics (GimpBrushCore *core,
   g_return_if_fail (dynamics == NULL || GIMP_IS_DYNAMICS (dynamics));
 
   g_signal_emit (core, core_signals[SET_DYNAMICS], 0, dynamics);
-}
-
-void
-gimp_brush_core_create_boundary (GimpBrushCore    *core,
-                                 GimpPaintOptions *paint_options)
-{
-  TempBuf *mask = NULL;
-  gdouble  scale;
-
-  g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
-  g_return_if_fail (core->main_brush != NULL);
-  g_return_if_fail (core->brush_bound_segs == NULL);
-
-  scale = paint_options->brush_size /
-          MAX (core->main_brush->mask->width,
-               core->main_brush->mask->height);
-
-  if (scale > 0.0)
-    {
-      scale = gimp_brush_clamp_scale (core->main_brush, scale);
-
-      /* Generated brushes are a bit special */
-      if (GIMP_IS_BRUSH_GENERATED (core->main_brush))
-        {
-          GimpBrushGenerated *generated_brush;
-          gdouble             ratio;
-
-          generated_brush = GIMP_BRUSH_GENERATED (core->main_brush);
-
-          ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
-
-          g_signal_handlers_block_by_func (generated_brush,
-                                           gimp_brush_core_invalidate_cache,
-                                           core);
-
-          gimp_brush_generated_set_aspect_ratio (generated_brush, 1.0);
-
-          mask = gimp_brush_transform_mask (core->main_brush,
-                                            1.0, 0.0, 0.0, 1.0);
-
-          gimp_brush_generated_set_aspect_ratio (generated_brush, ratio);
-
-          g_signal_handlers_unblock_by_func (generated_brush,
-                                             gimp_brush_core_invalidate_cache,
-                                             core);
-        }
-      else
-        {
-          mask = gimp_brush_transform_mask (core->main_brush,
-                                            1.0, 0.0, 0.0, 1.0);
-        }
-    }
-
-  if (mask)
-    {
-      PixelRegion PR = { 0, };
-
-      pixel_region_init_temp_buf (&PR, mask,
-                                  0, 0, mask->width, mask->height);
-
-      /* Large, complex brush outlines are a performance problem.
-       * Smooth the mask in order to obtain a simpler boundary.
-       */
-      if (mask->width > 32 && mask->height > 32)
-        smooth_region (&PR);
-
-      core->brush_bound_segs = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
-                                              0, 0, PR.w, PR.h,
-                                              0,
-                                              &core->n_brush_bound_segs);
-
-      core->brush_bound_width  = mask->width;
-      core->brush_bound_height = mask->height;
-
-      temp_buf_free (mask);
-    }
-}
-
-gboolean
-gimp_brush_core_get_transform (GimpBrushCore *core,
-                               GimpMatrix3   *matrix)
-{
-  gdouble scale;
-  gdouble angle;
-  gdouble aspect_ratio;
-  gdouble height;
-  gdouble width;
-  gdouble scale_x = core->scale;
-  gdouble scale_y = core->scale;
-
-  g_return_val_if_fail (GIMP_IS_BRUSH_CORE (core), FALSE);
-  g_return_val_if_fail (matrix != 0, FALSE);
-  g_return_val_if_fail (core->main_brush != NULL, FALSE);
-  g_return_val_if_fail (core->brush_bound_segs != NULL, FALSE);
-
-  gimp_matrix3_identity (matrix);
-
-  scale = core->scale;
-  angle = core->angle;
-  aspect_ratio = core->aspect_ratio;
-
-  /* Generated brushes have their angle applied on top of base angle */
-  if (GIMP_IS_BRUSH_GENERATED (core->main_brush))
-    {
-      GimpBrushGenerated *generated_brush;
-      gdouble             base_angle;
-
-      generated_brush = GIMP_BRUSH_GENERATED (core->main_brush);
-
-      base_angle = gimp_brush_generated_get_angle (generated_brush);
-
-      angle = angle + base_angle / 360;
-
-      if (aspect_ratio == 0.0)
-        aspect_ratio = (gimp_brush_generated_get_aspect_ratio (generated_brush) - 1) / 19.0 * 20.0;
-    }
-
-  height = core->brush_bound_width;
-  width  = core->brush_bound_height;
-
-  if (aspect_ratio < 0.0)
-    {
-      scale_x = scale * (1.0 - (fabs (aspect_ratio) / 20.0));
-      scale_y = scale;
-    }
-  else if (aspect_ratio > 0.0)
-    {
-      scale_x = scale;
-      scale_y = scale * (1.0 - (aspect_ratio  / 20.0));
-    }
-
-
-  if (scale > 0.0)
-    {
-      scale = gimp_brush_clamp_scale (core->main_brush, scale);
-
-      gimp_brush_transform_matrix (height, width,
-                                   scale, aspect_ratio, angle, matrix);
-
-      /* FIXME. Do noy use scale_x/scale_y */
-      core->transformed_brush_bound_width  = core->brush_bound_width  * scale_x;
-      core->transformed_brush_bound_height = core->brush_bound_height * scale_y;
-
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 void
