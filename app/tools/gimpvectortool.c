@@ -1413,7 +1413,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
   /* the stroke itself */
   if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
-    gimp_draw_tool_add_path (draw_tool, gimp_vectors_get_bezier (vectors));
+    gimp_draw_tool_add_path (draw_tool, gimp_vectors_get_bezier (vectors), 0, 0);
 
   for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
        cur_stroke;

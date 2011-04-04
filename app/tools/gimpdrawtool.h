@@ -167,7 +167,9 @@ GimpCanvasItem * gimp_draw_tool_add_strokes          (GimpDrawTool     *draw_too
                                                       gint              n_points,
                                                       gboolean          filled);
 GimpCanvasItem * gimp_draw_tool_add_path             (GimpDrawTool     *draw_tool,
-                                                      const GimpBezierDesc *desc);
+                                                      const GimpBezierDesc *desc,
+                                                      gdouble           x,
+                                                      gdouble           y);
 
 GimpCanvasItem * gimp_draw_tool_add_pen              (GimpDrawTool     *draw_tool,
                                                       const GimpVector2 *points,

@@ -41,6 +41,8 @@ enum
 {
   PROP_0,
   PROP_PATH,
+  PROP_X,
+  PROP_Y,
   PROP_FILLED,
   PROP_PATH_STYLE
 };
@@ -51,6 +53,8 @@ typedef struct _GimpCanvasPathPrivate GimpCanvasPathPrivate;
 struct _GimpCanvasPathPrivate
 {
   cairo_path_t *path;
+  gdouble       x;
+  gdouble       y;
   gboolean      filled;
   gboolean      path_style;
 };
@@ -107,6 +111,18 @@ gimp_canvas_path_class_init (GimpCanvasPathClass *klass)
                                                        GIMP_TYPE_BEZIER_DESC,
                                                        GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_X,
+                                   g_param_spec_double ("x", NULL, NULL,
+                                                        -GIMP_MAX_IMAGE_SIZE,
+                                                        GIMP_MAX_IMAGE_SIZE, 0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_Y,
+                                   g_param_spec_double ("y", NULL, NULL,
+                                                        -GIMP_MAX_IMAGE_SIZE,
+                                                        GIMP_MAX_IMAGE_SIZE, 0,
+                                                        GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_FILLED,
                                    g_param_spec_boolean ("filled", NULL, NULL,
                                                          FALSE,
@@ -155,6 +171,12 @@ gimp_canvas_path_set_property (GObject      *object,
         gimp_bezier_desc_free (private->path);
       private->path = g_value_dup_boxed (value);
       break;
+    case PROP_X:
+      private->x = g_value_get_double (value);
+      break;
+    case PROP_Y:
+      private->y = g_value_get_double (value);
+      break;
     case PROP_FILLED:
       private->filled = g_value_get_boolean (value);
       break;
@@ -181,6 +203,12 @@ gimp_canvas_path_get_property (GObject    *object,
     case PROP_PATH:
       g_value_set_boxed (value, private->path);
       break;
+    case PROP_X:
+      g_value_set_double (value, private->x);
+      break;
+    case PROP_Y:
+      g_value_set_double (value, private->y);
+      break;
     case PROP_FILLED:
       g_value_set_boolean (value, private->filled);
       break;
@@ -204,7 +232,9 @@ gimp_canvas_path_draw (GimpCanvasItem   *item,
   if (private->path)
     {
       cairo_save (cr);
-      cairo_translate (cr, - shell->offset_x, - shell->offset_y);
+      cairo_translate (cr,
+                       - shell->offset_x + private->x,
+                       - shell->offset_y + private->y);
       cairo_scale (cr, shell->scale_x, shell->scale_y);
 
       cairo_append_path (cr, private->path);
@@ -232,7 +262,9 @@ gimp_canvas_path_get_extents (GimpCanvasItem   *item,
       cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
 
       cairo_save (cr);
-      cairo_translate (cr, - shell->offset_x, - shell->offset_y);
+      cairo_translate (cr,
+                       - shell->offset_x + private->x,
+                       - shell->offset_y + private->y);
       cairo_scale (cr, shell->scale_x, shell->scale_y);
 
       cairo_append_path (cr, private->path);
@@ -289,6 +321,8 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
 GimpCanvasItem *
 gimp_canvas_path_new (GimpDisplayShell     *shell,
                       const GimpBezierDesc *bezier,
+                      gdouble               x,
+                      gdouble               y,
                       gboolean              filled,
                       gboolean              path_style)
 {
@@ -297,6 +331,8 @@ gimp_canvas_path_new (GimpDisplayShell     *shell,
   return g_object_new (GIMP_TYPE_CANVAS_PATH,
                        "shell",      shell,
                        "path",       bezier,
+                       "x",          x,
+                       "y",          y,
                        "filled",     filled,
                        "path-style", path_style,
                        NULL);

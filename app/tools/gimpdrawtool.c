@@ -749,7 +749,9 @@ gimp_draw_tool_add_strokes (GimpDrawTool     *draw_tool,
 
 GimpCanvasItem *
 gimp_draw_tool_add_path (GimpDrawTool         *draw_tool,
-                         const GimpBezierDesc *desc)
+                         const GimpBezierDesc *desc,
+                         gdouble               x,
+                         gdouble               y)
 {
   GimpCanvasItem *item;
 
@@ -757,7 +759,7 @@ gimp_draw_tool_add_path (GimpDrawTool         *draw_tool,
   g_return_val_if_fail (desc != NULL, NULL);
 
   item = gimp_canvas_path_new (gimp_display_get_shell (draw_tool->display),
-                               desc, FALSE, FALSE);
+                               desc, x, y, FALSE, FALSE);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
