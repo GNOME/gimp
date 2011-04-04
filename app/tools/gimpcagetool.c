@@ -371,13 +371,8 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
       else
         {
           /* switch to edit mode */
-
-          if (ct->image_map)
-            {
-              gimp_image_map_abort (ct->image_map);
-              g_object_unref (ct->image_map);
-              ct->image_map = NULL;
-            }
+          gimp_image_map_clear (ct->image_map);
+          gimp_cage_tool_image_map_flush (ct->image_map, tool);
 
           gimp_tool_pop_status (tool, tool->display);
           ct->tool_state = CAGE_STATE_WAIT;
