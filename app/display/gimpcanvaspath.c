@@ -232,10 +232,9 @@ gimp_canvas_path_draw (GimpCanvasItem   *item,
   if (private->path)
     {
       cairo_save (cr);
-      cairo_translate (cr,
-                       - shell->offset_x + private->x,
-                       - shell->offset_y + private->y);
+      cairo_translate (cr, -shell->offset_x, -shell->offset_y);
       cairo_scale (cr, shell->scale_x, shell->scale_y);
+      cairo_translate (cr, private->x, private->y);
 
       cairo_append_path (cr, private->path);
       cairo_restore (cr);
@@ -262,10 +261,9 @@ gimp_canvas_path_get_extents (GimpCanvasItem   *item,
       cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
 
       cairo_save (cr);
-      cairo_translate (cr,
-                       - shell->offset_x + private->x,
-                       - shell->offset_y + private->y);
+      cairo_translate (cr, -shell->offset_x, -shell->offset_y);
       cairo_scale (cr, shell->scale_x, shell->scale_y);
+      cairo_translate (cr, private->x, private->y);
 
       cairo_append_path (cr, private->path);
       cairo_restore (cr);
