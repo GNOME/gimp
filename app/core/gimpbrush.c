@@ -27,6 +27,7 @@
 #include "base/temp-buf.h"
 
 #include "gimpbrush.h"
+#include "gimpbrush-boundary.h"
 #include "gimpbrush-load.h"
 #include "gimpbrush-transform.h"
 #include "gimpbrushgenerated.h"
@@ -129,6 +130,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
   klass->transform_size            = gimp_brush_real_transform_size;
   klass->transform_mask            = gimp_brush_real_transform_mask;
   klass->transform_pixmap          = gimp_brush_real_transform_pixmap;
+  klass->transform_boundary        = gimp_brush_real_transform_boundary;
   klass->spacing_changed           = NULL;
 
   g_object_class_install_property (object_class, PROP_SPACING,
@@ -536,11 +538,19 @@ gimp_brush_transform_boundary (GimpBrush *brush,
                                gdouble    scale,
                                gdouble    aspect_ratio,
                                gdouble    angle,
-                               gdouble    hardness)
+                               gdouble    hardness,
+                               gint      *width,
+                               gint      *height)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+  g_return_val_if_fail (scale > 0.0, NULL);
+  g_return_val_if_fail (width != NULL, NULL);
+  g_return_val_if_fail (height != NULL, NULL);
 
-  return NULL;
+  return GIMP_BRUSH_GET_CLASS (brush)->transform_boundary (brush,
+                                                           scale, aspect_ratio,
+                                                           angle, hardness,
+                                                           width, height);
 }
 
 gdouble

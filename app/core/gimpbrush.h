@@ -76,7 +76,9 @@ struct _GimpBrushClass
                                            gdouble           scale,
                                            gdouble           aspect_ratio,
                                            gdouble           angle,
-                                           gdouble           hardness);
+                                           gdouble           hardness,
+                                           gint             *width,
+                                           gint             *height);
 
   /*  signals  */
   void             (* spacing_changed)    (GimpBrush        *brush);
@@ -119,7 +121,9 @@ GimpBezierDesc * gimp_brush_transform_boundary (GimpBrush        *brush,
                                                 gdouble           scale,
                                                 gdouble           aspect_ratio,
                                                 gdouble           angle,
-                                                gdouble           hardness);
+                                                gdouble           hardness,
+                                                gint             *width,
+                                                gint             *height);
 
 gdouble          gimp_brush_clamp_scale        (GimpBrush        *brush,
                                                 gdouble           scale);
