@@ -469,7 +469,9 @@ gimp_brush_transform_size (GimpBrush     *brush,
   g_return_if_fail (width != NULL);
   g_return_if_fail (height != NULL);
 
-  if ((scale == 1.0) && ( aspect_ratio == 0.0) && ((angle == 0.0) || (angle == 0.5) || (angle == 1.0)))
+  if (scale        == 1.0 &&
+      aspect_ratio == 0.0 &&
+      ((angle == 0.0) || (angle == 0.5) || (angle == 1.0)))
     {
       *width  = brush->mask->width;
       *height = brush->mask->height;
@@ -477,7 +479,9 @@ gimp_brush_transform_size (GimpBrush     *brush,
       return;
     }
 
-  GIMP_BRUSH_GET_CLASS (brush)->transform_size (brush, scale, aspect_ratio, angle, width, height);
+  GIMP_BRUSH_GET_CLASS (brush)->transform_size (brush,
+                                                scale, aspect_ratio, angle,
+                                                width, height);
 }
 
 TempBuf *
@@ -490,10 +494,17 @@ gimp_brush_transform_mask (GimpBrush *brush,
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (scale > 0.0, NULL);
 
-  if ((scale == 1.0) && (aspect_ratio == 0.0) && (angle == 0.0) && (hardness == 1.0))
-    return temp_buf_copy (brush->mask, NULL);
+  if (scale        == 1.0 &&
+      aspect_ratio == 0.0 &&
+      angle        == 0.0 &&
+      hardness     == 1.0)
+    {
+      return temp_buf_copy (brush->mask, NULL);
+    }
 
-  return GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush, scale, aspect_ratio, angle, hardness);
+  return GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
+                                                       scale, aspect_ratio,
+                                                       angle, hardness);
 }
 
 TempBuf *
@@ -507,10 +518,17 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
   g_return_val_if_fail (brush->pixmap != NULL, NULL);
   g_return_val_if_fail (scale > 0.0, NULL);
 
-  if ((scale == 1.0) && (aspect_ratio == 0.0) && (angle == 0.0) && (hardness == 1.0))
-    return temp_buf_copy (brush->pixmap, NULL);
+  if (scale        == 1.0 &&
+      aspect_ratio == 0.0 &&
+      angle        == 0.0 &&
+      hardness     == 1.0)
+    {
+      return temp_buf_copy (brush->pixmap, NULL);
+    }
 
-  return GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush, scale, aspect_ratio, angle, hardness);
+  return GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
+                                                         scale, aspect_ratio,
+                                                         angle, hardness);
 }
 
 gdouble
