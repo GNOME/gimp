@@ -22,6 +22,8 @@
 /config.status.lineno
 /config.sub
 /configure
+/cscope.files
+/cscope.out
 /depcomp
 /gimp-2.0.pc
 /gimp-zip
