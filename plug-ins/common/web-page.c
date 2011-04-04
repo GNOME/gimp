@@ -219,6 +219,7 @@ webpage_dialog (void)
   GtkWidget *image;
   GtkWidget *label;
   GtkWidget *entry;
+  GtkSizeGroup *sizegroup;
   GtkObject *adjustment;
   GtkWidget *spinbutton;
   GtkWidget *combo;
@@ -276,6 +277,8 @@ webpage_dialog (void)
                         webpagevals.url);
   gtk_widget_show (entry);
 
+  sizegroup = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /* Width */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox),
@@ -283,6 +286,8 @@ webpage_dialog (void)
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Width (pixels):"));
+  gtk_size_group_add_widget (sizegroup, label);
+
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -300,6 +305,8 @@ webpage_dialog (void)
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Font size:"));
+  gtk_size_group_add_widget (sizegroup, label);
+
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -342,6 +349,8 @@ webpage_dialog (void)
 
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
+
+  g_object_unref (sizegroup);
 
   status = gimp_dialog_run (GIMP_DIALOG (dialog));
   if (status == GTK_RESPONSE_OK)
