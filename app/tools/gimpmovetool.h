@@ -54,7 +54,7 @@ struct _GimpMoveTool
 
 struct _GimpMoveToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpDrawToolClass  parent_class;
 };
 
 

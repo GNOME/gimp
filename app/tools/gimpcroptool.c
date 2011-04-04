@@ -43,19 +43,6 @@
 #include "gimp-intl.h"
 
 
-struct _GimpCropTool
-{
-  GimpDrawTool  parent_instance;
-
-  GimpImage    *current_image;
-};
-
-struct _GimpCropToolClass
-{
-  GimpDrawToolClass parent_class;
-};
-
-
 static void      gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
 static void      gimp_crop_tool_constructed               (GObject              *object);
@@ -146,8 +133,6 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   object_class->set_property      = gimp_rectangle_tool_set_property;
   object_class->get_property      = gimp_rectangle_tool_get_property;
 
-  gimp_rectangle_tool_install_properties (object_class);
-
   tool_class->control             = gimp_crop_tool_control;
   tool_class->button_press        = gimp_crop_tool_button_press;
   tool_class->button_release      = gimp_crop_tool_button_release;
@@ -158,6 +143,8 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   tool_class->cursor_update       = gimp_crop_tool_cursor_update;
 
   draw_tool_class->draw           = gimp_crop_tool_draw;
+
+  gimp_rectangle_tool_install_properties (object_class);
 }
 
 static void
@@ -173,12 +160,12 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
 {
   GimpTool *tool = GIMP_TOOL (crop_tool);
 
-  gimp_rectangle_tool_init (GIMP_RECTANGLE_TOOL (crop_tool));
-
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_precision   (tool->control,
                                      GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
+
+  gimp_rectangle_tool_init (GIMP_RECTANGLE_TOOL (crop_tool));
 
   crop_tool->current_image = NULL;
 }
@@ -196,9 +183,7 @@ gimp_crop_tool_constructed (GObject *object)
 
   gimp_rectangle_tool_constructor (object);
 
-  g_object_get (object,
-                "tool-info", &tool_info,
-                NULL);
+  tool_info = GIMP_TOOL (crop_tool)->tool_info;
 
   gimp_context = gimp_get_user_context (tool_info->gimp);
 

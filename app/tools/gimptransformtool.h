@@ -109,7 +109,7 @@ struct _GimpTransformTool
 
 struct _GimpTransformToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpDrawToolClass  parent_class;
 
   /*  virtual functions  */
   void          (* dialog)        (GimpTransformTool *tool);

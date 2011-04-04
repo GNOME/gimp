@@ -33,7 +33,6 @@
 typedef struct _GimpHealTool      GimpHealTool;
 typedef struct _GimpHealToolClass GimpHealToolClass;
 
-
 struct _GimpHealTool
 {
   GimpSourceTool  parent_instance;

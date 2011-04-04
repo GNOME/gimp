@@ -197,18 +197,22 @@ gimp_perspective_tool_motion (GimpTransformTool *transform_tool)
       transform_tool->trans_info[X0] += diff_x;
       transform_tool->trans_info[Y0] += diff_y;
       break;
+
     case TRANSFORM_HANDLE_NE:
       transform_tool->trans_info[X1] += diff_x;
       transform_tool->trans_info[Y1] += diff_y;
       break;
+
     case TRANSFORM_HANDLE_SW:
       transform_tool->trans_info[X2] += diff_x;
       transform_tool->trans_info[Y2] += diff_y;
       break;
+
     case TRANSFORM_HANDLE_SE:
       transform_tool->trans_info[X3] += diff_x;
       transform_tool->trans_info[Y3] += diff_y;
       break;
+
     case TRANSFORM_HANDLE_CENTER:
       transform_tool->trans_info[X0] += diff_x;
       transform_tool->trans_info[Y0] += diff_y;
@@ -219,6 +223,7 @@ gimp_perspective_tool_motion (GimpTransformTool *transform_tool)
       transform_tool->trans_info[X3] += diff_x;
       transform_tool->trans_info[Y3] += diff_y;
       break;
+
     default:
       break;
     }

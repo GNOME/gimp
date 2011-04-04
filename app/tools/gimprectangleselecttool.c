@@ -186,8 +186,6 @@ gimp_rectangle_select_tool_class_init (GimpRectangleSelectToolClass *klass)
   object_class->set_property      = gimp_rectangle_tool_set_property;
   object_class->get_property      = gimp_rectangle_tool_get_property;
 
-  gimp_rectangle_tool_install_properties (object_class);
-
   tool_class->control             = gimp_rectangle_select_tool_control;
   tool_class->button_press        = gimp_rectangle_select_tool_button_press;
   tool_class->button_release      = gimp_rectangle_select_tool_button_release;
@@ -200,6 +198,8 @@ gimp_rectangle_select_tool_class_init (GimpRectangleSelectToolClass *klass)
   draw_tool_class->draw           = gimp_rectangle_select_tool_draw;
 
   klass->select                   = gimp_rectangle_select_tool_real_select;
+
+  gimp_rectangle_tool_install_properties (object_class);
 }
 
 static void
@@ -392,7 +392,7 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
                                                         coords,
                                                         display))
     {
-      /* In some cases we want to finnish the rectangle select tool
+      /* In some cases we want to finish the rectangle select tool
        * and hand over responsability to the selection tool
        */
       gimp_rectangle_tool_execute (rectangle);

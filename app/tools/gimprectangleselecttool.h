@@ -44,7 +44,7 @@ struct _GimpRectangleSelectTool
 
 struct _GimpRectangleSelectToolClass
 {
-  GimpSelectionToolClass parent_class;
+  GimpSelectionToolClass  parent_class;
 
   void (* select) (GimpRectangleSelectTool *rect_select,
                    GimpChannelOps           operation,

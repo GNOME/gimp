@@ -96,14 +96,13 @@ struct _GimpVectorToolClass
 };
 
 
-void    gimp_vector_tool_register (GimpToolRegisterCallback  callback,
-                                   gpointer                  data);
+void    gimp_vector_tool_register    (GimpToolRegisterCallback  callback,
+                                      gpointer                  data);
 
-GType   gimp_vector_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_vector_tool_get_type    (void) G_GNUC_CONST;
 
-
-void    gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
-                                      GimpVectors    *vectors);
+void    gimp_vector_tool_set_vectors (GimpVectorTool           *vector_tool,
+                                      GimpVectors              *vectors);
 
 
 #endif  /*  __GIMP_VECTOR_TOOL_H__  */

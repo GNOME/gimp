@@ -64,7 +64,10 @@
 #define ARROW_VELOCITY          25
 
 
-typedef struct _GimpEditSelectionTool
+typedef struct _GimpEditSelectionTool      GimpEditSelectionTool;
+typedef struct _GimpEditSelectionToolClass GimpEditSelectionToolClass;
+
+struct _GimpEditSelectionTool
 {
   GimpDrawTool        parent_instance;
 
@@ -91,12 +94,12 @@ typedef struct _GimpEditSelectionTool
   gboolean            constrain;       /*  Constrain the movement            */
   gdouble             start_x, start_y;/*  Coords when button was pressed    */
   gdouble             last_x,  last_y; /*  Previous coords sent to _motion   */
-} GimpEditSelectionTool;
+};
 
-typedef struct _GimpEditSelectionToolClass
+struct _GimpEditSelectionToolClass
 {
   GimpDrawToolClass   parent_class;
-} GimpEditSelectionToolClass;
+};
 
 
 static void       gimp_edit_selection_tool_button_release      (GimpTool                    *tool,

@@ -39,7 +39,6 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimpitem.h"
 #include "core/gimpundostack.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -154,6 +153,11 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 {
   GimpTool *tool = GIMP_TOOL (move_tool);
 
+  gimp_tool_control_set_snap_to            (tool->control, FALSE);
+  gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor        (tool->control,
+                                            GIMP_TOOL_CURSOR_MOVE);
+
   move_tool->floating_layer     = NULL;
   move_tool->guide              = NULL;
 
@@ -165,11 +169,6 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 
   move_tool->old_active_layer   = NULL;
   move_tool->old_active_vectors = NULL;
-
-  gimp_tool_control_set_snap_to            (tool->control, FALSE);
-  gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor        (tool->control,
-                                            GIMP_TOOL_CURSOR_MOVE);
 }
 
 static void

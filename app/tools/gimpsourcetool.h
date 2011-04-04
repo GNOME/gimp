@@ -52,7 +52,7 @@ struct _GimpSourceTool
 
 struct _GimpSourceToolClass
 {
-  GimpBrushToolClass parent_class;
+  GimpBrushToolClass  parent_class;
 };
 
 

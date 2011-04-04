@@ -94,7 +94,7 @@ struct _GimpTextTool
 
 struct _GimpTextToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpDrawToolClass  parent_class;
 };
 
 

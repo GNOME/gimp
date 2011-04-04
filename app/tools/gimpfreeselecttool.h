@@ -19,8 +19,6 @@
 #define __GIMP_FREE_SELECT_TOOL_H__
 
 
-#include "libgimpmath/gimpmath.h"
-
 #include "gimpselectiontool.h"
 
 

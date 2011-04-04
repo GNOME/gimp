@@ -426,11 +426,11 @@ gimp_free_select_tool_handle_segment_selection (GimpFreeSelectTool *fst,
 
   if (grabbed_segment_index != priv->grabbed_segment_index)
     {
-      gimp_draw_tool_pause(draw_tool);
+      gimp_draw_tool_pause (draw_tool);
 
       priv->grabbed_segment_index = grabbed_segment_index;
 
-      gimp_draw_tool_resume(draw_tool);
+      gimp_draw_tool_resume (draw_tool);
     }
 }
 

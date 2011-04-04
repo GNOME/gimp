@@ -212,8 +212,8 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
 
   if (orig_tiles)
     {
-      /*  this happens when transforming a normal drawable or the
-       *  selection
+      /*  this happens when transforming a selection cut out of a
+       *  normal drawable, or the selection
        */
 
       ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
@@ -228,7 +228,7 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
     }
   else
     {
-      /*  this happens for paths and layer groups  */
+      /*  this happens for entire drawables, paths and layer groups  */
 
       gimp_item_flip (active_item, context, options->flip_type, axis, FALSE);
     }

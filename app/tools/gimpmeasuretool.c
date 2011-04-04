@@ -205,7 +205,7 @@ gimp_measure_tool_button_press (GimpTool            *tool,
   if (display != tool->display)
     {
       if (tool->display)
-        gimp_tool_pop_status (tool, display);
+        gimp_tool_pop_status (tool, tool->display);
     }
 
   measure->function = CREATING;

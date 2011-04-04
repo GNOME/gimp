@@ -115,24 +115,22 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
 {
   GimpTool *tool = GIMP_TOOL (magnify_tool);
 
-  magnify_tool->x = 0;
-  magnify_tool->y = 0;
-  magnify_tool->w = 0;
-  magnify_tool->h = 0;
-
   gimp_tool_control_set_scroll_lock            (tool->control, TRUE);
   gimp_tool_control_set_handle_empty_image     (tool->control, TRUE);
   gimp_tool_control_set_wants_click            (tool->control, TRUE);
   gimp_tool_control_set_snap_to                (tool->control, FALSE);
 
-  gimp_tool_control_set_cursor                 (tool->control,
-                                                GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor            (tool->control,
                                                 GIMP_TOOL_CURSOR_ZOOM);
   gimp_tool_control_set_cursor_modifier        (tool->control,
                                                 GIMP_CURSOR_MODIFIER_PLUS);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
+
+  magnify_tool->x = 0;
+  magnify_tool->y = 0;
+  magnify_tool->w = 0;
+  magnify_tool->h = 0;
 }
 
 static void

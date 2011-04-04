@@ -54,8 +54,6 @@ G_DEFINE_TYPE (GimpEllipseSelectTool, gimp_ellipse_select_tool,
 #define parent_class gimp_ellipse_select_tool_parent_class
 
 
-/*  public functions  */
-
 void
 gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data)
@@ -72,9 +70,6 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_STOCK_TOOL_ELLIPSE_SELECT,
                 data);
 }
-
-
-/*  private functions  */
 
 static void
 gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)

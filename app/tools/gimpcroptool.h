@@ -35,6 +35,18 @@
 typedef struct _GimpCropTool      GimpCropTool;
 typedef struct _GimpCropToolClass GimpCropToolClass;
 
+struct _GimpCropTool
+{
+  GimpDrawTool  parent_instance;
+
+  GimpImage    *current_image;
+};
+
+struct _GimpCropToolClass
+{
+  GimpDrawToolClass parent_class;
+};
+
 
 void    gimp_crop_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data);

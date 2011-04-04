@@ -234,7 +234,6 @@ static gboolean
 gimp_gegl_tool_operation_blacklisted (const gchar *name,
                                       const gchar *categories_str)
 {
-  gchar **categories;
   static const gchar * const category_blacklist[] =
   {
     "compositors",
@@ -257,10 +256,12 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gimp-",
     "gimp:"
   };
-  gint i;
+
+  gchar **categories;
+  gint    i;
 
   /* Operations with no name are abstract base classes */
-  if (!name)
+  if (! name)
     return TRUE;
 
   for (i = 0; i < G_N_ELEMENTS (name_blacklist); i++)
@@ -269,8 +270,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
         return TRUE;
     }
 
-
-  if (!categories_str)
+  if (! categories_str)
     return FALSE;
 
   categories = g_strsplit (categories_str, ":", 0);
@@ -278,8 +278,9 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   for (i = 0; i < G_N_ELEMENTS (category_blacklist); i++)
     {
       gint j;
+
       for (j = 0; categories[j]; j++)
-        if (g_str_equal (categories[j], category_blacklist[i]))
+        if (! strcmp (categories[j], category_blacklist[i]))
           {
             g_strfreev (categories);
             return TRUE;
@@ -287,6 +288,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     }
 
   g_strfreev (categories);
+
   return FALSE;
 }
 

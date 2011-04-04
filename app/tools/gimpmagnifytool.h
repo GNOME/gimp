@@ -47,7 +47,7 @@ struct _GimpMagnifyTool
 
 struct _GimpMagnifyToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpDrawToolClass  parent_class;
 };
 
 
