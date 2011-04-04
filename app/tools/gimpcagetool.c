@@ -347,14 +347,15 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
                                  _("Press ENTER to commit the transform"));
           ct->tool_state = DEFORM_STATE_WAIT;
 
-          if (ct->dirty_coef)
-            {
-              gimp_cage_tool_compute_coef (ct, tool->display);
-            }
-
           if (! ct->render_node)
             {
               gimp_cage_tool_create_render_node (ct);
+            }
+
+          if (ct->dirty_coef)
+            {
+              gimp_cage_tool_compute_coef (ct, tool->display);
+              gimp_cage_tool_render_node_update (ct);
             }
 
           if (! ct->image_map)
@@ -1146,7 +1147,7 @@ gimp_cage_tool_render_node_update (GimpCageTool *ct)
                  "buffer", &buffer,
                  NULL);
 
-  if (option_fill != node_fill)
+  if (buffer != ct->coef)
     {
       gegl_node_set (ct->coef_node,
                      "buffer",  ct->coef,
