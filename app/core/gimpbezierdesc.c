@@ -25,6 +25,8 @@
 
 #include "core-types.h"
 
+#include "base/boundary.h"
+
 #include "gimpbezierdesc.h"
 
 
@@ -56,6 +58,105 @@ gimp_bezier_desc_new (cairo_path_data_t *data,
   desc->data     = data;
 
   return desc;
+}
+
+static void
+add_polyline (GArray            *path_data,
+              const GimpVector2 *points,
+              guint              n_points)
+{
+  GimpVector2       prev = { 0.0, 0.0, };
+  cairo_path_data_t pd;
+  gint              i;
+
+  for (i = 0; i < n_points; i++)
+    {
+      /* compress multiple identical coordinates */
+      if (i == 0 ||
+          prev.x != points[i].x ||
+          prev.y != points[i].y)
+        {
+          pd.header.type   = (i == 0) ? CAIRO_PATH_MOVE_TO : CAIRO_PATH_LINE_TO;
+          pd.header.length = 2;
+
+          g_array_append_val (path_data, pd);
+
+          pd.point.x = points[i].x;
+          pd.point.y = points[i].y;
+
+          g_array_append_val (path_data, pd);
+
+          prev = points[i];
+        }
+    }
+
+  /* close the polyline */
+  pd.header.type   = CAIRO_PATH_CLOSE_PATH;
+  pd.header.length = 1;
+
+  g_array_append_val (path_data, pd);
+}
+
+GimpBezierDesc *
+gimp_bezier_desc_new_from_bound_segs (BoundSeg *bound_segs,
+                                      gint      n_bound_segs,
+                                      gint      n_bound_groups)
+{
+  GArray      *path_data;
+  GimpVector2 *points;
+  gint         n_points;
+  gint         seg;
+  gint         i;
+
+  g_return_val_if_fail (bound_segs != NULL, NULL);
+  g_return_val_if_fail (n_bound_segs > 0, NULL);
+
+  path_data = g_array_new (FALSE, FALSE, sizeof (cairo_path_data_t));
+
+  points = g_new0 (GimpVector2, n_bound_segs + 4);
+
+  seg = 0;
+  n_points = 0;
+
+  points[n_points].x = (gdouble) (bound_segs[0].x1);
+  points[n_points].y = (gdouble) (bound_segs[0].y1);
+
+  n_points++;
+
+  for (i = 0; i < n_bound_groups; i++)
+    {
+      while (bound_segs[seg].x1 != -1 ||
+             bound_segs[seg].x2 != -1 ||
+             bound_segs[seg].y1 != -1 ||
+             bound_segs[seg].y2 != -1)
+        {
+          points[n_points].x = (gdouble) (bound_segs[seg].x1);
+          points[n_points].y = (gdouble) (bound_segs[seg].y1);
+
+          n_points++;
+          seg++;
+        }
+
+      /* Close the stroke points up */
+      points[n_points] = points[0];
+
+      n_points++;
+
+      add_polyline (path_data, points, n_points);
+
+      n_points = 0;
+      seg++;
+
+      points[n_points].x = (gdouble) (bound_segs[seg].x1);
+      points[n_points].y = (gdouble) (bound_segs[seg].y1);
+
+      n_points++;
+    }
+
+  g_free (points);
+
+  return gimp_bezier_desc_new ((cairo_path_data_t *) g_array_free (path_data, FALSE),
+                               path_data->len);
 }
 
 GimpBezierDesc *
