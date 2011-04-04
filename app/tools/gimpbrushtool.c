@@ -29,6 +29,7 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpbezierdesc.h"
 #include "core/gimpbrush.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
@@ -301,7 +302,10 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   GimpDrawTool     *draw_tool;
   GimpBrushCore    *brush_core;
   GimpPaintOptions *options;
-  GimpMatrix3       matrix;
+  GimpDisplayShell *shell;
+  GimpBezierDesc   *boundary = NULL;
+  gint              width    = 0;
+  gint              height   = 0;
 
   g_return_if_fail (GIMP_IS_BRUSH_TOOL (brush_tool));
 
@@ -311,51 +315,51 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   draw_tool  = GIMP_DRAW_TOOL (brush_tool);
   brush_core = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
   options    = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
+  shell      = gimp_display_get_shell (draw_tool->display);
 
   if (! brush_core->main_brush || ! brush_core->dynamics)
     return;
 
-  if (! brush_core->brush_bound_segs)
-    gimp_brush_core_create_boundary (brush_core, options);
+  if (brush_core->scale > 0.0)
+    boundary = gimp_brush_transform_boundary (brush_core->main_brush,
+                                              brush_core->scale,
+                                              brush_core->aspect_ratio,
+                                              brush_core->angle,
+                                              brush_core->hardness,
+                                              &width,
+                                              &height);
 
-  if (brush_core->brush_bound_segs &&
-      gimp_brush_core_get_transform (brush_core, &matrix))
+  /*  don't draw the boundary if it becomes too small  */
+  if (boundary                   &&
+      SCALEX (shell, width)  > 4 &&
+      SCALEY (shell, height) > 4)
     {
-      GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
-      gdouble           width  = brush_core->transformed_brush_bound_width;
-      gdouble           height = brush_core->transformed_brush_bound_height;
+      x -= width  / 2.0;
+      y -= height / 2.0;
 
-      /*  don't draw the boundary if it becomes too small  */
-      if (SCALEX (shell, width) > 4 && SCALEY (shell, height) > 4)
+      if (gimp_paint_options_get_brush_mode (options) == GIMP_BRUSH_HARD)
         {
-          x -= width  / 2.0;
-          y -= height / 2.0;
-
-          if (gimp_paint_options_get_brush_mode (options) == GIMP_BRUSH_HARD)
-            {
 #define EPSILON 0.000001
-              /*  Add EPSILON before rounding since e.g.
-               *  (5.0 - 0.5) may end up at (4.499999999....)
-               *  due to floating point fnords
-               */
-              x = RINT (x + EPSILON);
-              y = RINT (y + EPSILON);
+          /*  Add EPSILON before rounding since e.g.
+           *  (5.0 - 0.5) may end up at (4.499999999....)
+           *  due to floating point fnords
+           */
+          x = RINT (x + EPSILON);
+          y = RINT (y + EPSILON);
 #undef EPSILON
-            }
+        }
 
-          gimp_draw_tool_add_boundary (draw_tool,
-                                       brush_core->brush_bound_segs,
-                                       brush_core->n_brush_bound_segs,
-                                       &matrix,
-                                       x, y);
-        }
-      else if (draw_fallback)
-        {
-          gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_CROSS,
-                                     x, y,
-                                     5, 5, GIMP_HANDLE_ANCHOR_CENTER);
-        }
+      gimp_draw_tool_add_path (draw_tool, boundary, x, y);
     }
+  else if (draw_fallback)
+    {
+      gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_CROSS,
+                                 x, y,
+                                 5, 5, GIMP_HANDLE_ANCHOR_CENTER);
+    }
+
+  if (boundary)
+    gimp_bezier_desc_free (boundary);
 }
 
 static void
