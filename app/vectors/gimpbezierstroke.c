@@ -27,11 +27,11 @@
 
 #include "vectors-types.h"
 
+#include "core/gimpbezierdesc.h"
 #include "core/gimpcoords.h"
 #include "core/gimpcoords-interpolate.h"
 
 #include "gimpanchor.h"
-#include "gimpbezierdesc.h"
 #include "gimpbezierstroke.h"
 
 

@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimp-transform-utils.h"
+#include "core/gimpbezierdesc.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -45,7 +46,6 @@
 #include "paint/gimppaintoptions.h"
 
 #include "gimpanchor.h"
-#include "gimpbezierdesc.h"
 #include "gimpstroke.h"
 #include "gimpvectors.h"
 #include "gimpvectors-preview.h"

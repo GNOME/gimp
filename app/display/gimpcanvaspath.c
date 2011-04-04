@@ -28,9 +28,8 @@
 
 #include "display-types.h"
 
+#include "core/gimpbezierdesc.h"
 #include "core/gimpparamspecs.h"
-
-#include "vectors/gimpbezierdesc.h"
 
 #include "gimpcanvaspath.h"
 #include "gimpdisplayshell.h"

@@ -23,7 +23,7 @@
 #include <gegl.h>
 #include <cairo.h>
 
-#include "vectors-types.h"
+#include "core-types.h"
 
 #include "gimpbezierdesc.h"
 
