@@ -33,8 +33,9 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-callbacks.h"
+#include "display/gimpdisplayshell-scale.h"
+#include "display/gimpdisplayshell-tool-events.h"
 #include "display/gimpdisplayshell-transform.h"
 #include "display/gimpimagewindow.h"
 
