@@ -38,7 +38,7 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
                                      gdouble    angle,
                                      gdouble    hardness)
 {
-  TempBuf *mask;
+  const TempBuf *mask;
 
   mask = gimp_brush_transform_mask (brush,
                                     scale, aspect_ratio, angle, hardness);
@@ -49,15 +49,13 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
       BoundSeg    *bound_segs;
       gint         n_bound_segs;
 
-      pixel_region_init_temp_buf (&maskPR, mask,
+      pixel_region_init_temp_buf (&maskPR, (TempBuf *) mask,
                                   0, 0, mask->width, mask->height);
 
       bound_segs = boundary_find (&maskPR, BOUNDARY_WITHIN_BOUNDS,
                                   0, 0, maskPR.w, maskPR.h,
                                   0,
                                   &n_bound_segs);
-
-      temp_buf_free (mask);
 
       if (bound_segs)
         {

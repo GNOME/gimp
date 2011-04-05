@@ -84,7 +84,7 @@ static void         gimp_heal_laplace_loop       (gdouble          *matrix,
 
 static PixelRegion *gimp_heal_region             (PixelRegion      *tempPR,
                                                   PixelRegion      *srcPR,
-                                                  TempBuf          *mask_buf);
+                                                  const TempBuf    *mask_buf);
 
 static void         gimp_heal_motion             (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
@@ -387,9 +387,9 @@ gimp_heal_laplace_loop (gdouble *matrix,
  * 2005, http://www.tgeorgiev.net/
  */
 static PixelRegion *
-gimp_heal_region (PixelRegion *tempPR,
-                  PixelRegion *srcPR,
-                  TempBuf     *mask_buf)
+gimp_heal_region (PixelRegion   *tempPR,
+                  PixelRegion   *srcPR,
+                  const TempBuf *mask_buf)
 {
   gdouble *i_1  = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
   gdouble *i_2  = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
@@ -442,7 +442,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   PixelRegion         tempPR;
   PixelRegion         destPR;
   GimpImageType       src_type;
-  TempBuf            *mask_buf;
+  const TempBuf      *mask_buf;
   gdouble             fade_point;
   gdouble             hardness;
 

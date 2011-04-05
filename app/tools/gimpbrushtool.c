@@ -295,13 +295,13 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
                             gdouble        y,
                             gboolean       draw_fallback)
 {
-  GimpDrawTool     *draw_tool;
-  GimpBrushCore    *brush_core;
-  GimpPaintOptions *options;
-  GimpDisplayShell *shell;
-  GimpBezierDesc   *boundary = NULL;
-  gint              width    = 0;
-  gint              height   = 0;
+  GimpDrawTool         *draw_tool;
+  GimpBrushCore        *brush_core;
+  GimpPaintOptions     *options;
+  GimpDisplayShell     *shell;
+  const GimpBezierDesc *boundary = NULL;
+  gint                  width    = 0;
+  gint                  height   = 0;
 
   g_return_if_fail (GIMP_IS_BRUSH_TOOL (brush_tool));
 
@@ -353,9 +353,6 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
                                  x, y,
                                  5, 5, GIMP_HANDLE_ANCHOR_CENTER);
     }
-
-  if (boundary)
-    gimp_bezier_desc_free (boundary);
 }
 
 static void
