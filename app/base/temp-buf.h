@@ -61,7 +61,7 @@ TempBuf * temp_buf_copy_area     (TempBuf       *src,
 void      temp_buf_demultiply    (TempBuf       *buf);
 
 void      temp_buf_free          (TempBuf       *buf);
-guchar  * temp_buf_get_data      (TempBuf       *buf);
+guchar  * temp_buf_get_data      (const TempBuf *buf);
 gsize     temp_buf_get_data_size (TempBuf       *buf);
 guchar  * temp_buf_data_clear    (TempBuf       *buf);
 

@@ -352,7 +352,7 @@ temp_buf_free (TempBuf *buf)
 }
 
 guchar *
-temp_buf_get_data (TempBuf *buf)
+temp_buf_get_data (const TempBuf *buf)
 {
   return buf->data;
 }
