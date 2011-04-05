@@ -196,23 +196,18 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
       drawable && proximity)
     {
+      GimpContext   *context    = GIMP_CONTEXT (paint_options);
       GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
       GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
-      GimpBrush     *brush;
-      GimpDynamics  *dynamics;
 
       brush_tool->brush_x = coords->x;
       brush_tool->brush_y = coords->y;
 
-      brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+      gimp_brush_core_set_brush (brush_core,
+                                 gimp_context_get_brush (context));
 
-      if (brush_core->main_brush != brush)
-        gimp_brush_core_set_brush (brush_core, brush);
-
-      dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
-
-      if (brush_core->dynamics != dynamics)
-        gimp_brush_core_set_dynamics (brush_core, dynamics);
+      gimp_brush_core_set_dynamics (brush_core,
+                                    gimp_context_get_dynamics (context));
 
       if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)
         {
@@ -274,7 +269,8 @@ gimp_brush_tool_options_notify (GimpTool         *tool,
       GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
       GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
 
-      gimp_brush_core_set_brush (brush_core, brush_core->main_brush);
+      g_signal_emit_by_name (brush_core, "set-brush",
+                             brush_core->main_brush);
     }
 }
 
@@ -370,8 +366,7 @@ gimp_brush_tool_brush_changed (GimpContext   *context,
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (brush_tool);
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
 
-  if (brush_core->main_brush != brush)
-    gimp_brush_core_set_brush (brush_core, brush);
+  gimp_brush_core_set_brush (brush_core, brush);
 
 }
 

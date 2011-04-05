@@ -396,19 +396,12 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
                        const GimpCoords  *coords,
                        GError           **error)
 {
-  GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
-  GimpBrush     *brush;
-  GimpDynamics  *dynamics;
+  GimpBrushCore *core    = GIMP_BRUSH_CORE (paint_core);
+  GimpContext   *context = GIMP_CONTEXT (paint_options);
 
-  brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+  gimp_brush_core_set_brush (core, gimp_context_get_brush (context));
 
-  if (core->main_brush != brush)
-    gimp_brush_core_set_brush (core, brush);
-
-  dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
-
-  if (core->dynamics != dynamics)
-    gimp_brush_core_set_dynamics (core, dynamics);
+  gimp_brush_core_set_dynamics (core, gimp_context_get_dynamics (context));
 
   if (! core->main_brush)
     {
@@ -866,6 +859,9 @@ static void
 gimp_brush_core_real_set_brush (GimpBrushCore *core,
                                 GimpBrush     *brush)
 {
+  if (brush == core->main_brush)
+    return;
+
   if (core->main_brush)
     {
       g_signal_handlers_disconnect_by_func (core->main_brush,
@@ -890,6 +886,9 @@ static void
 gimp_brush_core_real_set_dynamics (GimpBrushCore *core,
                                    GimpDynamics  *dynamics)
 {
+  if (dynamics == core->dynamics)
+    return;
+
   if (core->dynamics)
     g_object_unref (core->dynamics);
 
@@ -906,7 +905,8 @@ gimp_brush_core_set_brush (GimpBrushCore *core,
   g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
   g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
 
-  g_signal_emit (core, core_signals[SET_BRUSH], 0, brush);
+  if (brush != core->main_brush)
+    g_signal_emit (core, core_signals[SET_BRUSH], 0, brush);
 }
 
 void
@@ -916,7 +916,8 @@ gimp_brush_core_set_dynamics (GimpBrushCore *core,
   g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
   g_return_if_fail (dynamics == NULL || GIMP_IS_DYNAMICS (dynamics));
 
-  g_signal_emit (core, core_signals[SET_DYNAMICS], 0, dynamics);
+  if (dynamics != core->dynamics)
+    g_signal_emit (core, core_signals[SET_DYNAMICS], 0, dynamics);
 }
 
 void
@@ -1018,9 +1019,9 @@ gimp_brush_core_invalidate_cache (GimpBrush     *brush,
   core->cache_invalid       = TRUE;
   core->solid_cache_invalid = TRUE;
 
-  /* Set the same brush again so the "set-brush" signal is emitted */
+  /* Notify of the brush change */
 
-  gimp_brush_core_set_brush (core, brush);
+  g_signal_emit (core, core_signals[SET_BRUSH], 0, brush);
 }
 
 
