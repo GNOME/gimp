@@ -290,6 +290,7 @@ gimp_brush_core_finalize (GObject *object)
       g_signal_handlers_disconnect_by_func (core->main_brush,
                                             gimp_brush_core_invalidate_cache,
                                             core);
+      gimp_brush_end_use (core->main_brush);
       g_object_unref (core->main_brush);
       core->main_brush = NULL;
     }
@@ -867,6 +868,7 @@ gimp_brush_core_real_set_brush (GimpBrushCore *core,
       g_signal_handlers_disconnect_by_func (core->main_brush,
                                             gimp_brush_core_invalidate_cache,
                                             core);
+      gimp_brush_end_use (core->main_brush);
       g_object_unref (core->main_brush);
       core->main_brush = NULL;
     }
@@ -876,6 +878,7 @@ gimp_brush_core_real_set_brush (GimpBrushCore *core,
   if (core->main_brush)
     {
       g_object_ref (core->main_brush);
+      gimp_brush_start_use (core->main_brush);
       g_signal_connect (core->main_brush, "invalidate-preview",
                         G_CALLBACK (gimp_brush_core_invalidate_cache),
                         core);

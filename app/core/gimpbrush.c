@@ -605,3 +605,25 @@ gimp_brush_set_spacing (GimpBrush *brush,
       g_object_notify (G_OBJECT (brush), "spacing");
     }
 }
+
+void
+gimp_brush_start_use (GimpBrush *brush)
+{
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+
+  brush->use_count++;
+}
+
+void
+gimp_brush_end_use (GimpBrush *brush)
+{
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+  g_return_if_fail (brush->use_count > 0);
+
+  brush->use_count--;
+
+  if (brush->use_count == 0)
+    {
+      /* flush caches */
+    }
+}

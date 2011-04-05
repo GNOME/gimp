@@ -43,6 +43,8 @@ struct _GimpBrush
   gint          spacing;    /*  brush's spacing                */
   GimpVector2   x_axis;     /*  for calculating brush spacing  */
   GimpVector2   y_axis;     /*  for calculating brush spacing  */
+
+  gint          use_count;  /*  for keeping the caches alive   */
 };
 
 struct _GimpBrushClass
@@ -134,6 +136,9 @@ TempBuf        * gimp_brush_get_pixmap         (const GimpBrush  *brush);
 gint             gimp_brush_get_spacing        (const GimpBrush  *brush);
 void             gimp_brush_set_spacing        (GimpBrush        *brush,
                                                 gint              spacing);
+
+void             gimp_brush_start_use          (GimpBrush        *brush);
+void             gimp_brush_end_use            (GimpBrush        *brush);
 
 
 #endif /* __GIMP_BRUSH_H__ */
