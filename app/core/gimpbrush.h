@@ -134,7 +134,6 @@ TempBuf        * gimp_brush_get_pixmap         (const GimpBrush  *brush);
 gint             gimp_brush_get_spacing        (const GimpBrush  *brush);
 void             gimp_brush_set_spacing        (GimpBrush        *brush,
                                                 gint              spacing);
-void             gimp_brush_spacing_changed    (GimpBrush        *brush);
 
 
 #endif /* __GIMP_BRUSH_H__ */

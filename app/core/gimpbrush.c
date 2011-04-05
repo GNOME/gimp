@@ -601,15 +601,7 @@ gimp_brush_set_spacing (GimpBrush *brush,
     {
       brush->spacing = spacing;
 
-      gimp_brush_spacing_changed (brush);
+      g_signal_emit (brush, brush_signals[SPACING_CHANGED], 0);
       g_object_notify (G_OBJECT (brush), "spacing");
     }
-}
-
-void
-gimp_brush_spacing_changed (GimpBrush *brush)
-{
-  g_return_if_fail (GIMP_IS_BRUSH (brush));
-
-  g_signal_emit (brush, brush_signals[SPACING_CHANGED], 0);
 }
