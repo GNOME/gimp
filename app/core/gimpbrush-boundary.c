@@ -45,12 +45,9 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
 
   if (mask)
     {
-      PixelRegion     maskPR;
-      BoundSeg       *bound_segs;
-      gint            n_bound_segs;
-      BoundSeg       *stroke_segs;
-      gint            n_stroke_groups;
-      GimpBezierDesc *path;
+      PixelRegion  maskPR;
+      BoundSeg    *bound_segs;
+      gint         n_bound_segs;
 
       pixel_region_init_temp_buf (&maskPR, mask,
                                   0, 0, mask->width, mask->height);
@@ -62,23 +59,29 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
 
       temp_buf_free (mask);
 
-      if (! bound_segs)
-        return NULL;
+      if (bound_segs)
+        {
+          BoundSeg *stroke_segs;
+          gint      n_stroke_groups;
 
-      stroke_segs = boundary_sort (bound_segs, n_bound_segs, &n_stroke_groups);
+          stroke_segs = boundary_sort (bound_segs, n_bound_segs,
+                                       &n_stroke_groups);
 
-      g_free (bound_segs);
+          g_free (bound_segs);
 
-      if (! stroke_segs)
-        return NULL;
+          if (stroke_segs)
+            {
+              GimpBezierDesc *path;
 
-      path = gimp_bezier_desc_new_from_bound_segs (stroke_segs,
-                                                   n_bound_segs,
-                                                   n_stroke_groups);
+              path = gimp_bezier_desc_new_from_bound_segs (stroke_segs,
+                                                           n_bound_segs,
+                                                           n_stroke_groups);
 
-      g_free (stroke_segs);
+              g_free (stroke_segs);
 
-      return path;
+              return path;
+            }
+        }
     }
 
   return NULL;
@@ -91,7 +94,9 @@ gimp_brush_transform_boundary_approx (GimpBrush *brush,
                                       gdouble    angle,
                                       gdouble    hardness)
 {
-  return NULL;
+  return gimp_brush_transform_boundary_exact (brush,
+                                              scale, aspect_ratio,
+                                              angle, hardness);
 }
 
 GimpBezierDesc *
@@ -106,7 +111,7 @@ gimp_brush_real_transform_boundary (GimpBrush *brush,
   gimp_brush_transform_size (brush, scale, aspect_ratio, angle,
                              width, height);
 
-  if (TRUE /* width < foo && height < bar */)
+  if (*width < 256 && *height < 256)
     {
       return gimp_brush_transform_boundary_exact (brush,
                                                   scale, aspect_ratio,
