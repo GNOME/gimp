@@ -57,7 +57,7 @@ struct _GimpBrushPipe
 
   gint             *index;      /* Current index for incremental dimensions */
 
-  gint              nbrushes;   /* Might be less than the product of the
+  gint              n_brushes;  /* Might be less than the product of the
                                  * ranks in some odd special case */
   GimpBrush       **brushes;
   GimpBrush        *current;    /* Currently selected brush */

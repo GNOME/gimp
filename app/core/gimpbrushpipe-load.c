@@ -208,14 +208,14 @@ gimp_brush_pipe_load (GimpContext  *context,
 
   pipe->brushes = g_new0 (GimpBrush *, num_of_brushes);
 
-  while (pipe->nbrushes < num_of_brushes)
+  while (pipe->n_brushes < num_of_brushes)
     {
-      pipe->brushes[pipe->nbrushes] = gimp_brush_load_brush (context,
-                                                             fd, filename, NULL);
+      pipe->brushes[pipe->n_brushes] = gimp_brush_load_brush (context,
+                                                              fd, filename, NULL);
 
-      if (pipe->brushes[pipe->nbrushes])
+      if (pipe->brushes[pipe->n_brushes])
         {
-          gimp_object_set_name (GIMP_OBJECT (pipe->brushes[pipe->nbrushes]),
+          gimp_object_set_name (GIMP_OBJECT (pipe->brushes[pipe->n_brushes]),
                                 NULL);
         }
       else
@@ -229,7 +229,7 @@ gimp_brush_pipe_load (GimpContext  *context,
           return NULL;
         }
 
-      pipe->nbrushes++;
+      pipe->n_brushes++;
     }
 
   close (fd);

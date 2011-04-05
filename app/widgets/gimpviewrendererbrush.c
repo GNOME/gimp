@@ -154,7 +154,7 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
 
   renderbrush->pipe_animation_index++;
 
-  if (renderbrush->pipe_animation_index >= brush_pipe->nbrushes)
+  if (renderbrush->pipe_animation_index >= brush_pipe->n_brushes)
     renderbrush->pipe_animation_index = 0;
 
   brush =

@@ -80,7 +80,7 @@ gimp_brush_pipe_init (GimpBrushPipe *pipe)
   pipe->dimension = 0;
   pipe->rank      = NULL;
   pipe->stride    = NULL;
-  pipe->nbrushes  = 0;
+  pipe->n_brushes = 0;
   pipe->brushes   = NULL;
   pipe->select    = NULL;
   pipe->index     = NULL;
@@ -106,7 +106,7 @@ gimp_brush_pipe_finalize (GObject *object)
     {
       gint i;
 
-      for (i = 0; i < pipe->nbrushes; i++)
+      for (i = 0; i < pipe->n_brushes; i++)
         if (pipe->brushes[i])
           g_object_unref (pipe->brushes[i]);
 
@@ -143,7 +143,7 @@ gimp_brush_pipe_get_memsize (GimpObject *object,
                                 sizeof (gint) /* stride */ +
                                 sizeof (PipeSelectModes));
 
-  for (i = 0; i < pipe->nbrushes; i++)
+  for (i = 0; i < pipe->n_brushes; i++)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (pipe->brushes[i]),
                                         gui_size);
 
@@ -171,7 +171,7 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
   gint           i, brushix, ix;
   gdouble        velocity, spacing;
 
-  if (pipe->nbrushes == 1)
+  if (pipe->n_brushes == 1)
     return GIMP_BRUSH (pipe->current);
 
 
@@ -230,7 +230,7 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
     }
 
   /* Make sure is inside bounds */
-  brushix = CLAMP (brushix, 0, pipe->nbrushes - 1);
+  brushix = CLAMP (brushix, 0, pipe->n_brushes - 1);
 
   pipe->current = pipe->brushes[brushix];
 
@@ -245,7 +245,7 @@ gimp_brush_pipe_want_null_motion (GimpBrush        *brush,
   GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
   gint           i;
 
-  if (pipe->nbrushes == 1)
+  if (pipe->n_brushes == 1)
     return TRUE;
 
   for (i = 0; i < pipe->dimension; i++)
