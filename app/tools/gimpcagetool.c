@@ -1148,6 +1148,12 @@ gimp_cage_tool_render_node_update (GimpCageTool *ct)
                      "buffer",  ct->coef,
                      NULL);
     }
+
+  /* This just unref buffer, since gegl_node_get add a refcount on it */
+  if (buffer)
+    {
+      gegl_buffer_destroy (buffer);
+    }
 }
 
 static void
