@@ -19,6 +19,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -162,6 +163,9 @@ static void      gimp_image_window_switch_page         (GtkNotebook         *not
                                                         gpointer             page,
                                                         gint                 page_num,
                                                         GimpImageWindow     *window);
+static gboolean  gimp_image_window_key_pressed         (GtkWidget           *widget,
+                                                        GdkEventKey         *event,
+                                                        gpointer             user_data);
 static void      gimp_image_window_page_removed        (GtkNotebook         *notebook,
                                                         GtkWidget           *widget,
                                                         gint                 page_num,
@@ -343,6 +347,9 @@ gimp_image_window_constructed (GObject *object)
                    TRUE, TRUE);
   g_signal_connect (private->notebook, "switch-page",
                     G_CALLBACK (gimp_image_window_switch_page),
+                    window);
+  g_signal_connect (private->notebook, "key-press-event",
+                    G_CALLBACK (gimp_image_window_key_pressed),
                     window);
   g_signal_connect (private->notebook, "page-removed",
                     G_CALLBACK (gimp_image_window_page_removed),
@@ -1250,6 +1257,30 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
                                     TRUE /*from_switch_page*/);
 
   gimp_ui_manager_update (private->menubar_manager, active_display);
+}
+
+static gboolean
+gimp_image_window_key_pressed (GtkWidget           *widget,
+                               GdkEventKey         *event,
+                               gpointer             user_data)
+{
+  if (event->state & GDK_MOD1_MASK)
+    {
+      if ((event->keyval >= GDK_KEY_0) &&
+          (event->keyval <= GDK_KEY_9))
+        {
+          guint tab = (event->keyval - GDK_KEY_0) - 1;
+          gint n = gtk_notebook_get_n_pages (GTK_NOTEBOOK (widget));
+
+          if (tab < n)
+            {
+              gtk_notebook_set_current_page (GTK_NOTEBOOK (widget), tab);
+              return TRUE;
+            }
+        }
+    }
+
+  return FALSE;
 }
 
 static void
