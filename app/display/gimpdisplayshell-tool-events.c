@@ -709,78 +709,77 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_SCROLL:
       {
         GdkEventScroll     *sevent = (GdkEventScroll *) event;
-        GdkScrollDirection  direction;
         GimpController     *wheel;
 
         wheel = gimp_controllers_get_wheel (gimp);
 
-        if (wheel &&
-            gimp_controller_wheel_scroll (GIMP_CONTROLLER_WHEEL (wheel),
-                                          sevent))
-          return TRUE;
-
-        direction = sevent->direction;
-
-        if (state & GDK_CONTROL_MASK)
+        if (! wheel ||
+            ! gimp_controller_wheel_scroll (GIMP_CONTROLLER_WHEEL (wheel),
+                                            sevent))
           {
-            switch (direction)
+            GdkScrollDirection  direction = sevent->direction;
+
+            if (state & GDK_CONTROL_MASK)
               {
-              case GDK_SCROLL_UP:
-                gimp_display_shell_scale (shell,
-                                          GIMP_ZOOM_IN,
-                                          0.0,
-                                          GIMP_ZOOM_FOCUS_BEST_GUESS);
-                break;
+                switch (direction)
+                  {
+                  case GDK_SCROLL_UP:
+                    gimp_display_shell_scale (shell,
+                                              GIMP_ZOOM_IN,
+                                              0.0,
+                                              GIMP_ZOOM_FOCUS_BEST_GUESS);
+                    break;
 
-              case GDK_SCROLL_DOWN:
-                gimp_display_shell_scale (shell,
-                                          GIMP_ZOOM_OUT,
-                                          0.0,
-                                          GIMP_ZOOM_FOCUS_BEST_GUESS);
-                break;
+                  case GDK_SCROLL_DOWN:
+                    gimp_display_shell_scale (shell,
+                                              GIMP_ZOOM_OUT,
+                                              0.0,
+                                              GIMP_ZOOM_FOCUS_BEST_GUESS);
+                    break;
 
-              default:
-                break;
+                  default:
+                    break;
+                  }
               }
-          }
-        else
-          {
-            GtkAdjustment *adj = NULL;
-            gdouble        value;
-
-            if (state & GDK_SHIFT_MASK)
-              switch (direction)
-                {
-                case GDK_SCROLL_UP:    direction = GDK_SCROLL_LEFT;  break;
-                case GDK_SCROLL_DOWN:  direction = GDK_SCROLL_RIGHT; break;
-                case GDK_SCROLL_LEFT:  direction = GDK_SCROLL_UP;    break;
-                case GDK_SCROLL_RIGHT: direction = GDK_SCROLL_DOWN;  break;
-                }
-
-            switch (direction)
+            else
               {
-              case GDK_SCROLL_LEFT:
-              case GDK_SCROLL_RIGHT:
-                adj = shell->hsbdata;
-                break;
+                GtkAdjustment *adj = NULL;
+                gdouble        value;
 
-              case GDK_SCROLL_UP:
-              case GDK_SCROLL_DOWN:
-                adj = shell->vsbdata;
-                break;
+                if (state & GDK_SHIFT_MASK)
+                  switch (direction)
+                    {
+                    case GDK_SCROLL_UP:    direction = GDK_SCROLL_LEFT;  break;
+                    case GDK_SCROLL_DOWN:  direction = GDK_SCROLL_RIGHT; break;
+                    case GDK_SCROLL_LEFT:  direction = GDK_SCROLL_UP;    break;
+                    case GDK_SCROLL_RIGHT: direction = GDK_SCROLL_DOWN;  break;
+                    }
+
+                switch (direction)
+                  {
+                  case GDK_SCROLL_LEFT:
+                  case GDK_SCROLL_RIGHT:
+                    adj = shell->hsbdata;
+                    break;
+
+                  case GDK_SCROLL_UP:
+                  case GDK_SCROLL_DOWN:
+                    adj = shell->vsbdata;
+                    break;
+                  }
+
+                value = (gtk_adjustment_get_value (adj) +
+                         ((direction == GDK_SCROLL_UP ||
+                           direction == GDK_SCROLL_LEFT) ?
+                          -gtk_adjustment_get_page_increment (adj) / 2 :
+                          gtk_adjustment_get_page_increment (adj) / 2));
+                value = CLAMP (value,
+                               gtk_adjustment_get_lower (adj),
+                               gtk_adjustment_get_upper (adj) -
+                               gtk_adjustment_get_page_size (adj));
+
+                gtk_adjustment_set_value (adj, value);
               }
-
-            value = (gtk_adjustment_get_value (adj) +
-                     ((direction == GDK_SCROLL_UP ||
-                       direction == GDK_SCROLL_LEFT) ?
-                      -gtk_adjustment_get_page_increment (adj) / 2 :
-                      gtk_adjustment_get_page_increment (adj) / 2));
-            value = CLAMP (value,
-                           gtk_adjustment_get_lower (adj),
-                           gtk_adjustment_get_upper (adj) -
-                           gtk_adjustment_get_page_size (adj));
-
-            gtk_adjustment_set_value (adj, value);
           }
 
         gimp_display_shell_untransform_event_coords (shell,
