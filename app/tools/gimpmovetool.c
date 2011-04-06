@@ -287,14 +287,20 @@ gimp_move_tool_button_press (GimpTool            *tool,
     {
     case GIMP_TRANSFORM_TYPE_PATH:
       if (gimp_image_get_active_vectors (image))
-        gimp_edit_selection_tool_start (tool, display, coords,
-                                        GIMP_TRANSLATE_MODE_VECTORS, TRUE);
+        {
+          gimp_tool_control_activate (tool->control);
+          gimp_edit_selection_tool_start (tool, display, coords,
+                                          GIMP_TRANSLATE_MODE_VECTORS, TRUE);
+        }
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-        gimp_edit_selection_tool_start (tool, display, coords,
-                                        GIMP_TRANSLATE_MODE_MASK, TRUE);
+        {
+          gimp_tool_control_activate (tool->control);
+          gimp_edit_selection_tool_start (tool, display, coords,
+                                          GIMP_TRANSLATE_MODE_MASK, TRUE);
+        }
       break;
 
     case GIMP_TRANSFORM_TYPE_LAYER:
@@ -302,14 +308,23 @@ gimp_move_tool_button_press (GimpTool            *tool,
         GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
         if (GIMP_IS_LAYER_MASK (drawable))
-          gimp_edit_selection_tool_start (tool, display, coords,
-                                          GIMP_TRANSLATE_MODE_LAYER_MASK, TRUE);
+          {
+            gimp_tool_control_activate (tool->control);
+            gimp_edit_selection_tool_start (tool, display, coords,
+                                            GIMP_TRANSLATE_MODE_LAYER_MASK, TRUE);
+          }
         else if (GIMP_IS_CHANNEL (drawable))
-          gimp_edit_selection_tool_start (tool, display, coords,
-                                          GIMP_TRANSLATE_MODE_CHANNEL, TRUE);
+          {
+            gimp_tool_control_activate (tool->control);
+            gimp_edit_selection_tool_start (tool, display, coords,
+                                            GIMP_TRANSLATE_MODE_CHANNEL, TRUE);
+          }
         else if (GIMP_IS_LAYER (drawable))
-          gimp_edit_selection_tool_start (tool, display, coords,
-                                          GIMP_TRANSLATE_MODE_LAYER, TRUE);
+          {
+            gimp_tool_control_activate (tool->control);
+            gimp_edit_selection_tool_start (tool, display, coords,
+                                            GIMP_TRANSLATE_MODE_LAYER, TRUE);
+          }
       }
       break;
     }
@@ -328,8 +343,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
   GimpDisplayShell *shell  = gimp_display_get_shell (display);
   GimpImage        *image  = gimp_display_get_image (display);
 
-  if (gimp_tool_control_is_active (tool->control))
-    gimp_tool_control_halt (tool->control);
+  gimp_tool_control_halt (tool->control);
 
   if (move->moving_guide)
     {
