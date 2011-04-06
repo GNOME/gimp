@@ -26,6 +26,7 @@
 
 #include "gimpbrushcache.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
@@ -193,12 +194,14 @@ gimp_brush_cache_get (GimpBrushCache *cache,
       cache->last_angle        == angle        &&
       cache->last_hardness     == hardness)
     {
-      g_printerr ("%c", cache->debug_hit);
+      if (gimp_log_flags & GIMP_LOG_BRUSH_CACHE)
+        g_printerr ("%c", cache->debug_hit);
 
       return (gconstpointer) cache->last_data;
     }
 
-  g_printerr ("%c", cache->debug_miss);
+  if (gimp_log_flags & GIMP_LOG_BRUSH_CACHE)
+    g_printerr ("%c", cache->debug_miss);
 
   return NULL;
 }
