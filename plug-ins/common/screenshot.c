@@ -949,12 +949,8 @@ shoot (GdkScreen *screen)
           return -1;
         }
 
-#if GTK_CHECK_VERSION (2, 24, 0)
       rect.width  = gdk_window_get_width (window);
       rect.height = gdk_window_get_height (window);
-#else
-      gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
-#endif
       gdk_window_get_origin (window, &x, &y);
 
       rect.x = x;

@@ -43,10 +43,10 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 m4_define([babl_required_version], [0.1.4])
 m4_define([gegl_required_version], [0.1.6])
 m4_define([glib_required_version], [2.28.1])
-m4_define([gtk_required_version], [2.20.0])
-m4_define([gdk_pixbuf_required_version], [gtk_required_version])
-m4_define([cairo_required_version], [1.8.0])
-m4_define([cairo_pdf_required_version], [1.8.0])
+m4_define([gtk_required_version], [2.24.3])
+m4_define([gdk_pixbuf_required_version], [2.22.1])
+m4_define([cairo_required_version], [1.10.2])
+m4_define([cairo_pdf_required_version], [1.10.2])
 m4_define([pangocairo_required_version], [1.22.0])
 m4_define([fontconfig_required_version], [2.2.0])
 m4_define([gtkdoc_required_version], [1.0])
@@ -519,6 +519,14 @@ AC_PATH_PROG(GDK_PIXBUF_CSOURCE, gdk-pixbuf-csource, no)
 if test "x$GDK_PIXBUF_CSOURCE" = xno; then
   AC_MSG_ERROR(Could not find gdk-pixbuf-csource in your PATH)
 fi
+
+AC_MSG_CHECKING([if GdkPixbuf is version 2.26.0 or newer])
+if $PKG_CONFIG --atleast-version=2.26.0 gdk-pixbuf-2.0; then
+  have_gdk_pixbuf_2_26=yes
+else
+  have_gdk_pixbuf_2_26=no
+fi
+AC_MSG_RESULT($have_gdk_pixbuf_2_26)
 
 PKG_CHECK_MODULES(CAIRO, cairo >= cairo_required_version)
 
@@ -1950,7 +1958,11 @@ if test "x$have_glib_2_32" != "xyes"; then
 fi
 
 if test "x$have_gtk_2_26" != "xyes"; then
-  CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+  CPPFLAGS="${CPPFLAGS} -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+fi
+
+if test "x$have_gdk_pixbuf_2_26" != "xyes"; then
+  CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED"
 fi
 
 if test "x$have_pango_1_32" != "xyes"; then

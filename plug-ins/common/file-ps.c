@@ -3196,7 +3196,6 @@ load_dialog (const gchar *filename,
       gimp_help_set_help_data (GTK_WIDGET (entry),
                                _("Pages to load (e.g.: 1-4 or 1,3,5-7)"), NULL);
 
-#if GTK_CHECK_VERSION (2, 24, 0)
       target = gtk_combo_box_text_new ();
       gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (target),
                                       GIMP_PAGE_SELECTOR_TARGET_LAYERS,
@@ -3204,13 +3203,6 @@ load_dialog (const gchar *filename,
       gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (target),
                                       GIMP_PAGE_SELECTOR_TARGET_IMAGES,
                                       _("Images"));
-#else
-      target = gtk_combo_box_new_text ();
-      gtk_combo_box_insert_text (GTK_COMBO_BOX (target),
-                                 GIMP_PAGE_SELECTOR_TARGET_LAYERS, _("Layers"));
-      gtk_combo_box_insert_text (GTK_COMBO_BOX (target),
-                                 GIMP_PAGE_SELECTOR_TARGET_IMAGES, _("Images"));
-#endif
       gtk_combo_box_set_active (GTK_COMBO_BOX (target), (int) ps_pagemode);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
                                  _("Open as"), 0.0, 0.5,

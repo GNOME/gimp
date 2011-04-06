@@ -257,14 +257,8 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
       gdk_window_get_position (child->window,
                                &old_allocation.x,
                                &old_allocation.y);
-#if GTK_CHECK_VERSION (2, 24, 0)
       old_allocation.width  = gdk_window_get_width (child->window);
       old_allocation.height = gdk_window_get_height (child->window);
-#else
-      gdk_drawable_get_size (child->window,
-                             &old_allocation.width,
-                             &old_allocation.height);
-#endif
 
       gimp_overlay_child_transform_bounds (child, &old_allocation, &old_bounds);
 

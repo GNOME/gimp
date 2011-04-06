@@ -149,8 +149,6 @@ gimp_ui_init (const gchar *prog_name,
 static GdkWindow *
 gimp_ui_get_foreign_window (guint32 window)
 {
-#if GTK_CHECK_VERSION (2, 24, 0)
-
 #ifdef GDK_WINDOWING_X11
   return gdk_x11_window_foreign_new_for_display (gdk_display_get_default (),
                                                  window);
@@ -160,15 +158,6 @@ gimp_ui_get_foreign_window (guint32 window)
   return gdk_win32_window_foreign_new_for_display (gdk_display_get_default (),
                                                    window);
 #endif
-
-#else /* ! GTK_CHECK_VERSION (2, 24, 0) */
-
-#ifndef GDK_NATIVE_WINDOW_POINTER
-  return gdk_window_foreign_new_for_display (gdk_display_get_default (),
-                                             window);
-#endif
-
-#endif /* GTK_CHECK_VERSION (2, 24, 0) */
 
   return NULL;
 }

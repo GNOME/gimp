@@ -1060,20 +1060,11 @@ gih_save_dialog (gint32 image_ID)
             cellw_adjust.rank0 = cellh_adjust.rank0 = NULL;
         }
 
-#if GTK_CHECK_VERSION (2, 24, 0)
       cb = gtk_combo_box_text_new ();
-#else
-      cb = gtk_combo_box_new_text ();
-#endif
 
       for (j = 0; j < G_N_ELEMENTS (selection_modes); j++)
-#if GTK_CHECK_VERSION (2, 24, 0)
         gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (cb),
                                         selection_modes[j]);
-#else
-        gtk_combo_box_append_text (GTK_COMBO_BOX (cb), selection_modes[j]);
-#endif
-
       gtk_combo_box_set_active (GTK_COMBO_BOX (cb), 2);  /* random */
 
       if (gihparams.selection[i])

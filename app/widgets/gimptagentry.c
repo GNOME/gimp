@@ -1296,13 +1296,8 @@ gimp_tag_entry_expose (GtkWidget      *widget,
   pango_layout_set_attributes (layout, attr_list);
   pango_attr_list_unref (attr_list);
 
-#if GTK_CHECK_VERSION (2, 24, 0)
   window_width  = gdk_window_get_width (event->window);
   window_height = gdk_window_get_height (event->window);
-#else
-  gdk_drawable_get_size (GDK_DRAWABLE (event->window),
-                         &window_width, &window_height);
-#endif
   pango_layout_get_size (layout,
                          &layout_width, &layout_height);
   offset = (window_height - PANGO_PIXELS (layout_height)) / 2;

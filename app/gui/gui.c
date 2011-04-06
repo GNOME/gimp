@@ -251,8 +251,8 @@ static gchar *
 gui_sanity_check (void)
 {
 #define GTK_REQUIRED_MAJOR 2
-#define GTK_REQUIRED_MINOR 20
-#define GTK_REQUIRED_MICRO 0
+#define GTK_REQUIRED_MINOR 24
+#define GTK_REQUIRED_MICRO 3
 
   const gchar *mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
                                              GTK_REQUIRED_MINOR,

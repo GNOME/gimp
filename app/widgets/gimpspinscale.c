@@ -235,12 +235,8 @@ gimp_spin_scale_expose (GtkWidget      *widget,
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
-#if GTK_CHECK_VERSION (2, 24, 0)
   w = gdk_window_get_width (event->window);
   h = gdk_window_get_height (event->window);
-#else
-  gdk_drawable_get_size (event->window, &w, &h);
-#endif
 
   cairo_set_line_width (cr, 1.0);
 
@@ -334,11 +330,7 @@ gimp_spin_scale_change_value (GtkWidget *widget,
   gint                  width;
   gdouble               value;
 
-#if GTK_CHECK_VERSION (2, 24, 0)
   width = gdk_window_get_width (text_window);
-#else
-  gdk_drawable_get_size (text_window, &width, NULL);
-#endif
 
   if (private->relative_change)
     {
