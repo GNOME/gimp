@@ -211,7 +211,7 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
 
       if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)
         {
-          gimp_brush_core_eval_transform_dynamics (paint_tool->core,
+          gimp_brush_core_eval_transform_dynamics (brush_core,
                                                    drawable,
                                                    paint_options,
                                                    coords);
@@ -372,13 +372,13 @@ gimp_brush_tool_set_brush (GimpBrushCore *brush_core,
                            GimpBrush     *brush,
                            GimpBrushTool *brush_tool)
 {
-  GimpPaintCore *paint_core = GIMP_PAINT_CORE (brush_core);
-
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (brush_tool));
 
   if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)
     {
-      gimp_brush_core_eval_transform_dynamics (paint_core,
+      GimpPaintCore *paint_core = GIMP_PAINT_CORE (brush_core);
+
+      gimp_brush_core_eval_transform_dynamics (brush_core,
                                                NULL,
                                                GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool),
                                                &paint_core->cur_coords);

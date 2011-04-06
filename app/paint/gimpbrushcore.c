@@ -185,7 +185,7 @@ gimp_brush_core_init (GimpBrushCore *core)
   core->scale                        = 1.0;
   core->angle                        = 1.0;
   core->hardness                     = 1.0;
-  core->force                        = 1.0;
+  core->aspect_ratio                 = 0.0;
 
   core->pressure_brush               = NULL;
 
@@ -193,11 +193,10 @@ gimp_brush_core_init (GimpBrushCore *core)
   core->solid_cache_invalid          = FALSE;
 
   core->transform_brush              = NULL;
-
   core->transform_pixmap             = NULL;
 
-  core->last_brush_mask              = NULL;
-  core->cache_invalid                = FALSE;
+  core->last_subsample_brush_mask    = NULL;
+  core->subsample_cache_invalid      = FALSE;
 
   core->rand                         = g_rand_new ();
 
@@ -223,7 +222,7 @@ gimp_brush_core_init (GimpBrushCore *core)
     {
       for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
         {
-          core->kernel_brushes[i][j] = NULL;
+          core->subsample_brushes[i][j] = NULL;
         }
     }
 
@@ -257,10 +256,10 @@ gimp_brush_core_finalize (GObject *object)
 
   for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
     for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
-      if (core->kernel_brushes[i][j])
+      if (core->subsample_brushes[i][j])
         {
-          temp_buf_free (core->kernel_brushes[i][j]);
-          core->kernel_brushes[i][j] = NULL;
+          temp_buf_free (core->subsample_brushes[i][j]);
+          core->subsample_brushes[i][j] = NULL;
         }
 
   if (core->main_brush)
@@ -398,7 +397,7 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
-      gimp_brush_core_eval_transform_dynamics (paint_core,
+      gimp_brush_core_eval_transform_dynamics (core,
                                                drawable,
                                                paint_options,
                                                coords);
@@ -479,7 +478,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gimp_paint_core_get_current_coords (paint_core, paint_options, &current_coords);
 
   /*  Zero sized brushes are unfit for interpolate, so we just let
-   *  paint core fail onits own
+   *  paint core fail on its own
    */
   if (core->scale == 0.0)
     {
@@ -793,7 +792,7 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {
-      gimp_brush_core_eval_transform_dynamics (paint_core,
+      gimp_brush_core_eval_transform_dynamics (core,
                                                drawable,
                                                paint_options,
                                                coords);
@@ -997,8 +996,8 @@ gimp_brush_core_invalidate_cache (GimpBrush     *brush,
 {
   /* Make sure we don't cache data for a brush that has changed */
 
-  core->cache_invalid       = TRUE;
-  core->solid_cache_invalid = TRUE;
+  core->subsample_cache_invalid = TRUE;
+  core->solid_cache_invalid     = TRUE;
 
   /* Notify of the brush change */
 
@@ -1085,23 +1084,24 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
 
   kernel = subsample[index2][index1];
 
-  if (mask == core->last_brush_mask && ! core->cache_invalid)
+  if (mask == core->last_subsample_brush_mask &&
+      ! core->subsample_cache_invalid)
     {
-      if (core->kernel_brushes[index2][index1])
-        return core->kernel_brushes[index2][index1];
+      if (core->subsample_brushes[index2][index1])
+        return core->subsample_brushes[index2][index1];
     }
   else
     {
       for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
         for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
-          if (core->kernel_brushes[i][j])
+          if (core->subsample_brushes[i][j])
             {
-              temp_buf_free (core->kernel_brushes[i][j]);
-              core->kernel_brushes[i][j] = NULL;
+              temp_buf_free (core->subsample_brushes[i][j]);
+              core->subsample_brushes[i][j] = NULL;
             }
 
-      core->last_brush_mask = mask;
-      core->cache_invalid   = FALSE;
+      core->last_subsample_brush_mask = mask;
+      core->subsample_cache_invalid   = FALSE;
     }
 
   dest = temp_buf_new (mask->width  + 2,
@@ -1112,7 +1112,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
   for (i = 0; i < KERNEL_HEIGHT ; i++)
     accum[i] = g_new0 (gulong, dest->width + 1);
 
-  core->kernel_brushes[index2][index1] = dest;
+  core->subsample_brushes[index2][index1] = dest;
 
   m = temp_buf_get_data (mask);
   for (i = 0; i < mask->height; i++)
@@ -1355,7 +1355,7 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   const TempBuf *mask;
 
   if (core->scale <= 0.0)
-    return NULL; /* Should never happen now, with scale clamping. */
+    return NULL;
 
   mask = gimp_brush_transform_mask (brush,
                                     core->scale,
@@ -1366,9 +1366,9 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   if (mask == core->transform_brush)
     return mask;
 
-  core->transform_brush     = mask;
-  core->cache_invalid       = TRUE;
-  core->solid_cache_invalid = TRUE;
+  core->transform_brush         = mask;
+  core->subsample_cache_invalid = TRUE;
+  core->solid_cache_invalid     = TRUE;
 
   return core->transform_brush;
 }
@@ -1391,8 +1391,8 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
   if (pixmap == core->transform_pixmap)
     return pixmap;
 
-  core->transform_pixmap = pixmap;
-  core->cache_invalid    = TRUE;
+  core->transform_pixmap        = pixmap;
+  core->subsample_cache_invalid = TRUE;
 
   return core->transform_pixmap;
 }
@@ -1436,14 +1436,11 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
 }
 
 void
-gimp_brush_core_eval_transform_dynamics (GimpPaintCore     *paint_core,
+gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
                                          GimpDrawable      *drawable,
                                          GimpPaintOptions  *paint_options,
                                          const GimpCoords  *coords)
 {
-  GimpBrushCore      *core                = GIMP_BRUSH_CORE (paint_core);
-  gdouble             fade_point          = 1.0;
-
   if (core->main_brush)
     core->scale = paint_options->brush_size /
                   MAX (core->main_brush->mask->width,
@@ -1459,56 +1456,52 @@ gimp_brush_core_eval_transform_dynamics (GimpPaintCore     *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
     {
-      GimpDynamicsOutput *size_output;
-      GimpDynamicsOutput *angle_output;
-      GimpDynamicsOutput *hardness_output;
-      GimpDynamicsOutput *aspect_output;
+      GimpDynamicsOutput *output;
       gdouble             dyn_aspect_ratio = 0.0;
+      gdouble             fade_point       = 1.0;
 
       if (drawable)
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage     *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
 
           fade_point = gimp_paint_options_get_fade (paint_options, image,
                                                     paint_core->pixel_dist);
         }
 
-      size_output     = gimp_dynamics_get_output (core->dynamics,
-                                                  GIMP_DYNAMICS_OUTPUT_SIZE);
-      angle_output    = gimp_dynamics_get_output (core->dynamics,
-                                                  GIMP_DYNAMICS_OUTPUT_ANGLE);
-      hardness_output = gimp_dynamics_get_output (core->dynamics,
-                                                  GIMP_DYNAMICS_OUTPUT_HARDNESS);
-      hardness_output = gimp_dynamics_get_output (core->dynamics,
-                                                  GIMP_DYNAMICS_OUTPUT_HARDNESS);
-      aspect_output   = gimp_dynamics_get_output (core->dynamics,
-                                                  GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO);
-
-      core->scale *= gimp_dynamics_output_get_linear_value (size_output,
+      output = gimp_dynamics_get_output (core->dynamics,
+                                         GIMP_DYNAMICS_OUTPUT_SIZE);
+      core->scale *= gimp_dynamics_output_get_linear_value (output,
                                                             coords,
                                                             paint_options,
                                                             fade_point);
 
-      core->angle += gimp_dynamics_output_get_angular_value (angle_output,
+      output = gimp_dynamics_get_output (core->dynamics,
+                                         GIMP_DYNAMICS_OUTPUT_ANGLE);
+      core->angle += gimp_dynamics_output_get_angular_value (output,
                                                              coords,
                                                              paint_options,
                                                              fade_point);
 
-      core->hardness = gimp_dynamics_output_get_linear_value (hardness_output,
+      output = gimp_dynamics_get_output (core->dynamics,
+                                         GIMP_DYNAMICS_OUTPUT_HARDNESS);
+      core->hardness = gimp_dynamics_output_get_linear_value (output,
                                                               coords,
                                                               paint_options,
                                                               fade_point);
 
-      dyn_aspect_ratio = gimp_dynamics_output_get_aspect_value (aspect_output,
+      output = gimp_dynamics_get_output (core->dynamics,
+                                         GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO);
+      dyn_aspect_ratio = gimp_dynamics_output_get_aspect_value (output,
                                                                 coords,
                                                                 paint_options,
                                                                 fade_point);
 
       /* Zero aspect ratio is special cased to half of all ar range,
-       * to force dynamics to have any effect . Forcing to full results
+       * to force dynamics to have any effect. Forcing to full results
        * in disapearing stamp if applied to maximum.
        */
-      if (gimp_dynamics_output_is_enabled (aspect_output))
+      if (gimp_dynamics_output_is_enabled (output))
         {
           if (core->aspect_ratio == 0.0)
             core->aspect_ratio = 10.0 * dyn_aspect_ratio;

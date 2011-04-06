@@ -48,7 +48,6 @@ struct _GimpBrushCore
   gdouble        scale;
   gdouble        angle;
   gdouble        hardness;
-  gdouble        force;
   gdouble        aspect_ratio;
 
   /*  brush buffers  */
@@ -61,10 +60,9 @@ struct _GimpBrushCore
   const TempBuf *transform_brush;
   const TempBuf *transform_pixmap;
 
-  TempBuf       *kernel_brushes[BRUSH_CORE_SUBSAMPLE + 1][BRUSH_CORE_SUBSAMPLE + 1];
-
-  const TempBuf *last_brush_mask;
-  gboolean       cache_invalid;
+  TempBuf       *subsample_brushes[BRUSH_CORE_SUBSAMPLE + 1][BRUSH_CORE_SUBSAMPLE + 1];
+  const TempBuf *last_subsample_brush_mask;
+  gboolean       subsample_cache_invalid;
 
   gdouble        jitter;
   gdouble        jitter_lut_x[BRUSH_CORE_JITTER_LUTSIZE];
@@ -133,7 +131,7 @@ const TempBuf * gimp_brush_core_get_brush_mask
                                        gdouble                   dynamic_hardness);
 
 void   gimp_brush_core_eval_transform_dynamics
-                                      (GimpPaintCore            *paint_core,
+                                      (GimpBrushCore            *paint_core,
                                        GimpDrawable             *drawable,
                                        GimpPaintOptions         *paint_options,
                                        const GimpCoords         *coords);
