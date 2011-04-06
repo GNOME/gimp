@@ -646,6 +646,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 1:
             state &= ~GDK_BUTTON1_MASK;
 
+            if (shell->scrolling)
+              return TRUE;
+
             if (! shell->space_pressed && ! shell->space_release_pending)
               gimp_display_shell_keyboard_ungrab (shell, event);
 
@@ -687,7 +690,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case 2:
             state &= ~GDK_BUTTON2_MASK;
-            gimp_display_shell_stop_scrolling (shell);
+            if (shell->scrolling)
+              gimp_display_shell_stop_scrolling (shell);
             break;
 
           case 3:
