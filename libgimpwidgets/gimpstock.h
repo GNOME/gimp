@@ -226,7 +226,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CONTROLLER_KEYBOARD      "gimp-controller-keyboard"
 #define GIMP_STOCK_CONTROLLER_LINUX_INPUT   "gimp-controller-linux-input"
 #define GIMP_STOCK_CONTROLLER_MIDI          "gimp-controller-midi"
-#define GIMP_STOCK_CONTROLLER_MOUSE         "gimp-controller-mouse"
 #define GIMP_STOCK_CONTROLLER_WHEEL         "gimp-controller-wheel"
 
 #define GIMP_STOCK_DISPLAY_FILTER           "gimp-display-filter"
@@ -280,6 +279,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_GRADIENT                 GIMP_STOCK_TOOL_BLEND
 #define GIMP_STOCK_PALETTE                  GTK_STOCK_SELECT_COLOR
 #define GIMP_STOCK_PATTERN                  GIMP_STOCK_TOOL_BUCKET_FILL
+#define GIMP_STOCK_CONTROLLER_MOUSE         GIMP_STOCK_CURSOR
 
 
 void   gimp_stock_init (void);
