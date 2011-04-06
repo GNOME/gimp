@@ -441,10 +441,10 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
     edit_select->center_y = (y1 + y2) / 2.0;
   }
 
+  tool_manager_push_tool (display->gimp, tool);
+
   gimp_tool_control_activate (tool->control);
   tool->display = display;
-
-  tool_manager_push_tool (display->gimp, tool);
 
   /*  pause the current selection  */
   gimp_display_shell_selection_pause (shell);
