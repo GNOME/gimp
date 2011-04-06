@@ -235,7 +235,7 @@ gimp_controller_mouse_init (GimpControllerMouse *mouse)
 }
 
 static void
-gimp_controller_mouse_constructed (GObject *object);
+gimp_controller_mouse_constructed (GObject *object)
 {
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
