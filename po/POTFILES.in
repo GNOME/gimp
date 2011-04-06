@@ -414,6 +414,7 @@ app/widgets/gimpcontainerpopup.c
 app/widgets/gimpcontrollereditor.c
 app/widgets/gimpcontrollerkeyboard.c
 app/widgets/gimpcontrollerlist.c
+app/widgets/gimpcontrollermouse.c
 app/widgets/gimpcontrollerwheel.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdeviceeditor.c

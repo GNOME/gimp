@@ -31,6 +31,7 @@
 
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpcontrollerkeyboard.h"
+#include "widgets/gimpcontrollermouse.h"
 #include "widgets/gimpcontrollerwheel.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdeviceinfo-coords.h"
@@ -699,6 +700,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             break;
 
           default:
+            {
+              GdkEventButton *bevent = (GdkEventButton *) event;
+              GimpController *mouse;
+
+              mouse = gimp_controllers_get_mouse (gimp);
+
+              if (!(shell->scrolling || shell->pointer_grabbed) &&
+                  mouse && gimp_controller_mouse_button (GIMP_CONTROLLER_MOUSE (mouse),
+                                                         bevent))
+                return TRUE;
+            }
             break;
           }
 

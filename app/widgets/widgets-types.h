@@ -69,6 +69,7 @@ typedef struct _GimpDeviceManager            GimpDeviceManager;
 typedef struct _GimpDeviceInfo               GimpDeviceInfo;
 typedef struct _GimpControllerInfo           GimpControllerInfo;
 typedef struct _GimpControllerKeyboard       GimpControllerKeyboard;
+typedef struct _GimpControllerMouse          GimpControllerMouse;
 typedef struct _GimpControllerWheel          GimpControllerWheel;
 
 

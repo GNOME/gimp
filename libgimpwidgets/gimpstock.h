@@ -226,6 +226,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CONTROLLER_KEYBOARD      "gimp-controller-keyboard"
 #define GIMP_STOCK_CONTROLLER_LINUX_INPUT   "gimp-controller-linux-input"
 #define GIMP_STOCK_CONTROLLER_MIDI          "gimp-controller-midi"
+#define GIMP_STOCK_CONTROLLER_MOUSE         "gimp-controller-mouse"
 #define GIMP_STOCK_CONTROLLER_WHEEL         "gimp-controller-wheel"
 
 #define GIMP_STOCK_DISPLAY_FILTER           "gimp-display-filter"
