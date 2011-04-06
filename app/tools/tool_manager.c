@@ -168,7 +168,12 @@ tool_manager_select_tool (Gimp     *gimp,
 
   tool_manager = tool_manager_get (gimp);
 
-  if (tool_manager->active_tool)
+  /*  reset the previously selected tool, but only if it is not only
+   *  temporarily pushed to the tool stack
+   */
+  if (tool_manager->active_tool &&
+      ! (tool_manager->tool_stack &&
+         tool_manager->active_tool == tool_manager->tool_stack->data))
     {
       GimpTool    *active_tool = tool_manager->active_tool;
       GimpDisplay *display;
@@ -224,20 +229,14 @@ tool_manager_pop_tool (Gimp *gimp)
 
   if (tool_manager->tool_stack)
     {
-      GimpTool    *tool          = tool_manager->tool_stack->data;
-      GimpDisplay *focus_display = NULL;
-
-      if (tool_manager->active_tool)
-        focus_display = tool_manager->active_tool->focus_display;
+      GimpTool *tool = tool_manager->tool_stack->data;
 
       tool_manager->tool_stack = g_slist_remove (tool_manager->tool_stack,
                                                  tool);
 
       tool_manager_select_tool (gimp, tool);
-      g_object_unref (tool);
 
-      if (focus_display)
-        tool_manager_focus_display_active (gimp, focus_display);
+      g_object_unref (tool);
     }
 }
 
