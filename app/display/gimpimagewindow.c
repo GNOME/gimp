@@ -1269,8 +1269,13 @@ gimp_image_window_key_pressed (GtkWidget           *widget,
       if ((event->keyval >= GDK_KEY_0) &&
           (event->keyval <= GDK_KEY_9))
         {
-          guint tab = (event->keyval - GDK_KEY_0) - 1;
+          guint tab;
           gint n = gtk_notebook_get_n_pages (GTK_NOTEBOOK (widget));
+
+          if (event->keyval == GDK_KEY_0)
+            tab = 9;
+          else
+            tab = event->keyval - GDK_KEY_1;
 
           if (tab < n)
             {
