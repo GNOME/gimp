@@ -80,7 +80,8 @@ static void       gimp_display_shell_stop_scrolling           (GimpDisplayShell 
 static void       gimp_display_shell_space_pressed            (GimpDisplayShell *shell,
                                                                GdkEvent         *event);
 static void       gimp_display_shell_space_released           (GimpDisplayShell *shell,
-                                                               GdkEvent         *event);
+                                                               GdkEvent         *event,
+                                                               const GimpCoords *image_coords);
 
 static void       gimp_display_shell_update_focus             (GimpDisplayShell *shell,
                                                                gboolean          focus_in,
@@ -409,22 +410,22 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (G_UNLIKELY (! gtk_widget_has_focus (canvas)))
               g_warning ("%s: FOCUS_IN but canvas has no focus", G_STRFUNC);
 
-            /*  press modifier keys when the canvas gets the focus
-             *
-             *  in "click to focus" mode, we did this on BUTTON_PRESS, so
-             *  do it here only if the mouse is not grabbed (which happens
-             *  on BUTTON_PRESS.
-             */
-            if (! shell->pointer_grabbed)
-              {
-                gimp_display_shell_update_focus (shell, TRUE,
-                                                 &image_coords, state);
-              }
+            /*  ignore any focus changes while we have a grab  */
+            if (shell->pointer_grabbed)
+              return TRUE;
+
+            /*   press modifier keys when the canvas gets the focus  */
+            gimp_display_shell_update_focus (shell, TRUE,
+                                             &image_coords, state);
           }
         else
           {
             if (G_UNLIKELY (gtk_widget_has_focus (canvas)))
               g_warning ("%s: FOCUS_OUT but canvas has focus", G_STRFUNC);
+
+             /*  ignore any focus changes while we have a grab  */
+            if (shell->pointer_grabbed)
+              return TRUE;
 
             /*  release modifier keys when the canvas loses the focus  */
             gimp_display_shell_update_focus (shell, FALSE,
@@ -671,13 +672,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /*  update the tool's modifier state because it didn't get
              *  key events while BUTTON1 was down
              */
-            gimp_display_shell_update_focus (shell, TRUE,
-                                             &image_coords, state);
+            if (gtk_widget_has_focus (canvas))
+              gimp_display_shell_update_focus (shell, TRUE,
+                                               &image_coords, state);
+            else
+              gimp_display_shell_update_focus (shell, FALSE,
+                                               &image_coords, 0);
 
             gtk_grab_remove (canvas);
 
             if (shell->space_release_pending)
-              gimp_display_shell_space_released (shell, event);
+              gimp_display_shell_space_released (shell, event, &image_coords);
             break;
 
           case 2:
@@ -1151,7 +1156,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
               case GDK_KEY_space:
               case GDK_KEY_KP_Space:
-                gimp_display_shell_space_released (shell, event);
+                gimp_display_shell_space_released (shell, event, NULL);
                 return_val = TRUE;
                 break;
 
@@ -1463,7 +1468,8 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
 
 static void
 gimp_display_shell_space_released (GimpDisplayShell *shell,
-                                   GdkEvent         *event)
+                                   GdkEvent         *event,
+                                   const GimpCoords *image_coords)
 {
   Gimp *gimp = gimp_display_get_gimp (shell->display);
 
@@ -1482,17 +1488,25 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 
     case GIMP_SPACE_BAR_ACTION_MOVE:
       {
-        GdkModifierType state;
-
         gimp_context_set_tool (gimp_get_user_context (gimp),
                                gimp_get_tool_info (gimp,
                                                    shell->space_shaded_tool));
         shell->space_shaded_tool = NULL;
 
-        gdk_event_get_state (event, &state);
+        if (gtk_widget_has_focus (shell->canvas))
+          {
+            GdkModifierType state;
 
-        gimp_display_shell_update_focus (shell, TRUE,
-                                         NULL, state);
+            gdk_event_get_state (event, &state);
+
+            gimp_display_shell_update_focus (shell, TRUE,
+                                             image_coords, state);
+          }
+        else
+          {
+            gimp_display_shell_update_focus (shell, FALSE,
+                                             image_coords, 0);
+          }
       }
       break;
     }
@@ -1520,7 +1534,6 @@ gimp_display_shell_update_focus (GimpDisplayShell *shell,
     {
       tool_manager_focus_display_active (gimp, NULL);
     }
-
 
   if (image_coords)
     tool_manager_oper_update_active (gimp,
