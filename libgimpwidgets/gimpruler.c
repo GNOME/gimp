@@ -1216,24 +1216,17 @@ gimp_ruler_make_pixmap (GimpRuler *ruler)
   GtkWidget        *widget = GTK_WIDGET (ruler);
   GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
   GtkAllocation     allocation;
-  cairo_t          *cr;
-  cairo_surface_t  *surface;
 
   gtk_widget_get_allocation (widget, &allocation);
 
   if (priv->backing_store)
     cairo_surface_destroy (priv->backing_store);
 
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-  surface = cairo_get_target (cr);
-
   priv->backing_store =
-    cairo_surface_create_similar (surface,
-                                  CAIRO_CONTENT_COLOR,
-                                  allocation.width,
-                                  allocation.height);
-
-  cairo_destroy (cr);
+    gdk_window_create_similar_surface (gtk_widget_get_window (widget),
+                                       CAIRO_CONTENT_COLOR,
+                                       allocation.width,
+                                       allocation.height);
 }
 
 
