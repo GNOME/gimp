@@ -646,7 +646,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case 1:
             state &= ~GDK_BUTTON1_MASK;
 
-            if (shell->scrolling)
+            if (! shell->pointer_grabbed)
               return TRUE;
 
             if (! shell->space_pressed && ! shell->space_release_pending)
