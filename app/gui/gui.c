@@ -272,6 +272,7 @@ gui_sanity_check (void)
          gtk_major_version, gtk_minor_version, gtk_micro_version,
          GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO);
     }
+
 #undef GTK_REQUIRED_MAJOR
 #undef GTK_REQUIRED_MINOR
 #undef GTK_REQUIRED_MICRO
