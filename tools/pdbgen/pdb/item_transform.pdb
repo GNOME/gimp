@@ -107,7 +107,7 @@ item. If there was no selection or the item is not a drawable, this
 will be equal to the item ID supplied as input.  Otherwise, this will
 be the newly created and flipped drawable.
 
-This prodecure is affected by the following context setters:
+This procedure is affected by the following context setters:
 gimp_context_set_transform_resize().
 HELP
 
@@ -193,7 +193,7 @@ the flipped item. If there was no selection or the item is not a
 drawable, this will be equal to the item ID supplied as input.
 Otherwise, this will be the newly created and flipped drawable.
 
-This prodecure is affected by the following context setters:
+This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
@@ -248,7 +248,7 @@ translation) can be affected. Additionally, these values can be
 specified such that the resulting transformed item will appear to
 have been projected via a perspective transform.
 
-This prodecure is affected by the following context setters:
+This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
@@ -313,7 +313,7 @@ value is the ID of the rotated item. If there was no selection or the
 item is not a drawable, this will be equal to the item ID supplied as
 input. Otherwise, this will be the newly created and rotated drawable.
 
-This prodecure is affected by the following context setters:
+This procedure is affected by the following context setters:
 gimp_context_set_transform_resize().
 HELP
 
@@ -403,7 +403,7 @@ value is the ID of the rotated item. If there was no selection or the
 item is not a drawable, this will be equal to the item ID supplied as
 input. Otherwise, this will be the newly created and rotated drawable.
 
-This prodecure is affected by the following context setters:
+This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
@@ -452,7 +452,7 @@ value is the ID of the scaled item. If there was no selection or the
 item is not a drawable, this will be equal to the item ID supplied as
 input. Otherwise, this will be the newly created and scaled drawable.
 
-This prodecure is affected by the following context setters:
+This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
@@ -507,7 +507,7 @@ drawable. The shear type parameter indicates whether the shear will be
 applied horizontally or vertically. The magnitude can be either
 positive or negative and indicates the extent (in pixels) to shear by.
 
-This prodecure is affected by the following context setters:
+This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
@@ -554,7 +554,7 @@ selection or the item is not a drawable, this will be equal to the
 item ID supplied as input. Otherwise, this will be the newly created
 and transformed drawable.
 
-This prodecure is affected by the following context setters:
+This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
@@ -609,7 +609,7 @@ the item is not a drawable, this will be equal to the item ID supplied
 as input. Otherwise, this will be the newly created and transformed
 drawable.
 
-This prodecure is affected by the following context setters:
+This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
