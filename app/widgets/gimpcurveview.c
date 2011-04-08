@@ -888,6 +888,9 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
                   gdouble xpos = (gdouble) i / (gdouble) (n_samples - 1);
                   gdouble ypos = (y1 + ((y2 - y1) * (xpos - x1)) / (x2 - x1));
 
+                  xpos = CLAMP (xpos, 0.0, 1.0);
+                  ypos = CLAMP (ypos, 0.0, 1.0);
+
                   gimp_curve_set_curve (curve, xpos, 1.0 - ypos);
                 }
 
