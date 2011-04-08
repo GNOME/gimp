@@ -8,7 +8,9 @@ SUBDIRS = \
 # they want to use
 TESTS_ENVIRONMENT = \
 	GIMP_TESTING_ABS_TOP_SRCDIR=@abs_top_srcdir@ \
-	GIMP_TESTING_ABS_TOP_BUILDDIR=@abs_top_builddir@
+	GIMP_TESTING_ABS_TOP_BUILDDIR=@abs_top_builddir@ \
+	GIMP_TESTING_PLUGINDIRS=@abs_top_builddir@/plug-ins/common \
+	GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES=mkgen.pl
 
 # Run tests with xvfb-run if available
 if HAVE_XVFB_RUN
