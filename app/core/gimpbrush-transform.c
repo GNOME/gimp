@@ -21,35 +21,40 @@
 
 #include <glib-object.h>
 
-#include "core-types.h"
-
 #include "libgimpmath/gimpmath.h"
 
-#include "gimpbrush.h"
-#include "gimpbrush-transform.h"
+#include "core-types.h"
 
 #include "base/temp-buf.h"
 #include "base/pixel-region.h"
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gimpbrush.h"
+#include "gimpbrush-transform.h"
+
+
+#define MAX_BLUR_KERNEL 15
+
+
 /*  local function prototypes  */
 
-static void    gimp_brush_transform_bounding_box (TempBuf           *brush,
-                                                  const GimpMatrix3 *matrix,
-                                                  gint              *x,
-                                                  gint              *y,
-                                                  gint              *width,
-                                                  gint              *height);
+static void    gimp_brush_transform_bounding_box     (TempBuf           *brush,
+                                                      const GimpMatrix3 *matrix,
+                                                      gint              *x,
+                                                      gint              *y,
+                                                      gint              *width,
+                                                      gint              *height);
 
-static gdouble gimp_brush_transform_array_sum    (gfloat            *arr,
-                                                  gint               len);
+static gdouble gimp_brush_transform_array_sum        (gfloat            *arr,
+                                                      gint               len);
 static void    gimp_brush_transform_fill_blur_kernel (gfloat            *arr,
                                                       gint               len);
-static gint    gimp_brush_transform_blur_kernel_size (gint height,
-                                                      gint width,
-                                                      gdouble hardness);
-#define MAX_BLUR_KERNEL   15
+static gint    gimp_brush_transform_blur_kernel_size (gint               height,
+                                                      gint               width,
+                                                      gdouble            hardness);
+
+
 /*  public functions  */
 
 void
@@ -218,10 +223,10 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   src_tl_to_bl_delta_y = bly - tly;
 
   /* speed optimized, note conversion to int precision */
-  src_walk_ux_i = (gint) ((src_tl_to_tr_delta_x / dest_width)* int_multiple);
-  src_walk_uy_i = (gint) ((src_tl_to_tr_delta_y / dest_width)* int_multiple);
-  src_walk_vx_i = (gint) ((src_tl_to_bl_delta_x / dest_height)* int_multiple);
-  src_walk_vy_i = (gint) ((src_tl_to_bl_delta_y / dest_height)* int_multiple);
+  src_walk_ux_i = (gint) ((src_tl_to_tr_delta_x / dest_width)  * int_multiple);
+  src_walk_uy_i = (gint) ((src_tl_to_tr_delta_y / dest_width)  * int_multiple);
+  src_walk_vx_i = (gint) ((src_tl_to_bl_delta_x / dest_height) * int_multiple);
+  src_walk_vy_i = (gint) ((src_tl_to_bl_delta_y / dest_height) * int_multiple);
 
   /* initialize current position in source space to the start position (tl)
    * speed optimized, note conversion to int precision
@@ -326,9 +331,9 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
       TempBuf      *blur_src;
       PixelRegion  srcPR;
       PixelRegion  destPR;
-      gint kernel_size = gimp_brush_transform_blur_kernel_size ( result->height,
-                                                                 result->width,
-                                                                 hardness);
+      gint kernel_size = gimp_brush_transform_blur_kernel_size (result->height,
+                                                                result->width,
+                                                                hardness);
       gint kernel_len  = kernel_size * kernel_size;
       gfloat blur_kernel [kernel_len];
 
@@ -350,7 +355,6 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
   return result;
 }
-
 
 /*
  * Transforms the brush pixmap with bilinear interpolation.
@@ -640,8 +644,6 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   return result;
 }
 
-
-
 void
 gimp_brush_transform_matrix (gdouble      width,
                              gdouble      height,
@@ -671,8 +673,8 @@ gimp_brush_transform_matrix (gdouble      width,
   gimp_matrix3_translate (matrix, - center_x * scale_x, - center_y * scale_y);
   gimp_matrix3_rotate (matrix, -2 * G_PI * angle);
   gimp_matrix3_translate (matrix, center_x * scale_x, center_y * scale_y);
-
 }
+
 
 /*  private functions  */
 
@@ -706,48 +708,54 @@ gimp_brush_transform_bounding_box (TempBuf           *brush,
   *y = floor (temp_y);
 
   /* Transform size can not be less than 1 px */
-  *width  = MAX(1, *width);
-  *height = MAX(1, *height);
-
+  *width  = MAX (1, *width);
+  *height = MAX (1, *height);
 }
 
 static gdouble
-gimp_brush_transform_array_sum (gfloat *arr, gint len)
+gimp_brush_transform_array_sum (gfloat *arr,
+                                gint    len)
 {
-  int i;
   gfloat total = 0;
+  gint   i;
+
   for (i = 0; i < len; i++)
     {
       total += arr [i];
     }
+
   return total;
 }
 
 static void
-gimp_brush_transform_fill_blur_kernel (gfloat *arr, gint len)
+gimp_brush_transform_fill_blur_kernel (gfloat *arr,
+                                       gint    len)
 {
-  int i;
   gint half_point = ((gint) len / 2) + 1;
+  gint i;
 
   for (i = 0; i < len; i++)
     {
       if (i < half_point)
         arr [i] = half_point - i;
-      else arr [i] = i - half_point;
+      else
+        arr [i] = i - half_point;
     }
 }
 
 static gint
-gimp_brush_transform_blur_kernel_size (gint height,
-                                       gint width,
+gimp_brush_transform_blur_kernel_size (gint    height,
+                                       gint    width,
                                        gdouble hardness)
 {
+  gint kernel_size = (MIN (MAX_BLUR_KERNEL,
+                           MIN (width, height)) *
+                      ((MIN (width, height) * (1.0 - hardness)) /
+                       MIN (width, height)));
 
-  gint kernel_size = MIN (MAX_BLUR_KERNEL, MIN(width, height)) *
-                        ((MIN (width, height) * (1.0 - hardness)) / MIN (width, height));
-
-  /*Kernel size must be odd*/
-  if ( kernel_size % 2 == 0) kernel_size++;
+  /* Kernel size must be odd */
+  if (kernel_size % 2 == 0)
+    kernel_size++;
 
   return kernel_size;
 }
