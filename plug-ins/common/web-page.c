@@ -548,6 +548,8 @@ webpage_capture (void)
 
   gtk_widget_destroy (window);
 
+  gimp_progress_update (1.0);
+
   if (webpagevals.pixbuf)
     {
       gint width;
@@ -570,6 +572,8 @@ webpage_capture (void)
 
       g_object_unref (webpagevals.pixbuf);
       webpagevals.pixbuf = NULL;
+
+      gimp_progress_update (1.0);
     }
 
   return image;
