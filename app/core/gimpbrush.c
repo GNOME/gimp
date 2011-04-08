@@ -668,10 +668,17 @@ gimp_brush_transform_boundary (GimpBrush *brush,
                                                                    width,
                                                                    height);
 
-      gimp_brush_cache_add (brush->boundary_cache,
-                            (gpointer) boundary,
-                            *width, *height,
-                            scale, aspect_ratio, angle, hardness);
+      /*  while the brush mask is always at least 1x1 pixels, its
+       *  outline can correctly be NULL
+       *
+       *  FIXME: make the cache handle NULL things when it is
+       *         properly implemented
+       */
+      if (boundary)
+        gimp_brush_cache_add (brush->boundary_cache,
+                              (gpointer) boundary,
+                              *width, *height,
+                              scale, aspect_ratio, angle, hardness);
     }
 
   return boundary;
