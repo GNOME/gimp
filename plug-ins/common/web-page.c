@@ -311,17 +311,17 @@ webpage_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  combo = gtk_combo_box_new_text ();
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                             _("Huge"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                             _("Large"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                             _("Default"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                             _("Small"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                             _("Tiny"));
+  combo = gtk_combo_box_text_new ();
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
+                                  _("Huge"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
+                                  _("Large"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
+                                  _("Default"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
+                                  _("Small"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
+                                  _("Tiny"));
 
   switch (webpagevals.font_size)
     {
