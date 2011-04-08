@@ -228,8 +228,14 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
 
   status_callback (_("Searching Plug-Ins"), "", 0.0);
 
-  path = gimp_config_path_expand (manager->gimp->config->plug_in_path,
-                                  TRUE, NULL);
+  /* Give automatic tests a chance to use plug-ins from the build
+   * dir
+   */
+  path = g_strdup(g_getenv("GIMP_TESTING_PLUGINDIRS"));
+
+  if (! path) 
+    path = gimp_config_path_expand (manager->gimp->config->plug_in_path,
+                                    TRUE, NULL);
 
   gimp_datafiles_read_directories (path,
                                    G_FILE_TEST_IS_EXECUTABLE,
@@ -493,6 +499,45 @@ gimp_plug_in_manager_bind_text_domains (GimpPlugInManager *manager)
   g_strfreev (locale_paths);
 }
 
+/**
+ * gimp_plug_in_manager_ignore_plugin_basename:
+ * @basename: Basename to test with
+ *
+ * Checks the environment variable
+ * GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES for file basenames.
+ *
+ * Returns: %TRUE if @basename was in GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES
+ **/
+static gboolean
+gimp_plug_in_manager_ignore_plugin_basename (const gchar *plugin_basename)
+{
+  const gchar *ignore_basenames_string;
+  GList       *ignore_basenames;
+  GList       *iter;
+  gboolean     ignore = FALSE;
+
+  ignore_basenames_string = g_getenv("GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES");
+  ignore_basenames        = gimp_path_parse (ignore_basenames_string,
+                                             256 /*max_paths*/,
+                                             FALSE /*check*/,
+                                             NULL /*check_failed*/);
+
+  for (iter = ignore_basenames; iter; iter = g_list_next (iter))
+    {
+      const gchar *ignore_basename = iter->data;
+
+      if (g_ascii_strcasecmp (ignore_basename, plugin_basename) == 0)
+        {
+          ignore = TRUE;
+          break;
+        }
+    }
+  
+  gimp_path_free (ignore_basenames);
+
+  return ignore;
+}
+
 static void
 gimp_plug_in_manager_add_from_file (const GimpDatafileData *file_data,
                                     gpointer                data)
@@ -500,6 +545,14 @@ gimp_plug_in_manager_add_from_file (const GimpDatafileData *file_data,
   GimpPlugInManager *manager = data;
   GimpPlugInDef     *plug_in_def;
   GSList            *list;
+
+  /* When we scan build dirs for plug-ins, there will be some
+   * executable files that are not plug-ins that we want to ignore,
+   * for example plug-ins/common/mkgen.pl if
+   * GIMP_TESTING_PLUGINDIRS=plug-ins/common
+   */
+  if (gimp_plug_in_manager_ignore_plugin_basename (file_data->basename))
+      return;
 
   for (list = manager->plug_in_defs; list; list = list->next)
     {
