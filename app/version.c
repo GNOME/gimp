@@ -18,12 +18,11 @@
 #include "config.h"
 
 #include <glib.h>
-
+#include <cairo.h>
 #include <fontconfig/fontconfig.h>
-
 #include <pango/pango.h>
 #include <pango/pangoft2.h>
-
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #ifndef GIMP_CONSOLE_COMPILATION
@@ -96,6 +95,14 @@ gimp_show_library_versions (void)
                              glib_minor_version,
                              glib_micro_version);
 
+  gimp_show_library_version ("GdkPixbuf",
+                             GDK_PIXBUF_MAJOR,
+                             GDK_PIXBUF_MINOR,
+                             GDK_PIXBUF_MICRO,
+                             gdk_pixbuf_major_version,
+                             gdk_pixbuf_minor_version,
+                             gdk_pixbuf_micro_version);
+
 #ifndef GIMP_CONSOLE_COMPILATION
   gimp_show_library_version ("GTK+",
                              GTK_MAJOR_VERSION,
@@ -119,6 +126,10 @@ gimp_show_library_versions (void)
                              FcGetVersion () / 100 / 100,
                              FcGetVersion () / 100 % 100,
                              FcGetVersion () % 100);
+
+  g_print (_("using %s version %s (compiled against version %s)"),
+           "Cairo", cairo_version_string (), CAIRO_VERSION_STRING);
+  g_print ("\n");
 }
 
 void
