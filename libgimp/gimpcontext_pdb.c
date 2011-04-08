@@ -98,6 +98,39 @@ gimp_context_pop (void)
 }
 
 /**
+ * gimp_context_set_defaults:
+ *
+ * Reset context settings to their default values.
+ *
+ * This procedure resets context settings used by various procedures to
+ * their default value. This procedure will usually be called after a
+ * context push so that a script which calls procedures affected by
+ * context settings will not be affected by changes in the global
+ * context.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_defaults (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-defaults",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_list_paint_methods:
  * @num_paint_methods: The number of the available paint methods.
  * @paint_methods: The names of the available paint methods.

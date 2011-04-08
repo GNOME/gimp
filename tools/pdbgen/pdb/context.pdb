@@ -73,6 +73,30 @@ CODE
     );
 }
 
+sub context_set_defaults {
+    $blurb = 'Reset context settings to their default values.';
+
+    $help = <<'HELP';
+This procedure resets context settings used by various procedures to their
+default value. This procedure will usually be called after a context push
+so that a script which calls procedures affected by context settings will
+not be affected by changes in the global context.
+HELP
+
+    $author = 'Kevin Cozens <kcozens@svn.gnome.org>';
+    $copyright = 'Kevin Cozens';
+    $date = '2011';
+    $since = '2.8';
+
+    %invoke = (
+	code => <<'CODE'
+{
+    gimp_config_reset (GIMP_CONFIG (context));
+}
+CODE
+    );
+}
+
 sub context_get_paint_method {
     $blurb = 'Retrieve the currently active paint method.';
 
@@ -1411,13 +1435,14 @@ CODE
 @headers = qw("core/gimp.h"
               "core/gimpcontainer.h"
               "core/gimpdatafactory.h"
+              "libgimpconfig/gimpconfig.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimpplugin-context.h"
               "plug-in/gimppluginmanager.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h");
 
-@procs = qw(context_push context_pop
+@procs = qw(context_push context_pop context_set_defaults
             context_list_paint_methods
             context_get_paint_method context_set_paint_method
             context_get_foreground context_set_foreground

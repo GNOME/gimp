@@ -22,6 +22,7 @@
 #include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "pdb-types.h"
 
@@ -78,6 +79,19 @@ context_pop_invoker (GimpProcedure      *procedure,
 
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
+}
+
+static GValueArray *
+context_set_defaults_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
+{
+    gimp_config_reset (GIMP_CONFIG (context));
+
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
 static GValueArray *
@@ -1213,6 +1227,23 @@ register_context_procs (GimpPDB *pdb)
                                      "Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>",
                                      "Michael Natterer & Sven Neumann",
                                      "2004",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-defaults
+   */
+  procedure = gimp_procedure_new (context_set_defaults_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-defaults");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-defaults",
+                                     "Reset context settings to their default values.",
+                                     "This procedure resets context settings used by various procedures to their default value. This procedure will usually be called after a context push so that a script which calls procedures affected by context settings will not be affected by changes in the global context.",
+                                     "Kevin Cozens <kcozens@svn.gnome.org>",
+                                     "Kevin Cozens",
+                                     "2011",
                                      NULL);
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
