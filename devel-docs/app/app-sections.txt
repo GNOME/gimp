@@ -6458,8 +6458,8 @@ GIMP_COLOR_DISPLAY_EDITOR_GET_CLASS
 
 <SECTION>
 <FILE>gimpcolorframe</FILE>
-GIMP_COLOR_FRAME_ROWS
 <TITLE>GimpColorFrame</TITLE>
+GIMP_COLOR_FRAME_ROWS
 GimpColorFrame
 gimp_color_frame_new
 gimp_color_frame_set_mode
@@ -7551,6 +7551,7 @@ GIMP_IMAGE_VIEW_GET_CLASS
 
 <SECTION>
 <FILE>gimpitemtreeview</FILE>
+<TITLE>GimpItemTreeView</TITLE>
 GimpGetContainerFunc
 GimpGetItemFunc
 GimpSetItemFunc
@@ -7617,8 +7618,8 @@ GIMP_ACTION_FACTORY_GET_CLASS
 
 <SECTION>
 <FILE>gimpmenufactory</FILE>
-GimpMenuFactoryEntry
 <TITLE>GimpMenuFactory</TITLE>
+GimpMenuFactoryEntry
 GimpMenuFactory
 gimp_menu_factory_new
 gimp_menu_factory_manager_register
@@ -7672,8 +7673,8 @@ GIMP_MESSAGE_DIALOG_GET_CLASS
 
 <SECTION>
 <FILE>gimpuimanager</FILE>
-GimpUIManagerUIEntry
 <TITLE>GimpUIManager</TITLE>
+GimpUIManagerUIEntry
 GimpUIManager
 gimp_ui_manager_new
 gimp_ui_managers_from_name
@@ -12155,11 +12156,11 @@ text_tool_direction_cmd_callback
 
 <SECTION>
 <FILE>tool-options-commands</FILE>
-tool_options_save_new_cmd_callback
-tool_options_save_to_cmd_callback
-tool_options_restore_from_cmd_callback
-tool_options_rename_saved_cmd_callback
-tool_options_delete_saved_cmd_callback
+tool_options_save_new_preset_cmd_callback
+tool_options_save_preset_cmd_callback
+tool_options_restore_preset_cmd_callback
+tool_options_edit_preset_cmd_callback
+tool_options_delete_preset_cmd_callback
 tool_options_reset_cmd_callback
 tool_options_reset_all_cmd_callback
 </SECTION>
