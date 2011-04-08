@@ -455,7 +455,9 @@ gimp_drawable_scale (GimpItem              *item,
   new_tiles = tile_manager_new (new_width, new_height,
                                 gimp_drawable_bytes (drawable));
 
+#ifdef GIMP_UNSTABLE
   GIMP_TIMER_START ();
+#endif
 
   if (gimp_use_gegl (gimp_item_get_image (item)->gimp) &&
       ! gimp_drawable_is_indexed (drawable)            &&
@@ -508,7 +510,9 @@ gimp_drawable_scale (GimpItem              *item,
                     progress);
     }
 
+#ifdef GIMP_UNSTABLE
   GIMP_TIMER_END ("scaling");
+#endif
 
   gimp_drawable_set_tiles_full (drawable, gimp_item_is_attached (item), NULL,
                                 new_tiles, gimp_drawable_type (drawable),
