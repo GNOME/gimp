@@ -6,6 +6,7 @@
 
 #define PLUG_IN_PROC   "plug-in-map-object"
 #define PLUG_IN_BINARY "map-object"
+#define PLUG_IN_ROLE   "gimp-map-object"
 
 #define TILE_CACHE_SIZE 16
 

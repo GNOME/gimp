@@ -45,6 +45,7 @@
 #define ERODE_PROC           "plug-in-erode"
 #define DILATE_PROC          "plug-in-dilate"
 #define PLUG_IN_BINARY       "value-propagate"
+#define PLUG_IN_ROLE         "gimp-value-propagate"
 #define PLUG_IN_IMAGE_TYPES  "RGB*, GRAY*"
 
 #define VP_RGB          (1 << 0)
@@ -1085,7 +1086,7 @@ vpropagate_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Value Propagate"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Value Propagate"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, VPROPAGATE_PROC,
 

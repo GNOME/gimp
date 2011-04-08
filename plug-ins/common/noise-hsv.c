@@ -32,6 +32,7 @@
 #define HSV_NOISE_PROC   "plug-in-hsv-noise"
 #define SCATTER_HSV_PROC "plug-in-scatter-hsv"
 #define PLUG_IN_BINARY   "noise-hsv"
+#define PLUG_IN_ROLE     "gimp-noise-hsv"
 #define SCALE_WIDTH      100
 #define ENTRY_WIDTH        3
 
@@ -360,7 +361,7 @@ scatter_hsv_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("HSV Noise"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("HSV Noise"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, HSV_NOISE_PROC,
 

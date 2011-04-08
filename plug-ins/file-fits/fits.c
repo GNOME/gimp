@@ -52,6 +52,7 @@
 #define LOAD_PROC      "file-fits-load"
 #define SAVE_PROC      "file-fits-save"
 #define PLUG_IN_BINARY "file-fits"
+#define PLUG_IN_ROLE   "gimp-file-fits"
 
 
 /* Load info */
@@ -989,7 +990,7 @@ load_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Load FITS File"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Load FITS File"), PLUG_IN_ROLE,
                             NULL, 0,
 			    gimp_standard_help_func, LOAD_PROC,
 

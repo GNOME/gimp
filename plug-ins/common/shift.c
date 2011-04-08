@@ -33,6 +33,7 @@
 
 #define PLUG_IN_PROC      "plug-in-shift"
 #define PLUG_IN_BINARY    "shift"
+#define PLUG_IN_ROLE      "gimp-shift"
 #define SPIN_BUTTON_WIDTH  8
 #define TILE_CACHE_SIZE   16
 #define HORIZONTAL         0
@@ -351,7 +352,7 @@ shift_dialog (gint32        image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Shift"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Shift"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

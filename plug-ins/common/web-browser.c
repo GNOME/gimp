@@ -35,6 +35,7 @@
 
 #define PLUG_IN_PROC   "plug-in-web-browser"
 #define PLUG_IN_BINARY "web-browser"
+#define PLUG_IN_ROLE   "gimp-web-browser"
 
 
 static void     query            (void);

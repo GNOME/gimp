@@ -1018,7 +1018,7 @@ main_dialog (GimpDrawable *drawable)
 
   lighting_stock_init ();
 
-  appwin = gimp_dialog_new (_("Lighting Effects"), PLUG_IN_BINARY,
+  appwin = gimp_dialog_new (_("Lighting Effects"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

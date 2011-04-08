@@ -44,6 +44,7 @@
 
 #define PLUG_IN_PROC   "plug-in-jigsaw"
 #define PLUG_IN_BINARY "jigsaw"
+#define PLUG_IN_ROLE   "gimp-jigsaw"
 
 
 typedef enum
@@ -2412,7 +2413,7 @@ jigsaw_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Jigsaw"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Jigsaw"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

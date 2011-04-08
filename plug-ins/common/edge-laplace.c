@@ -30,6 +30,7 @@
 
 #define PLUG_IN_PROC   "plug-in-laplace"
 #define PLUG_IN_BINARY "edge-laplace"
+#define PLUG_IN_ROLE   "gimp-edge-laplace"
 
 
 /* Declare local functions.

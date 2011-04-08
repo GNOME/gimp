@@ -58,6 +58,7 @@
 
 #define PLUG_IN_PROC    "plug-in-qbist"
 #define PLUG_IN_BINARY  "qbist"
+#define PLUG_IN_ROLE    "gimp-qbist"
 #define PLUG_IN_VERSION "January 2001, 1.12"
 
 /** types *******************************************************************/
@@ -805,7 +806,7 @@ dialog_run (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("G-Qbist"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("G-Qbist"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

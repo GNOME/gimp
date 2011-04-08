@@ -29,6 +29,7 @@
 
 #define PLUG_IN_PROC     "plug-in-video"
 #define PLUG_IN_BINARY   "video"
+#define PLUG_IN_ROLE     "gimp-video"
 
 #define MAX_PATTERNS       9
 #define MAX_PATTERN_SIZE 108
@@ -2013,7 +2014,7 @@ video_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dlg = gimp_dialog_new (_("Video"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Video"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

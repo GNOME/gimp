@@ -62,6 +62,7 @@
 
 #define SAVE_PROC      "file-gtm-save"
 #define PLUG_IN_BINARY "file-html-table"
+#define PLUG_IN_ROLE   "gimp-file-html-table"
 
 /* Typedefs */
 

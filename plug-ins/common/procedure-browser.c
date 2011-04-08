@@ -50,6 +50,7 @@
 
 #define PLUG_IN_PROC   "plug-in-dbbrowser"
 #define PLUG_IN_BINARY "procedure-browser"
+#define PLUG_IN_ROLE   "gimp-procedure-browser"
 
 
 static void   query (void);

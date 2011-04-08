@@ -140,6 +140,7 @@ static const guint8 screenshot_icon[] =
 /* Defines */
 #define PLUG_IN_PROC   "plug-in-screenshot"
 #define PLUG_IN_BINARY "screenshot"
+#define PLUG_IN_ROLE   "gimp-screenshot"
 
 #ifdef __GNUC__
 #ifdef GDK_NATIVE_WINDOW_POINTER
@@ -1057,7 +1058,7 @@ shoot_dialog (GdkScreen **screen)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Screenshot"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Screenshot"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

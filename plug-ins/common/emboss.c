@@ -36,6 +36,7 @@
 
 #define PLUG_IN_PROC   "plug-in-emboss"
 #define PLUG_IN_BINARY "emboss"
+#define PLUG_IN_ROLE   "gimp-emboss"
 
 
 enum
@@ -443,7 +444,7 @@ emboss_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Emboss"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Emboss"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

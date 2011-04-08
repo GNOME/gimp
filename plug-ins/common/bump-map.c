@@ -41,6 +41,7 @@
 #define PLUG_IN_PROC       "plug-in-bump-map"
 #define PLUG_IN_TILED_PROC "plug-in-bump-map-tiled"
 #define PLUG_IN_BINARY     "bumpmap"
+#define PLUG_IN_ROLE       "gimp-bumpmap"
 #define PLUG_IN_VERSION    "April 2000, 3.0-pre1-ac2"
 
 #define SCALE_WIDTH       100
@@ -762,7 +763,7 @@ bumpmap_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Bump Map"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Bump Map"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

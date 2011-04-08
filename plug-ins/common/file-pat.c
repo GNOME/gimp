@@ -52,6 +52,7 @@
 #define LOAD_PROC      "file-pat-load"
 #define SAVE_PROC      "file-pat-save"
 #define PLUG_IN_BINARY "file-pat"
+#define PLUG_IN_ROLE   "gimp-file-pat"
 
 
 /*  local function prototypes  */

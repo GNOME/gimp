@@ -34,6 +34,7 @@
 #define LOAD_PROC      "file-cel-load"
 #define SAVE_PROC      "file-cel-save"
 #define PLUG_IN_BINARY "file-cel"
+#define PLUG_IN_ROLE   "gimp-file-cel"
 
 
 static void query (void);

@@ -84,6 +84,7 @@
 #define PARAM_FILE_FORMAT_VERSION 1.0
 #define PLUG_IN_PROC              "plug-in-cml-explorer"
 #define PLUG_IN_BINARY            "cml-explorer"
+#define PLUG_IN_ROLE              "gimp-cml-explorer"
 #define VALS                      CML_explorer_vals
 #define PROGRESS_UPDATE_NUM        100
 #define CML_LINE_SIZE             1024
@@ -1178,7 +1179,7 @@ CML_explorer_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -1845,7 +1846,7 @@ function_graph_new (GtkWidget *widget,
   GtkWidget *frame;
   GtkWidget *preview;
 
-  dialog = gimp_dialog_new (_("Graph of the Current Settings"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Graph of the Current Settings"), PLUG_IN_ROLE,
                             gtk_widget_get_toplevel (widget), 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

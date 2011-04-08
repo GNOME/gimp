@@ -35,6 +35,7 @@
 
 #define PLUG_IN_PROC    "plug-in-plug-in-details"
 #define PLUG_IN_BINARY  "plugin-browser"
+#define PLUG_IN_ROLE    "gimp-plugin-browser"
 #define DBL_LIST_WIDTH  250
 #define DBL_WIDTH       (DBL_LIST_WIDTH + 400)
 #define DBL_HEIGHT      250
@@ -556,7 +557,7 @@ browser_dialog_new (void)
 
   browser = g_new0 (PluginBrowser, 1);
 
-  browser->dialog = gimp_dialog_new (_("Plug-In Browser"), PLUG_IN_BINARY,
+  browser->dialog = gimp_dialog_new (_("Plug-In Browser"), PLUG_IN_ROLE,
                                      NULL, 0,
                                      gimp_standard_help_func, PLUG_IN_PROC,
 

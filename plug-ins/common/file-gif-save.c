@@ -41,6 +41,7 @@
 
 #define SAVE_PROC      "file-gif-save"
 #define PLUG_IN_BINARY "file-gif-save"
+#define PLUG_IN_ROLE   "gimp-file-gif-save"
 
 
 /* Define only one of these to determine which kind of gif's you would like.

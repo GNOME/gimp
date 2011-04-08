@@ -62,6 +62,7 @@
 #define PGM_SAVE_PROC  "file-pgm-save"
 #define PPM_SAVE_PROC  "file-ppm-save"
 #define PLUG_IN_BINARY "file-pnm"
+#define PLUG_IN_ROLE   "gimp-file-pnm"
 
 
 /* Declare local data types

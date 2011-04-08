@@ -33,6 +33,7 @@
 
 #define PLUG_IN_PROC    "plug-in-sharpen"
 #define PLUG_IN_BINARY  "sharpen"
+#define PLUG_IN_ROLE    "gimp-sharpen"
 #define PLUG_IN_VERSION "1.4.2 - 3 June 1998"
 #define SCALE_WIDTH     100
 
@@ -470,7 +471,7 @@ sharpen_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Sharpen"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Sharpen"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

@@ -40,6 +40,7 @@
 #define LOAD_PROC      "file-uri-load"
 #define SAVE_PROC      "file-uri-save"
 #define PLUG_IN_BINARY "file-uri"
+#define PLUG_IN_ROLE   "gimp-file-uri"
 
 
 static void                query         (void);

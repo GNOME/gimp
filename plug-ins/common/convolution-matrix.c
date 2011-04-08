@@ -29,6 +29,7 @@
 
 #define PLUG_IN_PROC   "plug-in-convmatrix"
 #define PLUG_IN_BINARY "convolution-matrix"
+#define PLUG_IN_ROLE   "gimp-convolution-matrix"
 
 #define RESPONSE_RESET 1
 
@@ -902,7 +903,7 @@ convolve_image_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Convolution Matrix"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Convolution Matrix"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

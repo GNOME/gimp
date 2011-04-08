@@ -39,6 +39,7 @@
 
 #define SAVE_PROC      "file-aa-save"
 #define PLUG_IN_BINARY "file-aa"
+#define PLUG_IN_ROLE   "gimp-file-aa"
 
 
 /*

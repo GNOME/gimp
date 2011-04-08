@@ -38,6 +38,7 @@
 
 #define PLUG_IN_PROC   "plug-in-neon"
 #define PLUG_IN_BINARY "edge-neon"
+#define PLUG_IN_ROLE   "gimp-edge-neon"
 
 
 typedef struct
@@ -691,7 +692,7 @@ neon_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Neon Detection"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Neon Detection"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

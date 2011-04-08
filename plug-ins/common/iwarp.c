@@ -52,6 +52,7 @@
 
 #define PLUG_IN_PROC           "plug-in-iwarp"
 #define PLUG_IN_BINARY         "iwarp"
+#define PLUG_IN_ROLE           "gimp-iwarp"
 #define RESPONSE_RESET         1
 
 #define MAX_DEFORM_AREA_RADIUS 250
@@ -1279,7 +1280,7 @@ iwarp_dialog (void)
   if (! iwarp_init ())
     return FALSE;
 
-  dialog = gimp_dialog_new (_("IWarp"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("IWarp"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

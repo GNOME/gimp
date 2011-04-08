@@ -63,6 +63,7 @@
 
 #define PLUG_IN_PROC        "plug-in-gflare"
 #define PLUG_IN_BINARY      "gradient-flare"
+#define PLUG_IN_ROLE        "gimp-gradient-flare"
 
 #define GRADIENT_NAME_MAX   256
 #define GRADIENT_RESOLUTION 360
@@ -2351,7 +2352,7 @@ dlg_run (void)
    *    Dialog Shell
    */
 
-  shell = dlg->shell = gimp_dialog_new (_("Gradient Flare"), PLUG_IN_BINARY,
+  shell = dlg->shell = gimp_dialog_new (_("Gradient Flare"), PLUG_IN_ROLE,
                                         NULL, 0,
                                         gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -3311,7 +3312,7 @@ ed_run (GtkWindow            *parent,
    *    Dialog Shell
    */
   ed->shell =
-    shell = gimp_dialog_new (_("Gradient Flare Editor"), PLUG_IN_BINARY,
+    shell = gimp_dialog_new (_("Gradient Flare Editor"), PLUG_IN_ROLE,
                              GTK_WIDGET (parent), 0,
                              gimp_standard_help_func, PLUG_IN_PROC,
 

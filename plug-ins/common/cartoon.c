@@ -36,6 +36,7 @@
 
 #define PLUG_IN_PROC    "plug-in-cartoon"
 #define PLUG_IN_BINARY  "cartoon"
+#define PLUG_IN_ROLE    "gimp-cartoon"
 #define TILE_CACHE_SIZE 48
 
 typedef struct
@@ -807,7 +808,7 @@ cartoon_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Cartoon"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Cartoon"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

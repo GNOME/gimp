@@ -83,6 +83,7 @@
 #define LOAD_PROC      "file-xjt-load"
 #define SAVE_PROC      "file-xjt-save"
 #define PLUG_IN_BINARY "flie-xjt"
+#define PLUG_IN_ROLE   "gimp-flie-xjt"
 
 #ifdef _MSC_VER
 typedef int pid_t;

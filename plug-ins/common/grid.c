@@ -48,6 +48,7 @@
 
 #define PLUG_IN_PROC        "plug-in-grid"
 #define PLUG_IN_BINARY      "grid"
+#define PLUG_IN_ROLE        "gimp-grid"
 #define SPIN_BUTTON_WIDTH    8
 #define COLOR_BUTTON_WIDTH  55
 
@@ -631,7 +632,7 @@ dialog (gint32        image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  main_dialog = dlg = gimp_dialog_new (_("Grid"), PLUG_IN_BINARY,
+  main_dialog = dlg = gimp_dialog_new (_("Grid"), PLUG_IN_ROLE,
                                        NULL, 0,
                                        gimp_standard_help_func, PLUG_IN_PROC,
 

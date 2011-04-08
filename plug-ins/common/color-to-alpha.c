@@ -30,6 +30,7 @@
 
 #define PLUG_IN_PROC   "plug-in-colortoalpha"
 #define PLUG_IN_BINARY "color-to-aplha"
+#define PLUG_IN_ROLE   "gimp-color-to-aplha"
 #define PRV_WIDTH      40
 #define PRV_HEIGHT     20
 
@@ -373,7 +374,7 @@ color_to_alpha_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Color to Alpha"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Color to Alpha"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

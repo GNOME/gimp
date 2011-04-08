@@ -33,6 +33,7 @@
 
 #define PLUG_IN_PROC     "plug-in-lens-distortion"
 #define PLUG_IN_BINARY   "lens-distortion"
+#define PLUG_IN_ROLE     "gimp-lens-distortion"
 
 #define RESPONSE_RESET   1
 
@@ -477,7 +478,7 @@ lens_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Lens Distortion"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Lens Distortion"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

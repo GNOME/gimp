@@ -27,6 +27,7 @@
 
 #define PLUG_IN_PROC   "plug-in-align-layers"
 #define PLUG_IN_BINARY "align-layers"
+#define PLUG_IN_ROLE   "gimp-align-layers"
 #define SCALE_WIDTH    150
 
 enum
@@ -396,7 +397,7 @@ align_layers_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Align Visible Layers"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Align Visible Layers"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

@@ -284,7 +284,7 @@ gfig_dialog (void)
     }
 
   /* Start building the dialog up */
-  top_level_dlg = gimp_dialog_new (_("Gfig"), PLUG_IN_BINARY,
+  top_level_dlg = gimp_dialog_new (_("Gfig"), PLUG_IN_ROLE,
                                    NULL, 0,
                                    gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -1212,7 +1212,7 @@ gfig_prefs_action_callback (GtkAction *widget,
       GtkWidget *scale;
       GtkObject *scale_data;
 
-      dialog = gimp_dialog_new (_("Options"), "gfig-options",
+      dialog = gimp_dialog_new (_("Options"), "gimp-gfig-options",
                                 GTK_WIDGET (data), 0, NULL, NULL,
 
                                 GTK_STOCK_CLOSE,  GTK_RESPONSE_CLOSE,
@@ -1361,7 +1361,7 @@ gfig_grid_action_callback (GtkAction *action,
       GtkObject *sectors_data;
       GtkObject *radius_data;
 
-      dialog = gimp_dialog_new (_("Grid"), "gfig-grid",
+      dialog = gimp_dialog_new (_("Grid"), "gimp-gfig-grid",
                                 GTK_WIDGET (data), 0, NULL, NULL,
 
                                 GTK_STOCK_CLOSE,  GTK_RESPONSE_CLOSE,

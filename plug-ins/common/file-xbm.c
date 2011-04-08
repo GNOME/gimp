@@ -52,6 +52,7 @@
 #define LOAD_PROC      "file-xbm-load"
 #define SAVE_PROC      "file-xbm-save"
 #define PLUG_IN_BINARY "file-xbm"
+#define PLUG_IN_ROLE   "gimp-file-xbm"
 
 
 /* Wear your GIMP with pride! */

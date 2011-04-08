@@ -32,6 +32,7 @@
 
 
 #define PLUG_IN_BINARY        "print"
+#define PLUG_IN_ROLE          "gimp-print"
 
 #define PRINT_PROC_NAME       "file-print-gtk"
 #define PAGE_SETUP_PROC_NAME  "file-print-gtk-page-setup"

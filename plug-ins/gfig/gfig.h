@@ -68,6 +68,7 @@ void       object_end              (GdkPoint *pnt, gint shift_down);
 
 #define PLUG_IN_PROC   "plug-in-gfig"
 #define PLUG_IN_BINARY "gfig"
+#define PLUG_IN_ROLE   "gimp-gfig"
 
 extern gint       line_no;
 extern gint       preview_width, preview_height;

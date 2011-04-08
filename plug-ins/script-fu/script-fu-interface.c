@@ -223,7 +223,7 @@ script_fu_interface (SFScript  *script,
   title = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
 
   sf_interface->dialog = dialog =
-    gimp_dialog_new (title, "script-fu",
+    gimp_dialog_new (title, "gimp-script-fu",
                      NULL, 0,
                      gimp_standard_help_func, script->name,
 

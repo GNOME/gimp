@@ -35,6 +35,7 @@
 #define LOAD_PROC       "file-pdf-load"
 #define LOAD_THUMB_PROC "file-pdf-load-thumb"
 #define PLUG_IN_BINARY  "file-pdf-load"
+#define PLUG_IN_ROLE    "gimp-file-pdf-load"
 
 #define THUMBNAIL_SIZE  128
 
@@ -820,7 +821,7 @@ load_dialog (PopplerDocument  *doc,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Import from PDF"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Import from PDF"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 

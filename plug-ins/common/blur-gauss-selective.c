@@ -38,6 +38,7 @@
 
 #define PLUG_IN_PROC   "plug-in-sel-gauss"
 #define PLUG_IN_BINARY "blur-gauss-selective"
+#define PLUG_IN_ROLE   "gimp-blur-gauss-selective"
 
 #ifndef ALWAYS_INLINE
 #if defined(__GNUC__) && (__GNUC__ > 3 || __GNUC__ == 3 && __GNUC_MINOR__ > 0)
@@ -228,7 +229,7 @@ sel_gauss_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Selective Gaussian Blur"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Selective Gaussian Blur"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

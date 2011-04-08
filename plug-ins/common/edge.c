@@ -59,6 +59,7 @@
 
 #define PLUG_IN_PROC    "plug-in-edge"
 #define PLUG_IN_BINARY  "edge"
+#define PLUG_IN_ROLE    "gimp-edge"
 #define TILE_CACHE_SIZE 48
 
 enum
@@ -625,7 +626,7 @@ edge_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Edge Detection"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Edge Detection"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

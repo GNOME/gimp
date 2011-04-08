@@ -43,6 +43,7 @@
 
 #define PLUG_IN_PROC   "plug-in-animationplay"
 #define PLUG_IN_BINARY "animation-play"
+#define PLUG_IN_ROLE   "gimp-animation-play"
 #define DITHERTYPE     GDK_RGB_DITHER_NORMAL
 
 

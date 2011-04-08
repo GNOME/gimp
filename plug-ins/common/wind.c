@@ -39,6 +39,7 @@
 
 #define PLUG_IN_PROC   "plug-in-wind"
 #define PLUG_IN_BINARY "wind"
+#define PLUG_IN_ROLE   "gimp-wind"
 
 #define COMPARE_WIDTH    3
 
@@ -875,7 +876,7 @@ dialog_box (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Wind"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Wind"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

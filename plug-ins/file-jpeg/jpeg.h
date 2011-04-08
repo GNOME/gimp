@@ -19,6 +19,7 @@
 #define LOAD_THUMB_PROC "file-jpeg-load-thumb"
 #define SAVE_PROC       "file-jpeg-save"
 #define PLUG_IN_BINARY  "file-jpeg"
+#define PLUG_IN_ROLE    "gimp-file-jpeg"
 
 /* headers used in some APPn markers */
 #define JPEG_APP_HEADER_EXIF "Exif\0\0"

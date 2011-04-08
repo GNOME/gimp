@@ -28,6 +28,7 @@
 #define LOAD_PROC      "file-psp-load"
 #define SAVE_PROC      "file-psp-save"
 #define PLUG_IN_BINARY "file-psp"
+#define PLUG_IN_ROLE   "gimp-file-psp"
 
 /* set to the level of debugging output you want, 0 for none */
 #define PSP_DEBUG 0

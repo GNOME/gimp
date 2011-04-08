@@ -34,6 +34,7 @@
 
 #define PLUG_IN_PROC    "plug-in-mosaic"
 #define PLUG_IN_BINARY  "mosaic"
+#define PLUG_IN_ROLE    "gimp-mosaic"
 
 #define SCALE_WIDTH     150
 
@@ -589,7 +590,7 @@ mosaic_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Mosaic"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Mosaic"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

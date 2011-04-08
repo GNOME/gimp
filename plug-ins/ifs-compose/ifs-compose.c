@@ -55,6 +55,7 @@
 #define PLUG_IN_PARASITE "ifscompose-parasite"
 #define PLUG_IN_PROC     "plug-in-ifscompose"
 #define PLUG_IN_BINARY   "ifs-compose"
+#define PLUG_IN_ROLE     "gimp-ifs-compose"
 
 typedef enum
 {
@@ -764,7 +765,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("IFS Fractal"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("IFS Fractal"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -1169,7 +1170,7 @@ ifs_options_dialog (GtkWidget *parent)
       ifsOptD = g_new0 (IfsOptionsDialog, 1);
 
       ifsOptD->dialog =
-        gimp_dialog_new (_("IFS Fractal Render Options"), PLUG_IN_BINARY,
+        gimp_dialog_new (_("IFS Fractal Render Options"), PLUG_IN_ROLE,
                          parent, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

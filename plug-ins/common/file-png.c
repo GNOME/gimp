@@ -63,6 +63,7 @@
 #define GET_DEFAULTS_PROC      "file-png-get-defaults"
 #define SET_DEFAULTS_PROC      "file-png-set-defaults"
 #define PLUG_IN_BINARY         "file-png"
+#define PLUG_IN_ROLE           "gimp-file-png"
 
 #define PLUG_IN_VERSION        "1.3.4 - 03 September 2002"
 #define SCALE_WIDTH            125

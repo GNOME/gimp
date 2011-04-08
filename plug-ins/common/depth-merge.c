@@ -42,6 +42,7 @@
 #define PLUG_IN_PROC    "plug-in-depth-merge"
 #define PLUG_IN_VERSION "August 1998"
 #define PLUG_IN_BINARY  "depth-merge"
+#define PLUG_IN_ROLE    "gimp-depth-merge"
 
 #define PREVIEW_SIZE    256
 
@@ -641,7 +642,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   dm->interface->dialog =
-    dialog = gimp_dialog_new (_("Depth Merge"), PLUG_IN_BINARY,
+    dialog = gimp_dialog_new (_("Depth Merge"), PLUG_IN_ROLE,
                               NULL, 0,
                               gimp_standard_help_func, PLUG_IN_PROC,
 

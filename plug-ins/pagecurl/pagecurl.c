@@ -52,6 +52,7 @@
 
 #define PLUG_IN_PROC    "plug-in-pagecurl"
 #define PLUG_IN_BINARY  "pagecurl"
+#define PLUG_IN_ROLE    "gimp-pagecurl"
 #define PLUG_IN_VERSION "July 2004, 1.0"
 #define NGRADSAMPLES    256
 
@@ -436,7 +437,7 @@ dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Pagecurl Effect"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Pagecurl Effect"), PLUG_IN_ROLE,
                             NULL, 0,
 			    gimp_standard_help_func, PLUG_IN_PROC,
 

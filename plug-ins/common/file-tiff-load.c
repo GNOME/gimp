@@ -73,6 +73,7 @@
 
 #define LOAD_PROC      "file-tiff-load"
 #define PLUG_IN_BINARY "file-tiff-load"
+#define PLUG_IN_ROLE   "gimp-file-tiff-load"
 
 
 typedef struct
@@ -475,7 +476,7 @@ load_dialog (TIFF              *tif,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 

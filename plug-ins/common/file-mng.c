@@ -94,6 +94,7 @@
 
 #define SAVE_PROC      "file-mng-save"
 #define PLUG_IN_BINARY "file-mng"
+#define PLUG_IN_ROLE   "gimp-file-mng"
 #define SCALE_WIDTH    125
 
 enum

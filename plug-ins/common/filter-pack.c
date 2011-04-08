@@ -33,6 +33,7 @@
 
 #define PLUG_IN_PROC       "plug-in-filter-pack"
 #define PLUG_IN_BINARY     "filter-pack"
+#define PLUG_IN_ROLE       "gimp-filter-pack"
 
 #define MAX_PREVIEW_SIZE   125
 #define MAX_ROUGHNESS      128
@@ -1197,7 +1198,7 @@ fp_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Filter Pack Simulation"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Filter Pack Simulation"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

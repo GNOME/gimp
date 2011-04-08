@@ -82,6 +82,7 @@
 #define SAVE_PROC2             "file-xmc-save2"
 
 #define PLUG_IN_BINARY         "file-xmc"
+#define PLUG_IN_ROLE           "gimp-file-xmc"
 /* We use "xmc" as the file extension of X cursor for convenience */
 #define XCURSOR_EXTENSION      "xmc"
 #define XCURSOR_MIME_TYPE      "image/x-xcursor"

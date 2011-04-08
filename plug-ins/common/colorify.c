@@ -28,6 +28,7 @@
 
 #define PLUG_IN_PROC    "plug-in-colorify"
 #define PLUG_IN_BINARY  "colorify"
+#define PLUG_IN_ROLE    "gimp-colorify"
 #define PLUG_IN_VERSION "1.1"
 
 #define COLOR_SIZE 30
@@ -251,7 +252,7 @@ colorify_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Colorify"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Colorify"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

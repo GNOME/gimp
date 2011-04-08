@@ -68,6 +68,7 @@
 
 #define PLUG_IN_PROC     "plug-in-plasma"
 #define PLUG_IN_BINARY   "plasma"
+#define PLUG_IN_ROLE     "gimp-plasma"
 #define SCALE_WIDTH      48
 #define TILE_CACHE_SIZE  32
 
@@ -296,7 +297,7 @@ plasma_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Plasma"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Plasma"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

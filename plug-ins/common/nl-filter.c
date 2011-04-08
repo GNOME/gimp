@@ -40,6 +40,7 @@
 
 #define PLUG_IN_PROC   "plug-in-nlfilt"
 #define PLUG_IN_BINARY "nl-filter"
+#define PLUG_IN_ROLE   "gimp-nl-filter"
 
 
 typedef struct
@@ -1012,7 +1013,7 @@ nlfilter_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("NL Filter"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("NL Filter"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

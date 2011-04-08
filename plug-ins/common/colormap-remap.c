@@ -40,6 +40,7 @@
 #define PLUG_IN_PROC_REMAP  "plug-in-colormap-remap"
 #define PLUG_IN_PROC_SWAP   "plug-in-colormap-swap"
 #define PLUG_IN_BINARY      "colormap-remap"
+#define PLUG_IN_ROLE        "gimp-colormap-remap"
 
 
 /* Declare local functions.
@@ -592,7 +593,7 @@ remap_dialog (gint32  image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Rearrange Colormap"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Rearrange Colormap"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC_REMAP,
 

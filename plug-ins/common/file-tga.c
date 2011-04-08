@@ -95,6 +95,7 @@
 #define LOAD_PROC      "file-tga-load"
 #define SAVE_PROC      "file-tga-save"
 #define PLUG_IN_BINARY "file-tga"
+#define PLUG_IN_ROLE   "gimp-file-tga"
 
 typedef enum
 {

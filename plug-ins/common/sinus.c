@@ -36,6 +36,7 @@
 
 #define PLUG_IN_PROC   "plug-in-sinus"
 #define PLUG_IN_BINARY "sinus"
+#define PLUG_IN_ROLE   "gimp-sinus"
 
 
 /*
@@ -644,7 +645,7 @@ sinus_dialog (void)
 
   /* Create Main window with a vbox */
   /* ============================== */
-  dlg = gimp_dialog_new (_("Sinus"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Sinus"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

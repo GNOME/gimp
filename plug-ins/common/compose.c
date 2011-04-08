@@ -43,6 +43,7 @@
 #define DRAWABLE_COMPOSE_PROC "plug-in-drawable-compose"
 #define RECOMPOSE_PROC        "plug-in-recompose"
 #define PLUG_IN_BINARY        "compose"
+#define PLUG_IN_ROLE          "gimp-compose"
 
 
 typedef struct
@@ -1478,7 +1479,7 @@ compose_dialog (const gchar *compose_type,
   layer_list = gimp_image_get_layers (gimp_item_get_image (drawable_ID),
                                       &nlayers);
 
-  dialog = gimp_dialog_new (_("Compose"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Compose"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, COMPOSE_PROC,
 

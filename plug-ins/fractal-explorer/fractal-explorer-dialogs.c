@@ -559,7 +559,7 @@ explorer_dialog (void)
   elements    = g_new (DialogElements, 1);
 
   dialog = maindlg =
-    gimp_dialog_new (_("Fractal Explorer"), PLUG_IN_BINARY,
+    gimp_dialog_new (_("Fractal Explorer"), PLUG_IN_ROLE,
                      NULL, 0,
                      gimp_standard_help_func, PLUG_IN_PROC,
 

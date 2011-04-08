@@ -47,6 +47,7 @@
 #define LOAD_PROC        "file-sgi-load"
 #define SAVE_PROC        "file-sgi-save"
 #define PLUG_IN_BINARY   "file-sgi"
+#define PLUG_IN_ROLE     "gimp-file-sgi"
 #define PLUG_IN_VERSION  "1.1.1 - 17 May 1998"
 
 

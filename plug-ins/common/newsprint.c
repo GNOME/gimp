@@ -57,6 +57,7 @@
 
 #define PLUG_IN_PROC       "plug-in-newsprint"
 #define PLUG_IN_BINARY     "newsprint"
+#define PLUG_IN_ROLE       "gimp-newsprint"
 
 #define TILE_CACHE_SIZE     16
 #define SCALE_WIDTH        125
@@ -1175,7 +1176,7 @@ newsprint_dialog (GimpDrawable *drawable)
         pvals.colourspace = CS_RGB;
     }
 
-  dialog = gimp_dialog_new (_("Newsprint"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Newsprint"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

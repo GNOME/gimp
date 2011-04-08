@@ -42,6 +42,7 @@
 #define RGB_NOISE_PROC   "plug-in-rgb-noise"
 #define NOISIFY_PROC     "plug-in-noisify"
 #define PLUG_IN_BINARY   "noise-rgb"
+#define PLUG_IN_ROLE     "gimp-noise-rgb"
 #define SCALE_WIDTH      125
 #define TILE_CACHE_SIZE  16
 
@@ -446,7 +447,7 @@ noisify_dialog (GimpDrawable *drawable,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("RGB Noise"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("RGB Noise"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, RGB_NOISE_PROC,
 

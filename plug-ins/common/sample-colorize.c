@@ -38,6 +38,7 @@
 
 #define PLUG_IN_PROC        "plug-in-sample-colorize"
 #define PLUG_IN_BINARY      "sample-colorize"
+#define PLUG_IN_ROLE        "gimp-sample-colorize"
 #define NUMBER_IN_ARGS      13
 
 #define TILE_CACHE_SIZE      32
@@ -1321,7 +1322,7 @@ smp_dialog (void)
 
   /* Main Dialog */
   g_di.dialog = dialog =
-    gimp_dialog_new (_("Sample Colorize"), PLUG_IN_BINARY,
+    gimp_dialog_new (_("Sample Colorize"), PLUG_IN_ROLE,
                      NULL, 0,
                      gimp_standard_help_func, PLUG_IN_PROC,
 

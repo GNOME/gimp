@@ -42,6 +42,7 @@
 
 #define PLUG_IN_PROC   "plug-in-apply-canvas"
 #define PLUG_IN_BINARY "apply-canvas"
+#define PLUG_IN_ROLE   "gimp-apply-canvas"
 
 
 static const gchar sdata[] =
@@ -1259,7 +1260,7 @@ struc_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Apply Canvas"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Apply Canvas"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

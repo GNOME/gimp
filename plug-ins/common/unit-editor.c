@@ -31,6 +31,7 @@
 
 #define PLUG_IN_PROC     "plug-in-unit-editor"
 #define PLUG_IN_BINARY   "unit-editor"
+#define PLUG_IN_ROLE     "gimp-unit-editor"
 #define RESPONSE_REFRESH 1
 
 enum
@@ -204,7 +205,7 @@ new_unit_dialog (GtkWidget *main_dialog,
 
   GimpUnit   unit = GIMP_UNIT_PIXEL;
 
-  dialog = gimp_dialog_new (_("Add a New Unit"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Add a New Unit"), PLUG_IN_ROLE,
                             main_dialog, GTK_DIALOG_MODAL,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -407,7 +408,7 @@ unit_editor_dialog (void)
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
   g_object_unref (list_store);
 
-  dialog = gimp_dialog_new (_("Unit Editor"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Unit Editor"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

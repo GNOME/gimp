@@ -33,6 +33,7 @@
 #endif
 
 #define PLUG_IN_BINARY      "file-ico"
+#define PLUG_IN_ROLE        "gimp-file-ico"
 
 #define ICO_PNG_MAGIC       0x474e5089
 #define ICO_ALPHA_THRESHOLD 127

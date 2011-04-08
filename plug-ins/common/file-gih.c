@@ -78,6 +78,7 @@
 #define LOAD_PROC          "file-gih-load"
 #define SAVE_PROC          "file-gih-save"
 #define PLUG_IN_BINARY     "file-gih"
+#define PLUG_IN_ROLE       "gimp-file-gih"
 #define DUMMY_PATTERN_NAME "x"
 #define MAXDESCLEN         256
 

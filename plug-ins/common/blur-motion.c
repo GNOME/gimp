@@ -44,6 +44,7 @@
 #define PLUG_IN_PROC         "plug-in-mblur"
 #define PLUG_IN_PROC_INWARD  "plug-in-mblur-inward"
 #define PLUG_IN_BINARY       "blur-motion"
+#define PLUG_IN_ROLE         "gimp-blur-motion"
 #define PLUG_IN_VERSION      "May 2007, 1.3"
 
 
@@ -1010,7 +1011,7 @@ mblur_dialog (gint32        image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Motion Blur"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Motion Blur"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

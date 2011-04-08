@@ -30,6 +30,7 @@
 
 #define PLUG_IN_PROC   "plug-in-tile"
 #define PLUG_IN_BINARY "tile"
+#define PLUG_IN_ROLE   "gimp-tile"
 
 
 typedef struct
@@ -397,7 +398,7 @@ tile_dialog (gint32 image_ID,
   tvals.new_width  = width;
   tvals.new_height = height;
 
-  dlg = gimp_dialog_new (_("Tile"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Tile"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

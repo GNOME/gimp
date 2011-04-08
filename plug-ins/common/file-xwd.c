@@ -64,6 +64,7 @@
 #define LOAD_PROC      "file-xwd-load"
 #define SAVE_PROC      "file-xwd-save"
 #define PLUG_IN_BINARY "file-xwd"
+#define PLUG_IN_ROLE   "gimp-file-xwd"
 
 
 typedef gulong  L_CARD32;

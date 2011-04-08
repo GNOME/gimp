@@ -636,7 +636,7 @@ create_save_preset (GtkWidget *parent)
     }
 
   window =
-    gimp_dialog_new (_("Save Current"), PLUG_IN_BINARY,
+    gimp_dialog_new (_("Save Current"), PLUG_IN_ROLE,
                      gtk_widget_get_toplevel (parent), 0,
                      gimp_standard_help_func, PLUG_IN_PROC,
 

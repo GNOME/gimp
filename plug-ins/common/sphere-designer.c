@@ -50,6 +50,7 @@
 
 #define PLUG_IN_PROC   "plug-in-spheredesigner"
 #define PLUG_IN_BINARY "sphere-designer"
+#define PLUG_IN_ROLE   "gimp-sphere-designer"
 
 #define RESPONSE_RESET 1
 
@@ -2547,7 +2548,7 @@ makewindow (void)
   GtkWidget  *list;
   GimpRGB     rgb = { 0, 0, 0, 0 };
 
-  window = gimp_dialog_new (_("Sphere Designer"), PLUG_IN_BINARY,
+  window = gimp_dialog_new (_("Sphere Designer"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

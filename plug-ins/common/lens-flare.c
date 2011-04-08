@@ -54,6 +54,7 @@
 
 #define PLUG_IN_PROC   "plug-in-flarefx"
 #define PLUG_IN_BINARY "flarefx"
+#define PLUG_IN_ROLE   "gimp-flarefx"
 
 /* --- Typedefs --- */
 typedef struct
@@ -297,7 +298,7 @@ flare_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Lens Flare"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Lens Flare"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

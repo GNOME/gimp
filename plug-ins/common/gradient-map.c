@@ -31,6 +31,7 @@
 #define GRADMAP_PROC    "plug-in-gradmap"
 #define PALETTEMAP_PROC "plug-in-palettemap"
 #define PLUG_IN_BINARY  "gradient-map"
+#define PLUG_IN_ROLE    "gimp-gradient-map"
 #define NSAMPLES        256
 #define LUMINOSITY(X)   (GIMP_RGB_LUMINANCE (X[0], X[1], X[2]) + 0.5)
 

@@ -37,6 +37,7 @@
 
 #define PLUG_IN_PROC    "plug-in-softglow"
 #define PLUG_IN_BINARY  "softglow"
+#define PLUG_IN_ROLE    "gimp-softglow"
 #define TILE_CACHE_SIZE 48
 #define SIGMOIDAL_BASE   2
 #define SIGMOIDAL_RANGE 20
@@ -628,7 +629,7 @@ softglow_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Softglow"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Softglow"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

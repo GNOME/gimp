@@ -36,6 +36,7 @@
 
 #define PLUG_IN_PROC     "plug-in-despeckle"
 #define PLUG_IN_BINARY   "despeckle"
+#define PLUG_IN_ROLE     "gimp-despeckle"
 #define PLUG_IN_VERSION  "May 2010"
 #define SCALE_WIDTH      100
 #define ENTRY_WIDTH        3
@@ -437,7 +438,7 @@ despeckle_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Despeckle"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Despeckle"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

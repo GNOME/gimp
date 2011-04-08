@@ -30,6 +30,7 @@
 #define GAUSS_RLE_PROC  "plug-in-gauss-rle"
 #define GAUSS_RLE2_PROC "plug-in-gauss-rle2"
 #define PLUG_IN_BINARY  "blur-gauss"
+#define PLUG_IN_ROLE    "gimp-blur-gauss"
 
 typedef enum
 {
@@ -474,7 +475,7 @@ gauss_dialog (gint32        image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Gaussian Blur"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Gaussian Blur"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, GAUSS_PROC,
 

@@ -353,7 +353,7 @@ jpeg_exif_rotate_query_dialog (gint32 image_ID)
   GdkPixbuf *pixbuf;
   gint       response;
 
-  dialog = gimp_dialog_new (_("Rotate Image?"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Rotate Image?"), PLUG_IN_ROLE,
                             NULL, 0, NULL, NULL,
 
                             _("_Keep Orientation"), GTK_RESPONSE_CANCEL,

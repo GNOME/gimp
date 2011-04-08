@@ -38,6 +38,7 @@
 #define LOAD_PROC               "file-svg-load"
 #define LOAD_THUMB_PROC         "file-svg-load-thumb"
 #define PLUG_IN_BINARY          "file-svg"
+#define PLUG_IN_ROLE            "gimp-file-svg"
 #define SVG_VERSION             "2.5.0"
 #define SVG_DEFAULT_RESOLUTION  90.0
 #define SVG_DEFAULT_SIZE        500
@@ -739,7 +740,7 @@ load_dialog (const gchar  *filename,
 
   /* Scalable Vector Graphics is SVG, should perhaps not be translated */
   dialog = gimp_dialog_new (_("Render Scalable Vector Graphics"),
-                            PLUG_IN_BINARY,
+                            PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 

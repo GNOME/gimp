@@ -33,6 +33,7 @@
 
 #define PLUG_IN_PROC   "plug-in-alienmap2"
 #define PLUG_IN_BINARY "alien-map"
+#define PLUG_IN_ROLE   "gimp-alien-map"
 #define SCALE_WIDTH    200
 #define ENTRY_WIDTH      6
 
@@ -389,7 +390,7 @@ alienmap2_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Alien Map"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Alien Map"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

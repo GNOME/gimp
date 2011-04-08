@@ -29,6 +29,7 @@
 
 #define SAVE_PROC      "file-header-save"
 #define PLUG_IN_BINARY "file-header"
+#define PLUG_IN_ROLE   "gimp-file-header"
 
 
 /* Declare some local functions.

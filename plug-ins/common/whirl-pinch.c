@@ -54,6 +54,7 @@
 
 #define PLUG_IN_PROC    "plug-in-whirl-pinch"
 #define PLUG_IN_BINARY  "whirl-pinch"
+#define PLUG_IN_ROLE    "gimp-whirl-pinch"
 #define PLUG_IN_VERSION "May 1997, 2.09"
 
 /***** Magic numbers *****/
@@ -524,7 +525,7 @@ whirl_pinch_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Whirl and Pinch"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Whirl and Pinch"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

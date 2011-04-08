@@ -52,6 +52,7 @@
 
 #define PLUG_IN_PROC   "plug-in-lic"
 #define PLUG_IN_BINARY "van-gogh-lic"
+#define PLUG_IN_ROLE   "gimp-van-gogh-lic"
 
 typedef enum
 {
@@ -639,7 +640,7 @@ create_main_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Van Gogh (LIC)"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Van Gogh (LIC)"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

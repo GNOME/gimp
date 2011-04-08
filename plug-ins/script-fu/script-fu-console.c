@@ -128,7 +128,7 @@ script_fu_console_interface (void)
   console.history_max = 50;
 
   console.dialog = gimp_dialog_new (_("Script-Fu Console"),
-                                    "script-fu-console",
+                                    "gimp-script-fu-console",
                                     NULL, 0,
                                     gimp_standard_help_func, PROC_NAME,
 

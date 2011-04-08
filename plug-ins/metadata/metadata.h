@@ -33,6 +33,7 @@
 #define IMPORT_PROC         "plug-in-metadata-import"
 #define EXPORT_PROC         "plug-in-metadata-export"
 #define PLUG_IN_BINARY      "metadata"
+#define PLUG_IN_ROLE        "gimp-metadata"
 
 
 #endif /* __METADATA_H__ */

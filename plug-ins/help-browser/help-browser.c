@@ -42,6 +42,7 @@
 #define GIMP_HELP_BROWSER_EXT_PROC       "extension-gimp-help-browser"
 #define GIMP_HELP_BROWSER_TEMP_EXT_PROC  "extension-gimp-help-browser-temp"
 #define PLUG_IN_BINARY                   "help-browser"
+#define PLUG_IN_ROLE                     "gimp-help-browser"
 
 
 /*  forward declarations  */

@@ -69,6 +69,7 @@
 
 #define PLUG_IN_PROC    "plug-in-polar-coords"
 #define PLUG_IN_BINARY  "polar-coords"
+#define PLUG_IN_ROLE    "gimp-polar-coords"
 #define PLUG_IN_VERSION "July 1997, 0.5"
 
 #define SCALE_WIDTH     200
@@ -589,7 +590,7 @@ polarize_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Polar Coordinates"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Polar Coordinates"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

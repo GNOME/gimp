@@ -61,6 +61,7 @@
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.70 (07/16/1999)"
 #define PLUG_IN_BINARY      "win-snap"
+#define PLUG_IN_ROLE        "gimp-win-snap"
 
 /*
  * Application definitions
@@ -856,7 +857,7 @@ snap_dialog (void)
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   /* Main Dialog */
-  dialog = gimp_dialog_new (PLUG_IN_PRINT_NAME, PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (PLUG_IN_PRINT_NAME, PLUG_IN_ROLE,
                             NULL, 0,
 			    gimp_standard_help_func, PLUG_IN_PROC,
 

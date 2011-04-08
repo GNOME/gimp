@@ -33,6 +33,7 @@
 
 #define PLUG_IN_PROC        "plug-in-film"
 #define PLUG_IN_BINARY      "film"
+#define PLUG_IN_ROLE        "gimp-film"
 
 /* Maximum number of pictures per film */
 #define MAX_FILM_PICTURES   64
@@ -1244,7 +1245,7 @@ film_dialog (gint32 image_ID)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dlg = gimp_dialog_new (_("Filmstrip"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Filmstrip"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

@@ -27,6 +27,7 @@
 
 #define PLUG_IN_PROC        "plug-in-retinex"
 #define PLUG_IN_BINARY      "contrast-retinex"
+#define PLUG_IN_ROLE        "gimp-contrast-retinex"
 #define MAX_RETINEX_SCALES    8
 #define MIN_GAUSSIAN_SCALE   16
 #define MAX_GAUSSIAN_SCALE  250
@@ -281,7 +282,7 @@ retinex_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Retinex Image Enhancement"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Retinex Image Enhancement"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

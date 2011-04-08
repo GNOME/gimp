@@ -29,6 +29,7 @@
 
 #define PLUG_IN_PROC    "plug-in-unsharp-mask"
 #define PLUG_IN_BINARY  "unsharp-mask"
+#define PLUG_IN_ROLE    "gimp-unsharp-mask"
 
 #define SCALE_WIDTH   120
 #define ENTRY_WIDTH     5
@@ -826,7 +827,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Unsharp Mask"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Unsharp Mask"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

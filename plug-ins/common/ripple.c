@@ -33,6 +33,7 @@
 /* Some useful macros */
 #define PLUG_IN_PROC    "plug-in-ripple"
 #define PLUG_IN_BINARY  "ripple"
+#define PLUG_IN_ROLE    "gimp-ripple"
 
 #define SCALE_WIDTH     200
 #define TILE_CACHE_SIZE  16
@@ -481,7 +482,7 @@ ripple_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Ripple"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Ripple"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

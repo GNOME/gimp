@@ -69,6 +69,7 @@
 #define LOAD_PROC      "file-gbr-load"
 #define SAVE_PROC      "file-gbr-save"
 #define PLUG_IN_BINARY "file-gbr"
+#define PLUG_IN_ROLE   "gimp-file-gbr"
 
 
 typedef struct

@@ -36,6 +36,7 @@
 
 #define PLUG_IN_PROC   "plug-in-ccanalyze"
 #define PLUG_IN_BINARY "color-cube-analyze"
+#define PLUG_IN_ROLE   "gimp-color-cube-analyze"
 
 /* size of histogram image */
 #define PREWIDTH  256
@@ -352,7 +353,7 @@ doDialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Colorcube Analysis"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Colorcube Analysis"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

@@ -55,6 +55,7 @@
 #define LOAD_PROC      "file-pix-load"
 #define SAVE_PROC      "file-pix-save"
 #define PLUG_IN_BINARY "file-pix"
+#define PLUG_IN_ROLE   "gimp-file-pix"
 
 
 /* #define PIX_DEBUG */

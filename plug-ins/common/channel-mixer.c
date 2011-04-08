@@ -38,6 +38,7 @@
 
 #define PLUG_IN_PROC    "plug-in-colors-channel-mixer"
 #define PLUG_IN_BINARY  "channel-mixer"
+#define PLUG_IN_ROLE    "gimp-channel-mixer"
 #define CM_LINE_SIZE    1024
 
 typedef enum
@@ -488,7 +489,7 @@ cm_dialog (CmParamsType *mix,
         }
     }
 
-  dialog = gimp_dialog_new (_("Channel Mixer"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Channel Mixer"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

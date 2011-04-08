@@ -83,6 +83,7 @@
  ********************************/
 
 #define PLUG_IN_BINARY "noise-randomize"
+#define PLUG_IN_ROLE   "gimp-noise-randomize"
 
 /*
  *  progress meter update frequency
@@ -728,7 +729,7 @@ randomize_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (gettext (RNDM_NAME[rndm_type - 1]), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (gettext (RNDM_NAME[rndm_type - 1]), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC[rndm_type - 1],
 

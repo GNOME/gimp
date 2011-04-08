@@ -35,6 +35,7 @@
 
 #define PLUG_IN_PROC    "plug-in-illusion"
 #define PLUG_IN_BINARY  "illusion"
+#define PLUG_IN_ROLE    "gimp-illusion"
 #define PLUG_IN_VERSION "v0.8 (May 14 2000)"
 
 
@@ -346,7 +347,7 @@ illusion_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Illusion"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Illusion"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

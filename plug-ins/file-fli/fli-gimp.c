@@ -68,6 +68,7 @@
 #define SAVE_PROC      "file-fli-save"
 #define INFO_PROC      "file-fli-info"
 #define PLUG_IN_BINARY "file-fli"
+#define PLUG_IN_ROLE   "gimp-file-fli"
 
 
 static void      query       (void);
@@ -841,7 +842,7 @@ load_dialog (const gchar *filename)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), PLUG_IN_ROLE,
                             NULL, 0,
 			    gimp_standard_help_func, LOAD_PROC,
 

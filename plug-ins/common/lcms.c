@@ -33,6 +33,7 @@
 
 
 #define PLUG_IN_BINARY          "lcms"
+#define PLUG_IN_ROLE            "gimp-lcms"
 
 #define PLUG_IN_PROC_SET        "plug-in-icc-profile-set"
 #define PLUG_IN_PROC_SET_RGB    "plug-in-icc-profile-set-rgb"
@@ -1223,7 +1224,7 @@ lcms_icc_apply_dialog (gint32       image,
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   dialog = gimp_dialog_new (_("Convert to RGB working space?"),
-                            PLUG_IN_BINARY,
+                            PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC_APPLY,
 
@@ -1451,7 +1452,7 @@ lcms_dialog (GimpColorConfig *config,
   dialog = gimp_dialog_new (apply ?
                             _("Convert to ICC Color Profile") :
                             _("Assign ICC Color Profile"),
-                            PLUG_IN_BINARY,
+                            PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func,
                             apply ? PLUG_IN_PROC_APPLY : PLUG_IN_PROC_SET,

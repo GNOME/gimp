@@ -71,6 +71,7 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ`";
 #define LOAD_PROC      "file-xpm-load"
 #define SAVE_PROC      "file-xpm-save"
 #define PLUG_IN_BINARY "file-xpm"
+#define PLUG_IN_ROLE   "gimp-file-xpm"
 #define SCALE_WIDTH    125
 
 /* Structs for the save dialog */

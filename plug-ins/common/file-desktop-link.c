@@ -33,6 +33,7 @@
 
 #define LOAD_PROC      "file-desktop-link-load"
 #define PLUG_IN_BINARY "file-desktop-link"
+#define PLUG_IN_ROLE   "gimp-file-desktop-link"
 
 
 static void    query      (void);

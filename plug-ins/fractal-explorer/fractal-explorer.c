@@ -1111,7 +1111,7 @@ fractalexplorer_rescan_list (GtkWidget *widget,
       return;
     }
 
-  dlg = gimp_dialog_new (_("Rescan for Fractals"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Rescan for Fractals"), PLUG_IN_ROLE,
                          gtk_widget_get_toplevel (view),
                          GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
                          gimp_standard_help_func, PLUG_IN_PROC,

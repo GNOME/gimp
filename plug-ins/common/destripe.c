@@ -37,6 +37,7 @@
 
 #define PLUG_IN_PROC    "plug-in-destripe"
 #define PLUG_IN_BINARY  "destripe"
+#define PLUG_IN_ROLE    "gimp-destripe"
 #define PLUG_IN_VERSION "0.2"
 #define SCALE_WIDTH     140
 #define MAX_AVG         100
@@ -434,7 +435,7 @@ destripe_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Destripe"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Destripe"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

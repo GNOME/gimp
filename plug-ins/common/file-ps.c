@@ -114,6 +114,7 @@ static const gchar dversio[] = "v1.17  19-Sep-2004";
 #define SAVE_PS_PROC         "file-ps-save"
 #define SAVE_EPS_PROC        "file-eps-save"
 #define PLUG_IN_BINARY       "file-ps"
+#define PLUG_IN_ROLE         "gimp-file-ps"
 
 
 #define STR_LENGTH 64
@@ -3089,7 +3090,7 @@ load_dialog (const gchar *filename,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Import from PostScript"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Import from PostScript"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PS_PROC,
 

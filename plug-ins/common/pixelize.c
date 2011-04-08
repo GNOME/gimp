@@ -70,6 +70,7 @@
 #define PIXELIZE_PROC   "plug-in-pixelize"
 #define PIXELIZE2_PROC  "plug-in-pixelize2"
 #define PLUG_IN_BINARY  "pixelize"
+#define PLUG_IN_ROLE    "gimp-pixelize"
 #define TILE_CACHE_SIZE  16
 #define SCALE_WIDTH     125
 #define ENTRY_WIDTH       6
@@ -312,7 +313,7 @@ pixelize_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Pixelize"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Pixelize"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PIXELIZE_PROC,
 

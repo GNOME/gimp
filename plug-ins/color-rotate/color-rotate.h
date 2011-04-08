@@ -40,6 +40,7 @@
 
 #define PLUG_IN_PROC   "plug-in-rotate-colormap"
 #define PLUG_IN_BINARY "rcm"
+#define PLUG_IN_ROLE   "gimp-rcm"
 #define TP             (2*G_PI)
 
 

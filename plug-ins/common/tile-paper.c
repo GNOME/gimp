@@ -35,6 +35,7 @@
 
 #define PLUG_IN_PROC   "plug-in-papertile"
 #define PLUG_IN_BINARY "tile-paper"
+#define PLUG_IN_ROLE   "gimp-tile-paper"
 
 /*===========================================================================*/
 /* TYPES                                                                     */
@@ -239,7 +240,7 @@ open_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Paper Tile"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Paper Tile"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

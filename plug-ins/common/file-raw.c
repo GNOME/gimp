@@ -49,6 +49,7 @@
 #define LOAD_PROC      "file-raw-load"
 #define SAVE_PROC      "file-raw-save"
 #define PLUG_IN_BINARY "file-raw"
+#define PLUG_IN_ROLE   "gimp-file-raw"
 #define PREVIEW_SIZE   350
 
 
@@ -1051,7 +1052,7 @@ load_dialog (const gchar *filename)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Load Image from Raw Data"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Load Image from Raw Data"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 

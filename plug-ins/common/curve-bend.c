@@ -50,6 +50,7 @@
 /* Defines */
 #define PLUG_IN_PROC        "plug-in-curve-bend"
 #define PLUG_IN_BINARY      "curve-bend"
+#define PLUG_IN_ROLE        "gimp-curve-bend"
 #define PLUG_IN_VERSION     "v1.3.18 (2003/08/26)"
 #define PLUG_IN_IMAGE_TYPES "RGB*, GRAY*"
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
@@ -1221,7 +1222,7 @@ bender_new_dialog (GimpDrawable *drawable)
   p_retrieve_values(cd);       /* Possibly retrieve data from a previous run */
 
   /*  The shell and main vbox  */
-  cd->shell = gimp_dialog_new (_("Curve Bend"), PLUG_IN_BINARY,
+  cd->shell = gimp_dialog_new (_("Curve Bend"), PLUG_IN_ROLE,
                                NULL, 0,
                                gimp_standard_help_func, PLUG_IN_PROC,
 

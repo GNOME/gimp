@@ -31,6 +31,7 @@
 
 #define PLUG_IN_PROC    "plug-in-threshold-alpha"
 #define PLUG_IN_BINARY  "threshold-alpha"
+#define PLUG_IN_ROLE    "gimp-threshold-alpha"
 
 #define SCALE_WIDTH     120
 
@@ -244,7 +245,7 @@ threshold_alpha_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Threshold Alpha"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Threshold Alpha"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

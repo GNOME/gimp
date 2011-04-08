@@ -33,6 +33,7 @@
 #define PLUG_IN_PROC          "plug-in-oilify"
 #define PLUG_IN_ENHANCED_PROC "plug-in-oilify-enhanced"
 #define PLUG_IN_BINARY        "oilify"
+#define PLUG_IN_ROLE          "gimp-oilify"
 
 #define SCALE_WIDTH    125
 #define HISTSIZE       256
@@ -773,7 +774,7 @@ oilify_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Oilify"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Oilify"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

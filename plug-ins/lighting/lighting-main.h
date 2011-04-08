@@ -6,6 +6,7 @@
 
 #define PLUG_IN_PROC   "plug-in-lighting"
 #define PLUG_IN_BINARY "lighting"
+#define PLUG_IN_ROLE   "gimp-lighting"
 
 #define TILE_CACHE_SIZE 16
 #define NUM_LIGHTS      6

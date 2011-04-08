@@ -35,6 +35,7 @@
 #define LOAD_PROC               "file-wmf-load"
 #define LOAD_THUMB_PROC         "file-wmf-load-thumb"
 #define PLUG_IN_BINARY          "file-wmf"
+#define PLUG_IN_ROLE            "gimp-file-wmf"
 
 #define WMF_DEFAULT_RESOLUTION  90.0
 #define WMF_DEFAULT_SIZE        500
@@ -496,7 +497,7 @@ load_dialog (const gchar *filename)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Render Windows Metafile"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Render Windows Metafile"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 

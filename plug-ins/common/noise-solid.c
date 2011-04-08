@@ -74,6 +74,7 @@
 
 #define PLUG_IN_PROC   "plug-in-solid-noise"
 #define PLUG_IN_BINARY "noise-solid"
+#define PLUG_IN_ROLE   "gimp-noise-solid"
 
 #define TABLE_SIZE      64
 #define WEIGHT(T)      ((2.0*fabs(T)-3.0)*(T)*(T)+1.0)
@@ -559,7 +560,7 @@ solid_noise_dialog (GimpDrawable *drawable)
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   /*  Dialog initialization  */
-  dialog = gimp_dialog_new (_("Solid Noise"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Solid Noise"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

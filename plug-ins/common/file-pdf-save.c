@@ -114,6 +114,7 @@
 #define SAVE_DEFAULTS_PROC      "file-pdf-save-defaults"
 #define SAVE_MULTI_PROC         "file-pdf-save-multi"
 #define PLUG_IN_BINARY          "file-pdf-save"
+#define PLUG_IN_ROLE            "gimp-file-pdf-save"
 
 #define DATA_OPTIMIZE           "file-pdf-data-optimize"
 #define DATA_IMAGE_LIST         "file-pdf-data-multi-page"
@@ -698,7 +699,7 @@ gui_single (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  window = gimp_export_dialog_new ("PDF", PLUG_IN_BINARY, SAVE_PROC);
+  window = gimp_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_PROC);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (window)),
@@ -760,7 +761,7 @@ gui_multi (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  window = gimp_export_dialog_new ("PDF", PLUG_IN_BINARY, SAVE_MULTI_PROC);
+  window = gimp_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_MULTI_PROC);
 
   vbox = gtk_vbox_new (FALSE, 10);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (window)),

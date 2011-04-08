@@ -44,6 +44,7 @@
 
 #define PLUG_IN_PROC   "plug-in-exchange"
 #define PLUG_IN_BINARY "color-exchange"
+#define PLUG_IN_ROLE   "gimp-color-exchange"
 
 #define SCALE_WIDTH    128
 
@@ -283,7 +284,7 @@ exchange_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Color Exchange"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Color Exchange"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

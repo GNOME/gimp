@@ -804,7 +804,7 @@ server_interface (void)
 
   gimp_ui_init ("script-fu", FALSE);
 
-  dlg = gimp_dialog_new (_("Script-Fu Server Options"), "script-fu",
+  dlg = gimp_dialog_new (_("Script-Fu Server Options"), "gimp-script-fu",
                          NULL, 0,
                          gimp_standard_help_func, "plug-in-script-fu-server",
 

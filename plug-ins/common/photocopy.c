@@ -37,6 +37,7 @@
 
 #define PLUG_IN_PROC    "plug-in-photocopy"
 #define PLUG_IN_BINARY  "photocopy"
+#define PLUG_IN_ROLE    "gimp-photocopy"
 #define TILE_CACHE_SIZE 48
 #define GAMMA           1.0
 #define EPSILON         2
@@ -835,7 +836,7 @@ photocopy_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Photocopy"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Photocopy"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

@@ -74,6 +74,7 @@
 #define SAVE_PROC      "file-tiff-save"
 #define SAVE2_PROC     "file-tiff-save2"
 #define PLUG_IN_BINARY "file-tiff-save"
+#define PLUG_IN_ROLE   "gimp-file-tiff-save"
 
 
 typedef struct

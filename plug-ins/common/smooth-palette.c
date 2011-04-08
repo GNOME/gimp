@@ -31,6 +31,7 @@
 
 #define PLUG_IN_PROC   "plug-in-smooth-palette"
 #define PLUG_IN_BINARY "smooth-palette"
+#define PLUG_IN_ROLE   "gimp-smooth-palette"
 
 
 /* Declare local functions. */
@@ -408,7 +409,7 @@ dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Smooth Palette"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Smooth Palette"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

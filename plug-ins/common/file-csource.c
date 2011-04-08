@@ -33,6 +33,7 @@
 
 #define SAVE_PROC      "file-csource-save"
 #define PLUG_IN_BINARY "file-csource"
+#define PLUG_IN_ROLE   "gimp-file-csource"
 
 
 typedef struct

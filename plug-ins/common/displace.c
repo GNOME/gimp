@@ -55,6 +55,7 @@
 
 #define PLUG_IN_PROC    "plug-in-displace"
 #define PLUG_IN_BINARY  "displace"
+#define PLUG_IN_ROLE    "gimp-displace"
 
 #define ENTRY_WIDTH     75
 #define TILE_CACHE_SIZE 48
@@ -322,7 +323,7 @@ displace_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Displace"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Displace"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

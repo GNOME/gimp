@@ -40,6 +40,7 @@
 
 #define PLUG_IN_PROC   "plug-in-sparkle"
 #define PLUG_IN_BINARY "sparkle"
+#define PLUG_IN_ROLE   "gimp-sparkle"
 
 #define SCALE_WIDTH    175
 #define ENTRY_WIDTH      7
@@ -333,7 +334,7 @@ sparkle_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Sparkle"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Sparkle"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

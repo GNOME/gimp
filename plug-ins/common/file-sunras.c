@@ -52,6 +52,7 @@
 #define LOAD_PROC      "file-sunras-load"
 #define SAVE_PROC      "file-sunras-save"
 #define PLUG_IN_BINARY "file-sunras"
+#define PLUG_IN_ROLE   "gimp-file-sunras"
 
 
 typedef int WRITE_FUN(void*,size_t,size_t,FILE*);

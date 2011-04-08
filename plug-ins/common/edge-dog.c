@@ -36,6 +36,7 @@
 
 #define PLUG_IN_PROC   "plug-in-dog"
 #define PLUG_IN_BINARY "edge-dog"
+#define PLUG_IN_ROLE   "gimp-edge-dog"
 
 
 typedef struct
@@ -298,7 +299,7 @@ dog_dialog (gint32        image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("DoG Edge Detect"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("DoG Edge Detect"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

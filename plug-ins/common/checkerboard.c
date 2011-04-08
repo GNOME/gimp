@@ -28,6 +28,7 @@
 
 #define PLUG_IN_PROC      "plug-in-checkerboard"
 #define PLUG_IN_BINARY    "checkerboard"
+#define PLUG_IN_ROLE      "gimp-checkerboard"
 #define SPIN_BUTTON_WIDTH 8
 
 
@@ -342,7 +343,7 @@ checkerboard_dialog (gint32        image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Checkerboard"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Checkerboard"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

@@ -45,6 +45,7 @@
 
 #define PLUG_IN_PROC   "plug-in-small-tiles"
 #define PLUG_IN_BINARY "tile-small"
+#define PLUG_IN_ROLE   "gimp-tile-small"
 
 /***** Magic numbers *****/
 
@@ -367,7 +368,7 @@ tileit_dialog (void)
 
   cache_preview (); /* Get the preview image */
 
-  dlg = gimp_dialog_new (_("Small Tiles"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Small Tiles"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

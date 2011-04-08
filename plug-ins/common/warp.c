@@ -75,6 +75,7 @@
 
 #define PLUG_IN_PROC    "plug-in-warp"
 #define PLUG_IN_BINARY  "warp"
+#define PLUG_IN_ROLE    "gimp-warp"
 #define ENTRY_WIDTH     75
 #define TILE_CACHE_SIZE 30  /* was 48. There is a cache flush problem in GIMP preventing sequential updates */
 #define MIN_ARGS         6  /* minimum number of arguments required */
@@ -372,7 +373,7 @@ warp_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Warp"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Warp"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

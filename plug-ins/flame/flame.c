@@ -36,6 +36,7 @@
 
 #define PLUG_IN_PROC      "plug-in-flame"
 #define PLUG_IN_BINARY    "flame"
+#define PLUG_IN_ROLE      "gimp-flame"
 
 #define VARIATION_SAME    (-2)
 
@@ -640,7 +641,7 @@ edit_callback (GtkWidget *widget,
       GtkObject *adj;
       gint       i, j;
 
-      edit_dialog = gimp_dialog_new (_("Edit Flame"), PLUG_IN_BINARY,
+      edit_dialog = gimp_dialog_new (_("Edit Flame"), PLUG_IN_ROLE,
                                      parent, GTK_DIALOG_DESTROY_WITH_PARENT,
                                      gimp_standard_help_func, PLUG_IN_PROC,
 
@@ -962,7 +963,7 @@ flame_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Flame"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Flame"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

@@ -604,7 +604,7 @@ metadata_dialog (gint32    image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  mgui.dlg = gimp_dialog_new (_("Image Properties"), PLUG_IN_BINARY,
+  mgui.dlg = gimp_dialog_new (_("Image Properties"), PLUG_IN_ROLE,
                               NULL, 0,
                               gimp_standard_help_func, EDITOR_PROC,
 

@@ -46,6 +46,7 @@
 
 
 #define PLUG_IN_BINARY "selection-to-path"
+#define PLUG_IN_ROLE   "gimp-selection-to-path"
 
 #define RESPONSE_RESET 1
 #define MID_POINT      127
@@ -299,7 +300,7 @@ sel2path_dialog (SELVALS *sels)
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   dlg = gimp_dialog_new (_("Selection to Path Advanced Settings"),
-                         PLUG_IN_BINARY,
+                         PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, "plug-in-sel2path-advanced",
 

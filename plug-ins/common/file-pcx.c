@@ -35,6 +35,7 @@
 #define LOAD_PROC      "file-pcx-load"
 #define SAVE_PROC      "file-pcx-save"
 #define PLUG_IN_BINARY "file-pcx"
+#define PLUG_IN_ROLE   "gimp-file-pcx"
 
 /* Declare local functions.  */
 

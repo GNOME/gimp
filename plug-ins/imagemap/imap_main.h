@@ -30,6 +30,7 @@
 
 #define PLUG_IN_PROC   "plug-in-imagemap"
 #define PLUG_IN_BINARY "imagemap"
+#define PLUG_IN_ROLE   "gimp-imagemap"
 
 typedef enum {NCSA, CERN, CSIM} MapFormat_t;
 

@@ -33,6 +33,7 @@
 /* Defines */
 #define PLUG_IN_PROC   "plug-in-web-page"
 #define PLUG_IN_BINARY "web-page"
+#define PLUG_IN_ROLE   "gimp-web-page"
 #define MAX_URL_LEN    2048
 
 typedef struct
@@ -229,7 +230,7 @@ webpage_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Create from webpage"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Create from webpage"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

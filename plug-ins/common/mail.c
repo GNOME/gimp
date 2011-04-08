@@ -110,6 +110,7 @@ static const guint8 mail_icon[] =
 
 #define PLUG_IN_PROC   "plug-in-mail-image"
 #define PLUG_IN_BINARY "mail"
+#define PLUG_IN_ROLE   "gimp-mail"
 
 typedef struct
 {
@@ -403,7 +404,7 @@ save_dialog (void)
       g_free (gump_from);
     }
 
-  dlg = gimp_dialog_new (_("Send by Email"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Send by Email"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

@@ -41,6 +41,7 @@
 #define LOAD_THUMB_PROC                 "file-psd-load-thumb"
 #define SAVE_PROC                       "file-psd-save"
 #define PLUG_IN_BINARY                  "file-psd"
+#define PLUG_IN_ROLE                    "gimp-file-psd"
 
 #define DECODE_XMP_PROC                 "plug-in-metadata-decode-xmp"
 

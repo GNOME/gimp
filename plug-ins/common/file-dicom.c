@@ -38,6 +38,7 @@
 #define LOAD_PROC      "file-dicom-load"
 #define SAVE_PROC      "file-dicom-save"
 #define PLUG_IN_BINARY "file-dicom"
+#define PLUG_IN_ROLE   "gimp-file-dicom"
 
 
 /* A lot of Dicom images are wrongly encoded. By guessing the endian

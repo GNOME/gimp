@@ -92,7 +92,7 @@ make_default_dialog (const gchar *title)
    data->apply_cb = NULL;
    data->cancel_cb = NULL;
 
-   data->dialog = gimp_dialog_new (title, PLUG_IN_BINARY,
+   data->dialog = gimp_dialog_new (title, PLUG_IN_ROLE,
                                    get_dialog(), 0,
                                    gimp_standard_help_func, PLUG_IN_PROC,
                                    NULL);

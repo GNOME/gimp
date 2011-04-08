@@ -75,6 +75,7 @@ static void     redeye_inner_loop     (const guchar     *src,
 
 #define PLUG_IN_PROC    "plug-in-red-eye-removal"
 #define PLUG_IN_BINARY  "red-eye-removal"
+#define PLUG_IN_ROLE    "gimp-red-eye-removal"
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -138,7 +139,7 @@ dialog (gint32        image_id,
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Red Eye Removal"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Red Eye Removal"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

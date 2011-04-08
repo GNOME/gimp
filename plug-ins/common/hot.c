@@ -74,6 +74,7 @@
 
 #define PLUG_IN_PROC   "plug-in-hot"
 #define PLUG_IN_BINARY "hot"
+#define PLUG_IN_ROLE   "gimp-hot"
 
 
 typedef struct
@@ -582,7 +583,7 @@ plugin_dialog (piArgs *argp)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dlg = gimp_dialog_new (_("Hot"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Hot"), PLUG_IN_ROLE,
                          NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 

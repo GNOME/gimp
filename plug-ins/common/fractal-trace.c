@@ -22,6 +22,7 @@
 
 #define PLUG_IN_PROC     "plug-in-fractal-trace"
 #define PLUG_IN_BINARY   "fractal-trace"
+#define PLUG_IN_ROLE     "gimp-fractal-trace"
 #define PLUG_IN_VERSION  "v0.4 test version (Dec. 25 1997)"
 
 /*****************************************************************************/
@@ -687,7 +688,7 @@ dialog_show (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Fractal Trace"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Fractal Trace"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
