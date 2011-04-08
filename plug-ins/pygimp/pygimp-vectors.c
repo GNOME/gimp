@@ -493,7 +493,7 @@ vbs_init(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
                                      "O!O|i:gimp.VectorsBezierStroke.__init__",
                                      kwlist,
                                      &PyGimpVectors_Type, &vectors,
-                                     &py_controlpoints, &closed));
+                                     &py_controlpoints, &closed))
         return -1;
 
     if (!PySequence_Check(py_controlpoints)) {

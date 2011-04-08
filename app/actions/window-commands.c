@@ -44,7 +44,7 @@ window_close_cmd_callback (GtkAction *action,
   if (! gtk_widget_is_toplevel (widget))
     widget = gtk_widget_get_toplevel (widget);
 
-  if (widget && gtk_widget_get_window (widget));
+  if (widget && gtk_widget_get_window (widget))
     {
       GdkEvent *event = gdk_event_new (GDK_DELETE);
 
