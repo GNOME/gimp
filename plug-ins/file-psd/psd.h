@@ -115,10 +115,10 @@
 #define PSD_LPAR_ANNOTATE       "Anno"          /* Annotation (PS6) */
 
 /* Other */
-#define PSD_LOTH_SECTION        "lsct"          /* Section divider setting - Layer goups (PS6) */
+#define PSD_LOTH_SECTION        "lsct"          /* Section divider setting - Layer groups (PS6) */
 #define PSD_LOTH_PATTERN        "Patt"          /* Patterns (PS6) */
 #define PSD_LOTH_GRADIENT       "grdm"          /* Gradient settings (PS6) */
-#define PSD_LOTH_RESTRICT       "brst"          /* Channel blending restirction setting (PS6) */
+#define PSD_LOTH_RESTRICT       "brst"          /* Channel blending restriction setting (PS6) */
 #define PSD_LOTH_FOREIGN_FX     "ffxi"          /* Foreign effect ID (PS6) */
 #define PSD_LOTH_PATT_DATA      "shpa"          /* Pattern data (PS6) */
 #define PSD_LOTH_META_DATA      "shmd"          /* Meta data setting (PS6) */
@@ -490,6 +490,7 @@ typedef struct
   LayerMaskExtra        layer_mask_extra;       /* Layer mask extra data */
   LayerFlags            layer_flags;            /* Layer flags */
   guint32               id;                     /* Layer ID (Tattoo) */
+  guchar                group_type;             /* 0 -> not a group; 1 -> open folder; 2 -> closed folder; 3 -> end of group */
 } PSDlayer;
 
 /* PSD Channel data structure */

@@ -72,8 +72,8 @@
  * Other *
   PSD_LOTH_PATTERN        "Patt"        -       * Patterns (PS6) *
   PSD_LOTH_GRADIENT       "grdm"        -       * Gradient settings (PS6) *
-  PSD_LOTH_SECTION        "lsct"    Drop Layer  * Section divider setting (PS6) (Layer Groups) *
-  PSD_LOTH_RESTRICT       "brst"        -       * Channel blending restirction setting (PS6) *
+  PSD_LOTH_SECTION        "lsct"     Loaded     * Section divider setting (PS6) (Layer Groups) *
+  PSD_LOTH_RESTRICT       "brst"        -       * Channel blending restriction setting (PS6) *
   PSD_LOTH_FOREIGN_FX     "ffxi"        -       * Foreign effect ID (PS6) *
   PSD_LOTH_PATT_DATA      "shpa"        -       * Pattern data (PS6) *
   PSD_LOTH_META_DATA      "shmd"        -       * Meta data setting (PS6) *
@@ -452,8 +452,11 @@ load_resource_lsct (const PSDlayerres  *res_a,
                     FILE               *f,
                     GError            **error)
 {
-  /* Load adjustment layer */
-  static gboolean   msg_flag = FALSE;
+  /* Load layer group & type information
+   * Type 0: not a group
+   * Type 1: Open folder
+   * Type 2: Closed folder
+   * Type 3: End of most recent group */
   guint32           type;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Section divider", res_a->key);
@@ -465,24 +468,7 @@ load_resource_lsct (const PSDlayerres  *res_a,
   type = GUINT32_FROM_BE (type);
   IFDBG(3) g_debug ("Section divider type: %i", type);
 
-  if (type == 1 ||      /* Layer group start - open folder */
-      type == 2)        /* Layer group start - closed folder */
-    {
-      lyr_a->drop = TRUE;
-      if (! msg_flag && CONVERSION_WARNINGS)
-        {
-          g_message ("Warning:\n"
-                     "The image file contains layer groups. "
-                     "These are not supported by the GIMP and will "
-                     "be dropped.");
-          msg_flag = TRUE;
-        }
-    }
-
-  if (type == 3)        /* End of layer group - hidden in UI */
-      lyr_a->drop = TRUE;
-
-
+  lyr_a->group_type = type;
   return 0;
 }
 
