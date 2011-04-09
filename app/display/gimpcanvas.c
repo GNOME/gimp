@@ -97,7 +97,6 @@ gimp_canvas_init (GimpCanvas *canvas)
 {
   GtkWidget *widget = GTK_WIDGET (canvas);
 
-  gtk_widget_set_double_buffered (widget, FALSE);
   gtk_widget_set_can_focus (widget, TRUE);
   gtk_widget_add_events (widget, GIMP_CANVAS_EVENT_MASK);
   gtk_widget_set_extension_events (widget, GDK_EXTENSION_EVENTS_ALL);

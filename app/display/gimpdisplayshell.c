@@ -1320,6 +1320,9 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
 
+  /*  so wilber doesn't flicker  */
+  gtk_widget_set_double_buffered (shell->canvas, TRUE);
+
   gimp_display_shell_expose_full (shell);
 
   user_context = gimp_get_user_context (shell->display->gimp);
@@ -1373,6 +1376,9 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_scroll_center_image_on_next_size_allocate (shell,
                                                                 TRUE,
                                                                 TRUE);
+
+  /*  we double buffer image drawing manually  */
+  gtk_widget_set_double_buffered (shell->canvas, FALSE);
 
   shell->fill_idle_id = g_idle_add_full (G_PRIORITY_LOW,
                                          (GSourceFunc) gimp_display_shell_fill_idle,
