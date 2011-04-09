@@ -98,6 +98,7 @@ EXPORTS
 	gimp_context_set_background
 	gimp_context_set_brush
 	gimp_context_set_default_colors
+	gimp_context_set_defaults
 	gimp_context_set_feather
 	gimp_context_set_feather_radius
 	gimp_context_set_font
