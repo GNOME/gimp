@@ -394,11 +394,12 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
 {
   GimpEditor *gimp_editor = GIMP_EDITOR (editor);
 
-  gtk_ui_manager_get_widget (GTK_UI_MANAGER (gimp_editor->ui_manager),
-                             gimp_editor->ui_path);
-  gimp_ui_manager_update (gimp_editor->ui_manager, gimp_editor->popup_data);
+  gtk_ui_manager_get_widget (GTK_UI_MANAGER (gimp_editor_get_ui_manager (gimp_editor)),
+                             gimp_editor_get_ui_path (gimp_editor));
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (gimp_editor),
+                          gimp_editor_get_popup_data (gimp_editor));
 
-  gimp_ui_manager_ui_popup (gimp_editor->ui_manager, path,
+  gimp_ui_manager_ui_popup (gimp_editor_get_ui_manager (gimp_editor), path,
                             button,
                             gimp_tool_options_editor_menu_pos, button,
                             NULL, NULL);
@@ -415,7 +416,7 @@ gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
     }
   else
     {
-      gimp_ui_manager_activate_action (GIMP_EDITOR (editor)->ui_manager,
+      gimp_ui_manager_activate_action (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
                                        "tool-options",
                                        "tool-options-save-new-preset");
     }

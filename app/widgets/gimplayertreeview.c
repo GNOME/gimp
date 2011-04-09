@@ -378,7 +378,7 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                           "layers-new-group", NULL);
-  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
+  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
                          button, 2);
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
@@ -386,7 +386,7 @@ gimp_layer_tree_view_constructed (GObject *object)
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);
-  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
+  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
                          button, 6);
 }
 
@@ -1111,7 +1111,7 @@ static void
 gimp_layer_tree_view_update_menu (GimpLayerTreeView *layer_view,
                                   GimpLayer         *layer)
 {
-  GimpUIManager   *ui_manager = GIMP_EDITOR (layer_view)->ui_manager;
+  GimpUIManager   *ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (layer_view));
   GimpActionGroup *group;
   GimpLayerMask   *mask;
 
@@ -1304,7 +1304,7 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpUIManager    *ui_manager = GIMP_EDITOR (tree_view)->ui_manager;
+      GimpUIManager    *ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
       GimpActionGroup  *group;
       GimpViewRenderer *renderer;
 
@@ -1347,7 +1347,7 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
       GimpUIManager    *ui_manager;
       GimpActionGroup  *group;
 
-      ui_manager = GIMP_EDITOR (tree_view)->ui_manager;
+      ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
       group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,

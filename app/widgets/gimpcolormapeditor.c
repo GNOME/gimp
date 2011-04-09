@@ -592,7 +592,7 @@ gimp_colormap_editor_entry_activated (GimpPaletteView    *view,
 {
   gimp_colormap_editor_set_index (editor, entry->position, NULL);
 
-  gimp_ui_manager_activate_action (GIMP_EDITOR (editor)->ui_manager,
+  gimp_ui_manager_activate_action (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
                                    "colormap",
                                    "colormap-edit-color");
 }

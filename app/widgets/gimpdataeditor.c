@@ -495,9 +495,9 @@ gimp_data_editor_set_data (GimpDataEditor *editor,
 
       g_object_notify (G_OBJECT (editor), "data");
 
-      if (GIMP_EDITOR (editor)->ui_manager)
-        gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
-                                GIMP_EDITOR (editor)->popup_data);
+      if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
+        gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                                gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
     }
 }
 

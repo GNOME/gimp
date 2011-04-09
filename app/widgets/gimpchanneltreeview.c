@@ -177,7 +177,7 @@ gimp_channel_tree_view_constructed (GObject *object)
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (view),
                                   GTK_BUTTON (view->priv->toselection_button),
                                   GIMP_TYPE_CHANNEL);
-  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (view)->button_box),
+  gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (view)),
                          view->priv->toselection_button, 5);
 }
 
@@ -286,7 +286,7 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
 
       channel_view->priv->component_editor =
         gimp_component_editor_new (view_size,
-                                   GIMP_EDITOR (item_view)->menu_factory);
+                                   gimp_editor_get_menu_factory (GIMP_EDITOR (item_view)));
       gimp_docked_set_context (GIMP_DOCKED (channel_view->priv->component_editor),
                                gimp_container_view_get_context (view));
       gtk_box_pack_start (GTK_BOX (item_view), channel_view->priv->component_editor,

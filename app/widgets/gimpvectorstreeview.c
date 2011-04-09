@@ -150,7 +150,7 @@ gimp_vectors_tree_view_constructed (GObject *object)
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
                                   GTK_BUTTON (view->toselection_button),
                                   GIMP_TYPE_VECTORS);
-  gtk_box_reorder_child (GTK_BOX (editor->button_box),
+  gtk_box_reorder_child (gimp_editor_get_button_box (editor),
                          view->toselection_button, 5);
 
   view->tovectors_button =
@@ -159,7 +159,7 @@ gimp_vectors_tree_view_constructed (GObject *object)
                                    "vectors-selection-to-vectors-advanced",
                                    GDK_SHIFT_MASK,
                                    NULL);
-  gtk_box_reorder_child (GTK_BOX (editor->button_box),
+  gtk_box_reorder_child (gimp_editor_get_button_box (editor),
                          view->tovectors_button, 6);
 
   view->stroke_button =
@@ -171,7 +171,7 @@ gimp_vectors_tree_view_constructed (GObject *object)
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
                                   GTK_BUTTON (view->stroke_button),
                                   GIMP_TYPE_VECTORS);
-  gtk_box_reorder_child (GTK_BOX (editor->button_box),
+  gtk_box_reorder_child (gimp_editor_get_button_box (editor),
                          view->stroke_button, 7);
 
   gimp_dnd_svg_dest_add (GTK_WIDGET (tree_view->view), NULL, view);

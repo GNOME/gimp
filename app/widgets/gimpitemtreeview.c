@@ -605,7 +605,7 @@ gimp_item_tree_view_set_image (GimpItemTreeView *view,
 
   g_signal_emit (view, view_signals[SET_IMAGE], 0, image);
 
-  gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (view)), view);
 }
 
 GimpImage *
@@ -815,7 +815,7 @@ gimp_item_tree_view_image_flush (GimpImage        *image,
                                  gboolean          invalidate_preview,
                                  GimpItemTreeView *view)
 {
-  gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (view)), view);
 }
 
 
@@ -976,7 +976,7 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
       gimp_item_tree_view_update_options (tree_view, GIMP_ITEM (item));
     }
 
-  gimp_ui_manager_update (GIMP_EDITOR (tree_view)->ui_manager, tree_view);
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view)), tree_view);
 
   if (tree_view->priv->options_box)
     gtk_widget_set_sensitive (tree_view->priv->options_box, options_sensitive);
@@ -996,7 +996,7 @@ gimp_item_tree_view_activate_item (GimpContainerView *view,
 
   if (item_view_class->activate_action)
     {
-      gimp_ui_manager_activate_action (GIMP_EDITOR (view)->ui_manager,
+      gimp_ui_manager_activate_action (gimp_editor_get_ui_manager (GIMP_EDITOR (view)),
                                        item_view_class->action_group,
                                        item_view_class->activate_action);
     }
@@ -1130,7 +1130,7 @@ gimp_item_tree_view_new_dropped (GtkWidget    *widget,
     {
       GtkAction *action;
 
-      action = gimp_ui_manager_find_action (GIMP_EDITOR (view)->ui_manager,
+      action = gimp_ui_manager_find_action (gimp_editor_get_ui_manager (GIMP_EDITOR (view)),
                                             item_view_class->action_group,
                                             item_view_class->new_default_action);
 

@@ -150,7 +150,8 @@ gimp_template_view_new (GimpViewType     view_type,
                                   GTK_BUTTON (template_view->delete_button),
                                   GIMP_TYPE_TEMPLATE);
 
-  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
+                          editor);
 
   return GTK_WIDGET (template_view);
 }

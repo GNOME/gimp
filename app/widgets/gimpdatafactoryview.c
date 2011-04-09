@@ -337,7 +337,8 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                   GTK_BUTTON (factory_view->priv->delete_button),
                                   gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
 
-  gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
+  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
+                          editor);
 
   return TRUE;
 }

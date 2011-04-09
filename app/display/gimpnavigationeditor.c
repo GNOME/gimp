@@ -490,9 +490,9 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
       gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
     }
 
-  if (GIMP_EDITOR (editor)->ui_manager)
-    gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
-                            GIMP_EDITOR (editor)->popup_data);
+  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
+    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 }
 
 static gboolean
@@ -636,9 +636,9 @@ gimp_navigation_editor_shell_scaled (GimpDisplayShell     *shell,
 
   gimp_navigation_editor_update_marker (editor);
 
-  if (GIMP_EDITOR (editor)->ui_manager)
-    gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
-                            GIMP_EDITOR (editor)->popup_data);
+  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
+    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 }
 
 static void
@@ -647,9 +647,9 @@ gimp_navigation_editor_shell_scrolled (GimpDisplayShell     *shell,
 {
   gimp_navigation_editor_update_marker (editor);
 
-  if (GIMP_EDITOR (editor)->ui_manager)
-    gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
-                            GIMP_EDITOR (editor)->popup_data);
+  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
+    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 }
 
 static void
@@ -661,9 +661,9 @@ gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
   gimp_view_set_viewable (GIMP_VIEW (editor->view),
                           GIMP_VIEWABLE (image));
 
-  if (GIMP_EDITOR (editor)->ui_manager)
-    gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
-                            GIMP_EDITOR (editor)->popup_data);
+  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
+    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 }
 
 static void

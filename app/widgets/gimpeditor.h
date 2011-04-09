@@ -30,21 +30,14 @@
 #define GIMP_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_EDITOR, GimpEditorClass))
 
 
-typedef struct _GimpEditorClass  GimpEditorClass;
+typedef struct _GimpEditorClass    GimpEditorClass;
+typedef struct _GimpEditorPrivate  GimpEditorPrivate;
 
 struct _GimpEditor
 {
-  GtkBox           parent_instance;
+  GtkBox            parent_instance;
 
-  GimpMenuFactory *menu_factory;
-  gchar           *menu_identifier;
-  GimpUIManager   *ui_manager;
-  gchar           *ui_path;
-  gpointer         popup_data;
-
-  gboolean         show_button_bar;
-  GtkWidget       *name_label;
-  GtkWidget       *button_box;
+  GimpEditorPrivate *priv;
 };
 
 struct _GimpEditorClass
@@ -91,6 +84,12 @@ void        gimp_editor_set_name            (GimpEditor         *editor,
 
 void        gimp_editor_set_box_style       (GimpEditor         *editor,
                                              GtkBox             *box);
-
+GimpUIManager *
+            gimp_editor_get_ui_manager      (GimpEditor         *editor);
+GtkBox    * gimp_editor_get_button_box      (GimpEditor         *editor);
+GimpMenuFactory *
+            gimp_editor_get_menu_factory    (GimpEditor         *editor);
+gpointer *  gimp_editor_get_popup_data      (GimpEditor         *editor);
+gchar *     gimp_editor_get_ui_path         (GimpEditor         *editor);
 
 #endif  /*  __GIMP_EDITOR_H__  */

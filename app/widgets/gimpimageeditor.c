@@ -151,9 +151,9 @@ gimp_image_editor_set_image (GimpImageEditor *editor,
     {
       GIMP_IMAGE_EDITOR_GET_CLASS (editor)->set_image (editor, image);
 
-      if (GIMP_EDITOR (editor)->ui_manager)
-        gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
-                                GIMP_EDITOR (editor)->popup_data);
+      if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
+        gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                                gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
     }
 }
 
@@ -173,7 +173,7 @@ gimp_image_editor_image_flush (GimpImage       *image,
                                gboolean         invalidate_preview,
                                GimpImageEditor *editor)
 {
-  if (GIMP_EDITOR (editor)->ui_manager)
-    gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
-                            GIMP_EDITOR (editor)->popup_data);
+  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
+    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
 }

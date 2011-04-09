@@ -691,8 +691,8 @@ palette_editor_entry_selected (GimpPaletteView   *view,
       gtk_editable_set_editable (GTK_EDITABLE (editor->color_name),
                                  entry && data_editor->data_editable);
 
-      gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
-                              GIMP_EDITOR (editor)->popup_data);
+      gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
+                              gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
     }
 }
 
@@ -703,7 +703,7 @@ palette_editor_entry_activated (GimpPaletteView   *view,
 {
   if (GIMP_DATA_EDITOR (editor)->data_editable && entry == editor->color)
     {
-      gimp_ui_manager_activate_action (GIMP_EDITOR (editor)->ui_manager,
+      gimp_ui_manager_activate_action (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
                                        "palette-editor",
                                        "palette-editor-edit-color");
     }

@@ -62,7 +62,7 @@ tool_options_save_new_preset_cmd_callback (GtkAction *action,
                                            gpointer   user_data)
 {
   GimpEditor  *editor  = GIMP_EDITOR (user_data);
-  GimpContext *context = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpContext *context = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
   GimpData    *data;
 
   data = gimp_data_factory_data_new (context->gimp->tool_preset_factory,
@@ -77,7 +77,7 @@ tool_options_save_preset_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
-  GimpContext    *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
 
@@ -99,7 +99,7 @@ tool_options_restore_preset_cmd_callback (GtkAction *action,
                                           gpointer   data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
-  GimpContext    *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
 
@@ -121,7 +121,7 @@ tool_options_edit_preset_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
-  GimpContext    *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
 
@@ -140,7 +140,7 @@ tool_options_delete_preset_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
-  GimpContext    *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
 
@@ -164,7 +164,7 @@ tool_options_reset_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpEditor   *editor    = GIMP_EDITOR (data);
-  GimpContext  *context   = gimp_get_user_context (editor->ui_manager->gimp);
+  GimpContext  *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
   GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
   gimp_tool_options_reset (tool_info->tool_options);
@@ -205,7 +205,7 @@ tool_options_reset_all_cmd_callback (GtkAction *action,
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
-      Gimp  *gimp = editor->ui_manager->gimp;
+      Gimp  *gimp = gimp_editor_get_ui_manager (editor)->gimp;
       GList *list;
 
       for (list = gimp_get_tool_info_iter (gimp);
