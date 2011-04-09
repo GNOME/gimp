@@ -43,10 +43,10 @@ header files installed.
        git://git.gnome.org/babl
        git://git.gnome.org/gegl
 
-  4. You need to have installed GTK+ version 2.20.0 or newer.
-     GIMP also need a recent versions of GLib (>= 2.24.0) and
-     Pango (>= 1.22.0). Sources for these can be grabbed from
-     ftp://ftp.gtk.org/.
+  4. You need to have installed GTK+ version 2.24.3 or newer.
+     GIMP also need a recent versions of GLib (>= 2.28.1), GDK-PixBuf 
+     (>= 2.22.1), and Pango (>= 1.22.0). Sources for these can be grabbed
+     from ftp://ftp.gtk.org/.
 
   5. We use cairo, which is hosted at http://www.cairographics.org/.
 
