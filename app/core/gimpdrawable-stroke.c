@@ -257,7 +257,7 @@ gimp_drawable_render_vectors (GimpDrawable  *drawable,
 
   bezier = gimp_vectors_get_bezier (vectors);
 
-  if (bezier && bezier->num_data > 1)
+  if (bezier && (do_stroke ? bezier->num_data >= 2 : bezier->num_data > 4))
     {
       GimpScanConvert *scan_convert;
 
@@ -351,7 +351,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
   gimp_scan_convert_render (scan_convert, mask,
                             x + off_x, y + off_y,
-                            gimp_fill_options_get_antialias (GIMP_FILL_OPTIONS (options)));
+                            gimp_fill_options_get_antialias (options));
 
   bytes = gimp_drawable_bytes_with_alpha (drawable);
 
