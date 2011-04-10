@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -36,6 +37,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimpbezierdesc.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-stroke.h"
@@ -209,68 +211,40 @@ gimp_drawable_render_boundary (GimpDrawable    *drawable,
                                gint             offset_x,
                                gint             offset_y)
 {
-  GimpScanConvert *scan_convert;
-  BoundSeg        *stroke_segs;
-  gint             n_stroke_segs;
-  GimpVector2     *points;
-  gint             n_points;
-  gint             seg;
-  gint             i;
-
-  if (n_bound_segs == 0)
-    return NULL;
-
-  stroke_segs = boundary_sort (bound_segs, n_bound_segs, &n_stroke_segs);
-
-  if (n_stroke_segs == 0)
-    return NULL;
-
-  scan_convert = gimp_scan_convert_new ();
-
-  points = g_new0 (GimpVector2, n_bound_segs + 4);
-
-  seg = 0;
-  n_points = 0;
-
-  points[n_points].x = (gdouble) (stroke_segs[0].x1 + offset_x);
-  points[n_points].y = (gdouble) (stroke_segs[0].y1 + offset_y);
-
-  n_points++;
-
-  for (i = 0; i < n_stroke_segs; i++)
+  if (bound_segs)
     {
-      while (stroke_segs[seg].x1 != -1 ||
-             stroke_segs[seg].x2 != -1 ||
-             stroke_segs[seg].y1 != -1 ||
-             stroke_segs[seg].y2 != -1)
+      BoundSeg *stroke_segs;
+      gint      n_stroke_segs;
+
+      stroke_segs = boundary_sort (bound_segs, n_bound_segs, &n_stroke_segs);
+
+      if (stroke_segs)
         {
-          points[n_points].x = (gdouble) (stroke_segs[seg].x1 + offset_x);
-          points[n_points].y = (gdouble) (stroke_segs[seg].y1 + offset_y);
+          GimpBezierDesc *bezier;
 
-          n_points++;
-          seg++;
+          bezier = gimp_bezier_desc_new_from_bound_segs (stroke_segs,
+                                                         n_bound_segs,
+                                                         n_stroke_segs);
+
+          g_free (stroke_segs);
+
+          if (bezier)
+            {
+              GimpScanConvert *scan_convert;
+
+              scan_convert = gimp_scan_convert_new ();
+
+              gimp_bezier_desc_translate (bezier, offset_x, offset_y);
+              gimp_scan_convert_add_bezier (scan_convert, bezier);
+
+              gimp_bezier_desc_free (bezier);
+
+              return scan_convert;
+            }
         }
-
-      /* Close the stroke points up */
-      points[n_points] = points[0];
-
-      n_points++;
-
-      gimp_scan_convert_add_polyline (scan_convert, n_points, points, TRUE);
-
-      n_points = 0;
-      seg++;
-
-      points[n_points].x = (gdouble) (stroke_segs[seg].x1 + offset_x);
-      points[n_points].y = (gdouble) (stroke_segs[seg].y1 + offset_y);
-
-      n_points++;
     }
 
-  g_free (points);
-  g_free (stroke_segs);
-
-  return scan_convert;
+  return NULL;
 }
 
 static GimpScanConvert *
