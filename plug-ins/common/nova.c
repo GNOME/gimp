@@ -536,22 +536,29 @@ nova_center_preview_expose (GtkWidget  *widget,
   if (show_cursor)
     {
       cairo_t *cr;
-      gint     x, y;
+      gint     x, y, offx, offy;
       gint     width, height;
+
+      GimpPreviewArea *area = GIMP_PREVIEW_AREA (center->preview->area);
+      GtkAllocation    allocation;
 
       cr = gdk_cairo_create (gtk_widget_get_window (center->preview->area));
 
       gimp_preview_transform (center->preview,
                               pvals.xcenter, pvals.ycenter,
                               &x, &y);
+      gtk_widget_get_allocation (GTK_WIDGET (area), &allocation);
+
+      offx = (allocation.width  - area->width)  / 2;
+      offy = (allocation.height - area->height) / 2;
 
       gimp_preview_get_size (center->preview, &width, &height);
 
-      cairo_move_to (cr, x + 0.5, 0);
-      cairo_line_to (cr, x + 0.5, height);
+      cairo_move_to (cr, offx + x + 0.5, 0);
+      cairo_line_to (cr, offx + x + 0.5, allocation.height);
 
-      cairo_move_to (cr, 0,     y + 0.5);
-      cairo_line_to (cr, width, y + 0.5);
+      cairo_move_to (cr, 0,    offy + y + 0.5);
+      cairo_line_to (cr, allocation.width, offy + y + 0.5);
 
       cairo_set_line_width (cr, 3.0);
       cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
@@ -578,6 +585,15 @@ nova_center_update (GtkWidget  *widget,
                     gint        y)
 {
   gint tx, ty;
+
+
+  GimpPreviewArea *area = GIMP_PREVIEW_AREA (center->preview->area);
+  GtkAllocation    allocation;
+
+  gtk_widget_get_allocation (GTK_WIDGET (area), &allocation);
+
+  x -= (allocation.width  - area->width)  / 2;
+  y -= (allocation.height - area->height) / 2;
 
   gimp_preview_untransform (center->preview, x, y, &tx, &ty);
 
