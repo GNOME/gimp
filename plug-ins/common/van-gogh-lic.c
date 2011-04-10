@@ -552,6 +552,7 @@ compute_lic (GimpDrawable *drawable,
 
       gimp_progress_update ((gfloat) ycount / (gfloat) src_rgn.h);
     }
+  gimp_progress_update (1.0);
 }
 
 static void

@@ -411,6 +411,8 @@ plasma (GimpDrawable *drawable,
         {
           depth++;
         }
+      if (pft)
+        gimp_progress_update (1.0);
     }
 
   end_plasma (drawable, pft, gr);

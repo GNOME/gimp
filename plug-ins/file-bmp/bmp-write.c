@@ -766,7 +766,7 @@ write_image (FILE   *f,
         }
     }
 
-  gimp_progress_update (1);
+  gimp_progress_update (1.0);
 }
 
 static void

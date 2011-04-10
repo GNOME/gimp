@@ -2736,6 +2736,8 @@ sample_analyze (t_GDRW *sample_gdrw)
             }
         }
     }
+  if (g_show_progress)
+    gimp_progress_update (1.0);
 
   if (g_Sdebug)
     printf ("ROWS: %d - %d  COLS: %d - %d\n",

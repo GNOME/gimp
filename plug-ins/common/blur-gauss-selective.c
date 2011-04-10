@@ -763,6 +763,7 @@ sel_gauss (GimpDrawable *drawable,
 
   matrixmult (src, dest, width, height, mat, numrad,
               bytes, has_alpha, maxdelta, FALSE);
+  gimp_progress_update (1.0);
 
   gimp_pixel_rgn_init (&dest_rgn,
                        drawable, x, y, width, height, TRUE, TRUE);

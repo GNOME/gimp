@@ -3002,6 +3002,7 @@ realrender (GimpDrawable *drawable)
       gimp_pixel_rgn_set_row (&dpr, ibuffer, x1, y1 + y, x2 - x1);
       gimp_progress_update ((gdouble) y / (gdouble) ty);
     }
+  gimp_progress_update (1.0);
   g_free (buffer);
   g_free (ibuffer);
   gimp_drawable_flush (drawable);

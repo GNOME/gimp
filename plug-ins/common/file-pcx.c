@@ -468,6 +468,8 @@ load_image (const gchar  *filename,
       return -1;
     }
 
+  gimp_progress_update (1.0);
+
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, TRUE, FALSE);
   gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, 0, width, height);
 

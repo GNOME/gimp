@@ -324,6 +324,7 @@ remove_redeye (GimpDrawable *drawable)
         gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
 
+  gimp_progress_update (1.0);
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x, y, width, height);

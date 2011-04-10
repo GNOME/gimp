@@ -482,6 +482,7 @@ raw_load_planar (RawGimpData *data)
       gimp_pixel_rgn_set_row (&data->region, row, 0, i, runtime->image_width);
       gimp_progress_update ((gfloat) i / (gfloat) runtime->image_height);
     }
+  gimp_progress_update (1.0);
 
   g_free (row);
   g_free (r_row);

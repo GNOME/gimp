@@ -908,6 +908,7 @@ do_curl_effect (gint32 drawable_id)
       gimp_progress_update ((double) progress / (double) max_progress);
     }
 
+  gimp_progress_update (1.0);
   gimp_drawable_flush (curl_layer);
   gimp_drawable_merge_shadow (curl_layer->drawable_id, FALSE);
   gimp_drawable_update (curl_layer->drawable_id,
@@ -1007,6 +1008,7 @@ clear_curled_region (gint32 drawable_id)
       gimp_progress_update ((double) progress / (double) max_progress);
     }
 
+  gimp_progress_update (1.0);
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable_id, TRUE);
   gimp_drawable_update (drawable_id,

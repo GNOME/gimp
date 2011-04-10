@@ -402,6 +402,7 @@ render_blast (GimpDrawable *drawable,
     }
   else
     {
+      gimp_progress_update (1.0);
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
@@ -501,6 +502,7 @@ render_wind (GimpDrawable *drawable,
     }
   else
     {
+      gimp_progress_update (1.0);
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);

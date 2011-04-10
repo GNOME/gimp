@@ -617,6 +617,7 @@ photocopy (GimpDrawable *drawable,
 
   if (! preview)
     {
+      gimp_progress_update (1.0);
       /*  merge the shadow, update the drawable  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);

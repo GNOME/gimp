@@ -946,6 +946,7 @@ load_image (const gchar  *filename,
       gimp_progress_update ((double) (i + tileheight) / (double) height);
       gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i, width, tileheight);
     }
+  gimp_progress_update (1.0);
 
   g_free (data);
 
@@ -1162,6 +1163,7 @@ save_image (const gchar  *filename,
 
       gimp_progress_update ((double) (i + tileheight) / (double) height);
     }
+  gimp_progress_update (1.0);
 
   /* Write the trailer. */
   fprintf (fp, " };\n");

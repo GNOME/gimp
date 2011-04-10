@@ -523,6 +523,7 @@ DepthMerge_execute (DepthMerge *dm)
   g_free (depthMap2Row);
   g_free (tempRow);
 
+  gimp_progress_update (1.0);
   gimp_drawable_flush (dm->resultDrawable);
   gimp_drawable_merge_shadow (dm->resultDrawable->drawable_id, TRUE);
   gimp_drawable_update (dm->resultDrawable->drawable_id,

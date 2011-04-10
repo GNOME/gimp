@@ -475,6 +475,8 @@ load_image (const gchar  *filename,
       g_free (dest_base);
     }
 
+  gimp_progress_update (1.0);
+
   gimp_drawable_flush (drawable);
   gimp_drawable_detach (drawable);
 
@@ -636,6 +638,7 @@ save_image (const gchar  *filename,
           gimp_progress_update ((double) i / (double) drawable->height);
         }
     }
+  gimp_progress_update (1.0);
 
   g_free (src_base);
 

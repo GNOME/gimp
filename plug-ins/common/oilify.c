@@ -731,6 +731,7 @@ oilify (GimpDrawable *drawable,
 
   if (!preview)
     {
+      gimp_progress_update (1.0);
       /*  Update the oil-painted region  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);

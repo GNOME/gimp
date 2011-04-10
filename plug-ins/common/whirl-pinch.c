@@ -437,6 +437,7 @@ whirl_pinch (GimpDrawable *drawable)
       gimp_progress_update ((double) progress / max_progress);
     }
 
+  gimp_progress_update (1.0);
   gimp_pixel_fetcher_destroy (pft);
   gimp_pixel_fetcher_destroy (pfb);
 

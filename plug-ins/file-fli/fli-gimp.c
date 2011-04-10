@@ -591,6 +591,7 @@ load_image (const gchar  *filename,
 
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
+  gimp_progress_update (1.0);
 
   gimp_image_set_colormap (image_id, cm, 256);
 
@@ -808,6 +809,7 @@ save_image (const gchar  *filename,
 
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
+  gimp_progress_update (1.0);
 
   /*
    * finish fli

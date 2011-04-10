@@ -252,6 +252,8 @@ print_surface_from_drawable (gint32 drawable_ID)
         gimp_progress_update ((gdouble) done / (width * height));
     }
 
+  gimp_progress_update (1.0);
+
   gimp_drawable_detach (drawable);
 
   cairo_surface_mark_dirty (surface);

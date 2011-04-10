@@ -1118,6 +1118,7 @@ ReadImage (FILE        *fp,
                                    info->width, tileheight);
         }
     }
+  gimp_progress_update (1.0);
 
   g_free (data);
   g_free (buffer);
@@ -1340,6 +1341,7 @@ save_image (const gchar  *filename,
       if (row % 16 == 0)
         gimp_progress_update ((gdouble) row / (gdouble) height);
     }
+  gimp_progress_update (1.0);
 
   gimp_drawable_detach (drawable);
 

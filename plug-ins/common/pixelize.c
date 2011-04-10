@@ -610,6 +610,7 @@ pixelize_large (GimpDrawable *drawable,
     }
   else
     {
+      gimp_progress_update (1.0);
       /*  update the blurred region      */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
@@ -687,6 +688,7 @@ pixelize_small (GimpDrawable *drawable,
 
   g_free(area.data);
 
+  gimp_progress_update (1.0);
   /*  update the pixelized region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);

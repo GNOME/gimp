@@ -646,6 +646,7 @@ decompose (gint32       image_ID,
 
       gimp_progress_update ((gdouble) i / (gdouble) height);
     }
+  gimp_progress_update (1.0);
 
   g_free (src);
 

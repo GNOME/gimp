@@ -548,6 +548,7 @@ pluginCore (piArgs *argp)
             }
         }
     }
+  gimp_progress_update (1.0);
 
   gimp_pixel_rgn_set_rect (&dstPr, dst, sel_x1, sel_y1, width, height);
 

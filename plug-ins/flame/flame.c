@@ -328,6 +328,7 @@ flame (GimpDrawable *drawable)
   drawable_to_cmap (&config.cp);
   render_rectangle (&f, tmp, width, field_both, 4,
                     gimp_progress_update);
+  gimp_progress_update (1.0);
 
   /* update destination */
   if (4 == bytes)

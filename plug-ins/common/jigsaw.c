@@ -602,6 +602,7 @@ draw_jigsaw (guchar   *buffer,
       printf("draw_jigsaw: bad style\n");
       gimp_quit ();
     }
+  gimp_progress_update (1.0);
 
   g_free (globals.gridx);
   g_free (globals.gridy);

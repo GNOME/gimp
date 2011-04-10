@@ -809,6 +809,7 @@ filter (void)
   gimp_pixel_rgn_set_rect (&dst, pixels, 0, 0, p.drawable->width,
                            p.drawable->height);
 
+  gimp_progress_update (1.0);
   gimp_drawable_flush (p.drawable);
   gimp_drawable_merge_shadow (p.drawable->drawable_id, TRUE);
   gimp_drawable_update (p.drawable->drawable_id,

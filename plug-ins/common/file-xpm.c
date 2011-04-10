@@ -521,6 +521,7 @@ parse_image (gint32    image_ID,
                                drawable->width, scanlines);
 
     }
+  gimp_progress_update (1.0);
 
   g_free(buf);
 
@@ -704,6 +705,7 @@ save_image (const gchar  *filename,
           gimp_progress_update ((gdouble) (i+j) / (gdouble) height);
         }
     }
+  gimp_progress_update (1.0);
 
   g_free (buffer);
 

@@ -340,6 +340,7 @@ tile (gint32  image_id,
             }
         }
     }
+  gimp_progress_update (1.0);
 
   gimp_drawable_update (new_layer->drawable_id,
                         0, 0, new_layer->width, new_layer->height);

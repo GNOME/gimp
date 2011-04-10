@@ -524,6 +524,7 @@ bumpmap (void)
     }
 
   /* Done */
+  gimp_progress_update (1.0);
 
   g_free (bm_row1);
   g_free (bm_row2);

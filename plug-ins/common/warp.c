@@ -810,6 +810,7 @@ blur16 (GimpDrawable *drawable)
         gimp_progress_update ((double) row / (double) (y2 - y1));
     }
 
+  gimp_progress_update (1.0);
   /*  update the region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
@@ -1167,6 +1168,7 @@ diff (GimpDrawable *drawable,
 
     } /* for (row..) */
 
+  gimp_progress_update (1.0);
   /*  update the region  */
   gimp_drawable_flush (draw_xd);
   gimp_drawable_flush (draw_yd);
@@ -1574,6 +1576,7 @@ warp_one (GimpDrawable *draw,
       gimp_progress_update ((double) progress / (double) max_progress);
 
     } /* for pr */
+   gimp_progress_update (1.0);
 
    if (tile != NULL)
     gimp_tile_unref (tile, FALSE);

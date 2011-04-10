@@ -1002,6 +1002,7 @@ plugin_do (void)
   else
     plugin_do_non_asupsample ();
 
+  gimp_progress_update (1.0);
   /* Clean up */
   calc_deinit ();
   gimp_drawable_flush (drawable);

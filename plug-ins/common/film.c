@@ -518,6 +518,7 @@ film (void)
       g_free (layers);
       gimp_image_delete (image_ID_tmp);
     }
+  gimp_progress_update (1.0);
 
   gimp_image_flatten (image_ID_dst);
 

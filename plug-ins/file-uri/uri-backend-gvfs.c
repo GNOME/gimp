@@ -324,6 +324,7 @@ copy_uri (const gchar  *src_uri,
   success = g_file_copy (src_file, dest_file, G_FILE_COPY_OVERWRITE, NULL,
                          uri_progress_callback, &progress,
                          error);
+  gimp_progress_update (1.0);
 
   if (! success &&
       run_mode == GIMP_RUN_INTERACTIVE &&

@@ -448,6 +448,7 @@ load_image (const gchar  *file,
       gimp_pixel_rgn_set_rect (&pixel_rgn, line, 0, i, drawable->width, 1);
       gimp_progress_update ((float) i / (float) height);
     }
+  gimp_progress_update (1.0);
 
   /* Close image files, give back allocated memory */
 
@@ -674,6 +675,7 @@ save_image (const gchar  *file,
 
       gimp_progress_update ((float) i / (float) drawable->height);
     }
+  gimp_progress_update (1.0);
 
   /* Close files, give back allocated memory */
   fclose (fp);

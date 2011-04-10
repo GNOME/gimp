@@ -362,6 +362,7 @@ drawlens (GimpDrawable *drawable,
     }
   else
     {
+      gimp_progress_update (1.0);
       gimp_pixel_rgn_set_rect (&destPR, dest, x1, y1,
                                regionwidth, regionheight);
 

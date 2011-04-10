@@ -752,6 +752,7 @@ iwarp_frame (void)
                              &progress, max_progress);
         }
     }
+  gimp_progress_update (1.0);
 
   gimp_drawable_flush (destdrawable);
   gimp_drawable_merge_shadow (destdrawable->drawable_id, TRUE);
@@ -831,6 +832,7 @@ iwarp (void)
 
               gimp_image_insert_layer (imageID, layerID, -1, 0);
             }
+          gimp_progress_update (1.0);
         }
       g_free (animlayers);
     }

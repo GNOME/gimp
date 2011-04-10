@@ -665,7 +665,8 @@ load_image (PopplerDocument        *doc,
 
           image_ID = 0;
         }
-   }
+    }
+  gimp_progress_update (1.0);
 
   if (image_ID)
     {

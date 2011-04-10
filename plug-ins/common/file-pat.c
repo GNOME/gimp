@@ -458,6 +458,7 @@ load_image (const gchar  *filename,
 
       gimp_progress_update ((gdouble) line / (gdouble) ph.height);
     }
+  gimp_progress_update (1.0);
 
   gimp_drawable_flush (drawable);
 

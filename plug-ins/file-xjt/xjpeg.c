@@ -227,6 +227,7 @@ xjpg_load_layer (const char    *filename,
 
       gimp_progress_update ((double) cinfo.output_scanline / (double) cinfo.output_height);
   }
+  gimp_progress_update (1.0);
 
   /* Step 7: Finish decompression */
 
@@ -421,6 +422,7 @@ xjpg_load_layer_alpha (const char *filename,
 
       gimp_progress_update ((double) cinfo.output_scanline / (double) cinfo.output_height);
   }
+  gimp_progress_update (1.0);
 
   /* Step 7: Finish decompression */
 
@@ -618,6 +620,7 @@ xjpg_load_channel (const char   *filename,
 
       gimp_progress_update ((double) cinfo.output_scanline / (double) cinfo.output_height);
   }
+  gimp_progress_update (1.0);
 
   /* Step 7: Finish decompression */
 
@@ -913,6 +916,7 @@ xjpg_save_drawable (const char     *filename,
       if ((cinfo.next_scanline % 5) == 0)
 	gimp_progress_update ((double) cinfo.next_scanline / (double) cinfo.image_height);
   }
+  gimp_progress_update (1.0);
 
   /* Step 6: Finish compression */
   jpeg_finish_compress (&cinfo);

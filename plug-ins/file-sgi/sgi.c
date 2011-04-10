@@ -477,6 +477,7 @@ load_image (const gchar  *filename,
               *pptr = rows[i][x] >> 8;
         }
     }
+  gimp_progress_update (1.0);
 
   /*
    * Do the last n rows (count always > 0)
@@ -625,7 +626,8 @@ save_image (const gchar  *filename,
         };
 
       gimp_progress_update ((double) y / (double) drawable->height);
-    };
+    }
+  gimp_progress_update (1.0);
 
   /*
    * Done with the file...

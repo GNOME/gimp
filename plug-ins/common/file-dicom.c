@@ -756,6 +756,7 @@ dicom_loader (guint8       *pix_buffer,
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, row_idx, width, scanlines);
       row_idx += scanlines;
     }
+  gimp_progress_update (1.0);
 
   g_free (data);
 }

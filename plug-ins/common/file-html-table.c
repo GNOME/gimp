@@ -374,6 +374,7 @@ save_image (const gchar   *filename,
 
       gimp_progress_update ((double) y / (double) rows);
     }
+  gimp_progress_update (1.0);
 
   if (gtmvals.fulldoc)
     fprintf (fp, "</TABLE></BODY></HTML>\n");

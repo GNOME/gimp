@@ -355,6 +355,7 @@ smooth_palette (GimpDrawable *drawable,
               len_best = len;
             }
         }
+      gimp_progress_update (1.0);
       memcpy (pal, pal_best, bpp * psize);
       g_free (pal_best);
       g_free (original);

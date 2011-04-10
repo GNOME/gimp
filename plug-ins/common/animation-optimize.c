@@ -1087,6 +1087,7 @@ do_optimizations (GimpRunMode run_mode,
           gimp_progress_update (((gdouble) this_frame_num + 1.0) /
                                 ((gdouble) total_frames));
         }
+      gimp_progress_update (1.0);
     }
 
   gimp_image_undo_enable (new_image_id);

@@ -942,16 +942,17 @@ save_image (const gchar *filename,
                                           get_pixel);
         }
 
-     gif_encode_image_data (outfile, cols, rows,
-                            (rows > 4) ? gsvals.interlace : 0,
-                            useBPP,
-                            get_pixel,
-                            offset_x, offset_y);
+      gif_encode_image_data (outfile, cols, rows,
+                             (rows > 4) ? gsvals.interlace : 0,
+                             useBPP,
+                             get_pixel,
+                             offset_x, offset_y);
+      gimp_progress_update (1.0);
 
-     gimp_drawable_detach (drawable);
+      gimp_drawable_detach (drawable);
 
-     g_free (pixels);
-  }
+      g_free (pixels);
+    }
 
   g_free(layers);
 

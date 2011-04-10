@@ -690,6 +690,7 @@ load_fits (const gchar *filename,
 	}
       g_free (linebuf);
     }
+  gimp_progress_update (1.0);
 
   g_free (data);
 
@@ -833,6 +834,7 @@ save_direct (FITS_FILE *ofp,
                                   (gdouble) (height * bpp));
 	}
     }
+  gimp_progress_update (1.0);
 
   nbytes = nbytes % FITS_RECORD_SIZE;
   if (nbytes)
@@ -957,6 +959,7 @@ save_index (FITS_FILE *ofp,
 	gimp_progress_update ((gdouble) (i + channel * height) /
 			      (gdouble) (height * (bpp + 2)));
     }
+  gimp_progress_update (1.0);
 
   nbytes = nbytes % FITS_RECORD_SIZE;
   if (nbytes)

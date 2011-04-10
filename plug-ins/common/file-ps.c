@@ -2128,6 +2128,7 @@ load_ps (const gchar *filename,
           if (err) break;
         }
     }
+  gimp_progress_update (1.0);
 
   g_free (data);
   g_free (byteline);
@@ -2498,6 +2499,7 @@ save_ps_preview (FILE   *ofp,
       if ((y % 20) == 0)
         gimp_progress_update ((double)(y) / (double)height);
     }
+  gimp_progress_update (1.0);
 
   fprintf (ofp, "%%%%EndPreview\n");
 
@@ -2581,6 +2583,7 @@ save_gray  (FILE   *ofp,
       if ((i % 20) == 0)
         gimp_progress_update ((double) i / (double) height);
     }
+  gimp_progress_update (1.0);
 
   if (level2)
     {
@@ -2710,6 +2713,7 @@ save_bw (FILE   *ofp,
       if ((i % 20) == 0)
         gimp_progress_update ((double) i / (double) height);
     }
+  gimp_progress_update (1.0);
 
   if (level2)
     {
@@ -2865,6 +2869,7 @@ save_index (FILE   *ofp,
       if ((i % 20) == 0)
         gimp_progress_update ((double) i / (double) height);
     }
+  gimp_progress_update (1.0);
 
   ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
@@ -2994,6 +2999,7 @@ save_rgb (FILE   *ofp,
       if ((i % 20) == 0)
         gimp_progress_update ((double) i / (double) height);
     }
+  gimp_progress_update (1.0);
 
   ps_end_data (ofp);
   fprintf (ofp, "showpage\n");

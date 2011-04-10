@@ -885,6 +885,7 @@ compose (const gchar  *compose_type,
 
       gimp_progress_update ((gdouble) i / (gdouble) height);
     }
+  gimp_progress_update (1.0);
 
   for (j = 0; j < num_images; j++)
     {

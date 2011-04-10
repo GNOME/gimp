@@ -490,6 +490,7 @@ neon (GimpDrawable *drawable,
     }
   else
     {
+      gimp_progress_update (1.0);
       /*  now, merge horizontal and vertical into a magnitude  */
       gimp_pixel_rgn_init (&src_rgn, drawable,
                            0, 0, drawable->width, drawable->height,

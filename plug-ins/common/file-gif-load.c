@@ -1152,6 +1152,7 @@ ReadImage (FILE        *fd,
   if (LZWReadByte (fd, FALSE, c) >= 0)
     g_print ("GIF: too much input data, ignoring extra...\n");
 
+  gimp_progress_update (1.0);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0, drawable->width, drawable->height, TRUE, FALSE);
   gimp_pixel_rgn_set_rect (&pixel_rgn, dest,

@@ -3192,6 +3192,7 @@ p_vertical_bend (BenderDialog *cd,
             }
         }
     }
+  gimp_progress_update (1.0);
 
   g_free (last_arr);
   g_free (first_arr);

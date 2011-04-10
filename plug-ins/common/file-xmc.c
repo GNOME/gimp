@@ -769,6 +769,7 @@ load_image (const gchar *filename, GError **error)
 
       gimp_progress_update ( (i + 1) / imagesp->nimage);
     }
+  gimp_progress_update (1.0);
   /* free temporary buffer */
   g_free(tmppixel);
 
@@ -1655,6 +1656,7 @@ save_image (const gchar *filename,
 
       gimp_progress_update ((i + 1) / imagesp->nimage);
     }
+  gimp_progress_update (1.0);
 
   /*
    * comment parsing

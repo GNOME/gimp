@@ -469,6 +469,7 @@ explorer (GimpDrawable * drawable)
       if ((row % 10) == 0)
         gimp_progress_update ((double) row / (double) (y2 - y1));
     }
+  gimp_progress_update (1.0);
 
   /*  update the processed region  */
   gimp_drawable_flush (drawable);

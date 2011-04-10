@@ -351,6 +351,7 @@ tile (GimpDrawable *drawable)
 
   tile_region (drawable, TRUE, x1, y1, x2, y2);
   tile_region (drawable, FALSE, x1, y1, x2, y2);
+  gimp_progress_update (1.0);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);

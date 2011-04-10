@@ -464,6 +464,7 @@ prim (gint    pos,
       if (progress++ % PRIMS_PROGRESS_UPDATE)
         gimp_progress_update ((double) progress / (double) max_progress);
     }
+  gimp_progress_update (1.0);
 
   g_slist_free (front_cells);
 }
@@ -639,6 +640,7 @@ prim_tileable (guchar *maz,
       if (progress++ % PRIMS_PROGRESS_UPDATE)
         gimp_progress_update ((double) progress / (double) max_progress);
     }
+  gimp_progress_update (1.0);
 
   g_slist_free (front_cells);
 }

@@ -563,6 +563,7 @@ load_image (const gchar  *filename,
         }
       break;
     }
+  gimp_progress_update (1.0);
 
   fclose (ifp);
 
@@ -631,6 +632,8 @@ save_image (const gchar  *filename,
     retval = save_rgb (ofp, image_ID, drawable_ID);
   else
     retval = FALSE;
+
+  gimp_progress_update (1.0);
 
   fclose (ofp);
 

@@ -509,6 +509,7 @@ load_image (const gchar  *filename,
       image_ID = -1;
       break;
     }
+  gimp_progress_update (1.0);
 
   fclose (ifp);
 

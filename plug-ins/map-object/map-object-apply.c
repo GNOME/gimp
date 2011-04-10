@@ -311,6 +311,7 @@ compute_image (void)
                                       show_progress,
                                       NULL);
     }
+  gimp_progress_update (1.0);
 
   /* Update the region */
   /* ================= */

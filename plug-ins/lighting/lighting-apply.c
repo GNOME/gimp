@@ -134,6 +134,8 @@ compute_image (void)
       gimp_pixel_rgn_set_row (&dest_region, row, 0, ycount, width);
     }
 
+  gimp_progress_update (1.0);
+
   g_free (row);
 
   /* Update image */

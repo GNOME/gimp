@@ -118,6 +118,8 @@ find_outline_pixels (void)
 	gimp_progress_update (((gdouble)row) / height);
   }
 
+  gimp_progress_update (1.0);
+
   local_free_bitmap (&marked);
 
   return outline_list;

@@ -1565,6 +1565,8 @@ save_image (const gchar  *filename,
         }
     }
 
+  gimp_progress_update (1.0);
+
   png_write_end (pp, info);
   png_destroy_write_struct (&pp, &info);
 
