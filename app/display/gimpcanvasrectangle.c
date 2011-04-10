@@ -206,36 +206,43 @@ gimp_canvas_rectangle_transform (GimpCanvasItem   *item,
                                  gdouble          *h)
 {
   GimpCanvasRectanglePrivate *private = GET_PRIVATE (item);
+  gdouble                     x1, y1;
+  gdouble                     x2, y2;
 
   gimp_display_shell_transform_xy_f (shell,
                                      MIN (private->x,
                                           private->x + private->width),
                                      MIN (private->y,
                                           private->y + private->height),
-                                     x, y);
+                                     &x1, &y1);
   gimp_display_shell_transform_xy_f (shell,
                                      MAX (private->x,
                                           private->x + private->width),
                                      MAX (private->y,
                                           private->y + private->height),
-                                     w, h);
+                                     &x2, &y2);
 
-  *w -= *x;
-  *h -= *y;
+  x1 = floor (x1);
+  y1 = floor (y1);
+  x2 = ceil (x2);
+  y2 = ceil (y2);
 
   if (private->filled)
     {
-      *x = floor (*x);
-      *y = floor (*y);
-      *w = ceil (*w);
-      *h = ceil (*h);
+      *x = x1;
+      *y = y1;
+      *w = x2 - x1;
+      *h = y2 - y1;
     }
   else
     {
-      *x = floor (*x) + 0.5;
-      *y = floor (*y) + 0.5;
-      *w = ceil (*w) - 1.0;
-      *h = ceil (*h) - 1.0;
+      *x = x1 + 0.5;
+      *y = y1 + 0.5;
+      *w = x2 - 0.5 - *x;
+      *h = y2 - 0.5 - *y;
+
+      *w = MAX (0.0, *w);
+      *h = MAX (0.0, *h);
     }
 }
 
