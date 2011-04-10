@@ -259,7 +259,7 @@ cartoon (GimpDrawable *drawable,
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   GimpPixelRgn *pr;
-  gint          width, height;
+  gint          x, y, width, height;
   gint          bytes;
   gboolean      has_alpha;
   guchar       *dest1;
@@ -275,7 +275,6 @@ cartoon (GimpDrawable *drawable,
   gdouble       bd_p2[5], bd_m2[5];
   gdouble      *val_p1, *val_m1, *vp1, *vm1;
   gdouble      *val_p2, *val_m2, *vp2, *vm2;
-  gint          x1, y1, x2, y2;
   gint          i, j;
   gint          row, col, b;
   gint          terms;
@@ -292,15 +291,13 @@ cartoon (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_position (preview, &x, &y);
       gimp_preview_get_size (preview, &width, &height);
     }
-  else
+  else if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                           &x, &y, &width, &height))
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-      width     = (x2 - x1);
-      height    = (y2 - y1);
+      return;
     }
 
   bytes     = drawable->bpp;
@@ -342,7 +339,7 @@ cartoon (GimpDrawable *drawable,
       memset (val_m1, 0, height * bytes * sizeof (gdouble));
       memset (val_m2, 0, height * bytes * sizeof (gdouble));
 
-      gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, height);
+      gimp_pixel_rgn_get_col (&src_rgn, src, col + x, y, height);
 
       src1  = src;
       sp_p1 = src1;
@@ -491,7 +488,7 @@ cartoon (GimpDrawable *drawable,
   ramp = compute_ramp (dest1, dest2, width * height, cvals.pct_black);
 
   /* Initialize the pixel regions. */
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&src_rgn, drawable, x, y, width, height, FALSE, FALSE);
 
   if (preview)
     {
@@ -501,7 +498,7 @@ cartoon (GimpDrawable *drawable,
   else
     {
       gimp_pixel_rgn_init (&dest_rgn, drawable,
-                           x1, y1, width, height, TRUE, TRUE);
+                           x, y, width, height, TRUE, TRUE);
       pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
     }
 
@@ -509,8 +506,8 @@ cartoon (GimpDrawable *drawable,
     {
       guchar  *src_ptr  = src_rgn.data;
       guchar  *dest_ptr;
-      guchar  *blur_ptr = dest1 + (src_rgn.y - y1) * width + (src_rgn.x - x1);
-      guchar  *avg_ptr  = dest2 + (src_rgn.y - y1) * width + (src_rgn.x - x1);
+      guchar  *blur_ptr = dest1 + (src_rgn.y - y) * width + (src_rgn.x - x);
+      guchar  *avg_ptr  = dest2 + (src_rgn.y - y) * width + (src_rgn.x - x);
       gdouble  diff;
       gdouble  mult     = 0.0;
       gdouble  lightness;
@@ -518,7 +515,7 @@ cartoon (GimpDrawable *drawable,
       if (preview)
         dest_ptr =
           preview_buffer +
-          ((src_rgn.y - y1) * width + (src_rgn.x - x1)) * bytes;
+          ((src_rgn.y - y) * width + (src_rgn.x - x)) * bytes;
       else
         dest_ptr = dest_rgn.data;
 
@@ -598,7 +595,7 @@ cartoon (GimpDrawable *drawable,
       /*  merge the shadow, update the drawable  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+      gimp_drawable_update (drawable->drawable_id, x, y, width, height);
     }
 
   /*  free up buffers  */
