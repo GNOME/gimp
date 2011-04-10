@@ -312,41 +312,27 @@ webpage_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  combo = gtk_combo_box_text_new ();
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
-                                  _("Huge"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
-                                  _("Large"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
-                                  _("Default"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
-                                  _("Small"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo),
-                                  _("Tiny"));
+  combo = gimp_int_combo_box_new (_("Huge"), 16,
+                                  _("Large"), 14,
+                                  _("Default"), 12,
+                                  _("Small"), 10,
+                                  _("Tiny"), 8,
+                                  NULL);
 
   switch (webpagevals.font_size)
     {
     case 16:
-      active = 0;
-      break;
     case 14:
-      active = 1;
-      break;
     case 12:
-      active = 2;
-      break;
     case 10:
-      active = 3;
-      break;
     case 8:
-      active = 4;
+      active = webpagevals.font_size;
       break;
     default:
-      active = 2;
-      break;
+      active = 12;
     }
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), active);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), active);
 
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
@@ -362,27 +348,8 @@ webpage_dialog (void)
       webpagevals.width = (gint) gtk_adjustment_get_value
         (GTK_ADJUSTMENT (adjustment));
 
-      active = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
-      switch (active)
-        {
-        case 0:
-          webpagevals.font_size = 16;
-          break;
-        case 1:
-          webpagevals.font_size = 14;
-          break;
-        case 2:
-          webpagevals.font_size = 12;
-          break;
-        case 3:
-          webpagevals.font_size = 10;
-          break;
-        case 4:
-          webpagevals.font_size = 8;
-          break;
-        default:
-          webpagevals.font_size = 12;
-        }
+      gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo),
+                                     &webpagevals.font_size);
 
       ret = TRUE;
     }
