@@ -306,7 +306,7 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
                                   GimpDisplayShell *shell)
 {
   GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
-  GdkRectangle               rectangle;
+  cairo_rectangle_int_t      rectangle;
   GimpSegment               *segs;
   gint                       x1, y1, x2, y2;
   gint                       i;
@@ -340,7 +340,7 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
   rectangle.width  = x2 - x1 + 4;
   rectangle.height = y2 - y1 + 4;
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 GimpCanvasItem *

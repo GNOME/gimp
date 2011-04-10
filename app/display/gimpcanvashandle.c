@@ -354,7 +354,7 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
                                 GimpDisplayShell *shell)
 {
   GimpCanvasHandlePrivate *private = GET_PRIVATE (item);
-  GdkRectangle             rectangle;
+  cairo_rectangle_int_t    rectangle;
   gdouble                  x, y;
 
   gimp_canvas_handle_transform (item, shell, &x, &y);
@@ -382,7 +382,7 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
       break;
     }
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 static gboolean

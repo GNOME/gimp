@@ -270,7 +270,7 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
                                    GimpDisplayShell *shell)
 {
   GimpCanvasRectanglePrivate *private = GET_PRIVATE (item);
-  GdkRectangle                rectangle;
+  cairo_rectangle_int_t       rectangle;
   gdouble                     x, y;
   gdouble                     w, h;
 
@@ -283,7 +283,7 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
       rectangle.width  = ceil (w + 2.0);
       rectangle.height = ceil (h + 2.0);
 
-      return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+      return cairo_region_create_rectangle (&rectangle);
     }
   else if (w > 64 && h > 64)
     {
@@ -295,12 +295,12 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
       rectangle.width  = 3.0;
       rectangle.height = ceil (h + 3.0);
 
-      region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+      region = cairo_region_create_rectangle (&rectangle);
 
       /* right */
       rectangle.x      = floor (x + w - 1.5);
 
-      cairo_region_union_rectangle (region, (cairo_rectangle_int_t *) &rectangle);
+      cairo_region_union_rectangle (region, &rectangle);
 
       /* top */
       rectangle.x      = floor (x - 1.5);
@@ -308,12 +308,12 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
       rectangle.width  = ceil (w + 3.0);
       rectangle.height = 3.0;
 
-      cairo_region_union_rectangle (region, (cairo_rectangle_int_t *) &rectangle);
+      cairo_region_union_rectangle (region, &rectangle);
 
       /* bottom */
       rectangle.y      = floor (y + h - 1.5);
 
-      cairo_region_union_rectangle (region, (cairo_rectangle_int_t *) &rectangle);
+      cairo_region_union_rectangle (region, &rectangle);
 
       return region;
     }
@@ -324,7 +324,7 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
       rectangle.width  = ceil (w + 3.0);
       rectangle.height = ceil (h + 3.0);
 
-      return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+      return cairo_region_create_rectangle (&rectangle);
     }
 }
 

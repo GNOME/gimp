@@ -344,11 +344,11 @@ static cairo_region_t *
 gimp_canvas_grid_get_extents (GimpCanvasItem   *item,
                               GimpDisplayShell *shell)
 {
-  GimpImage    *image = gimp_display_get_image (shell->display);
-  GdkRectangle  rectangle;
-  gdouble       x1, y1;
-  gdouble       x2, y2;
-  gint          w, h;
+  GimpImage             *image = gimp_display_get_image (shell->display);
+  cairo_rectangle_int_t  rectangle;
+  gdouble                x1, y1;
+  gdouble                x2, y2;
+  gint                   w, h;
 
   if (! image)
     return NULL;
@@ -364,7 +364,7 @@ gimp_canvas_grid_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ceil (x2) - rectangle.x;
   rectangle.height = ceil (y2) - rectangle.y;
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 static void

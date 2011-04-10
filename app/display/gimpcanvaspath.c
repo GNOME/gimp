@@ -254,9 +254,9 @@ gimp_canvas_path_get_extents (GimpCanvasItem   *item,
 
   if (private->path && gtk_widget_get_realized (shell->canvas))
     {
-      cairo_t      *cr;
-      GdkRectangle  rectangle;
-      gdouble       x1, y1, x2, y2;
+      cairo_t               *cr;
+      cairo_rectangle_int_t  rectangle;
+      gdouble                x1, y1, x2, y2;
 
       cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
 
@@ -287,7 +287,7 @@ gimp_canvas_path_get_extents (GimpCanvasItem   *item,
           rectangle.height = ceil (y2 + 1.5) - rectangle.y;
         }
 
-      return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+      return cairo_region_create_rectangle (&rectangle);
     }
 
   return NULL;

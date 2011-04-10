@@ -188,7 +188,7 @@ gimp_canvas_cursor_get_extents (GimpCanvasItem   *item,
                                 GimpDisplayShell *shell)
 {
   GimpCanvasCursorPrivate *private = GET_PRIVATE (item);
-  GdkRectangle             rectangle;
+  cairo_rectangle_int_t    rectangle;
   gdouble                  x, y;
 
   x = floor (private->x) + 0.5;
@@ -199,7 +199,7 @@ gimp_canvas_cursor_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ceil (x + GIMP_CURSOR_SIZE + 1.5) - rectangle.x;
   rectangle.height = ceil (y + GIMP_CURSOR_SIZE + 1.5) - rectangle.y;
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 GimpCanvasItem *

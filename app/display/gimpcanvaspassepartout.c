@@ -83,16 +83,17 @@ static cairo_region_t *
 gimp_canvas_passe_partout_get_extents (GimpCanvasItem   *item,
                                        GimpDisplayShell *shell)
 {
-  cairo_region_t *inner;
-  cairo_region_t *outer;
-  GdkRectangle    rect = { 0, 0, 0, 0 };
+  cairo_rectangle_int_t  rectangle;
+  cairo_region_t        *inner;
+  cairo_region_t        *outer;
 
-  rect.x = - shell->offset_x;
-  rect.y = - shell->offset_y;
+  rectangle.x = - shell->offset_x;
+  rectangle.y = - shell->offset_y;
   gimp_display_shell_draw_get_scaled_image_size (shell,
-                                                 &rect.width, &rect.height);
+                                                 &rectangle.width,
+                                                 &rectangle.height);
 
-  outer = cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rect);
+  outer = cairo_region_create_rectangle (&rectangle);
 
   inner = GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item, shell);
 

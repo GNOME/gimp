@@ -346,9 +346,9 @@ gimp_canvas_transform_preview_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_canvas_transform_preview_transform (GimpCanvasItem   *item,
-                                         GimpDisplayShell *shell,
-                                         GdkRectangle     *extents)
+gimp_canvas_transform_preview_transform (GimpCanvasItem        *item,
+                                         GimpDisplayShell      *shell,
+                                         cairo_rectangle_int_t *extents)
 {
   GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
   gdouble                            tx1, ty1;
@@ -569,10 +569,10 @@ static cairo_region_t *
 gimp_canvas_transform_preview_get_extents (GimpCanvasItem   *item,
                                            GimpDisplayShell *shell)
 {
-  GdkRectangle rectangle;
+  cairo_rectangle_int_t rectangle;
 
   if (gimp_canvas_transform_preview_transform (item, shell, &rectangle))
-    return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+    return cairo_region_create_rectangle (&rectangle);
 
   return NULL;
 }

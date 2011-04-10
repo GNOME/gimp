@@ -230,9 +230,9 @@ static cairo_region_t *
 gimp_canvas_guide_get_extents (GimpCanvasItem   *item,
                                GimpDisplayShell *shell)
 {
-  GdkRectangle rectangle;
-  gdouble      x1, y1;
-  gdouble      x2, y2;
+  cairo_rectangle_int_t rectangle;
+  gdouble               x1, y1;
+  gdouble               x2, y2;
 
   gimp_canvas_guide_transform (item, shell, &x1, &y1, &x2, &y2);
 
@@ -241,7 +241,7 @@ gimp_canvas_guide_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ABS (x2 - x1) + 3.0;
   rectangle.height = ABS (y2 - y1) + 3.0;
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 static void

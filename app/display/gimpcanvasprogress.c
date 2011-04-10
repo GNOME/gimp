@@ -310,9 +310,9 @@ static cairo_region_t *
 gimp_canvas_progress_get_extents (GimpCanvasItem   *item,
                                   GimpDisplayShell *shell)
 {
-  GdkRectangle rectangle;
-  gdouble      x, y;
-  gint         width, height;
+  cairo_rectangle_int_t rectangle;
+  gdouble               x, y;
+  gint                  width, height;
 
   gimp_canvas_progress_transform (item, shell, &x, &y, &width, &height);
 
@@ -322,7 +322,7 @@ gimp_canvas_progress_get_extents (GimpCanvasItem   *item,
   rectangle.width  = width  + 2;
   rectangle.height = height + 2;
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 static GimpProgress *

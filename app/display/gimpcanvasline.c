@@ -226,9 +226,9 @@ static cairo_region_t *
 gimp_canvas_line_get_extents (GimpCanvasItem   *item,
                               GimpDisplayShell *shell)
 {
-  GdkRectangle rectangle;
-  gdouble      x1, y1;
-  gdouble      x2, y2;
+  cairo_rectangle_int_t rectangle;
+  gdouble               x1, y1;
+  gdouble               x2, y2;
 
   gimp_canvas_line_transform (item, shell, &x1, &y1, &x2, &y2);
 
@@ -247,7 +247,7 @@ gimp_canvas_line_get_extents (GimpCanvasItem   *item,
       rectangle.height = ceil (ABS (y2 - y1) + 5.0);
     }
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 GimpCanvasItem *

@@ -251,7 +251,7 @@ gimp_canvas_polygon_get_extents (GimpCanvasItem   *item,
                                  GimpDisplayShell *shell)
 {
   GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
-  GdkRectangle              rectangle;
+  cairo_rectangle_int_t     rectangle;
   GimpVector2              *points;
   gint                      x1, y1, x2, y2;
   gint                      i;
@@ -285,7 +285,7 @@ gimp_canvas_polygon_get_extents (GimpCanvasItem   *item,
   rectangle.width  = x2 - x1;
   rectangle.height = y2 - y1;
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 GimpCanvasItem *

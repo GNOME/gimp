@@ -170,16 +170,16 @@ gimp_canvas_pen_get_extents (GimpCanvasItem   *item,
 
   if (region)
     {
-      GdkRectangle rectangle;
+      cairo_rectangle_int_t rectangle;
 
-      cairo_region_get_extents (region, (cairo_rectangle_int_t *) &rectangle);
+      cairo_region_get_extents (region, &rectangle);
 
       rectangle.x      -= ceil (private->width / 2.0);
       rectangle.y      -= ceil (private->width / 2.0);
       rectangle.width  += private->width + 1;
       rectangle.height += private->width + 1;
 
-      cairo_region_union_rectangle (region, (cairo_rectangle_int_t *) &rectangle);
+      cairo_region_union_rectangle (region, &rectangle);
     }
 
   return region;

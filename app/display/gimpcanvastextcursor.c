@@ -273,7 +273,7 @@ gimp_canvas_text_cursor_get_extents (GimpCanvasItem   *item,
                                      GimpDisplayShell *shell)
 {
   GimpCanvasTextCursorPrivate *private = GET_PRIVATE (item);
-  GdkRectangle                 rectangle;
+  cairo_rectangle_int_t        rectangle;
   gdouble                      x, y;
   gdouble                      w, h;
 
@@ -294,7 +294,7 @@ gimp_canvas_text_cursor_get_extents (GimpCanvasItem   *item,
       rectangle.height = ceil (h + 3.0);
     }
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 GimpCanvasItem *

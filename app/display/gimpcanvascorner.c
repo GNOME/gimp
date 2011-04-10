@@ -412,9 +412,9 @@ static cairo_region_t *
 gimp_canvas_corner_get_extents (GimpCanvasItem   *item,
                                 GimpDisplayShell *shell)
 {
-  GdkRectangle rectangle;
-  gdouble      x, y;
-  gdouble      w, h;
+  cairo_rectangle_int_t rectangle;
+  gdouble               x, y;
+  gdouble               w, h;
 
   gimp_canvas_corner_transform (item, shell, &x, &y, &w, &h);
 
@@ -423,7 +423,7 @@ gimp_canvas_corner_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ceil (w + 3.0);
   rectangle.height = ceil (h + 3.0);
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 GimpCanvasItem *

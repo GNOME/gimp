@@ -261,9 +261,9 @@ static cairo_region_t *
 gimp_canvas_sample_point_get_extents (GimpCanvasItem   *item,
                                       GimpDisplayShell *shell)
 {
-  GdkRectangle rectangle;
-  gdouble      x, y;
-  gint         x1, x2, y1, y2;
+  cairo_rectangle_int_t rectangle;
+  gdouble               x, y;
+  gint                  x1, x2, y1, y2;
 
   gimp_canvas_sample_point_transform (item, shell, &x, &y);
 
@@ -281,7 +281,7 @@ gimp_canvas_sample_point_get_extents (GimpCanvasItem   *item,
   rectangle.width  += 5;
   rectangle.height += 5;
 
-  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+  return cairo_region_create_rectangle (&rectangle);
 }
 
 static void
