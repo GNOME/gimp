@@ -19,6 +19,7 @@
 
 #include <string.h>
 
+#include <cairo.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -290,56 +291,29 @@ gimp_channel_select_vectors (GimpChannel    *channel,
                              gdouble         feather_radius_y,
                              gboolean        push_undo)
 {
-  GimpScanConvert *scan_convert;
-  GList           *stroke;
-  gboolean         coords_added = FALSE;
+  const GimpBezierDesc *bezier;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
 
-  scan_convert = gimp_scan_convert_new ();
+  bezier = gimp_vectors_get_bezier (vectors);
 
-  for (stroke = vectors->strokes; stroke; stroke = stroke->next)
+  if (bezier && bezier->num_data > 4)
     {
-      GArray   *coords;
-      gboolean  closed;
+      GimpScanConvert *scan_convert;
 
-      coords = gimp_stroke_interpolate (GIMP_STROKE (stroke->data),
-                                        1.0, &closed);
+      scan_convert = gimp_scan_convert_new ();
+      gimp_scan_convert_add_bezier (scan_convert, bezier);
 
-      if (coords && coords->len)
-        {
-          GimpVector2 *points;
-          gint         i;
+      gimp_channel_select_scan_convert (channel, undo_desc, scan_convert, 0, 0,
+                                        op, antialias, feather,
+                                        feather_radius_x, feather_radius_y,
+                                        push_undo);
 
-          points = g_new0 (GimpVector2, coords->len);
-
-          for (i = 0; i < coords->len; i++)
-            {
-              points[i].x = g_array_index (coords, GimpCoords, i).x;
-              points[i].y = g_array_index (coords, GimpCoords, i).y;
-            }
-
-          gimp_scan_convert_add_polyline (scan_convert, coords->len,
-                                          points, TRUE);
-          coords_added = TRUE;
-
-          g_free (points);
-        }
-
-      if (coords)
-        g_array_free (coords, TRUE);
+      gimp_scan_convert_free (scan_convert);
     }
-
-  if (coords_added)
-    gimp_channel_select_scan_convert (channel, undo_desc, scan_convert, 0, 0,
-                                      op, antialias, feather,
-                                      feather_radius_x, feather_radius_y,
-                                      push_undo);
-
-  gimp_scan_convert_free (scan_convert);
 }
 
 
