@@ -149,9 +149,9 @@ gimp_canvas_arc_init (GimpCanvasArc *arc)
 
 static void
 gimp_canvas_arc_set_property (GObject      *object,
-                                    guint         property_id,
-                                    const GValue *value,
-                                    GParamSpec   *pspec)
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
 {
   GimpCanvasArcPrivate *private = GET_PRIVATE (object);
 
@@ -187,9 +187,9 @@ gimp_canvas_arc_set_property (GObject      *object,
 
 static void
 gimp_canvas_arc_get_property (GObject    *object,
-                                    guint       property_id,
-                                    GValue     *value,
-                                    GParamSpec *pspec)
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
 {
   GimpCanvasArcPrivate *private = GET_PRIVATE (object);
 
