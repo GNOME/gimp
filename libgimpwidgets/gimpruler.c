@@ -67,6 +67,7 @@ typedef struct
   gdouble          position;
   gdouble          max_size;
 
+  GdkWindow       *input_window;
   cairo_surface_t *backing_store;
   PangoLayout     *layout;
   gdouble          font_scale;
@@ -104,6 +105,8 @@ static void          gimp_ruler_get_property  (GObject        *object,
 
 static void          gimp_ruler_realize       (GtkWidget      *widget);
 static void          gimp_ruler_unrealize     (GtkWidget      *widget);
+static void          gimp_ruler_map           (GtkWidget      *widget);
+static void          gimp_ruler_unmap         (GtkWidget      *widget);
 static void          gimp_ruler_size_allocate (GtkWidget      *widget,
                                                GtkAllocation  *allocation);
 static void          gimp_ruler_size_request  (GtkWidget      *widget,
@@ -140,6 +143,8 @@ gimp_ruler_class_init (GimpRulerClass *klass)
 
   widget_class->realize             = gimp_ruler_realize;
   widget_class->unrealize           = gimp_ruler_unrealize;
+  widget_class->map                 = gimp_ruler_map;
+  widget_class->unmap               = gimp_ruler_unmap;
   widget_class->size_allocate       = gimp_ruler_size_allocate;
   widget_class->size_request        = gimp_ruler_size_request;
   widget_class->style_set           = gimp_ruler_style_set;
@@ -219,6 +224,8 @@ static void
 gimp_ruler_init (GimpRuler *ruler)
 {
   GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (ruler);
+
+  gtk_widget_set_has_window (GTK_WIDGET (ruler), FALSE);
 
   priv->orientation   = GTK_ORIENTATION_HORIZONTAL;
   priv->unit          = GIMP_PIXELS;
@@ -710,12 +717,13 @@ gimp_ruler_get_range (GimpRuler *ruler,
 static void
 gimp_ruler_realize (GtkWidget *widget)
 {
-  GimpRuler     *ruler = GIMP_RULER (widget);
-  GtkAllocation  allocation;
-  GdkWindowAttr  attributes;
-  gint           attributes_mask;
+  GimpRuler        *ruler = GIMP_RULER (widget);
+  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkAllocation     allocation;
+  GdkWindowAttr     attributes;
+  gint              attributes_mask;
 
-  gtk_widget_set_realized (widget, TRUE);
+  GTK_WIDGET_CLASS (gimp_ruler_parent_class)->realize (widget);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -724,24 +732,17 @@ gimp_ruler_realize (GtkWidget *widget)
   attributes.y           = allocation.y;
   attributes.width       = allocation.width;
   attributes.height      = allocation.height;
-  attributes.wclass      = GDK_INPUT_OUTPUT;
-  attributes.visual      = gtk_widget_get_visual (widget);
+  attributes.wclass      = GDK_INPUT_ONLY;
   attributes.event_mask  = (gtk_widget_get_events (widget) |
                             GDK_EXPOSURE_MASK              |
                             GDK_POINTER_MOTION_MASK        |
                             GDK_POINTER_MOTION_HINT_MASK);
 
-  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
+  attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-  gtk_widget_set_window (widget,
-                         gdk_window_new (gtk_widget_get_parent_window (widget),
-                                         &attributes, attributes_mask));
-  gdk_window_set_user_data (gtk_widget_get_window (widget), ruler);
-
-  gtk_widget_style_attach (widget);
-  gtk_style_set_background (gtk_widget_get_style (widget),
-                            gtk_widget_get_window (widget),
-                            GTK_STATE_ACTIVE);
+  priv->input_window = gdk_window_new (gtk_widget_get_window (widget),
+                                       &attributes, attributes_mask);
+  gdk_window_set_user_data (priv->input_window, ruler);
 
   gimp_ruler_make_pixmap (ruler);
 }
@@ -764,20 +765,49 @@ gimp_ruler_unrealize (GtkWidget *widget)
       priv->layout = NULL;
     }
 
+  if (priv->input_window)
+    {
+      gdk_window_destroy (priv->input_window);
+      priv->input_window = NULL;
+    }
+
   GTK_WIDGET_CLASS (gimp_ruler_parent_class)->unrealize (widget);
+}
+
+static void
+gimp_ruler_map (GtkWidget *widget)
+{
+  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->map (widget);
+
+  if (priv->input_window)
+    gdk_window_show (priv->input_window);
+}
+
+static void
+gimp_ruler_unmap (GtkWidget *widget)
+{
+  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
+
+  if (priv->input_window)
+    gdk_window_hide (priv->input_window);
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
 static void
 gimp_ruler_size_allocate (GtkWidget     *widget,
                           GtkAllocation *allocation)
 {
-  GimpRuler *ruler = GIMP_RULER (widget);
+  GimpRuler        *ruler = GIMP_RULER (widget);
+  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
 
   gtk_widget_set_allocation (widget, allocation);
 
   if (gtk_widget_get_realized (widget))
     {
-      gdk_window_move_resize (gtk_widget_get_window (widget),
+      gdk_window_move_resize (priv->input_window,
                               allocation->x, allocation->y,
                               allocation->width, allocation->height);
 
@@ -852,6 +882,7 @@ gimp_ruler_expose (GtkWidget      *widget,
     {
       GimpRuler        *ruler = GIMP_RULER (widget);
       GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+      GtkAllocation     allocation;
       cairo_t          *cr;
 
       gimp_ruler_draw_ticks (ruler);
@@ -859,6 +890,9 @@ gimp_ruler_expose (GtkWidget      *widget,
       cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdk_cairo_region (cr, event->region);
       cairo_clip (cr);
+
+      gtk_widget_get_allocation (widget, &allocation);
+      cairo_translate (cr, allocation.x, allocation.y);
 
       cairo_set_source_surface (cr, priv->backing_store, 0, 0);
       cairo_paint (cr);
@@ -1157,6 +1191,8 @@ gimp_ruler_draw_pos (GimpRuler *ruler)
       gdouble  upper;
       gdouble  position;
       gdouble  increment;
+
+      cairo_translate (cr, allocation.x, allocation.y);
 
       /*  If a backing store exists, restore the ruler  */
       if (priv->backing_store)
