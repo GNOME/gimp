@@ -253,56 +253,24 @@ gimp_drawable_render_vectors (GimpDrawable  *drawable,
                               gboolean       do_stroke,
                               GError       **error)
 {
-  GimpScanConvert *scan_convert;
-  GimpStroke      *stroke;
-  gint             num_coords = 0;
+  const GimpBezierDesc *bezier;
 
-  scan_convert = gimp_scan_convert_new ();
+  bezier = gimp_vectors_get_bezier (vectors);
 
-  /* For each Stroke in the vector, interpolate it, and add it to the
-   * ScanConvert
-   */
-  for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-       stroke;
-       stroke = gimp_vectors_stroke_get_next (vectors, stroke))
+  if (bezier && bezier->num_data > 1)
     {
-      GArray   *coords;
-      gboolean  closed;
+      GimpScanConvert *scan_convert;
 
-      /* Get the interpolated version of this stroke, and add it to our
-       * scanconvert.
-       */
-      coords = gimp_stroke_interpolate (stroke, 0.2, &closed);
+      scan_convert = gimp_scan_convert_new ();
+      gimp_scan_convert_add_bezier (scan_convert, bezier);
 
-      if (coords && coords->len)
-        {
-          GimpVector2 *points = g_new0 (GimpVector2, coords->len);
-          gint         i;
-
-          for (i = 0; i < coords->len; i++)
-            {
-              points[i].x = g_array_index (coords, GimpCoords, i).x;
-              points[i].y = g_array_index (coords, GimpCoords, i).y;
-              num_coords++;
-            }
-
-          gimp_scan_convert_add_polyline (scan_convert, coords->len,
-                                          points, closed || !do_stroke);
-
-          g_free (points);
-        }
-
-      if (coords)
-        g_array_free (coords, TRUE);
+      return scan_convert;
     }
 
-  if (num_coords > 0)
-    return scan_convert;
-
-  gimp_scan_convert_free (scan_convert);
-
   g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                       _("Not enough points to stroke"));
+                       do_stroke ?
+                       _("Not enough points to stroke") :
+                       _("Not enough points to fill"));
 
   return NULL;
 }
