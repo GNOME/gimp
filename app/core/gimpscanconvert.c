@@ -31,6 +31,7 @@
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
 
+#include "gimpbezierdesc.h"
 #include "gimpscanconvert.h"
 
 
@@ -53,7 +54,6 @@ struct _GimpScanConvert
   gdouble         dash_offset;
   GArray         *dash_info;
 
-  guint           num_nodes;
   GArray         *path_data;
 };
 
@@ -182,7 +182,6 @@ gimp_scan_convert_add_polyline (GimpScanConvert   *sc,
           pd.point.x = points[i].x;
           pd.point.y = points[i].y;
           sc->path_data = g_array_append_val (sc->path_data, pd);
-          sc->num_nodes++;
           prev = points[i];
         }
     }
@@ -196,6 +195,26 @@ gimp_scan_convert_add_polyline (GimpScanConvert   *sc,
     }
 }
 
+/**
+ * gimp_scan_convert_add_polyline:
+ * @sc:     a #GimpScanConvert context
+ * @bezier: a #GimpBezierDesc
+ *
+ * Adds a @bezier path to @sc.
+ *
+ * Please note that you should use gimp_scan_convert_stroke() if you
+ * specify open paths.
+ **/
+void
+gimp_scan_convert_add_bezier (GimpScanConvert       *sc,
+                              const GimpBezierDesc  *bezier)
+{
+  g_return_if_fail (sc != NULL);
+  g_return_if_fail (bezier != NULL);
+
+  sc->path_data = g_array_append_vals (sc->path_data,
+                                       bezier->data, bezier->num_data);
+}
 
 /**
  * gimp_scan_convert_stroke:

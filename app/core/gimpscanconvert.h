@@ -33,6 +33,8 @@ void      gimp_scan_convert_add_polyline       (GimpScanConvert   *sc,
                                                 guint              n_points,
                                                 const GimpVector2 *points,
                                                 gboolean           closed);
+void      gimp_scan_convert_add_bezier         (GimpScanConvert      *sc,
+                                                const GimpBezierDesc *bezier);
 void      gimp_scan_convert_stroke             (GimpScanConvert   *sc,
                                                 gdouble            width,
                                                 GimpJoinStyle      join,
