@@ -63,7 +63,8 @@ gimp_bezier_desc_new (cairo_path_data_t *data,
 static void
 add_polyline (GArray            *path_data,
               const GimpVector2 *points,
-              guint              n_points)
+              gint               n_points,
+              gboolean           closed)
 {
   GimpVector2       prev = { 0.0, 0.0, };
   cairo_path_data_t pd;
@@ -90,11 +91,14 @@ add_polyline (GArray            *path_data,
         }
     }
 
-  /* close the polyline */
-  pd.header.type   = CAIRO_PATH_CLOSE_PATH;
-  pd.header.length = 1;
+  /* close the polyline when needed */
+  if (closed)
+    {
+      pd.header.type   = CAIRO_PATH_CLOSE_PATH;
+      pd.header.length = 1;
 
-  g_array_append_val (path_data, pd);
+      g_array_append_val (path_data, pd);
+    }
 }
 
 GimpBezierDesc *
@@ -142,7 +146,7 @@ gimp_bezier_desc_new_from_bound_segs (BoundSeg *bound_segs,
 
       n_points++;
 
-      add_polyline (path_data, points, n_points);
+      add_polyline (path_data, points, n_points, TRUE);
 
       n_points = 0;
       seg++;
@@ -157,6 +161,22 @@ gimp_bezier_desc_new_from_bound_segs (BoundSeg *bound_segs,
 
   return gimp_bezier_desc_new ((cairo_path_data_t *) g_array_free (path_data, FALSE),
                                path_data->len);
+}
+
+void
+gimp_bezier_desc_translate (GimpBezierDesc *desc,
+                            gdouble         offset_x,
+                            gdouble         offset_y)
+{
+  gint i;
+
+  g_return_if_fail (desc != NULL);
+
+  for (i = 0; i < desc->num_data; i++)
+    {
+      desc->data[i].point.x += offset_x;
+      desc->data[i].point.y += offset_y;
+    }
 }
 
 GimpBezierDesc *

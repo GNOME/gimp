@@ -36,6 +36,10 @@ GimpBezierDesc * gimp_bezier_desc_new_from_bound_segs (BoundSeg             *bou
                                                        gint                  n_bound_segs,
                                                        gint                  n_bound_groups);
 
+void             gimp_bezier_desc_translate           (GimpBezierDesc       *desc,
+                                                       gdouble               offset_x,
+                                                       gdouble               offset_y);
+
 GimpBezierDesc * gimp_bezier_desc_copy                (const GimpBezierDesc *desc);
 void             gimp_bezier_desc_free                (GimpBezierDesc       *desc);
 
