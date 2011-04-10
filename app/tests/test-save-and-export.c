@@ -168,8 +168,9 @@ imported_file_uris (GimpTestFixture *fixture,
   filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
                                "desktop/64x64/gimp.png",
                                NULL);
-  uri = g_filename_to_uri (filename, NULL, NULL);
+  g_assert (g_file_test (filename, G_FILE_TEST_EXISTS));
 
+  uri = g_filename_to_uri (filename, NULL, NULL);
   image = file_open_image (gimp,
                            gimp_get_user_context (gimp),
                            NULL /*progress*/,
