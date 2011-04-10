@@ -390,6 +390,9 @@ plasma (GimpDrawable *drawable,
 
   pft = init_plasma (drawable, preview_mode, gr);
 
+  if (!preview_mode && !pft)
+    return;
+
   if (ix1 != ix2 && iy1 != iy2)
     {
       /*
@@ -433,12 +436,16 @@ init_plasma (GimpDrawable *drawable,
 
       pft = NULL;
     }
+  else if (gimp_drawable_mask_intersect (drawable->drawable_id,
+                                         &ix1, &iy1, &ix2, &iy2))
+    {
+      ix2 += ix1;
+      iy2 += iy1;
+      pft = gimp_pixel_fetcher_new (drawable, TRUE);
+    }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id,
-                                 &ix1, &iy1, &ix2, &iy2);
-
-      pft = gimp_pixel_fetcher_new (drawable, TRUE);
+      return NULL;
     }
 
   bpp       = drawable->bpp;
