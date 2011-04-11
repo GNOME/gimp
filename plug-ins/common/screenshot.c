@@ -193,7 +193,7 @@ static void       run                  (const gchar      *name,
 
 static guint32    select_window        (GdkScreen        *screen);
 static gint32     create_image         (GdkPixbuf        *pixbuf,
-                                        GdkRegion        *shape,
+                                        cairo_region_t   *shape,
                                         const gchar      *name);
 
 static gint32     shoot                (GdkScreen        *screen);
@@ -695,11 +695,11 @@ window_get_title (GdkDisplay *display,
 #endif
 }
 
-static GdkRegion *
+static cairo_region_t *
 window_get_shape (GdkScreen *screen,
                   guint32    window)
 {
-  GdkRegion  *shape = NULL;
+  cairo_region_t *shape = NULL;
 
 #if defined(GDK_WINDOWING_X11) && defined(HAVE_X11_EXTENSIONS_SHAPE_H)
   XRectangle *rects;
@@ -716,16 +716,16 @@ window_get_shape (GdkScreen *screen,
         {
           gint i;
 
-          shape = gdk_region_new ();
+          shape = cairo_region_create ();
 
           for (i = 0; i < rect_count; i++)
             {
-              GdkRectangle rect = { rects[i].x,
-                                    rects[i].y,
-                                    rects[i].width,
-                                    rects[i].height };
+              cairo_rectangle_int_t rect = { rects[i].x,
+                                             rects[i].y,
+                                             rects[i].width,
+                                             rects[i].height };
 
-              gdk_region_union_with_rect (shape, &rect);
+              cairo_region_union_rectangle (shape, &rect);
             }
         }
 
@@ -737,25 +737,26 @@ window_get_shape (GdkScreen *screen,
 }
 
 static void
-image_select_shape (gint32     image,
-                    GdkRegion *shape)
+image_select_shape (gint32          image,
+                    cairo_region_t *shape)
 {
-  GdkRectangle *rects;
-  gint          num_rects;
-  gint          i;
+  gint num_rects;
+  gint i;
 
   gimp_selection_none (image);
 
-  gdk_region_get_rectangles (shape, &rects, &num_rects);
+  num_rects = cairo_region_num_rectangles (shape);
 
   for (i = 0; i < num_rects; i++)
     {
-      gimp_image_select_rectangle (image, GIMP_CHANNEL_OP_ADD,
-                                   rects[i].x, rects[i].y,
-                                   rects[i].width, rects[i].height);
-    }
+      cairo_rectangle_int_t rect;
 
-  g_free (rects);
+      cairo_region_get_rectangle (shape, i, &rect);
+
+      gimp_image_select_rectangle (image, GIMP_CHANNEL_OP_ADD,
+                                   rect.x, rect.y,
+                                   rect.width, rect.height);
+    }
 
   gimp_selection_invert (image);
 }
@@ -764,9 +765,9 @@ image_select_shape (gint32     image,
 /* Create a GimpImage from a GdkPixbuf */
 
 static gint32
-create_image (GdkPixbuf   *pixbuf,
-              GdkRegion   *shape,
-              const gchar *name)
+create_image (GdkPixbuf      *pixbuf,
+              cairo_region_t *shape,
+              const gchar    *name)
 {
   gint32     image;
   gint32     layer;
@@ -806,7 +807,7 @@ create_image (GdkPixbuf   *pixbuf,
                                       100, GIMP_NORMAL_MODE, 0.0, 1.0);
   gimp_image_insert_layer (image, layer, -1, 0);
 
-  if (shape && ! gdk_region_empty (shape))
+  if (shape && ! cairo_region_is_empty (shape))
     {
       image_select_shape (image, shape);
 
@@ -917,17 +918,17 @@ get_foreign_window (GdkDisplay *display,
 static gint32
 shoot (GdkScreen *screen)
 {
-  GdkDisplay   *display;
-  GdkWindow    *window;
-  GdkPixbuf    *screenshot;
-  GdkRegion    *shape = NULL;
-  GdkRectangle  rect;
-  GdkRectangle  screen_rect;
-  gchar        *name  = NULL;
-  gint32        image;
-  gint          screen_x;
-  gint          screen_y;
-  gint          x, y;
+  GdkDisplay     *display;
+  GdkWindow      *window;
+  GdkPixbuf      *screenshot;
+  cairo_region_t *shape = NULL;
+  GdkRectangle    rect;
+  GdkRectangle    screen_rect;
+  gchar          *name  = NULL;
+  gint32          image;
+  gint            screen_x;
+  gint            screen_y;
+  gint            x, y;
 
   /* use default screen if we are running non-interactively */
   if (screen == NULL)
@@ -998,7 +999,7 @@ shoot (GdkScreen *screen)
       shape = window_get_shape (screen, shootvals.window_id);
 
       if (shape)
-        gdk_region_offset (shape, x - rect.x, y - rect.y);
+        cairo_region_translate (shape, x - rect.x, y - rect.y);
     }
 
   image = create_image (screenshot, shape, name);
@@ -1006,7 +1007,7 @@ shoot (GdkScreen *screen)
   g_object_unref (screenshot);
 
   if (shape)
-    gdk_region_destroy (shape);
+    cairo_region_destroy (shape);
 
   g_free (name);
 
