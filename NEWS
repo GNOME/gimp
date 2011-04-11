@@ -19,7 +19,9 @@ UI:
  - Remove the old bitmap cursors completely and always use RGBA cursors
    also for compat cursors for old X servers
  - Add new GimpCanvasItem infrastructure with subclasses for everything
-   that needs to be drawn on the canvas and port all tools to canvas items
+   that needs to be drawn on the canvas and port all tools to canvas items,
+   this is a huge change that touches all tools and almost all display
+   code, and which finally gets rid of XOR drawing alltogether
  - Switch from purely idle-rendering the display to something that ensures
    a minimum framerate, so we don't fail to update under heavy load
  - Make the text tool handle RTL mode better
@@ -27,22 +29,69 @@ UI:
  - Replace the brush scale control in tool options by a brush size
    one that works in pixels, and does the right thing when the brush
    changes
+ - Add new widget GimpSpinScale which is a scale with number entry,
+   and use it in all tool options
+ - Make the brush, pattern etc. selectors in tool options more
+   compact and allow to directoy jump to the editor dialogs
+ - Make handle sizes in tool consistent
+ - Add an on-cavas progress and use it for tool progress instead of
+   the statusbar
+ - Add a new GimpToolPalette class with lots of code that was
+   in GimpToolBox
+ - Allow to properly drop into and after a layer group
+ - Refactor and clean up the dynamics editor widget, and add colors
+   for the curves
+ - Add support for F2 to rename items in lists
+ - Clean up GimpDeviceStatus internally and visually
+ - Allow to set GimpToolPreset's icon using the new GimpIconPicker widget
+ - Make the text tool's style overlay show default values from the
+   text object if there is no style active at the cursor position/selection
+ - Show the the text size's unit in the text style overlay
+ - Make tool dialogs transient to the image window again
+ - Consistently add a "gimp-" prefix to all window roles
+ - Make the preset buttons in tool options work on the global tool
+   presets instead of the removed per-tool preset lists
+
 
 Core:
 
  - Add uniform API to turn any GimpItem's outline into a selection
- - Add operators and gegl infrastructure for the cage tool
  - Add support for color tags in text layers
  - Remove the selection_control() stuff from GimpImage and with it
    maybe last piece of UI code still not properly separated
  - Add more validation code for XCF loading
  - Add accessors to GimpPalette and use them globally
  - Keep a proxy GimpPalette around for the image's colormap
+ - Don't scale SVGs when pasting or importing them
+ - A lot of changes to the input device handling code, partly
+   merged from gjt gtk3-port branch, add GimpDeviceManager class
+ - Add smoothing of paint strokes
+ - Fix display filters to work on a cairo surface
+ - Fix and enhance GimpImage's URI/filename handling API
+ - Unset "removed" flag on items when they get added back to
+   the image from the undo stack
+ - Change item creation to properly use GObject properties and
+   remove item_configure() and drawable_configure()
+ - Refactor tool event handling and move lots of stuff into
+   utilits functions
+ - Clean up GimpViewRenderer API
+ - Implement transforms on group layers
+ - Clean up the transform tool a lot, and refactor away old junk
+ - Tool and tool event cleanup: enforce tool activate/halt invariants,
+   consistently shutdown all tools in control(HALT), and many other
+   tool fixes
+ - Remove GimpToolPresets object, this functionality got merged into
+   the new GimpToolPreset system
+ - Rename GimpFilteredContainer to GimpTaggedContainer and add a new
+   GimpFilteredContainer parent class which is a generic filter
+ - Remove the concept of an "offset" from TileManager and instead
+   pass around the offsets explicitly when needed, like then
+   transforming.
 
 
 GEGL:
 
- - 
+ - Add operations and gegl infrastructure for the cage tool
 
 
 Libgimp:
@@ -56,6 +105,12 @@ Libgimp:
  - Move GimpUnitStore and GimpUnitComboBox to libgimpwidgets, and
    use them in GimpSizeEntry, deprecate GimpUnitMenu.
  - Deprecate gimp_min_colors() and gimp_install_cmap()
+ - Add API that enables GimpRuler to track motion events by itself
+ - Add new selection API and deprecate all old selection functions
+ - Move around and rename all parasite functions, deprecate the old ones
+ - Add a generated PDB file in the "gimp" namespace and get rid
+   of "gimpmisc"
+ - Add unit conversion functions to libgimpbase
 
 
 Plug-ins:
@@ -65,6 +120,11 @@ Plug-ins:
  - Add PDF export plugin
  - Lots of cairo porting here too
  - UTF-8 fixes in script-fu
+ - Set the progress to 1.0 when done
+ - Merge a lot of upstream fixes into script-fu's Tinyscheme
+ - Add "New Layer" option to MapObject
+ - Support loading of 16-bit raw PPM files
+ - Add web-page, a new plug-ins which renders images of web pages
 
 
 Data:
@@ -84,18 +144,32 @@ Source and build system:
  - Add more unit tests and refactor existing ones to use global
    test utility functions
  - Add a manifest to executables (app and plug-ins, Win32)
- - Depend on GLib 2.28.0
+ - Depend on GLib 2.28, GTK+ 2.24, Cairo 1.10
+ - Make WebKit available to all plug-ins, not just the help browser
+ - Run UI tests on Xvfb if available
+
+
+General:
+
  - Improve safety on Win32 by calling SetDllDirectory() and
    SetProcessDEPPolicy()
  - Switch from GtkObject::destroy() to GObject::dispose() all over
    the place
- - Make WebKit available to all plug-ins, not just the help browser
- - Various changes that make msaintaining the gtk3-port branch easier,
+ - Various changes that make maintaining the gtk3-port branch easier,
    such as s/GtkAnchorType/GimpHandleAnchor/ and s/GtkObject/GtkAdjustment/
  - Don't use gtk_container_add() for adding to GtkBoxes
  - Inherit from GkBox directly, not from GtkHBox/GtkVBox
- - Run UI tests on Xvfb if available
+ - Add namespace to the ink blob types and functions
+ - Remove all useless calls to gtk_range_set_update_policy()
+ - Use GObject::constructed() instead of GObject::constructor() all
+   over the place
+ - Move more members to private and add accessors for them
+ - Stop using GdkNativeWindow, use guint32 instead
  - Plug memory leaks
+ - Remove ps-menurc, we are not a PS clone
+ - Use the new g_[s]list_free_full() instead of foreach() and free()
+ - Don't use newly deprecated GTK+ API
+ - Use the new GDK_KEY_foo key names
  - Lots of bug fixes and cleanup
  - Lots of translation updates
 
