@@ -643,9 +643,9 @@ select_window (GdkScreen *screen)
 }
 
 static gchar *
-window_get_utf8_property (GdkDisplay      *display,
-                          GdkNativeWindow  window,
-                          const gchar     *name)
+window_get_utf8_property (GdkDisplay  *display,
+                          guint32      window,
+                          const gchar *name)
 {
   gchar   *retval = NULL;
 
@@ -681,8 +681,8 @@ window_get_utf8_property (GdkDisplay      *display,
 }
 
 static gchar *
-window_get_title (GdkDisplay      *display,
-                  GdkNativeWindow  window)
+window_get_title (GdkDisplay *display,
+                  guint       window)
 {
 #if defined(GDK_WINDOWING_X11)
 #ifdef HAVE_X11_XMU_WINUTIL_H
@@ -696,8 +696,8 @@ window_get_title (GdkDisplay      *display,
 }
 
 static GdkRegion *
-window_get_shape (GdkScreen       *screen,
-                  GdkNativeWindow  window)
+window_get_shape (GdkScreen *screen,
+                  guint32    window)
 {
   GdkRegion  *shape = NULL;
 
