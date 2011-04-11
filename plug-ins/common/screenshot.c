@@ -184,23 +184,23 @@ static ScreenshotValues shootvals =
 };
 
 
-static void      query (void);
-static void      run   (const gchar      *name,
-                        gint              nparams,
-                        const GimpParam  *param,
-                        gint             *nreturn_vals,
-                        GimpParam       **return_vals);
+static void       query                (void);
+static void       run                  (const gchar      *name,
+                                        gint              nparams,
+                                        const GimpParam  *param,
+                                        gint             *nreturn_vals,
+                                        GimpParam       **return_vals);
 
-static GdkNativeWindow   select_window (GdkScreen    *screen);
-static gint32            create_image  (GdkPixbuf    *pixbuf,
-                                        GdkRegion    *shape,
-                                        const gchar  *name);
+static guint32    select_window        (GdkScreen        *screen);
+static gint32     create_image         (GdkPixbuf        *pixbuf,
+                                        GdkRegion        *shape,
+                                        const gchar      *name);
 
-static gint32     shoot                (GdkScreen    *screen);
-static gboolean   shoot_dialog         (GdkScreen   **screen);
-static void       shoot_delay          (gint32        delay);
-static gboolean   shoot_delay_callback (gpointer      data);
-static gboolean   shoot_quit_timeout   (gpointer      data);
+static gint32     shoot                (GdkScreen        *screen);
+static gboolean   shoot_dialog         (GdkScreen       **screen);
+static void       shoot_delay          (gint32            delay);
+static gboolean   shoot_delay_callback (gpointer          data);
+static gboolean   shoot_quit_timeout   (gpointer          data);
 
 
 /* Global Variables */
@@ -382,7 +382,7 @@ run (const gchar      *name,
 
 #ifdef GDK_WINDOWING_X11
 
-static GdkNativeWindow
+static guint32
 select_window_x11 (GdkScreen *screen)
 {
   Display      *x_dpy       = GDK_SCREEN_XDISPLAY (screen);
@@ -604,7 +604,7 @@ select_window_x11 (GdkScreen *screen)
 
 #ifdef GDK_WINDOWING_WIN32
 
-static GdkNativeWindow
+static guint32
 select_window_win32 (GdkScreen *screen)
 {
   /* MS Windows specific code goes here (yet to be written) */
@@ -629,7 +629,7 @@ select_window_win32 (GdkScreen *screen)
 #endif
 
 
-static GdkNativeWindow
+static guint32
 select_window (GdkScreen *screen)
 {
 #if defined(GDK_WINDOWING_X11)
@@ -896,6 +896,21 @@ add_cursor_image (gint32      image,
 #endif
 }
 
+static GdkWindow *
+get_foreign_window (GdkDisplay *display,
+                    guint32     window)
+{
+#ifdef GDK_WINDOWING_X11
+  return gdk_x11_window_foreign_new_for_display (display, window);
+#endif
+
+#ifdef GDK_WINDOWING_WIN32
+  return gdk_win32_window_foreign_new_for_display (display, window);
+#endif
+
+  return NULL;
+}
+
 
 /* The main Screenshot function */
 
@@ -940,8 +955,7 @@ shoot (GdkScreen *screen)
         }
       else
         {
-          window = gdk_window_foreign_new_for_display (display,
-                                                       shootvals.window_id);
+          window = get_foreign_window (display, shootvals.window_id);
         }
 
       if (! window)
