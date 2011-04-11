@@ -573,9 +573,9 @@ script_fu_cc_key_function (GtkWidget        *widget,
 
   switch (event->keyval)
     {
-    case GDK_Return:
-    case GDK_KP_Enter:
-    case GDK_ISO_Enter:
+    case GDK_KEY_Return:
+    case GDK_KEY_KP_Enter:
+    case GDK_KEY_ISO_Enter:
       if (script_fu_cc_is_empty (console))
         return TRUE;
 
@@ -648,24 +648,24 @@ script_fu_cc_key_function (GtkWidget        *widget,
       return TRUE;
       break;
 
-    case GDK_KP_Up:
-    case GDK_Up:
+    case GDK_KEY_KP_Up:
+    case GDK_KEY_Up:
       direction = -1;
       break;
 
-    case GDK_KP_Down:
-    case GDK_Down:
+    case GDK_KEY_KP_Down:
+    case GDK_KEY_Down:
       direction = 1;
       break;
 
-    case GDK_P:
-    case GDK_p:
+    case GDK_KEY_P:
+    case GDK_KEY_p:
       if (event->state & GDK_CONTROL_MASK)
         direction = -1;
       break;
 
-    case GDK_N:
-    case GDK_n:
+    case GDK_KEY_N:
+    case GDK_KEY_n:
       if (event->state & GDK_CONTROL_MASK)
         direction = 1;
       break;

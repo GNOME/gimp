@@ -281,7 +281,7 @@ gimp_pick_button_key_press (GtkWidget      *invisible,
                             GdkEventKey    *event,
                             GimpPickButton *button)
 {
-  if (event->keyval == GDK_Escape)
+  if (event->keyval == GDK_KEY_Escape)
     {
       gimp_pick_button_shutdown (button);
 

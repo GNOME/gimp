@@ -1015,10 +1015,10 @@ static gboolean
 key_timeout_cb(gpointer data)
 {
    switch (_keyval) {
-   case GDK_Left:
-   case GDK_Right:
-   case GDK_Up:
-   case GDK_Down:
+   case GDK_KEY_Left:
+   case GDK_KEY_Right:
+   case GDK_KEY_Up:
+   case GDK_KEY_Down:
       command_list_add(move_selected_command_new(_shapes, _dx, _dy));
       _dx = _dy = 0;
       break;
@@ -1040,35 +1040,35 @@ key_press_cb(GtkWidget *widget, GdkEventKey *event)
    _timeout = 0;
 
    switch (event->keyval) {
-   case GDK_Left:
+   case GDK_KEY_Left:
       if (ctrl)
          move_sash_selected_objects(-1, 0, shift);
       else
          move_selected_objects(-1, 0, shift);
       handled = TRUE;
       break;
-   case GDK_Right:
+   case GDK_KEY_Right:
       if (ctrl)
          move_sash_selected_objects(1, 0, shift);
       else
          move_selected_objects(1, 0, shift);
       handled = TRUE;
       break;
-   case GDK_Up:
+   case GDK_KEY_Up:
       if (ctrl)
          move_sash_selected_objects(0, -1, shift);
       else
          move_selected_objects(0, -1, shift);
       handled = TRUE;
       break;
-   case GDK_Down:
+   case GDK_KEY_Down:
       if (ctrl)
          move_sash_selected_objects(0, 1, shift);
       else
          move_selected_objects(0, 1, shift);
       handled = TRUE;
       break;
-   case GDK_Tab:
+   case GDK_KEY_Tab:
       if (shift)
          command = select_prev_command_new(_shapes);
       else

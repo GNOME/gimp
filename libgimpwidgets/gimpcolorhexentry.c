@@ -231,9 +231,9 @@ gimp_color_hex_entry_events (GtkWidget *widget,
       {
         GdkEventKey *kevent = (GdkEventKey *) event;
 
-        if (kevent->keyval != GDK_Return   &&
-            kevent->keyval != GDK_KP_Enter &&
-            kevent->keyval != GDK_ISO_Enter)
+        if (kevent->keyval != GDK_KEY_Return   &&
+            kevent->keyval != GDK_KEY_KP_Enter &&
+            kevent->keyval != GDK_KEY_ISO_Enter)
           break;
         /*  else fall through  */
       }

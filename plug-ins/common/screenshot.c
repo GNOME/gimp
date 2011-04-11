@@ -445,7 +445,7 @@ select_window_x11 (GdkScreen *screen)
                         &gc_values);
     }
 
-  if (gdk_keymap_get_entries_for_keyval (NULL, GDK_Escape, &keys, &num_keys))
+  if (gdk_keymap_get_entries_for_keyval (NULL, GDK_KEY_Escape, &keys, &num_keys))
     {
       gdk_error_trap_push ();
 
@@ -554,7 +554,7 @@ select_window_x11 (GdkScreen *screen)
                 gint i;
 
                 for (i = 0; i < n && ! cancel; i++)
-                  if (keyvals[i] == GDK_Escape)
+                  if (keyvals[i] == GDK_KEY_Escape)
                     cancel = TRUE;
 
                 g_free (keyvals);
