@@ -42,6 +42,8 @@ static gboolean    gimp_brush_pipe_get_popup_size   (GimpViewable     *viewable,
                                                      gint             *popup_width,
                                                      gint             *popup_height);
 
+static void        gimp_brush_pipe_begin_use        (GimpBrush        *brush);
+static void        gimp_brush_pipe_end_use          (GimpBrush        *brush);
 static GimpBrush * gimp_brush_pipe_select_brush     (GimpBrush        *brush,
                                                      const GimpCoords *last_coords,
                                                      const GimpCoords *current_coords);
@@ -69,6 +71,8 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
 
   viewable_class->get_popup_size = gimp_brush_pipe_get_popup_size;
 
+  brush_class->begin_use         = gimp_brush_pipe_begin_use;
+  brush_class->end_use           = gimp_brush_pipe_end_use;
   brush_class->select_brush      = gimp_brush_pipe_select_brush;
   brush_class->want_null_motion  = gimp_brush_pipe_want_null_motion;
 }
@@ -160,6 +164,32 @@ gimp_brush_pipe_get_popup_size (GimpViewable *viewable,
                                 gint         *popup_height)
 {
   return gimp_viewable_get_size (viewable, popup_width, popup_height);
+}
+
+static void
+gimp_brush_pipe_begin_use (GimpBrush *brush)
+{
+  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
+  gint           i;
+
+  GIMP_BRUSH_CLASS (parent_class)->begin_use (brush);
+
+  for (i = 0; i < pipe->n_brushes; i++)
+    if (pipe->brushes[i])
+      gimp_brush_begin_use (pipe->brushes[i]);
+}
+
+static void
+gimp_brush_pipe_end_use (GimpBrush *brush)
+{
+  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
+  gint           i;
+
+  GIMP_BRUSH_CLASS (parent_class)->end_use (brush);
+
+  for (i = 0; i < pipe->n_brushes; i++)
+    if (pipe->brushes[i])
+      gimp_brush_end_use (pipe->brushes[i]);
 }
 
 static GimpBrush *
