@@ -55,6 +55,8 @@ struct _GimpBrushClass
   GimpDataClass  parent_class;
 
   /*  virtual functions  */
+  void             (* begin_use)          (GimpBrush        *brush);
+  void             (* end_use)            (GimpBrush        *brush);
   GimpBrush      * (* select_brush)       (GimpBrush        *brush,
                                            const GimpCoords *last_coords,
                                            const GimpCoords *current_coords);
@@ -95,6 +97,9 @@ GType                  gimp_brush_get_type           (void) G_GNUC_CONST;
 GimpData             * gimp_brush_new                (GimpContext      *context,
                                                       const gchar      *name);
 GimpData             * gimp_brush_get_standard       (GimpContext      *context);
+
+void                   gimp_brush_begin_use          (GimpBrush        *brush);
+void                   gimp_brush_end_use            (GimpBrush        *brush);
 
 GimpBrush            * gimp_brush_select_brush       (GimpBrush        *brush,
                                                       const GimpCoords *last_coords,
@@ -139,9 +144,6 @@ TempBuf              * gimp_brush_get_pixmap         (const GimpBrush  *brush);
 gint                   gimp_brush_get_spacing        (const GimpBrush  *brush);
 void                   gimp_brush_set_spacing        (GimpBrush        *brush,
                                                       gint              spacing);
-
-void                   gimp_brush_begin_use          (GimpBrush        *brush);
-void                   gimp_brush_end_use            (GimpBrush        *brush);
 
 
 #endif /* __GIMP_BRUSH_H__ */

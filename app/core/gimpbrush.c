@@ -81,6 +81,8 @@ static gchar       * gimp_brush_get_description       (GimpViewable         *vie
 static void          gimp_brush_dirty                 (GimpData             *data);
 static const gchar * gimp_brush_get_extension         (GimpData             *data);
 
+static void          gimp_brush_real_begin_use        (GimpBrush            *brush);
+static void          gimp_brush_real_end_use          (GimpBrush            *brush);
 static GimpBrush   * gimp_brush_real_select_brush     (GimpBrush            *brush,
                                                        const GimpCoords     *last_coords,
                                                        const GimpCoords     *current_coords);
@@ -131,6 +133,8 @@ gimp_brush_class_init (GimpBrushClass *klass)
   data_class->dirty                = gimp_brush_dirty;
   data_class->get_extension        = gimp_brush_get_extension;
 
+  klass->begin_use                 = gimp_brush_real_begin_use;
+  klass->end_use                   = gimp_brush_real_end_use;
   klass->select_brush              = gimp_brush_real_select_brush;
   klass->want_null_motion          = gimp_brush_real_want_null_motion;
   klass->transform_size            = gimp_brush_real_transform_size;
@@ -406,6 +410,32 @@ gimp_brush_get_extension (GimpData *data)
   return GIMP_BRUSH_FILE_EXTENSION;
 }
 
+static void
+gimp_brush_real_begin_use (GimpBrush *brush)
+{
+  brush->mask_cache =
+    gimp_brush_cache_new ((GDestroyNotify) temp_buf_free, 'M', 'm');
+
+  brush->pixmap_cache =
+    gimp_brush_cache_new ((GDestroyNotify) temp_buf_free, 'P', 'p');
+
+  brush->boundary_cache =
+    gimp_brush_cache_new ((GDestroyNotify) gimp_bezier_desc_free, 'B', 'b');
+}
+
+static void
+gimp_brush_real_end_use (GimpBrush *brush)
+{
+  g_object_unref (brush->mask_cache);
+  brush->mask_cache = NULL;
+
+  g_object_unref (brush->pixmap_cache);
+  brush->pixmap_cache = NULL;
+
+  g_object_unref (brush->boundary_cache);
+  brush->boundary_cache = NULL;
+}
+
 static GimpBrush *
 gimp_brush_real_select_brush (GimpBrush        *brush,
                               const GimpCoords *last_coords,
@@ -477,6 +507,29 @@ gimp_brush_get_standard (GimpContext *context)
     }
 
   return standard_brush;
+}
+
+void
+gimp_brush_begin_use (GimpBrush *brush)
+{
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+
+  brush->use_count++;
+
+  if (brush->use_count == 1)
+    GIMP_BRUSH_GET_CLASS (brush)->begin_use (brush);
+}
+
+void
+gimp_brush_end_use (GimpBrush *brush)
+{
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+  g_return_if_fail (brush->use_count > 0);
+
+  brush->use_count--;
+
+  if (brush->use_count == 0)
+    GIMP_BRUSH_GET_CLASS (brush)->end_use (brush);
 }
 
 GimpBrush *
@@ -734,46 +787,5 @@ gimp_brush_set_spacing (GimpBrush *brush,
 
       g_signal_emit (brush, brush_signals[SPACING_CHANGED], 0);
       g_object_notify (G_OBJECT (brush), "spacing");
-    }
-}
-
-void
-gimp_brush_begin_use (GimpBrush *brush)
-{
-  g_return_if_fail (GIMP_IS_BRUSH (brush));
-
-  brush->use_count++;
-
-  if (brush->use_count == 1)
-    {
-      brush->mask_cache =
-        gimp_brush_cache_new ((GDestroyNotify) temp_buf_free, 'M', 'm');
-
-      brush->pixmap_cache =
-        gimp_brush_cache_new ((GDestroyNotify) temp_buf_free, 'P', 'p');
-
-      brush->boundary_cache =
-        gimp_brush_cache_new ((GDestroyNotify) gimp_bezier_desc_free, 'B', 'b');
-    }
-}
-
-void
-gimp_brush_end_use (GimpBrush *brush)
-{
-  g_return_if_fail (GIMP_IS_BRUSH (brush));
-  g_return_if_fail (brush->use_count > 0);
-
-  brush->use_count--;
-
-  if (brush->use_count == 0)
-    {
-      g_object_unref (brush->mask_cache);
-      brush->mask_cache = NULL;
-
-      g_object_unref (brush->pixmap_cache);
-      brush->pixmap_cache = NULL;
-
-      g_object_unref (brush->boundary_cache);
-      brush->boundary_cache = NULL;
     }
 }
