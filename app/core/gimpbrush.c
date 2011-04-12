@@ -304,7 +304,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
       if (scale != 1.0)
         {
-          gimp_brush_start_use (brush);
+          gimp_brush_begin_use (brush);
 
           mask_buf = gimp_brush_transform_mask (brush, scale,
                                                 0.0, 0.0, 1.0);
@@ -738,7 +738,7 @@ gimp_brush_set_spacing (GimpBrush *brush,
 }
 
 void
-gimp_brush_start_use (GimpBrush *brush)
+gimp_brush_begin_use (GimpBrush *brush)
 {
   g_return_if_fail (GIMP_IS_BRUSH (brush));
 

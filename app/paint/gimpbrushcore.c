@@ -855,7 +855,7 @@ gimp_brush_core_real_set_brush (GimpBrushCore *core,
   if (core->main_brush)
     {
       g_object_ref (core->main_brush);
-      gimp_brush_start_use (core->main_brush);
+      gimp_brush_begin_use (core->main_brush);
       g_signal_connect (core->main_brush, "invalidate-preview",
                         G_CALLBACK (gimp_brush_core_invalidate_cache),
                         core);
