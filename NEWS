@@ -21,7 +21,7 @@ UI:
  - Add new GimpCanvasItem infrastructure with subclasses for everything
    that needs to be drawn on the canvas and port all tools to canvas items,
    this is a huge change that touches all tools and almost all display
-   code, and which finally gets rid of XOR drawing alltogether
+   code, and which finally gets rid of XOR drawing altogether
  - Switch from purely idle-rendering the display to something that ensures
    a minimum framerate, so we don't fail to update under heavy load
  - Make the text tool handle RTL mode better
@@ -32,9 +32,9 @@ UI:
  - Add new widget GimpSpinScale which is a scale with number entry,
    and use it in all tool options
  - Make the brush, pattern etc. selectors in tool options more
-   compact and allow to directoy jump to the editor dialogs
+   compact and allow to directly jump to the editor dialogs
  - Make handle sizes in tool consistent
- - Add an on-cavas progress and use it for tool progress instead of
+ - Add an on-canvas progress and use it for tool progress instead of
    the statusbar
  - Add a new GimpToolPalette class with lots of code that was
    in GimpToolBox
@@ -64,7 +64,7 @@ Core:
  - Keep a proxy GimpPalette around for the image's colormap
  - Don't scale SVGs when pasting or importing them
  - A lot of changes to the input device handling code, partly
-   merged from gjt gtk3-port branch, add GimpDeviceManager class
+   merged from the gtk3-port branch, add GimpDeviceManager class
  - Add smoothing of paint strokes
  - Fix display filters to work on a cairo surface
  - Fix and enhance GimpImage's URI/filename handling API
@@ -73,7 +73,7 @@ Core:
  - Change item creation to properly use GObject properties and
    remove item_configure() and drawable_configure()
  - Refactor tool event handling and move lots of stuff into
-   utilits functions
+   utility functions
  - Clean up GimpViewRenderer API
  - Implement transforms on group layers
  - Clean up the transform tool a lot, and refactor away old junk
@@ -85,8 +85,8 @@ Core:
  - Rename GimpFilteredContainer to GimpTaggedContainer and add a new
    GimpFilteredContainer parent class which is a generic filter
  - Remove the concept of an "offset" from TileManager and instead
-   pass around the offsets explicitly when needed, like then
-   transforming.
+   pass around the offsets explicitly when needed, like when
+   transforming
 
 
 GEGL:
@@ -124,7 +124,7 @@ Plug-ins:
  - Merge a lot of upstream fixes into script-fu's Tinyscheme
  - Add "New Layer" option to MapObject
  - Support loading of 16-bit raw PPM files
- - Add web-page, a new plug-ins which renders images of web pages
+ - Add web-page, a new plug-in which renders images of web pages
 
 
 Data:
@@ -158,7 +158,7 @@ General:
  - Various changes that make maintaining the gtk3-port branch easier,
    such as s/GtkAnchorType/GimpHandleAnchor/ and s/GtkObject/GtkAdjustment/
  - Don't use gtk_container_add() for adding to GtkBoxes
- - Inherit from GkBox directly, not from GtkHBox/GtkVBox
+ - Inherit from GtkBox directly, not from GtkHBox/GtkVBox
  - Add namespace to the ink blob types and functions
  - Remove all useless calls to gtk_range_set_update_policy()
  - Use GObject::constructed() instead of GObject::constructor() all
@@ -198,7 +198,7 @@ UI:
  - Default to non-fixed-aspect in Canvas Size dialog
  - Add a still incomplete and Single-window mode
  - Have an Export button, not Save, in export dialogs
- - Improve Free Select Tool handle highlightning
+ - Improve Free Select Tool handle highlighting
  - Support changing user interface language from preferences
  - Update ps-menurc with PS CS4 keyboard shortcuts
  - Reduce spacing around canvas and use it for the canvas itself
@@ -214,7 +214,7 @@ UI:
    notebook tabs
  - Add an icon for the desaturate tool
  - Add 'Rule of fifths' crop guide overlay
- - Make Alt+Click on layers not affecting active layer
+ - Make Alt+Click on layers not affect active layer
 
 
 Core:
@@ -224,7 +224,7 @@ Core:
  - Make group layers work except for layer masks and save them in
    the XCF
  - Change GimpProjectable::update to GimpProjectable:invalidate
- - Make sure we don't mix font backends (and crash) by explicitely
+ - Make sure we don't mix font backends (and crash) by explicitly
    asking for FT/Fontconfig backends
  - Move members of GimpObject to a private struct
  - gimp_object_get_name() takes a gconstpointer now, remove casts
@@ -289,8 +289,8 @@ UI:
    and add the ability to mix different text styles in the same layer
  - Add support for tagging GIMP resources such as brushes and allow
    filtering based on these tags (GSoC 2008)
- - Separate the activies of saving an image and exporting it, there is
-   now an 'File->Export...' for example
+ - Separate the activities of saving an image and exporting it, there is
+   now a 'File->Export...' for example
  - Port file plug-ins to new export API which gets rid of many
    annoying export dialogs
  - Add a simple parser to size entry widgets, images can be scaled
@@ -302,25 +302,22 @@ UI:
  - Get rid of the Tools dockable and move toolbox configuration to
    Preferences
  - Allow closing the toolbox without closing the whole application
- - Add status bar feedback for keyboard changes to brush paramaters
+ - Add status bar feedback for keyboard changes to brush parameters
  - Add diagonal guides to the Crop Tool
  - New docks are created at the pointer position
  - Add support for printing crop marks for images
  - Move 'Text along path' from tool options to text context menu
  - Change default shortcuts for "Shrink Wrap" and "Fit in Window" to
-   Ctrl+R and Ctrl+Shift+R respectively since the previous shortcuts
+   Ctrl+J and Ctrl+Shift+J respectively since the previous shortcuts
    are now used for the save+export feature
  - Make Alt+Click on layers in Layers dockable create a selection from
    the layer
  - Allow to specify written language in the Text Tool
  - Support custom mapping curves for input device properties like "Pressure"
  - New desktop launcher icon
- - Use Ctrl+J and Ctrl+Shift+J for 'Shrink Wrap' and 'Fit Image in
-   Window' to avoid conflict with Ctrl+Shift+R for 'Show Rulers'
  - Add 'Windows→Hide docks' menu item that does what 'Tab' does and also displays
-   it's state. Make the state persistent across sessions, too.
+   its state. Make the state persistent across sessions, too.
  - Make dock window title separators translatable
- - 
 
 
 Plug-ins:
@@ -372,7 +369,7 @@ Core:
  - Add infrastructure to soon support vector layers (GSoC 2006)
  - Rearrange legacy layer mode code to increase maintainability
  - Drop support for the obsolete GnomeVFS file-uri backend
- - Allow to dump keyboard shortucts ith File->Debug->Dump Keyboard
+ - Allow to dump keyboard shortcuts with File->Debug->Dump Keyboard
    Shortcuts
  - Prepare data structures for layer groups
  - Remove gimprc setting "menu-mnemonics",
@@ -384,6 +381,6 @@ Core:
 
 General:
 
- - Changed licence to (L)GPLv3+
+ - Changed license to (L)GPLv3+
  - Use the automake 1.11 feature 'silent build rules' by default
  - Lots of bug fixes and cleanup
