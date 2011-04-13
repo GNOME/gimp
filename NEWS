@@ -51,7 +51,7 @@ UI:
  - Consistently add a "gimp-" prefix to all window roles
  - Make the preset buttons in tool options work on the global tool
    presets instead of the removed per-tool preset lists
- - Add GimpControllerMouse, which allos to bind extra mouse buttons to
+ - Add GimpControllerMouse, which allows to bind extra mouse buttons to
    arbitrary actions
 
 
