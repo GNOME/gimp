@@ -791,11 +791,13 @@ gimp_data_create_filename (GimpData    *data,
       return;
     }
 
+  g_strstrip (safename);
+
   if (safename[0] == '.')
     safename[0] = '-';
 
   for (i = 0; safename[i]; i++)
-    if (safename[i] == G_DIR_SEPARATOR || g_ascii_isspace (safename[i]))
+    if (strchr ("\\/*?\"`'<>{}|\n\t ;:$^&", safename[i]))
       safename[i] = '-';
 
   filename = g_strconcat (safename, gimp_data_get_extension (data), NULL);
