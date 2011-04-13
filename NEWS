@@ -33,7 +33,7 @@ UI:
    and use it in all tool options
  - Make the brush, pattern etc. selectors in tool options more
    compact and allow to directly jump to the editor dialogs
- - Make handle sizes in tool consistent
+ - Make handle sizes in tools consistent
  - Add an on-canvas progress and use it for tool progress instead of
    the statusbar
  - Add a new GimpToolPalette class with lots of code that was
@@ -51,6 +51,8 @@ UI:
  - Consistently add a "gimp-" prefix to all window roles
  - Make the preset buttons in tool options work on the global tool
    presets instead of the removed per-tool preset lists
+ - Add GimpControllerMouse, which allos to bind extra mouse buttons to
+   arbitrary actions
 
 
 Core:
@@ -87,6 +89,12 @@ Core:
  - Remove the concept of an "offset" from TileManager and instead
    pass around the offsets explicitly when needed, like when
    transforming
+ - Move GimpBezier desc from vectors/ to core/ and add API to create
+   one from sorted BoundSegs
+ - Change GimpBrush boundary API to return a GimpBezierDesc
+ - Add GimpBrushCache object and use it to cache a brush's transformed
+   pixels and its outline, remove the caching code from GimpBrushCore
+ - Add GimpBezierDesc based API to GimpScanConvert and use it
 
 
 GEGL:
@@ -111,6 +119,7 @@ Libgimp:
  - Add a generated PDB file in the "gimp" namespace and get rid
    of "gimpmisc"
  - Add unit conversion functions to libgimpbase
+ - Add function to reset a plug-in's context to default values
 
 
 Plug-ins:
@@ -125,6 +134,7 @@ Plug-ins:
  - Add "New Layer" option to MapObject
  - Support loading of 16-bit raw PPM files
  - Add web-page, a new plug-in which renders images of web pages
+ - Fix some more plug-ins to not warn if applied on an empty region
 
 
 Data:
@@ -147,6 +157,10 @@ Source and build system:
  - Depend on GLib 2.28, GTK+ 2.24, Cairo 1.10
  - Make WebKit available to all plug-ins, not just the help browser
  - Run UI tests on Xvfb if available
+ - Check for GdkPixbuf separately because it's now a separate library
+ - Allow tests to use uninstalled plug-ins from the build dir
+ - Remove, comment out, or build for GIMP_UNSTABLE some stuff that
+   should not be in a stable release
 
 
 General:
