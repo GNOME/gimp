@@ -36,8 +36,8 @@ header files installed.
      Intltool can be downloaded from
      http://ftp.gnome.org/pub/gnome/sources/intltool/
 
-  3. You need to have GEGL version 0.1.2 or newer and babl version
-     0.1.2 or newer. You can get them from http://gegl.org/ or clone
+  3. You need to have GEGL version 0.1.6 or newer and babl version
+     0.1.4 or newer. You can get them from http://gegl.org/ or clone
      them from the GNOME git repository:
 
        git://git.gnome.org/babl
