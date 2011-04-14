@@ -52,6 +52,7 @@
 
  ( ) Tag the release (don't forget to push the tag)
         git tag -s GIMP_2_x_y
+        git push origin GIMP_2_x_y
 
  ( ) Move the tarball and the .md5 file to its final destination in the
      FTP area (/home/ftp/pub/gimp/v2.x).
