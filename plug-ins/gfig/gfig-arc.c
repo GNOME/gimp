@@ -27,6 +27,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+#undef GDK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>

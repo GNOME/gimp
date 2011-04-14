@@ -36,6 +36,7 @@
 #include <string.h>
 
 #include <libgimp/gimp.h>
+#undef GDK_DISABLE_DEPRECATED
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
