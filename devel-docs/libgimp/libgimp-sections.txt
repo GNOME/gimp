@@ -45,8 +45,12 @@ gimp_get_progname
 gimp_extension_enable
 gimp_extension_ack
 gimp_extension_process
+gimp_attach_parasite
+gimp_detach_parasite
 gimp_parasite_find
 gimp_parasite_list
+gimp_get_parasite
+gimp_get_parasite_list
 gimp_parasite_attach
 gimp_parasite_detach
 gimp_attach_new_parasite
@@ -231,6 +235,7 @@ gimp_threshold
 <FILE>gimpcontext</FILE>
 gimp_context_push
 gimp_context_pop
+gimp_context_set_defaults
 gimp_context_get_foreground
 gimp_context_set_foreground
 gimp_context_get_background
@@ -609,6 +614,10 @@ gimp_image_set_colormap
 gimp_image_get_vectors
 gimp_image_get_vectors_by_tattoo
 gimp_image_get_thumbnail_data
+gimp_image_attach_parasite
+gimp_image_detach_parasite
+gimp_image_get_parasite
+gimp_image_get_parasite_list
 gimp_image_parasite_find
 gimp_image_parasite_list
 gimp_image_parasite_attach

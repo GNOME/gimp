@@ -259,8 +259,10 @@ gimp_unit_get_symbol
 gimp_unit_get_abbreviation
 gimp_unit_get_singular
 gimp_unit_get_plural
+gimp_unit_format_string 
 gimp_pixels_to_units
 gimp_units_to_pixels
+gimp_units_to_points
 GIMP_TYPE_UNIT
 GIMP_TYPE_PARAM_UNIT
 GIMP_IS_PARAM_SPEC_UNIT

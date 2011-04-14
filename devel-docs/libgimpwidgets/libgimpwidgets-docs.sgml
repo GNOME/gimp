@@ -48,14 +48,14 @@
     <xi:include href="xml/gimppageselector.xml" />
     <xi:include href="xml/gimppatheditor.xml" />
     <xi:include href="xml/gimppickbutton.xml" />
-    <xi:include href="xml/gimppixmap.xml" />
     <xi:include href="xml/gimppreviewarea.xml" />
     <xi:include href="xml/gimppreview.xml" />
     <xi:include href="xml/gimpruler.xml" />
     <xi:include href="xml/gimpscrolledpreview.xml" />
     <xi:include href="xml/gimpsizeentry.xml" />
     <xi:include href="xml/gimpstringcombobox.xml" />
-    <xi:include href="xml/gimpunitmenu.xml" />
+    <xi:include href="xml/gimpunitstore.xml" />
+    <xi:include href="xml/gimpunitcombobox.xml" />
     <xi:include href="xml/gimpzoommodel.xml" />
   </part>
   
@@ -101,6 +101,8 @@
   <part id="libgimpwidgets-deprecated">
     <title>Deprecated API</title>
     <xi:include href="xml/gimpoldwidgets.xml" />
+    <xi:include href="xml/gimppixmap.xml" />
+    <xi:include href="xml/gimpunitmenu.xml" />
   </part>
 
   <index id="libgimpwidgets-index">

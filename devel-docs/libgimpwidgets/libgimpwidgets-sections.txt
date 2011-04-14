@@ -43,7 +43,9 @@ gimp_cairo_set_focus_line_pattern
 gimp_cairo_checkerboard_create
 gimp_cairo_surface_create_from_pixbuf
 GIMP_CAIRO_RGB24_SET_PIXEL
+GIMP_CAIRO_RGB24_GET_PIXEL
 GIMP_CAIRO_ARGB32_SET_PIXEL
+GIMP_CAIRO_ARGB32_GET_PIXEL
 </SECTION>
 
 <SECTION>
@@ -575,6 +577,7 @@ gimp_ruler_set_position
 gimp_ruler_get_position
 gimp_ruler_set_range
 gimp_ruler_get_range
+gimp_ruler_add_track_widget
 <SUBSECTION Standard>
 GimpRulerClass
 GIMP_RULER
@@ -584,6 +587,50 @@ gimp_ruler_get_type
 GIMP_RULER_CLASS
 GIMP_IS_RULER_CLASS
 GIMP_RULER_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpunitstore</FILE>
+<TITLE>GimpUnitStore</TITLE>
+GimpUnitStore
+GimpUnitStoreClass
+gimp_unit_store_new
+gimp_unit_store_set_has_pixels
+gimp_unit_store_get_has_pixels
+gimp_unit_store_set_has_percent
+gimp_unit_store_get_has_percent
+gimp_unit_store_set_pixel_value
+gimp_unit_store_set_pixel_values
+gimp_unit_store_set_resolution
+gimp_unit_store_set_resolutions
+gimp_unit_store_get_value
+gimp_unit_store_get_values
+<SUBSECTION Standard>
+GIMP_UNIT_STORE
+GIMP_IS_UNIT_STORE
+GIMP_TYPE_UNIT_STORE
+gimp_unit_store_get_type
+GIMP_UNIT_STORE_CLASS
+GIMP_IS_UNIT_STORE_CLASS
+GIMP_UNIT_STORE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpunitcombobox</FILE>
+<TITLE>GimpUnitComboBox</TITLE>
+GimpUnitComboBoxClass
+gimp_unit_combo_box_new
+gimp_unit_combo_box_new_with_model
+gimp_unit_combo_box_get_active
+gimp_unit_combo_box_set_active
+<SUBSECTION Standard>
+GIMP_UNIT_COMBO_BOX
+GIMP_IS_UNIT_COMBO_BOX
+GIMP_TYPE_UNIT_COMBO_BOX
+gimp_unit_combo_box_get_type
+GIMP_UNIT_COMBO_BOX_CLASS
+GIMP_IS_UNIT_COMBO_BOX_CLASS
+GIMP_UNIT_COMBO_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -872,6 +919,7 @@ GIMP_STOCK_CONTROLLER
 GIMP_STOCK_CONTROLLER_KEYBOARD
 GIMP_STOCK_CONTROLLER_LINUX_INPUT
 GIMP_STOCK_CONTROLLER_MIDI
+GIMP_STOCK_CONTROLLER_MOUSE
 GIMP_STOCK_CONTROLLER_WHEEL
 GIMP_STOCK_DISPLAY_FILTER_COLORBLIND
 GIMP_STOCK_DISPLAY_FILTER_CONTRAST
@@ -972,6 +1020,7 @@ gimp_prop_spin_button_new
 gimp_prop_stock_image_new
 gimp_prop_string_combo_box_new
 gimp_prop_text_buffer_new
+gimp_prop_unit_combo_box_new
 gimp_prop_unit_menu_new
 </SECTION>
 
@@ -986,6 +1035,7 @@ gimp_color_display_get_enabled
 gimp_color_display_get_config
 gimp_color_display_get_managed
 gimp_color_display_convert
+gimp_color_display_convert_surface
 gimp_color_display_load_state
 gimp_color_display_save_state
 gimp_color_display_configure
@@ -1014,6 +1064,7 @@ gimp_color_display_stack_remove
 gimp_color_display_stack_reorder_up
 gimp_color_display_stack_reorder_down
 gimp_color_display_stack_convert
+gimp_color_display_stack_convert_surface
 <SUBSECTION Standard>
 GimpColorDisplayStackClass
 GIMP_COLOR_DISPLAY_STACK

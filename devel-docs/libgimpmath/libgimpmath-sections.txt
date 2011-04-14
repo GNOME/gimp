@@ -45,9 +45,16 @@ GIMP_TYPE_PARAM_MATRIX2
 GIMP_IS_PARAM_SPEC_MATRIX2
 gimp_param_spec_matrix2
 GIMP_VALUE_HOLDS_MATRIX2
+GIMP_TYPE_MATRIX3
+GIMP_TYPE_PARAM_MATRIX3
+GIMP_IS_PARAM_SPEC_MATRIX3
+gimp_param_spec_matrix3
+GIMP_VALUE_HOLDS_MATRIX3
 <SUBSECTION Standard>
 gimp_matrix2_get_type
 gimp_param_matrix2_get_type
+gimp_matrix3_get_type
+gimp_param_matrix3_get_type
 </SECTION>
 
 <SECTION>
@@ -62,6 +69,8 @@ gimp_vector2_length
 gimp_vector2_length_val
 gimp_vector2_mul
 gimp_vector2_mul_val
+gimp_vector2_normal
+gimp_vector2_normal_val
 gimp_vector2_normalize
 gimp_vector2_normalize_val
 gimp_vector2_neg

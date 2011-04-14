@@ -1459,6 +1459,13 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_CONTROLLER_MOUSE ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CONTROLLER_WHEEL ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-controller-wheel-24.png" format="png"></inlinegraphic>
