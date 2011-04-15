@@ -282,10 +282,14 @@ static void
 selection_render_mask (Selection *selection)
 {
   cairo_t *cr;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
-
-  cairo_push_group_with_content (cr, CAIRO_CONTENT_ALPHA);
+  cairo_surface_t *surface;
+  GdkWindow       *window;
+  
+  window = gtk_widget_get_window (selection->shell->canvas);
+  surface = gdk_window_create_similar_surface (window, CAIRO_CONTENT_ALPHA,
+                                               gdk_window_get_width  (window),
+                                               gdk_window_get_height (window));
+  cr = cairo_create (surface);
 
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
   cairo_set_line_width (cr, 1.0);
@@ -295,9 +299,10 @@ selection_render_mask (Selection *selection)
                            selection->n_segs_in);
   cairo_stroke (cr);
 
-  selection->segs_in_mask = cairo_pop_group (cr);
+  selection->segs_in_mask = cairo_pattern_create_for_surface (surface);
 
   cairo_destroy (cr);
+  cairo_surface_destroy (surface);
 }
 
 static void
