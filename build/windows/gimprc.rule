@@ -1,10 +1,10 @@
 # Version resources for Microsoft Windows
 
-SUFFIXES = .rc .rc.o
+GIMPAPPRC = $(top_srcdir)/build/windows/gimp.rc
 
-.rc.rc.o: $(top_srcdir)/build/windows/gimp.rc
+%.rc.o: 
 	$(WINDRES) --define ORIGINALFILENAME_STR="$*$(EXEEXT)" \
 		--define INTERNALNAME_STR="$*" \
 		--define TOP_SRCDIR="$(top_srcdir)" \
 		-I$(top_srcdir)/app \
-		$< $@
+		$(GIMPAPPRC) $@
