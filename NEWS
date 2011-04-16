@@ -100,6 +100,8 @@ Core:
 GEGL:
 
  - Add operations and gegl infrastructure for the cage tool
+ - Disable View -> Use GEGL as we will not have time to finish the
+   GEGL projection code for GIMP 2.8
 
 
 Libgimp:
