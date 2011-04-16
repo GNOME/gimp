@@ -504,9 +504,14 @@ gimp_text_set_property (GObject      *object,
       text->border = g_value_get_int (value);
       break;
     case PROP_HINTING:
-      text->hint_style = (g_value_get_boolean (value) ?
-                          GIMP_TEXT_HINT_STYLE_MEDIUM :
-                          GIMP_TEXT_HINT_STYLE_NONE);
+      /* interpret "hinting" only if "hint-style" has its default
+       * value, so we don't overwrite a serialized new hint-style with
+       * a compat "hinting" that is only there for old GIMP versions
+       */
+      if (text->hint_style == GIMP_TEXT_HINT_STYLE_MEDIUM)
+        text->hint_style = (g_value_get_boolean (value) ?
+                            GIMP_TEXT_HINT_STYLE_MEDIUM :
+                            GIMP_TEXT_HINT_STYLE_NONE);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
