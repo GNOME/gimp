@@ -881,7 +881,7 @@ sub context_set_feather_radius {
     $help = <<'HELP';
 This procedure modifies the feather radius setting.
 
-This setting affects the all procedures that are affected
+This setting affects all procedures that are affected
 by gimp_context_set_feather().
 HELP
 

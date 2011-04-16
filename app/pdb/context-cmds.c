@@ -1918,7 +1918,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-feather-radius",
                                      "Set the feather radius setting.",
-                                     "This procedure modifies the feather radius setting. This setting affects the all procedures that are affected by 'gimp-context-set-feather'.",
+                                     "This procedure modifies the feather radius setting. This setting affects all procedures that are affected by 'gimp-context-set-feather'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",

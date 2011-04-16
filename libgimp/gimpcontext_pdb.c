@@ -1084,7 +1084,7 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  * Set the feather radius setting.
  *
  * This procedure modifies the feather radius setting. This setting
- * affects the all procedures that are affected by
+ * affects all procedures that are affected by
  * gimp_context_set_feather().
  *
  * Returns: TRUE on success.
