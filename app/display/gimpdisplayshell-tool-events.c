@@ -663,8 +663,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
                 if (gimp_tool_control_is_active (active_tool->control))
                   {
-                    if (shell->motion_buffer->event_queue->len > 0)
-                      gimp_display_shell_flush_event_queue (shell);
+                    gimp_display_shell_flush_event_queue (shell);
 
                     tool_manager_button_release_active (gimp,
                                                         &image_coords,
@@ -1731,8 +1730,14 @@ gimp_display_shell_flush_event_queue (GimpDisplayShell *shell)
 
   shell->motion_buffer->event_delay = FALSE;
 
-  /* Set the timeout id to 0 */
-  shell->motion_buffer->event_delay_timeout = 0;
+  /*  Remove the timeout explicitly because this function might be
+   *  called directly (not via the timeout)
+   */
+  if (shell->motion_buffer->event_delay_timeout)
+    {
+      g_source_remove (shell->motion_buffer->event_delay_timeout);
+      shell->motion_buffer->event_delay_timeout = 0;
+    }
 
   if (active_tool                                        &&
       gimp_tool_control_is_active (active_tool->control) &&
@@ -1777,8 +1782,11 @@ gimp_display_shell_process_event_queue (GimpDisplayShell *shell,
       event_state = state; /* Save the state */
     }
 
-  if (shell->motion_buffer->event_delay_timeout != 0)
-    g_source_remove (shell->motion_buffer->event_delay_timeout);
+  if (shell->motion_buffer->event_delay_timeout)
+    {
+      g_source_remove (shell->motion_buffer->event_delay_timeout);
+      shell->motion_buffer->event_delay_timeout = 0;
+    }
 
   shell->motion_buffer->last_active_state = state;
 
