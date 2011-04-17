@@ -1746,7 +1746,7 @@ gimp_display_shell_flush_event_queue (GimpDisplayShell *shell)
     {
        GimpCoords last_coords = g_array_index (shell->motion_buffer->event_queue,
                                                GimpCoords,
-                                               shell->motion_buffer->event_queue->len - 1 );
+                                               shell->motion_buffer->event_queue->len - 1);
 
        gimp_motion_buffer_push_event_history (shell->motion_buffer, &last_coords);
 
@@ -1764,23 +1764,20 @@ gimp_display_shell_process_event_queue (GimpDisplayShell *shell,
                                         GdkModifierType   state,
                                         guint32           time)
 {
-  gint             i;
-  gint             keep = 0;
   GdkModifierType  event_state;
-  GimpCoords       keep_event;
-  GimpCoords      *buf_coords = NULL;
+  gint             keep = 0;
 
   if (shell->motion_buffer->event_delay)
     {
-      keep = 1; /* Holding one event in buf */
       /* If we are in delay we use LAST state, not current */
       event_state = shell->motion_buffer->last_active_state;
-      keep_event = g_array_index (shell->motion_buffer->event_queue,
-                                  GimpCoords, shell->motion_buffer->event_queue->len - 1);
+
+      keep = 1; /* Holding one event in buf */
     }
   else
     {
-      event_state = state; /* Save the state */
+      /* Save the state */
+      event_state = state;
     }
 
   if (shell->motion_buffer->event_delay_timeout)
@@ -1794,12 +1791,15 @@ gimp_display_shell_process_event_queue (GimpDisplayShell *shell,
   tool_manager_control_active (shell->display->gimp,
                                GIMP_TOOL_ACTION_PAUSE, shell->display);
 
-  for (i = 0; i < (shell->motion_buffer->event_queue->len - keep); i++)
+  while (shell->motion_buffer->event_queue->len > keep)
     {
-      buf_coords = &g_array_index (shell->motion_buffer->event_queue, GimpCoords, i);
+      GimpCoords buf_coords;
+
+      gimp_motion_buffer_pop_event_queue (shell->motion_buffer,
+                                          &buf_coords);
 
       tool_manager_motion_active (shell->display->gimp,
-                                  buf_coords,
+                                  &buf_coords,
                                   time,
                                   event_state,
                                   shell->display);
@@ -1808,12 +1808,8 @@ gimp_display_shell_process_event_queue (GimpDisplayShell *shell,
   tool_manager_control_active (shell->display->gimp,
                                GIMP_TOOL_ACTION_RESUME, shell->display);
 
-  g_array_set_size (shell->motion_buffer->event_queue, 0);
-
   if (shell->motion_buffer->event_delay)
     {
-      g_array_append_val (shell->motion_buffer->event_queue, keep_event);
-
       shell->motion_buffer->event_delay_timeout =
         g_timeout_add (50,
                        (GSourceFunc) gimp_display_shell_flush_event_queue,
