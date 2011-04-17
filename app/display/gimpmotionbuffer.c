@@ -245,10 +245,13 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
       /*  Events with distances less than the screen resolution are
        *  not worth handling.
        */
-      filter = MIN (1 / scale_x, 1 / scale_y) / 2.0;
+      filter = MIN (1.0 / scale_x, 1.0 / scale_y) / 2.0;
 
-      if (fabs (delta_x) < filter && fabs (delta_y) < filter)
-        return FALSE;
+      if (fabs (delta_x) < filter &&
+          fabs (delta_y) < filter)
+        {
+          return FALSE;
+        }
 
       distance = dist = sqrt (SQR (delta_x) + SQR (delta_y));
 
@@ -318,12 +321,12 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
 
       delta_dir = coords->direction - buffer->last_coords.direction;
 
-      if ((fabs (delta_dir) > 0.5) && (delta_dir < 0.0))
+      if (delta_dir < -0.5)
         {
           coords->direction = (0.5 * coords->direction +
                                0.5 * (buffer->last_coords.direction - 1.0));
         }
-      else if ((fabs (delta_dir) > 0.5) && (delta_dir > 0.0))
+      else if (delta_dir > 0.5)
         {
           coords->direction = (0.5 * coords->direction +
                                0.5 * (buffer->last_coords.direction + 1.0));
