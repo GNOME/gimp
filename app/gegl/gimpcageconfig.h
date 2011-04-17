@@ -24,6 +24,16 @@
 #include "core/gimpimagemapconfig.h"
 
 
+struct _GimpCagePoint
+{
+  GimpVector2 src_point;
+  GimpVector2 dest_point;
+  GimpVector2 edge_normal;
+  gdouble     edge_scaling_factor;
+  gboolean    selected;
+};
+
+
 #define GIMP_TYPE_CAGE_CONFIG            (gimp_cage_config_get_type ())
 #define GIMP_CAGE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CAGE_CONFIG, GimpCageConfig))
 #define GIMP_CAGE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CAGE_CONFIG, GimpCageConfigClass))
@@ -52,6 +62,7 @@ struct _GimpCageConfigClass
 {
   GimpImageMapConfigClass  parent_class;
 };
+
 
 GType           gimp_cage_config_get_type               (void) G_GNUC_CONST;
 

@@ -177,14 +177,12 @@ typedef struct _GimpTagged          GimpTagged;      /* dummy typedef */
 /*  non-object types  */
 
 typedef struct _GimpArea            GimpArea;
-typedef struct _GimpCagePoint       GimpCagePoint;
 typedef struct _GimpCoords          GimpCoords;
 typedef struct _GimpGradientSegment GimpGradientSegment;
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 typedef struct _GimpSamplePoint     GimpSamplePoint;
 typedef struct _GimpScanConvert     GimpScanConvert;
 typedef         guint32             GimpTattoo;
-
 
 /* The following hack is made so that we can reuse the definition
  * the cairo definition of cairo_path_t without having to translate
@@ -223,15 +221,6 @@ typedef void     (* GimpImageMapApplyFunc) (gpointer          apply_data,
 
 /*  structs  */
 
-struct _GimpCagePoint
-{
-  GimpVector2 src_point;
-  GimpVector2 dest_point;
-  GimpVector2 edge_normal;
-  gdouble     edge_scaling_factor;
-  gboolean    selected;
-};
-
 struct _GimpCoords
 {
   gdouble x;
@@ -243,6 +232,7 @@ struct _GimpCoords
   gdouble velocity;
   gdouble direction;
 };
+
 
 #include "gegl/gimp-gegl-types.h"
 #include "paint/paint-types.h"
