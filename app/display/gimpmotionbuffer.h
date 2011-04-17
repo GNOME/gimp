@@ -76,7 +76,7 @@ gboolean           gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
                                                   gdouble           scale_x,
                                                   gdouble           scale_y,
                                                   GimpCoords       *coords,
-                                                  gdouble           inertia_factor,
+                                                  gboolean          event_fill,
                                                   guint32           time);
 void               gimp_motion_buffer_push_event_history (GimpMotionBuffer *buffer,
                                                           GimpCoords       *coords);

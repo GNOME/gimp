@@ -139,9 +139,6 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   paint_tool->status_line = _("Click to draw the line");
   paint_tool->status_ctrl = _("%s to pick a color");
 
-  /*  Paint tools benefit most from strong smoothing on coordinates  */
-  tool->max_coord_smooth  = 0.80;
-
   paint_tool->core        = NULL;
 }
 

@@ -811,6 +811,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventMotion *mevent            = (GdkEventMotion *) event;
         GdkEvent       *compressed_motion = NULL;
+        GimpMotionMode  motion_mode       = GIMP_MOTION_MODE_EXACT;
         GimpTool       *active_tool;
 
         if (gimp->busy)
@@ -818,10 +819,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gimp);
 
+        if (active_tool)
+          motion_mode = gimp_tool_control_get_motion_mode (active_tool->control);
+
         if (shell->scrolling ||
-            (active_tool &&
-             gimp_tool_control_get_motion_mode (active_tool->control) ==
-             GIMP_MOTION_MODE_COMPRESS))
+            motion_mode == GIMP_MOTION_MODE_COMPRESS)
           {
             compressed_motion = gimp_display_shell_compress_motion (shell);
 
@@ -894,8 +896,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  * amount of events between timestamps is final or
                  * risk loosing some.
                  */
-                if ((gimp_tool_control_get_motion_mode (active_tool->control) ==
-                     GIMP_MOTION_MODE_EXACT) &&
+                if (motion_mode == GIMP_MOTION_MODE_EXACT     &&
                     shell->display->config->use_event_history &&
                     gdk_device_get_history (mevent->device, mevent->window,
                                             shell->motion_buffer->last_read_motion_time + 1,
@@ -928,7 +929,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                            shell->scale_x,
                                                            shell->scale_y,
                                                            &image_coords,
-                                                           active_tool->max_coord_smooth,
+                                                           TRUE,
                                                            history_events[i]->time))
                           {
                             gimp_display_shell_process_event_queue (shell,
@@ -944,13 +945,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   }
                 else
                   {
+                    gboolean event_fill = (motion_mode == GIMP_MOTION_MODE_EXACT);
+
                     /* Early removal of useless events saves CPU time.
                      */
                     if (gimp_motion_buffer_eval_event (shell->motion_buffer,
                                                        shell->scale_x,
                                                        shell->scale_y,
                                                        &image_coords,
-                                                       active_tool->max_coord_smooth,
+                                                       event_fill,
                                                        time))
                       {
                         gimp_display_shell_process_event_queue (shell,
@@ -965,13 +968,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
           {
             /* Early removal of useless events saves CPU time.
-             * Smoothing is 0.0 here for coasting.
+             * Pass event_fill = FALSE since we are only hovering.
              */
             if (gimp_motion_buffer_eval_event (shell->motion_buffer,
                                                shell->scale_x,
                                                shell->scale_y,
                                                &image_coords,
-                                               0.0,
+                                               FALSE,
                                                time))
               {
                 /* then update the tool. */

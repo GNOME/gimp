@@ -207,7 +207,7 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
                                gdouble           scale_x,
                                gdouble           scale_y,
                                GimpCoords       *coords,
-                               gdouble           inertia_factor,
+                               gboolean          event_fill,
                                guint32           time)
 {
   gdouble  delta_time  = 0.001;
@@ -216,20 +216,11 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
   gdouble  dir_delta_x = 0.0;
   gdouble  dir_delta_y = 0.0;
   gdouble  distance    = 1.0;
-  gboolean event_fill  = (inertia_factor > 0.0);
 
   /*  the last_read_motion_time most be set unconditionally, so set
    *  it early
    */
   buffer->last_read_motion_time  = time;
-
-  /*  Smoothing causes problems with cursor tracking when zoomed above
-   *  screen resolution so we need to supress it.
-   */
-  if (scale_x > 1.0 || scale_y > 1.0)
-    {
-      inertia_factor = 0.0;
-    }
 
   delta_time = (buffer->last_motion_delta_time * (1 - SMOOTH_FACTOR) +
                 (time - buffer->last_motion_time) * SMOOTH_FACTOR);

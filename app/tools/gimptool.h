@@ -47,8 +47,6 @@ struct _GimpTool
   GimpDisplay     *display;     /*  pointer to currently active display    */
   GimpDrawable    *drawable;    /*  pointer to the tool's current drawable */
 
-  gdouble          max_coord_smooth;
-
   /*  private state of gimp_tool_set_focus_display() and
    *  gimp_tool_set_[active_]modifier_state()
    */
