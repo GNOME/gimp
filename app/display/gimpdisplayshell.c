@@ -307,6 +307,10 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->motion_buffer   = gimp_motion_buffer_new ();
 
+  g_signal_connect (shell->motion_buffer, "motion",
+                    G_CALLBACK (gimp_display_shell_buffer_motion),
+                    shell);
+
   shell->zoom_focus_pointer_queue = g_queue_new ();
 
   gtk_widget_set_events (GTK_WIDGET (shell), (GDK_POINTER_MOTION_MASK      |

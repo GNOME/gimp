@@ -62,26 +62,33 @@ struct _GimpMotionBufferClass
 {
   GtkBoxClass  parent_class;
 
-  void (* motion)    (GimpMotionBuffer *buffer,
-                      const GimpCoords *coords,
-                      guint32           time);
+  void (* motion) (GimpMotionBuffer *buffer,
+                   const GimpCoords *coords,
+                   guint32           time,
+                   GdkModifierType   state);
 };
 
 
-GType              gimp_motion_buffer_get_type   (void) G_GNUC_CONST;
+GType              gimp_motion_buffer_get_type    (void) G_GNUC_CONST;
 
-GimpMotionBuffer * gimp_motion_buffer_new        (void);
+GimpMotionBuffer * gimp_motion_buffer_new         (void);
 
-gboolean   gimp_motion_buffer_eval_event         (GimpMotionBuffer *buffer,
-                                                  gdouble           scale_x,
-                                                  gdouble           scale_y,
-                                                  GimpCoords       *coords,
-                                                  gboolean          event_fill,
-                                                  guint32           time);
-void       gimp_motion_buffer_push_event_history (GimpMotionBuffer *buffer,
-                                                  const GimpCoords *coords);
-void       gimp_motion_buffer_pop_event_queue    (GimpMotionBuffer *buffer,
-                                                  GimpCoords       *coords);
+gboolean   gimp_motion_buffer_eval_event          (GimpMotionBuffer *buffer,
+                                                   gdouble           scale_x,
+                                                   gdouble           scale_y,
+                                                   GimpCoords       *coords,
+                                                   gboolean          event_fill,
+                                                   guint32           time);
+
+void       gimp_motion_buffer_push_event_history  (GimpMotionBuffer *buffer,
+                                                   const GimpCoords *coords);
+void       gimp_motion_buffer_pop_event_queue     (GimpMotionBuffer *buffer,
+                                                   GimpCoords       *coords);
+
+void       gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
+                                                   GdkModifierType   state,
+                                                   guint32           time);
+gboolean   gimp_motion_buffer_flush_event_queue   (GimpMotionBuffer *buffer);
 
 
 #endif /* __GIMP_MOTION_BUFFER_H__ */

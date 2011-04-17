@@ -90,8 +90,11 @@ gimp_motion_buffer_class_init (GimpMotionBufferClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpMotionBufferClass, motion),
                   NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
+                  gimp_marshal_VOID__POINTER_UINT_FLAGS,
+                  G_TYPE_NONE, 3,
+                  G_TYPE_POINTER,
+                  G_TYPE_UINT,
+                  GDK_TYPE_MODIFIER_TYPE);
 
   object_class->constructed  = gimp_motion_buffer_constructed;
   object_class->dispose      = gimp_motion_buffer_dispose;
@@ -179,8 +182,8 @@ gimp_motion_buffer_new (void)
 }
 
 /**
- * gimp_display_shell_eval_event:
- * @shell:
+ * gimp_motion_buffer_eval_event:
+ * @buffer:
  * @coords:
  * @inertia_factor:
  * @time:
@@ -410,6 +413,85 @@ gimp_motion_buffer_pop_event_queue (GimpMotionBuffer *buffer,
   *coords = g_array_index (buffer->event_queue, GimpCoords, 0);
 
   g_array_remove_index (buffer->event_queue, 0);
+}
+
+void
+gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
+                                        GdkModifierType   state,
+                                        guint32           time)
+{
+  GdkModifierType  event_state;
+  gint             keep = 0;
+
+  if (buffer->event_delay)
+    {
+      /* If we are in delay we use LAST state, not current */
+      event_state = buffer->last_active_state;
+
+      keep = 1; /* Holding one event in buf */
+    }
+  else
+    {
+      /* Save the state */
+      event_state = state;
+    }
+
+  if (buffer->event_delay_timeout)
+    {
+      g_source_remove (buffer->event_delay_timeout);
+      buffer->event_delay_timeout = 0;
+    }
+
+  buffer->last_active_state = state;
+
+  while (buffer->event_queue->len > keep)
+    {
+      GimpCoords buf_coords;
+
+      gimp_motion_buffer_pop_event_queue (buffer, &buf_coords);
+
+      g_signal_emit (buffer, motion_buffer_signals[MOTION], 0,
+                     &buf_coords, time, event_state);
+    }
+
+  if (buffer->event_delay)
+    {
+      buffer->event_delay_timeout =
+        g_timeout_add (50,
+                       (GSourceFunc) gimp_motion_buffer_flush_event_queue,
+                       buffer);
+    }
+}
+
+gboolean
+gimp_motion_buffer_flush_event_queue (GimpMotionBuffer *buffer)
+{
+  buffer->event_delay = FALSE;
+
+  /*  Remove the timeout explicitly because this function might be
+   *  called directly (not via the timeout)
+   */
+  if (buffer->event_delay_timeout)
+    {
+      g_source_remove (buffer->event_delay_timeout);
+      buffer->event_delay_timeout = 0;
+    }
+
+  if (buffer->event_queue->len > 0)
+    {
+       GimpCoords last_coords = g_array_index (buffer->event_queue,
+                                               GimpCoords,
+                                               buffer->event_queue->len - 1);
+
+       gimp_motion_buffer_push_event_history (buffer, &last_coords);
+
+       gimp_motion_buffer_process_event_queue (buffer,
+                                               buffer->last_active_state,
+                                               buffer->last_read_motion_time);
+    }
+
+  /* Return false so a potential timeout calling it gets removed */
+  return FALSE;
 }
 
 
