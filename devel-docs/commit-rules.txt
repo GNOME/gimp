@@ -1,0 +1,29 @@
+Commit Rules
+============
+
+This file describes rules and things to think about when creating GIMP
+commits.
+
+ * Commit message format template:
+
+     modulename: Summary on one line
+
+     Detailed description that may span several paragraphs and
+     lines. Like this example description that is more than one
+     line. Focus on explaning _why_ the commit is needed.
+
+   or
+
+     Bug XXXXXX - Bug title
+
+     Detailed description that may span several paragraphs and
+     lines. Like this example description that is more than one
+     line. Focus on explaning _why_ the commit is needed.
+
+   Look at existing commit messages for examples.
+
+ * Keep NEWS up to date
+
+   Whenever you make a change that is worthy of being mentioned in the
+   NEWS file, update the NEWS file too. The purpose of this rule is to
+   make it as easy as possble to make a GIMP release.
