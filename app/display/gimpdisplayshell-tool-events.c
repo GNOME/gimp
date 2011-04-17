@@ -502,30 +502,30 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (gimp_display_shell_initialize_tool (shell,
                                                     &image_coords, state))
               {
+                GimpCoords last_motion;
+
                 /* Use the last evaluated dynamic axes instead of the
                  * button_press event's ones because the click is
                  * usually at the same spot as the last motion event
                  * which would give us bogus dynamics.
                  */
-                GimpCoords tmp_coords;
+                gimp_motion_buffer_start_stroke (shell->motion_buffer, time,
+                                                 &last_motion);
 
-                tmp_coords = shell->motion_buffer->last_coords;
+                last_motion.x        = image_coords.x;
+                last_motion.y        = image_coords.y;
+                last_motion.pressure = image_coords.pressure;
+                last_motion.xtilt    = image_coords.xtilt;
+                last_motion.ytilt    = image_coords.ytilt;
+                last_motion.wheel    = image_coords.wheel;
 
-                tmp_coords.x        = image_coords.x;
-                tmp_coords.y        = image_coords.y;
-                tmp_coords.pressure = image_coords.pressure;
-                tmp_coords.xtilt    = image_coords.xtilt;
-                tmp_coords.ytilt    = image_coords.ytilt;
-
-                image_coords = tmp_coords;
+                image_coords = last_motion;
 
                 tool_manager_button_press_active (gimp,
                                                   &image_coords,
                                                   time, state,
                                                   GIMP_BUTTON_PRESS_NORMAL,
                                                   display);
-
-                shell->motion_buffer->last_read_motion_time = bevent->time;
               }
             break;
 
@@ -656,10 +656,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 (! gimp_image_is_empty (image) ||
                  gimp_tool_control_get_handle_empty_image (active_tool->control)))
               {
+                gimp_motion_buffer_finish_stroke (shell->motion_buffer);
+
                 if (gimp_tool_control_is_active (active_tool->control))
                   {
-                    gimp_motion_buffer_flush_event_queue (shell->motion_buffer);
-
                     tool_manager_button_release_active (gimp,
                                                         &image_coords,
                                                         time, state,

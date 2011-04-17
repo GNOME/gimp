@@ -73,6 +73,11 @@ GType              gimp_motion_buffer_get_type    (void) G_GNUC_CONST;
 
 GimpMotionBuffer * gimp_motion_buffer_new         (void);
 
+void       gimp_motion_buffer_start_stroke        (GimpMotionBuffer *buffer,
+                                                   guint32           time,
+                                                   GimpCoords       *last_motion);
+void       gimp_motion_buffer_finish_stroke       (GimpMotionBuffer *buffer);
+
 gboolean   gimp_motion_buffer_eval_event          (GimpMotionBuffer *buffer,
                                                    gdouble           scale_x,
                                                    gdouble           scale_y,
@@ -88,7 +93,6 @@ void       gimp_motion_buffer_pop_event_queue     (GimpMotionBuffer *buffer,
 void       gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
                                                    GdkModifierType   state,
                                                    guint32           time);
-void       gimp_motion_buffer_flush_event_queue   (GimpMotionBuffer *buffer);
 
 
 #endif /* __GIMP_MOTION_BUFFER_H__ */

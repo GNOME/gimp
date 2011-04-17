@@ -188,6 +188,33 @@ gimp_motion_buffer_new (void)
                        NULL);
 }
 
+void
+gimp_motion_buffer_start_stroke (GimpMotionBuffer *buffer,
+                                 guint32           time,
+                                 GimpCoords       *last_motion)
+{
+  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
+  g_return_if_fail (last_motion != NULL);
+
+  buffer->last_read_motion_time = time;
+
+  *last_motion = buffer->last_coords;
+}
+
+void
+gimp_motion_buffer_finish_stroke (GimpMotionBuffer *buffer)
+{
+  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
+
+  if (buffer->event_delay_timeout)
+    {
+      g_source_remove (buffer->event_delay_timeout);
+      buffer->event_delay_timeout = 0;
+    }
+
+  gimp_motion_buffer_event_queue_timeout (buffer);
+}
+
 /**
  * gimp_motion_buffer_eval_event:
  * @buffer:
@@ -473,17 +500,6 @@ gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
                        (GSourceFunc) gimp_motion_buffer_event_queue_timeout,
                        buffer);
     }
-}
-
-void
-gimp_motion_buffer_flush_event_queue (GimpMotionBuffer *buffer)
-{
-  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
-
-  if (buffer->event_delay_timeout)
-    g_source_remove (buffer->event_delay_timeout);
-
-  gimp_motion_buffer_event_queue_timeout (buffer);
 }
 
 
