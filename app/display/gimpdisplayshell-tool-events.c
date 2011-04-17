@@ -909,9 +909,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                     device = gimp_device_info_get_by_device (mevent->device);
 
-                    tool_manager_control_active (gimp, GIMP_TOOL_ACTION_PAUSE,
-                                                 display);
-
                     for (i = 0; i < n_history_events; i++)
                       {
                         gimp_device_info_get_time_coords (device,
@@ -937,9 +934,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                     history_events[i]->time);
                           }
                       }
-
-                    tool_manager_control_active (gimp, GIMP_TOOL_ACTION_RESUME,
-                                                 display);
 
                     gdk_device_free_history (history_events, n_history_events);
                   }
@@ -1788,9 +1782,6 @@ gimp_display_shell_process_event_queue (GimpDisplayShell *shell,
 
   shell->motion_buffer->last_active_state = state;
 
-  tool_manager_control_active (shell->display->gimp,
-                               GIMP_TOOL_ACTION_PAUSE, shell->display);
-
   while (shell->motion_buffer->event_queue->len > keep)
     {
       GimpCoords buf_coords;
@@ -1804,9 +1795,6 @@ gimp_display_shell_process_event_queue (GimpDisplayShell *shell,
                                   event_state,
                                   shell->display);
     }
-
-  tool_manager_control_active (shell->display->gimp,
-                               GIMP_TOOL_ACTION_RESUME, shell->display);
 
   if (shell->motion_buffer->event_delay)
     {
