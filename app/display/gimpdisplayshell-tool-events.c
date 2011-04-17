@@ -936,8 +936,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                     state,
                                                                     history_events[i]->time);
                           }
-
-                        shell->motion_buffer->last_read_motion_time = history_events[i]->time;
                       }
 
                     tool_manager_control_active (gimp, GIMP_TOOL_ACTION_RESUME,
@@ -960,8 +958,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                 state,
                                                                 time);
                       }
-
-                    shell->motion_buffer->last_read_motion_time = time;
                   }
               }
           }
@@ -994,7 +990,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             gimp_motion_buffer_push_event_history (shell->motion_buffer,
                                                    &image_coords);
-            shell->motion_buffer->last_read_motion_time = time;
           }
 
         return_val = TRUE;

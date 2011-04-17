@@ -377,6 +377,8 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
 
   g_array_append_val (buffer->event_queue, *coords);
 
+  buffer->last_read_motion_time  = time;
+
   buffer->last_coords            = *coords;
   buffer->last_motion_time       = time;
   buffer->last_motion_delta_time = delta_time;
