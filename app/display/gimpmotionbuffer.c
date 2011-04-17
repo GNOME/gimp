@@ -385,12 +385,28 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
 
 void
 gimp_motion_buffer_push_event_history (GimpMotionBuffer *buffer,
-                                       GimpCoords       *coords)
+                                       const GimpCoords *coords)
 {
+  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
+  g_return_if_fail (coords != NULL);
+
   if (buffer->event_history->len == 4)
     g_array_remove_index (buffer->event_history, 0);
 
   g_array_append_val (buffer->event_history, *coords);
+}
+
+void
+gimp_motion_buffer_pop_event_queue (GimpMotionBuffer *buffer,
+                                    GimpCoords       *coords)
+{
+  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
+  g_return_if_fail (coords != NULL);
+  g_return_if_fail (buffer->event_queue->len > 0);
+
+  *coords = g_array_index (buffer->event_queue, GimpCoords, 0);
+
+  g_array_remove_index (buffer->event_queue, 0);
 }
 
 

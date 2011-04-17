@@ -977,17 +977,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                FALSE,
                                                time))
               {
-                /* then update the tool. */
-                GimpCoords *buf_coords = &g_array_index (shell->motion_buffer->event_queue,
-                                                         GimpCoords, 0);
+                GimpCoords buf_coords;
+
+                gimp_motion_buffer_pop_event_queue (shell->motion_buffer,
+                                                    &buf_coords);
 
                 tool_manager_oper_update_active (gimp,
-                                                 buf_coords, state,
+                                                 &buf_coords, state,
                                                  shell->proximity,
                                                  display);
-
-                /* remove used event */
-                g_array_remove_index (shell->motion_buffer->event_queue, 0);
               }
 
             gimp_motion_buffer_push_event_history (shell->motion_buffer,
