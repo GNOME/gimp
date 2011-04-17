@@ -38,8 +38,9 @@ struct _GimpMotionBuffer
 {
   GimpObject  parent_instance;
 
-  guint32     last_motion_time; /*  previous time of a forwarded motion event  */
   guint32     last_read_motion_time;
+
+  guint32     last_motion_time; /*  previous time of a forwarded motion event  */
   gdouble     last_motion_delta_time;
   gdouble     last_motion_delta_x;
   gdouble     last_motion_delta_y;

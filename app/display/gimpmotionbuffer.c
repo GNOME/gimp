@@ -218,6 +218,11 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
   gdouble  distance    = 1.0;
   gboolean event_fill  = (inertia_factor > 0.0);
 
+  /*  the last_read_motion_time most be set unconditionally, so set
+   *  it early
+   */
+  buffer->last_read_motion_time  = time;
+
   /*  Smoothing causes problems with cursor tracking when zoomed above
    *  screen resolution so we need to supress it.
    */
@@ -376,8 +381,6 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
     }
 
   g_array_append_val (buffer->event_queue, *coords);
-
-  buffer->last_read_motion_time  = time;
 
   buffer->last_coords            = *coords;
   buffer->last_motion_time       = time;
