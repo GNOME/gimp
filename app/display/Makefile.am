@@ -83,8 +83,6 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-callbacks.h		\
 	gimpdisplayshell-close.c		\
 	gimpdisplayshell-close.h		\
-	gimpdisplayshell-coords.c		\
-	gimpdisplayshell-coords.h		\
 	gimpdisplayshell-cursor.c		\
 	gimpdisplayshell-cursor.h		\
 	gimpdisplayshell-dnd.c			\
@@ -129,6 +127,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-transform.h		\
 	gimpimagewindow.c			\
 	gimpimagewindow.h			\
+	gimpmotionbuffer.c			\
+	gimpmotionbuffer.h			\
 	gimpnavigationeditor.c			\
 	gimpnavigationeditor.h			\
 	gimpscalecombobox.c			\

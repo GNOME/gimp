@@ -50,7 +50,6 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-autoscroll.h"
-#include "gimpdisplayshell-coords.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-grab.h"
 #include "gimpdisplayshell-layer-select.h"
@@ -59,6 +58,7 @@
 #include "gimpdisplayshell-tool-events.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
+#include "gimpmotionbuffer.h"
 
 #include "gimp-log.h"
 
@@ -514,7 +514,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  */
                 GimpCoords tmp_coords;
 
-                tmp_coords = shell->last_coords;
+                tmp_coords = shell->motion_buffer->last_coords;
 
                 tmp_coords.x        = image_coords.x;
                 tmp_coords.y        = image_coords.y;
@@ -530,7 +530,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                   GIMP_BUTTON_PRESS_NORMAL,
                                                   display);
 
-                shell->last_read_motion_time = bevent->time;
+                shell->motion_buffer->last_read_motion_time = bevent->time;
               }
             break;
 
@@ -663,7 +663,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
                 if (gimp_tool_control_is_active (active_tool->control))
                   {
-                    if (shell->event_queue->len > 0)
+                    if (shell->motion_buffer->event_queue->len > 0)
                       gimp_display_shell_flush_event_queue (shell);
 
                     tool_manager_button_release_active (gimp,
@@ -899,7 +899,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                      GIMP_MOTION_MODE_EXACT) &&
                     shell->display->config->use_event_history &&
                     gdk_device_get_history (mevent->device, mevent->window,
-                                            shell->last_read_motion_time + 1,
+                                            shell->motion_buffer->last_read_motion_time + 1,
                                             mevent->time - 1,
                                             &history_events,
                                             &n_history_events))
@@ -925,7 +925,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                         /* Early removal of useless events saves CPU time.
                          */
-                        if (gimp_display_shell_eval_event (shell,
+                        if (gimp_motion_buffer_eval_event (shell->motion_buffer,
+                                                           shell->scale_x,
+                                                           shell->scale_y,
                                                            &image_coords,
                                                            active_tool->max_coord_smooth,
                                                            history_events[i]->time))
@@ -935,7 +937,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                     history_events[i]->time);
                           }
 
-                        shell->last_read_motion_time = history_events[i]->time;
+                        shell->motion_buffer->last_read_motion_time = history_events[i]->time;
                       }
 
                     tool_manager_control_active (gimp, GIMP_TOOL_ACTION_RESUME,
@@ -947,7 +949,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   {
                     /* Early removal of useless events saves CPU time.
                      */
-                    if (gimp_display_shell_eval_event (shell,
+                    if (gimp_motion_buffer_eval_event (shell->motion_buffer,
+                                                       shell->scale_x,
+                                                       shell->scale_y,
                                                        &image_coords,
                                                        active_tool->max_coord_smooth,
                                                        time))
@@ -957,7 +961,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                 time);
                       }
 
-                    shell->last_read_motion_time = time;
+                    shell->motion_buffer->last_read_motion_time = time;
                   }
               }
           }
@@ -968,13 +972,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /* Early removal of useless events saves CPU time.
              * Smoothing is 0.0 here for coasting.
              */
-            if (gimp_display_shell_eval_event (shell,
+            if (gimp_motion_buffer_eval_event (shell->motion_buffer,
+                                               shell->scale_x,
+                                               shell->scale_y,
                                                &image_coords,
                                                0.0,
                                                time))
               {
                 /* then update the tool. */
-                GimpCoords *buf_coords = &g_array_index (shell->event_queue,
+                GimpCoords *buf_coords = &g_array_index (shell->motion_buffer->event_queue,
                                                          GimpCoords, 0);
 
                 tool_manager_oper_update_active (gimp,
@@ -983,11 +989,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                  display);
 
                 /* remove used event */
-                g_array_remove_index (shell->event_queue, 0);
+                g_array_remove_index (shell->motion_buffer->event_queue, 0);
               }
 
-            gimp_display_shell_push_event_history (shell, &image_coords);
-            shell->last_read_motion_time = time;
+            gimp_motion_buffer_push_event_history (shell->motion_buffer,
+                                                   &image_coords);
+            shell->motion_buffer->last_read_motion_time = time;
           }
 
         return_val = TRUE;
@@ -1727,23 +1734,24 @@ gimp_display_shell_flush_event_queue (GimpDisplayShell *shell)
 {
   GimpTool *active_tool = tool_manager_get_active (shell->display->gimp);
 
-  shell->event_delay = FALSE;
+  shell->motion_buffer->event_delay = FALSE;
 
   /* Set the timeout id to 0 */
-  shell->event_delay_timeout = 0;
+  shell->motion_buffer->event_delay_timeout = 0;
 
   if (active_tool                                        &&
       gimp_tool_control_is_active (active_tool->control) &&
-      shell->event_queue->len > 0)
+      shell->motion_buffer->event_queue->len > 0)
     {
-       GimpCoords last_coords = g_array_index (shell->event_queue,
-                                               GimpCoords, shell->event_queue->len - 1 );
+       GimpCoords last_coords = g_array_index (shell->motion_buffer->event_queue,
+                                               GimpCoords,
+                                               shell->motion_buffer->event_queue->len - 1 );
 
-       gimp_display_shell_push_event_history (shell, &last_coords);
+       gimp_motion_buffer_push_event_history (shell->motion_buffer, &last_coords);
 
        gimp_display_shell_process_event_queue (shell,
-                                               shell->last_active_state,
-                                               shell->last_read_motion_time);
+                                               shell->motion_buffer->last_active_state,
+                                               shell->motion_buffer->last_read_motion_time);
     }
 
   /* Return false so a potential timeout calling it gets removed */
@@ -1761,30 +1769,30 @@ gimp_display_shell_process_event_queue (GimpDisplayShell *shell,
   GimpCoords       keep_event;
   GimpCoords      *buf_coords = NULL;
 
-  if (shell->event_delay)
+  if (shell->motion_buffer->event_delay)
     {
       keep = 1; /* Holding one event in buf */
       /* If we are in delay we use LAST state, not current */
-      event_state = shell->last_active_state;
-      keep_event = g_array_index (shell->event_queue,
-                                  GimpCoords, shell->event_queue->len - 1 );
+      event_state = shell->motion_buffer->last_active_state;
+      keep_event = g_array_index (shell->motion_buffer->event_queue,
+                                  GimpCoords, shell->motion_buffer->event_queue->len - 1);
     }
   else
     {
       event_state = state; /* Save the state */
     }
 
-  if (shell->event_delay_timeout != 0)
-    g_source_remove (shell->event_delay_timeout);
+  if (shell->motion_buffer->event_delay_timeout != 0)
+    g_source_remove (shell->motion_buffer->event_delay_timeout);
 
-  shell->last_active_state = state;
+  shell->motion_buffer->last_active_state = state;
 
   tool_manager_control_active (shell->display->gimp,
                                GIMP_TOOL_ACTION_PAUSE, shell->display);
 
-  for (i = 0; i < (shell->event_queue->len - keep); i++)
+  for (i = 0; i < (shell->motion_buffer->event_queue->len - keep); i++)
     {
-      buf_coords = &g_array_index (shell->event_queue, GimpCoords, i);
+      buf_coords = &g_array_index (shell->motion_buffer->event_queue, GimpCoords, i);
 
       tool_manager_motion_active (shell->display->gimp,
                                   buf_coords,
@@ -1796,13 +1804,13 @@ gimp_display_shell_process_event_queue (GimpDisplayShell *shell,
   tool_manager_control_active (shell->display->gimp,
                                GIMP_TOOL_ACTION_RESUME, shell->display);
 
-  g_array_set_size (shell->event_queue, 0);
+  g_array_set_size (shell->motion_buffer->event_queue, 0);
 
-  if (shell->event_delay)
+  if (shell->motion_buffer->event_delay)
     {
-      g_array_append_val (shell->event_queue, keep_event);
+      g_array_append_val (shell->motion_buffer->event_queue, keep_event);
 
-      shell->event_delay_timeout =
+      shell->motion_buffer->event_delay_timeout =
         g_timeout_add (50,
                        (GSourceFunc) gimp_display_shell_flush_event_queue,
                        shell);

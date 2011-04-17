@@ -74,6 +74,7 @@
 #include "gimpdisplayshell-tool-events.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
+#include "gimpmotionbuffer.h"
 #include "gimpstatusbar.h"
 
 #include "about.h"
@@ -304,8 +305,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
   shell->override_cursor = (GimpCursorType) -1;
 
-  shell->event_history = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
-  shell->event_queue   = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
+  shell->motion_buffer   = gimp_motion_buffer_new ();
 
   shell->zoom_focus_pointer_queue = g_queue_new ();
 
@@ -789,16 +789,10 @@ gimp_display_shell_dispose (GObject *object)
 
   gimp_display_shell_items_free (shell);
 
-  if (shell->event_history)
+  if (shell->motion_buffer)
     {
-      g_array_free (shell->event_history, TRUE);
-      shell->event_history = NULL;
-    }
-
-  if (shell->event_queue)
-    {
-      g_array_free (shell->event_queue, TRUE);
-      shell->event_queue = NULL;
+      g_object_unref (shell->motion_buffer);
+      shell->motion_buffer = NULL;
     }
 
   if (shell->zoom_focus_pointer_queue)

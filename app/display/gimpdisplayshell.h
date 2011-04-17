@@ -86,15 +86,6 @@ struct _GimpDisplayShell
   gint               last_offset_x;    /*  offsets used when reverting zoom   */
   gint               last_offset_y;
 
-  guint32            last_motion_time; /*  previous time of a forwarded motion event  */
-  guint32            last_read_motion_time;
-  gdouble            last_motion_delta_time;
-  gdouble            last_motion_delta_x;
-  gdouble            last_motion_delta_y;
-  gdouble            last_motion_distance;
-
-  GimpCoords         last_coords;      /* last motion event                   */
-
   gdouble            other_scale;      /*  scale factor entered in Zoom->Other*/
 
   gint               disp_width;       /*  width of drawing area              */
@@ -190,15 +181,9 @@ struct _GimpDisplayShell
   GimpDrawable      *mask;
   GimpRGB            mask_color;
 
-  GArray            *event_history;
-  GArray            *event_queue;
-  gboolean           event_delay;      /* TRUE if theres an unsent event in
-                                          the history buffer                  */
+  GimpMotionBuffer  *motion_buffer;
 
   GQueue            *zoom_focus_pointer_queue;
-
-  gint               event_delay_timeout;
-  GdkModifierType    last_active_state;
 };
 
 struct _GimpDisplayShellClass

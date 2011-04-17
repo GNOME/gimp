@@ -1,0 +1,84 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpmotionbuffer.h
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef __GIMP_MOTION_BUFFER_H__
+#define __GIMP_MOTION_BUFFER_H__
+
+
+#include "core/gimpobject.h"
+
+
+#define GIMP_TYPE_MOTION_BUFFER            (gimp_motion_buffer_get_type ())
+#define GIMP_MOTION_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MOTION_BUFFER, GimpMotionBuffer))
+#define GIMP_MOTION_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MOTION_BUFFER, GimpMotionBufferClass))
+#define GIMP_IS_MOTION_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MOTION_BUFFER))
+#define GIMP_IS_MOTION_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MOTION_BUFFER))
+#define GIMP_MOTION_BUFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MOTION_BUFFER, GimpMotionBufferClass))
+
+
+typedef struct _GimpMotionBufferClass  GimpMotionBufferClass;
+
+struct _GimpMotionBuffer
+{
+  GimpObject  parent_instance;
+
+  guint32     last_motion_time; /*  previous time of a forwarded motion event  */
+  guint32     last_read_motion_time;
+  gdouble     last_motion_delta_time;
+  gdouble     last_motion_delta_x;
+  gdouble     last_motion_delta_y;
+  gdouble     last_motion_distance;
+
+  GimpCoords  last_coords;      /* last motion event                   */
+
+  GArray     *event_history;
+  GArray     *event_queue;
+  gboolean    event_delay;      /* TRUE if theres an unsent event in
+                                 *  the history buffer
+                                 */
+
+  gint               event_delay_timeout;
+  GdkModifierType    last_active_state;
+};
+
+struct _GimpMotionBufferClass
+{
+  GtkBoxClass  parent_class;
+
+  void (* motion)    (GimpMotionBuffer *buffer,
+                      const GimpCoords *coords,
+                      guint32           time);
+};
+
+
+GType              gimp_motion_buffer_get_type (void) G_GNUC_CONST;
+
+GimpMotionBuffer * gimp_motion_buffer_new      (void);
+
+gboolean           gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
+                                                  gdouble           scale_x,
+                                                  gdouble           scale_y,
+                                                  GimpCoords       *coords,
+                                                  gdouble           inertia_factor,
+                                                  guint32           time);
+void               gimp_motion_buffer_push_event_history (GimpMotionBuffer *buffer,
+                                                          GimpCoords       *coords);
+
+
+#endif /* __GIMP_MOTION_BUFFER_H__ */

@@ -30,6 +30,7 @@ typedef struct _GimpCanvasGroup       GimpCanvasGroup;
 
 typedef struct _GimpDisplay           GimpDisplay;
 typedef struct _GimpDisplayShell      GimpDisplayShell;
+typedef struct _GimpMotionBuffer      GimpMotionBuffer;
 
 typedef struct _GimpImageWindow       GimpImageWindow;
 
