@@ -20,7 +20,6 @@
 
 
 #include "gimpdata.h"
-#include "libgimpmath/gimpvector.h"
 
 
 #define GIMP_TYPE_CURVE            (gimp_curve_get_type ())

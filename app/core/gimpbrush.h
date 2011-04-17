@@ -19,7 +19,6 @@
 #define __GIMP_BRUSH_H__
 
 
-#include "libgimpmath/gimpvector.h"
 #include "gimpdata.h"
 
 
