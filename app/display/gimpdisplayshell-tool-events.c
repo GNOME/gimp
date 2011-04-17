@@ -917,12 +917,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                         /* Early removal of useless events saves CPU time.
                          */
-                        if (gimp_motion_buffer_eval_event (shell->motion_buffer,
-                                                           shell->scale_x,
-                                                           shell->scale_y,
-                                                           &image_coords,
-                                                           TRUE,
-                                                           history_events[i]->time))
+                        if (gimp_motion_buffer_motion_event (shell->motion_buffer,
+                                                             &image_coords,
+                                                             history_events[i]->time,
+                                                             shell->scale_x,
+                                                             shell->scale_y,
+                                                             TRUE))
                           {
                             gimp_motion_buffer_process_event_queue (shell->motion_buffer,
                                                                     state,
@@ -938,12 +938,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                     /* Early removal of useless events saves CPU time.
                      */
-                    if (gimp_motion_buffer_eval_event (shell->motion_buffer,
-                                                       shell->scale_x,
-                                                       shell->scale_y,
-                                                       &image_coords,
-                                                       event_fill,
-                                                       time))
+                    if (gimp_motion_buffer_motion_event (shell->motion_buffer,
+                                                         &image_coords,
+                                                         time,
+                                                         shell->scale_x,
+                                                         shell->scale_y,
+                                                         event_fill))
                       {
                         gimp_motion_buffer_process_event_queue (shell->motion_buffer,
                                                                 state,
@@ -959,12 +959,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /* Early removal of useless events saves CPU time.
              * Pass event_fill = FALSE since we are only hovering.
              */
-            if (gimp_motion_buffer_eval_event (shell->motion_buffer,
-                                               shell->scale_x,
-                                               shell->scale_y,
-                                               &image_coords,
-                                               FALSE,
-                                               time))
+            if (gimp_motion_buffer_motion_event (shell->motion_buffer,
+                                                 &image_coords,
+                                                 time,
+                                                 shell->scale_x,
+                                                 shell->scale_y,
+                                                 FALSE))
               {
                 GimpCoords buf_coords;
 

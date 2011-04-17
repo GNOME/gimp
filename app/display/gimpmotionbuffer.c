@@ -216,7 +216,7 @@ gimp_motion_buffer_finish_stroke (GimpMotionBuffer *buffer)
 }
 
 /**
- * gimp_motion_buffer_eval_event:
+ * gimp_motion_buffer_motion_event:
  * @buffer:
  * @coords:
  * @inertia_factor:
@@ -240,12 +240,12 @@ gimp_motion_buffer_finish_stroke (GimpMotionBuffer *buffer)
  * Return value:
  **/
 gboolean
-gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
-                               gdouble           scale_x,
-                               gdouble           scale_y,
-                               GimpCoords       *coords,
-                               gboolean          event_fill,
-                               guint32           time)
+gimp_motion_buffer_motion_event (GimpMotionBuffer *buffer,
+                                 GimpCoords       *coords,
+                                 guint32           time,
+                                 gdouble           scale_x,
+                                 gdouble           scale_y,
+                                 gboolean          event_fill)
 {
   gdouble  delta_time  = 0.001;
   gdouble  delta_x     = 0.0;
@@ -427,32 +427,6 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
 }
 
 void
-gimp_motion_buffer_push_event_history (GimpMotionBuffer *buffer,
-                                       const GimpCoords *coords)
-{
-  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
-  g_return_if_fail (coords != NULL);
-
-  if (buffer->event_history->len == 4)
-    g_array_remove_index (buffer->event_history, 0);
-
-  g_array_append_val (buffer->event_history, *coords);
-}
-
-void
-gimp_motion_buffer_pop_event_queue (GimpMotionBuffer *buffer,
-                                    GimpCoords       *coords)
-{
-  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
-  g_return_if_fail (coords != NULL);
-  g_return_if_fail (buffer->event_queue->len > 0);
-
-  *coords = g_array_index (buffer->event_queue, GimpCoords, 0);
-
-  g_array_remove_index (buffer->event_queue, 0);
-}
-
-void
 gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
                                         GdkModifierType   state,
                                         guint32           time)
@@ -500,6 +474,32 @@ gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
                        (GSourceFunc) gimp_motion_buffer_event_queue_timeout,
                        buffer);
     }
+}
+
+void
+gimp_motion_buffer_push_event_history (GimpMotionBuffer *buffer,
+                                       const GimpCoords *coords)
+{
+  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
+  g_return_if_fail (coords != NULL);
+
+  if (buffer->event_history->len == 4)
+    g_array_remove_index (buffer->event_history, 0);
+
+  g_array_append_val (buffer->event_history, *coords);
+}
+
+void
+gimp_motion_buffer_pop_event_queue (GimpMotionBuffer *buffer,
+                                    GimpCoords       *coords)
+{
+  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
+  g_return_if_fail (coords != NULL);
+  g_return_if_fail (buffer->event_queue->len > 0);
+
+  *coords = g_array_index (buffer->event_queue, GimpCoords, 0);
+
+  g_array_remove_index (buffer->event_queue, 0);
 }
 
 
