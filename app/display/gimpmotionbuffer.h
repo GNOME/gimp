@@ -88,7 +88,7 @@ void       gimp_motion_buffer_pop_event_queue     (GimpMotionBuffer *buffer,
 void       gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
                                                    GdkModifierType   state,
                                                    guint32           time);
-gboolean   gimp_motion_buffer_flush_event_queue   (GimpMotionBuffer *buffer);
+void       gimp_motion_buffer_flush_event_queue   (GimpMotionBuffer *buffer);
 
 
 #endif /* __GIMP_MOTION_BUFFER_H__ */
