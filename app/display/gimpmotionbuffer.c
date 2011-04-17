@@ -123,6 +123,12 @@ gimp_motion_buffer_dispose (GObject *object)
 {
   GimpMotionBuffer *buffer = GIMP_MOTION_BUFFER (object);
 
+  if (buffer->event_delay_timeout)
+    {
+      g_source_remove (buffer->event_delay_timeout);
+      buffer->event_delay_timeout = 0;
+    }
+
   if (buffer->event_history)
     {
       g_array_free (buffer->event_history, TRUE);
@@ -221,8 +227,8 @@ gimp_motion_buffer_eval_event (GimpMotionBuffer *buffer,
   gdouble  dir_delta_y = 0.0;
   gdouble  distance    = 1.0;
 
-  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
-  g_return_if_fail (coords != NULL);
+  g_return_val_if_fail (GIMP_IS_MOTION_BUFFER (buffer), FALSE);
+  g_return_val_if_fail (coords != NULL, FALSE);
 
   /*  the last_read_motion_time most be set unconditionally, so set
    *  it early
