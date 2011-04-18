@@ -924,7 +924,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                              shell->scale_y,
                                                              TRUE))
                           {
-                            gimp_motion_buffer_process_stroke (shell->motion_buffer,
+                            gimp_motion_buffer_request_stroke (shell->motion_buffer,
                                                                state,
                                                                history_events[i]->time);
                           }
@@ -945,7 +945,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                          shell->scale_y,
                                                          event_fill))
                       {
-                        gimp_motion_buffer_process_stroke (shell->motion_buffer,
+                        gimp_motion_buffer_request_stroke (shell->motion_buffer,
                                                            state,
                                                            time);
                       }
@@ -966,7 +966,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                  shell->scale_y,
                                                  FALSE))
               {
-                gimp_motion_buffer_process_hover (shell->motion_buffer,
+                gimp_motion_buffer_request_hover (shell->motion_buffer,
                                                   state,
                                                   shell->proximity);
               }

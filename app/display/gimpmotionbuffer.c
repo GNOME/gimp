@@ -445,7 +445,7 @@ gimp_motion_buffer_motion_event (GimpMotionBuffer *buffer,
 }
 
 void
-gimp_motion_buffer_process_stroke (GimpMotionBuffer *buffer,
+gimp_motion_buffer_request_stroke (GimpMotionBuffer *buffer,
                                    GdkModifierType   state,
                                    guint32           time)
 {
@@ -495,7 +495,7 @@ gimp_motion_buffer_process_stroke (GimpMotionBuffer *buffer,
 }
 
 void
-gimp_motion_buffer_process_hover (GimpMotionBuffer *buffer,
+gimp_motion_buffer_request_hover (GimpMotionBuffer *buffer,
                                   GdkModifierType   state,
                                   gboolean          proximity)
 {
@@ -587,7 +587,7 @@ gimp_motion_buffer_event_queue_timeout (GimpMotionBuffer *buffer)
 
       gimp_motion_buffer_push_event_history (buffer, &last_coords);
 
-      gimp_motion_buffer_process_stroke (buffer,
+      gimp_motion_buffer_request_stroke (buffer,
                                          buffer->last_active_state,
                                          buffer->last_read_motion_time);
     }

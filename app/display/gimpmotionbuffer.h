@@ -89,10 +89,10 @@ gboolean   gimp_motion_buffer_motion_event        (GimpMotionBuffer *buffer,
                                                    gdouble           scale_y,
                                                    gboolean          event_fill);
 
-void       gimp_motion_buffer_process_stroke      (GimpMotionBuffer *buffer,
+void       gimp_motion_buffer_request_stroke      (GimpMotionBuffer *buffer,
                                                    GdkModifierType   state,
                                                    guint32           time);
-void       gimp_motion_buffer_process_hover       (GimpMotionBuffer *buffer,
+void       gimp_motion_buffer_request_hover       (GimpMotionBuffer *buffer,
                                                    GdkModifierType   state,
                                                    gboolean          proximity);
 
