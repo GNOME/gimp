@@ -22,16 +22,6 @@
 #define __GIMP_SCALE_COMBO_BOX_H__
 
 
-#if GTK_CHECK_VERSION(2,23,1)
-#undef GTK_DISABLE_DEPRECATED
-#undef GTK_DISABLE_SINGLE_INCLUDES
-#undef __GTK_COMBO_BOX_ENTRY_H__
-#include <gtk/gtkcomboboxentry.h>
-#define GTK_DISABLE_SINGLE_INCLUDES
-#define GTK_DISABLE_DEPRECATED
-#endif
-
-
 #define GIMP_TYPE_SCALE_COMBO_BOX            (gimp_scale_combo_box_get_type ())
 #define GIMP_SCALE_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SCALE_COMBO_BOX, GimpScaleComboBox))
 #define GIMP_SCALE_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SCALE_COMBO_BOX, GimpScaleComboBoxClass))
@@ -44,18 +34,18 @@ typedef struct _GimpScaleComboBoxClass  GimpScaleComboBoxClass;
 
 struct _GimpScaleComboBoxClass
 {
-  GtkComboBoxEntryClass  parent_instance;
+  GtkComboBoxClass  parent_instance;
 
   void (* entry_activated) (GimpScaleComboBox *combo_box);
 };
 
 struct _GimpScaleComboBox
 {
-  GtkComboBoxEntry  parent_instance;
+  GtkComboBox  parent_instance;
 
-  gdouble           scale;
-  GtkTreePath      *last_path;
-  GList            *mru;
+  gdouble      scale;
+  GtkTreePath *last_path;
+  GList       *mru;
 };
 
 

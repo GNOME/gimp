@@ -52,6 +52,7 @@ enum
 };
 
 
+static void      gimp_scale_combo_box_constructed     (GObject           *object);
 static void      gimp_scale_combo_box_finalize        (GObject           *object);
 
 static void      gimp_scale_combo_box_style_set       (GtkWidget         *widget,
@@ -71,7 +72,7 @@ static void      gimp_scale_combo_box_scale_iter_set  (GtkListStore      *store,
 
 
 G_DEFINE_TYPE (GimpScaleComboBox, gimp_scale_combo_box,
-               GTK_TYPE_COMBO_BOX_ENTRY)
+               GTK_TYPE_COMBO_BOX)
 
 #define parent_class gimp_scale_combo_box_parent_class
 
@@ -93,11 +94,12 @@ gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize  = gimp_scale_combo_box_finalize;
+  object_class->constructed = gimp_scale_combo_box_constructed;
+  object_class->finalize    = gimp_scale_combo_box_finalize;
 
-  widget_class->style_set = gimp_scale_combo_box_style_set;
+  widget_class->style_set   = gimp_scale_combo_box_style_set;
 
-  klass->entry_activated  = NULL;
+  klass->entry_activated    = NULL;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_double ("label-scale",
@@ -111,16 +113,24 @@ gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
 static void
 gimp_scale_combo_box_init (GimpScaleComboBox *combo_box)
 {
-  GtkWidget       *entry;
-  GtkListStore    *store;
-  GtkCellLayout   *layout;
-  GtkCellRenderer *cell;
-  GtkTreeIter      iter;
-  GtkBorder        border = { 0, 0, 0, 0 };
-  gint             i;
-
   combo_box->scale     = 1.0;
   combo_box->last_path = NULL;
+}
+
+static void
+gimp_scale_combo_box_constructed (GObject *object)
+{
+  GimpScaleComboBox *combo_box = GIMP_SCALE_COMBO_BOX (object);
+  GtkWidget         *entry;
+  GtkListStore      *store;
+  GtkCellLayout     *layout;
+  GtkCellRenderer   *cell;
+  GtkTreeIter        iter;
+  GtkBorder          border = { 0, 0, 0, 0 };
+  gint               i;
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   store = gtk_list_store_new (N_COLUMNS,
                               G_TYPE_DOUBLE,    /* SCALE       */
@@ -130,7 +140,7 @@ gimp_scale_combo_box_init (GimpScaleComboBox *combo_box)
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
   g_object_unref (store);
 
-  gtk_combo_box_entry_set_text_column (GTK_COMBO_BOX_ENTRY (combo_box),
+  gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (combo_box),
                                        COLUMN_LABEL);
 
   entry = gtk_bin_get_child (GTK_BIN (combo_box));
@@ -452,7 +462,9 @@ gimp_scale_combo_box_mru_remove_last (GimpScaleComboBox *combo_box)
 GtkWidget *
 gimp_scale_combo_box_new (void)
 {
-  return g_object_new (GIMP_TYPE_SCALE_COMBO_BOX, NULL);
+  return g_object_new (GIMP_TYPE_SCALE_COMBO_BOX,
+                       "has-entry", TRUE,
+                       NULL);
 }
 
 void
