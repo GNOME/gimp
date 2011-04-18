@@ -47,7 +47,8 @@ enum
 
 enum
 {
-  MOTION,
+  STROKE,
+  HOVER,
   LAST_SIGNAL
 };
 
@@ -65,6 +66,11 @@ static void     gimp_motion_buffer_get_property        (GObject          *object
                                                         guint             property_id,
                                                         GValue           *value,
                                                         GParamSpec       *pspec);
+
+static void     gimp_motion_buffer_push_event_history  (GimpMotionBuffer *buffer,
+                                                        const GimpCoords *coords);
+static void     gimp_motion_buffer_pop_event_queue     (GimpMotionBuffer *buffer,
+                                                        GimpCoords       *coords);
 
 static void     gimp_motion_buffer_interpolate_stroke  (GimpMotionBuffer *buffer,
                                                         GimpCoords       *coords);
@@ -85,17 +91,29 @@ gimp_motion_buffer_class_init (GimpMotionBufferClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  motion_buffer_signals[MOTION] =
-    g_signal_new ("motion",
+  motion_buffer_signals[STROKE] =
+    g_signal_new ("stroke",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpMotionBufferClass, motion),
+                  G_STRUCT_OFFSET (GimpMotionBufferClass, stroke),
                   NULL, NULL,
                   gimp_marshal_VOID__POINTER_UINT_FLAGS,
                   G_TYPE_NONE, 3,
                   G_TYPE_POINTER,
                   G_TYPE_UINT,
                   GDK_TYPE_MODIFIER_TYPE);
+
+  motion_buffer_signals[HOVER] =
+    g_signal_new ("hover",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpMotionBufferClass, hover),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER_FLAGS_BOOLEAN,
+                  G_TYPE_NONE, 3,
+                  G_TYPE_POINTER,
+                  GDK_TYPE_MODIFIER_TYPE,
+                  G_TYPE_BOOLEAN);
 
   object_class->constructed  = gimp_motion_buffer_constructed;
   object_class->dispose      = gimp_motion_buffer_dispose;
@@ -189,7 +207,7 @@ gimp_motion_buffer_new (void)
 }
 
 void
-gimp_motion_buffer_start_stroke (GimpMotionBuffer *buffer,
+gimp_motion_buffer_begin_stroke (GimpMotionBuffer *buffer,
                                  guint32           time,
                                  GimpCoords       *last_motion)
 {
@@ -202,7 +220,7 @@ gimp_motion_buffer_start_stroke (GimpMotionBuffer *buffer,
 }
 
 void
-gimp_motion_buffer_finish_stroke (GimpMotionBuffer *buffer)
+gimp_motion_buffer_end_stroke (GimpMotionBuffer *buffer)
 {
   g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
 
@@ -427,9 +445,9 @@ gimp_motion_buffer_motion_event (GimpMotionBuffer *buffer,
 }
 
 void
-gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
-                                        GdkModifierType   state,
-                                        guint32           time)
+gimp_motion_buffer_process_stroke (GimpMotionBuffer *buffer,
+                                   GdkModifierType   state,
+                                   guint32           time)
 {
   GdkModifierType  event_state;
   gint             keep = 0;
@@ -463,7 +481,7 @@ gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
 
       gimp_motion_buffer_pop_event_queue (buffer, &buf_coords);
 
-      g_signal_emit (buffer, motion_buffer_signals[MOTION], 0,
+      g_signal_emit (buffer, motion_buffer_signals[STROKE], 0,
                      &buf_coords, time, event_state);
     }
 
@@ -477,33 +495,46 @@ gimp_motion_buffer_process_event_queue (GimpMotionBuffer *buffer,
 }
 
 void
+gimp_motion_buffer_process_hover (GimpMotionBuffer *buffer,
+                                  GdkModifierType   state,
+                                  gboolean          proximity)
+{
+  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
+
+  if (buffer->event_queue->len > 0)
+    {
+      GimpCoords buf_coords = g_array_index (buffer->event_queue,
+                                             GimpCoords,
+                                             buffer->event_queue->len - 1);
+
+      g_signal_emit (buffer, motion_buffer_signals[HOVER], 0,
+                     &buf_coords, state, proximity);
+
+      g_array_set_size (buffer->event_queue, 0);
+    }
+}
+
+
+/*  private functions  */
+
+static void
 gimp_motion_buffer_push_event_history (GimpMotionBuffer *buffer,
                                        const GimpCoords *coords)
 {
-  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
-  g_return_if_fail (coords != NULL);
-
   if (buffer->event_history->len == 4)
     g_array_remove_index (buffer->event_history, 0);
 
   g_array_append_val (buffer->event_history, *coords);
 }
 
-void
+static void
 gimp_motion_buffer_pop_event_queue (GimpMotionBuffer *buffer,
                                     GimpCoords       *coords)
 {
-  g_return_if_fail (GIMP_IS_MOTION_BUFFER (buffer));
-  g_return_if_fail (coords != NULL);
-  g_return_if_fail (buffer->event_queue->len > 0);
-
   *coords = g_array_index (buffer->event_queue, GimpCoords, 0);
 
   g_array_remove_index (buffer->event_queue, 0);
 }
-
-
-/*  private functions  */
 
 static void
 gimp_motion_buffer_interpolate_stroke (GimpMotionBuffer *buffer,
@@ -556,9 +587,9 @@ gimp_motion_buffer_event_queue_timeout (GimpMotionBuffer *buffer)
 
       gimp_motion_buffer_push_event_history (buffer, &last_coords);
 
-      gimp_motion_buffer_process_event_queue (buffer,
-                                              buffer->last_active_state,
-                                              buffer->last_read_motion_time);
+      gimp_motion_buffer_process_stroke (buffer,
+                                         buffer->last_active_state,
+                                         buffer->last_read_motion_time);
     }
 
   return FALSE;

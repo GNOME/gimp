@@ -307,8 +307,11 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->motion_buffer   = gimp_motion_buffer_new ();
 
-  g_signal_connect (shell->motion_buffer, "motion",
-                    G_CALLBACK (gimp_display_shell_buffer_motion),
+  g_signal_connect (shell->motion_buffer, "stroke",
+                    G_CALLBACK (gimp_display_shell_buffer_stroke),
+                    shell);
+  g_signal_connect (shell->motion_buffer, "hover",
+                    G_CALLBACK (gimp_display_shell_buffer_hover),
                     shell);
 
   shell->zoom_focus_pointer_queue = g_queue_new ();

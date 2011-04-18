@@ -509,7 +509,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  * usually at the same spot as the last motion event
                  * which would give us bogus dynamics.
                  */
-                gimp_motion_buffer_start_stroke (shell->motion_buffer, time,
+                gimp_motion_buffer_begin_stroke (shell->motion_buffer, time,
                                                  &last_motion);
 
                 last_motion.x        = image_coords.x;
@@ -656,7 +656,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 (! gimp_image_is_empty (image) ||
                  gimp_tool_control_get_handle_empty_image (active_tool->control)))
               {
-                gimp_motion_buffer_finish_stroke (shell->motion_buffer);
+                gimp_motion_buffer_end_stroke (shell->motion_buffer);
 
                 if (gimp_tool_control_is_active (active_tool->control))
                   {
@@ -924,9 +924,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                              shell->scale_y,
                                                              TRUE))
                           {
-                            gimp_motion_buffer_process_event_queue (shell->motion_buffer,
-                                                                    state,
-                                                                    history_events[i]->time);
+                            gimp_motion_buffer_process_stroke (shell->motion_buffer,
+                                                               state,
+                                                               history_events[i]->time);
                           }
                       }
 
@@ -945,9 +945,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                          shell->scale_y,
                                                          event_fill))
                       {
-                        gimp_motion_buffer_process_event_queue (shell->motion_buffer,
-                                                                state,
-                                                                time);
+                        gimp_motion_buffer_process_stroke (shell->motion_buffer,
+                                                           state,
+                                                           time);
                       }
                   }
               }
@@ -966,19 +966,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                  shell->scale_y,
                                                  FALSE))
               {
-                GimpCoords buf_coords;
-
-                gimp_motion_buffer_pop_event_queue (shell->motion_buffer,
-                                                    &buf_coords);
-
-                tool_manager_oper_update_active (gimp,
-                                                 &buf_coords, state,
-                                                 shell->proximity,
-                                                 display);
+                gimp_motion_buffer_process_hover (shell->motion_buffer,
+                                                  state,
+                                                  shell->proximity);
               }
-
-            gimp_motion_buffer_push_event_history (shell->motion_buffer,
-                                                   &image_coords);
           }
 
         return_val = TRUE;
@@ -1212,7 +1203,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 }
 
 void
-gimp_display_shell_buffer_motion (GimpMotionBuffer *buffer,
+gimp_display_shell_buffer_stroke (GimpMotionBuffer *buffer,
                                   const GimpCoords *coords,
                                   guint32           time,
                                   GdkModifierType   state,
@@ -1230,6 +1221,28 @@ gimp_display_shell_buffer_motion (GimpMotionBuffer *buffer,
       tool_manager_motion_active (gimp,
                                   coords, time, state,
                                   display);
+    }
+}
+
+void
+gimp_display_shell_buffer_hover (GimpMotionBuffer *buffer,
+                                 const GimpCoords *coords,
+                                 GdkModifierType   state,
+                                 gboolean          proximity,
+                                 GimpDisplayShell *shell)
+{
+  GimpDisplay *display = shell->display;
+  Gimp        *gimp    = gimp_display_get_gimp (display);
+  GimpTool    *active_tool;
+
+  active_tool = tool_manager_get_active (gimp);
+
+  if (active_tool &&
+      ! gimp_tool_control_is_active (active_tool->control))
+    {
+      tool_manager_oper_update_active (gimp,
+                                       coords, state, proximity,
+                                       display);
     }
 }
 

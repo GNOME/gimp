@@ -26,10 +26,15 @@ gboolean   gimp_display_shell_events                  (GtkWidget        *widget,
 gboolean   gimp_display_shell_canvas_tool_events      (GtkWidget        *widget,
                                                        GdkEvent         *event,
                                                        GimpDisplayShell *shell);
-void       gimp_display_shell_buffer_motion           (GimpMotionBuffer *buffer,
+void       gimp_display_shell_buffer_stroke           (GimpMotionBuffer *buffer,
                                                        const GimpCoords *coords,
                                                        guint32           time,
                                                        GdkModifierType   state,
+                                                       GimpDisplayShell *shell);
+void       gimp_display_shell_buffer_hover            (GimpMotionBuffer *buffer,
+                                                       const GimpCoords *coords,
+                                                       GdkModifierType   state,
+                                                       gboolean          proximity,
                                                        GimpDisplayShell *shell);
 
 gboolean   gimp_display_shell_hruler_button_press     (GtkWidget        *widget,
