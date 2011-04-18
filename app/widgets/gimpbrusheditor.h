@@ -40,7 +40,7 @@ struct _GimpBrushEditor
   GimpDataEditor  parent_instance;
 
   GtkWidget      *shape_group;
-  GtkWidget      *options_table;
+  GtkWidget      *options_box;
   GtkAdjustment  *radius_data;
   GtkAdjustment  *spikes_data;
   GtkAdjustment  *hardness_data;
