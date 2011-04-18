@@ -52,8 +52,9 @@
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
 #include "gimplayertreeview.h"
-#include "gimpviewrenderer.h"
+#include "gimpspinscale.h"
 #include "gimpuimanager.h"
+#include "gimpviewrenderer.h"
 #include "gimpwidgets-constructors.h"
 
 #include "gimp-intl.h"
@@ -239,7 +240,7 @@ static void
 gimp_layer_tree_view_init (GimpLayerTreeView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  GtkWidget             *table;
+  GtkWidget             *scale;
   GtkWidget             *hbox;
   GtkWidget             *image;
   GtkIconSize            icon_size;
@@ -276,18 +277,14 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Opacity scale  */
 
-  table = gtk_table_new (2, 1, FALSE);
-
   view->priv->opacity_adjustment =
-    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                          NULL, -1, -1,
-                                          100.0, 0.0, 100.0, 1.0, 10.0, 1,
-                                          TRUE, 0.0, 0.0,
-                                          NULL,
-                                          GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE));
+    GTK_ADJUSTMENT (gtk_adjustment_new (100.0, 0.0, 100.0,
+                                        1.0, 10.0, 0.0));
+  scale = gimp_spin_scale_new (view->priv->opacity_adjustment, _("Opacity"), 1);
+  gimp_help_set_help_data (scale, NULL,
+                           GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE);
   gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view),
-                                   _("Opacity:"),
-                                   table);
+                                   NULL, scale);
 
   g_signal_connect (view->priv->opacity_adjustment, "value-changed",
                     G_CALLBACK (gimp_layer_tree_view_opacity_scale_changed),
