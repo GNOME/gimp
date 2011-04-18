@@ -31,6 +31,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpspinscale.h"
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -133,6 +134,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       scale = gimp_prop_spin_scale_new (config, "brush-size",
                                         _("Size"),
                                         0.01, 1.0, 2);
+      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 500.0);
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_widget_show (scale);
 
