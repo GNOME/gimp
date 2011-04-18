@@ -50,6 +50,10 @@ typedef struct _GimpSpinScalePrivate GimpSpinScalePrivate;
 struct _GimpSpinScalePrivate
 {
   gchar    *label;
+  gboolean  scale_limits_set;
+  gdouble   scale_lower;
+  gdouble   scale_upper;
+
   gboolean  changing_value;
   gboolean  relative_change;
   gdouble   start_x;
@@ -321,6 +325,28 @@ gimp_spin_scale_get_target (GtkWidget *widget,
 }
 
 static void
+gimp_spin_scale_get_limits (GimpSpinScale *scale,
+                            gdouble       *lower,
+                            gdouble       *upper)
+{
+  GimpSpinScalePrivate *private = GET_PRIVATE (scale);
+
+  if (private->scale_limits_set)
+    {
+      *lower = private->scale_lower;
+      *upper = private->scale_upper;
+    }
+  else
+    {
+      GtkSpinButton *spin_button = GTK_SPIN_BUTTON (scale);
+      GtkAdjustment *adjustment  = gtk_spin_button_get_adjustment (spin_button);
+
+      *lower = gtk_adjustment_get_lower (adjustment);
+      *upper = gtk_adjustment_get_upper (adjustment);
+    }
+}
+
+static void
 gimp_spin_scale_change_value (GtkWidget *widget,
                               gdouble    x)
 {
@@ -328,8 +354,12 @@ gimp_spin_scale_change_value (GtkWidget *widget,
   GtkSpinButton        *spin_button = GTK_SPIN_BUTTON (widget);
   GtkAdjustment        *adjustment  = gtk_spin_button_get_adjustment (spin_button);
   GdkWindow            *text_window = gtk_entry_get_text_window (GTK_ENTRY (widget));
+  gdouble               lower;
+  gdouble               upper;
   gint                  width;
   gdouble               value;
+
+  gimp_spin_scale_get_limits (GIMP_SPIN_SCALE (widget), &lower, &upper);
 
   width = gdk_window_get_width (text_window);
 
@@ -338,9 +368,7 @@ gimp_spin_scale_change_value (GtkWidget *widget,
       gdouble diff;
       gdouble step;
 
-      step = ((gtk_adjustment_get_upper (adjustment) -
-               gtk_adjustment_get_lower (adjustment)) +
-              gtk_adjustment_get_lower (adjustment)) / width / 10.0;
+      step = ((upper - lower) + lower) / width / 10.0;
 
       diff = x - private->start_x;
 
@@ -352,9 +380,7 @@ gimp_spin_scale_change_value (GtkWidget *widget,
 
       fraction = x / (gdouble) width;
 
-      value = (fraction * (gtk_adjustment_get_upper (adjustment) -
-                           gtk_adjustment_get_lower (adjustment)) +
-               gtk_adjustment_get_lower (adjustment));
+      value = fraction * (upper - lower) + lower;
     }
 
   gtk_adjustment_set_value (adjustment, value);
@@ -476,13 +502,20 @@ static void
 gimp_spin_scale_value_changed (GtkSpinButton *spin_button)
 {
   GtkAdjustment *adjustment = gtk_spin_button_get_adjustment (spin_button);
+  gdouble        lower;
+  gdouble        upper;
+  gdouble        value;
+
+  gimp_spin_scale_get_limits (GIMP_SPIN_SCALE (spin_button), &lower, &upper);
+
+  value = CLAMP (gtk_adjustment_get_value (adjustment), lower, upper);
 
   gtk_entry_set_progress_fraction (GTK_ENTRY (spin_button),
-                                   (gtk_adjustment_get_value (adjustment) -
-                                    gtk_adjustment_get_lower (adjustment)) /
-                                   (gtk_adjustment_get_upper (adjustment) -
-                                    gtk_adjustment_get_lower (adjustment)));
+                                   (value - lower) / (upper - lower));
 }
+
+
+/*  public functions  */
 
 GtkWidget *
 gimp_spin_scale_new (GtkAdjustment *adjustment,
@@ -497,3 +530,65 @@ gimp_spin_scale_new (GtkAdjustment *adjustment,
                        "digits",     digits,
                        NULL);
 }
+
+void
+gimp_spin_scale_set_scale_limits (GimpSpinScale *scale,
+                                  gdouble        lower,
+                                  gdouble        upper)
+{
+  GimpSpinScalePrivate *private;
+  GtkSpinButton        *spin_button;
+  GtkAdjustment        *adjustment;
+
+  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
+
+  private     = GET_PRIVATE (scale);
+  spin_button = GTK_SPIN_BUTTON (scale);
+  adjustment  = gtk_spin_button_get_adjustment (spin_button);
+
+  g_return_if_fail (lower >= gtk_adjustment_get_lower (adjustment));
+  g_return_if_fail (upper <= gtk_adjustment_get_upper (adjustment));
+
+  private->scale_limits_set = TRUE;
+  private->scale_lower      = lower;
+  private->scale_upper      = upper;
+
+  gimp_spin_scale_value_changed (spin_button);
+}
+
+void
+gimp_spin_scale_unset_scale_limits (GimpSpinScale *scale)
+{
+  GimpSpinScalePrivate *private;
+
+  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
+
+  private = GET_PRIVATE (scale);
+
+  private->scale_limits_set = FALSE;
+  private->scale_lower      = 0.0;
+  private->scale_upper      = 0.0;
+
+  gimp_spin_scale_value_changed (GTK_SPIN_BUTTON (scale));
+}
+
+gboolean
+gimp_spin_scale_get_scale_limits (GimpSpinScale *scale,
+                                  gdouble       *lower,
+                                  gdouble       *upper)
+{
+  GimpSpinScalePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), FALSE);
+
+  private = GET_PRIVATE (scale);
+
+  if (lower)
+    *lower = private->scale_lower;
+
+  if (upper)
+    *upper = private->scale_upper;
+
+  return private->scale_limits_set;
+}
+
