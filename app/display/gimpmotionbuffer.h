@@ -73,28 +73,29 @@ struct _GimpMotionBufferClass
 };
 
 
-GType              gimp_motion_buffer_get_type    (void) G_GNUC_CONST;
+GType              gimp_motion_buffer_get_type     (void) G_GNUC_CONST;
 
-GimpMotionBuffer * gimp_motion_buffer_new         (void);
+GimpMotionBuffer * gimp_motion_buffer_new          (void);
 
-void       gimp_motion_buffer_begin_stroke        (GimpMotionBuffer *buffer,
-                                                   guint32           time,
-                                                   GimpCoords       *last_motion);
-void       gimp_motion_buffer_end_stroke          (GimpMotionBuffer *buffer);
+void       gimp_motion_buffer_begin_stroke         (GimpMotionBuffer *buffer,
+                                                    guint32           time,
+                                                    GimpCoords       *last_motion);
+void       gimp_motion_buffer_end_stroke           (GimpMotionBuffer *buffer);
 
-gboolean   gimp_motion_buffer_motion_event        (GimpMotionBuffer *buffer,
-                                                   GimpCoords       *coords,
-                                                   guint32           time,
-                                                   gdouble           scale_x,
-                                                   gdouble           scale_y,
-                                                   gboolean          event_fill);
+gboolean   gimp_motion_buffer_motion_event         (GimpMotionBuffer *buffer,
+                                                    GimpCoords       *coords,
+                                                    guint32           time,
+                                                    gdouble           scale_x,
+                                                    gdouble           scale_y,
+                                                    gboolean          event_fill);
+guint32    gimp_motion_buffer_get_last_motion_time (GimpMotionBuffer *buffer);
 
-void       gimp_motion_buffer_request_stroke      (GimpMotionBuffer *buffer,
-                                                   GdkModifierType   state,
-                                                   guint32           time);
-void       gimp_motion_buffer_request_hover       (GimpMotionBuffer *buffer,
-                                                   GdkModifierType   state,
-                                                   gboolean          proximity);
+void       gimp_motion_buffer_request_stroke       (GimpMotionBuffer *buffer,
+                                                    GdkModifierType   state,
+                                                    guint32           time);
+void       gimp_motion_buffer_request_hover        (GimpMotionBuffer *buffer,
+                                                    GdkModifierType   state,
+                                                    gboolean          proximity);
 
 
 #endif /* __GIMP_MOTION_BUFFER_H__ */

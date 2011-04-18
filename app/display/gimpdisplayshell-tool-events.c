@@ -870,6 +870,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
                 GdkTimeCoord **history_events;
                 gint           n_history_events;
+                guint32        last_motion_time;
 
                 /*  if the first mouse button is down, check for automatic
                  *  scrolling...
@@ -883,18 +884,21 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     gimp_display_shell_autoscroll_start (shell, state, mevent);
                   }
 
-                /* gdk_device_get_history() has several quirks. First is
-                 * that events with borderline timestamps at both ends
-                 * are included. Because of that we need to add 1 to
-                 * lower border. The second is due to poor X event
+                /* gdk_device_get_history() has several quirks. First
+                 * is that events with borderline timestamps at both
+                 * ends are included. Because of that we need to add 1
+                 * to lower border. The second is due to poor X event
                  * resolution. We need to do -1 to ensure that the
                  * amount of events between timestamps is final or
                  * risk loosing some.
                  */
+                last_motion_time =
+                  gimp_motion_buffer_get_last_motion_time (shell->motion_buffer);
+
                 if (motion_mode == GIMP_MOTION_MODE_EXACT     &&
                     shell->display->config->use_event_history &&
                     gdk_device_get_history (mevent->device, mevent->window,
-                                            shell->motion_buffer->last_read_motion_time + 1,
+                                            last_motion_time + 1,
                                             mevent->time - 1,
                                             &history_events,
                                             &n_history_events))

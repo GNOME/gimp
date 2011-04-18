@@ -444,6 +444,14 @@ gimp_motion_buffer_motion_event (GimpMotionBuffer *buffer,
   return TRUE;
 }
 
+guint32
+gimp_motion_buffer_get_last_motion_time (GimpMotionBuffer *buffer)
+{
+  g_return_val_if_fail (GIMP_IS_MOTION_BUFFER (buffer), 0);
+
+  return buffer->last_read_motion_time;
+}
+
 void
 gimp_motion_buffer_request_stroke (GimpMotionBuffer *buffer,
                                    GdkModifierType   state,
