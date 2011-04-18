@@ -368,7 +368,7 @@ gimp_spin_scale_change_value (GtkWidget *widget,
       gdouble diff;
       gdouble step;
 
-      step = ((upper - lower) + lower) / width / 10.0;
+      step = (upper - lower) / width / 10.0;
 
       diff = x - private->start_x;
 
