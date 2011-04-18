@@ -514,7 +514,8 @@ gimp_item_tree_view_style_set (GtkWidget *widget,
         {
           GtkWidget *child = list->data;
 
-          gtk_box_set_spacing (GTK_BOX (child), button_spacing);
+          if (GTK_IS_BOX (child))
+            gtk_box_set_spacing (GTK_BOX (child), button_spacing);
         }
 
       g_list_free (children);
@@ -621,14 +622,11 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
                                  const gchar      *label,
                                  GtkWidget        *options)
 {
-  GtkWidget *hbox;
-  GtkWidget *label_widget;
-  gint       content_spacing;
-  gint       button_spacing;
-  gboolean   box_created = FALSE;
+  gint     content_spacing;
+  gint     button_spacing;
+  gboolean box_created = FALSE;
 
   g_return_if_fail (GIMP_IS_ITEM_TREE_VIEW (view));
-  g_return_if_fail (label != NULL);
   g_return_if_fail (GTK_IS_WIDGET (options));
 
   gtk_widget_style_get (GTK_WIDGET (view),
@@ -654,26 +652,44 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
           gtk_widget_set_sensitive (view->priv->options_box, FALSE);
         }
 
-      view->priv->options_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
       box_created = TRUE;
     }
 
-  hbox = gtk_hbox_new (FALSE, button_spacing);
-  gtk_box_pack_start (GTK_BOX (view->priv->options_box), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  if (label)
+    {
+      GtkWidget *hbox;
+      GtkWidget *label_widget;
+      gboolean   group_created = FALSE;
 
-  label_widget = gtk_label_new (label);
-  gtk_misc_set_alignment (GTK_MISC (label_widget), 0.0, 0.5);
-  gtk_size_group_add_widget (view->priv->options_group, label_widget);
-  gtk_box_pack_start (GTK_BOX (hbox), label_widget, FALSE, FALSE, 0);
-  gtk_widget_show (label_widget);
+      hbox = gtk_hbox_new (FALSE, button_spacing);
+      gtk_box_pack_start (GTK_BOX (view->priv->options_box), hbox,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
 
-  if (box_created)
-    g_object_unref (view->priv->options_group);
+      if (! view->priv->options_group)
+        {
+          view->priv->options_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+          group_created = TRUE;
+        }
 
-  gtk_box_pack_start (GTK_BOX (hbox), options, TRUE, TRUE, 0);
-  gtk_widget_show (options);
+      label_widget = gtk_label_new (label);
+      gtk_misc_set_alignment (GTK_MISC (label_widget), 0.0, 0.5);
+      gtk_size_group_add_widget (view->priv->options_group, label_widget);
+      gtk_box_pack_start (GTK_BOX (hbox), label_widget, FALSE, FALSE, 0);
+      gtk_widget_show (label_widget);
+
+      if (group_created)
+        g_object_unref (view->priv->options_group);
+
+      gtk_box_pack_start (GTK_BOX (hbox), options, TRUE, TRUE, 0);
+      gtk_widget_show (options);
+    }
+  else
+    {
+      gtk_box_pack_start (GTK_BOX (view->priv->options_box), options,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (options);
+    }
 }
 
 GtkWidget *
