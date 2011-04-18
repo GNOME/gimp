@@ -32,7 +32,7 @@
 #define GIMP_MOTION_BUFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MOTION_BUFFER, GimpMotionBufferClass))
 
 
-typedef struct _GimpMotionBufferClass  GimpMotionBufferClass;
+typedef struct _GimpMotionBufferClass GimpMotionBufferClass;
 
 struct _GimpMotionBuffer
 {
@@ -60,7 +60,7 @@ struct _GimpMotionBuffer
 
 struct _GimpMotionBufferClass
 {
-  GtkBoxClass  parent_class;
+  GimpObjectClass  parent_class;
 
   void (* stroke) (GimpMotionBuffer *buffer,
                    const GimpCoords *coords,
