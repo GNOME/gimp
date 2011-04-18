@@ -55,7 +55,6 @@ enum
 
 /*  local function prototypes  */
 
-static void     gimp_motion_buffer_constructed         (GObject          *object);
 static void     gimp_motion_buffer_dispose             (GObject          *object);
 static void     gimp_motion_buffer_finalize            (GObject          *object);
 static void     gimp_motion_buffer_set_property        (GObject          *object,
@@ -115,7 +114,6 @@ gimp_motion_buffer_class_init (GimpMotionBufferClass *klass)
                   GDK_TYPE_MODIFIER_TYPE,
                   G_TYPE_BOOLEAN);
 
-  object_class->constructed  = gimp_motion_buffer_constructed;
   object_class->dispose      = gimp_motion_buffer_dispose;
   object_class->finalize     = gimp_motion_buffer_finalize;
   object_class->set_property = gimp_motion_buffer_set_property;
@@ -130,13 +128,6 @@ gimp_motion_buffer_init (GimpMotionBuffer *buffer)
 }
 
 static void
-gimp_motion_buffer_constructed (GObject *object)
-{
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
-}
-
-static void
 gimp_motion_buffer_dispose (GObject *object)
 {
   GimpMotionBuffer *buffer = GIMP_MOTION_BUFFER (object);
@@ -146,6 +137,14 @@ gimp_motion_buffer_dispose (GObject *object)
       g_source_remove (buffer->event_delay_timeout);
       buffer->event_delay_timeout = 0;
     }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_motion_buffer_finalize (GObject *object)
+{
+  GimpMotionBuffer *buffer = GIMP_MOTION_BUFFER (object);
 
   if (buffer->event_history)
     {
@@ -159,12 +158,6 @@ gimp_motion_buffer_dispose (GObject *object)
       buffer->event_queue = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
-gimp_motion_buffer_finalize (GObject *object)
-{
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -237,8 +230,10 @@ gimp_motion_buffer_end_stroke (GimpMotionBuffer *buffer)
  * gimp_motion_buffer_motion_event:
  * @buffer:
  * @coords:
- * @inertia_factor:
  * @time:
+ * @scale_x:
+ * @scale_y:
+ * @event_fill:
  *
  * This function evaluates the event to decide if the change is big
  * enough to need handling and returns FALSE, if change is less than
@@ -255,7 +250,8 @@ gimp_motion_buffer_end_stroke (GimpMotionBuffer *buffer)
  * each tool. If they were to use this distance, more resouces on
  * recalculating the same value would be saved.
  *
- * Return value:
+ * Return value: %TRUE if the motion was significant enough to be
+ *               processed, %FALSE otherwise.
  **/
 gboolean
 gimp_motion_buffer_motion_event (GimpMotionBuffer *buffer,
