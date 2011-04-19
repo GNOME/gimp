@@ -267,18 +267,12 @@ gimp_spin_scale_expose (GtkWidget      *widget,
       cairo_stroke (cr);
     }
 
-  cairo_destroy (cr);
-
   if (private->label &&
       gtk_widget_is_drawable (widget) &&
       event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
     {
       PangoLayout     *layout;
       const GtkBorder *border;
-
-      cr = gdk_cairo_create (event->window);
-      gdk_cairo_region (cr, event->region);
-      cairo_clip (cr);
 
       border = gtk_entry_get_inner_border (GTK_ENTRY (widget));
 
@@ -292,10 +286,11 @@ gimp_spin_scale_expose (GtkWidget      *widget,
 
       layout = gtk_widget_create_pango_layout (widget, private->label);
       pango_cairo_show_layout (cr, layout);
-      cairo_destroy (cr);
 
       g_object_unref (layout);
     }
+
+  cairo_destroy (cr);
 
   return FALSE;
 }
