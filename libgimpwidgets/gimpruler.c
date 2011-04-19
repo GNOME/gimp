@@ -1192,6 +1192,11 @@ gimp_ruler_draw_pos (GimpRuler *ruler)
       gdouble  position;
       gdouble  increment;
 
+      cairo_rectangle (cr,
+                       allocation.x, allocation.y,
+                       allocation.width, allocation.height);
+      cairo_clip (cr);
+
       cairo_translate (cr, allocation.x, allocation.y);
 
       /*  If a backing store exists, restore the ruler  */
@@ -1201,7 +1206,6 @@ gimp_ruler_draw_pos (GimpRuler *ruler)
           cairo_rectangle (cr, priv->xsrc, priv->ysrc, bs_width, bs_height);
           cairo_fill (cr);
         }
-
 
       position = gimp_ruler_get_position (ruler);
 
