@@ -360,26 +360,45 @@ libgimp_2_0_la_LDFLAGS = \
 	$(no_undefined)				\
 	$(libgimp_export_symbols)
 
-libgimp_2_0_la_LIBADD = $(libgimpconfig) $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) $(RT_LIBS)
+libgimp_2_0_la_LIBADD = \
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GDK_PIXBUF_LIBS)	\
+	$(RT_LIBS)
 
-libgimp_2_0_la_DEPENDENCIES = $(gimp_def) $(libgimpconfig) $(libgimpcolor) $(libgimpbase)
+libgimp_2_0_la_DEPENDENCIES = \
+	$(gimp_def)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)
 
 libgimpui_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpui_export_symbols)
 
-libgimpui_2_0_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpcolor) \
-	 $(libgimpbase) $(libgimpmodule) $(GTK_LIBS) $(RT_LIBS)
+libgimpui_2_0_la_LIBADD = \
+	$(libgimp)		\
+	$(libgimpwidgets)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(libgimpmodule)	\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)
 
-libgimpui_2_0_la_DEPENDENCIES = $(gimpui_def) $(libgimp) $(libgimpwidgets) $(libgimpbase)
+libgimpui_2_0_la_DEPENDENCIES = \
+	$(gimpui_def)		\
+	$(libgimp)		\
+	$(libgimpwidgets)	\
+	$(libgimpbase)
 
 EXTRA_DIST = \
-	COPYING					\
-	makefile.msc				\
-	gimp.def				\
-	gimpui.def				\
-	$(libgimp_2_0_la_extra_sources)		\
+	COPYING				\
+	makefile.msc			\
+	gimp.def			\
+	gimpui.def			\
+	$(libgimp_2_0_la_extra_sources)	\
 	$(libgimpui_2_0_la_extra_sources)
 
 install-data-local: install-ms-lib install-libtool-import-lib
