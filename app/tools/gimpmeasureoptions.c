@@ -63,7 +63,9 @@ gimp_measure_options_class_init (GimpMeasureOptionsClass *klass)
   object_class->get_property = gimp_measure_options_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
-                                    "use-info-window", NULL,
+                                    "use-info-window",
+                                    N_("Open a floating dialog to view details"
+                                       "about measurements"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }

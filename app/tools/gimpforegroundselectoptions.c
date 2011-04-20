@@ -82,31 +82,34 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONTIGUOUS,
                                     "contiguous",
-                                    _("Select a single contiguous area"),
+                                    N_("Select a single contiguous area"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BACKGROUND,
-                                    "background", NULL,
+                                    "background",
+                                    N_("Paint over areas to mark color values for "
+                                       "inclusion or exclusion from selection"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_STROKE_WIDTH,
                                 "stroke-width",
-                                _("Size of the brush used for refinements"),
+                                N_("Size of the brush used for refinements"),
                                 1, 80, 18,
                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHNESS,
                                 "smoothness",
-                                _("Smaller values give a more accurate "
+                                N_("Smaller values give a more accurate "
                                   "selection border but may introduce holes "
                                   "in the selection"),
                                 0, 8, SIOX_DEFAULT_SMOOTHNESS,
                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MASK_COLOR,
-                                 "mask-color", NULL,
+                                 "mask-color",
+                                 N_("Color of selection preview mask"),
                                  GIMP_TYPE_CHANNEL_TYPE,
                                  GIMP_BLUE_CHANNEL,
                                  GIMP_PARAM_STATIC_STRINGS);
@@ -118,19 +121,19 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_L,
                                    "sensitivity-l",
-                                   _("Sensitivity for brightness component"),
+                                   N_("Sensitivity for brightness component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_L,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_A,
                                    "sensitivity-a",
-                                   _("Sensitivity for red/green component"),
+                                   N_("Sensitivity for red/green component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_A,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_B,
                                    "sensitivity-b",
-                                   _("Sensitivity for yellow/blue component"),
+                                   N_("Sensitivity for yellow/blue component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_B,
                                    GIMP_PARAM_STATIC_STRINGS);
 }

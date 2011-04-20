@@ -64,16 +64,21 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
 
   /* override a GimpColorOptions property to get a different default value */
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
-                                    "sample-average", NULL,
+                                    "sample-average",
+                                    N_("Use accumulated color value from "
+                                       "all composited visible layers"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PICK_MODE,
-                                 "pick-mode", NULL,
+                                 "pick-mode",
+                                 N_("Choose what color picker will do"),
                                  GIMP_TYPE_COLOR_PICK_MODE,
                                  GIMP_COLOR_PICK_MODE_FOREGROUND,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
-                                    "use-info-window", NULL,
+                                    "use-info-window",
+                                    N_("Open a floating dialog to view picked "
+                                       "color values in various color models"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }

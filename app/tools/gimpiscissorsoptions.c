@@ -64,7 +64,9 @@ gimp_iscissors_options_class_init (GimpIscissorsOptionsClass *klass)
   object_class->get_property = gimp_iscissors_options_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
-                                    "interactive", NULL,
+                                    "interactive",
+                                    N_("Display future selection segment "
+                                       "as you drag a control node"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }

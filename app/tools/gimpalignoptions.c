@@ -87,18 +87,21 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                   GIMP_TYPE_ALIGNMENT_TYPE);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGN_REFERENCE,
-                                 "align-reference", NULL,
+                                 "align-reference",
+                                 N_("Reference image object a layer will be aligned on"),
                                  GIMP_TYPE_ALIGN_REFERENCE_TYPE,
                                  GIMP_ALIGN_REFERENCE_FIRST,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_X,
-                                   "offset-x", NULL,
+                                   "offset-x",
+                                   N_("Horizontal offset for distrubution"),
                                    -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
-                                   "offset-y", NULL,
+                                   "offset-y",
+                                   N_("Vertical offset for distrubution"),
                                    -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                                    GIMP_PARAM_STATIC_STRINGS);
 }
