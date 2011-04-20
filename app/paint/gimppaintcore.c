@@ -321,6 +321,10 @@ gimp_paint_core_paint (GimpPaintCore    *core,
                              paint_options,
                              paint_state, time))
     {
+      gimp_paint_core_smooth_coords (core,
+                                     paint_options,
+                                     &core->cur_coords);
+
       if (paint_state == GIMP_PAINT_STATE_MOTION)
         {
           /* Save coordinates for gimp_paint_core_interpolate() */
@@ -328,9 +332,6 @@ gimp_paint_core_paint (GimpPaintCore    *core,
           core->last_paint.y = core->cur_coords.y;
         }
 
-      gimp_paint_core_smooth_coords (core,
-                                     paint_options,
-                                     &core->cur_coords);
       core_class->paint (core, drawable,
                          paint_options,
                          &core->cur_coords,
