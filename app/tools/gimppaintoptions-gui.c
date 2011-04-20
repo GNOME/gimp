@@ -390,7 +390,7 @@ smoothing_options_gui (GimpPaintOptions *paint_options,
   gtk_widget_show (scale);
 
   scale = gimp_prop_spin_scale_new (config, "smoothing-factor",
-                                    _("Factor"),
+                                    _("Weight"),
                                     1, 10, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);

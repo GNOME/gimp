@@ -156,22 +156,22 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
-                                 "application-mode", NULL,
+                                 "application-mode", _("Override opacity set for the tool when painting over same place"),
                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
                                  DEFAULT_APPLICATION_MODE,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HARD,
-                                    "hard", NULL,
+                                    "hard", _("Ignore fuzzyness of the current brush"),
                                     DEFAULT_HARD,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_JITTER,
-                                    "use-jitter", NULL,
+                                    "use-jitter", _("Scatter brush as you paint"),
                                     DEFAULT_USE_JITTER,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_JITTER_AMOUNT,
-                                   "jitter-amount", NULL,
+                                   "jitter-amount", _("Distance of scattering"),
                                    0.0, 50.0, DEFAULT_JITTER_AMOUNT,
                                    GIMP_PARAM_STATIC_STRINGS);
 
@@ -181,7 +181,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
-                                   "fade-length", NULL,
+                                   "fade-length", _("Distance over which strokes fade out"),
                                    0.0, 32767.0, DEFAULT_FADE_LENGTH,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FADE_UNIT,
@@ -189,11 +189,11 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                  TRUE, TRUE, DEFAULT_FADE_UNIT,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FADE_REVERSE,
-                                    "fade-reverse", NULL,
+                                    "fade-reverse", _("Reverse direction of fading"),
                                     DEFAULT_FADE_REVERSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FADE_REPEAT,
-                                 "fade-repeat", NULL,
+                                 "fade-repeat", _("How fade is repeated as you paint"),
                                  GIMP_TYPE_REPEAT_MODE,
                                  DEFAULT_FADE_REPEAT,
                                  GIMP_PARAM_STATIC_STRINGS);
@@ -252,15 +252,15 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_SMOOTHING,
-                                    "use-smoothing", NULL,
+                                    "use-smoothing", _("Paint smoother strokes"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHING_QUALITY,
-                                "smoothing-quality", NULL,
+                                "smoothing-quality", _("Depth of smoothing"),
                                 1, 100, DEFAULT_SMOOTHING_QUALITY,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SMOOTHING_FACTOR,
-                                   "smoothing-factor", NULL,
+                                   "smoothing-factor", _("Gravity of the pen"),
                                    3.0, 1000.0, DEFAULT_SMOOTHING_FACTOR,
                                    /* Max velocity is set at 3.
                                     * Allowing for smoothing factor to be
