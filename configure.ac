@@ -118,8 +118,10 @@ AC_SUBST(GIMP_FULL_NAME)
 # These are used in the .pc files
 GLIB_REQUIRED_VERSION=glib_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
+GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
+AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol

@@ -208,6 +208,8 @@ libgimp_2_0_la_sources = \
 	gimppatterns.h		\
 	gimppatternselect.c	\
 	gimppatternselect.h	\
+	gimppixbuf.c		\
+	gimppixbuf.h		\
 	gimppixelfetcher.c	\
 	gimppixelfetcher.h	\
 	gimppixelrgn.c		\
@@ -276,8 +278,6 @@ libgimpui_2_0_la_sources = \
 	gimppatternmenu.h		\
 	gimppatternselectbutton.c	\
 	gimppatternselectbutton.h	\
-	gimppixbuf.c			\
-	gimppixbuf.h			\
 	gimpprocbrowserdialog.c		\
 	gimpprocbrowserdialog.h		\
 	gimpprocview.c			\

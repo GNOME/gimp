@@ -34,7 +34,6 @@
 #include <libgimp/gimpgradientmenu.h>
 #include <libgimp/gimppalettemenu.h>
 #include <libgimp/gimppatternmenu.h>
-#include <libgimp/gimppixbuf.h>
 #include <libgimp/gimpprocbrowserdialog.h>
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>

@@ -53,15 +53,6 @@ GdkPixbuf * gimp_drawable_get_sub_thumbnail (gint32                  drawable_ID
                                              gint                    dest_height,
                                              GimpPixbufTransparency  alpha);
 
-gint32      gimp_layer_new_from_pixbuf      (gint32                  image_ID,
-                                             const gchar            *name,
-                                             GdkPixbuf              *pixbuf,
-                                             gdouble                 opacity,
-                                             GimpLayerModeEffects    mode,
-                                             gdouble                 progress_start,
-                                             gdouble                 progress_end);
-
-
 G_END_DECLS
 
 #endif /* __GIMP_PIXBUF_H__ */

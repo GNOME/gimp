@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 #undef GIMP_DISABLE_DEPRECATED
 #undef __GIMP_LAYER_H__
@@ -80,6 +82,120 @@ gint32
 gimp_layer_copy (gint32  layer_ID)
 {
   return _gimp_layer_copy (layer_ID, FALSE);
+}
+
+/**
+ * gimp_layer_new_from_pixbuf:
+ * @image_ID:       The RGB image to which to add the layer.
+ * @name:           The layer name.
+ * @pixbuf:         A GdkPixbuf.
+ * @opacity:        The layer opacity.
+ * @mode:           The layer combination mode.
+ * @progress_start: start of progress
+ * @progress_end:   end of progress
+ *
+ * Create a new layer from a %GdkPixbuf.
+ *
+ * This procedure creates a new layer from the given %GdkPixbuf.  The
+ * image has to be an RGB image and just like with gimp_layer_new()
+ * you will still need to add the layer to it.
+ *
+ * If you pass @progress_end > @progress_start to this function,
+ * gimp_progress_update() will be called for. You have to call
+ * gimp_progress_init() beforehand then.
+ *
+ * Returns: The newly created layer.
+ *
+ * Since: GIMP 2.4
+ */
+gint32
+gimp_layer_new_from_pixbuf (gint32                image_ID,
+                            const gchar          *name,
+                            GdkPixbuf            *pixbuf,
+                            gdouble               opacity,
+                            GimpLayerModeEffects  mode,
+                            gdouble               progress_start,
+                            gdouble               progress_end)
+{
+  GimpDrawable *drawable;
+  GimpPixelRgn	rgn;
+  const guchar *pixels;
+  gpointer      pr;
+  gint32        layer;
+  gint          width;
+  gint          height;
+  gint          rowstride;
+  gint          bpp;
+  gdouble       range = progress_end - progress_start;
+  guint         count = 0;
+  guint         done  = 0;
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), -1);
+
+  if (gimp_image_base_type (image_ID) != GIMP_RGB)
+    {
+      g_warning ("gimp_layer_new_from_pixbuf() needs an RGB image");
+      return -1;
+    }
+
+  if (gdk_pixbuf_get_colorspace (pixbuf) != GDK_COLORSPACE_RGB)
+    {
+      g_warning ("gimp_layer_new_from_pixbuf() assumes that GdkPixbuf is RGB");
+      return -1;
+    }
+
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
+  bpp    = gdk_pixbuf_get_n_channels (pixbuf);
+
+  layer = gimp_layer_new (image_ID, name, width, height,
+                          bpp == 3 ? GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
+                          opacity, mode);
+
+  if (layer == -1)
+    return -1;
+
+  drawable = gimp_drawable_get (layer);
+
+  gimp_pixel_rgn_init (&rgn, drawable, 0, 0, width, height, TRUE, FALSE);
+
+  g_assert (bpp == rgn.bpp);
+
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  pixels    = gdk_pixbuf_get_pixels (pixbuf);
+
+  for (pr = gimp_pixel_rgns_register (1, &rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      const guchar *src  = pixels + rgn.y * rowstride + rgn.x * bpp;
+      guchar       *dest = rgn.data;
+      gint          y;
+
+      for (y = 0; y < rgn.h; y++)
+        {
+          memcpy (dest, src, rgn.w * rgn.bpp);
+
+          src  += rowstride;
+          dest += rgn.rowstride;
+        }
+
+      if (range > 0.0)
+        {
+          done += rgn.h * rgn.w;
+
+          if (count++ % 32 == 0)
+            gimp_progress_update (progress_start +
+                                  (gdouble) done / (width * height) * range);
+        }
+    }
+
+  if (range > 0.0)
+    gimp_progress_update (progress_end);
+
+  gimp_drawable_detach (drawable);
+
+  return layer;
 }
 
 /**

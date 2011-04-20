@@ -29,8 +29,8 @@ file_faxg3_SOURCES = \
 	g3.h
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GLIB_CFLAGS)	\
+	-I$(top_srcdir)		\
+	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \
@@ -39,7 +39,7 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(libgimpmath)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_faxg3_RC)

@@ -137,9 +137,9 @@ foreach (sort keys %plugins) {
 
     my $glib;
     if (exists $plugins{$_}->{ui}) {
-	$glib = "\$(GTK_LIBS)"
+	$glib = "\$(GTK_LIBS)\t\t\\"
     } else {
-	$glib = "\$(GLIB_LIBS)"
+	$glib = "\$(GDK_PIXBUF_LIBS)\t\\"
     }
 
     my $optlib = "";
@@ -177,7 +177,7 @@ ${makename}_SOURCES = \\
 
 ${makename}_LDADD = \\
 	$libgimp		\\
-	$glib		\\$optlib
+	$glib$optlib
 	$deplib		\\
 	$rclib
 EOT

@@ -695,6 +695,7 @@ gimp_item_transform_matrix
 gimp_layer_new
 gimp_layer_new_from_drawable
 gimp_layer_new_from_visible
+gimp_layer_new_from_pixbuf
 gimp_layer_group_new
 gimp_layer_copy
 gimp_layer_scale
@@ -1097,7 +1098,6 @@ GimpPixbufTransparency
 gimp_image_get_thumbnail
 gimp_drawable_get_thumbnail
 gimp_drawable_get_sub_thumbnail
-gimp_layer_new_from_pixbuf
 </SECTION>
 
 <SECTION>

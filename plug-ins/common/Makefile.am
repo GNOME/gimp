@@ -264,7 +264,7 @@ animation_optimize_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(animation_optimize_RC)
@@ -295,7 +295,7 @@ antialias_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(antialias_RC)
@@ -343,7 +343,7 @@ blur_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(blur_RC)
@@ -631,7 +631,7 @@ contrast_normalize_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(contrast_normalize_RC)
@@ -662,7 +662,7 @@ contrast_stretch_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(contrast_stretch_RC)
@@ -676,7 +676,7 @@ contrast_stretch_hsv_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(contrast_stretch_hsv_RC)
@@ -707,7 +707,7 @@ crop_auto_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(crop_auto_RC)
@@ -721,7 +721,7 @@ crop_zealous_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(crop_zealous_RC)
@@ -922,7 +922,7 @@ edge_laplace_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(edge_laplace_RC)
@@ -1039,7 +1039,7 @@ file_compressor_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_compressor_RC)
@@ -1070,7 +1070,7 @@ file_desktop_link_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_desktop_link_RC)
@@ -1120,7 +1120,7 @@ file_gif_load_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_gif_load_RC)
@@ -1168,7 +1168,7 @@ file_glob_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_glob_RC)
@@ -1216,7 +1216,7 @@ file_jp2_load_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(JP2_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
@@ -1660,7 +1660,7 @@ gradient_map_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(gradient_map_RC)
@@ -1691,7 +1691,7 @@ guillotine_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(guillotine_RC)
@@ -2201,7 +2201,7 @@ rotate_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(rotate_RC)
@@ -2252,7 +2252,7 @@ semi_flatten_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(semi_flatten_RC)
@@ -2453,7 +2453,7 @@ tile_seamless_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(tile_seamless_RC)
@@ -2518,7 +2518,7 @@ value_invert_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(value_invert_RC)

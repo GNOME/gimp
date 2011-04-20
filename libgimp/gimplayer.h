@@ -35,6 +35,14 @@ gint32   gimp_layer_new                (gint32                image_ID,
                                         GimpLayerModeEffects  mode);
 gint32   gimp_layer_copy               (gint32                layer_ID);
 
+gint32   gimp_layer_new_from_pixbuf    (gint32                image_ID,
+                                        const gchar          *name,
+                                        GdkPixbuf            *pixbuf,
+                                        gdouble               opacity,
+                                        GimpLayerModeEffects  mode,
+                                        gdouble               progress_start,
+                                        gdouble               progress_end);
+
 
 #ifndef GIMP_DISABLE_DEPRECATED
 gboolean gimp_layer_get_preserve_trans (gint32                layer_ID);

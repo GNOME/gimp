@@ -21,7 +21,7 @@
 #ifndef __GIMP_H__
 #define __GIMP_H__
 
-#include <glib-object.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <libgimpbase/gimpbase.h>
 #include <libgimpcolor/gimpcolor.h>
@@ -46,6 +46,7 @@
 #include <libgimp/gimppaletteselect.h>
 #include <libgimp/gimppatterns.h>
 #include <libgimp/gimppatternselect.h>
+#include <libgimp/gimppixbuf.h>
 #include <libgimp/gimppixelfetcher.h>
 #include <libgimp/gimppixelrgn.h>
 #include <libgimp/gimpplugin.h>
