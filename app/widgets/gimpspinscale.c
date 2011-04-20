@@ -49,15 +49,17 @@ typedef struct _GimpSpinScalePrivate GimpSpinScalePrivate;
 
 struct _GimpSpinScalePrivate
 {
-  gchar    *label;
-  gboolean  scale_limits_set;
-  gdouble   scale_lower;
-  gdouble   scale_upper;
+  gchar       *label;
 
-  gboolean  changing_value;
-  gboolean  relative_change;
-  gdouble   start_x;
-  gdouble   start_value;
+  gboolean     scale_limits_set;
+  gdouble      scale_lower;
+  gdouble      scale_upper;
+
+  PangoLayout *layout;
+  gboolean     changing_value;
+  gboolean     relative_change;
+  gdouble      start_x;
+  gdouble      start_value;
 };
 
 #define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
@@ -137,7 +139,13 @@ gimp_spin_scale_init (GimpSpinScale *scale)
 static void
 gimp_spin_scale_dispose (GObject *object)
 {
-  /* GimpSpinScalePrivate *priv = GET_PRIVATE (object); */
+  GimpSpinScalePrivate *private = GET_PRIVATE (object);
+
+  if (private->layout)
+    {
+      g_object_unref (private->layout);
+      private->layout = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -202,11 +210,12 @@ static void
 gimp_spin_scale_style_set (GtkWidget *widget,
                            GtkStyle  *prev_style)
 {
-  GtkStyle         *style   = gtk_widget_get_style (widget);
-  PangoContext     *context = gtk_widget_get_pango_context (widget);
-  PangoFontMetrics *metrics;
-  gint              height;
-  GtkBorder         border;
+  GimpSpinScalePrivate *private = GET_PRIVATE (widget);
+  GtkStyle             *style   = gtk_widget_get_style (widget);
+  PangoContext         *context = gtk_widget_get_pango_context (widget);
+  PangoFontMetrics     *metrics;
+  gint                  height;
+  GtkBorder             border;
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
@@ -223,6 +232,12 @@ gimp_spin_scale_style_set (GtkWidget *widget,
   border.bottom = 2;
 
   gtk_entry_set_inner_border (GTK_ENTRY (widget), &border);
+
+  if (private->layout)
+    {
+      g_object_unref (private->layout);
+      private->layout = NULL;
+    }
 }
 
 static gboolean
@@ -232,6 +247,7 @@ gimp_spin_scale_expose (GtkWidget      *widget,
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
   GtkStyle             *style   = gtk_widget_get_style (widget);
   cairo_t              *cr;
+  gboolean              rtl;
   gint                  w, h;
 
   GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
@@ -240,6 +256,8 @@ gimp_spin_scale_expose (GtkWidget      *widget,
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
+  rtl = (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL);
+
   w = gdk_window_get_width (event->window);
   h = gdk_window_get_height (event->window);
 
@@ -247,21 +265,33 @@ gimp_spin_scale_expose (GtkWidget      *widget,
 
   if (event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
     {
-      /* let right line of rectangle disappear */
-      cairo_rectangle (cr, 0.5, 0.5, w, h - 1.0);
+      /* let spinbutton-side line of rectangle disappear */
+      if (rtl)
+        cairo_rectangle (cr, -0.5, 0.5, w, h - 1.0);
+      else
+        cairo_rectangle (cr, 0.5, 0.5, w, h - 1.0);
+
       gdk_cairo_set_source_color (cr,
                                   &style->text[gtk_widget_get_state (widget)]);
       cairo_stroke (cr);
     }
   else
     {
-      /* let left line of rectangle disappear */
-      cairo_rectangle (cr, -0.5, 0.5, w, h - 1.0);
+      /* let text-box-side line of rectangle disappear */
+      if (rtl)
+        cairo_rectangle (cr, 0.5, 0.5, w, h - 1.0);
+      else
+        cairo_rectangle (cr, -0.5, 0.5, w, h - 1.0);
+
       gdk_cairo_set_source_color (cr,
                                   &style->text[gtk_widget_get_state (widget)]);
       cairo_stroke (cr);
 
-      cairo_rectangle (cr, 0.5, 1.5, w - 2.0, h - 3.0);
+      if (rtl)
+        cairo_rectangle (cr, 1.5, 1.5, w - 2.0, h - 3.0);
+      else
+        cairo_rectangle (cr, 0.5, 1.5, w - 2.0, h - 3.0);
+
       gdk_cairo_set_source_color (cr,
                                   &style->base[gtk_widget_get_state (widget)]);
       cairo_stroke (cr);
@@ -271,23 +301,37 @@ gimp_spin_scale_expose (GtkWidget      *widget,
       gtk_widget_is_drawable (widget) &&
       event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
     {
-      PangoLayout     *layout;
       const GtkBorder *border;
+      gint             layout_width;
+
+      if (! private->layout)
+        private->layout = gtk_widget_create_pango_layout (widget,
+                                                          private->label);
+
+      pango_layout_get_pixel_size (private->layout, &layout_width, NULL);
 
       border = gtk_entry_get_inner_border (GTK_ENTRY (widget));
 
-      if (border)
-        cairo_move_to (cr, border->left, border->left /* sic! */);
+      if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+        {
+          if (border)
+            cairo_move_to (cr, w - layout_width - border->right,
+                           border->right /* sic! */);
+          else
+            cairo_move_to (cr, w - layout_width - 2, 2);
+        }
       else
-        cairo_move_to (cr, 2, 2);
+        {
+          if (border)
+            cairo_move_to (cr, border->left, border->left /* sic! */);
+          else
+            cairo_move_to (cr, 2, 2);
+        }
 
       gdk_cairo_set_source_color (cr,
                                   &style->text[gtk_widget_get_state (widget)]);
 
-      layout = gtk_widget_create_pango_layout (widget, private->label);
-      pango_cairo_show_layout (cr, layout);
-
-      g_object_unref (layout);
+      pango_cairo_show_layout (cr, private->layout);
     }
 
   cairo_destroy (cr);
@@ -358,6 +402,9 @@ gimp_spin_scale_change_value (GtkWidget *widget,
 
   width = gdk_window_get_width (text_window);
 
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    x = width - x;
+
   if (private->relative_change)
     {
       gdouble diff;
@@ -365,7 +412,10 @@ gimp_spin_scale_change_value (GtkWidget *widget,
 
       step = (upper - lower) / width / 10.0;
 
-      diff = x - private->start_x;
+      if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+        diff = x - (width - private->start_x);
+      else
+        diff = x - private->start_x;
 
       value = (private->start_value + diff * step);
     }
