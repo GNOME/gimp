@@ -46,12 +46,12 @@ enum
 /*  public functions  */
 
 GimpSessionInfoDock *
-gimp_session_info_dock_new (const gchar *identifier)
+gimp_session_info_dock_new (const gchar *dock_type)
 {
   GimpSessionInfoDock *dock_info = NULL;
 
   dock_info = g_slice_new0 (GimpSessionInfoDock);
-  dock_info->identifier = g_strdup (identifier);
+  dock_info->dock_type = g_strdup (dock_type);
 
   return dock_info;
 }
@@ -61,10 +61,10 @@ gimp_session_info_dock_free (GimpSessionInfoDock *dock_info)
 {
   g_return_if_fail (dock_info != NULL);
 
-  if (dock_info->identifier)
+  if (dock_info->dock_type)
     {
-      g_free (dock_info->identifier);
-      dock_info->identifier = NULL;
+      g_free (dock_info->dock_type);
+      dock_info->dock_type = NULL;
     }
 
   if (dock_info->books)
@@ -86,7 +86,7 @@ gimp_session_info_dock_serialize (GimpConfigWriter    *writer,
   g_return_if_fail (writer != NULL);
   g_return_if_fail (dock_info != NULL);
 
-  gimp_config_writer_open (writer, dock_info->identifier);
+  gimp_config_writer_open (writer, dock_info->dock_type);
 
   for (list = dock_info->books; list; list = g_list_next (list))
     gimp_session_info_book_serialize (writer, list->data);
@@ -98,7 +98,7 @@ GTokenType
 gimp_session_info_dock_deserialize (GScanner             *scanner,
                                     gint                  scope,
                                     GimpSessionInfoDock **dock_info,
-                                    const gchar          *identifier)
+                                    const gchar          *dock_type)
 {
   GTokenType token;
 
@@ -108,7 +108,7 @@ gimp_session_info_dock_deserialize (GScanner             *scanner,
   g_scanner_scope_add_symbol (scanner, scope, "book",
                               GINT_TO_POINTER (SESSION_INFO_BOOK));
 
-  *dock_info = gimp_session_info_dock_new (identifier);
+  *dock_info = gimp_session_info_dock_new (dock_type);
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -205,7 +205,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
   dock       = gimp_dialog_factory_dialog_new (factory,
                                                screen,
                                                ui_manager,
-                                               dock_info->identifier,
+                                               dock_info->dock_type,
                                                -1 /*view_size*/,
                                                FALSE /*present*/);
 

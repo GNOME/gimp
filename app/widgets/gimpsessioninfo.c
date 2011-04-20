@@ -340,7 +340,7 @@ gimp_session_info_deserialize (GimpConfig *config,
             case SESSION_INFO_DOCK:
               {
                 GimpSessionInfoDock *dock_info  = NULL;
-                const gchar         *identifier = NULL;
+                const gchar         *dock_type = NULL;
 
                 /* Handle old sessionrc:s from versions <= GIMP 2.6 */
                 if (GPOINTER_TO_INT (scanner->value.v_symbol) == SESSION_INFO_DOCK &&
@@ -348,20 +348,20 @@ gimp_session_info_deserialize (GimpConfig *config,
                     info->p->factory_entry->identifier &&
                     strcmp ("gimp-toolbox-window", info->p->factory_entry->identifier) == 0)
                   {
-                    identifier = "gimp-toolbox";
+                    dock_type = "gimp-toolbox";
                   }
                 else
                   {
-                    identifier = ((GPOINTER_TO_INT (scanner->value.v_symbol) ==
-                                   SESSION_INFO_GIMP_TOOLBOX) ?
-                                  "gimp-toolbox" :
-                                  "gimp-dock");
+                    dock_type = ((GPOINTER_TO_INT (scanner->value.v_symbol) ==
+                                  SESSION_INFO_GIMP_TOOLBOX) ?
+                                 "gimp-toolbox" :
+                                 "gimp-dock");
                   }
 
                 g_scanner_set_scope (scanner, scope_id + 1);
                 token = gimp_session_info_dock_deserialize (scanner, scope_id + 1,
                                                             &dock_info,
-                                                            identifier);
+                                                            dock_type);
 
                 if (token == G_TOKEN_LEFT_PAREN)
                   {
