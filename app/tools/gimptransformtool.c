@@ -355,6 +355,8 @@ gimp_transform_tool_button_release (GimpTool              *tool,
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   gint               i;
 
+  gimp_tool_control_halt (tool->control);
+
   /*  if we are creating, there is nothing to be done...exit  */
   if (tr_tool->function == TRANSFORM_CREATING && tr_tool->use_grid)
     return;
@@ -387,8 +389,6 @@ gimp_transform_tool_button_release (GimpTool              *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
-
-  gimp_tool_control_halt (tool->control);
 }
 
 static void
