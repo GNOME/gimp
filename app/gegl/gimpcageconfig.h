@@ -48,14 +48,11 @@ struct _GimpCageConfig
 {
   GimpImageMapConfig  parent_instance;
 
-  gint                n_cage_vertices;   /* vertices used by the cage */
-  gint                max_cage_vertices; /* vertices allocated        */
+  GArray             *cage_points;
 
   gdouble             displacement_x;
   gdouble             displacement_y;
   GimpCageMode        cage_mode;  /* Cage mode, used to commit displacement */
-
-  GimpCagePoint      *cage_points;
 };
 
 struct _GimpCageConfigClass
@@ -66,6 +63,7 @@ struct _GimpCageConfigClass
 
 GType           gimp_cage_config_get_type               (void) G_GNUC_CONST;
 
+guint           gimp_cage_config_get_n_points           (GimpCageConfig  *gcc);
 void            gimp_cage_config_add_cage_point         (GimpCageConfig  *gcc,
                                                          gdouble          x,
                                                          gdouble          y);
@@ -96,6 +94,8 @@ void            gimp_cage_config_select_add_area        (GimpCageConfig  *gcc,
 void            gimp_cage_config_toggle_point_selection (GimpCageConfig  *gcc,
                                                          gint             point_number);
 void            gimp_cage_config_deselect_points        (GimpCageConfig  *gcc);
+gboolean        gimp_cage_config_point_is_selected      (GimpCageConfig  *gcc,
+                                                         gint             point_number);
 
 
 #endif /* __GIMP_CAGE_CONFIG_H__ */

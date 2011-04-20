@@ -210,7 +210,7 @@ gimp_operation_cage_transform_prepare (GeglOperation *operation)
 
   gegl_operation_set_format (operation, "input",
                              babl_format_n (babl_type ("float"),
-                                            2 * config->n_cage_vertices));
+                                            2 * gimp_cage_config_get_n_points (config)));
   gegl_operation_set_format (operation, "output",
                              babl_format_n (babl_type ("float"), 2));
 }
@@ -232,13 +232,18 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   GeglBufferIterator         *it;
   gint                        x, y;
   gboolean                    output_set;
+  GimpCagePoint              *point;
+  guint                       n_cage_vertices;
 
   /* pre-fill the out buffer with no-displacement coordinate */
   it      = gegl_buffer_iterator_new (out_buf, roi, NULL, GEGL_BUFFER_WRITE);
   cage_bb = gimp_cage_config_get_bounding_box (config);
 
-  plain_color.x = (gint) config->cage_points[0].src_point.x;
-  plain_color.y = (gint) config->cage_points[0].src_point.y;
+  point = &(g_array_index (config->cage_points, GimpCagePoint, 0));
+  plain_color.x = (gint) point->src_point.x;
+  plain_color.y = (gint) point->src_point.y;
+
+  n_cage_vertices   = gimp_cage_config_get_n_points (config);
 
   while (gegl_buffer_iterator_next (it))
     {
@@ -290,8 +295,8 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
   /* pre-allocate memory outside of the loop */
   coords      = g_slice_alloc (2 * sizeof (gfloat));
-  coef        = g_malloc (config->n_cage_vertices * 2 * sizeof (gfloat));
-  format_coef = babl_format_n (babl_type ("float"), 2 * config->n_cage_vertices);
+  coef        = g_malloc (n_cage_vertices * 2 * sizeof (gfloat));
+  format_coef = babl_format_n (babl_type ("float"), 2 * n_cage_vertices);
 
   /* compute, reverse and interpolate the transformation */
   for (y = cage_bb.y; y < cage_bb.y + cage_bb.height - 1; y++)
@@ -536,14 +541,14 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
                                          GeglBuffer     *coef_buf,
                                          GimpVector2     coords)
 {
-  gdouble        pos_x, pos_y;
-  GimpVector2    result;
-  gint           cvn = config->n_cage_vertices;
+  GimpVector2    result = {0, 0};
+  gint           n_cage_vertices = gimp_cage_config_get_n_points (config);
   gint           i;
+  GimpCagePoint *point;
 
   /* When Gegl bug #645810 will be solved, this should be a good optimisation */
   #ifdef GEGL_BUG_645810_SOLVED
-    gegl_buffer_sample (coef_buf, coords.x, coords.y, 1.0, coef, format_coef, GEGL_INTERPOLATION_LANCZOS);
+    gegl_buffer_sample (coef_buf, coords.x, coords.y, 1.0, coef, format_coef, GEGL_INTERPOLATION_NEAREST);
   #else
     GeglRectangle  rect;
 
@@ -555,20 +560,16 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
     gegl_buffer_get (coef_buf, 1, &rect, format_coef, coef, GEGL_AUTO_ROWSTRIDE);
   #endif
 
-  pos_x = 0;
-  pos_y = 0;
-
-  for (i = 0; i < cvn; i++)
+  for (i = 0; i < n_cage_vertices; i++)
     {
-      pos_x += coef[i] * config->cage_points[i].dest_point.x;
-      pos_y += coef[i] * config->cage_points[i].dest_point.y;
+      point = &g_array_index (config->cage_points, GimpCagePoint, i);
 
-      pos_x += coef[i + cvn] * config->cage_points[i].edge_scaling_factor * config->cage_points[i].edge_normal.x;
-      pos_y += coef[i + cvn] * config->cage_points[i].edge_scaling_factor * config->cage_points[i].edge_normal.y;
+      result.x += coef[i] * point->dest_point.x;
+      result.y += coef[i] * point->dest_point.y;
+
+      result.x += coef[i + n_cage_vertices] * point->edge_scaling_factor * point->edge_normal.x;
+      result.y += coef[i + n_cage_vertices] * point->edge_scaling_factor * point->edge_normal.y;
     }
-
-  result.x = pos_x;
-  result.y = pos_y;
 
   return result;
 }
