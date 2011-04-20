@@ -156,7 +156,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
-                                 "application-mode", _("Override opacity set for the tool when painting over same place"),
+                                 "application-mode", _("Every stamp has its own opacity"),
                                  GIMP_TYPE_PAINT_APPLICATION_MODE,
                                  DEFAULT_APPLICATION_MODE,
                                  GIMP_PARAM_STATIC_STRINGS);
