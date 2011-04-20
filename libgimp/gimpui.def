@@ -13,8 +13,6 @@ EXPORTS
 	gimp_channel_menu_new
 	gimp_drawable_combo_box_get_type
 	gimp_drawable_combo_box_new
-	gimp_drawable_get_sub_thumbnail
-	gimp_drawable_get_thumbnail
 	gimp_drawable_menu_new
 	gimp_drawable_preview_draw_region
 	gimp_drawable_preview_get_drawable
@@ -39,12 +37,10 @@ EXPORTS
 	gimp_gradient_select_widget_set
 	gimp_image_combo_box_get_type
 	gimp_image_combo_box_new
-	gimp_image_get_thumbnail
 	gimp_image_menu_new
 	gimp_layer_combo_box_get_type
 	gimp_layer_combo_box_new
 	gimp_layer_menu_new
-	gimp_layer_new_from_pixbuf
 	gimp_palette_select_button_get_palette
 	gimp_palette_select_button_get_type
 	gimp_palette_select_button_new

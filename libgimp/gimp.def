@@ -156,8 +156,10 @@ EXPORTS
 	gimp_drawable_get_linked
 	gimp_drawable_get_name
 	gimp_drawable_get_pixel
+	gimp_drawable_get_sub_thumbnail
 	gimp_drawable_get_sub_thumbnail_data
 	gimp_drawable_get_tattoo
+	gimp_drawable_get_thumbnail
 	gimp_drawable_get_thumbnail_data
 	gimp_drawable_get_tile
 	gimp_drawable_get_tile2
@@ -371,6 +373,7 @@ EXPORTS
 	gimp_image_get_resolution
 	gimp_image_get_selection
 	gimp_image_get_tattoo_state
+	gimp_image_get_thumbnail
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
 	gimp_image_get_uri
@@ -512,6 +515,7 @@ EXPORTS
 	gimp_layer_mode_effects_get_type
 	gimp_layer_new
 	gimp_layer_new_from_drawable
+	gimp_layer_new_from_pixbuf
 	gimp_layer_new_from_visible
 	gimp_layer_remove_mask
 	gimp_layer_resize
