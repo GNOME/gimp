@@ -21,6 +21,7 @@
 #ifndef __GIMP_H__
 #define __GIMP_H__
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <libgimpbase/gimpbase.h>

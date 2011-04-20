@@ -42,6 +42,13 @@ gint32   gimp_layer_new_from_pixbuf    (gint32                image_ID,
                                         GimpLayerModeEffects  mode,
                                         gdouble               progress_start,
                                         gdouble               progress_end);
+gint32   gimp_layer_new_from_surface   (gint32                image_ID,
+                                        const gchar          *name,
+                                        cairo_surface_t      *surface,
+                                        gdouble               opacity,
+                                        GimpLayerModeEffects  mode,
+                                        gdouble               progress_start,
+                                        gdouble               progress_end);
 
 
 #ifndef GIMP_DISABLE_DEPRECATED

@@ -44,6 +44,7 @@ help_SOURCES = help.c
 
 INCLUDES = \
 	-I$(top_srcdir)		\
+	$(CAIRO_CFLAGS)		\
 	$(GIO_CFLAGS)		\
 	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
@@ -55,6 +56,7 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(libgimpmath)		\
+	$(CAIRO_LIBS)		\
 	$(GIO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\

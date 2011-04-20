@@ -364,6 +364,7 @@ libgimp_2_0_la_LIBADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
+	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)
 

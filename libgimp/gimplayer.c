@@ -27,6 +27,9 @@
 #undef __GIMP_LAYER_H__
 #include "gimplayer.h"
 
+#include "libgimpwidgets/gimpcairo-utils.h" /* eek */
+
+
 /**
  * gimp_layer_new:
  * @image_ID: The image to which to add the layer.
@@ -181,6 +184,160 @@ gimp_layer_new_from_pixbuf (gint32                image_ID,
         }
 
       if (range > 0.0)
+        {
+          done += rgn.h * rgn.w;
+
+          if (count++ % 32 == 0)
+            gimp_progress_update (progress_start +
+                                  (gdouble) done / (width * height) * range);
+        }
+    }
+
+  if (range > 0.0)
+    gimp_progress_update (progress_end);
+
+  gimp_drawable_detach (drawable);
+
+  return layer;
+}
+
+/**
+ * gimp_layer_new_from_surface:
+ * @image_ID:        The RGB image to which to add the layer.
+ * @name:            The layer name.
+ * @cairo_surface_t: A Cairo image surface.
+ * @opacity:         The layer opacity.
+ * @mode:            The layer combination mode.
+ * @progress_start:  start of progress
+ * @progress_end:    end of progress
+ *
+ * Create a new layer from a #cairo_surface_t.
+ *
+ * This procedure creates a new layer from the given
+ * #cairo_surface_t. The image has to be an RGB image and just like
+ * with gimp_layer_new() you will still need to add the layer to it.
+ *
+ * If you pass @progress_end > @progress_start to this function,
+ * gimp_progress_update() will be called for. You have to call
+ * gimp_progress_init() beforehand then.
+ *
+ * Returns: The newly created layer.
+ *
+ * Since: GIMP 2.8
+ */
+gint32
+gimp_layer_new_from_surface (gint32                image_ID,
+                             const gchar          *name,
+                             cairo_surface_t      *surface,
+                             gdouble               opacity,
+                             GimpLayerModeEffects  mode,
+                             gdouble               progress_start,
+                             gdouble               progress_end)
+{
+  GimpDrawable    *drawable;
+  GimpPixelRgn	   rgn;
+  const guchar    *pixels;
+  gpointer         pr;
+  gint32           layer;
+  cairo_format_t   format;
+  gint             width;
+  gint             height;
+  gint             rowstride;
+  gdouble          range = progress_end - progress_start;
+  guint            count = 0;
+  guint            done  = 0;
+
+  g_return_val_if_fail (surface != NULL, -1);
+  g_return_val_if_fail (cairo_surface_get_type (surface) ==
+                        CAIRO_SURFACE_TYPE_IMAGE, -1);
+
+  if (gimp_image_base_type (image_ID) != GIMP_RGB)
+    {
+      g_warning ("gimp_layer_new_from_surface() needs an RGB image");
+      return -1;
+    }
+
+  width  = cairo_image_surface_get_width (surface);
+  height = cairo_image_surface_get_height (surface);
+  format = cairo_image_surface_get_format (surface);
+
+  if (format != CAIRO_FORMAT_ARGB32 &&
+      format != CAIRO_FORMAT_RGB24)
+    {
+      g_warning ("gimp_layer_new_from_surface() assumes that surface is RGB");
+      return -1;
+    }
+
+  layer = gimp_layer_new (image_ID, name, width, height,
+                          format == CAIRO_FORMAT_RGB24 ?
+                          GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
+                          opacity, mode);
+
+  if (layer == -1)
+    return -1;
+
+  drawable = gimp_drawable_get (layer);
+
+  gimp_pixel_rgn_init (&rgn, drawable, 0, 0, width, height, TRUE, FALSE);
+
+  rowstride = cairo_image_surface_get_stride (surface);
+  pixels    = cairo_image_surface_get_data (surface);
+
+  for (pr = gimp_pixel_rgns_register (1, &rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      const guchar *src  = pixels + rgn.y * rowstride + rgn.x * 4;
+      guchar       *dest = rgn.data;
+      gint          y;
+
+      switch (format)
+        {
+        case CAIRO_FORMAT_RGB24:
+          for (y = 0; y < rgn.h; y++)
+            {
+              const guchar *s = src;
+              guchar       *d = dest;
+              gint          w = rgn.w;
+
+              while (w--)
+                {
+                  GIMP_CAIRO_RGB24_GET_PIXEL (s, d[0], d[1], d[2]);
+
+                  s += 4;
+                  d += 3;
+                }
+
+              src  += rowstride;
+              dest += rgn.rowstride;
+            }
+          break;
+
+        case CAIRO_FORMAT_ARGB32:
+          for (y = 0; y < rgn.h; y++)
+            {
+              const guchar *s = src;
+              guchar       *d = dest;
+              gint          w = rgn.w;
+
+              while (w--)
+                {
+                  GIMP_CAIRO_ARGB32_GET_PIXEL (s, d[0], d[1], d[2], d[3]);
+
+                  s += 4;
+                  d += 4;
+                }
+
+              src  += rowstride;
+              dest += rgn.rowstride;
+            }
+          break;
+
+        default:
+          break;
+        }
+
+     if (range > 0.0)
         {
           done += rgn.h * rgn.w;
 

@@ -30,6 +30,7 @@ file_faxg3_SOURCES = \
 
 INCLUDES = \
 	-I$(top_srcdir)		\
+	$(CAIRO_CFLAGS)		\
 	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
 
@@ -39,6 +40,7 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(libgimpmath)		\
+	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\

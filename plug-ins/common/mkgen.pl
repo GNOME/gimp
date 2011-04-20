@@ -139,7 +139,7 @@ foreach (sort keys %plugins) {
     if (exists $plugins{$_}->{ui}) {
 	$glib = "\$(GTK_LIBS)\t\t\\"
     } else {
-	$glib = "\$(GDK_PIXBUF_LIBS)\t\\"
+	$glib = "\$(CAIRO_LIBS)\t\t\\\n\t\$(GDK_PIXBUF_LIBS)\t\\"
     }
 
     my $optlib = "";
