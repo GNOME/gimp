@@ -620,6 +620,14 @@ gimp_dock_get_vbox (GimpDock *dock)
   return dock->p->paned_vbox;
 }
 
+gint
+gimp_dock_get_id (GimpDock *dock)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), 0);
+
+  return dock->p->ID;
+}
+
 void
 gimp_dock_add (GimpDock     *dock,
                GimpDockable *dockable,
