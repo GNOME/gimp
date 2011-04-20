@@ -80,12 +80,14 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FEATHER,
-                                    "feather", NULL,
+                                    "feather",
+                                    N_("Enable feathering of selection edges"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS,
-                                   "feather-radius", NULL,
+                                   "feather-radius",
+                                   N_("Radius of feathering"),
                                    0.0, 100.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 }

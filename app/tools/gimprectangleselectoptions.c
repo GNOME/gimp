@@ -73,17 +73,20 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
    */
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
                                     GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
-                                    "highlight", NULL,
+                                    "highlight",
+                                    N_("Dim everything outside selection"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ROUND_CORNERS,
-                                    "round-corners", NULL,
+                                    "round-corners",
+                                    N_("Round corners of selection"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CORNER_RADIUS,
-                                   "corner-radius", NULL,
+                                   "corner-radius",
+                                   N_("Radius of rounding in pixels"),
                                    0.0, 100.0, 5.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
