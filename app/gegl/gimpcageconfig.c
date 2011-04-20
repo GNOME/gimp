@@ -166,7 +166,7 @@ gimp_cage_config_get_n_points (GimpCageConfig *gcc)
  * @x: x value of the new point
  * @y: y value of the new point
  *
- * Add a new point in the polygon of the cage, and make allocation if needed.
+ * Add a new point in the last index of the polygon of the cage.
  * Point is added in both source and destination cage
  */
 void
@@ -174,9 +174,30 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
                                  gdouble          x,
                                  gdouble          y)
 {
+  gimp_cage_config_insert_cage_point (gcc, gcc->cage_points->len - 1, x, y);
+}
+
+/**
+ * gimp_cage_config_insert_cage_point:
+ * @gcc: the cage config
+ * @point_number: index where the point will be inserted
+ * @x: x value of the new point
+ * @y: y value of the new point
+ *
+ * Insert a new point in the polygon of the cage at the given index.
+ * Point is added in both source and destination cage
+ */
+void
+gimp_cage_config_insert_cage_point (GimpCageConfig  *gcc,
+                                    gint             point_number,
+                                    gdouble          x,
+                                    gdouble          y)
+{
   GimpCagePoint point;
 
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+  g_return_if_fail (point_number <= gcc->cage_points->len);
+  g_return_if_fail (point_number >= 0);
 
   point.src_point.x = x + DELTA;
   point.src_point.y = y + DELTA;
@@ -184,7 +205,7 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
   point.dest_point.x = x + DELTA;
   point.dest_point.y = y + DELTA;
 
-  g_array_append_val (gcc->cage_points, point);
+  g_array_insert_val (gcc->cage_points, point_number, point);
 
   gimp_cage_config_compute_scaling_factor (gcc);
   gimp_cage_config_compute_edges_normal (gcc);
@@ -199,7 +220,23 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
 void
 gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
 {
+  gimp_cage_config_remove_cage_point (gcc, gcc->cage_points->len - 1);
+}
+
+/**
+ * gimp_cage_config_remove_cage_point:
+ * @gcc: the cage config
+ * @point_number: the index of the point to remove
+ *
+ * Remove the given point from the cage
+ */
+void
+gimp_cage_config_remove_cage_point (GimpCageConfig *gcc,
+                                    gint            point_number)
+{
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+  g_return_if_fail (point_number < gcc->cage_points->len);
+  g_return_if_fail (point_number >= 0);
 
   if (gcc->cage_points->len > 0)
     g_array_remove_index (gcc->cage_points, gcc->cage_points->len - 1);
