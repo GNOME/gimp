@@ -192,7 +192,7 @@ static void       run                  (const gchar      *name,
                                         GimpParam       **return_vals);
 
 static guint32    select_window        (GdkScreen        *screen);
-static gint32     create_image         (GdkPixbuf        *pixbuf,
+static gint32     create_image         (cairo_surface_t  *surface,
                                         cairo_region_t   *shape,
                                         const gchar      *name);
 
@@ -468,7 +468,11 @@ select_window_x11 (GdkScreen *screen)
 #undef X_GRAB_KEY
 
       gdk_flush ();
-      gdk_error_trap_pop ();
+
+      if (gdk_error_trap_pop ())
+        {
+          /* ignore errors */
+        }
     }
 
   while (! cancel && ((x_win == None) || (buttons != 0)))
@@ -765,9 +769,9 @@ image_select_shape (gint32          image,
 /* Create a GimpImage from a GdkPixbuf */
 
 static gint32
-create_image (GdkPixbuf      *pixbuf,
-              cairo_region_t *shape,
-              const gchar    *name)
+create_image (cairo_surface_t *surface,
+              cairo_region_t  *shape,
+              const gchar     *name)
 {
   gint32     image;
   gint32     layer;
@@ -778,8 +782,8 @@ create_image (GdkPixbuf      *pixbuf,
 
   status = gimp_progress_init (_("Importing screenshot"));
 
-  width  = gdk_pixbuf_get_width (pixbuf);
-  height = gdk_pixbuf_get_height (pixbuf);
+  width  = cairo_image_surface_get_width (surface);
+  height = cairo_image_surface_get_height (surface);
 
   image = gimp_image_new (width, height, GIMP_RGB);
   gimp_image_undo_disable (image);
@@ -801,10 +805,10 @@ create_image (GdkPixbuf      *pixbuf,
       g_free (comment);
     }
 
-  layer = gimp_layer_new_from_pixbuf (image,
-                                      name ? name : _("Screenshot"),
-                                      pixbuf,
-                                      100, GIMP_NORMAL_MODE, 0.0, 1.0);
+  layer = gimp_layer_new_from_surface (image,
+                                       name ? name : _("Screenshot"),
+                                       surface,
+                                       0.0, 1.0);
   gimp_image_insert_layer (image, layer, -1, 0);
 
   if (shape && ! cairo_region_is_empty (shape))
@@ -918,17 +922,18 @@ get_foreign_window (GdkDisplay *display,
 static gint32
 shoot (GdkScreen *screen)
 {
-  GdkDisplay     *display;
-  GdkWindow      *window;
-  GdkPixbuf      *screenshot;
-  cairo_region_t *shape = NULL;
-  GdkRectangle    rect;
-  GdkRectangle    screen_rect;
-  gchar          *name  = NULL;
-  gint32          image;
-  gint            screen_x;
-  gint            screen_y;
-  gint            x, y;
+  GdkDisplay      *display;
+  GdkWindow       *window;
+  cairo_surface_t *screenshot;
+  cairo_region_t  *shape = NULL;
+  cairo_t         *cr;
+  GdkRectangle     rect;
+  GdkRectangle     screen_rect;
+  gchar           *name  = NULL;
+  gint32           image;
+  gint             screen_x;
+  gint             screen_y;
+  gint             x, y;
 
   /* use default screen if we are running non-interactively */
   if (screen == NULL)
@@ -979,18 +984,19 @@ shoot (GdkScreen *screen)
   window = gdk_screen_get_root_window (screen);
   gdk_window_get_origin (window, &screen_x, &screen_y);
 
-  screenshot = gdk_pixbuf_get_from_drawable (NULL, window, NULL,
-                                             rect.x - screen_x,
-                                             rect.y - screen_y,
-                                             0, 0, rect.width, rect.height);
+  screenshot = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                           rect.width, rect.height);
+
+  cr = cairo_create (screenshot);
+
+  gdk_cairo_set_source_window (cr, window,
+                               - (rect.x - screen_x),
+                               - (rect.y - screen_y));
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
 
   gdk_display_beep (display);
-
-  if (! screenshot)
-    {
-      g_message (_("There was an error taking the screenshot."));
-      return -1;
-    }
 
   if (shootvals.shoot_type == SHOOT_WINDOW)
     {
@@ -1004,7 +1010,7 @@ shoot (GdkScreen *screen)
 
   image = create_image (screenshot, shape, name);
 
-  g_object_unref (screenshot);
+  cairo_surface_destroy (screenshot);
 
   if (shape)
     cairo_region_destroy (shape);
