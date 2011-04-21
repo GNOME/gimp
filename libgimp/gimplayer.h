@@ -45,8 +45,6 @@ gint32   gimp_layer_new_from_pixbuf    (gint32                image_ID,
 gint32   gimp_layer_new_from_surface   (gint32                image_ID,
                                         const gchar          *name,
                                         cairo_surface_t      *surface,
-                                        gdouble               opacity,
-                                        GimpLayerModeEffects  mode,
                                         gdouble               progress_start,
                                         gdouble               progress_end);
 

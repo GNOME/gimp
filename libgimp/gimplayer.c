@@ -206,8 +206,6 @@ gimp_layer_new_from_pixbuf (gint32                image_ID,
  * @image_ID:        The RGB image to which to add the layer.
  * @name:            The layer name.
  * @cairo_surface_t: A Cairo image surface.
- * @opacity:         The layer opacity.
- * @mode:            The layer combination mode.
  * @progress_start:  start of progress
  * @progress_end:    end of progress
  *
@@ -229,8 +227,6 @@ gint32
 gimp_layer_new_from_surface (gint32                image_ID,
                              const gchar          *name,
                              cairo_surface_t      *surface,
-                             gdouble               opacity,
-                             GimpLayerModeEffects  mode,
                              gdouble               progress_start,
                              gdouble               progress_end)
 {
@@ -271,7 +267,7 @@ gimp_layer_new_from_surface (gint32                image_ID,
   layer = gimp_layer_new (image_ID, name, width, height,
                           format == CAIRO_FORMAT_RGB24 ?
                           GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
-                          opacity, mode);
+                          100.0, GIMP_NORMAL_MODE);
 
   if (layer == -1)
     return -1;

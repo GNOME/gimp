@@ -761,7 +761,6 @@ layer_from_surface (gint32           image,
                     gdouble          progress_scale)
 {
   gint32 layer = gimp_layer_new_from_surface (image, layer_name, surface,
-                                              100.0, GIMP_NORMAL_MODE,
                                               progress_start,
                                               progress_start + progress_scale);
 
