@@ -77,6 +77,7 @@ typedef struct
   GtkWidget *spin;
 
   ValuePairType type;
+  guint         timeout_id;
 
   union
   {
@@ -2123,6 +2124,7 @@ value_pair_create (gpointer      data,
 
   value_pair->data.d = data;
   value_pair->type   = type;
+  value_pair->timeout_id = 0;
 
   value_pair->spin = gimp_spin_button_new (&value_pair->adjustment,
                                            1.0, lower, upper,
@@ -2146,8 +2148,6 @@ value_pair_create (gpointer      data,
         gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 3);
 
       gtk_scale_set_draw_value (GTK_SCALE (value_pair->scale), FALSE);
-      gtk_range_set_update_policy (GTK_RANGE (value_pair->scale),
-                                   GTK_UPDATE_DELAYED);
     }
   else
     {
@@ -2169,31 +2169,49 @@ value_pair_update (ValuePair *value_pair)
 
 }
 
-static void
-value_pair_scale_callback (GtkAdjustment *adjustment,
-                           ValuePair     *value_pair)
+static gboolean
+value_pair_scale_callback_real (gpointer data)
 {
+  ValuePair *value_pair = data;
   gint changed = FALSE;
 
   if (value_pair->type == VALUE_PAIR_DOUBLE)
     {
-      if ((gdouble) *value_pair->data.d != gtk_adjustment_get_value (adjustment))
+      if ((gdouble) *value_pair->data.d !=
+          gtk_adjustment_get_value (GTK_ADJUSTMENT (value_pair->adjustment)))
         {
           changed = TRUE;
-          *value_pair->data.d = gtk_adjustment_get_value (adjustment);
+          *value_pair->data.d = gtk_adjustment_get_value (GTK_ADJUSTMENT (value_pair->adjustment));
         }
     }
   else
     {
-      if (*value_pair->data.i != (gint) gtk_adjustment_get_value (adjustment))
+      if (*value_pair->data.i !=
+          (gint) gtk_adjustment_get_value (GTK_ADJUSTMENT (value_pair->adjustment)))
         {
           changed = TRUE;
-          *value_pair->data.i = gtk_adjustment_get_value (adjustment);
+          *value_pair->data.i = gtk_adjustment_get_value (GTK_ADJUSTMENT (value_pair->adjustment));
         }
     }
 
   if (changed)
     val_changed_update ();
+
+  value_pair->timeout_id = 0;
+
+  return FALSE;
+}
+
+static void
+value_pair_scale_callback (GtkAdjustment *adjustment,
+                           ValuePair     *value_pair)
+{
+  if (value_pair->timeout_id != 0)
+    return;
+
+  value_pair->timeout_id = g_timeout_add (500, /* update every half second */
+                                          value_pair_scale_callback_real,
+                                          value_pair);
 }
 
 static void
