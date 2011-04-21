@@ -138,8 +138,12 @@ static void
 lightmenu_callback (GtkWidget *widget,
                     gpointer   data)
 {
+  int active;
+
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 (gint *) &mapvals.lightsource.type);
+                                 &active);
+
+  mapvals.lightsource.type = active;
 
   if (mapvals.lightsource.type == POINT_LIGHT)
     {
@@ -172,8 +176,12 @@ static void
 mapmenu_callback (GtkWidget *widget,
                   gpointer   data)
 {
+  int active;
+
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 (gint *) &mapvals.maptype);
+                                 &active);
+
+  mapvals.maptype = active;
 
   if (mapvals.livepreview)
     {
