@@ -391,6 +391,7 @@ select_window_x11 (GdkScreen *screen)
   Window        x_win       = None;
   GC            x_gc        = NULL;
   Cursor        x_cursor    = XCreateFontCursor (x_dpy, GDK_CROSSHAIR);
+  GdkKeymap    *keymap;
   GdkKeymapKey *keys        = NULL;
   gint          status;
   gint          i, num_keys;
@@ -445,7 +446,10 @@ select_window_x11 (GdkScreen *screen)
                         &gc_values);
     }
 
-  if (gdk_keymap_get_entries_for_keyval (NULL, GDK_KEY_Escape, &keys, &num_keys))
+  keymap = gdk_keymap_get_for_display (gdk_screen_get_display (screen));
+
+  if (gdk_keymap_get_entries_for_keyval (keymap, GDK_KEY_Escape,
+                                         &keys, &num_keys))
     {
       gdk_error_trap_push ();
 
