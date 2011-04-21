@@ -87,12 +87,14 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
   options_class->reset       = gimp_bucket_fill_options_reset;
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_MODE,
-                                 "fill-mode", NULL,
+                                 "fill-mode",
+                                 N_("What to fill a selection or a layer with"),
                                  GIMP_TYPE_BUCKET_FILL_MODE,
                                  GIMP_FG_BUCKET_FILL,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_SELECTION,
-                                    "fill-selection", NULL,
+                                    "fill-selection",
+                                    N_("Which area will be filled"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
@@ -113,7 +115,8 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                                    0.0, 255.0, 15.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_CRITERION,
-                                 "fill-criterion", NULL,
+                                 "fill-criterion",
+                                 N_("What to use for calculating an area to fill"),
                                  GIMP_TYPE_SELECT_CRITERION,
                                  GIMP_SELECT_CRITERION_COMPOSITE,
                                  GIMP_PARAM_STATIC_STRINGS);

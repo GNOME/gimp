@@ -98,40 +98,48 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                  GIMP_TRANSFORM_TYPE_LAYER,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DIRECTION,
-                                 "direction", NULL,
+                                 "direction",
+                                 N_("Direction of transformation"),
                                  GIMP_TYPE_TRANSFORM_DIRECTION,
                                  GIMP_TRANSFORM_FORWARD,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
-                                 "interpolation", NULL,
+                                 "interpolation",
+                                 N_("Interpolation method"),
                                  GIMP_TYPE_INTERPOLATION_TYPE,
                                  GIMP_INTERPOLATION_LINEAR,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLIP,
-                                 "clip", NULL,
+                                 "clip",
+                                 N_("How to clip..."),
                                  GIMP_TYPE_TRANSFORM_RESIZE,
                                  GIMP_TRANSFORM_RESIZE_ADJUST,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PREVIEW_TYPE,
-                                 "preview-type", NULL,
+                                 "preview-type",
+                                  N_("How to render preview"),
                                  GIMP_TYPE_TRANSFORM_PREVIEW_TYPE,
                                  GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PREVIEW_OPACITY,
-                                   "preview-opacity", NULL,
+                                   "preview-opacity",
+                                   N_("Preview opacity"),
                                    0.0, 1.0, 1.0,
-                                GIMP_PARAM_STATIC_STRINGS);
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRID_TYPE,
-                                 "grid-type", NULL,
+                                 "grid-type",
+                                  N_("How to define grid settings"),
                                  GIMP_TYPE_TRANSFORM_GRID_TYPE,
                                  GIMP_TRANSFORM_GRID_TYPE_N_LINES,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_GRID_SIZE,
-                                "grid-size", NULL,
+                                "grid-size",
+                                 N_("Size of a grid cell"),
                                 1, 128, 15,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN,
-                                    "constrain", NULL,
+                                    "constrain",
+                                     N_("Limit rotation step to 15 degrees"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }

@@ -62,7 +62,8 @@ gimp_flip_options_class_init (GimpFlipOptionsClass *klass)
   object_class->get_property = gimp_flip_options_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FLIP_TYPE,
-                                 "flip-type", NULL,
+                                 "flip-type",
+                                 N_("Direction of flipping"),
                                  GIMP_TYPE_ORIENTATION_TYPE,
                                  GIMP_ORIENTATION_HORIZONTAL,
                                  GIMP_PARAM_STATIC_STRINGS);

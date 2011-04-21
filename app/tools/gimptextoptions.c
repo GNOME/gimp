@@ -127,11 +127,13 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
-                                 "font-size-unit", NULL,
+                                 "font-size-unit",
+                                 N_("Font size unit"),
                                  TRUE, FALSE, GIMP_UNIT_PIXEL,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
-                                   "font-size", NULL,
+                                   "font-size",
+                                   N_("Font size"),
                                    0.0, 8192.0, 18.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
@@ -158,7 +160,8 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                  GIMP_TEXT_DIRECTION_LTR,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
-                                "justify", NULL,
+                                "justify",
+                                N_("Text alignment"),
                                  GIMP_TYPE_TEXT_JUSTIFICATION,
                                  GIMP_TEXT_JUSTIFY_LEFT,
                                  GIMP_PARAM_STATIC_STRINGS);
@@ -182,7 +185,8 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
                                 "box-mode",
-                                 N_("Text box resize mode"),
+                                 N_("Whether text flows into rectangular shape or"
+                                    "moves into a new line when you press Enter"),
                                  GIMP_TYPE_TEXT_BOX_MODE,
                                  GIMP_TEXT_BOX_DYNAMIC,
                                  GIMP_PARAM_STATIC_STRINGS);
