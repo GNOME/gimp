@@ -74,6 +74,7 @@ void            gimp_cage_config_insert_cage_point      (GimpCageConfig  *gcc,
 void            gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc);
 void            gimp_cage_config_remove_cage_point      (GimpCageConfig  *gcc,
                                                          gint             point_number);
+void            gimp_cage_config_remove_selected_points (GimpCageConfig  *gcc);
 GimpVector2     gimp_cage_config_get_point_coordinate   (GimpCageConfig  *gcc,
                                                          GimpCageMode     mode,
                                                          gint             point_number);

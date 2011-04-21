@@ -174,7 +174,7 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
                                  gdouble          x,
                                  gdouble          y)
 {
-  gimp_cage_config_insert_cage_point (gcc, gcc->cage_points->len - 1, x, y);
+  gimp_cage_config_insert_cage_point (gcc, gcc->cage_points->len, x, y);
 }
 
 /**
@@ -240,6 +240,35 @@ gimp_cage_config_remove_cage_point (GimpCageConfig *gcc,
 
   if (gcc->cage_points->len > 0)
     g_array_remove_index (gcc->cage_points, gcc->cage_points->len - 1);
+
+  gimp_cage_config_compute_scaling_factor (gcc);
+  gimp_cage_config_compute_edges_normal (gcc);
+}
+
+/**
+ * gimp_cage_config_remove_selected_points:
+ * @gcc: the cage config
+ *
+ * Remove all the selected points from the cage
+ */
+void
+gimp_cage_config_remove_selected_points (GimpCageConfig  *gcc)
+{
+  gint           i;
+  GimpCagePoint *point;
+
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+
+  for (i = 0; i < gcc->cage_points->len; i++)
+    {
+      point = &g_array_index (gcc->cage_points, GimpCagePoint, i);
+
+      if (point->selected)
+        {
+          g_array_remove_index (gcc->cage_points, i);
+          i--;
+        }
+    }
 
   gimp_cage_config_compute_scaling_factor (gcc);
   gimp_cage_config_compute_edges_normal (gcc);
