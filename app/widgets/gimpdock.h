@@ -96,6 +96,8 @@ gint                gimp_dock_get_n_dockables         (GimpDock       *dock);
 GtkWidget         * gimp_dock_get_main_vbox           (GimpDock       *dock);
 GtkWidget         * gimp_dock_get_vbox                (GimpDock       *dock);
 gint                gimp_dock_get_id                  (GimpDock       *dock);
+void                gimp_dock_set_id                  (GimpDock       *dock,
+                                                       gint            ID);
 
 void                gimp_dock_add                     (GimpDock       *dock,
                                                        GimpDockable   *dockable,

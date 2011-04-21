@@ -629,6 +629,15 @@ gimp_dock_get_id (GimpDock *dock)
 }
 
 void
+gimp_dock_set_id (GimpDock *dock,
+                  gint      ID)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  dock->p->ID = ID;
+}
+
+void
 gimp_dock_add (GimpDock     *dock,
                GimpDockable *dockable,
                gint          section,
