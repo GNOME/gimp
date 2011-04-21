@@ -4,8 +4,8 @@
  *
  * Copyright (C) 2005 Nathan Summers
  *
- * Some code borrowed from poppler.git/glib/poppler-page.cc
- * Copyright (C) 2005, Red Hat, Inc.
+ * Some code in render_page_to_surface() borrowed from
+ * poppler.git/glib/poppler-page.cc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
