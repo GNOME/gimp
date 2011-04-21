@@ -1087,7 +1087,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GimpContext          *context        = GIMP_CONTEXT (options);
   GimpImage            *image          = gimp_display_get_image (display);
   GimpItem             *active_item    = NULL;
-  TileManager          *orig_tiles;
+  TileManager          *orig_tiles     = NULL;
   gint                  orig_offset_x;
   gint                  orig_offset_y;
   TileManager          *new_tiles;
