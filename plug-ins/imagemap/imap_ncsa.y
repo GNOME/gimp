@@ -34,8 +34,8 @@
 #include "imap_rectangle.h"
 #include "imap_string.h"
 
-extern int ncsa_lex();
-extern int ncsa_restart();
+extern int ncsa_lex(void);
+extern int ncsa_restart(FILE *ncsa_in);
 static void ncsa_error(char* s);
 
 static Object_t *current_object;

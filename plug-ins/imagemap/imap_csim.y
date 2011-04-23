@@ -35,8 +35,8 @@
 #include "imap_rectangle.h"
 #include "imap_string.h"
 
-extern int csim_lex();
-extern int csim_restart();
+extern int csim_lex(void);
+extern int csim_restart(FILE *csim_in);
 static void csim_error(char* s);
 
 static enum {UNDEFINED, RECTANGLE, CIRCLE, POLYGON} current_type;

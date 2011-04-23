@@ -35,8 +35,8 @@
 #include "imap_rectangle.h"
 #include "imap_string.h"
 
-extern int cern_lex();
-extern int cern_restart();
+extern int cern_lex(void);
+extern int cern_restart(FILE *cern_in);
 static void cern_error(char* s);
 
 static Object_t *current_object;
