@@ -17,10 +17,6 @@ static int
 gimp_composite_3dnow_test (int iterations, int n_pixels)
 {
 #if defined(COMPILE_3DNOW_IS_OKAY)
-  GimpCompositeContext generic_ctx;
-  GimpCompositeContext special_ctx;
-  double ft0;
-  double ft1;
   gimp_rgba8_t *rgba8D1;
   gimp_rgba8_t *rgba8D2;
   gimp_rgba8_t *rgba8A;
