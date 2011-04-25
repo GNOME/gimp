@@ -1223,7 +1223,9 @@ save_image (const gchar  *filename,
   if (pngvals.comment)
     {
       GimpParasite *parasite;
+#ifndef PNG_iTXt_SUPPORTED
       gsize text_length = 0;
+#endif /* PNG_iTXt_SUPPORTED */
 
       parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
       if (parasite)
