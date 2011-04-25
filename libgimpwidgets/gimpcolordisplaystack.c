@@ -286,7 +286,6 @@ gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,
 
 /**
  * gimp_color_display_stack_convert_surface:
- * @display: a #GimpColorDisplayStack
  * @surface: a #cairo_image_surface_t of type ARGB32
  *
  * Runs all the stack's filters on all pixels in @surface.
