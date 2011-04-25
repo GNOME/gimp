@@ -768,6 +768,9 @@ load_image (const gchar *filename, GError **error)
                                0, 0, drawable->width, drawable->height);
 
       gimp_progress_update ( (i + 1) / imagesp->nimage);
+
+      gimp_drawable_flush (drawable);
+      gimp_drawable_detach (drawable);
     }
   gimp_progress_update (1.0);
   /* free temporary buffer */
@@ -798,13 +801,7 @@ load_image (const gchar *filename, GError **error)
   XcursorCommentsDestroy (commentsp);
   fclose (fp);
 
-  /*
-   * Update the display...
-   */
-
   gimp_progress_end ();
-  gimp_drawable_flush (drawable);
-  gimp_drawable_detach (drawable);
 
   return image_ID;
 }
