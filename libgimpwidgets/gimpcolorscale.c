@@ -810,7 +810,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
                     l[0] = light[0];
                     l[1] = light[1];
                     l[2] = light[2];
-                    l[2] = light[3];
+                    l[3] = light[3];
                   }
                 else
                   {
