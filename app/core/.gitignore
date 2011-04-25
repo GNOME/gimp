@@ -1,9 +1,9 @@
-/Makefile
-/Makefile.in
+/*.lo
 /.deps
 /.libs
-/*.lo
-/libappcore.a
-/libappcore.la
+/Makefile
+/Makefile.in
 /gimpmarshal.c
 /gimpmarshal.h
+/libappcore.a
+/libappcore.la
