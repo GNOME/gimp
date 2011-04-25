@@ -777,8 +777,8 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
 
     case GTK_ORIENTATION_VERTICAL:
       {
-        guchar  light[4];
-        guchar  dark[4];
+        guchar  light[4] = {0xff, 0xff, 0xff, 0xff};
+        guchar  dark[4] = {0xff, 0xff, 0xff, 0xff};
 
         for (y = 0, d = buf; y < scale->height; y++, d += scale->rowstride)
           {
@@ -836,7 +836,7 @@ gimp_color_scale_render_stipple (GimpColorScale *scale)
   GtkWidget *widget = GTK_WIDGET (scale);
   GtkStyle  *style  = gtk_widget_get_style (widget);
   guchar    *buf;
-  guchar     insensitive[4];
+  guchar     insensitive[4] = {0xff, 0xff, 0xff, 0xff};
   guint      x, y;
 
   if ((buf = scale->buf) == NULL)
