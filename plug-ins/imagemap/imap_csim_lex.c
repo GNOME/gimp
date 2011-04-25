@@ -72,6 +72,7 @@ typedef int flex_int32_t;
 typedef unsigned char flex_uint8_t; 
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
+#endif /* ! C99 */
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -102,8 +103,6 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
-#endif /* ! C99 */
-
 #endif /* ! FLEXINT_H */
 
 #ifdef __cplusplus
@@ -111,15 +110,15 @@ typedef unsigned int flex_uint32_t;
 /* The "const" storage-class-modifier is valid. */
 #define YY_USE_CONST
 
-#else   /* ! __cplusplus */
+#else	/* ! __cplusplus */
 
 /* C99 requires __STDC__ to be defined as 1. */
 #if defined (__STDC__)
 
 #define YY_USE_CONST
 
-#endif  /* defined (__STDC__) */
-#endif  /* ! __cplusplus */
+#endif	/* defined (__STDC__) */
+#endif	/* ! __cplusplus */
 
 #ifdef YY_USE_CONST
 #define yyconst const
@@ -160,15 +159,7 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k.
- * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
- * Ditto for the __ia64__ case accordingly.
- */
-#define YY_BUF_SIZE 32768
-#else
 #define YY_BUF_SIZE 16384
-#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -192,17 +183,17 @@ extern FILE *csim_in, *csim_out;
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
-        do \
-                { \
-                /* Undo effects of setting up csim_text. */ \
+	do \
+		{ \
+		/* Undo effects of setting up csim_text. */ \
         int yyless_macro_arg = (n); \
         YY_LESS_LINENO(yyless_macro_arg);\
-                *yy_cp = (yy_hold_char); \
-                YY_RESTORE_YY_MORE_OFFSET \
-                (yy_c_buf_p) = yy_cp = yy_bp + yyless_macro_arg - YY_MORE_ADJ; \
-                YY_DO_BEFORE_ACTION; /* set up csim_text again */ \
-                } \
-        while ( 0 )
+		*yy_cp = (yy_hold_char); \
+		YY_RESTORE_YY_MORE_OFFSET \
+		(yy_c_buf_p) = yy_cp = yy_bp + yyless_macro_arg - YY_MORE_ADJ; \
+		YY_DO_BEFORE_ACTION; /* set up csim_text again */ \
+		} \
+	while ( 0 )
 
 #define unput(c) yyunput( c, (yytext_ptr)  )
 
@@ -214,66 +205,66 @@ typedef size_t yy_size_t;
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
 struct yy_buffer_state
-        {
-        FILE *yy_input_file;
+	{
+	FILE *yy_input_file;
 
-        char *yy_ch_buf;                /* input buffer */
-        char *yy_buf_pos;               /* current position in input buffer */
+	char *yy_ch_buf;		/* input buffer */
+	char *yy_buf_pos;		/* current position in input buffer */
 
-        /* Size of input buffer in bytes, not including room for EOB
-         * characters.
-         */
-        yy_size_t yy_buf_size;
+	/* Size of input buffer in bytes, not including room for EOB
+	 * characters.
+	 */
+	yy_size_t yy_buf_size;
 
-        /* Number of characters read into yy_ch_buf, not including EOB
-         * characters.
-         */
-        int yy_n_chars;
+	/* Number of characters read into yy_ch_buf, not including EOB
+	 * characters.
+	 */
+	int yy_n_chars;
 
-        /* Whether we "own" the buffer - i.e., we know we created it,
-         * and can realloc() it to grow it, and should free() it to
-         * delete it.
-         */
-        int yy_is_our_buffer;
+	/* Whether we "own" the buffer - i.e., we know we created it,
+	 * and can realloc() it to grow it, and should free() it to
+	 * delete it.
+	 */
+	int yy_is_our_buffer;
 
-        /* Whether this is an "interactive" input source; if so, and
-         * if we're using stdio for input, then we want to use getc()
-         * instead of fread(), to make sure we stop fetching input after
-         * each newline.
-         */
-        int yy_is_interactive;
+	/* Whether this is an "interactive" input source; if so, and
+	 * if we're using stdio for input, then we want to use getc()
+	 * instead of fread(), to make sure we stop fetching input after
+	 * each newline.
+	 */
+	int yy_is_interactive;
 
-        /* Whether we're considered to be at the beginning of a line.
-         * If so, '^' rules will be active on the next match, otherwise
-         * not.
-         */
-        int yy_at_bol;
+	/* Whether we're considered to be at the beginning of a line.
+	 * If so, '^' rules will be active on the next match, otherwise
+	 * not.
+	 */
+	int yy_at_bol;
 
     int yy_bs_lineno; /**< The line count. */
     int yy_bs_column; /**< The column count. */
     
-        /* Whether to try to fill the input buffer when we reach the
-         * end of it.
-         */
-        int yy_fill_buffer;
+	/* Whether to try to fill the input buffer when we reach the
+	 * end of it.
+	 */
+	int yy_fill_buffer;
 
-        int yy_buffer_status;
+	int yy_buffer_status;
 
 #define YY_BUFFER_NEW 0
 #define YY_BUFFER_NORMAL 1
-        /* When an EOF's been seen but there's still some text to process
-         * then we mark the buffer as YY_EOF_PENDING, to indicate that we
-         * shouldn't try reading from the input source any more.  We might
-         * still have a bunch of tokens to match, though, because of
-         * possible backing-up.
-         *
-         * When we actually see the EOF, we change the status to "new"
-         * (via csim_restart()), so that the user can continue scanning by
-         * just pointing csim_in at a new input file.
-         */
+	/* When an EOF's been seen but there's still some text to process
+	 * then we mark the buffer as YY_EOF_PENDING, to indicate that we
+	 * shouldn't try reading from the input source any more.  We might
+	 * still have a bunch of tokens to match, though, because of
+	 * possible backing-up.
+	 *
+	 * When we actually see the EOF, we change the status to "new"
+	 * (via csim_restart()), so that the user can continue scanning by
+	 * just pointing csim_in at a new input file.
+	 */
 #define YY_BUFFER_EOF_PENDING 2
 
-        };
+	};
 #endif /* !YY_STRUCT_YY_BUFFER_STATE */
 
 /* Stack of input buffers. */
@@ -298,13 +289,13 @@ static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
 
 /* yy_hold_char holds the character lost when csim_text is formed. */
 static char yy_hold_char;
-static int yy_n_chars;          /* number of characters read into yy_ch_buf */
+static int yy_n_chars;		/* number of characters read into yy_ch_buf */
 int csim_leng;
 
 /* Points to current character in buffer. */
 static char *yy_c_buf_p = (char *) 0;
-static int yy_init = 0;         /* whether we need to initialize */
-static int yy_start = 0;        /* start state number */
+static int yy_init = 0;		/* whether we need to initialize */
+static int yy_start = 0;	/* start state number */
 
 /* Flag which is used to allow csim_wrap()'s to do buffer switches
  * instead of setting up a fresh csim_in.  A bit of a hack ...
@@ -336,24 +327,24 @@ void csim_free (void *  );
 #define yy_new_buffer csim__create_buffer
 
 #define yy_set_interactive(is_interactive) \
-        { \
-        if ( ! YY_CURRENT_BUFFER ){ \
+	{ \
+	if ( ! YY_CURRENT_BUFFER ){ \
         csim_ensure_buffer_stack (); \
-                YY_CURRENT_BUFFER_LVALUE =    \
+		YY_CURRENT_BUFFER_LVALUE =    \
             csim__create_buffer(csim_in,YY_BUF_SIZE ); \
-        } \
-        YY_CURRENT_BUFFER_LVALUE->yy_is_interactive = is_interactive; \
-        }
+	} \
+	YY_CURRENT_BUFFER_LVALUE->yy_is_interactive = is_interactive; \
+	}
 
 #define yy_set_bol(at_bol) \
-        { \
-        if ( ! YY_CURRENT_BUFFER ){\
+	{ \
+	if ( ! YY_CURRENT_BUFFER ){\
         csim_ensure_buffer_stack (); \
-                YY_CURRENT_BUFFER_LVALUE =    \
+		YY_CURRENT_BUFFER_LVALUE =    \
             csim__create_buffer(csim_in,YY_BUF_SIZE ); \
-        } \
-        YY_CURRENT_BUFFER_LVALUE->yy_at_bol = at_bol; \
-        }
+	} \
+	YY_CURRENT_BUFFER_LVALUE->yy_at_bol = at_bol; \
+	}
 
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
@@ -384,21 +375,21 @@ static void yy_fatal_error (yyconst char msg[]  );
  * corresponding action - sets up csim_text.
  */
 #define YY_DO_BEFORE_ACTION \
-        (yytext_ptr) = yy_bp; \
-        csim_leng = (size_t) (yy_cp - yy_bp); \
-        (yy_hold_char) = *yy_cp; \
-        *yy_cp = '\0'; \
-        (yy_c_buf_p) = yy_cp;
+	(yytext_ptr) = yy_bp; \
+	csim_leng = (size_t) (yy_cp - yy_bp); \
+	(yy_hold_char) = *yy_cp; \
+	*yy_cp = '\0'; \
+	(yy_c_buf_p) = yy_cp;
 
 #define YY_NUM_RULES 32
 #define YY_END_OF_BUFFER 33
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
-        {
-        flex_int32_t yy_verify;
-        flex_int32_t yy_nxt;
-        };
+	{
+	flex_int32_t yy_verify;
+	flex_int32_t yy_nxt;
+	};
 static yyconst flex_int16_t yy_accept[154] =
     {   0,
        29,   29,   28,   28,    0,    0,   33,   31,   30,   30,
@@ -644,7 +635,7 @@ char *csim_text;
 
 
 
-#line 648 "<stdout>"
+#line 639 "<stdout>"
 
 #define INITIAL 0
 #define quoted_string 1
@@ -727,12 +718,7 @@ static int input (void );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k */
-#define YY_READ_BUF_SIZE 16384
-#else
 #define YY_READ_BUF_SIZE 8192
-#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -748,33 +734,33 @@ static int input (void );
  */
 #ifndef YY_INPUT
 #define YY_INPUT(buf,result,max_size) \
-        if ( YY_CURRENT_BUFFER_LVALUE->yy_is_interactive ) \
-                { \
-                int c = '*'; \
-                size_t n; \
-                for ( n = 0; n < max_size && \
-                             (c = getc( csim_in )) != EOF && c != '\n'; ++n ) \
-                        buf[n] = (char) c; \
-                if ( c == '\n' ) \
-                        buf[n++] = (char) c; \
-                if ( c == EOF && ferror( csim_in ) ) \
-                        YY_FATAL_ERROR( "input in flex scanner failed" ); \
-                result = n; \
-                } \
-        else \
-                { \
-                errno=0; \
-                while ( (result = fread(buf, 1, max_size, csim_in))==0 && ferror(csim_in)) \
-                        { \
-                        if( errno != EINTR) \
-                                { \
-                                YY_FATAL_ERROR( "input in flex scanner failed" ); \
-                                break; \
-                                } \
-                        errno=0; \
-                        clearerr(csim_in); \
-                        } \
-                }\
+	if ( YY_CURRENT_BUFFER_LVALUE->yy_is_interactive ) \
+		{ \
+		int c = '*'; \
+		unsigned n; \
+		for ( n = 0; n < max_size && \
+			     (c = getc( csim_in )) != EOF && c != '\n'; ++n ) \
+			buf[n] = (char) c; \
+		if ( c == '\n' ) \
+			buf[n++] = (char) c; \
+		if ( c == EOF && ferror( csim_in ) ) \
+			YY_FATAL_ERROR( "input in flex scanner failed" ); \
+		result = n; \
+		} \
+	else \
+		{ \
+		errno=0; \
+		while ( (result = fread(buf, 1, max_size, csim_in))==0 && ferror(csim_in)) \
+			{ \
+			if( errno != EINTR) \
+				{ \
+				YY_FATAL_ERROR( "input in flex scanner failed" ); \
+				break; \
+				} \
+			errno=0; \
+			clearerr(csim_in); \
+			} \
+		}\
 \
 
 #endif
@@ -823,134 +809,134 @@ extern int csim_lex (void);
 #endif
 
 #define YY_RULE_SETUP \
-        YY_USER_ACTION
+	YY_USER_ACTION
 
 /** The main scanner function which does all the work.
  */
 YY_DECL
 {
-        register yy_state_type yy_current_state;
-        register char *yy_cp, *yy_bp;
-        register int yy_act;
+	register yy_state_type yy_current_state;
+	register char *yy_cp, *yy_bp;
+	register int yy_act;
     
 #line 45 "imap_csim.l"
 
 
-#line 840 "<stdout>"
+#line 826 "<stdout>"
 
-        if ( !(yy_init) )
-                {
-                (yy_init) = 1;
+	if ( !(yy_init) )
+		{
+		(yy_init) = 1;
 
 #ifdef YY_USER_INIT
-                YY_USER_INIT;
+		YY_USER_INIT;
 #endif
 
-                if ( ! (yy_start) )
-                        (yy_start) = 1; /* first start state */
+		if ( ! (yy_start) )
+			(yy_start) = 1;	/* first start state */
 
-                if ( ! csim_in )
-                        csim_in = stdin;
+		if ( ! csim_in )
+			csim_in = stdin;
 
-                if ( ! csim_out )
-                        csim_out = stdout;
+		if ( ! csim_out )
+			csim_out = stdout;
 
-                if ( ! YY_CURRENT_BUFFER ) {
-                        csim_ensure_buffer_stack ();
-                        YY_CURRENT_BUFFER_LVALUE =
-                                csim__create_buffer(csim_in,YY_BUF_SIZE );
-                }
+		if ( ! YY_CURRENT_BUFFER ) {
+			csim_ensure_buffer_stack ();
+			YY_CURRENT_BUFFER_LVALUE =
+				csim__create_buffer(csim_in,YY_BUF_SIZE );
+		}
 
-                csim__load_buffer_state( );
-                }
+		csim__load_buffer_state( );
+		}
 
-        while ( 1 )             /* loops until end-of-file is reached */
-                {
-                yy_cp = (yy_c_buf_p);
+	while ( 1 )		/* loops until end-of-file is reached */
+		{
+		yy_cp = (yy_c_buf_p);
 
-                /* Support of csim_text. */
-                *yy_cp = (yy_hold_char);
+		/* Support of csim_text. */
+		*yy_cp = (yy_hold_char);
 
-                /* yy_bp points to the position in yy_ch_buf of the start of
-                 * the current run.
-                 */
-                yy_bp = yy_cp;
+		/* yy_bp points to the position in yy_ch_buf of the start of
+		 * the current run.
+		 */
+		yy_bp = yy_cp;
 
-                yy_current_state = (yy_start);
+		yy_current_state = (yy_start);
 yy_match:
-                do
-                        {
-                        register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
-                        if ( yy_accept[yy_current_state] )
-                                {
-                                (yy_last_accepting_state) = yy_current_state;
-                                (yy_last_accepting_cpos) = yy_cp;
-                                }
-                        while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
-                                {
-                                yy_current_state = (int) yy_def[yy_current_state];
-                                if ( yy_current_state >= 154 )
-                                        yy_c = yy_meta[(unsigned int) yy_c];
-                                }
-                        yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-                        ++yy_cp;
-                        }
-                while ( yy_base[yy_current_state] != 322 );
+		do
+			{
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
+			if ( yy_accept[yy_current_state] )
+				{
+				(yy_last_accepting_state) = yy_current_state;
+				(yy_last_accepting_cpos) = yy_cp;
+				}
+			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
+				{
+				yy_current_state = (int) yy_def[yy_current_state];
+				if ( yy_current_state >= 154 )
+					yy_c = yy_meta[(unsigned int) yy_c];
+				}
+			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+			++yy_cp;
+			}
+		while ( yy_base[yy_current_state] != 322 );
 
 yy_find_action:
-                yy_act = yy_accept[yy_current_state];
-                if ( yy_act == 0 )
-                        { /* have to back up */
-                        yy_cp = (yy_last_accepting_cpos);
-                        yy_current_state = (yy_last_accepting_state);
-                        yy_act = yy_accept[yy_current_state];
-                        }
+		yy_act = yy_accept[yy_current_state];
+		if ( yy_act == 0 )
+			{ /* have to back up */
+			yy_cp = (yy_last_accepting_cpos);
+			yy_current_state = (yy_last_accepting_state);
+			yy_act = yy_accept[yy_current_state];
+			}
 
-                YY_DO_BEFORE_ACTION;
+		YY_DO_BEFORE_ACTION;
 
-do_action:      /* This label is used only to access EOF actions. */
+do_action:	/* This label is used only to access EOF actions. */
 
-                switch ( yy_act )
-        { /* beginning of action switch */
-                        case 0: /* must back up */
-                        /* undo the effects of YY_DO_BEFORE_ACTION */
-                        *yy_cp = (yy_hold_char);
-                        yy_cp = (yy_last_accepting_cpos);
-                        yy_current_state = (yy_last_accepting_state);
-                        goto yy_find_action;
+		switch ( yy_act )
+	{ /* beginning of action switch */
+			case 0: /* must back up */
+			/* undo the effects of YY_DO_BEFORE_ACTION */
+			*yy_cp = (yy_hold_char);
+			yy_cp = (yy_last_accepting_cpos);
+			yy_current_state = (yy_last_accepting_state);
+			goto yy_find_action;
 
 case 1:
 YY_RULE_SETUP
 #line 47 "imap_csim.l"
 {
-                                   BEGIN(comment);
-                                   return AUTHOR;
-                                }
-        YY_BREAK
+				   BEGIN(comment);
+				   return AUTHOR;
+				}
+	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 52 "imap_csim.l"
 {
-                                   BEGIN(comment);
-                                   return DESCRIPTION;
-                                }
-        YY_BREAK
+				   BEGIN(comment);
+				   return DESCRIPTION;
+				}
+	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 57 "imap_csim.l"
 {
-                                   BEGIN(comment);
-                                   return BEGIN_COMMENT;
-                                }
-        YY_BREAK
+				   BEGIN(comment);
+				   return BEGIN_COMMENT;
+				}
+	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 62 "imap_csim.l"
 {
-                                   BEGIN(INITIAL);
-                                   return END_COMMENT;
-                                }
-        YY_BREAK
+				   BEGIN(INITIAL);
+				   return END_COMMENT;
+			        }
+	YY_BREAK
 case 5:
 *yy_cp = (yy_hold_char); /* undo effects of setting up csim_text */
 (yy_c_buf_p) = yy_cp -= 3;
@@ -958,523 +944,523 @@ YY_DO_BEFORE_ACTION; /* set up csim_text again */
 YY_RULE_SETUP
 #line 67 "imap_csim.l"
 {
-                                   csim_lval.id = g_strndup (csim_text, csim_leng);
-                                   return STRING;
-                                }
-        YY_BREAK
+				   csim_lval.id = g_strndup (csim_text, csim_leng);
+   				   return STRING;
+				}
+	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 72 "imap_csim.l"
 return IMG;
-        YY_BREAK
+	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 74 "imap_csim.l"
 return SRC;
-        YY_BREAK
+	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 76 "imap_csim.l"
 return WIDTH;
-        YY_BREAK
+	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 78 "imap_csim.l"
 return HEIGHT;
-        YY_BREAK
+	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 80 "imap_csim.l"
 return BORDER;
-        YY_BREAK
+	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 82 "imap_csim.l"
 return USEMAP;
-        YY_BREAK
+	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 84 "imap_csim.l"
 return START_MAP;
-        YY_BREAK
+	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 86 "imap_csim.l"
 return END_MAP;
-        YY_BREAK
+	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 88 "imap_csim.l"
 return NAME;
-        YY_BREAK
+	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 90 "imap_csim.l"
 return AREA;
-        YY_BREAK
+	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 92 "imap_csim.l"
 return SHAPE;
-        YY_BREAK
+	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 94 "imap_csim.l"
 return COORDS;
-        YY_BREAK
+	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 96 "imap_csim.l"
 return TARGET;
-        YY_BREAK
+	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 98 "imap_csim.l"
 return ONMOUSEOVER;
-        YY_BREAK
+	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 100 "imap_csim.l"
 return ONMOUSEOUT;
-        YY_BREAK
+	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 102 "imap_csim.l"
 return ONFOCUS;
-        YY_BREAK
+	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 104 "imap_csim.l"
 return ONBLUR;
-        YY_BREAK
+	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 106 "imap_csim.l"
 return ALT;
-        YY_BREAK
+	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 108 "imap_csim.l"
 return HREF;
-        YY_BREAK
+	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 110 "imap_csim.l"
 return NOHREF;
-        YY_BREAK
+	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 112 "imap_csim.l"
 {
-                                   BEGIN(quoted_string);
-                                }
-        YY_BREAK
+				   BEGIN(quoted_string);
+				}
+	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 116 "imap_csim.l"
 {
-                                   BEGIN(INITIAL);
-                                   return STRING;
-                                }
-        YY_BREAK
+				   BEGIN(INITIAL);
+				   return STRING;
+				}
+	YY_BREAK
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
 #line 121 "imap_csim.l"
 {
-                                  csim_lval.id = g_strndup (csim_text, csim_leng);
-                                }
-        YY_BREAK
+				  csim_lval.id = g_strndup (csim_text, csim_leng);
+				}
+	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 125 "imap_csim.l"
 {
                                    csim_lval.value = g_ascii_strtod (csim_text, NULL);
-                                   return FLOAT;
-                                }
-        YY_BREAK
+				   return FLOAT;
+				}
+	YY_BREAK
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
 #line 130 "imap_csim.l"
 ; /* Eat white space */
-        YY_BREAK
+	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 132 "imap_csim.l"
 return *csim_text;
-        YY_BREAK
+	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 134 "imap_csim.l"
 ECHO;
-        YY_BREAK
-#line 1113 "<stdout>"
+	YY_BREAK
+#line 1099 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(quoted_string):
 case YY_STATE_EOF(comment):
-        yyterminate();
+	yyterminate();
 
-        case YY_END_OF_BUFFER:
-                {
-                /* Amount of text matched not including the EOB char. */
-                int yy_amount_of_matched_text = (int) (yy_cp - (yytext_ptr)) - 1;
+	case YY_END_OF_BUFFER:
+		{
+		/* Amount of text matched not including the EOB char. */
+		int yy_amount_of_matched_text = (int) (yy_cp - (yytext_ptr)) - 1;
 
-                /* Undo the effects of YY_DO_BEFORE_ACTION. */
-                *yy_cp = (yy_hold_char);
-                YY_RESTORE_YY_MORE_OFFSET
+		/* Undo the effects of YY_DO_BEFORE_ACTION. */
+		*yy_cp = (yy_hold_char);
+		YY_RESTORE_YY_MORE_OFFSET
 
-                if ( YY_CURRENT_BUFFER_LVALUE->yy_buffer_status == YY_BUFFER_NEW )
-                        {
-                        /* We're scanning a new file or input source.  It's
-                         * possible that this happened because the user
-                         * just pointed csim_in at a new source and called
-                         * csim_lex().  If so, then we have to assure
-                         * consistency between YY_CURRENT_BUFFER and our
-                         * globals.  Here is the right place to do so, because
-                         * this is the first action (other than possibly a
-                         * back-up) that will match for the new input source.
-                         */
-                        (yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
-                        YY_CURRENT_BUFFER_LVALUE->yy_input_file = csim_in;
-                        YY_CURRENT_BUFFER_LVALUE->yy_buffer_status = YY_BUFFER_NORMAL;
-                        }
+		if ( YY_CURRENT_BUFFER_LVALUE->yy_buffer_status == YY_BUFFER_NEW )
+			{
+			/* We're scanning a new file or input source.  It's
+			 * possible that this happened because the user
+			 * just pointed csim_in at a new source and called
+			 * csim_lex().  If so, then we have to assure
+			 * consistency between YY_CURRENT_BUFFER and our
+			 * globals.  Here is the right place to do so, because
+			 * this is the first action (other than possibly a
+			 * back-up) that will match for the new input source.
+			 */
+			(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
+			YY_CURRENT_BUFFER_LVALUE->yy_input_file = csim_in;
+			YY_CURRENT_BUFFER_LVALUE->yy_buffer_status = YY_BUFFER_NORMAL;
+			}
 
-                /* Note that here we test for yy_c_buf_p "<=" to the position
-                 * of the first EOB in the buffer, since yy_c_buf_p will
-                 * already have been incremented past the NUL character
-                 * (since all states make transitions on EOB to the
-                 * end-of-buffer state).  Contrast this with the test
-                 * in input().
-                 */
-                if ( (yy_c_buf_p) <= &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] )
-                        { /* This was really a NUL. */
-                        yy_state_type yy_next_state;
+		/* Note that here we test for yy_c_buf_p "<=" to the position
+		 * of the first EOB in the buffer, since yy_c_buf_p will
+		 * already have been incremented past the NUL character
+		 * (since all states make transitions on EOB to the
+		 * end-of-buffer state).  Contrast this with the test
+		 * in input().
+		 */
+		if ( (yy_c_buf_p) <= &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] )
+			{ /* This was really a NUL. */
+			yy_state_type yy_next_state;
 
-                        (yy_c_buf_p) = (yytext_ptr) + yy_amount_of_matched_text;
+			(yy_c_buf_p) = (yytext_ptr) + yy_amount_of_matched_text;
 
-                        yy_current_state = yy_get_previous_state(  );
+			yy_current_state = yy_get_previous_state(  );
 
-                        /* Okay, we're now positioned to make the NUL
-                         * transition.  We couldn't have
-                         * yy_get_previous_state() go ahead and do it
-                         * for us because it doesn't know how to deal
-                         * with the possibility of jamming (and we don't
-                         * want to build jamming into it because then it
-                         * will run more slowly).
-                         */
+			/* Okay, we're now positioned to make the NUL
+			 * transition.  We couldn't have
+			 * yy_get_previous_state() go ahead and do it
+			 * for us because it doesn't know how to deal
+			 * with the possibility of jamming (and we don't
+			 * want to build jamming into it because then it
+			 * will run more slowly).
+			 */
 
-                        yy_next_state = yy_try_NUL_trans( yy_current_state );
+			yy_next_state = yy_try_NUL_trans( yy_current_state );
 
-                        yy_bp = (yytext_ptr) + YY_MORE_ADJ;
+			yy_bp = (yytext_ptr) + YY_MORE_ADJ;
 
-                        if ( yy_next_state )
-                                {
-                                /* Consume the NUL. */
-                                yy_cp = ++(yy_c_buf_p);
-                                yy_current_state = yy_next_state;
-                                goto yy_match;
-                                }
+			if ( yy_next_state )
+				{
+				/* Consume the NUL. */
+				yy_cp = ++(yy_c_buf_p);
+				yy_current_state = yy_next_state;
+				goto yy_match;
+				}
 
-                        else
-                                {
-                                yy_cp = (yy_c_buf_p);
-                                goto yy_find_action;
-                                }
-                        }
+			else
+				{
+				yy_cp = (yy_c_buf_p);
+				goto yy_find_action;
+				}
+			}
 
-                else switch ( yy_get_next_buffer(  ) )
-                        {
-                        case EOB_ACT_END_OF_FILE:
-                                {
-                                (yy_did_buffer_switch_on_eof) = 0;
+		else switch ( yy_get_next_buffer(  ) )
+			{
+			case EOB_ACT_END_OF_FILE:
+				{
+				(yy_did_buffer_switch_on_eof) = 0;
 
-                                if ( csim_wrap( ) )
-                                        {
-                                        /* Note: because we've taken care in
-                                         * yy_get_next_buffer() to have set up
-                                         * csim_text, we can now set up
-                                         * yy_c_buf_p so that if some total
-                                         * hoser (like flex itself) wants to
-                                         * call the scanner after we return the
-                                         * YY_NULL, it'll still work - another
-                                         * YY_NULL will get returned.
-                                         */
-                                        (yy_c_buf_p) = (yytext_ptr) + YY_MORE_ADJ;
+				if ( csim_wrap( ) )
+					{
+					/* Note: because we've taken care in
+					 * yy_get_next_buffer() to have set up
+					 * csim_text, we can now set up
+					 * yy_c_buf_p so that if some total
+					 * hoser (like flex itself) wants to
+					 * call the scanner after we return the
+					 * YY_NULL, it'll still work - another
+					 * YY_NULL will get returned.
+					 */
+					(yy_c_buf_p) = (yytext_ptr) + YY_MORE_ADJ;
 
-                                        yy_act = YY_STATE_EOF(YY_START);
-                                        goto do_action;
-                                        }
+					yy_act = YY_STATE_EOF(YY_START);
+					goto do_action;
+					}
 
-                                else
-                                        {
-                                        if ( ! (yy_did_buffer_switch_on_eof) )
-                                                YY_NEW_FILE;
-                                        }
-                                break;
-                                }
+				else
+					{
+					if ( ! (yy_did_buffer_switch_on_eof) )
+						YY_NEW_FILE;
+					}
+				break;
+				}
 
-                        case EOB_ACT_CONTINUE_SCAN:
-                                (yy_c_buf_p) =
-                                        (yytext_ptr) + yy_amount_of_matched_text;
+			case EOB_ACT_CONTINUE_SCAN:
+				(yy_c_buf_p) =
+					(yytext_ptr) + yy_amount_of_matched_text;
 
-                                yy_current_state = yy_get_previous_state(  );
+				yy_current_state = yy_get_previous_state(  );
 
-                                yy_cp = (yy_c_buf_p);
-                                yy_bp = (yytext_ptr) + YY_MORE_ADJ;
-                                goto yy_match;
+				yy_cp = (yy_c_buf_p);
+				yy_bp = (yytext_ptr) + YY_MORE_ADJ;
+				goto yy_match;
 
-                        case EOB_ACT_LAST_MATCH:
-                                (yy_c_buf_p) =
-                                &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)];
+			case EOB_ACT_LAST_MATCH:
+				(yy_c_buf_p) =
+				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)];
 
-                                yy_current_state = yy_get_previous_state(  );
+				yy_current_state = yy_get_previous_state(  );
 
-                                yy_cp = (yy_c_buf_p);
-                                yy_bp = (yytext_ptr) + YY_MORE_ADJ;
-                                goto yy_find_action;
-                        }
-                break;
-                }
+				yy_cp = (yy_c_buf_p);
+				yy_bp = (yytext_ptr) + YY_MORE_ADJ;
+				goto yy_find_action;
+			}
+		break;
+		}
 
-        default:
-                YY_FATAL_ERROR(
-                        "fatal flex scanner internal error--no action found" );
-        } /* end of action switch */
-                } /* end of scanning one token */
+	default:
+		YY_FATAL_ERROR(
+			"fatal flex scanner internal error--no action found" );
+	} /* end of action switch */
+		} /* end of scanning one token */
 } /* end of csim_lex */
 
 /* yy_get_next_buffer - try to read in a new buffer
  *
  * Returns a code representing an action:
- *      EOB_ACT_LAST_MATCH -
- *      EOB_ACT_CONTINUE_SCAN - continue scanning from current position
- *      EOB_ACT_END_OF_FILE - end of file
+ *	EOB_ACT_LAST_MATCH -
+ *	EOB_ACT_CONTINUE_SCAN - continue scanning from current position
+ *	EOB_ACT_END_OF_FILE - end of file
  */
 static int yy_get_next_buffer (void)
 {
-        register char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
-        register char *source = (yytext_ptr);
-        register int number_to_move, i;
-        int ret_val;
+    	register char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
+	register char *source = (yytext_ptr);
+	register int number_to_move, i;
+	int ret_val;
 
-        if ( (yy_c_buf_p) > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] )
-                YY_FATAL_ERROR(
-                "fatal flex scanner internal error--end of buffer missed" );
+	if ( (yy_c_buf_p) > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] )
+		YY_FATAL_ERROR(
+		"fatal flex scanner internal error--end of buffer missed" );
 
-        if ( YY_CURRENT_BUFFER_LVALUE->yy_fill_buffer == 0 )
-                { /* Don't try to fill the buffer, so this is an EOF. */
-                if ( (yy_c_buf_p) - (yytext_ptr) - YY_MORE_ADJ == 1 )
-                        {
-                        /* We matched a single character, the EOB, so
-                         * treat this as a final EOF.
-                         */
-                        return EOB_ACT_END_OF_FILE;
-                        }
+	if ( YY_CURRENT_BUFFER_LVALUE->yy_fill_buffer == 0 )
+		{ /* Don't try to fill the buffer, so this is an EOF. */
+		if ( (yy_c_buf_p) - (yytext_ptr) - YY_MORE_ADJ == 1 )
+			{
+			/* We matched a single character, the EOB, so
+			 * treat this as a final EOF.
+			 */
+			return EOB_ACT_END_OF_FILE;
+			}
 
-                else
-                        {
-                        /* We matched some text prior to the EOB, first
-                         * process it.
-                         */
-                        return EOB_ACT_LAST_MATCH;
-                        }
-                }
+		else
+			{
+			/* We matched some text prior to the EOB, first
+			 * process it.
+			 */
+			return EOB_ACT_LAST_MATCH;
+			}
+		}
 
-        /* Try to read more data. */
+	/* Try to read more data. */
 
-        /* First move last chars to start of buffer. */
-        number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr)) - 1;
+	/* First move last chars to start of buffer. */
+	number_to_move = (int) ((yy_c_buf_p) - (yytext_ptr)) - 1;
 
-        for ( i = 0; i < number_to_move; ++i )
-                *(dest++) = *(source++);
+	for ( i = 0; i < number_to_move; ++i )
+		*(dest++) = *(source++);
 
-        if ( YY_CURRENT_BUFFER_LVALUE->yy_buffer_status == YY_BUFFER_EOF_PENDING )
-                /* don't do the read, it's not guaranteed to return an EOF,
-                 * just force an EOF
-                 */
-                YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars) = 0;
+	if ( YY_CURRENT_BUFFER_LVALUE->yy_buffer_status == YY_BUFFER_EOF_PENDING )
+		/* don't do the read, it's not guaranteed to return an EOF,
+		 * just force an EOF
+		 */
+		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars) = 0;
 
-        else
-                {
-                        int num_to_read =
-                        YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
+	else
+		{
+			int num_to_read =
+			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
-                while ( num_to_read <= 0 )
-                        { /* Not enough room in the buffer - grow it. */
+		while ( num_to_read <= 0 )
+			{ /* Not enough room in the buffer - grow it. */
 
-                        /* just a shorter name for the current buffer */
-                        YY_BUFFER_STATE b = YY_CURRENT_BUFFER;
+			/* just a shorter name for the current buffer */
+			YY_BUFFER_STATE b = YY_CURRENT_BUFFER;
 
-                        int yy_c_buf_p_offset =
-                                (int) ((yy_c_buf_p) - b->yy_ch_buf);
+			int yy_c_buf_p_offset =
+				(int) ((yy_c_buf_p) - b->yy_ch_buf);
 
-                        if ( b->yy_is_our_buffer )
-                                {
-                                int new_size = b->yy_buf_size * 2;
+			if ( b->yy_is_our_buffer )
+				{
+				int new_size = b->yy_buf_size * 2;
 
-                                if ( new_size <= 0 )
-                                        b->yy_buf_size += b->yy_buf_size / 8;
-                                else
-                                        b->yy_buf_size *= 2;
+				if ( new_size <= 0 )
+					b->yy_buf_size += b->yy_buf_size / 8;
+				else
+					b->yy_buf_size *= 2;
 
-                                b->yy_ch_buf = (char *)
-                                        /* Include room in for 2 EOB chars. */
-                                        csim_realloc((void *) b->yy_ch_buf,b->yy_buf_size + 2  );
-                                }
-                        else
-                                /* Can't grow it, we don't own it. */
-                                b->yy_ch_buf = 0;
+				b->yy_ch_buf = (char *)
+					/* Include room in for 2 EOB chars. */
+					csim_realloc((void *) b->yy_ch_buf,b->yy_buf_size + 2  );
+				}
+			else
+				/* Can't grow it, we don't own it. */
+				b->yy_ch_buf = 0;
 
-                        if ( ! b->yy_ch_buf )
-                                YY_FATAL_ERROR(
-                                "fatal error - scanner input buffer overflow" );
+			if ( ! b->yy_ch_buf )
+				YY_FATAL_ERROR(
+				"fatal error - scanner input buffer overflow" );
 
-                        (yy_c_buf_p) = &b->yy_ch_buf[yy_c_buf_p_offset];
+			(yy_c_buf_p) = &b->yy_ch_buf[yy_c_buf_p_offset];
 
-                        num_to_read = YY_CURRENT_BUFFER_LVALUE->yy_buf_size -
-                                                number_to_move - 1;
+			num_to_read = YY_CURRENT_BUFFER_LVALUE->yy_buf_size -
+						number_to_move - 1;
 
-                        }
+			}
 
-                if ( num_to_read > YY_READ_BUF_SIZE )
-                        num_to_read = YY_READ_BUF_SIZE;
+		if ( num_to_read > YY_READ_BUF_SIZE )
+			num_to_read = YY_READ_BUF_SIZE;
 
-                /* Read in more data. */
-                YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-                        (yy_n_chars), (size_t) num_to_read );
+		/* Read in more data. */
+		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
+			(yy_n_chars), (size_t) num_to_read );
 
-                YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
-                }
+		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
+		}
 
-        if ( (yy_n_chars) == 0 )
-                {
-                if ( number_to_move == YY_MORE_ADJ )
-                        {
-                        ret_val = EOB_ACT_END_OF_FILE;
-                        csim_restart(csim_in  );
-                        }
+	if ( (yy_n_chars) == 0 )
+		{
+		if ( number_to_move == YY_MORE_ADJ )
+			{
+			ret_val = EOB_ACT_END_OF_FILE;
+			csim_restart(csim_in  );
+			}
 
-                else
-                        {
-                        ret_val = EOB_ACT_LAST_MATCH;
-                        YY_CURRENT_BUFFER_LVALUE->yy_buffer_status =
-                                YY_BUFFER_EOF_PENDING;
-                        }
-                }
+		else
+			{
+			ret_val = EOB_ACT_LAST_MATCH;
+			YY_CURRENT_BUFFER_LVALUE->yy_buffer_status =
+				YY_BUFFER_EOF_PENDING;
+			}
+		}
 
-        else
-                ret_val = EOB_ACT_CONTINUE_SCAN;
+	else
+		ret_val = EOB_ACT_CONTINUE_SCAN;
 
-        if ((yy_size_t) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
-                /* Extend the array by 50%, plus the number we really need. */
-                yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
-                YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) csim_realloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
-                if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
-                        YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
-        }
+	if ((yy_size_t) ((yy_n_chars) + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
+		/* Extend the array by 50%, plus the number we really need. */
+		yy_size_t new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) csim_realloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size  );
+		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
+			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
+	}
 
-        (yy_n_chars) += number_to_move;
-        YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] = YY_END_OF_BUFFER_CHAR;
-        YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] = YY_END_OF_BUFFER_CHAR;
+	(yy_n_chars) += number_to_move;
+	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] = YY_END_OF_BUFFER_CHAR;
+	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars) + 1] = YY_END_OF_BUFFER_CHAR;
 
-        (yytext_ptr) = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[0];
+	(yytext_ptr) = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[0];
 
-        return ret_val;
+	return ret_val;
 }
 
 /* yy_get_previous_state - get the state just before the EOB char was reached */
 
     static yy_state_type yy_get_previous_state (void)
 {
-        register yy_state_type yy_current_state;
-        register char *yy_cp;
+	register yy_state_type yy_current_state;
+	register char *yy_cp;
     
-        yy_current_state = (yy_start);
+	yy_current_state = (yy_start);
 
-        for ( yy_cp = (yytext_ptr) + YY_MORE_ADJ; yy_cp < (yy_c_buf_p); ++yy_cp )
-                {
-                register YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
-                if ( yy_accept[yy_current_state] )
-                        {
-                        (yy_last_accepting_state) = yy_current_state;
-                        (yy_last_accepting_cpos) = yy_cp;
-                        }
-                while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
-                        {
-                        yy_current_state = (int) yy_def[yy_current_state];
-                        if ( yy_current_state >= 154 )
-                                yy_c = yy_meta[(unsigned int) yy_c];
-                        }
-                yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-                }
+	for ( yy_cp = (yytext_ptr) + YY_MORE_ADJ; yy_cp < (yy_c_buf_p); ++yy_cp )
+		{
+		register YY_CHAR yy_c = (*yy_cp ? yy_ec[YY_SC_TO_UI(*yy_cp)] : 1);
+		if ( yy_accept[yy_current_state] )
+			{
+			(yy_last_accepting_state) = yy_current_state;
+			(yy_last_accepting_cpos) = yy_cp;
+			}
+		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
+			{
+			yy_current_state = (int) yy_def[yy_current_state];
+			if ( yy_current_state >= 154 )
+				yy_c = yy_meta[(unsigned int) yy_c];
+			}
+		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+		}
 
-        return yy_current_state;
+	return yy_current_state;
 }
 
 /* yy_try_NUL_trans - try to make a transition on the NUL character
  *
  * synopsis
- *      next_state = yy_try_NUL_trans( current_state );
+ *	next_state = yy_try_NUL_trans( current_state );
  */
     static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )
 {
-        register int yy_is_jam;
-        register char *yy_cp = (yy_c_buf_p);
+	register int yy_is_jam;
+    	register char *yy_cp = (yy_c_buf_p);
 
-        register YY_CHAR yy_c = 1;
-        if ( yy_accept[yy_current_state] )
-                {
-                (yy_last_accepting_state) = yy_current_state;
-                (yy_last_accepting_cpos) = yy_cp;
-                }
-        while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
-                {
-                yy_current_state = (int) yy_def[yy_current_state];
-                if ( yy_current_state >= 154 )
-                        yy_c = yy_meta[(unsigned int) yy_c];
-                }
-        yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-        yy_is_jam = (yy_current_state == 153);
+	register YY_CHAR yy_c = 1;
+	if ( yy_accept[yy_current_state] )
+		{
+		(yy_last_accepting_state) = yy_current_state;
+		(yy_last_accepting_cpos) = yy_cp;
+		}
+	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
+		{
+		yy_current_state = (int) yy_def[yy_current_state];
+		if ( yy_current_state >= 154 )
+			yy_c = yy_meta[(unsigned int) yy_c];
+		}
+	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
+	yy_is_jam = (yy_current_state == 153);
 
-        return yy_is_jam ? 0 : yy_current_state;
+	return yy_is_jam ? 0 : yy_current_state;
 }
 
     static void yyunput (int c, register char * yy_bp )
 {
-        register char *yy_cp;
+	register char *yy_cp;
     
     yy_cp = (yy_c_buf_p);
 
-        /* undo effects of setting up csim_text */
-        *yy_cp = (yy_hold_char);
+	/* undo effects of setting up csim_text */
+	*yy_cp = (yy_hold_char);
 
-        if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
-                { /* need to shift things up to make room */
-                /* +2 for EOB chars. */
-                register int number_to_move = (yy_n_chars) + 2;
-                register char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
-                                        YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
-                register char *source =
-                                &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
+	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
+		{ /* need to shift things up to make room */
+		/* +2 for EOB chars. */
+		register int number_to_move = (yy_n_chars) + 2;
+		register char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
+					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
+		register char *source =
+				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
 
-                while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
-                        *--dest = *--source;
+		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
+			*--dest = *--source;
 
-                yy_cp += (int) (dest - source);
-                yy_bp += (int) (dest - source);
-                YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-                        (yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
+		yy_cp += (int) (dest - source);
+		yy_bp += (int) (dest - source);
+		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
+			(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
 
-                if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
-                        YY_FATAL_ERROR( "flex scanner push-back overflow" );
-                }
+		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
+			YY_FATAL_ERROR( "flex scanner push-back overflow" );
+		}
 
-        *--yy_cp = (char) c;
+	*--yy_cp = (char) c;
 
-        (yytext_ptr) = yy_bp;
-        (yy_hold_char) = *yy_cp;
-        (yy_c_buf_p) = yy_cp;
+	(yytext_ptr) = yy_bp;
+	(yy_hold_char) = *yy_cp;
+	(yy_c_buf_p) = yy_cp;
 }
 
 #ifndef YY_NO_INPUT
@@ -1485,71 +1471,71 @@ static int yy_get_next_buffer (void)
 #endif
 
 {
-        int c;
+	int c;
     
-        *(yy_c_buf_p) = (yy_hold_char);
+	*(yy_c_buf_p) = (yy_hold_char);
 
-        if ( *(yy_c_buf_p) == YY_END_OF_BUFFER_CHAR )
-                {
-                /* yy_c_buf_p now points to the character we want to return.
-                 * If this occurs *before* the EOB characters, then it's a
-                 * valid NUL; if not, then we've hit the end of the buffer.
-                 */
-                if ( (yy_c_buf_p) < &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] )
-                        /* This was really a NUL. */
-                        *(yy_c_buf_p) = '\0';
+	if ( *(yy_c_buf_p) == YY_END_OF_BUFFER_CHAR )
+		{
+		/* yy_c_buf_p now points to the character we want to return.
+		 * If this occurs *before* the EOB characters, then it's a
+		 * valid NUL; if not, then we've hit the end of the buffer.
+		 */
+		if ( (yy_c_buf_p) < &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[(yy_n_chars)] )
+			/* This was really a NUL. */
+			*(yy_c_buf_p) = '\0';
 
-                else
-                        { /* need more input */
-                        int offset = (yy_c_buf_p) - (yytext_ptr);
-                        ++(yy_c_buf_p);
+		else
+			{ /* need more input */
+			int offset = (yy_c_buf_p) - (yytext_ptr);
+			++(yy_c_buf_p);
 
-                        switch ( yy_get_next_buffer(  ) )
-                                {
-                                case EOB_ACT_LAST_MATCH:
-                                        /* This happens because yy_g_n_b()
-                                         * sees that we've accumulated a
-                                         * token and flags that we need to
-                                         * try matching the token before
-                                         * proceeding.  But for input(),
-                                         * there's no matching to consider.
-                                         * So convert the EOB_ACT_LAST_MATCH
-                                         * to EOB_ACT_END_OF_FILE.
-                                         */
+			switch ( yy_get_next_buffer(  ) )
+				{
+				case EOB_ACT_LAST_MATCH:
+					/* This happens because yy_g_n_b()
+					 * sees that we've accumulated a
+					 * token and flags that we need to
+					 * try matching the token before
+					 * proceeding.  But for input(),
+					 * there's no matching to consider.
+					 * So convert the EOB_ACT_LAST_MATCH
+					 * to EOB_ACT_END_OF_FILE.
+					 */
 
-                                        /* Reset buffer status. */
-                                        csim_restart(csim_in );
+					/* Reset buffer status. */
+					csim_restart(csim_in );
 
-                                        /*FALLTHROUGH*/
+					/*FALLTHROUGH*/
 
-                                case EOB_ACT_END_OF_FILE:
-                                        {
-                                        if ( csim_wrap( ) )
-                                                return EOF;
+				case EOB_ACT_END_OF_FILE:
+					{
+					if ( csim_wrap( ) )
+						return EOF;
 
-                                        if ( ! (yy_did_buffer_switch_on_eof) )
-                                                YY_NEW_FILE;
+					if ( ! (yy_did_buffer_switch_on_eof) )
+						YY_NEW_FILE;
 #ifdef __cplusplus
-                                        return yyinput();
+					return yyinput();
 #else
-                                        return input();
+					return input();
 #endif
-                                        }
+					}
 
-                                case EOB_ACT_CONTINUE_SCAN:
-                                        (yy_c_buf_p) = (yytext_ptr) + offset;
-                                        break;
-                                }
-                        }
-                }
+				case EOB_ACT_CONTINUE_SCAN:
+					(yy_c_buf_p) = (yytext_ptr) + offset;
+					break;
+				}
+			}
+		}
 
-        c = *(unsigned char *) (yy_c_buf_p);    /* cast for 8-bit char's */
-        *(yy_c_buf_p) = '\0';   /* preserve csim_text */
-        (yy_hold_char) = *++(yy_c_buf_p);
+	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
+	*(yy_c_buf_p) = '\0';	/* preserve csim_text */
+	(yy_hold_char) = *++(yy_c_buf_p);
 
-        return c;
+	return c;
 }
-#endif  /* ifndef YY_NO_INPUT */
+#endif	/* ifndef YY_NO_INPUT */
 
 /** Immediately switch to a different input stream.
  * @param input_file A readable stream.
@@ -1559,14 +1545,14 @@ static int yy_get_next_buffer (void)
     void csim_restart  (FILE * input_file )
 {
     
-        if ( ! YY_CURRENT_BUFFER ){
+	if ( ! YY_CURRENT_BUFFER ){
         csim_ensure_buffer_stack ();
-                YY_CURRENT_BUFFER_LVALUE =
+		YY_CURRENT_BUFFER_LVALUE =
             csim__create_buffer(csim_in,YY_BUF_SIZE );
-        }
+	}
 
-        csim__init_buffer(YY_CURRENT_BUFFER,input_file );
-        csim__load_buffer_state( );
+	csim__init_buffer(YY_CURRENT_BUFFER,input_file );
+	csim__load_buffer_state( );
 }
 
 /** Switch to a different input buffer.
@@ -1576,40 +1562,40 @@ static int yy_get_next_buffer (void)
     void csim__switch_to_buffer  (YY_BUFFER_STATE  new_buffer )
 {
     
-        /* TODO. We should be able to replace this entire function body
-         * with
-         *              csim_pop_buffer_state();
-         *              csim_push_buffer_state(new_buffer);
+	/* TODO. We should be able to replace this entire function body
+	 * with
+	 *		csim_pop_buffer_state();
+	 *		csim_push_buffer_state(new_buffer);
      */
-        csim_ensure_buffer_stack ();
-        if ( YY_CURRENT_BUFFER == new_buffer )
-                return;
+	csim_ensure_buffer_stack ();
+	if ( YY_CURRENT_BUFFER == new_buffer )
+		return;
 
-        if ( YY_CURRENT_BUFFER )
-                {
-                /* Flush out information for old buffer. */
-                *(yy_c_buf_p) = (yy_hold_char);
-                YY_CURRENT_BUFFER_LVALUE->yy_buf_pos = (yy_c_buf_p);
-                YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
-                }
+	if ( YY_CURRENT_BUFFER )
+		{
+		/* Flush out information for old buffer. */
+		*(yy_c_buf_p) = (yy_hold_char);
+		YY_CURRENT_BUFFER_LVALUE->yy_buf_pos = (yy_c_buf_p);
+		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
+		}
 
-        YY_CURRENT_BUFFER_LVALUE = new_buffer;
-        csim__load_buffer_state( );
+	YY_CURRENT_BUFFER_LVALUE = new_buffer;
+	csim__load_buffer_state( );
 
-        /* We don't actually know whether we did this switch during
-         * EOF (csim_wrap()) processing, but the only time this flag
-         * is looked at is after csim_wrap() is called, so it's safe
-         * to go ahead and always set it.
-         */
-        (yy_did_buffer_switch_on_eof) = 1;
+	/* We don't actually know whether we did this switch during
+	 * EOF (csim_wrap()) processing, but the only time this flag
+	 * is looked at is after csim_wrap() is called, so it's safe
+	 * to go ahead and always set it.
+	 */
+	(yy_did_buffer_switch_on_eof) = 1;
 }
 
 static void csim__load_buffer_state  (void)
 {
-        (yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
-        (yytext_ptr) = (yy_c_buf_p) = YY_CURRENT_BUFFER_LVALUE->yy_buf_pos;
-        csim_in = YY_CURRENT_BUFFER_LVALUE->yy_input_file;
-        (yy_hold_char) = *(yy_c_buf_p);
+    	(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
+	(yytext_ptr) = (yy_c_buf_p) = YY_CURRENT_BUFFER_LVALUE->yy_buf_pos;
+	csim_in = YY_CURRENT_BUFFER_LVALUE->yy_input_file;
+	(yy_hold_char) = *(yy_c_buf_p);
 }
 
 /** Allocate and initialize an input buffer state.
@@ -1620,26 +1606,26 @@ static void csim__load_buffer_state  (void)
  */
     YY_BUFFER_STATE csim__create_buffer  (FILE * file, int  size )
 {
-        YY_BUFFER_STATE b;
+	YY_BUFFER_STATE b;
     
-        b = (YY_BUFFER_STATE) csim_alloc(sizeof( struct yy_buffer_state )  );
-        if ( ! b )
-                YY_FATAL_ERROR( "out of dynamic memory in csim__create_buffer()" );
+	b = (YY_BUFFER_STATE) csim_alloc(sizeof( struct yy_buffer_state )  );
+	if ( ! b )
+		YY_FATAL_ERROR( "out of dynamic memory in csim__create_buffer()" );
 
-        b->yy_buf_size = size;
+	b->yy_buf_size = size;
 
-        /* yy_ch_buf has to be 2 characters longer than the size given because
-         * we need to put in 2 end-of-buffer characters.
-         */
-        b->yy_ch_buf = (char *) csim_alloc(b->yy_buf_size + 2  );
-        if ( ! b->yy_ch_buf )
-                YY_FATAL_ERROR( "out of dynamic memory in csim__create_buffer()" );
+	/* yy_ch_buf has to be 2 characters longer than the size given because
+	 * we need to put in 2 end-of-buffer characters.
+	 */
+	b->yy_ch_buf = (char *) csim_alloc(b->yy_buf_size + 2  );
+	if ( ! b->yy_ch_buf )
+		YY_FATAL_ERROR( "out of dynamic memory in csim__create_buffer()" );
 
-        b->yy_is_our_buffer = 1;
+	b->yy_is_our_buffer = 1;
 
-        csim__init_buffer(b,file );
+	csim__init_buffer(b,file );
 
-        return b;
+	return b;
 }
 
 /** Destroy the buffer.
@@ -1649,16 +1635,16 @@ static void csim__load_buffer_state  (void)
     void csim__delete_buffer (YY_BUFFER_STATE  b )
 {
     
-        if ( ! b )
-                return;
+	if ( ! b )
+		return;
 
-        if ( b == YY_CURRENT_BUFFER ) /* Not sure if we should pop here. */
-                YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) 0;
+	if ( b == YY_CURRENT_BUFFER ) /* Not sure if we should pop here. */
+		YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) 0;
 
-        if ( b->yy_is_our_buffer )
-                csim_free((void *) b->yy_ch_buf  );
+	if ( b->yy_is_our_buffer )
+		csim_free((void *) b->yy_ch_buf  );
 
-        csim_free((void *) b  );
+	csim_free((void *) b  );
 }
 
 #ifndef __cplusplus
@@ -1672,12 +1658,12 @@ extern int isatty (int );
     static void csim__init_buffer  (YY_BUFFER_STATE  b, FILE * file )
 
 {
-        int oerrno = errno;
+	int oerrno = errno;
     
-        csim__flush_buffer(b );
+	csim__flush_buffer(b );
 
-        b->yy_input_file = file;
-        b->yy_fill_buffer = 1;
+	b->yy_input_file = file;
+	b->yy_fill_buffer = 1;
 
     /* If b is the current buffer, then csim__init_buffer was _probably_
      * called from csim_restart() or through yy_get_next_buffer.
@@ -1690,7 +1676,7 @@ extern int isatty (int );
 
         b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
     
-        errno = oerrno;
+	errno = oerrno;
 }
 
 /** Discard all buffered characters. On the next scan, YY_INPUT will be called.
@@ -1699,25 +1685,25 @@ extern int isatty (int );
  */
     void csim__flush_buffer (YY_BUFFER_STATE  b )
 {
-        if ( ! b )
-                return;
+    	if ( ! b )
+		return;
 
-        b->yy_n_chars = 0;
+	b->yy_n_chars = 0;
 
-        /* We always need two end-of-buffer characters.  The first causes
-         * a transition to the end-of-buffer state.  The second causes
-         * a jam in that state.
-         */
-        b->yy_ch_buf[0] = YY_END_OF_BUFFER_CHAR;
-        b->yy_ch_buf[1] = YY_END_OF_BUFFER_CHAR;
+	/* We always need two end-of-buffer characters.  The first causes
+	 * a transition to the end-of-buffer state.  The second causes
+	 * a jam in that state.
+	 */
+	b->yy_ch_buf[0] = YY_END_OF_BUFFER_CHAR;
+	b->yy_ch_buf[1] = YY_END_OF_BUFFER_CHAR;
 
-        b->yy_buf_pos = &b->yy_ch_buf[0];
+	b->yy_buf_pos = &b->yy_ch_buf[0];
 
-        b->yy_at_bol = 1;
-        b->yy_buffer_status = YY_BUFFER_NEW;
+	b->yy_at_bol = 1;
+	b->yy_buffer_status = YY_BUFFER_NEW;
 
-        if ( b == YY_CURRENT_BUFFER )
-                csim__load_buffer_state( );
+	if ( b == YY_CURRENT_BUFFER )
+		csim__load_buffer_state( );
 }
 
 /** Pushes the new state onto the stack. The new state becomes
@@ -1728,28 +1714,28 @@ extern int isatty (int );
  */
 void csim_push_buffer_state (YY_BUFFER_STATE new_buffer )
 {
-        if (new_buffer == NULL)
-                return;
+    	if (new_buffer == NULL)
+		return;
 
-        csim_ensure_buffer_stack();
+	csim_ensure_buffer_stack();
 
-        /* This block is copied from csim__switch_to_buffer. */
-        if ( YY_CURRENT_BUFFER )
-                {
-                /* Flush out information for old buffer. */
-                *(yy_c_buf_p) = (yy_hold_char);
-                YY_CURRENT_BUFFER_LVALUE->yy_buf_pos = (yy_c_buf_p);
-                YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
-                }
+	/* This block is copied from csim__switch_to_buffer. */
+	if ( YY_CURRENT_BUFFER )
+		{
+		/* Flush out information for old buffer. */
+		*(yy_c_buf_p) = (yy_hold_char);
+		YY_CURRENT_BUFFER_LVALUE->yy_buf_pos = (yy_c_buf_p);
+		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
+		}
 
-        /* Only push if top exists. Otherwise, replace top. */
-        if (YY_CURRENT_BUFFER)
-                (yy_buffer_stack_top)++;
-        YY_CURRENT_BUFFER_LVALUE = new_buffer;
+	/* Only push if top exists. Otherwise, replace top. */
+	if (YY_CURRENT_BUFFER)
+		(yy_buffer_stack_top)++;
+	YY_CURRENT_BUFFER_LVALUE = new_buffer;
 
-        /* copied from csim__switch_to_buffer. */
-        csim__load_buffer_state( );
-        (yy_did_buffer_switch_on_eof) = 1;
+	/* copied from csim__switch_to_buffer. */
+	csim__load_buffer_state( );
+	(yy_did_buffer_switch_on_eof) = 1;
 }
 
 /** Removes and deletes the top of the stack, if present.
@@ -1758,18 +1744,18 @@ void csim_push_buffer_state (YY_BUFFER_STATE new_buffer )
  */
 void csim_pop_buffer_state (void)
 {
-        if (!YY_CURRENT_BUFFER)
-                return;
+    	if (!YY_CURRENT_BUFFER)
+		return;
 
-        csim__delete_buffer(YY_CURRENT_BUFFER );
-        YY_CURRENT_BUFFER_LVALUE = NULL;
-        if ((yy_buffer_stack_top) > 0)
-                --(yy_buffer_stack_top);
+	csim__delete_buffer(YY_CURRENT_BUFFER );
+	YY_CURRENT_BUFFER_LVALUE = NULL;
+	if ((yy_buffer_stack_top) > 0)
+		--(yy_buffer_stack_top);
 
-        if (YY_CURRENT_BUFFER) {
-                csim__load_buffer_state( );
-                (yy_did_buffer_switch_on_eof) = 1;
-        }
+	if (YY_CURRENT_BUFFER) {
+		csim__load_buffer_state( );
+		(yy_did_buffer_switch_on_eof) = 1;
+	}
 }
 
 /* Allocates the stack if it does not exist.
@@ -1777,45 +1763,45 @@ void csim_pop_buffer_state (void)
  */
 static void csim_ensure_buffer_stack (void)
 {
-        int num_to_alloc;
+	int num_to_alloc;
     
-        if (!(yy_buffer_stack)) {
+	if (!(yy_buffer_stack)) {
 
-                /* First allocation is just for 2 elements, since we don't know if this
-                 * scanner will even need a stack. We use 2 instead of 1 to avoid an
-                 * immediate realloc on the next call.
+		/* First allocation is just for 2 elements, since we don't know if this
+		 * scanner will even need a stack. We use 2 instead of 1 to avoid an
+		 * immediate realloc on the next call.
          */
-                num_to_alloc = 1;
-                (yy_buffer_stack) = (struct yy_buffer_state**)csim_alloc
-                                                                (num_to_alloc * sizeof(struct yy_buffer_state*)
-                                                                );
-                if ( ! (yy_buffer_stack) )
-                        YY_FATAL_ERROR( "out of dynamic memory in csim_ensure_buffer_stack()" );
-                                                                  
-                memset((yy_buffer_stack), 0, num_to_alloc * sizeof(struct yy_buffer_state*));
-                                
-                (yy_buffer_stack_max) = num_to_alloc;
-                (yy_buffer_stack_top) = 0;
-                return;
-        }
+		num_to_alloc = 1;
+		(yy_buffer_stack) = (struct yy_buffer_state**)csim_alloc
+								(num_to_alloc * sizeof(struct yy_buffer_state*)
+								);
+		if ( ! (yy_buffer_stack) )
+			YY_FATAL_ERROR( "out of dynamic memory in csim_ensure_buffer_stack()" );
+								  
+		memset((yy_buffer_stack), 0, num_to_alloc * sizeof(struct yy_buffer_state*));
+				
+		(yy_buffer_stack_max) = num_to_alloc;
+		(yy_buffer_stack_top) = 0;
+		return;
+	}
 
-        if ((yy_buffer_stack_top) >= ((yy_buffer_stack_max)) - 1){
+	if ((yy_buffer_stack_top) >= ((yy_buffer_stack_max)) - 1){
 
-                /* Increase the buffer to prepare for a possible push. */
-                int grow_size = 8 /* arbitrary grow size */;
+		/* Increase the buffer to prepare for a possible push. */
+		int grow_size = 8 /* arbitrary grow size */;
 
-                num_to_alloc = (yy_buffer_stack_max) + grow_size;
-                (yy_buffer_stack) = (struct yy_buffer_state**)csim_realloc
-                                                                ((yy_buffer_stack),
-                                                                num_to_alloc * sizeof(struct yy_buffer_state*)
-                                                                );
-                if ( ! (yy_buffer_stack) )
-                        YY_FATAL_ERROR( "out of dynamic memory in csim_ensure_buffer_stack()" );
+		num_to_alloc = (yy_buffer_stack_max) + grow_size;
+		(yy_buffer_stack) = (struct yy_buffer_state**)csim_realloc
+								((yy_buffer_stack),
+								num_to_alloc * sizeof(struct yy_buffer_state*)
+								);
+		if ( ! (yy_buffer_stack) )
+			YY_FATAL_ERROR( "out of dynamic memory in csim_ensure_buffer_stack()" );
 
-                /* zero only the new slots.*/
-                memset((yy_buffer_stack) + (yy_buffer_stack_max), 0, grow_size * sizeof(struct yy_buffer_state*));
-                (yy_buffer_stack_max) = num_to_alloc;
-        }
+		/* zero only the new slots.*/
+		memset((yy_buffer_stack) + (yy_buffer_stack_max), 0, grow_size * sizeof(struct yy_buffer_state*));
+		(yy_buffer_stack_max) = num_to_alloc;
+	}
 }
 
 /** Setup the input buffer state to scan directly from a user-specified character buffer.
@@ -1826,31 +1812,31 @@ static void csim_ensure_buffer_stack (void)
  */
 YY_BUFFER_STATE csim__scan_buffer  (char * base, yy_size_t  size )
 {
-        YY_BUFFER_STATE b;
+	YY_BUFFER_STATE b;
     
-        if ( size < 2 ||
-             base[size-2] != YY_END_OF_BUFFER_CHAR ||
-             base[size-1] != YY_END_OF_BUFFER_CHAR )
-                /* They forgot to leave room for the EOB's. */
-                return 0;
+	if ( size < 2 ||
+	     base[size-2] != YY_END_OF_BUFFER_CHAR ||
+	     base[size-1] != YY_END_OF_BUFFER_CHAR )
+		/* They forgot to leave room for the EOB's. */
+		return 0;
 
-        b = (YY_BUFFER_STATE) csim_alloc(sizeof( struct yy_buffer_state )  );
-        if ( ! b )
-                YY_FATAL_ERROR( "out of dynamic memory in csim__scan_buffer()" );
+	b = (YY_BUFFER_STATE) csim_alloc(sizeof( struct yy_buffer_state )  );
+	if ( ! b )
+		YY_FATAL_ERROR( "out of dynamic memory in csim__scan_buffer()" );
 
-        b->yy_buf_size = size - 2;      /* "- 2" to take care of EOB's */
-        b->yy_buf_pos = b->yy_ch_buf = base;
-        b->yy_is_our_buffer = 0;
-        b->yy_input_file = 0;
-        b->yy_n_chars = b->yy_buf_size;
-        b->yy_is_interactive = 0;
-        b->yy_at_bol = 1;
-        b->yy_fill_buffer = 0;
-        b->yy_buffer_status = YY_BUFFER_NEW;
+	b->yy_buf_size = size - 2;	/* "- 2" to take care of EOB's */
+	b->yy_buf_pos = b->yy_ch_buf = base;
+	b->yy_is_our_buffer = 0;
+	b->yy_input_file = 0;
+	b->yy_n_chars = b->yy_buf_size;
+	b->yy_is_interactive = 0;
+	b->yy_at_bol = 1;
+	b->yy_fill_buffer = 0;
+	b->yy_buffer_status = YY_BUFFER_NEW;
 
-        csim__switch_to_buffer(b  );
+	csim__switch_to_buffer(b  );
 
-        return b;
+	return b;
 }
 
 /** Setup the input buffer state to scan a string. The next call to csim_lex() will
@@ -1864,44 +1850,44 @@ YY_BUFFER_STATE csim__scan_buffer  (char * base, yy_size_t  size )
 YY_BUFFER_STATE csim__scan_string (yyconst char * yystr )
 {
     
-        return csim__scan_bytes(yystr,strlen(yystr) );
+	return csim__scan_bytes(yystr,strlen(yystr) );
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to csim_lex() will
  * scan from a @e copy of @a bytes.
- * @param yybytes the byte buffer to scan
- * @param _yybytes_len the number of bytes in the buffer pointed to by @a bytes.
+ * @param bytes the byte buffer to scan
+ * @param len the number of bytes in the buffer pointed to by @a bytes.
  * 
  * @return the newly allocated buffer state object.
  */
 YY_BUFFER_STATE csim__scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 {
-        YY_BUFFER_STATE b;
-        char *buf;
-        yy_size_t n;
-        int i;
+	YY_BUFFER_STATE b;
+	char *buf;
+	yy_size_t n;
+	int i;
     
-        /* Get memory for full buffer, including space for trailing EOB's. */
-        n = _yybytes_len + 2;
-        buf = (char *) csim_alloc(n  );
-        if ( ! buf )
-                YY_FATAL_ERROR( "out of dynamic memory in csim__scan_bytes()" );
+	/* Get memory for full buffer, including space for trailing EOB's. */
+	n = _yybytes_len + 2;
+	buf = (char *) csim_alloc(n  );
+	if ( ! buf )
+		YY_FATAL_ERROR( "out of dynamic memory in csim__scan_bytes()" );
 
-        for ( i = 0; i < _yybytes_len; ++i )
-                buf[i] = yybytes[i];
+	for ( i = 0; i < _yybytes_len; ++i )
+		buf[i] = yybytes[i];
 
-        buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
+	buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
 
-        b = csim__scan_buffer(buf,n );
-        if ( ! b )
-                YY_FATAL_ERROR( "bad buffer in csim__scan_bytes()" );
+	b = csim__scan_buffer(buf,n );
+	if ( ! b )
+		YY_FATAL_ERROR( "bad buffer in csim__scan_bytes()" );
 
-        /* It's okay to grow etc. this buffer, and we should throw it
-         * away when we're done.
-         */
-        b->yy_is_our_buffer = 1;
+	/* It's okay to grow etc. this buffer, and we should throw it
+	 * away when we're done.
+	 */
+	b->yy_is_our_buffer = 1;
 
-        return b;
+	return b;
 }
 
 #ifndef YY_EXIT_FAILURE
@@ -1910,26 +1896,26 @@ YY_BUFFER_STATE csim__scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
 
 static void yy_fatal_error (yyconst char* msg )
 {
-        (void) fprintf( stderr, "%s\n", msg );
-        exit( YY_EXIT_FAILURE );
+    	(void) fprintf( stderr, "%s\n", msg );
+	exit( YY_EXIT_FAILURE );
 }
 
 /* Redefine yyless() so it works in section 3 code. */
 
 #undef yyless
 #define yyless(n) \
-        do \
-                { \
-                /* Undo effects of setting up csim_text. */ \
+	do \
+		{ \
+		/* Undo effects of setting up csim_text. */ \
         int yyless_macro_arg = (n); \
         YY_LESS_LINENO(yyless_macro_arg);\
-                csim_text[csim_leng] = (yy_hold_char); \
-                (yy_c_buf_p) = csim_text + yyless_macro_arg; \
-                (yy_hold_char) = *(yy_c_buf_p); \
-                *(yy_c_buf_p) = '\0'; \
-                csim_leng = yyless_macro_arg; \
-                } \
-        while ( 0 )
+		csim_text[csim_leng] = (yy_hold_char); \
+		(yy_c_buf_p) = csim_text + yyless_macro_arg; \
+		(yy_hold_char) = *(yy_c_buf_p); \
+		*(yy_c_buf_p) = '\0'; \
+		csim_leng = yyless_macro_arg; \
+		} \
+	while ( 0 )
 
 /* Accessor  methods (get/set functions) to struct members. */
 
@@ -2044,15 +2030,15 @@ int csim_lex_destroy  (void)
 {
     
     /* Pop the buffer stack, destroying each element. */
-        while(YY_CURRENT_BUFFER){
-                csim__delete_buffer(YY_CURRENT_BUFFER  );
-                YY_CURRENT_BUFFER_LVALUE = NULL;
-                csim_pop_buffer_state();
-        }
+	while(YY_CURRENT_BUFFER){
+		csim__delete_buffer(YY_CURRENT_BUFFER  );
+		YY_CURRENT_BUFFER_LVALUE = NULL;
+		csim_pop_buffer_state();
+	}
 
-        /* Destroy the stack itself. */
-        csim_free((yy_buffer_stack) );
-        (yy_buffer_stack) = NULL;
+	/* Destroy the stack itself. */
+	csim_free((yy_buffer_stack) );
+	(yy_buffer_stack) = NULL;
 
     /* Reset the globals. This is important in a non-reentrant scanner so the next time
      * csim_lex() is called, initialization will occur. */
@@ -2068,43 +2054,43 @@ int csim_lex_destroy  (void)
 #ifndef yytext_ptr
 static void yy_flex_strncpy (char* s1, yyconst char * s2, int n )
 {
-        register int i;
-        for ( i = 0; i < n; ++i )
-                s1[i] = s2[i];
+	register int i;
+	for ( i = 0; i < n; ++i )
+		s1[i] = s2[i];
 }
 #endif
 
 #ifdef YY_NEED_STRLEN
 static int yy_flex_strlen (yyconst char * s )
 {
-        register int n;
-        for ( n = 0; s[n]; ++n )
-                ;
+	register int n;
+	for ( n = 0; s[n]; ++n )
+		;
 
-        return n;
+	return n;
 }
 #endif
 
 void *csim_alloc (yy_size_t  size )
 {
-        return (void *) malloc( size );
+	return (void *) malloc( size );
 }
 
 void *csim_realloc  (void * ptr, yy_size_t  size )
 {
-        /* The cast to (char *) in the following accommodates both
-         * implementations that use char* generic pointers, and those
-         * that use void* generic pointers.  It works with the latter
-         * because both ANSI C and C++ allow castless assignment from
-         * any pointer type to void*, and deal with argument conversions
-         * as though doing an assignment.
-         */
-        return (void *) realloc( (char *) ptr, size );
+	/* The cast to (char *) in the following accommodates both
+	 * implementations that use char* generic pointers, and those
+	 * that use void* generic pointers.  It works with the latter
+	 * because both ANSI C and C++ allow castless assignment from
+	 * any pointer type to void*, and deal with argument conversions
+	 * as though doing an assignment.
+	 */
+	return (void *) realloc( (char *) ptr, size );
 }
 
 void csim_free (void * ptr )
 {
-        free( (char *) ptr );   /* see csim_realloc() for (char *) cast */
+	free( (char *) ptr );	/* see csim_realloc() for (char *) cast */
 }
 
 #define YYTABLES_NAME "yytables"
