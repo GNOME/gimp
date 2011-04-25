@@ -85,6 +85,8 @@ typedef struct
 } gimp_rgba32_t;
 #endif
 
+typedef void (*GimpCompositeRegressionFunc) (GimpCompositeContext *ctx);
+
 extern void gimp_composite_regression_print_vector (guchar vector[],
                                                                                                                                                                                                                                                                                                                                                                                                                                 GimpPixelFormat format,
                                                                                                                                                                                                                                                                                                                                                                                                                                 gulong n_pixels);
@@ -103,7 +105,7 @@ extern void gimp_composite_regression_print_vector_rgba8 (gimp_rgba8_t v[],
 
 
 extern double gimp_composite_regression_time_function (gulong iterations,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        void (*func)(),
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        GimpCompositeRegressionFunc func,
                                                                                                                                                                                                                                                                                                                                                                                                                                                         GimpCompositeContext *ctx);
 extern int gimp_composite_regression_comp_rgba8 (char *str,
                                                                                                                                                                                                                                                                                                                                                                                                         gimp_rgba8_t *rgba8A,

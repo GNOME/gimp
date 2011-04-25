@@ -441,7 +441,7 @@ gimp_composite_regression_timer_report (char *name, double t1, double t2)
  * Return value:
  **/
 double
-gimp_composite_regression_time_function (gulong iterations, void (*func)(), GimpCompositeContext *ctx)
+gimp_composite_regression_time_function (gulong iterations, GimpCompositeRegressionFunc func, GimpCompositeContext *ctx)
 {
   struct timeval t0;
   struct timeval t1;
