@@ -653,7 +653,7 @@ on_read_error (png_structp png_ptr, png_const_charp error_msg)
                                 error_data->drawable->width, num);
     }
 
-  longjmp (png_ptr->jmpbuf, 1);
+  longjmp (png_jmpbuf (png_ptr), 1);
 }
 
 /*
@@ -697,7 +697,7 @@ load_image (const gchar  *filename,
   pp = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   info = png_create_info_struct (pp);
 
-  if (setjmp (pp->jmpbuf))
+  if (setjmp (png_jmpbuf (pp)))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error while reading '%s'. File corrupted?"),
@@ -738,17 +738,19 @@ load_image (const gchar  *filename,
    * Latest attempt, this should be my best yet :)
    */
 
-  if (info->bit_depth == 16)
+  if (png_get_bit_depth (pp, info) == 16)
     {
       png_set_strip_16 (pp);
     }
 
-  if (info->color_type == PNG_COLOR_TYPE_GRAY && info->bit_depth < 8)
+  if (png_get_color_type (pp, info) == PNG_COLOR_TYPE_GRAY &&
+      png_get_bit_depth (pp, info) < 8)
     {
       png_set_expand (pp);
     }
 
-  if (info->color_type == PNG_COLOR_TYPE_PALETTE && info->bit_depth < 8)
+  if (png_get_color_type (pp, info) == PNG_COLOR_TYPE_PALETTE &&
+      png_get_bit_depth (pp, info) < 8)
     {
       png_set_packing (pp);
     }
@@ -757,8 +759,8 @@ load_image (const gchar  *filename,
    * Expand G+tRNS to GA, RGB+tRNS to RGBA
    */
 
-  if (info->color_type != PNG_COLOR_TYPE_PALETTE &&
-      (info->valid & PNG_INFO_tRNS))
+  if (png_get_color_type (pp, info) != PNG_COLOR_TYPE_PALETTE &&
+      png_get_valid (pp, info, PNG_INFO_tRNS))
     {
       png_set_expand (pp);
     }
@@ -775,7 +777,7 @@ load_image (const gchar  *filename,
    */
 
   if (png_get_valid (pp, info, PNG_INFO_tRNS) &&
-      info->color_type == PNG_COLOR_TYPE_PALETTE)
+      png_get_color_type (pp, info) == PNG_COLOR_TYPE_PALETTE)
     {
       png_get_tRNS (pp, info, &alpha_ptr, &num, NULL);
       /* Copy the existing alpha values from the tRNS chunk */
@@ -797,7 +799,7 @@ load_image (const gchar  *filename,
 
   png_read_update_info (pp, info);
 
-  switch (info->color_type)
+  switch (png_get_color_type (pp, info))
     {
     case PNG_COLOR_TYPE_RGB:           /* RGB */
       bpp = 3;
@@ -836,7 +838,9 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  image = gimp_image_new (info->width, info->height, image_type);
+  image = gimp_image_new (png_get_image_width (pp, info),
+                          png_get_image_height (pp, info),
+                          image_type);
   if (image == -1)
     {
       g_set_error (error, 0, 0,
@@ -849,7 +853,9 @@ load_image (const gchar  *filename,
    * Create the "background" layer to hold the image...
    */
 
-  layer = gimp_layer_new (image, _("Background"), info->width, info->height,
+  layer = gimp_layer_new (image, _("Background"),
+                          png_get_image_width (pp, info),
+                          png_get_image_height (pp, info),
                           layer_type, 100, GIMP_NORMAL_MODE);
   gimp_image_insert_layer (image, layer, -1, 0);
 
@@ -883,7 +889,8 @@ load_image (const gchar  *filename,
 
       gimp_layer_set_offsets (layer, offset_x, offset_y);
 
-      if ((abs (offset_x) > info->width) || (abs (offset_y) > info->height))
+      if ((abs (offset_x) > png_get_image_width (pp, info)) ||
+          (abs (offset_y) > png_get_image_height (pp, info)))
         {
           if (interactive)
             g_message (_("The PNG file specifies an offset that caused "
@@ -938,23 +945,27 @@ load_image (const gchar  *filename,
 
   empty = 0; /* by default assume no full transparent palette entries */
 
-  if (info->color_type & PNG_COLOR_MASK_PALETTE)
+  if (png_get_color_type (pp, info) & PNG_COLOR_MASK_PALETTE)
     {
+      png_colorp palette;
+      int num_palette;
+
+      png_get_PLTE (pp, info, &palette, &num_palette);
       if (png_get_valid (pp, info, PNG_INFO_tRNS))
         {
           for (empty = 0; empty < 256 && alpha[empty] == 0; ++empty)
             /* Calculates number of fully transparent "empty" entries */;
 
           /*  keep at least one entry  */
-          empty = MIN (empty, info->num_palette - 1);
+          empty = MIN (empty, num_palette - 1);
 
-          gimp_image_set_colormap (image, (guchar *) (info->palette + empty),
-                                   info->num_palette - empty);
+          gimp_image_set_colormap (image, (guchar *) (palette + empty),
+                                   num_palette - empty);
         }
       else
         {
-          gimp_image_set_colormap (image, (guchar *) info->palette,
-                                   info->num_palette);
+          gimp_image_set_colormap (image, (guchar *) palette,
+                                   num_palette);
         }
     }
 
@@ -972,18 +983,19 @@ load_image (const gchar  *filename,
    */
 
   tile_height = gimp_tile_height ();
-  pixel = g_new0 (guchar, tile_height * info->width * bpp);
+  pixel = g_new0 (guchar, tile_height * png_get_image_width (pp, info) * bpp);
   pixels = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i++)
-    pixels[i] = pixel + info->width * info->channels * i;
+    pixels[i] = pixel + png_get_image_width (pp, info) *
+      png_get_channels (pp, info) * i;
 
   /* Install our own error handler to handle incomplete PNG files better */
   error_data.drawable    = drawable;
   error_data.pixel       = pixel;
   error_data.tile_height = tile_height;
-  error_data.width       = info->width;
-  error_data.height      = info->height;
+  error_data.width       = png_get_image_width (pp, info);
+  error_data.height      = png_get_image_height (pp, info);
   error_data.bpp         = bpp;
   error_data.pixel_rgn   = &pixel_rgn;
 
@@ -996,10 +1008,11 @@ load_image (const gchar  *filename,
        */
 
       for (begin = 0, end = tile_height;
-           begin < info->height; begin += tile_height, end += tile_height)
+           begin < png_get_image_height (pp, info);
+           begin += tile_height, end += tile_height)
         {
-          if (end > info->height)
-            end = info->height;
+          if (end > png_get_image_height (pp, info))
+            end = png_get_image_height (pp, info);
 
           num = end - begin;
 
@@ -1016,11 +1029,13 @@ load_image (const gchar  *filename,
           gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
 
-          memset (pixel, 0, tile_height * info->width * bpp);
+          memset (pixel, 0,
+                  tile_height * png_get_image_width (pp, info) * bpp);
 
-          gimp_progress_update (((gdouble) pass +
-                                 (gdouble) end / (gdouble) info->height) /
-                                (gdouble) num_passes);
+          gimp_progress_update
+            (((gdouble) pass +
+              (gdouble) end / (gdouble) png_get_image_height (pp, info)) /
+             (gdouble) num_passes);
         }
     }
 
@@ -1249,7 +1264,7 @@ save_image (const gchar  *filename,
   pp = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   info = png_create_info_struct (pp);
 
-  if (setjmp (pp->jmpbuf))
+  if (setjmp (png_jmpbuf (pp)))
     {
       g_set_error (error, 0, 0,
                    _("Error while saving '%s'. Could not save image."),
