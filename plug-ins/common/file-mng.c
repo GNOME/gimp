@@ -435,8 +435,8 @@ get_bit_depth_for_palette (int num_palette)
  */
 
 static gboolean
-respin_cmap (png_structp  png_ptr,
-             png_infop    png_info_ptr,
+respin_cmap (png_structp  pp,
+             png_infop    info,
              guchar       *remap,
              gint32       image_id,
              GimpDrawable *drawable,
@@ -481,7 +481,7 @@ respin_cmap (png_structp  png_ptr,
           png_color palette[256] = { {0, 0, 0} };
           gint i;
 
-          png_set_tRNS (png_ptr, png_info_ptr, (png_bytep) trans, 1, NULL);
+          png_set_tRNS (pp, info, (png_bytep) trans, 1, NULL);
 
           /* Transform all pixels with a value = transparent to
            * 0 and vice versa to compensate for re-ordering in palette
@@ -503,7 +503,7 @@ respin_cmap (png_structp  png_ptr,
               palette[i].blue = before[3 * remap[i] + 2];
             }
 
-          png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) palette, colors);
+          png_set_PLTE (pp, info, (png_colorp) palette, colors);
           *bit_depth = get_bit_depth_for_palette (colors);
 
           return TRUE;
@@ -515,7 +515,7 @@ respin_cmap (png_structp  png_ptr,
         }
     }
 
-  png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) before, colors);
+  png_set_PLTE (pp, info, (png_colorp) before, colors);
   *bit_depth = get_bit_depth_for_palette (colors);
 
   return FALSE;
