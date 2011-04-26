@@ -1974,6 +1974,12 @@ if test "x$have_pango_1_32" != "xyes"; then
 fi
 
 
+###############################################
+# Enable additional warnings of other libraries
+###############################################
+
+CPPFLAGS="${CPPFLAGS} -DPNG_PEDANTIC_WARNINGS"
+
 ############################
 # Require multihead safe API
 ############################
