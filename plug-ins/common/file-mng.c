@@ -196,7 +196,8 @@ static gboolean  respin_cmap     (png_structp       png_ptr,
                                   png_infop         png_info_ptr,
                                   guchar           *remap,
                                   gint32            image_id,
-                                  GimpDrawable     *drawable);
+                                  GimpDrawable     *drawable,
+                                  int              *bit_depth);
 
 static gboolean  mng_save_image  (const gchar      *filename,
                                   gint32            image_id,
@@ -414,6 +415,18 @@ ia_has_transparent_pixels (guchar *pixels,
   return FALSE;
 }
 
+static int
+get_bit_depth_for_palette (int num_palette)
+{
+  if (num_palette <= 2)
+    return 1;
+  else if (num_palette <= 4)
+    return 2;
+  else if (num_palette <= 16)
+    return 4;
+  else
+    return 8;
+}
 
 /* Spins the color map (palette) putting the transparent color at
  * index 0 if there is space. If there isn't any space, warn the user
@@ -426,7 +439,8 @@ respin_cmap (png_structp  png_ptr,
              png_infop    png_info_ptr,
              guchar       *remap,
              gint32       image_id,
-             GimpDrawable *drawable)
+             GimpDrawable *drawable,
+             int          *bit_depth)
 {
   static guchar  trans[] = { 0 };
   guchar        *before;
@@ -490,6 +504,7 @@ respin_cmap (png_structp  png_ptr,
             }
 
           png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) palette, colors);
+          *bit_depth = get_bit_depth_for_palette (colors);
 
           return TRUE;
         }
@@ -501,6 +516,7 @@ respin_cmap (png_structp  png_ptr,
     }
 
   png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) before, colors);
+  *bit_depth = get_bit_depth_for_palette (colors);
 
   return FALSE;
 }
@@ -804,6 +820,9 @@ mng_save_image (const gchar  *filename,
       int             pass, j, k, begin, end, num;
       guchar         *fixed;
       guchar          layer_remap[256];
+      int             color_type;
+      int             bit_depth;
+      png_colorp      palette;
 
       layer_name          = gimp_item_get_name (layers[i]);
       layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name);
@@ -969,7 +988,7 @@ mng_save_image (const gchar  *filename,
           goto err3;
         }
 
-      if (setjmp (pp->jmpbuf) != 0)
+      if (setjmp (png_jmpbuf (pp)) != 0)
         {
           g_warning ("HRM saving PNG in mng_save_image()");
           png_destroy_write_struct (&pp, &info);
@@ -979,39 +998,35 @@ mng_save_image (const gchar  *filename,
         }
 
       png_init_io (pp, outfile);
-      png_set_compression_level (pp, mng_data.compression_level);
 
-      info->width = layer_cols;
-      info->height = layer_rows;
-      info->interlace_type = (mng_data.interlaced == 0 ? 0 : 1);
-      info->bit_depth = 8;
+      bit_depth = 8;
 
       switch (layer_drawable_type)
         {
         case GIMP_RGB_IMAGE:
-          info->color_type = PNG_COLOR_TYPE_RGB;
+          color_type = PNG_COLOR_TYPE_RGB;
           break;
         case GIMP_RGBA_IMAGE:
-          info->color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+          color_type = PNG_COLOR_TYPE_RGB_ALPHA;
           break;
         case GIMP_GRAY_IMAGE:
-          info->color_type = PNG_COLOR_TYPE_GRAY;
+          color_type = PNG_COLOR_TYPE_GRAY;
           break;
         case GIMP_GRAYA_IMAGE:
-          info->color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
+          color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
           break;
         case GIMP_INDEXED_IMAGE:
-          info->color_type = PNG_COLOR_TYPE_PALETTE;
-          info->valid |= PNG_INFO_PLTE;
-          info->palette =
-            (png_colorp) gimp_image_get_colormap (image_id, &num_colors);
-          info->num_palette = num_colors;
+          color_type = PNG_COLOR_TYPE_PALETTE;
+          palette = (png_colorp) gimp_image_get_colormap (image_id, &num_colors);
+          png_set_PLTE (pp, info, palette, num_colors);
+          bit_depth = get_bit_depth_for_palette (num_colors);
           break;
         case GIMP_INDEXEDA_IMAGE:
-          info->color_type = PNG_COLOR_TYPE_PALETTE;
+          color_type = PNG_COLOR_TYPE_PALETTE;
           layer_has_unique_palette =
             respin_cmap (pp, info, layer_remap,
-                         image_id, layer_drawable);
+                         image_id, layer_drawable,
+                         &bit_depth);
           break;
         default:
           g_warning ("This can't be!\n");
@@ -1021,15 +1036,13 @@ mng_save_image (const gchar  *filename,
           goto err3;
         }
 
-      if ((info->valid & PNG_INFO_PLTE) == PNG_INFO_PLTE)
-        {
-          if (info->num_palette <= 2)
-            info->bit_depth = 1;
-          else if (info->num_palette <= 4)
-            info->bit_depth = 2;
-          else if (info->num_palette <= 16)
-            info->bit_depth = 4;
-        }
+      png_set_IHDR (pp, info, layer_cols, layer_rows,
+                bit_depth,
+                color_type,
+                (mng_data.interlaced == 0 ? 0 : 1),
+                PNG_COMPRESSION_TYPE_BASE,
+                PNG_FILTER_TYPE_BASE);
+      png_set_compression_level (pp, mng_data.compression_level);
 
       png_write_info (pp, info);
 
@@ -1038,8 +1051,8 @@ mng_save_image (const gchar  *filename,
       else
         num_passes = 1;
 
-      if ((info->color_type == PNG_COLOR_TYPE_PALETTE) &&
-          (info->bit_depth < 8))
+      if ((color_type == PNG_COLOR_TYPE_PALETTE) &&
+          (bit_depth < 8))
         png_set_packing (pp);
 
       tile_height = gimp_tile_height ();
@@ -1065,7 +1078,7 @@ mng_save_image (const gchar  *filename,
               gimp_pixel_rgn_get_rect (&layer_pixel_rgn, layer_pixel, 0,
                                        begin, layer_cols, num);
 
-              if ((info->valid & PNG_INFO_tRNS) == PNG_INFO_tRNS)
+              if (png_get_valid (pp, info, PNG_INFO_tRNS))
                 {
                   for (j = 0; j < num; j++)
                     {
@@ -1077,7 +1090,7 @@ mng_save_image (const gchar  *filename,
                     }
                 }
               else
-                if (((info->valid & PNG_INFO_PLTE) == PNG_INFO_PLTE)
+                if (png_get_valid (pp, info, PNG_INFO_PLTE)
                     && (layer_bpp == 2))
                 {
                   for (j = 0; j < num; j++)
