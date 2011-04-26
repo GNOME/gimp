@@ -795,8 +795,8 @@ mng_save_image (const gchar  *filename,
       gchar           frame_mode;
       int             frame_delay;
       gchar          *temp_file_name;
-      png_structp     png_ptr;
-      png_infop       png_info_ptr;
+      png_structp     pp;
+      png_infop       info;
       FILE           *infile, *outfile;
       int             num_passes;
       int             tile_height;
@@ -948,9 +948,9 @@ mng_save_image (const gchar  *filename,
           goto err3;
         }
 
-      png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING,
+      pp = png_create_write_struct (PNG_LIBPNG_VER_STRING,
                                          NULL, NULL, NULL);
-      if (NULL == png_ptr)
+      if (NULL == pp)
         {
           g_warning ("Unable to png_create_write_struct() in mng_save_image()");
           fclose (outfile);
@@ -958,89 +958,89 @@ mng_save_image (const gchar  *filename,
           goto err3;
         }
 
-      png_info_ptr = png_create_info_struct (png_ptr);
-      if (NULL == png_info_ptr)
+      info = png_create_info_struct (pp);
+      if (NULL == info)
         {
           g_warning
             ("Unable to png_create_info_struct() in mng_save_image()");
-          png_destroy_write_struct (&png_ptr, NULL);
+          png_destroy_write_struct (&pp, NULL);
           fclose (outfile);
           g_unlink (temp_file_name);
           goto err3;
         }
 
-      if (setjmp (png_ptr->jmpbuf) != 0)
+      if (setjmp (pp->jmpbuf) != 0)
         {
           g_warning ("HRM saving PNG in mng_save_image()");
-          png_destroy_write_struct (&png_ptr, &png_info_ptr);
+          png_destroy_write_struct (&pp, &info);
           fclose (outfile);
           g_unlink (temp_file_name);
           goto err3;
         }
 
-      png_init_io (png_ptr, outfile);
-      png_set_compression_level (png_ptr, mng_data.compression_level);
+      png_init_io (pp, outfile);
+      png_set_compression_level (pp, mng_data.compression_level);
 
-      png_info_ptr->width = layer_cols;
-      png_info_ptr->height = layer_rows;
-      png_info_ptr->interlace_type = (mng_data.interlaced == 0 ? 0 : 1);
-      png_info_ptr->bit_depth = 8;
+      info->width = layer_cols;
+      info->height = layer_rows;
+      info->interlace_type = (mng_data.interlaced == 0 ? 0 : 1);
+      info->bit_depth = 8;
 
       switch (layer_drawable_type)
         {
         case GIMP_RGB_IMAGE:
-          png_info_ptr->color_type = PNG_COLOR_TYPE_RGB;
+          info->color_type = PNG_COLOR_TYPE_RGB;
           break;
         case GIMP_RGBA_IMAGE:
-          png_info_ptr->color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+          info->color_type = PNG_COLOR_TYPE_RGB_ALPHA;
           break;
         case GIMP_GRAY_IMAGE:
-          png_info_ptr->color_type = PNG_COLOR_TYPE_GRAY;
+          info->color_type = PNG_COLOR_TYPE_GRAY;
           break;
         case GIMP_GRAYA_IMAGE:
-          png_info_ptr->color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
+          info->color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
           break;
         case GIMP_INDEXED_IMAGE:
-          png_info_ptr->color_type = PNG_COLOR_TYPE_PALETTE;
-          png_info_ptr->valid |= PNG_INFO_PLTE;
-          png_info_ptr->palette =
+          info->color_type = PNG_COLOR_TYPE_PALETTE;
+          info->valid |= PNG_INFO_PLTE;
+          info->palette =
             (png_colorp) gimp_image_get_colormap (image_id, &num_colors);
-          png_info_ptr->num_palette = num_colors;
+          info->num_palette = num_colors;
           break;
         case GIMP_INDEXEDA_IMAGE:
-          png_info_ptr->color_type = PNG_COLOR_TYPE_PALETTE;
+          info->color_type = PNG_COLOR_TYPE_PALETTE;
           layer_has_unique_palette =
-            respin_cmap (png_ptr, png_info_ptr, layer_remap,
+            respin_cmap (pp, info, layer_remap,
                          image_id, layer_drawable);
           break;
         default:
           g_warning ("This can't be!\n");
-          png_destroy_write_struct (&png_ptr, &png_info_ptr);
+          png_destroy_write_struct (&pp, &info);
           fclose (outfile);
           g_unlink (temp_file_name);
           goto err3;
         }
 
-      if ((png_info_ptr->valid & PNG_INFO_PLTE) == PNG_INFO_PLTE)
+      if ((info->valid & PNG_INFO_PLTE) == PNG_INFO_PLTE)
         {
-          if (png_info_ptr->num_palette <= 2)
-            png_info_ptr->bit_depth = 1;
-          else if (png_info_ptr->num_palette <= 4)
-            png_info_ptr->bit_depth = 2;
-          else if (png_info_ptr->num_palette <= 16)
-            png_info_ptr->bit_depth = 4;
+          if (info->num_palette <= 2)
+            info->bit_depth = 1;
+          else if (info->num_palette <= 4)
+            info->bit_depth = 2;
+          else if (info->num_palette <= 16)
+            info->bit_depth = 4;
         }
 
-      png_write_info (png_ptr, png_info_ptr);
+      png_write_info (pp, info);
 
       if (mng_data.interlaced != 0)
-        num_passes = png_set_interlace_handling (png_ptr);
+        num_passes = png_set_interlace_handling (pp);
       else
         num_passes = 1;
 
-      if ((png_info_ptr->color_type == PNG_COLOR_TYPE_PALETTE) &&
-          (png_info_ptr->bit_depth < 8))
-        png_set_packing (png_ptr);
+      if ((info->color_type == PNG_COLOR_TYPE_PALETTE) &&
+          (info->bit_depth < 8))
+        png_set_packing (pp);
 
       tile_height = gimp_tile_height ();
       layer_pixel = g_new (guchar, tile_height * layer_cols * layer_bpp);
@@ -1065,7 +1065,7 @@ mng_save_image (const gchar  *filename,
               gimp_pixel_rgn_get_rect (&layer_pixel_rgn, layer_pixel, 0,
                                        begin, layer_cols, num);
 
-              if ((png_info_ptr->valid & PNG_INFO_tRNS) == PNG_INFO_tRNS)
+              if ((info->valid & PNG_INFO_tRNS) == PNG_INFO_tRNS)
                 {
                   for (j = 0; j < num; j++)
                     {
@@ -1077,7 +1077,7 @@ mng_save_image (const gchar  *filename,
                     }
                 }
               else
-                if (((png_info_ptr->valid & PNG_INFO_PLTE) == PNG_INFO_PLTE)
+                if (((info->valid & PNG_INFO_PLTE) == PNG_INFO_PLTE)
                     && (layer_bpp == 2))
                 {
                   for (j = 0; j < num; j++)
@@ -1089,12 +1089,12 @@ mng_save_image (const gchar  *filename,
                     }
                 }
 
-              png_write_rows (png_ptr, layer_pixels, num);
+              png_write_rows (pp, layer_pixels, num);
             }
         }
 
-      png_write_end (png_ptr, png_info_ptr);
-      png_destroy_write_struct (&png_ptr, &png_info_ptr);
+      png_write_end (pp, info);
+      png_destroy_write_struct (&pp, &info);
 
       g_free (layer_pixels);
       g_free (layer_pixel);
