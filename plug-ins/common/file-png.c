@@ -1230,6 +1230,7 @@ save_image (const gchar  *filename,
   struct tm *gmt;               /* GMT broken down */
   int color_type;
   int bit_depth;
+  png_colorp palette;
 
   guchar remap[256];            /* Re-mapping for the palette */
 
@@ -1354,9 +1355,8 @@ save_image (const gchar  *filename,
     case GIMP_INDEXED_IMAGE:
       bpp = 1;
       color_type = PNG_COLOR_TYPE_PALETTE;
-      png_set_PLTE (pp, info,
-                    (png_colorp) gimp_image_get_colormap (image_ID, &num_colors),
-                    num_colors);
+      palette = (png_colorp) gimp_image_get_colormap (image_ID, &num_colors);
+      png_set_PLTE (pp, info, palette, num_colors);
       bit_depth = get_bit_depth_for_palette (num_colors);
       break;
 
