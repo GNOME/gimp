@@ -127,7 +127,7 @@ static gboolean  save_image                (const gchar      *filename,
                                             gint32            orig_image_ID,
                                             GError          **error);
 
-static void      respin_cmap               (png_structp       pp,
+static int       respin_cmap               (png_structp       pp,
                                             png_infop         info,
                                             guchar           *remap,
                                             gint32            image_ID,
@@ -659,6 +659,19 @@ on_read_error (png_structp png_ptr, png_const_charp error_msg)
 /*
  * 'load_image()' - Load a PNG image into a new image window.
  */
+
+static int
+get_bit_depth_for_palette (int num_palette)
+{
+  if (num_palette <= 2)
+    return 1;
+  else if (num_palette <= 4)
+    return 2;
+  else if (num_palette <= 16)
+    return 4;
+  else
+    return 8;
+}
 
 static gint32
 load_image (const gchar  *filename,
@@ -1215,6 +1228,8 @@ save_image (const gchar  *filename,
   guchar red, green, blue;      /* Used for palette background */
   time_t cutime;                /* Time since epoch */
   struct tm *gmt;               /* GMT broken down */
+  int color_type;
+  int bit_depth;
 
   guchar remap[256];            /* Re-mapping for the palette */
 
@@ -1303,17 +1318,6 @@ save_image (const gchar  *filename,
   type = gimp_drawable_type (drawable_ID);
 
   /*
-   * Set the image dimensions, bit depth, interlacing and compression
-   */
-
-  png_set_compression_level (pp, pngvals.compression_level);
-
-  info->width          = drawable->width;
-  info->height         = drawable->height;
-  info->bit_depth      = 8;
-  info->interlace_type = pngvals.interlaced;
-
-  /*
    * Initialise remap[]
    */
   for (i = 0; i < 256; i++)
@@ -1323,62 +1327,49 @@ save_image (const gchar  *filename,
    * Set color type and remember bytes per pixel count
    */
 
+  bit_depth = 8;
+
   switch (type)
     {
     case GIMP_RGB_IMAGE:
-      info->color_type = PNG_COLOR_TYPE_RGB;
+      color_type = PNG_COLOR_TYPE_RGB;
       bpp = 3;
       break;
 
     case GIMP_RGBA_IMAGE:
-      info->color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+      color_type = PNG_COLOR_TYPE_RGB_ALPHA;
       bpp = 4;
       break;
 
     case GIMP_GRAY_IMAGE:
-      info->color_type = PNG_COLOR_TYPE_GRAY;
+      color_type = PNG_COLOR_TYPE_GRAY;
       bpp = 1;
       break;
 
     case GIMP_GRAYA_IMAGE:
-      info->color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
+      color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
       bpp = 2;
       break;
 
     case GIMP_INDEXED_IMAGE:
       bpp = 1;
-      info->color_type = PNG_COLOR_TYPE_PALETTE;
-      info->valid |= PNG_INFO_PLTE;
-      info->palette =
-        (png_colorp) gimp_image_get_colormap (image_ID, &num_colors);
-      info->num_palette = num_colors;
+      color_type = PNG_COLOR_TYPE_PALETTE;
+      png_set_PLTE (pp, info,
+                    (png_colorp) gimp_image_get_colormap (image_ID, &num_colors),
+                    num_colors);
+      bit_depth = get_bit_depth_for_palette (num_colors);
       break;
 
     case GIMP_INDEXEDA_IMAGE:
       bpp = 2;
-      info->color_type = PNG_COLOR_TYPE_PALETTE;
+      color_type = PNG_COLOR_TYPE_PALETTE;
       /* fix up transparency */
-      respin_cmap (pp, info, remap, image_ID, drawable);
+      bit_depth = respin_cmap (pp, info, remap, image_ID, drawable);
       break;
 
     default:
       g_set_error (error, 0, 0, "Image type can't be saved as PNG");
       return FALSE;
-    }
-
-  /*
-   * Fix bit depths for (possibly) smaller colormap images
-   */
-
-  if (info->valid & PNG_INFO_PLTE)
-    {
-      if (info->num_palette <= 2)
-        info->bit_depth = 1;
-      else if (info->num_palette <= 4)
-        info->bit_depth = 2;
-      else if (info->num_palette <= 16)
-        info->bit_depth = 4;
-      /* otherwise the default is fine */
     }
 
   /* All this stuff is optional extras, if the user is aiming for smallest
@@ -1475,6 +1466,18 @@ save_image (const gchar  *filename,
   }
 #endif
 
+  /*
+   * Set the image dimensions, bit depth, interlacing and compression
+   */
+
+  png_set_IHDR (pp, info, drawable->width, drawable->height,
+                bit_depth,
+                color_type,
+                pngvals.interlaced,
+                PNG_COMPRESSION_TYPE_BASE,
+                PNG_FILTER_TYPE_BASE);
+  png_set_compression_level (pp, pngvals.compression_level);
+
   png_write_info (pp, info);
 
   /*
@@ -1490,7 +1493,8 @@ save_image (const gchar  *filename,
    * Convert unpacked pixels to packed if necessary
    */
 
-  if (info->color_type == PNG_COLOR_TYPE_PALETTE && info->bit_depth < 8)
+  if (color_type == PNG_COLOR_TYPE_PALETTE &&
+      bit_depth < 8)
     png_set_packing (pp);
 
   /*
@@ -1542,7 +1546,7 @@ save_image (const gchar  *filename,
 
           /* If we're dealing with a paletted image with
            * transparency set, write out the remapped palette */
-          if (info->valid & PNG_INFO_tRNS)
+          if (png_get_valid (pp, info, PNG_INFO_tRNS))
             {
               guchar inverse_remap[256];
 
@@ -1562,7 +1566,8 @@ save_image (const gchar  *filename,
             }
           /* Otherwise if we have a paletted image and transparency
            * couldn't be set, we ignore the alpha channel */
-          else if (info->valid & PNG_INFO_PLTE && bpp == 2)
+          else if (png_get_valid (pp, info, PNG_INFO_PLTE) &&
+                   bpp == 2)
             {
               for (i = 0; i < num; ++i)
                 {
@@ -1577,7 +1582,7 @@ save_image (const gchar  *filename,
           png_write_rows (pp, pixels, num);
 
           gimp_progress_update (((double) pass + (double) end /
-                                 (double) info->height) /
+                                 (double) drawable->height) /
                                 (double) num_passes);
         }
     }
@@ -1709,7 +1714,7 @@ find_unused_ia_color (GimpDrawable *drawable,
 }
 
 
-static void
+static int
 respin_cmap (png_structp   pp,
              png_infop     info,
              guchar       *remap,
@@ -1783,6 +1788,7 @@ respin_cmap (png_structp   pp,
       png_set_PLTE (pp, info, (png_colorp) before, colors);
     }
 
+  return get_bit_depth_for_palette (colors);
 }
 
 static GtkWidget *
