@@ -639,17 +639,12 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
       return;
     }
 
-  switch (gdk_pixbuf_get_n_channels (pixbuf))
-    {
-    case 1: image_type = GIMP_GRAY_IMAGE;  break;
-    case 2: image_type = GIMP_GRAYA_IMAGE; break;
-    case 3: image_type = GIMP_RGB_IMAGE;   break;
-    case 4: image_type = GIMP_RGBA_IMAGE;  break;
-      break;
+  image_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (image));
 
-    default:
-      g_return_if_reached ();
-      break;
+  if (gdk_pixbuf_get_n_channels (pixbuf) == 2 ||
+      gdk_pixbuf_get_n_channels (pixbuf) == 4)
+    {
+      image_type = GIMP_IMAGE_TYPE_WITH_ALPHA (image_type);
     }
 
   new_layer =
