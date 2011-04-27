@@ -362,8 +362,7 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-named-cut",          writable && !children);
   SET_SENSITIVE ("edit-named-copy",         drawable);
   SET_SENSITIVE ("edit-named-copy-visible", drawable);
-  SET_SENSITIVE ("edit-named-paste",        image && (!drawable ||
-                                                      (writable && !children)));
+  SET_SENSITIVE ("edit-named-paste",        TRUE);
 
   SET_SENSITIVE ("edit-clear",              writable && !children);
   SET_SENSITIVE ("edit-fill-fg",            writable && !children);
