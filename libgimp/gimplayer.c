@@ -205,7 +205,7 @@ gimp_layer_new_from_pixbuf (gint32                image_ID,
  * gimp_layer_new_from_surface:
  * @image_ID:        The RGB image to which to add the layer.
  * @name:            The layer name.
- * @cairo_surface_t: A Cairo image surface.
+ * @surface:         A Cairo image surface.
  * @progress_start:  start of progress
  * @progress_end:    end of progress
  *
