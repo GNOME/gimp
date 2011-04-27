@@ -1208,6 +1208,8 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (GIMP_IMAGE_TYPE_BASE_TYPE (type) ==
+                        gimp_image_base_type (dest_image), NULL);
 
   pixel_region_init_data (&bufPR, gdk_pixbuf_get_pixels (pixbuf),
                           gdk_pixbuf_get_n_channels (pixbuf),
