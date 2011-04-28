@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpversion.h"
+#include "libgimpbase/gimpbase.h"
 
 
 typedef struct _CopyData CopyData;

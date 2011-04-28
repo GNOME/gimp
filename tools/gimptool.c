@@ -32,9 +32,9 @@
 
 #include <sys/stat.h>
 
-#include <glib.h>
+#include <glib-object.h>
 
-#include "libgimpbase/gimpversion.h"
+#include "libgimpbase/gimpbase.h"
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
