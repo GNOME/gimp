@@ -19,6 +19,10 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_MATH_H_INSIDE__) && !defined (GIMP_MATH_COMPILATION)
+#error "Only <libgimpmath/gimpmath.h> can be included directly."
+#endif
+
 #ifndef __GIMP_MATRIX_H__
 #define __GIMP_MATRIX_H__
 

@@ -27,6 +27,10 @@
  * provides.
  */
 
+#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
+#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#endif
+
 #ifndef __GIMP_CHAIN_BUTTON_H__
 #define __GIMP_CHAIN_BUTTON_H__
 

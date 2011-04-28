@@ -19,6 +19,10 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
+#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#endif
+
 #ifndef __GIMP_COLOR_MANAGED_H__
 #define __GIMP_COLOR_MANAGED_H__
 

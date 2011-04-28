@@ -16,6 +16,10 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
+#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#endif
+
 #ifndef __GIMP_CHECKS_H__
 #define __GIMP_CHECKS_H__
 

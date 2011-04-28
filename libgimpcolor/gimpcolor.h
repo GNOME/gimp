@@ -19,6 +19,7 @@
 #ifndef __GIMP_COLOR_H__
 #define __GIMP_COLOR_H__
 
+#define __GIMP_COLOR_H_INSIDE__
 
 #include <libgimpcolor/gimpcolortypes.h>
 
@@ -31,5 +32,6 @@
 #include <libgimpcolor/gimphsv.h>
 #include <libgimpcolor/gimprgb.h>
 
+#undef __GIMP_COLOR_H_INSIDE__
 
 #endif  /* __GIMP_COLOR_H__ */

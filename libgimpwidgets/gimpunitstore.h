@@ -19,8 +19,14 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
+#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#endif
+
 #ifndef __GIMP_UNIT_STORE_H__
 #define __GIMP_UNIT_STORE_H__
+
+G_BEGIN_DECLS
 
 
 enum
@@ -99,5 +105,7 @@ void            gimp_unit_store_get_values       (GimpUnitStore *store,
                                                   gdouble       *first_value,
                                                   ...);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_UNIT_STORE_H__ */

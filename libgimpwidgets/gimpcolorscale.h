@@ -20,10 +20,9 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/* This provides a color preview area. The preview
- * can handle transparency by showing the checkerboard and
- * handles drag'n'drop.
- */
+#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
+#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#endif
 
 #ifndef __GIMP_COLOR_SCALE_H__
 #define __GIMP_COLOR_SCALE_H__

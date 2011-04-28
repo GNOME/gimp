@@ -19,9 +19,12 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_CONFIG_H_INSIDE__) && !defined (GIMP_CONFIG_COMPILATION)
+#error "Only <libgimpconfig/gimpconfig.h> can be included directly."
+#endif
+
 #ifndef __GIMP_CONFIG_PATH_H__
 #define __GIMP_CONFIG_PATH_H__
-
 
 G_BEGIN_DECLS
 

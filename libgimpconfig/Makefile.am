@@ -44,7 +44,8 @@ endif
 libgimpconfigincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpconfig
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"LibGimpConfig\"
+	-DG_LOG_DOMAIN=\"LibGimpConfig\"	\
+	-DGIMP_CONFIG_COMPILATION
 
 INCLUDES = \
 	-I$(top_srcdir)	\
@@ -132,7 +133,7 @@ CLEANFILES = $(gen_sources)
 
 $(srcdir)/gimpcolorconfig-enums.c: $(srcdir)/gimpcolorconfig-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
-		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbasetypes.h\"\n#include \"gimpcolorconfig-enums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"gimpcolorconfig-enums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \

@@ -19,17 +19,21 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OLD_WIDGETS_H__
-#define __GIMP_OLD_WIDGETS_H__
-
 /*  These functions are deprecated and should not be used in newly
  *  written code.
  */
 
 #ifndef GIMP_DISABLE_DEPRECATED
 
+#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
+#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#endif
+
+#ifndef __GIMP_OLD_WIDGETS_H__
+#define __GIMP_OLD_WIDGETS_H__
 
 G_BEGIN_DECLS
+
 
 /*
  *  Widget Constructors
@@ -96,9 +100,9 @@ void  gimp_option_menu_set_sensitive (GtkOptionMenu    *option_menu,
 void gimp_menu_item_update           (GtkWidget        *widget,
                                       gpointer          data);
 
+
 G_END_DECLS
 
+#endif /* __GIMP_OLD_WIDGETS_H__ */
 
 #endif /*  GIMP_DISABLE_DEPRECATED  */
-
-#endif /* __GIMP_OLD_WIDGETS_H__ */

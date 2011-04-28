@@ -24,9 +24,13 @@
 
 #include <gmodule.h>
 
+#define __GIMP_MODULE_H_INSIDE__
+
 #include <libgimpmodule/gimpmoduletypes.h>
 
 #include <libgimpmodule/gimpmoduledb.h>
+
+#undef __GIMP_MODULE_H_INSIDE__
 
 G_BEGIN_DECLS
 

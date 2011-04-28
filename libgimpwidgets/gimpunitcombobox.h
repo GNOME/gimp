@@ -19,8 +19,14 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
+#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#endif
+
 #ifndef __GIMP_UNIT_COMBO_BOX_H__
 #define __GIMP_UNIT_COMBO_BOX_H__
+
+G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_UNIT_COMBO_BOX            (gimp_unit_combo_box_get_type ())
@@ -59,5 +65,7 @@ GimpUnit    gimp_unit_combo_box_get_active     (GimpUnitComboBox *combo);
 void        gimp_unit_combo_box_set_active     (GimpUnitComboBox *combo,
                                                 GimpUnit          unit);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_UNIT_COMBO_BOX_H__ */

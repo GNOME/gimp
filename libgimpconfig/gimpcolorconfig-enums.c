@@ -3,7 +3,7 @@
 
 #include "config.h"
 #include <glib-object.h>
-#include "libgimpbase/gimpbasetypes.h"
+#include "libgimpbase/gimpbase.h"
 #include "gimpcolorconfig-enums.h"
 #include "libgimp/libgimp-intl.h"
 

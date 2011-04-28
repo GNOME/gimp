@@ -16,6 +16,10 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_MODULE_H_INSIDE__) && !defined (GIMP_MODULE_COMPILATION)
+#error "Only <libgimpmodule/gimpmodule.h> can be included directly."
+#endif
+
 #ifndef __GIMP_MODULE_DB_H__
 #define __GIMP_MODULE_DB_H__
 

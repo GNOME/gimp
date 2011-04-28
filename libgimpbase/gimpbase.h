@@ -19,6 +19,7 @@
 #ifndef __GIMP_BASE_H__
 #define __GIMP_BASE_H__
 
+#define __GIMP_BASE_H_INSIDE__
 
 #include <libgimpbase/gimpbasetypes.h>
 
@@ -38,5 +39,6 @@
 #include <libgimpbase/gimpsignal.h>
 #endif
 
+#undef __GIMP_BASE_H_INSIDE__
 
 #endif  /* __GIMP_BASE_H__ */

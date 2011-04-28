@@ -25,11 +25,14 @@
 #ifndef __GIMP_THUMB_H__
 #define __GIMP_THUMB_H__
 
+#define __GIMP_THUMB_H_INSIDE__
+
+#include <libgimpthumb/gimpthumb-types.h>
 
 #include <libgimpthumb/gimpthumb-error.h>
-#include <libgimpthumb/gimpthumb-types.h>
 #include <libgimpthumb/gimpthumb-utils.h>
 #include <libgimpthumb/gimpthumbnail.h>
 
+#undef __GIMP_THUMB_H_INSIDE__
 
 #endif /* __GIMP_THUMB_H__ */

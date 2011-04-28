@@ -2005,6 +2005,10 @@ AC_CONFIG_COMMANDS([libgimpbase/gimpversion.h], [
  * This is a generated file.  Please modify 'configure.ac'
  */
 
+#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
+#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#endif
+
 #ifndef __GIMP_VERSION_H__
 #define __GIMP_VERSION_H__
 

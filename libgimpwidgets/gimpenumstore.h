@@ -19,10 +19,15 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
+#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#endif
+
 #ifndef __GIMP_ENUM_STORE_H__
 #define __GIMP_ENUM_STORE_H__
 
 #include <libgimpwidgets/gimpintstore.h>
+
 
 G_BEGIN_DECLS
 

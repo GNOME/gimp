@@ -22,6 +22,10 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_THUMB_H_INSIDE__) && !defined (GIMP_THUMB_COMPILATION)
+#error "Only <libgimpthumb/gimpthumb.h> can be included directly."
+#endif
+
 #ifndef __GIMP_THUMBNAIL_H__
 #define __GIMP_THUMBNAIL_H__
 

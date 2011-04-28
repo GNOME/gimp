@@ -47,7 +47,8 @@ endif
 libgimpmathincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpmath
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"LibGimpMath\"
+	-DG_LOG_DOMAIN=\"LibGimpMath\"	\
+	-DGIMP_MATH_COMPILATION
 
 INCLUDES = \
 	-I$(top_srcdir)	\

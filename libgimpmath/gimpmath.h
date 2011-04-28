@@ -21,6 +21,7 @@
 #ifndef __GIMP_MATH_H__
 #define __GIMP_MATH_H__
 
+
 #include <math.h>
 
 #ifdef HAVE_IEEEFP_H
@@ -31,11 +32,16 @@
 #include <float.h>
 #endif
 
+#define __GIMP_MATH_H_INSIDE__
+
 #include <libgimpmath/gimpmathtypes.h>
 
 #include <libgimpmath/gimpmatrix.h>
 #include <libgimpmath/gimpmd5.h>
 #include <libgimpmath/gimpvector.h>
+
+#undef __GIMP_MATH_H_INSIDE__
+
 
 G_BEGIN_DECLS
 

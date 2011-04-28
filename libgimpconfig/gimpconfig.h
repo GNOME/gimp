@@ -19,6 +19,7 @@
 #ifndef __GIMP_CONFIG_H__
 #define __GIMP_CONFIG_H__
 
+#define __GIMP_CONFIG_H_INSIDE__
 
 #include <libgimpconfig/gimpconfigtypes.h>
 
@@ -34,5 +35,6 @@
 
 #include <libgimpconfig/gimpcolorconfig.h>
 
+#undef __GIMP_CONFIG_H_INSIDE__
 
 #endif  /* __GIMP_CONFIG_H__ */

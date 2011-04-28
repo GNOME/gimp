@@ -5,6 +5,10 @@
  * Use of this code is deprecated! Use %GChecksum from GLib instead.
  */
 
+#if !defined (__GIMP_MATH_H_INSIDE__) && !defined (GIMP_MATH_COMPILATION)
+#error "Only <libgimpmath/gimpmath.h> can be included directly."
+#endif
+
 #ifndef __GIMP_MD5_H__
 #define __GIMP_MD5_H__
 

@@ -22,6 +22,7 @@
 #ifndef __GIMP_WIDGETS_H__
 #define __GIMP_WIDGETS_H__
 
+#define __GIMP_WIDGETS_H_INSIDE__
 
 #include <libgimpwidgets/gimpwidgetstypes.h>
 
@@ -80,6 +81,7 @@
 
 #include <libgimpwidgets/gimpoldwidgets.h>
 
+#undef __GIMP_WIDGETS_H_INSIDE__
 
 G_BEGIN_DECLS
 
