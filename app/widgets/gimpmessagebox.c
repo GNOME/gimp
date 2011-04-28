@@ -22,8 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
-#include "libgimpbase/gimputils.h"
 
 #include "widgets-types.h"
 

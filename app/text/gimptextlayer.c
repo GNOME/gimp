@@ -28,7 +28,10 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpcairo-utils.h"
+
+#define GIMP_WIDGETS_COMPILATION
+#include "libgimpwidgets/gimpcairo-utils.h" /* eek */
+#undef GIMP_WIDGETS_COMPILATION
 
 #include "text-types.h"
 

@@ -19,9 +19,6 @@
 #define __GIMP_COLOR_PANEL_H__
 
 
-#include "libgimpwidgets/gimpcolorbutton.h"
-
-
 #define GIMP_TYPE_COLOR_PANEL            (gimp_color_panel_get_type ())
 #define GIMP_COLOR_PANEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PANEL, GimpColorPanel))
 #define GIMP_COLOR_PANEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PANEL, GimpColorPanelClass))

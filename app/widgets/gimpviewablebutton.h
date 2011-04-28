@@ -21,9 +21,6 @@
 #ifndef __GIMP_VIEWABLE_BUTTON_H__
 #define __GIMP_VIEWABLE_BUTTON_H__
 
-#include "libgimpwidgets/gimpbutton.h"
-
-G_BEGIN_DECLS
 
 #define GIMP_TYPE_VIEWABLE_BUTTON            (gimp_viewable_button_get_type ())
 #define GIMP_VIEWABLE_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEWABLE_BUTTON, GimpViewableButton))
@@ -83,7 +80,5 @@ gint         gimp_viewable_button_get_view_size (GimpViewableButton *button);
 void         gimp_viewable_button_set_view_size (GimpViewableButton *button,
                                                  gint                view_size);
 
-
-G_END_DECLS
 
 #endif /* __GIMP_VIEWABLE_BUTTON_H__ */

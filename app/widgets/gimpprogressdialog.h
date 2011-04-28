@@ -21,10 +21,6 @@
 #ifndef __GIMP_PROGRESS_DIALOG_H__
 #define __GIMP_PROGRESS_DIALOG_H__
 
-#include "libgimpwidgets/gimpdialog.h"
-
-G_BEGIN_DECLS
-
 
 #define GIMP_TYPE_PROGRESS_DIALOG            (gimp_progress_dialog_get_type ())
 #define GIMP_PROGRESS_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROGRESS_DIALOG, GimpProgressDialog))
@@ -53,7 +49,5 @@ GType       gimp_progress_dialog_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_progress_dialog_new      (void);
 
-
-G_END_DECLS
 
 #endif /* __GIMP_PROGRESS_DIALOG_H__ */

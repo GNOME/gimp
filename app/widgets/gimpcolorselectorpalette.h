@@ -22,9 +22,6 @@
 #define __GIMP_COLOR_SELECTOR_PALETTE_H__
 
 
-#include "libgimpwidgets/gimpcolorselector.h"
-
-
 #define GIMP_TYPE_COLOR_SELECTOR_PALETTE            (gimp_color_selector_palette_get_type ())
 #define GIMP_COLOR_SELECTOR_PALETTE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_SELECTOR_PALETTE, GimpColorSelectorPalette))
 #define GIMP_IS_COLOR_SELECTOR_PALETTE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SELECTOR_PALETTE))

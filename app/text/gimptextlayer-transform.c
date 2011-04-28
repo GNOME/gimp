@@ -22,6 +22,8 @@
 
 #include <gegl.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "text-types.h"
 
 #include "core/gimp-transform-utils.h"
