@@ -974,7 +974,6 @@ GIMP_RANDOM_SEED_TOGGLE
 gimp_random_seed_new
 GIMP_COORDINATES_CHAINBUTTON
 gimp_coordinates_new
-gimp_pixmap_button_new
 gimp_toggle_button_sensitive_update
 gimp_toggle_button_update
 gimp_radio_button_update
@@ -982,7 +981,6 @@ gimp_int_adjustment_update
 gimp_uint_adjustment_update
 gimp_float_adjustment_update
 gimp_double_adjustment_update
-gimp_unit_menu_update
 gimp_table_attach_aligned
 gimp_label_set_attributes
 GIMP_WIDGETS_ERROR
@@ -1267,6 +1265,8 @@ gimp_option_menu_set_history
 GimpOptionMenuSensitivityCallback
 gimp_option_menu_set_sensitive
 gimp_menu_item_update
+gimp_pixmap_button_new
+gimp_unit_menu_update
 </SECTION>
 
 <SECTION>

@@ -55,8 +55,9 @@ GtkWidget * gimp_int_option_menu_new         (gboolean        menu_only,
 void        gimp_int_option_menu_set_history (GtkOptionMenu  *option_menu,
                                               gint            item_data);
 
-typedef gboolean (*GimpIntOptionMenuSensitivityCallback) (gint     item_data,
-                                                          gpointer callback_data);
+typedef gboolean (* GimpIntOptionMenuSensitivityCallback) (gint     item_data,
+                                                           gpointer callback_data);
+
 void  gimp_int_option_menu_set_sensitive (GtkOptionMenu    *option_menu,
                                           GimpIntOptionMenuSensitivityCallback callback,
                                           gpointer          callback_data);
@@ -89,15 +90,26 @@ void  gimp_option_menu_set_history   (GtkOptionMenu    *option_menu,
                                       gpointer          item_data);
 
 
-typedef gboolean (*GimpOptionMenuSensitivityCallback) (gpointer item_data,
-                                                       gpointer callback_data);
+typedef gboolean (* GimpOptionMenuSensitivityCallback) (gpointer item_data,
+                                                        gpointer callback_data);
 
 void  gimp_option_menu_set_sensitive (GtkOptionMenu    *option_menu,
                                       GimpOptionMenuSensitivityCallback callback,
                                       gpointer          callback_data);
 
 
-void gimp_menu_item_update           (GtkWidget        *widget,
+void   gimp_menu_item_update         (GtkWidget        *widget,
+                                      gpointer          data);
+
+GtkWidget * gimp_pixmap_button_new   (gchar           **xpm_data,
+                                      const gchar      *text);
+
+
+/*
+ *  Standard Callbacks
+ */
+
+void   gimp_unit_menu_update         (GtkWidget        *widget,
                                       gpointer          data);
 
 

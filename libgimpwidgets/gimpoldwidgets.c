@@ -27,10 +27,14 @@
 #undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpwidgetstypes.h"
 
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpoldwidgets.h"
+#include "gimppixmap.h"
+#include "gimpunitmenu.h"
 
 
 /**
@@ -548,4 +552,96 @@ gimp_menu_item_update (GtkWidget *widget,
 
   *item_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                   "gimp-item-data"));
+}
+
+
+/**
+ * gimp_pixmap_button_new:
+ * @xpm_data: The XPM data which will be passed to gimp_pixmap_new().
+ * @text:     An optional text which will appear right of the pixmap.
+ *
+ * Convenience function that creates a #GtkButton with a #GimpPixmap
+ * and an optional #GtkLabel.
+ *
+ * Returns: The new #GtkButton.
+ **/
+GtkWidget *
+gimp_pixmap_button_new (gchar       **xpm_data,
+                        const gchar  *text)
+{
+  GtkWidget *button;
+  GtkWidget *pixmap;
+
+  button = gtk_button_new ();
+  pixmap = gimp_pixmap_new (xpm_data);
+
+  if (text)
+    {
+      GtkWidget *abox;
+      GtkWidget *hbox;
+      GtkWidget *label;
+
+      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_container_add (GTK_CONTAINER (button), abox);
+      gtk_widget_show (abox);
+
+      hbox = gtk_hbox_new (FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (abox), hbox);
+      gtk_widget_show (hbox);
+
+      gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, 4);
+      gtk_widget_show (pixmap);
+
+      label = gtk_label_new_with_mnemonic (text);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), button);
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
+      gtk_widget_show (label);
+    }
+  else
+    {
+      gtk_container_add (GTK_CONTAINER (button), pixmap);
+      gtk_widget_show (pixmap);
+    }
+
+
+  return button;
+}
+
+
+/**
+ * gimp_unit_menu_update:
+ * @widget: A #GimpUnitMenu.
+ * @data:   A pointer to a #GimpUnit variable which will store the unit menu's
+ *          value.
+ *
+ * This callback can set the number of decimal digits of an arbitrary number
+ * of #GtkSpinButton's. To use this functionality, attach the spinbuttons
+ * as list of data pointers attached with g_object_set_data() with the
+ * "set_digits" key.
+ *
+ * See gimp_toggle_button_sensitive_update() for a description of how
+ * to set up the list.
+ **/
+void
+gimp_unit_menu_update (GtkWidget *widget,
+                       gpointer   data)
+{
+  GimpUnit  *val = (GimpUnit *) data;
+  GtkWidget *spinbutton;
+  gint       digits;
+
+  *val = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
+
+  digits = ((*val == GIMP_UNIT_PIXEL) ? 0 :
+            ((*val == GIMP_UNIT_PERCENT) ? 2 :
+             (MIN (6, MAX (3, gimp_unit_get_digits (*val))))));
+
+  digits += gimp_unit_menu_get_pixel_digits (GIMP_UNIT_MENU (widget));
+
+  spinbutton = g_object_get_data (G_OBJECT (widget), "set_digits");
+  while (spinbutton)
+    {
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
+      spinbutton = g_object_get_data (G_OBJECT (spinbutton), "set_digits");
+    }
 }

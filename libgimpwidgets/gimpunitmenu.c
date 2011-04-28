@@ -23,6 +23,8 @@
 
 #undef GSEAL_ENABLE
 
+/* FIXME: #undef GTK_DISABLE_DEPRECATED */
+#undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -34,6 +36,7 @@
 #include "gimpwidgets.h"
 
 #undef GIMP_DISABLE_DEPRECATED
+#include "gimpoldwidgets.h"
 #include "gimpunitmenu.h"
 
 #include "libgimp/libgimp-intl.h"

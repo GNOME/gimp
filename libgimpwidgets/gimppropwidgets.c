@@ -19,6 +19,8 @@
 
 #include <string.h>
 
+/* FIXME: #undef GTK_DISABLE_DEPRECATED */
+#undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -29,6 +31,7 @@
 #include "gimpwidgetstypes.h"
 
 #undef GIMP_DISABLE_DEPRECATED
+#include "gimpoldwidgets.h"
 #include "gimppropwidgets.h"
 #include "gimpunitmenu.h"
 
