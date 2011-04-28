@@ -20,6 +20,7 @@
 #include <string.h>
 #include <time.h>
 
+#include <cairo.h>
 #include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"

@@ -107,7 +107,7 @@ package Gimp::CodeGen::pdb;
 		     init_value     => '{ 0.0, 0.0, 0.0, 1.0 }',
 		     get_value_func => 'gimp_value_get_rgb ($value, &$var)',
 		     set_value_func => 'gimp_value_set_rgb ($value, &$var)',
-		     headers        => [ qw("libgimpcolor/gimpcolor.h") ] },
+		     headers        => [ qw(<cairo.h> "libgimpcolor/gimpcolor.h") ] },
 
     display     => { name           => 'DISPLAY',
 		     type           => 'GimpObject *',

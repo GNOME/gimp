@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl.h>
 #include <gegl-paramspecs.h>
 

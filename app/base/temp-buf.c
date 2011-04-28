@@ -23,6 +23,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include <cairo.h>
 #include <glib-object.h>
 #include <glib/gstdio.h>
 

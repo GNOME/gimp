@@ -22,16 +22,14 @@
 
 #include <string.h>
 
+#include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pango/pangocairo.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
-
-#define GIMP_WIDGETS_COMPILATION
-#include "libgimpwidgets/gimpcairo-utils.h" /* eek */
-#undef GIMP_WIDGETS_COMPILATION
 
 #include "text-types.h"
 

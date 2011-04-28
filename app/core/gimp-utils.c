@@ -26,6 +26,7 @@
 #include <langinfo.h>
 #endif
 
+#include <cairo.h>
 #include <glib-object.h>
 #include <gobject/gvaluecollector.h>
 

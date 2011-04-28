@@ -27,6 +27,7 @@
 #include <unistd.h>
 #endif
 
+#include <cairo.h>
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"

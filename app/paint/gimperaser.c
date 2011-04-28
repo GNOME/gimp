@@ -19,8 +19,6 @@
 
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
-
 #include "paint-types.h"
 
 #include "base/temp-buf.h"

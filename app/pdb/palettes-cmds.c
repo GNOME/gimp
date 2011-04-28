@@ -19,6 +19,7 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <string.h>
 
 #include <gegl.h>

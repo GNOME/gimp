@@ -20,6 +20,7 @@
     <xi:include href="xml/gimpcolormanaged.xml" />
     <xi:include href="xml/gimpadaptivesupersample.xml" />
     <xi:include href="xml/gimpbilinear.xml" />
+    <xi:include href="xml/gimpcairocolor.xml" />
   </part>
 
   <index id="libgimpcolor-index">

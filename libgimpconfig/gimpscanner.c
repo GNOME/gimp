@@ -25,6 +25,7 @@
 #include <string.h>
 #include <errno.h>
 
+#include <cairo.h>
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"

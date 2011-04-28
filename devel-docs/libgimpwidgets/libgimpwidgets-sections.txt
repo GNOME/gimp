@@ -37,15 +37,8 @@ GIMP_BUTTON_GET_CLASS
 <SECTION>
 <FILE>gimpcairo-utils</FILE>
 <TITLE>GimpCairoUtils</TITLE>
-gimp_cairo_set_source_rgb
-gimp_cairo_set_source_rgba
 gimp_cairo_set_focus_line_pattern
-gimp_cairo_checkerboard_create
 gimp_cairo_surface_create_from_pixbuf
-GIMP_CAIRO_RGB24_SET_PIXEL
-GIMP_CAIRO_RGB24_GET_PIXEL
-GIMP_CAIRO_ARGB32_SET_PIXEL
-GIMP_CAIRO_ARGB32_GET_PIXEL
 </SECTION>
 
 <SECTION>

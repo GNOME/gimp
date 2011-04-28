@@ -25,7 +25,6 @@
 #include <gobject/gvaluecollector.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
 

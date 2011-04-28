@@ -31,6 +31,7 @@
 #define _O_BINARY 0
 #endif
 
+#include <cairo.h>
 #include <glib-object.h>
 #include <glib/gstdio.h>
 

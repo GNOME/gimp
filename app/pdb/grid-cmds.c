@@ -19,6 +19,8 @@
 
 #include "config.h"
 
+#include <cairo.h>
+
 #include <gegl.h>
 
 #include "libgimpbase/gimpbaseenums.h"

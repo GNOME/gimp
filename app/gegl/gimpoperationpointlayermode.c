@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl-plugin.h>
 
 #include "libgimpcolor/gimpcolor.h"

@@ -141,3 +141,15 @@ gimp_bilinear_rgb
 gimp_bilinear_rgba
 gimp_bilinear_pixels_8
 </SECTION>
+
+<SECTION>
+<FILE>gimpcairocolor</FILE>
+<TITLE>GimpCairoColor</TITLE>
+gimp_cairo_set_source_rgb
+gimp_cairo_set_source_rgba
+gimp_cairo_checkerboard_create
+GIMP_CAIRO_RGB24_SET_PIXEL
+GIMP_CAIRO_RGB24_GET_PIXEL
+GIMP_CAIRO_ARGB32_SET_PIXEL
+GIMP_CAIRO_ARGB32_GET_PIXEL
+</SECTION>

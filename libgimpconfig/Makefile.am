@@ -49,6 +49,7 @@ AM_CPPFLAGS = \
 
 INCLUDES = \
 	-I$(top_srcdir)	\
+	$(CAIRO_CFLAGS)	\
 	$(GLIB_CFLAGS)	\
 	-I$(includedir)
 
@@ -116,6 +117,7 @@ libgimpconfig_2_0_la_LIBADD = \
 	$(libgimpbase)	\
 	$(libgimpcolor)	\
 	$(libgimpmath)	\
+	$(CAIRO_LIBS)	\
 	$(GLIB_LIBS)
 
 

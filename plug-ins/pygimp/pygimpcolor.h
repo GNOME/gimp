@@ -21,6 +21,7 @@
 
 #include <Python.h>
 
+#include <cairo.h>
 #include <glib-object.h>
 
 #include <pygobject.h>

@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include <cairo.h>
 #include <gegl.h>
 #include <glib/gstdio.h>
 

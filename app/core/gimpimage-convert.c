@@ -132,6 +132,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <cairo.h>
 #include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"

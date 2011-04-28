@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <cairo.h>
 #include <pango/pango.h>
 
 #include "libgimpbase/gimpbase.h"

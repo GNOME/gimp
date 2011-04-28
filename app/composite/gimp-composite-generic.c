@@ -26,6 +26,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <cairo.h>
 #include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"

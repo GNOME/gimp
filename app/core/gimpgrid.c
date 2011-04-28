@@ -20,8 +20,9 @@
 
 #include "config.h"
 
-#include <string.h> /* strcmp */
+#include <string.h>
 
+#include <cairo.h>
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
