@@ -19,6 +19,10 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
+#error "Only <libgimp/gimpui.h> can be included directly."
+#endif
+
 #ifndef __GIMP_PROGRESS_BAR_H__
 #define __GIMP_PROGRESS_BAR_H__
 

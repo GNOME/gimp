@@ -630,6 +630,10 @@ LGPL
         print HFILE $lgpl_bottom;
  	my $guard = "__GIMP_\U$group\E_PDB_H__";
 	print HFILE <<HEADER;
+#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
+#error "Only <libgimp/gimp.h> can be included directly."
+#endif
+
 #ifndef $guard
 #define $guard
 
@@ -687,6 +691,10 @@ SECTION_DOCS
         print PFILE $lgpl_bottom;
 	my $guard = "__GIMP_PDB_HEADERS_H__";
 	print PFILE <<HEADER;
+#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
+#error "Only <libgimp/gimp.h> can be included directly."
+#endif
+
 #ifndef $guard
 #define $guard
 

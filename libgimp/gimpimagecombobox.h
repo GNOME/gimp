@@ -19,9 +19,12 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
+#error "Only <libgimp/gimpui.h> can be included directly."
+#endif
+
 #ifndef __GIMP_IMAGE_COMBO_BOX_H__
 #define __GIMP_IMAGE_COMBO_BOX_H__
-
 
 G_BEGIN_DECLS
 

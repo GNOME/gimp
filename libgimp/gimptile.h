@@ -18,6 +18,10 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
+#error "Only <libgimp/gimp.h> can be included directly."
+#endif
+
 #ifndef __GIMP_TILE_H__
 #define __GIMP_TILE_H__
 

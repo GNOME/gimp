@@ -23,6 +23,8 @@
 
 #include <libgimpwidgets/gimpwidgets.h>
 
+#define __GIMP_UI_H_INSIDE__
+
 #include <libgimp/gimpuitypes.h>
 
 #include <libgimp/gimpexport.h>
@@ -46,6 +48,8 @@
 #include <libgimp/gimppaletteselectbutton.h>
 #include <libgimp/gimppatternselectbutton.h>
 #include <libgimp/gimpzoompreview.h>
+
+#undef __GIMP_UI_H_INSIDE__
 
 G_BEGIN_DECLS
 

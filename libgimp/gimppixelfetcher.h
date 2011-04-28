@@ -22,12 +22,17 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
+#error "Only <libgimp/gimp.h> can be included directly."
+#endif
+
 #ifndef __GIMP_PIXEL_FETCHER_H__
 #define __GIMP_PIXEL_FETCHER_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
+
 
 typedef enum
 {

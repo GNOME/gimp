@@ -29,6 +29,8 @@
 #include <libgimpconfig/gimpconfig.h>
 #include <libgimpmath/gimpmath.h>
 
+#define __GIMP_H_INSIDE__
+
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimptypes.h>
 
@@ -60,10 +62,11 @@
 
 #include <libgimp/gimp_pdb_headers.h>
 
+#undef __GIMP_H_INSIDE__
+
 #ifdef G_OS_WIN32
 #include <stdlib.h> /* For __argc and __argv */
 #endif
-
 
 G_BEGIN_DECLS
 
