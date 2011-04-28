@@ -26,10 +26,8 @@
 #include <string.h>
 
 #include <glib/gstdio.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimppixbuf.h>
 
 #include "bmp.h"
 
