@@ -21,8 +21,6 @@
 #ifndef __GIMP_ASPECT_PREVIEW_H__
 #define __GIMP_ASPECT_PREVIEW_H__
 
-#include <libgimpwidgets/gimppreview.h>
-
 G_BEGIN_DECLS
 
 

@@ -21,8 +21,6 @@
 #ifndef __GIMP_DRAWABLE_PREVIEW_H__
 #define __GIMP_DRAWABLE_PREVIEW_H__
 
-#include <libgimpwidgets/gimpscrolledpreview.h>
-
 G_BEGIN_DECLS
 
 

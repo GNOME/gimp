@@ -27,7 +27,9 @@
 #undef __GIMP_LAYER_H__
 #include "gimplayer.h"
 
+#define GIMP_WIDGETS_COMPILATION
 #include "libgimpwidgets/gimpcairo-utils.h" /* eek */
+#undef GIMP_WIDGETS_COMPILATION
 
 
 /**

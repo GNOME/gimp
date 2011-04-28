@@ -22,8 +22,6 @@
 #ifndef __GIMP_ZOOM_PREVIEW_H__
 #define __GIMP_ZOOM_PREVIEW_H__
 
-#include <libgimpwidgets/gimppreview.h>
-
 G_BEGIN_DECLS
 
 

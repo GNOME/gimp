@@ -21,8 +21,6 @@
 #ifndef __GIMP_PROC_BROWSER_DIALOG_H__
 #define __GIMP_PROC_BROWSER_DIALOG_H__
 
-#include <libgimpwidgets/gimpdialog.h>
-
 G_BEGIN_DECLS
 
 
