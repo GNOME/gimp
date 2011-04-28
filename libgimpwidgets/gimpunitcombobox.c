@@ -29,6 +29,17 @@
 #include "gimpunitstore.h"
 
 
+/**
+ * SECTION: gimpunitcombobox
+ * @title: GimpUnitComboBox
+ * @short_description: A #GtkComboBox to select a #GimpUnit.
+ * @see_also: #GimpUnit, #GimpUnitStore
+ *
+ * #GimpUnitComboBox allows to select units stored in a #GimpUnitStore.
+ * It replaces the deprecated #GimpUnitMenu.
+ **/
+
+
 static void  gimp_unit_combo_box_style_set (GtkWidget *widget,
                                             GtkStyle  *prev_style);
 

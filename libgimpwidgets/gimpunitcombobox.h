@@ -39,24 +39,24 @@ G_BEGIN_DECLS
 
 typedef struct _GimpUnitComboBoxClass  GimpUnitComboBoxClass;
 
-struct _GimpUnitComboBoxClass
-{
-  GtkComboBoxClass  parent_instance;
-
-  /* Padding for future expansion */
-  void (*_gtk_reserved1) (void);
-  void (*_gtk_reserved2) (void);
-  void (*_gtk_reserved3) (void);
-  void (*_gtk_reserved4) (void);
-};
-
 struct _GimpUnitComboBox
 {
   GtkComboBox       parent_instance;
 };
 
+struct _GimpUnitComboBoxClass
+{
+  GtkComboBoxClass  parent_class;
 
-GType       gimp_unit_combo_box_get_type (void) G_GNUC_CONST;
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+};
+
+
+GType       gimp_unit_combo_box_get_type       (void) G_GNUC_CONST;
 
 GtkWidget * gimp_unit_combo_box_new            (void);
 GtkWidget * gimp_unit_combo_box_new_with_model (GimpUnitStore    *model);
