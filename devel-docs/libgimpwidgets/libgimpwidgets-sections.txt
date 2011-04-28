@@ -611,6 +611,7 @@ GIMP_UNIT_STORE_GET_CLASS
 <SECTION>
 <FILE>gimpunitcombobox</FILE>
 <TITLE>GimpUnitComboBox</TITLE>
+GimpUnitComboBox
 GimpUnitComboBoxClass
 gimp_unit_combo_box_new
 gimp_unit_combo_box_new_with_model
