@@ -27,9 +27,83 @@ typedef struct _GimpMatrix2 GimpMatrix2;
 typedef struct _GimpMatrix3 GimpMatrix3;
 typedef struct _GimpMatrix4 GimpMatrix4;
 
+/**
+ * GimpMatrix2
+ * @coeff: the coefficients
+ *
+ * A two by two matrix.
+ **/
+struct _GimpMatrix2
+{
+  gdouble coeff[2][2];
+};
+
+/**
+ * GimpMatrix3
+ * @coeff: the coefficients
+ *
+ * A three by three matrix.
+ **/
+struct _GimpMatrix3
+{
+  gdouble coeff[3][3];
+};
+
+/**
+ * GimpMatrix4
+ * @coeff: the coefficients
+ *
+ * A four by four matrix.
+ **/
+struct _GimpMatrix4
+{
+  gdouble coeff[4][4];
+};
+
+
 typedef struct _GimpVector2 GimpVector2;
 typedef struct _GimpVector3 GimpVector3;
 typedef struct _GimpVector4 GimpVector4;
+
+/**
+ * GimpVector2:
+ * @x: the x axis
+ * @y: the y axis
+ *
+ * A two dimensional vector.
+ **/
+struct _GimpVector2
+{
+  gdouble x, y;
+};
+
+/**
+ * GimpVector3:
+ * @x: the x axis
+ * @y: the y axis
+ * @z: the z axis
+ *
+ * A three dimensional vector.
+ **/
+struct _GimpVector3
+{
+  gdouble x, y, z;
+};
+
+/**
+ * GimpVector4:
+ * @x: the x axis
+ * @y: the y axis
+ * @z: the z axis
+ * @w: the w axis
+ *
+ * A four dimensional vector.
+ **/
+struct _GimpVector4
+{
+  gdouble x, y, z, w;
+};
+
 
 G_END_DECLS
 
