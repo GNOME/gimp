@@ -31,10 +31,6 @@
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
-#ifndef LIBGIMP_COMPILATION
-#define LIBGIMP_COMPILATION
-#endif
-
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpbasetypes.h"
 

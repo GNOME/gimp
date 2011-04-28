@@ -23,8 +23,8 @@
 #error "Only <libgimpbase/gimpbase.h> can be included directly."
 #endif
 
-#ifndef __GIMPENV_H__
-#define __GIMPENV_H__
+#ifndef __GIMP_ENV_H__
+#define __GIMP_ENV_H__
 
 
 G_BEGIN_DECLS
@@ -33,11 +33,11 @@ G_BEGIN_DECLS
 
 
 #ifdef G_OS_WIN32
-#  ifdef LIBGIMP_COMPILATION
+#  ifdef GIMP_BASE_COMPILATION
 #    define GIMPVAR __declspec(dllexport)
-#  else  /* !LIBGIMP_COMPILATION */
+#  else  /* !GIMP_BASE_COMPILATION */
 #    define GIMPVAR extern __declspec(dllimport)
-#  endif /* !LIBGIMP_COMPILATION */
+#  endif /* !GIMP_BASE_COMPILATION */
 #else  /* !G_OS_WIN32 */
 #  define GIMPVAR extern
 #endif
@@ -76,4 +76,4 @@ void          gimp_env_init                   (gboolean            plug_in);
 
 G_END_DECLS
 
-#endif  /*  __GIMPENV_H__  */
+#endif  /*  __GIMP_ENV_H__  */
