@@ -92,11 +92,8 @@
 
 #include <locale.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-
+#include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpbase-private.h"
-#include "libgimpbase/gimpenv.h"
-#include "libgimpbase/gimpparasite.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
