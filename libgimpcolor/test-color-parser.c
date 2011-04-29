@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include <glib-object.h>
+#include <cairo.h>
 
 #include "gimpcolor.h"
 
