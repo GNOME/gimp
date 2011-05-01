@@ -265,7 +265,7 @@ gimp_canvas_layer_boundary_set_layer (GimpCanvasLayerBoundary *boundary,
 
       g_object_set (boundary,
                     "layer",     layer,
-                    "edit-mask", FALSE,
+                    "edit-mask", edit_mask,
                     NULL);
 
       gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (boundary));
