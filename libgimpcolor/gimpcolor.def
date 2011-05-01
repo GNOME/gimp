@@ -7,6 +7,9 @@ EXPORTS
 	gimp_bilinear_pixels_8
 	gimp_bilinear_rgb
 	gimp_bilinear_rgba
+	gimp_cairo_checkerboard_create
+	gimp_cairo_set_source_rgb
+	gimp_cairo_set_source_rgba
 	gimp_cmyk_get_type
 	gimp_cmyk_get_uchar
 	gimp_cmyk_set
