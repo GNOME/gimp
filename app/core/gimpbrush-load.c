@@ -688,7 +688,6 @@ gimp_brush_load_abr_brush_v6 (FILE         *file,
 
   gint32     brush_size;
   gint32     brush_end;
-  gint32     complement_to_4;
   gint32     next_brush;
 
   gint32     top, left, bottom, right;
@@ -704,9 +703,11 @@ gimp_brush_load_abr_brush_v6 (FILE         *file,
 
   brush_size = abr_read_long (file);
   brush_end = brush_size;
+
   /* complement to 4 */
-  while (brush_end % 4 != 0) brush_end++;
-  complement_to_4 = brush_end - brush_size;
+  while (brush_end % 4 != 0)
+    brush_end++;
+
   next_brush = ftell (file) + brush_end;
 
   if (abr_hdr->count == 1)

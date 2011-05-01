@@ -127,9 +127,6 @@ color_pixels_mask (guchar       *dest,
                    guint         bytes)
 {
   guchar c0, c1, c2;
-  gint   alpha;
-
-  alpha = HAS_ALPHA (bytes) ? bytes - 1 : bytes;
 
   switch (bytes)
     {

@@ -453,16 +453,13 @@ gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
                                   GType              page_type,
                                   gboolean           has_page)
 {
-  GimpColorSelector *selector;
-  GList             *list;
+  GList *list;
 
   g_return_val_if_fail (GIMP_IS_COLOR_NOTEBOOK (notebook), NULL);
   g_return_val_if_fail (g_type_is_a (page_type, GIMP_TYPE_COLOR_SELECTOR),
                         NULL);
   g_return_val_if_fail (! g_type_is_a (page_type, GIMP_TYPE_COLOR_NOTEBOOK),
                         NULL);
-
-  selector = GIMP_COLOR_SELECTOR (notebook);
 
   for (list = notebook->selectors; list; list = g_list_next (list))
     {

@@ -897,21 +897,17 @@ gimp_rectangle_tool_button_press (GimpTool         *tool,
                                   GdkModifierType   state,
                                   GimpDisplay      *display)
 {
-  GimpRectangleTool           *rect_tool;
-  GimpDrawTool                *draw_tool;
-  GimpRectangleToolPrivate    *private;
-  GimpRectangleOptions        *options;
-  GimpRectangleOptionsPrivate *options_private;
-  gdouble                      snapped_x, snapped_y;
-  gint                         snap_x, snap_y;
+  GimpRectangleTool        *rect_tool;
+  GimpDrawTool             *draw_tool;
+  GimpRectangleToolPrivate *private;
+  gdouble                   snapped_x, snapped_y;
+  gint                      snap_x, snap_y;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
-  rect_tool       = GIMP_RECTANGLE_TOOL (tool);
-  draw_tool       = GIMP_DRAW_TOOL (tool);
-  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
-  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+  rect_tool = GIMP_RECTANGLE_TOOL (tool);
+  draw_tool = GIMP_DRAW_TOOL (tool);
+  private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
 
   gimp_draw_tool_pause (draw_tool);
 
@@ -1019,13 +1015,11 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
 {
   GimpRectangleTool        *rect_tool;
   GimpRectangleToolPrivate *private;
-  GimpRectangleOptions     *options;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
   rect_tool = GIMP_RECTANGLE_TOOL (tool);
   private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-  options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -1093,20 +1087,18 @@ gimp_rectangle_tool_motion (GimpTool         *tool,
                             GdkModifierType   state,
                             GimpDisplay      *display)
 {
-  GimpRectangleTool           *rect_tool;
-  GimpRectangleToolPrivate    *private;
-  GimpRectangleOptions        *options;
-  GimpRectangleOptionsPrivate *options_private;
-  gdouble                      snapped_x;
-  gdouble                      snapped_y;
-  gint                         snap_x, snap_y;
+  GimpRectangleTool        *rect_tool;
+  GimpRectangleToolPrivate *private;
+  GimpRectangleOptions     *options;
+  gdouble                   snapped_x;
+  gdouble                   snapped_y;
+  gint                      snap_x, snap_y;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
-  rect_tool       = GIMP_RECTANGLE_TOOL (tool);
-  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
-  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+  rect_tool = GIMP_RECTANGLE_TOOL (tool);
+  private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
 
   /* Motion events should be ignored when we're just waiting for the
    * button release event to execute or if the user has grabbed a dead
@@ -1668,15 +1660,13 @@ gimp_rectangle_tool_cursor_update (GimpTool         *tool,
                                    GdkModifierType   state,
                                    GimpDisplay      *display)
 {
-  GimpRectangleTool        *rect_tool;
   GimpRectangleToolPrivate *private;
   GimpCursorType            cursor   = GIMP_CURSOR_CROSSHAIR_SMALL;
   GimpCursorModifier        modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
-  rect_tool = GIMP_RECTANGLE_TOOL (tool);
-  private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
 
   if (tool->display == display)
     {
@@ -2132,15 +2122,12 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
 {
   GimpTool                    *tool = GIMP_TOOL (rect_tool);
   GimpRectangleOptionsPrivate *options_private;
-  GimpRectangleToolPrivate    *private;
   GimpImage                   *image;
   gdouble                      xres;
   gdouble                      yres;
 
   options_private =
     GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (gimp_tool_get_options (tool));
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   image = gimp_display_get_image (display);
 
@@ -2277,14 +2264,11 @@ gimp_rectangle_tool_execute (GimpRectangleTool *rect_tool)
 
   if (iface->execute)
     {
-      GimpRectangleToolPrivate *private;
-      gdouble                   pub_x1, pub_y1;
-      gdouble                   pub_x2, pub_y2;
+      gdouble pub_x1, pub_y1;
+      gdouble pub_x2, pub_y2;
 
       gimp_rectangle_tool_get_public_rect (rect_tool,
                                            &pub_x1, &pub_y1, &pub_x2, &pub_y2);
-
-      private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
 
@@ -2317,16 +2301,14 @@ static void
 gimp_rectangle_tool_update_options (GimpRectangleTool *rect_tool,
                                     GimpDisplay       *display)
 {
-  GimpRectangleToolPrivate *private;
-  GimpRectangleOptions     *options;
-  gdouble                   x1, y1;
-  gdouble                   x2, y2;
-  gdouble                   old_x;
-  gdouble                   old_y;
-  gdouble                   old_width;
-  gdouble                   old_height;
+  GimpRectangleOptions *options;
+  gdouble               x1, y1;
+  gdouble               x2, y2;
+  gdouble               old_x;
+  gdouble               old_y;
+  gdouble               old_width;
+  gdouble               old_height;
 
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rect_tool);
 
   gimp_rectangle_tool_get_public_rect (rect_tool, &x1, &y1, &x2, &y2);
@@ -2960,12 +2942,9 @@ gimp_rectangle_tool_update_highlight (GimpRectangleTool *rect_tool)
     }
   else
     {
-      GimpRectangleToolPrivate *private;
-      GdkRectangle              rect;
-      gdouble                   pub_x1, pub_y1;
-      gdouble                   pub_x2, pub_y2;
-
-      private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+      GdkRectangle rect;
+      gdouble      pub_x1, pub_y1;
+      gdouble      pub_x2, pub_y2;
 
       gimp_rectangle_tool_get_public_rect (rect_tool,
                                            &pub_x1, &pub_y1, &pub_x2, &pub_y2);
@@ -3100,14 +3079,8 @@ gimp_rectangle_tool_get_other_side_coord (GimpRectangleTool *rect_tool,
                                           gdouble           *other_side_x,
                                           gdouble           *other_side_y)
 {
-  GimpRectangleToolPrivate *private;
-  gdouble                  *other_x;
-  gdouble                  *other_y;
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
-
-  other_x = NULL;
-  other_y = NULL;
+  gdouble *other_x = NULL;
+  gdouble *other_y = NULL;
 
   gimp_rectangle_tool_get_other_side (rect_tool,
                                       &other_x,
@@ -3123,14 +3096,8 @@ gimp_rectangle_tool_set_other_side_coord (GimpRectangleTool *rect_tool,
                                           gdouble            other_side_x,
                                           gdouble            other_side_y)
 {
-  GimpRectangleToolPrivate *private;
-  gdouble                  *other_x;
-  gdouble                  *other_y;
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
-
-  other_x = NULL;
-  other_y = NULL;
+  gdouble *other_x = NULL;
+  gdouble *other_y = NULL;
 
   gimp_rectangle_tool_get_other_side (rect_tool,
                                       &other_x,
@@ -3628,13 +3595,9 @@ gimp_rectangle_tool_apply_fixed_width (GimpRectangleTool      *rect_tool,
                                        GimpRectangleConstraint constraint,
                                        gdouble                 width)
 {
-  GimpRectangleToolPrivate    *private;
-  GimpRectangleOptions        *options;
-  GimpRectangleOptionsPrivate *options_private;
+  GimpRectangleToolPrivate *private;
 
-  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
-  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rect_tool);
-  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   switch (private->function)
     {
@@ -3688,13 +3651,9 @@ gimp_rectangle_tool_apply_fixed_height (GimpRectangleTool      *rect_tool,
                                         gdouble                 height)
 
 {
-  GimpRectangleToolPrivate    *private;
-  GimpRectangleOptions        *options;
-  GimpRectangleOptionsPrivate *options_private;
+  GimpRectangleToolPrivate *private;
 
-  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
-  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rect_tool);
-  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   switch (private->function)
     {

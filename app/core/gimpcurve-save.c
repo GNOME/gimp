@@ -36,13 +36,13 @@ gboolean
 gimp_curve_save (GimpData  *data,
                  GError   **error)
 {
-  GimpCurve *curve;
+  /* GimpCurve *curve; */
   FILE      *file;
 
   g_return_val_if_fail (GIMP_IS_CURVE (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  curve = GIMP_CURVE (data);
+  /* curve = GIMP_CURVE (data); */
 
   file = g_fopen (gimp_data_get_filename (data), "wb");
 

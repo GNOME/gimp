@@ -59,7 +59,6 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
                                    GimpMenuFactory  *menu_factory)
 {
   GimpToolPresetFactoryView *factory_view;
-  GimpContainerEditor     *editor;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (view_size > 0 &&
@@ -82,8 +81,6 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
       g_object_unref (factory_view);
       return NULL;
     }
-
-  editor = GIMP_CONTAINER_EDITOR (factory_view);
 
   gtk_widget_hide (gimp_data_factory_view_get_duplicate_button (GIMP_DATA_FACTORY_VIEW (factory_view)));
 

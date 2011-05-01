@@ -1311,17 +1311,12 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
                               GdkDragContext *context,
                               GimpDockable   *dockable)
 {
-  GimpDock          *dock;
-  GimpPanedBoxClass *paned_box_class;
-  GtkAllocation      allocation;
-  GtkWidget         *window;
-  GtkWidget         *view;
-  GtkRequisition     requisition;
-  gint               drag_x;
-  gint               drag_y;
-
-  dock            = GIMP_DOCK (gimp_dockable_get_dockbook (dockable)->p->dock);
-  paned_box_class = GIMP_PANED_BOX_GET_CLASS (gimp_dock_get_vbox (dock));
+  GtkAllocation   allocation;
+  GtkWidget      *window;
+  GtkWidget      *view;
+  GtkRequisition  requisition;
+  gint            drag_x;
+  gint            drag_y;
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -1359,14 +1354,10 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
                             GdkDragContext *context,
                             GimpDockable   *dockable)
 {
-  GimpDock          *dock;
-  GimpPanedBoxClass *paned_box_class;
-  GtkWidget         *drag_widget;
+  GtkWidget *drag_widget;
 
-  dock            = GIMP_DOCK (gimp_dockable_get_dockbook (dockable)->p->dock);
-  paned_box_class = GIMP_PANED_BOX_GET_CLASS (gimp_dock_get_vbox (dock));
-  drag_widget     = g_object_get_data (G_OBJECT (dockable),
-                                       "gimp-dock-drag-widget");
+  drag_widget = g_object_get_data (G_OBJECT (dockable),
+                                   "gimp-dock-drag-widget");
 
   /*  finding the drag_widget means the drop was not successful, so
    *  pop up a new dock and move the dockable there

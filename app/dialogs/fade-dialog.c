@@ -77,7 +77,6 @@ fade_dialog_new (GimpImage *image,
   GtkWidget        *main_vbox;
   GtkWidget        *table;
   GtkWidget        *menu;
-  GtkWidget        *label;
   gchar            *title;
   gint              table_row = 0;
 
@@ -153,9 +152,9 @@ fade_dialog_new (GimpImage *image,
   /*  the paint mode menu  */
   menu = gimp_prop_paint_mode_menu_new (G_OBJECT (private->context),
                                         "paint-mode", TRUE, TRUE);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                     _("_Mode:"), 0.0, 0.5,
-                                     menu, 2, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                             _("_Mode:"), 0.0, 0.5,
+                             menu, 2, FALSE);
 
   /*  the opacity scale  */
   gimp_prop_opacity_entry_new (G_OBJECT (private->context), "opacity",

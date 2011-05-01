@@ -162,13 +162,11 @@ gimp_template_view_activate_item (GimpContainerEditor *editor,
 {
   GimpTemplateView *view = GIMP_TEMPLATE_VIEW (editor);
   GimpContainer    *container;
-  GimpContext      *context;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
   container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
 
   if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
     {

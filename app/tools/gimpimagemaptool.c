@@ -298,11 +298,8 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       GtkWidget             *dialog;
       GtkWidget             *vbox;
       GtkWidget             *toggle;
-      const gchar           *stock_id;
 
       klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
-
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
       window = gimp_display_shell_get_window (display_shell);
 

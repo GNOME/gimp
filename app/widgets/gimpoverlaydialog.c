@@ -266,12 +266,12 @@ gimp_overlay_dialog_new (GimpToolInfo *tool_info,
                          ...)
 {
   GtkWidget   *dialog;
-  const gchar *stock_id;
+  /* const gchar *stock_id; */
   va_list      args;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  /* stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info)); */
 
   dialog = g_object_new (GIMP_TYPE_OVERLAY_DIALOG, NULL);
 

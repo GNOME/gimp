@@ -622,9 +622,8 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
                                  const gchar      *label,
                                  GtkWidget        *options)
 {
-  gint     content_spacing;
-  gint     button_spacing;
-  gboolean box_created = FALSE;
+  gint content_spacing;
+  gint button_spacing;
 
   g_return_if_fail (GIMP_IS_ITEM_TREE_VIEW (view));
   g_return_if_fail (GTK_IS_WIDGET (options));
@@ -651,8 +650,6 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
         {
           gtk_widget_set_sensitive (view->priv->options_box, FALSE);
         }
-
-      box_created = TRUE;
     }
 
   if (label)

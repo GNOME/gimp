@@ -221,13 +221,9 @@ gimp_buffer_new (TileManager *tiles,
                  gboolean     copy_pixels)
 {
   GimpBuffer *buffer;
-  gint        width, height;
 
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (name != NULL, NULL);
-
-  width  = tile_manager_width (tiles);
-  height = tile_manager_height (tiles);
 
   buffer = g_object_new (GIMP_TYPE_BUFFER,
                          "name", name,

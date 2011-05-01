@@ -63,17 +63,14 @@ gimp_rc_serialize_properties_diff (GimpConfig       *config,
                                    GimpConfig       *compare,
                                    GimpConfigWriter *writer)
 {
-  GObjectClass *klass;
-  GList        *diff;
-  GList        *list;
-  gboolean      retval = TRUE;
+  GList    *diff;
+  GList    *list;
+  gboolean  retval = TRUE;
 
   g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
   g_return_val_if_fail (G_IS_OBJECT (compare), FALSE);
   g_return_val_if_fail (G_TYPE_FROM_INSTANCE (config) ==
                         G_TYPE_FROM_INSTANCE (compare), FALSE);
-
-  klass = G_OBJECT_GET_CLASS (config);
 
   diff = gimp_config_diff (G_OBJECT (config),
                            G_OBJECT (compare), GIMP_CONFIG_PARAM_SERIALIZE);

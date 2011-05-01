@@ -1482,15 +1482,13 @@ gimp_drawable_set_tiles_full (GimpDrawable  *drawable,
                               gint           offset_x,
                               gint           offset_y)
 {
-  GimpItem  *item;
-  GimpImage *image;
+  GimpItem *item;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (tiles != NULL);
   g_return_if_fail (tile_manager_bpp (tiles) == GIMP_IMAGE_TYPE_BYTES (type));
 
-  item  = GIMP_ITEM (drawable);
-  image = gimp_item_get_image (item);
+  item = GIMP_ITEM (drawable);
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;

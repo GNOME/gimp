@@ -107,26 +107,10 @@ gimp_display_shell_update_scrollbars_and_rulers (GimpDisplayShell *shell)
 void
 gimp_display_shell_scale_update_scrollbars (GimpDisplayShell *shell)
 {
-  GimpImage *image;
-  gint       image_width;
-  gint       image_height;
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   if (! shell->display)
     return;
-
-  image = gimp_display_get_image (shell->display);
-
-  if (image)
-    {
-      image_width  = gimp_image_get_width  (image);
-      image_height = gimp_image_get_height (image);
-    }
-  else
-    {
-      image_width  = shell->disp_width;
-      image_height = shell->disp_height;
-    }
-
 
   /* Horizontal scrollbar */
 

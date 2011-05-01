@@ -1812,7 +1812,7 @@ find_max_gradient (GimpIscissorsTool *iscissors,
   gint         radius;
   gint         i, j;
   gint         endx, endy;
-  gint         sx, sy, cx, cy;
+  gint         cx, cy;
   gint         x1, y1, x2, y2;
   gpointer     pr;
   gfloat       max_gradient;
@@ -1827,8 +1827,6 @@ find_max_gradient (GimpIscissorsTool *iscissors,
   /*  calculate the extent of the search  */
   cx = CLAMP (*x, 0, gimp_image_get_width  (image));
   cy = CLAMP (*y, 0, gimp_image_get_height (image));
-  sx = cx - radius;
-  sy = cy - radius;
   x1 = CLAMP (cx - radius, 0, gimp_image_get_width  (image));
   y1 = CLAMP (cy - radius, 0, gimp_image_get_height (image));
   x2 = CLAMP (cx + radius, 0, gimp_image_get_width  (image));

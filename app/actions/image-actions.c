@@ -229,7 +229,6 @@ image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
   GimpImage *image  = action_data_get_image (data);
-  gboolean   fs     = FALSE;
   gboolean   aux    = FALSE;
   gboolean   lp     = FALSE;
   gboolean   sel    = FALSE;
@@ -257,7 +256,6 @@ image_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      fs  = (gimp_image_get_floating_selection (image) != NULL);
       aux = (gimp_image_get_active_channel (image) != NULL);
       lp  = ! gimp_image_is_empty (image);
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));

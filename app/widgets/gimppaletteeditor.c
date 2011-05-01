@@ -669,9 +669,6 @@ palette_editor_entry_selected (GimpPaletteView   *view,
                                GimpPaletteEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  GimpPalette    *palette;
-
-  palette = GIMP_PALETTE (data_editor->data);
 
   if (editor->color != entry)
     {

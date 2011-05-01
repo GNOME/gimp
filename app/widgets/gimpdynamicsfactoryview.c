@@ -59,7 +59,6 @@ gimp_dynamics_factory_view_new (GimpViewType      view_type,
                                GimpMenuFactory  *menu_factory)
 {
   GimpDynamicsFactoryView *factory_view;
-  GimpContainerEditor     *editor;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (view_size > 0 &&
@@ -82,8 +81,6 @@ gimp_dynamics_factory_view_new (GimpViewType      view_type,
       g_object_unref (factory_view);
       return NULL;
     }
-
-  editor = GIMP_CONTAINER_EDITOR (factory_view);
 
   return GTK_WIDGET (factory_view);
 }

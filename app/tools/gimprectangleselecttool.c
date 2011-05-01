@@ -556,11 +556,7 @@ gimp_rectangle_select_tool_oper_update (GimpTool         *tool,
                                         gboolean          proximity,
                                         GimpDisplay      *display)
 {
-  GimpRectangleFunction function;
-
   gimp_rectangle_tool_oper_update (tool, coords, state, proximity, display);
-
-  function = gimp_rectangle_tool_get_function (GIMP_RECTANGLE_TOOL (tool));
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);

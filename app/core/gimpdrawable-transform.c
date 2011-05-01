@@ -78,7 +78,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       gint                   *new_offset_y,
                                       GimpProgress           *progress)
 {
-  GimpImage   *image;
   PixelRegion  destPR;
   TileManager *new_tiles;
   GimpMatrix3  m;
@@ -94,8 +93,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (new_offset_x != NULL, NULL);
   g_return_val_if_fail (new_offset_y != NULL, NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   m   = *matrix;
   inv = *matrix;

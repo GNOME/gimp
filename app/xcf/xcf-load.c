@@ -1773,13 +1773,10 @@ xcf_load_vectors (XcfInfo   *info,
   guint32      active_index;
   guint32      num_paths;
   GimpVectors *active_vectors;
-  guint32      base;
 
 #ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("xcf_load_vectors\n");
 #endif
-
-  base = info->cp;
 
   info->cp += xcf_read_int32  (info->fp, &version, 1);
 

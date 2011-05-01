@@ -202,18 +202,15 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
                                     gint              n_coords,
                                     gboolean          closed)
 {
-  GimpBezierStroke *bezier_stroke;
-  GimpStroke       *stroke;
-  GimpAnchor       *last_anchor;
-  gint              count;
+  GimpStroke *stroke;
+  GimpAnchor *last_anchor;
+  gint        count;
 
   g_return_val_if_fail (coords != NULL, NULL);
   g_return_val_if_fail (n_coords >= 3, NULL);
   g_return_val_if_fail ((n_coords % 3) == 0, NULL);
 
   stroke = gimp_bezier_stroke_new ();
-
-  bezier_stroke = GIMP_BEZIER_STROKE (stroke);
 
   last_anchor = NULL;
 
@@ -990,11 +987,8 @@ static gboolean
 gimp_bezier_stroke_is_extendable (GimpStroke *stroke,
                                   GimpAnchor *neighbor)
 {
-  GimpBezierStroke *bezier_stroke;
-  GList            *listneighbor;
-  gint              loose_end;
-
-  bezier_stroke = GIMP_BEZIER_STROKE (stroke);
+  GList *listneighbor;
+  gint   loose_end;
 
   if (stroke->closed)
     return FALSE;
@@ -1079,12 +1073,9 @@ gimp_bezier_stroke_extend (GimpStroke           *stroke,
                            GimpAnchor           *neighbor,
                            GimpVectorExtendMode  extend_mode)
 {
-  GimpAnchor       *anchor = NULL;
-  GimpBezierStroke *bezier_stroke;
-  GList            *listneighbor;
-  gint              loose_end, control_count;
-
-  bezier_stroke = GIMP_BEZIER_STROKE (stroke);
+  GimpAnchor *anchor = NULL;
+  GList      *listneighbor;
+  gint        loose_end, control_count;
 
   if (stroke->anchors == NULL)
     {

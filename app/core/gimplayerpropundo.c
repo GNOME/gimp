@@ -60,7 +60,6 @@ static void
 gimp_layer_prop_undo_constructed (GObject *object)
 {
   GimpLayerPropUndo *layer_prop_undo = GIMP_LAYER_PROP_UNDO (object);
-  GimpImage         *image;
   GimpLayer         *layer;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
@@ -68,7 +67,6 @@ gimp_layer_prop_undo_constructed (GObject *object)
 
   g_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
 
-  image = GIMP_UNDO (object)->image;
   layer = GIMP_LAYER (GIMP_ITEM_UNDO (object)->item);
 
   switch (GIMP_UNDO (object)->undo_type)

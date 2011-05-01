@@ -248,7 +248,6 @@ vectors_actions_update (GimpActionGroup *group,
   GimpDrawable *drawable    = NULL;
   gint          n_vectors   = 0;
   gboolean      mask_empty  = TRUE;
-  gboolean      global_buf  = FALSE;
   gboolean      visible     = FALSE;
   gboolean      linked      = FALSE;
   gboolean      locked      = FALSE;
@@ -262,7 +261,6 @@ vectors_actions_update (GimpActionGroup *group,
     {
       n_vectors  = gimp_image_get_n_vectors (image);
       mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
-      global_buf = FALSE;
 
       vectors = gimp_image_get_active_vectors (image);
 

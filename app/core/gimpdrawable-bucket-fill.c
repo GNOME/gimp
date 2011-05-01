@@ -63,7 +63,6 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            gdouble               y,
                            GError              **error)
 {
-  GimpImage   *image;
   GimpRGB      color;
   GimpPattern *pattern = NULL;
 
@@ -71,8 +70,6 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (fill_mode == GIMP_FG_BUCKET_FILL)
     {

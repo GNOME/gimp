@@ -530,12 +530,8 @@ gimp_undo_type_to_name (GimpUndoType type)
 gboolean
 gimp_undo_is_weak (GimpUndo *undo)
 {
-  GimpUndoType type;
-
   if (! undo)
     return FALSE;
-
-  type = undo->undo_type;
 
   switch (undo->undo_type)
     {

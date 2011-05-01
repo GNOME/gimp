@@ -163,13 +163,10 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                    const GimpCoords *coords)
 {
   GimpSmudge  *smudge = GIMP_SMUDGE (paint_core);
-  GimpImage   *image;
   TempBuf     *area;
   PixelRegion  srcPR;
   gint         bytes;
   gint         x, y, w, h;
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;

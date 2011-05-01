@@ -445,13 +445,11 @@ gimp_tag_entry_insert_text (GtkEditable *editable,
                             gint        *position)
 {
   GimpTagEntry *entry = GIMP_TAG_ENTRY (editable);
-  const gchar  *entry_text;
   gboolean      is_tag[2];
   gint          i;
   gint          insert_pos = *position;
   glong         num_chars;
 
-  entry_text = gtk_entry_get_text (GTK_ENTRY (editable));
   num_chars = g_utf8_strlen (new_text, text_length);
 
   if (! entry->internal_operation)
@@ -1216,20 +1214,10 @@ static void
 gimp_tag_entry_toggle_desc (GimpTagEntry *tag_entry,
                             gboolean      show)
 {
-  GtkWidget   *widget = GTK_WIDGET (tag_entry);
-  const gchar *display_text;
+  GtkWidget *widget = GTK_WIDGET (tag_entry);
 
   if (! (show ^ tag_entry->description_shown))
     return;
-
-  if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY)
-    {
-      display_text = GIMP_TAG_ENTRY_QUERY_DESC;
-    }
-  else
-    {
-      display_text = GIMP_TAG_ENTRY_ASSIGN_DESC;
-    }
 
   if (show)
     {

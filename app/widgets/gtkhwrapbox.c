@@ -78,14 +78,10 @@ gtk_hwrap_box_get_type (void)
 static void
 gtk_hwrap_box_class_init (GtkHWrapBoxClass *class)
 {
-  GObjectClass *object_class;
   GtkWidgetClass *widget_class;
-  GtkContainerClass *container_class;
   GtkWrapBoxClass *wrap_box_class;
 
-  object_class = G_OBJECT_CLASS (class);
   widget_class = GTK_WIDGET_CLASS (class);
-  container_class = GTK_CONTAINER_CLASS (class);
   wrap_box_class = GTK_WRAP_BOX_CLASS (class);
 
   parent_class = g_type_class_peek_parent (class);

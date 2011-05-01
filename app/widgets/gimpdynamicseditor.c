@@ -305,7 +305,6 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
                                      gint         row)
 {
   GtkWidget *label;
-  GtkWidget *button;
   gint       column = 1;
 
   label = gtk_label_new (row_label);
@@ -314,32 +313,32 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  button = dynamics_check_button_new (config, "use-pressure",
-                                      table, column, row);
+  dynamics_check_button_new (config, "use-pressure",
+                             table, column, row);
   column++;
 
-  button = dynamics_check_button_new (config, "use-velocity",
-                                      table, column, row);
+  dynamics_check_button_new (config, "use-velocity",
+                             table, column, row);
   column++;
 
-  button = dynamics_check_button_new (config, "use-direction",
-                                      table, column, row);
+  dynamics_check_button_new (config, "use-direction",
+                             table, column, row);
   column++;
 
-  button = dynamics_check_button_new (config,  "use-tilt",
-                                      table, column, row);
+  dynamics_check_button_new (config,  "use-tilt",
+                             table, column, row);
   column++;
 
-  button = dynamics_check_button_new (config,  "use-wheel",
-                                      table, column, row);
+  dynamics_check_button_new (config,  "use-wheel",
+                             table, column, row);
   column++;
 
-  button = dynamics_check_button_new (config, "use-random",
-                                      table, column, row);
+  dynamics_check_button_new (config, "use-random",
+                             table, column, row);
   column++;
 
-  button = dynamics_check_button_new (config, "use-fade",
-                                      table, column, row);
+  dynamics_check_button_new (config, "use-fade",
+                             table, column, row);
   column++;
 }
 

@@ -167,7 +167,6 @@ drawable_actions_update (GimpActionGroup *group,
   GimpImage    *image;
   GimpDrawable *drawable   = NULL;
   gboolean      is_rgb     = FALSE;
-  gboolean      is_gray    = FALSE;
   gboolean      is_indexed = FALSE;
   gboolean      visible    = FALSE;
   gboolean      linked     = FALSE;
@@ -188,7 +187,6 @@ drawable_actions_update (GimpActionGroup *group,
           GimpItem      *item;
 
           is_rgb     = GIMP_IMAGE_TYPE_IS_RGB     (drawable_type);
-          is_gray    = GIMP_IMAGE_TYPE_IS_GRAY    (drawable_type);
           is_indexed = GIMP_IMAGE_TYPE_IS_INDEXED (drawable_type);
 
           if (GIMP_IS_LAYER_MASK (drawable))

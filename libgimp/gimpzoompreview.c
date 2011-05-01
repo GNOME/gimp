@@ -621,22 +621,19 @@ gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
                                 GimpDrawable    *drawable)
 {
   GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+  gint                    x, y;
   gint                    width, height;
   gint                    max_width, max_height;
-  gint                    x1, y1;
-  gint                    x2, y2;
 
   g_return_if_fail (priv->drawable == NULL);
 
   priv->drawable = drawable;
 
-  if (gimp_drawable_mask_intersect (drawable->drawable_id, &x1, &y1, &width, &height))
+  if (gimp_drawable_mask_intersect (drawable->drawable_id,
+                                    &x, &y, &width, &height))
     {
-      x2 = x1 + width;
-      y2 = y1 + height;
-
-      priv->extents.x = x1;
-      priv->extents.y = y1;
+      priv->extents.x = x;
+      priv->extents.y = y;
     }
   else
     {

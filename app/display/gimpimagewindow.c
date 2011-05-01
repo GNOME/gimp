@@ -904,23 +904,20 @@ void
 gimp_image_window_shrink_wrap (GimpImageWindow *window,
                                gboolean         grow_only)
 {
-  GimpImageWindowPrivate *private;
-  GimpDisplayShell       *active_shell;
-  GimpImage              *image;
-  GtkWidget              *widget;
-  GtkAllocation           allocation;
-  GdkScreen              *screen;
-  GdkRectangle            rect;
-  gint                    monitor;
-  gint                    disp_width, disp_height;
-  gint                    width, height;
-  gint                    max_auto_width, max_auto_height;
-  gint                    border_width, border_height;
-  gboolean                resize = FALSE;
+  GimpDisplayShell *active_shell;
+  GimpImage        *image;
+  GtkWidget        *widget;
+  GtkAllocation     allocation;
+  GdkScreen        *screen;
+  GdkRectangle      rect;
+  gint              monitor;
+  gint              disp_width, disp_height;
+  gint              width, height;
+  gint              max_auto_width, max_auto_height;
+  gint              border_width, border_height;
+  gboolean          resize = FALSE;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
-
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   if (! gtk_widget_get_realized (GTK_WIDGET (window)))
     return;
