@@ -84,5 +84,7 @@ GValueArray   * gimp_pdb_execute_procedure_by_name      (GimpPDB       *pdb,
                                                          const gchar   *name,
                                                          ...);
 
+GList         * gimp_pdb_get_deprecated_procedures      (GimpPDB       *pdb);
+
 
 #endif  /*  __GIMP_PDB_H__  */

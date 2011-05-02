@@ -454,6 +454,44 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
   return return_vals;
 }
 
+/**
+ * gimp_pdb_get_deprecated_procedures:
+ * @pdb:
+ *
+ * Returns: A new #GList with the deprecated procedures. Free with
+ *          g_list_free().
+ **/
+GList *
+gimp_pdb_get_deprecated_procedures (GimpPDB *pdb)
+{
+  GList *result = NULL;
+  GList *procs;
+  GList *iter;
+
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+
+  procs = g_hash_table_get_values (pdb->procedures);
+
+  for (iter = procs;
+       iter;
+       iter = g_list_next (iter))
+    {
+      GList *proc_list = iter->data;
+
+      /* Only care about the first procedure in the list */
+      GimpProcedure *procedure = GIMP_PROCEDURE (proc_list->data);
+
+      if (procedure->deprecated)
+        result = g_list_prepend (result, procedure);
+    }
+
+  result = g_list_sort (result, (GCompareFunc) gimp_procedure_name_compare);
+
+  g_list_free (procs);
+
+  return result;
+}
+
 
 /*  private functions  */
 
