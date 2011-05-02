@@ -363,6 +363,9 @@ CFLAGS="$CFLAGS $extra_warnings"
 GIMP_DETECT_CFLAGS(extra_warnings, '-fno-common')
 CFLAGS="$CFLAGS $extra_warnings"
 
+GIMP_DETECT_CFLAGS(extra_warnings, '-fdiagnostics-show-option')
+CFLAGS="$CFLAGS $extra_warnings"
+
 
 # Extra optimization flags for super performance
 GIMP_DETECT_CFLAGS(extra_warnings, '--omg-optimized')
