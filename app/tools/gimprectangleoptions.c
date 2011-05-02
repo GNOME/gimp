@@ -1081,10 +1081,7 @@ gimp_rectangle_options_setup_ratio_completion (GimpRectangleOptions *rectangle_o
                                                GtkWidget            *entry,
                                                GtkListStore         *history)
 {
-  GimpRectangleOptionsPrivate *private;
-  GtkEntryCompletion          *completion;
-
-  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
+  GtkEntryCompletion *completion;
 
   completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
                              "model", history,

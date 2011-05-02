@@ -498,7 +498,6 @@ gimp_template_editor_new (GimpTemplate *template,
       GtkWidget   *table;
       GtkWidget   *entry;
       GtkWidget   *icon_picker;
-      const gchar *stock_id;
 
       table = gtk_table_new (2, 2, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -512,8 +511,6 @@ gimp_template_editor_new (GimpTemplate *template,
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                  _("_Name:"), 1.0, 0.5,
                                  entry, 1, FALSE);
-
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (private->template));
 
       icon_picker = gimp_prop_icon_picker_new (G_OBJECT (private->template),
                                                "stock-id",
