@@ -118,6 +118,10 @@ static gint       gimp_cage_tool_is_on_handle       (GimpCageTool          *ct,
                                                      gdouble                x,
                                                      gdouble                y,
                                                      gint                   handle_size);
+static gint       gimp_cage_tool_is_on_edge         (GimpCageTool          *ct,
+                                                     gdouble                x,
+                                                     gdouble                y,
+                                                     gint                   handle_size);
 
 static void       gimp_cage_tool_remove_last_handle (GimpCageTool          *ct);
 static void       gimp_cage_tool_compute_coef       (GimpCageTool          *ct,
@@ -300,6 +304,7 @@ gimp_cage_tool_start (GimpCageTool *ct,
 
   ct->config          = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
   ct->hovering_handle = -1;
+  ct->hovering_edge   = -1;
   ct->cage_complete   = FALSE;
   ct->tool_state      = CAGE_STATE_INIT;
 
@@ -486,19 +491,24 @@ gimp_cage_tool_oper_update (GimpTool         *tool,
 {
   GimpCageTool *ct        = GIMP_CAGE_TOOL (tool);
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
-  gint          handle    = -1;
 
   if (ct->config)
-    handle = gimp_cage_tool_is_on_handle (ct,
-                                          draw_tool,
-                                          display,
-                                          coords->x,
-                                          coords->y,
-                                          GIMP_TOOL_HANDLE_SIZE_CIRCLE);
+    {
+      ct->hovering_handle = gimp_cage_tool_is_on_handle (ct,
+                                                         draw_tool,
+                                                         display,
+                                                         coords->x,
+                                                         coords->y,
+                                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE);
+
+      ct->hovering_edge = gimp_cage_tool_is_on_edge (ct,
+                                                     coords->x,
+                                                     coords->y,
+                                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE);
+    }
 
   gimp_draw_tool_pause (draw_tool);
 
-  ct->hovering_handle = handle;
   ct->cursor_x        = coords->x;
   ct->cursor_y        = coords->y;
 
@@ -516,6 +526,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
   GimpCageTool    *ct        = GIMP_CAGE_TOOL (tool);
   GimpDrawTool    *draw_tool = GIMP_DRAW_TOOL (tool);
   gint             handle    = -1;
+  gint             edge      = -1;
 
   if (display != tool->display)
     gimp_cage_tool_start (ct, display);
@@ -523,12 +534,19 @@ gimp_cage_tool_button_press (GimpTool            *tool,
   gimp_tool_control_activate (tool->control);
 
   if (ct->config)
-    handle = gimp_cage_tool_is_on_handle (ct,
-                                          draw_tool,
-                                          display,
-                                          coords->x,
-                                          coords->y,
-                                          GIMP_TOOL_HANDLE_SIZE_CIRCLE);
+    {
+      handle = gimp_cage_tool_is_on_handle (ct,
+                                            draw_tool,
+                                            display,
+                                            coords->x,
+                                            coords->y,
+                                            GIMP_TOOL_HANDLE_SIZE_CIRCLE);
+      edge = gimp_cage_tool_is_on_edge (ct,
+                                        coords->x,
+                                        coords->y,
+                                        GIMP_TOOL_HANDLE_SIZE_CIRCLE);
+    }
+
   ct->movement_start_x = coords->x;
   ct->movement_start_y = coords->y;
 
@@ -548,7 +566,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
       case CAGE_STATE_WAIT:
         if (ct->cage_complete == FALSE)
           {
-            if (handle == -1)
+            if (handle == -1 && edge == -1)
               {
                 /* User clicked on the background, we add a new handle
                  * and move it
@@ -569,7 +587,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
                 gimp_cage_config_select_point (ct->config, 0);
                 ct->tool_state = CAGE_STATE_CLOSING;
               }
-            else if (handle > 0)
+            else if (handle >= 0)
               {
                 /* User clicked on a handle, so we move it */
 
@@ -591,12 +609,20 @@ gimp_cage_tool_button_press (GimpTool            *tool,
 
                 ct->tool_state = CAGE_STATE_MOVE_HANDLE;
               }
+            else if (edge >= 0)
+              {
+                /* User clicked on an edge, we add a new handle here and select it */
+
+                gimp_cage_config_insert_cage_point (ct->config, edge, coords->x, coords->y);
+                gimp_cage_config_select_point (ct->config, edge);
+                ct->tool_state = CAGE_STATE_MOVE_HANDLE;
+              }
           }
         else
           {
             /* Cage already closed */
 
-            if (handle == -1)
+            if (handle == -1 && edge == -1)
               {
                 /* User clicked on the background, we start a rubber
                  * band selection
@@ -605,8 +631,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
                 ct->selection_start_y = coords->y;
                 ct->tool_state = CAGE_STATE_SELECTING;
               }
-
-            if (handle >= 0)
+            else if (handle >= 0)
               {
                 /* User clicked on a handle, so we move it */
 
@@ -626,6 +651,14 @@ gimp_cage_tool_button_press (GimpTool            *tool,
                       }
                   }
 
+                ct->tool_state = CAGE_STATE_MOVE_HANDLE;
+              }
+            else if (edge >= 0)
+              {
+                /* User clicked on an edge, we add a new handle here and select it */
+
+                gimp_cage_config_insert_cage_point (ct->config, edge, coords->x, coords->y);
+                gimp_cage_config_select_point (ct->config, edge);
                 ct->tool_state = CAGE_STATE_MOVE_HANDLE;
               }
           }
@@ -798,6 +831,7 @@ gimp_cage_tool_cursor_update (GimpTool         *tool,
                               GimpDisplay      *display)
 {
   GimpCageTool       *ct       = GIMP_CAGE_TOOL (tool);
+  GimpCageOptions    *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_PLUS;
 
   if (tool->display)
@@ -805,6 +839,10 @@ gimp_cage_tool_cursor_update (GimpTool         *tool,
       if (ct->hovering_handle != -1)
         {
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
+        }
+      else if (ct->hovering_edge != -1 && options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+        {
+          modifier = GIMP_CURSOR_MODIFIER_PLUS;
         }
       else
         {
@@ -971,6 +1009,59 @@ gimp_cage_tool_is_on_handle (GimpCageTool *ct,
 
       if (dist <= SQR (handle_size / 2))
         return i;
+    }
+
+  return -1;
+}
+
+static gint
+gimp_cage_tool_is_on_edge (GimpCageTool *ct,
+                           gdouble       x,
+                           gdouble       y,
+                           gint          handle_size)
+{
+  GimpCageOptions *options = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
+  GimpCageConfig  *config  = ct->config;
+  gint             i;
+  guint            n_cage_vertices;
+  GimpVector2      A, B, C, AB, BC, AC;
+  gdouble          lAB, lBC, lAC, lEB, lEC;
+
+  g_return_val_if_fail (GIMP_IS_CAGE_TOOL (ct), -1);
+
+  n_cage_vertices = gimp_cage_config_get_n_points (config);
+
+  if (n_cage_vertices < 2)
+    return -1;
+
+  A = gimp_cage_config_get_point_coordinate (config,
+                                             options->cage_mode,
+                                             n_cage_vertices-1);
+  B = gimp_cage_config_get_point_coordinate (config,
+                                             options->cage_mode,
+                                             0);
+  C.x = x;
+  C.y = y;
+
+  for (i = 0; i < n_cage_vertices; i++)
+    {
+      gimp_vector2_sub (&AB, &A, &B);
+      gimp_vector2_sub (&BC, &B, &C);
+      gimp_vector2_sub (&AC, &A, &C);
+
+      lAB = gimp_vector2_length (&AB);
+      lBC = gimp_vector2_length (&BC);
+      lAC = gimp_vector2_length (&AC);
+      lEB = lAB / 2 + (SQR (lBC) - SQR (lAC)) / (2 * lAB);
+      lEC = sqrt (SQR (lBC) - SQR (lEB));
+
+      if ((lEC < handle_size / 2) && (abs (SQR (lBC) - SQR (lAC)) <= SQR (lAB)))
+        return i;
+
+      A = B;
+      B = gimp_cage_config_get_point_coordinate (config,
+                                                 options->cage_mode,
+                                                 (i+1) % n_cage_vertices);
     }
 
   return -1;
