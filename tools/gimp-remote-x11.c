@@ -36,7 +36,7 @@
 
 #include <X11/Xmu/WinUtil.h>
 
-#include "libgimpbase/gimpversion.h"
+#include "libgimpbase/gimpbase.h"
 
 #include <glib/gi18n.h>
 
