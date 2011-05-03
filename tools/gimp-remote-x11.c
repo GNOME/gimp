@@ -135,7 +135,7 @@ gimp_remote_find_toolbox (GdkDisplay *display,
               strcmp ((const gchar *) data, "gimp-toolbox") == 0)
             {
               XFree (data);
-              result = gdk_window_foreign_new_for_display (display, window);
+              result = gdk_x11_window_foreign_new_for_display (display, window);
               break;
             }
 
