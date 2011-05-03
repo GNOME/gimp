@@ -13,6 +13,12 @@ Changes in GIMP 2.7.3
 
 UI:
 
+ - Use GimpSpinScales instead of scale entries in all dockable widgets
+ - Allow the spin scale to control a range larger than its scale's range
+ - Implement RTL mode in GimpSpinScale
+ - Add lots of tooltips to tool options
+ - Allow to drop more things to the empty image window, and simply
+   create new images from them
  - Cage tool: allow to add handle to the cage when clicking on an edge
  - Cage tool: allow to remove selected handles from the cage by hitting delete
 
@@ -30,13 +36,19 @@ GEGL:
 
 Libgimp:
 
- - foo
+ - Make libgimp depend on GdkPixbuf
+ - Add API to create layers from cairo surfaces
+ - Make it impossible to include individual files from any GIMP
+   library. This was always forbidden and designed so it most
+   probably breaks, but now it reliably breaks using #error.
 
 
 Plug-ins:
 
- - foo
-
+ - Use poppler's cairo API to load PDFs, the pixbuf API is removed
+ - Port screenshot from GdkPixbuf to cairo
+ - Fix the annoying parser build warnings in imagemap
+ - PNG?
 
 Data:
 
@@ -45,17 +57,20 @@ Data:
 
 Developer documentation:
 
- - foo
+ - Many updates
 
 
 Source and build system:
 
- - foo
+ - Make cairo a global dependency, starting at libgimpcolor
+ - Require poppler >= 0.12.4
 
 
 General:
 
  - foo
+ - Some more undeprecations now that we use GTK+ 2.24
+ - Fix lots of warnings that are new in -Wall in GCC 4.6
  - Lots of bug fixes and cleanup
  - Lots of translation updates
 
