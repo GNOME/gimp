@@ -81,3 +81,18 @@ LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(script_fu_RC)
+
+
+# Perform static analysis on all *.scm files and look for usage of
+# deprecated pdb procedures
+check-for-deprecated-procedures-in-script-fu:
+	@echo "Looking for deprecated procedures in *.scm files"
+	@scm_files=`find $(top_srcdir)/plug-ins/script-fu -name "*.scm"`;       \
+	deprecated_procs=`$(top_builddir)/app/gimp-$(GIMP_APP_VERSION)$(EXEEXT) --dump-pdb-procedures-deprecated`; \
+	for scm_file in $$scm_files; do                                         \
+	  for proc in $$deprecated_procs; do                                    \
+	    if grep -qw $$proc $$scm_file; then                                 \
+	      echo "$${scm_file} uses deprecated procedure '$${proc}'";         \
+	    fi                                                                  \
+	  done                                                                  \
+	done

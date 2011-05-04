@@ -49,6 +49,7 @@ Plug-ins:
  - Use poppler's cairo API to load PDFs, the pixbuf API is removed
  - Port screenshot from GdkPixbuf to cairo
  - Fix the annoying parser build warnings in imagemap
+ - Add a check-for-deprecated-procedures-in-script-fu make target
  - PNG?
 
 Data:
