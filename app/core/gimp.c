@@ -62,6 +62,7 @@
 #include "gimpdocumentlist.h"
 #include "gimpgradient-load.h"
 #include "gimpgradient.h"
+#include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimpimagefile.h"
 #include "gimplist.h"
@@ -218,13 +219,11 @@ gimp_init (Gimp *gimp)
   gimp->images              = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->images), "images");
 
-  gimp->next_image_ID        = 1;
   gimp->next_guide_ID        = 1;
   gimp->next_sample_point_ID = 1;
-  gimp->image_table          = g_hash_table_new (g_direct_hash, NULL);
+  gimp->image_table          = gimp_id_table_new ();
 
-  gimp->next_item_ID        = 1;
-  gimp->item_table          = g_hash_table_new (g_direct_hash, NULL);
+  gimp->item_table          = gimp_id_table_new ();
 
   gimp->displays            = g_object_new (GIMP_TYPE_LIST,
                                             "children-type", GIMP_TYPE_OBJECT,
@@ -417,13 +416,13 @@ gimp_finalize (GObject *object)
 
   if (gimp->item_table)
     {
-      g_hash_table_destroy (gimp->item_table);
+      g_object_unref (gimp->item_table);
       gimp->item_table = NULL;
     }
 
   if (gimp->image_table)
     {
-      g_hash_table_destroy (gimp->image_table);
+      g_object_unref (gimp->image_table);
       gimp->image_table = NULL;
     }
 
@@ -492,8 +491,8 @@ gimp_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->plug_in_manager),
                                       gui_size);
 
-  memsize += gimp_g_hash_table_get_memsize (gimp->image_table, 0);
-  memsize += gimp_g_hash_table_get_memsize (gimp->item_table,  0);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->image_table), 0);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->item_table),  0);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->displays), gui_size);
 

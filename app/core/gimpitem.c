@@ -30,6 +30,7 @@
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpchannel.h"
+#include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -337,8 +338,7 @@ gimp_item_finalize (GObject *object)
 
   if (private->image && private->image->gimp)
     {
-      g_hash_table_remove (private->image->gimp->item_table,
-                           GINT_TO_POINTER (private->ID));
+      gimp_id_table_remove (private->image->gimp->item_table, private->ID);
       private->image = NULL;
     }
 
@@ -1600,8 +1600,7 @@ gimp_item_get_by_ID (Gimp *gimp,
   if (gimp->item_table == NULL)
     return NULL;
 
-  return (GimpItem *) g_hash_table_lookup (gimp->item_table,
-                                           GINT_TO_POINTER (item_id));
+  return (GimpItem *) gimp_id_table_lookup (gimp->item_table, item_id);
 }
 
 GimpTattoo
@@ -1649,19 +1648,7 @@ gimp_item_set_image (GimpItem  *item,
 
   if (private->ID == 0)
     {
-      do
-        {
-          private->ID = image->gimp->next_item_ID++;
-
-          if (image->gimp->next_item_ID == G_MAXINT)
-            image->gimp->next_item_ID = 1;
-        }
-      while (g_hash_table_lookup (image->gimp->item_table,
-                                  GINT_TO_POINTER (private->ID)));
-
-      g_hash_table_insert (image->gimp->item_table,
-                           GINT_TO_POINTER (private->ID),
-                           item);
+      private->ID = gimp_id_table_insert (image->gimp->item_table, item);
 
       g_object_notify (G_OBJECT (item), "id");
     }
@@ -1715,13 +1702,13 @@ gimp_item_replace_item (GimpItem *item,
   gimp_object_set_name (GIMP_OBJECT (item), gimp_object_get_name (replace));
 
   if (private->ID)
-    g_hash_table_remove (gimp_item_get_image (item)->gimp->item_table,
-                         GINT_TO_POINTER (gimp_item_get_ID (item)));
+    gimp_id_table_remove (gimp_item_get_image (item)->gimp->item_table,
+                          gimp_item_get_ID (item));
 
   private->ID = gimp_item_get_ID (replace);
-  g_hash_table_replace (gimp_item_get_image (item)->gimp->item_table,
-                        GINT_TO_POINTER (gimp_item_get_ID (item)),
-                        item);
+  gimp_id_table_replace (gimp_item_get_image (item)->gimp->item_table,
+                         gimp_item_get_ID (item),
+                         item);
 
   /* Set image before tatoo so that the explicitly set tatoo overrides
    * the one implicitly set when setting the image

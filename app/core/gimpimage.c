@@ -42,6 +42,7 @@
 #include "gimpgrid.h"
 #include "gimperror.h"
 #include "gimpguide.h"
+#include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
@@ -749,19 +750,7 @@ gimp_image_constructed (GObject *object)
 
   config = image->gimp->config;
 
-  do
-    {
-      private->ID = image->gimp->next_image_ID++;
-
-      if (image->gimp->next_image_ID == G_MAXINT)
-        image->gimp->next_image_ID = 1;
-    }
-  while (g_hash_table_lookup (image->gimp->image_table,
-                              GINT_TO_POINTER (private->ID)));
-
-  g_hash_table_insert (image->gimp->image_table,
-                       GINT_TO_POINTER (private->ID),
-                       image);
+  private->ID = gimp_id_table_insert (image->gimp->image_table, image);
 
   template = config->default_image;
 
@@ -997,8 +986,7 @@ gimp_image_finalize (GObject *object)
 
   if (image->gimp && image->gimp->image_table)
     {
-      g_hash_table_remove (image->gimp->image_table,
-                           GINT_TO_POINTER (private->ID));
+      gimp_id_table_remove (image->gimp->image_table, private->ID);
       image->gimp = NULL;
     }
 
@@ -1502,8 +1490,7 @@ gimp_image_get_by_ID (Gimp *gimp,
   if (gimp->image_table == NULL)
     return NULL;
 
-  return (GimpImage *) g_hash_table_lookup (gimp->image_table,
-                                            GINT_TO_POINTER (image_id));
+  return (GimpImage *) gimp_id_table_lookup (gimp->image_table, image_id);
 }
 
 void

@@ -74,13 +74,11 @@ struct _Gimp
   GimpPlugInManager      *plug_in_manager;
 
   GimpContainer          *images;
-  gint                    next_image_ID;
   guint32                 next_guide_ID;
   guint32                 next_sample_point_ID;
-  GHashTable             *image_table;
+  GimpIdTable            *image_table;
 
-  gint                    next_item_ID;
-  GHashTable             *item_table;
+  GimpIdTable            *item_table;
 
   GimpContainer          *displays;
   gint                    next_display_ID;
