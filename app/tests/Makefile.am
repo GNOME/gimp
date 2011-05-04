@@ -20,6 +20,7 @@ endif
 
 TESTS = \
 	test-core		\
+	test-gimpidtable	\
 	test-save-and-export	\
 	test-session-management	\
 	test-tools		\

@@ -153,6 +153,7 @@ typedef struct _GimpUndoAccumulator   GimpUndoAccumulator;
 typedef struct _GimpBuffer          GimpBuffer;
 typedef struct _GimpEnvironTable    GimpEnvironTable;
 typedef struct _GimpGuide           GimpGuide;
+typedef struct _GimpIdTable         GimpIdTable;
 typedef struct _GimpImageMap        GimpImageMap;
 typedef struct _GimpImageMapConfig  GimpImageMapConfig;
 typedef struct _GimpImagefile       GimpImagefile;

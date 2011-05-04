@@ -205,6 +205,8 @@ libappcore_a_sources = \
 	gimpguide.h				\
 	gimpguideundo.c				\
 	gimpguideundo.h				\
+	gimpidtable.c				\
+	gimpidtable.h				\
 	gimpimage.c				\
 	gimpimage.h				\
 	gimpimage-arrange.c			\

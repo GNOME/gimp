@@ -5,6 +5,7 @@ Makefile
 Makefile.in
 libgimpapptestutils.a
 test-core*
+test-gimpidtable*
 test-layer-grouping*
 test-save-and-export*
 test-session-management*
