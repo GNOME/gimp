@@ -43,8 +43,8 @@ typedef struct
 } GimpTestFixture;
 
 
-static void *data1 = (void *) 0x00000001;
-static void *data2 = (void *) 0x00000002;
+static gpointer data1 = (gpointer) 0x00000001;
+static gpointer data2 = (gpointer) 0x00000002;
 
 
 static void
@@ -71,8 +71,8 @@ static void
 insert_and_lookup (GimpTestFixture *f,
                    gconstpointer    data)
 {
-  gint  ret_id   = gimp_id_table_insert (f->id_table, data1);
-  void *ret_data = gimp_id_table_lookup (f->id_table, ret_id);
+  gint     ret_id   = gimp_id_table_insert (f->id_table, data1);
+  gpointer ret_data = gimp_id_table_lookup (f->id_table, ret_id);
 
   g_assert (ret_data == data1);
 }
@@ -86,10 +86,10 @@ static void
 insert_twice (GimpTestFixture *f,
               gconstpointer    data)
 {
-  gint  ret_id    = gimp_id_table_insert (f->id_table, data1);
-  void *ret_data  = gimp_id_table_lookup (f->id_table, ret_id);
-  gint  ret_id2   = gimp_id_table_insert (f->id_table, data2);
-  void *ret_data2 = gimp_id_table_lookup (f->id_table, ret_id2);
+  gint     ret_id    = gimp_id_table_insert (f->id_table, data1);
+  gpointer ret_data  = gimp_id_table_lookup (f->id_table, ret_id);
+  gint     ret_id2   = gimp_id_table_insert (f->id_table, data2);
+  gpointer ret_data2 = gimp_id_table_lookup (f->id_table, ret_id2);
 
   g_assert (ret_id    != ret_id2);
   g_assert (ret_data  == data1);
@@ -107,8 +107,8 @@ insert_with_id (GimpTestFixture *f,
 {
   const int id = 10;
 
-  int   ret_id   = gimp_id_table_insert_with_id (f->id_table, id, data1);
-  void *ret_data = gimp_id_table_lookup (f->id_table, id);
+  int      ret_id   = gimp_id_table_insert_with_id (f->id_table, id, data1);
+  gpointer ret_data = gimp_id_table_lookup (f->id_table, id);
 
   g_assert (ret_id   == id);
   g_assert (ret_data == data1);
@@ -126,10 +126,10 @@ insert_with_id_existing (GimpTestFixture *f,
 {
   const int id = 10;
 
-  int   ret_id    = gimp_id_table_insert_with_id (f->id_table, id, data1);
-  void *ret_data  = gimp_id_table_lookup (f->id_table, ret_id);
-  int   ret_id2   = gimp_id_table_insert_with_id (f->id_table, id, data2);
-  void *ret_data2 = gimp_id_table_lookup (f->id_table, ret_id2);
+  int      ret_id    = gimp_id_table_insert_with_id (f->id_table, id, data1);
+  gpointer ret_data  = gimp_id_table_lookup (f->id_table, ret_id);
+  int      ret_id2   = gimp_id_table_insert_with_id (f->id_table, id, data2);
+  gpointer ret_data2 = gimp_id_table_lookup (f->id_table, ret_id2);
 
   g_assert (id        == ret_id);
   g_assert (ret_id2   == -1);
@@ -148,7 +148,7 @@ replace (GimpTestFixture *f,
          gconstpointer    data)
 {
   int ret_id = gimp_id_table_insert (f->id_table, data1);
-  void *ret_data;
+  gpointer ret_data;
 
   gimp_id_table_replace (f->id_table, ret_id, data2);
   ret_data = gimp_id_table_lookup (f->id_table, ret_id);
@@ -168,7 +168,7 @@ replace_as_insert (GimpTestFixture *f,
 {
   const int id = 10;
 
-  void *ret_data;
+  gpointer ret_data;
 
   gimp_id_table_replace (f->id_table, id, data1);
   ret_data = gimp_id_table_lookup (f->id_table, id);

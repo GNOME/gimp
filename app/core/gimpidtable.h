@@ -52,14 +52,14 @@ struct _GimpIdTableClass
 GType          gimp_id_table_get_type       (void) G_GNUC_CONST;
 GimpIdTable *  gimp_id_table_new            (void);
 gint           gimp_id_table_insert         (GimpIdTable *id_table,
-                                             void        *data);
+                                             gpointer     data);
 gint           gimp_id_table_insert_with_id (GimpIdTable *id_table,
                                              gint         id,
-                                             void        *data);
+                                             gpointer     data);
 void           gimp_id_table_replace        (GimpIdTable *id_table,
                                              gint         id,
-                                             void        *data);
-void         * gimp_id_table_lookup         (GimpIdTable *id_table,
+                                             gpointer     data);
+gpointer       gimp_id_table_lookup         (GimpIdTable *id_table,
                                              gint         id);
 gboolean       gimp_id_table_remove         (GimpIdTable *id_table,
                                              gint         id);

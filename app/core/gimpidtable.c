@@ -124,7 +124,7 @@ gimp_id_table_new (void)
  * Returns: The assigned ID.
  **/
 gint
-gimp_id_table_insert (GimpIdTable *id_table, void *data)
+gimp_id_table_insert (GimpIdTable *id_table, gpointer data)
 {
   gint new_id;
 
@@ -154,7 +154,7 @@ gimp_id_table_insert (GimpIdTable *id_table, void *data)
  * Returns: The used ID if successful, -1 if it was already in use.
  **/
 gint
-gimp_id_table_insert_with_id (GimpIdTable *id_table, gint id, void *data)
+gimp_id_table_insert_with_id (GimpIdTable *id_table, gint id, gpointer data)
 {
   g_return_val_if_fail (GIMP_IS_ID_TABLE (id_table), 0);
   g_return_val_if_fail (id > 0, 0);
@@ -177,7 +177,7 @@ gimp_id_table_insert_with_id (GimpIdTable *id_table, gint id, void *data)
  * entry in the id table.
  **/
 void
-gimp_id_table_replace (GimpIdTable *id_table, gint id, void *data)
+gimp_id_table_replace (GimpIdTable *id_table, gint id, gpointer data)
 {
   g_return_if_fail (GIMP_IS_ID_TABLE (id_table));
   g_return_if_fail (id > 0);
@@ -194,7 +194,7 @@ gimp_id_table_replace (GimpIdTable *id_table, gint id, void *data)
  *
  * Returns: The data, or NULL if no data with the given ID was found.
  **/
-void *
+gpointer
 gimp_id_table_lookup (GimpIdTable *id_table, gint id)
 {
   g_return_val_if_fail (GIMP_IS_ID_TABLE (id_table), NULL);
