@@ -579,6 +579,14 @@ gimp_procedure_create_override (GimpProcedure   *procedure,
   return new_procedure;
 }
 
+gint
+gimp_procedure_name_compare (GimpProcedure *proc1,
+                             GimpProcedure *proc2)
+{
+  /* Assume there always is a name, don't bother with NULL checks */
+  return strcmp (proc1->original_name,
+                 proc2->original_name);
+}
 
 /*  private functions  */
 
