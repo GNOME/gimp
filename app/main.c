@@ -43,13 +43,17 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
+#include "pdb/pdb-types.h"
 
 #include "base/tile.h"
 
 #include "config/gimpconfig-dump.h"
 
 #include "core/gimp.h"
+
+#include "pdb/gimppdb.h"
+#include "pdb/gimpprocedure.h"
+#include "pdb/internal-procs.h"
 
 #include "about.h"
 #include "app.h"
@@ -85,6 +89,11 @@ static gboolean  gimp_option_pdb_compat_mode  (const gchar  *option_name,
                                                gpointer      data,
                                                GError      **error);
 static gboolean  gimp_option_dump_gimprc      (const gchar  *option_name,
+                                               const gchar  *value,
+                                               gpointer      data,
+                                               GError      **error);
+static gboolean  gimp_option_dump_pdb_procedures_deprecated
+                                              (const gchar  *option_name,
                                                const gchar  *value,
                                                gpointer      data,
                                                GError      **error);
@@ -254,6 +263,12 @@ static const GOptionEntry main_entries[] =
     "dump-gimprc-manpage", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
     G_OPTION_ARG_CALLBACK, gimp_option_dump_gimprc,
     NULL, NULL
+  },
+  {
+    "dump-pdb-procedures-deprecated", 0,
+    G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
+    G_OPTION_ARG_CALLBACK, gimp_option_dump_pdb_procedures_deprecated,
+    N_("Output a gimprc file with default settings"), NULL
   },
   {
     G_OPTION_REMAINING, 0, 0,
@@ -590,6 +605,43 @@ gimp_option_dump_gimprc (const gchar  *option_name,
 
       app_exit (success ? EXIT_SUCCESS : EXIT_FAILURE);
     }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_option_dump_pdb_procedures_deprecated (const gchar  *option_name,
+                                            const gchar  *value,
+                                            gpointer      data,
+                                            GError      **error)
+{
+  Gimp  *gimp;
+  GList *deprecated_procs;
+  GList *iter;
+
+  gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
+
+  /* Make sure to turn of on compatibility mode so deprecated
+   * procedure are included
+   */
+  gimp->pdb_compat_mode = GIMP_PDB_COMPAT_ON;
+
+  internal_procs_init (gimp->pdb);
+
+  deprecated_procs = gimp_pdb_get_deprecated_procedures (gimp->pdb);
+
+  for (iter = deprecated_procs; iter; iter = g_list_next (iter))
+    {
+      GimpProcedure *procedure = GIMP_PROCEDURE (iter->data);
+
+      g_print ("%s\n", procedure->original_name);
+    }
+
+  g_list_free (deprecated_procs);
+
+  g_object_unref (gimp);
+
+  app_exit (EXIT_SUCCESS);
 
   return FALSE;
 }
