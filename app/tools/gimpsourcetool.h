@@ -37,17 +37,20 @@ typedef struct _GimpSourceToolClass GimpSourceToolClass;
 
 struct _GimpSourceTool
 {
-  GimpBrushTool  parent_instance;
+  GimpBrushTool   parent_instance;
 
-  GimpDisplay   *src_display;
-  gint           src_x;
-  gint           src_y;
+  GimpDisplay    *src_display;
+  gint            src_x;
+  gint            src_y;
 
-  gboolean       show_source_outline;
+  gboolean        show_source_outline;
 
-  const gchar   *status_paint;
-  const gchar   *status_set_source;
-  const gchar   *status_set_source_ctrl;
+  GimpCanvasItem *src_handle;
+  GimpCanvasItem *src_outline;
+
+  const gchar    *status_paint;
+  const gchar    *status_set_source;
+  const gchar    *status_set_source_ctrl;
 };
 
 struct _GimpSourceToolClass

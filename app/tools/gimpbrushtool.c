@@ -37,6 +37,8 @@
 #include "paint/gimpbrushcore.h"
 #include "paint/gimppaintoptions.h"
 
+#include "display/gimpcanvashandle.h"
+#include "display/gimpcanvaspath.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
@@ -277,25 +279,34 @@ gimp_brush_tool_options_notify (GimpTool         *tool,
 static void
 gimp_brush_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (draw_tool);
+  GimpBrushTool  *brush_tool = GIMP_BRUSH_TOOL (draw_tool);
+  GimpCanvasItem *item;
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     return;
 
-  gimp_brush_tool_draw_brush (brush_tool,
-                              brush_tool->brush_x, brush_tool->brush_y,
-                              ! brush_tool->show_cursor);
+  item = gimp_brush_tool_create_outline (brush_tool,
+                                         draw_tool->display,
+                                         brush_tool->brush_x,
+                                         brush_tool->brush_y,
+                                         ! brush_tool->show_cursor);
+
+  if (item)
+    {
+      gimp_draw_tool_add_item (draw_tool, item);
+      g_object_unref (item);
+    }
 }
 
-void
-gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
-                            gdouble        x,
-                            gdouble        y,
-                            gboolean       draw_fallback)
+GimpCanvasItem *
+gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
+                                GimpDisplay   *display,
+                                gdouble        x,
+                                gdouble        y,
+                                gboolean       draw_fallback)
 {
-  GimpDrawTool         *draw_tool;
   GimpBrushCore        *brush_core;
   GimpPaintOptions     *options;
   GimpDisplayShell     *shell;
@@ -303,18 +314,18 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   gint                  width    = 0;
   gint                  height   = 0;
 
-  g_return_if_fail (GIMP_IS_BRUSH_TOOL (brush_tool));
+  g_return_val_if_fail (GIMP_IS_BRUSH_TOOL (brush_tool), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
 
   if (! brush_tool->draw_brush)
-    return;
+    return NULL;
 
-  draw_tool  = GIMP_DRAW_TOOL (brush_tool);
   brush_core = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
   options    = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
-  shell      = gimp_display_get_shell (draw_tool->display);
+  shell      = gimp_display_get_shell (display);
 
   if (! brush_core->main_brush || ! brush_core->dynamics)
-    return;
+    return NULL;
 
   if (brush_core->scale > 0.0)
     boundary = gimp_brush_transform_boundary (brush_core->main_brush,
@@ -345,14 +356,19 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
 #undef EPSILON
         }
 
-      gimp_draw_tool_add_path (draw_tool, boundary, x, y);
+      return gimp_canvas_path_new (shell, boundary, x, y, FALSE, FALSE);
     }
   else if (draw_fallback)
     {
-      gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_CROSS,
-                                 x, y,
-                                 5, 5, GIMP_HANDLE_ANCHOR_CENTER);
+      return gimp_canvas_handle_new (shell,
+                                     GIMP_HANDLE_CROSS,
+                                     GIMP_HANDLE_ANCHOR_CENTER,
+                                     x, y,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL);
     }
+
+  return NULL;
 }
 
 static void

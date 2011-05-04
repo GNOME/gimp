@@ -31,7 +31,9 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvashandle.h"
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell-items.h"
 
 #include "gimpsourcetool.h"
 #include "gimptoolcontrol.h"
@@ -73,6 +75,9 @@ static void          gimp_source_tool_oper_update   (GimpTool            *tool,
                                                      GimpDisplay         *display);
 
 static void          gimp_source_tool_draw          (GimpDrawTool        *draw_tool);
+
+static void          gimp_source_tool_set_src_display (GimpSourceTool      *source_tool,
+                                                       GimpDisplay         *display);
 
 
 G_DEFINE_TYPE (GimpSourceTool, gimp_source_tool, GIMP_TYPE_BRUSH_TOOL)
@@ -150,7 +155,7 @@ gimp_source_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      source_tool->src_display = NULL;
+      gimp_source_tool_set_src_display (source_tool, NULL);
       g_object_set (GIMP_PAINT_TOOL (tool)->core,
                     "src-drawable", NULL,
                     NULL);
@@ -178,7 +183,7 @@ gimp_source_tool_button_press (GimpTool            *tool,
     {
       source->set_source = TRUE;
 
-      source_tool->src_display = display;
+      gimp_source_tool_set_src_display (source_tool, display);
     }
   else
     {
@@ -360,32 +365,88 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
 
   source = GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (draw_tool)->core);
 
+  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+
   if (options->use_source && source->src_drawable && source_tool->src_display)
     {
-      GimpDisplay   *tmp_display = draw_tool->display;
-      gint           off_x;
-      gint           off_y;
+      GimpDisplayShell *src_shell;
+      gint              off_x;
+      gint              off_y;
 
-      draw_tool->display = source_tool->src_display;
+      src_shell = gimp_display_get_shell (source_tool->src_display);
 
       gimp_item_get_offset (GIMP_ITEM (source->src_drawable), &off_x, &off_y);
 
+      if (source_tool->src_outline)
+        {
+          gimp_display_shell_remove_item (src_shell,
+                                          source_tool->src_outline);
+          source_tool->src_outline = NULL;
+        }
+
       if (source_tool->show_source_outline)
-        gimp_brush_tool_draw_brush (GIMP_BRUSH_TOOL (source_tool),
+        {
+          source_tool->src_outline =
+            gimp_brush_tool_create_outline (GIMP_BRUSH_TOOL (source_tool),
+                                            source_tool->src_display,
+                                            source_tool->src_x + off_x,
+                                            source_tool->src_y + off_y,
+                                            FALSE);
+          gimp_display_shell_add_item (src_shell,
+                                       source_tool->src_outline);
+          g_object_unref (source_tool->src_outline);
+        }
+
+      if (! source_tool->src_handle)
+        {
+          source_tool->src_handle =
+            gimp_canvas_handle_new (src_shell,
+                                    GIMP_HANDLE_CROSS,
+                                    GIMP_HANDLE_ANCHOR_CENTER,
                                     source_tool->src_x + off_x,
                                     source_tool->src_y + off_y,
-                                    FALSE);
-
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_CROSS,
-                                 source_tool->src_x + off_x,
-                                 source_tool->src_y + off_y,
-                                 GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                 GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
-
-      draw_tool->display = tmp_display;
+                                    GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                    GIMP_TOOL_HANDLE_SIZE_CROSS);
+          gimp_display_shell_add_item (src_shell,
+                                       source_tool->src_handle);
+          g_object_unref (source_tool->src_handle);
+        }
+      else
+        {
+          gimp_canvas_handle_set_position (source_tool->src_handle,
+                                           source_tool->src_x + off_x,
+                                           source_tool->src_y + off_y);
+        }
     }
+}
 
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+static void
+gimp_source_tool_set_src_display (GimpSourceTool *source_tool,
+                                  GimpDisplay    *display)
+{
+  if (source_tool->src_display != display)
+    {
+      if (source_tool->src_display)
+        {
+          GimpDisplayShell *src_shell;
+
+          src_shell = gimp_display_get_shell (source_tool->src_display);
+
+          if (source_tool->src_handle)
+            {
+              gimp_display_shell_remove_item (src_shell,
+                                              source_tool->src_handle);
+              source_tool->src_handle = NULL;
+            }
+
+          if (source_tool->src_outline)
+            {
+              gimp_display_shell_remove_item (src_shell,
+                                              source_tool->src_outline);
+              source_tool->src_outline = NULL;
+            }
+        }
+
+      source_tool->src_display = display;
+    }
 }
