@@ -1178,6 +1178,7 @@ fi
 
 if test "x$have_libpng" = xyes; then
   MIME_TYPES="$MIME_TYPES;image/png;image/x-icon"
+  PNG_CFLAGS="$PNG_CFLAGS -DPNG_PEDANTIC_WARNINGS"
 fi
 
 AC_SUBST(FILE_PNG)
@@ -1199,7 +1200,7 @@ if test "x$with_libmng" != xno && test -z "$MNG_LIBS" &&
     [have_libmng="no (MNG library not found)"], -lz -lm)
   if test "$mng_ok" = yes; then
     have_libmng=yes
-    FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng $JPEG_LIBS $PNG_LIBS"
+    FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng $JPEG_LIBS $PNG_LIBS"; MNG_CFLAGS="$PNG_CFLAGS"
   else
     have_libmng="no (MNG header file not found)"
   fi
@@ -1207,6 +1208,7 @@ fi
 
 AC_SUBST(FILE_MNG)
 AC_SUBST(MNG_LIBS)
+AC_SUBST(MNG_CFLAGS)
 
 
 ############################################################
@@ -1976,12 +1978,6 @@ if test "x$have_pango_1_32" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
 fi
 
-
-###############################################
-# Enable additional warnings of other libraries
-###############################################
-
-CPPFLAGS="${CPPFLAGS} -DPNG_PEDANTIC_WARNINGS"
 
 ############################
 # Require multihead safe API

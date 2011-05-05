@@ -1236,6 +1236,8 @@ file_jp2_load_LDADD = \
 	$(INTLLIBS)		\
 	$(file_jp2_load_RC)
 
+file_mng_CFLAGS = $(MNG_CFLAGS)
+
 file_mng_SOURCES = \
 	file-mng.c
 
