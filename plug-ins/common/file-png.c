@@ -1336,8 +1336,8 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  /* Set the image dimensions, bit depth, interlacing and compression */
-
+  /* Note: png_set_IHDR() must be called before any other png_set_*()
+     functions. */
   png_set_IHDR (pp, info, drawable->width, drawable->height,
                 bit_depth,
                 color_type,
