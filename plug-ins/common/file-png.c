@@ -1473,7 +1473,7 @@ save_image (const gchar  *filename,
   png_set_IHDR (pp, info, drawable->width, drawable->height,
                 bit_depth,
                 color_type,
-                pngvals.interlaced,
+                pngvals.interlaced ? PNG_INTERLACE_ADAM7 : PNG_INTERLACE_NONE,
                 PNG_COMPRESSION_TYPE_BASE,
                 PNG_FILTER_TYPE_BASE);
   png_set_compression_level (pp, pngvals.compression_level);
