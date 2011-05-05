@@ -281,7 +281,6 @@ sharpen (GimpDrawable *drawable)
   gint          width;          /* Byte width of the image */
   gint          x1;             /* Selection bounds */
   gint          y1;
-  gint          x2;
   gint          y2;
   gint          sel_width;      /* Selection width */
   gint          sel_height;     /* Selection height */
@@ -294,7 +293,6 @@ sharpen (GimpDrawable *drawable)
                                       &x1, &y1, &sel_width, &sel_height))
     return;
 
-  x2 = x1 + sel_width;
   y2 = y1 + sel_height;
 
   img_bpp = gimp_drawable_bpp (drawable->drawable_id);

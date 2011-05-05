@@ -174,7 +174,6 @@ script_fu_interface (SFScript  *script,
                      gint       start_arg)
 {
   GtkWidget    *dialog;
-  GtkWidget    *menu;
   GtkWidget    *vbox;
   GtkWidget    *vbox2;
   GtkSizeGroup *group;
@@ -321,7 +320,6 @@ script_fu_interface (SFScript  *script,
               break;
 
             default:
-              menu = NULL;
               break;
             }
 

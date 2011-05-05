@@ -780,11 +780,9 @@ save_direct (FITS_FILE *ofp,
   guchar *data, *src;
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
-  GimpImageType drawable_type;
   FITS_HDU_LIST *hdu;
 
   drawable = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
   width = drawable->width;
   height = drawable->height;
   bpp = drawable->bpp;       /* Bytes per pixel */
@@ -871,13 +869,11 @@ save_index (FITS_FILE *ofp,
   guchar *channels[3];
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
-  GimpImageType drawable_type;
   FITS_HDU_LIST *hdu;
 
   channels[0] = red;   channels[1] = green;   channels[2] = blue;
 
   drawable = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
   width = drawable->width;
   height = drawable->height;
   bpp = drawable->bpp;       /* Bytes per pixel */

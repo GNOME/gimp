@@ -200,7 +200,7 @@ tile_region (GimpDrawable *drawable,
   gint          bpp;
   gint          wodd, hodd;
   gint          w, h, x, y;
-  gint          rgn1_x, rgn2_x, off_x;
+  gint          rgn1_x, rgn2_x;
   static gint   progress = 0;
   gint          max_progress;
   GimpPixelRgn  src1_rgn, src2_rgn, dest1_rgn, dest2_rgn;
@@ -224,13 +224,11 @@ tile_region (GimpDrawable *drawable,
     {
       rgn1_x = x1;
       rgn2_x = x1 + w + wodd;
-      off_x = w + wodd;
     }
   else
     {
       rgn1_x = x1 + w + wodd;
       rgn2_x = x1;
-      off_x = -w - wodd;
     }
 
   asymmetry_correction = !wodd && !left;

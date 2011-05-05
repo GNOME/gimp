@@ -979,12 +979,10 @@ do_tiles(void)
 
           for (col = dest_rgn.x; col < (dest_rgn.x + dest_rgn.w); col++)
             {
-              gint an_action;
-
-              an_action = tiles_xy (sel_width,
-                                    sel_height,
-                                    col-sel_x1,row-sel_y1,
-                                    &nc,&nr);
+              tiles_xy (sel_width,
+                        sel_height,
+                        col-sel_x1,row-sel_y1,
+                        &nc,&nr);
 
               gimp_pixel_fetcher_get_pixel (pft, nc + sel_x1, nr + sel_y1,
                                             pixel);

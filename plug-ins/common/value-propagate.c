@@ -913,7 +913,6 @@ set_foreground_to_peak (GimpImageType  image_type,
                         void          *tmp)
 {
   gint  value_chs = 0;
-  gint  alpha = 0;
   gint  ch;
   MiddlePacket  *data;
 
@@ -933,14 +932,12 @@ set_foreground_to_peak (GimpImageType  image_type,
       break;
     case GIMP_RGBA_IMAGE:
       value_chs = 3;
-      alpha = 3;
       break;
     case GIMP_GRAY_IMAGE:
       value_chs = 1;
       break;
     case GIMP_GRAYA_IMAGE:
       value_chs = 1;
-      alpha = 1;
       break;
     default:
       break;
