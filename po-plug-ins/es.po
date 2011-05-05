@@ -14,21 +14,22 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2009.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2011-02-16 21:53+0000\n"
-"PO-Revision-Date: 2011-02-17 16:30+0100\n"
-"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
+"POT-Creation-Date: 2011-02-27 17:29+0000\n"
+"PO-Revision-Date: 2011-05-05 09:48+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:118
 msgid "Original"
@@ -314,7 +315,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1039
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1080
-#: ../plug-ins/lighting/lighting-ui.c:414
+#: ../plug-ins/lighting/lighting-ui.c:418
 #: ../plug-ins/print/print-page-layout.c:461
 msgid "None"
 msgstr "Ninguno"
@@ -562,7 +563,7 @@ msgstr "Aplicar lienzo"
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
 #: ../plug-ins/common/apply-canvas.c:1292 ../plug-ins/common/wind.c:945
-#: ../plug-ins/lighting/lighting-ui.c:516
+#: ../plug-ins/lighting/lighting-ui.c:520
 msgid "Direction"
 msgstr "Dirección"
 
@@ -584,7 +585,7 @@ msgstr "In_ferior-Derecho"
 
 #: ../plug-ins/common/apply-canvas.c:1324 ../plug-ins/common/bump-map.c:916
 #: ../plug-ins/common/emboss.c:524 ../plug-ins/common/fractal-trace.c:796
-#: ../plug-ins/map-object/map-object-ui.c:507
+#: ../plug-ins/map-object/map-object-ui.c:518
 msgid "_Depth:"
 msgstr "P_rofundidad:"
 
@@ -639,7 +640,8 @@ msgstr "_Vertical"
 #: ../plug-ins/file-psd/psd-image-res-load.c:997
 #: ../plug-ins/file-psd/psd-load.c:1576 ../plug-ins/file-sgi/sgi.c:406
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:139 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1155
 msgid "Background"
 msgstr "Fondo"
@@ -777,7 +779,7 @@ msgstr "Desenfoque central [Blur]"
 #: ../plug-ins/common/nova.c:453 ../plug-ins/common/tile-paper.c:282
 #: ../plug-ins/flame/flame.c:1248
 #: ../plug-ins/gradient-flare/gradient-flare.c:2724
-#: ../plug-ins/lighting/lighting-ui.c:475
+#: ../plug-ins/lighting/lighting-ui.c:479
 msgid "_X:"
 msgstr "_X:"
 
@@ -785,7 +787,7 @@ msgstr "_X:"
 #: ../plug-ins/common/nova.c:458 ../plug-ins/common/tile-paper.c:291
 #: ../plug-ins/flame/flame.c:1262
 #: ../plug-ins/gradient-flare/gradient-flare.c:2728
-#: ../plug-ins/lighting/lighting-ui.c:490
+#: ../plug-ins/lighting/lighting-ui.c:494
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -798,7 +800,7 @@ msgid "Blur Parameters"
 msgstr "Parámetros de desenfoque"
 
 #: ../plug-ins/common/blur-motion.c:1127
-#: ../plug-ins/map-object/map-object-ui.c:1186
+#: ../plug-ins/map-object/map-object-ui.c:1197
 msgid "L_ength:"
 msgstr "L_ongitud:"
 
@@ -875,17 +877,17 @@ msgstr "Mapa de _relieve [bumb map]:"
 
 #. Map type menu
 #: ../plug-ins/common/bump-map.c:835 ../plug-ins/flame/flame.c:745
-#: ../plug-ins/lighting/lighting-ui.c:840
+#: ../plug-ins/lighting/lighting-ui.c:844
 msgid "Linear"
 msgstr "Lineal"
 
 #: ../plug-ins/common/bump-map.c:836 ../plug-ins/flame/flame.c:747
-#: ../plug-ins/lighting/lighting-ui.c:843
+#: ../plug-ins/lighting/lighting-ui.c:847
 msgid "Spherical"
 msgstr "Esférico"
 
 #: ../plug-ins/common/bump-map.c:837 ../plug-ins/flame/flame.c:746
-#: ../plug-ins/lighting/lighting-ui.c:842
+#: ../plug-ins/lighting/lighting-ui.c:846
 msgid "Sinusoidal"
 msgstr "Sinuosidal"
 
@@ -1066,7 +1068,7 @@ msgstr "Cargar la configuración del mezclador de canales"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:928
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
 #: ../plug-ins/help/gimphelplocale.c:238
-#: ../plug-ins/lighting/lighting-ui.c:1358
+#: ../plug-ins/lighting/lighting-ui.c:1365
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "No se pudo abrir «%s» para lectura: %s"
@@ -1101,7 +1103,7 @@ msgstr "Guardar la configuración del mezclador de canales"
 #: ../plug-ins/flame/flame.c:440
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:798 ../plug-ins/ifs-compose/ifs-compose.c:2394
-#: ../plug-ins/lighting/lighting-ui.c:1214
+#: ../plug-ins/lighting/lighting-ui.c:1221
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No se pudo abrir «%s» para escritura: %s"
@@ -2706,7 +2708,7 @@ msgstr "Anti-bandas"
 #: ../plug-ins/common/file-raw.c:1132 ../plug-ins/common/smooth-palette.c:435
 #: ../plug-ins/common/tile-paper.c:302 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
-#: ../plug-ins/imagemap/imap_rectangle.c:402
+#: ../plug-ins/imagemap/imap_rectangle.c:401
 #: ../plug-ins/print/print-page-layout.c:264
 msgid "_Width:"
 msgstr "A_nchura:"
@@ -2732,7 +2734,7 @@ msgid "Diffraction Patterns"
 msgstr "Patrones de difracción"
 
 #: ../plug-ins/common/diffraction.c:476
-#: ../plug-ins/map-object/map-object-ui.c:1326
+#: ../plug-ins/map-object/map-object-ui.c:1339
 msgid "_Preview!"
 msgstr "¡Vista _previa!"
 
@@ -3021,7 +3023,7 @@ msgstr "Grabado"
 #: ../plug-ins/common/file-raw.c:1145 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:440 ../plug-ins/common/tile-paper.c:313
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:174
-#: ../plug-ins/imagemap/imap_rectangle.c:409
+#: ../plug-ins/imagemap/imap_rectangle.c:408
 #: ../plug-ins/print/print-page-layout.c:266
 msgid "_Height:"
 msgstr "A_ltura:"
@@ -4176,7 +4178,7 @@ msgstr "_Milímetro"
 
 #. Rotation
 #: ../plug-ins/common/file-ps.c:3428
-#: ../plug-ins/map-object/map-object-ui.c:969
+#: ../plug-ins/map-object/map-object-ui.c:980
 msgid "Rotation"
 msgstr "Rotación"
 
@@ -5085,7 +5087,7 @@ msgstr "Numeración"
 
 #: ../plug-ins/common/film.c:1052
 msgid "Start _index:"
-msgstr "Índice _inicial:"
+msgstr "índice _inicial:"
 
 #: ../plug-ins/common/film.c:1065
 msgid "_Font:"
@@ -5870,7 +5872,7 @@ msgstr "H_acer los alrededores transparentes"
 
 #: ../plug-ins/common/lens-apply.c:475
 msgid "_Lens refraction index:"
-msgstr "Índice de refracción de los _lentes:"
+msgstr "índice de refracción de los _lentes:"
 
 #: ../plug-ins/common/lens-distortion.c:112
 msgid "Corrects lens distortion"
@@ -6735,8 +6737,8 @@ msgstr "Quitar ojos rojos"
 
 #: ../plug-ins/common/red-eye-removal.c:170
 #: ../plug-ins/common/unsharp-mask.c:892 ../plug-ins/common/wind.c:1008
-#: ../plug-ins/imagemap/imap_preferences.c:440
-#: ../plug-ins/map-object/map-object-ui.c:519
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:530
 msgid "_Threshold:"
 msgstr "_Umbral:"
 
@@ -7104,7 +7106,7 @@ msgid "_Distorted"
 msgstr "_Deformado"
 
 #: ../plug-ins/common/sinus.c:781 ../plug-ins/common/sinus.c:797
-#: ../plug-ins/imagemap/imap_preferences.c:421
+#: ../plug-ins/imagemap/imap_preferences.c:432
 msgid "Colors"
 msgstr "Colores"
 
@@ -7432,7 +7434,7 @@ msgstr "Relieve"
 
 #. row labels
 #: ../plug-ins/common/sphere-designer.c:2706
-#: ../plug-ins/lighting/lighting-ui.c:403
+#: ../plug-ins/lighting/lighting-ui.c:407
 msgid "Type:"
 msgstr "Tipo:"
 
@@ -7473,7 +7475,7 @@ msgid "Transformations"
 msgstr "Transformaciones"
 
 #: ../plug-ins/common/sphere-designer.c:2800
-#: ../plug-ins/map-object/map-object-ui.c:1077
+#: ../plug-ins/map-object/map-object-ui.c:1088
 msgid "Scale X:"
 msgstr "Escala X:"
 
@@ -9296,7 +9298,7 @@ msgstr "Gran angular"
 msgid "Bubble"
 msgstr "Burbuja"
 
-#: ../plug-ins/flame/flame.c:770 ../plug-ins/map-object/map-object-ui.c:425
+#: ../plug-ins/flame/flame.c:770 ../plug-ins/map-object/map-object-ui.c:423
 msgid "Cylinder"
 msgstr "Cilindro"
 
@@ -9413,22 +9415,22 @@ msgid "Fractal Parameters"
 msgstr "Parámetros del fractal"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:733
-#: ../plug-ins/map-object/map-object-ui.c:1033
+#: ../plug-ins/map-object/map-object-ui.c:1044
 msgid "Left:"
 msgstr "Izquierda:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:742
-#: ../plug-ins/map-object/map-object-ui.c:1033
+#: ../plug-ins/map-object/map-object-ui.c:1044
 msgid "Right:"
 msgstr "Derecha:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:751
-#: ../plug-ins/map-object/map-object-ui.c:1032
+#: ../plug-ins/map-object/map-object-ui.c:1043
 msgid "Top:"
 msgstr "Superior:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:760
-#: ../plug-ins/map-object/map-object-ui.c:1032
+#: ../plug-ins/map-object/map-object-ui.c:1043
 msgid "Bottom:"
 msgstr "Inferior:"
 
@@ -10569,7 +10571,7 @@ msgstr "Releer la carpeta de preajustes"
 #: ../plug-ins/gimpressionist/preview.c:173
 #: ../plug-ins/gimpressionist/repaint.c:1183
 #: ../plug-ins/imagemap/imap_polygon.c:514
-#: ../plug-ins/lighting/lighting-ui.c:1073
+#: ../plug-ins/lighting/lighting-ui.c:1080
 msgid "_Update"
 msgstr "Act_ualizar"
 
@@ -11113,22 +11115,22 @@ msgstr "_Fractal IFS…"
 
 #. X
 #: ../plug-ins/ifs-compose/ifs-compose.c:523
-#: ../plug-ins/lighting/lighting-ui.c:525
-#: ../plug-ins/map-object/map-object-ui.c:609
-#: ../plug-ins/map-object/map-object-ui.c:663
-#: ../plug-ins/map-object/map-object-ui.c:931
-#: ../plug-ins/map-object/map-object-ui.c:980
+#: ../plug-ins/lighting/lighting-ui.c:529
+#: ../plug-ins/map-object/map-object-ui.c:620
+#: ../plug-ins/map-object/map-object-ui.c:674
+#: ../plug-ins/map-object/map-object-ui.c:942
+#: ../plug-ins/map-object/map-object-ui.c:991
 msgid "X:"
 msgstr "X:"
 
 #. Y
 #: ../plug-ins/ifs-compose/ifs-compose.c:537
-#: ../plug-ins/lighting/lighting-ui.c:539
-#: ../plug-ins/map-object/map-object-ui.c:623
-#: ../plug-ins/map-object/map-object-ui.c:676
-#: ../plug-ins/map-object/map-object-ui.c:944
-#: ../plug-ins/map-object/map-object-ui.c:991
-#: ../plug-ins/map-object/map-object-ui.c:1089
+#: ../plug-ins/lighting/lighting-ui.c:543
+#: ../plug-ins/map-object/map-object-ui.c:634
+#: ../plug-ins/map-object/map-object-ui.c:687
+#: ../plug-ins/map-object/map-object-ui.c:955
+#: ../plug-ins/map-object/map-object-ui.c:1002
+#: ../plug-ins/map-object/map-object-ui.c:1100
 msgid "Y:"
 msgstr "Y:"
 
@@ -11301,14 +11303,14 @@ msgstr "Centro _x:"
 
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
-#: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:250
-#: ../plug-ins/imagemap/imap_grid.c:256
+#: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:249
+#: ../plug-ins/imagemap/imap_grid.c:255
 #: ../plug-ins/imagemap/imap_polygon.c:504
 #: ../plug-ins/imagemap/imap_polygon.c:512
-#: ../plug-ins/imagemap/imap_rectangle.c:393
-#: ../plug-ins/imagemap/imap_rectangle.c:400
-#: ../plug-ins/imagemap/imap_rectangle.c:407
-#: ../plug-ins/imagemap/imap_rectangle.c:414
+#: ../plug-ins/imagemap/imap_rectangle.c:392
+#: ../plug-ins/imagemap/imap_rectangle.c:399
+#: ../plug-ins/imagemap/imap_rectangle.c:406
+#: ../plug-ins/imagemap/imap_rectangle.c:413
 msgid "pixels"
 msgstr "píxeles"
 
@@ -11453,7 +11455,7 @@ msgstr "Insertar punto"
 msgid "Move Down"
 msgstr "Mover hacia abajo"
 
-#: ../plug-ins/imagemap/imap_cmd_move_sash.c:68
+#: ../plug-ins/imagemap/imap_cmd_move_sash.c:69
 msgid "Move Sash"
 msgstr "Mover marco"
 
@@ -11598,55 +11600,55 @@ msgstr "Cargar mapa de imagen"
 msgid "Save Image Map"
 msgstr "Guardar mapa de imagen"
 
-#: ../plug-ins/imagemap/imap_grid.c:197
+#: ../plug-ins/imagemap/imap_grid.c:196
 msgid "Grid Settings"
 msgstr "Configuración de rejilla"
 
-#: ../plug-ins/imagemap/imap_grid.c:201
+#: ../plug-ins/imagemap/imap_grid.c:200
 msgid "_Snap-to grid enabled"
 msgstr "Aju_ste a la rejilla activado"
 
-#: ../plug-ins/imagemap/imap_grid.c:207
+#: ../plug-ins/imagemap/imap_grid.c:206
 msgid "Grid Visibility and Type"
 msgstr "Tipo y visibilidad de la rejilla"
 
-#: ../plug-ins/imagemap/imap_grid.c:214
+#: ../plug-ins/imagemap/imap_grid.c:213
 msgid "_Hidden"
 msgstr "_Oculta"
 
-#: ../plug-ins/imagemap/imap_grid.c:222
+#: ../plug-ins/imagemap/imap_grid.c:221
 msgid "_Lines"
 msgstr "_Líneas"
 
-#: ../plug-ins/imagemap/imap_grid.c:231
+#: ../plug-ins/imagemap/imap_grid.c:230
 msgid "C_rosses"
 msgstr "C_ruces"
 
-#: ../plug-ins/imagemap/imap_grid.c:239
+#: ../plug-ins/imagemap/imap_grid.c:238
 msgid "Grid Granularity"
 msgstr "Granularidad de la Rejilla"
 
-#: ../plug-ins/imagemap/imap_grid.c:246
+#: ../plug-ins/imagemap/imap_grid.c:245
 msgid "_Width"
 msgstr "A_nchura"
 
-#: ../plug-ins/imagemap/imap_grid.c:252
+#: ../plug-ins/imagemap/imap_grid.c:251
 msgid "_Height"
 msgstr "Al_tura"
 
-#: ../plug-ins/imagemap/imap_grid.c:266
+#: ../plug-ins/imagemap/imap_grid.c:265
 msgid "Grid Offset"
 msgstr "Desplazamiento de la Rejilla"
 
-#: ../plug-ins/imagemap/imap_grid.c:273
+#: ../plug-ins/imagemap/imap_grid.c:272
 msgid "pixels from l_eft"
 msgstr "píx_eles desde la izquierda"
 
-#: ../plug-ins/imagemap/imap_grid.c:278
+#: ../plug-ins/imagemap/imap_grid.c:277
 msgid "pixels from _top"
 msgstr "píxeles desde _arriba"
 
-#: ../plug-ins/imagemap/imap_grid.c:289
+#: ../plug-ins/imagemap/imap_grid.c:288
 msgid "_Preview"
 msgstr "Vista _previa"
 
@@ -11658,41 +11660,41 @@ msgstr "Crea un mapa de imágenes pulsables"
 msgid "_Image Map..."
 msgstr "_Mapa de imagen…"
 
-#: ../plug-ins/imagemap/imap_main.c:516
+#: ../plug-ins/imagemap/imap_main.c:484
 #: ../plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<Sinnombre>"
 
-#: ../plug-ins/imagemap/imap_main.c:659
+#: ../plug-ins/imagemap/imap_main.c:626
 msgid "Some data has been changed!"
 msgstr "¡Algunos datos han sido cambiados!"
 
-#: ../plug-ins/imagemap/imap_main.c:662
+#: ../plug-ins/imagemap/imap_main.c:629
 msgid "Do you really want to discard your changes?"
 msgstr "¿Realmente desea descartar los cambios?"
 
-#: ../plug-ins/imagemap/imap_main.c:876
+#: ../plug-ins/imagemap/imap_main.c:841
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "El archivo «%s» ha sido guardado."
 
-#: ../plug-ins/imagemap/imap_main.c:880
+#: ../plug-ins/imagemap/imap_main.c:845
 msgid "Couldn't save file:"
 msgstr "No se pudo guardar el archivo:"
 
-#: ../plug-ins/imagemap/imap_main.c:893
+#: ../plug-ins/imagemap/imap_main.c:858
 msgid "Image size has changed."
 msgstr "El tamaño de la imagen ha cambiado."
 
-#: ../plug-ins/imagemap/imap_main.c:894
+#: ../plug-ins/imagemap/imap_main.c:859
 msgid "Resize area's?"
 msgstr "¿Redimensionar el área?"
 
-#: ../plug-ins/imagemap/imap_main.c:928
+#: ../plug-ins/imagemap/imap_main.c:892
 msgid "Couldn't read file:"
 msgstr "No se pudo leer el archivo:"
 
-#: ../plug-ins/imagemap/imap_main.c:975
+#: ../plug-ins/imagemap/imap_main.c:939
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -11879,75 +11881,80 @@ msgstr "Añ_adir"
 msgid "_Remove"
 msgstr "_Quitar"
 
-#: ../plug-ins/imagemap/imap_preferences.c:235
+#: ../plug-ins/imagemap/imap_preferences.c:247
 msgid "Couldn't save resource file:"
 msgstr "No se pudo guardar el archivo de recursos:"
 
-#: ../plug-ins/imagemap/imap_preferences.c:349
+#: ../plug-ins/imagemap/imap_preferences.c:360
 msgid "General"
 msgstr "General"
 
-#: ../plug-ins/imagemap/imap_preferences.c:353
+#: ../plug-ins/imagemap/imap_preferences.c:364
 msgid "Default Map Type"
 msgstr "Tipo de mapa predeterminado"
 
-#: ../plug-ins/imagemap/imap_preferences.c:372
+#: ../plug-ins/imagemap/imap_preferences.c:383
 msgid "_Prompt for area info"
 msgstr "S_olicitar información del área"
 
-#: ../plug-ins/imagemap/imap_preferences.c:374
+#: ../plug-ins/imagemap/imap_preferences.c:385
 msgid "_Require default URL"
 msgstr "_Requerir URL predeterminado"
 
-#: ../plug-ins/imagemap/imap_preferences.c:376
+#: ../plug-ins/imagemap/imap_preferences.c:387
 msgid "Show area _handles"
 msgstr "Mostrar los mane_jadores de área"
 
-#: ../plug-ins/imagemap/imap_preferences.c:378
+#: ../plug-ins/imagemap/imap_preferences.c:389
 msgid "_Keep NCSA circles true"
 msgstr "Man_tener círculos NCSA en verdadero"
 
-#: ../plug-ins/imagemap/imap_preferences.c:380
+#: ../plug-ins/imagemap/imap_preferences.c:391
 msgid "Show area URL _tip"
 msgstr "Mos_trar el consejo en el área de URL"
 
-#: ../plug-ins/imagemap/imap_preferences.c:383
+#: ../plug-ins/imagemap/imap_preferences.c:394
 msgid "_Use double-sized grab handles"
 msgstr "_Usar cuadros de manejo de tamaño doble"
 
-#: ../plug-ins/imagemap/imap_preferences.c:390
+#: ../plug-ins/imagemap/imap_preferences.c:401
 msgid "Menu"
 msgstr "Menú"
 
-#: ../plug-ins/imagemap/imap_preferences.c:394
+#: ../plug-ins/imagemap/imap_preferences.c:405
 msgid "Number of _undo levels (1 - 99):"
 msgstr "Número de niveles de _deshacer (1 - 99):"
 
-#: ../plug-ins/imagemap/imap_preferences.c:399
+#: ../plug-ins/imagemap/imap_preferences.c:410
 msgid "Number of M_RU entries (1 - 16):"
 msgstr "Número de entradas M_RU (1 - 16):"
 
-#: ../plug-ins/imagemap/imap_preferences.c:408
+#: ../plug-ins/imagemap/imap_preferences.c:419
 msgid "Select Color"
 msgstr "Seleccione color"
 
-#: ../plug-ins/imagemap/imap_preferences.c:423
+#: ../plug-ins/imagemap/imap_preferences.c:434
 msgid "Normal:"
 msgstr "Normal:"
 
-#: ../plug-ins/imagemap/imap_preferences.c:427
+#: ../plug-ins/imagemap/imap_preferences.c:438
 msgid "Selected:"
 msgstr "Seleccionada:"
 
-#: ../plug-ins/imagemap/imap_preferences.c:436
+#: ../plug-ins/imagemap/imap_preferences.c:442
+#| msgid "Iterations:"
+msgid "Interaction:"
+msgstr "Interacción:"
+
+#: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
 msgstr "Región co_ntigua"
 
-#: ../plug-ins/imagemap/imap_preferences.c:442
+#: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
 msgstr "Convertir _automáticamente"
 
-#: ../plug-ins/imagemap/imap_preferences.c:453
+#: ../plug-ins/imagemap/imap_preferences.c:468
 msgid "General Preferences"
 msgstr "Preferencias generales"
 
@@ -11955,11 +11962,11 @@ msgstr "Preferencias generales"
 msgid "_Rectangle"
 msgstr "_Rectángulo"
 
-#: ../plug-ins/imagemap/imap_rectangle.c:388
+#: ../plug-ins/imagemap/imap_rectangle.c:387
 msgid "Upper left _x:"
 msgstr "_X superior izquierdo:"
 
-#: ../plug-ins/imagemap/imap_rectangle.c:395
+#: ../plug-ins/imagemap/imap_rectangle.c:394
 msgid "Upper left _y:"
 msgstr "_Y superior izquierdo:"
 
@@ -12021,7 +12028,7 @@ msgid "View Source"
 msgstr "Ver fuente"
 
 #: ../plug-ins/lighting/lighting-apply.c:105
-#: ../plug-ins/lighting/lighting-ui.c:1017
+#: ../plug-ins/lighting/lighting-ui.c:1021
 msgid "Lighting Effects"
 msgstr "Efectos de iluminación"
 
@@ -12034,537 +12041,558 @@ msgid "_Lighting Effects..."
 msgstr "Efectos de _iluminación…"
 
 #. General options
-#: ../plug-ins/lighting/lighting-ui.c:293
-#: ../plug-ins/map-object/map-object-ui.c:406
+#: ../plug-ins/lighting/lighting-ui.c:297
+#: ../plug-ins/map-object/map-object-ui.c:404
 msgid "General Options"
 msgstr "Opciones generales"
 
-#: ../plug-ins/lighting/lighting-ui.c:301
+#: ../plug-ins/lighting/lighting-ui.c:305
 msgid "T_ransparent background"
 msgstr "Fondo t_ransparente"
 
-#: ../plug-ins/lighting/lighting-ui.c:311
+#: ../plug-ins/lighting/lighting-ui.c:315
 msgid "Make destination image transparent where bump height is zero"
 msgstr ""
 "Hacer que la imagen destino sea transparente allí donde la altura del "
 "relieve sea cero"
 
-#: ../plug-ins/lighting/lighting-ui.c:314
+#: ../plug-ins/lighting/lighting-ui.c:318
 msgid "Cre_ate new image"
 msgstr "Cre_ar una imagen nueva"
 
-#: ../plug-ins/lighting/lighting-ui.c:324
-#: ../plug-ins/map-object/map-object-ui.c:475
+#: ../plug-ins/lighting/lighting-ui.c:328
+#: ../plug-ins/map-object/map-object-ui.c:473
 msgid "Create a new image when applying filter"
 msgstr "Crear nueva imagen cuando se aplique el filtro"
 
-#: ../plug-ins/lighting/lighting-ui.c:326
+#: ../plug-ins/lighting/lighting-ui.c:330
 msgid "High _quality preview"
 msgstr "Vista previa de alta _calidad"
 
-#: ../plug-ins/lighting/lighting-ui.c:336
+#: ../plug-ins/lighting/lighting-ui.c:340
 msgid "Enable/disable high quality preview"
 msgstr "Activar/desactivar vista previa de alta calidad"
 
-#: ../plug-ins/lighting/lighting-ui.c:343
+#: ../plug-ins/lighting/lighting-ui.c:347
 msgid "Distance:"
 msgstr "Distancia:"
 
-#: ../plug-ins/lighting/lighting-ui.c:376
-#: ../plug-ins/map-object/map-object-ui.c:553
+#: ../plug-ins/lighting/lighting-ui.c:380
+#: ../plug-ins/map-object/map-object-ui.c:564
 msgid "Light Settings"
 msgstr "Configuración de luz"
 
-#: ../plug-ins/lighting/lighting-ui.c:389
+#: ../plug-ins/lighting/lighting-ui.c:393
 msgid "Light 1"
 msgstr "Luz 1"
 
-#: ../plug-ins/lighting/lighting-ui.c:390
+#: ../plug-ins/lighting/lighting-ui.c:394
 msgid "Light 2"
 msgstr "Luz 2"
 
-#: ../plug-ins/lighting/lighting-ui.c:391
+#: ../plug-ins/lighting/lighting-ui.c:395
 msgid "Light 3"
 msgstr "Luz 3"
 
-#: ../plug-ins/lighting/lighting-ui.c:392
+#: ../plug-ins/lighting/lighting-ui.c:396
 msgid "Light 4"
 msgstr "Luz 4"
 
-#: ../plug-ins/lighting/lighting-ui.c:393
+#: ../plug-ins/lighting/lighting-ui.c:397
 msgid "Light 5"
 msgstr "Luz 5"
 
-#: ../plug-ins/lighting/lighting-ui.c:394
+#: ../plug-ins/lighting/lighting-ui.c:398
 msgid "Light 6"
 msgstr "Luz 6"
 
-#: ../plug-ins/lighting/lighting-ui.c:408
+#: ../plug-ins/lighting/lighting-ui.c:412
 msgid "Color:"
 msgstr "Color:"
 
-#: ../plug-ins/lighting/lighting-ui.c:415
+#: ../plug-ins/lighting/lighting-ui.c:419
 msgid "Directional"
 msgstr "Direccional"
 
-#: ../plug-ins/lighting/lighting-ui.c:416
+#: ../plug-ins/lighting/lighting-ui.c:420
 msgid "Point"
 msgstr "Punto"
 
-#: ../plug-ins/lighting/lighting-ui.c:430
-#: ../plug-ins/map-object/map-object-ui.c:576
+#: ../plug-ins/lighting/lighting-ui.c:434
+#: ../plug-ins/map-object/map-object-ui.c:587
 msgid "Type of light source to apply"
 msgstr "Tipo de fuente de luz a aplicar"
 
-#: ../plug-ins/lighting/lighting-ui.c:432
-#: ../plug-ins/map-object/map-object-ui.c:578
+#: ../plug-ins/lighting/lighting-ui.c:436
+#: ../plug-ins/map-object/map-object-ui.c:589
 msgid "Select lightsource color"
 msgstr "Seleccionar el color de la fuente de luz"
 
-#: ../plug-ins/lighting/lighting-ui.c:446
-#: ../plug-ins/map-object/map-object-ui.c:591
+#: ../plug-ins/lighting/lighting-ui.c:450
+#: ../plug-ins/map-object/map-object-ui.c:602
 msgid "Set light source color"
 msgstr "Establecer color de fuente de luz"
 
-#: ../plug-ins/lighting/lighting-ui.c:454
+#: ../plug-ins/lighting/lighting-ui.c:458
 msgid "_Intensity:"
 msgstr "_Intensidad:"
 
-#: ../plug-ins/lighting/lighting-ui.c:462
+#: ../plug-ins/lighting/lighting-ui.c:466
 msgid "Light intensity"
 msgstr "Intensidad de la luz"
 
-#: ../plug-ins/lighting/lighting-ui.c:465
-#: ../plug-ins/map-object/map-object-ui.c:593
-#: ../plug-ins/map-object/map-object-ui.c:920
+#: ../plug-ins/lighting/lighting-ui.c:469
+#: ../plug-ins/map-object/map-object-ui.c:604
+#: ../plug-ins/map-object/map-object-ui.c:931
 #: ../plug-ins/print/print-page-layout.c:355
 msgid "Position"
 msgstr "Posición"
 
-#: ../plug-ins/lighting/lighting-ui.c:483
-#: ../plug-ins/map-object/map-object-ui.c:617
+#: ../plug-ins/lighting/lighting-ui.c:487
+#: ../plug-ins/map-object/map-object-ui.c:628
 msgid "Light source X position in XYZ space"
 msgstr "Posición X de la fuente de luz en el espacio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:498
-#: ../plug-ins/map-object/map-object-ui.c:631
+#: ../plug-ins/lighting/lighting-ui.c:502
+#: ../plug-ins/map-object/map-object-ui.c:642
 msgid "Light source Y position in XYZ space"
 msgstr "Posición Y de la fuente de luz en el espacio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:505
+#: ../plug-ins/lighting/lighting-ui.c:509
 msgid "_Z:"
 msgstr "_Z:"
 
-#: ../plug-ins/lighting/lighting-ui.c:513
-#: ../plug-ins/map-object/map-object-ui.c:645
+#: ../plug-ins/lighting/lighting-ui.c:517
+#: ../plug-ins/map-object/map-object-ui.c:656
 msgid "Light source Z position in XYZ space"
 msgstr "Posición Z de la fuente de luz en el espacio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:533
-#: ../plug-ins/map-object/map-object-ui.c:671
+#: ../plug-ins/lighting/lighting-ui.c:537
+#: ../plug-ins/map-object/map-object-ui.c:682
 msgid "Light source X direction in XYZ space"
 msgstr "Dirección X de la fuente de luz en el espacio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:547
-#: ../plug-ins/map-object/map-object-ui.c:684
+#: ../plug-ins/lighting/lighting-ui.c:551
+#: ../plug-ins/map-object/map-object-ui.c:695
 msgid "Light source Y direction in XYZ space"
 msgstr "Dirección Y de la fuente de luz en el espacio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:553
-#: ../plug-ins/map-object/map-object-ui.c:637
-#: ../plug-ins/map-object/map-object-ui.c:689
-#: ../plug-ins/map-object/map-object-ui.c:957
-#: ../plug-ins/map-object/map-object-ui.c:1002
-#: ../plug-ins/map-object/map-object-ui.c:1101
+#: ../plug-ins/lighting/lighting-ui.c:557
+#: ../plug-ins/map-object/map-object-ui.c:648
+#: ../plug-ins/map-object/map-object-ui.c:700
+#: ../plug-ins/map-object/map-object-ui.c:968
+#: ../plug-ins/map-object/map-object-ui.c:1013
+#: ../plug-ins/map-object/map-object-ui.c:1112
 msgid "Z:"
 msgstr "Z:"
 
-#: ../plug-ins/lighting/lighting-ui.c:561
-#: ../plug-ins/map-object/map-object-ui.c:697
+#: ../plug-ins/lighting/lighting-ui.c:565
+#: ../plug-ins/map-object/map-object-ui.c:708
 msgid "Light source Z direction in XYZ space"
 msgstr "Dirección Z de la fuente de luz en el espacio XYZ"
 
-#: ../plug-ins/lighting/lighting-ui.c:564
+#: ../plug-ins/lighting/lighting-ui.c:568
 msgid "I_solate"
 msgstr "A_islar"
 
-#: ../plug-ins/lighting/lighting-ui.c:573
+#: ../plug-ins/lighting/lighting-ui.c:577
 msgid "Lighting preset:"
 msgstr "Preconfiguración de la luz:"
 
-#: ../plug-ins/lighting/lighting-ui.c:619
+#: ../plug-ins/lighting/lighting-ui.c:623
 msgid "Material Properties"
 msgstr "Propiedades del material"
 
-#: ../plug-ins/lighting/lighting-ui.c:637
+#: ../plug-ins/lighting/lighting-ui.c:641
 msgid "_Glowing:"
 msgstr "_Incandescencia:"
 
-#: ../plug-ins/lighting/lighting-ui.c:656
-#: ../plug-ins/map-object/map-object-ui.c:758
+#: ../plug-ins/lighting/lighting-ui.c:660
+#: ../plug-ins/map-object/map-object-ui.c:769
 msgid "Amount of original color to show where no direct light falls"
 msgstr "Cantidad de color original a mostrar donde no cae luz directa"
 
-#: ../plug-ins/lighting/lighting-ui.c:670
+#: ../plug-ins/lighting/lighting-ui.c:674
 msgid "_Bright:"
 msgstr "_Brillo:"
 
-#: ../plug-ins/lighting/lighting-ui.c:689
-#: ../plug-ins/map-object/map-object-ui.c:787
+#: ../plug-ins/lighting/lighting-ui.c:693
+#: ../plug-ins/map-object/map-object-ui.c:798
 msgid "Intensity of original color when lit by a light source"
 msgstr "Intensidad del color original donde es iluminado por la fuente de luz"
 
-#: ../plug-ins/lighting/lighting-ui.c:703
+#: ../plug-ins/lighting/lighting-ui.c:707
 msgid "_Shiny:"
 msgstr "_Lustre (Shiny):"
 
 # //R ¿reflejos?
-#: ../plug-ins/lighting/lighting-ui.c:722
-#: ../plug-ins/map-object/map-object-ui.c:859
+#: ../plug-ins/lighting/lighting-ui.c:726
+#: ../plug-ins/map-object/map-object-ui.c:870
 msgid "Controls how intense the highlights will be"
 msgstr "Controla cómo de intensos son los reflejos"
 
-#: ../plug-ins/lighting/lighting-ui.c:735
+#: ../plug-ins/lighting/lighting-ui.c:739
 msgid "_Polished:"
 msgstr "_Pulido:"
 
 # //R No estoy muy seguro de esto...
-#: ../plug-ins/lighting/lighting-ui.c:754
-#: ../plug-ins/map-object/map-object-ui.c:888
+#: ../plug-ins/lighting/lighting-ui.c:758
+#: ../plug-ins/map-object/map-object-ui.c:899
 msgid "Higher values makes the highlights more focused"
 msgstr "Valores más altos hace que los reflejos estén más concentrados"
 
 #. Metallic
-#: ../plug-ins/lighting/lighting-ui.c:764
+#: ../plug-ins/lighting/lighting-ui.c:768
 msgid "_Metallic"
 msgstr "_Metálico"
 
-#: ../plug-ins/lighting/lighting-ui.c:801
+#: ../plug-ins/lighting/lighting-ui.c:805
 msgid "E_nable bump mapping"
 msgstr "Activar el _mapeo de relieve [bump mapping]"
 
-#: ../plug-ins/lighting/lighting-ui.c:815
+#: ../plug-ins/lighting/lighting-ui.c:819
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "Activar/desactivar mapa de relieve (profundidad de imagen) "
 
-#: ../plug-ins/lighting/lighting-ui.c:837
+#: ../plug-ins/lighting/lighting-ui.c:841
 msgid "Bumpm_ap image:"
 msgstr "_Mapa del relieve:"
 
-#: ../plug-ins/lighting/lighting-ui.c:841
+#: ../plug-ins/lighting/lighting-ui.c:845
 msgid "Logarithmic"
 msgstr "Logarítmico"
 
-#: ../plug-ins/lighting/lighting-ui.c:853
+#: ../plug-ins/lighting/lighting-ui.c:857
 msgid "Cu_rve:"
 msgstr "Cu_rva:"
 
-#: ../plug-ins/lighting/lighting-ui.c:858
+#: ../plug-ins/lighting/lighting-ui.c:862
 msgid "Ma_ximum height:"
 msgstr "Altura má_xima:"
 
-#: ../plug-ins/lighting/lighting-ui.c:868
+#: ../plug-ins/lighting/lighting-ui.c:872
 msgid "Maximum height for bumps"
 msgstr "Altura máxima del relieve"
 
-#: ../plug-ins/lighting/lighting-ui.c:892
+#: ../plug-ins/lighting/lighting-ui.c:896
 msgid "E_nable environment mapping"
 msgstr "Activar mapeo de e_ntorno"
 
-#: ../plug-ins/lighting/lighting-ui.c:906
+#: ../plug-ins/lighting/lighting-ui.c:910
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Activar/Desactivar mapeo de entorno (reflexión)"
 
-#: ../plug-ins/lighting/lighting-ui.c:923
+#: ../plug-ins/lighting/lighting-ui.c:927
 msgid "En_vironment image:"
 msgstr "Imagen de _entorno:"
 
-#: ../plug-ins/lighting/lighting-ui.c:926
+#: ../plug-ins/lighting/lighting-ui.c:930
 msgid "Environment image to use"
 msgstr "Imagen del entorno a usar"
 
-#: ../plug-ins/lighting/lighting-ui.c:948
+#: ../plug-ins/lighting/lighting-ui.c:952
 msgid "Op_tions"
 msgstr "Op_ciones"
 
-#: ../plug-ins/lighting/lighting-ui.c:952
-#: ../plug-ins/map-object/map-object-ui.c:1225
+#: ../plug-ins/lighting/lighting-ui.c:956
+#: ../plug-ins/map-object/map-object-ui.c:1236
 msgid "_Light"
 msgstr "_Luz"
 
-#: ../plug-ins/lighting/lighting-ui.c:956
-#: ../plug-ins/map-object/map-object-ui.c:1229
+#: ../plug-ins/lighting/lighting-ui.c:960
+#: ../plug-ins/map-object/map-object-ui.c:1240
 msgid "_Material"
 msgstr "_Material"
 
-#: ../plug-ins/lighting/lighting-ui.c:960
+#: ../plug-ins/lighting/lighting-ui.c:964
 msgid "_Bump Map"
 msgstr "M_apa de relieve"
 
-#: ../plug-ins/lighting/lighting-ui.c:964
+#: ../plug-ins/lighting/lighting-ui.c:968
 msgid "_Environment Map"
 msgstr "Mapa del _entorno"
 
-#: ../plug-ins/lighting/lighting-ui.c:1080
-#: ../plug-ins/map-object/map-object-ui.c:1335
+#: ../plug-ins/lighting/lighting-ui.c:1087
+#: ../plug-ins/map-object/map-object-ui.c:1348
 msgid "Recompute preview image"
 msgstr "Recalcular imagen de vista previa"
 
-#: ../plug-ins/lighting/lighting-ui.c:1082
+#: ../plug-ins/lighting/lighting-ui.c:1089
 msgid "I_nteractive"
 msgstr "I_nteractivo"
 
-#: ../plug-ins/lighting/lighting-ui.c:1096
+#: ../plug-ins/lighting/lighting-ui.c:1103
 msgid "Enable/disable real time preview of changes"
 msgstr "Activar/desactivar la vista previa de los cambios en tiempo real"
 
-#: ../plug-ins/lighting/lighting-ui.c:1140
+#: ../plug-ins/lighting/lighting-ui.c:1147
 msgid "Save Lighting Preset"
 msgstr "Guardar preset de iluminación"
 
-#: ../plug-ins/lighting/lighting-ui.c:1284
+#: ../plug-ins/lighting/lighting-ui.c:1291
 msgid "Load Lighting Preset"
 msgstr "Cargar preset de iluminación"
 
-#: ../plug-ins/map-object/map-object-apply.c:276
+#: ../plug-ins/map-object/map-object-apply.c:251
+#: ../plug-ins/map-object/map-object-apply.c:272
 msgid "Map to plane"
 msgstr "Mapear a plano"
 
-#: ../plug-ins/map-object/map-object-apply.c:279
+#: ../plug-ins/map-object/map-object-apply.c:251
+#: ../plug-ins/map-object/map-object-apply.c:275
 msgid "Map to sphere"
 msgstr "Mapear a esfera"
 
-#: ../plug-ins/map-object/map-object-apply.c:282
+#: ../plug-ins/map-object/map-object-apply.c:251
+#: ../plug-ins/map-object/map-object-apply.c:278
 msgid "Map to box"
 msgstr "Mapear a caja"
 
-#: ../plug-ins/map-object/map-object-apply.c:285
+#: ../plug-ins/map-object/map-object-apply.c:252
+#: ../plug-ins/map-object/map-object-apply.c:281
 msgid "Map to cylinder"
 msgstr "Mapear a cilindro"
 
-#: ../plug-ins/map-object/map-object-main.c:192
+#: ../plug-ins/map-object/map-object-main.c:188
 msgid "Map the image to an object (plane, sphere, box or cylinder)"
 msgstr "Mapea la imagen a un objeto (plano, esfera, caja o cilindro)"
 
-#: ../plug-ins/map-object/map-object-main.c:197
+#: ../plug-ins/map-object/map-object-main.c:193
 msgid "Map _Object..."
 msgstr "Mapear _objeto…"
 
 #: ../plug-ins/map-object/map-object-ui.c:199
-#: ../plug-ins/map-object/map-object-ui.c:1239
+#: ../plug-ins/map-object/map-object-ui.c:1251
 msgid "_Box"
 msgstr "Ca_ja"
 
-#: ../plug-ins/map-object/map-object-ui.c:215
-#: ../plug-ins/map-object/map-object-ui.c:1245
+#: ../plug-ins/map-object/map-object-ui.c:216
+#: ../plug-ins/map-object/map-object-ui.c:1258
 msgid "C_ylinder"
 msgstr "C_ilindro"
 
-#: ../plug-ins/map-object/map-object-ui.c:418
+#: ../plug-ins/map-object/map-object-ui.c:416
 msgid "Map to:"
 msgstr "Mapear a:"
 
-#: ../plug-ins/map-object/map-object-ui.c:422
+#: ../plug-ins/map-object/map-object-ui.c:420
 msgid "Plane"
 msgstr "Plano"
 
-#: ../plug-ins/map-object/map-object-ui.c:423
+#: ../plug-ins/map-object/map-object-ui.c:421
 msgid "Sphere"
 msgstr "Esfera"
 
-#: ../plug-ins/map-object/map-object-ui.c:424
+#: ../plug-ins/map-object/map-object-ui.c:422
 msgid "Box"
 msgstr "Caja"
 
-#: ../plug-ins/map-object/map-object-ui.c:435
+#: ../plug-ins/map-object/map-object-ui.c:433
 msgid "Type of object to map to"
 msgstr "Tipo de objeto a mapear"
 
-#: ../plug-ins/map-object/map-object-ui.c:437
+#: ../plug-ins/map-object/map-object-ui.c:435
 msgid "Transparent background"
 msgstr "Fondo transparente"
 
-#: ../plug-ins/map-object/map-object-ui.c:448
+#: ../plug-ins/map-object/map-object-ui.c:446
 msgid "Make image transparent outside object"
 msgstr "Hacer la imagen transparente fuera del objeto"
 
-#: ../plug-ins/map-object/map-object-ui.c:450
+#: ../plug-ins/map-object/map-object-ui.c:448
 msgid "Tile source image"
 msgstr "Enlosado con imagen de origen"
 
-#: ../plug-ins/map-object/map-object-ui.c:461
+#: ../plug-ins/map-object/map-object-ui.c:459
 msgid "Tile source image: useful for infinite planes"
 msgstr ""
 "Enlosado con la imagen de origen: esto es útil para producir planos infinitos"
 
-#: ../plug-ins/map-object/map-object-ui.c:464
+#: ../plug-ins/map-object/map-object-ui.c:462
 msgid "Create new image"
 msgstr "Crear imagen nueva"
 
-#: ../plug-ins/map-object/map-object-ui.c:483
+#: ../plug-ins/map-object/map-object-ui.c:475
+#| msgid "Create _new layer"
+msgid "Create new layer"
+msgstr "Crear una capa nueva"
+
+#: ../plug-ins/map-object/map-object-ui.c:486
+#| msgid "Create a new image when applying filter"
+msgid "Create a new layer when applying filter"
+msgstr "Crea una capa nueva cuando se aplica el filtro"
+
+#: ../plug-ins/map-object/map-object-ui.c:494
 msgid "Enable _antialiasing"
 msgstr "Activar _suavizado"
 
-#: ../plug-ins/map-object/map-object-ui.c:494
+#: ../plug-ins/map-object/map-object-ui.c:505
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Activar/desactivar la eliminación de bordes afilados (suavizado)"
 
-#: ../plug-ins/map-object/map-object-ui.c:510
+#: ../plug-ins/map-object/map-object-ui.c:521
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Calidad del suavizado. A mayor calidad, mejor, pero más lento"
 
-#: ../plug-ins/map-object/map-object-ui.c:527
+#: ../plug-ins/map-object/map-object-ui.c:538
 msgid "Stop when pixel differences are smaller than this value"
 msgstr ""
 "Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
 
-#: ../plug-ins/map-object/map-object-ui.c:562
+#: ../plug-ins/map-object/map-object-ui.c:573
 msgid "Point light"
 msgstr "Punto de luz"
 
-#: ../plug-ins/map-object/map-object-ui.c:563
+#: ../plug-ins/map-object/map-object-ui.c:574
 msgid "Directional light"
 msgstr "Luz direccional"
 
-#: ../plug-ins/map-object/map-object-ui.c:564
+#: ../plug-ins/map-object/map-object-ui.c:575
 msgid "No light"
 msgstr "Sin luz"
 
-#: ../plug-ins/map-object/map-object-ui.c:569
+#: ../plug-ins/map-object/map-object-ui.c:580
 msgid "Lightsource type:"
 msgstr "Tipo de fuente de luz:"
 
-#: ../plug-ins/map-object/map-object-ui.c:583
+#: ../plug-ins/map-object/map-object-ui.c:594
 msgid "Lightsource color:"
 msgstr "Color de fuente de luz:"
 
-#: ../plug-ins/map-object/map-object-ui.c:648
+#: ../plug-ins/map-object/map-object-ui.c:659
 msgid "Direction Vector"
 msgstr "Vector director"
 
-#: ../plug-ins/map-object/map-object-ui.c:724
+#: ../plug-ins/map-object/map-object-ui.c:735
 msgid "Intensity Levels"
 msgstr "Niveles de intensidad"
 
-#: ../plug-ins/map-object/map-object-ui.c:743
+#: ../plug-ins/map-object/map-object-ui.c:754
 msgid "Ambient:"
 msgstr "Ambiental:"
 
-#: ../plug-ins/map-object/map-object-ui.c:772
-#: ../plug-ins/map-object/map-object-ui.c:815
+#: ../plug-ins/map-object/map-object-ui.c:783
+#: ../plug-ins/map-object/map-object-ui.c:826
 msgid "Diffuse:"
 msgstr "Difusa:"
 
-#: ../plug-ins/map-object/map-object-ui.c:796
+#: ../plug-ins/map-object/map-object-ui.c:807
 msgid "Reflectivity"
 msgstr "Reflectividad"
 
-#: ../plug-ins/map-object/map-object-ui.c:830
+#: ../plug-ins/map-object/map-object-ui.c:841
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "Valores altos hacen que el objeto refleje más luz (parezca más claro)"
 
-#: ../plug-ins/map-object/map-object-ui.c:844
+#: ../plug-ins/map-object/map-object-ui.c:855
 msgid "Specular:"
 msgstr "Especular:"
 
-#: ../plug-ins/map-object/map-object-ui.c:873
+#: ../plug-ins/map-object/map-object-ui.c:884
 msgid "Highlight:"
 msgstr "Reflejos:"
 
-#: ../plug-ins/map-object/map-object-ui.c:934
+#: ../plug-ins/map-object/map-object-ui.c:945
 msgid "Object X position in XYZ space"
 msgstr "Posición X del objeto en el espacio XYZ"
 
-#: ../plug-ins/map-object/map-object-ui.c:947
+#: ../plug-ins/map-object/map-object-ui.c:958
 msgid "Object Y position in XYZ space"
 msgstr "Posición Y del objeto en el espacio XYZ"
 
-#: ../plug-ins/map-object/map-object-ui.c:960
+#: ../plug-ins/map-object/map-object-ui.c:971
 msgid "Object Z position in XYZ space"
 msgstr "Posición Z del objeto en el espacio XYZ"
 
-#: ../plug-ins/map-object/map-object-ui.c:983
+#: ../plug-ins/map-object/map-object-ui.c:994
 msgid "Rotation angle about X axis"
 msgstr "Ángulo de rotación alrededor del eje X"
 
-#: ../plug-ins/map-object/map-object-ui.c:994
+#: ../plug-ins/map-object/map-object-ui.c:1005
 msgid "Rotation angle about Y axis"
 msgstr "Ángulo de rotación alrededor del eje Y"
 
-#: ../plug-ins/map-object/map-object-ui.c:1005
+#: ../plug-ins/map-object/map-object-ui.c:1016
 msgid "Rotation angle about Z axis"
 msgstr "Ángulo de rotación alrededor del eje Z"
 
-#: ../plug-ins/map-object/map-object-ui.c:1031
+#: ../plug-ins/map-object/map-object-ui.c:1042
 msgid "Front:"
 msgstr "Frente:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1031
+#: ../plug-ins/map-object/map-object-ui.c:1042
 msgid "Back:"
 msgstr "Fondo:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1039
+#: ../plug-ins/map-object/map-object-ui.c:1050
 msgid "Map Images to Box Faces"
 msgstr "Mapear imágenes a las caras de la caja"
 
-#: ../plug-ins/map-object/map-object-ui.c:1080
+#: ../plug-ins/map-object/map-object-ui.c:1091
 msgid "X scale (size)"
 msgstr "Escala X (tamaño)"
 
-#: ../plug-ins/map-object/map-object-ui.c:1092
+#: ../plug-ins/map-object/map-object-ui.c:1103
 msgid "Y scale (size)"
 msgstr "Escala Y (tamaño)"
 
-#: ../plug-ins/map-object/map-object-ui.c:1104
+#: ../plug-ins/map-object/map-object-ui.c:1115
 msgid "Z scale (size)"
 msgstr "Escala Z (tamaño)"
 
-#: ../plug-ins/map-object/map-object-ui.c:1127
+#: ../plug-ins/map-object/map-object-ui.c:1138
 #: ../plug-ins/print/print-page-layout.c:414
 msgid "_Top:"
 msgstr "S_uperior:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1127
+#: ../plug-ins/map-object/map-object-ui.c:1138
 #: ../plug-ins/print/print-page-layout.c:433
 msgid "_Bottom:"
 msgstr "I_nferior:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1132
+#: ../plug-ins/map-object/map-object-ui.c:1143
 msgid "Images for the Cap Faces"
 msgstr "Imágenes para las tapas"
 
-#: ../plug-ins/map-object/map-object-ui.c:1161
+#: ../plug-ins/map-object/map-object-ui.c:1172
 #: ../plug-ins/print/print-page-layout.c:231
 msgid "Size"
 msgstr "Tamaño"
 
-#: ../plug-ins/map-object/map-object-ui.c:1172
+#: ../plug-ins/map-object/map-object-ui.c:1183
 msgid "R_adius:"
 msgstr "R_adio:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1176
+#: ../plug-ins/map-object/map-object-ui.c:1187
 msgid "Cylinder radius"
 msgstr "Radio del cilindro"
 
-#: ../plug-ins/map-object/map-object-ui.c:1190
+#: ../plug-ins/map-object/map-object-ui.c:1201
 msgid "Cylinder length"
 msgstr "Longitud del cilindro"
 
-#: ../plug-ins/map-object/map-object-ui.c:1221
+#: ../plug-ins/map-object/map-object-ui.c:1232
 msgid "O_ptions"
 msgstr "O_pciones"
 
-#: ../plug-ins/map-object/map-object-ui.c:1233
+#: ../plug-ins/map-object/map-object-ui.c:1244
 msgid "O_rientation"
 msgstr "O_rientación"
 
-#: ../plug-ins/map-object/map-object-ui.c:1269
+#: ../plug-ins/map-object/map-object-ui.c:1282
 msgid "Map to Object"
 msgstr "Mapear al objeto"
 
-#: ../plug-ins/map-object/map-object-ui.c:1353
-msgid "Update previe_w live"
-msgstr "Actualizar la vista previa en tiempo real"
+# //R :-?
+#: ../plug-ins/map-object/map-object-ui.c:1366
+#| msgid "Show Line Frame"
+msgid "Show _wireframe"
+msgstr "_Mostrar el marco de alambre"
+
+#: ../plug-ins/map-object/map-object-ui.c:1375
+#| msgid "Update previe_w live"
+msgid "Update preview _live"
+msgstr "Actua_lizar la vista previa en tiempo real"
 
 #: ../plug-ins/maze/maze-algorithms.c:278
 msgid "Constructing maze using Prim's Algorithm"
