@@ -392,9 +392,13 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
                                             source_tool->src_x + off_x,
                                             source_tool->src_y + off_y,
                                             FALSE);
-          gimp_display_shell_add_item (src_shell,
-                                       source_tool->src_outline);
-          g_object_unref (source_tool->src_outline);
+
+          if (source_tool->src_outline)
+            {
+              gimp_display_shell_add_item (src_shell,
+                                           source_tool->src_outline);
+              g_object_unref (source_tool->src_outline);
+            }
         }
 
       if (! source_tool->src_handle)
