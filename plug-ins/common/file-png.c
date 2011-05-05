@@ -1236,49 +1236,6 @@ save_image (const gchar  *filename,
 
   png_textp  text = NULL;
 
-  if (pngvals.comment)
-    {
-      GimpParasite *parasite;
-#ifndef PNG_iTXt_SUPPORTED
-      gsize text_length = 0;
-#endif /* PNG_iTXt_SUPPORTED */
-
-      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
-      if (parasite)
-        {
-          gchar *comment = g_strndup (gimp_parasite_data (parasite),
-                                      gimp_parasite_data_size (parasite));
-
-          gimp_parasite_free (parasite);
-
-          text = g_new0 (png_text, 1);
-          text->key         = "Comment";
-
-#ifdef PNG_iTXt_SUPPORTED
-
-          text->compression = PNG_ITXT_COMPRESSION_NONE;
-          text->text        = comment;
-          text->itxt_length = strlen (comment);
-
-#else
-
-          text->compression = PNG_TEXT_COMPRESSION_NONE;
-          text->text        = g_convert (comment, -1,
-                                         "ISO-8859-1", "UTF-8",
-                                         NULL, &text_length,
-                                         NULL);
-          text->text_length = text_length;
-
-#endif
-
-          if (!text->text)
-            {
-              g_free (text);
-              text = NULL;
-            }
-        }
-    }
-
   pp = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   info = png_create_info_struct (pp);
 
@@ -1289,9 +1246,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename));
       return FALSE;
     }
-
-  if (text)
-    png_set_text (pp, info, text, 1);
 
   /*
    * Open the file and initialize the PNG write "engine"...
@@ -1477,6 +1431,52 @@ save_image (const gchar  *filename,
                 PNG_COMPRESSION_TYPE_BASE,
                 PNG_FILTER_TYPE_BASE);
   png_set_compression_level (pp, pngvals.compression_level);
+
+  if (pngvals.comment)
+    {
+      GimpParasite *parasite;
+#ifndef PNG_iTXt_SUPPORTED
+      gsize text_length = 0;
+#endif /* PNG_iTXt_SUPPORTED */
+
+      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
+      if (parasite)
+        {
+          gchar *comment = g_strndup (gimp_parasite_data (parasite),
+                                      gimp_parasite_data_size (parasite));
+
+          gimp_parasite_free (parasite);
+
+          text = g_new0 (png_text, 1);
+          text->key         = "Comment";
+
+#ifdef PNG_iTXt_SUPPORTED
+
+          text->compression = PNG_ITXT_COMPRESSION_NONE;
+          text->text        = comment;
+          text->itxt_length = strlen (comment);
+
+#else
+
+          text->compression = PNG_TEXT_COMPRESSION_NONE;
+          text->text        = g_convert (comment, -1,
+                                         "ISO-8859-1", "UTF-8",
+                                         NULL, &text_length,
+                                         NULL);
+          text->text_length = text_length;
+
+#endif
+
+          if (!text->text)
+            {
+              g_free (text);
+              text = NULL;
+            }
+        }
+    }
+
+  if (text)
+    png_set_text (pp, info, text, 1);
 
   png_write_info (pp, info);
 
