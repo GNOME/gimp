@@ -152,7 +152,7 @@ uri_backend_load_image (const gchar  *uri,
   FILE      *out_file;
   CURL      *curl_handle;
   CURLcode   result;
-  gint       response_code;
+  glong      response_code;
 
   gimp_progress_init (_("Connecting to server"));
 
@@ -199,7 +199,7 @@ uri_backend_load_image (const gchar  *uri,
       fclose (out_file);
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Opening '%s' for reading resulted in HTTP "
-                     "response code: %d"),
+                     "response code: %ld"),
                    uri, response_code);
       curl_easy_cleanup (curl_handle);
       return FALSE;
