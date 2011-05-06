@@ -1,5 +1,5 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
+ * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@
 #include "core/core-types.h"
 
 #include "core/gimpidtable.h"
-
-//#include "tests.h"
-
-//#include "gimp-app-test-utils.h"
 
 
 #define ADD_TEST(function) \
