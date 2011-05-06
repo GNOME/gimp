@@ -67,6 +67,7 @@ struct _GimpDockPrivate
   GList             *dockbooks;
 
   gint               ID;
+  GtkCssProvider    *css_provider;
 };
 
 
@@ -171,7 +172,7 @@ gimp_dock_init (GimpDock *dock)
   dock->p = G_TYPE_INSTANCE_GET_PRIVATE (dock,
                                          GIMP_TYPE_DOCK,
                                          GimpDockPrivate);
-  dock->p->ID             = dock_ID++;
+  dock->p->ID = dock_ID++;
 
   name = g_strdup_printf ("gimp-internal-dock-%d", dock->p->ID);
   gtk_widget_set_name (GTK_WIDGET (dock), name);
@@ -209,6 +210,16 @@ gimp_dock_dispose (GObject *object)
       g_object_unref (dockbook);
     }
 
+  if (dock->p->css_provider)
+    {
+      GtkWidget *widget = GTK_WIDGET (object);
+
+      gtk_style_context_remove_provider_for_screen (gtk_widget_get_screen (widget),
+                                                    GTK_STYLE_PROVIDER (dock->p->css_provider));
+      g_object_unref (dock->p->css_provider);
+      dock->p->css_provider = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -230,7 +241,7 @@ gimp_dock_style_updated (GtkWidget *widget)
       PangoFontDescription *font_desc;
       gint                  font_size;
       gchar                *font_str;
-      gchar                *rc_string;
+      gchar                *css_string;
 
       context = gtk_widget_get_pango_context (widget);
       font_desc = pango_context_get_font_description (context);
@@ -243,20 +254,26 @@ gimp_dock_style_updated (GtkWidget *widget)
       font_str = pango_font_description_to_string (font_desc);
       pango_font_description_free (font_desc);
 
-      rc_string =
-        g_strdup_printf ("style \"gimp-dock-style\""
-                         "{"
-                         "  font_name = \"%s\""
-                         "}"
-                         "widget \"*.gimp-internal-dock-%d.*\" style \"gimp-dock-style\"",
-                         font_str,
-                         dock->p->ID);
+      css_string = g_strdup_printf ("#gimp-internal-dock-%d * {\n"
+                                    "  font: %s;\n"
+                                    "}",
+                                    dock->p->ID,
+                                    font_str);
       g_free (font_str);
 
-      gtk_rc_parse_string (rc_string);
-      g_free (rc_string);
+      if (! dock->p->css_provider)
+        {
+          dock->p->css_provider = gtk_css_provider_new ();
+          gtk_style_context_add_provider_for_screen (gtk_widget_get_screen (widget),
+                                                     GTK_STYLE_PROVIDER (dock->p->css_provider),
+                                                     GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
 
-      gtk_widget_reset_rc_styles (widget);
+      gtk_css_provider_load_from_data (dock->p->css_provider,
+                                       css_string, -1, NULL);
+      g_free (css_string);
+
+      gtk_widget_reset_style (widget);
     }
 }
 
