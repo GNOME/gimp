@@ -198,7 +198,7 @@ splash_create (gboolean be_verbose)
   gtk_box_pack_end (GTK_BOX (vbox), splash->progress, FALSE, FALSE, 0);
   gtk_widget_show (splash->progress);
 
-  gtk_widget_show_now (splash->window);
+  gtk_widget_show (splash->window);
 
 #ifdef STARTUP_TIMER
   splash->timer = g_timer_new ();
