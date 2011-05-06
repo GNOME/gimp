@@ -268,7 +268,7 @@ static const GOptionEntry main_entries[] =
     "dump-pdb-procedures-deprecated", 0,
     G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
     G_OPTION_ARG_CALLBACK, gimp_option_dump_pdb_procedures_deprecated,
-    N_("Output a gimprc file with default settings"), NULL
+    N_("Output a sorted list of deprecated procedures in the PDB"), NULL
   },
   {
     G_OPTION_REMAINING, 0, 0,
@@ -621,13 +621,15 @@ gimp_option_dump_pdb_procedures_deprecated (const gchar  *option_name,
 
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
-  /* Make sure to turn of on compatibility mode so deprecated
-   * procedure are included
+  /* Make sure to turn on compatibility mode so deprecated procedures
+   * are included
    */
   gimp->pdb_compat_mode = GIMP_PDB_COMPAT_ON;
 
+  /* Initialize the list of procedures */
   internal_procs_init (gimp->pdb);
 
+  /* Get deprecated procedures */
   deprecated_procs = gimp_pdb_get_deprecated_procedures (gimp->pdb);
 
   for (iter = deprecated_procs; iter; iter = g_list_next (iter))
