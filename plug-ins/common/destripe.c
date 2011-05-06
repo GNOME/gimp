@@ -244,7 +244,7 @@ destripe (GimpDrawable *drawable,
   GimpPixelRgn  dst_rgn;        /* destination image region */
   guchar       *src_rows;       /* image data */
   gdouble       progress, progress_inc;
-  gint          x1, x2, y1, y2;
+  gint          x1, x2, y1;
   gint          width, height;
   gint          bpp;
   glong        *hist, *corr;        /* "histogram" data */
@@ -264,19 +264,20 @@ destripe (GimpDrawable *drawable,
     {
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &width, &height);
-      x2 = x1 + width;
-      y2 = y1 + height;
     }
   else
     {
       gimp_progress_init (_("Destriping"));
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-      width  = x2 - x1;
-      height = y2 - y1;
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x1, &y1, &width, &height))
+        {
+          return;
+        }
       progress = 0;
       progress_inc = 0.5 * tile_width / width;
     }
+
+  x2 = x1 + width;
 
   /*
    * Setup for filter...

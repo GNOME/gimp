@@ -1416,9 +1416,9 @@ gauss (GimpDrawable *drawable,
        GtkWidget    *preview)
 {
 
-  gint    x1, y1, x2, y2;
+  gint    x, y;
   gint    width, height;
-  guchar *preview_buffer;
+  guchar *preview_buffer = NULL;
 
   /*
    * IIR goes wrong if the blur radius is less than 1, so we silently
@@ -1436,36 +1436,25 @@ gauss (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+      gimp_preview_get_position (GIMP_PREVIEW (preview), &x, &y);
       gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
-
-      if (width < 1 || height < 1)
-        return;
 
       preview_buffer = g_new (guchar, width * height * drawable->bpp);
 
     }
-  else
+  else if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                           &x, &y, &width, &height))
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-      width  = (x2 - x1);
-      height = (y2 - y1);
-
-      if (width < 1 || height < 1)
-        return;
-
-      preview_buffer = NULL;
-
+      return;
     }
 
 
   if (method == BLUR_IIR)
     gauss_iir (drawable,
-               horz, vert, method, preview_buffer, x1, y1, width, height);
+               horz, vert, method, preview_buffer, x, y, width, height);
   else
     gauss_rle (drawable,
-               horz, vert, method, preview_buffer, x1, y1, width, height);
+               horz, vert, method, preview_buffer, x, y, width, height);
 
   if (preview)
     {
@@ -1479,7 +1468,7 @@ gauss (GimpDrawable *drawable,
       /*  merge the shadow, update the drawable  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+      gimp_drawable_update (drawable->drawable_id, x, y, width, height);
     }
 }
 

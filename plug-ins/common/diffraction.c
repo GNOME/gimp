@@ -286,8 +286,8 @@ run (const gchar      *name,
 typedef struct {
   gdouble       dhoriz;
   gdouble       dvert;
-  gint          x1;
-  gint          y1;
+  gint          x;
+  gint          y;
 } DiffractionParam_t;
 
 static void
@@ -301,8 +301,8 @@ diffraction_func (gint x,
   gdouble px, py;
   GimpRGB rgb;
 
-  px = -5.0 + param->dhoriz * (x - param->x1);
-  py = 5.0 + param->dvert * (y - param->y1);
+  px = -5.0 + param->dhoriz * (x - param->x);
+  py = 5.0 + param->dvert * (y - param->y);
 
   diff_diffract (px, py, &rgb);
 
@@ -319,13 +319,18 @@ diffraction (GimpDrawable *drawable)
 {
   GimpRgnIterator *iter;
   DiffractionParam_t param;
-  gint x1, y1, x2, y2;
+  gint x, y, width, height;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  param.x1 = x1;
-  param.y1 = y1;
-  param.dhoriz = 10.0 / (x2 - x1 - 1);
-  param.dvert  = -10.0 / (y2 - y1 - 1);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x, &y,
+                                      &width, &height))
+    {
+      return;
+    }
+
+  param.x = x;
+  param.y = y;
+  param.dhoriz = 10.0 / (width - 1);
+  param.dvert  = -10.0 / (height - 1);
 
   gimp_progress_init (_("Creating diffraction pattern"));
   iter = gimp_rgn_iterator_new (drawable, 0);

@@ -382,14 +382,16 @@ cubism (GimpDrawable *drawable,
     {
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &sel_width, &sel_height);
-      x2 = x1 + sel_width;
-      y2 = y1 + sel_height;
       dest = g_new (guchar, sel_height * sel_width * bytes);
     }
-  else
+  else if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                           &x1, &y1, &sel_width, &sel_height))
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      return;
     }
+
+  x2 = x1 + sel_width;
+  y2 = y1 + sel_height;
 
   /*  determine the background color  */
   if (cvals.bg_color == BLACK)

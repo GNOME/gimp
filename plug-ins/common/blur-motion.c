@@ -895,16 +895,11 @@ mblur (GimpDrawable *drawable,
       gimp_preview_get_position (preview, &x, &y);
       gimp_preview_get_size (preview, &width, &height);
     }
-  else
+  else if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                           &x, &y, &width, &height))
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id,
-                                 &x, &y, &width, &height);
-      width  -= x;
-      height -= y;
+      return;
     }
-
-  if (width < 1 || height < 1)
-    return;
 
   if (! preview)
     gimp_progress_init (_("Motion blurring"));

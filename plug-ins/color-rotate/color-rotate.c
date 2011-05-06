@@ -241,30 +241,36 @@ color_rotate (GimpDrawable *drawable)
   gint         bytes;
   guchar      *src_row, *dest_row;
   gint         row;
-  gint         x1, y1, x2, y2;
+  gint         x, y;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  width  = drawable->width;
-  height = drawable->height;
-  bytes  = drawable->bpp;
-
-  src_row  = g_new (guchar, (x2 - x1) * bytes);
-  dest_row = g_new (guchar, (x2 - x1) * bytes);
-
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-
-  for (row = y1; row < y2; row++)
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x, &y, &width, &height))
     {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
+      return;
+    }
 
-      color_rotate_row (src_row, dest_row, row, (x2 - x1), bytes);
+  bytes = drawable->bpp;
 
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
+  src_row  = g_new (guchar, width * bytes);
+  dest_row = g_new (guchar, width * bytes);
+
+  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0,
+                       drawable->width,
+                       drawable->height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, 0, 0,
+                       drawable->width,
+                       drawable->height, TRUE, TRUE);
+
+  for (row = y; row < (y + height); row++)
+    {
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x, row, width);
+
+      color_rotate_row (src_row, dest_row, row, width, bytes);
+
+      gimp_pixel_rgn_set_row (&destPR, dest_row, x, row, width);
 
       if ((row % 10) == 0)
-        gimp_progress_update ((double) row / (double) (y2 - y1));
+        gimp_progress_update ((double) row / (double) height);
     }
 
   /*  update the processed region  */
@@ -272,7 +278,7 @@ color_rotate (GimpDrawable *drawable)
   gimp_progress_update (1.0);
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x, y, width, height);
 
   g_free (src_row);
   g_free (dest_row);

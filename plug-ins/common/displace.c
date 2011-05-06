@@ -523,7 +523,7 @@ displace (GimpDrawable *drawable,
   guchar           *mxrow, *mx;
   guchar           *myrow, *my;
   guchar            pixel[4][4];
-  gint              x1, y1, x2, y2;
+  gint              x1, y1;
   gint              x, y;
   gdouble           cx, cy;
   gint              progress, max_progress;
@@ -561,23 +561,23 @@ displace (GimpDrawable *drawable,
 
   bytes  = drawable->bpp;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  width  = x2 - x1;
-  height = y2 - y1;
-
-  if (dvals.mode == POLAR_MODE)
-    {
-      cx = x1 + width / 2.0;
-      cy = y1 + height / 2.0;
-    }
 
   if (preview)
     {
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &width, &height);
-      x2 = x1 + width;
-      y2 = y1 + height;
       buffer = g_new (guchar, width * height * bytes);
+    }
+  else if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x1, &y1,
+                                           &width, &height))
+    {
+      return;
+    }
+
+  if (dvals.mode == POLAR_MODE)
+    {
+      cx = x1 + width / 2.0;
+      cy = y1 + height / 2.0;
     }
 
   progress     = 0;

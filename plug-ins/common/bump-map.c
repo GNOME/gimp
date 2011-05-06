@@ -317,11 +317,15 @@ run (const gchar      *name,
   /* Get drawable information */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &sel_x1, &sel_y1,
+                                      &sel_width, &sel_height))
+    {
+      return;
+    }
 
-  sel_width     = sel_x2 - sel_x1;
-  sel_height    = sel_y2 - sel_y1;
+  sel_x2 = sel_width + sel_x1;
+  sel_y2 = sel_height + sel_y1;
   img_bpp       = gimp_drawable_bpp (drawable->drawable_id);
   img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
