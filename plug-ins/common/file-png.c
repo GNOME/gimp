@@ -1320,7 +1320,8 @@ save_image (const gchar  *filename,
       bpp = 1;
       color_type = PNG_COLOR_TYPE_PALETTE;
       pngg.has_plte = TRUE;
-      pngg.palette = (png_colorp) gimp_image_get_colormap (image_ID, &pngg.num_palette);
+      pngg.palette = (png_colorp) gimp_image_get_colormap (image_ID,
+                                                           &pngg.num_palette);
       bit_depth = get_bit_depth_for_palette (pngg.num_palette);
       break;
 
@@ -1545,7 +1546,9 @@ save_image (const gchar  *filename,
 
           gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
-          /*if we are with a RGBA image and have to pre-multiply the alpha channel */
+
+          /* If we are with a RGBA image and have to pre-multiply the
+             alpha channel */
           if (bpp == 4 && ! pngvals.save_transp_pixels)
             {
               for (i = 0; i < num; ++i)
@@ -1585,6 +1588,7 @@ save_image (const gchar  *filename,
                     }
                 }
             }
+
           /* Otherwise if we have a paletted image and transparency
            * couldn't be set, we ignore the alpha channel */
           else if (png_get_valid (pp, info, PNG_INFO_PLTE) &&
