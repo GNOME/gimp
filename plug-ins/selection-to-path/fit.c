@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <string.h>
 #include <float.h>
 #include <math.h>
 #include <assert.h>
@@ -1110,6 +1111,13 @@ fit_with_least_squares (curve_type curve)
   unsigned iteration = 0;
   real previous_error = FLT_MAX;
   real improvement = FLT_MAX;
+
+  /* FIXME: Initialize best_spline to zeroes. This is strictly not
+     necessary as best_spline is always set in the loop below. But the
+     compiler thinks it isn't and warns. Ideally, the code should be
+     rewritten such that best_spline and best_error are initialized with
+     the first values before the loop begins. */
+  memset (&best_spline, 0, sizeof best_spline);
 
 /*   LOG ("\nFitting with least squares:\n"); */
 
