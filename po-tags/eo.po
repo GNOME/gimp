@@ -1,0 +1,26 @@
+# Esperanto translation of GIMP tags
+# Copyright (C) 2011 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-05-06 13:45+0000\n"
+"PO-Revision-Date: 2011-05-06 15:51+0200\n"
+"Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
+"Language-Team: Esperanto <ubuntu-l10n-eo@lists.launchpad.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: ../data/tags/gimp-tags-default.xml.in.h:1
+msgid "fuzzy"
+msgstr "svage"
+
+#: ../data/tags/gimp-tags-default.xml.in.h:2
+msgid "round"
+msgstr "ronde"
