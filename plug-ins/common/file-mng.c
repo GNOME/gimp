@@ -1039,7 +1039,8 @@ mng_save_image (const gchar  *filename,
         case GIMP_INDEXED_IMAGE:
           color_type = PNG_COLOR_TYPE_PALETTE;
           mngg.has_plte = TRUE;
-          mngg.palette = (png_colorp) gimp_image_get_colormap (image_id, &mngg.num_palette);
+          mngg.palette = (png_colorp)
+            gimp_image_get_colormap (image_id, &mngg.num_palette);
           bit_depth = get_bit_depth_for_palette (mngg.num_palette);
           break;
         case GIMP_INDEXEDA_IMAGE:
