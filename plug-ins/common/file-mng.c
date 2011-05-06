@@ -136,7 +136,6 @@ struct mng_data_t
   gint32 default_dispose;
 };
 
-
 /* Values of the instance of the above struct when the plug-in is
  * first invoked. */
 
@@ -158,6 +157,21 @@ static struct mng_data_t mng_data =
   100,                          /* default_delay */
   DISPOSE_COMBINE               /* default_dispose */
 };
+
+
+/* These are not saved or restored. */
+
+struct mng_globals_t
+{
+  gboolean   has_trns;
+  png_bytep  trans;
+  int        num_trans;
+  gboolean   has_plte;
+  png_colorp palette;
+  int        num_palette;
+};
+
+static struct mng_globals_t mngg;
 
 
 /* The output FILE pointer which is used by libmng;
@@ -478,10 +492,13 @@ respin_cmap (png_structp  pp,
 
       if (transparent != -1)
         {
-          png_color palette[256] = { {0, 0, 0} };
+          static png_color palette[256] = { {0, 0, 0} };
           gint i;
 
-          png_set_tRNS (pp, info, (png_bytep) trans, 1, NULL);
+          /* Set tRNS chunk values for writing later. */
+          mngg.has_trns = TRUE;
+          mngg.trans = trans;
+          mngg.num_trans = 1;
 
           /* Transform all pixels with a value = transparent to
            * 0 and vice versa to compensate for re-ordering in palette
@@ -503,7 +520,11 @@ respin_cmap (png_structp  pp,
               palette[i].blue = before[3 * remap[i] + 2];
             }
 
-          png_set_PLTE (pp, info, (png_colorp) palette, colors);
+          /* Set PLTE chunk values for writing later. */
+          mngg.has_plte = TRUE;
+          mngg.palette = palette;
+          mngg.num_palette = colors;
+
           *bit_depth = get_bit_depth_for_palette (colors);
 
           return TRUE;
@@ -515,7 +536,9 @@ respin_cmap (png_structp  pp,
         }
     }
 
-  png_set_PLTE (pp, info, (png_colorp) before, colors);
+  mngg.has_plte = TRUE;
+  mngg.palette = (png_colorp) before;
+  mngg.num_palette = colors;
   *bit_depth = get_bit_depth_for_palette (colors);
 
   return FALSE;
@@ -793,7 +816,6 @@ mng_save_image (const gchar  *filename,
 
   for (i = (num_layers - 1); i >= 0; i--)
     {
-      gint            num_colors;
       GimpImageType   layer_drawable_type;
       GimpDrawable   *layer_drawable;
       gint            layer_offset_x, layer_offset_y;
@@ -822,7 +844,6 @@ mng_save_image (const gchar  *filename,
       guchar          layer_remap[256];
       int             color_type;
       int             bit_depth;
-      png_colorp      palette;
 
       layer_name          = gimp_item_get_name (layers[i]);
       layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name);
@@ -1017,9 +1038,9 @@ mng_save_image (const gchar  *filename,
           break;
         case GIMP_INDEXED_IMAGE:
           color_type = PNG_COLOR_TYPE_PALETTE;
-          palette = (png_colorp) gimp_image_get_colormap (image_id, &num_colors);
-          png_set_PLTE (pp, info, palette, num_colors);
-          bit_depth = get_bit_depth_for_palette (num_colors);
+          mngg.has_plte = TRUE;
+          mngg.palette = (png_colorp) gimp_image_get_colormap (image_id, &mngg.num_palette);
+          bit_depth = get_bit_depth_for_palette (mngg.num_palette);
           break;
         case GIMP_INDEXEDA_IMAGE:
           color_type = PNG_COLOR_TYPE_PALETTE;
@@ -1036,12 +1057,25 @@ mng_save_image (const gchar  *filename,
           goto err3;
         }
 
+      /* Note: png_set_IHDR() must be called before any other
+         png_set_*() functions. */
       png_set_IHDR (pp, info, layer_cols, layer_rows,
                 bit_depth,
                 color_type,
                 mng_data.interlaced ? PNG_INTERLACE_ADAM7 : PNG_INTERLACE_NONE,
                 PNG_COMPRESSION_TYPE_BASE,
                 PNG_FILTER_TYPE_BASE);
+
+      if (mngg.has_trns)
+        {
+          png_set_tRNS (pp, info, mngg.trans, mngg.num_trans, NULL);
+        }
+
+      if (mngg.has_plte)
+        {
+          png_set_PLTE (pp, info, mngg.palette, mngg.num_palette);
+        }
+
       png_set_compression_level (pp, mng_data.compression_level);
 
       png_write_info (pp, info);
