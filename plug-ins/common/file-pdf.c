@@ -91,12 +91,12 @@ static GdkPixbuf *       get_thumb_pixbuf  (PopplerDocument        *doc,
                                             gint                    page,
                                             gint                    preferred_size);
 
-static gint32            layer_from_surface (gint32                  image,
-					     const gchar            *layer_name,
-					     gint                    position,
-					     cairo_surface_t        *surface,
-					     gdouble                 progress_start,
-					     gdouble                 progress_scale);
+static gint32            layer_from_pixbuf (gint32                  image,
+					                        const gchar            *layer_name,
+					                        gint                    position,
+					                        GdkPixbuf              *pixbuf,
+					                        gdouble                 progress_start,
+					                        gdouble                 progress_scale);
 
 /**
  ** the following was formerly part of
@@ -440,12 +440,12 @@ run (const gchar      *name,
         }
       else
         {
-          gdouble          width     = 0;
-          gdouble          height    = 0;
-          gdouble          scale;
-          gint32           image     = -1;
-          gint             num_pages = 0;
-          cairo_surface_t *surface   = NULL;
+          gdouble    width     = 0;
+          gdouble    height    = 0;
+          gdouble    scale;
+          gint32     image     = -1;
+          gint       num_pages = 0;
+          GdkPixbuf *pixbuf    = NULL;
 
           /* Possibly retrieve last settings */
           gimp_get_data (LOAD_PROC, &loadvals);
@@ -465,21 +465,21 @@ run (const gchar      *name,
 
               num_pages = poppler_document_get_n_pages (doc);
 
-              surface = get_thumb_surface (doc, 0, param[1].data.d_int32);
+              pixbuf = get_thumb_pixbuf (doc, 0, param[1].data.d_int32);
 
               g_object_unref (doc);
             }
 
-          if (surface)
+          if (pixbuf)
             {
-              image = gimp_image_new (cairo_image_surface_get_width (surface),
-                                      cairo_image_surface_get_height (surface),
+              image = gimp_image_new (gdk_pixbuf_get_width  (pixbuf),
+                                      gdk_pixbuf_get_height (pixbuf),
                                       GIMP_RGB);
 
               gimp_image_undo_disable (image);
 
-              layer_from_surface (image, "thumbnail", 0, surface, 0.0, 1.0);
-              cairo_surface_destroy (surface);
+              layer_from_pixbuf (image, "thumbnail", 0, pixbuf, 0.0, 1.0);
+              g_object_unref (pixbuf);
 
               gimp_image_undo_enable (image);
               gimp_image_clean_all (image);
@@ -741,17 +741,17 @@ gdk_pixbuf_get_from_surface  (cairo_surface_t *surface,
 #endif
 
 static gint32
-layer_from_surface (gint32           image,
-                    const gchar     *layer_name,
-                    gint             position,
-                    cairo_surface_t *surface,
-                    gdouble          progress_start,
-                    gdouble          progress_scale)
+layer_from_pixbuf (gint32        image,
+                   const gchar  *layer_name,
+                   gint          position,
+                   GdkPixbuf    *pixbuf,
+                   gdouble       progress_start,
+                   gdouble       progress_scale)
 {
-  gint32 layer = gimp_layer_new_from_surface (image, layer_name, surface,
-                                              100.0, GIMP_NORMAL_MODE,
-                                              progress_start,
-                                              progress_start + progress_scale);
+  gint32 layer = gimp_layer_new_from_pixbuf (image, layer_name, pixbuf,
+                                             100.0, GIMP_NORMAL_MODE,
+                                             progress_start,
+                                             progress_start + progress_scale);
 
   gimp_image_add_layer (image, layer, position);
 
@@ -788,11 +788,6 @@ render_page_to_surface (PopplerPage *page,
   return surface;
 }
 
-#if 0
-
-/* This is currently unused, but we'll have it here in case the military
-   wants it. */
-
 static GdkPixbuf *
 render_page_to_pixbuf (PopplerPage *page,
                        int          width,
@@ -810,8 +805,6 @@ render_page_to_pixbuf (PopplerPage *page,
 
   return pixbuf;
 }
-
-#endif
 
 static gint32
 load_image (PopplerDocument        *doc,
@@ -844,9 +837,9 @@ load_image (PopplerDocument        *doc,
       gdouble      page_width;
       gdouble      page_height;
 
-      cairo_surface_t *surface;
-      gint             width;
-      gint             height;
+      GdkPixbuf   *pixbuf;
+      gint         width;
+      gint         height;
 
       page = poppler_document_get_page (doc, pages->pages[i]);
 
@@ -874,13 +867,13 @@ load_image (PopplerDocument        *doc,
           gimp_image_set_resolution (image_ID, resolution, resolution);
         }
 
-      surface = render_page_to_surface (page, width, height, scale);
+      pixbuf = render_page_to_pixbuf (page, width, height, scale);
 
-      layer_from_surface (image_ID, page_label, i, surface,
-                          doc_progress, 1.0 / pages->n_pages);
+      layer_from_pixbuf (image_ID, page_label, i, pixbuf,
+                         doc_progress, 1.0 / pages->n_pages);
 
       g_free (page_label);
-      cairo_surface_destroy (surface);
+      g_object_unref(pixbuf);
 
       doc_progress = (double) (i + 1) / pages->n_pages;
       gimp_progress_update (doc_progress);
