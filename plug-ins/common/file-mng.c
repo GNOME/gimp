@@ -1039,7 +1039,7 @@ mng_save_image (const gchar  *filename,
       png_set_IHDR (pp, info, layer_cols, layer_rows,
                 bit_depth,
                 color_type,
-                (mng_data.interlaced == 0 ? 0 : 1),
+                mng_data.interlaced ? PNG_INTERLACE_ADAM7 : PNG_INTERLACE_NONE,
                 PNG_COMPRESSION_TYPE_BASE,
                 PNG_FILTER_TYPE_BASE);
       png_set_compression_level (pp, mng_data.compression_level);
