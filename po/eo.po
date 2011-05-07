@@ -25,7 +25,10 @@
 # unfocused (photog.) = eksterfokusita		blur = malfokusi ("misenfokusigi" tro longe)
 # justify = ambaŭen
 #
-# Antonio C. Codazzi "la Filozofo" < >, 2006.
+# Antonio C. CODAZZI "la Filozofo" < >, 2006.
+# Alekĉjo < >, 2007.
+# Petr Adam DOHNÁLEK < >, 2010.
+# Michael MORONI < >, 2009, 2010, 2011.
 # Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011.
 #
 msgid ""
