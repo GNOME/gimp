@@ -302,11 +302,21 @@ file_save_cmd_callback (GtkAction *action,
 
         if (uri && export_proc)
           {
+            char *uri_copy;
+
+            /* The memory that 'uri' points to can be freed by
+               file_save_dialog_save_image(), when it eventually calls
+               gimp_image_set_imported_uri() to reset the imported uri,
+               resulting in garbage. So make a duplicate of it here. */
+
+            uri_copy = g_strdup (uri);
+
             saved = file_save_dialog_save_image (GIMP_PROGRESS (display),
-                                                 gimp, image, uri,
+                                                 gimp, image, uri_copy,
                                                  export_proc,
                                                  GIMP_RUN_WITH_LAST_VALS,
                                                  FALSE, TRUE, TRUE);
+            g_free (uri_copy);
           }
       }
       break;
