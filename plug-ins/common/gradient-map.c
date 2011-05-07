@@ -269,6 +269,8 @@ get_samples_gradient (GimpDrawable *drawable)
   gimp_gradient_get_uniform_samples (gradient_name, NSAMPLES, FALSE,
                                      &n_f_samples, &f_samples);
 
+  g_free (gradient_name);
+
   bpp       = gimp_drawable_bpp (drawable->drawable_id);
   color     = gimp_drawable_is_rgb (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
