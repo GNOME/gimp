@@ -281,10 +281,10 @@ selection_undraw (Selection *selection)
 static void
 selection_render_mask (Selection *selection)
 {
-  cairo_t *cr;
-  cairo_surface_t *surface;
   GdkWindow       *window;
-  
+  cairo_surface_t *surface;
+  cairo_t         *cr;
+
   window = gtk_widget_get_window (selection->shell->canvas);
   surface = gdk_window_create_similar_surface (window, CAIRO_CONTENT_ALPHA,
                                                gdk_window_get_width  (window),
