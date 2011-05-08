@@ -470,7 +470,7 @@ WriteBMP (const gchar  *filename,
       Write (outfile, puffer, mask_info_size);
     }
 
-  /* Write V4 header colorspace fields */
+  /* Write V5 colorspace fields */
 
   /* bV5CSType = LCS_sRGB */
   FromL (0x73524742, &puffer[0x00]);
