@@ -154,7 +154,7 @@ WriteBMP (const gchar  *filename,
   GimpPixelRgn   pixel_rgn;
   GimpDrawable  *drawable;
   GimpImageType  drawable_type;
-  guchar         puffer[50];
+  guchar         puffer[128];
   gint           i;
   gint           mask_info_size;
   guint32        Mask[4];
@@ -331,11 +331,11 @@ WriteBMP (const gchar  *filename,
   else
     SpZeile = ((gint) (((Spcols * BitsPerPixel) / 8) / 4) + 1) * 4;
 
-  Bitmap_File_Head.bfSize    = 0x36 + MapSize + (rows * SpZeile) + mask_info_size;
+  Bitmap_File_Head.bfSize    = 0x36 + MapSize + (rows * SpZeile) + mask_info_size + (68 /* V5 color space */);
   Bitmap_File_Head.zzHotX    = 0;
   Bitmap_File_Head.zzHotY    = 0;
-  Bitmap_File_Head.bfOffs    = 0x36 + MapSize + mask_info_size;
-  Bitmap_File_Head.biSize    = 40 + (mask_info_size > 12 ? mask_info_size : 0);
+  Bitmap_File_Head.bfOffs    = 0x36 + MapSize + mask_info_size + 68;
+  Bitmap_File_Head.biSize    = 40 + mask_info_size + 68;
 
   Bitmap_Head.biWidth  = cols;
   Bitmap_Head.biHeight = rows;
@@ -421,7 +421,7 @@ WriteBMP (const gchar  *filename,
   Write (outfile, puffer, 36);
   write_color_map (outfile, Red, Green, Blue, MapSize);
 
-  if (mask_info_size)
+  if (mask_info_size > 0)
     {
       switch (BMPSaveData.rgb_format)
         {
@@ -469,6 +469,38 @@ WriteBMP (const gchar  *filename,
       FromL (Mask[3], &puffer[0x0C]);
       Write (outfile, puffer, mask_info_size);
     }
+
+  /* Write V4 header colorspace fields */
+
+  /* bV5CSType = LCS_sRGB */
+  FromL (0x73524742, &puffer[0x00]);
+
+  /* bV5Endpoints is set to 0 (ignored) */
+  for (i = 0; i < 0x24; i++)
+    puffer[0x04 + i] = 0x00;
+
+  /* bV5GammaRed is set to 0 (ignored) */
+  FromL (0x0, &puffer[0x28]);
+
+  /* bV5GammaGreen is set to 0 (ignored) */
+  FromL (0x0, &puffer[0x2c]);
+
+  /* bV5GammaBlue is set to 0 (ignored) */
+  FromL (0x0, &puffer[0x30]);
+
+  /* bV5Intent = LCS_GM_GRAPHICS */
+  FromL (0x00000002, &puffer[0x34]);
+
+  /* bV5ProfileData is set to 0 (ignored) */
+  FromL (0x0, &puffer[0x38]);
+
+  /* bV5ProfileSize is set to 0 (ignored) */
+  FromL (0x0, &puffer[0x3c]);
+
+  /* bV5Reserved = 0 */
+  FromL (0x0, &puffer[0x40]);
+
+  Write (outfile, puffer, 68);
 
   /* After that is done, we write the image ... */
 
