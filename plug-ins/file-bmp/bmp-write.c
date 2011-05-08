@@ -195,8 +195,12 @@ WriteBMP (const gchar  *filename,
       colors       = 256;
       BitsPerPixel = 8;
       MapSize      = 1024;
-      if (drawable_type == GIMP_GRAY_IMAGE) channels = 1;
-      else channels = 2;
+
+      if (drawable_type == GIMP_GRAYA_IMAGE)
+        channels = 2;
+      else
+        channels = 1;
+
       for (i = 0; i < colors; i++)
         {
           Red[i]   = i;
@@ -216,8 +220,11 @@ WriteBMP (const gchar  *filename,
     case GIMP_INDEXED_IMAGE:
       cmap     = gimp_image_get_colormap (image, &colors);
       MapSize  = 4 * colors;
-      if (drawable_type == GIMP_INDEXED_IMAGE) channels = 1;
-      else channels = 2;
+
+      if (drawable_type == GIMP_INDEXEDA_IMAGE)
+        channels = 2;
+      else
+        channels = 1;
 
       if (colors > 16)
         BitsPerPixel = 8;
