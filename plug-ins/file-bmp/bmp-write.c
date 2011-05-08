@@ -344,8 +344,10 @@ WriteBMP (const gchar  *filename,
 
   if (BMPSaveData.encoded == 0)
   {
-    if (!mask_info_size) Bitmap_Head.biCompr = 0;
-    else Bitmap_Head.biCompr = 3;
+    if (mask_info_size > 0)
+      Bitmap_Head.biCompr = 3; /* BI_BITFIELDS */
+    else
+      Bitmap_Head.biCompr = 0; /* BI_RGB */
   }
   else if (BitsPerPixel == 8)
     Bitmap_Head.biCompr = 1;
