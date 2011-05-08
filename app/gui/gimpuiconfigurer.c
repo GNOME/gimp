@@ -439,8 +439,8 @@ gimp_ui_configurer_configure_for_multi_window (GimpUIConfigurer *ui_configurer)
 static GimpImageWindow *
 gimp_ui_configurer_get_uber_window (GimpUIConfigurer *ui_configurer)
 {
-  GimpContext      *context      = gimp_get_user_context (ui_configurer->p->gimp);
-  GimpDisplay      *display      = gimp_context_get_display (context);
+  Gimp             *gimp         = ui_configurer->p->gimp;
+  GimpDisplay      *display      = gimp_get_display_iter (gimp)->data;
   GimpDisplayShell *shell        = gimp_display_get_shell (display);
   GimpImageWindow  *image_window = gimp_display_shell_get_window (shell);
 
