@@ -148,6 +148,8 @@ libappwidgets_a_sources = \
 	gimpdockable.h			\
 	gimpdockbook.c			\
 	gimpdockbook.h			\
+	gimpdockcontainer.c		\
+	gimpdockcontainer.h		\
 	gimpdocked.c			\
 	gimpdocked.h			\
 	gimpdockwindow.c		\

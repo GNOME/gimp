@@ -40,6 +40,7 @@ typedef struct _GimpDeviceManager            GimpDeviceManager;
 
 typedef struct _GimpDock                     GimpDock;
 typedef struct _GimpDockColumns              GimpDockColumns;
+typedef struct _GimpDockContainer            GimpDockContainer; /* dummy typedef */
 typedef struct _GimpDockWindow               GimpDockWindow;
 typedef struct _GimpDockable                 GimpDockable;
 typedef struct _GimpDockbook                 GimpDockbook;
