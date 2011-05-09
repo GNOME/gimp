@@ -70,7 +70,6 @@ void                gimp_dock_window_remove_dock            (GimpDockWindow    *
 GimpUIManager     * gimp_dock_window_get_ui_manager         (GimpDockWindow    *dock_window);
 GimpContext       * gimp_dock_window_get_context            (GimpDockWindow    *dock);
 GimpDialogFactory * gimp_dock_window_get_dialog_factory     (GimpDockWindow    *dock);
-GList             * gimp_dock_window_get_docks              (GimpDockWindow    *dock_window);
 gboolean            gimp_dock_window_get_auto_follow_active (GimpDockWindow    *menu_dock);
 void                gimp_dock_window_set_auto_follow_active (GimpDockWindow    *menu_dock,
                                                              gboolean           show);

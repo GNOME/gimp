@@ -30,6 +30,8 @@
 
 #include "config/gimpguiconfig.h"
 
+#include "widgets/gimpdockcontainer.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
@@ -740,11 +742,12 @@ gimp_session_info_get_info (GimpSessionInfo *info)
 
   info->p->aux_info = gimp_session_info_aux_get_list (info->p->widget);
 
-  if (GIMP_IS_DOCK_WINDOW (info->p->widget))
+  if (GIMP_IS_DOCK_CONTAINER (info->p->widget))
     {
-      GList *iter = NULL;
+      GimpDockContainer *dock_container = GIMP_DOCK_CONTAINER (info->p->widget);
+      GList             *iter           = NULL;
 
-      for (iter = gimp_dock_window_get_docks (GIMP_DOCK_WINDOW (info->p->widget));
+      for (iter = gimp_dock_container_get_docks (dock_container);
            iter;
            iter = g_list_next (iter))
         {

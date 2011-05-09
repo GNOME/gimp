@@ -48,6 +48,7 @@
 #include "gimpdock.h"
 #include "gimpdockbook.h"
 #include "gimpdockcolumns.h"
+#include "gimpdockcontainer.h"
 #include "gimpdockwindow.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
@@ -108,6 +109,9 @@ struct _GimpDockWindowPrivate
 };
 
 
+static void      gimp_dock_window_dock_container_iface_init
+                                                          (GimpDockContainerInterface
+                                                                           *iface);
 static void      gimp_dock_window_constructed             (GObject         *object);
 static void      gimp_dock_window_dispose                 (GObject         *object);
 static void      gimp_dock_window_finalize                (GObject         *object);
@@ -124,6 +128,8 @@ static void      gimp_dock_window_style_set               (GtkWidget       *widg
                                                            GtkStyle        *prev_style);
 static gboolean  gimp_dock_window_delete_event            (GtkWidget       *widget,
                                                            GdkEventAny     *event);
+static GList *   gimp_dock_window_get_docks               (GimpDockContainer
+                                                                           *dock_container);
 
 static gboolean  gimp_dock_window_should_add_to_recent    (GimpDockWindow  *dock_window);
 static void      gimp_dock_window_display_changed         (GimpDockWindow  *dock_window,
@@ -152,7 +158,9 @@ static void      gimp_dock_window_auto_clicked            (GtkWidget       *widg
                                                            GimpDock        *dock);
 
 
-G_DEFINE_TYPE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW)
+G_DEFINE_TYPE_WITH_CODE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCK_CONTAINER,
+                                                gimp_dock_window_dock_container_iface_init))
 
 #define parent_class gimp_dock_window_parent_class
 
@@ -251,6 +259,12 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   /* Misc */
   gtk_window_set_resizable (GTK_WINDOW (dock_window), TRUE);
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
+}
+
+static void
+gimp_dock_window_dock_container_iface_init (GimpDockContainerInterface *iface)
+{
+  iface->get_docks = gimp_dock_window_get_docks;
 }
 
 static void
@@ -669,6 +683,25 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
 }
 
 /**
+ * gimp_dock_window_get_docks:
+ *
+ * Get a list of docks in the dock window.
+ *
+ * Returns:
+ **/
+static GList *
+gimp_dock_window_get_docks (GimpDockContainer *dock_container)
+{
+  GimpDockWindow *dock_window;
+
+  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_container), NULL);
+
+  dock_window = GIMP_DOCK_WINDOW (dock_container);
+
+  return gimp_dock_columns_get_docks (dock_window->p->dock_columns);
+}
+
+/**
  * gimp_dock_window_should_add_to_recent:
  * @dock_window:
  *
@@ -680,8 +713,10 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
 static gboolean
 gimp_dock_window_should_add_to_recent (GimpDockWindow *dock_window)
 {
-  GList    *docks      = gimp_dock_window_get_docks (dock_window);
+  GList    *docks;
   gboolean  should_add = TRUE;
+
+  docks = gimp_dock_container_get_docks (GIMP_DOCK_CONTAINER (dock_window));
 
   if (g_list_length (docks) < 1)
     {
@@ -763,7 +798,7 @@ gimp_dock_window_get_description (GimpDockWindow *dock_window,
   GString *complete_desc = g_string_new (NULL);
   GList   *iter          = NULL;
 
-  for (iter = gimp_dock_window_get_docks (dock_window);
+  for (iter = gimp_dock_container_get_docks (GIMP_DOCK_CONTAINER (dock_window));
        iter;
        iter = g_list_next (iter))
     {
@@ -1003,22 +1038,6 @@ gimp_dock_window_get_dialog_factory (GimpDockWindow *dock_window)
   g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
 
   return dock_window->p->dialog_factory;
-}
-
-/**
- * gimp_dock_window_get_docks:
- * @dock_window:
- *
- * Get a list of docks in the dock window.
- *
- * Returns:
- **/
-GList *
-gimp_dock_window_get_docks (GimpDockWindow *dock_window)
-{
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
-
-  return gimp_dock_columns_get_docks (dock_window->p->dock_columns);
 }
 
 gboolean

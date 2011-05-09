@@ -38,6 +38,7 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
+#include "widgets/gimpdockcontainer.h"
 #include "widgets/gimpdocked.h"
 #include "widgets/gimpdockwindow.h"
 #include "widgets/gimphelp-ids.h"
@@ -734,15 +735,17 @@ gimp_ui_not_toolbox_window (GObject *object)
 static gboolean
 gimp_ui_multicolumn_not_toolbox_window (GObject *object)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+  GimpDockWindow    *dock_window;
+  GimpDockContainer *dock_container;
 
   if (! GIMP_IS_DOCK_WINDOW (object))
     return FALSE;
 
-  dock_window = GIMP_DOCK_WINDOW (object);
+  dock_window    = GIMP_DOCK_WINDOW (object);
+  dock_container = GIMP_DOCK_CONTAINER (object);
 
   return (! gimp_dock_window_has_toolbox (dock_window) &&
-          g_list_length (gimp_dock_window_get_docks (dock_window)) > 1);
+          g_list_length (gimp_dock_container_get_docks (dock_container)) > 1);
 }
 
 static gboolean
