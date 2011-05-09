@@ -666,9 +666,7 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   gimp_object_set_name (GIMP_OBJECT (info), name);
   g_free (name);
 
-  gimp_session_info_set_widget (info, GTK_WIDGET (dock_window));
-  gimp_session_info_get_info (info);
-  gimp_session_info_set_widget (info, NULL);
+  gimp_session_info_get_info_with_widget (info, GTK_WIDGET (dock_window));
 
   entry_name = (gimp_dock_window_has_toolbox (dock_window) ?
                 "gimp-toolbox-window" :

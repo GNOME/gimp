@@ -64,6 +64,8 @@ void                     gimp_session_info_restore                       (GimpSe
 void                     gimp_session_info_apply_geometry                (GimpSessionInfo        *info);
 void                     gimp_session_info_read_geometry                 (GimpSessionInfo        *info);
 void                     gimp_session_info_get_info                      (GimpSessionInfo        *info);
+void                     gimp_session_info_get_info_with_widget          (GimpSessionInfo        *info,
+                                                                          GtkWidget              *widget);
 void                     gimp_session_info_clear_info                    (GimpSessionInfo        *info);
 gboolean                 gimp_session_info_is_singleton                  (GimpSessionInfo        *info);
 gboolean                 gimp_session_info_is_session_managed            (GimpSessionInfo        *info);

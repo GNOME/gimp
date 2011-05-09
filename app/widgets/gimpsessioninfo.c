@@ -760,6 +760,31 @@ gimp_session_info_get_info (GimpSessionInfo *info)
     }
 }
 
+/**
+ * gimp_session_info_get_info_with_widget:
+ * @info:
+ * @widget: #GtkWidget to use
+ *
+ * Temporarily sets @widget on @info and calls
+ * gimp_session_info_get_info(), then restores the old widget that was
+ * set.
+ **/
+void
+gimp_session_info_get_info_with_widget (GimpSessionInfo *info,
+                                        GtkWidget       *widget)
+{
+  GtkWidget *old_widget;
+
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  old_widget = gimp_session_info_get_widget (info);
+
+  gimp_session_info_set_widget (info, widget);
+  gimp_session_info_get_info (info);
+  gimp_session_info_set_widget (info, old_widget);
+}
+
 void
 gimp_session_info_clear_info (GimpSessionInfo *info)
 {
