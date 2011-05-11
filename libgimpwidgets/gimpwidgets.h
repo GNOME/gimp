@@ -225,8 +225,6 @@ GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
  *  Standard Callbacks
  */
 
-void gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button);
-
 void gimp_toggle_button_update           (GtkWidget       *widget,
                                           gpointer         data);
 

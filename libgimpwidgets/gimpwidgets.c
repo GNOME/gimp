@@ -32,6 +32,10 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/*  hack: declare prototype here instead of #undef GIMP_DISABLE_DEPRECATED  */
+void   gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button);
+
+
 /**
  * SECTION: gimpwidgets
  * @title: GimpWidgets
@@ -548,14 +552,12 @@ gimp_random_seed_new (guint    *seed,
   g_object_set_data (G_OBJECT (hbox), "button", button);
   g_object_set_data (G_OBJECT (hbox), "toggle", toggle);
 
-  /* Set sensitivity data for the toggle, this stuff makes
-   * gimp_toggle_button_sensitive_update work
-   */
-  g_object_set_data (G_OBJECT (toggle), "inverse_sensitive", spinbutton);
-  g_object_set_data (G_OBJECT (spinbutton), "inverse_sensitive", button);
-
-  /* Initialise sensitivity */
-  gimp_toggle_button_update (toggle, random_seed);
+  g_object_bind_property (toggle,     "active",
+                          spinbutton, "sensitive",
+                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+  g_object_bind_property (toggle, "active",
+                          button, "sensitive",
+                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
   return hbox;
 }
@@ -836,6 +838,9 @@ gimp_coordinates_new (GimpUnit         unit,
  * This function can also set the sensitive state according to the toggle
  * button's inverse "active" state by attaching widgets with the
  * "inverse_sensitive" key.
+ *
+ * Deprecated: use g_object_bind_property() instead of using the
+ *             "set_sensitive" and "inverse_sensitive" data pointers.
  **/
 void
 gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
@@ -870,7 +875,9 @@ gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
  * @data:   A pointer to a #gint variable which will store the value of
  *          gtk_toggle_button_get_active().
  *
- * Note that this function calls gimp_toggle_button_sensitive_update().
+ * Note that this function calls gimp_toggle_button_sensitive_update()
+ * which is a deprecated hack you shouldn't use. See that function's
+ * documentation for a proper replacement of its functionality.
  **/
 void
 gimp_toggle_button_update (GtkWidget *widget,
@@ -892,7 +899,9 @@ gimp_toggle_button_update (GtkWidget *widget,
  * @data:   A pointer to a #gint variable which will store the value of
  *          GPOINTER_TO_INT (g_object_get_data (@widget, "gimp-item-data")).
  *
- * Note that this function calls gimp_toggle_button_sensitive_update().
+ * Note that this function calls gimp_toggle_button_sensitive_update()
+ * which is a deprecated hack you shouldn't use. See that function's
+ * documentation for a proper replacement of its functionality.
  **/
 void
 gimp_radio_button_update (GtkWidget *widget,

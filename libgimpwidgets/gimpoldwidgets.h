@@ -109,8 +109,10 @@ GtkWidget * gimp_pixmap_button_new   (gchar           **xpm_data,
  *  Standard Callbacks
  */
 
-void   gimp_unit_menu_update         (GtkWidget        *widget,
-                                      gpointer          data);
+void   gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button);
+
+void   gimp_unit_menu_update               (GtkWidget       *widget,
+                                            gpointer         data);
 
 
 G_END_DECLS

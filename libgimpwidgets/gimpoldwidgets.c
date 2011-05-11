@@ -621,6 +621,8 @@ gimp_pixmap_button_new (gchar       **xpm_data,
  *
  * See gimp_toggle_button_sensitive_update() for a description of how
  * to set up the list.
+ *
+ * Deprecated: use #GimpUnitComboBox instead.
  **/
 void
 gimp_unit_menu_update (GtkWidget *widget,
