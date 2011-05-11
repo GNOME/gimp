@@ -194,8 +194,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_EDITOR,
                                     "use-editor",
                                     N_("Use an external editor window for text "
-                                       "entry, instead of direct-on-canvas "
-                                       "editing"),
+                                       "entry"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
