@@ -953,6 +953,7 @@ load_dialog (const gchar  *filename,
 
   /*  Path Import  */
   toggle = gtk_check_button_new_with_mnemonic (_("Import _paths"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), load_vals.import);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 5, 6,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
@@ -962,28 +963,23 @@ load_dialog (const gchar  *filename,
                              "can be used with the GIMP path tool"),
                            NULL);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), load_vals.import);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &load_vals.import);
 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_sensitive_update),
-                    NULL);
-
   toggle2 = gtk_check_button_new_with_mnemonic (_("Merge imported paths"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle2), load_vals.merge);
   gtk_table_attach (GTK_TABLE (table), toggle2, 0, 2, 6, 7,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_set_sensitive (toggle2, load_vals.import);
   gtk_widget_show (toggle2);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle2), load_vals.merge);
   g_signal_connect (toggle2, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &load_vals.merge);
 
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", toggle2);
-
+  g_object_bind_property (toggle,  "active",
+                          toggle2, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   gtk_widget_show (dialog);
 

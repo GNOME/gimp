@@ -379,6 +379,7 @@ displace_dialog (GimpDrawable *drawable)
                                      1, 10, 0, 1, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -387,24 +388,25 @@ displace_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_widget_set_sensitive (spinbutton, dvals.do_x);
-  g_object_set_data (G_OBJECT (toggle_x), "set_sensitive", spinbutton);
-  gtk_widget_show (spinbutton);
+  g_object_bind_property (toggle_x,   "active",
+                          spinbutton, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   combo = gimp_drawable_combo_box_new (displace_map_constrain, drawable);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.displace_map_x,
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &dvals.displace_map_x);
-  g_signal_connect_swapped (combo, "changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
   gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
-  gtk_widget_set_sensitive (combo, dvals.do_x);
-  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", combo);
+  g_signal_connect_swapped (combo, "changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  g_object_bind_property (toggle_x, "active",
+                          combo,    "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   /*  Y Options  */
   toggle_y = gtk_check_button_new_with_mnemonic (_("_Y displacement:"));
@@ -426,6 +428,7 @@ displace_dialog (GimpDrawable *drawable)
                                      1, 10, 0, 1, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -434,9 +437,9 @@ displace_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_widget_set_sensitive (spinbutton, dvals.do_y);
-  g_object_set_data (G_OBJECT (toggle_y), "set_sensitive", spinbutton);
-  gtk_widget_show (spinbutton);
+  g_object_bind_property (toggle_y,   "active",
+                          spinbutton, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   combo = gimp_drawable_combo_box_new (displace_map_constrain, drawable);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.displace_map_y,
@@ -450,8 +453,9 @@ displace_dialog (GimpDrawable *drawable)
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
-  gtk_widget_set_sensitive (combo, dvals.do_y);
-  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", combo);
+  g_object_bind_property (toggle_y, "active",
+                          combo,    "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   hbox = gtk_hbox_new (FALSE, 24);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);

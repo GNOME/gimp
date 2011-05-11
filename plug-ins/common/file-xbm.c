@@ -1255,8 +1255,9 @@ save_dialog (gint32 drawable_ID)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
-  gtk_widget_set_sensitive (table, xsvals.use_hot);
+  g_object_bind_property (toggle, "active",
+                          table,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   spinbutton = gimp_spin_button_new (&adj, xsvals.x_hot, 0,
                                      gimp_drawable_width (drawable_ID) - 1,
@@ -1308,8 +1309,9 @@ save_dialog (gint32 drawable_ID)
                     G_CALLBACK (mask_ext_entry_callback),
                     NULL);
 
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", entry);
-  gtk_widget_set_sensitive (entry, xsvals.write_mask);
+  g_object_bind_property (toggle, "active",
+                          entry,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   gtk_widget_set_sensitive (frame, gimp_drawable_has_alpha (drawable_ID));
 

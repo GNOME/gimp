@@ -2836,11 +2836,13 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_container_add (GTK_CONTAINER (frame), asup_table);
   gtk_widget_show (asup_table);
 
-  gtk_widget_set_sensitive (asup_table, pvals.use_asupsample);
-  g_object_set_data (G_OBJECT (button), "set_sensitive", asup_table);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &pvals.use_asupsample);
+
+  g_object_bind_property (button,     "active",
+                          asup_table, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   adj = gimp_scale_entry_new (GTK_TABLE (asup_table), 0, 0,
                               _("_Max depth:"), -1, 4,
@@ -3921,8 +3923,9 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (polygon_hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  gtk_widget_set_sensitive (entry, gflare->sflare_shape == GF_POLYGON);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", entry);
+  g_object_bind_property (toggle, "active",
+                          entry,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   /*
    *    Random Seed Entry

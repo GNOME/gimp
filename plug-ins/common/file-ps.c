@@ -3488,8 +3488,9 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
-  gtk_widget_set_sensitive (table, psvals.preview);
+  g_object_bind_property (toggle, "active",
+                          table,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   spinbutton = gimp_spin_button_new (&adj, psvals.preview_size,
                                      0, 1024, 1, 10, 0, 1, 0);

@@ -592,8 +592,9 @@ ripple_dialog (GimpDrawable *drawable)
                     GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);
 
-  g_object_set_data (G_OBJECT (toggle), "inverse_sensitive", frame);
-  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (toggle));
+  g_object_bind_property (toggle, "active",
+                          frame,  "sensitive",
+                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
   g_signal_connect_swapped (wrap, "toggled",
                             G_CALLBACK (gimp_preview_invalidate),

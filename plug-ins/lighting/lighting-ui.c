@@ -825,8 +825,9 @@ create_bump_page (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  gtk_widget_set_sensitive (table, mapvals.bump_mapped);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
+  g_object_bind_property (toggle, "active",
+                          table,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   combo = gimp_drawable_combo_box_new (bumpmap_constrain, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.bumpmap_id,
@@ -916,8 +917,9 @@ create_environment_page (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  gtk_widget_set_sensitive (table, mapvals.env_mapped);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
+  g_object_bind_property (toggle, "active",
+                          table,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   combo = gimp_drawable_combo_box_new (envmap_constrain, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.envmap_id,

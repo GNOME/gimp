@@ -519,8 +519,9 @@ create_options_page (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  gtk_widget_set_sensitive (table, mapvals.antialiasing);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
+  g_object_bind_property (toggle, "active",
+                          table,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                               _("_Depth:"), 0, 0,

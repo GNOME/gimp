@@ -1168,11 +1168,13 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
   gtk_widget_show (toggle);
 
-  g_object_set_data (G_OBJECT (button), "set_sensitive", toggle);
-
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &shootvals.decorate);
+
+  g_object_bind_property (button, "active",
+                          toggle, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
 #endif /* HAVE_X11_XMU_WINUTIL_H */
 
@@ -1206,12 +1208,13 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
   gtk_widget_show (toggle);
 
-  gtk_widget_set_sensitive (toggle, FALSE);
-  g_object_set_data (G_OBJECT (button), "set_sensitive", toggle);
-
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &shootvals.show_cursor);
+
+  g_object_bind_property (button, "active",
+                          toggle, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
 #endif
 

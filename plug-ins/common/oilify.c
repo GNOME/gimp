@@ -858,8 +858,9 @@ oilify_dialog (GimpDrawable *drawable)
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
-  gtk_widget_set_sensitive (combo, ovals.use_mask_size_map);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", combo);
+  g_object_bind_property (toggle, "active",
+                          combo,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   /*
    * Exponent scale
@@ -910,8 +911,9 @@ oilify_dialog (GimpDrawable *drawable)
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
-  gtk_widget_set_sensitive (combo, ovals.use_exponent_map);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", combo);
+  g_object_bind_property (toggle, "active",
+                          combo,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   /*
    * Intensity algorithm check button

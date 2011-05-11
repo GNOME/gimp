@@ -533,8 +533,9 @@ save_dialog (gint32 image_ID)
                     G_CALLBACK (gtm_caption_callback),
                     NULL);
 
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", entry);
-  gtk_widget_set_sensitive (entry, gtmvals.caption);
+  g_object_bind_property (toggle, "active",
+                          entry,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);

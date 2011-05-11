@@ -1010,11 +1010,14 @@ create_selection_tab (GtkWidget *notebook,
                     G_CALLBACK (gimp_int_adjustment_update),
                     &filmvals.film_height);
 
-  g_object_set_data (G_OBJECT (toggle), "inverse_sensitive", spinbutton);
-  g_object_set_data
-    (G_OBJECT (spinbutton), "inverse_sensitive",
-     /* FIXME: eeeeeek */
-     g_list_nth_data (gtk_container_get_children (GTK_CONTAINER (table)), 1));
+  g_object_bind_property (toggle,     "active",
+                          spinbutton, "sensitive",
+                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+  g_object_bind_property (toggle,     "active",
+                          /* FIXME: eeeeeek */
+                          g_list_nth_data (gtk_container_get_children (GTK_CONTAINER (table)), 1), "sensitive",
+                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 filmvals.keep_height);
 

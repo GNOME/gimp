@@ -1044,8 +1044,9 @@ iwarp_animate_dialog (GtkWidget *dialog,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  g_object_set_data (G_OBJECT (button), "set_sensitive", table);
-  gtk_widget_set_sensitive (table, do_animate);
+  g_object_bind_property (button, "active",
+                          table,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                      _("Number of _frames:"), SCALE_WIDTH, 0,
@@ -1196,8 +1197,9 @@ iwarp_settings_dialog (GtkWidget *dialog,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  g_object_set_data (G_OBJECT (button), "set_sensitive", table);
-  gtk_widget_set_sensitive (table, iwarp_vals.do_supersample);
+  g_object_bind_property (button, "active",
+                          table,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                      _("Ma_x depth:"), SCALE_WIDTH, 5,

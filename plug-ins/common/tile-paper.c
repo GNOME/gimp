@@ -408,13 +408,13 @@ open_dialog (void)
                       color_button, TRUE, TRUE, 0);
   gtk_widget_show (color_button);
 
-  gtk_widget_set_sensitive (color_button,
-                            p.params.background_type == BACKGROUND_TYPE_COLOR);
-  g_object_set_data (G_OBJECT (button), "set_sensitive", color_button);
-
   g_signal_connect (color_button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &p.params.background_color);
+
+  g_object_bind_property (button,       "active",
+                          color_button, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   gtk_widget_show (dialog);
 

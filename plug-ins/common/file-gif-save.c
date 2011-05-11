@@ -1210,11 +1210,10 @@ save_dialog (gint32 image_ID)
                                "you are trying to export only has one "
                                "layer."),
                              NULL);
-  gtk_widget_set_sensitive (frame, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)));
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", frame);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_sensitive_update),
-                    NULL);
+
+  g_object_bind_property (toggle, "active",
+                          frame,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   gtk_widget_show (dialog);
 

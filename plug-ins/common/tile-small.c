@@ -506,8 +506,9 @@ tileit_dialog (void)
                     GTK_FILL | GTK_SHRINK , GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  gtk_widget_set_sensitive (label, FALSE);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", label);
+  g_object_bind_property (toggle, "active",
+                          label,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
@@ -521,8 +522,9 @@ tileit_dialog (void)
 
   exp_call.r_adj = adj;
 
-  gtk_widget_set_sensitive (spinbutton, FALSE);
-  g_object_set_data (G_OBJECT (label), "set_sensitive", spinbutton);
+  g_object_bind_property (toggle,     "active",
+                          spinbutton, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   label = gtk_label_new_with_mnemonic (_("Col_umn:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -530,8 +532,9 @@ tileit_dialog (void)
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 3, 4,
                     GTK_FILL , GTK_FILL, 0, 0);
 
-  gtk_widget_set_sensitive (label, FALSE);
-  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", label);
+  g_object_bind_property (toggle, "active",
+                          label,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
@@ -545,8 +548,9 @@ tileit_dialog (void)
 
   exp_call.c_adj = adj;
 
-  gtk_widget_set_sensitive (spinbutton, FALSE);
-  g_object_set_data (G_OBJECT (label), "set_sensitive", spinbutton);
+  g_object_bind_property (toggle,     "active",
+                          spinbutton, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
                      GINT_TO_POINTER (EXPLICIT));
@@ -565,8 +569,9 @@ tileit_dialog (void)
 
   exp_call.applybut = button;
 
-  gtk_widget_set_sensitive (button, FALSE);
-  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", button);
+  g_object_bind_property (toggle,     "active",
+                          spinbutton, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   /* Widget for selecting the Opacity */
 
