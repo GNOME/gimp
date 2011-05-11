@@ -70,7 +70,7 @@ stroke_dialog_new (GimpItem    *item,
   GtkWidget         *dialog;
   GtkWidget         *main_vbox;
   GtkWidget         *radio_box;
-  GtkWidget         *libart_radio;
+  GtkWidget         *cairo_radio;
   GtkWidget         *paint_radio;
   GSList            *group;
   GtkWidget         *frame;
@@ -133,8 +133,8 @@ stroke_dialog_new (GimpItem    *item,
   group = gtk_radio_button_get_group (g_object_get_data (G_OBJECT (radio_box),
                                                          "radio-button"));
 
-  libart_radio = g_object_ref (group->next->data);
-  gtk_container_remove (GTK_CONTAINER (radio_box), libart_radio);
+  cairo_radio = g_object_ref (group->next->data);
+  gtk_container_remove (GTK_CONTAINER (radio_box), cairo_radio);
 
   paint_radio = g_object_ref (group->data);
   gtk_container_remove (GTK_CONTAINER (radio_box), paint_radio);
@@ -148,7 +148,7 @@ stroke_dialog_new (GimpItem    *item,
     font_desc = pango_font_description_new ();
     pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
 
-    gtk_widget_modify_font (gtk_bin_get_child (GTK_BIN (libart_radio)),
+    gtk_widget_modify_font (gtk_bin_get_child (GTK_BIN (cairo_radio)),
                             font_desc);
     gtk_widget_modify_font (gtk_bin_get_child (GTK_BIN (paint_radio)),
                             font_desc);
@@ -163,12 +163,8 @@ stroke_dialog_new (GimpItem    *item,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gtk_frame_set_label_widget (GTK_FRAME (frame), libart_radio);
-  g_object_unref (libart_radio);
-
-  g_signal_connect (libart_radio, "toggled",
-                    G_CALLBACK (gimp_toggle_button_sensitive_update),
-                    NULL);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), cairo_radio);
+  g_object_unref (cairo_radio);
 
   {
     GtkWidget *stroke_editor;
@@ -181,10 +177,9 @@ stroke_dialog_new (GimpItem    *item,
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);
 
-    gtk_widget_set_sensitive (stroke_editor,
-                              gimp_stroke_options_get_method (options) ==
-                              GIMP_STROKE_METHOD_LIBART);
-    g_object_set_data (G_OBJECT (libart_radio), "set_sensitive", stroke_editor);
+    g_object_bind_property (cairo_radio,   "active",
+                            stroke_editor, "sensitive",
+                            G_BINDING_SYNC_CREATE);
   }
 
 
@@ -197,10 +192,6 @@ stroke_dialog_new (GimpItem    *item,
   gtk_frame_set_label_widget (GTK_FRAME (frame), paint_radio);
   g_object_unref (paint_radio);
 
-  g_signal_connect (paint_radio, "toggled",
-                    G_CALLBACK (gimp_toggle_button_sensitive_update),
-                    NULL);
-
   {
     GtkWidget *vbox;
     GtkWidget *hbox;
@@ -212,10 +203,9 @@ stroke_dialog_new (GimpItem    *item,
     gtk_container_add (GTK_CONTAINER (frame), vbox);
     gtk_widget_show (vbox);
 
-    gtk_widget_set_sensitive (vbox,
-                              gimp_stroke_options_get_method (options) ==
-                              GIMP_STROKE_METHOD_PAINT_CORE);
-    g_object_set_data (G_OBJECT (paint_radio), "set_sensitive", vbox);
+    g_object_bind_property (paint_radio, "active",
+                            vbox,        "sensitive",
+                            G_BINDING_SYNC_CREATE);
 
     hbox = gtk_hbox_new (FALSE, 6);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

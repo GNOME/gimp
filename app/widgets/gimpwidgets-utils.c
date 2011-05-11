@@ -329,13 +329,9 @@ gimp_enum_radio_box_add (GtkBox    *box,
           gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
           gtk_widget_show (widget);
 
-          g_object_set_data (G_OBJECT (radio), "set_sensitive", widget);
-          g_signal_connect (radio, "toggled",
-                            G_CALLBACK (gimp_toggle_button_sensitive_update),
-                            NULL);
-
-          gtk_widget_set_sensitive (widget,
-                                    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (list->data)));
+          g_object_bind_property (radio,  "active",
+                                  widget, "sensitive",
+                                  G_BINDING_SYNC_CREATE);
 
           gtk_widget_show (hbox);
 

@@ -445,8 +445,6 @@ prefs_resolution_source_callback (GtkWidget *widget,
   gdouble  yres;
   gboolean from_gdk;
 
-  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
-
   from_gdk = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
   if (from_gdk)
@@ -2359,7 +2357,6 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_show (button);
 
   g_object_set_data (G_OBJECT (button), "monitor_resolution_sizeentry", entry);
-  g_object_set_data (G_OBJECT (button), "inverse_sensitive", entry);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (prefs_resolution_source_callback),
@@ -2388,7 +2385,12 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_set_sensitive (calibrate_button,
                             ! display_config->monitor_res_from_gdk);
 
-  g_object_set_data (G_OBJECT (entry), "inverse_sensitive", calibrate_button);
+  g_object_bind_property (button, "active",
+                          entry,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
+  g_object_bind_property (button,           "active",
+                          calibrate_button, "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   g_signal_connect (calibrate_button, "clicked",
                     G_CALLBACK (prefs_resolution_calibrate_callback),

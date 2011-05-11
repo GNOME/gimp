@@ -164,9 +164,9 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
-  gtk_widget_set_sensitive (scale,
-                            GIMP_COLOR_OPTIONS (config)->sample_average);
-  g_object_set_data (G_OBJECT (button), "set_sensitive", scale);
+  g_object_bind_property (config, "sample-average",
+                          scale,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   return vbox;
 }

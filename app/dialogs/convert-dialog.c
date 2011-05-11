@@ -225,8 +225,9 @@ convert_dialog_new (GimpImage    *image,
                     G_CALLBACK (gimp_toggle_button_update),
                     &dialog->remove_dups);
 
-  g_object_set_data (G_OBJECT (button), "inverse_sensitive", toggle);
-  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (button));
+  g_object_bind_property (button, "active",
+                          toggle, "sensitive",
+                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
   /*  dithering  */
 
