@@ -750,8 +750,11 @@ gimp_session_info_get_info (GimpSessionInfo *info)
     {
       GimpDockContainer *dock_container = GIMP_DOCK_CONTAINER (info->p->widget);
       GList             *iter           = NULL;
+      GList             *docks;
 
-      for (iter = gimp_dock_container_get_docks (dock_container);
+      docks = gimp_dock_container_get_docks (dock_container);
+
+      for (iter = docks;
            iter;
            iter = g_list_next (iter))
         {
@@ -761,6 +764,8 @@ gimp_session_info_get_info (GimpSessionInfo *info)
             g_list_append (info->p->docks,
                            gimp_session_info_dock_from_widget (dock));
         }
+
+      g_list_free (docks);
     }
 }
 

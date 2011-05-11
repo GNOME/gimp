@@ -68,6 +68,13 @@ gimp_dock_container_iface_base_init (GimpDockContainerInterface *container_iface
   container_iface->get_docks = NULL;
 }
 
+/**
+ * gimp_dock_container_get_docks:
+ * @container: A #GimpDockContainer
+ *
+ * Returns: A list of #GimpDock:s in the dock container. Free with
+ *          g_list_free() when done.
+ **/
 GList *
 gimp_dock_container_get_docks (GimpDockContainer *container)
 {

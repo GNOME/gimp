@@ -176,7 +176,7 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
       dock_window    = GIMP_DOCK_WINDOW (dialog_iter->data);
       dock_container = GIMP_DOCK_CONTAINER (dock_window);
 
-      docks = g_list_copy (gimp_dock_container_get_docks (dock_container));
+      docks = gimp_dock_container_get_docks (dock_container);
       for (dock_iter = docks; dock_iter; dock_iter = dock_iter->next)
         {
           GimpDock *dock = GIMP_DOCK (dock_iter->data);
@@ -202,12 +202,21 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
        * complains about invalid reads when the dock window already is
        * destroyed
        */
-      if (GTK_IS_WIDGET (dock_window) &&
-          g_list_length (gimp_dock_container_get_docks (dock_container)) == 0)
+      if (GTK_IS_WIDGET (dock_window))
         {
-          gimp_dialog_factory_remove_dialog (gimp_dialog_factory_get_singleton (),
-                                             GTK_WIDGET (dock_window));
-          gtk_widget_destroy (GTK_WIDGET (dock_window));
+          guint docks_len;
+
+          docks     = gimp_dock_container_get_docks (dock_container);
+          docks_len = g_list_length (docks);
+
+          if (docks_len == 0)
+            {
+              gimp_dialog_factory_remove_dialog (gimp_dialog_factory_get_singleton (),
+                                                 GTK_WIDGET (dock_window));
+              gtk_widget_destroy (GTK_WIDGET (dock_window));
+            }
+
+          g_list_free (docks);
         }
     }
 }

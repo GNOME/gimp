@@ -735,17 +735,24 @@ gimp_ui_not_toolbox_window (GObject *object)
 static gboolean
 gimp_ui_multicolumn_not_toolbox_window (GObject *object)
 {
+  gboolean           not_toolbox_window;
   GimpDockWindow    *dock_window;
   GimpDockContainer *dock_container;
+  GList             *docks;
 
   if (! GIMP_IS_DOCK_WINDOW (object))
     return FALSE;
 
   dock_window    = GIMP_DOCK_WINDOW (object);
   dock_container = GIMP_DOCK_CONTAINER (object);
+  docks          = gimp_dock_container_get_docks (dock_container);
 
-  return (! gimp_dock_window_has_toolbox (dock_window) &&
-          g_list_length (gimp_dock_container_get_docks (dock_container)) > 1);
+  not_toolbox_window = (! gimp_dock_window_has_toolbox (dock_window) &&
+                        g_list_length (docks) > 1);
+
+  g_list_free (docks);
+
+  return not_toolbox_window;
 }
 
 static gboolean
