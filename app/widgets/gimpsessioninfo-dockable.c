@@ -290,6 +290,13 @@ gimp_session_info_dockable_restore (GimpSessionInfoDockable *info,
 
   if (dockable)
     {
+      /*  gimp_dialog_factory_dockable_new() might return an already
+       *  existing singleton dockable, return NULL so our caller won't
+       *  try to add it to another dockbook
+       */
+      if (gimp_dockable_get_dockbook (GIMP_DOCKABLE (dockable)))
+        return NULL;
+
       gimp_dockable_set_locked    (GIMP_DOCKABLE (dockable), info->locked);
       gimp_dockable_set_tab_style (GIMP_DOCKABLE (dockable), info->tab_style);
 
