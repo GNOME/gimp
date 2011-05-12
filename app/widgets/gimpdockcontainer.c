@@ -71,7 +71,14 @@ gimp_dock_container_iface_base_init (GimpDockContainerInterface *container_iface
 GList *
 gimp_dock_container_get_docks (GimpDockContainer *container)
 {
+  GimpDockContainerInterface *iface;
+
   g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), NULL);
 
-  return GIMP_DOCK_CONTAINER_GET_INTERFACE (container)->get_docks (container);
+  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+
+  if (iface->get_docks)
+    return iface->get_docks (container);
+  else
+    return NULL;
 }
