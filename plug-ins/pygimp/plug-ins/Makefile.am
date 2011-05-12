@@ -4,6 +4,7 @@ pluginexecdir = $(gimpplugindir)/plug-ins
 
 scripts = \
 	colorxhtml.py		\
+	css-gradients.py		\
 	file-openraster.py	\
 	foggify.py		\
 	palette-offset.py	\
