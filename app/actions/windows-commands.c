@@ -99,10 +99,14 @@ windows_open_recent_cmd_callback (GtkAction *action,
   GimpSessionInfo *info = g_object_get_data (G_OBJECT (action), "info");
 
   g_object_ref (info);
+
   gimp_container_remove (global_recent_docks, GIMP_OBJECT (info));
 
-  gimp_dialog_factory_add_session_info (gimp_dialog_factory_get_singleton (), info);
+  gimp_dialog_factory_add_session_info (gimp_dialog_factory_get_singleton (),
+                                        info);
 
   gimp_session_info_restore (info, gimp_dialog_factory_get_singleton ());
   gimp_session_info_clear_info (info);
+
+  g_object_unref (info);
 }

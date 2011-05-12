@@ -205,9 +205,9 @@ session_init (Gimp *gimp)
                       GIMP_LOG (DIALOG_FACTORY,
                                 "failed to parse session info %p, not adding",
                                 info);
-
-                      g_object_unref (info);
                     }
+
+                  g_object_unref (info);
                 }
               else
                 {

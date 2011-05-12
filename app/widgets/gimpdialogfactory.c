@@ -682,11 +682,13 @@ gimp_dialog_factory_add_session_info (GimpDialogFactory *factory,
                                       GimpSessionInfo   *info)
 {
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
 
   /* We want to append rather than prepend so that the serialized
    * order in sessionrc remains the same
    */
-  factory->p->session_infos = g_list_append (factory->p->session_infos, info);
+  factory->p->session_infos = g_list_append (factory->p->session_infos,
+                                             g_object_ref (info));
 }
 
 /**
@@ -911,7 +913,8 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                                 NULL);
             }
 
-          factory->p->session_infos = g_list_append (factory->p->session_infos, info);
+          gimp_dialog_factory_add_session_info (factory, info);
+          g_object_unref (info);
         }
     }
 
