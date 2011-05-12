@@ -467,6 +467,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
 
+  g_object_ref (info);
+
   display = gdk_display_get_default ();
 
   if (info->p->screen != DEFAULT_SCREEN)
@@ -512,6 +514,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                                     factory,
                                     screen,
                                     GIMP_DOCK_WINDOW (dialog));
+
+  g_object_unref (info);
 }
 
 /* This function mostly lifted from
