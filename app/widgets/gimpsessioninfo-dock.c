@@ -28,6 +28,7 @@
 
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
+#include "gimpdockbook.h"
 #include "gimpdockwindow.h"
 #include "gimpsessioninfo.h"
 #include "gimpsessioninfo-aux.h"
@@ -188,7 +189,7 @@ gimp_session_info_dock_from_widget (GimpDock *dock)
   return dock_info;
 }
 
-void
+GimpDock *
 gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
                                 GimpDialogFactory   *factory,
                                 GdkScreen           *screen,
@@ -197,9 +198,10 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
   GtkWidget     *dock       = NULL;
   GList         *iter       = NULL;
   GimpUIManager *ui_manager = NULL;
+  gint           n_books    = 0;
 
-  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
-  g_return_if_fail (GDK_IS_SCREEN (screen));
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
   ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
   dock       = gimp_dialog_factory_dialog_new (factory,
@@ -209,7 +211,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
                                                -1 /*view_size*/,
                                                FALSE /*present*/);
 
-  g_return_if_fail (GIMP_IS_DOCK (dock));
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
   /* Add the dock to the dock window immediately so the stuff in the
    * dock has access to e.g. a dialog factory
@@ -227,20 +229,62 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
     {
       GimpSessionInfoBook *book_info = iter->data;
       GtkWidget           *dockbook;
-      GtkWidget           *parent;
 
       dockbook = GTK_WIDGET (gimp_session_info_book_restore (book_info,
                                                              GIMP_DOCK (dock)));
-      parent   = gtk_widget_get_parent (dockbook);
 
-      if (GTK_IS_VPANED (parent))
+      if (dockbook)
         {
-          GtkPaned *paned = GTK_PANED (parent);
+          GtkWidget *parent = gtk_widget_get_parent (dockbook);
 
-          if (dockbook == gtk_paned_get_child2 (paned))
-            gtk_paned_set_position (paned, book_info->position);
+          n_books++;
+
+          if (GTK_IS_PANED (parent))
+            {
+              GtkPaned *paned = GTK_PANED (parent);
+
+              if (dockbook == gtk_paned_get_child2 (paned))
+                gtk_paned_set_position (paned, book_info->position);
+            }
         }
     }
 
+  /* Now remove empty dockbooks from the list, check the comment in
+   * gimp_session_info_book_restore() which explains why the dock
+   * can contain empty dockbooks at all
+   */
+  if (dock_info && dock_info->books)
+    {
+      GList *books;
+
+      books = g_list_copy (gimp_dock_get_dockbooks (GIMP_DOCK (dock)));
+
+      while (books)
+        {
+          GtkContainer *dockbook = books->data;
+          GList        *children = gtk_container_get_children (dockbook);
+
+          if (children)
+            {
+              g_list_free (children);
+            }
+          else
+            {
+              gimp_dock_remove_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook));
+              n_books--;
+            }
+
+          books = g_list_remove (books, dockbook);
+        }
+    }
+
+  /*  if we removed all books again, the dock was destroyed, so bail out  */
+  if (dock_info && dock_info->books && n_books == 0)
+    {
+      return NULL;
+    }
+
   gtk_widget_show (dock);
+
+  return GIMP_DOCK (dock);
 }
