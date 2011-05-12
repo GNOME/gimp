@@ -50,7 +50,7 @@ Plug-ins:
  - Port screenshot from GdkPixbuf to cairo
  - Fix the annoying parser build warnings in imagemap
  - Add a check-for-deprecated-procedures-in-script-fu make target
- - PNG?
+ - Update libpng code to not use deprecated API (file-mng and file-png)
 
 Data:
 
