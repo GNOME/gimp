@@ -65,6 +65,9 @@ struct _GimpDialogFactoryEntry
   /* If TRUE the visibility of the dialog is toggleable */
   gboolean           hideable;
 
+  /* If TRUE the entry is for a GimpImageWindow, FALSE otherwise */
+  gboolean           image_window;
+
   /* If TRUE the entry is for a dockable, FALSE otherwise */
   gboolean           dockable;
 };
@@ -123,6 +126,7 @@ void                gimp_dialog_factory_register_entry       (GimpDialogFactory 
                                                               gboolean                 remember_size,
                                                               gboolean                 remember_if_open,
                                                               gboolean                 hideable,
+                                                              gboolean                 image_window,
                                                               gboolean                 dockable);
 GimpDialogFactoryEntry *
                     gimp_dialog_factory_find_entry           (GimpDialogFactory       *factory,

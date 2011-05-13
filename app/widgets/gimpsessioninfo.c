@@ -481,7 +481,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   info->p->screen = DEFAULT_SCREEN;
 
   if (info->p->factory_entry &&
-      ! info->p->factory_entry->dockable)
+      ! info->p->factory_entry->dockable &&
+      ! info->p->factory_entry->image_window)
     {
       GimpCoreConfig *config = gimp_dialog_factory_get_context (factory)->gimp->config;
 

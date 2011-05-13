@@ -273,6 +273,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
                                     gboolean           remember_size,
                                     gboolean           remember_if_open,
                                     gboolean           hideable,
+                                    gboolean           image_window,
                                     gboolean           dockable)
 {
   GimpDialogFactoryEntry *entry;
@@ -294,6 +295,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
   entry->remember_size    = remember_size ? TRUE : FALSE;
   entry->remember_if_open = remember_if_open ? TRUE : FALSE;
   entry->hideable         = hideable ? TRUE : FALSE;
+  entry->image_window     = image_window ? TRUE : FALSE;
   entry->dockable         = dockable ? TRUE : FALSE;
 
   factory->p->registered_dialogs = g_list_prepend (factory->p->registered_dialogs,
