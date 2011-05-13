@@ -104,3 +104,27 @@ gimp_dock_container_get_ui_manager (GimpDockContainer *container)
   return NULL;
 }
 
+/**
+ * gimp_dock_container_add_dock:
+ * @container: A #GimpDockContainer
+ * @dock:      The newly created #GimpDock to add to the container.
+ * @dock_info: The #GimpSessionInfoDock the @dock was created from.
+ *
+ * Add @dock that was created from @dock_info to @container.
+ **/
+void
+gimp_dock_container_add_dock (GimpDockContainer   *container,
+                              GimpDock            *dock,
+                              GimpSessionInfoDock *dock_info)
+{
+  GimpDockContainerInterface *iface;
+
+  g_return_if_fail (GIMP_IS_DOCK_CONTAINER (container));
+
+  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+
+  if (iface->add_dock)
+    iface->add_dock (container,
+                     dock,
+                     dock_info);
+}

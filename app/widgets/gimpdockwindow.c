@@ -109,56 +109,52 @@ struct _GimpDockWindowPrivate
 };
 
 
-static void      gimp_dock_window_dock_container_iface_init
-                                                          (GimpDockContainerInterface
-                                                                           *iface);
-static void      gimp_dock_window_constructed             (GObject         *object);
-static void      gimp_dock_window_dispose                 (GObject         *object);
-static void      gimp_dock_window_finalize                (GObject         *object);
-static void      gimp_dock_window_set_property            (GObject         *object,
-                                                           guint            property_id,
-                                                           const GValue    *value,
-                                                           GParamSpec      *pspec);
-static void      gimp_dock_window_get_property            (GObject         *object,
-                                                           guint            property_id,
-                                                           GValue          *value,
-                                                           GParamSpec      *pspec);
-
-static void      gimp_dock_window_style_set               (GtkWidget       *widget,
-                                                           GtkStyle        *prev_style);
-static gboolean  gimp_dock_window_delete_event            (GtkWidget       *widget,
-                                                           GdkEventAny     *event);
-static GList *   gimp_dock_window_get_docks               (GimpDockContainer
-                                                                           *dock_container);
-static GimpUIManager *
-                 gimp_dock_window_get_ui_manager          (GimpDockContainer
-                                                                           *dock_container);
-
-static gboolean  gimp_dock_window_should_add_to_recent    (GimpDockWindow  *dock_window);
-static void      gimp_dock_window_display_changed         (GimpDockWindow  *dock_window,
-                                                           GimpObject      *display,
-                                                           GimpContext     *context);
-static void      gimp_dock_window_image_changed           (GimpDockWindow  *dock_window,
-                                                           GimpImage       *image,
-                                                           GimpContext     *context);
-static void      gimp_dock_window_image_flush             (GimpImage       *image,
-                                                           gboolean         invalidate_preview,
-                                                           GimpDockWindow  *dock_window);
-static void      gimp_dock_window_update_title            (GimpDockWindow  *dock_window);
-static gboolean  gimp_dock_window_update_title_idle       (GimpDockWindow  *dock_window);
-static gchar *   gimp_dock_window_get_description         (GimpDockWindow  *dock_window,
-                                                           gboolean         complete);
-static void      gimp_dock_window_dock_removed            (GimpDockWindow  *dock_window,
-                                                           GimpDock        *dock,
-                                                           GimpDockColumns *dock_columns);
-static void      gimp_dock_window_factory_display_changed (GimpContext     *context,
-                                                           GimpObject      *display,
-                                                           GimpDock        *dock);
-static void      gimp_dock_window_factory_image_changed   (GimpContext     *context,
-                                                           GimpImage       *image,
-                                                           GimpDock        *dock);
-static void      gimp_dock_window_auto_clicked            (GtkWidget       *widget,
-                                                           GimpDock        *dock);
+static void            gimp_dock_window_dock_container_iface_init (GimpDockContainerInterface *iface);
+static void            gimp_dock_window_constructed               (GObject                    *object);
+static void            gimp_dock_window_dispose                   (GObject                    *object);
+static void            gimp_dock_window_finalize                  (GObject                    *object);
+static void            gimp_dock_window_set_property              (GObject                    *object,
+                                                                   guint                       property_id,
+                                                                   const GValue               *value,
+                                                                   GParamSpec                 *pspec);
+static void            gimp_dock_window_get_property              (GObject                    *object,
+                                                                   guint                       property_id,
+                                                                   GValue                     *value,
+                                                                   GParamSpec                 *pspec);
+static void            gimp_dock_window_style_set                 (GtkWidget                  *widget,
+                                                                   GtkStyle                   *prev_style);
+static gboolean        gimp_dock_window_delete_event              (GtkWidget                  *widget,
+                                                                   GdkEventAny                *event);
+static GList         * gimp_dock_window_get_docks                 (GimpDockContainer          *dock_container);
+static GimpUIManager * gimp_dock_window_get_ui_manager            (GimpDockContainer          *dock_container);
+static void            gimp_dock_window_add_dock_from_session     (GimpDockContainer          *dock_container,
+                                                                   GimpDock                   *dock,
+                                                                   GimpSessionInfoDock        *dock_info);
+static gboolean        gimp_dock_window_should_add_to_recent      (GimpDockWindow             *dock_window);
+static void            gimp_dock_window_display_changed           (GimpDockWindow             *dock_window,
+                                                                   GimpObject                 *display,
+                                                                   GimpContext                *context);
+static void            gimp_dock_window_image_changed             (GimpDockWindow             *dock_window,
+                                                                   GimpImage                  *image,
+                                                                   GimpContext                *context);
+static void            gimp_dock_window_image_flush               (GimpImage                  *image,
+                                                                   gboolean                    invalidate_preview,
+                                                                   GimpDockWindow             *dock_window);
+static void            gimp_dock_window_update_title              (GimpDockWindow             *dock_window);
+static gboolean        gimp_dock_window_update_title_idle         (GimpDockWindow             *dock_window);
+static gchar         * gimp_dock_window_get_description           (GimpDockWindow             *dock_window,
+                                                                   gboolean                    complete);
+static void            gimp_dock_window_dock_removed              (GimpDockWindow             *dock_window,
+                                                                   GimpDock                   *dock,
+                                                                   GimpDockColumns            *dock_columns);
+static void            gimp_dock_window_factory_display_changed   (GimpContext                *context,
+                                                                   GimpObject                 *display,
+                                                                   GimpDock                   *dock);
+static void            gimp_dock_window_factory_image_changed     (GimpContext                *context,
+                                                                   GimpImage                  *image,
+                                                                   GimpDock                   *dock);
+static void            gimp_dock_window_auto_clicked              (GtkWidget                  *widget,
+                                                                   GimpDock                   *dock);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW,
@@ -269,6 +265,7 @@ gimp_dock_window_dock_container_iface_init (GimpDockContainerInterface *iface)
 {
   iface->get_docks      = gimp_dock_window_get_docks;
   iface->get_ui_manager = gimp_dock_window_get_ui_manager;
+  iface->add_dock       = gimp_dock_window_add_dock_from_session;
 }
 
 static void
@@ -713,6 +710,22 @@ gimp_dock_window_get_ui_manager (GimpDockContainer *dock_container)
   dock_window = GIMP_DOCK_WINDOW (dock_container);
 
   return dock_window->p->ui_manager;
+}
+
+static void
+gimp_dock_window_add_dock_from_session (GimpDockContainer   *dock_container,
+                                        GimpDock            *dock,
+                                        GimpSessionInfoDock *dock_info)
+{
+  GimpDockWindow *dock_window;
+
+  g_return_if_fail (GIMP_IS_DOCK_WINDOW (dock_container));
+
+  dock_window = GIMP_DOCK_WINDOW (dock_container);
+
+  gimp_dock_window_add_dock (dock_window,
+                             dock,
+                             -1 /*index*/);
 }
 
 /**

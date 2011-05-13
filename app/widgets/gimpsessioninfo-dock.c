@@ -218,9 +218,9 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
   /* Add the dock to the dock window immediately so the stuff in the
    * dock has access to e.g. a dialog factory
    */
-  gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
-                             GIMP_DOCK (dock),
-                             -1);
+  gimp_dock_container_add_dock (dock_container,
+                                GIMP_DOCK (dock),
+                                dock_info);
 
   /* Note that if it is a toolbox, we will get here even though we
    * don't have any books
