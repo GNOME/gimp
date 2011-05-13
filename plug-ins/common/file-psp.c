@@ -1200,7 +1200,7 @@ read_channel_data (FILE       *f,
             fread (buf, runcount, 1, f);
 
           /* prevent buffer overflow for bogus data */
-          runcount = MIN (runcount, endq - q);
+          runcount = MIN (runcount, (endq - q) / bytespp);
 
           if (bytespp == 1)
             {
