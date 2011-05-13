@@ -36,6 +36,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdocked.h"
+#include "gimpdockcontainer.h"
 #include "gimpdockwindow.h"
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
@@ -1076,7 +1077,8 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
 
   /* EEK */
   dock_window = gimp_dock_window_from_dock (dockbook->p->dock);
-  if (dock_window && gimp_dock_window_get_ui_manager (dock_window))
+  if (dock_window &&
+      gimp_dock_container_get_ui_manager (GIMP_DOCK_CONTAINER (dock_window)))
     {
       const gchar *dialog_id;
 
@@ -1085,10 +1087,13 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
 
       if (dialog_id)
         {
-          GimpActionGroup *group;
+          GimpDockContainer *dock_container;
+          GimpActionGroup   *group;
+
+          dock_container = GIMP_DOCK_CONTAINER (dock_window);
 
           group = gimp_ui_manager_get_action_group
-            (gimp_dock_window_get_ui_manager (dock_window), "dialogs");
+            (gimp_dock_container_get_ui_manager (dock_container), "dialogs");
 
           if (group)
             {

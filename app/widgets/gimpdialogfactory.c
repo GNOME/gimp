@@ -41,6 +41,7 @@
 #include "gimpdock.h"
 #include "gimpdockbook.h"
 #include "gimpdockable.h"
+#include "gimpdockcontainer.h"
 #include "gimpdockwindow.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
@@ -456,6 +457,8 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
             }
           else if (strcmp ("gimp-toolbox", entry->identifier) == 0)
             {
+              GimpDockContainer *dock_container;
+
               dock_window = gimp_dialog_factory_dialog_new (factory,
                                                             screen,
                                                             NULL /*ui_manager*/,
@@ -466,7 +469,8 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
               /* When we get a dock window, we also get a UI
                * manager
                */
-              ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
+              dock_container = GIMP_DOCK_CONTAINER (dock_window);
+              ui_manager     = gimp_dock_container_get_ui_manager (dock_container);
             }
         }
 

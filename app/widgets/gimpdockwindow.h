@@ -67,7 +67,6 @@ void                gimp_dock_window_add_dock               (GimpDockWindow    *
                                                              gint               index);
 void                gimp_dock_window_remove_dock            (GimpDockWindow    *dock_window,
                                                              GimpDock          *dock);
-GimpUIManager     * gimp_dock_window_get_ui_manager         (GimpDockWindow    *dock_window);
 GimpContext       * gimp_dock_window_get_context            (GimpDockWindow    *dock);
 GimpDialogFactory * gimp_dock_window_get_dialog_factory     (GimpDockWindow    *dock);
 gboolean            gimp_dock_window_get_auto_follow_active (GimpDockWindow    *menu_dock);

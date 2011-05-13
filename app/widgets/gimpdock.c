@@ -37,6 +37,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdockcolumns.h"
+#include "gimpdockcontainer.h"
 #include "gimpdockwindow.h"
 #include "gimppanedbox.h"
 #include "gimpuimanager.h"
@@ -564,13 +565,17 @@ gimp_dock_get_ui_manager (GimpDock *dock)
         ui_manager = gimp_dock_columns_get_ui_manager (dock_columns);
     }
 
-  /* Then GimpDockWindow */
+  /* Then GimpDockContainer */
   if (! ui_manager)
     {
       GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
 
       if (dock_window)
-        ui_manager = gimp_dock_window_get_ui_manager (dock_window);
+        {
+          GimpDockContainer *dock_container = GIMP_DOCK_CONTAINER (dock_window);
+
+          ui_manager = gimp_dock_container_get_ui_manager (dock_container);
+        }
     }
 
   return ui_manager;

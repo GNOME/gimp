@@ -130,6 +130,9 @@ static gboolean  gimp_dock_window_delete_event            (GtkWidget       *widg
                                                            GdkEventAny     *event);
 static GList *   gimp_dock_window_get_docks               (GimpDockContainer
                                                                            *dock_container);
+static GimpUIManager *
+                 gimp_dock_window_get_ui_manager          (GimpDockContainer
+                                                                           *dock_container);
 
 static gboolean  gimp_dock_window_should_add_to_recent    (GimpDockWindow  *dock_window);
 static void      gimp_dock_window_display_changed         (GimpDockWindow  *dock_window,
@@ -264,7 +267,8 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
 static void
 gimp_dock_window_dock_container_iface_init (GimpDockContainerInterface *iface)
 {
-  iface->get_docks = gimp_dock_window_get_docks;
+  iface->get_docks      = gimp_dock_window_get_docks;
+  iface->get_ui_manager = gimp_dock_window_get_ui_manager;
 }
 
 static void
@@ -699,6 +703,18 @@ gimp_dock_window_get_docks (GimpDockContainer *dock_container)
   return gimp_dock_columns_get_docks (dock_window->p->dock_columns);
 }
 
+static GimpUIManager *
+gimp_dock_window_get_ui_manager (GimpDockContainer *dock_container)
+{
+  GimpDockWindow *dock_window;
+
+  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_container), NULL);
+
+  dock_window = GIMP_DOCK_WINDOW (dock_container);
+
+  return dock_window->p->ui_manager;
+}
+
 /**
  * gimp_dock_window_should_add_to_recent:
  * @dock_window:
@@ -1012,14 +1028,6 @@ gimp_dock_window_get_id (GimpDockWindow *dock_window)
   g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), 0);
 
   return dock_window->p->ID;
-}
-
-GimpUIManager *
-gimp_dock_window_get_ui_manager (GimpDockWindow *dock_window)
-{
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
-
-  return dock_window->p->ui_manager;
 }
 
 GimpContext *

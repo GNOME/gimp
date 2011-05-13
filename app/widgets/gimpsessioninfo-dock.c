@@ -29,6 +29,7 @@
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockbook.h"
+#include "gimpdockcontainer.h"
 #include "gimpdockwindow.h"
 #include "gimpsessioninfo.h"
 #include "gimpsessioninfo-aux.h"
@@ -195,15 +196,16 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
                                 GdkScreen           *screen,
                                 GimpDockWindow      *dock_window)
 {
-  GtkWidget     *dock       = NULL;
-  GList         *iter       = NULL;
-  GimpUIManager *ui_manager = NULL;
-  gint           n_books    = 0;
+  GimpDockContainer *dock_container = GIMP_DOCK_CONTAINER (dock_window);
+  gint               n_books        = 0;
+  GtkWidget         *dock;
+  GList             *iter;
+  GimpUIManager     *ui_manager;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
-  ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
+  ui_manager = gimp_dock_container_get_ui_manager (dock_container);
   dock       = gimp_dialog_factory_dialog_new (factory,
                                                screen,
                                                ui_manager,

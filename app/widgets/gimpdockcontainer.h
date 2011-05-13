@@ -35,12 +35,14 @@ struct _GimpDockContainerInterface
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  GList *   (* get_docks)        (GimpDockContainer *container);
+  GList         * (* get_docks)      (GimpDockContainer *container);
+  GimpUIManager * (* get_ui_manager) (GimpDockContainer *container);
 };
 
 
-GType     gimp_dock_container_interface_get_type  (void) G_GNUC_CONST;
-GList   * gimp_dock_container_get_docks           (GimpDockContainer *container);
+GType           gimp_dock_container_interface_get_type  (void) G_GNUC_CONST;
+GList         * gimp_dock_container_get_docks           (GimpDockContainer *container);
+GimpUIManager * gimp_dock_container_get_ui_manager      (GimpDockContainer *container);
 
 
 #endif  /*  __GIMP_DOCK_CONTAINER_H__  */

@@ -79,6 +79,28 @@ gimp_dock_container_get_docks (GimpDockContainer *container)
 
   if (iface->get_docks)
     return iface->get_docks (container);
-  else
-    return NULL;
+
+  return NULL;
 }
+
+/**
+ * gimp_dock_container_get_ui_manager:
+ * @container: A #GimpDockContainer
+ *
+ * Returns: The #GimpUIManager of the #GimpDockContainer
+ **/
+GimpUIManager *
+gimp_dock_container_get_ui_manager (GimpDockContainer *container)
+{
+  GimpDockContainerInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), NULL);
+
+  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+
+  if (iface->get_ui_manager)
+    return iface->get_ui_manager (container);
+
+  return NULL;
+}
+
