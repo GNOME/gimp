@@ -4,9 +4,9 @@ pluginexecdir = $(gimpplugindir)/plug-ins
 
 scripts = \
 	colorxhtml.py		\
-	css-gradients.py		\
 	file-openraster.py	\
 	foggify.py		\
+        gradients-save-as-css.py\
 	palette-offset.py	\
 	palette-sort.py		\
 	palette-to-gradient.py	\

@@ -84,7 +84,7 @@ def gradient_css_save(gradient, file_name):
         file_.write(format_text(final_text))
 
 register(
-        "palette_from_gradient",
+        "gradient-save-as-css",
         "Creates a new palette from a given gradient",
         "palette_from_gradient (gradient, number, segment_colors) -> None",
         "Joao S. O. Bueno",
