@@ -194,13 +194,12 @@ GimpDock *
 gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
                                 GimpDialogFactory   *factory,
                                 GdkScreen           *screen,
-                                GimpDockWindow      *dock_window)
+                                GimpDockContainer   *dock_container)
 {
-  GimpDockContainer *dock_container = GIMP_DOCK_CONTAINER (dock_window);
-  gint               n_books        = 0;
-  GtkWidget         *dock;
-  GList             *iter;
-  GimpUIManager     *ui_manager;
+  gint           n_books = 0;
+  GtkWidget     *dock;
+  GList         *iter;
+  GimpUIManager *ui_manager;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);

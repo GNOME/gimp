@@ -514,7 +514,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
     gimp_session_info_dock_restore ((GimpSessionInfoDock *)iter->data,
                                     factory,
                                     screen,
-                                    GIMP_DOCK_WINDOW (dialog));
+                                    GIMP_DOCK_CONTAINER (dialog));
 
   g_object_unref (info);
 }
