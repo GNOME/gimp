@@ -366,6 +366,10 @@ gimp_image_window_constructed (GObject *object)
                            window, G_CONNECT_SWAPPED);
 
   private->entry_id = gimp_image_window_config_to_entry_id (config);
+
+  gimp_image_window_session_update (window,
+                                    NULL /*new_display*/,
+                                    FALSE /*from_switch_page*/);
 }
 
 static void
@@ -1381,14 +1385,15 @@ gimp_image_window_session_update (GimpImageWindow *window,
 
   if (strcmp (private->entry_id, GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID) == 0)
     {
-      if (gimp_display_get_image (new_display))
+      if (new_display && gimp_display_get_image (new_display))
         {
           /* As soon as we have an image we should not affect the size of the
            * empty image window
            */
           gimp_image_window_session_clear (window);
         }
-      else if (! gimp_display_get_image (new_display) &&
+      else if (new_display &&
+               ! gimp_display_get_image (new_display) &&
                g_list_length (private->shells) <= 1)
         {
           /* As soon as we have no image (and no other shells that may
