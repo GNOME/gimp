@@ -303,6 +303,7 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
         { GIMP_TYPE_STRING_ARRAY,    GIMP_PDB_STRINGARRAY },
         { GIMP_TYPE_COLOR_ARRAY,     GIMP_PDB_COLORARRAY  },
 
+        { GIMP_TYPE_ITEM_ID,         GIMP_PDB_ITEM        },
         { GIMP_TYPE_DISPLAY_ID,      GIMP_PDB_DISPLAY     },
         { GIMP_TYPE_IMAGE_ID,        GIMP_PDB_IMAGE       },
         { GIMP_TYPE_LAYER_ID,        GIMP_PDB_LAYER       },
