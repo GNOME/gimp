@@ -488,15 +488,18 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                                                      info);
     }
 
-  /* We expect expect there to always be docks. In sessionrc files
-   * from <= 2.6 not all dock window entries had dock entries, but we
-   * take care of that during sessionrc parsing
-   */
-  for (iter = info->p->docks; iter; iter = g_list_next (iter))
-    gimp_session_info_dock_restore ((GimpSessionInfoDock *)iter->data,
-                                    factory,
-                                    screen,
-                                    GIMP_DOCK_CONTAINER (dialog));
+  if (dialog && GIMP_IS_DOCK_CONTAINER (dialog))
+    {
+      /* We expect expect there to always be docks. In sessionrc files
+       * from <= 2.6 not all dock window entries had dock entries, but we
+       * take care of that during sessionrc parsing
+       */
+      for (iter = info->p->docks; iter; iter = g_list_next (iter))
+        gimp_session_info_dock_restore ((GimpSessionInfoDock *)iter->data,
+                                        factory,
+                                        screen,
+                                        GIMP_DOCK_CONTAINER (dialog));
+    }
 
   g_object_unref (info);
 }

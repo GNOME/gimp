@@ -82,7 +82,7 @@ GimpContainer *global_recent_docks = NULL;
     singleton              /* singleton        */, \
     TRUE                   /* session_managed  */, \
     remember_size          /* remember_size    */, \
-    FALSE                  /* remember_if_open */, \
+    TRUE                   /* remember_if_open */, \
     FALSE                  /* hideable         */, \
     TRUE                   /* image_window     */, \
     FALSE                  /* dockable         */}
