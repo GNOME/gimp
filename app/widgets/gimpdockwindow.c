@@ -130,6 +130,9 @@ static GimpUIManager * gimp_dock_window_get_ui_manager            (GimpDockConta
 static void            gimp_dock_window_add_dock_from_session     (GimpDockContainer          *dock_container,
                                                                    GimpDock                   *dock,
                                                                    GimpSessionInfoDock        *dock_info);
+static GimpAlignmentType
+                       gimp_dock_window_get_dock_side             (GimpDockContainer          *dock_container,
+                                                                   GimpDock                   *dock);
 static gboolean        gimp_dock_window_should_add_to_recent      (GimpDockWindow             *dock_window);
 static void            gimp_dock_window_display_changed           (GimpDockWindow             *dock_window,
                                                                    GimpObject                 *display,
@@ -266,6 +269,7 @@ gimp_dock_window_dock_container_iface_init (GimpDockContainerInterface *iface)
   iface->get_docks      = gimp_dock_window_get_docks;
   iface->get_ui_manager = gimp_dock_window_get_ui_manager;
   iface->add_dock       = gimp_dock_window_add_dock_from_session;
+  iface->get_dock_side  = gimp_dock_window_get_dock_side;
 }
 
 static void
@@ -719,6 +723,19 @@ gimp_dock_window_add_dock_from_session (GimpDockContainer   *dock_container,
   gimp_dock_window_add_dock (dock_window,
                              dock,
                              -1 /*index*/);
+}
+
+static GimpAlignmentType
+gimp_dock_window_get_dock_side (GimpDockContainer *dock_container,
+                                GimpDock          *dock)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_container), -1);
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), -1);
+
+  /* A GimpDockWindow don't have docks on different sides, it's just
+   * one set of columns
+   */
+  return -1;
 }
 
 /**

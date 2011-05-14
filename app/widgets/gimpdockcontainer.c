@@ -135,3 +135,28 @@ gimp_dock_container_add_dock (GimpDockContainer   *container,
                      dock,
                      dock_info);
 }
+
+/**
+ * gimp_dock_container_get_dock_side:
+ * @container: A #GimpDockContainer
+ * @dock:      A #GimpDock
+ *
+ * Returns: What side @dock is in in @container, either
+ *          GIMP_ALIGN_LEFT or GIMP_ALIGN_RIGHT, or -1 if the side
+ *          concept is not applicable.
+ **/
+GimpAlignmentType
+gimp_dock_container_get_dock_side (GimpDockContainer   *container,
+                                   GimpDock            *dock)
+{
+  GimpDockContainerInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), -1);
+
+  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+
+  if (iface->get_dock_side)
+    return iface->get_dock_side (container, dock);
+
+  return -1;
+}

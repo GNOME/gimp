@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
@@ -41,8 +43,29 @@
 
 enum
 {
+  SESSION_INFO_SIDE,
   SESSION_INFO_BOOK
 };
+
+
+static GimpAlignmentType gimp_session_info_dock_get_side (GimpDock *dock);
+
+
+static GimpAlignmentType
+gimp_session_info_dock_get_side (GimpDock *dock)
+{
+  GimpAlignmentType result   = -1;
+  GtkWidget        *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (dock));
+
+  if (GIMP_IS_DOCK_CONTAINER (toplevel))
+    {
+      GimpDockContainer *container = GIMP_DOCK_CONTAINER (toplevel);
+
+      result = gimp_dock_container_get_dock_side (container, dock);
+    }
+
+  return result;
+}
 
 
 /*  public functions  */
@@ -54,6 +77,7 @@ gimp_session_info_dock_new (const gchar *dock_type)
 
   dock_info = g_slice_new0 (GimpSessionInfoDock);
   dock_info->dock_type = g_strdup (dock_type);
+  dock_info->side      = -1;
 
   return dock_info;
 }
@@ -90,6 +114,16 @@ gimp_session_info_dock_serialize (GimpConfigWriter    *writer,
 
   gimp_config_writer_open (writer, dock_info->dock_type);
 
+  if (dock_info->side != -1)
+    {
+      const char *side_text =
+        dock_info->side == GIMP_ALIGN_LEFT ? "left" : "right";
+      
+      gimp_config_writer_open (writer, "side");
+      gimp_config_writer_print (writer, side_text, strlen (side_text));
+      gimp_config_writer_close (writer);
+    }
+
   for (list = dock_info->books; list; list = g_list_next (list))
     gimp_session_info_book_serialize (writer, list->data);
 
@@ -107,6 +141,8 @@ gimp_session_info_dock_deserialize (GScanner             *scanner,
   g_return_val_if_fail (scanner != NULL, G_TOKEN_LEFT_PAREN);
   g_return_val_if_fail (dock_info != NULL, G_TOKEN_LEFT_PAREN);
 
+  g_scanner_scope_add_symbol (scanner, scope, "side",
+                              GINT_TO_POINTER (SESSION_INFO_SIDE));
   g_scanner_scope_add_symbol (scanner, scope, "book",
                               GINT_TO_POINTER (SESSION_INFO_BOOK));
 
@@ -128,6 +164,19 @@ gimp_session_info_dock_deserialize (GScanner             *scanner,
           switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
               GimpSessionInfoBook *book;
+
+            case SESSION_INFO_SIDE:
+              token = G_TOKEN_IDENTIFIER;
+              if (g_scanner_peek_next_token (scanner) != token)
+                break;
+
+              g_scanner_get_next_token (scanner);
+
+              if (strcmp ("left", scanner->value.v_identifier) == 0)
+                (*dock_info)->side = GIMP_ALIGN_LEFT;
+              else
+                (*dock_info)->side = GIMP_ALIGN_RIGHT;
+              break;
 
             case SESSION_INFO_BOOK:
               g_scanner_set_scope (scanner, scope + 1);
@@ -160,6 +209,7 @@ gimp_session_info_dock_deserialize (GScanner             *scanner,
     }
 
   g_scanner_scope_remove_symbol (scanner, scope, "book");
+  g_scanner_scope_remove_symbol (scanner, scope, "side");
 
   return token;
 }
@@ -186,6 +236,7 @@ gimp_session_info_dock_from_widget (GimpDock *dock)
     }
 
   dock_info->books = g_list_reverse (dock_info->books);
+  dock_info->side  = gimp_session_info_dock_get_side (dock);
 
   return dock_info;
 }

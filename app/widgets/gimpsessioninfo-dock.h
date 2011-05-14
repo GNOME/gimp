@@ -32,10 +32,15 @@ struct _GimpSessionInfoDock
   /* Type of dock, written to/read from sessionrc. E.g. 'gimp-dock' or
    * 'gimp-toolbox'
    */
-  gchar *dock_type;
+  gchar             *dock_type;
+
+  /* What side this dock is in in single-window mode. Either
+   * GIMP_ARRANGE_LEFT, GIMP_ARRANGE_RIGHT or -1.
+   */
+  GimpAlignmentType  side;
 
   /*  list of GimpSessionInfoBook  */
-  GList *books;
+  GList             *books;
 };
 
 GimpSessionInfoDock * gimp_session_info_dock_new         (const gchar          *dock_type);
