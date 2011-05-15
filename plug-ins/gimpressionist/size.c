@@ -30,10 +30,10 @@
 
 #define NUMSIZERADIO 8
 
-static GtkObject *sizenumadjust   = NULL;
-static GtkObject *sizefirstadjust = NULL;
-static GtkObject *sizelastadjust  = NULL;
-static GtkWidget *sizeradio[NUMSIZERADIO];
+static GtkAdjustment *sizenumadjust   = NULL;
+static GtkAdjustment *sizefirstadjust = NULL;
+static GtkAdjustment *sizelastadjust  = NULL;
+static GtkWidget     *sizeradio[NUMSIZERADIO];
 
 static void
 size_store (GtkWidget *wg, void *d)

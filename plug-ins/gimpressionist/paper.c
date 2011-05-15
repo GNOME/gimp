@@ -31,12 +31,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static GtkWidget *paper_preview       = NULL;
-static GtkWidget *paper_invert        = NULL;
-static GtkWidget *paper_list          = NULL;
-static GtkObject *paper_relief_adjust = NULL;
-static GtkObject *paper_scale_adjust  = NULL;
-static GtkWidget *paper_overlay       = NULL;
+static GtkWidget     *paper_preview       = NULL;
+static GtkWidget     *paper_invert        = NULL;
+static GtkWidget     *paper_list          = NULL;
+static GtkAdjustment *paper_relief_adjust = NULL;
+static GtkAdjustment *paper_scale_adjust  = NULL;
+static GtkWidget     *paper_overlay       = NULL;
 
 static void paper_update_preview (void)
 {
