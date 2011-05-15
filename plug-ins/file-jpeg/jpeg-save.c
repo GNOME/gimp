@@ -1493,16 +1493,15 @@ create_thumbnail (gint32    image_ID,
                   gdouble   quality,
                   guchar  **thumbnail_buffer)
 {
-  GimpDrawable  *drawable;
-  gint           req_width, req_height, bpp, rbpp;
-  guchar        *thumbnail_data = NULL;
+  GimpDrawable               *drawable;
+  gint                        req_width, req_height, bpp, rbpp;
+  guchar                     *thumbnail_data = NULL;
   struct jpeg_compress_struct cinfo;
   struct my_error_mgr         jerr;
-  my_dest_ptr dest;
-  gboolean  alpha = FALSE;
-  JSAMPROW  scanline[1];
-  guchar   *buf = NULL;
-  gint      i;
+  my_dest_ptr                 dest;
+  JSAMPROW                    scanline[1];
+  guchar                     *buf = NULL;
+  gint                        i;
 
   drawable = gimp_drawable_get (drawable_ID);
 
@@ -1523,7 +1522,6 @@ create_thumbnail (gint32    image_ID,
 
   if ((bpp == 2) || (bpp == 4))
     {
-      alpha = TRUE;
       rbpp = bpp - 1;
     }
 

@@ -228,8 +228,6 @@ static void
 borderaverage (GimpDrawable *drawable,
                GimpRGB      *result)
 {
-  gint    width;
-  gint    height;
   gint    x1, x2, y1, y2;
   gint    bytes;
   gint    max;
@@ -269,8 +267,6 @@ borderaverage (GimpDrawable *drawable,
   /*  Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width = drawable->width;
-  height = drawable->height;
   bytes = drawable->bpp;
 
   gimp_tile_cache_ntiles (2 * ((x2 - x1) / gimp_tile_width () + 1));

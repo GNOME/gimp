@@ -210,16 +210,10 @@ draw_light_marker (cairo_t *cr,
                    gint xpos,
                    gint ypos)
 {
-  GdkColor  color;
-  gint pw, ph, startx, starty;
+  GdkColor color;
 
   if (mapvals.lightsource.type != POINT_LIGHT)
     return;
-
-  pw = PREVIEW_WIDTH * mapvals.zoom;
-  ph = PREVIEW_HEIGHT * mapvals.zoom;
-  startx = (PREVIEW_WIDTH - pw) / 2;
-  starty = (PREVIEW_HEIGHT - ph) / 2;
 
   cairo_set_line_width (cr, 1.0);
 
@@ -288,12 +282,10 @@ compute_preview_image (void)
 {
   GdkDisplay *display = gtk_widget_get_display (previewarea);
   GdkCursor  *cursor;
-  gint       startx, starty, pw, ph;
+  gint        pw, ph;
 
   pw = PREVIEW_WIDTH * mapvals.zoom;
   ph = PREVIEW_HEIGHT * mapvals.zoom;
-  startx = (PREVIEW_WIDTH - pw) / 2;
-  starty = (PREVIEW_HEIGHT - ph) / 2;
 
   cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
   gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
@@ -394,7 +386,7 @@ draw_wireframe_plane (cairo_t *cr,
 {
   GimpVector3 v1, v2, a, b, c, d, dir1, dir2;
   gint        cnt;
-  gdouble     x1, y1, x2, y2, cx1, cy1, cx2, cy2, fac;
+  gdouble     x1, y1, x2, y2, fac;
 
   cairo_rectangle (cr, startx, starty, pw, ph);
   cairo_clip (cr);
@@ -430,11 +422,6 @@ draw_wireframe_plane (cairo_t *cr,
   gimp_vector3_sub (&d, &d, &v2);
 
   c = b;
-
-  cx1 = (gdouble) startx;
-  cy1 = (gdouble) starty;
-  cx2 = cx1 + (gdouble) pw;
-  cy2 = cy1 + (gdouble) ph;
 
   for (cnt = 0; cnt <= WIRESIZE; cnt++)
     {
@@ -476,7 +463,7 @@ draw_wireframe_sphere (cairo_t *cr,
 {
   GimpVector3 p[2 * (WIRESIZE + 5)];
   gint        cnt, cnt2;
-  gdouble     x1, y1, x2, y2, twopifac, cx1, cy1, cx2, cy2;
+  gdouble     x1, y1, x2, y2, twopifac;
 
   cairo_rectangle (cr, startx, starty, pw, ph);
   cairo_clip (cr);
@@ -543,11 +530,6 @@ draw_wireframe_sphere (cairo_t *cr,
 
   /* Draw the circles (equator and zero meridian) */
   /* ============================================ */
-
-  cx1 = (gdouble) startx;
-  cy1 = (gdouble) starty;
-  cx2 = cx1 + (gdouble) pw;
-  cy2 = cy1 + (gdouble) ph;
 
   for (cnt = 0; cnt < cnt2 - 1; cnt++)
     {

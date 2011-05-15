@@ -717,7 +717,7 @@ do_curl_effect (gint32 drawable_id)
   gboolean      color_image;
   gint          x1, y1, k;
   guint         alpha_pos, progress, max_progress;
-  gdouble       intensity, alpha, beta;
+  gdouble       intensity, alpha;
   GimpVector2   v, dl, dr;
   gdouble       dl_mag, dr_mag, angle, factor;
   guchar       *pp, *dest, fore_grayval, back_grayval;
@@ -760,7 +760,6 @@ do_curl_effect (gint32 drawable_id)
 		    -(sel_height - right_tangent.y));
   dr_mag = gimp_vector2_length (&dr);
   alpha = acos (gimp_vector2_inner_product (&dl, &dr) / (dl_mag * dr_mag));
-  beta = alpha / 2;
 
   /* Init shade_curl */
 

@@ -1215,7 +1215,6 @@ dialog(GimpDrawable *drawable)
    GtkWidget    *hbox;
    GtkWidget    *main_vbox;
    GtkWidget    *tools;
-   Menu_t       *menu;
 
    gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -1251,7 +1250,7 @@ dialog(GimpDrawable *drawable)
    init_stock_icons();
 
    /* Create menu */
-   menu = make_menu(main_vbox, dlg);
+   make_menu(main_vbox, dlg);
 
    /* Create toolbar */
    make_toolbar(main_vbox, dlg);

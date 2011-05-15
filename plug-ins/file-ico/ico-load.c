@@ -637,7 +637,6 @@ ico_load_image (const gchar  *filename,
   gint         max_width, max_height;
   gint         i;
   gint32       image;
-  gint32       layer;
   guchar      *buffer;
   guint        icon_count;
   gint         maxsize;
@@ -693,7 +692,7 @@ ico_load_image (const gchar  *filename,
   buffer = g_new (guchar, max_width * max_height * 4);
   for (i = 0; i < icon_count; i++)
     {
-      layer = ico_load_layer (fp, image, i, buffer, maxsize, info+i);
+      ico_load_layer (fp, image, i, buffer, maxsize, info+i);
     }
   g_free (buffer);
   g_free (info);
@@ -713,7 +712,6 @@ ico_load_thumbnail_image (const gchar  *filename,
   FILE        *fp;
   IcoLoadInfo *info;
   gint32       image;
-  gint32       layer;
   gint         w     = 0;
   gint         h     = 0;
   gint         bpp   = 0;
@@ -777,7 +775,7 @@ ico_load_thumbnail_image (const gchar  *filename,
 
   image = gimp_image_new (w, h, GIMP_RGB);
   buffer = g_new (guchar, w*h*4);
-  layer = ico_load_layer (fp, image, match, buffer, w*h*4, info+match);
+  ico_load_layer (fp, image, match, buffer, w*h*4, info+match);
   g_free (buffer);
 
   *width  = w;

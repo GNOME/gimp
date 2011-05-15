@@ -274,7 +274,6 @@ xjpg_load_layer_alpha (const char *filename,
 {
   GimpPixelRgn l_pixel_rgn;
   GimpDrawable *l_drawable;
-  GimpImageType  l_layer_type;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr jerr;
   FILE *infile;
@@ -291,8 +290,6 @@ xjpg_load_layer_alpha (const char *filename,
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
-
-  l_layer_type = GIMP_GRAY_IMAGE;
 
   /* add alpha channel */
   gimp_layer_add_alpha (layer_id);

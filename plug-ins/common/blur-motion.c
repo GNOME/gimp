@@ -998,7 +998,6 @@ mblur_dialog (gint32        image_ID,
   GtkWidget *table;
   GtkWidget *entry;
   GtkWidget *spinbutton;
-  GtkWidget *label;
   GtkWidget *button;
   GtkObject *adj;
   gdouble    xres, yres;
@@ -1088,13 +1087,13 @@ mblur_dialog (gint32        image_ID,
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, TRUE);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, mbvals.center_x);
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("_X:"), 0, 0, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+                                _("_X:"), 0, 0, 0.0);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1, yres, TRUE);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, mbvals.center_y);
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("_Y:"), 1, 0, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+                                _("_Y:"), 1, 0, 0.0);
 
   button = gtk_check_button_new_with_mnemonic (_("Blur _outward"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
