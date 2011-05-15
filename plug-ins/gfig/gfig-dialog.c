@@ -1235,7 +1235,7 @@ gfig_prefs_action_callback (GtkAction *widget,
       GtkWidget     *main_vbox;
       GtkWidget     *table;
       GtkWidget     *toggle;
-      GtkObject     *size_data;
+      GtkAdjustment *size_data;
       GtkWidget     *scale;
       GtkAdjustment *scale_data;
 
@@ -1349,7 +1349,7 @@ gfig_prefs_action_callback (GtkAction *widget,
                         NULL);
       gtk_widget_show (toggle);
 
-      scale_data = (GtkAdjustment *)
+      scale_data =
         gtk_adjustment_new (selopt.feather_radius, 0.0, 100.0, 1.0, 1.0, 0.0);
       scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_data);
       gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
@@ -1379,13 +1379,13 @@ gfig_grid_action_callback (GtkAction *action,
 
   if (!dialog)
     {
-      GtkWidget *main_vbox;
-      GtkWidget *hbox;
-      GtkWidget *table;
-      GtkWidget *combo;
-      GtkObject *size_data;
-      GtkObject *sectors_data;
-      GtkObject *radius_data;
+      GtkWidget     *main_vbox;
+      GtkWidget     *hbox;
+      GtkWidget     *table;
+      GtkWidget     *combo;
+      GtkAdjustment *size_data;
+      GtkAdjustment *sectors_data;
+      GtkAdjustment *radius_data;
 
       dialog = gimp_dialog_new (_("Grid"), "gimp-gfig-grid",
                                 GTK_WIDGET (data), 0, NULL, NULL,
@@ -1431,7 +1431,7 @@ gfig_grid_action_callback (GtkAction *action,
                         G_CALLBACK (draw_grid_clear),
                         NULL);
 
-      gfig_opt_widget.gridspacing = GTK_ADJUSTMENT (size_data);
+      gfig_opt_widget.gridspacing = size_data;
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
                                  (gpointer) &gfig_opt_widget.gridspacing);
 
@@ -1448,12 +1448,12 @@ gfig_grid_action_callback (GtkAction *action,
                         G_CALLBACK (draw_grid_clear),
                         NULL);
 
-      gfig_opt_widget.grid_sectors_desired = GTK_ADJUSTMENT (sectors_data);
+      gfig_opt_widget.grid_sectors_desired = sectors_data;
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.grid_sectors_desired),
                                  (gpointer) &gfig_opt_widget.grid_sectors_desired);
 
 
-      gfig_opt_widget.gridspacing = GTK_ADJUSTMENT (size_data);
+      gfig_opt_widget.gridspacing = size_data;
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
                                  (gpointer) &gfig_opt_widget.gridspacing);
 
@@ -1470,7 +1470,7 @@ gfig_grid_action_callback (GtkAction *action,
                         G_CALLBACK (draw_grid_clear),
                         NULL);
 
-      gfig_opt_widget.grid_radius_interval = GTK_ADJUSTMENT (radius_data);
+      gfig_opt_widget.grid_radius_interval = radius_data;
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.grid_radius_interval),
                                  (gpointer) &gfig_opt_widget.grid_radius_interval);
 
@@ -1717,8 +1717,8 @@ num_sides_widget (const gchar *d_title,
                   gint         adj_min,
                   gint         adj_max)
 {
-  GtkWidget *table;
-  GtkObject *size_data;
+  GtkWidget     *table;
+  GtkAdjustment *size_data;
 
   table = gtk_table_new (which_way ? 2 : 1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);

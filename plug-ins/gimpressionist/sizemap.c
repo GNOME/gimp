@@ -36,13 +36,13 @@
 
 #define MAPFILE "data.out"
 
-static GtkWidget *smwindow;
-static GtkWidget *smvectorprev;
-static GtkWidget *smpreviewprev;
-static GtkWidget *prev_button;
-static GtkWidget *next_button;
-static GtkWidget *add_button;
-static GtkWidget *kill_button;
+static GtkWidget     *smwindow;
+static GtkWidget     *smvectorprev;
+static GtkWidget     *smpreviewprev;
+static GtkWidget     *prev_button;
+static GtkWidget     *next_button;
+static GtkWidget     *add_button;
+static GtkWidget     *kill_button;
 
 static GtkAdjustment *smvectprevbrightadjust = NULL;
 

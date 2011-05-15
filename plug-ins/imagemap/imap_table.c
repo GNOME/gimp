@@ -39,7 +39,7 @@ GtkWidget*
 create_spin_button_in_table(GtkWidget *table, GtkWidget *label,
                             int row, int col, int value, int min, int max)
 {
-   GtkObject *adj = gtk_adjustment_new(value, min, max, 1, 1, 1);
+   GtkAdjustment *adj = gtk_adjustment_new(value, min, max, 1, 1, 1);
    GtkWidget *button = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 0);
    gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(button), TRUE);
    if (label)

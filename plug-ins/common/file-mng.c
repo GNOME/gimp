@@ -1447,9 +1447,8 @@ mng_save_dialog (gint32 image_id)
                              _("Default frame disposal:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
-  scale_adj = (GtkAdjustment *)
-    gtk_adjustment_new (mng_data.compression_level,
-                        0.0, 9.0, 1.0, 1.0, 0.0);
+  scale_adj = gtk_adjustment_new (mng_data.compression_level,
+                                  0.0, 9.0, 1.0, 1.0, 0.0);
 
   scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adj);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
@@ -1468,9 +1467,8 @@ mng_save_dialog (gint32 image_id)
                              "for small file size"),
                            NULL);
 
-  scale_adj = (GtkAdjustment *)
-    gtk_adjustment_new (mng_data.quality,
-                        0.0, 1.0, 0.01, 0.01, 0.0);
+  scale_adj = gtk_adjustment_new (mng_data.quality,
+                                  0.0, 1.0, 0.01, 0.01, 0.0);
 
   scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adj);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
@@ -1485,9 +1483,8 @@ mng_save_dialog (gint32 image_id)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mng_data.quality);
 
-  scale_adj = (GtkAdjustment *)
-    gtk_adjustment_new (mng_data.smoothing,
-                        0.0, 1.0, 0.01, 0.01, 0.0);
+  scale_adj = gtk_adjustment_new (mng_data.smoothing,
+                                  0.0, 1.0, 0.01, 0.01, 0.0);
 
   scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adj);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
@@ -1529,9 +1526,8 @@ mng_save_dialog (gint32 image_id)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spinbutton_adj = (GtkAdjustment *)
-    gtk_adjustment_new (mng_data.default_delay,
-                        0, 65000, 10, 100, 0);
+  spinbutton_adj = gtk_adjustment_new (mng_data.default_delay,
+                                       0, 65000, 10, 100, 0);
   spinbutton = gtk_spin_button_new (spinbutton_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 

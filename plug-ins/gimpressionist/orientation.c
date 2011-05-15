@@ -28,10 +28,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static GtkWidget *orient_radio[NUMORIENTRADIO];
-static GtkObject *orient_num_adjust = NULL;
-static GtkObject *orient_first_adjust = NULL;
-static GtkObject *orient_last_adjust = NULL;
+static GtkWidget     *orient_radio[NUMORIENTRADIO];
+static GtkAdjustment *orient_num_adjust = NULL;
+static GtkAdjustment *orient_first_adjust = NULL;
+static GtkAdjustment *orient_last_adjust = NULL;
 
 
 static void

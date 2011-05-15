@@ -35,16 +35,16 @@
 
 #define NUMGENERALBGRADIO 4
 
-static GtkWidget *general_bg_radio[NUMGENERALBGRADIO];
-static GtkWidget *general_paint_edges      = NULL;
-static GtkObject *general_dark_edge_adjust = NULL;
-static GtkWidget *general_tileable;
-static GtkWidget *general_drop_shadow      = NULL;
-static GtkWidget *general_color_button;
-static GtkObject *general_shadow_adjust    = NULL;
-static GtkObject *general_shadow_depth     = NULL;
-static GtkObject *general_shadow_blur      = NULL;
-static GtkObject *dev_thresh_adjust        = NULL;
+static GtkWidget     *general_bg_radio[NUMGENERALBGRADIO];
+static GtkWidget     *general_paint_edges      = NULL;
+static GtkAdjustment *general_dark_edge_adjust = NULL;
+static GtkWidget     *general_tileable;
+static GtkWidget     *general_drop_shadow      = NULL;
+static GtkWidget     *general_color_button;
+static GtkAdjustment *general_shadow_adjust    = NULL;
+static GtkAdjustment *general_shadow_depth     = NULL;
+static GtkAdjustment *general_shadow_blur      = NULL;
+static GtkAdjustment *dev_thresh_adjust        = NULL;
 
 static int
 normalize_bg (int n)

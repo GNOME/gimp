@@ -76,8 +76,8 @@ typedef struct
   GtkWidget     *scale;
   GtkWidget     *spin;
 
-  ValuePairType type;
-  guint         timeout_id;
+  ValuePairType  type;
+  guint          timeout_id;
 
   union
   {
