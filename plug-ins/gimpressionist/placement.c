@@ -30,9 +30,9 @@
 
 #define NUM_PLACE_RADIO 2
 
-static GtkWidget *placement_radio[NUM_PLACE_RADIO];
-static GtkWidget *placement_center = NULL;
-static GtkObject *brush_density_adjust = NULL;
+static GtkWidget     *placement_radio[NUM_PLACE_RADIO];
+static GtkWidget     *placement_center = NULL;
+static GtkAdjustment *brush_density_adjust = NULL;
 
 void
 place_restore (void)

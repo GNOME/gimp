@@ -30,8 +30,8 @@
 
 #define NUMCOLORRADIO 2
 
-static GtkWidget *colorradio[NUMCOLORRADIO];
-static GtkObject *colornoiseadjust = NULL;
+static GtkWidget     *colorradio[NUMCOLORRADIO];
+static GtkAdjustment *colornoiseadjust = NULL;
 
 void
 color_restore (void)
