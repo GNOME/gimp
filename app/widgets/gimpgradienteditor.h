@@ -61,7 +61,7 @@ struct _GimpGradientEditor
 
   /*  Zoom and scrollbar  */
   guint           zoom_factor;
-  GtkObject      *scroll_data;
+  GtkAdjustment  *scroll_data;
 
   /*  Color dialog  */
   GtkWidget      *color_dialog;

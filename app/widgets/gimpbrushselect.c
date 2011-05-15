@@ -288,8 +288,7 @@ gimp_brush_select_opacity_changed (GimpContext     *context,
                                    gimp_brush_select_opacity_update,
                                    select);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (select->opacity_data),
-                            opacity * 100.0);
+  gtk_adjustment_set_value (select->opacity_data, opacity * 100.0);
 
   g_signal_handlers_unblock_by_func (select->opacity_data,
                                      gimp_brush_select_opacity_update,

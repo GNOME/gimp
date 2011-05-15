@@ -363,10 +363,10 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   /*  Scrollbar  */
   editor->zoom_factor = 1;
 
-  editor->scroll_data = gtk_adjustment_new (0.0, 0.0, 1.0,
-                                            GRAD_SCROLLBAR_STEP_SIZE,
-                                            GRAD_SCROLLBAR_PAGE_SIZE,
-                                            1.0);
+  editor->scroll_data = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1.0,
+                                                            GRAD_SCROLLBAR_STEP_SIZE,
+                                                            GRAD_SCROLLBAR_PAGE_SIZE,
+                                                            1.0));
 
   g_signal_connect (editor->scroll_data, "value-changed",
                     G_CALLBACK (gradient_editor_scrollbar_update),
@@ -375,7 +375,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                     G_CALLBACK (gradient_editor_scrollbar_update),
                     editor);
 
-  editor->scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (editor->scroll_data));
+  editor->scrollbar = gtk_hscrollbar_new (editor->scroll_data);
   gtk_box_pack_start (GTK_BOX (editor), editor->scrollbar, FALSE, FALSE, 0);
   gtk_widget_show (editor->scrollbar);
 
@@ -560,7 +560,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 
   g_return_if_fail (GIMP_IS_GRADIENT_EDITOR (editor));
 
-  adjustment = GTK_ADJUSTMENT (editor->scroll_data);
+  adjustment = editor->scroll_data;
 
   old_value     = gtk_adjustment_get_value (adjustment);
   old_page_size = gtk_adjustment_get_page_size (adjustment);
@@ -880,7 +880,7 @@ view_events (GtkWidget          *widget,
           }
         else
           {
-            GtkAdjustment *adj   = GTK_ADJUSTMENT (editor->scroll_data);
+            GtkAdjustment *adj   = editor->scroll_data;
             gfloat         value = gtk_adjustment_get_value (adj);
 
             switch (sevent->direction)
@@ -1076,7 +1076,7 @@ control_events (GtkWidget          *widget,
           }
         else
           {
-            GtkAdjustment *adj = GTK_ADJUSTMENT (editor->scroll_data);
+            GtkAdjustment *adj = editor->scroll_data;
 
             gfloat new_value;
 
@@ -1183,7 +1183,7 @@ control_expose (GtkWidget          *widget,
                 GdkEventExpose     *event,
                 GimpGradientEditor *editor)
 {
-  GtkAdjustment *adj = GTK_ADJUSTMENT (editor->scroll_data);
+  GtkAdjustment *adj = editor->scroll_data;
   cairo_t       *cr  = gdk_cairo_create (gtk_widget_get_window (widget));
   GtkAllocation  allocation;
 
@@ -1846,7 +1846,7 @@ static gint
 control_calc_p_pos (GimpGradientEditor *editor,
                     gdouble             pos)
 {
-  GtkAdjustment *adjustment = GTK_ADJUSTMENT (editor->scroll_data);
+  GtkAdjustment *adjustment = editor->scroll_data;
   GtkAllocation  allocation;
   gint           pwidth;
 
@@ -1868,7 +1868,7 @@ static gdouble
 control_calc_g_pos (GimpGradientEditor *editor,
                     gint                pos)
 {
-  GtkAdjustment *adjustment = GTK_ADJUSTMENT (editor->scroll_data);
+  GtkAdjustment *adjustment = editor->scroll_data;
   GtkAllocation  allocation;
   gint           pwidth;
 

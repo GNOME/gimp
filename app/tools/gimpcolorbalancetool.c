@@ -214,10 +214,10 @@ create_levels_scale (gdouble        value,
                      GtkWidget     *table,
                      gint           col)
 {
-  GtkWidget *label;
-  GtkWidget *slider;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
+  GtkWidget     *label;
+  GtkWidget     *slider;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
 
   label = gtk_label_new (left);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -225,11 +225,11 @@ create_levels_scale (gdouble        value,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  spinbutton = gimp_spin_button_new (&adj,
+  spinbutton = gimp_spin_button_new ((GtkObject **) &adj,
                                      value, -100.0, 100.0,
                                      1.0, 10.0, 0.0, 1.0, 0);
 
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (adj));
+  slider = gtk_hscale_new (adj);
   gtk_scale_set_draw_value (GTK_SCALE (slider), FALSE);
   gtk_widget_set_size_request (slider, 100, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, col, col + 1);
@@ -245,7 +245,7 @@ create_levels_scale (gdouble        value,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  return GTK_ADJUSTMENT (adj);
+  return adj;
 }
 
 static void
