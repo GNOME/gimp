@@ -37,6 +37,15 @@
 #include "gimp-app-test-utils.h"
 
 
+#define ADD_TEST(function) \
+  g_test_add ("/gimp-session-management/" #function, \
+              GimpTestFixture, \
+              NULL, \
+              NULL, \
+              function, \
+              NULL);
+
+
 typedef struct
 {
   int dummy;
@@ -49,101 +58,6 @@ typedef struct
   GTimeVal  modtime;
 } GimpTestFileState;
 
-
-static gboolean  gimp_test_get_file_state_verbose (const gchar       *filename,
-                                                   GimpTestFileState *filestate);
-static gboolean  gimp_test_file_state_changes     (const gchar       *filename,
-                                                   GimpTestFileState *state1,
-                                                   GimpTestFileState *state2);
-
-static Gimp *gimp = NULL;
-
-
-int main(int argc, char **argv)
-{
-  GimpTestFileState  initial_sessionrc_state = { NULL, NULL, { 0, 0 } };
-  GimpTestFileState  initial_dockrc_state    = { NULL, NULL, { 0, 0 } };
-  GimpTestFileState  final_sessionrc_state   = { NULL, NULL, { 0, 0 } };
-  GimpTestFileState  final_dockrc_state      = { NULL, NULL, { 0, 0 } };
-  gchar             *sessionrc_filename      = NULL;
-  gchar             *dockrc_filename         = NULL;
-  gint               result                  = 0;
-
-  gimp_test_bail_if_no_display ();
-  gtk_test_init (&argc, &argv, NULL);
-
-  /* Make sure to run this before we use any GIMP functions */
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir");
-  gimp_test_utils_setup_menus_dir ();
-
-  /* Note that we expect the resulting sessionrc to be different from
-   * the read file, which is why we check the MD5 of the -expected
-   * variant
-   */
-  sessionrc_filename = gimp_personal_rc_file ("sessionrc-expected");
-  dockrc_filename    = gimp_personal_rc_file ("dockrc-expected");
-
-  /* Remeber the modtimes and MD5s */
-  if (!gimp_test_get_file_state_verbose (sessionrc_filename,
-                                         &initial_sessionrc_state))
-    result = -1;
-  if (!gimp_test_get_file_state_verbose (dockrc_filename,
-                                         &initial_dockrc_state))
-    result = -1;
-
-  /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
-
-  /* Let the main loop run until idle to let things stabilize. This
-   * includes parsing sessionrc and dockrc
-   */
-  gimp_test_run_mainloop_until_idle ();
-
-  /* Change the gimp dir to the output dir so files are written there,
-   * we don't want to (can't always) write to files in the source
-   * dir. There is a hook in Makefile.am that makes sure the output
-   * dir exists
-   */
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
-                                       "app/tests/gimpdir-output");
-  g_free (sessionrc_filename);
-  g_free (dockrc_filename);
-  sessionrc_filename = gimp_personal_rc_file ("sessionrc");
-  dockrc_filename    = gimp_personal_rc_file ("dockrc");
-
-  /* Exit. This includes writing sessionrc and dockrc*/
-  gimp_exit (gimp, TRUE);
-
-  /* Now get the new modtimes and MD5s */
-  if (!gimp_test_get_file_state_verbose (sessionrc_filename,
-                                         &final_sessionrc_state))
-    result = -1;
-  if (!gimp_test_get_file_state_verbose (dockrc_filename,
-                                         &final_dockrc_state))
-    result = -1;
-
-  /* If things have gone our way, GIMP will have deserialized
-   * sessionrc and dockrc, shown the GUI, and then serialized the new
-   * files. To make sure we have new files we check the modtime, and
-   * to make sure that their content remains the same we compare their
-   * MD5
-   */
-  if (!gimp_test_file_state_changes ("sessionrc",
-                                     &initial_sessionrc_state,
-                                     &final_sessionrc_state))
-    result = -1;
-  if (!gimp_test_file_state_changes ("dockrc",
-                                     &initial_dockrc_state,
-                                     &final_dockrc_state))
-    result = -1;
-
-  if (result == 0)
-    g_print ("/gimp-session-management/sessionrc_compatibility: OK\n");
-
-  /* Don't bother freeing stuff, the process is short-lived */
-  return result;
-}
 
 static gboolean
 gimp_test_get_file_state_verbose (const gchar       *filename,
@@ -240,4 +154,92 @@ gimp_test_file_state_changes (const gchar       *filename,
     }
 
   return TRUE;
+}
+
+/**
+ * Tests that a sessionrc from GIMP 2.6 is loaded and written (thus
+ * also interpreted) like we expect.
+ **/
+static void
+session_2_6_compatibility (GimpTestFixture *fixture,
+                           gconstpointer    data)
+{
+  Gimp              *gimp;
+  GimpTestFileState  initial_sessionrc_state = { NULL, NULL, { 0, 0 } };
+  GimpTestFileState  initial_dockrc_state    = { NULL, NULL, { 0, 0 } };
+  GimpTestFileState  final_sessionrc_state   = { NULL, NULL, { 0, 0 } };
+  GimpTestFileState  final_dockrc_state      = { NULL, NULL, { 0, 0 } };
+  gchar             *sessionrc_filename      = NULL;
+  gchar             *dockrc_filename         = NULL;
+
+  /* Make sure to run this before we use any GIMP functions */
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/gimpdir");
+  gimp_test_utils_setup_menus_dir ();
+
+  /* Note that we expect the resulting sessionrc to be different from
+   * the read file, which is why we check the MD5 of the -expected
+   * variant
+   */
+  sessionrc_filename = gimp_personal_rc_file ("sessionrc-expected");
+  dockrc_filename    = gimp_personal_rc_file ("dockrc-expected");
+
+  /* Remeber the modtimes and MD5s */
+  g_assert (gimp_test_get_file_state_verbose (sessionrc_filename,
+                                              &initial_sessionrc_state));
+  g_assert (gimp_test_get_file_state_verbose (dockrc_filename,
+                                              &initial_dockrc_state));
+
+  /* Start up GIMP */
+  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
+
+  /* Let the main loop run until idle to let things stabilize. This
+   * includes parsing sessionrc and dockrc
+   */
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Change the gimp dir to the output dir so files are written there,
+   * we don't want to (can't always) write to files in the source
+   * dir. There is a hook in Makefile.am that makes sure the output
+   * dir exists
+   */
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/gimpdir-output");
+  g_free (sessionrc_filename);
+  g_free (dockrc_filename);
+  sessionrc_filename = gimp_personal_rc_file ("sessionrc");
+  dockrc_filename    = gimp_personal_rc_file ("dockrc");
+
+  /* Exit. This includes writing sessionrc and dockrc*/
+  gimp_exit (gimp, TRUE);
+
+  /* Now get the new modtimes and MD5s */
+  g_assert (gimp_test_get_file_state_verbose (sessionrc_filename,
+                                              &final_sessionrc_state));
+  g_assert (gimp_test_get_file_state_verbose (dockrc_filename,
+                                              &final_dockrc_state));
+
+  /* If things have gone our way, GIMP will have deserialized
+   * sessionrc and dockrc, shown the GUI, and then serialized the new
+   * files. To make sure we have new files we check the modtime, and
+   * to make sure that their content remains the same we compare their
+   * MD5
+   */
+  g_assert (gimp_test_file_state_changes ("sessionrc",
+                                          &initial_sessionrc_state,
+                                          &final_sessionrc_state));
+  g_assert (gimp_test_file_state_changes ("dockrc",
+                                          &initial_dockrc_state,
+                                          &final_dockrc_state));
+}
+
+int main(int argc, char **argv)
+{
+  gimp_test_bail_if_no_display ();
+  gtk_test_init (&argc, &argv, NULL);
+
+  ADD_TEST (session_2_6_compatibility);
+
+  /* Don't bother freeing stuff, the process is short-lived */
+  return g_test_run ();
 }
