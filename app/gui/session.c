@@ -364,15 +364,22 @@ session_clear (Gimp    *gimp,
 static gchar *
 session_filename (Gimp *gimp)
 {
-  gchar *filename = gimp_personal_rc_file ("sessionrc");
+  const gchar *filename;
+  gchar       *filepath;
+
+  filename = g_getenv ("GIMP_TESTING_SESSIONRC_NAME");
+  if (! filename)
+    filename = "sessionrc";
+
+  filepath = gimp_personal_rc_file (filename);
 
   if (gimp->session_name)
     {
-      gchar *tmp = g_strconcat (filename, ".", gimp->session_name, NULL);
+      gchar *tmp = g_strconcat (filepath, ".", gimp->session_name, NULL);
 
-      g_free (filename);
-      filename = tmp;
+      g_free (filepath);
+      filepath = tmp;
     }
 
-  return filename;
+  return filepath;
 }

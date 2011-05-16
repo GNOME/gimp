@@ -464,21 +464,33 @@ dialogs_ensure_factory_entry_on_recent_dock (GimpSessionInfo *info)
     }
 }
 
+static char *
+dialogs_get_dockrc_filepath (void)
+{
+  const gchar *filename;
+
+  filename = g_getenv ("GIMP_TESTING_DOCKRC_NAME");
+  if (! filename)
+    filename = "dockrc";
+
+  return gimp_personal_rc_file (filename);
+}
+
 void
 dialogs_load_recent_docks (Gimp *gimp)
 {
-  gchar  *filename;
+  char   *filepath;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("dockrc");
+  filepath = dialogs_get_dockrc_filepath ();
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filepath));
 
   if (! gimp_config_deserialize_file (GIMP_CONFIG (global_recent_docks),
-                                      filename,
+                                      filepath,
                                       NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
@@ -496,24 +508,24 @@ dialogs_load_recent_docks (Gimp *gimp)
 
   gimp_list_reverse (GIMP_LIST (global_recent_docks));
 
-  g_free (filename);
+  g_free (filepath);
 }
 
 void
 dialogs_save_recent_docks (Gimp *gimp)
 {
-  gchar  *filename;
+  gchar  *filepath;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("dockrc");
+  filepath = dialogs_get_dockrc_filepath ();
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filepath));
 
   if (! gimp_config_serialize_to_file (GIMP_CONFIG (global_recent_docks),
-                                       filename,
+                                       filepath,
                                        "recently closed docks",
                                        "end of recently closed docks",
                                        NULL, &error))
@@ -522,7 +534,7 @@ dialogs_save_recent_docks (Gimp *gimp)
       g_clear_error (&error);
     }
 
-  g_free (filename);
+  g_free (filepath);
 }
 
 GtkWidget *
