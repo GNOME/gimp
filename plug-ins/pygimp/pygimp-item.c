@@ -30,8 +30,18 @@
 
 #include <glib-object.h>
 
+PyObject *
+item_from_id(PyObject *not_used, PyObject *args)
+{
+    gint32 ID;
+ 
+    if (!PyArg_ParseTuple(args, "i", &ID)) 
+        return NULL;
+    return pygimp_item_new(ID);
+}
 
 static PyMethodDef item_methods[] = {
+    {"from_id",   (PyCFunction)item_from_id,  METH_VARARGS | METH_STATIC},
     {NULL,              NULL}           /* sentinel */
 };
 
@@ -59,7 +69,7 @@ item_repr(PyGimpItem *self)
 {
     PyObject *s;
 
-    s = PyString_FromFormat("<gimp.Item '%s'>", self->ID);
+    s = PyString_FromFormat("<gimp.Item '%d'>", self->ID);
 
     return s;
 }
@@ -119,19 +129,21 @@ PyTypeObject PyGimpItem_Type = {
 PyObject *
 pygimp_item_new(gint32 ID)
 {
-    PyGimpItem *self;
+    PyObject *self;
 
     if (!gimp_item_is_valid(ID)) {
         Py_INCREF(Py_None);
         return Py_None;
     }
 
-    self = PyObject_NEW(PyGimpItem, &PyGimpItem_Type);
+    /* create the appropriate object type */
+    if (gimp_item_is_drawable(ID))
+        self = pygimp_drawable_new(NULL, ID);
+    else /* Vectors */
+        self = pygimp_vectors_new(ID);
 
     if (self == NULL)
         return NULL;
 
-    self->ID = ID;
-
-    return (PyObject *)self;
+    return self;
 }

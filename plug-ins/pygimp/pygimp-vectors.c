@@ -969,7 +969,7 @@ PyTypeObject PyGimpVectors_Type = {
     vectors_methods,                    /* tp_methods */
     0,                                  /* tp_members */
     vectors_getsets,                    /* tp_getset */
-    &PyGimpItem_Type,                  /* tp_base */
+    &PyGimpItem_Type,                   /* tp_base */
     (PyObject *)0,                      /* tp_dict */
     0,                                  /* tp_descr_get */
     0,                                  /* tp_descr_set */
