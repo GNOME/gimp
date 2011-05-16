@@ -1301,7 +1301,7 @@ PyTypeObject PyGimpDrawable_Type = {
     drw_methods,			/* tp_methods */
     0,					/* tp_members */
     drw_getsets,			/* tp_getset */
-    (PyTypeObject *)0,			/* tp_base */
+    &PyGimpItem_Type,			/* tp_base */
     (PyObject *)0,			/* tp_dict */
     0,					/* tp_descr_get */
     0,					/* tp_descr_set */

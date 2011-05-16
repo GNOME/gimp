@@ -26,7 +26,7 @@
 typedef struct {
     PyObject_HEAD
     gint32 ID;
-} PyGimpImage;
+} PyGimpImage, PyGimpItem;
 
 typedef struct {
     PyObject_HEAD
@@ -50,6 +50,9 @@ struct _PyGimp_Functions {
 
     PyTypeObject *Display_Type;
     PyObject *(* display_new)(gint32 ID);
+
+    PyTypeObject *Item_Type;
+    PyObject *(* item_new)(gint32 ID);
 
     PyTypeObject *Drawable_Type;
     PyObject *(* drawable_new)(GimpDrawable *drawable, gint32 ID);
@@ -78,6 +81,8 @@ struct _PyGimp_Functions *_PyGimp_API;
 #define pygimp_image_new        (_PyGimp_API->image_new)
 #define PyGimpDisplay_Type      (_PyGimp_API->Display_Type)
 #define pygimp_display_new      (_PyGimp_API->display_new)
+#define PyGimpItem_Type         (_PyGimp_API->Item_Type)
+#define pygimp_item_new         (_PyGimp_API->item_new)
 #define PyGimpDrawable_Type     (_PyGimp_API->Drawable_Type)
 #define pygimp_drawable_new     (_PyGimp_API->drawable_new)
 #define PyGimpLayer_Type        (_PyGimp_API->Layer_Type)

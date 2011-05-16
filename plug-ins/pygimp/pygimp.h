@@ -64,6 +64,10 @@ extern PyTypeObject PyGimpDisplay_Type;
 #define pygimp_display_check(v) (PyObject_TypeCheck(v, &PyGimpDisplay_Type))
 PyObject *pygimp_display_new(gint32 ID);
 
+extern PyTypeObject PyGimpItem_Type;
+#define pygimp_item_check(v) (PyObject_TypeCheck(v, &PyGimpItem_Type))
+PyObject *pygimp_item_new(gint32 ID);
+
 extern PyTypeObject PyGimpDrawable_Type;
 #define pygimp_drawable_check(v) (PyObject_TypeCheck(v, &PyGimpDrawable_Type))
 PyObject *pygimp_drawable_new(GimpDrawable *drawable, gint32 ID);

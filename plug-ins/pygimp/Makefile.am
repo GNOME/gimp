@@ -32,6 +32,7 @@ pygimp_LTLIBRARIES = gimp.la _gimpenums.la gimpcolor.la _gimpui.la \
 
 gimp_la_SOURCES = \
 	gimpmodule.c		\
+	pygimp-item.c		\
 	pygimp-display.c	\
 	pygimp-drawable.c	\
 	pygimp-image.c		\

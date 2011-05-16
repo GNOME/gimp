@@ -1764,6 +1764,8 @@ static struct _PyGimp_Functions pygimp_api_functions = {
     pygimp_image_new,
     &PyGimpDisplay_Type,
     pygimp_display_new,
+    &PyGimpItem_Type,
+    pygimp_item_new,
     &PyGimpDrawable_Type,
     pygimp_drawable_new,
     &PyGimpLayer_Type,
@@ -1890,6 +1892,9 @@ initgimp(void)
     /* export the types used in gimpmodule */
     Py_INCREF(&PyGimpImage_Type);
     PyModule_AddObject(m, "Image", (PyObject *)&PyGimpImage_Type);
+
+    Py_INCREF(&PyGimpItem_Type);
+    PyModule_AddObject(m, "Item", (PyObject *)&PyGimpItem_Type);
 
     Py_INCREF(&PyGimpDrawable_Type);
     PyModule_AddObject(m, "Drawable", (PyObject *)&PyGimpDrawable_Type);
