@@ -19,6 +19,24 @@ import tempfile, zipfile, os
 import xml.etree.ElementTree as ET
 
 
+layermodes_map = {
+    "svg:src-over": NORMAL_MODE,
+    "svg:plus": ADDITION_MODE,
+    "svg:multiply": MULTIPLY_MODE,
+    "svg:screen": SCREEN_MODE,
+    "svg:overlay": OVERLAY_MODE,
+    "svg:darken": DARKEN_ONLY_MODE,
+    "svg:lighten": LIGHTEN_ONLY_MODE,
+    "svg:color-dodge": DODGE_MODE,
+    "svg:color-burn": BURN_MODE,
+    "svg:hard-light": HARDLIGHT_MODE,
+    "svg:soft-light": SOFTLIGHT_MODE,
+    "svg:difference": DIFFERENCE_MODE,
+}
+
+def reverse_map(mapping):
+    return dict((v,k) for k, v in mapping.iteritems())
+
 def get_image_attributes(orafile):
     xml = orafile.read('stack.xml')
     image = ET.fromstring(xml)
@@ -36,8 +54,10 @@ def get_layer_attributes(layer):
     y = int(a.get('y', '0'))
     opac = float(a.get('opacity', '1.0'))
     visible = a.get('visibility', 'visible') != 'hidden'
+    m = a.get('composite-op', 'svg:src-over')
+    layer_mode = layermodes_map.get(m, NORMAL_MODE)
 
-    return path, name, x, y, opac, visible
+    return path, name, x, y, opac, visible, layer_mode
 
 
 def thumbnail_ora(filename, thumb_size):
@@ -105,6 +125,7 @@ def save_ora(img, drawable, filename, raw_filename):
         a['y'] = str(y)
         a['opacity'] = str(opac)
         a['visibility'] = 'visible' if visible else 'hidden'
+        a['composite-op'] = reverse_map(layermodes_map).get(gimp_layer.mode, 'svg:src-over')
         return layer
 
     # save layers
@@ -156,7 +177,7 @@ def load_ora(filename, raw_filename):
         return res
 
     for layer_no, layer in enumerate(get_layers(stack)):
-        path, name, x, y, opac, visible = get_layer_attributes(layer)
+        path, name, x, y, opac, visible, layer_mode = get_layer_attributes(layer)
 
         if not path.lower().endswith('.png'):
             continue
@@ -180,6 +201,7 @@ def load_ora(filename, raw_filename):
         # import layer, set attributes and add to image
         gimp_layer = pdb['gimp-file-load-layer'](img, tmp)
         gimp_layer.name = name
+        gimp_layer.mode = layer_mode
         gimp_layer.set_offsets(x, y)  # move to correct position
         gimp_layer.opacity = opac * 100  # a float between 0 and 100
         gimp_layer.visible = visible
