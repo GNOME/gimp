@@ -423,7 +423,11 @@ file_open_with_proc_and_display (Gimp                *gimp,
           g_free (basename);
         }
 
-      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+      if (gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0))
+        {
+          /*  the display owns the image now  */
+          g_object_unref (image);
+        }
 
       if (! as_new)
         {
@@ -444,9 +448,6 @@ file_open_with_proc_and_display (Gimp                *gimp,
                 }
             }
         }
-
-      /*  the display owns the image now  */
-      g_object_unref (image);
 
       /*  announce that we opened this image  */
       gimp_image_opened (image->gimp, uri);
