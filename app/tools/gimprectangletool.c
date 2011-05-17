@@ -1859,14 +1859,12 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
 static void
 gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
 {
-  GimpTool       *tool = GIMP_TOOL (draw_tool);
-  gdouble         x1, y1;
-  gdouble         x2, y2;
+  GimpTool *tool = GIMP_TOOL (draw_tool);
+  gdouble   x1, y1;
+  gdouble   x2, y2;
 
   gimp_rectangle_tool_get_public_rect (GIMP_RECTANGLE_TOOL (draw_tool),
                                        &x1, &y1, &x2, &y2);
-  x2 -= 1.0;
-  y2 -= 1.0;
 
   switch (GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool)->guide)
     {
