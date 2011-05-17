@@ -977,10 +977,13 @@ gimp_restore (Gimp               *gimp,
   if (! gimp->no_fonts)
     gimp_fonts_load (gimp);
 
-  /*  initialize the list of gimp tool presets   */
-  status_callback (NULL, _("Tool Presets"), 0.65);
-  gimp_data_factory_data_init (gimp->tool_preset_factory, gimp->user_context,
-                               gimp->no_data);
+  /*  initialize the list of gimp tool presets if we have a GUI  */
+  if (! gimp->no_interface)
+    {
+      status_callback (NULL, _("Tool Presets"), 0.65);
+      gimp_data_factory_data_init (gimp->tool_preset_factory, gimp->user_context,
+                                   gimp->no_data);
+    }
 
   /*  initialize the template list  */
   status_callback (NULL, _("Templates"), 0.7);
