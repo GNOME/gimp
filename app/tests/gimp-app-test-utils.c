@@ -38,10 +38,10 @@
 #include "gimp-app-test-utils.h"
 
 
-static void
-gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
-                                   const gchar *subdir,
-                                   const gchar *target_env_var)
+void
+gimp_test_utils_set_env_to_subpath (const gchar *root_env_var,
+                                    const gchar *subdir,
+                                    const gchar *target_env_var)
 {
   const gchar *root_dir   = NULL;
   gchar       *target_dir = NULL;
@@ -78,9 +78,9 @@ void
 gimp_test_utils_set_gimp2_directory (const gchar *root_env_var,
                                      const gchar *subdir)
 {
-  gimp_test_utils_set_env_to_subdir (root_env_var,
-                                     subdir,
-                                     "GIMP2_DIRECTORY" /*target_env_var*/);
+  gimp_test_utils_set_env_to_subpath (root_env_var,
+                                      subdir,
+                                      "GIMP2_DIRECTORY" /*target_env_var*/);
 }
 
 /**
@@ -94,9 +94,9 @@ gimp_test_utils_setup_menus_dir (void)
   /* GIMP_TESTING_ABS_TOP_SRCDIR is set by the automake test runner,
    * see Makefile.am
    */
-  gimp_test_utils_set_env_to_subdir ("GIMP_TESTING_ABS_TOP_SRCDIR" /*root_env_var*/,
-                                     "menus" /*subdir*/,
-                                     "GIMP_TESTING_MENUS_DIR" /*target_env_var*/);
+  gimp_test_utils_set_env_to_subpath ("GIMP_TESTING_ABS_TOP_SRCDIR" /*root_env_var*/,
+                                      "menus" /*subdir*/,
+                                      "GIMP_TESTING_MENUS_DIR" /*target_env_var*/);
 }
 
 /**
