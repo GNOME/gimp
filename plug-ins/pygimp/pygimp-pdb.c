@@ -31,6 +31,7 @@
 #include <structmember.h>
 
 #include <glib-object.h>
+#include <glib/gprintf.h>
 
 #ifndef PG_DEBUG
 # define PG_DEBUG 2
@@ -338,7 +339,7 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 GimpParam *
 pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 {
-    PyObject *tuple, *item, *x, *y, *w, *h;
+    PyObject *tuple, *item, *x, *y;
     GimpParam *ret;
     int i, j, len;
     gint32 *i32a; gint16 *i16a; guint8 *i8a; gdouble *fa; gchar **sa;

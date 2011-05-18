@@ -30,7 +30,7 @@
 
 #include <glib-object.h>
 
-PyObject *
+static PyObject *
 item_from_id(PyObject *not_used, PyObject *args)
 {
     gint32 ID;
