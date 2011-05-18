@@ -366,6 +366,11 @@ gimp_display_shell_render_info_init (RenderInfo       *info,
   info->w = w;
   info->h = h;
 
+  /* This function must be called before switching from drawing
+   * on the surface with cairo to drawing on it directly
+   */
+  cairo_surface_flush (dest);
+
   info->dest        = cairo_image_surface_get_data (dest);
   info->dest_bpl    = cairo_image_surface_get_stride (dest);
 
