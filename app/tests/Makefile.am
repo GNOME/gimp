@@ -19,14 +19,14 @@ endif
 
 
 TESTS = \
-	test-core		\
-	test-gimpidtable	\
-	test-save-and-export	\
-	test-session-management	\
-	test-tools		\
-	test-ui			\
+	test-core					\
+	test-gimpidtable				\
+	test-save-and-export				\
+	test-session-2-6-compatibility			\
+	test-session-2-8-compatibility-multi-window	\
+	test-tools					\
+	test-ui					\
 	test-xcf
-
 
 EXTRA_PROGRAMS = $(TESTS)
 CLEANFILES = $(EXTRA_PROGRAMS)
@@ -35,8 +35,10 @@ $(TESTS): gimpdir-output
 
 noinst_LIBRARIES = libgimpapptestutils.a
 libgimpapptestutils_a_SOURCES = \
-	gimp-app-test-utils.c	\
-	gimp-app-test-utils.h
+	gimp-app-test-utils.c		\
+	gimp-app-test-utils.h		\
+	gimp-test-session-utils.c	\
+	gimp-test-session-utils.h
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la

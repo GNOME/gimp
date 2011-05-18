@@ -1,5 +1,5 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 2009 Martin Nordholts
+ * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#include "config.h"
 
 #include <gegl.h>
 #include <glib/gstdio.h>
@@ -35,21 +37,8 @@
 #include "tests.h"
 
 #include "gimp-app-test-utils.h"
+#include "gimp-test-session-utils.h"
 
-
-#define ADD_TEST(function) \
-  g_test_add ("/gimp-session-management/" #function, \
-              GimpTestFixture, \
-              NULL, \
-              NULL, \
-              function, \
-              NULL);
-
-
-typedef struct
-{
-  int dummy;
-} GimpTestFixture;
 
 typedef struct
 {
@@ -157,12 +146,24 @@ gimp_test_file_state_changes (const gchar       *filename,
 }
 
 /**
- * Tests that a sessionrc from GIMP 2.6 is loaded and written (thus
- * also interpreted) like we expect.
+ * gimp_test_session_load_and_write_session_files:
+ * @loaded_sessionrc:   The name of the file of the sessionrc file to
+ *                      load
+ * @loaded_dockrc:      The name of the file of the dockrc file to load
+ * @expected_sessionrc: The name of the file with the expected
+ *                      sessionrc file content
+ * @expected_dockrc:    The name of the file with the expected dockrc
+ *                      file content
+ *
+ * Utility function for the various session management tests. We can't
+ * easily have all those tests in a single program several Gimp
+ * instance can't easily be initialized in the same process.
  **/
-static void
-session_2_6_compatibility (GimpTestFixture *fixture,
-                           gconstpointer    data)
+void
+gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
+                                                const gchar *loaded_dockrc,
+                                                const gchar *expected_sessionrc,
+                                                const gchar *expected_dockrc)
 {
   Gimp              *gimp;
   GimpTestFileState  initial_sessionrc_state = { NULL, NULL, { 0, 0 } };
@@ -181,14 +182,18 @@ session_2_6_compatibility (GimpTestFixture *fixture,
    * the read file, which is why we check the MD5 of the -expected
    * variant
    */
-  sessionrc_filename = gimp_personal_rc_file ("sessionrc-expected");
-  dockrc_filename    = gimp_personal_rc_file ("dockrc-expected");
+  sessionrc_filename = gimp_personal_rc_file (expected_sessionrc);
+  dockrc_filename    = gimp_personal_rc_file (expected_dockrc);
 
   /* Remeber the modtimes and MD5s */
   g_assert (gimp_test_get_file_state_verbose (sessionrc_filename,
                                               &initial_sessionrc_state));
   g_assert (gimp_test_get_file_state_verbose (dockrc_filename,
                                               &initial_dockrc_state));
+
+  /* Use specific input files when restoring the session */
+  g_setenv ("GIMP_TESTING_SESSIONRC_NAME", loaded_sessionrc, TRUE /*overwrite*/);
+  g_setenv ("GIMP_TESTING_DOCKRC_NAME", loaded_dockrc, TRUE /*overwrite*/);
 
   /* Start up GIMP */
   gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
@@ -205,6 +210,10 @@ session_2_6_compatibility (GimpTestFixture *fixture,
    */
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
                                        "app/tests/gimpdir-output");
+  /* Use normal output names */
+  g_unsetenv ("GIMP_TESTING_SESSIONRC_NAME");
+  g_unsetenv ("GIMP_TESTING_DOCKRC_NAME");
+
   g_free (sessionrc_filename);
   g_free (dockrc_filename);
   sessionrc_filename = gimp_personal_rc_file ("sessionrc");
@@ -231,15 +240,4 @@ session_2_6_compatibility (GimpTestFixture *fixture,
   g_assert (gimp_test_file_state_changes ("dockrc",
                                           &initial_dockrc_state,
                                           &final_dockrc_state));
-}
-
-int main(int argc, char **argv)
-{
-  gimp_test_bail_if_no_display ();
-  gtk_test_init (&argc, &argv, NULL);
-
-  ADD_TEST (session_2_6_compatibility);
-
-  /* Don't bother freeing stuff, the process is short-lived */
-  return g_test_run ();
 }
