@@ -24,8 +24,9 @@ TESTS = \
 	test-save-and-export				\
 	test-session-2-6-compatibility			\
 	test-session-2-8-compatibility-multi-window	\
+	test-session-2-8-compatibility-single-window	\
 	test-tools					\
-	test-ui					\
+	test-ui						\
 	test-xcf
 
 EXTRA_PROGRAMS = $(TESTS)

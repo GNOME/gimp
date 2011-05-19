@@ -1,0 +1,103 @@
+# GIMP sessionrc
+# 
+# This file takes session-specific info (that is info, you want to keep
+# between two GIMP sessions).  You are not supposed to edit it manually, but
+# of course you can do.  The sessionrc will be entirely rewritten every time
+# you quit GIMP.  If this file isn't found, defaults are used.
+
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
+    (position 565 170)
+    (size 210 535)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "false")
+        (follow-active-image "true"))
+    (gimp-dock
+        (book
+            (current-page 0)
+            (dockable "gimp-layer-list"
+                (tab-style icon)
+                (preview-size 32)))
+        (book
+            (position 290)
+            (current-page 0)
+            (dockable "gimp-brush-grid"
+                (tab-style preview)))))
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
+    (position 140 290)
+    (size 445 300)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "false")
+        (follow-active-image "true"))
+    (gimp-dock
+        (book
+            (current-page 0)
+            (dockable "gimp-tool-options"
+                (tab-style icon))))
+    (gimp-dock
+        (position 230)
+        (book
+            (current-page 0)
+            (dockable "gimp-device-status"
+                (tab-style icon)))))
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
+    (position 795 45)
+    (size 200 265)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "true")
+        (follow-active-image "true"))
+    (gimp-dock
+        (book
+            (current-page 1)
+            (dockable "gimp-pattern-grid"
+                (tab-style preview))
+            (dockable "gimp-gradient-list"
+                (tab-style preview)))))
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
+    (position 805 345)
+    (size 200 450)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "true")
+        (follow-active-image "true"))
+    (gimp-dock
+        (book
+            (current-page 0)
+            (dockable "gimp-channel-list"
+                (tab-style automatic)
+                (preview-size 32)))
+        (book
+            (position 200)
+            (current-page 0)
+            (dockable "gimp-palette-editor"
+                (tab-style icon)
+                (aux-info
+                    (edit-active "true")
+                    (current-data "Standard")
+                    (zoom-factor "2.80"))))))
+(session-info "toplevel"
+    (factory-entry "gimp-file-open-dialog")
+    (position 390 140)
+    (size 900 815))
+(session-info "toplevel"
+    (factory-entry "gimp-image-new-dialog")
+    (position 100 100))
+(session-info "toplevel"
+    (factory-entry "gimp-empty-image-window")
+    (position 140 30)
+    (size 610 190)
+    (open-on-exit))
+(session-info "toplevel"
+    (factory-entry "gimp-single-image-window")
+    (position 10 40)
+    (size 900 600))
+
+(last-tip-shown 0)
+
+# end of sessionrc

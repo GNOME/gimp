@@ -28,7 +28,7 @@
 
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimp-session-2-8-compatibility-multi-window/" #function, \
+  g_test_add ("/gimp-session-2-8-compatibility-single-window/" #function, \
               GimpTestFixture, \
               NULL, \
               NULL, \
@@ -43,18 +43,18 @@ typedef struct
 
 
 /**
- * Tests that a single-window sessionrc in GIMP 2.8 format is loaded
+ * Tests that a multi-window sessionrc in GIMP 2.8 format is loaded
  * and written (thus also interpreted) like we expect.
  **/
 static void
 read_and_write_session_files (GimpTestFixture *fixture,
-                          gconstpointer    data)
+                              gconstpointer    data)
 {
-  gimp_test_session_load_and_write_session_files ("sessionrc-2-8-multi-window",
+  gimp_test_session_load_and_write_session_files ("sessionrc-2-8-single-window",
                                                   "dockrc-2-8",
-                                                  "sessionrc-expected-multi-window",
+                                                  "sessionrc-expected-single-window",
                                                   "dockrc-expected",
-                                                  FALSE /*single_window_mode*/);
+                                                  TRUE /*single_window_mode*/);
 }
 
 int main(int argc, char **argv)

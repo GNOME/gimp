@@ -163,7 +163,8 @@ void
 gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
                                                 const gchar *loaded_dockrc,
                                                 const gchar *expected_sessionrc,
-                                                const gchar *expected_dockrc)
+                                                const gchar *expected_dockrc,
+                                                gboolean     single_window_mode)
 {
   Gimp              *gimp;
   GimpTestFileState  initial_sessionrc_state = { NULL, NULL, { 0, 0 } };
@@ -172,6 +173,7 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
   GimpTestFileState  final_dockrc_state      = { NULL, NULL, { 0, 0 } };
   gchar             *sessionrc_filename      = NULL;
   gchar             *dockrc_filename         = NULL;
+  gchar             *gimprc_filename         = NULL;
 
   /* Make sure to run this before we use any GIMP functions */
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
@@ -196,7 +198,15 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
   g_setenv ("GIMP_TESTING_DOCKRC_NAME", loaded_dockrc, TRUE /*overwrite*/);
 
   /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
+  if (single_window_mode)
+    {
+      gimprc_filename =
+        g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                          "app/tests/gimpdir/gimprc-single-window",
+                          NULL);
+    }
+  gimp = gimp_init_for_gui_testing_with_rc (TRUE /*show_gui*/, gimprc_filename);
+  g_free (gimprc_filename);
 
   /* Let the main loop run until idle to let things stabilize. This
    * includes parsing sessionrc and dockrc

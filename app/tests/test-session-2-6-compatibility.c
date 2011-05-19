@@ -53,7 +53,8 @@ read_and_write_session_files (GimpTestFixture *fixture,
   gimp_test_session_load_and_write_session_files ("sessionrc-2-6",
                                                   "dockrc-2-6",
                                                   "sessionrc-expected-2-6",
-                                                  "dockrc-expected");
+                                                  "dockrc-expected",
+                                                  FALSE /*single_window_mode*/);
 }
 
 int main(int argc, char **argv)
