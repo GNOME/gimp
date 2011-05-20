@@ -199,9 +199,6 @@ struct _GimpRectangleToolPrivate
   gdouble                 saved_y2;
 
   gint                    suppress_updates;
-
-  /* Synced with options->guide, only exists for drawing. */
-  GimpGuidesType          guide;
 };
 
 
@@ -840,16 +837,10 @@ gimp_rectangle_tool_get_property (GObject      *object,
 void
 gimp_rectangle_tool_constructor (GObject *object)
 {
-  GimpRectangleTool        *rect_tool = GIMP_RECTANGLE_TOOL (object);
-  GimpRectangleToolPrivate *private;
-  GimpRectangleOptions     *options;
+  GimpRectangleTool    *rect_tool = GIMP_RECTANGLE_TOOL (object);
+  GimpRectangleOptions *options;
 
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (object);
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (object);
-
-  g_object_get (options,
-                "guide", &private->guide,
-                NULL);
 
   g_signal_connect_object (options, "notify",
                            G_CALLBACK (gimp_rectangle_tool_options_notify),
@@ -1859,14 +1850,19 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
 static void
 gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
 {
-  GimpTool *tool = GIMP_TOOL (draw_tool);
-  gdouble   x1, y1;
-  gdouble   x2, y2;
+  GimpTool                    *tool = GIMP_TOOL (draw_tool);
+  GimpRectangleOptions        *options;
+  GimpRectangleOptionsPrivate *options_private;
+  gdouble                      x1, y1;
+  gdouble                      x2, y2;
+
+  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
   gimp_rectangle_tool_get_public_rect (GIMP_RECTANGLE_TOOL (draw_tool),
                                        &x1, &y1, &x2, &y2);
 
-  switch (GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool)->guide)
+  switch (options_private->guide)
     {
     case GIMP_GUIDES_NONE:
       break;
@@ -2413,9 +2409,6 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
   if (strcmp (pspec->name, "guide") == 0)
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
-
-      private->guide = options_private->guide;
-
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
     }
   else if (strcmp  (pspec->name, "x") == 0 &&
