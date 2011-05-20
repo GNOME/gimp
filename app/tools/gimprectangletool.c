@@ -2234,9 +2234,6 @@ gimp_rectangle_tool_halt (GimpRectangleTool *rect_tool)
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (rect_tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (rect_tool));
 
-  if (gimp_tool_control_is_active (tool->control))
-    gimp_tool_control_halt (tool->control);
-
   tool->display  = NULL;
   tool->drawable = NULL;
 
