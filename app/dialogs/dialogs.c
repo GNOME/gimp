@@ -465,32 +465,32 @@ dialogs_ensure_factory_entry_on_recent_dock (GimpSessionInfo *info)
 }
 
 static char *
-dialogs_get_dockrc_filepath (void)
+dialogs_get_dockrc_filename (void)
 {
-  const gchar *filename;
+  const gchar *basename;
 
-  filename = g_getenv ("GIMP_TESTING_DOCKRC_NAME");
-  if (! filename)
-    filename = "dockrc";
+  basename = g_getenv ("GIMP_TESTING_DOCKRC_NAME");
+  if (! basename)
+    basename = "dockrc";
 
-  return gimp_personal_rc_file (filename);
+  return gimp_personal_rc_file (basename);
 }
 
 void
 dialogs_load_recent_docks (Gimp *gimp)
 {
-  char   *filepath;
+  gchar  *filename;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filepath = dialogs_get_dockrc_filepath ();
+  filename = dialogs_get_dockrc_filename ();
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filepath));
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (! gimp_config_deserialize_file (GIMP_CONFIG (global_recent_docks),
-                                      filepath,
+                                      filename,
                                       NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
@@ -508,24 +508,24 @@ dialogs_load_recent_docks (Gimp *gimp)
 
   gimp_list_reverse (GIMP_LIST (global_recent_docks));
 
-  g_free (filepath);
+  g_free (filename);
 }
 
 void
 dialogs_save_recent_docks (Gimp *gimp)
 {
-  gchar  *filepath;
+  gchar  *filename;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filepath = dialogs_get_dockrc_filepath ();
+  filename = dialogs_get_dockrc_filename ();
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filepath));
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
   if (! gimp_config_serialize_to_file (GIMP_CONFIG (global_recent_docks),
-                                       filepath,
+                                       filename,
                                        "recently closed docks",
                                        "end of recently closed docks",
                                        NULL, &error))
@@ -534,7 +534,7 @@ dialogs_save_recent_docks (Gimp *gimp)
       g_clear_error (&error);
     }
 
-  g_free (filepath);
+  g_free (filename);
 }
 
 GtkWidget *
