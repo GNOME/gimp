@@ -201,7 +201,7 @@ struct _GimpRectangleToolPrivate
   gint                    suppress_updates;
 
   /* Synced with options->guide, only exists for drawing. */
-  GimpRectangleGuide      guide;
+  GimpGuidesType          guide;
 };
 
 
@@ -1868,10 +1868,10 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
 
   switch (GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool)->guide)
     {
-    case GIMP_RECTANGLE_GUIDE_NONE:
+    case GIMP_GUIDES_NONE:
       break;
 
-    case GIMP_RECTANGLE_GUIDE_CENTER_LINES:
+    case GIMP_GUIDES_CENTER_LINES:
       gimp_draw_tool_add_line (draw_tool,
                                x1, (y1 + y2) / 2,
                                x2, (y1 + y2) / 2);
@@ -1881,7 +1881,7 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
                                (x1 + x2) / 2, y2);
       break;
 
-    case GIMP_RECTANGLE_GUIDE_THIRDS:
+    case GIMP_GUIDES_THIRDS:
       gimp_draw_tool_add_line (draw_tool,
                                x1, (2 * y1 + y2) / 3,
                                x2, (2 * y1 + y2) / 3);
@@ -1897,7 +1897,7 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
                                (x1 + 2 * x2) / 3, y2);
       break;
 
-    case GIMP_RECTANGLE_GUIDE_FIFTHS:
+    case GIMP_GUIDES_FIFTHS:
       gimp_draw_tool_add_line (draw_tool,
                                x1, y1 + (y2 - y1) / 5,
                                x2, y1 + (y2 - y1) / 5);
@@ -1925,7 +1925,7 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
                                x1 + 4 * (x2 - x1) / 5, y2);
       break;
 
-    case GIMP_RECTANGLE_GUIDE_GOLDEN:
+    case GIMP_GUIDES_GOLDEN:
       gimp_draw_tool_add_line (draw_tool,
                                x1,
                                (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5),
@@ -1952,7 +1952,7 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
     /* This code implements the method of diagonals discovered by
      * Edwin Westhoff - see http://www.diagonalmethod.info/
      */
-    case GIMP_RECTANGLE_GUIDE_DIAGONALS:
+    case GIMP_GUIDES_DIAGONALS:
       {
         /* the side of the largest square that can be
          * fitted in whole into the rectangle (x1, y1), (x2, y2)

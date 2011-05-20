@@ -120,8 +120,8 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                            g_param_spec_enum ("guide",
                                                               NULL,
                                                               N_("Composition guides such as rule of thirds"),
-                                                              GIMP_TYPE_RECTANGLE_GUIDE,
-                                                              GIMP_RECTANGLE_GUIDE_NONE,
+                                                              GIMP_TYPE_GUIDES_TYPE,
+                                                              GIMP_GUIDES_NONE,
                                                               GIMP_CONFIG_PARAM_FLAGS |
                                                               GIMP_PARAM_STATIC_STRINGS));
 

@@ -80,7 +80,7 @@ struct _GimpRectangleOptionsPrivate
   gboolean                    shrink_merged;
 
   gboolean                    highlight;
-  GimpRectangleGuide          guide;
+  GimpGuidesType              guide;
 
   gdouble                     x;
   gdouble                     y;

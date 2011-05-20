@@ -40,6 +40,43 @@ gimp_cursor_precision_get_type (void)
 }
 
 GType
+gimp_guides_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_GUIDES_NONE, "GIMP_GUIDES_NONE", "none" },
+    { GIMP_GUIDES_CENTER_LINES, "GIMP_GUIDES_CENTER_LINES", "center-lines" },
+    { GIMP_GUIDES_THIRDS, "GIMP_GUIDES_THIRDS", "thirds" },
+    { GIMP_GUIDES_FIFTHS, "GIMP_GUIDES_FIFTHS", "fifths" },
+    { GIMP_GUIDES_GOLDEN, "GIMP_GUIDES_GOLDEN", "golden" },
+    { GIMP_GUIDES_DIAGONALS, "GIMP_GUIDES_DIAGONALS", "diagonals" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_GUIDES_NONE, NC_("guides-type", "No guides"), NULL },
+    { GIMP_GUIDES_CENTER_LINES, NC_("guides-type", "Center lines"), NULL },
+    { GIMP_GUIDES_THIRDS, NC_("guides-type", "Rule of thirds"), NULL },
+    { GIMP_GUIDES_FIFTHS, NC_("guides-type", "Rule of fifths"), NULL },
+    { GIMP_GUIDES_GOLDEN, NC_("guides-type", "Golden sections"), NULL },
+    { GIMP_GUIDES_DIAGONALS, NC_("guides-type", "Diagonal lines"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpGuidesType", values);
+      gimp_type_set_translation_context (type, "guides-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_handle_type_get_type (void)
 {
   static const GEnumValue values[] =

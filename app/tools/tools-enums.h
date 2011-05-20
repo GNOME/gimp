@@ -47,21 +47,6 @@ typedef enum
 } GimpButtonReleaseType;
 
 
-#define GIMP_TYPE_RECTANGLE_GUIDE (gimp_rectangle_guide_get_type ())
-
-GType gimp_rectangle_guide_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_RECTANGLE_GUIDE_NONE,          /*< desc="No guides"       >*/
-  GIMP_RECTANGLE_GUIDE_CENTER_LINES,  /*< desc="Center lines"    >*/
-  GIMP_RECTANGLE_GUIDE_THIRDS,        /*< desc="Rule of thirds"  >*/
-  GIMP_RECTANGLE_GUIDE_FIFTHS,        /*< desc="Rule of fifths"  >*/
-  GIMP_RECTANGLE_GUIDE_GOLDEN,        /*< desc="Golden sections" >*/
-  GIMP_RECTANGLE_GUIDE_DIAGONALS      /*< desc="Diagonal lines"  >*/
-} GimpRectangleGuide;
-
-
 #define GIMP_TYPE_RECTANGLE_CONSTRAINT (gimp_rectangle_constraint_get_type ())
 
 GType gimp_rectangle_constraint_get_type (void) G_GNUC_CONST;

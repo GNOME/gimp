@@ -31,6 +31,21 @@ typedef enum
 } GimpCursorPrecision;
 
 
+#define GIMP_TYPE_GUIDES_TYPE (gimp_guides_type_get_type ())
+
+GType gimp_guides_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_GUIDES_NONE,          /*< desc="No guides"       >*/
+  GIMP_GUIDES_CENTER_LINES,  /*< desc="Center lines"    >*/
+  GIMP_GUIDES_THIRDS,        /*< desc="Rule of thirds"  >*/
+  GIMP_GUIDES_FIFTHS,        /*< desc="Rule of fifths"  >*/
+  GIMP_GUIDES_GOLDEN,        /*< desc="Golden sections" >*/
+  GIMP_GUIDES_DIAGONALS      /*< desc="Diagonal lines"  >*/
+} GimpGuidesType;
+
+
 #define GIMP_TYPE_HANDLE_TYPE (gimp_handle_type_get_type ())
 
 GType gimp_handle_type_get_type (void) G_GNUC_CONST;
