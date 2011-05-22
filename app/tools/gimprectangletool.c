@@ -1710,7 +1710,7 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
 {
   GimpTool                 *tool;
   GimpRectangleToolPrivate *private;
-  gdouble                   pub_x1, pub_y1, pub_x2, pub_y2;
+  gdouble                   x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (draw_tool));
   g_return_if_fail (stroke_group == NULL || GIMP_IS_CANVAS_GROUP (stroke_group));
@@ -1719,7 +1719,7 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
 
   gimp_rectangle_tool_get_public_rect (GIMP_RECTANGLE_TOOL (draw_tool),
-                                       &pub_x1, &pub_y1, &pub_x2, &pub_y2);
+                                       &x1, &y1, &x2, &y2);
 
   if (private->function == GIMP_RECTANGLE_TOOL_INACTIVE)
     return;
@@ -1732,10 +1732,9 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
   gimp_rectangle_tool_draw_guides (draw_tool);
 
   gimp_draw_tool_add_rectangle (draw_tool, FALSE,
-                                pub_x1,
-                                pub_y1,
-                                pub_x2 - pub_x1,
-                                pub_y2 - pub_y1);
+                                x1, y1,
+                                x2 - x1,
+                                y2 - y1);
 
   gimp_draw_tool_pop_group (draw_tool);
 
@@ -1748,8 +1747,8 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
           /* Mark the center because we snap to it */
           gimp_draw_tool_add_handle (draw_tool,
                                      GIMP_HANDLE_CROSS,
-                                     (pub_x1 + pub_x2) / 2.0,
-                                     (pub_y1 + pub_y2) / 2.0,
+                                     (x1 + x2) / 2.0,
+                                     (y1 + y2) / 2.0,
                                      GIMP_TOOL_HANDLE_SIZE_SMALL,
                                      GIMP_TOOL_HANDLE_SIZE_SMALL,
                                      GIMP_HANDLE_ANCHOR_CENTER);
@@ -1765,26 +1764,26 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
       gimp_draw_tool_push_group (draw_tool, stroke_group);
 
       gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
+                                 x1, y1,
+                                 x2, y2,
                                  private->corner_handle_w,
                                  private->corner_handle_h,
                                  GIMP_HANDLE_ANCHOR_NORTH_WEST);
       gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
+                                 x1, y1,
+                                 x2, y2,
                                  private->corner_handle_w,
                                  private->corner_handle_h,
                                  GIMP_HANDLE_ANCHOR_NORTH_EAST);
       gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
+                                 x1, y1,
+                                 x2, y2,
                                  private->corner_handle_w,
                                  private->corner_handle_h,
                                  GIMP_HANDLE_ANCHOR_SOUTH_WEST);
       gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
+                                 x1, y1,
+                                 x2, y2,
                                  private->corner_handle_w,
                                  private->corner_handle_h,
                                  GIMP_HANDLE_ANCHOR_SOUTH_EAST);
@@ -1800,8 +1799,8 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
       gimp_draw_tool_add_corner (draw_tool,
                                  ! gimp_tool_control_is_active (tool->control),
                                  private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
+                                 x1, y1,
+                                 x2, y2,
                                  private->top_and_bottom_handle_w,
                                  private->corner_handle_h,
                                  gimp_rectangle_tool_get_anchor (private));
@@ -1818,8 +1817,8 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
       gimp_draw_tool_add_corner (draw_tool,
                                  ! gimp_tool_control_is_active (tool->control),
                                  private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
+                                 x1, y1,
+                                 x2, y2,
                                  private->corner_handle_w,
                                  private->left_and_right_handle_h,
                                  gimp_rectangle_tool_get_anchor (private));
@@ -1835,8 +1834,8 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
       gimp_draw_tool_add_corner (draw_tool,
                                  ! gimp_tool_control_is_active (tool->control),
                                  private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
+                                 x1, y1,
+                                 x2, y2,
                                  private->corner_handle_w,
                                  private->corner_handle_h,
                                  gimp_rectangle_tool_get_anchor (private));
