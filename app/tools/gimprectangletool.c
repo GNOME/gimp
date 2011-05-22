@@ -69,7 +69,6 @@ enum
 #define MIN_HANDLE_SIZE         15
 #define NARROW_MODE_HANDLE_SIZE 15
 #define NARROW_MODE_THRESHOLD   45
-#define SQRT5                    2.236067977
 
 typedef enum
 {
@@ -210,7 +209,6 @@ static GimpRectangleToolPrivate *
 static void          gimp_rectangle_tool_start                (GimpRectangleTool        *rect_tool,
                                                                GimpDisplay              *display);
 static void          gimp_rectangle_tool_halt                 (GimpRectangleTool        *rect_tool);
-static void          gimp_rectangle_tool_draw_guides          (GimpDrawTool             *draw_tool);
 
 static void          gimp_rectangle_tool_update_options       (GimpRectangleTool        *rect_tool,
                                                                GimpDisplay              *display);
@@ -1708,15 +1706,19 @@ void
 gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
                           GimpCanvasGroup *stroke_group)
 {
-  GimpTool                 *tool;
-  GimpRectangleToolPrivate *private;
-  gdouble                   x1, y1, x2, y2;
+  GimpTool                    *tool;
+  GimpRectangleToolPrivate    *private;
+  GimpRectangleOptions        *options;
+  GimpRectangleOptionsPrivate *options_private;
+  gdouble                      x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (draw_tool));
   g_return_if_fail (stroke_group == NULL || GIMP_IS_CANVAS_GROUP (stroke_group));
 
-  tool    = GIMP_TOOL (draw_tool);
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  tool            = GIMP_TOOL (draw_tool);
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
   gimp_rectangle_tool_get_public_rect (GIMP_RECTANGLE_TOOL (draw_tool),
                                        &x1, &y1, &x2, &y2);
@@ -1729,7 +1731,11 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
 
   gimp_draw_tool_push_group (draw_tool, stroke_group);
 
-  gimp_rectangle_tool_draw_guides (draw_tool);
+  gimp_draw_tool_add_rectangle_guides (draw_tool,
+                                       options_private->guide,
+                                       x1, y1,
+                                       x2 - x1,
+                                       y2 - y1);
 
   gimp_draw_tool_add_rectangle (draw_tool, FALSE,
                                 x1, y1,
@@ -1842,138 +1848,6 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
 
       if (gimp_tool_control_is_active (tool->control))
         gimp_draw_tool_pop_group (draw_tool);
-      break;
-    }
-}
-
-static void
-gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
-{
-  GimpTool                    *tool = GIMP_TOOL (draw_tool);
-  GimpRectangleOptions        *options;
-  GimpRectangleOptionsPrivate *options_private;
-  gdouble                      x1, y1;
-  gdouble                      x2, y2;
-
-  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
-  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
-
-  gimp_rectangle_tool_get_public_rect (GIMP_RECTANGLE_TOOL (draw_tool),
-                                       &x1, &y1, &x2, &y2);
-
-  switch (options_private->guide)
-    {
-    case GIMP_GUIDES_NONE:
-      break;
-
-    case GIMP_GUIDES_CENTER_LINES:
-      gimp_draw_tool_add_line (draw_tool,
-                               x1, (y1 + y2) / 2,
-                               x2, (y1 + y2) / 2);
-
-      gimp_draw_tool_add_line (draw_tool,
-                               (x1 + x2) / 2, y1,
-                               (x1 + x2) / 2, y2);
-      break;
-
-    case GIMP_GUIDES_THIRDS:
-      gimp_draw_tool_add_line (draw_tool,
-                               x1, (2 * y1 + y2) / 3,
-                               x2, (2 * y1 + y2) / 3);
-      gimp_draw_tool_add_line (draw_tool,
-                               x1, (y1 + 2 * y2) / 3,
-                               x2, (y1 + 2 * y2) / 3);
-
-      gimp_draw_tool_add_line (draw_tool,
-                               (2 * x1 + x2) / 3, y1,
-                               (2 * x1 + x2) / 3, y2);
-      gimp_draw_tool_add_line (draw_tool,
-                               (x1 + 2 * x2) / 3, y1,
-                               (x1 + 2 * x2) / 3, y2);
-      break;
-
-    case GIMP_GUIDES_FIFTHS:
-      gimp_draw_tool_add_line (draw_tool,
-                               x1, y1 + (y2 - y1) / 5,
-                               x2, y1 + (y2 - y1) / 5);
-      gimp_draw_tool_add_line (draw_tool,
-                               x1, y1 + 2 * (y2 - y1) / 5,
-                               x2, y1 + 2 * (y2 - y1) / 5);
-      gimp_draw_tool_add_line (draw_tool,
-                               x1, y1 + 3 * (y2 - y1) / 5,
-                               x2, y1 + 3 * (y2 - y1) / 5);
-      gimp_draw_tool_add_line (draw_tool,
-                               x1, y1 + 4 * (y2 - y1) / 5,
-                               x2, y1 + 4 * (y2 - y1) / 5);
-
-      gimp_draw_tool_add_line (draw_tool,
-                               x1 + (x2 - x1) / 5, y1,
-                               x1 + (x2 - x1) / 5, y2);
-      gimp_draw_tool_add_line (draw_tool,
-                               x1 + 2 * (x2 - x1) / 5, y1,
-                               x1 + 2 * (x2 - x1) / 5, y2);
-      gimp_draw_tool_add_line (draw_tool,
-                               x1 + 3 * (x2 - x1) / 5, y1,
-                               x1 + 3 * (x2 - x1) / 5, y2);
-      gimp_draw_tool_add_line (draw_tool,
-                               x1 + 4 * (x2 - x1) / 5, y1,
-                               x1 + 4 * (x2 - x1) / 5, y2);
-      break;
-
-    case GIMP_GUIDES_GOLDEN:
-      gimp_draw_tool_add_line (draw_tool,
-                               x1,
-                               (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5),
-                               x2,
-                               (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5));
-      gimp_draw_tool_add_line (draw_tool,
-                               x1,
-                               ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5),
-                               x2,
-                               ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5));
-
-      gimp_draw_tool_add_line (draw_tool,
-                               (2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5),
-                               y1,
-                               (2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5),
-                               y2);
-      gimp_draw_tool_add_line (draw_tool,
-                               ((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5),
-                               y1,
-                               ((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5),
-                               y2);
-      break;
-
-    /* This code implements the method of diagonals discovered by
-     * Edwin Westhoff - see http://www.diagonalmethod.info/
-     */
-    case GIMP_GUIDES_DIAGONALS:
-      {
-        /* the side of the largest square that can be
-         * fitted in whole into the rectangle (x1, y1), (x2, y2)
-         */
-        const gdouble square_side = MIN (x2 - x1, y2 - y1);
-
-        /* diagonal from the top-left edge */
-        gimp_draw_tool_add_line (draw_tool,
-                                 x1, y1,
-                                 x1 + square_side, y1 + square_side);
-
-        /* diagonal from the top-right edge */
-        gimp_draw_tool_add_line (draw_tool,
-                                 x2, y1,
-                                 x2 - square_side, y1 + square_side);
-
-        /* diagonal from the bottom-left edge */
-        gimp_draw_tool_add_line (draw_tool,
-                                 x1, y2,
-                                 x1 + square_side, y2 - square_side);
-
-        /* diagonal from the bottom-right edge */
-        gimp_draw_tool_add_line (draw_tool,
-                                 x2, y2,
-                                 x2 - square_side, y2 - square_side);
-      }
       break;
     }
 }

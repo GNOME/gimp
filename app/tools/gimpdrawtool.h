@@ -121,6 +121,12 @@ GimpCanvasItem * gimp_draw_tool_add_rectangle        (GimpDrawTool     *draw_too
                                                       gdouble           y,
                                                       gdouble           width,
                                                       gdouble           height);
+GimpCanvasItem * gimp_draw_tool_add_rectangle_guides (GimpDrawTool     *draw_tool,
+                                                      GimpGuidesType    type,
+                                                      gdouble           x,
+                                                      gdouble           y,
+                                                      gdouble           width,
+                                                      gdouble           height);
 GimpCanvasItem * gimp_draw_tool_add_arc              (GimpDrawTool     *draw_tool,
                                                       gboolean          filled,
                                                       gdouble           x,

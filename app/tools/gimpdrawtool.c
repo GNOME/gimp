@@ -46,6 +46,7 @@
 #include "display/gimpcanvaspen.h"
 #include "display/gimpcanvaspolygon.h"
 #include "display/gimpcanvasrectangle.h"
+#include "display/gimpcanvasrectangleguides.h"
 #include "display/gimpcanvassamplepoint.h"
 #include "display/gimpcanvastextcursor.h"
 #include "display/gimpcanvastransformpreview.h"
@@ -594,6 +595,27 @@ gimp_draw_tool_add_rectangle (GimpDrawTool *draw_tool,
 
   item = gimp_canvas_rectangle_new (gimp_display_get_shell (draw_tool->display),
                                     x, y, width, height, filled);
+
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_draw_tool_add_rectangle_guides (GimpDrawTool   *draw_tool,
+                                     GimpGuidesType  type,
+                                     gdouble         x,
+                                     gdouble         y,
+                                     gdouble         width,
+                                     gdouble         height)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
+
+  item = gimp_canvas_rectangle_guides_new (gimp_display_get_shell (draw_tool->display),
+                                           x, y, width, height, type);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);

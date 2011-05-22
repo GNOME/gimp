@@ -57,6 +57,8 @@ libappdisplay_a_sources = \
 	gimpcanvasproxygroup.h			\
 	gimpcanvasrectangle.c			\
 	gimpcanvasrectangle.h			\
+	gimpcanvasrectangleguides.c		\
+	gimpcanvasrectangleguides.h		\
 	gimpcanvassamplepoint.c			\
 	gimpcanvassamplepoint.h			\
 	gimpcanvastextcursor.c			\
