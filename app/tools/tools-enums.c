@@ -350,6 +350,45 @@ gimp_matting_engine_get_type (void)
   return type;
 }
 
+GType
+gimp_warp_behavior_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_WARP_BEHAVIOR_MOVE, "GIMP_WARP_BEHAVIOR_MOVE", "imp-warp-behavior-move" },
+    { GEGL_WARP_BEHAVIOR_GROW, "GEGL_WARP_BEHAVIOR_GROW", "egl-warp-behavior-grow" },
+    { GEGL_WARP_BEHAVIOR_SHRINK, "GEGL_WARP_BEHAVIOR_SHRINK", "egl-warp-behavior-shrink" },
+    { GEGL_WARP_BEHAVIOR_SWIRL_CW, "GEGL_WARP_BEHAVIOR_SWIRL_CW", "egl-warp-behavior-swirl-cw" },
+    { GEGL_WARP_BEHAVIOR_SWIRL_CCW, "GEGL_WARP_BEHAVIOR_SWIRL_CCW", "egl-warp-behavior-swirl-ccw" },
+    { GEGL_WARP_BEHAVIOR_ERASE, "GEGL_WARP_BEHAVIOR_ERASE", "egl-warp-behavior-erase" },
+    { GEGL_WARP_BEHAVIOR_SMOOTH, "GEGL_WARP_BEHAVIOR_SMOOTH", "egl-warp-behavior-smooth" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_WARP_BEHAVIOR_MOVE, NC_("warp-behavior", "Move pixels"), NULL },
+    { GEGL_WARP_BEHAVIOR_GROW, NC_("warp-behavior", "Grow area"), NULL },
+    { GEGL_WARP_BEHAVIOR_SHRINK, NC_("warp-behavior", "Shrink area"), NULL },
+    { GEGL_WARP_BEHAVIOR_SWIRL_CW, NC_("warp-behavior", "Swirl clockwise"), NULL },
+    { GEGL_WARP_BEHAVIOR_SWIRL_CCW, NC_("warp-behavior", "Swirl counter-clockwise"), NULL },
+    { GEGL_WARP_BEHAVIOR_ERASE, NC_("warp-behavior", "Erase warping"), NULL },
+    { GEGL_WARP_BEHAVIOR_SMOOTH, NC_("warp-behavior", "Smooth warping"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpWarpBehavior", values);
+      gimp_type_set_translation_context (type, "warp-behavior");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

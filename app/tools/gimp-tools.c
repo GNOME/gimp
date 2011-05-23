@@ -85,6 +85,7 @@
 #include "gimptexttool.h"
 #include "gimpunifiedtransformtool.h"
 #include "gimpvectortool.h"
+#include "gimpwarptool.h"
 
 #include "gimp-intl.h"
 
@@ -163,6 +164,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_crop_tool_register,
     gimp_align_tool_register,
     gimp_move_tool_register,
+    gimp_warp_tool_register,
 
     /*  non-modifying tools  */
 

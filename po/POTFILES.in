@@ -398,6 +398,8 @@ app/tools/gimptransformtool.c
 app/tools/gimpunifiedtransformtool.c
 app/tools/gimpvectoroptions.c
 app/tools/gimpvectortool.c
+app/tools/gimpwarpoptions.c
+app/tools/gimpwarptool.c
 app/tools/tools-enums.c
 
 app/vectors/gimpvectors.c

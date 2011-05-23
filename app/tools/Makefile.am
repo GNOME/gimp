@@ -203,7 +203,11 @@ libapptools_a_sources = \
 	gimpvectoroptions.c		\
 	gimpvectoroptions.h		\
 	gimpvectortool.c		\
-	gimpvectortool.h
+	gimpvectortool.h		\
+	gimpwarpoptions.c		\
+	gimpwarpoptions.h		\
+	gimpwarptool.c			\
+	gimpwarptool.h
 
 libapptools_a_built_sources = tools-enums.c
 

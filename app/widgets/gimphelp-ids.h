@@ -299,6 +299,7 @@
 #define GIMP_HELP_TOOL_THRESHOLD                  "gimp-tool-threshold"
 #define GIMP_HELP_TOOL_UNIFIED_TRANSFORM          "gimp-tool-unified-transform"
 #define GIMP_HELP_TOOL_VECTORS                    "gimp-tool-vectors"
+#define GIMP_HELP_TOOL_WARP                       "gimp-tool-warp"
 #define GIMP_HELP_TOOL_ZOOM                       "gimp-tool-zoom"
 
 #define GIMP_HELP_FILTER_REPEAT                   "gimp-filter-repeat"
