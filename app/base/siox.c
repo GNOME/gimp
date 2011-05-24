@@ -1075,6 +1075,7 @@ siox_foreground_extract (SioxState          *state,
 
       if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
         {
+          g_free (state->bgsig);
           /* Create color signature for the background */
           state->bgsig = create_signature (surebg, surebgcount,
                                            &state->bgsiglen, limits,
@@ -1096,6 +1097,7 @@ siox_foreground_extract (SioxState          *state,
 
       if (refinement & SIOX_REFINEMENT_ADD_FOREGROUND)
         {
+          g_free (state->fgsig);
           /* Create color signature for the foreground */
           state->fgsig = create_signature (surefg, surefgcount,
                                            &state->fgsiglen, limits,

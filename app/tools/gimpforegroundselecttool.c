@@ -855,7 +855,7 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
       refinement = SIOX_REFINEMENT_CHANGE_SENSITIVITY;
     }
 
-  if (refinement)
+  if (refinement && fg_select->strokes)
     {
       fg_select->refinement |= refinement;
 
