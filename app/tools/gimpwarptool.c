@@ -95,6 +95,12 @@ static void       gimp_warp_tool_oper_update        (GimpTool              *tool
 
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
 
+static void       gimp_warp_tool_create_image_map   (GimpWarpTool          *wt,
+                                                     GimpDrawable          *drawable);
+static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *image_map,
+                                                     GimpTool              *tool);
+static void       gimp_warp_tool_image_map_update   (GimpWarpTool          *wt);
+
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_warp_tool_parent_class
@@ -148,6 +154,10 @@ gimp_warp_tool_init (GimpWarpTool *self)
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
+
+  self->coords_buffer   = NULL;
+  self->render_node     = NULL;
+  self->image_map       = NULL;
 }
 
 static void
@@ -161,7 +171,35 @@ gimp_warp_tool_control (GimpTool       *tool,
     {
     case GIMP_TOOL_ACTION_PAUSE:
     case GIMP_TOOL_ACTION_RESUME:
+      break;
+
     case GIMP_TOOL_ACTION_HALT:
+      if (wt->coords_buffer)
+        {
+          gegl_buffer_destroy (wt->coords_buffer);
+          wt->coords_buffer = NULL;
+        }
+
+      if (wt->render_node)
+        {
+          g_object_unref (wt->render_node);
+          wt->render_node = NULL;
+        }
+
+      if (wt->image_map)
+        {
+          gimp_tool_control_set_preserve (tool->control, TRUE);
+
+          gimp_image_map_abort (wt->image_map);
+          g_object_unref (wt->image_map);
+          wt->image_map = NULL;
+
+          gimp_tool_control_set_preserve (tool->control, FALSE);
+
+          gimp_image_flush (gimp_display_get_image (tool->display));
+        }
+
+      tool->display = NULL;
       break;
     }
 
@@ -172,12 +210,49 @@ static void
 gimp_warp_tool_start (GimpWarpTool *wt,
                       GimpDisplay  *display)
 {
-  GimpTool     *tool     = GIMP_TOOL (wt);
+  GimpTool      *tool     = GIMP_TOOL (wt);
+  GimpImage     *image    = gimp_display_get_image (display);
+  GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
+  Babl          *format;
+  gint           x1, x2, y1, y2;
+  GeglRectangle  bbox;
 
   gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   tool->display = display;
 
+  if (wt->coords_buffer)
+    {
+      gegl_buffer_destroy (wt->coords_buffer);
+      wt->coords_buffer = NULL;
+    }
+
+  if (wt->render_node)
+    {
+      g_object_unref (wt->render_node);
+      wt->render_node = NULL;
+    }
+
+  if (wt->image_map)
+    {
+      gimp_image_map_abort (wt->image_map);
+      g_object_unref (wt->image_map);
+      wt->image_map = NULL;
+    }
+
+  /* Create the coords buffer, with the size of the selection */
+  format = babl_format_n (babl_type ("float"), 2);
+
+  gimp_channel_bounds (gimp_image_get_mask (image), &x1, &y1, &x2, &y2);
+
+  bbox.x      = MIN (x1, x2);
+  bbox.y      = MIN (y1, y2);
+  bbox.width  = ABS (x1 - x2);
+  bbox.height = ABS (y1 - y2);
+
+  wt->coords_buffer = gegl_buffer_new (&bbox, format);
+
+  gimp_warp_tool_create_image_map (wt, drawable);
   gimp_draw_tool_start (GIMP_DRAW_TOOL (wt), display);
 }
 
@@ -186,7 +261,7 @@ gimp_warp_tool_options_notify (GimpTool         *tool,
                                GimpToolOptions  *options,
                                const GParamSpec *pspec)
 {
-  GimpWarpTool *ct = GIMP_WARP_TOOL (tool);
+  GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
 
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
@@ -271,6 +346,8 @@ gimp_warp_tool_button_press (GimpTool            *tool,
   if (display != tool->display)
     gimp_warp_tool_start (wt, display);
 
+  gimp_warp_tool_image_map_update (wt);
+
   gimp_tool_control_activate (tool->control);
 }
 
@@ -320,4 +397,100 @@ static void
 gimp_warp_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpWarpTool    *wt        = GIMP_WARP_TOOL (draw_tool);
+}
+
+static void
+gimp_warp_tool_create_render_node (GimpWarpTool *wt)
+{
+  GeglNode        *coords, *render; /* Render nodes */
+  GeglNode        *input, *output; /* Proxy nodes*/
+  GeglNode        *node; /* wraper to be returned */
+
+  g_return_if_fail (wt->render_node == NULL);
+  /* render_node is not supposed to be recreated */
+
+  node = gegl_node_new ();
+
+  input  = gegl_node_get_input_proxy  (node, "input");
+  output = gegl_node_get_output_proxy (node, "output");
+
+  coords = gegl_node_new_child (node,
+                               "operation", "gegl:buffer-source",
+                               "buffer",    wt->coords_buffer,
+                               NULL);
+
+  render = gegl_node_new_child (node,
+                                "operation", "gegl:map-relative",
+                                NULL);
+
+  gegl_node_connect_to (input, "output",
+                        render, "input");
+
+  gegl_node_connect_to (coords, "output",
+                        render, "aux");
+
+  gegl_node_connect_to (render, "output",
+                        output, "input");
+
+  wt->render_node = node;
+  wt->coords_node = coords;
+}
+
+static void
+gimp_warp_tool_create_image_map (GimpWarpTool *wt,
+                                 GimpDrawable *drawable)
+{
+  if (!wt->render_node)
+    gimp_warp_tool_create_render_node (wt);
+
+  wt->image_map = gimp_image_map_new (drawable,
+                                      _("Warp transform"),
+                                      wt->render_node,
+                                      NULL,
+                                      NULL);
+
+  g_signal_connect (wt->image_map, "flush",
+                    G_CALLBACK (gimp_warp_tool_image_map_flush),
+                    wt);
+}
+
+static void
+gimp_warp_tool_image_map_flush (GimpImageMap *image_map,
+                                GimpTool     *tool)
+{
+  GimpImage *image = gimp_display_get_image (tool->display);
+
+  gimp_projection_flush_now (gimp_image_get_projection (image));
+  gimp_display_flush_now (tool->display);
+}
+
+static void
+gimp_warp_tool_image_map_update (GimpWarpTool *wt)
+{
+  GimpTool         *tool  = GIMP_TOOL (wt);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  GimpItem         *item  = GIMP_ITEM (tool->drawable);
+  gint              x, y;
+  gint              w, h;
+  gint              off_x, off_y;
+  GeglRectangle     visible;
+
+  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+
+  gimp_item_get_offset (item, &off_x, &off_y);
+
+  gimp_rectangle_intersect (x, y, w, h,
+                            off_x,
+                            off_y,
+                            gimp_item_get_width  (item),
+                            gimp_item_get_height (item),
+                            &visible.x,
+                            &visible.y,
+                            &visible.width,
+                            &visible.height);
+
+  visible.x -= off_x;
+  visible.y -= off_y;
+
+  gimp_image_map_apply (wt->image_map, &visible);
 }

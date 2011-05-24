@@ -40,6 +40,13 @@ typedef struct _GimpWarpToolClass GimpWarpToolClass;
 struct _GimpWarpTool
 {
   GimpDrawTool    parent_instance;
+
+  GeglBuffer     *coords_buffer; /* Gegl buffer where coordinates are stored */
+
+  GeglNode       *coords_node; /* Gegl node that read in the coords buffer */
+  GeglNode       *render_node; /* Gegl node graph to render the transfromation */
+
+  GimpImageMap   *image_map; /* For preview */
 };
 
 struct _GimpWarpToolClass
