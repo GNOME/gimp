@@ -371,15 +371,15 @@ gimp_canvas_rectangle_guides_get_extents (GimpCanvasItem   *item,
   if (private->type != GIMP_GUIDES_NONE)
     {
       cairo_rectangle_int_t rectangle;
-      gdouble               x, y;
-      gdouble               w, h;
+      gdouble               x1, y1;
+      gdouble               x2, y2;
 
-      gimp_canvas_rectangle_guides_transform (item, shell, &x, &y, &w, &h);
+      gimp_canvas_rectangle_guides_transform (item, shell, &x1, &y1, &x2, &y2);
 
-      rectangle.x      = floor (x - 1.5);
-      rectangle.y      = floor (y - 1.5);
-      rectangle.width  = ceil (w + 3.0);
-      rectangle.height = ceil (h + 3.0);
+      rectangle.x      = floor (x1 - 1.5);
+      rectangle.y      = floor (y1 - 1.5);
+      rectangle.width  = ceil (x2 - x1 + 3.0);
+      rectangle.height = ceil (y2 - y1 + 3.0);
 
       return cairo_region_create_rectangle (&rectangle);
     }
