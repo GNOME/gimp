@@ -59,7 +59,7 @@ struct _GimpCageTool
   gint            hovering_edge; /* Edge which the cursor is above */
   gboolean        cage_complete; /* Cage closed or not */
 
-  GeglBuffer     *coef; /* Gegl where the coefficient of the transformation are stored */
+  GeglBuffer     *coef; /* Gegl buffer where the coefficient of the transformation are stored */
   gboolean        dirty_coef; /* Indicate if the coef are still valid */
 
   GeglNode       *render_node; /* Gegl node graph to render the transfromation */
