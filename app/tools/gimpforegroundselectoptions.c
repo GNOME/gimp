@@ -268,7 +268,6 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GtkWidget *menu;
   GtkWidget *inner_frame;
   GtkWidget *table;
-  GtkObject *adj;
   gchar     *title;
   gint       row = 0;
 
@@ -331,7 +330,6 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   scale = gimp_prop_hscale_new (config, "smoothness", 0.1, 1.0, 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_RIGHT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Smoothing:"), 0.0, 0.5, scale, 2, FALSE);
@@ -357,20 +355,14 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (inner_frame), table);
   gtk_widget_show (table);
 
-  adj = gimp_prop_opacity_entry_new (config, "sensitivity-l",
-                                     GTK_TABLE (table), 0, row++, "L");
-  gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
-                               GTK_UPDATE_DELAYED);
+  gimp_prop_opacity_entry_new (config, "sensitivity-l",
+                               GTK_TABLE (table), 0, row++, "L");
 
-  adj = gimp_prop_opacity_entry_new (config, "sensitivity-a",
-                                     GTK_TABLE (table), 0, row++, "a");
-  gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
-                               GTK_UPDATE_DELAYED);
+  gimp_prop_opacity_entry_new (config, "sensitivity-a",
+                               GTK_TABLE (table), 0, row++, "a");
 
-  adj = gimp_prop_opacity_entry_new (config, "sensitivity-b",
-                                     GTK_TABLE (table), 0, row++, "b");
-  gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
-                               GTK_UPDATE_DELAYED);
+  gimp_prop_opacity_entry_new (config, "sensitivity-b",
+                               GTK_TABLE (table), 0, row++, "b");
 
   return vbox;
 }

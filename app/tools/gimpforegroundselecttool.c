@@ -832,6 +832,9 @@ gimp_foreground_select_tool_idle_select (GimpForegroundSelectTool *fg_select)
   return FALSE;
 }
 
+/* To compress close notify signals, the process is delayed by */
+#define MINIMUM_DELAY 300
+
 static void
 gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
                                        GParamSpec                  *pspec,
@@ -862,10 +865,10 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
       if (fg_select->idle_id)
         g_source_remove (fg_select->idle_id);
 
-      fg_select->idle_id =
-        g_idle_add_full (G_PRIORITY_LOW,
-                         (GSourceFunc) gimp_foreground_select_tool_idle_select,
-                         fg_select, NULL);
+      fg_select->idle_id = 
+        g_timeout_add_full (G_PRIORITY_LOW, MINIMUM_DELAY,
+                            (GSourceFunc) gimp_foreground_select_tool_idle_select,
+                            fg_select, NULL);
     }
 
   if (g_str_has_prefix (pspec->name, "mask-color"))
