@@ -95,13 +95,13 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_X,
                                    "offset-x",
-                                   N_("Horizontal offset for distrubution"),
+                                   N_("Horizontal offset for distribution"),
                                    -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
                                    "offset-y",
-                                   N_("Vertical offset for distrubution"),
+                                   N_("Vertical offset for distribution"),
                                    -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                                    GIMP_PARAM_STATIC_STRINGS);
 }
