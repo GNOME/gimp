@@ -234,6 +234,30 @@ gimp_canvas_rectangle_guides_transform (GimpCanvasItem   *item,
 }
 
 static void
+draw_hline (cairo_t *cr,
+            gdouble  x1,
+            gdouble  x2,
+            gdouble  y)
+{
+  y = floor (y) + 0.5;
+
+  cairo_move_to (cr, x1, y);
+  cairo_line_to (cr, x2, y);
+}
+
+static void
+draw_vline (cairo_t *cr,
+            gdouble  y1,
+            gdouble  y2,
+            gdouble  x)
+{
+  x = floor (x) + 0.5;
+
+  cairo_move_to (cr, x, y1);
+  cairo_line_to (cr, x, y2);
+}
+
+static void
 gimp_canvas_rectangle_guides_draw (GimpCanvasItem   *item,
                                    GimpDisplayShell *shell,
                                    cairo_t          *cr)
@@ -241,7 +265,6 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem   *item,
   GimpCanvasRectangleGuidesPrivate *private = GET_PRIVATE (item);
   gdouble                           x1, y1;
   gdouble                           x2, y2;
-  gdouble                           x, y;
 
   gimp_canvas_rectangle_guides_transform (item, shell, &x1, &y1, &x2, &y2);
 
@@ -251,83 +274,36 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem   *item,
       break;
 
     case GIMP_GUIDES_CENTER_LINES:
-      y = floor ((y1 + y2) / 2) + 0.5;
-      cairo_move_to (cr, x1, y);
-      cairo_line_to (cr, x2, y);
-
-      x = floor ((x1 + x2) / 2) + 0.5;
-      cairo_move_to (cr, x, y1);
-      cairo_line_to (cr, x, y2);
+      draw_hline (cr, x1, x2, (y1 + y2) / 2);
+      draw_vline (cr, y1, y2, (x1 + x2) / 2);
       break;
 
     case GIMP_GUIDES_THIRDS:
-      y = floor ((2 * y1 + y2) / 3) + 0.5;
-      cairo_move_to (cr, x1, y);
-      cairo_line_to (cr, x2, y);
+      draw_hline (cr, x1, x2, (2 * y1 +     y2) / 3);
+      draw_hline (cr, x1, x2, (    y1 + 2 * y2) / 3);
 
-      y = floor ((y1 + 2 * y2) / 3) + 0.5;
-      cairo_move_to (cr, x1, y);
-      cairo_line_to (cr, x2, y);
-
-      x = floor ((2 * x1 + x2) / 3) + 0.5;
-      cairo_move_to (cr, x, y1);
-      cairo_line_to (cr, x, y2);
-
-      x = floor ((x1 + 2 * x2) / 3) + 0.5;
-      cairo_move_to (cr, x, y1);
-      cairo_line_to (cr, x, y2);
+      draw_vline (cr, y1, y2, (2 * x1 +     x2) / 3);
+      draw_vline (cr, y1, y2, (    x1 + 2 * x2) / 3);
       break;
 
     case GIMP_GUIDES_FIFTHS:
-      y = floor (y1 + (y2 - y1) / 5) + 0.5;
-      cairo_move_to (cr, x1, y);
-      cairo_line_to (cr, x2, y);
+      draw_hline (cr, x1, x2, y1 +     (y2 - y1) / 5);
+      draw_hline (cr, x1, x2, y1 + 2 * (y2 - y1) / 5);
+      draw_hline (cr, x1, x2, y1 + 3 * (y2 - y1) / 5);
+      draw_hline (cr, x1, x2, y1 + 4 * (y2 - y1) / 5);
 
-      y = floor (y1 + 2 * (y2 - y1) / 5) + 0.5;
-      cairo_move_to (cr, x1, y);
-      cairo_line_to (cr, x2, y);
-
-      y = floor (y1 + 3 * (y2 - y1) / 5) + 0.5;
-      cairo_move_to (cr, x1, y);
-      cairo_line_to (cr, x2, y);
-
-      y = floor (y1 + 4 * (y2 - y1) / 5) + 0.5;
-      cairo_move_to (cr, x1, y);
-      cairo_line_to (cr, x2, y);
-
-      x = floor (x1 + (x2 - x1) / 5) + 0.5;
-      cairo_move_to (cr, x, y1);
-      cairo_line_to (cr, x, y2);
-
-      x = floor (x1 + 2 * (x2 - x1) / 5) + 0.5;
-      cairo_move_to (cr, x, y1);
-      cairo_line_to (cr, x, y2);
-
-      x = floor (x1 + 3 * (x2 - x1) / 5) + 0.5;
-      cairo_move_to (cr, x, y1);
-      cairo_line_to (cr, x, y2);
-
-      x = floor (x1 + 4 * (x2 - x1) / 5) + 0.5;
-      cairo_move_to (cr, x, y1);
-      cairo_line_to (cr, x, y2);
+      draw_vline (cr, y1, y2, x1 +     (x2 - x1) / 5);
+      draw_vline (cr, y1, y2, x1 + 2 * (x2 - x1) / 5);
+      draw_vline (cr, y1, y2, x1 + 3 * (x2 - x1) / 5);
+      draw_vline (cr, y1, y2, x1 + 4 * (x2 - x1) / 5);
       break;
 
     case GIMP_GUIDES_GOLDEN:
-      y = floor ((2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5)) + 0.5;
-      cairo_move_to (cr, x1, y);
-      cairo_line_to (cr, x2, y);
+      draw_hline (cr, x1, x2, (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5));
+      draw_hline (cr, x1, x2, ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5));
 
-      y = floor (((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5)) + 0.5;
-      cairo_move_to (cr, x1, y);
-      cairo_line_to (cr, x2, y);
-
-      x = floor ((2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5)) + 0.5;
-      cairo_move_to (cr, x, y1);
-      cairo_line_to (cr, x, y2);
-
-      x = floor (((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5)) + 0.5;
-      cairo_move_to (cr, x, y1);
-      cairo_line_to (cr, x, y2);
+      draw_vline (cr, y1, y2, (2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5));
+      draw_vline (cr, y1, y2, ((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5));
       break;
 
     /* This code implements the method of diagonals discovered by
