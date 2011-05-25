@@ -372,6 +372,14 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
                                     const GimpRGB       *color,
                                     gint                 color_index)
 {
+  GimpTool *tool = GIMP_TOOL (picker_tool);
+
+  gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (picker_tool->dialog),
+                              gimp_display_get_shell (tool->display));
+  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (picker_tool->dialog),
+                                     GIMP_VIEWABLE (tool->drawable),
+                                     GIMP_CONTEXT (gimp_tool_get_options (tool)));
+
   gimp_color_area_set_color (GIMP_COLOR_AREA (picker_tool->color_area),
                              color);
 
