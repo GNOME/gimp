@@ -100,6 +100,9 @@ static void       gimp_warp_tool_create_image_map   (GimpWarpTool          *wt,
 static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *image_map,
                                                      GimpTool              *tool);
 static void       gimp_warp_tool_image_map_update   (GimpWarpTool          *wt);
+static void       gimp_warp_tool_act_on_coords      (GimpWarpTool          *wt,
+                                                     gint                   x,
+                                                     gint                   y);
 
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -346,6 +349,7 @@ gimp_warp_tool_button_press (GimpTool            *tool,
   if (display != tool->display)
     gimp_warp_tool_start (wt, display);
 
+  gimp_warp_tool_act_on_coords (wt, coords->x, coords->y);
   gimp_warp_tool_image_map_update (wt);
 
   gimp_tool_control_activate (tool->control);
@@ -493,4 +497,46 @@ gimp_warp_tool_image_map_update (GimpWarpTool *wt)
   visible.y -= off_y;
 
   gimp_image_map_apply (wt->image_map, &visible);
+}
+
+static void
+gimp_warp_tool_act_on_coords (GimpWarpTool *wt,
+                              gint x,
+                              gint y)
+{
+  GeglBufferIterator  *it;
+  Babl                *format;
+  GeglRectangle        area = {x - 30,
+                               y - 30,
+                               60,
+                               60};
+
+  format = babl_format_n (babl_type ("float"), 2);
+  it = gegl_buffer_iterator_new (wt->coords_buffer, &area, format, GEGL_BUFFER_READWRITE);
+
+  while (gegl_buffer_iterator_next (it))
+    {
+      /* iterate inside the roi */
+      gint    n_pixels = it->length;
+      gfloat *coords   = it->data[0];
+
+      x = it->roi->x; /* initial x         */
+      y = it->roi->y; /* and y coordinates */
+
+      while (n_pixels--)
+        {
+          coords[0] += 2;
+          coords[1] += 2;
+
+          coords += 2;
+
+          /* update x and y coordinates */
+          x++;
+          if (x >= (it->roi->x + it->roi->width))
+            {
+              x = it->roi->x;
+              y++;
+            }
+        }
+    }
 }
