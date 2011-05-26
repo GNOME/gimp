@@ -234,7 +234,7 @@ gimp_test_utils_create_image_from_dalog (Gimp *gimp)
                                       -1 /*view_size*/);
 
   /* Press the focused widget, it should be the Ok button. It will
-   * take a while for the image to be created to loop for a while
+   * take a while for the image to be created so loop for a while
    */
   gtk_widget_activate (gtk_window_get_focus (GTK_WINDOW (new_image_dialog)));
   do
