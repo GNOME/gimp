@@ -608,6 +608,34 @@ switch_back_to_multi_window_mode (GimpTestFixture *fixture,
   gimp_test_run_mainloop_until_idle ();
 }
 
+static void
+close_image (GimpTestFixture *fixture,
+             gconstpointer    data)
+{
+  Gimp *gimp       = GIMP (data);
+  int   undo_count = 4;
+
+  /* Undo all changes so we don't need to find the 'Do you want to
+   * save?'-dialog and its 'No' button
+   */
+  while (undo_count--)
+    {
+      gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+                                       "edit",
+                                       "edit-undo");
+      gimp_test_run_mainloop_until_idle ();
+    }
+
+  /* Close the image */
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+                                   "view",
+                                   "view-close");
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Did it really disappear? */
+  g_assert_cmpint (g_list_length (gimp_get_image_iter (gimp)), ==, 0);
+}
+
 /**
  * window_roles:
  * @fixture:
@@ -800,6 +828,7 @@ int main(int argc, char **argv)
   ADD_TEST (hide_docks_in_single_window_mode);
   ADD_TEST (show_docks_in_single_window_mode);
   ADD_TEST (switch_back_to_multi_window_mode);
+  ADD_TEST (close_image);
   ADD_TEST (window_roles);
 
   /* Run the tests and return status */
