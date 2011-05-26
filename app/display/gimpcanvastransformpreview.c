@@ -934,6 +934,7 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
   if (! dx)
     return;
 
+  cairo_surface_flush (area);
   pptr = (cairo_image_surface_get_data (area)
           + (y - area_offy) * cairo_image_surface_get_stride (area)
           + (x1 - area_offx) * 4);
@@ -1171,6 +1172,7 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
   mu = u + mask_offx;
   mv = v + mask_offy;
 
+  cairo_surface_flush (area);
   pptr = (cairo_image_surface_get_data (area)
           + (y - area_offy) * cairo_image_surface_get_stride (area)
           + (x1 - area_offx) * 4);
