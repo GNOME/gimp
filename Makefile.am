@@ -43,7 +43,7 @@ pkgconfig_DATA = \
 
 AUTHORS: authors.xml authors.xsl
 if HAVE_XSLTPROC
-	$(XSLTPROC) -o $(@) authors.xsl $< || rm -f $(@)
+	$(XSLTPROC) -o $(@) $(top_srcdir)/authors.xsl $< || rm -f $(@)
 endif
 
 

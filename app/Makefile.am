@@ -271,8 +271,8 @@ dist-hook: dist-check-gimp-console dist-dump-gimprc
 # in which case the git-version.h we ship is correct.
 git-version.h: update-git-version-header
 	@if test -d "$(top_srcdir)/.git"; then \
-	  git_version="`git describe`"; \
-	  git_last_commit_timestamp="`git log -n1 --reverse --pretty=%ct`"; \
+	  git_version="`git --git-dir=$(top_srcdir)/.git describe`"; \
+	  git_last_commit_timestamp="`git --git-dir=$(top_srcdir)/.git log -n1 --reverse --pretty=%ct`"; \
 	  git_last_commit_year="`date --utc -d \"1970-01-01 + $$git_last_commit_timestamp seconds\" '+%Y'`"; \
 	elif test ! -f "$@"; then \
 	  git_version="Unknown, shouldn't happen"; \
