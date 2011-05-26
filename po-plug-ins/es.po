@@ -21,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-05-06 23:35+0000\n"
-"PO-Revision-Date: 2011-05-26 10:40+0200\n"
+"PO-Revision-Date: 2011-05-26 20:13+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -193,7 +193,7 @@ msgstr "Mo_dificar el canal verde"
 
 #: ../plug-ins/common/alien-map.c:141
 msgid "Mo_dify saturation channel"
-msgstr "Mo_dificar el canal  de saturación"
+msgstr "Mo_dificar el canal de saturación"
 
 #: ../plug-ins/common/alien-map.c:142
 msgid "Mod_ify blue channel"
@@ -1780,9 +1780,9 @@ msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"Arrastre y suelte los colores para reconfigurar la paleta.  Los números que "
-"se muestran son los índices originales.  Pulse el botón derecho para abrir "
-"un menú con opciones de ordenación."
+"Arrastre y suelte los colores para reconfigurar la paleta. Los números que "
+"se muestran son los índices originales. Pulse el botón derecho para abrir un "
+"menú con opciones de ordenación."
 
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
 #: ../plug-ins/common/file-raw.c:1100
@@ -2583,7 +2583,7 @@ msgid ""
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
 "Los píxeles en el color del primer plano aparecerán negros en todas las "
-"imágenes de salida.  Esto se puede usar para cosas como marcas de corte que "
+"imágenes de salida. Esto se puede usar para cosas como marcas de corte que "
 "tienen que mostrarse en todos los canales."
 
 #: ../plug-ins/common/deinterlace.c:91
@@ -3648,7 +3648,8 @@ msgstr ""
 #, c-format
 msgid "Image component %d of image '%s' does not have both a hstep and vstep."
 msgstr ""
-"El componente de imagen %d de la imagen «%s» no tiene un «hstep» y un «vstep»."
+"El componente de imagen %d de la imagen «%s» no tiene un «hstep» y un "
+"«vstep»."
 
 #: ../plug-ins/common/file-jp2-load.c:346
 #, c-format
@@ -8999,8 +9000,8 @@ msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
 msgstr ""
-"No se puede guardar la capa con el modo «%s». Bien el formato del archivo PSD "
-"o bien el complemento de guardado no lo soportan, se utilizará el modo "
+"No se puede guardar la capa con el modo «%s». Bien el formato del archivo "
+"PSD o bien el complemento de guardado no lo soportan, se utilizará el modo "
 "normal en su lugar."
 
 #: ../plug-ins/file-psd/psd-save.c:634
@@ -9126,8 +9127,8 @@ msgstr "Descargando «%s» de datos de imagen"
 #| msgid "Opening '%s' for reading resulted in HTTP response code: %d"
 msgid "Opening '%s' for reading resulted in HTTP response code: %ld"
 msgstr ""
-"La apertura de «%s» para lectura ha producido el código de respuesta de HTTP: "
-"%ld"
+"La apertura de «%s» para lectura ha producido el código de respuesta de "
+"HTTP: %ld"
 
 #: ../plug-ins/file-uri/uri-backend-wget.c:161
 #: ../plug-ins/file-uri/uri-backend-wget.c:181
@@ -10128,8 +10129,8 @@ msgstr ""
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
-"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: «%"
-"s»"
+"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: "
+"«%s»"
 
 # //R ¿Drawables?
 #: ../plug-ins/gimpressionist/brush.c:246
@@ -10250,7 +10251,8 @@ msgstr "Convertible en mosaico"
 
 #: ../plug-ins/gimpressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr ""
+"Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
 
 #: ../plug-ins/gimpressionist/general.c:221
 msgid "Drop shadow"
@@ -12695,7 +12697,7 @@ msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
-"El tamaño de la selección no es par.  \n"
+"El tamaño de la selección no es par.\n"
 "«Laberinto enlosable» no funcionará perfectamente."
 
 #: ../plug-ins/maze/maze.c:122
