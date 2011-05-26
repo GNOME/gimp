@@ -633,12 +633,15 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info)
 
 /**
  * gimp_session_info_read_geometry:
- * @info:
+ * @info:  A #GimpSessionInfo
+ * @cevent A #GdkEventConfigure. If set, use the size from here
+ *         instead of from the window allocation.
  *
  * Read geometry related information from the associated widget.
  **/
 void
-gimp_session_info_read_geometry (GimpSessionInfo *info)
+gimp_session_info_read_geometry (GimpSessionInfo   *info,
+                                 GdkEventConfigure *cevent)
 {
   GdkWindow *window;
 
@@ -662,12 +665,26 @@ gimp_session_info_read_geometry (GimpSessionInfo *info)
 
       if (gimp_session_info_get_remember_size (info))
         {
-          GtkAllocation allocation;
+          int width;
+          int height;
 
-          gtk_widget_get_allocation (info->p->widget, &allocation);
+          if (cevent)
+            {
+              width  = cevent->width;
+              height = cevent->height;
+            }
+          else
+            {
+              GtkAllocation allocation;
 
-          info->p->width  = allocation.width;
-          info->p->height = allocation.height;
+              gtk_widget_get_allocation (info->p->widget, &allocation);
+
+              width  = allocation.width;
+              height = allocation.height;
+            }
+
+          info->p->width  = width;
+          info->p->height = height;
         }
       else
         {
@@ -725,7 +742,7 @@ gimp_session_info_get_info (GimpSessionInfo *info)
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WIDGET (info->p->widget));
 
-  gimp_session_info_read_geometry (info);
+  gimp_session_info_read_geometry (info, NULL /*cevent*/);
 
   info->p->aux_info = gimp_session_info_aux_get_list (info->p->widget);
 

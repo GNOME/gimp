@@ -62,7 +62,8 @@ GimpSessionInfo *        gimp_session_info_new                           (void);
 void                     gimp_session_info_restore                       (GimpSessionInfo        *info,
                                                                           GimpDialogFactory      *factory);
 void                     gimp_session_info_apply_geometry                (GimpSessionInfo        *info);
-void                     gimp_session_info_read_geometry                 (GimpSessionInfo        *info);
+void                     gimp_session_info_read_geometry                 (GimpSessionInfo        *info,
+                                                                          GdkEventConfigure      *cevent);
 void                     gimp_session_info_get_info                      (GimpSessionInfo        *info);
 void                     gimp_session_info_get_info_with_widget          (GimpSessionInfo        *info,
                                                                           GtkWidget              *widget);

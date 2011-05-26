@@ -1324,7 +1324,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 
       if (gimp_session_info_get_widget (session_info) == dialog)
         {
-          gimp_session_info_read_geometry (session_info);
+          gimp_session_info_read_geometry (session_info, cevent);
 
           GIMP_LOG (DIALOG_FACTORY,
                     "updated session info for \"%s\" from window geometry "
