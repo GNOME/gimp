@@ -98,6 +98,7 @@ wilber_get_extents (cairo_t *cr)
       cairo_fill_extents (cr, &wilber_x1, &wilber_y1, &wilber_x2, &wilber_y2);
 
       wilber_cairo_path = cairo_copy_path (cr);
+      cairo_new_path (cr);
 
       cairo_restore (cr);
     }
