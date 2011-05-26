@@ -8,7 +8,7 @@
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:param name="debug-menu" />
+  <xsl:param name="unstable-menus" />
 
   <xsl:output method="xml"
               version="1.0"
@@ -39,7 +39,13 @@
   </xsl:template>
 
   <xsl:template match="menu[@action='debug-menu']">
-    <xsl:if test="$debug-menu='yes'">
+    <xsl:if test="$unstable-menus='yes'">
+      <xsl:call-template name="identity" />
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="menu[@action='view-use-gegl']">
+    <xsl:if test="$unstable-menus='yes'">
       <xsl:call-template name="identity" />
     </xsl:if>
   </xsl:template>
