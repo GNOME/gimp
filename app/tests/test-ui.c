@@ -99,6 +99,7 @@ static GtkWidget     * gimp_ui_find_window                      (GimpDialogFacto
 static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
 static gboolean        gimp_ui_multicolumn_not_toolbox_window   (GObject           *object);
 static gboolean        gimp_ui_is_gimp_layer_list               (GObject           *object);
+static void            gimp_ui_switch_window_mode               (Gimp              *gimp);
 
 
 /**
@@ -526,10 +527,7 @@ switch_to_single_window_mode (GimpTestFixture *fixture,
   /* Switch to single-window mode. We consider this test as passed if
    * we don't get any GLib warnings/errors
    */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
-                                   "windows",
-                                   "windows-use-single-window-mode");
-  gimp_test_run_mainloop_until_idle ();
+  gimp_ui_switch_window_mode (gimp);
 }
 
 static void
@@ -602,10 +600,7 @@ switch_back_to_multi_window_mode (GimpTestFixture *fixture,
   /* Switch back to multi-window mode. We consider this test as passed
    * if we don't get any GLib warnings/errors
    */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
-                                   "windows",
-                                   "windows-use-single-window-mode");
-  gimp_test_run_mainloop_until_idle ();
+  gimp_ui_switch_window_mode (gimp);
 }
 
 static void
@@ -634,6 +629,74 @@ close_image (GimpTestFixture *fixture,
 
   /* Did it really disappear? */
   g_assert_cmpint (g_list_length (gimp_get_image_iter (gimp)), ==, 0);
+}
+
+/**
+ * repeatedly_switch_window_mode:
+ * @fixture:
+ * @data:
+ *
+ * Makes sure that the size of the image window is properly handled
+ * when repeatedly switching between window modes.
+ **/
+static void
+repeatedly_switch_window_mode (GimpTestFixture *fixture,
+                               gconstpointer    data)
+{
+  Gimp             *gimp     = GIMP (data);
+  GimpDisplay      *display  = GIMP_DISPLAY (gimp_get_empty_display (gimp));
+  GimpDisplayShell *shell    = gimp_display_get_shell (display);
+  GtkWidget        *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
+  gint expected_initial_height;
+  gint expected_initial_width;
+  gint expected_second_height;
+  gint expected_second_width;
+  gint initial_width;
+  gint initial_height;
+  gint second_width;
+  gint second_height;
+
+  /* We need this for some reason */
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Remember the multi-window mode size */
+  gtk_window_get_size (GTK_WINDOW (toplevel),
+                       &expected_initial_width,
+                       &expected_initial_height);
+
+  /* Switch to single-window mode */
+  gimp_ui_switch_window_mode (gimp);
+
+  /* Rememeber the single-window mode size */
+  gtk_window_get_size (GTK_WINDOW (toplevel),
+                       &expected_second_width,
+                       &expected_second_height);
+
+  /* Make sure they differ, otherwise the test is pointless */
+  g_assert_cmpint (expected_initial_width,  !=, expected_second_width);
+  g_assert_cmpint (expected_initial_height, !=, expected_second_height);
+
+  /* Switch back to multi-window mode */
+  gimp_ui_switch_window_mode (gimp);
+
+  /* Make sure the size is the same as before */
+  gtk_window_get_size (GTK_WINDOW (toplevel), &initial_width, &initial_height);
+  g_assert_cmpint (expected_initial_width,  ==, initial_width);
+  g_assert_cmpint (expected_initial_height, ==, initial_height);
+
+  /* Switch to single-window mode again... */
+  gimp_ui_switch_window_mode (gimp);
+
+  /* Make sure the size is the same as before */
+  gtk_window_get_size (GTK_WINDOW (toplevel), &second_width, &second_height);
+  g_assert_cmpint (expected_second_width,  ==, second_width);
+  g_assert_cmpint (expected_second_height, ==, second_height);
+
+  /* Finally switch back to multi-window mode since that was the mode
+   * when we started
+   */
+  gimp_ui_switch_window_mode (gimp);
 }
 
 /**
@@ -796,6 +859,15 @@ gimp_ui_is_gimp_layer_list (GObject *object)
   return strcmp (entry->identifier, "gimp-layer-list") == 0;
 }
 
+static void
+gimp_ui_switch_window_mode (Gimp *gimp)
+{
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+                                   "windows",
+                                   "windows-use-single-window-mode");
+  gimp_test_run_mainloop_until_idle ();
+}
+
 int main(int argc, char **argv)
 {
   Gimp *gimp   = NULL;
@@ -829,6 +901,7 @@ int main(int argc, char **argv)
   ADD_TEST (show_docks_in_single_window_mode);
   ADD_TEST (switch_back_to_multi_window_mode);
   ADD_TEST (close_image);
+  ADD_TEST (repeatedly_switch_window_mode);
   ADD_TEST (window_roles);
 
   /* Run the tests and return status */
