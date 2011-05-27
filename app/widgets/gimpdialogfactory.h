@@ -48,28 +48,29 @@ typedef GtkWidget * (* GimpDialogNewFunc)     (GimpDialogFactory      *factory,
 
 struct _GimpDialogFactoryEntry
 {
-  gchar             *identifier;
-  gchar             *name;
-  gchar             *blurb;
-  gchar             *stock_id;
-  gchar             *help_id;
+  gchar                *identifier;
+  gchar                *name;
+  gchar                *blurb;
+  gchar                *stock_id;
+  gchar                *help_id;
 
-  GimpDialogNewFunc  new_func;
-  gint               view_size;
+  GimpDialogNewFunc     new_func;
+  GimpDialogRestoreFunc restore_func;
+  gint                  view_size;
 
-  gboolean           singleton;
-  gboolean           session_managed;
-  gboolean           remember_size;
-  gboolean           remember_if_open;
+  gboolean              singleton;
+  gboolean              session_managed;
+  gboolean              remember_size;
+  gboolean              remember_if_open;
 
   /* If TRUE the visibility of the dialog is toggleable */
-  gboolean           hideable;
+  gboolean              hideable;
 
   /* If TRUE the entry is for a GimpImageWindow, FALSE otherwise */
-  gboolean           image_window;
+  gboolean              image_window;
 
   /* If TRUE the entry is for a dockable, FALSE otherwise */
-  gboolean           dockable;
+  gboolean              dockable;
 };
 
 
@@ -120,6 +121,7 @@ void                gimp_dialog_factory_register_entry       (GimpDialogFactory 
                                                               const gchar             *stock_id,
                                                               const gchar             *help_id,
                                                               GimpDialogNewFunc        new_func,
+                                                              GimpDialogRestoreFunc    restore_func,
                                                               gint                     view_size,
                                                               gboolean                 singleton,
                                                               gboolean                 session_managed,

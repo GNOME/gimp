@@ -481,29 +481,11 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   info->p->screen = DEFAULT_SCREEN;
 
   if (info->p->factory_entry &&
-      ! info->p->factory_entry->dockable &&
-      ! info->p->factory_entry->image_window)
+      info->p->factory_entry->restore_func)
     {
-      GimpCoreConfig *config = gimp_dialog_factory_get_context (factory)->gimp->config;
-
-      GIMP_LOG (DIALOG_FACTORY, "restoring toplevel \"%s\" (info %p)",
-                info->p->factory_entry->identifier,
-                info);
-
-      dialog =
-        gimp_dialog_factory_dialog_new (factory, screen,
-                                        NULL /*ui_manager*/,
-                                        info->p->factory_entry->identifier,
-                                        info->p->factory_entry->view_size,
-                                        ! GIMP_GUI_CONFIG (config)->hide_docks);
-
-      g_object_set_data (G_OBJECT (dialog), GIMP_DIALOG_VISIBILITY_KEY,
-                         GINT_TO_POINTER (GIMP_GUI_CONFIG (config)->hide_docks ?
-                                          GIMP_DIALOG_VISIBILITY_HIDDEN :
-                                          GIMP_DIALOG_VISIBILITY_VISIBLE));
-
-      if (dialog && info->p->aux_info)
-        gimp_session_info_aux_set_list (dialog, info->p->aux_info);
+      dialog = info->p->factory_entry->restore_func (factory,
+                                                     screen,
+                                                     info);
     }
 
   /* We expect expect there to always be docks. In sessionrc files
@@ -793,6 +775,14 @@ gimp_session_info_get_info_with_widget (GimpSessionInfo *info,
   gimp_session_info_set_widget (info, widget);
   gimp_session_info_get_info (info);
   gimp_session_info_set_widget (info, old_widget);
+}
+
+GList *
+gimp_session_info_get_aux_info (GimpSessionInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), NULL);
+
+  return info->p->aux_info;
 }
 
 void

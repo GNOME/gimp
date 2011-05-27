@@ -260,21 +260,22 @@ gimp_dialog_factory_new (const gchar           *name,
 }
 
 void
-gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
-                                    const gchar       *identifier,
-                                    const gchar       *name,
-                                    const gchar       *blurb,
-                                    const gchar       *stock_id,
-                                    const gchar       *help_id,
-                                    GimpDialogNewFunc  new_func,
-                                    gint               view_size,
-                                    gboolean           singleton,
-                                    gboolean           session_managed,
-                                    gboolean           remember_size,
-                                    gboolean           remember_if_open,
-                                    gboolean           hideable,
-                                    gboolean           image_window,
-                                    gboolean           dockable)
+gimp_dialog_factory_register_entry (GimpDialogFactory    *factory,
+                                    const gchar          *identifier,
+                                    const gchar          *name,
+                                    const gchar          *blurb,
+                                    const gchar          *stock_id,
+                                    const gchar          *help_id,
+                                    GimpDialogNewFunc     new_func,
+                                    GimpDialogRestoreFunc restore_func,
+                                    gint                  view_size,
+                                    gboolean              singleton,
+                                    gboolean              session_managed,
+                                    gboolean              remember_size,
+                                    gboolean              remember_if_open,
+                                    gboolean              hideable,
+                                    gboolean              image_window,
+                                    gboolean              dockable)
 {
   GimpDialogFactoryEntry *entry;
 
@@ -289,6 +290,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
   entry->stock_id         = g_strdup (stock_id);
   entry->help_id          = g_strdup (help_id);
   entry->new_func         = new_func;
+  entry->restore_func     = restore_func;
   entry->view_size        = view_size;
   entry->singleton        = singleton ? TRUE : FALSE;
   entry->session_managed  = session_managed ? TRUE : FALSE;
