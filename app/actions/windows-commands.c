@@ -46,8 +46,8 @@ void
 windows_hide_docks_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  gboolean         active    = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-  Gimp            *gimp      = NULL;
+  gboolean  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  Gimp     *gimp;
   return_if_no_gimp (gimp, data);
 
   if (GIMP_GUI_CONFIG (gimp->config)->hide_docks == active)
@@ -63,7 +63,7 @@ windows_use_single_window_mode_cmd_callback (GtkAction *action,
                                              gpointer   data)
 {
   gboolean  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-  Gimp     *gimp   = NULL;
+  Gimp     *gimp;
   return_if_no_gimp (gimp, data);
 
   if (GIMP_GUI_CONFIG (gimp->config)->single_window_mode == active)
@@ -75,10 +75,54 @@ windows_use_single_window_mode_cmd_callback (GtkAction *action,
 }
 
 void
+windows_show_display_next_cmd_callback (GtkAction *action,
+                                        gpointer   data)
+{
+  GimpDisplay *display;
+  Gimp        *gimp;
+  gint         index;
+  return_if_no_display (display, data);
+  return_if_no_gimp (gimp, data);
+
+  index = gimp_container_get_child_index (gimp->displays,
+                                          GIMP_OBJECT (display));
+  index++;
+
+  if (index >= gimp_container_get_n_children (gimp->displays))
+    index = 0;
+
+  display = GIMP_DISPLAY (gimp_container_get_child_by_index (gimp->displays,
+                                                             index));
+  gimp_display_shell_present (gimp_display_get_shell (display));
+}
+
+void
+windows_show_display_previous_cmd_callback (GtkAction *action,
+                                            gpointer   data)
+{
+  GimpDisplay *display;
+  Gimp        *gimp;
+  gint         index;
+  return_if_no_display (display, data);
+  return_if_no_gimp (gimp, data);
+
+  index = gimp_container_get_child_index (gimp->displays,
+                                          GIMP_OBJECT (display));
+  index--;
+
+  if (index < 0)
+    index = gimp_container_get_n_children (gimp->displays) - 1;
+
+  display = GIMP_DISPLAY (gimp_container_get_child_by_index (gimp->displays,
+                                                             index));
+  gimp_display_shell_present (gimp_display_get_shell (display));
+}
+
+void
 windows_show_display_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  GimpDisplay *display  = g_object_get_data (G_OBJECT (action), "display");
+  GimpDisplay *display = g_object_get_data (G_OBJECT (action), "display");
 
   gimp_display_shell_present (gimp_display_get_shell (display));
 }

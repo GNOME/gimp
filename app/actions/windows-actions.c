@@ -83,6 +83,13 @@ static void  windows_actions_single_window_mode_notify (GimpDisplayConfig *confi
                                                         GimpActionGroup   *group);
 
 
+/* The only reason we have "Tab" in the action entries below is to
+ * give away the hardcoded keyboard shortcut. If the user changes the
+ * shortcut to something else, both that shortcut and Tab will
+ * work. The reason we have the shortcut hardcoded is beccause
+ * gtk_accelerator_valid() returns FALSE for GDK_tab.
+ */
+
 static const GimpActionEntry windows_actions[] =
 {
   { "windows-menu",         NULL, NC_("windows-action",
@@ -91,19 +98,24 @@ static const GimpActionEntry windows_actions[] =
                                       "_Recently Closed Docks") },
   { "windows-dialogs-menu", NULL, NC_("windows-action",
                                       "_Dockable Dialogs")      },
+
+  { "windows-show-display-next", NULL,
+    NC_("windows-action", "Next Image"), "<alt>Tab",
+    NC_("windows-action", "Switch to the next image"),
+    G_CALLBACK (windows_show_display_next_cmd_callback),
+    NULL },
+
+  { "windows-show-display-previous", NULL,
+    NC_("windows-action", "Previous Image"), "<alt><shift>Tab",
+    NC_("windows-action", "Switch to the previous image"),
+    G_CALLBACK (windows_show_display_previous_cmd_callback),
+    NULL }
 };
 
 static const GimpToggleActionEntry windows_toggle_actions[] =
 {
   { "windows-hide-docks", NULL,
-    NC_("windows-action", "Hide Docks"),
-    /* The only reason we have Tab here is to give away the hardcoded
-     * keyboard shortcut. If the user changes the shortcut to
-     * something else, both that shortcut and Tab will work. The
-     * reason we have the shortcut hardcoded is beccause
-     * gtk_accelerator_valid() returns FALSE for GDK_tab.
-     */
-    "Tab",
+    NC_("windows-action", "Hide Docks"), "Tab",
     NC_("windows-action", "When enabled docks and other dialogs are hidden, leaving only image windows."),
     G_CALLBACK (windows_hide_docks_cmd_callback),
     FALSE,

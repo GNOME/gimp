@@ -109,6 +109,8 @@ static void       gimp_display_shell_untransform_event_coords (GimpDisplayShell 
                                                                gboolean         *update_software_cursor);
 
 static void       gimp_display_shell_toggle_hide_docks        (GimpDisplayShell *shell);
+static void       gimp_display_shell_show_display_next        (GimpDisplayShell *shell);
+static void       gimp_display_shell_show_display_previous    (GimpDisplayShell *shell);
 
 static GdkEvent * gimp_display_shell_compress_motion          (GimpDisplayShell *shell);
 
@@ -259,8 +261,11 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
         if (kevent->keyval == GDK_KEY_Tab ||
             kevent->keyval == GDK_KEY_ISO_Left_Tab)
           {
-            gimp_display_shell_toggle_hide_docks (shell);
-            return TRUE;
+            if (! (kevent->state & GDK_MOD1_MASK))
+              {
+                gimp_display_shell_toggle_hide_docks (shell);
+                return TRUE;
+              }
           }
       }
       break;
@@ -1073,6 +1078,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                 -1, kevent->time);
                       }
                   }
+                else if (state & GDK_MOD1_MASK)
+                  {
+                    if (kevent->keyval == GDK_KEY_Tab)
+                      gimp_display_shell_show_display_next (shell);
+                    else
+                      gimp_display_shell_show_display_previous (shell);
+                  }
                 else
                   {
                     gimp_display_shell_toggle_hide_docks (shell);
@@ -1412,6 +1424,28 @@ gimp_display_shell_toggle_hide_docks (GimpDisplayShell *shell)
     gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
                                      "windows",
                                      "windows-hide-docks");
+}
+
+static void
+gimp_display_shell_show_display_next (GimpDisplayShell *shell)
+{
+  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+  if (window)
+    gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
+                                     "windows",
+                                     "windows-show-display-next");
+}
+
+static void
+gimp_display_shell_show_display_previous (GimpDisplayShell *shell)
+{
+  GimpImageWindow *window = gimp_display_shell_get_window (shell);
+
+  if (window)
+    gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
+                                     "windows",
+                                     "windows-show-display-previous");
 }
 
 static void

@@ -23,6 +23,11 @@ void  windows_hide_docks_cmd_callback             (GtkAction *action,
                                                    gpointer   data);
 void  windows_use_single_window_mode_cmd_callback (GtkAction *action,
                                                    gpointer   data);
+
+void  windows_show_display_next_cmd_callback      (GtkAction *action,
+                                                   gpointer   data);
+void  windows_show_display_previous_cmd_callback  (GtkAction *action,
+                                                   gpointer   data);
 void  windows_show_display_cmd_callback           (GtkAction *action,
                                                    gpointer   data);
 void  windows_show_dock_cmd_callback              (GtkAction *action,
