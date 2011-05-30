@@ -462,7 +462,6 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   GtkWidget  *dialog  = NULL;
   GdkDisplay *display = NULL;
   GdkScreen  *screen  = NULL;
-  GList      *iter    = NULL;
 
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
@@ -488,8 +487,10 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                                                      info);
     }
 
-  if (dialog && GIMP_IS_DOCK_CONTAINER (dialog))
+  if (GIMP_IS_DOCK_CONTAINER (dialog))
     {
+      GList *iter;
+
       /* We expect expect there to always be docks. In sessionrc files
        * from <= 2.6 not all dock window entries had dock entries, but we
        * take care of that during sessionrc parsing
