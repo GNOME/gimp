@@ -82,10 +82,6 @@ void            gimp_dockable_get_drag_pos     (GimpDockable   *dockable,
                                                 gint           *drag_y);
 GimpPanedBox  * gimp_dockable_get_drag_handler (GimpDockable  *dockable);
 
-void            gimp_dockable_set_aux_info     (GimpDockable   *dockable,
-                                                GList          *aux_info);
-GList         * gimp_dockable_get_aux_info     (GimpDockable   *dockable);
-
 void            gimp_dockable_set_locked       (GimpDockable   *dockable,
                                                 gboolean        lock);
 gboolean        gimp_dockable_is_locked        (GimpDockable   *dockable);

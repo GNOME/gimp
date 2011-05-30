@@ -29,6 +29,7 @@ Core:
    a simple API and takes it out of GimpDisplayShell
  - Add a GimpIdTable utility class
  - Add a GimpDockContainer interface
+ - Add a GimpSessionManaged interface
 
 
 GEGL:

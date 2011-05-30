@@ -77,9 +77,6 @@ void                gimp_dock_window_set_show_image_menu    (GimpDockWindow    *
                                                              gboolean           show);
 void                gimp_dock_window_setup                  (GimpDockWindow    *dock_window,
                                                              GimpDockWindow    *template);
-void                gimp_dock_window_set_aux_info           (GimpDockWindow    *dock,
-                                                             GList             *aux_info);
-GList             * gimp_dock_window_get_aux_info           (GimpDockWindow    *dock);
 gboolean            gimp_dock_window_has_toolbox            (GimpDockWindow    *dock_window);
 
 GimpDockWindow    * gimp_dock_window_from_dock              (GimpDock          *dock);

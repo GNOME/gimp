@@ -43,7 +43,8 @@
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dock.h"
 #include "gimpsessioninfo-private.h"
-
+#include "gimpsessionmanaged.h"
+ 
 #include "gimp-log.h"
 
 
@@ -748,7 +749,9 @@ gimp_session_info_get_info (GimpSessionInfo *info)
 
   gimp_session_info_read_geometry (info, NULL /*cevent*/);
 
-  info->p->aux_info = gimp_session_info_aux_get_list (info->p->widget);
+  if (GIMP_IS_SESSION_MANAGED (info->p->widget))
+    info->p->aux_info =
+      gimp_session_managed_get_aux_info (GIMP_SESSION_MANAGED (info->p->widget));
 
   if (GIMP_IS_DOCK_CONTAINER (info->p->widget))
     {

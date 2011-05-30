@@ -54,6 +54,7 @@
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo.h"
+#include "gimpsessionmanaged.h"
 #include "gimptoolbox.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
@@ -110,6 +111,7 @@ struct _GimpDockWindowPrivate
 
 
 static void            gimp_dock_window_dock_container_iface_init (GimpDockContainerInterface *iface);
+static void            gimp_dock_window_session_managed_iface_init(GimpSessionManagedInterface*iface);
 static void            gimp_dock_window_constructed               (GObject                    *object);
 static void            gimp_dock_window_dispose                   (GObject                    *object);
 static void            gimp_dock_window_finalize                  (GObject                    *object);
@@ -130,6 +132,9 @@ static GimpUIManager * gimp_dock_window_get_ui_manager            (GimpDockConta
 static void            gimp_dock_window_add_dock_from_session     (GimpDockContainer          *dock_container,
                                                                    GimpDock                   *dock,
                                                                    GimpSessionInfoDock        *dock_info);
+static GList         * gimp_dock_window_get_aux_info              (GimpSessionManaged         *session_managed);
+static void            gimp_dock_window_set_aux_info              (GimpSessionManaged         *session_managed,
+                                                                   GList                      *aux_info);
 static GimpAlignmentType
                        gimp_dock_window_get_dock_side             (GimpDockContainer          *dock_container,
                                                                    GimpDock                   *dock);
@@ -162,7 +167,9 @@ static void            gimp_dock_window_auto_clicked              (GtkWidget    
 
 G_DEFINE_TYPE_WITH_CODE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCK_CONTAINER,
-                                                gimp_dock_window_dock_container_iface_init))
+                                                gimp_dock_window_dock_container_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
+                                                gimp_dock_window_session_managed_iface_init))
 
 #define parent_class gimp_dock_window_parent_class
 
@@ -270,6 +277,13 @@ gimp_dock_window_dock_container_iface_init (GimpDockContainerInterface *iface)
   iface->get_ui_manager = gimp_dock_window_get_ui_manager;
   iface->add_dock       = gimp_dock_window_add_dock_from_session;
   iface->get_dock_side  = gimp_dock_window_get_dock_side;
+}
+
+static void
+gimp_dock_window_session_managed_iface_init (GimpSessionManagedInterface *iface)
+{
+  iface->get_aux_info = gimp_dock_window_get_aux_info;
+  iface->set_aux_info = gimp_dock_window_set_aux_info;
 }
 
 static void
@@ -725,6 +739,74 @@ gimp_dock_window_add_dock_from_session (GimpDockContainer   *dock_container,
                              -1 /*index*/);
 }
 
+static GList *
+gimp_dock_window_get_aux_info (GimpSessionManaged *session_managed)
+{
+  GimpDockWindow     *dock_window;
+  GList              *aux_info = NULL;
+  GimpSessionInfoAux *aux;
+
+  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (session_managed), NULL);
+
+  dock_window = GIMP_DOCK_WINDOW (session_managed);
+
+  if (dock_window->p->allow_dockbook_absence)
+    {
+      /* Assume it is the toolbox; it does not have aux info */
+      return NULL;
+    }
+
+  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
+
+  aux = gimp_session_info_aux_new (AUX_INFO_SHOW_IMAGE_MENU,
+                                   dock_window->p->show_image_menu ?
+                                   "true" : "false");
+  aux_info = g_list_append (aux_info, aux);
+
+  aux = gimp_session_info_aux_new (AUX_INFO_FOLLOW_ACTIVE_IMAGE,
+                                   dock_window->p->auto_follow_active ?
+                                   "true" : "false");
+  aux_info = g_list_append (aux_info, aux);
+
+  return aux_info;
+}
+
+static void
+gimp_dock_window_set_aux_info (GimpSessionManaged *session_managed,
+                               GList              *aux_info)
+{
+  GimpDockWindow *dock_window;
+  GList          *list;
+  gboolean        menu_shown;
+  gboolean        auto_follow;
+
+  g_return_if_fail (GIMP_IS_DOCK_WINDOW (session_managed));
+
+  dock_window = GIMP_DOCK_WINDOW (session_managed);
+  menu_shown  = dock_window->p->show_image_menu;
+  auto_follow = dock_window->p->auto_follow_active;
+
+  for (list = aux_info; list; list = g_list_next (list))
+    {
+      GimpSessionInfoAux *aux = list->data;
+
+      if (! strcmp (aux->name, AUX_INFO_SHOW_IMAGE_MENU))
+        {
+          menu_shown = ! g_ascii_strcasecmp (aux->value, "true");
+        }
+      else if (! strcmp (aux->name, AUX_INFO_FOLLOW_ACTIVE_IMAGE))
+        {
+          auto_follow = ! g_ascii_strcasecmp (aux->value, "true");
+        }
+    }
+
+  if (menu_shown != dock_window->p->show_image_menu)
+    gimp_dock_window_set_show_image_menu (dock_window, menu_shown);
+
+  if (auto_follow != dock_window->p->auto_follow_active)
+    gimp_dock_window_set_auto_follow_active (dock_window, auto_follow);
+}
+
 static GimpAlignmentType
 gimp_dock_window_get_dock_side (GimpDockContainer *dock_container,
                                 GimpDock          *dock)
@@ -1125,66 +1207,6 @@ gimp_dock_window_setup (GimpDockWindow *dock_window,
                                            template->p->auto_follow_active);
   gimp_dock_window_set_show_image_menu (GIMP_DOCK_WINDOW (dock_window),
                                         template->p->show_image_menu);
-}
-
-void
-gimp_dock_window_set_aux_info (GimpDockWindow *dock_window,
-                               GList          *aux_info)
-{
-  GList        *list;
-  gboolean      menu_shown  = dock_window->p->show_image_menu;
-  gboolean      auto_follow = dock_window->p->auto_follow_active;
-
-  g_return_if_fail (GIMP_IS_DOCK_WINDOW (dock_window));
-
-  for (list = aux_info; list; list = g_list_next (list))
-    {
-      GimpSessionInfoAux *aux = list->data;
-
-      if (! strcmp (aux->name, AUX_INFO_SHOW_IMAGE_MENU))
-        {
-          menu_shown = ! g_ascii_strcasecmp (aux->value, "true");
-        }
-      else if (! strcmp (aux->name, AUX_INFO_FOLLOW_ACTIVE_IMAGE))
-        {
-          auto_follow = ! g_ascii_strcasecmp (aux->value, "true");
-        }
-    }
-
-  if (menu_shown != dock_window->p->show_image_menu)
-    gimp_dock_window_set_show_image_menu (dock_window, menu_shown);
-
-  if (auto_follow != dock_window->p->auto_follow_active)
-    gimp_dock_window_set_auto_follow_active (dock_window, auto_follow);
-}
-
-GList *
-gimp_dock_window_get_aux_info (GimpDockWindow *dock_window)
-{
-  GList              *aux_info = NULL;
-  GimpSessionInfoAux *aux      = NULL;
-
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
-
-  if (dock_window->p->allow_dockbook_absence)
-    {
-      /* Assume it is the toolbox; it does not have aux info */
-      return NULL;
-    }
-
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
-
-  aux = gimp_session_info_aux_new (AUX_INFO_SHOW_IMAGE_MENU,
-                                   dock_window->p->show_image_menu ?
-                                   "true" : "false");
-  aux_info = g_list_append (aux_info, aux);
-
-  aux = gimp_session_info_aux_new (AUX_INFO_FOLLOW_ACTIVE_IMAGE,
-                                   dock_window->p->auto_follow_active ?
-                                   "true" : "false");
-  aux_info = g_list_append (aux_info, aux);
-
-  return aux_info;
 }
 
 /**

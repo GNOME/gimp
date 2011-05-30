@@ -42,6 +42,7 @@
 #include "gimphelp-ids.h"
 #include "gimppanedbox.h"
 #include "gimpsessioninfo-aux.h"
+#include "gimpsessionmanaged.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -80,6 +81,9 @@ struct _GimpDockablePrivate
 };
 
 
+static void       gimp_dockable_session_managed_iface_init
+                                                  (GimpSessionManagedInterface
+                                                                  *iface);
 static void       gimp_dockable_dispose           (GObject        *object);
 static void       gimp_dockable_set_property      (GObject        *object,
                                                    guint           property_id,
@@ -114,13 +118,21 @@ static void       gimp_dockable_style_set         (GtkWidget      *widget,
 static void       gimp_dockable_add               (GtkContainer   *container,
                                                    GtkWidget      *widget);
 static GType      gimp_dockable_child_type        (GtkContainer   *container);
+static GList    * gimp_dockable_get_aux_info      (GimpSessionManaged
+                                                                  *session_managed);
+static void       gimp_dockable_set_aux_info      (GimpSessionManaged
+                                                                  *session_managed,
+                                                   GList          *aux_info);
+
 static GimpTabStyle
                   gimp_dockable_convert_tab_style (GimpDockable   *dockable,
                                                    GimpTabStyle    tab_style);
 static gboolean   gimp_dockable_blink_timeout     (GimpDockable   *dockable);
 
 
-G_DEFINE_TYPE (GimpDockable, gimp_dockable, GTK_TYPE_BIN)
+G_DEFINE_TYPE_WITH_CODE (GimpDockable, gimp_dockable, GTK_TYPE_BIN,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
+                                                gimp_dockable_session_managed_iface_init))
 
 #define parent_class gimp_dockable_parent_class
 
@@ -179,6 +191,13 @@ gimp_dockable_init (GimpDockable *dockable)
                      0,
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
+}
+
+static void
+gimp_dockable_session_managed_iface_init (GimpSessionManagedInterface *iface)
+{
+  iface->get_aux_info = gimp_dockable_get_aux_info;
+  iface->set_aux_info = gimp_dockable_set_aux_info;
 }
 
 static void
@@ -673,36 +692,6 @@ gimp_dockable_get_drag_handler (GimpDockable *dockable)
 }
 
 void
-gimp_dockable_set_aux_info (GimpDockable *dockable,
-                            GList        *aux_info)
-{
-  GtkWidget *child;
-
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
-  child = gtk_bin_get_child (GTK_BIN (dockable));
-
-  if (child)
-    gimp_docked_set_aux_info (GIMP_DOCKED (child), aux_info);
-}
-
-GList *
-gimp_dockable_get_aux_info (GimpDockable *dockable)
-{
-  GtkWidget *child;
-
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
-
-  child = gtk_bin_get_child (GTK_BIN (dockable));
-
-  if (child)
-    return gimp_docked_get_aux_info (GIMP_DOCKED (child));
-
-  return NULL;
-}
-
-
-void
 gimp_dockable_set_locked (GimpDockable *dockable,
                           gboolean      lock)
 {
@@ -927,6 +916,41 @@ gimp_dockable_blink_cancel (GimpDockable *dockable)
 
 
 /*  private functions  */
+
+static GList *
+gimp_dockable_get_aux_info (GimpSessionManaged *session_managed)
+{
+  GimpDockable *dockable;
+  GtkWidget    *child;
+
+  g_return_val_if_fail (GIMP_IS_DOCKABLE (session_managed), NULL);
+
+  dockable = GIMP_DOCKABLE (session_managed);
+
+  child = gtk_bin_get_child (GTK_BIN (dockable));
+
+  if (child)
+    return gimp_docked_get_aux_info (GIMP_DOCKED (child));
+
+  return NULL;
+}
+
+static void
+gimp_dockable_set_aux_info (GimpSessionManaged *session_managed,
+                            GList              *aux_info)
+{
+  GimpDockable *dockable;
+  GtkWidget    *child;
+
+  g_return_if_fail (GIMP_IS_DOCKABLE (session_managed));
+
+  dockable = GIMP_DOCKABLE (session_managed);
+
+  child = gtk_bin_get_child (GTK_BIN (dockable));
+
+  if (child)
+    gimp_docked_set_aux_info (GIMP_DOCKED (child), aux_info);
+}
 
 static GimpTabStyle
 gimp_dockable_convert_tab_style (GimpDockable   *dockable,

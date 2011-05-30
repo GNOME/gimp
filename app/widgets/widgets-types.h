@@ -244,6 +244,7 @@ typedef struct _GimpSessionInfoAux           GimpSessionInfoAux;
 typedef struct _GimpSessionInfoBook          GimpSessionInfoBook;
 typedef struct _GimpSessionInfoDock          GimpSessionInfoDock;
 typedef struct _GimpSessionInfoDockable      GimpSessionInfoDockable;
+typedef struct _GimpSessionManaged           GimpSessionManaged;
 
 
 /*  structs  */

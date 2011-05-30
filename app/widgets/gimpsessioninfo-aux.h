@@ -51,9 +51,5 @@ void         gimp_session_info_aux_serialize      (GimpConfigWriter    *writer,
 GTokenType   gimp_session_info_aux_deserialize    (GScanner            *scanner,
                                                    GList              **aux_list);
 
-void         gimp_session_info_aux_set_list       (GtkWidget           *dialog,
-                                                   GList               *aux_info);
-GList      * gimp_session_info_aux_get_list       (GtkWidget           *dialog);
-
 
 #endif  /* __GIMP_SESSION_INFO_AUX_H__ */

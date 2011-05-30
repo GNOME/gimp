@@ -40,6 +40,7 @@
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpsessioninfo-aux.h"
+#include "widgets/gimpsessionmanaged.h"
 #include "widgets/gimptoolbox.h"
 
 #include "dialogs.h"
@@ -441,9 +442,9 @@ dialogs_restore_dialog (GimpDialogFactory *factory,
                                       GIMP_DIALOG_VISIBILITY_HIDDEN :
                                       GIMP_DIALOG_VISIBILITY_VISIBLE));
 
-  if (dialog && gimp_session_info_get_aux_info (info))
-    gimp_session_info_aux_set_list (dialog,
-                                    gimp_session_info_get_aux_info (info));
+  if (GIMP_IS_SESSION_MANAGED (dialog) && gimp_session_info_get_aux_info (info))
+    gimp_session_managed_set_aux_info (GIMP_SESSION_MANAGED (dialog),
+                                       gimp_session_info_get_aux_info (info));
 
   return dialog;
 }

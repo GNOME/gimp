@@ -33,6 +33,7 @@
 #include "gimpdockable.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo-dockable.h"
+#include "gimpsessionmanaged.h"
 #include "gimptoolbox.h"
 
 
@@ -264,7 +265,9 @@ gimp_session_info_dockable_from_widget (GimpDockable *dockable)
   if (view_size > 0 && view_size != entry->view_size)
     info->view_size = view_size;
 
-  info->aux_info = gimp_session_info_aux_get_list (GTK_WIDGET (dockable));
+  if (GIMP_IS_SESSION_MANAGED (dockable))
+    info->aux_info =
+      gimp_session_managed_get_aux_info (GIMP_SESSION_MANAGED (dockable));
 
   return info;
 }
@@ -301,7 +304,8 @@ gimp_session_info_dockable_restore (GimpSessionInfoDockable *info,
       gimp_dockable_set_tab_style (GIMP_DOCKABLE (dockable), info->tab_style);
 
       if (info->aux_info)
-        gimp_session_info_aux_set_list (dockable, info->aux_info);
+        gimp_session_managed_set_aux_info (GIMP_SESSION_MANAGED (dockable),
+                                           info->aux_info);
     }
 
   return GIMP_DOCKABLE (dockable);
