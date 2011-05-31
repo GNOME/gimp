@@ -162,6 +162,10 @@ libgimpwidgets_sources = \
 	gimpstringcombobox.h		\
 	gimpunitcombobox.c		\
 	gimpunitcombobox.h		\
+	gimpunitadjustment.c		\
+	gimpunitadjustment.h		\
+	gimpunitentry.c			\
+	gimpunitentry.h			\
 	gimpunitmenu.c			\
 	gimpunitmenu.h			\
 	gimpunitstore.c			\
@@ -242,6 +246,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpstock.h			\
 	gimpstringcombobox.h		\
 	gimpunitcombobox.h		\
+	gimpunitentry.h			\
 	gimpunitmenu.h			\
 	gimpunitstore.h			\
 	gimpwidgets-error.h		\
@@ -334,7 +339,8 @@ gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
 
 EXTRA_PROGRAMS = \
 	test-preview-area	\
-	test-eevl
+	test-eevl		\
+	test-unitentry
 
 
 test_preview_area_SOURCES = test-preview-area.c 
@@ -357,6 +363,19 @@ test_eevl_DEPENDENCIES = \
 test_eevl_LDADD = \
 	$(GLIB_LIBS) 		\
 	$(test_eevl_DEPENDENCIES)
+
+test_unitentry_SOURCES = \
+	test-unitentry.c \
+	$(top_builddir)/devel-docs/tools/units.c
+
+test_unitentry_DEPENDENCIES = \
+	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la \
+	$(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la \	
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+
+test_unitentry_LDADD = \
+	$(GLIB_LIBS) 		\
+	$(test_unitentry_DEPENDENCIES)
 
 
 #
