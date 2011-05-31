@@ -21,7 +21,7 @@
 
 gboolean gimp_device_info_get_event_coords   (GimpDeviceInfo  *info,
                                               GdkWindow       *window,
-                                              GdkEvent        *event,
+                                              const GdkEvent  *event,
                                               GimpCoords      *coords);
 void     gimp_device_info_get_device_coords  (GimpDeviceInfo  *info,
                                               GdkWindow       *window,
@@ -33,7 +33,7 @@ void     gimp_device_info_get_time_coords    (GimpDeviceInfo  *info,
 
 gboolean gimp_device_info_get_event_state    (GimpDeviceInfo  *info,
                                               GdkWindow       *window,
-                                              GdkEvent        *event,
+                                              const GdkEvent  *event,
                                               GdkModifierType *state);
 void     gimp_device_info_get_device_state   (GimpDeviceInfo  *info,
                                               GdkWindow       *window,

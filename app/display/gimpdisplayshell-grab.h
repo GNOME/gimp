@@ -22,15 +22,15 @@
 
 
 gboolean   gimp_display_shell_pointer_grab    (GimpDisplayShell *shell,
-                                               GdkEvent         *event,
+                                               const GdkEvent   *event,
                                                GdkEventMask      event_mask);
 void       gimp_display_shell_pointer_ungrab  (GimpDisplayShell *shell,
-                                               GdkEvent         *event);
+                                               const GdkEvent   *event);
 
 gboolean   gimp_display_shell_keyboard_grab   (GimpDisplayShell *shell,
-                                               GdkEvent         *event);
+                                               const GdkEvent   *event);
 void       gimp_display_shell_keyboard_ungrab (GimpDisplayShell *shell,
-                                               GdkEvent         *event);
+                                               const GdkEvent   *event);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_GRAB_H__ */

@@ -33,7 +33,7 @@ static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
 gboolean
 gimp_device_info_get_event_coords (GimpDeviceInfo *info,
                                    GdkWindow      *window,
-                                   GdkEvent       *event,
+                                   const GdkEvent *event,
                                    GimpCoords     *coords)
 {
   gdouble x;
@@ -178,7 +178,7 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
 gboolean
 gimp_device_info_get_event_state (GimpDeviceInfo  *info,
                                   GdkWindow       *window,
-                                  GdkEvent        *event,
+                                  const GdkEvent  *event,
                                   GdkModifierType *state)
 {
   if (gdk_event_get_state (event, state))

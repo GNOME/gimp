@@ -34,7 +34,7 @@
 
 gboolean
 gimp_display_shell_pointer_grab (GimpDisplayShell *shell,
-                                 GdkEvent         *event,
+                                 const GdkEvent   *event,
                                  GdkEventMask      event_mask)
 {
   GdkGrabStatus status;
@@ -81,7 +81,7 @@ gimp_display_shell_pointer_grab (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_pointer_ungrab (GimpDisplayShell *shell,
-                                   GdkEvent         *event)
+                                   const GdkEvent   *event)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (event != NULL);
@@ -95,7 +95,7 @@ gimp_display_shell_pointer_ungrab (GimpDisplayShell *shell,
 
 gboolean
 gimp_display_shell_keyboard_grab (GimpDisplayShell *shell,
-                                  GdkEvent         *event)
+                                  const GdkEvent   *event)
 {
   GdkGrabStatus status;
 
@@ -122,7 +122,7 @@ gimp_display_shell_keyboard_grab (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_keyboard_ungrab (GimpDisplayShell *shell,
-                                    GdkEvent         *event)
+                                    const GdkEvent   *event)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (event != NULL);
