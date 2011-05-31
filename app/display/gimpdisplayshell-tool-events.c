@@ -84,6 +84,9 @@ static void       gimp_display_shell_space_released           (GimpDisplayShell 
                                                                GdkEvent         *event,
                                                                const GimpCoords *image_coords);
 
+static gboolean   gimp_display_shell_tab_pressed              (GimpDisplayShell *shell,
+                                                               GdkEventKey      *event);
+
 static void       gimp_display_shell_update_focus             (GimpDisplayShell *shell,
                                                                gboolean          focus_in,
                                                                const GimpCoords *image_coords,
@@ -107,10 +110,6 @@ static void       gimp_display_shell_untransform_event_coords (GimpDisplayShell 
                                                                const GimpCoords *display_coords,
                                                                GimpCoords       *image_coords,
                                                                gboolean         *update_software_cursor);
-
-static void       gimp_display_shell_toggle_hide_docks        (GimpDisplayShell *shell);
-static void       gimp_display_shell_show_display_next        (GimpDisplayShell *shell);
-static void       gimp_display_shell_show_display_previous    (GimpDisplayShell *shell);
 
 static GdkEvent * gimp_display_shell_compress_motion          (GimpDisplayShell *shell);
 
@@ -261,11 +260,7 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
         if (kevent->keyval == GDK_KEY_Tab ||
             kevent->keyval == GDK_KEY_ISO_Left_Tab)
           {
-            if (! (kevent->state & GDK_MOD1_MASK))
-              {
-                gimp_display_shell_toggle_hide_docks (shell);
-                return TRUE;
-              }
+            return gimp_display_shell_tab_pressed (shell, kevent);
           }
       }
       break;
@@ -1066,30 +1061,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
               case GDK_KEY_Tab:
               case GDK_KEY_ISO_Left_Tab:
-                if (state & GDK_CONTROL_MASK)
-                  {
-                    if (! gimp_image_is_empty (image))
-                      {
-                        if (kevent->keyval == GDK_KEY_Tab)
-                          gimp_display_shell_layer_select_init (shell,
-                                                                1, kevent->time);
-                        else
-                          gimp_display_shell_layer_select_init (shell,
-                                                                -1, kevent->time);
-                      }
-                  }
-                else if (state & GDK_MOD1_MASK)
-                  {
-                    if (kevent->keyval == GDK_KEY_Tab)
-                      gimp_display_shell_show_display_next (shell);
-                    else
-                      gimp_display_shell_show_display_previous (shell);
-                  }
-                else
-                  {
-                    gimp_display_shell_toggle_hide_docks (shell);
-                  }
-
+                gimp_display_shell_tab_pressed (shell, kevent);
                 return_val = TRUE;
                 break;
 
@@ -1416,39 +1388,6 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 }
 
 static void
-gimp_display_shell_toggle_hide_docks (GimpDisplayShell *shell)
-{
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
-
-  if (window)
-    gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
-                                     "windows",
-                                     "windows-hide-docks");
-}
-
-static void
-gimp_display_shell_show_display_next (GimpDisplayShell *shell)
-{
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
-
-  if (window)
-    gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
-                                     "windows",
-                                     "windows-show-display-next");
-}
-
-static void
-gimp_display_shell_show_display_previous (GimpDisplayShell *shell)
-{
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
-
-  if (window)
-    gimp_ui_manager_activate_action (gimp_image_window_get_ui_manager (window),
-                                     "windows",
-                                     "windows-show-display-previous");
-}
-
-static void
 gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
                                     gint              x,
                                     gint              y)
@@ -1594,6 +1533,53 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 
   shell->space_pressed         = FALSE;
   shell->space_release_pending = FALSE;
+}
+
+static gboolean
+gimp_display_shell_tab_pressed (GimpDisplayShell *shell,
+                                GdkEventKey      *kevent)
+{
+  GimpImageWindow *window  = gimp_display_shell_get_window (shell);
+  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+  GimpImage       *image   = gimp_display_get_image (shell->display);
+
+  if (kevent->state & GDK_CONTROL_MASK)
+    {
+      if (image && ! gimp_image_is_empty (image))
+        {
+          if (kevent->keyval == GDK_KEY_Tab)
+            gimp_display_shell_layer_select_init (shell,
+                                                  1, kevent->time);
+          else
+            gimp_display_shell_layer_select_init (shell,
+                                                  -1, kevent->time);
+
+          return TRUE;
+        }
+    }
+  else if (kevent->state & GDK_MOD1_MASK)
+    {
+      if (image)
+        {
+          if (kevent->keyval == GDK_KEY_Tab)
+            gimp_ui_manager_activate_action (manager, "windows",
+                                             "windows-show-display-next");
+          else
+            gimp_ui_manager_activate_action (manager, "windows",
+                                             "windows-show-display-previous");
+
+          return TRUE;
+        }
+    }
+  else
+    {
+      gimp_ui_manager_activate_action (manager, "windows",
+                                       "windows-hide-docks");
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static void
