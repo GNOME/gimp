@@ -5,58 +5,62 @@
 # of course you can do.  The sessionrc will be entirely rewritten every time
 # you quit GIMP.  If this file isn't found, defaults are used.
 
-(session-info "dock" "dock"
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
     (position 565 170)
     (size 210 535)
     (open-on-exit)
     (aux-info
         (show-image-menu "false")
         (follow-active-image "true"))
-    (dock
+    (gimp-dock
         (book
             (current-page 0)
             (dockable "gimp-layer-list"
                 (tab-style icon)
                 (preview-size 32)))
         (book
-            (position 289)
+            (position 290)
             (current-page 0)
             (dockable "gimp-brush-grid"
                 (tab-style preview)))))
-(session-info "dock" "dock"
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
     (position 140 290)
     (size 405 300)
     (open-on-exit)
     (aux-info
         (show-image-menu "false")
         (follow-active-image "true"))
-    (dock
+    (gimp-dock
         (book
             (current-page 0)
             (dockable "gimp-tool-options"
                 (tab-style icon)))))
-(session-info "dock" "dock"
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
     (position 795 45)
     (size 200 265)
     (open-on-exit)
     (aux-info
         (show-image-menu "true")
         (follow-active-image "true"))
-    (dock
+    (gimp-dock
         (book
             (current-page 1)
             (dockable "gimp-pattern-grid"
                 (tab-style preview))
             (dockable "gimp-gradient-list"
                 (tab-style preview)))))
-(session-info "dock" "dock"
+(session-info "toplevel"
+    (factory-entry "gimp-dock-window")
     (position 805 345)
     (size 200 450)
     (open-on-exit)
     (aux-info
         (show-image-menu "true")
         (follow-active-image "true"))
-    (dock
+    (gimp-dock
         (book
             (current-page 0)
             (dockable "gimp-channel-list"
@@ -71,20 +75,18 @@
                     (edit-active "true")
                     (current-data "Standard")
                     (zoom-factor "2.80"))))))
-# Enable this when we have a way to handle that the toolbox size is
-# likely to change due to the use of GDK_HINT_RESIZE_INC
-# (session-info "toolbox" "dock"
-#     (position 15 35)
-#     (size 95 620)
-#     (open-on-exit))
-(session-info "toplevel" "gimp-file-open-dialog"
+(session-info "toplevel"
+    (factory-entry "gimp-file-open-dialog")
     (position 390 140)
     (size 900 815))
-(session-info "toplevel" "gimp-image-new-dialog"
+(session-info "toplevel"
+    (factory-entry "gimp-image-new-dialog")
     (position 100 100))
-(session-info "display" "gimp-empty-image-window"
+(session-info "toplevel"
+    (factory-entry "gimp-empty-image-window")
     (position 140 30)
-    (size 610 190))
+    (size 610 190)
+    (open-on-exit))
 
 (last-tip-shown 0)
 

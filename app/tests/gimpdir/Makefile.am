@@ -12,4 +12,5 @@ EXTRA_DIST = \
 	sessionrc-2-6		\
 	sessionrc-2-8		\
 	sessionrc-expected	\
+	sessionrc-expected-2-6	\
 	tags.xml
