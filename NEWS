@@ -22,6 +22,7 @@ UI:
  - Cage tool: allow to add handle to the cage when clicking on an edge
  - Cage tool: allow to remove selected handles from the cage by hitting delete
  - Remember column widths in multi-column dock windows
+ - Support starting GIMP in single-window mode
 
 
 Core:
