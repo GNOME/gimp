@@ -488,6 +488,10 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                                                      info);
     }
 
+  if (GIMP_IS_SESSION_MANAGED (dialog) && info->p->aux_info)
+    gimp_session_managed_set_aux_info (GIMP_SESSION_MANAGED (dialog),
+                                       info->p->aux_info);
+
   if (GIMP_IS_DOCK_CONTAINER (dialog))
     {
       GList *iter;
@@ -799,14 +803,6 @@ gimp_session_info_get_info_with_widget (GimpSessionInfo *info,
   gimp_session_info_set_widget (info, widget);
   gimp_session_info_get_info (info);
   gimp_session_info_set_widget (info, old_widget);
-}
-
-GList *
-gimp_session_info_get_aux_info (GimpSessionInfo *info)
-{
-  g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), NULL);
-
-  return info->p->aux_info;
 }
 
 void
