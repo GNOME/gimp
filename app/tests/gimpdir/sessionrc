@@ -27,7 +27,7 @@
 (session-info "toplevel"
     (factory-entry "gimp-dock-window")
     (position 140 290)
-    (size 405 300)
+    (size 445 300)
     (open-on-exit)
     (aux-info
         (show-image-menu "false")
@@ -38,6 +38,7 @@
             (dockable "gimp-tool-options"
                 (tab-style icon))))
     (gimp-dock
+        (position 230)
         (book
             (current-page 0)
             (dockable "gimp-device-status"

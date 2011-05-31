@@ -33,6 +33,7 @@
 #endif
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -44,6 +45,7 @@
 #include "gimpdockcontainer.h"
 #include "gimpdockwindow.h"
 #include "gimperrordialog.h"
+#include "gimpsessioninfo.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -1276,4 +1278,24 @@ gimp_print_event (const GdkEvent *event)
   g_idle_add (gimp_print_event_free, str);
 
   return str;
+}
+
+void
+gimp_session_write_position (GimpConfigWriter *writer,
+                             gint              position)
+{
+  GimpSessionInfoClass *klass;
+  gint                  pos_to_write;
+
+  klass = g_type_class_ref (GIMP_TYPE_SESSION_INFO);
+
+  pos_to_write =
+    gimp_session_info_class_apply_position_accuracy (klass,
+                                                     position);
+
+  gimp_config_writer_open (writer, "position");
+  gimp_config_writer_printf (writer, "%d", pos_to_write);
+  gimp_config_writer_close (writer);
+
+  g_type_class_unref (klass);
 }

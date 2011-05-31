@@ -501,10 +501,29 @@ gimp_session_info_restore (GimpSessionInfo   *info,
        * take care of that during sessionrc parsing
        */
       for (iter = info->p->docks; iter; iter = g_list_next (iter))
-        gimp_session_info_dock_restore ((GimpSessionInfoDock *)iter->data,
-                                        factory,
-                                        screen,
-                                        GIMP_DOCK_CONTAINER (dialog));
+        {
+          GimpSessionInfoDock *dock_info = (GimpSessionInfoDock *) iter->data;
+          GtkWidget           *dock;
+
+          dock =
+            GTK_WIDGET (gimp_session_info_dock_restore (dock_info,
+                                                        factory,
+                                                        screen,
+                                                        GIMP_DOCK_CONTAINER (dialog)));
+
+          if (dock && dock_info->position != 0)
+            {
+              GtkWidget *parent = gtk_widget_get_parent (dock);
+
+              if (GTK_IS_PANED (parent))
+                {
+                  GtkPaned *paned = GTK_PANED (parent);
+
+                  if (dock == gtk_paned_get_child2 (paned))
+                    gtk_paned_set_position (paned, dock_info->position);
+                }
+            }
+        }
     }
 
   g_object_unref (info);

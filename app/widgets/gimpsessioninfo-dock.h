@@ -39,6 +39,9 @@ struct _GimpSessionInfoDock
    */
   GimpAlignmentType  side;
 
+  /* GtkPaned position of this dock */
+  gint               position;
+
   /*  list of GimpSessionInfoBook  */
   GList             *books;
 };

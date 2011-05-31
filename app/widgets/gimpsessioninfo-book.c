@@ -34,6 +34,7 @@
 #include "gimpsessioninfo.h" /* for gimp_session_info_class_apply_position_accuracy() */
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dockable.h"
+#include "gimpwidgets-utils.h"
 
 
 enum
@@ -79,22 +80,7 @@ gimp_session_info_book_serialize (GimpConfigWriter    *writer,
   gimp_config_writer_open (writer, "book");
 
   if (info->position != 0)
-    {
-      GimpSessionInfoClass *klass;
-      gint                  pos_to_write;
-
-      klass = g_type_class_ref (GIMP_TYPE_SESSION_INFO);
-
-      pos_to_write =
-        gimp_session_info_class_apply_position_accuracy (klass,
-                                                         info->position);
-
-      gimp_config_writer_open (writer, "position");
-      gimp_config_writer_printf (writer, "%d", pos_to_write);
-      gimp_config_writer_close (writer);
-
-      g_type_class_unref (klass);
-    }
+    gimp_session_write_position (writer, info->position);
 
   gimp_config_writer_open (writer, "current-page");
   gimp_config_writer_printf (writer, "%d", info->current_page);
@@ -216,7 +202,7 @@ gimp_session_info_book_from_widget (GimpDockbook *dockbook)
 
   parent = gtk_widget_get_parent (GTK_WIDGET (dockbook));
 
-  if (GTK_IS_VPANED (parent))
+  if (GTK_IS_PANED (parent))
     {
       GtkPaned *paned = GTK_PANED (parent);
 

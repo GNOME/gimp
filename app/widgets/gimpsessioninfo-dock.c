@@ -39,11 +39,13 @@
 #include "gimpsessioninfo-dock.h"
 #include "gimpsessioninfo-private.h"
 #include "gimptoolbox.h"
+#include "gimpwidgets-utils.h"
 
 
 enum
 {
   SESSION_INFO_SIDE,
+  SESSION_INFO_POSITION,
   SESSION_INFO_BOOK
 };
 
@@ -124,6 +126,9 @@ gimp_session_info_dock_serialize (GimpConfigWriter    *writer,
       gimp_config_writer_close (writer);
     }
 
+  if (dock_info->position != 0)
+    gimp_session_write_position (writer, dock_info->position);
+
   for (list = dock_info->books; list; list = g_list_next (list))
     gimp_session_info_book_serialize (writer, list->data);
 
@@ -143,6 +148,8 @@ gimp_session_info_dock_deserialize (GScanner             *scanner,
 
   g_scanner_scope_add_symbol (scanner, scope, "side",
                               GINT_TO_POINTER (SESSION_INFO_SIDE));
+  g_scanner_scope_add_symbol (scanner, scope, "position",
+                              GINT_TO_POINTER (SESSION_INFO_POSITION));
   g_scanner_scope_add_symbol (scanner, scope, "book",
                               GINT_TO_POINTER (SESSION_INFO_BOOK));
 
@@ -178,6 +185,12 @@ gimp_session_info_dock_deserialize (GScanner             *scanner,
                 (*dock_info)->side = GIMP_ALIGN_RIGHT;
               break;
 
+            case SESSION_INFO_POSITION:
+              token = G_TOKEN_INT;
+              if (! gimp_scanner_parse_int (scanner, &((*dock_info)->position)))
+                (*dock_info)->position = 0;
+              break;
+
             case SESSION_INFO_BOOK:
               g_scanner_set_scope (scanner, scope + 1);
               token = gimp_session_info_book_deserialize (scanner, scope + 1,
@@ -209,6 +222,7 @@ gimp_session_info_dock_deserialize (GScanner             *scanner,
     }
 
   g_scanner_scope_remove_symbol (scanner, scope, "book");
+  g_scanner_scope_remove_symbol (scanner, scope, "position");
   g_scanner_scope_remove_symbol (scanner, scope, "side");
 
   return token;
@@ -217,8 +231,9 @@ gimp_session_info_dock_deserialize (GScanner             *scanner,
 GimpSessionInfoDock *
 gimp_session_info_dock_from_widget (GimpDock *dock)
 {
-  GimpSessionInfoDock *dock_info = NULL;
-  GList               *list      = NULL;
+  GimpSessionInfoDock *dock_info;
+  GList               *list;
+  GtkWidget           *parent;
 
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
@@ -237,6 +252,16 @@ gimp_session_info_dock_from_widget (GimpDock *dock)
 
   dock_info->books = g_list_reverse (dock_info->books);
   dock_info->side  = gimp_session_info_dock_get_side (dock);
+
+  parent = gtk_widget_get_parent (GTK_WIDGET (dock));
+
+  if (GTK_IS_PANED (parent))
+    {
+      GtkPaned *paned = GTK_PANED (parent);
+
+      if (GTK_WIDGET (dock) == gtk_paned_get_child2 (paned))
+        dock_info->position = gtk_paned_get_position (paned);
+    }
 
   return dock_info;
 }

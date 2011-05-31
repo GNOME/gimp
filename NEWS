@@ -21,6 +21,7 @@ UI:
    create new images from them
  - Cage tool: allow to add handle to the cage when clicking on an edge
  - Cage tool: allow to remove selected handles from the cage by hitting delete
+ - Remember column widths in multi-column dock windows
 
 
 Core:
