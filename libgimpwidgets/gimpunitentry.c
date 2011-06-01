@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 #include <gtk/gtkadjustment.h>
 #include <gtk/gtkspinbutton.h>
+#include <gdk/gdkkeysyms.h>
 
 #include <glib/gprintf.h>
 
@@ -52,6 +53,17 @@ static gboolean gimp_unit_entry_parse (GimpUnitEntry *unitEntry);
  **/
 static gint gimp_unit_entry_focus_out      (GtkWidget          *widget,
                                             GdkEventFocus      *event);
+static gint gimp_unit_entry_button_press   (GtkWidget          *widget,
+                                            GdkEventButton     *event);
+static gint gimp_unit_entry_button_release (GtkWidget          *widget,
+                                            GdkEventButton     *event);
+static gint gimp_unit_entry_scroll         (GtkWidget          *widget,
+                                            GdkEventScroll     *event);
+static gint gimp_unit_entry_key_press      (GtkWidget          *widget,
+                                            GdkEventKey        *event);
+static gint gimp_unit_entry_key_release    (GtkWidget          *widget,
+                                            GdkEventKey        *event);
+
 
 /**
  *  signal handlers
@@ -85,9 +97,11 @@ gimp_unit_entry_init (GimpUnitEntry *unitEntry)
                                   GTK_ADJUSTMENT (adjustment));
 
   /* some default values */
-  gtk_spin_button_set_update_policy (&unitEntry->parent_instance, GTK_UPDATE_ALWAYS);                                            
+  unitEntry->buttonPressed = FALSE;        
+  unitEntry->scrolling = FALSE;                                   
 
   /* connect signals */
+  /* we don't need all of them... */
   g_signal_connect (&unitEntry->parent_instance, 
                     "output",
                     G_CALLBACK(on_output), 
@@ -112,10 +126,14 @@ gimp_unit_entry_init (GimpUnitEntry *unitEntry)
 static void
 gimp_unit_entry_class_init (GimpUnitEntryClass *class)
 {
-  //GtkWidgetClass   *widgetClass = GTK_WIDGET_CLASS (class);
+  GtkWidgetClass   *widgetClass = GTK_WIDGET_CLASS (class);
 
-  /* some events we need to catch instead of our parent */
-  //widgetClass->focus_out_event = gimp_unit_entry_focus_out;
+  /* some events we need to catch before our parent */
+  widgetClass->button_press_event   = gimp_unit_entry_button_press;
+  widgetClass->button_release_event = gimp_unit_entry_button_release;
+  widgetClass->scroll_event         = gimp_unit_entry_scroll;
+  widgetClass->key_press_event      = gimp_unit_entry_key_press;
+  widgetClass->key_release_event    = gimp_unit_entry_key_release;
 
   class->id = 0;
 }
@@ -220,20 +238,29 @@ static gboolean
 on_output (GtkSpinButton *spin, gpointer data)
 {
   gchar *text;
-  GimpUnitAdjustment *adj = GIMP_UNIT_ADJUSTMENT (data);
+  GimpUnitAdjustment *adj   = GIMP_UNIT_ADJUSTMENT (data);
+  GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (spin); 
 
   /* return if widget still has focus => user input must not be overwritten */
-  if (gtk_widget_has_focus (GTK_WIDGET (spin)))
+  if (gtk_widget_has_focus (GTK_WIDGET (spin)) && 
+      !entry->buttonPressed &&
+      !entry->scrolling)
+  {
     return TRUE;
+  }
 
   /* parse once more to prevent value from being overwritten somewhere in GtkSpinButton or 
      GtkEntry. If we don't do that, the entered text is truncated at the first space.
      TODO: find out where and why
-     not very elegant, because we have do deactivate parsing in case the value was not
-     modified by user input but by changes that happened in a connected entry
+     not very elegant, because we have do deactivate parsing in case the value was modified
+     due to a unit change or up/down buttons or keys
   */
-  if(adj->unitChanged)
+  if(adj->unitChanged || entry->buttonPressed || entry->scrolling)
+  {
+    /* reset certain flags */
     adj->unitChanged = FALSE;
+    entry->scrolling = FALSE;
+  }
   else
     gimp_unit_entry_parse (GIMP_UNIT_ENTRY (spin));
   
@@ -262,9 +289,11 @@ void on_insert_text (GtkEditable *editable,
 static 
 void on_text_changed (GtkEditable *editable, gpointer user_data)
 {
+  GimpUnitEntry *entry = GIMP_UNIT_ENTRY (user_data);
+
   g_debug ("on_text_changed\n"); 
-  
-  gimp_unit_entry_parse (GIMP_UNIT_ENTRY (user_data));
+
+  gimp_unit_entry_parse (entry);
 }
 
 /* unit resolver for GimpEevl */
@@ -330,11 +359,7 @@ gint on_input        (GtkSpinButton *spinButton,
                       gpointer       arg1,
                       gpointer       user_data)
 {
-  g_debug ("on_input\n");
-
-  //gimp_unit_entry_parse (GIMP_UNIT_ENTRY (spinButton));
-
-  return 0;
+  return FALSE;
 }
 
 static gint 
@@ -346,4 +371,84 @@ gimp_unit_entry_focus_out (GtkWidget          *widget,
   g_debug ("focus_out\n");
 
   return GTK_WIDGET_CLASS (class)->focus_out_event (widget, event);
+}
+
+static 
+gint gimp_unit_entry_button_press          (GtkWidget          *widget,
+                                            GdkEventButton     *event)
+{
+  GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
+  GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
+
+  /* disable output (i.e. parsing and overwriting of our value) while button pressed */
+  entry->buttonPressed = TRUE;
+   
+  return GTK_WIDGET_CLASS(class)->button_press_event (widget, event);
+}
+static 
+gint gimp_unit_entry_button_release          (GtkWidget          *widget,
+                                              GdkEventButton     *event)
+{
+  GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
+  GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
+
+  /* reenable output */
+  entry->buttonPressed = FALSE;
+   
+  return GTK_WIDGET_CLASS(class)->button_release_event (widget, event);
+}
+
+static 
+gint gimp_unit_entry_scroll                (GtkWidget          *widget,
+                                            GdkEventScroll     *event)
+{
+  GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
+  GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
+
+  entry->scrolling = TRUE;  
+
+  return GTK_WIDGET_CLASS(class)->scroll_event (widget, event);
+}
+
+static 
+gint gimp_unit_entry_key_press      (GtkWidget          *widget,
+                                     GdkEventKey        *event)
+{
+  GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
+  GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
+
+  /* disable output for up/down keys */
+  switch (event->keyval)
+  {
+    case GDK_Up:
+    case GDK_Down:
+      entry->buttonPressed = TRUE;
+      break;
+
+    default:
+      break;
+  }
+   
+  return GTK_WIDGET_CLASS(class)->key_press_event (widget, event);
+}
+static 
+gint gimp_unit_entry_key_release    (GtkWidget          *widget,
+                                     GdkEventKey        *event)
+{
+  GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
+  GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
+
+  /* reenable output */
+  switch (event->keyval)
+  {
+    case GDK_Up:
+    case GDK_Down:
+      entry->buttonPressed = FALSE;
+      break;
+      
+    default:
+      break;
+  }
+   
+  return GTK_WIDGET_CLASS(class)->key_release_event (widget, event);
 }

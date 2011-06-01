@@ -47,6 +47,11 @@ struct _GimpUnitEntry
   GimpUnitAdjustment *unitAdjustment; /* for convinience */
   GimpUnit           enteredUnit;     /* used to determine which unit was entered */
 
+  /* set TRUE while up/down buttons/keys pressed or scrolling so that we can disable
+     our parsing and display the changed value */
+  gboolean          buttonPressed;    
+  gboolean          scrolling;
+
   gint id; /* for debugging */
 };
 
