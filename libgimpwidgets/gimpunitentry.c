@@ -34,16 +34,11 @@
 
 #include "gimpwidgets.h"
 
-#include "gimpeevl.h"
+#include "gimpunitparser.h"
 #include "gimpunitentry.h"
 #include "gimpunitadjustment.h"
 
 G_DEFINE_TYPE (GimpUnitEntry, gimp_unit_entry, GTK_TYPE_SPIN_BUTTON);
-
-/* unit resolver for GimpEevl */
-static gboolean unit_resolver (const gchar      *ident,
-                               GimpEevlQuantity *result,
-                               gpointer          data);
 
 /* read and parse entered text */
 static gboolean gimp_unit_entry_parse (GimpUnitEntry *unitEntry);
@@ -161,68 +156,50 @@ gimp_unit_entry_connect (GimpUnitEntry *entry, GimpUnitEntry *target)
 static gboolean
 gimp_unit_entry_parse (GimpUnitEntry *entry)
 {
-  gdouble           newValue;
-  /* GimpEevl related stuff */
-  GimpEevlQuantity  result;
-  GError            *error    = NULL;
-  const gchar       *errorpos = 0;
-  /* text to parse */
-  const gchar       *str      = gtk_entry_get_text (GTK_ENTRY (entry));
+  GimpUnitParserResult result; 
+  gboolean             success;
+  const gchar          *str = gtk_entry_get_text (GTK_ENTRY (entry));
 
-  if (strlen (str) <= 0)
-    return FALSE;
-  
-  /** 
-   * purpose of enteredUnit: use first unit unit_resolver will be called with  
-   * as entered unit. enteredUnit is reset now to know which unit was the first one
-   **/
-  entry->enteredUnit = -1;
+  /* set resolution (important for correct calculation of px) */
+  result.resolution = entry->unitAdjustment->resolution;
 
-  g_debug ("%i parsing: %s", entry->id, str);
+  /* parse string of entry */
+  success = gimp_unit_parser_parse (str, &result);
 
-  /* parse text via GimpEevl */
-  gimp_eevl_evaluate (str,
-                      unit_resolver,
-                      &result,
-                      (gpointer) entry,
-                      &errorpos,
-                      &error);
-
-  if (error || errorpos)
+  if (!success)
   {
+    /* paint entry red */
     GdkColor color;
     gdk_color_parse ("LightSalmon", &color);
     gtk_widget_modify_base (GTK_WIDGET (entry), GTK_STATE_NORMAL, &color);
 
-    g_debug ("gimpeevl parsing error \n");
     return FALSE;
   }
   else
   {
+    /* reset color */
     gtk_widget_modify_base (GTK_WIDGET (entry), GTK_STATE_NORMAL, NULL);
-    g_debug ("%i gimpeevl parser result: %s = %lg (%d)", entry->id, str, result.value, result.dimension);
-    g_debug ("%i determined unit: %s\n", entry->id, gimp_unit_get_abbreviation (entry->enteredUnit));
 
     /* set new unit */  
-    if (entry->enteredUnit != entry->unitAdjustment->unit)
+    if (result.unit != entry->unitAdjustment->unit)
     {
-      gimp_unit_adjustment_set_unit (entry->unitAdjustment, entry->enteredUnit);
+      gimp_unit_adjustment_set_unit (entry->unitAdjustment, result.unit);
     }
 
     /* set new value */
     if (gimp_unit_adjustment_get_value (entry->unitAdjustment) != result.value)
     {
       /* result from parser is in inch, so convert to desired unit */
-      newValue = gimp_units_to_pixels (result.value,
-                                       GIMP_UNIT_INCH,
-                                       entry->unitAdjustment->resolution);
-      newValue = gimp_pixels_to_units (newValue,
-                                       entry->unitAdjustment->unit, 
-                                       entry->unitAdjustment->resolution);
+      result.value = gimp_units_to_pixels (result.value,
+                                            GIMP_UNIT_INCH,
+                                            entry->unitAdjustment->resolution);
+      result.value = gimp_pixels_to_units (result.value,
+                                            entry->unitAdjustment->unit, 
+                                            entry->unitAdjustment->resolution);
 
-      gimp_unit_adjustment_set_value (entry->unitAdjustment, newValue);
+      gimp_unit_adjustment_set_value (entry->unitAdjustment, result.value);
 
-      g_object_notify (G_OBJECT ( GTK_SPIN_BUTTON (entry)), "value");
+      //g_object_notify (G_OBJECT ( GTK_SPIN_BUTTON (entry)), "value");
     }
   }
 
@@ -294,64 +271,6 @@ void on_text_changed (GtkEditable *editable, gpointer user_data)
   g_debug ("on_text_changed\n"); 
 
   gimp_unit_entry_parse (entry);
-}
-
-/* unit resolver for GimpEevl */
-static gboolean
-unit_resolver (const gchar      *ident,
-               GimpEevlQuantity *result,
-               gpointer          user_data)
-{
-  GimpUnitEntry   *entry       = GIMP_UNIT_ENTRY (user_data);
-  GimpUnit        *unit        = &(entry->enteredUnit);
-  gboolean        resolved     = FALSE;
-  gboolean        default_unit = (ident == NULL);
-  gint            numUnits     = gimp_unit_get_number_of_units ();
-  const gchar     *abbr; 
-  gint            i            = 0;
-
-  result->dimension = 1;
-
-  /* if no unit is specified, use default unit */
-  if (default_unit)
-  {
-    /* if default hasn't been set before, set to inch*/
-    if (*unit == -1)
-      *unit = GIMP_UNIT_INCH;
-
-    result->dimension = 1;
-
-    if (*unit == GIMP_UNIT_PIXEL) /* handle case that unit is px */
-      result->value = gimp_unit_entry_get_adjustment (entry)->resolution;
-    else                          /* otherwise use factor */
-      result->value = gimp_unit_get_factor (*unit);
-
-    resolved          = TRUE; 
-    return resolved;
-  }
-
-  /* find matching unit */
-  for (i = 0; i < numUnits; i++)
-  {
-    abbr = gimp_unit_get_abbreviation (i);
-
-    if (strcmp (abbr, ident) == 0)
-    {
-      /* handle case that unit is px */
-      if (i == GIMP_UNIT_PIXEL)
-        result->value = gimp_unit_entry_get_adjustment (entry)->resolution;
-      else
-        result->value = gimp_unit_get_factor (i);
-
-      if (*unit == -1)
-        *unit = i;
-
-      i = numUnits;
-      resolved = TRUE;
-    }
-  }
-
-  return resolved;
 }
 
 static 
