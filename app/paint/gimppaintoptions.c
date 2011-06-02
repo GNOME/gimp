@@ -710,3 +710,62 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 
   return GIMP_BRUSH_SOFT;
 }
+
+void
+gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
+                                     GimpPaintOptions *dest)
+{
+  gdouble  brush_size;
+  gdouble  brush_angle;
+  gdouble  brush_aspect_ratio;
+
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
+
+  g_object_get (src,
+                "brush-size", &brush_size,
+                "brush-angle", &brush_angle,
+                "brush-aspect-ratio", &brush_aspect_ratio,
+                NULL);
+
+  g_object_set (dest,
+                "brush-size", brush_size,
+                "brush-angle", brush_angle,
+                "brush-aspect-ratio", brush_aspect_ratio,
+                NULL);
+}
+
+void
+gimp_paint_options_copy_dynamics_props (GimpPaintOptions *src,
+                                        GimpPaintOptions *dest)
+{
+  gboolean        dynamics_expanded;
+  gboolean        fade_reverse;
+  gdouble         fade_length;
+  GimpUnit        fade_unit;
+  GimpRepeatMode  fade_repeat;
+
+  gboolean        gradient_reverse;
+
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
+
+    g_object_get (src,
+                  "dynamics-expanded", &dynamics_expanded,
+                  "fade-reverse", &fade_reverse,
+                  "fade-length", &fade_length,
+                  "fade-unit", &fade_unit,
+                  "fade-repeat", &fade_repeat,
+                  "gradient-reverse", &gradient_reverse,
+                  NULL);
+
+  g_object_set (dest,
+                "dynamics-expanded", dynamics_expanded,
+                "fade-reverse", fade_reverse,
+                "fade-length", fade_length,
+                "fade-unit", fade_unit,
+                "fade-repeat", fade_repeat,
+                "gradient-reverse", gradient_reverse,
+                NULL);
+
+}
