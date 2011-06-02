@@ -38,10 +38,19 @@
 #include "gimpunitentry.h"
 #include "gimpunitadjustment.h"
 
+/* debug macro */
+//#define UNITENTRY_DEBUG
+#ifdef  UNITENTRY_DEBUG
+#define DEBUG(x) g_debug x 
+#else
+#define DEBUG(x) /* nothing */
+#endif
+
 G_DEFINE_TYPE (GimpUnitEntry, gimp_unit_entry, GTK_TYPE_SPIN_BUTTON);
 
 /* read and parse entered text */
 static gboolean gimp_unit_entry_parse (GimpUnitEntry *unitEntry);
+
 
 /**
  * event handlers
@@ -59,25 +68,29 @@ static gint gimp_unit_entry_key_press      (GtkWidget          *widget,
 static gint gimp_unit_entry_key_release    (GtkWidget          *widget,
                                             GdkEventKey        *event);
 
-
 /**
  *  signal handlers
  **/
 
 /* format displayed text (signal emmitted by GtkSpinButton before text is displayed) */
-static gboolean on_output   (GtkSpinButton      *spin, 
-                             gpointer           data);
+static gboolean on_output     (GtkSpinButton      *spin, 
+                               gpointer           data);
 /* parse and process entered text (signal emmited from GtkEntry) */
-static void on_text_changed (GtkEditable        *editable,
-                             gpointer           user_data);
-static void on_insert_text  (GtkEditable *editable,
-                             gchar *new_text,
-                             gint new_text_length,
-                             gint *position,
-                             gpointer user_data);
-static gint on_input        (GtkSpinButton *spinbutton,
-                             gpointer       arg1,
-                             gpointer       user_data);
+static void on_text_changed   (GtkEditable        *editable,
+                               gpointer           user_data);
+static void on_insert_text    (GtkEditable *editable,
+                               gchar *new_text,
+                               gint new_text_length,
+                               gint *position,
+                               gpointer user_data);
+static gint on_input          (GtkSpinButton *spinbutton,
+                               gpointer       arg1,
+                               gpointer       user_data);
+static void on_populate_popup (GtkEntry *entry,
+                               GtkMenu  *menu,
+                               gpointer  user_data); 
+static void on_menu_item      (GtkWidget *menuItem,
+                               gpointer *user_data);
 
 static void
 gimp_unit_entry_init (GimpUnitEntry *unitEntry)
@@ -113,6 +126,10 @@ gimp_unit_entry_init (GimpUnitEntry *unitEntry)
                     "changed",
                     G_CALLBACK(on_text_changed), 
                     (gpointer) unitEntry);
+  g_signal_connect (&unitEntry->parent_instance.entry,
+                    "populate-popup",
+                    G_CALLBACK(on_populate_popup), 
+                    NULL);
 
   unitEntry->id = class->id;
   class->id++;
@@ -235,15 +252,17 @@ on_output (GtkSpinButton *spin, gpointer data)
   if(adj->unitChanged || entry->buttonPressed || entry->scrolling)
   {
     /* reset certain flags */
-    adj->unitChanged = FALSE;
-    entry->scrolling = FALSE;
+    if(adj->unitChanged)
+      adj->unitChanged = FALSE;
+    if(entry->scrolling)
+      entry->scrolling = FALSE;
   }
   else
     gimp_unit_entry_parse (GIMP_UNIT_ENTRY (spin));
   
   text = gimp_unit_adjustment_to_string (adj);
 
-  g_debug ("on_output: %s\n", text);
+  DEBUG (("on_output: %s\n", text);)
 
   gtk_entry_set_text (GTK_ENTRY (spin), text);
 
@@ -259,7 +278,7 @@ void on_insert_text (GtkEditable *editable,
                      gint *position,
                      gpointer user_data)
 {
-  g_debug ("on_insert_text\n");
+  DEBUG (("on_insert_text\n");)
 }
 
 /* parse and process entered text (signal emmited from GtkEntry) */
@@ -268,7 +287,7 @@ void on_text_changed (GtkEditable *editable, gpointer user_data)
 {
   GimpUnitEntry *entry = GIMP_UNIT_ENTRY (user_data);
 
-  g_debug ("on_text_changed\n"); 
+  DEBUG (("on_text_changed\n");)
 
   gimp_unit_entry_parse (entry);
 }
@@ -281,13 +300,56 @@ gint on_input        (GtkSpinButton *spinButton,
   return FALSE;
 }
 
+static 
+void on_populate_popup (GtkEntry *entry,
+                        GtkMenu  *menu,
+                        gpointer  user_data)
+{
+  GtkWidget *menuItem;
+  int       i = 0;
+
+  /* populate popup with item for each available unit */
+  menuItem = gtk_separator_menu_item_new ();
+  gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuItem);
+
+  for (i = gimp_unit_get_number_of_units()-1; i >= 0; i--)
+  {
+    menuItem = gtk_menu_item_new_with_label (gimp_unit_get_singular (i));
+    gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuItem);
+    g_signal_connect(menuItem, "activate",
+                     (GCallback) on_menu_item, 
+                     gimp_unit_entry_get_adjustment (GIMP_UNIT_ENTRY (entry)));
+  }
+
+  menuItem = gtk_menu_item_new_with_label ("Set Unit:");
+  gtk_widget_set_sensitive (menuItem, FALSE);
+  gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuItem);
+
+  gtk_widget_show_all (GTK_WIDGET (menu));
+}
+
+static 
+void on_menu_item      (GtkWidget *menuItem,
+                        gpointer *user_data)
+{
+  GimpUnitAdjustment *adj   = GIMP_UNIT_ADJUSTMENT (user_data);
+  gint               i      = 0;
+  const gchar        *label = gtk_menu_item_get_label (GTK_MENU_ITEM (menuItem));
+              
+  /* get selected unit */
+  while (strcmp (gimp_unit_get_singular (i), label) != 0)
+    i++;
+
+  /* change unit according to selected unit */
+  gimp_unit_adjustment_set_unit (adj, i);
+}                        
+
+
 static gint 
 gimp_unit_entry_focus_out (GtkWidget          *widget,
                            GdkEventFocus      *event)
 {
   GtkEntryClass *class = GTK_ENTRY_CLASS (gimp_unit_entry_parent_class);
-
-  g_debug ("focus_out\n");
 
   return GTK_WIDGET_CLASS (class)->focus_out_event (widget, event);
 }
