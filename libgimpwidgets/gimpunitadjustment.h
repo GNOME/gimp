@@ -58,6 +58,7 @@ struct _GimpUnitAdjustmentClass
 
   /* signals */
   guint sig_unit_changed_id;
+  guint sig_resolution_changed_id;
 };
 
 /**

@@ -31,9 +31,17 @@
 #include "gimpwidgets.h"
 #include "gimpunitadjustment.h"
 
+/* debug macro */
+//#define UNITADJUSTMENT_DEBUG
+#ifdef  UNITADJUSTMENT_DEBUG
+#define DEBUG(x) g_debug x 
+#else
+#define DEBUG(x) /* nothing */
+#endif
+
 /* some default values */
 #define DEFAULT_UNIT        GIMP_UNIT_INCH
-#define DEFAULT_RESOLUTION  300.0
+#define DEFAULT_RESOLUTION  72.0
 
 G_DEFINE_TYPE (GimpUnitAdjustment, gimp_unit_adjustment, GTK_TYPE_ADJUSTMENT);
 
@@ -51,6 +59,7 @@ gimp_unit_adjustment_init (GimpUnitAdjustment *unitAdjustment)
   /* set default values */
   gtk_adjustment_set_upper (&unitAdjustment->parent_instance, 10000000.0);
   gtk_adjustment_set_step_increment (&unitAdjustment->parent_instance, 1.0);
+  gtk_adjustment_set_page_increment (&unitAdjustment->parent_instance, 10.0);
   unitAdjustment->unitChanged = FALSE;
 
   /* default unit, resolution */
@@ -71,6 +80,17 @@ gimp_unit_adjustment_class_init (GimpUnitAdjustmentClass *klass)
                                               G_TYPE_NONE, 
                                               1, 
                                               G_TYPE_INT);
+
+  klass->sig_resolution_changed_id = g_signal_new ("resolution-changed",
+                                                    GIMP_TYPE_UNIT_ADJUSTMENT,
+                                                    G_SIGNAL_RUN_LAST,
+                                                    0,
+                                                    NULL, 
+                                                    NULL,
+                                                    g_cclosure_marshal_VOID__INT,
+                                                    G_TYPE_NONE, 
+                                                    1, 
+                                                    G_TYPE_DOUBLE);
 }
 
 GObject *
@@ -84,7 +104,7 @@ unit_changed_handler (GimpUnitAdjustment *adj, GimpUnit unit, gpointer userData)
 {
   GimpUnitAdjustment *adjustment = GIMP_UNIT_ADJUSTMENT (userData);
 
-  adj->unitChanged = TRUE;
+  adjustment->unitChanged = TRUE;
 
   gimp_unit_adjustment_convert_unit (adjustment, unit);
 }
@@ -106,9 +126,9 @@ gimp_unit_adjustment_convert_unit (GimpUnitAdjustment *adj, GimpUnit unit)
   gdouble newValue = 0;
   if (adj->unit != unit)
   {
-    g_debug ("GimpUnitAdjustment: changing unit from %s to %s\n",
+    DEBUG   (("GimpUnitAdjustment: changing unit from %s to %s\n",
              gimp_unit_get_abbreviation (adj->unit),
-             gimp_unit_get_abbreviation (unit));
+             gimp_unit_get_abbreviation (unit));)
 
     /* convert value to new unit */
     newValue = gimp_units_to_pixels (gtk_adjustment_get_value (&(adj->parent_instance)),
@@ -141,11 +161,9 @@ gimp_unit_adjustment_set_unit (GimpUnitAdjustment *adj, GimpUnit unit)
 void
 gimp_unit_adjustment_set_value (GimpUnitAdjustment *adj, gdouble value)
 {
-  g_debug ("set_value: %f", value);
+  DEBUG (("set_value: %f", value);)
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (adj), value);
-
-  //g_debug ("new value: %f\n", gimp_unit_adjustment_get_value (adj));
 }
 gdouble 
 gimp_unit_adjustment_get_value (GimpUnitAdjustment *adj)
@@ -169,7 +187,15 @@ gimp_unit_adjustment_get_value_in_unit (GimpUnitAdjustment *adj, GimpUnit unit)
 void    
 gimp_unit_adjustment_set_resolution (GimpUnitAdjustment *adj, gdouble res)
 {
-  adj->resolution = res;
+  if (adj->resolution != res) 
+  {
+    adj->resolution = res;
+    /* emit "resolution-changed" */
+    g_signal_emit(adj, 
+                  GIMP_UNIT_ADJUSTMENT_GET_CLASS(adj)->sig_resolution_changed_id,
+                  0, 
+                  res);
+  }
 }
 gdouble 
 gimp_unit_adjustment_get_resolution (GimpUnitAdjustment *adj)
@@ -191,7 +217,8 @@ gimp_unit_adjustment_to_string_in_unit (GimpUnitAdjustment *adj, GimpUnit unit)
 
   value = gimp_unit_adjustment_get_value_in_unit (adj, unit);
 
-  g_sprintf (text, "%.2f %s", 
+  g_sprintf (text, "%.*f %s", 
+             gimp_unit_get_digits (unit),
              value,
              gimp_unit_get_abbreviation (unit));
 
