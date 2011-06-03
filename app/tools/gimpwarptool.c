@@ -330,12 +330,22 @@ gimp_warp_tool_oper_update (GimpTool         *tool,
   GimpWarpTool *wt        = GIMP_WARP_TOOL (tool);
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  gimp_draw_tool_pause (draw_tool);
+  if (!gimp_draw_tool_is_active (draw_tool))
+    {
+      gimp_warp_tool_start (wt, display);
+    }
+  else
+    {
+      if (display == tool->display)
+        {
+          gimp_draw_tool_pause (draw_tool);
 
-  wt->cursor_x        = coords->x;
-  wt->cursor_y        = coords->y;
+          wt->cursor_x        = coords->x;
+          wt->cursor_y        = coords->y;
 
-  gimp_draw_tool_resume (draw_tool);
+          gimp_draw_tool_resume (draw_tool);
+        }
+    }
 }
 
 static void
