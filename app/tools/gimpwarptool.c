@@ -291,8 +291,21 @@ gimp_warp_tool_key_press (GimpTool    *tool,
     {
     case GDK_KEY_BackSpace:
     case GDK_KEY_Return:
+      return TRUE;
+
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
+      gimp_tool_control_set_preserve (tool->control, TRUE);
+
+      gimp_image_map_commit (wt->image_map);
+      g_object_unref (wt->image_map);
+      wt->image_map = NULL;
+
+      gimp_tool_control_set_preserve (tool->control, FALSE);
+
+      gimp_image_flush (gimp_display_get_image (display));
+
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return TRUE;
 
     case GDK_KEY_Escape:
