@@ -27,6 +27,9 @@
 
 #include "tools-types.h"
 
+#include "widgets/gimppropwidgets.h"
+#include "widgets/gimpspinscale.h"
+
 #include "gimpwarpoptions.h"
 #include "gimptooloptions-gui.h"
 
@@ -35,7 +38,9 @@
 
 enum
 {
-  PROP_0
+  PROP_0,
+  PROP_EFFECT_STRENGTH,
+  PROP_EFFECT_SIZE
 };
 
 
@@ -62,6 +67,16 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
 
   object_class->set_property = gimp_warp_options_set_property;
   object_class->get_property = gimp_warp_options_get_property;
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
+                                   "effect-strength", _("Effect Strength"),
+                                   0.0, 100.0, 1.0,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_SIZE,
+                                   "effect-size", _("Effect Size"),
+                                   1.0, 10000.0, 40.0,
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -79,6 +94,12 @@ gimp_warp_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_EFFECT_STRENGTH:
+      options->effect_strength = g_value_get_double (value);
+      break;
+    case PROP_EFFECT_SIZE:
+      options->effect_size = g_value_get_double (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -96,6 +117,12 @@ gimp_warp_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_EFFECT_STRENGTH:
+      g_value_set_double (value, options->effect_strength);
+      break;
+    case PROP_EFFECT_SIZE:
+      g_value_set_double (value, options->effect_size);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -108,6 +135,22 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget *strength;
+  GtkWidget *size;
+
+  strength = gimp_prop_spin_scale_new (config, "effect-strength",
+                                        _("Strength"),
+                                        0.01, 1.0, 2);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (strength), 0.0, 10.0);
+  gtk_box_pack_start (GTK_BOX (vbox), strength, FALSE, FALSE, 0);
+  gtk_widget_show (strength);
+
+  size = gimp_prop_spin_scale_new (config, "effect-size",
+                                        _("Size"),
+                                        0.01, 1.0, 2);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (size), 1.0, 1000.0);
+  gtk_box_pack_start (GTK_BOX (vbox),  size, FALSE, FALSE, 0);
+  gtk_widget_show (size);
 
   return vbox;
 }

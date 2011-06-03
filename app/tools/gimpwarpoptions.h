@@ -38,6 +38,9 @@ typedef struct _GimpWarpOptionsClass GimpWarpOptionsClass;
 struct _GimpWarpOptions
 {
   GimpToolOptions  parent_instance;
+
+  gdouble          effect_strength;
+  gdouble          effect_size;
 };
 
 struct _GimpWarpOptionsClass
