@@ -391,32 +391,34 @@ gimp_selection_tool_cursor_update (GimpTool         *tool,
 
 gboolean
 gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
+                                GimpDisplay       *display,
                                 const GimpCoords  *coords)
 {
   GimpTool *tool;
 
   g_return_val_if_fail (GIMP_IS_SELECTION_TOOL (sel_tool), FALSE);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
   tool = GIMP_TOOL (sel_tool);
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY (tool->display), FALSE);
-  g_return_val_if_fail (gimp_tool_control_is_active (tool->control), FALSE);
+  g_return_val_if_fail (gimp_tool_control_is_active (tool->control) == FALSE,
+                        FALSE);
 
   switch (sel_tool->function)
     {
     case SELECTION_MOVE_MASK:
-      gimp_edit_selection_tool_start (tool, tool->display, coords,
+      gimp_edit_selection_tool_start (tool, display, coords,
                                       GIMP_TRANSLATE_MODE_MASK, FALSE);
       return TRUE;
 
     case SELECTION_MOVE:
-      gimp_edit_selection_tool_start (tool, tool->display, coords,
+      gimp_edit_selection_tool_start (tool, display, coords,
                                       GIMP_TRANSLATE_MODE_MASK_TO_LAYER, FALSE);
       return TRUE;
 
     case SELECTION_MOVE_COPY:
-      gimp_edit_selection_tool_start (tool, tool->display, coords,
+      gimp_edit_selection_tool_start (tool, display, coords,
                                       GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER,
                                       FALSE);
       return TRUE;

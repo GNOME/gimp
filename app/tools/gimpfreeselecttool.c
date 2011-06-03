@@ -516,32 +516,6 @@ gimp_free_select_tool_is_point_grabbed (GimpFreeSelectTool *fst)
 }
 
 static void
-gimp_free_select_tool_start (GimpFreeSelectTool *fst,
-                             const GimpCoords   *coords,
-                             GimpDisplay        *display)
-{
-  GimpTool                  *tool      = GIMP_TOOL (fst);
-  GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
-  GimpSelectionOptions      *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (fst);
-  GimpFreeSelectToolPrivate *priv      = GET_PRIVATE (fst);
-
-  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-
-  gimp_tool_control_activate (tool->control);
-
-  tool->display = display;
-
-  gimp_draw_tool_start (draw_tool, display);
-
-  /* We want to apply the selection operation that was current when
-   * the tool was started, so we save this information */
-  priv->operation_at_start = options->operation;
-
-  gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (fst),
-                                  coords);
-}
-
-static void
 gimp_free_select_tool_fit_segment (GimpFreeSelectTool *fst,
                                    GimpVector2        *dest_points,
                                    GimpVector2         dest_start_target,
@@ -963,36 +937,6 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
     }
 }
 
-static gboolean
-gimp_free_select_tool_delegate_button_press (GimpFreeSelectTool *fst,
-                                             const GimpCoords   *coords,
-                                             GimpDisplay        *display)
-{
-  GimpTool *tool                   = GIMP_TOOL (fst);
-  gboolean  button_press_delegated = FALSE;
-
-  /* Only consider delegating if the tool is not active */
-  if (tool->display == NULL)
-    {
-      tool->display = display;
-      gimp_tool_control_activate (tool->control);
-
-      button_press_delegated =
-        gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (fst), coords);
-
-      if (! button_press_delegated)
-        {
-          /* Nope, the selection mask edit stuff was not interested, reset
-           * the situation
-           */
-          gimp_tool_control_halt (tool->control);
-          tool->display = NULL;
-        }
-    }
-
-  return button_press_delegated;
-}
-
 static void
 gimp_free_select_tool_update_motion (GimpFreeSelectTool *fst,
                                      gdouble             new_x,
@@ -1259,27 +1203,35 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
   GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
   GimpFreeSelectTool        *fst       = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv      = GET_PRIVATE (fst);
+  GimpSelectionOptions      *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
-  /* First of all handle delegation to the selection mask edit logic
-   * if appropriate
-   */
-  if (gimp_free_select_tool_delegate_button_press (fst,
-                                                   coords,
-                                                   display))
+  if (tool->display && tool->display != display)
+    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+
+  if (tool->display == NULL)
     {
-      return;
+      /* First of all handle delegation to the selection mask edit logic
+       * if appropriate.
+       */
+      if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (fst),
+                                          display, coords))
+        {
+          return;
+        }
+
+      tool->display = display;
+
+      gimp_draw_tool_start (draw_tool, display);
+
+      /* We want to apply the selection operation that was current when
+       * the tool was started, so we save this information
+       */
+      priv->operation_at_start = options->operation;
     }
 
   gimp_tool_control_activate (tool->control);
 
   gimp_draw_tool_pause (draw_tool);
-
-  if (display != tool->display)
-    {
-      gimp_free_select_tool_start (fst,
-                                   coords,
-                                   display);
-    }
 
   if (gimp_free_select_tool_is_point_grabbed (fst))
     {

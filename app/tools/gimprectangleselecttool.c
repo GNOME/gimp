@@ -343,27 +343,6 @@ gimp_rectangle_select_tool_draw (GimpDrawTool *draw_tool)
   gimp_rectangle_tool_draw (draw_tool, stroke_group);
 }
 
-static gboolean
-gimp_rectangle_select_tool_delegate_button_press (GimpRectangleSelectTool *rect_sel_tool,
-                                                  const GimpCoords        *coords,
-                                                  GimpDisplay             *display)
-{
-  GimpTool    *tool                   = GIMP_TOOL (rect_sel_tool);
-  gboolean     button_press_delegated = FALSE;
-  GimpDisplay *old_display            = tool->display;
-
-  tool->display = display;
-  gimp_tool_control_activate (tool->control);
-
-  button_press_delegated =
-    gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (tool), coords);
-
-  gimp_tool_control_halt (tool->control);
-  tool->display = old_display;
-
-  return button_press_delegated;
-}
-
 static void
 gimp_rectangle_select_tool_button_press (GimpTool            *tool,
                                          const GimpCoords    *coords,
@@ -388,9 +367,8 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
       gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
     }
 
-  if (gimp_rectangle_select_tool_delegate_button_press (rect_sel_tool,
-                                                        coords,
-                                                        display))
+  if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (tool),
+                                      display, coords))
     {
       /* In some cases we want to finish the rectangle select tool
        * and hand over responsability to the selection tool

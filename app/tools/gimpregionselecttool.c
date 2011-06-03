@@ -152,11 +152,14 @@ gimp_region_select_tool_button_press (GimpTool            *tool,
   region_sel->y               = coords->y;
   region_sel->saved_threshold = options->threshold;
 
+  if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (region_sel),
+                                      display, coords))
+    {
+      return;
+    }
+
   gimp_tool_control_activate (tool->control);
   tool->display = display;
-
-  if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (region_sel), coords))
-    return;
 
   gimp_tool_push_status (tool, display,
                          _("Move the mouse to change threshold"));
