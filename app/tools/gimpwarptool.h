@@ -41,6 +41,9 @@ struct _GimpWarpTool
 {
   GimpDrawTool    parent_instance;
 
+  gdouble         cursor_x; /* Hold the cursor x position */
+  gdouble         cursor_y; /* Hold the cursor y position */
+
   GeglBuffer     *coords_buffer; /* Gegl buffer where coordinates are stored */
 
   GeglNode       *coords_node; /* Gegl node that read in the coords buffer */
