@@ -23,6 +23,10 @@ UI:
  - Cage tool: allow to remove selected handles from the cage by hitting delete
  - Remember column widths in multi-column dock windows
  - Support starting GIMP in single-window mode
+ - When the brush is shared among paint tools, also share all
+   brush-modifying paint options
+ - Use ALT+number and ALT+Tab shortcuts to navigate between images
+   in both single- and multi-window mode
 
 
 Core:
@@ -32,11 +36,8 @@ Core:
  - Add a GimpIdTable utility class
  - Add a GimpDockContainer interface
  - Add a GimpSessionManaged interface
-
-
-GEGL:
-
- - foo
+ - Add GimpCanvasRectangleGuides which makes the rectangle tool's
+   guides draw properly
 
 
 Libgimp:
@@ -45,7 +46,8 @@ Libgimp:
  - Add API to create layers from cairo surfaces
  - Make it impossible to include individual files from any GIMP
    library. This was always forbidden and designed so it most
-   probably breaks, but now it reliably breaks using #error.
+   probably breaks, but now it reliably breaks using #error
+ - Deprecate the "set_sensitive" logic and use g_object_bind_property()
 
 
 Plug-ins:
@@ -55,10 +57,7 @@ Plug-ins:
  - Fix the annoying parser build warnings in imagemap
  - Add a check-for-deprecated-procedures-in-script-fu make target
  - Update libpng code to not use deprecated API (file-mng and file-png)
-
-Data:
-
- - foo
+ - Add an Item class to pygimp
 
 
 Developer documentation:
@@ -74,7 +73,6 @@ Source and build system:
 
 General:
 
- - foo
  - Some more undeprecations now that we use GTK+ 2.24
  - Fix lots of warnings that are new in -Wall in GCC 4.6
  - Lots of bug fixes and cleanup
