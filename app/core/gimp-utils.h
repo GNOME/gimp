@@ -28,6 +28,10 @@
   g_timer_destroy (_timer); }
 
 
+#define MIN4(a,b,c,d) MIN (MIN ((a), (b)), MIN ((c), (d)))
+#define MAX4(a,b,c,d) MAX (MAX ((a), (b)), MAX ((c), (d)))
+
+
 gint64       gimp_g_type_instance_get_memsize      (GTypeInstance   *instance);
 gint64       gimp_g_object_get_memsize             (GObject         *object);
 gint64       gimp_g_hash_table_get_memsize         (GHashTable      *hash,

@@ -24,6 +24,7 @@
 #include "core-types.h"
 
 #include "gimp-transform-resize.h"
+#include "gimp-utils.h"
 
 
 #if defined (HAVE_FINITE)
@@ -36,9 +37,7 @@
 #error "no FINITE() implementation available?!"
 #endif
 
-#define EPSILON       0.00000001
-#define MIN4(a,b,c,d) MIN(MIN((a),(b)),MIN((c),(d)))
-#define MAX4(a,b,c,d) MAX(MAX((a),(b)),MAX((c),(d)))
+#define EPSILON 0.00000001
 
 
 typedef struct

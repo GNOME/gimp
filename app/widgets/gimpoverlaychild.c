@@ -27,6 +27,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp-utils.h"
+
 #include "gimpoverlaybox.h"
 #include "gimpoverlaychild.h"
 
@@ -490,9 +492,6 @@ gimp_overlay_child_transform_bounds (GimpOverlayChild *child,
   cairo_matrix_transform_point (&child->matrix, &x2, &y2);
   cairo_matrix_transform_point (&child->matrix, &x3, &y3);
   cairo_matrix_transform_point (&child->matrix, &x4, &y4);
-
-#define MIN4(a,b,c,d) MIN(MIN((a),(b)),MIN((c),(d)))
-#define MAX4(a,b,c,d) MAX(MAX((a),(b)),MAX((c),(d)))
 
   bounds_box->x      = (gint) floor (MIN4 (x1, x2, x3, x4));
   bounds_box->y      = (gint) floor (MIN4 (y1, y2, y3, y4));

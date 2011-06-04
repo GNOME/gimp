@@ -45,6 +45,7 @@
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimp-transform-utils.h"
+#include "core/gimp-utils.h"
 
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpstroke.h"
@@ -68,8 +69,6 @@
 
 #define RESPONSE_RESET  1
 #define MIN_HANDLE_SIZE 6
-#define MIN4(a,b,c,d)   MIN(MIN((a),(b)),MIN((c),(d)))
-#define MAX4(a,b,c,d)   MAX(MAX((a),(b)),MAX((c),(d)))
 
 
 static void      gimp_transform_tool_finalize               (GObject               *object);
