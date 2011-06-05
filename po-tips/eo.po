@@ -1,27 +1,24 @@
-# translation of gimp20-tips.po to Esperanto language
-# Copyright (C) 2003, 2004 Free Software Foundation, Inc.
-# Antonio C. Codazzi "la Filozofo" <f_sophia@libero.it> 2006
-#
-# check Esperanto letters= ĉŝĝĥĵŭ
+# Esperanto translation for GIMP tips.
+# Copyright (C) 2006-2011 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
+# Antonio C. CODAZZI "la Filozofo" <f_sophia@libero.it>, 2006.
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-07 22:40+0100\n"
-"PO-Revision-Date: 2007-01-09 09:40+0200\n"
-"Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
-"Language-Team: eo-tradukado.tuxfamily.org\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-04-17 09:04+0000\n"
+"PO-Revision-Date: 2011-06-05 18:11+0200\n"
+"Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
+"Language-Team: Esperanto <ubuntu-l10n-eo@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr ""
-"<big>Bonvenon al bildmanipulilo GIMP (GNU Image Manipulation Program)!</big>"
-
-#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -32,18 +29,18 @@ msgstr ""
 "utiligata fona koloro anstataŭ malfona koloro. Simile per <tt>Strkl</tt>-"
 "alklako kun eltirilo, iĝos utiligata fona koloro anstataŭ malfona koloro."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
 "mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr ""
 "<tt>Strkl</tt>-alklako sur antaŭmontro de tavolmasko en TAVOLOJ "
-"dialogofenestro permesas kaŝi efekton de tavolmasko. <tt>Alt</tt>-"
-"alklako sur antaŭmontro de tavolmasko en TAVOLOJ fenestro permesas "
-"videbligi nur la maskon."
+"dialogofenestro permesas kaŝi efekton de tavolmasko. <tt>Alt</tt>-alklako "
+"sur antaŭmontro de tavolmasko en TAVOLOJ fenestro permesas videbligi nur la "
+"maskon."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -51,7 +48,7 @@ msgstr ""
 "Per <tt>Ctrl</tt>-treno kun ilo de Rotacio, la turno estos devigita laŭ "
 "anguloj je 15 gradoj."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -60,7 +57,7 @@ msgstr ""
 "ĉiujn tavolojn krom tiu kiu estas rilata la okulon. Per <tt>Shift</tt>-"
 "alklako, ĉiuj tavoloj re-aperos."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -72,7 +69,7 @@ msgstr ""
 "Tavolo&quot; aŭ &quot;Ankru Tavolo&quot; en TAVOLOJ dialogofenestro aŭ uzu "
 "erojn de menuo por fari la samajn agojn."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -85,11 +82,11 @@ msgstr ""
 "Post aktivado de &quot;Dinamikaj Klavarkurtvojoj&quot; en AGORDOJ, vi povas "
 "reatribui klavarkurtvojojn. Estas sufice ke vi malfermu menuon, elektu eron, "
 "kaj premu celitan klavkombinon. Se la opcio &quot;Konservu Klavarkurtvojojn "
-"Elire&quot; estas ebligita, la klavkombino estos konservata elirante el GIMP. "
-"Vi devus malebligi  &quot;Dinamikaj Klavarkurtvojoj&quot; por antaŭeviti "
-"hazardajn atribuojn/reatribuojn de klavarkurtvojoj."
+"Elire&quot; estas ebligita, la klavkombino estos konservata elirante el "
+"GIMP. Vi devus malebligi  &quot;Dinamikaj Klavarkurtvojoj&quot; por "
+"antaŭeviti hazardajn atribuojn/reatribuojn de klavarkurtvojoj."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -99,15 +96,7 @@ msgstr ""
 "trenitaj elektoj alkroĉiĝos al la gvidreloj. Vi povas formovi la gvidrelojn "
 "eltrenante ilin el la bildo per MOVILO."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
-msgid ""
-"GIMP allows you to undo most changes to the image, so feel free to "
-"experiment."
-msgstr ""
-"GIMP permesas nuligi la plejmulton da ŝanĝoj de la bildoj, do sentu vin "
-"libera eksperimenti!"
-
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
@@ -118,7 +107,7 @@ msgstr ""
 "konserviĝos kunpremita. Memkompreneble funkcias ankaŭ ŝargado por "
 "kunpremitaj bildoj."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -128,7 +117,7 @@ msgstr ""
 "de diapozitivoj aŭ filtriloj, tiel ke, rigardante tra ili, vi povas vidi "
 "komponaĵon de la tuta enteno."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -138,7 +127,7 @@ msgstr ""
 "litertipo</b>, tio signifas ke ĉi tavolo ne havas alfa-kanalon. Ĉiukaze vi "
 "povas aldoni ĝin per Tavolo→Diafaneco→Aldonu Alfa-Kanalon."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -147,10 +136,10 @@ msgid ""
 msgstr ""
 "Se la koloroj de viaj diĝitigitaj fotoj ne aspektas intensaj sufiĉe, vi "
 "povas facile plibonigi nuancon per &quot;Auto&quot; butono en Ilo de Niveloj"
-"(Koloroj→Niveloj). Se kolordominatoj ekzistas, vi povas korekti ilin per "
-"la ilo KURBOJ (Koloroj→Kurboj)."
+"(Koloroj→Niveloj). Se kolordominatoj ekzistas, vi povas korekti ilin per la "
+"ilo KURBOJ (Koloroj→Kurboj)."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -160,7 +149,7 @@ msgstr ""
 "uzataj kun iliaj nunaj  agordoj. La Peniko estas uzebla per gradiento kaj eĉ "
 "Gumo aŭ Stompilo."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -169,17 +158,17 @@ msgstr ""
 "fenestro de la bildo por kaŝi aŭ montri ilostangon aŭ aliaj "
 "dialogofenestrojn."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
 "in to work on the whole image."
 msgstr ""
 "La plejmulto da kromaĵoj laboras super nuna tavolo de la nuna bildo. "
-"Kelkfoje estas necese ke oni unuigu ĉiujn tavolojn (Bildo→Platigu Bildon),"
-" se oni volas ke la kromaĵo efikas sur tuta bildo."
+"Kelkfoje estas necese ke oni unuigu ĉiujn tavolojn (Bildo→Platigu Bildon), "
+"se oni volas ke la kromaĵo efikas sur tuta bildo."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -188,10 +177,10 @@ msgid ""
 msgstr ""
 "Estas neeble apliki ĉiujn efektojn al ĉiuspeco de bildo. Se ĝi estas neeble, "
 "la rilata menuo-ero aspektos griza. Vi devus ŝanĝi la moduson de la bildo al "
-"RGB (Bildo→Moduso→RGB) aŭ aldoni alfa-kanalon (Tavoloj→Diafaneco→Aldonu "
-"alfa-kanalon) aŭ platigi ĝin (Bildo→Platigita Bildo)."
+"RGB (Bildo→Moduso→RGB) aŭ aldoni alfa-kanalon (Tavoloj→Diafaneco→Aldonu alfa-"
+"kanalon) aŭ platigi ĝin (Bildo→Platigita Bildo)."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -201,21 +190,7 @@ msgstr ""
 "elekton anstataŭ anstataŭigi ĝin. Uzu <tt>Strkl</tt> por depreni elekton el "
 "la nuna."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
-msgid ""
-"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-"ellipse select. To place a circle precisely, drag horizontal and vertical "
-"guides tangent to the circle you want to select, place your cursor at the "
-"intersection of the guides, and the resulting selection will just touch the "
-"guides."
-msgstr ""
-"Por krei perfektan cirklon, premu <tt>Ŝvkl</tt> dum elipsa elekto. "
-"Por zorge loki cirklon, trenu horizontalajn kaj vertikalajn gvidrelojn "
-"tanĝante al cirklo kiun vi volas elekti, do loki indikilon (aŭ celumilon) "
-"sur la interkruciĝo de la gvidreloj: la rezultanta elekto tuŝos la "
-"gvidrelojn."
-
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -227,16 +202,23 @@ msgstr ""
 "kaj iun ajn proprecon de via evoluanta laboraĵo. Kiam la projekto estas "
 "finita, vi povas konservi ĝin kiel JPEG, PNG, GIF, ..."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/gimp-tips.xml.in.h:18
+#| msgid ""
+#| "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this "
+#| "makes the window move, your window manager uses the <tt>Alt</tt> key "
+#| "already."
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
-"the window move, your window manager uses the <tt>Alt</tt> key already."
+"the window move, your window manager uses the <tt>Alt</tt> key already. Most "
+"window managers can be configured to ignore the <tt>Alt</tt> key or to use "
+"the <tt>Super</tt> key (or \"Windows logo\") instead."
 msgstr ""
 "Vi povas aranĝi aŭ movi elekton per uzo de <tt>Alt</tt>-treno. Se la "
-"fenestro moviĝas, la kialo estas ke via fenestroadministrilo jam uzas "
-"<tt>Alt</tt> klavon."
+"fenestro moviĝas, via fenestroadministrilo jam uzas la <tt>Alt</tt>-klavon. "
+"Eblas agordi multajn fenestroadministrilon tiel ke ili ignoras la <tt>Alt</"
+"tt>-klavon aŭ uzi la <tt>Super</tt>-klavon (aŭ \"Vindoza klavo\") anstataŭe."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -246,7 +228,7 @@ msgstr ""
 "dialogofenestro de Strekoj eblas al vi labori super multaj strekojn kaj "
 "konverti ilin en elektoj."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -254,7 +236,7 @@ msgstr ""
 "Vi povas treni tavolon el dialogofenestro pri Tavoloj kaj lasi ĝin en la "
 "fenestro de la iloj. Tio kreos novan bildon kiu entenos nur tiun tavolon."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -264,7 +246,7 @@ msgstr ""
 "koloron el fenestro de iloj aŭ el paletro kaj lasante tiun en la bildo, vi "
 "plenigos la bildon mem aŭ la elekton per ĉi tiu koloro."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -272,18 +254,20 @@ msgid ""
 msgstr ""
 "Vi povas desegni simplajn kvadratojn aŭ cirklojn per Redaktu→Konturu "
 "Elekton. Ĝi konturas la randojn de via nuna elekto. Pli kompleksaj formoj "
-"estas desegneblaj per iloj de Motivo aŭ per uzo de Filtriloj→Transdono"
-"→Gfig."
+"estas desegneblaj per iloj de Motivo aŭ per uzo de Filtriloj→Transdono→Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:23
+#| msgid ""
+#| "You can get context-sensitive help for most of the GIMP's features by "
+#| "pressing the F1 key at any time. This also works inside the menus."
 msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Vi povas ĉiumomente akiri kuntekstan helpon pri karakterizaĵoj de GIMPo per "
-"premo de F1 klavo. Tio funkcias ankaŭ en menuoj."
+"Vi povas ĉiam akiri kuntekst-rilatan helpon pri trajtoj de GIMPo per premo "
+"de la F1-klavo. Tio funkcias ankaŭ en menuoj."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -291,35 +275,39 @@ msgstr ""
 "Vi povas fari multajn agojn per dekstra alklako sur la (teksto)slipo de "
 "tavolo en la fenestro pri Tavoloj."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
 msgstr ""
-"Vi povas konservi elekton laŭ kanalo (Elektu→Konservu en Kanalo) kaj "
-"poste redakti ĝin per iloj de desegno. Uzante butonojn en dialogfenestro de "
+"Vi povas konservi elekton laŭ kanalo (Elektu→Konservu en Kanalo) kaj poste "
+"redakti ĝin per iloj de desegno. Uzante butonojn en dialogfenestro de "
 "Kanaloj, vi povas mastrumi videblecon de ĉi tiu nova kanalo aŭ konverti ĝin "
 "en elekto."
 
-#: ../data/tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
 msgstr ""
-"Vi povas uzi <tt>Strkl</tt>-<tt>Tab</tt> por movi tra tavoloj en bildo (se ĉi "
-"tiuj klavoj ne estas jam uzataj de la fenestroadministrilo)."
+"Vi povas uzi <tt>Strkl</tt>-<tt>Tab</tt> por movi tra tavoloj en bildo (se "
+"ĉi tiuj klavoj ne estas jam uzataj de la fenestroadministrilo)."
 
-#: ../data/tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:27
+#, fuzzy
+#| msgid ""
+#| "You can use the middle mouse button to pan around the image (or "
+#| "optionally hold <tt>Spacebar</tt> while you move the mouse.)"
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
-"hold <tt>Spacebar</tt> while you move the mouse.)"
+"hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
-"Vi povas uzi centran butonon de la muso (aŭ laŭvole <tt>Spacoklavo</tt>  "
-"dum la movo de muso) por ĉirkaŭiri en la bildo mem."
+"Vi povas uzi la mezan mus-butonon (aŭ laŭvole <tt>Spacoklavo</tt>  dum la "
+"movo de muso) por ĉirkaŭiri en la bildo mem."
 
-#: ../data/tips/gimp-tips.xml.in.h:31
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -330,3 +318,28 @@ msgstr ""
 "Rapidmasko&quot; butonon en maldekstro-suba parto de la bildofenestro. Ŝanĝu "
 "elekton disegnante en la bildo kaj klaku denove sur la butono por konverti "
 "ĝin al normala elekto."
+
+#~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
+#~ msgstr ""
+#~ "<big>Bonvenon al bildmanipulilo GIMP (GNU Image Manipulation Program)!</"
+#~ "big>"
+
+#~ msgid ""
+#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "experiment."
+#~ msgstr ""
+#~ "GIMP permesas nuligi la plejmulton da ŝanĝoj de la bildoj, do sentu vin "
+#~ "libera eksperimenti!"
+
+#~ msgid ""
+#~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+#~ "ellipse select. To place a circle precisely, drag horizontal and vertical "
+#~ "guides tangent to the circle you want to select, place your cursor at the "
+#~ "intersection of the guides, and the resulting selection will just touch "
+#~ "the guides."
+#~ msgstr ""
+#~ "Por krei perfektan cirklon, premu <tt>Ŝvkl</tt> dum elipsa elekto. Por "
+#~ "zorge loki cirklon, trenu horizontalajn kaj vertikalajn gvidrelojn "
+#~ "tanĝante al cirklo kiun vi volas elekti, do loki indikilon (aŭ celumilon) "
+#~ "sur la interkruciĝo de la gvidreloj: la rezultanta elekto tuŝos la "
+#~ "gvidrelojn."
