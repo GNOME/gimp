@@ -194,7 +194,7 @@ gimp_tool_preset_editor_set_data (GimpDataEditor *editor,
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
 
-  if (editor->data)
+  if (editor->data && preset_editor->tool_preset_model)
     {
       GimpToolInfo *tool_info;
       const gchar  *stock_id;
