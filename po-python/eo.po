@@ -1,307 +1,364 @@
-# This is the Esperanto catalog for The GIMP.
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Antonio C. Codazzi "la Filozofo"    2006
+# Esperanto translation for GIMP python.
+# Copyright (C) 2006-2011 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
+# Antonio C. CODAZZI "la Filozofo" < >, 2006.
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-30 10:22+0100\n"
-"PO-Revision-Date: 2007-01-09 16:25+0200\n"
-"Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
-"Language-Team: eo-tradukado.tuxfamily.org\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-05-13 14:52+0000\n"
+"PO-Revision-Date: 2011-06-05 17:23+0200\n"
+"Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
+"Language-Team: Esperanto <ubuntu-l10n-eo@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:335
+#: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
 msgstr "Mankas informoj pri esceptoj"
 
-#: ../plug-ins/pygimp/gimpfu.py:344
+#: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
-msgid "An error occured running %s"
-msgstr "Eraro dum procezado de %s"
+#| msgid "An error occured running %s"
+msgid "An error occurred running %s"
+msgstr "Eraro dum rulo de %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:355
+#: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
 msgstr "Pl_uaj Informoj"
 
-#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
-#: ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
+#: ../plug-ins/pygimp/gimpfu.py:544
 msgid "No"
 msgstr "Ne"
 
-#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
 msgid "Yes"
 msgstr "Jes"
 
-#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
-msgstr "Elekto de Python-Fu Dosiero"
+msgstr "Elekto de Python-Fu-dosiero"
 
-#: ../plug-ins/pygimp/gimpfu.py:528
+#: ../plug-ins/pygimp/gimpfu.py:607
 msgid "Python-Fu Folder Selection"
-msgstr "Elekto de Python-Fu Dosierujo"
+msgstr "Elekto de Python-Fu-dosierujo"
 
-#: ../plug-ins/pygimp/gimpfu.py:618
+#: ../plug-ins/pygimp/gimpfu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Nevalida enigo por \"%s\""
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
-msgstr "Elekto de Python-Fu Koloro"
+msgstr "Elekto de Python-Fu-koloro"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Konservante kiel kolorita XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
-msgstr "Konservu kiel kolorita XHTML"
+msgstr "Konservi kiel kolorita XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "Kolorita XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
-msgid "Character source"
-msgstr "Tipara fonto"
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#| msgid "Character source"
+msgid "Character _source"
+msgstr "Signo_fonto"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Fontkodo"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Textdosiero"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Texteniga fako"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-msgid "File to read or characters to use"
-msgstr "Legenda dosiero aŭ uzendaj tiparoj"
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#| msgid "File to read or characters to use"
+msgid "_File to read or characters to use"
+msgstr "_Legenda dosiero aŭ uzendaj signoj"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Font size in pixels"
-msgstr "Tipargrandeco per bilderoj"
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#| msgid "Font size in pixels"
+msgid "Fo_nt size in pixels"
+msgstr "_Tipargrando per bilderoj"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Write a separate CSS file"
-msgstr "Skribu apartan CSS-dosieron"
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#| msgid "Write a separate CSS file"
+msgid "_Write a separate CSS file"
+msgstr "_Skribi apartan CSS-dosieron"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+msgid "Gradient to use"
+msgstr "Uzenda gradiento"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+msgid "File Name"
+msgstr "Dosiernomo"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "Add a layer of fog"
+msgstr "Aldoni nebultavolon"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Fog..."
+msgstr "_Nebulo"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#| msgid "Layer name"
+msgid "_Layer name"
+msgstr "_Tavolnomo"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+msgid "Clouds"
+msgstr "Nuboj"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#| msgid "Fog color"
+msgid "_Fog color"
+msgstr "_Nebula koloro"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#| msgid "Turbulence"
+msgid "_Turbulence"
+msgstr "_Turbulento"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+#| msgid "Opacity"
+msgid "Op_acity"
+msgstr "Op_akeco"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
+msgid "Offset the colors in a palette"
+msgstr "Delokado de koloroj en paletro"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+msgid "_Offset Palette..."
+msgstr "Del_okado de paletro..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+msgid "Palette"
+msgstr "Paletro"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#| msgid "Offset"
+msgid "Off_set"
+msgstr "_Delokado"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+msgid "Sort the colors in a palette"
+msgstr "Ordigi kolorojn en paletro"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+msgid "_Sort Palette..."
+msgstr "Ordigi pa_letron..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#| msgid "Color model"
+msgid "Color _model"
+msgstr "Kolor-modelo"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "RGB"
+msgstr "RVB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "HSV"
+msgstr "NSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#| msgid "Channel to sort"
+msgid "Channel to _sort"
+msgstr "_Ordigenda kanalo"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Red or Hue"
+msgstr "Ruĝo aŭ nuanco"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Green or Saturation"
+msgstr "Verdo aŭ satureco"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Blue or Value"
+msgstr "Bluo aŭ valoro"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#| msgid "Ascending"
+msgid "_Ascending"
+msgstr "_Kreskante"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Krei ripetan gradienton per paletraj koloroj"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+msgid "Palette to _Repeating Gradient"
+msgstr "Paletro laŭ _ripeta gradiento"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
+msgid "Create a gradient using colors from the palette"
+msgstr "Krei gradienton per paletraj koloroj"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette to _Gradient"
+msgstr "Paletro laŭ _gradiento"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
+msgid "Slice"
+msgstr "Tranĉo"
+
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+"Eltondi bildon laŭ siaj gvidreloj, kreu bildojn kaj pecon de HTML-tabelo"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+msgid "_Slice..."
+msgstr "_Tranĉo..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Path for HTML export"
+msgstr "Raŭto de HTML-elporto"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+msgid "Filename for export"
+msgstr "Elportenda dosiernomo"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+msgid "Image name prefix"
+msgstr "Bildnoma prefikso"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Image format"
+msgstr "Bildformato"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+msgid "Separate image folder"
+msgstr "Aparta bildodosierujo"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+msgid "Folder for image export"
+msgstr "Dosierujo por bildelporto"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Space between table elements"
+msgstr "Spaco inter elementoj de tabelo"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javaskripto por \"onmouseover\" kaj \"clicked\""
+
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+msgid "Skip animation for table caps"
+msgstr "Preterlasi animacion de tabeloj"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:56
 msgid "Python Console"
-msgstr "Python Konzolo"
+msgstr "Python-konzolo"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
+#: ../plug-ins/pygimp/plug-ins/python-console.py:60
 msgid "_Browse..."
 msgstr "_Foliumi..."
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+#: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
-msgstr "Navigilo por Python Proceduroj"
+msgstr "Navigilo por Python-proceduroj"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Estas neeble malfermi '%s' por skribi: %s"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#: ../plug-ins/pygimp/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Estas neeble skribi en '%s': %s"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+#: ../plug-ins/pygimp/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
-msgstr "Konservu Eligon de Python-Fu Konzolo"
+msgstr "Konservi eligon de Python-Fu-konzolo"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Interaktiva interpretilo Gimp-Python"
+#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#| msgid "Interactive Gimp-Python interpreter"
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interaktiva interpretilo \"GIMP-Python\""
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+#: ../plug-ins/pygimp/plug-ins/python-console.py:221
 msgid "_Console"
 msgstr "_Konzolo"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
-msgid "Add a layer of fog"
-msgstr "Aldonu nebultavolon"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
-msgid "_Fog..."
-msgstr "_Nebulo"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
-msgid "Layer name"
-msgstr "Tavolnomo"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
-msgid "Clouds"
-msgstr "Nuboj"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:60
-msgid "Fog color"
-msgstr "Nebula koloro"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "Turbulence"
-msgstr "Turbulo"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
-msgid "Opacity"
-msgstr "Opakeco"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
-msgid "Offset the colors in a palette"
-msgstr "Delokado de koloroj en paletro"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
-msgid "_Offset Palette..."
-msgstr "Del_okado de Paletro..."
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
-msgid "Palette"
-msgstr "Paletro"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
-msgid "Offset"
-msgstr "Delokado"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
-msgid "Sort the colors in a palette"
-msgstr "Ordigu kolorojn en paletro"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
-msgid "_Sort Palette..."
-msgstr "Ordigu Pa_letron..."
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "Color model"
-msgstr "Modelo de Koloro"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "RGB"
-msgstr "RGB"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
-msgid "HSV"
-msgstr "HSV"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Channel to sort"
-msgstr "Ordigenda kanalo"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Red or Hue"
-msgstr "Ruĝo aŭ Nuanco"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Green or Saturation"
-msgstr "Verdo aŭ Saturado"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
-msgid "Blue or Value"
-msgstr "Bluo aŭ Valoro"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
-msgid "Ascending"
-msgstr "Ascende"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "Kreu ripetan gradienton per paletraj koloroj"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
-msgid "Palette to _Repeating Gradient"
-msgstr "Paletro laŭ _Ripeta Gradiento"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
-msgid "Create a gradient using colors from the palette"
-msgstr "Kreu gradienton per paletraj koloroj"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
-msgid "Palette to _Gradient"
-msgstr "Paletro laŭ _Gradiento"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
-msgid "Slice"
-msgstr "Tranĉo"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Eltondu bildon laŭ siaj gvidreloj, kreu bildojn kaj pecon de HTML-tabelo"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
-msgid "_Slice..."
-msgstr "_Tranĉo..."
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
-msgid "Path for HTML export"
-msgstr "Raŭto de HTML eksporto"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
-msgid "Filename for export"
-msgstr "Eksportenda dosiernomo"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
-msgid "Image name prefix"
-msgstr "Bildnoma prefikso"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
-msgid "Image format"
-msgstr "Bildformato"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
-msgid "Separate image folder"
-msgstr "Aparta bildodosierujo"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
-msgid "Folder for image export"
-msgstr "Dosierujo por bildeksporto"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Space between table elements"
-msgstr "Spaco inter elementoj de tabelo"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javaskripto por onmouseover kaj clicked"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
-msgid "Skip animation for table caps"
-msgstr "Preterlasu animacion de tabeloj"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Aldonu ombron al tavolo kaj, laŭvole, bevelu ĝin"
+msgstr "Aldoni ombron al tavolo kaj, laŭvole, bevelu ĝin"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Kreu Ombron kaj Bevelu..."
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
-msgid "Shadow blur"
-msgstr "Malfokuso de Ombro"
+msgstr "_Krei ombron kaj bevelon..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "Bevel"
-msgstr "Bevelu"
+#, fuzzy
+#| msgid "Shadow blur"
+msgid "_Shadow blur"
+msgstr "Malfoku_so de Ombro"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "Drop shadow"
-msgstr "Estigo de Ombro"
+#| msgid "Bevel"
+msgid "_Bevel"
+msgstr "_Bevelo"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "Drop shadow X displacement"
-msgstr "X dislokado de estigita ombro"
+#, fuzzy
+#| msgid "Drop shadow"
+msgid "_Drop shadow"
+msgstr "Estigo de Ombro"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow Y displacement"
-msgstr "Y dislokado de estigita ombro"
+#| msgid "Drop shadow X displacement"
+msgid "Drop shadow _X displacement"
+msgstr "_X-dislokado de estigita ombro"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#| msgid "Drop shadow Y displacement"
+msgid "Drop shadow _Y displacement"
+msgstr "_Y-dislokado de estigita ombro"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+msgid "Create a new brush with characters from a text sequence"
+msgstr "Krei novan penikon kun signoj de tekst-sinsekvo"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+msgid "New Brush from _Text..."
+msgstr "Nova peniko de _teksto..."
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+msgid "Font"
+msgstr "Tiparo"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+msgid "Pixel Size"
+msgstr "Bilder-grando"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+#| msgid "Text file"
+msgid "Text"
+msgstr "Teksto"
