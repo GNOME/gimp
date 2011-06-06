@@ -22,6 +22,8 @@
 #ifndef __GIMP_UNIT_ENTRY_H__
 #define __GIMP_UNIT_ENTRY_H__
 
+#include <gtk/gtkspinbutton.h>
+
 #include "gimpunitadjustment.h"
 
 G_BEGIN_DECLS
@@ -51,24 +53,29 @@ struct _GimpUnitEntry
   gboolean          buttonPressed;    
   gboolean          scrolling;
 
-  gint id; /* for debugging */
+  const gchar *id; /* identifier string of unit entry (used by GimpUnitEntryTable) */
 };
 
 struct _GimpUnitEntryClass
 {
   GtkSpinButtonClass parent_class;
-
-  gint id; /* for debugging */
 };
 
 /**
  * prototypes
  **/
 GType     gimp_unit_entry_get_type (void);
-GtkWidget *gimp_unit_entry_new (void);
+GtkWidget *gimp_unit_entry_new (const gchar *id);
 GimpUnitAdjustment *gimp_unit_entry_get_adjustment (GimpUnitEntry *entry);
 /* connect to another entry */
 void gimp_unit_entry_connect (GimpUnitEntry *entry, GimpUnitEntry *target);
+/* convenience getters/setters */
+const gchar* gimp_unit_entry_get_id (GimpUnitEntry *entry);
+void gimp_unit_entry_set_unit (GimpUnitEntry *entry, GimpUnit unit);
+void gimp_unit_entry_set_resolution (GimpUnitEntry *entry, gdouble resolution);
+void gimp_unit_entry_set_value (GimpUnitEntry *entry, gdouble resolution);
+gdouble gimp_unit_entry_get_value (GimpUnitEntry *entry);
+gdouble gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, GimpUnit unit);
 
 G_END_DECLS
 

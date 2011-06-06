@@ -6,42 +6,25 @@
 #include <glib-object.h>
 #include <glib/gprintf.h>
 #include <gtk/gtk.h>
+#include "libgimpbase/gimpbase.h"
 
 #include "devel-docs/tools/units.h"
 
-#include "gimpunitentry.h"
+#include "gimpunitentrytable.h"
 
 /* global objects */
 GtkWidget *window;
 GtkWidget *vbox;
 GtkWidget *valign;
-GtkWidget *inLabel;
-GtkWidget *pxLabel;
 
-GtkWidget *entry1;
-GtkWidget *entry2;
-
-void on_value_changed (GtkAdjustment *adj, gpointer userData)
-{
-  gchar text[40];
-  gchar *val1 = gimp_unit_adjustment_to_string_in_unit (GIMP_UNIT_ENTRY (entry1)->unitAdjustment, GIMP_UNIT_INCH);
-  gchar *val2 = gimp_unit_adjustment_to_string_in_unit (GIMP_UNIT_ENTRY (entry2)->unitAdjustment, GIMP_UNIT_INCH);
-  g_sprintf (text, "%s x %s", val1, val2);
-  gtk_label_set_text (GTK_LABEL(inLabel), text); 
-
-  val1 = gimp_unit_adjustment_to_string_in_unit (GIMP_UNIT_ENTRY (entry1)->unitAdjustment, GIMP_UNIT_PIXEL);
-  val2 = gimp_unit_adjustment_to_string_in_unit (GIMP_UNIT_ENTRY (entry2)->unitAdjustment, GIMP_UNIT_PIXEL);
-  g_sprintf (text, "%s x %s", val1, val2);
-  gtk_label_set_text (GTK_LABEL(pxLabel), text); 
-
-  g_free (val1);
-  g_free (val2);
-}
+GimpUnitEntryTable *entryTable;
 
 /* set up interface */
 void
 create_interface(void)
 {
+  GimpUnitEntry *a, *b;
+
   /* main window */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_container_set_border_width (GTK_CONTAINER (window), 10);
@@ -56,35 +39,24 @@ create_interface(void)
   gtk_container_add (GTK_CONTAINER (valign), vbox);
   gtk_container_add (GTK_CONTAINER (window), valign);
 
-  /* the entries */
-  entry1 = gimp_unit_entry_new ();
-  entry2 = gimp_unit_entry_new ();
+  /* entry table */
+  entryTable = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
+  gimp_unit_entry_table_add_entry (entryTable, "width", "Width");
+  gimp_unit_entry_table_add_entry (entryTable, "height", "Height");
+  gimp_unit_entry_table_add_label (entryTable, GIMP_UNIT_PIXEL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), entry1, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), entry2, TRUE, TRUE, 0);
+  /* set some default values */
+  a = gimp_unit_entry_table_get_entry (entryTable, 0);
+  b = gimp_unit_entry_table_get_entry (entryTable, 1);
+  gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (a), 20);
+  gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (b), 20);
 
-  gimp_unit_entry_connect (GIMP_UNIT_ENTRY (entry1), GIMP_UNIT_ENTRY (entry2));
-  gimp_unit_entry_connect (GIMP_UNIT_ENTRY (entry2), GIMP_UNIT_ENTRY (entry1));
-
-  gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (GIMP_UNIT_ENTRY (entry1)), 20);
-  gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (GIMP_UNIT_ENTRY (entry2)), 20);
-
-  /* status label */
-  inLabel = gtk_label_new ("inches");
-  pxLabel = gtk_label_new ("pixels");
-  gtk_box_pack_end (GTK_BOX (vbox), pxLabel, TRUE, TRUE, 0);
-  gtk_box_pack_end (GTK_BOX (vbox), inLabel, TRUE, TRUE, 0);
-
-  on_value_changed (NULL, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), entryTable->table, TRUE, TRUE, 0);
 
   /* signals */
   g_signal_connect_swapped (G_OBJECT(window), "destroy",
                             G_CALLBACK(gtk_main_quit), NULL);
-  g_signal_connect (G_OBJECT (GIMP_UNIT_ENTRY (entry1)->unitAdjustment), "value-changed",
-                    G_CALLBACK (on_value_changed), NULL);
-  g_signal_connect (G_OBJECT (GIMP_UNIT_ENTRY (entry2)->unitAdjustment), "value-changed",
-                    G_CALLBACK (on_value_changed), NULL);
-
+ 
   gtk_widget_show_all (window);
 }
 

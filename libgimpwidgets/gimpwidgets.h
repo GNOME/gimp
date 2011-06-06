@@ -74,6 +74,7 @@
 #include <libgimpwidgets/gimpstock.h>
 #include <libgimpwidgets/gimpstringcombobox.h>
 #include <libgimpwidgets/gimpunitcombobox.h>
+#include <libgimpwidgets/gimpunitentrytable.h>
 #include <libgimpwidgets/gimpunitmenu.h>
 #include <libgimpwidgets/gimpunitstore.h>
 #include <libgimpwidgets/gimpwidgets-error.h>

@@ -94,9 +94,7 @@ static void on_menu_item      (GtkWidget *menuItem,
 
 static void
 gimp_unit_entry_init (GimpUnitEntry *unitEntry)
-{
-  GimpUnitEntryClass *class = GIMP_UNIT_ENTRY_GET_CLASS (unitEntry);
-  
+{ 
   /* create and set our adjustment subclass */
   GObject *adjustment = gimp_unit_adjustment_new ();
 
@@ -130,9 +128,6 @@ gimp_unit_entry_init (GimpUnitEntry *unitEntry)
                     "populate-popup",
                     G_CALLBACK(on_populate_popup), 
                     NULL);
-
-  unitEntry->id = class->id;
-  class->id++;
 }
 
 static void
@@ -146,14 +141,16 @@ gimp_unit_entry_class_init (GimpUnitEntryClass *class)
   widgetClass->scroll_event         = gimp_unit_entry_scroll;
   widgetClass->key_press_event      = gimp_unit_entry_key_press;
   widgetClass->key_release_event    = gimp_unit_entry_key_release;
-
-  class->id = 0;
 }
 
 GtkWidget*
-gimp_unit_entry_new (void)
+gimp_unit_entry_new (const gchar *id)
 {
-  return g_object_new (GIMP_TYPE_UNIT_ENTRY, NULL);
+  GtkWidget *entry = g_object_new (GIMP_TYPE_UNIT_ENTRY, NULL);
+
+  GIMP_UNIT_ENTRY (entry)->id = id;
+
+  return entry;
 }
 
 GimpUnitAdjustment*
@@ -354,9 +351,9 @@ gimp_unit_entry_focus_out (GtkWidget          *widget,
   return GTK_WIDGET_CLASS (class)->focus_out_event (widget, event);
 }
 
-static 
-gint gimp_unit_entry_button_press          (GtkWidget          *widget,
-                                            GdkEventButton     *event)
+static gint
+gimp_unit_entry_button_press (GtkWidget          *widget,
+                              GdkEventButton     *event)
 {
   GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
   GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
@@ -366,9 +363,9 @@ gint gimp_unit_entry_button_press          (GtkWidget          *widget,
    
   return GTK_WIDGET_CLASS(class)->button_press_event (widget, event);
 }
-static 
-gint gimp_unit_entry_button_release          (GtkWidget          *widget,
-                                              GdkEventButton     *event)
+static gint
+gimp_unit_entry_button_release (GtkWidget          *widget,
+                                GdkEventButton     *event)
 {
   GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
   GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
@@ -379,9 +376,9 @@ gint gimp_unit_entry_button_release          (GtkWidget          *widget,
   return GTK_WIDGET_CLASS(class)->button_release_event (widget, event);
 }
 
-static 
-gint gimp_unit_entry_scroll                (GtkWidget          *widget,
-                                            GdkEventScroll     *event)
+static gint
+gimp_unit_entry_scroll (GtkWidget          *widget,
+                        GdkEventScroll     *event)
 {
   GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
   GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
@@ -391,9 +388,9 @@ gint gimp_unit_entry_scroll                (GtkWidget          *widget,
   return GTK_WIDGET_CLASS(class)->scroll_event (widget, event);
 }
 
-static 
-gint gimp_unit_entry_key_press      (GtkWidget          *widget,
-                                     GdkEventKey        *event)
+static gint 
+gimp_unit_entry_key_press (GtkWidget          *widget,
+                           GdkEventKey        *event)
 {
   GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
   GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
@@ -412,9 +409,9 @@ gint gimp_unit_entry_key_press      (GtkWidget          *widget,
    
   return GTK_WIDGET_CLASS(class)->key_press_event (widget, event);
 }
-static 
-gint gimp_unit_entry_key_release    (GtkWidget          *widget,
-                                     GdkEventKey        *event)
+static gint 
+gimp_unit_entry_key_release (GtkWidget          *widget,
+                             GdkEventKey        *event)
 {
   GtkSpinButtonClass *class = GTK_SPIN_BUTTON_CLASS (gimp_unit_entry_parent_class);
   GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (widget);
@@ -432,4 +429,42 @@ gint gimp_unit_entry_key_release    (GtkWidget          *widget,
   }
    
   return GTK_WIDGET_CLASS(class)->key_release_event (widget, event);
+}
+
+/* convenience getters/setters */
+const gchar* 
+gimp_unit_entry_get_id (GimpUnitEntry *entry)
+{
+  return entry->id;
+}
+
+void 
+gimp_unit_entry_set_unit (GimpUnitEntry *entry, GimpUnit unit)
+{
+  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
+  gimp_unit_adjustment_set_unit (adj, unit);
+}
+void 
+gimp_unit_entry_set_resolution (GimpUnitEntry *entry, gdouble resolution)
+{
+  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
+  gimp_unit_adjustment_set_resolution (adj, resolution);
+}
+void 
+gimp_unit_entry_set_value (GimpUnitEntry *entry, gdouble value)
+{
+  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
+  gimp_unit_adjustment_set_value (adj, value);
+}
+gdouble 
+gimp_unit_entry_get_value (GimpUnitEntry *entry)
+{
+  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
+  return gimp_unit_adjustment_get_value (adj);
+}
+gdouble
+gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, GimpUnit unit)
+{
+  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
+  return gimp_unit_adjustment_get_value_in_unit (adj, unit);
 }
