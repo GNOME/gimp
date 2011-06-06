@@ -18,6 +18,7 @@
 #ifndef __LAYER_OPTIONS_DIALOG_H__
 #define __LAYER_OPTIONS_DIALOG_H__
 
+#include "libgimpwidgets/gimpwidgets.h"
 
 typedef struct _LayerOptionsDialog LayerOptionsDialog;
 
@@ -25,7 +26,7 @@ struct _LayerOptionsDialog
 {
   GtkWidget    *dialog;
   GtkWidget    *name_entry;
-  GtkWidget    *size_se;
+  GimpUnitEntryTable    *size_se;
   GtkWidget    *rename_toggle;
 
   GimpFillType  fill_type;
