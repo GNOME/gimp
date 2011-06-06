@@ -49,8 +49,9 @@ G_DEFINE_TYPE (GimpUnitAdjustment, gimp_unit_adjustment, GTK_TYPE_ADJUSTMENT);
  * prototypes
  **/
 /* converts from one current unit to another */
-void gimp_unit_adjustment_convert_unit (GimpUnitAdjustment *adj, GimpUnit unit);
-void unit_changed_handler (GimpUnitAdjustment *adj, GimpUnit unit, gpointer userData);
+static void gimp_unit_adjustment_convert_unit (GimpUnitAdjustment *adj, GimpUnit unit);
+/* handler for unit-changed signal from other entries */
+static void unit_changed_handler (GimpUnitAdjustment *adj, GimpUnit unit, gpointer userData);
 
 
 static void
@@ -99,7 +100,7 @@ gimp_unit_adjustment_new (void)
   return g_object_new (GIMP_TYPE_UNIT_ADJUSTMENT, NULL);
 }
 
-void
+static void
 unit_changed_handler (GimpUnitAdjustment *adj, GimpUnit unit, gpointer userData)
 {
   GimpUnitAdjustment *adjustment = GIMP_UNIT_ADJUSTMENT (userData);
@@ -120,7 +121,7 @@ gimp_unit_adjustment_connect (GimpUnitAdjustment *adj, GimpUnitAdjustment *targe
 }
 
 /* converts from one current unit to another */
-void
+static void
 gimp_unit_adjustment_convert_unit (GimpUnitAdjustment *adj, GimpUnit unit)
 {
   gdouble newValue = 0;
