@@ -29,6 +29,7 @@
 #include "gimpoperationcagecoefcalc.h"
 #include "gimpcageconfig.h"
 
+#include "gimp-intl.h"
 
 static void           gimp_operation_cage_coef_calc_prepare           (GeglOperation        *operation);
 static void           gimp_operation_cage_coef_calc_finalize          (GObject              *object);
@@ -61,7 +62,7 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
 
   operation_class->name               = "gimp:cage-coef-calc";
   operation_class->categories         = "transform";
-  operation_class->description        = "GIMP cage transform coefficient calc";
+  operation_class->description        = _("Compute a set of coefficient buffer for the Gimp cage tool");
 
   operation_class->prepare            = gimp_operation_cage_coef_calc_prepare;
   operation_class->get_bounding_box   = gimp_operation_cage_coef_calc_get_bounding_box;
@@ -76,7 +77,9 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_CAGE_COEF_CALC_PROP_CONFIG,
-                                   g_param_spec_object ("config", NULL, NULL,
+                                   g_param_spec_object ("config",
+                                                        _("Config"),
+                                                        _("A GimpCageConfig object, that define the transformation"),
                                                         GIMP_TYPE_CAGE_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));

@@ -31,6 +31,7 @@
 #include "gimpoperationcagetransform.h"
 #include "gimpcageconfig.h"
 
+#include "gimp-intl.h"
 
 enum
 {
@@ -100,7 +101,7 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 
   operation_class->name                    = "gimp:cage-transform";
   operation_class->categories              = "transform";
-  operation_class->description             = "GIMP cage reverse transform";
+  operation_class->description             = _("Convert a set of coefficient buffer to a coordinate buffer for the Gimp cage tool");
 
   operation_class->prepare                 = gimp_operation_cage_transform_prepare;
 
@@ -112,15 +113,17 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
   filter_class->process                    = gimp_operation_cage_transform_process;
 
   g_object_class_install_property (object_class, PROP_CONFIG,
-                                   g_param_spec_object ("config", NULL, NULL,
+                                   g_param_spec_object ("config",
+                                                        _("Config"),
+                                                        _("A GimpCageConfig object, that define the transformation"),
                                                         GIMP_TYPE_CAGE_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_FILL,
                                    g_param_spec_boolean ("fill-plain-color",
-                                                         "Blocking render",
-                                                         "Fill the original position of the cage with a plain color",
+                                                         _("Fill with plain color"),
+                                                         _("Fill the original position of the cage with a plain color"),
                                                          FALSE,
                                                          G_PARAM_READWRITE));
 
