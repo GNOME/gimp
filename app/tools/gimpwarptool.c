@@ -426,25 +426,15 @@ static void
 gimp_warp_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpWarpTool     *wt      = GIMP_WARP_TOOL (draw_tool);
-  GimpTool         *tool    = GIMP_TOOL (wt);
-  GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
   GimpWarpOptions  *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
-  gdouble           sizex;
-  gdouble           sizey;
 
-  sizex = SCALEX (shell, options->effect_size);
-  sizey = SCALEY (shell, options->effect_size);
-
-  if (sizex >= 3.0 && sizey >= 3.0)
-    {
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_CIRCLE,
-                                 wt->cursor_x,
-                                 wt->cursor_y,
-                                 sizex,
-                                 sizey,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
-    }
+  gimp_draw_tool_add_arc (draw_tool,
+                          FALSE,
+                          wt->cursor_x - options->effect_size / 2.0,
+                          wt->cursor_y - options->effect_size / 2.0,
+                          options->effect_size,
+                          options->effect_size,
+                          0.0, 2.0 * G_PI);
 }
 
 static void
