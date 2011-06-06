@@ -20,8 +20,10 @@
 
 
 Gimp * gimp_init_for_testing             (void);
-Gimp * gimp_init_for_gui_testing         (gboolean show_gui);
-void   gimp_test_run_temp_mainloop       (guint32  running_time);
+Gimp * gimp_init_for_gui_testing         (gboolean     show_gui);
+Gimp * gimp_init_for_gui_testing_with_rc (gboolean     show_gui,
+                                          const gchar *gimprc);
+void   gimp_test_run_temp_mainloop       (guint32      running_time);
 void   gimp_test_run_mainloop_until_idle (void);
 void   gimp_test_bail_if_no_display      (void);
 

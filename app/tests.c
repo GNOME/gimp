@@ -82,17 +82,9 @@ gimp_init_for_testing (void)
 
 #ifndef GIMP_CONSOLE_COMPILATION
 
-/**
- * gimp_init_for_gui_testing:
- * @use_cpu_accel:
- *
- * Initializes a #Gimp instance for use in test cases that rely on GUI
- * code to be initialized.
- *
- * Returns: The #Gimp instance.
- **/
-Gimp *
-gimp_init_for_gui_testing (gboolean show_gui)
+static Gimp *
+gimp_init_for_gui_testing_internal (gboolean     show_gui,
+                                    const gchar *gimprc)
 {
   GimpSessionInfoClass *klass;
   Gimp                 *gimp;
@@ -111,7 +103,7 @@ gimp_init_for_gui_testing (gboolean show_gui)
                    FALSE, TRUE, TRUE, FALSE);
   gimp_set_show_gui (gimp, show_gui);
   units_init (gimp);
-  gimp_load_config (gimp, NULL, NULL);
+  gimp_load_config (gimp, gimprc, NULL);
   base_init (GIMP_BASE_CONFIG (gimp->config),
              FALSE /*be_verbose*/,
              FALSE /*use_cpu_accel*/);
@@ -122,6 +114,38 @@ gimp_init_for_gui_testing (gboolean show_gui)
   g_type_class_unref (klass);
 
   return gimp;
+}
+
+/**
+ * gimp_init_for_gui_testing:
+ * @show_gui:
+ *
+ * Initializes a #Gimp instance for use in test cases that rely on GUI
+ * code to be initialized.
+ *
+ * Returns: The #Gimp instance.
+ **/
+Gimp *
+gimp_init_for_gui_testing (gboolean show_gui)
+{
+  return gimp_init_for_gui_testing_internal (show_gui, NULL);
+}
+
+/**
+ * gimp_init_for_gui_testing:
+ * @show_gui:
+ * @gimprc:
+ *
+ * Like gimp_init_for_gui_testing(), but also allows a custom gimprc
+ * filename to be specified.
+ *
+ * Returns: The #Gimp instance.
+ **/
+Gimp *
+gimp_init_for_gui_testing_with_rc (gboolean     show_gui,
+                                   const gchar *gimprc)
+{
+  return gimp_init_for_gui_testing_internal (show_gui, gimprc);
 }
 
 #endif /* GIMP_CONSOLE_COMPILATION */
