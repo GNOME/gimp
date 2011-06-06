@@ -46,8 +46,8 @@ create_interface(void)
   gimp_unit_entry_table_add_label (entryTable, GIMP_UNIT_PIXEL);
 
   /* set some default values */
-  a = gimp_unit_entry_table_get_entry (entryTable, 0);
-  b = gimp_unit_entry_table_get_entry (entryTable, 1);
+  a = gimp_unit_entry_table_get_entry (entryTable, "width");
+  b = gimp_unit_entry_table_get_entry (entryTable, "height");
   gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (a), 20);
   gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (b), 20);
 
