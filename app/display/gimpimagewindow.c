@@ -732,11 +732,14 @@ gimp_image_window_add_dock (GimpDockContainer   *dock_container,
                             GimpDock            *dock,
                             GimpSessionInfoDock *dock_info)
 {
+  GimpImageWindow        *window;
+  GimpDisplayShell       *active_shell;
   GimpImageWindowPrivate *private;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (dock_container));
 
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (dock_container);
+  window  = GIMP_IMAGE_WINDOW (dock_container);
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   if (dock_info->side == GIMP_ALIGN_LEFT)
     {
@@ -750,6 +753,10 @@ gimp_image_window_add_dock (GimpDockContainer   *dock_container,
                                   dock,
                                   -1 /*index*/);
     }
+
+  active_shell = gimp_image_window_get_active_shell (window);
+  if (active_shell)
+    gimp_display_shell_appearance_update (active_shell);
 }
 
 static GimpAlignmentType
