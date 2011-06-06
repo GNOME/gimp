@@ -425,17 +425,24 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
 static void
 gimp_warp_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpWarpTool    *wt        = GIMP_WARP_TOOL (draw_tool);
-  GimpWarpOptions *options   = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpWarpTool     *wt      = GIMP_WARP_TOOL (draw_tool);
+  GimpTool         *tool    = GIMP_TOOL (wt);
+  GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
+  GimpWarpOptions  *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  gdouble           sizex;
+  gdouble           sizey;
 
-  if (options->effect_size >= 3.0)
+  sizex = SCALEX (shell, options->effect_size);
+  sizey = SCALEY (shell, options->effect_size);
+
+  if (sizex >= 3.0 && sizey >= 3.0)
     {
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_CIRCLE,
                                  wt->cursor_x,
                                  wt->cursor_y,
-                                 options->effect_size,
-                                 options->effect_size,
+                                 sizex,
+                                 sizey,
                                  GIMP_HANDLE_ANCHOR_CENTER);
     }
 }
