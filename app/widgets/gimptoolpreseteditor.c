@@ -45,6 +45,7 @@ static void   gimp_tool_preset_editor_finalize     (GObject              *object
 static void   gimp_tool_preset_editor_set_data     (GimpDataEditor       *editor,
                                                     GimpData             *data);
 
+static void   gimp_tool_preset_editor_sync_data    (GimpToolPresetEditor *editor);
 static void   gimp_tool_preset_editor_notify_model (GimpToolPreset       *options,
                                                     const GParamSpec     *pspec,
                                                     GimpToolPresetEditor *editor);
@@ -165,6 +166,9 @@ gimp_tool_preset_editor_constructed (GObject *object)
                                        _("Apply stored font"));
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  if (data_editor->data)
+    gimp_tool_preset_editor_sync_data (editor);
 }
 
 static void
@@ -194,38 +198,14 @@ gimp_tool_preset_editor_set_data (GimpDataEditor *editor,
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
 
-  if (editor->data && preset_editor->tool_preset_model)
+  if (editor->data)
     {
-      GimpToolInfo *tool_info;
-      const gchar  *stock_id;
-      gchar        *label;
-
-      g_signal_handlers_block_by_func (preset_editor->tool_preset_model,
-                                       gimp_tool_preset_editor_notify_model,
-                                       editor);
-
-      gimp_config_copy (GIMP_CONFIG (editor->data),
-                        GIMP_CONFIG (preset_editor->tool_preset_model),
-                        GIMP_CONFIG_PARAM_SERIALIZE);
-
-      g_signal_handlers_unblock_by_func (preset_editor->tool_preset_model,
-                                         gimp_tool_preset_editor_notify_model,
-                                         editor);
-
       g_signal_connect (editor->data, "notify",
                         G_CALLBACK (gimp_tool_preset_editor_notify_data),
                         editor);
 
-      tool_info = preset_editor->tool_preset_model->tool_options->tool_info;
-
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-      label    = g_strdup_printf (_("%s Preset"), tool_info->blurb);
-
-      gtk_image_set_from_stock (GTK_IMAGE (preset_editor->tool_icon),
-                                stock_id, GTK_ICON_SIZE_MENU);
-      gtk_label_set_text (GTK_LABEL (preset_editor->tool_label), label);
-
-      g_free (label);
+      if (preset_editor->tool_preset_model)
+        gimp_tool_preset_editor_sync_data (preset_editor);
     }
 }
 
@@ -251,6 +231,38 @@ gimp_tool_preset_editor_new (GimpContext     *context,
 
 
 /*  private functions  */
+
+static void
+gimp_tool_preset_editor_sync_data (GimpToolPresetEditor *editor)
+{
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  GimpToolInfo   *tool_info;
+  const gchar    *stock_id;
+  gchar          *label;
+
+  g_signal_handlers_block_by_func (editor->tool_preset_model,
+                                   gimp_tool_preset_editor_notify_model,
+                                   editor);
+
+  gimp_config_copy (GIMP_CONFIG (data_editor->data),
+                    GIMP_CONFIG (editor->tool_preset_model),
+                    GIMP_CONFIG_PARAM_SERIALIZE);
+
+  g_signal_handlers_unblock_by_func (editor->tool_preset_model,
+                                     gimp_tool_preset_editor_notify_model,
+                                     editor);
+
+  tool_info = editor->tool_preset_model->tool_options->tool_info;
+
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  label    = g_strdup_printf (_("%s Preset"), tool_info->blurb);
+
+  gtk_image_set_from_stock (GTK_IMAGE (editor->tool_icon),
+                            stock_id, GTK_ICON_SIZE_MENU);
+  gtk_label_set_text (GTK_LABEL (editor->tool_label), label);
+
+  g_free (label);
+ }
 
 static void
 gimp_tool_preset_editor_notify_model (GimpToolPreset       *options,
