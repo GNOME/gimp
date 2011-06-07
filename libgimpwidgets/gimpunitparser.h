@@ -32,6 +32,7 @@ struct _GimpUnitParserResult
   gdouble   value;
   gdouble   resolution;
   GimpUnit  unit;
+  gboolean  unitFound;
 };
 
 /* parse given string */

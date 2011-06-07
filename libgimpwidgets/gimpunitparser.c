@@ -53,9 +53,9 @@ gimp_unit_parser_parse (const char *str, GimpUnitParserResult *result)
   if (strlen (str) <= 0)
     return FALSE;
   
-  /* set unit to -1 so we can determine the first unit the user entered and use that
+  /* set unitFound to FALSE so we can determine the first unit the user entered and use that
      as unit for our result */
-  result->unit = -1;
+  result->unitFound = FALSE;
 
   DEBUG (("parsing: %s", str));
 
@@ -113,7 +113,8 @@ gboolean unit_resolver (const gchar      *ident,
     else                          /* otherwise use factor */
       result->value = gimp_unit_get_factor (*unit);
 
-    resolved          = TRUE; 
+    parserResult->unitFound = TRUE;
+    resolved                = TRUE; 
     return resolved;
   }
 
@@ -130,8 +131,11 @@ gboolean unit_resolver (const gchar      *ident,
       else
         result->value = gimp_unit_get_factor (i);
 
-      if (*unit == -1)
+      if (!parserResult->unitFound)
+      {
         *unit = i;
+        parserResult->unitFound = TRUE;
+      }
 
       i = numUnits;
       resolved = TRUE;

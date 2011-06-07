@@ -176,6 +176,8 @@ gimp_unit_entry_parse (GimpUnitEntry *entry)
 
   /* set resolution (important for correct calculation of px) */
   result.resolution = entry->unitAdjustment->resolution;
+  /* set unit (we want to use current unit if the user didn't enter one) */
+  result.unit = entry->unitAdjustment->unit;
 
   /* parse string of entry */
   success = gimp_unit_parser_parse (str, &result);
