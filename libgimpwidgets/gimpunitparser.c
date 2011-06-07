@@ -67,7 +67,7 @@ gimp_unit_parser_parse (const char *str, GimpUnitParserResult *result)
                       &errorpos,
                       &error);
 
-  if (error || errorpos)
+  if (error || errorpos || eevlResult.dimension > 1)
   {
     DEBUG (("gimpeevl parsing error \n"));
     return FALSE;
