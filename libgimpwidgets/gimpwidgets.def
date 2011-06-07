@@ -375,12 +375,12 @@ EXPORTS
 	gimp_unit_combo_box_new_with_model
 	gimp_unit_combo_box_set_active
 	gimp_unit_entry_connect
-	gimp_unit_entry_get_id
-	gimp_unit_entry_new
 	gimp_unit_entry_get_adjustment
+	gimp_unit_entry_get_id
 	gimp_unit_entry_get_type
 	gimp_unit_entry_get_value
 	gimp_unit_entry_get_value_in_unit
+	gimp_unit_entry_new
 	gimp_unit_entry_set_resolution
 	gimp_unit_entry_set_unit
 	gimp_unit_entry_set_value
