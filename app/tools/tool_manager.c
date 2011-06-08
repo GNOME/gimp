@@ -654,6 +654,25 @@ tool_manager_preset_changed (GimpContext     *user_context,
   gimp_context_copy_properties (GIMP_CONTEXT (preset->tool_options),
                                 user_context,
                                 gimp_tool_preset_get_prop_mask (preset));
+
+  if (GIMP_IS_PAINT_OPTIONS (preset->tool_options))
+    {
+      GimpCoreConfig  *config = user_context->gimp->config;
+      GimpToolOptions *src    = preset->tool_options;
+      GimpToolOptions *dest   = tool_manager->active_tool->tool_info->tool_options;
+
+      /* if connect_options() did overwrite the brush options and the
+       * preset contains a brush, use the brush options from the
+       * preset
+       */
+      if (config->global_brush && preset->use_brush)
+        gimp_paint_options_copy_brush_props (GIMP_PAINT_OPTIONS (src),
+                                             GIMP_PAINT_OPTIONS (dest));
+
+      if (config->global_dynamics && preset->use_dynamics)
+        gimp_paint_options_copy_dynamics_props (GIMP_PAINT_OPTIONS (src),
+                                                GIMP_PAINT_OPTIONS (dest));
+    }
 }
 
 static void
