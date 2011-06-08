@@ -95,14 +95,18 @@ static void       gimp_warp_tool_oper_update        (GimpTool              *tool
 
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
 
+static void       gimp_warp_tool_create_graph       (GimpWarpTool          *wt);
 static void       gimp_warp_tool_create_image_map   (GimpWarpTool          *wt,
                                                      GimpDrawable          *drawable);
 static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *image_map,
                                                      GimpTool              *tool);
 static void       gimp_warp_tool_image_map_update   (GimpWarpTool          *wt);
+static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt);
+#if 0
 static void       gimp_warp_tool_act_on_coords      (GimpWarpTool          *wt,
                                                      gint                   x,
                                                      gint                   y);
+#endif
 
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -183,10 +187,10 @@ gimp_warp_tool_control (GimpTool       *tool,
           wt->coords_buffer = NULL;
         }
 
-      if (wt->render_node)
+      if (wt->graph)
         {
-          g_object_unref (wt->render_node);
-          wt->render_node = NULL;
+          g_object_unref (wt->graph);
+          wt->graph = NULL;
         }
 
       if (wt->image_map)
@@ -230,10 +234,10 @@ gimp_warp_tool_start (GimpWarpTool *wt,
       wt->coords_buffer = NULL;
     }
 
-  if (wt->render_node)
+  if (wt->graph)
     {
-      g_object_unref (wt->render_node);
-      wt->render_node = NULL;
+      g_object_unref (wt->graph);
+      wt->graph = NULL;
     }
 
   if (wt->image_map)
@@ -374,7 +378,9 @@ gimp_warp_tool_button_press (GimpTool            *tool,
   if (display != tool->display)
     gimp_warp_tool_start (wt, display);
 
-  gimp_warp_tool_act_on_coords (wt, coords->x, coords->y);
+  wt->current_stroke = gegl_path_new ();
+
+  gimp_warp_tool_add_op (wt);
   gimp_warp_tool_image_map_update (wt);
 
   gimp_tool_control_activate (tool->control);
@@ -438,26 +444,26 @@ gimp_warp_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_warp_tool_create_render_node (GimpWarpTool *wt)
+gimp_warp_tool_create_graph (GimpWarpTool *wt)
 {
   GeglNode        *coords, *render; /* Render nodes */
   GeglNode        *input, *output; /* Proxy nodes*/
-  GeglNode        *node; /* wraper to be returned */
+  GeglNode        *graph; /* wraper to be returned */
 
-  g_return_if_fail (wt->render_node == NULL);
+  g_return_if_fail (wt->graph == NULL);
   /* render_node is not supposed to be recreated */
 
-  node = gegl_node_new ();
+  graph = gegl_node_new ();
 
-  input  = gegl_node_get_input_proxy  (node, "input");
-  output = gegl_node_get_output_proxy (node, "output");
+  input  = gegl_node_get_input_proxy  (graph, "input");
+  output = gegl_node_get_output_proxy (graph, "output");
 
-  coords = gegl_node_new_child (node,
+  coords = gegl_node_new_child (graph,
                                "operation", "gegl:buffer-source",
                                "buffer",    wt->coords_buffer,
                                NULL);
 
-  render = gegl_node_new_child (node,
+  render = gegl_node_new_child (graph,
                                 "operation", "gegl:map-relative",
                                 NULL);
 
@@ -470,20 +476,21 @@ gimp_warp_tool_create_render_node (GimpWarpTool *wt)
   gegl_node_connect_to (render, "output",
                         output, "input");
 
-  wt->render_node = node;
-  wt->coords_node = coords;
+  wt->graph = graph;
+  wt->render_node = render;
+  wt->read_coords_buffer_node = coords;
 }
 
 static void
 gimp_warp_tool_create_image_map (GimpWarpTool *wt,
                                  GimpDrawable *drawable)
 {
-  if (!wt->render_node)
-    gimp_warp_tool_create_render_node (wt);
+  if (!wt->graph)
+    gimp_warp_tool_create_graph (wt);
 
   wt->image_map = gimp_image_map_new (drawable,
                                       _("Warp transform"),
-                                      wt->render_node,
+                                      wt->graph,
                                       NULL,
                                       NULL);
 
@@ -534,6 +541,32 @@ gimp_warp_tool_image_map_update (GimpWarpTool *wt)
 }
 
 static void
+gimp_warp_tool_add_op (GimpWarpTool *wt)
+{
+  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GeglNode *new_op, *last_op;
+
+  g_return_if_fail (GEGL_IS_NODE (wt->render_node));
+
+  new_op = gegl_node_new_child (wt->graph,
+                                "operation", "gimp:warp",
+                                "strength", options->effect_strength,
+                                "size", options->effect_size,
+                                "stroke", wt->current_stroke,
+                                NULL);
+
+  last_op = gegl_node_get_producer (wt->render_node, "aux", NULL);
+
+  gegl_node_disconnect (wt->render_node, "aux");
+
+  gegl_node_connect_to (last_op, "output", new_op, "input");
+  gegl_node_connect_to (new_op, "output", wt->render_node, "aux");
+
+  g_object_unref (last_op);
+}
+
+#if 0
+static void
 gimp_warp_tool_act_on_coords (GimpWarpTool *wt,
                               gint x,
                               gint y)
@@ -574,3 +607,4 @@ gimp_warp_tool_act_on_coords (GimpWarpTool *wt,
         }
     }
 }
+#endif
