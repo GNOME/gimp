@@ -191,8 +191,7 @@ void label_updater (GtkAdjustment *adj, gpointer userData)
   GimpUnitEntryTable *table       = GIMP_UNIT_ENTRY_TABLE (userData);
   GimpUnitAdjustment *adjustment;
   gint                count       = g_list_length (table->entries);
-  gint                i           = 0;
-  GimpUnit            *unit;       
+  gint                i           = 0;     
 
   if (table->previewLabel == NULL || count <= 0)
     return;

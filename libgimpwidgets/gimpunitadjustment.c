@@ -225,4 +225,9 @@ gimp_unit_adjustment_to_string_in_unit (GimpUnitAdjustment *adj, GimpUnit unit)
 
   return text;
 }
+GimpUnit 
+gimp_unit_adjustment_get_unit (GimpUnitAdjustment *adj)
+{
+  return adj->unit;
+}
 

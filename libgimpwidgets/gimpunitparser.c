@@ -52,7 +52,7 @@ gimp_unit_parser_parse (const char *str, GimpUnitParserResult *result)
 
   if (strlen (str) <= 0)
     return FALSE;
-  
+    
   /* set unitFound to FALSE so we can determine the first unit the user entered and use that
      as unit for our result */
   result->unitFound = FALSE;
@@ -98,6 +98,7 @@ gboolean unit_resolver (const gchar      *ident,
   gint                   i            = 0;
 
   result->dimension = 1;
+  DEBUG (("unit resolver: %s", ident));
 
   /* if no unit is specified, use default unit */
   if (default_unit)

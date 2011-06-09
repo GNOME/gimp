@@ -361,6 +361,7 @@ EXPORTS
 	gimp_unit_adjustment_connect
 	gimp_unit_adjustment_get_resolution
 	gimp_unit_adjustment_get_type
+	gimp_unit_adjustment_get_unit
 	gimp_unit_adjustment_get_value
 	gimp_unit_adjustment_get_value_in_unit
 	gimp_unit_adjustment_new
@@ -378,6 +379,7 @@ EXPORTS
 	gimp_unit_entry_get_adjustment
 	gimp_unit_entry_get_id
 	gimp_unit_entry_get_type
+	gimp_unit_entry_get_unit
 	gimp_unit_entry_get_value
 	gimp_unit_entry_get_value_in_unit
 	gimp_unit_entry_new

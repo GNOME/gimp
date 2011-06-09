@@ -470,3 +470,9 @@ gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, GimpUnit unit)
   GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
   return gimp_unit_adjustment_get_value_in_unit (adj, unit);
 }
+GimpUnit 
+gimp_unit_entry_get_unit (GimpUnitEntry *entry)
+{
+  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
+  return gimp_unit_adjustment_get_unit (adj);
+}
