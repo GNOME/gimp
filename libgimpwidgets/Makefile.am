@@ -344,7 +344,8 @@ gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
 EXTRA_PROGRAMS = \
 	test-preview-area	\
 	test-eevl		\
-	test-unitentry
+	test-unitentry \
+	test-unitentrygui
 
 
 test_preview_area_SOURCES = test-preview-area.c 
@@ -368,13 +369,26 @@ test_eevl_LDADD = \
 	$(GLIB_LIBS) 		\
 	$(test_eevl_DEPENDENCIES)
 
+test_unitentrygui_SOURCES = \
+	test-unitentrygui.c \
+	$(top_builddir)/devel-docs/tools/units.c
+
+test_unitentrygui_DEPENDENCIES = \
+	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la \
+	$(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la \
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+
+test_unitentrygui_LDADD = \
+	$(GLIB_LIBS) 		\
+	$(test_unitentrygui_DEPENDENCIES)
+
 test_unitentry_SOURCES = \
 	test-unitentry.c \
 	$(top_builddir)/devel-docs/tools/units.c
 
 test_unitentry_DEPENDENCIES = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la \
-	$(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la \	
+	$(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la \
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 test_unitentry_LDADD = \
@@ -386,7 +400,8 @@ test_unitentry_LDADD = \
 # test programs, not to be built by default and never installed
 #
 
-TESTS = test-eevl$(EXEEXT)
+TESTS = test-eevl$(EXEEXT) \
+				test-unitentry$(EXEEXT)
 
 
 
