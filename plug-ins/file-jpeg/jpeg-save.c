@@ -1086,13 +1086,13 @@ save_dialog (void)
   gtk_widget_show (label);
 
   pg.subsmp =
-    combo = gimp_int_combo_box_new (_("1x1,1x1,1x1 (best quality)"),
+    combo = gimp_int_combo_box_new (_("4:4:4 (best quality)"),
                                     JPEG_SUPSAMPLING_1x1_1x1_1x1,
-                                    _("2x1,1x1,1x1 (4:2:2)"),
+                                    _("4:2:2 horizontal (chroma halved)"),
                                     JPEG_SUPSAMPLING_2x1_1x1_1x1,
-                                    _("1x2,1x1,1x1"),
+                                    _("4:2:2 vertical (chroma halved)"),
                                     JPEG_SUPSAMPLING_1x2_1x1_1x1,
-                                    _("2x2,1x1,1x1 (smallest file)"),
+                                    _("4:2:0 (chroma quartered)"),
                                     JPEG_SUPSAMPLING_2x2_1x1_1x1,
                                     NULL);
   gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 2, 3,
