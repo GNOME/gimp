@@ -60,6 +60,7 @@
 #define DEFAULT_BASELINE         TRUE
 #define DEFAULT_SUBSMP           JPEG_SUPSAMPLING_1x1_1x1_1x1
 #define DEFAULT_RESTART          0
+#define DEFAULT_RESTART_MCU_ROWS 16
 #define DEFAULT_DCT              0
 #define DEFAULT_PREVIEW          FALSE
 #define DEFAULT_EXIF             TRUE
@@ -945,7 +946,8 @@ save_dialog (void)
   /*pg.scale_data = scale_data;*/
   pg.restart = restart_markers_scale = spinbutton =
     gimp_spin_button_new (&pg.scale_data,
-                          (jsvals.restart == 0) ? 1 : jsvals.restart,
+                          ((jsvals.restart == 0) ?
+                           DEFAULT_RESTART_MCU_ROWS : jsvals.restart),
                           1.0, 64.0, 1.0, 1.0, 0, 1.0, 0);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 5, 6, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
