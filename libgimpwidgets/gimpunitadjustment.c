@@ -64,8 +64,9 @@ gimp_unit_adjustment_init (GimpUnitAdjustment *unitAdjustment)
   unitAdjustment->unitChanged = FALSE;
 
   /* default unit, resolution */
-  unitAdjustment->unit = DEFAULT_UNIT;
-  unitAdjustment->resolution = DEFAULT_RESOLUTION;
+  unitAdjustment->unit        = DEFAULT_UNIT;
+  unitAdjustment->resolution  = DEFAULT_RESOLUTION;
+  unitAdjustment->unitChanged = FALSE;
 }
 
 static void
@@ -142,9 +143,6 @@ gimp_unit_adjustment_convert_unit (GimpUnitAdjustment *adj, GimpUnit unit)
     adj->unit  = unit;
 
     gimp_unit_adjustment_set_value (adj, newValue);
-
-    /* emit "unit-changed" */
-    g_signal_emit(adj, GIMP_UNIT_ADJUSTMENT_GET_CLASS(adj)->sig_unit_changed_id, 0, unit);
   }
 }
 
