@@ -205,8 +205,8 @@ layer_options_dialog_new (GimpImage    *image,
       options->size_se = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
       entry1 = gimp_unit_entry_table_add_entry (options->size_se, "width", _("Width:"));
       entry2 = gimp_unit_entry_table_add_entry (options->size_se, "height", _("Height:"));
-      gimp_unit_entry_table_add_label (options->size_se, GIMP_UNIT_PIXEL);
-
+      gimp_unit_entry_table_add_label (options->size_se, GIMP_UNIT_PIXEL, "width", "height");
+      
       gimp_unit_entry_set_unit (GIMP_UNIT_ENTRY (entry1), GIMP_UNIT_PIXEL);
       gimp_unit_entry_set_resolution (GIMP_UNIT_ENTRY (entry1), xres);
       gimp_unit_entry_set_resolution (GIMP_UNIT_ENTRY (entry2), yres);

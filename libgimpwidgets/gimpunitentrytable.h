@@ -24,8 +24,6 @@
 
 #include <stdarg.h>
 
-#include <gtk/gtktable.h>
-#include <gtk/gtklabel.h>
 #include <glib.h>
 
 #include "gimpunitentry.h"
@@ -45,14 +43,6 @@ G_BEGIN_DECLS
 typedef struct _GimpUnitEntryTable       GimpUnitEntryTable;
 typedef struct _GimpUnitEntryTableClass  GimpUnitEntryTableClass;
 
-/* enum for standard 'set-ups' */
-typedef enum 
-{
-  GIMP_UNIT_ENTRY_TABLE_EMPTY,                /* empty table */
-  GIMP_UNIT_ENTRY_TABLE_DEFAULT,              /* just two entries */
-  GIMP_UNIT_ENTRY_TABLE_DEFAULT_WITH_PREVIEW  /* ... with label showing value */
-} GimpUnitEntryTableSetup;
-
 struct _GimpUnitEntryTable
 {
   GObject parent_instance;
@@ -60,8 +50,8 @@ struct _GimpUnitEntryTable
   /* private */
   GtkWidget  *table;
   GList      *entries;        /* list of entries */
-  GtkLabel   *previewLabel;   /* (optional) preview label automatically showing value */
-  GimpUnit   previewUnit;    /* unit in which the preview is shown */
+
+  gint       bottom;          /* bottom row of our table */
 };
 
 struct _GimpUnitEntryTableClass
@@ -78,8 +68,10 @@ GObject   *gimp_unit_entry_table_new (void);
 /* add UnitEntry */
 GtkWidget* gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table, const gchar* id, const gchar *label);
 //void gimp_unit_entry_table_add_entries ()
-/* add preview label showing the current value in given unit */
-void gimp_unit_entry_table_add_label (GimpUnitEntryTable *table, GimpUnit unit);
+/* add preview label showing the current value of two entries in given unit */
+void gimp_unit_entry_table_add_label (GimpUnitEntryTable *table, GimpUnit unit, const char* id1, const char* id2);
+/* add chain button connecting the two given UnitEntries */
+GtkWidget* gimp_unit_entry_table_add_chain_button (GimpUnitEntryTable *table, const char* id1, const char*id2);
 /* get UnitEntry by id */
 GimpUnitEntry* gimp_unit_entry_table_get_entry (GimpUnitEntryTable *table, const gchar* id);
 /* get UnitEntry by index */

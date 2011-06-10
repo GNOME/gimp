@@ -21,10 +21,11 @@
 
 #include "config.h"
 
-#include "gimpunitentrytable.h"
-
-#include <gtk/gtklabel.h>
+#include <gtk/gtk.h>
 #include <glib/gprintf.h>
+
+#include "gimpunitentrytable.h"
+#include "gimpwidgets.h"
 
 /* debug macro */
 //#define UNITENTRY_DEBUG
@@ -33,9 +34,6 @@
 #else
 #define DEBUG(x) /* nothing */
 #endif
-
-#define DEFAULT_TABLE_SIZE_X 3
-#define DEFAULT_TABLE_SIZE_Y 3
 
 G_DEFINE_TYPE (GimpUnitEntryTable, gimp_unit_entry_table, G_TYPE_OBJECT);
 
@@ -48,9 +46,9 @@ static void
 gimp_unit_entry_table_init (GimpUnitEntryTable *table)
 {
    /* initialize our fields */
-  table->table        = gtk_table_new (DEFAULT_TABLE_SIZE_X, DEFAULT_TABLE_SIZE_Y, FALSE);
+  table->table        = gtk_table_new (1, 1, FALSE);
   table->entries      = NULL;
-  table->previewLabel = NULL;
+  table->bottom       = 0;
 }
 
 static void
@@ -78,20 +76,36 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
   GimpUnitEntry *entry = GIMP_UNIT_ENTRY (gimp_unit_entry_new (id)) , *entry2; 
   gint          count  = g_list_length (table->entries); 
   GtkWidget     *label;
-  int i;
-   
+  gint i;
+  /* position of the entry */
+  gint leftAttach   = 1,
+       rightAttach  = 2,
+       topAttach    = table->bottom,
+       bottomAttach = table->bottom+1;
+
+  /* remember position in table so that we later can place other widgets around it */
+  g_object_set_data (G_OBJECT (entry), "leftAttach", GINT_TO_POINTER (leftAttach));
+  g_object_set_data (G_OBJECT (entry), "rightAttach", GINT_TO_POINTER (rightAttach));
+  g_object_set_data (G_OBJECT (entry), "topAttach", GINT_TO_POINTER (topAttach));
+  g_object_set_data (G_OBJECT (entry), "bottomAttach", GINT_TO_POINTER (bottomAttach));
+
   /* add entry to table at position (1, count) */
   gtk_table_attach_defaults (GTK_TABLE (table->table),
                              GTK_WIDGET (entry), 
-                             1, 2, count, count + 1);
+                             leftAttach,
+                             rightAttach,
+                             topAttach,
+                             bottomAttach);
 
-  /* if label is given, create label and attach to the left of entry */
+  table->bottom++;
+
+  /* if label string is given, create label and attach to the left of entry */
   if (labelStr != NULL)
   {
     label = gtk_label_new (labelStr);
     gtk_table_attach (GTK_TABLE (table->table),
                       label,
-                      0, 1, count, count + 1,
+                      leftAttach-1 , leftAttach, topAttach, bottomAttach,
                       GTK_SHRINK, GTK_EXPAND | GTK_FILL,
                       10, 0);
   }
@@ -111,44 +125,84 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
   return GTK_WIDGET (entry);
 }
 
-/* add preview label showing the current value in given unit */
-/** TODO: The whole label thing is subject to change. 
- *        Just a quick'n dirty solution for now 
- **/
+/* add preview label showing value of the two given entries in given unit */
 void 
-gimp_unit_entry_table_add_label (GimpUnitEntryTable *table, GimpUnit unit)
+gimp_unit_entry_table_add_label (GimpUnitEntryTable *table,
+                                 GimpUnit unit,
+                                 const char* id1,
+                                 const char* id2)
 {
   GtkWidget     *label = gtk_label_new("preview");
-  gint           count  = g_list_length (table->entries);
-  gint           i;
-  GimpUnitEntry *entry;
+  GimpUnitEntry *entry1 = gimp_unit_entry_table_get_entry (table, id1);
+  GimpUnitEntry *entry2 = gimp_unit_entry_table_get_entry (table, id2);
+  gint          leftAttach, rightAttach, topAttach, bottomAttach;
 
   /* save unit */
-  table->previewUnit = unit;
+  g_object_set_data (G_OBJECT (label), "unit", GINT_TO_POINTER (unit));
+  /* save the two entries */
+  g_object_set_data (G_OBJECT (label), "entry1", (gpointer) entry1);
+  g_object_set_data (G_OBJECT (label), "entry2", (gpointer) entry2);
+
+  /* get the position of the entries and set label accordingly */
+  leftAttach   = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry1), "leftAttach"));
+  rightAttach  = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry1), "rightAttach"));
+  topAttach    = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry2), "bottomAttach"));
+  bottomAttach = topAttach + 1;
 
   /* add label below unit entries */
   gtk_table_attach (GTK_TABLE (table->table),
                     label,
-                    1, 2, 
-                    count, count+1,
+                    leftAttach, rightAttach, 
+                    topAttach, bottomAttach,
                     GTK_SHRINK, GTK_EXPAND | GTK_FILL,
                     10, 0);
 
-  table->previewLabel = GTK_LABEL (label);
-  gtk_widget_show (GTK_WIDGET (table->previewLabel));
+  table->bottom++;
+
+  gtk_widget_show (GTK_WIDGET (label));
 
   /* connect label updater to changed signal */
-  for (i = 0; i < count; i++)
-  {
-    entry = gimp_unit_entry_table_get_nth_entry (table, i);
-    g_signal_connect (G_OBJECT (gimp_unit_entry_get_adjustment (entry)), "value-changed",
-                      G_CALLBACK (label_updater), (gpointer) table);
-  }
+  g_signal_connect (G_OBJECT (gimp_unit_entry_get_adjustment (entry1)), "value-changed",
+                    G_CALLBACK (label_updater), (gpointer) label);
 
-  label_updater (NULL, (gpointer) table);
+  g_signal_connect (G_OBJECT (gimp_unit_entry_get_adjustment (entry2)), "value-changed",
+                    G_CALLBACK (label_updater), (gpointer) label);
+
+  label_updater (NULL, (gpointer) label);
 }
 
-/* get UnitEntry by label */
+/* add chain button connecting the two given UnitEntries */
+GtkWidget* 
+gimp_unit_entry_table_add_chain_button (GimpUnitEntryTable *table,
+                                        const char* id1,
+                                        const char* id2)
+{
+  GtkWidget        *chainButton = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
+  GimpUnitEntry    *entry1      = gimp_unit_entry_table_get_entry (table, id1);
+  GimpUnitEntry    *entry2      = gimp_unit_entry_table_get_entry (table, id2);
+
+  /* retrieve position of entries */
+  gint rightAttach  = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry1), "rightAttach"));
+  gint topAttach    = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry1), "topAttach"));
+  gint bottomAttach = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry2), "bottomAttach"));
+
+  /* add chainbutton to right of entries, spanning from the first to the second */
+  gtk_table_attach (GTK_TABLE (table->table),
+                             GTK_WIDGET (chainButton),
+                             rightAttach,
+                             rightAttach + 1,
+                             topAttach,
+                             bottomAttach,
+                             GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+
+  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainButton), TRUE);
+
+  gtk_widget_show (chainButton);                          
+
+  return chainButton;
+}
+
+/* get UnitEntry by identifier */
 GimpUnitEntry* 
 gimp_unit_entry_table_get_entry (GimpUnitEntryTable *table,
                                  const gchar *id)
@@ -181,29 +235,25 @@ gimp_unit_entry_table_get_nth_entry (GimpUnitEntryTable *table,
 }
 
 /* updates the text of the preview label */
-/** TODO: The whole label thing is subject to change. 
- *        Just a quick'n dirty solution for now 
- **/
 static 
 void label_updater (GtkAdjustment *adj, gpointer userData)
 {
   gchar               str[40];
-  GimpUnitEntryTable *table       = GIMP_UNIT_ENTRY_TABLE (userData);
-  GimpUnitAdjustment *adjustment;
-  gint                count       = g_list_length (table->entries);
-  gint                i           = 0;     
+  GtkLabel           *label       = GTK_LABEL (userData);
+  GimpUnitEntry      *entry1      = GIMP_UNIT_ENTRY (g_object_get_data (G_OBJECT (label), "entry1"));
+  GimpUnitEntry      *entry2      = GIMP_UNIT_ENTRY (g_object_get_data (G_OBJECT (label), "entry2"));
+  GimpUnitAdjustment *adjustment;   
+  GimpUnit           unit;
 
-  if (table->previewLabel == NULL || count <= 0)
-    return;
+  /* retrieve preview unit */
+  unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (label), "unit"));
 
-  adjustment = gimp_unit_entry_get_adjustment (gimp_unit_entry_table_get_nth_entry (table, 0));
-  g_sprintf (str, "%s", gimp_unit_adjustment_to_string_in_unit (adjustment, table->previewUnit));
+  /* retrieve values of the two entries */
+  adjustment = gimp_unit_entry_get_adjustment (entry1);
+  g_sprintf (str, "%s", gimp_unit_adjustment_to_string_in_unit (adjustment, unit));
 
-  for (i = 1; i < count; i++)
-  {
-    adjustment = gimp_unit_entry_get_adjustment (gimp_unit_entry_table_get_nth_entry (table, i));
-    g_sprintf (str, "%s x %s ", str, gimp_unit_adjustment_to_string_in_unit (adjustment, table->previewUnit));
-  }
+  adjustment = gimp_unit_entry_get_adjustment (entry2);
+  g_sprintf (str, "%s x %s ", str, gimp_unit_adjustment_to_string_in_unit (adjustment, unit));
 
-  gtk_label_set_text (table->previewLabel, str); 
+  gtk_label_set_text (label, str);
 }

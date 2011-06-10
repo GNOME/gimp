@@ -43,7 +43,9 @@ create_interface(void)
   entryTable = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
   gimp_unit_entry_table_add_entry (entryTable, "width", "Width");
   gimp_unit_entry_table_add_entry (entryTable, "height", "Height");
-  gimp_unit_entry_table_add_label (entryTable, GIMP_UNIT_PIXEL);
+  gimp_unit_entry_table_add_label (entryTable, GIMP_UNIT_PIXEL, "width", "height");
+
+  gimp_unit_entry_table_add_chain_button (entryTable, "width", "height");
 
   /* set some default values */
   a = gimp_unit_entry_table_get_entry (entryTable, "width");
