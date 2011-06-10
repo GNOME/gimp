@@ -224,13 +224,13 @@ jpeg_restore_original_settings (gint32           image_ID,
                   if (h[1] == 1 && v[1] == 1 && h[2] == 1 && v[2] == 1)
                     {
                       if (h[0] == 1 && v[0] == 1)
-                        *subsmp = JPEG_SUPSAMPLING_1x1_1x1_1x1;
+                        *subsmp = JPEG_SUBSAMPLING_1x1_1x1_1x1;
                       else if (h[0] == 2 && v[0] == 1)
-                        *subsmp = JPEG_SUPSAMPLING_2x1_1x1_1x1;
+                        *subsmp = JPEG_SUBSAMPLING_2x1_1x1_1x1;
                       else if (h[0] == 1 && v[0] == 2)
-                        *subsmp = JPEG_SUPSAMPLING_1x2_1x1_1x1;
+                        *subsmp = JPEG_SUBSAMPLING_1x2_1x1_1x1;
                       else if (h[0] == 2 && v[0] == 2)
-                        *subsmp = JPEG_SUPSAMPLING_2x2_1x1_1x1;
+                        *subsmp = JPEG_SUBSAMPLING_2x2_1x1_1x1;
                     }
                 }
 

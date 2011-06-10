@@ -58,7 +58,7 @@
 #define DEFAULT_OPTIMIZE         TRUE
 #define DEFAULT_PROGRESSIVE      TRUE
 #define DEFAULT_BASELINE         TRUE
-#define DEFAULT_SUBSMP           JPEG_SUPSAMPLING_1x1_1x1_1x1
+#define DEFAULT_SUBSMP           JPEG_SUBSAMPLING_1x1_1x1_1x1
 #define DEFAULT_RESTART          0
 #define DEFAULT_RESTART_MCU_ROWS 16
 #define DEFAULT_DCT              0
@@ -400,11 +400,11 @@ save_image (const gchar  *filename,
   cinfo.optimize_coding = jsvals.optimize;
 
   subsampling = (gimp_drawable_is_rgb (drawable_ID) ?
-                 jsvals.subsmp : JPEG_SUPSAMPLING_1x1_1x1_1x1);
+                 jsvals.subsmp : JPEG_SUBSAMPLING_1x1_1x1_1x1);
 
   /*  smoothing is not supported with nonstandard sampling ratios  */
-  if (subsampling != JPEG_SUPSAMPLING_2x1_1x1_1x1 &&
-      subsampling != JPEG_SUPSAMPLING_1x2_1x1_1x1)
+  if (subsampling != JPEG_SUBSAMPLING_2x1_1x1_1x1 &&
+      subsampling != JPEG_SUBSAMPLING_1x2_1x1_1x1)
     {
       cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
     }
@@ -416,7 +416,7 @@ save_image (const gchar  *filename,
 
   switch (subsampling)
     {
-    case JPEG_SUPSAMPLING_2x2_1x1_1x1:
+    case JPEG_SUBSAMPLING_2x2_1x1_1x1:
     default:
       cinfo.comp_info[0].h_samp_factor = 2;
       cinfo.comp_info[0].v_samp_factor = 2;
@@ -426,7 +426,7 @@ save_image (const gchar  *filename,
       cinfo.comp_info[2].v_samp_factor = 1;
       break;
 
-    case JPEG_SUPSAMPLING_2x1_1x1_1x1:
+    case JPEG_SUBSAMPLING_2x1_1x1_1x1:
       cinfo.comp_info[0].h_samp_factor = 2;
       cinfo.comp_info[0].v_samp_factor = 1;
       cinfo.comp_info[1].h_samp_factor = 1;
@@ -435,7 +435,7 @@ save_image (const gchar  *filename,
       cinfo.comp_info[2].v_samp_factor = 1;
       break;
 
-    case JPEG_SUPSAMPLING_1x1_1x1_1x1:
+    case JPEG_SUBSAMPLING_1x1_1x1_1x1:
       cinfo.comp_info[0].h_samp_factor = 1;
       cinfo.comp_info[0].v_samp_factor = 1;
       cinfo.comp_info[1].h_samp_factor = 1;
@@ -444,7 +444,7 @@ save_image (const gchar  *filename,
       cinfo.comp_info[2].v_samp_factor = 1;
       break;
 
-    case JPEG_SUPSAMPLING_1x2_1x1_1x1:
+    case JPEG_SUBSAMPLING_1x2_1x1_1x1:
       cinfo.comp_info[0].h_samp_factor = 1;
       cinfo.comp_info[0].v_samp_factor = 2;
       cinfo.comp_info[1].h_samp_factor = 1;
@@ -1087,13 +1087,13 @@ save_dialog (void)
 
   pg.subsmp =
     combo = gimp_int_combo_box_new (_("4:4:4 (best quality)"),
-                                    JPEG_SUPSAMPLING_1x1_1x1_1x1,
+                                    JPEG_SUBSAMPLING_1x1_1x1_1x1,
                                     _("4:2:2 horizontal (chroma halved)"),
-                                    JPEG_SUPSAMPLING_2x1_1x1_1x1,
+                                    JPEG_SUBSAMPLING_2x1_1x1_1x1,
                                     _("4:2:2 vertical (chroma halved)"),
-                                    JPEG_SUPSAMPLING_1x2_1x1_1x1,
+                                    JPEG_SUBSAMPLING_1x2_1x1_1x1,
                                     _("4:2:0 (chroma quartered)"),
-                                    JPEG_SUPSAMPLING_2x2_1x1_1x1,
+                                    JPEG_SUBSAMPLING_2x2_1x1_1x1,
                                     NULL);
   gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 2, 3,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
@@ -1115,7 +1115,7 @@ save_dialog (void)
   else
     {
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                     JPEG_SUPSAMPLING_1x1_1x1_1x1);
+                                     JPEG_SUBSAMPLING_1x1_1x1_1x1);
 
       gtk_widget_set_sensitive (combo, FALSE);
     }
@@ -1402,8 +1402,8 @@ subsampling_changed (GtkWidget *combo,
 
   /*  smoothing is not supported with nonstandard sampling ratios  */
   gimp_scale_entry_set_sensitive (entry,
-                                  jsvals.subsmp != JPEG_SUPSAMPLING_2x1_1x1_1x1 &&
-                                  jsvals.subsmp != JPEG_SUPSAMPLING_1x2_1x1_1x1);
+                                  jsvals.subsmp != JPEG_SUBSAMPLING_2x1_1x1_1x1 &&
+                                  jsvals.subsmp != JPEG_SUBSAMPLING_1x2_1x1_1x1);
 
   make_preview ();
 }

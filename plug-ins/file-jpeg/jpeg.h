@@ -42,10 +42,10 @@ typedef struct my_error_mgr
 
 typedef enum
 {
-  JPEG_SUPSAMPLING_2x2_1x1_1x1 = 0,  /* smallest file */
-  JPEG_SUPSAMPLING_2x1_1x1_1x1 = 1,  /* 4:2:2         */
-  JPEG_SUPSAMPLING_1x1_1x1_1x1 = 2,
-  JPEG_SUPSAMPLING_1x2_1x1_1x1 = 3
+  JPEG_SUBSAMPLING_2x2_1x1_1x1 = 0,  /* smallest file */
+  JPEG_SUBSAMPLING_2x1_1x1_1x1 = 1,  /* 4:2:2         */
+  JPEG_SUBSAMPLING_1x1_1x1_1x1 = 2,
+  JPEG_SUBSAMPLING_1x2_1x1_1x1 = 3
 } JpegSubsampling;
 
 extern gint32 volatile  preview_image_ID;
