@@ -53,7 +53,7 @@
 
 
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
-#define DEFAULT_QUALITY          85.0
+#define DEFAULT_QUALITY          90.0
 #define DEFAULT_SMOOTHING        0.0
 #define DEFAULT_OPTIMIZE         TRUE
 #define DEFAULT_PROGRESSIVE      FALSE
