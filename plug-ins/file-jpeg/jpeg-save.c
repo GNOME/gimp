@@ -936,7 +936,7 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
-  restart_markers_label = gtk_label_new (_("Frequency (rows):"));
+  restart_markers_label = gtk_label_new (_("Interval (MCU rows):"));
   gtk_misc_set_alignment (GTK_MISC (restart_markers_label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), restart_markers_label, 4, 5, 1, 2,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);

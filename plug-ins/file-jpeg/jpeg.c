@@ -123,7 +123,7 @@ query (void)
     { GIMP_PDB_STRING,   "comment",      "Image comment" },
     { GIMP_PDB_INT32,    "subsmp",       "The subsampling option number" },
     { GIMP_PDB_INT32,    "baseline",     "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all decoders) (0/1)" },
-    { GIMP_PDB_INT32,    "restart",      "Frequency of restart markers (in rows, 0 = no restart markers)" },
+    { GIMP_PDB_INT32,    "restart",      "Interval of restart markers (in MCU rows, 0 = no restart markers)" },
     { GIMP_PDB_INT32,    "dct",          "DCT algorithm to use (speed/quality tradeoff)" }
   };
 
