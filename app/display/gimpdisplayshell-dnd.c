@@ -479,10 +479,20 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
                                   gpointer   data)
 {
   GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image   = gimp_display_get_image (shell->display);
-  GimpContext      *context = gimp_get_user_context (shell->display->gimp);
+  GimpImage        *image;
+  GimpContext      *context;
   GList            *list;
   gboolean          open_as_layers;
+
+  /* If the app is already being torn down, shell->display might be NULL here.
+   * Play it safe. */
+  if (! shell->display)
+    {
+      return;
+    }
+
+  image = gimp_display_get_image (shell->display);
+  context = gimp_get_user_context (shell->display->gimp);
 
   GIMP_LOG (DND, NULL);
 
@@ -494,6 +504,12 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
       GimpPDBStatusType  status;
       GError            *error = NULL;
       gboolean           warn  = FALSE;
+
+      if (! shell->display)
+        {
+          /* It seems as if GIMP is being torn down for quitting. Bail out. */
+          return;
+        }
 
       if (open_as_layers)
         {
@@ -550,7 +566,10 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
             warn = TRUE;
         }
 
-      if (warn)
+      /* Something above might have run a few rounds of the main loop. Check
+       * that shell->display is still there, otherwise ignore this as the app
+       * is being torn down for quitting. */
+      if (warn && shell->display)
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
