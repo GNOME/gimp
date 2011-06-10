@@ -58,7 +58,7 @@
 #define DEFAULT_OPTIMIZE         TRUE
 #define DEFAULT_PROGRESSIVE      FALSE
 #define DEFAULT_BASELINE         TRUE
-#define DEFAULT_SUBSMP           JPEG_SUPSAMPLING_2x2_1x1_1x1
+#define DEFAULT_SUBSMP           JPEG_SUPSAMPLING_1x1_1x1_1x1
 #define DEFAULT_RESTART          0
 #define DEFAULT_DCT              0
 #define DEFAULT_PREVIEW          FALSE
