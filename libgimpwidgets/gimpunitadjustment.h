@@ -76,6 +76,7 @@ gdouble gimp_unit_adjustment_get_value_in_unit    (GimpUnitAdjustment *adj, Gimp
 void    gimp_unit_adjustment_set_resolution (GimpUnitAdjustment *adj, gdouble res);
 gdouble gimp_unit_adjustment_get_resolution (GimpUnitAdjustment *adj);
 GimpUnit gimp_unit_adjustment_get_unit (GimpUnitAdjustment *adj);
+void    gimp_unit_adjustment_set_bounds (GimpUnitAdjustment *adj, GimpUnit unit, gdouble upper, gdouble lower);
 /* get string in format "value unit" */
 gchar*  gimp_unit_adjustment_to_string (GimpUnitAdjustment *adj);
 gchar*  gimp_unit_adjustment_to_string_in_unit (GimpUnitAdjustment *adj, GimpUnit unit);

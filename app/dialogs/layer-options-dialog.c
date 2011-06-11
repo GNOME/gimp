@@ -72,7 +72,6 @@ layer_options_dialog_new (GimpImage    *image,
   GtkWidget          *spinbutton;
   GtkWidget          *frame;
   GtkWidget          *button;
-  GimpUnitEntryTable *unitEntryTable;
   GtkWidget          *entry1;
   GtkWidget          *entry2;
 
@@ -207,11 +206,13 @@ layer_options_dialog_new (GimpImage    *image,
       entry2 = gimp_unit_entry_table_add_entry (options->size_se, "height", _("Height:"));
       gimp_unit_entry_table_add_label (options->size_se, GIMP_UNIT_PIXEL, "width", "height");
       
-      gimp_unit_entry_set_unit (GIMP_UNIT_ENTRY (entry1), GIMP_UNIT_PIXEL);
-      gimp_unit_entry_set_resolution (GIMP_UNIT_ENTRY (entry1), xres);
-      gimp_unit_entry_set_resolution (GIMP_UNIT_ENTRY (entry2), yres);
-      gimp_unit_entry_set_value (GIMP_UNIT_ENTRY (entry1), gimp_image_get_width  (image));
-      gimp_unit_entry_set_value (GIMP_UNIT_ENTRY (entry2), gimp_image_get_height  (image));
+      gimp_unit_entry_set_unit        (GIMP_UNIT_ENTRY (entry1), GIMP_UNIT_PIXEL);
+      gimp_unit_entry_set_resolution  (GIMP_UNIT_ENTRY (entry1), xres);
+      gimp_unit_entry_set_resolution  (GIMP_UNIT_ENTRY (entry2), yres);
+      gimp_unit_entry_set_value       (GIMP_UNIT_ENTRY (entry1), gimp_image_get_width  (image));
+      gimp_unit_entry_set_value       (GIMP_UNIT_ENTRY (entry2), gimp_image_get_height  (image));
+      gimp_unit_entry_set_bounds      (GIMP_UNIT_ENTRY (entry1), GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
+      gimp_unit_entry_set_bounds      (GIMP_UNIT_ENTRY (entry2), GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
 
       gtk_table_attach (GTK_TABLE (table), options->size_se->table, 0, 2, 1, 3,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

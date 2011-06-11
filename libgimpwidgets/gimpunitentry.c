@@ -476,3 +476,9 @@ gimp_unit_entry_get_unit (GimpUnitEntry *entry)
   GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
   return gimp_unit_adjustment_get_unit (adj);
 }
+void
+gimp_unit_entry_set_bounds (GimpUnitEntry *entry, GimpUnit unit, gdouble upper, gdouble lower)
+{
+  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
+  gimp_unit_adjustment_set_bounds (adj, unit, upper, lower);
+}

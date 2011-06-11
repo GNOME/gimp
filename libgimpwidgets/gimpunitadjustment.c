@@ -121,11 +121,11 @@ gimp_unit_adjustment_connect (GimpUnitAdjustment *adj, GimpUnitAdjustment *targe
                     (gpointer*) adj); 
 }
 
-/* converts from one current unit to another */
+/* converts value from one unit to another */
 static void
 gimp_unit_adjustment_convert_unit (GimpUnitAdjustment *adj, GimpUnit unit)
 {
-  gdouble newValue = 0;
+  gdouble newValue = 0, lower, upper;
   if (adj->unit != unit)
   {
     DEBUG   (("GimpUnitAdjustment: changing unit from %s to %s\n",
@@ -140,6 +140,25 @@ gimp_unit_adjustment_convert_unit (GimpUnitAdjustment *adj, GimpUnit unit)
                                      unit, 
                                      adj->resolution);
 
+    /* also convert bounds */
+    upper = gimp_units_to_pixels (gtk_adjustment_get_upper (GTK_ADJUSTMENT (adj)),
+                                  adj->unit,
+                                  adj->resolution);
+    lower = gimp_units_to_pixels (gtk_adjustment_get_lower (GTK_ADJUSTMENT (adj)),
+                                  adj->unit,
+                                  adj->resolution);
+
+    upper = gimp_pixels_to_units (upper,
+                                  unit, 
+                                  adj->resolution);
+    lower = gimp_pixels_to_units (lower,
+                                  unit, 
+                                  adj->resolution);
+
+    gtk_adjustment_set_upper (GTK_ADJUSTMENT (adj), upper);
+    gtk_adjustment_set_lower (GTK_ADJUSTMENT (adj), lower);
+
+    /* set the new unit */
     adj->unit  = unit;
 
     gimp_unit_adjustment_set_value (adj, newValue);
@@ -227,5 +246,27 @@ GimpUnit
 gimp_unit_adjustment_get_unit (GimpUnitAdjustment *adj)
 {
   return adj->unit;
+}
+void
+gimp_unit_adjustment_set_bounds (GimpUnitAdjustment *adj, GimpUnit unit, gdouble upper, gdouble lower)
+{
+  /* convert bounds from given unit to current unit */
+  upper = gimp_units_to_pixels (upper,
+                                unit,
+                                adj->resolution);
+  lower = gimp_units_to_pixels (lower,
+                                unit,
+                                adj->resolution);
+
+  upper = gimp_pixels_to_units (upper,
+                                adj->unit, 
+                                adj->resolution);
+  lower = gimp_pixels_to_units (lower,
+                                adj->unit, 
+                                adj->resolution);
+
+  /* set bounds */
+  gtk_adjustment_set_upper (GTK_ADJUSTMENT (adj), upper);
+  gtk_adjustment_set_lower (GTK_ADJUSTMENT (adj), lower);
 }
 
