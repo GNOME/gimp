@@ -52,6 +52,7 @@ struct _GimpUnitEntry
      our parsing and display the changed value */
   gboolean          buttonPressed;    
   gboolean          scrolling;
+  gboolean          dontUpdateText;
 
   const gchar *id; /* identifier string of unit entry (used by GimpUnitEntryTable) */
 };
@@ -73,7 +74,7 @@ void gimp_unit_entry_connect (GimpUnitEntry *entry, GimpUnitEntry *target);
 const gchar* gimp_unit_entry_get_id (GimpUnitEntry *entry);
 void gimp_unit_entry_set_unit (GimpUnitEntry *entry, GimpUnit unit);
 void gimp_unit_entry_set_resolution (GimpUnitEntry *entry, gdouble resolution);
-void gimp_unit_entry_set_value (GimpUnitEntry *entry, gdouble resolution);
+void gimp_unit_entry_set_value (GimpUnitEntry *entry, gdouble value);
 gdouble gimp_unit_entry_get_value (GimpUnitEntry *entry);
 gdouble gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, GimpUnit unit);
 GimpUnit gimp_unit_entry_get_unit (GimpUnitEntry *entry);

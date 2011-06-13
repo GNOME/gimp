@@ -61,12 +61,10 @@ gimp_unit_adjustment_init (GimpUnitAdjustment *unitAdjustment)
   gtk_adjustment_set_upper (&unitAdjustment->parent_instance, 10000000.0);
   gtk_adjustment_set_step_increment (&unitAdjustment->parent_instance, 1.0);
   gtk_adjustment_set_page_increment (&unitAdjustment->parent_instance, 10.0);
-  unitAdjustment->unitChanged = FALSE;
 
   /* default unit, resolution */
   unitAdjustment->unit        = DEFAULT_UNIT;
   unitAdjustment->resolution  = DEFAULT_RESOLUTION;
-  unitAdjustment->unitChanged = FALSE;
 }
 
 static void
@@ -105,8 +103,6 @@ static void
 unit_changed_handler (GimpUnitAdjustment *adj, GimpUnit unit, gpointer userData)
 {
   GimpUnitAdjustment *adjustment = GIMP_UNIT_ADJUSTMENT (userData);
-
-  adjustment->unitChanged = TRUE;
 
   gimp_unit_adjustment_convert_unit (adjustment, unit);
 }

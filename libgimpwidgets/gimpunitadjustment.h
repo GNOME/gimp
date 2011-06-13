@@ -43,9 +43,6 @@ struct _GimpUnitAdjustment
 {
   GtkAdjustment parent_instance;
 
-  /* flag set when unit has been changed externally */
-  gboolean      unitChanged; 
-
   /* private */
   /* TODO move private fields into own struct? */
   GimpUnit  unit;           /* the unit our value is in */
