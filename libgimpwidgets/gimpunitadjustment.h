@@ -68,6 +68,7 @@ GObject *gimp_unit_adjustment_new (void);
 void    gimp_unit_adjustment_set_unit (GimpUnitAdjustment *adj, GimpUnit unit);
 /* sets/gets the value of an adjustment */
 void    gimp_unit_adjustment_set_value (GimpUnitAdjustment *adj, gdouble value);
+void    gimp_unit_adjustment_set_value_in_unit (GimpUnitAdjustment *adj, gdouble value, GimpUnit unit);
 gdouble gimp_unit_adjustment_get_value (GimpUnitAdjustment *adj);
 gdouble gimp_unit_adjustment_get_value_in_unit    (GimpUnitAdjustment *adj, GimpUnit unit);
 void    gimp_unit_adjustment_set_resolution (GimpUnitAdjustment *adj, gdouble res);

@@ -75,6 +75,7 @@ const gchar* gimp_unit_entry_get_id (GimpUnitEntry *entry);
 void gimp_unit_entry_set_unit (GimpUnitEntry *entry, GimpUnit unit);
 void gimp_unit_entry_set_resolution (GimpUnitEntry *entry, gdouble resolution);
 void gimp_unit_entry_set_value (GimpUnitEntry *entry, gdouble value);
+void gimp_unit_entry_set_value_in_unit (GimpUnitEntry *entry, gdouble value, GimpUnit unit);
 gdouble gimp_unit_entry_get_value (GimpUnitEntry *entry);
 gdouble gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, GimpUnit unit);
 GimpUnit gimp_unit_entry_get_unit (GimpUnitEntry *entry);

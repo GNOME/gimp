@@ -179,6 +179,17 @@ gimp_unit_adjustment_set_value (GimpUnitAdjustment *adj, gdouble value)
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (adj), value);
 }
+void
+gimp_unit_adjustment_set_value_in_unit (GimpUnitAdjustment *adj, 
+                                        gdouble value, 
+                                        GimpUnit unit)
+{
+  /* convert from given unit to adjustments unit */
+  value = gimp_units_to_pixels (value, unit, adj->resolution);
+  value = gimp_pixels_to_units (value, adj->unit, adj->resolution);
+
+  gimp_unit_adjustment_set_value (adj, value);
+}
 gdouble 
 gimp_unit_adjustment_get_value (GimpUnitAdjustment *adj)
 {
