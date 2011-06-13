@@ -48,7 +48,7 @@ endif
 
 # Run tests with xvfb-run if available
 if HAVE_XVFB_RUN
-TESTS_ENVIRONMENT += $(XVFB_RUN) --server-args="-screen 0 1280x1024x24"
+TESTS_ENVIRONMENT = $(XVFB_RUN) --server-args="-screen 0 1280x1024x24"
 endif
 
 libgimpwidgetsincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpwidgets
