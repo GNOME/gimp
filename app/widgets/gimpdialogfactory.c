@@ -1390,7 +1390,6 @@ gimp_dialog_factory_restore (GimpDialogFactory *factory)
       if (gimp_session_info_get_open (info))
         {
           gimp_session_info_restore (info, factory);
-          gimp_session_info_clear_info (info);
         }
       else
         {

@@ -526,6 +526,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
         }
     }
 
+  gimp_session_info_clear_info (info);
+
   g_object_unref (info);
 }
 
