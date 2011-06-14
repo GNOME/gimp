@@ -187,6 +187,8 @@ automatic_tab_style (GimpTestFixture *fixture,
 
   dockable = GIMP_DOCKABLE (channel_dockable);
 
+  gimp_test_run_mainloop_until_idle ();
+
   /* The channel dockable is the only dockable, it has enough space
    * for the icon-blurb
    */
