@@ -330,6 +330,9 @@ gimp_warp_tool_motion (GimpTool         *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
+  gegl_path_append (wt->current_stroke,
+                    'M', coords->x, coords->y);
+
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
@@ -395,6 +398,9 @@ gimp_warp_tool_button_release (GimpTool              *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (wt));
 
   gimp_tool_control_halt (tool->control);
+
+  printf ("%s\n", gegl_path_to_string (wt->current_stroke));
+  gimp_warp_tool_image_map_update (wt);
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
