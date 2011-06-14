@@ -102,11 +102,6 @@ static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *imag
                                                      GimpTool              *tool);
 static void       gimp_warp_tool_image_map_update   (GimpWarpTool          *wt);
 static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt);
-#if 0
-static void       gimp_warp_tool_act_on_coords      (GimpWarpTool          *wt,
-                                                     gint                   x,
-                                                     gint                   y);
-#endif
 
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -257,6 +252,7 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   bbox.width  = ABS (x1 - x2);
   bbox.height = ABS (y1 - y2);
 
+  printf ("Initialize coordinate buffer (%d,%d) at %d,%d\n", bbox.width, bbox.height, bbox.x, bbox.y);
   wt->coords_buffer = gegl_buffer_new (&bbox, format);
 
   gimp_warp_tool_create_image_map (wt, drawable);
@@ -561,50 +557,4 @@ gimp_warp_tool_add_op (GimpWarpTool *wt)
 
   gegl_node_connect_to (last_op, "output", new_op, "input");
   gegl_node_connect_to (new_op, "output", wt->render_node, "aux");
-
-  g_object_unref (last_op);
 }
-
-#if 0
-static void
-gimp_warp_tool_act_on_coords (GimpWarpTool *wt,
-                              gint x,
-                              gint y)
-{
-  GeglBufferIterator  *it;
-  Babl                *format;
-  GeglRectangle        area = {x - 30,
-                               y - 30,
-                               60,
-                               60};
-
-  format = babl_format_n (babl_type ("float"), 2);
-  it = gegl_buffer_iterator_new (wt->coords_buffer, &area, format, GEGL_BUFFER_READWRITE);
-
-  while (gegl_buffer_iterator_next (it))
-    {
-      /* iterate inside the roi */
-      gint    n_pixels = it->length;
-      gfloat *coords   = it->data[0];
-
-      x = it->roi->x; /* initial x         */
-      y = it->roi->y; /* and y coordinates */
-
-      while (n_pixels--)
-        {
-          coords[0] += 2;
-          coords[1] += 2;
-
-          coords += 2;
-
-          /* update x and y coordinates */
-          x++;
-          if (x >= (it->roi->x + it->roi->width))
-            {
-              x = it->roi->x;
-              y++;
-            }
-        }
-    }
-}
-#endif
