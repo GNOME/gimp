@@ -58,6 +58,7 @@ Plug-ins:
  - Add a check-for-deprecated-procedures-in-script-fu make target
  - Update libpng code to not use deprecated API (file-mng and file-png)
  - Add an Item class to pygimp
+ - Correct/update some labels and defaults in the JPEG plug-in's save dialog UI
 
 
 Developer documentation:
