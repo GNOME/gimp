@@ -93,6 +93,7 @@ static void       gimp_warp_tool_oper_update        (GimpTool              *tool
                                                      gboolean               proximity,
                                                      GimpDisplay           *display);
 
+static gboolean   gimp_warp_tool_timer              (gpointer               data);
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
 
 static void       gimp_warp_tool_create_graph       (GimpWarpTool          *wt);
@@ -328,12 +329,8 @@ gimp_warp_tool_motion (GimpTool         *tool,
 {
   GimpWarpTool    *wt       = GIMP_WARP_TOOL (tool);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  gegl_path_append (wt->current_stroke,
-                    'M', coords->x, coords->y);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  wt->cursor_x = coords->x;
+  wt->cursor_y = coords->y;
 }
 
 static void
@@ -378,6 +375,10 @@ gimp_warp_tool_button_press (GimpTool            *tool,
     gimp_warp_tool_start (wt, display);
 
   wt->current_stroke = gegl_path_new ();
+  gegl_path_append (wt->current_stroke,
+                    'M', coords->x, coords->y);
+
+  wt->timer = g_timeout_add (100, gimp_warp_tool_timer, wt);
 
   gimp_warp_tool_add_op (wt);
   gimp_warp_tool_image_map_update (wt);
@@ -398,6 +399,8 @@ gimp_warp_tool_button_release (GimpTool              *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (wt));
 
   gimp_tool_control_halt (tool->control);
+
+  g_source_remove (wt->timer);
 
   printf ("%s\n", gegl_path_to_string (wt->current_stroke));
   gimp_warp_tool_image_map_update (wt);
@@ -428,6 +431,15 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+gboolean
+gimp_warp_tool_timer (gpointer data)
+{
+  GimpWarpTool    *wt        = GIMP_WARP_TOOL (data);
+
+  gegl_path_append (wt->current_stroke,
+                    'M', wt->cursor_x, wt->cursor_y);
 }
 
 static void
