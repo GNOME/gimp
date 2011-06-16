@@ -57,6 +57,9 @@ struct _GimpUnitEntryTable
 struct _GimpUnitEntryTableClass
 {
   GObjectClass parent_class;
+
+  /* signals */
+  guint sig_value_changed_id;
 };
 
 /**
@@ -76,6 +79,12 @@ GtkWidget* gimp_unit_entry_table_add_chain_button (GimpUnitEntryTable *table, co
 GimpUnitEntry* gimp_unit_entry_table_get_entry (GimpUnitEntryTable *table, const gchar* id);
 /* get UnitEntry by index */
 GimpUnitEntry* gimp_unit_entry_table_get_nth_entry (GimpUnitEntryTable *table, gint index);
+/* get count of attached unit entries */
+gint gimp_unit_entry_table_get_entry_count (GimpUnitEntryTable *table);
+/* sets the unit of all entries */
+void gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, GimpUnit unit);
+/* sets the resolution of all entries */
+void gimp_unit_entry_table_set_resolution (GimpUnitEntryTable *table, gdouble res);
 
 G_END_DECLS
 

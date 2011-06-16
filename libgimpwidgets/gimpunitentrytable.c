@@ -40,7 +40,8 @@ G_DEFINE_TYPE (GimpUnitEntryTable, gimp_unit_entry_table, G_TYPE_OBJECT);
 /**
  * signal handler
  **/
-static void label_updater (GtkAdjustment *adj, gpointer userData);
+static void label_updater     (GtkAdjustment *adj, gpointer userData);
+static void on_value_changed  (GtkAdjustment *adj, gpointer userData);
 
 static void
 gimp_unit_entry_table_init (GimpUnitEntryTable *table)
@@ -52,8 +53,18 @@ gimp_unit_entry_table_init (GimpUnitEntryTable *table)
 }
 
 static void
-gimp_unit_entry_table_class_init (GimpUnitEntryTableClass *class)
+gimp_unit_entry_table_class_init (GimpUnitEntryTableClass *klass)
 {
+  klass->sig_value_changed_id = g_signal_new ("value-changed",
+                                              GIMP_TYPE_UNIT_ENTRY_TABLE,
+                                              G_SIGNAL_RUN_LAST,
+                                              0,
+                                              NULL, 
+                                              NULL,
+                                              g_cclosure_marshal_VOID__OBJECT,
+                                              G_TYPE_NONE, 
+                                              1, 
+                                              G_TYPE_OBJECT);
 }
 
 GObject*
@@ -118,6 +129,10 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
     gimp_unit_entry_connect (GIMP_UNIT_ENTRY (entry2), GIMP_UNIT_ENTRY (entry));
   }
   
+  /* connect to ourselves */
+  g_signal_connect (gimp_unit_entry_get_adjustment (entry), "value-changed",
+                    G_CALLBACK (on_value_changed), (gpointer) table);
+
   gtk_widget_show_all (table->table); 
 
   table->entries = g_list_append (table->entries, (gpointer) entry);
@@ -154,8 +169,14 @@ gimp_unit_entry_table_add_label (GimpUnitEntryTable *table,
                     label,
                     leftAttach, rightAttach, 
                     topAttach, bottomAttach,
-                    GTK_SHRINK, GTK_EXPAND | GTK_FILL,
+                    GTK_FILL, GTK_SHRINK,
                     10, 0);
+
+  /* set alignment */
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  /*gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
+                             -1);*/
 
   table->bottom++;
 
@@ -256,4 +277,61 @@ void label_updater (GtkAdjustment *adj, gpointer userData)
   g_sprintf (str, "%s x %s ", str, gimp_unit_adjustment_to_string_in_unit (adjustment, unit));
 
   gtk_label_set_text (label, str);
+}
+
+/* signal handler for value changed signal of one of our entries/adjustments */
+static 
+void on_value_changed  (GtkAdjustment *adj, gpointer userData)
+{
+  GimpUnitEntryTable *table = GIMP_UNIT_ENTRY_TABLE (userData);
+  GimpUnitEntry *entry;
+  gint i, count = g_list_length (table->entries);
+
+  /* find corresponding entry */
+  for (i = 0; i < count; i++) 
+  {
+    entry = gimp_unit_entry_table_get_nth_entry (table, i);
+    if (gimp_unit_entry_get_adjustment (entry) == GIMP_UNIT_ADJUSTMENT (adj))
+      i = count;
+  }
+
+  /* emit "value-changed" */
+  g_signal_emit(table, GIMP_UNIT_ENTRY_TABLE_GET_CLASS(table)->sig_value_changed_id, 0, entry);
+}
+
+/* get count of attached unit entries */
+gint
+gimp_unit_entry_table_get_entry_count (GimpUnitEntryTable *table)
+{
+  return g_list_length (table->entries);
+}
+
+/* sets the unit of all entries */
+void 
+gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, GimpUnit unit)
+{
+  GimpUnitEntry *entry;
+  gint i, count = g_list_length (table->entries);
+
+  /* iterate over list of entries */
+  for (i = 0; i < count; i++) 
+  {
+    entry = gimp_unit_entry_table_get_nth_entry (table, i);
+    gimp_unit_entry_set_unit (entry, unit);
+  }
+}
+
+/* sets the resolution of all entries */
+void 
+gimp_unit_entry_table_set_resolution (GimpUnitEntryTable *table, gdouble res)
+{
+  GimpUnitEntry *entry;
+  gint i, count = g_list_length (table->entries);
+
+  /* iterate over list of entries */
+  for (i = 0; i < count; i++) 
+  {
+    entry = gimp_unit_entry_table_get_nth_entry (table, i);
+    gimp_unit_entry_set_resolution (entry, res);
+  }
 }
