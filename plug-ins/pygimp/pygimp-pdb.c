@@ -129,7 +129,9 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
     for (i = 0; i < nparams && params[i].type != GIMP_PDB_END; i++) {
 	PyObject *value = NULL;
 	
+#if PG_DEBUG > 1
 	g_printf("param_to_tuple: type: %d, PDB_ITEM: %d\n",  params[i].type, GIMP_PDB_ITEM);
+#endif
 
 	switch(params[i].type) {
 	case GIMP_PDB_INT32:
