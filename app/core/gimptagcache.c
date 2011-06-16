@@ -337,7 +337,7 @@ gimp_tag_cache_tagged_to_cache_record_foreach (GimpTagged  *tagged,
 
       g_free (checksum);
 
-      *cache_records = g_list_append (*cache_records, cache_rec);
+      *cache_records = g_list_prepend (*cache_records, cache_rec);
     }
 
   g_free (identifier);
@@ -378,7 +378,7 @@ gimp_tag_cache_save (GimpTagCache *cache)
           record_copy->checksum   = current_record->checksum;
           record_copy->tags       = g_list_copy (current_record->tags);
 
-          saved_records = g_list_append (saved_records, record_copy);
+          saved_records = g_list_prepend (saved_records, record_copy);
         }
     }
 
@@ -390,6 +390,8 @@ gimp_tag_cache_save (GimpTagCache *cache)
                               (GFunc) gimp_tag_cache_tagged_to_cache_record_foreach,
                               &saved_records);
     }
+
+  saved_records = g_list_reverse (saved_records);
 
   buf = g_string_new ("");
   g_string_append (buf, "<?xml version='1.0' encoding='UTF-8'?>\n");
