@@ -175,6 +175,8 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
 
       dock_window    = GIMP_DOCK_WINDOW (dialog_iter->data);
       dock_container = GIMP_DOCK_CONTAINER (dock_window);
+      g_object_add_weak_pointer (G_OBJECT (dock_window),
+                                 (gpointer) &dock_window);
 
       docks = gimp_dock_container_get_docks (dock_container);
       for (dock_iter = docks; dock_iter; dock_iter = dock_iter->next)
@@ -195,12 +197,12 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
         }
       g_list_free (docks);
 
+      if (dock_window)
+        g_object_remove_weak_pointer (G_OBJECT (dock_window),
+                                      (gpointer) &dock_window);
+
       /* Kill the window if removing the dock didn't destroy it
        * already. This will be the case for the toolbox dock window
-       */
-      /* FIXME: We should solve this in a more elegant way, valgrind
-       * complains about invalid reads when the dock window already is
-       * destroyed
        */
       if (GTK_IS_WIDGET (dock_window))
         {
