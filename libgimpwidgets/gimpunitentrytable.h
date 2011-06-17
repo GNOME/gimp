@@ -74,7 +74,7 @@ GtkWidget* gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table, const gch
 /* add preview label showing the current value of two entries in given unit */
 void gimp_unit_entry_table_add_label (GimpUnitEntryTable *table, GimpUnit unit, const char* id1, const char* id2);
 /* add chain button connecting the two given UnitEntries */
-GtkWidget* gimp_unit_entry_table_add_chain_button (GimpUnitEntryTable *table, const char* id1, const char*id2);
+GtkWidget* gimp_unit_entry_table_add_chainbutton (GimpUnitEntryTable *table, const char* id1, const char*id2);
 /* get UnitEntry by id */
 GimpUnitEntry* gimp_unit_entry_table_get_entry (GimpUnitEntryTable *table, const gchar* id);
 /* get UnitEntry by index */

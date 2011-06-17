@@ -398,6 +398,8 @@ EXPORTS
 	gimp_unit_entry_table_get_nth_entry
 	gimp_unit_entry_table_get_type
 	gimp_unit_entry_table_new
+	gimp_unit_entry_table_set_resolution
+	gimp_unit_entry_table_set_unit
 	gimp_unit_menu_get_pixel_digits
 	gimp_unit_menu_get_type
 	gimp_unit_menu_get_unit

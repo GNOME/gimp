@@ -194,7 +194,7 @@ gimp_unit_entry_table_add_label (GimpUnitEntryTable *table,
 
 /* add chain button connecting the two given UnitEntries */
 GtkWidget* 
-gimp_unit_entry_table_add_chain_button (GimpUnitEntryTable *table,
+gimp_unit_entry_table_add_chainbutton  (GimpUnitEntryTable *table,
                                         const char* id1,
                                         const char* id2)
 {
