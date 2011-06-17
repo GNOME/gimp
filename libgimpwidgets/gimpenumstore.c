@@ -151,7 +151,7 @@ static void
 gimp_enum_store_add_value (GtkListStore *store,
                            GEnumValue   *value)
 {
-  GtkTreeIter  iter;
+  GtkTreeIter  iter = { 0, };
   const gchar *desc;
 
   desc = gimp_enum_value_get_desc (GIMP_ENUM_STORE (store)->enum_class, value);

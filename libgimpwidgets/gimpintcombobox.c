@@ -268,7 +268,7 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
        label;
        label = va_arg (values, const gchar *), value = va_arg (values, gint))
     {
-      GtkTreeIter  iter;
+      GtkTreeIter  iter = { 0, };
 
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
