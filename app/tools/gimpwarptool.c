@@ -151,6 +151,7 @@ gimp_warp_tool_init (GimpWarpTool *self)
 {
   GimpTool *tool = GIMP_TOOL (self);
 
+  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_dirty_mask  (tool->control,
                                      GIMP_DIRTY_IMAGE           |
                                      GIMP_DIRTY_IMAGE_STRUCTURE |
