@@ -52,7 +52,8 @@ struct _GimpWarpTool
 
   GeglPath       *current_stroke;
 
-  guint           timer;
+  guint           stroke_timer;
+  guint           preview_timer;
 
   GimpImageMap   *image_map; /* For preview */
 };

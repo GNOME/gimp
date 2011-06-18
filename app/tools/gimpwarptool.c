@@ -93,7 +93,8 @@ static void       gimp_warp_tool_oper_update        (GimpTool              *tool
                                                      gboolean               proximity,
                                                      GimpDisplay           *display);
 
-static gboolean   gimp_warp_tool_timer              (gpointer               data);
+static gboolean   gimp_warp_tool_stroke_timer       (gpointer               data);
+static gboolean   gimp_warp_tool_preview_timer      (gpointer               data);
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
 
 static void       gimp_warp_tool_create_graph       (GimpWarpTool          *wt);
@@ -101,13 +102,14 @@ static void       gimp_warp_tool_create_image_map   (GimpWarpTool          *wt,
                                                      GimpDrawable          *drawable);
 static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *image_map,
                                                      GimpTool              *tool);
-static void       gimp_warp_tool_image_map_update   (GimpWarpTool          *wt);
 static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt);
 
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_warp_tool_parent_class
 
+#define STROKE_PERIOD 100
+#define PREVIEW_PERIOD 1000
 
 void
 gimp_warp_tool_register (GimpToolRegisterCallback  callback,
@@ -378,10 +380,10 @@ gimp_warp_tool_button_press (GimpTool            *tool,
   gegl_path_append (wt->current_stroke,
                     'M', coords->x, coords->y);
 
-  wt->timer = g_timeout_add (100, gimp_warp_tool_timer, wt);
+  wt->stroke_timer = g_timeout_add (STROKE_PERIOD, gimp_warp_tool_stroke_timer, wt);
+  wt->preview_timer = g_timeout_add (PREVIEW_PERIOD, gimp_warp_tool_preview_timer, wt);
 
   gimp_warp_tool_add_op (wt);
-  gimp_warp_tool_image_map_update (wt);
 
   gimp_tool_control_activate (tool->control);
 }
@@ -400,10 +402,11 @@ gimp_warp_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  g_source_remove (wt->timer);
+  g_source_remove (wt->stroke_timer);
+  g_source_remove (wt->preview_timer);
 
   printf ("%s\n", gegl_path_to_string (wt->current_stroke));
-  gimp_warp_tool_image_map_update (wt);
+  gimp_warp_tool_preview_timer (wt);
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
@@ -433,13 +436,48 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
-gboolean
-gimp_warp_tool_timer (gpointer data)
+static gboolean
+gimp_warp_tool_stroke_timer (gpointer data)
 {
   GimpWarpTool    *wt        = GIMP_WARP_TOOL (data);
 
   gegl_path_append (wt->current_stroke,
                     'M', wt->cursor_x, wt->cursor_y);
+  return TRUE;
+}
+
+static gboolean
+gimp_warp_tool_preview_timer (gpointer data)
+{
+  GimpWarpTool     *wt    = GIMP_WARP_TOOL (data);
+  GimpTool         *tool  = GIMP_TOOL (wt);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  GimpItem         *item  = GIMP_ITEM (tool->drawable);
+  gint              x, y;
+  gint              w, h;
+  gint              off_x, off_y;
+  GeglRectangle     visible;
+
+  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+
+  gimp_item_get_offset (item, &off_x, &off_y);
+
+  gimp_rectangle_intersect (x, y, w, h,
+                            off_x,
+                            off_y,
+                            gimp_item_get_width  (item),
+                            gimp_item_get_height (item),
+                            &visible.x,
+                            &visible.y,
+                            &visible.width,
+                            &visible.height);
+
+  visible.x -= off_x;
+  visible.y -= off_y;
+
+  gimp_image_map_apply (wt->image_map, &visible);
+
+  return TRUE;
 }
 
 static void
@@ -521,37 +559,6 @@ gimp_warp_tool_image_map_flush (GimpImageMap *image_map,
 
   gimp_projection_flush_now (gimp_image_get_projection (image));
   gimp_display_flush_now (tool->display);
-}
-
-static void
-gimp_warp_tool_image_map_update (GimpWarpTool *wt)
-{
-  GimpTool         *tool  = GIMP_TOOL (wt);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-  GimpItem         *item  = GIMP_ITEM (tool->drawable);
-  gint              x, y;
-  gint              w, h;
-  gint              off_x, off_y;
-  GeglRectangle     visible;
-
-  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
-
-  gimp_item_get_offset (item, &off_x, &off_y);
-
-  gimp_rectangle_intersect (x, y, w, h,
-                            off_x,
-                            off_y,
-                            gimp_item_get_width  (item),
-                            gimp_item_get_height (item),
-                            &visible.x,
-                            &visible.y,
-                            &visible.width,
-                            &visible.height);
-
-  visible.x -= off_x;
-  visible.y -= off_y;
-
-  gimp_image_map_apply (wt->image_map, &visible);
 }
 
 static void
