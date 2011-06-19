@@ -48,12 +48,12 @@ struct _GimpUnitEntry
   /* private */
   GimpUnitAdjustment *unitAdjustment; /* for convinience */
 
-  /* set TRUE while up/down buttons/keys pressed or scrolling so that we can disable
-     our parsing and display the changed value */
-  gboolean          buttonPressed;    
-  gboolean          scrolling;
+  /* flag set TRUE when entry's text should not be overwritten
+     (i.e. during user input) */
   gboolean          dontUpdateText;
 
+  /* set TRUE when the entry shall be used for resolution input */
+  gboolean          resMode;
   const gchar *id; /* identifier string of unit entry (used by GimpUnitEntryTable) */
 };
 
@@ -80,6 +80,7 @@ gdouble gimp_unit_entry_get_value (GimpUnitEntry *entry);
 gdouble gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, GimpUnit unit);
 GimpUnit gimp_unit_entry_get_unit (GimpUnitEntry *entry);
 void gimp_unit_entry_set_bounds (GimpUnitEntry *entry, GimpUnit unit, gdouble upper, gdouble lower);
+void gimp_unit_entry_set_res_mode (GimpUnitEntry *entry, gboolean activate);
 
 G_END_DECLS
 

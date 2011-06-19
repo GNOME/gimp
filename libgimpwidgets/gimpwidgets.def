@@ -387,6 +387,7 @@ EXPORTS
 	gimp_unit_entry_new
 	gimp_unit_entry_set_bounds
 	gimp_unit_entry_set_resolution
+	gimp_unit_entry_set_res_mode
 	gimp_unit_entry_set_unit
 	gimp_unit_entry_set_value
 	gimp_unit_entry_set_value_in_unit

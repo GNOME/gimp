@@ -103,7 +103,8 @@ gimp_unit_entry_init (GimpUnitEntry *unitEntry)
                                   GTK_ADJUSTMENT (adjustment));
 
   /* some default values */
-  unitEntry->dontUpdateText = FALSE;                                 
+  unitEntry->dontUpdateText = FALSE;  
+  unitEntry->resMode        = FALSE;                               
 
   /* connect signals */
   /* we don't need all of them... */
@@ -241,7 +242,17 @@ on_output (GtkSpinButton *spin, gpointer data)
   }
   
   /* set text of the entry */
-  text = gimp_unit_adjustment_to_string (adj);
+  if (!entry->resMode)
+  {
+    text = gimp_unit_adjustment_to_string (adj);
+  }
+  else
+  {
+    text = g_malloc (30 * sizeof (gchar));
+    sprintf (text, "%.1f px/%s", 
+             gimp_unit_adjustment_get_value (adj),
+             gimp_unit_get_abbreviation (gimp_unit_adjustment_get_unit (adj)));
+  }
 
   DEBUG (("on_output: %s\n", text);)
 
@@ -270,12 +281,15 @@ void on_text_changed (GtkEditable *editable, gpointer user_data)
 
   DEBUG (("on_text_changed\n");)
 
+  if (!entry->resMode)
+  {
   /* disable updating the displayed text (user input must not be overwriten) */
   entry->dontUpdateText = TRUE;
   /* parse input */
   gimp_unit_entry_parse (entry);
   /* reenable updating */
   entry->dontUpdateText = FALSE;
+  }
 }
 
 static 
@@ -283,10 +297,13 @@ gint on_input        (GtkSpinButton *spinButton,
                       gpointer       arg1,
                       gpointer       user_data)
 {
+  if (!GIMP_UNIT_ENTRY (spinButton)->resMode)
+  {
   /* parse and set value ourselves before GtkSpinButton does so, because
      GtkSpinButton would truncate our input and ignore parts of it */
   gimp_unit_entry_parse (GIMP_UNIT_ENTRY (spinButton));
   on_output (spinButton, (gpointer)GIMP_UNIT_ENTRY(spinButton)->unitAdjustment);
+  }
 
   /* we want GtkSpinButton to handle the input nontheless (there is no problem anymore
      since we done the parsing), so we return FALSE */
@@ -305,7 +322,10 @@ void on_populate_popup (GtkEntry *entry,
   menuItem = gtk_separator_menu_item_new ();
   gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuItem);
 
-  for (i = gimp_unit_get_number_of_units()-1; i >= 0; i--)
+  /* ignore PIXEL when in resolution mode */
+  (GIMP_UNIT_ENTRY (entry)->resMode) ? (i = 1) : (i = 0); 
+
+  for (; i < gimp_unit_get_number_of_units(); i++)
   {
     menuItem = gtk_menu_item_new_with_label (gimp_unit_get_singular (i));
     gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuItem);
@@ -451,4 +471,11 @@ gimp_unit_entry_set_bounds (GimpUnitEntry *entry, GimpUnit unit, gdouble upper, 
 {
   GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
   gimp_unit_adjustment_set_bounds (adj, unit, upper, lower);
+}
+
+void
+gimp_unit_entry_set_res_mode (GimpUnitEntry *entry,
+                              gboolean activate)
+{
+  entry->resMode = TRUE;
 }
