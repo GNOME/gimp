@@ -626,21 +626,40 @@ gimp_imagefile_icon_callback (GObject      *source_object,
                               GAsyncResult *result,
                               gpointer      data)
 {
-  GimpImagefile        *imagefile = GIMP_IMAGEFILE (data);
-  GimpImagefilePrivate *private   = GET_PRIVATE (imagefile);
-  GFile                *file      = G_FILE (source_object);
-  GError               *error     = NULL;
+  GimpImagefile        *imagefile;
+  GimpImagefilePrivate *private;
+  GFile                *file  = G_FILE (source_object);
+  GError               *error = NULL;
   GFileInfo            *file_info;
 
   file_info = g_file_query_info_finish (file, result, &error);
+
+  if (error)
+    {
+      /* we were cancelled from dispose() and the imagefile is
+       * long gone, bail out
+       */
+      if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+        {
+          g_clear_error (&error);
+          return;
+        }
+
+#ifdef GIMP_UNSTABLE
+      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+#endif
+
+      g_clear_error (&error);
+    }
+
+  imagefile = GIMP_IMAGEFILE (data);
+  private   = GET_PRIVATE (imagefile);
 
   if (file_info)
     {
       private->icon = g_object_ref (g_file_info_get_icon (file_info));
       g_object_unref (file_info);
     }
-
-  g_clear_error (&error);
 
   if (private->icon_cancellable)
     {
