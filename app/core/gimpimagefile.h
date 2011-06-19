@@ -59,6 +59,7 @@ GimpImagefile * gimp_imagefile_new                   (Gimp          *gimp,
                                                       const gchar   *uri);
 
 GimpThumbnail * gimp_imagefile_get_thumbnail         (GimpImagefile *imagefile);
+GIcon         * gimp_imagefile_get_gicon             (GimpImagefile *imagefile);
 
 void            gimp_imagefile_set_mime_type         (GimpImagefile *imagefile,
                                                       const gchar   *mime_type);

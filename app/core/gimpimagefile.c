@@ -63,6 +63,8 @@ struct _GimpImagefilePrivate
   Gimp          *gimp;
 
   GimpThumbnail *thumbnail;
+  GIcon         *icon;
+  GCancellable  *icon_cancellable;
 
   gchar         *description;
   gboolean       static_desc;
@@ -73,6 +75,7 @@ struct _GimpImagefilePrivate
                                                             GimpImagefilePrivate)
 
 
+static void        gimp_imagefile_dispose          (GObject        *object);
 static void        gimp_imagefile_finalize         (GObject        *object);
 
 static void        gimp_imagefile_name_changed     (GimpObject     *object);
@@ -96,6 +99,10 @@ static gboolean    gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
 
 static gchar     * gimp_imagefile_get_description  (GimpViewable   *viewable,
                                                     gchar         **tooltip);
+
+static void        gimp_imagefile_icon_callback    (GObject        *source_object,
+                                                    GAsyncResult   *result,
+                                                    gpointer        data);
 
 static void     gimp_thumbnail_set_info_from_image (GimpThumbnail  *thumbnail,
                                                     const gchar    *mime_type,
@@ -132,6 +139,7 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->dispose               = gimp_imagefile_dispose;
   object_class->finalize              = gimp_imagefile_finalize;
 
   gimp_object_class->name_changed     = gimp_imagefile_name_changed;
@@ -165,6 +173,21 @@ gimp_imagefile_init (GimpImagefile *imagefile)
 }
 
 static void
+gimp_imagefile_dispose (GObject *object)
+{
+  GimpImagefilePrivate *private = GET_PRIVATE (object);
+
+  if (private->icon_cancellable)
+    {
+      g_cancellable_cancel (private->icon_cancellable);
+      g_object_unref (private->icon_cancellable);
+      private->icon_cancellable = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_imagefile_finalize (GObject *object)
 {
   GimpImagefilePrivate *private = GET_PRIVATE (object);
@@ -181,6 +204,12 @@ gimp_imagefile_finalize (GObject *object)
     {
       g_object_unref (private->thumbnail);
       private->thumbnail = NULL;
+    }
+
+  if (private->icon)
+    {
+      g_object_unref (private->icon);
+      private->icon = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -210,6 +239,39 @@ gimp_imagefile_get_thumbnail (GimpImagefile *imagefile)
   g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), NULL);
 
   return GET_PRIVATE (imagefile)->thumbnail;
+}
+
+GIcon *
+gimp_imagefile_get_gicon (GimpImagefile *imagefile)
+{
+  GimpImagefilePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), NULL);
+
+  private = GET_PRIVATE (imagefile);
+
+  if (private->icon)
+    return private->icon;
+
+  if (! private->icon_cancellable)
+    {
+      GFile *file;
+
+      file = g_file_new_for_uri (gimp_object_get_name (imagefile));
+
+      private->icon_cancellable = g_cancellable_new ();
+
+      g_file_query_info_async (file, "standard::icon",
+                               G_FILE_QUERY_INFO_NONE,
+                               G_PRIORITY_DEFAULT,
+                               private->icon_cancellable,
+                               gimp_imagefile_icon_callback,
+                               imagefile);
+
+      g_object_unref (file);
+    }
+
+  return NULL;
 }
 
 void
@@ -557,6 +619,37 @@ gimp_imagefile_get_description (GimpViewable   *viewable,
     }
 
   return basename;
+}
+
+static void
+gimp_imagefile_icon_callback (GObject      *source_object,
+                              GAsyncResult *result,
+                              gpointer      data)
+{
+  GimpImagefile        *imagefile = GIMP_IMAGEFILE (data);
+  GimpImagefilePrivate *private   = GET_PRIVATE (imagefile);
+  GFile                *file      = G_FILE (source_object);
+  GError               *error     = NULL;
+  GFileInfo            *file_info;
+
+  file_info = g_file_query_info_finish (file, result, &error);
+
+  if (file_info)
+    {
+      private->icon = g_object_ref (g_file_info_get_icon (file_info));
+      g_object_unref (file_info);
+    }
+
+  g_clear_error (&error);
+
+  if (private->icon_cancellable)
+    {
+      g_object_unref (private->icon_cancellable);
+      private->icon_cancellable = NULL;
+    }
+
+  if (private->icon)
+    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (imagefile));
 }
 
 const gchar *

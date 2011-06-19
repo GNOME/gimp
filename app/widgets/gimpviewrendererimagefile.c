@@ -164,42 +164,20 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
   if (! gimp_object_get_name (imagefile))
     return NULL;
 
-#if 0
   if (! pixbuf)
     {
-      GFile     *file;
-      GFileInfo *file_info;
+      GIcon *icon = gimp_imagefile_get_gicon (imagefile);
 
-      file = g_file_new_for_uri (gimp_object_get_name (imagefile));
-      file_info = g_file_query_info (file, "standard::icon", 0, NULL, NULL);
-
-      if (file_info)
+      if (icon)
         {
-          GIcon *icon = g_file_info_get_icon (file_info);
+          GtkIconInfo *info;
 
-          if (icon)
-            {
-              GtkIconInfo *info;
+          info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, 0);
 
-              info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, 0);
-
-              if (info)
-                pixbuf = gtk_icon_info_load_icon (info, NULL);
-            }
-          else
-            {
-#ifdef GIMP_UNSTABLE
-              g_printerr ("no icon for: %s\n",
-                          gimp_object_get_name (imagefile));
-#endif
-            }
-
-          g_object_unref (file_info);
+          if (info)
+            pixbuf = gtk_icon_info_load_icon (info, NULL);
         }
-
-      g_object_unref (file);
     }
-#endif
 
   if (! pixbuf && thumbnail->image_mimetype)
     {
