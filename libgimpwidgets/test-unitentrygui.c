@@ -32,7 +32,7 @@ create_interface(void)
   gtk_window_set_default_size (GTK_WINDOW(window), 200, 100);
 
   /* vbox (used for the entries) */
-  vbox = gtk_vbox_new (TRUE, 1);
+  vbox = gtk_vbox_new (FALSE, 1);
 
   /* valign */
   valign = gtk_alignment_new (0, 0, 1, 0);
@@ -45,7 +45,7 @@ create_interface(void)
   gimp_unit_entry_table_add_entry (entryTable, "height", "Height");
   gimp_unit_entry_table_add_label (entryTable, GIMP_UNIT_PIXEL, "width", "height");
 
-  gimp_unit_entry_table_add_chain_button (entryTable, "width", "height");
+  gimp_unit_entry_table_add_chainbutton (entryTable, "width", "height");
 
   /* set some default values */
   a = gimp_unit_entry_table_get_entry (entryTable, "width");
@@ -53,7 +53,22 @@ create_interface(void)
   gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (a), 20);
   gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (b), 20);
 
-  gtk_box_pack_start (GTK_BOX (vbox), entryTable->table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), entryTable->table, FALSE, TRUE, 0);
+
+  /* resolution entry */
+  entryTable = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
+  gimp_unit_entry_table_add_entry (entryTable, "xres", "X Resolution");
+  gimp_unit_entry_table_add_entry (entryTable, "yres", "Y Resolution");
+
+  /* set some default values */
+  a = gimp_unit_entry_table_get_entry (entryTable, "xres");
+  b = gimp_unit_entry_table_get_entry (entryTable, "yres");
+  gimp_unit_entry_set_value (a, 72);
+  gimp_unit_entry_set_value (b, 72);
+  gimp_unit_entry_set_res_mode (a, TRUE);
+  gimp_unit_entry_set_res_mode (b, TRUE);
+
+  gtk_box_pack_end (GTK_BOX (vbox), entryTable->table, FALSE, TRUE, 5);
 
   /* signals */
   g_signal_connect_swapped (G_OBJECT(window), "destroy",
