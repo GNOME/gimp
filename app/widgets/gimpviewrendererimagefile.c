@@ -164,6 +164,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
   if (! gimp_object_get_name (imagefile))
     return NULL;
 
+#if 0
   if (! pixbuf)
     {
       GFile     *file;
@@ -198,6 +199,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
 
       g_object_unref (file);
     }
+#endif
 
   if (! pixbuf && thumbnail->image_mimetype)
     {
