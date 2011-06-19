@@ -59,7 +59,7 @@ struct _GimpUnitEntryTableClass
   GObjectClass parent_class;
 
   /* signals */
-  guint sig_value_changed_id;
+  guint sig_changed_id;
 };
 
 /**
@@ -85,7 +85,8 @@ gint gimp_unit_entry_table_get_entry_count (GimpUnitEntryTable *table);
 void gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, GimpUnit unit);
 /* sets the resolution of all entries */
 void gimp_unit_entry_table_set_resolution (GimpUnitEntryTable *table, gdouble res);
-
+/* sets resolution mode for all entries */
+void gimp_unit_entry_table_set_res_mode (GimpUnitEntryTable *table, gboolean enable);
 G_END_DECLS
 
 #endif /*__GIMP_UNIT_ENTRY_TABLE_H__*/
