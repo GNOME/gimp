@@ -443,7 +443,7 @@ gimp_warp_tool_stroke_timer (gpointer data)
   GimpWarpTool    *wt        = GIMP_WARP_TOOL (data);
 
   gegl_path_append (wt->current_stroke,
-                    'M', wt->cursor_x, wt->cursor_y);
+                    'L', wt->cursor_x, wt->cursor_y);
   return TRUE;
 }
 
