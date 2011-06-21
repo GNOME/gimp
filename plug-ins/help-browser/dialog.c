@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#undef G_DISABLE_DEPRECATED /* for G_CONST_RETURN used by webkit */
 #include <gtk/gtk.h>
 
 #include <gdk/gdkkeysyms.h>
