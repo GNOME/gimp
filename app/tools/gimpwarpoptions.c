@@ -40,7 +40,8 @@ enum
 {
   PROP_0,
   PROP_EFFECT_STRENGTH,
-  PROP_EFFECT_SIZE
+  PROP_EFFECT_SIZE,
+  PROP_BEHAVIOR
 };
 
 
@@ -77,6 +78,13 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                                    "effect-size", _("Effect Size"),
                                    1.0, 10000.0, 40.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BEHAVIOR,
+                                 "behavior",
+                                 N_("Behavior"),
+                                 GIMP_TYPE_WARP_BEHAVIOR,
+                                 GIMP_WARP_BEHAVIOR_MOVE,
+                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -99,6 +107,9 @@ gimp_warp_options_set_property (GObject      *object,
       break;
     case PROP_EFFECT_SIZE:
       options->effect_size = g_value_get_double (value);
+      break;
+    case PROP_BEHAVIOR:
+      options->behavior = g_value_get_enum (value);
       break;
 
     default:
@@ -123,6 +134,9 @@ gimp_warp_options_get_property (GObject    *object,
     case PROP_EFFECT_SIZE:
       g_value_set_double (value, options->effect_size);
       break;
+    case PROP_BEHAVIOR:
+      g_value_set_enum (value, options->behavior);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -135,8 +149,13 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget *behavior;
   GtkWidget *strength;
   GtkWidget *size;
+
+  behavior = gimp_prop_enum_combo_box_new (config, "behavior", 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), behavior, FALSE, FALSE, 0);
+  gtk_widget_show (behavior);
 
   strength = gimp_prop_spin_scale_new (config, "effect-strength",
                                         _("Strength"),

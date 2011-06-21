@@ -572,6 +572,7 @@ gimp_warp_tool_add_op (GimpWarpTool *wt)
 
   new_op = gegl_node_new_child (wt->graph,
                                 "operation", "gimp:warp",
+                                "behavior", options->behavior,
                                 "strength", options->effect_strength,
                                 "size", options->effect_size,
                                 "stroke", wt->current_stroke,
