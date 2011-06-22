@@ -185,8 +185,8 @@ gimp_template_editor_constructed (GObject *object)
                         
   gtk_table_attach_defaults (GTK_TABLE (table), private->size_se->table, 0, 2, 0, 2);
 
-  gtk_table_set_row_spacing (GTK_TABLE (private->size_se), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (private->size_se), 1, 6);
+  /*gtk_table_set_row_spacing (GTK_TABLE (private->size_se), 0, 2);
+  gtk_table_set_col_spacing (GTK_TABLE (private->size_se), 1, 6);*/
 
   gimp_unit_entry_table_add_entry (private->size_se, 
                                    "width", 
@@ -297,9 +297,9 @@ gimp_template_editor_constructed (GObject *object)
                                    _("Y resolution:"));
   gimp_unit_entry_table_set_res_mode (private->resolution_se, TRUE);                              
 
-  gtk_table_set_row_spacing (GTK_TABLE (private->resolution_se), 0, 2);
+  /*gtk_table_set_row_spacing (GTK_TABLE (private->resolution_se), 0, 2);
   gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 1, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 2, 2);
+  gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 2, 2);*/
 
   gtk_box_pack_start (GTK_BOX (hbox), private->resolution_se->table, TRUE, TRUE, 0);
   gtk_widget_show (private->resolution_se->table);
@@ -319,14 +319,14 @@ gimp_template_editor_constructed (GObject *object)
                                  G_OBJECT (private->resolution_se), chainbutton,
                                  1.0, 1.0);
 
-  focus_chain = g_list_prepend (focus_chain,
+  /*focus_chain = g_list_prepend (focus_chain,
                                 GIMP_SIZE_ENTRY (private->resolution_se)->unitmenu);
   focus_chain = g_list_prepend (focus_chain, chainbutton);
   focus_chain = g_list_prepend (focus_chain, yres);
   focus_chain = g_list_prepend (focus_chain, xres);
 
   gtk_container_set_focus_chain (GTK_CONTAINER (private->resolution_se),
-                                 focus_chain);
+                                 focus_chain);*/
   g_list_free (focus_chain);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
