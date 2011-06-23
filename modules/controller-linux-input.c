@@ -218,7 +218,7 @@ controller_linux_input_class_init (ControllerLinuxInputClass *klass)
                                                         _("The name of the device to read Linux Input events from."),
                                                         NULL,
                                                         GIMP_CONFIG_PARAM_FLAGS));
-#ifdef HAVE_LIBHAL
+#ifdef HAVE_LIBGUDEV
   g_object_class_install_property (object_class, PROP_DEVICE_STORE,
                                    g_param_spec_object ("device-values",
                                                         NULL, NULL,
@@ -480,11 +480,11 @@ linux_input_get_device_info (ControllerLinuxInput *controller,
 
 static void
 linux_input_device_changed (ControllerLinuxInput *controller,
-                            const gchar          *udi)
+                            const gchar          *identifier)
 {
-  if (controller->device && strcmp (udi, controller->device) == 0)
+  if (controller->device && strcmp (identifier, controller->device) == 0)
     {
-      linux_input_set_device (controller, udi);
+      linux_input_set_device (controller, identifier);
       g_object_notify (G_OBJECT (controller), "device");
     }
 }

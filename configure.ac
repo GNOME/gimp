@@ -58,7 +58,7 @@ m4_define([pygtk_required_version], [2.10.4])
 m4_define([poppler_required_version], [0.12.4])
 m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
-m4_define([libhal_required_version], [0.5.7])
+m4_define([libgudev_required_version], [167])
 m4_define([exif_required_version], [0.6.15])
 m4_define([lcms_required_version], [1.16])
 m4_define([libpng_required_version], [1.2.37])
@@ -1623,27 +1623,27 @@ if test "x$have_dbus_glib" = xyes; then
 fi
 
 
-###############################################
-# Check for libhal (Hardware Abstraction Layer)
-###############################################
+####################
+# Check for libgudev
+####################
 
-AC_ARG_WITH(hal,   [  --without-hal           build without HAL support])
+AC_ARG_WITH(gudev, [  --without-gudev        build without GUdev support])
 
-have_libhal=no
+have_libgudev=no
 
-if test "x$with_hal" = xno; then
-  have_libhal="no (disabled)"
+if test "x$with_gudev" = xno; then
+  have_libgudev="no (disabled)"
 fi
 
 if test "x$have_linux_input" = xyes && test "x$have_dbus_glib" = xyes &&
-   test "x$with_hal" != xno; then
-  PKG_CHECK_MODULES(HAL, hal >= libhal_required_version,
-    have_libhal=yes,
-    have_libhal="no (libhal not found)")
+   test "x$with_gudev" != xno; then
+  PKG_CHECK_MODULES(GUDEV, gudev-1.0 >= libgudev_required_version,
+    have_libgudev=yes,
+    have_libgudev="no (libgudev not found)")
 fi
 
-if test "x$have_libhal" = xyes; then
-  AC_DEFINE(HAVE_LIBHAL, 1, [Define to 1 if libhal is available])
+if test "x$have_libgudev" = xyes; then
+  AC_DEFINE(HAVE_LIBGUDEV, 1, [Define to 1 if libgudev is available])
 fi
 
 
@@ -2304,7 +2304,7 @@ Plug-In Features:
 
 Optional Modules:
   ALSA (MIDI Input):   $have_alsa
-  Linux Input:         $have_linux_input (HAL support: $have_libhal)
+  Linux Input:         $have_linux_input (GUdev support: $have_libgudev)
   DirectInput (Win32): $have_dx_dinput
   Color Correction:    $have_lcms
   Soft Proof:          $have_lcms

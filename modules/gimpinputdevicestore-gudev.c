@@ -1,9 +1,10 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpinputdevicestore-hal.c
- * Input device store based on HAL, the hardware abstraction layer.
+ * gimpinputdevicestore-gudev.c
+ * Input device store based on GUdev, the hardware abstraction layer.
  * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ *               2011  Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,16 +31,15 @@
 #include "libgimpmodule/gimpmodule.h"
 
 
-#ifdef HAVE_LIBHAL
+#ifdef HAVE_LIBGUDEV
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
-#include <hal/libhal.h>
+#include <gudev/gudev.h>
 
 enum
 {
-  COLUMN_UDI,
+  COLUMN_IDENTIFIER,
   COLUMN_LABEL,
+  COLUMN_DEVICE_FILE,
   NUM_COLUMNS
 };
 
@@ -60,10 +60,10 @@ typedef struct _GimpInputDeviceStoreClass GimpInputDeviceStoreClass;
 
 struct _GimpInputDeviceStore
 {
-  GtkListStore    parent_instance;
+  GtkListStore  parent_instance;
 
-  LibHalContext  *context;
-  GError         *error;
+  GUdevClient  *client;
+  GError       *error;
 };
 
 
@@ -72,23 +72,23 @@ struct _GimpInputDeviceStoreClass
   GtkListStoreClass   parent_class;
 
   void  (* device_added)   (GimpInputDeviceStore *store,
-                            const gchar          *udi);
+                            const gchar          *identifier);
   void  (* device_removed) (GimpInputDeviceStore *store,
-                            const gchar          *udi);
+                            const gchar          *identifier);
 };
 
 
 static void      gimp_input_device_store_finalize   (GObject              *object);
 
 static gboolean  gimp_input_device_store_add        (GimpInputDeviceStore *store,
-                                                     const gchar          *udi);
+                                                     GUdevDevice          *device);
 static gboolean  gimp_input_device_store_remove     (GimpInputDeviceStore *store,
-                                                     const gchar          *udi);
+                                                     GUdevDevice          *device);
 
-static void      gimp_input_device_store_device_added   (LibHalContext *ctx,
-                                                         const char    *udi);
-static void      gimp_input_device_store_device_removed (LibHalContext *ctx,
-                                                         const char    *udi);
+static void      gimp_input_device_store_uevent     (GUdevClient          *client,
+                                                     const gchar          *action,
+                                                     GUdevDevice          *device,
+                                                     GimpInputDeviceStore *store);
 
 
 G_DEFINE_DYNAMIC_TYPE (GimpInputDeviceStore, gimp_input_device_store,
@@ -140,63 +140,31 @@ gimp_input_device_store_class_finalize (GimpInputDeviceStoreClass *klass)
 static void
 gimp_input_device_store_init (GimpInputDeviceStore *store)
 {
-  GType            types[] = { G_TYPE_STRING, G_TYPE_STRING };
-  DBusGConnection *connection;
-  DBusError        dbus_error;
+  GType        types[]      = { G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING };
+  const gchar *subsystems[] = { "input", NULL };
+  GList       *devices;
+  GList       *list;
 
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    G_N_ELEMENTS (types), types);
 
-  connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &store->error);
+  store->client = g_udev_client_new (subsystems);
 
-  if (! connection)
-    return;
+  devices = g_udev_client_query_by_subsystem (store->client, "input");
 
-  store->context = libhal_ctx_new ();
-
-  libhal_ctx_set_dbus_connection (store->context,
-                                  dbus_g_connection_get_connection (connection));
-  dbus_g_connection_unref (connection);
-
-  dbus_error_init (&dbus_error);
-
-  if (libhal_ctx_init (store->context, &dbus_error))
+  for (list = devices; list; list = g_list_next (list))
     {
-      char **devices;
-      int    i, num_devices;
+      GUdevDevice *device = list->data;
 
-      devices = libhal_find_device_by_capability (store->context, "input",
-                                                  &num_devices, NULL);
-
-      for (i = 0; i < num_devices; i++)
-        gimp_input_device_store_add (store, devices[i]);
-
-      libhal_free_string_array (devices);
-
-      libhal_ctx_set_user_data (store->context, store);
-
-      libhal_ctx_set_device_added (store->context,
-                                   gimp_input_device_store_device_added);
-      libhal_ctx_set_device_removed (store->context,
-                                     gimp_input_device_store_device_removed);
+      gimp_input_device_store_add (store, device);
+      g_object_unref (device);
     }
-  else
-    {
-      if (dbus_error_is_set (&dbus_error))
-        {
-          dbus_set_g_error (&store->error, &dbus_error);
-          dbus_error_free (&dbus_error);
-        }
-      else
-        {
-          g_set_error_literal (&store->error,
-			       GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
-			       "Unable to connect to hald");
-        }
 
-      libhal_ctx_free (store->context);
-      store->context = NULL;
-    }
+  g_list_free (devices);
+
+  g_signal_connect (store->client, "uevent",
+                    G_CALLBACK (gimp_input_device_store_uevent),
+                    store);
 }
 
 static void
@@ -204,11 +172,10 @@ gimp_input_device_store_finalize (GObject *object)
 {
   GimpInputDeviceStore *store = GIMP_INPUT_DEVICE_STORE (object);
 
-  if (store->context)
+  if (store->client)
     {
-      libhal_ctx_shutdown (store->context, NULL);
-      libhal_ctx_free (store->context);
-      store->context = NULL;
+      g_object_unref (store->client);
+      store->client = NULL;
     }
 
   if (store->error)
@@ -222,7 +189,7 @@ gimp_input_device_store_finalize (GObject *object)
 
 static gboolean
 gimp_input_device_store_lookup (GimpInputDeviceStore *store,
-                                const gchar          *udi,
+                                const gchar          *identifier,
                                 GtkTreeIter          *iter)
 {
   GtkTreeModel *model = GTK_TREE_MODEL (store);
@@ -235,11 +202,11 @@ gimp_input_device_store_lookup (GimpInputDeviceStore *store,
     {
       const gchar *str;
 
-      gtk_tree_model_get_value (model, iter, COLUMN_UDI, &value);
+      gtk_tree_model_get_value (model, iter, COLUMN_IDENTIFIER, &value);
 
       str = g_value_get_string (&value);
 
-      if (strcmp (str, udi) == 0)
+      if (strcmp (str, identifier) == 0)
         {
           g_value_unset (&value);
           break;
@@ -254,8 +221,9 @@ gimp_input_device_store_lookup (GimpInputDeviceStore *store,
 /*  insert in alphabetic order  */
 static void
 gimp_input_device_store_insert (GimpInputDeviceStore *store,
-                                const gchar          *udi,
-                                const gchar          *label)
+                                const gchar          *identifier,
+                                const gchar          *label,
+                                const gchar          *device_file)
 {
   GtkTreeModel *model = GTK_TREE_MODEL (store);
   GtkTreeIter   iter;
@@ -283,72 +251,90 @@ gimp_input_device_store_insert (GimpInputDeviceStore *store,
     }
 
   gtk_list_store_insert_with_values (GTK_LIST_STORE (store), &iter, pos,
-                                     COLUMN_UDI,   udi,
-                                     COLUMN_LABEL, label,
+                                     COLUMN_IDENTIFIER,  identifier,
+                                     COLUMN_LABEL,       label,
+                                     COLUMN_DEVICE_FILE, device_file,
                                      -1);
 }
 
 static gboolean
 gimp_input_device_store_add (GimpInputDeviceStore *store,
-                             const gchar          *udi)
+                             GUdevDevice          *device)
 {
-  gboolean   added = FALSE;
-  char     **caps;
-  gint       i;
+  const gchar *device_file = g_udev_device_get_device_file (device);
+#if 0
+  const gchar *path        = g_udev_device_get_sysfs_path (device);
+#endif
+  const gchar *name        = g_udev_device_get_sysfs_attr (device, "name");
 
-  caps = libhal_device_get_property_strlist (store->context,
-                                             udi, "info.capabilities",
-                                             NULL);
+#if 0
+  g_printerr ("\ndevice added: %s, %s, %s\n",
+              name ? name : "NULL",
+              device_file ? device_file : "NULL",
+              path);
+#endif
 
-  for (i = 0; caps && caps[i] && !added; i++)
+  if (device_file)
     {
-      char *str;
-
-      if (strcmp (caps[i], "input") != 0)
-        continue;
-
-      /*  skip "PC Speaker" (why is this an input device at all?)  */
-      str = libhal_device_get_property_string (store->context,
-                                               udi, "input.physical_device",
-                                               NULL);
-      if (str)
+      if (name)
         {
-          gboolean speaker =
-            strcmp (str, "/org/freedesktop/Hal/devices/platform_pcspkr") == 0;
+          GtkTreeIter unused;
 
-          libhal_free_string (str);
+          if (! gimp_input_device_store_lookup (store, name, &unused))
+            {
+              gimp_input_device_store_insert (store, name, name, device_file);
 
-          if (speaker)
-            continue;
+              g_signal_emit (store, store_signals[DEVICE_ADDED], 0,
+                             name);
+
+              return TRUE;
+            }
         }
-
-      str = libhal_device_get_property_string (store->context,
-                                               udi, "input.product",
-                                               NULL);
-      if (str)
+      else
         {
-          gimp_input_device_store_insert (store, udi, str);
+          GUdevDevice *parent = g_udev_device_get_parent (device);
+          const gchar *parent_name;
 
-          libhal_free_string (str);
+          parent_name = g_udev_device_get_sysfs_attr (parent, "name");
 
-          added = TRUE;
+          if (parent_name)
+            {
+              GtkTreeIter unused;
+
+              if (! gimp_input_device_store_lookup (store, parent_name, &unused))
+                {
+                  gimp_input_device_store_insert (store, parent_name, parent_name,
+                                                  device_file);
+
+                  g_signal_emit (store, store_signals[DEVICE_ADDED], 0,
+                                 parent_name);
+
+                  g_object_unref (parent);
+                  return TRUE;
+                }
+            }
+
+          g_object_unref (parent);
+          return FALSE;
         }
     }
 
-  libhal_free_string_array (caps);
-
-  return added;
+  return FALSE;
 }
 
 static gboolean
 gimp_input_device_store_remove (GimpInputDeviceStore *store,
-                                const gchar          *udi)
+                                GUdevDevice          *device)
 {
+  const gchar *name = g_udev_device_get_sysfs_attr (device, "name");
   GtkTreeIter  iter;
 
-  if (gimp_input_device_store_lookup (store, udi, &iter))
+  if (gimp_input_device_store_lookup (store, name, &iter))
     {
       gtk_list_store_remove (GTK_LIST_STORE (store), &iter);
+
+      g_signal_emit (store, store_signals[DEVICE_REMOVED], 0, name);
+
       return TRUE;
     }
 
@@ -356,26 +342,18 @@ gimp_input_device_store_remove (GimpInputDeviceStore *store,
 }
 
 static void
-gimp_input_device_store_device_added (LibHalContext *ctx,
-                                      const char    *udi)
+gimp_input_device_store_uevent (GUdevClient          *client,
+                                const gchar          *action,
+                                GUdevDevice          *device,
+                                GimpInputDeviceStore *store)
 {
-  GimpInputDeviceStore *store = libhal_ctx_get_user_data (ctx);
-
-  if (gimp_input_device_store_add (store, udi))
+  if (! strcmp (action, "add"))
     {
-      g_signal_emit (store, store_signals[DEVICE_ADDED], 0, udi);
+      gimp_input_device_store_add (store, device);
     }
-}
-
-static void
-gimp_input_device_store_device_removed (LibHalContext *ctx,
-                                        const char    *udi)
-{
-  GimpInputDeviceStore *store = libhal_ctx_get_user_data (ctx);
-
-  if (gimp_input_device_store_remove (store, udi))
+  else if (! strcmp (action, "remove"))
     {
-      g_signal_emit (store, store_signals[DEVICE_REMOVED], 0, udi);
+      gimp_input_device_store_remove (store, device);
     }
 }
 
@@ -387,30 +365,26 @@ gimp_input_device_store_new (void)
 
 gchar *
 gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
-                                         const gchar          *udi)
+                                         const gchar          *identifier)
 {
   GtkTreeIter iter;
 
   g_return_val_if_fail (GIMP_IS_INPUT_DEVICE_STORE (store), NULL);
-  g_return_val_if_fail (udi != NULL, NULL);
+  g_return_val_if_fail (identifier != NULL, NULL);
 
-  if (! store->context)
+  if (! store->client)
     return NULL;
 
-  if (gimp_input_device_store_lookup (store, udi, &iter))
+  if (gimp_input_device_store_lookup (store, identifier, &iter))
     {
-      char *str = libhal_device_get_property_string (store->context,
-                                                     udi, "input.device",
-                                                     NULL);
+      GtkTreeModel *model = GTK_TREE_MODEL (store);
+      gchar        *device_file;
 
-      if (str)
-        {
-          gchar *retval = g_strdup (str);
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_DEVICE_FILE, &device_file,
+                          -1);
 
-          libhal_free_string (str);
-
-          return retval;
-        }
+      return device_file;
     }
 
   return NULL;
@@ -424,7 +398,7 @@ gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
   return store->error ? g_error_copy (store->error) : NULL;
 }
 
-#else /* HAVE_LIBHAL */
+#else /* HAVE_LIBGUDEV */
 
 void
 gimp_input_device_store_register_types (GTypeModule *module)
@@ -445,7 +419,7 @@ gimp_input_device_store_new (void)
 
 gchar *
 gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
-                                         const gchar          *udi)
+                                         const gchar          *identifier)
 {
   return NULL;
 }
@@ -456,4 +430,4 @@ gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
   return NULL;
 }
 
-#endif /* HAVE_LIBHAL */
+#endif /* HAVE_LIBGUDEV */
