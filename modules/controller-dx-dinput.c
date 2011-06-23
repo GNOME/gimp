@@ -332,8 +332,7 @@ dx_dinput_get_n_events (GimpController *controller)
 }
 
 static const gchar *
-dx_dinput_get_event_name
- (GimpController *controller,
+dx_dinput_get_event_name (GimpController *controller,
                           gint            event_id)
 {
   ControllerDXDInput *cdxdi = (ControllerDXDInput *) controller;
