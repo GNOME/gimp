@@ -87,9 +87,6 @@ struct _GimpTransformTool
   gboolean        use_center;      /*  uses the center handle            */
   gboolean        use_mid_handles; /*  use handles at midpoints of edges */
 
-  gint            handle_w;        /*  handle width                      */
-  gint            handle_h;        /*  handle height                     */
-
   gint            ngx, ngy;        /*  number of grid lines in original
                                     *  x and y directions
                                     */
