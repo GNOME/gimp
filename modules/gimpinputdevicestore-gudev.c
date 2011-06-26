@@ -293,29 +293,34 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
       else
         {
           GUdevDevice *parent = g_udev_device_get_parent (device);
-          const gchar *parent_name;
 
-          parent_name = g_udev_device_get_sysfs_attr (parent, "name");
-
-          if (parent_name)
+          if (parent)
             {
-              GtkTreeIter unused;
+              const gchar *parent_name;
 
-              if (! gimp_input_device_store_lookup (store, parent_name, &unused))
+              parent_name = g_udev_device_get_sysfs_attr (parent, "name");
+
+              if (parent_name)
                 {
-                  gimp_input_device_store_insert (store, parent_name, parent_name,
-                                                  device_file);
+                  GtkTreeIter unused;
 
-                  g_signal_emit (store, store_signals[DEVICE_ADDED], 0,
-                                 parent_name);
+                  if (! gimp_input_device_store_lookup (store, parent_name,
+                                                        &unused))
+                    {
+                      gimp_input_device_store_insert (store,
+                                                      parent_name, parent_name,
+                                                      device_file);
 
-                  g_object_unref (parent);
-                  return TRUE;
+                      g_signal_emit (store, store_signals[DEVICE_ADDED], 0,
+                                     parent_name);
+
+                      g_object_unref (parent);
+                      return TRUE;
+                    }
                 }
-            }
 
-          g_object_unref (parent);
-          return FALSE;
+              g_object_unref (parent);
+            }
         }
     }
 
