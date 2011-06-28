@@ -124,8 +124,7 @@ static gint       gimp_cage_tool_is_on_edge         (GimpCageTool          *ct,
                                                      gint                   handle_size);
 
 static void       gimp_cage_tool_remove_last_handle (GimpCageTool          *ct);
-static void       gimp_cage_tool_compute_coef       (GimpCageTool          *ct,
-                                                     GimpDisplay           *display);
+static void       gimp_cage_tool_compute_coef       (GimpCageTool          *ct);
 static void       gimp_cage_tool_create_image_map   (GimpCageTool          *ct,
                                                      GimpDrawable          *drawable);
 static void       gimp_cage_tool_image_map_flush    (GimpImageMap          *image_map,
@@ -359,7 +358,7 @@ gimp_cage_tool_options_notify (GimpTool         *tool,
 
           if (ct->dirty_coef)
             {
-              gimp_cage_tool_compute_coef (ct, tool->display);
+              gimp_cage_tool_compute_coef (ct);
               gimp_cage_tool_render_node_update (ct);
             }
 
@@ -1080,8 +1079,7 @@ gimp_cage_tool_remove_last_handle (GimpCageTool *ct)
 }
 
 static void
-gimp_cage_tool_compute_coef (GimpCageTool *ct,
-                             GimpDisplay  *display)
+gimp_cage_tool_compute_coef (GimpCageTool *ct)
 {
   GimpCageConfig *config = ct->config;
   GimpProgress   *progress;
