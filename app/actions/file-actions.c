@@ -149,7 +149,7 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_EXPORT_TO },
 
   { "file-overwrite", NULL,
-    NC_("file-action", "Overwrite"), "",
+    NC_("file-action", "Over_write"), "",
     NC_("file-action", "Export the image back to the imported file in the import format"),
     GIMP_SAVE_MODE_EXPORT_TO, FALSE,
     GIMP_HELP_FILE_OVERWRITE },
@@ -295,7 +295,7 @@ file_actions_update (GimpActionGroup *group,
     }
   else if (show_overwrite)
     {
-      gchar *label = file_actions_create_label (_("Overwrite %s"), source);
+      gchar *label = file_actions_create_label (_("Over_write %s"), source);
       gimp_action_group_set_action_label (group, "file-overwrite", label);
       g_free (label);
 
