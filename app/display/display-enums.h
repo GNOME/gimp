@@ -77,6 +77,17 @@ typedef enum
   GIMP_HANDLE_ANCHOR_EAST
 } GimpHandleAnchor;
 
+#define GIMP_TYPE_PATH_STYLE (gimp_path_style_get_type ())
+
+GType gimp_path_style_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_PATH_STYLE_DEFAULT = 0,
+  GIMP_PATH_STYLE_VECTORS,
+  GIMP_PATH_STYLE_OUTLINE
+} GimpPathStyle;
+
 
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
 

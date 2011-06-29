@@ -774,7 +774,7 @@ gimp_draw_tool_add_path (GimpDrawTool         *draw_tool,
   g_return_val_if_fail (desc != NULL, NULL);
 
   item = gimp_canvas_path_new (gimp_display_get_shell (draw_tool->display),
-                               desc, x, y, FALSE, FALSE);
+                               desc, GIMP_PATH_STYLE_DEFAULT, x, y, FALSE);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);

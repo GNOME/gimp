@@ -155,6 +155,37 @@ gimp_handle_anchor_get_type (void)
 }
 
 GType
+gimp_path_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_PATH_STYLE_DEFAULT, "GIMP_PATH_STYLE_DEFAULT", "default" },
+    { GIMP_PATH_STYLE_VECTORS, "GIMP_PATH_STYLE_VECTORS", "vectors" },
+    { GIMP_PATH_STYLE_OUTLINE, "GIMP_PATH_STYLE_OUTLINE", "outline" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_PATH_STYLE_DEFAULT, "GIMP_PATH_STYLE_DEFAULT", NULL },
+    { GIMP_PATH_STYLE_VECTORS, "GIMP_PATH_STYLE_VECTORS", NULL },
+    { GIMP_PATH_STYLE_OUTLINE, "GIMP_PATH_STYLE_OUTLINE", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpPathStyle", values);
+      gimp_type_set_translation_context (type, "path-style");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_zoom_focus_get_type (void)
 {
   static const GEnumValue values[] =

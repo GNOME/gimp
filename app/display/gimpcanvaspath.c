@@ -56,14 +56,13 @@ struct _GimpCanvasPathPrivate
   gdouble       x;
   gdouble       y;
   gboolean      filled;
-  gboolean      path_style;
+  GimpPathStyle  path_style;
 };
 
 #define GET_PRIVATE(path) \
         G_TYPE_INSTANCE_GET_PRIVATE (path, \
                                      GIMP_TYPE_CANVAS_PATH, \
                                      GimpCanvasPathPrivate)
-
 
 /*  local function prototypes  */
 
@@ -128,11 +127,12 @@ gimp_canvas_path_class_init (GimpCanvasPathClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
 
+
   g_object_class_install_property (object_class, PROP_PATH_STYLE,
-                                   g_param_spec_boolean ("path-style",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                   g_param_spec_enum ("path-style", NULL, NULL,
+                                                      GIMP_TYPE_PATH_STYLE,
+                                                      GIMP_PATH_STYLE_DEFAULT,
+                                                      GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpCanvasPathPrivate));
 }
@@ -181,7 +181,7 @@ gimp_canvas_path_set_property (GObject      *object,
       private->filled = g_value_get_boolean (value);
       break;
     case PROP_PATH_STYLE:
-      private->path_style = g_value_get_boolean (value);
+      private->path_style = g_value_get_enum (value);
       break;
 
     default:
@@ -213,7 +213,7 @@ gimp_canvas_path_get_property (GObject    *object,
       g_value_set_boolean (value, private->filled);
       break;
     case PROP_PATH_STYLE:
-      g_value_set_boolean (value, private->path_style);
+      g_value_set_enum (value, private->path_style);
       break;
 
     default:
@@ -299,40 +299,50 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
                          cairo_t          *cr)
 {
   GimpCanvasPathPrivate *private = GET_PRIVATE (item);
+  gboolean               active;
+  cairo_pattern_t       *pattern;
 
-  if (private->path_style)
+    switch (private->path_style)
     {
-      gboolean active = gimp_canvas_item_get_highlight (item);
+     case GIMP_PATH_STYLE_VECTORS:
+      active = gimp_canvas_item_get_highlight (item);
 
       gimp_display_shell_set_vectors_bg_style (shell, cr, active);
       cairo_stroke_preserve (cr);
 
       gimp_display_shell_set_vectors_fg_style (shell, cr, active);
       cairo_stroke (cr);
-    }
-  else
-    {
+      break;
+     case GIMP_PATH_STYLE_OUTLINE:
+      gimp_display_shell_set_outline_bg_style (shell, cr);
+      cairo_stroke_preserve (cr);
+
+      gimp_display_shell_set_outline_fg_style (shell, cr);
+      cairo_stroke (cr);
+      break;
+     case GIMP_PATH_STYLE_DEFAULT:
       GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, shell, cr);
+      break;
     }
 }
 
 GimpCanvasItem *
 gimp_canvas_path_new (GimpDisplayShell     *shell,
                       const GimpBezierDesc *bezier,
+                      GimpPathStyle          path_style,
                       gdouble               x,
                       gdouble               y,
-                      gboolean              filled,
-                      gboolean              path_style)
+                      gboolean              filled)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   return g_object_new (GIMP_TYPE_CANVAS_PATH,
                        "shell",      shell,
                        "path",       bezier,
+                       "path-style", path_style,
                        "x",          x,
                        "y",          y,
                        "filled",     filled,
-                       "path-style", path_style,
                        NULL);
 }
 

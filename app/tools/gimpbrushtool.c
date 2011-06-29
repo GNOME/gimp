@@ -356,7 +356,7 @@ gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
 #undef EPSILON
         }
 
-      return gimp_canvas_path_new (shell, boundary, x, y, FALSE, FALSE);
+      return gimp_canvas_path_new (shell, boundary, GIMP_PATH_STYLE_OUTLINE, x, y, FALSE);
     }
   else if (draw_fallback)
     {

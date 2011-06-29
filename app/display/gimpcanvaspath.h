@@ -51,10 +51,10 @@ GType            gimp_canvas_path_get_type (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_path_new      (GimpDisplayShell     *shell,
                                             const GimpBezierDesc *bezier,
+                                            GimpPathStyle        type,
                                             gdouble               x,
                                             gdouble               y,
-                                            gboolean              filled,
-                                            gboolean              path_style);
+                                            gboolean              filled);
 
 void             gimp_canvas_path_set      (GimpCanvasItem       *path,
                                             const GimpBezierDesc *bezier);

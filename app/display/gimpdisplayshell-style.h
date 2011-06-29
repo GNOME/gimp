@@ -49,7 +49,10 @@ void   gimp_display_shell_set_vectors_bg_style    (GimpDisplayShell *shell,
 void   gimp_display_shell_set_vectors_fg_style    (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
                                                    gboolean          active);
-
+void   gimp_display_shell_set_outline_bg_style    (GimpDisplayShell *shell,
+                                                   cairo_t          *cr);
+void   gimp_display_shell_set_outline_fg_style    (GimpDisplayShell *shell,
+                                                   cairo_t          *cr);
 void   gimp_display_shell_set_passe_partout_style (GimpDisplayShell *shell,
                                                    cairo_t          *cr);
 
