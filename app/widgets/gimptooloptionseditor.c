@@ -460,6 +460,12 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
 {
   GimpContainer *presets;
   GtkWidget     *options_gui;
+  
+  /* This will warn if tool info is changed to nothing.
+   * This seems to happen if starting in SWM with tool editor visible
+   * Maybe its normal, and the code should just be writen to
+   * handle this case, but someone smarter needs to take a look*/
+  g_return_if_fail(GIMP_IS_TOOL_INFO(tool_info));
 
   if (tool_info && tool_info->tool_options == editor->p->visible_tool_options)
     return;
@@ -510,9 +516,9 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
 
       gimp_help_set_help_data (editor->p->scrolled_window, NULL,
                                tool_info->help_id);
-    }
 
-  gimp_tool_options_editor_presets_update (editor);
+      gimp_tool_options_editor_presets_update (editor);
+    }
 
   if (editor->p->title_label != NULL)
     {
