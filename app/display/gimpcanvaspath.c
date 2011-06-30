@@ -56,7 +56,7 @@ struct _GimpCanvasPathPrivate
   gdouble       x;
   gdouble       y;
   gboolean      filled;
-  GimpPathStyle  path_style;
+  GimpPathStyle path_style;
 };
 
 #define GET_PRIVATE(path) \
@@ -302,9 +302,9 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
   gboolean               active;
   cairo_pattern_t       *pattern;
 
-    switch (private->path_style)
+  switch (private->path_style)
     {
-     case GIMP_PATH_STYLE_VECTORS:
+    case GIMP_PATH_STYLE_VECTORS:
       active = gimp_canvas_item_get_highlight (item);
 
       gimp_display_shell_set_vectors_bg_style (shell, cr, active);
@@ -313,14 +313,16 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
       gimp_display_shell_set_vectors_fg_style (shell, cr, active);
       cairo_stroke (cr);
       break;
-     case GIMP_PATH_STYLE_OUTLINE:
+
+    case GIMP_PATH_STYLE_OUTLINE:
       gimp_display_shell_set_outline_bg_style (shell, cr);
       cairo_stroke_preserve (cr);
 
       gimp_display_shell_set_outline_fg_style (shell, cr);
       cairo_stroke (cr);
       break;
-     case GIMP_PATH_STYLE_DEFAULT:
+
+    case GIMP_PATH_STYLE_DEFAULT:
       GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, shell, cr);
       break;
     }
@@ -329,20 +331,20 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
 GimpCanvasItem *
 gimp_canvas_path_new (GimpDisplayShell     *shell,
                       const GimpBezierDesc *bezier,
-                      GimpPathStyle          path_style,
                       gdouble               x,
                       gdouble               y,
-                      gboolean              filled)
+                      gboolean              filled,
+                      GimpPathStyle         style)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   return g_object_new (GIMP_TYPE_CANVAS_PATH,
                        "shell",      shell,
                        "path",       bezier,
-                       "path-style", path_style,
                        "x",          x,
                        "y",          y,
                        "filled",     filled,
+                       "path-style", style,
                        NULL);
 }
 

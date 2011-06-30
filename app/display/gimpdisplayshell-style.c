@@ -315,14 +315,14 @@ void
 gimp_display_shell_set_outline_fg_style (GimpDisplayShell *shell,
                                          cairo_t          *cr)
 {
-  static const double dashes[] = {4.0, 4.0};
+  static const double dashes[] = { 4.0, 4.0 };
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);
   gimp_cairo_set_source_rgba (cr, &outline_fg);
-  cairo_set_dash(cr, dashes, 2, 0);
+  cairo_set_dash (cr, dashes, G_N_ELEMENTS (dashes), 0);
 }
 
 void
