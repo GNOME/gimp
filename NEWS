@@ -27,6 +27,8 @@ UI:
    brush-modifying paint options
  - Use ALT+number and ALT+Tab shortcuts to navigate between images
    in both single- and multi-window mode
+ - Make 'Export to' always activatable and fall back to 'Export...' if
+   no export target has been set yet
 
 
 Core:
