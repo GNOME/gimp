@@ -100,9 +100,11 @@ static void       gimp_warp_tool_draw               (GimpDrawTool          *draw
 static void       gimp_warp_tool_create_graph       (GimpWarpTool          *wt);
 static void       gimp_warp_tool_create_image_map   (GimpWarpTool          *wt,
                                                      GimpDrawable          *drawable);
+static void       gimp_warp_tool_image_map_update   (GimpWarpTool          *wt);
 static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *image_map,
                                                      GimpTool              *tool);
 static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt);
+static void       gimp_warp_tool_undo               (GimpWarpTool          *wt);
 
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -411,6 +413,7 @@ gimp_warp_tool_button_release (GimpTool              *tool,
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
+      gimp_warp_tool_undo (wt);
     }
   else
     {
@@ -451,33 +454,8 @@ static gboolean
 gimp_warp_tool_preview_timer (gpointer data)
 {
   GimpWarpTool     *wt    = GIMP_WARP_TOOL (data);
-  GimpTool         *tool  = GIMP_TOOL (wt);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-  GimpItem         *item  = GIMP_ITEM (tool->drawable);
-  gint              x, y;
-  gint              w, h;
-  gint              off_x, off_y;
-  GeglRectangle     visible;
 
-  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
-
-  gimp_item_get_offset (item, &off_x, &off_y);
-
-  gimp_rectangle_intersect (x, y, w, h,
-                            off_x,
-                            off_y,
-                            gimp_item_get_width  (item),
-                            gimp_item_get_height (item),
-                            &visible.x,
-                            &visible.y,
-                            &visible.width,
-                            &visible.height);
-
-  visible.x -= off_x;
-  visible.y -= off_y;
-
-  gimp_image_map_apply (wt->image_map, &visible);
-
+  gimp_warp_tool_image_map_update (wt);
   return TRUE;
 }
 
@@ -553,6 +531,37 @@ gimp_warp_tool_create_image_map (GimpWarpTool *wt,
 }
 
 static void
+gimp_warp_tool_image_map_update (GimpWarpTool *wt)
+{
+  GimpTool         *tool  = GIMP_TOOL (wt);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  GimpItem         *item  = GIMP_ITEM (tool->drawable);
+  gint              x, y;
+  gint              w, h;
+  gint              off_x, off_y;
+  GeglRectangle     visible;
+
+  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+
+  gimp_item_get_offset (item, &off_x, &off_y);
+
+  gimp_rectangle_intersect (x, y, w, h,
+                            off_x,
+                            off_y,
+                            gimp_item_get_width  (item),
+                            gimp_item_get_height (item),
+                            &visible.x,
+                            &visible.y,
+                            &visible.width,
+                            &visible.height);
+
+  visible.x -= off_x;
+  visible.y -= off_y;
+
+  gimp_image_map_apply (wt->image_map, &visible);
+}
+
+static void
 gimp_warp_tool_image_map_flush (GimpImageMap *image_map,
                                 GimpTool     *tool)
 {
@@ -584,4 +593,25 @@ gimp_warp_tool_add_op (GimpWarpTool *wt)
 
   gegl_node_connect_to (last_op, "output", new_op, "input");
   gegl_node_connect_to (new_op, "output", wt->render_node, "aux");
+}
+static void
+gimp_warp_tool_undo (GimpWarpTool *wt)
+{
+  GeglNode    *to_delete;
+  GeglNode    *previous;
+  const gchar *type;
+
+  to_delete = gegl_node_get_producer (wt->render_node, "aux", NULL);
+  type = gegl_node_get_operation(to_delete);
+
+  if (strcmp (type, "gimp:warp"))
+    return;
+
+  previous = gegl_node_get_producer (to_delete, "input", NULL);
+
+  gegl_node_disconnect (to_delete, "input");
+  gegl_node_connect_to (previous, "output", wt->render_node, "aux");
+
+  g_object_unref (to_delete);
+  gimp_warp_tool_image_map_update (wt);
 }
