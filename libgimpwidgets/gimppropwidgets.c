@@ -3203,7 +3203,7 @@ gboolean        gimp_prop_coordinates_connect2     (GObject       *config,
                               old_unit_value,
                               (GDestroyNotify) g_free);
 
-      g_signal_connect (entry1, "unit-changed",
+      g_signal_connect (entry1, "changed",
                         G_CALLBACK (gimp_prop_coordinates_callback2),
                         config);
 
