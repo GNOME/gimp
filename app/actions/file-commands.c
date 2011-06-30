@@ -284,14 +284,26 @@ file_save_cmd_callback (GtkAction *action,
       break;
 
     case GIMP_SAVE_MODE_EXPORT_TO:
+    case GIMP_SAVE_MODE_OVERWRITE:
       {
         const gchar         *uri;
         GimpPlugInProcedure *export_proc;
 
-        uri = gimp_image_get_exported_uri (image);
+        if (save_mode == GIMP_SAVE_MODE_EXPORT_TO) 
+          {
+            uri = gimp_image_get_exported_uri (image);
 
-        if (!uri)
-          uri = gimp_image_get_imported_uri (image);
+            if (! uri)
+              {
+                /* Behave as if Export... was invoked */
+                file_export_dialog_show (gimp, image, widget);
+                break;
+              }
+          }
+        else if (save_mode == GIMP_SAVE_MODE_OVERWRITE)
+          {
+            uri = gimp_image_get_imported_uri (image);
+          }
 
         if (uri)
           {
