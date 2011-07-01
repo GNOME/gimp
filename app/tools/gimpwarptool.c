@@ -57,9 +57,6 @@
 static void       gimp_warp_tool_start              (GimpWarpTool          *wt,
                                                      GimpDisplay           *display);
 
-static void       gimp_warp_tool_options_notify     (GimpTool              *tool,
-                                                     GimpToolOptions       *options,
-                                                     const GParamSpec      *pspec);
 static void       gimp_warp_tool_button_press       (GimpTool              *tool,
                                                      const GimpCoords      *coords,
                                                      guint32                time,
@@ -136,7 +133,6 @@ gimp_warp_tool_class_init (GimpWarpToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  tool_class->options_notify = gimp_warp_tool_options_notify;
   tool_class->button_press   = gimp_warp_tool_button_press;
   tool_class->button_release = gimp_warp_tool_button_release;
   tool_class->key_press      = gimp_warp_tool_key_press;
@@ -263,27 +259,6 @@ gimp_warp_tool_start (GimpWarpTool *wt,
 
   gimp_warp_tool_create_image_map (wt, drawable);
   gimp_draw_tool_start (GIMP_DRAW_TOOL (wt), display);
-}
-
-static void
-gimp_warp_tool_options_notify (GimpTool         *tool,
-                               GimpToolOptions  *options,
-                               const GParamSpec *pspec)
-{
-  GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
-
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
-
-  if (! tool->display)
-    return;
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  if (strcmp (pspec->name, "foo") == 0)
-    {
-    }
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static gboolean
