@@ -1,0 +1,132 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-tips.el.po\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-05-22 20:14+0000\n"
+"PO-Revision-Date: 2011-07-01 16:36+0200\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <<dmtrs32@gmail.com>, 2011>\n"
+"Language-Team: Ελληνική μεταφραστική ομάδα GNOME <team@gnome.gr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n !=1);\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+
+#: ../data/tips/gimp-tips.xml.in.h:1
+msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool sets the background color instead of the foreground color."
+msgstr "<tt>Ctrl</tt>-κλικ με το εργαλείο κουβά γεμίσματος για χρήση του χρώματος παρασκηνίου αντί για το χρώμα προσκηνίου. Παρόμοια, <tt>Ctrl</tt>-κλικ με το εργαλείο σταγονόμετρο ορίζει το χρώμα παρασκηνίου αντί για το χρώμα προσκηνίου."
+
+#: ../data/tips/gimp-tips.xml.in.h:2
+msgid "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr "<tt>Ctrl</tt>-κλικ στην προεπισκόπηση μάσκας στρώσης στο διάλογο στρώσεων εναλλάσσει το αποτέλεσμα της μάσκας στρώσης. <tt>Alt</tt>-κλικ στην προεπισκόπηση μάσκας στρώσης στο διάλογο στρώσεων εναλλάσσει την προβολή της μάσκας άμεσα."
+
+#: ../data/tips/gimp-tips.xml.in.h:3
+msgid "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 degree angles."
+msgstr "<tt>Ctrl</tt>-σύρσιμο με το εργαλείο περιστροφή θα περιορίσει τη στροφή σε γωνίες 15 μοιρών."
+
+#: ../data/tips/gimp-tips.xml.in.h:4
+msgid "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr "<tt>Shift</tt>-κλικ στο εικονίδιο ματιού στο διάλογο στρώσεων για απόκρυψη όλων των στρώσεων πλην μιας. <tt>Shift</tt>-κλικ ξανά για εμφάνιση όλων των στρώσεων."
+
+#: ../data/tips/gimp-tips.xml.in.h:5
+msgid "A floating selection must be anchored to a new layer or to the last active layer before doing other operations on the image. Click on the &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or use the menus to do the same."
+msgstr "Μια αιωρούμενη επιλογή πρέπει να αγκυρωθεί σε μια νέα στρώση ή στην τελευταία ενεργή στρώση πριν να γίνουν άλλες λειτουργίες στην εικόνα. Κλικ στο &quot;Νέα στρώση&quot; ή το κουμπί &quot;Αγκίστρωση στρώσης&quot; στο διάλογο στρώσεων ή χρησιμοποιήστε τα μενού για να κάνετε το ίδιο."
+
+#: ../data/tips/gimp-tips.xml.in.h:6
+msgid "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences dialog, you can reassign shortcut keys. Do so by bringing up the menu, selecting a menu item, and pressing the desired key combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when you exit GIMP. You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning shortcuts."
+msgstr "Μετά την ενεργοποίηση &quot;δυναμικές συντομεύσεις πληκτρολογίου&quot; δτο διάλογο προτιμήσεων, μπορείτε να ξανααποδώσετε τα πλήκτρα συντόμευσης. Αυτό γίνεται εμφανίζοντας το μενού, επιλέγοντας ένα στοιχείο μενού και πιέζοντας τον επιθυμητό συνδυασμό πλήκτρων. Εάν το &quot;αποθήκευση συντομεύσεων πληκτρολογίου&quot; έχει ενεργοποιηθεί, οι δεσμεύσεις πληκτρολογίου αποθηκεύονται με την έξοδο από το GIMP. Θα πρέπει να απενεργοποιήσετε το &quot;δυναμικές συντομεύσεις πληκτρολογίου&quot;κατόπιν για αποφυγή τυχαίων αποδώσεων/ξανααποδώσεων συντομεύσεων."
+
+#: ../data/tips/gimp-tips.xml.in.h:7
+msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."
+msgstr "Κλικ και σύρσιμο σε χάρακα για τοποθέτηση οδηγού σε εικόνα. Όλες οι συρμένες επιλογές θα προσκολληθούν στους οδηγούς. Μπορείτε να αφαιρέσετε τους οδηγούς σύροντας τους εκτός εικόνας με το εργαλείο μετακίνησης."
+
+#: ../data/tips/gimp-tips.xml.in.h:8
+msgid "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image will be saved compressed. Of course loading compressed images works too."
+msgstr "Το GIMP υποστηρίζει συμπίεση gzip εν κινήσει. Απλά προσθέστε <tt>.gz</tt> (ή <tt>.bz2</tt>, εάν έχετε εγκαταστήσει bzip2) στο όνομα αρχείου και η εικόνα σας θα αποθηκευτεί συμπιεσμένη. Φυσικά η φόρτωση συμπιεσμένων εικόνων δουλεύει επίσης."
+
+#: ../data/tips/gimp-tips.xml.in.h:9
+msgid "GIMP uses layers to let you organize your image. Think of them as a stack of slides or filters, such that looking through them you see a composite of their contents."
+msgstr "Το GIMP χρησιμοποιεί στρώσεις για να οργανώσετε την εικόνα σας. Σκεφτείτε τες ως μία στοίβα διαφανειών ή φίλτρων, έτσι κοιτώντας μέσα από αυτές βλέπετε μια σύνθετη από τα περιεχόμενα τους."
+
+#: ../data/tips/gimp-tips.xml.in.h:10
+msgid "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this layer doesn't have an alpha-channel. You can add an alpha-channel using Layer→Transparency→Add Alpha Channel."
+msgstr "Εάν το όνομα στρώσης στο διάλογο στρώσεων εμφανίζεται σε <b>έντονα</b>, αυτή η στρώση δεν έχει κανάλι άλφα. Μπορείτε να προσθέσετε ένα άλφα κανάλι χρησιμοποιώντας Στρώση→Διαφάνεια→Προσθήκη καναλιού άλφα"
+
+#: ../data/tips/gimp-tips.xml.in.h:11
+msgid "If some of your scanned photos do not look colorful enough, you can easily improve their tonal range with the &quot;Auto&quot; button in the Levels tool (Colors→Levels). If there are any color casts, you can correct them with the Curves tool (Colors→Curves)."
+msgstr "Εάν μερικές από τις σαρωμένες σας φωτογραφίες δεν δείχνουν αρκετά χρωματιστές, μπορείτε εύκολα να βελτιώσετε την τονική τους περιοχή με το κουμπί &quot;Αυτόματο&quot; στο εργαλείο σταθμών (Χρώματα→Στάθμες). Εάν υπάρχουν αποχρώσεις, μπορείτε να τις διορθώσετε με το εργαλείο καμπυλών (Χρώματα→Καμπύλες)."
+
+#: ../data/tips/gimp-tips.xml.in.h:12
+msgid "If you stroke a path (Edit→Stroke Path), the paint tools can be used with their current settings. You can use the Paintbrush in gradient mode or even the Eraser or the Smudge tool."
+msgstr "Εάν βάψετε ένα μονοπάτι (Επεξεργασία→Περίγραμμα μονοπατιού), τα εργαλεία βαφής (ζωγραφικής) μπορούν να χρησιμοποιηθούν με τις τρέχουσες ρυθμίσεις τους. Μπορείτε να χρησιμοποιήσετε το πινέλο σε κατάσταση διαβάθμισης ή ακόμα τη γόμα ή το εργαλείο μουτζουρώματος."
+
+#: ../data/tips/gimp-tips.xml.in.h:13
+msgid "If your screen is too cluttered, you can press <tt>Tab</tt> in an image window to toggle the visibility of the toolbox and other dialogs."
+msgstr "Εάν η οθόνη σας είναι υπερβολικά ακατάστατη, μπορείτε να πατήσετε <tt>Tab</tt> στο παράθυρο εικόνας για εναλλαγή ορατότητας της κύριας εργαλειοθήκης και άλλων διαλόγων."
+
+#: ../data/tips/gimp-tips.xml.in.h:14
+msgid "Most plug-ins work on the current layer of the current image. In some cases, you will have to merge all layers (Image→Flatten Image) if you want the plug-in to work on the whole image."
+msgstr "Τα περισσότερα πρόσθετα δουλεύουν στην τρέχουσα στρώση της τρέχουσας εικόνας. Στις περισσότερες περιπτώσεις, πρέπει να συγχωνεύσετε όλες τις στρώσεις (Εικόνα→Ισοπέδωση εικόνας), εάν θέλετε το πρόσθετο να δουλέψει σε όλη την εικόνα."
+
+#: ../data/tips/gimp-tips.xml.in.h:15
+msgid "Not all effects can be applied to all kinds of images. This is indicated by a grayed-out menu-entry. You may need to change the image mode to RGB (Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha Channel) or flatten it (Image→Flatten Image)."
+msgstr "Δεν μπορούν να εφαρμοστούν όλα τα εφέ σε όλα τα είδη των εικόνων. Αυτό φαίνεται από μια αχνή είσοδο μενού. Μπορεί να χρειαστεί να αλλάξετε την κατάσταση εικόνας σε RGB (Εικόνα→Τύπος χρωμάτων→RGB), να προσθέσετε ένα άλφα κανάλι (Στρώση→Διαφάνεια→Προσθήκη καναλιού άλφα) ή να την ισοπεδώσετε (Εικόνα→Ισοπέδωση εικόνας)."
+
+#: ../data/tips/gimp-tips.xml.in.h:16
+msgid "Pressing and holding the <tt>Shift</tt> key before making a selection allows you to add to the current selection instead of replacing it. Using <tt>Ctrl</tt> before making a selection subtracts from the current one."
+msgstr "Πιέζοντας και κρατώντας το πλήκτρο <tt>Shift</tt> πριν την δημιουργία επιλογής, σας επιτρέπει να προσθέσετε στην τρέχουσα επιλογή αντί να την αντικαταστήσετε. Χρησιμοποιώντας <tt>Ctrl</tt> πριν την επιλογή αφαιρεί από την τρέχουσα επιλογή."
+
+#: ../data/tips/gimp-tips.xml.in.h:17
+msgid "When you save an image to work on it again later, try using XCF, GIMP's native file format (use the file extension <tt>.xcf</tt>). This preserves the layers and every aspect of your work-in-progress. Once a project is completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr "Όταν αποθηκεύετε μια εικόνα για να την ξαναδουλέψετε αργότερα, δοκιμάστε τη χρήση του εγγενούς τύπου αρχείου XCF του GIMP (χρησιμοποιήστε την επέκταση αρχείου <tt>.xcf</tt>). Αυτό διατηρεί τις στρώσεις και κάθε πτυχή της δουλειάς σας σε εξέλιξη. Όταν τελειώσει το έργο, μπορείτε να την αποθηκεύσετε ως JPEG, PNG, GIF, ..."
+
+#: ../data/tips/gimp-tips.xml.in.h:18
+msgid "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes the window move, your window manager uses the <tt>Alt</tt> key already. Most window managers can be configured to ignore the <tt>Alt</tt> key or to use the <tt>Super</tt> key (or \"Windows logo\") instead."
+msgstr "Μπορείτε να ρυθμίσετε ή να μετακινήσετε μια επιλογή χρησιμοποιώντας <tt>Alt</tt>-σύρσιμο. Εάν αυτό μετακινεί το παράθυρο, ο διαχειριστής παραθύρου χρησιμοποιεί το πλήκτρο <tt>Alt</tt> ήδη. Οι περισσότεροι διαχειριστές παραθύρου μπορούν να τροποποιηθούν για να αγνοήσουν το πλήκτρο <tt>Alt</tt> ή να χρησιμοποιήσουν το πλήκτρο <tt>Super</tt> (ή \"λογότυπος των Windows\") στη θέση του."
+
+#: ../data/tips/gimp-tips.xml.in.h:19
+msgid "You can create and edit complex selections using the Path tool. The Paths dialog allows you to work on multiple paths and to convert them to selections."
+msgstr "Μπορείτε να δημιουργήσετε και να επεξεργαστείτε σύνθετες επιλογές χρησιμοποιώντας το εργαλείο μονοπατιού. Ο διάλογος μονοπατιών σας επιτρέπει να εργαστείτε σε πολλαπλά μονοπάτια και να  τα μετατρέψετε σε επιλογές."
+
+#: ../data/tips/gimp-tips.xml.in.h:20
+msgid "You can drag a layer from the Layers dialog and drop it onto the toolbox. This will create a new image containing only that layer."
+msgstr "Μπορείτε να σύρετε μια στρώση από το διάλογο στρώσεων και να την εναποθέσετε στην εργαλειοθήκη. Αυτό θα δημιουργήσει μια νέα εικόνα που περιέχει μόνο αυτήν τη στρώση."
+
+#: ../data/tips/gimp-tips.xml.in.h:21
+msgid "You can drag and drop many things in GIMP. For example, dragging a color from the toolbox or from a color palette and dropping it into an image will fill the current selection with that color."
+msgstr "Μπορείτε να σύρετε και να εναποθέσετε πολλά πράγματα στο GIMP. Π.χ., σύρσιμο ενός χρώματος από την εργαλειοθήκη ή από μια χρωματική παλέτα και εναπόθεση της στην εικόνα θα γεμίσει την τρέχουσα επιλογή με αυτό το χρώμα."
+
+#: ../data/tips/gimp-tips.xml.in.h:22
+msgid "You can draw simple squares or circles using Edit→Stroke Selection. It strokes the edge of your current selection. More complex shapes can be drawn using the Path tool or with Filters→Render→Gfig."
+msgstr "Μπορείτε να σχεδιάσετε απλά τετράγωνα ή κύκλους χρησιμοποιώντας την επιλογή Επεξεργασία→Περίγραμμα επιλογής. Βάφει την ακμή της τρέχουσας επιλογής. Πιο σύνθετα σχήματα μπορούν να σχεδιαστούν χρησιμοποιώντας το εργαλείο μονοπάτι ή με Φίλτρα→Σχεδίαση→Gfig."
+
+#: ../data/tips/gimp-tips.xml.in.h:23
+msgid "You can get context-sensitive help for most of GIMP's features by pressing the F1 key at any time. This also works inside the menus."
+msgstr "Μπορείτε να πάρετε εξειδικευμένη βοήθεια για τα χαρακτηριστικά του GIMP πιέζοντας το πλήκτρο F1 οποτεδήποτε. Αυτό επίσης δουλεύει μες τα μενού."
+
+#: ../data/tips/gimp-tips.xml.in.h:24
+msgid "You can perform many layer operations by right-clicking on the text label of a layer in the Layers dialog."
+msgstr "Μπορείτε να κάνετε πολλές λειτουργίες στρώσης με δεξί κλικ στην ετικέτα κειμένου της στρώσης στο διάλογο στρώσεων."
+
+#: ../data/tips/gimp-tips.xml.in.h:25
+msgid "You can save a selection to a channel (Select→Save to Channel) and then modify this channel with any paint tools. Using the buttons in the Channels dialog, you can toggle the visibility of this new channel or convert it to a selection."
+msgstr "Μπορείτε να αποθηκεύσετε μια επιλογή σε κανάλι (Επιλογή→Αποθήκευση σε κανάλι) και έπειτα να τροποποιήσετε αυτό το κανάλι με οποιοδήποτε εργαλείο βαφής (ζωγραφικής). Χρησιμοποιώντας τα κουμπιά στο διάλογο καναλιών, μπορείτε να εναλλάξετε την ορατότητα αυτού του νέου καναλιού ή να τη μετατρέψετε σε επιλογή."
+
+#: ../data/tips/gimp-tips.xml.in.h:26
+msgid "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an image (if your window manager doesn't trap those keys...)."
+msgstr "Μπορείτε να χρησιμοποιήσετε <tt>Ctrl</tt>-<tt>Tab</tt> για να περιηγηθείτε όλες τις στρώσεις σε μια εικόνα (εάν ο διαχειριστής παραθύρου σας δεν παγιδεύσει αυτά τα πλήκτρα...)."
+
+#: ../data/tips/gimp-tips.xml.in.h:27
+msgid "You can use the middle mouse button to pan around the image (or optionally hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr "Μπορείτε να χρησιμοποιήσετε το μεσαίο πλήκτρο του ποντικιού για να εστιάσετε γύρω από την εικόνα (ή προαιρετικά κρατήστε πατημένο <tt>το πλήκτρο διαστήματος</tt> ενώ μετακινείται το ποντίκι)."
+
+#: ../data/tips/gimp-tips.xml.in.h:28
+msgid "You can use the paint tools to change the selection. Click on the &quot;Quick Mask&quot; button at the bottom left of an image window. Change your selection by painting in the image and click on the button again to convert it back to a normal selection."
+msgstr "Μπορείτε να χρησιμοποιήσετε τα εργαλεία βαφής (ζωγραφικής) για αλλαγή επιλογής. Πατήστε στο κουμπί  &quot;γρήγορη μάσκα&quot; κάτω αριστερά στο παράθυρο εικόνας. Αλλάξτε την επιλογή σας βάφοντας την εικόνα και πατήστε στο κουμπί ξανά για να την μετατρέψετε πάλι σε κανονική επιλογή."
+
