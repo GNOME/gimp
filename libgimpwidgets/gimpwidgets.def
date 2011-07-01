@@ -399,6 +399,7 @@ EXPORTS
 	gimp_unit_entry_table_get_nth_entry
 	gimp_unit_entry_table_get_type
 	gimp_unit_entry_table_new
+	gimp_unit_entry_table_set_activates_default
 	gimp_unit_entry_table_set_resolution
 	gimp_unit_entry_table_set_res_mode
 	gimp_unit_entry_table_set_unit

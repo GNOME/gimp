@@ -87,6 +87,8 @@ void gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, GimpUnit unit);
 void gimp_unit_entry_table_set_resolution (GimpUnitEntryTable *table, gdouble res);
 /* sets resolution mode for all entries */
 void gimp_unit_entry_table_set_res_mode (GimpUnitEntryTable *table, gboolean enable);
+/* calls gtk_entry_set_activates_default for all UnitEntries */
+void gimp_unit_entry_table_set_activates_default (GimpUnitEntryTable *table, gboolean setting);
 G_END_DECLS
 
 #endif /*__GIMP_UNIT_ENTRY_TABLE_H__*/

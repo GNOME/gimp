@@ -354,3 +354,19 @@ gimp_unit_entry_table_set_res_mode (GimpUnitEntryTable *table,
     gimp_unit_entry_set_res_mode (entry, enable);
   }
 }
+
+/* calls gtk_entry_set_activates_default for all UnitEntries */
+void 
+gimp_unit_entry_table_set_activates_default (GimpUnitEntryTable *table, 
+                                             gboolean setting)
+{
+  GimpUnitEntry *entry;
+  gint i, count = g_list_length (table->entries);
+
+  /* iterate over list of entries */
+  for (i = 0; i < count; i++) 
+  {
+    entry = gimp_unit_entry_table_get_nth_entry (table, i);
+    gtk_entry_set_activates_default (GTK_ENTRY (entry), setting);
+  }
+}
