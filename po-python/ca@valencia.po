@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-29 00:32+0100\n"
-"PO-Revision-Date: 2008-02-29 19:08+0100\n"
-"Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
+"POT-Creation-Date: 2011-07-02 20:00+0200\n"
+"PO-Revision-Date: 2011-06-14 17:48+0100\n"
+"Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgid "Missing exception information"
 msgstr "Falta la informació de l'excepció"
 
 #: ../plug-ins/pygimp/gimpfu.py:403
-#, fuzzy, python-format
+#, python-format
 msgid "An error occurred running %s"
 msgstr "S'ha produït un error en executar %s"
 
@@ -61,45 +61,53 @@ msgstr "El valor d'entrada no és vàlid per a '%s'"
 msgid "Python-Fu Color Selection"
 msgstr "Selecció del color Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
-msgstr "S'està desant com a XHTML amb colors"
+msgstr "S'està alçant com a XHTML amb colors"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Alça com a XHTML amb colors"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "XHTML amb colors"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "_Origen del caràcter"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Codi font"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Fitxer de text"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Camp d'entrada"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
-msgstr "_Fitxer a llegir o caràcters a emprar"
+msgstr "_Fitxer que s'ha de llegir o caràcters que s'han d'utilitzar"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "_Mida de la lletra en píxels"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "_Escriu un fitxer CSS separat"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+msgid "Gradient to use"
+msgstr "Degradat que s'ha d'utilitzar"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+msgid "File Name"
+msgstr "Nom del fitxer"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
@@ -139,8 +147,8 @@ msgstr "_Desplaça la paleta..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Paleta"
 
@@ -170,7 +178,7 @@ msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "Channel to _sort"
-msgstr "Canal per _ordenar"
+msgstr "Canal que s'ha d'_ordenar"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Red or Hue"
@@ -188,71 +196,71 @@ msgstr "Blau o valor"
 msgid "_Ascending"
 msgstr "_Ascendent"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:49
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Crea un degradat repetitiu emprant els colors de la paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:54
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "Degradat _repetitiu de la paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:71
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "Crea un degradat emprant els colors de la paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:76
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "De_gradat de la paleta"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:56
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "Divideix"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:417
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Retalla una imatge per les seues guies, creant un conjunt d'imatges "
-"separades i un taula HTML formada per les imatges resultants"
+"separades i una taula HTML formada per les imatges resultants"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:428
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "_Divideix..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
-msgstr "Carpeta del fitxer HTML"
+msgstr "Camí de l'exportació HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Filename for export"
-msgstr "Nom de fitxer a exportar"
+msgstr "Nom del fitxer que s'ha d'exportar"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "Prefix dels noms de les imatges"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "Format de les imatges"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Separate image folder"
 msgstr "Posa les imatges en una carpeta a part"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
 msgid "Folder for image export"
-msgstr "Carpeta per les imatge"
+msgstr "Carpeta on s'exportaran les imatges"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Space between table elements"
 msgstr "Separació entre els elements de la taula"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript per al onmouseover i el clicked"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
 msgstr "Deshabilita l'animació de la taula"
 
@@ -262,7 +270,7 @@ msgstr "Consola Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:60
 msgid "_Browse..."
-msgstr "_Cerca..."
+msgstr "_Navega..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
@@ -280,7 +288,7 @@ msgstr "No s'ha pogut escriure a '%s': %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
-msgstr "Alça la eixida de la consola Python-Fu"
+msgstr "Alça l'eixida de la consola Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
 msgid "Interactive GIMP Python interpreter"
@@ -320,21 +328,20 @@ msgstr "Longitud _Y de l'ombra"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:75
 msgid "Create a new brush with characters from a text sequence"
-msgstr ""
+msgstr "Crea un pinzell nou a partir dels caràcters d'una seqüència de text"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:81
 msgid "New Brush from _Text..."
-msgstr ""
+msgstr "Crea un pinzell nou a partir de _text..."
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:84
 msgid "Font"
-msgstr ""
+msgstr "Tipus de lletra"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:85
 msgid "Pixel Size"
-msgstr ""
+msgstr "Mida del píxel"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:86
-#, fuzzy
 msgid "Text"
-msgstr "Fitxer de text"
+msgstr "Text"
