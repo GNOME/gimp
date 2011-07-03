@@ -868,6 +868,10 @@ gimp_ui_switch_window_mode (Gimp *gimp)
                                    "windows",
                                    "windows-use-single-window-mode");
   gimp_test_run_mainloop_until_idle ();
+
+  /* Add a small sleep to let things stabilize */
+  g_usleep (500 * 1000);
+  gimp_test_run_mainloop_until_idle ();
 }
 
 int main(int argc, char **argv)
