@@ -29,6 +29,8 @@ UI:
    in both single- and multi-window mode
  - Make 'Export to' always activatable and fall back to 'Export...' if
    no export target has been set yet
+ - In single-window mode, add new dockable dialogs to the image window
+   instead of in a new window
 
 
 Core:
