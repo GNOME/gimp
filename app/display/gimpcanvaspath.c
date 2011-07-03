@@ -300,7 +300,6 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
 {
   GimpCanvasPathPrivate *private = GET_PRIVATE (item);
   gboolean               active;
-  cairo_pattern_t       *pattern;
 
   switch (private->path_style)
     {
