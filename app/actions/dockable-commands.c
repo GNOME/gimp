@@ -49,34 +49,9 @@ dockable_add_tab_cmd_callback (GtkAction   *action,
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
-  if (value)
-    {
-      GtkWidget *dockable;
-      GimpDock  *dock;
-      gchar     *identifier;
-      gchar     *p;
-
-      identifier = g_strdup (value);
-
-      p = strchr (identifier, '|');
-
-      if (p)
-        *p = '\0';
-
-      dock     = gimp_dockbook_get_dock (dockbook);
-      dockable = gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dock),
-                                                   dock,
-                                                   identifier, -1);
-
-      g_free (identifier);
-
-      /*  Maybe gimp_dialog_factory_dockable_new() returned an already
-       *  existing singleton dockable, so check if it already is
-       *  attached to a dockbook.
-       */
-      if (dockable && ! gimp_dockable_get_dockbook (GIMP_DOCKABLE (dockable)))
-        gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);
-    }
+  gimp_dockbook_add_from_dialog_factory (dockbook,
+                                         value /*identifiers*/,
+                                         -1);
 }
 
 void

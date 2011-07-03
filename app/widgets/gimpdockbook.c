@@ -31,6 +31,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
+#include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpdock.h"
 #include "gimpdockable.h"
@@ -987,6 +988,51 @@ gimp_dockbook_add (GimpDockbook *dockbook,
                     dockbook);
 
   g_signal_emit (dockbook, dockbook_signals[DOCKABLE_ADDED], 0, dockable);
+}
+
+/**
+ * gimp_dockbook_add_from_dialog_factory:
+ * @dockbook:    The #DockBook
+ * @identifiers: The dockable identifier(s)
+ * @position:    The insert position
+ *
+ * Add a dockable from the dialog factory associated wth the dockbook.
+ **/
+GtkWidget *
+gimp_dockbook_add_from_dialog_factory (GimpDockbook *dockbook,
+                                       const gchar  *identifiers,
+                                       gint          position)
+{
+  GtkWidget *dockable;
+  GimpDock  *dock;
+  gchar     *identifier;
+  gchar     *p;
+
+  g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
+  g_return_val_if_fail (identifiers != NULL, NULL);
+
+  identifier = g_strdup (identifiers);
+
+  p = strchr (identifier, '|');
+
+  if (p)
+    *p = '\0';
+
+  dock     = gimp_dockbook_get_dock (dockbook);
+  dockable = gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dock),
+                                               dock,
+                                               identifier, -1);
+
+  g_free (identifier);
+
+  /*  Maybe gimp_dialog_factory_dockable_new() returned an already
+   *  existing singleton dockable, so check if it already is
+   *  attached to a dockbook.
+   */
+  if (dockable && ! gimp_dockable_get_dockbook (GIMP_DOCKABLE (dockable)))
+    gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), position);
+
+  return dockable;
 }
 
 void

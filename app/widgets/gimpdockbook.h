@@ -68,6 +68,9 @@ GimpUIManager * gimp_dockbook_get_ui_manager            (GimpDockbook    *dockbo
 void            gimp_dockbook_add                       (GimpDockbook    *dockbook,
                                                          GimpDockable    *dockable,
                                                          gint             position);
+GtkWidget     * gimp_dockbook_add_from_dialog_factory   (GimpDockbook    *dockbook,
+                                                         const gchar     *identifiers,
+                                                         gint             position);
 void            gimp_dockbook_remove                    (GimpDockbook    *dockbook,
                                                          GimpDockable    *dockable);
 void            gimp_dockbook_update_with_context       (GimpDockbook    *dockbook,
