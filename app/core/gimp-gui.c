@@ -261,6 +261,17 @@ gimp_get_theme_dir (Gimp *gimp)
 }
 
 GimpObject *
+gimp_get_window_strategy (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->gui.get_window_strategy)
+    return gimp->gui.get_window_strategy (gimp);
+
+  return NULL;
+}
+
+GimpObject *
 gimp_get_empty_display (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);

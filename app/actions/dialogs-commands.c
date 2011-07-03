@@ -23,7 +23,11 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
+
 #include "widgets/gimpdialogfactory.h"
+
+#include "display/gimpwindowstrategy.h"
 
 #include "actions.h"
 #include "dialogs-commands.h"
@@ -51,11 +55,15 @@ dialogs_create_dockable_cmd_callback (GtkAction   *action,
                                       const gchar *value,
                                       gpointer     data)
 {
+  Gimp      *gimp;
   GtkWidget *widget;
+  return_if_no_gimp   (gimp, data);
   return_if_no_widget (widget, data);
 
   if (value)
-    gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                      gtk_widget_get_screen (widget),
-                                      value, -1);
+    gimp_window_strategy_create_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                                 gimp,
+                                                 gimp_dialog_factory_get_singleton (),
+                                                 gtk_widget_get_screen (widget),
+                                                 value);
 }

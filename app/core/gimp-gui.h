@@ -49,6 +49,7 @@ struct _GimpGui
 
   const gchar  * (* get_theme_dir)         (Gimp                *gimp);
 
+  GimpObject   * (* get_window_strategy)   (Gimp                *gimp);
   GimpObject   * (* get_empty_display)     (Gimp                *gimp);
   GimpObject   * (* display_get_by_id)     (Gimp                *gimp,
                                             gint                 ID);
@@ -99,6 +100,7 @@ void           gimp_gui_ungrab            (Gimp                *gimp);
 void           gimp_threads_enter         (Gimp                *gimp);
 void           gimp_threads_leave         (Gimp                *gimp);
 
+GimpObject   * gimp_get_window_strategy   (Gimp                *gimp);
 GimpObject   * gimp_get_empty_display     (Gimp                *gimp);
 GimpObject   * gimp_get_display_by_ID     (Gimp                *gimp,
                                            gint                 ID);

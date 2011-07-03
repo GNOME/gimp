@@ -35,6 +35,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
+#include "widgets/gimpdockbook.h"
 #include "widgets/gimpdockcolumns.h"
 #include "widgets/gimpdockcontainer.h"
 #include "widgets/gimphelp-ids.h"
@@ -1313,6 +1314,58 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
    */
   /* FIXME multiple shells */
   gimp_display_shell_scroll_center_image (active_shell, TRUE, TRUE);
+}
+
+static GtkWidget *
+gimp_image_window_get_first_dockbook (GimpDockColumns *columns)
+{
+  GList *dock_iter;
+  
+  for (dock_iter = gimp_dock_columns_get_docks (columns);
+       dock_iter;
+       dock_iter = g_list_next (dock_iter))
+    {
+      GimpDock *dock      = GIMP_DOCK (dock_iter->data);
+      GList    *dockbooks = gimp_dock_get_dockbooks (dock);
+
+      if (dockbooks)
+        return GTK_WIDGET (dockbooks->data);
+    }
+
+  return NULL;
+}
+
+/**
+ * gimp_image_window_get_default_dockbook:
+ * @window:
+ *
+ * Gets the default dockbook, which is the dockbook in which new
+ * dockables should be put in single-window mode.
+ *
+ * Returns: The default dockbook for new dockables, or NULL if no
+ *          dockbook were avaialble.
+ **/
+GtkWidget *
+gimp_image_window_get_default_dockbook (GimpImageWindow  *window)
+{
+  GimpImageWindowPrivate *private;
+  GimpDockColumns        *dock_columns;
+  GtkWidget              *dockbook = NULL;
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  /* First try the first dockbook in the right docks */
+  dock_columns = GIMP_DOCK_COLUMNS (private->right_docks);
+  dockbook     = gimp_image_window_get_first_dockbook (dock_columns);
+
+  /* Then the left docks */
+  if (! dockbook)
+    {
+      dock_columns = GIMP_DOCK_COLUMNS (private->left_docks);
+      dockbook     = gimp_image_window_get_first_dockbook (dock_columns);
+    }
+
+  return dockbook;
 }
 
 /**
