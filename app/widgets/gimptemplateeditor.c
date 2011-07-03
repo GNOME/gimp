@@ -188,12 +188,12 @@ gimp_template_editor_constructed (GObject *object)
   /*gtk_table_set_row_spacing (GTK_TABLE (private->size_se), 0, 2);
   gtk_table_set_col_spacing (GTK_TABLE (private->size_se), 1, 6);*/
 
-  gimp_unit_entry_table_add_entry (private->size_se, 
-                                   "width", 
-                                   _("Width:"));
-  gimp_unit_entry_table_add_entry (private->size_se,
-                                   "heigth",
-                                   _("Height:"));
+  gimp_unit_entry_table_add_entry_defaults (private->size_se, 
+                                           "width", 
+                                           _("Width:"));
+  gimp_unit_entry_table_add_entry_defaults (private->size_se,
+                                           "heigth",
+                                           _("Height:"));
 
   gimp_prop_coordinates_connect2 (G_OBJECT (template),
                                  "width", "height", "unit",
@@ -289,12 +289,12 @@ gimp_template_editor_constructed (GObject *object)
 
   private->resolution_se = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ()); 
 
-  gimp_unit_entry_table_add_entry (private->resolution_se,
-                                   "xres",
-                                   _("X resolution:"));
-  gimp_unit_entry_table_add_entry (private->resolution_se,
-                                   "yres",
-                                   _("Y resolution:"));
+  gimp_unit_entry_table_add_entry_defaults (private->resolution_se,
+                                           "xres",
+                                           _("X resolution:"));
+  gimp_unit_entry_table_add_entry_defaults (private->resolution_se,
+                                           "yres",
+                                           _("Y resolution:"));
   gimp_unit_entry_table_set_res_mode (private->resolution_se, TRUE);                              
 
   /*gtk_table_set_row_spacing (GTK_TABLE (private->resolution_se), 0, 2);

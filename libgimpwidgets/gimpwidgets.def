@@ -393,6 +393,7 @@ EXPORTS
 	gimp_unit_entry_set_value_in_unit
 	gimp_unit_entry_table_add_chainbutton
 	gimp_unit_entry_table_add_entry
+	gimp_unit_entry_table_add_entry_defaults
 	gimp_unit_entry_table_add_label
 	gimp_unit_entry_table_get_entry
 	gimp_unit_entry_table_get_entry_count

@@ -50,6 +50,7 @@ gimp_unit_entry_table_init (GimpUnitEntryTable *table)
   table->table        = gtk_table_new (1, 1, FALSE);
   table->entries      = NULL;
   table->bottom       = 0;
+  table->right        = 0;
 }
 
 static void
@@ -82,17 +83,18 @@ gimp_unit_entry_table_new (void)
 GtkWidget* 
 gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
                                  const gchar *id,
-                                 const gchar *labelStr)
+                                 const gchar *labelStr,
+                                 gint x,
+                                 gint y)
 {
-  GimpUnitEntry *entry = GIMP_UNIT_ENTRY (gimp_unit_entry_new (id)) , *entry2; 
-  gint          count  = g_list_length (table->entries); 
+  GimpUnitEntry *entry = GIMP_UNIT_ENTRY (gimp_unit_entry_new (id)); 
   GtkWidget     *label;
-  gint i;
-  /* position of the entry */
-  gint leftAttach   = 1,
-       rightAttach  = 2,
-       topAttach    = table->bottom,
-       bottomAttach = table->bottom+1;
+
+  /* position of the entry (leave one row/column empty for labels etc) */
+  gint leftAttach   = x + 1,
+       rightAttach  = x + 2,
+       topAttach    = y + 1,
+       bottomAttach = y + 2;
 
   /* remember position in table so that we later can place other widgets around it */
   g_object_set_data (G_OBJECT (entry), "leftAttach", GINT_TO_POINTER (leftAttach));
@@ -108,7 +110,11 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
                              topAttach,
                              bottomAttach);
 
-  table->bottom++;
+  /* save new size of our table if neccessary */                           
+  if (bottomAttach > table->bottom)                           
+    table->bottom = bottomAttach;
+  if (rightAttach > table->right)
+    table->right = rightAttach;
 
   /* if label string is given, create label and attach to the left of entry */
   if (labelStr != NULL)
@@ -121,14 +127,6 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
                       10, 0);
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   }
-
-  /* connect entry to others */
-  for (i = 0; i < count; i++)
-  {
-    entry2 = gimp_unit_entry_table_get_nth_entry (table, i);
-    gimp_unit_entry_connect (GIMP_UNIT_ENTRY (entry), GIMP_UNIT_ENTRY (entry2));
-    gimp_unit_entry_connect (GIMP_UNIT_ENTRY (entry2), GIMP_UNIT_ENTRY (entry));
-  }
   
   /* connect to ourselves */
   g_signal_connect (gimp_unit_entry_get_adjustment (entry), "value-changed",
@@ -139,6 +137,31 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
   gtk_widget_show_all (table->table); 
 
   table->entries = g_list_append (table->entries, (gpointer) entry);
+
+  return GTK_WIDGET (entry);
+}
+
+GtkWidget* 
+gimp_unit_entry_table_add_entry_defaults (GimpUnitEntryTable *table,
+                                          const gchar *id,
+                                          const gchar *labelStr)
+{
+  GimpUnitEntry *entry, *entry2;
+  gint i;
+
+  entry = GIMP_UNIT_ENTRY (gimp_unit_entry_table_add_entry (table,
+                                                           id,
+                                                           labelStr,
+                                                           1,
+                                                           table->bottom));
+
+  /* connect entry to others */
+  for (i = 0; i < g_list_length (table->entries); i++)
+  {
+    entry2 = gimp_unit_entry_table_get_nth_entry (table, i);
+    gimp_unit_entry_connect (GIMP_UNIT_ENTRY (entry), GIMP_UNIT_ENTRY (entry2));
+    gimp_unit_entry_connect (GIMP_UNIT_ENTRY (entry2), GIMP_UNIT_ENTRY (entry));
+  }                                         
 
   return GTK_WIDGET (entry);
 }
@@ -201,7 +224,7 @@ gimp_unit_entry_table_add_chainbutton  (GimpUnitEntryTable *table,
                                         const char* id1,
                                         const char* id2)
 {
-  GtkWidget        *chainButton = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
+  GtkWidget        *chainButton;
   GimpUnitEntry    *entry1      = gimp_unit_entry_table_get_entry (table, id1);
   GimpUnitEntry    *entry2      = gimp_unit_entry_table_get_entry (table, id2);
 
@@ -209,6 +232,8 @@ gimp_unit_entry_table_add_chainbutton  (GimpUnitEntryTable *table,
   gint rightAttach  = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry1), "rightAttach"));
   gint topAttach    = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry1), "topAttach"));
   gint bottomAttach = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (entry2), "bottomAttach"));
+
+  chainButton = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
 
   /* add chainbutton to right of entries, spanning from the first to the second */
   gtk_table_attach (GTK_TABLE (table->table),

@@ -41,8 +41,8 @@ create_interface(void)
 
   /* entry table */
   entryTable = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
-  gimp_unit_entry_table_add_entry (entryTable, "width", "Width");
-  gimp_unit_entry_table_add_entry (entryTable, "height", "Height");
+  gimp_unit_entry_table_add_entry_defaults (entryTable, "width", "Width");
+  gimp_unit_entry_table_add_entry_defaults (entryTable, "height", "Height");
   gimp_unit_entry_table_add_label (entryTable, GIMP_UNIT_PIXEL, "width", "height");
 
   gimp_unit_entry_table_add_chainbutton (entryTable, "width", "height");
@@ -57,8 +57,8 @@ create_interface(void)
 
   /* resolution entry */
   entryTable = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
-  gimp_unit_entry_table_add_entry (entryTable, "xres", "X Resolution");
-  gimp_unit_entry_table_add_entry (entryTable, "yres", "Y Resolution");
+  gimp_unit_entry_table_add_entry_defaults (entryTable, "xres", "X Resolution");
+  gimp_unit_entry_table_add_entry_defaults (entryTable, "yres", "Y Resolution");
 
   /* set some default values */
   a = gimp_unit_entry_table_get_entry (entryTable, "xres");

@@ -51,7 +51,8 @@ struct _GimpUnitEntryTable
   GtkWidget  *table;
   GList      *entries;        /* list of entries */
 
-  gint       bottom;          /* bottom row of our table */
+  /* dimensions of "sub-table" containing the actual entries */ 
+  gint       bottom, right;
 };
 
 struct _GimpUnitEntryTableClass
@@ -69,7 +70,8 @@ GType     gimp_unit_entry_table_get_type (void);
 GObject   *gimp_unit_entry_table_new (void);
 
 /* add UnitEntry */
-GtkWidget* gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table, const gchar* id, const gchar *label);
+GtkWidget* gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table, const gchar* id, const gchar *label, gint x, gint y);
+GtkWidget* gimp_unit_entry_table_add_entry_defaults (GimpUnitEntryTable *table, const gchar* id, const gchar *label);
 //void gimp_unit_entry_table_add_entries ()
 /* add preview label showing the current value of two entries in given unit */
 void gimp_unit_entry_table_add_label (GimpUnitEntryTable *table, GimpUnit unit, const char* id1, const char* id2);
