@@ -272,7 +272,9 @@ EXPORTS
 	gimp_prop_check_button_new
 	gimp_prop_color_area_new
 	gimp_prop_coordinates_connect
+	gimp_prop_coordinates_connect2
 	gimp_prop_coordinates_new
+	gimp_prop_coordinates_new2
 	gimp_prop_entry_new
 	gimp_prop_enum_check_button_new
 	gimp_prop_enum_combo_box_new
