@@ -468,7 +468,6 @@ dialogs_restore_window (GimpDialogFactory *factory,
                         GdkScreen         *screen,
                         GimpSessionInfo   *info)
 {
-  /* FIXME: We can't always use the empty display here */
   Gimp             *gimp    = gimp_dialog_factory_get_context (factory)->gimp;
   GimpDisplay      *display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
   GimpDisplayShell *shell   = gimp_display_get_shell (display);
