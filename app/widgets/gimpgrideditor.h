@@ -36,10 +36,11 @@ struct _GimpGridEditor
 {
   GtkBox       parent_instance;
 
-  GimpGrid    *grid;
-  GimpContext *context;
-  gdouble      xresolution;
-  gdouble      yresolution;
+  GimpGrid            *grid;
+  GimpContext         *context;
+  GimpUnitEntryTable  *spacing_table, *offset_table;
+  gdouble             xresolution;
+  gdouble             yresolution;
 };
 
 struct _GimpGridEditorClass
