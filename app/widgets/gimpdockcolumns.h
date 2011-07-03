@@ -64,6 +64,9 @@ GtkWidget         * gimp_dock_columns_new                (GimpContext       *con
 void                gimp_dock_columns_add_dock           (GimpDockColumns   *dock_columns,
                                                           GimpDock          *dock,
                                                           gint               index);
+void                gimp_dock_columns_prepare_dockbook   (GimpDockColumns   *dock_columns,
+                                                          gint               dock_index,
+                                                          GtkWidget        **dockbook_p);
 void                gimp_dock_columns_remove_dock        (GimpDockColumns   *dock_columns,
                                                           GimpDock          *dock);
 GList             * gimp_dock_columns_get_docks          (GimpDockColumns   *dock_columns);

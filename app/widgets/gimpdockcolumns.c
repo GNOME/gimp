@@ -237,36 +237,29 @@ gimp_dock_columns_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_dock_columns_dropped_cb (GtkWidget         *source,
-                              gint               insert_index,
-                              gpointer           data)
+gimp_dock_columns_dropped_cb (GtkWidget *source,
+                              gint       insert_index,
+                              gpointer   data)
 {
   GimpDockColumns *dock_columns = GIMP_DOCK_COLUMNS (data);
   GimpDockable    *dockable     = gimp_dockbook_drag_source_to_dockable (source);
-  GtkWidget       *dock         = NULL;
   GtkWidget       *dockbook     = NULL;
 
-  if (!dockable )
+  if (! dockable)
     return FALSE;
 
-  /* Create and insert new dock into columns */
-  dock = gimp_menu_dock_new ();
-  gimp_dock_columns_add_dock (dock_columns, GIMP_DOCK (dock), insert_index);
-
-  /* Put a now dockbook in the dock */
-  dockbook = gimp_dockbook_new (global_menu_factory);
-  g_object_ref (dockbook);
-  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), -1);
+  /* Create a new dock (including a new dockbook) */
+  gimp_dock_columns_prepare_dockbook (dock_columns,
+                                      insert_index,
+                                      &dockbook);
 
   /* Move the dockable to the new dockbook */
+  g_object_ref (dockbook);
   g_object_ref (dockable);
   gimp_dockbook_remove (gimp_dockable_get_dockbook (dockable), dockable);
   gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
   g_object_unref (dockable);
   g_object_unref (dockbook);
-
-  /* Show! */
-  gtk_widget_show (GTK_WIDGET (dock));
 
   return TRUE;
 }
@@ -350,6 +343,36 @@ gimp_dock_columns_add_dock (GimpDockColumns *dock_columns,
                            G_CONNECT_SWAPPED);
 
   g_signal_emit (dock_columns, dock_columns_signals[DOCK_ADDED], 0, dock);
+}
+
+/**
+ * gimp_dock_columns_prepare_dockbook:
+ * @dock_columns:
+ * @dock_index:
+ * @dockbook_p:
+ *
+ * Create a new dock and add it to the dock columns with the given
+ * dock_index insert index, then create and add a dockbook and put it
+ * in the dock.
+ **/
+void
+gimp_dock_columns_prepare_dockbook (GimpDockColumns  *dock_columns,
+                                    gint              dock_index,
+                                    GtkWidget       **dockbook_p)
+{
+  GtkWidget *dock;
+  GtkWidget *dockbook;
+
+  dock = gimp_menu_dock_new ();
+  gimp_dock_columns_add_dock (dock_columns, GIMP_DOCK (dock), dock_index);
+
+  dockbook = gimp_dockbook_new (global_menu_factory);
+  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), -1);
+
+  gtk_widget_show (GTK_WIDGET (dock));
+
+  if (dockbook_p)
+    *dockbook_p = dockbook;
 }
 
 
