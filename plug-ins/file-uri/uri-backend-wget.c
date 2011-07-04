@@ -146,13 +146,13 @@ uri_backend_load_image (const gchar  *uri,
       gchar    *message;
       gchar    *timeout_msg;
 
-#define DEBUG(x) if (debug) g_printerr (x)
+#define DEBUG(x) if (debug) g_printerr ("%s\n", x)
 
       close (p[1]);
 
       input = fdopen (p[0], "r");
 
-      /*  hardcoded and not-really-foolproof scanning of wget putput  */
+      /*  hardcoded and not-really-foolproof scanning of wget output  */
 
     wget_begin:
       /* Eat any Location lines */
