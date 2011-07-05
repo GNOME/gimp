@@ -286,7 +286,7 @@ file_save_cmd_callback (GtkAction *action,
     case GIMP_SAVE_MODE_EXPORT_TO:
     case GIMP_SAVE_MODE_OVERWRITE:
       {
-        const gchar         *uri;
+        const gchar         *uri = NULL;
         GimpPlugInProcedure *export_proc;
 
         if (save_mode == GIMP_SAVE_MODE_EXPORT_TO) 
