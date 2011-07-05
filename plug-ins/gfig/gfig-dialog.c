@@ -73,6 +73,8 @@
 #define OBJ_SELECT_LT       2
 #define OBJ_SELECT_EQ       4
 
+#define UPDATE_DELAY 300 /* From GtkRange in GTK+ 2.22 */
+
 /* Globals */
 gint   undo_level;  /* Last slot filled in -1 = no undo */
 GList *undo_table[MAX_UNDO];
@@ -138,6 +140,7 @@ static gchar          *gfig_path       = NULL;
 static GtkWidget      *page_menu_bg;
 static GtkWidget      *tool_options_notebook;
 static GtkWidget      *fill_type_notebook;
+static guint           paint_timeout   = 0;
 
 static GtkActionGroup *gfig_actions    = NULL;
 
@@ -1198,6 +1201,26 @@ select_filltype_callback (GtkWidget *widget)
   gfig_paint_callback ();
 }
 
+static gboolean
+gfig_paint_timeout (gpointer data)
+{
+  gfig_paint_callback ();
+
+  paint_timeout = 0;
+  
+  return FALSE;
+}
+
+static void
+gfig_paint_delayed (void)
+{
+  if (paint_timeout)
+    g_source_remove (paint_timeout);
+
+  paint_timeout =
+    g_timeout_add (UPDATE_DELAY, gfig_paint_timeout, NULL);
+}
+
 static void
 gfig_prefs_action_callback (GtkAction *widget,
                             gpointer   data)
@@ -1327,13 +1350,12 @@ gfig_prefs_action_callback (GtkAction *widget,
         gtk_adjustment_new (selopt.feather_radius, 0.0, 100.0, 1.0, 1.0, 0.0);
       scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
       gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-      gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 
       g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &selopt.feather_radius);
       g_signal_connect (scale_data, "value-changed",
-                        G_CALLBACK (gfig_paint_callback),
+                        G_CALLBACK (gfig_paint_delayed),
                         NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                                  _("Radius:"), 0.0, 1.0, scale, 1, FALSE);
