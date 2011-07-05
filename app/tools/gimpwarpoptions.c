@@ -41,6 +41,7 @@ enum
   PROP_0,
   PROP_EFFECT_STRENGTH,
   PROP_EFFECT_SIZE,
+  PROP_EFFECT_HARDNESS,
   PROP_BEHAVIOR
 };
 
@@ -79,6 +80,11 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                                    1.0, 10000.0, 40.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_HARDNESS,
+                                   "effect-hardness", _("Effect Hardness"),
+                                   0.0, 1.0, 0.5,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BEHAVIOR,
                                  "behavior",
                                  N_("Behavior"),
@@ -108,6 +114,9 @@ gimp_warp_options_set_property (GObject      *object,
     case PROP_EFFECT_SIZE:
       options->effect_size = g_value_get_double (value);
       break;
+    case PROP_EFFECT_HARDNESS:
+      options->effect_hardness = g_value_get_double (value);
+      break;
     case PROP_BEHAVIOR:
       options->behavior = g_value_get_enum (value);
       break;
@@ -134,6 +143,9 @@ gimp_warp_options_get_property (GObject    *object,
     case PROP_EFFECT_SIZE:
       g_value_set_double (value, options->effect_size);
       break;
+    case PROP_EFFECT_HARDNESS:
+      g_value_set_double (value, options->effect_hardness);
+      break;
     case PROP_BEHAVIOR:
       g_value_set_enum (value, options->behavior);
       break;
@@ -152,24 +164,32 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   GtkWidget *behavior;
   GtkWidget *strength;
   GtkWidget *size;
+  GtkWidget *hardness;
 
   behavior = gimp_prop_enum_combo_box_new (config, "behavior", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), behavior, FALSE, FALSE, 0);
   gtk_widget_show (behavior);
 
   strength = gimp_prop_spin_scale_new (config, "effect-strength",
-                                        _("Strength"),
-                                        0.01, 1.0, 2);
+                                       _("Strength"),
+                                       0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (strength), 0.0, 1.0);
   gtk_box_pack_start (GTK_BOX (vbox), strength, FALSE, FALSE, 0);
   gtk_widget_show (strength);
 
   size = gimp_prop_spin_scale_new (config, "effect-size",
-                                        _("Size"),
-                                        0.01, 1.0, 2);
+                                   _("Size"),
+                                   0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (size), 1.0, 1000.0);
   gtk_box_pack_start (GTK_BOX (vbox),  size, FALSE, FALSE, 0);
   gtk_widget_show (size);
+
+  hardness = gimp_prop_spin_scale_new (config, "effect-hardness",
+                                       _("Hardness"),
+                                       0.01, 1.0, 2);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (hardness), 0.0, 1.0);
+  gtk_box_pack_start (GTK_BOX (vbox),  hardness, FALSE, FALSE, 0);
+  gtk_widget_show (hardness);
 
   return vbox;
 }

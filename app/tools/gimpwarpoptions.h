@@ -41,6 +41,7 @@ struct _GimpWarpOptions
 
   gdouble          effect_strength;
   gdouble          effect_size;
+  gdouble          effect_hardness;
   GimpWarpBehavior behavior;
 };
 

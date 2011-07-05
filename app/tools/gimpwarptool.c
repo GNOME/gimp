@@ -559,6 +559,7 @@ gimp_warp_tool_add_op (GimpWarpTool *wt)
                                 "behavior", options->behavior,
                                 "strength", options->effect_strength,
                                 "size", options->effect_size,
+                                "hardness", options->effect_hardness,
                                 "stroke", wt->current_stroke,
                                 NULL);
 
