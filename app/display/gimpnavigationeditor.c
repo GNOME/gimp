@@ -53,6 +53,9 @@
 #include "gimp-intl.h"
 
 
+#define UPDATE_DELAY 300 /* From GtkRange in GTK+ 2.22 */
+
+
 static void        gimp_navigation_editor_docked_iface_init (GimpDockedInterface  *iface);
 
 static void        gimp_navigation_editor_dispose           (GObject              *object);
@@ -120,8 +123,9 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
 {
   GtkWidget *frame;
 
-  editor->context = NULL;
-  editor->shell   = NULL;
+  editor->context       = NULL;
+  editor->shell         = NULL;
+  editor->scale_timeout = 0;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -155,6 +159,12 @@ gimp_navigation_editor_dispose (GObject *object)
 
   if (editor->shell)
     gimp_navigation_editor_set_shell (editor, NULL);
+
+  if (editor->scale_timeout)
+    {
+      g_source_remove (editor->scale_timeout);
+      editor->scale_timeout = 0;
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -417,7 +427,6 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
                         editor);
 
       hscale = gtk_hscale_new (editor->zoom_adjustment);
-      gtk_range_set_update_policy (GTK_RANGE (hscale), GTK_UPDATE_DELAYED);
       gtk_scale_set_draw_value (GTK_SCALE (hscale), FALSE);
       gtk_box_pack_start (GTK_BOX (hbox), hscale, TRUE, TRUE, 0);
       gtk_widget_show (hscale);
@@ -591,15 +600,34 @@ gimp_navigation_editor_scroll (GimpNavigationView   *view,
     }
 }
 
-static void
-gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
-                                         GimpNavigationEditor *editor)
+static gboolean
+gimp_navigation_editor_zoom_adj_changed_timeout (gpointer data)
 {
+  GimpNavigationEditor *editor = GIMP_NAVIGATION_EDITOR (data);
+  GtkAdjustment        *adj    = editor->zoom_adjustment;
+
   if (gimp_display_get_image (editor->shell->display))
     gimp_display_shell_scale (editor->shell,
                               GIMP_ZOOM_TO,
                               pow (2.0, gtk_adjustment_get_value (adj)),
                               GIMP_ZOOM_FOCUS_BEST_GUESS);
+
+  editor->scale_timeout = 0;
+
+  return FALSE;
+}
+
+static void
+gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
+                                         GimpNavigationEditor *editor)
+{
+  if (editor->scale_timeout)
+    g_source_remove (editor->scale_timeout);
+
+  editor->scale_timeout =
+    g_timeout_add (UPDATE_DELAY,
+                   gimp_navigation_editor_zoom_adj_changed_timeout,
+                   editor);
 }
 
 static void
