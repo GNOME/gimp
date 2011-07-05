@@ -62,7 +62,7 @@ uri_backend_init (const gchar  *plugin_name,
 
   vinfo = curl_version_info (CURLVERSION_NOW);
 
-  protocols = g_string_new ("http:,ftp:");
+  protocols = g_string_new ("http:,ftp:,gopher:");
 
   if (vinfo->features & CURL_VERSION_SSL)
     {
@@ -153,6 +153,11 @@ uri_backend_load_image (const gchar  *uri,
   CURL      *curl_handle;
   CURLcode   result;
   glong      response_code;
+  gchar     *eff_url   = NULL;
+  gchar     *proto     = NULL;
+  gboolean   is_http   = FALSE;
+  gboolean   is_ftp    = FALSE;
+  gboolean   is_gopher = FALSE;
 
   gimp_progress_init (_("Connecting to server"));
 
@@ -194,13 +199,52 @@ uri_backend_load_image (const gchar  *uri,
 
   curl_easy_getinfo (curl_handle, CURLINFO_RESPONSE_CODE, &response_code);
 
-  if (response_code != 200)
+  /* protocol could be not specified in provided uri
+     get complete url guessed by curl */
+  curl_easy_getinfo (curl_handle, CURLINFO_EFFECTIVE_URL, &eff_url);
+
+  /* detect uri protocol */
+  if (! g_ascii_strncasecmp (eff_url, "http://", 7))
+    {
+      is_http = TRUE;
+      proto = "HTTP";
+    }
+  else
+  if (! g_ascii_strncasecmp (eff_url, "https://", 8))
+    {
+      is_http = TRUE;
+      proto = "HTTPS";
+    }
+  else
+  if (! g_ascii_strncasecmp (eff_url, "ftp://", 6))
+    {
+      is_ftp = TRUE;
+      proto = "FTP";
+    }
+  else
+  if (! g_ascii_strncasecmp (eff_url, "ftps://", 7))
+    {
+      is_ftp = TRUE;
+      proto = "FTPS";
+    }
+  else
+  if (! g_ascii_strncasecmp (eff_url ,"gopher://, 9"))
+    {
+      is_gopher = TRUE;
+      proto = "GOPHER";
+    }
+  else
+    {
+      proto = "UNKNOWN";
+    }
+
+  if (! ((is_http && response_code == 200) || (is_ftp && response_code == 226) || (is_gopher)))
     {
       fclose (out_file);
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Opening '%s' for reading resulted in HTTP "
+                   _("Opening '%s' for reading resulted in %s "
                      "response code: %ld"),
-                   uri, response_code);
+                   uri, proto, response_code);
       curl_easy_cleanup (curl_handle);
       return FALSE;
     }
