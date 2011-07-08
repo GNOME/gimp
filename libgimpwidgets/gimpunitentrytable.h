@@ -90,6 +90,7 @@ void gimp_unit_entry_table_set_resolution           (GimpUnitEntryTable *table, 
 void gimp_unit_entry_table_set_res_mode             (GimpUnitEntryTable *table, gboolean enable);
 /* calls gtk_entry_set_activates_default for all UnitEntries */
 void gimp_unit_entry_table_set_activates_default    (GimpUnitEntryTable *table, gboolean setting);
+void gimp_unit_entry_table_grab_focus               (GimpUnitEntryTable *table);
 G_END_DECLS
 
 #endif /*__GIMP_UNIT_ENTRY_TABLE_H__*/

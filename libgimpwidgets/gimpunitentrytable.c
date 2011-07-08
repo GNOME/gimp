@@ -415,3 +415,8 @@ gimp_unit_entry_table_set_activates_default (GimpUnitEntryTable *table,
     gtk_entry_set_activates_default (GTK_ENTRY (entry), setting);
   }
 }
+void 
+gimp_unit_entry_table_grab_focus (GimpUnitEntryTable *table)
+{
+  gtk_widget_grab_focus (GTK_WIDGET (gimp_unit_entry_table_get_nth_entry (table, 0)));
+}

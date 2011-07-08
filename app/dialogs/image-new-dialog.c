@@ -83,7 +83,7 @@ image_new_dialog_new (GimpContext *context)
   ImageNewDialog      *dialog;
   GtkWidget           *main_vbox;
   GtkWidget           *table;
-  GimpUnitEntryTable  *UETable;
+  GimpUnitEntryTable  *unit_entry_table;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
@@ -158,9 +158,9 @@ image_new_dialog_new (GimpContext *context)
   gtk_box_pack_start (GTK_BOX (main_vbox), dialog->editor, FALSE, FALSE, 0);
   gtk_widget_show (dialog->editor);
 
-  UETable = GIMP_UNIT_ENTRY_TABLE (gimp_template_editor_get_size_se (GIMP_TEMPLATE_EDITOR (dialog->editor)));
-  gimp_unit_entry_table_set_activates_default (UETable, TRUE);
-  gtk_widget_grab_focus (GTK_WIDGET (gimp_unit_entry_table_get_nth_entry (UETable, 0)));
+  unit_entry_table = gimp_template_editor_get_size_se (GIMP_TEMPLATE_EDITOR (dialog->editor));
+  gimp_unit_entry_table_set_activates_default (unit_entry_table, TRUE);
+  gimp_unit_entry_table_grab_focus (unit_entry_table);
 
   image_new_template_changed (dialog->context,
                               gimp_context_get_template (dialog->context),
