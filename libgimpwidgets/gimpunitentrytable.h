@@ -63,34 +63,33 @@ struct _GimpUnitEntryTableClass
   guint sig_changed_id;
 };
 
-/**
- * prototypes
- **/
 GType     gimp_unit_entry_table_get_type (void);
 GObject   *gimp_unit_entry_table_new (void);
 
 /* add UnitEntry */
-GtkWidget* gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table, const gchar* id, const gchar *label, gint x, gint y);
+GtkWidget* gimp_unit_entry_table_add_entry          (GimpUnitEntryTable *table, const gchar* id, const gchar *label, gint x, gint y);
 GtkWidget* gimp_unit_entry_table_add_entry_defaults (GimpUnitEntryTable *table, const gchar* id, const gchar *label);
-//void gimp_unit_entry_table_add_entries ()
+//void gimp_unit_entry_table_add_entries            ()
 /* add preview label showing the current value of two entries in given unit */
-void gimp_unit_entry_table_add_label (GimpUnitEntryTable *table, GimpUnit unit, const char* id1, const char* id2);
+void gimp_unit_entry_table_add_label                (GimpUnitEntryTable *table, GimpUnit unit, const char* id1, const char* id2);
 /* add chain button connecting the two given UnitEntries */
-GtkWidget* gimp_unit_entry_table_add_chainbutton (GimpUnitEntryTable *table, const char* id1, const char*id2);
+GtkWidget* gimp_unit_entry_table_add_chainbutton    (GimpUnitEntryTable *table, const char* id1, const char*id2);
 /* get UnitEntry by id */
-GimpUnitEntry* gimp_unit_entry_table_get_entry (GimpUnitEntryTable *table, const gchar* id);
+GimpUnitEntry* gimp_unit_entry_table_get_entry      (GimpUnitEntryTable *table, const gchar* id);
 /* get UnitEntry by index */
-GimpUnitEntry* gimp_unit_entry_table_get_nth_entry (GimpUnitEntryTable *table, gint index);
+GimpUnitEntry* gimp_unit_entry_table_get_nth_entry  (GimpUnitEntryTable *table, gint index);
 /* get count of attached unit entries */
-gint gimp_unit_entry_table_get_entry_count (GimpUnitEntryTable *table);
+gint gimp_unit_entry_table_get_entry_count          (GimpUnitEntryTable *table);
+gdouble gimp_unit_entry_table_get_pixels            (GimpUnitEntryTable *table, const gchar *id);
+gdouble gimp_unit_entry_table_get_value_in_unit     (GimpUnitEntryTable *table, const gchar *id, GimpUnit unit);
 /* sets the unit of all entries */
-void gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, GimpUnit unit);
+void gimp_unit_entry_table_set_unit                 (GimpUnitEntryTable *table, GimpUnit unit);
 /* sets the resolution of all entries */
-void gimp_unit_entry_table_set_resolution (GimpUnitEntryTable *table, gdouble res);
+void gimp_unit_entry_table_set_resolution           (GimpUnitEntryTable *table, gdouble res);
 /* sets resolution mode for all entries */
-void gimp_unit_entry_table_set_res_mode (GimpUnitEntryTable *table, gboolean enable);
+void gimp_unit_entry_table_set_res_mode             (GimpUnitEntryTable *table, gboolean enable);
 /* calls gtk_entry_set_activates_default for all UnitEntries */
-void gimp_unit_entry_table_set_activates_default (GimpUnitEntryTable *table, gboolean setting);
+void gimp_unit_entry_table_set_activates_default    (GimpUnitEntryTable *table, gboolean setting);
 G_END_DECLS
 
 #endif /*__GIMP_UNIT_ENTRY_TABLE_H__*/

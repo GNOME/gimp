@@ -334,6 +334,26 @@ gimp_unit_entry_table_get_entry_count (GimpUnitEntryTable *table)
   return g_list_length (table->entries);
 }
 
+/* get value of given entry in pixels */
+gdouble 
+gimp_unit_entry_table_get_pixels (GimpUnitEntryTable *table, 
+                                  const gchar *id)
+{
+  return gimp_unit_entry_table_get_value_in_unit (table, id, GIMP_UNIT_PIXEL);
+}
+gdouble 
+gimp_unit_entry_table_get_value_in_unit (GimpUnitEntryTable *table,
+                                         const gchar *id, 
+                                         GimpUnit unit)
+{
+  GimpUnitEntry *entry = gimp_unit_entry_table_get_entry (table, id);
+
+  if (entry != NULL)
+    return gimp_unit_entry_get_value_in_unit (entry, unit);
+  else
+    return -1;
+}
+
 /* sets the unit of all entries */
 void 
 gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, GimpUnit unit)
