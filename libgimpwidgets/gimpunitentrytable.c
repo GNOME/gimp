@@ -420,3 +420,9 @@ gimp_unit_entry_table_grab_focus (GimpUnitEntryTable *table)
 {
   gtk_widget_grab_focus (GTK_WIDGET (gimp_unit_entry_table_get_nth_entry (table, 0)));
 }
+
+GtkWidget*      
+gimp_unit_entry_table_get_table  (GimpUnitEntryTable *table)
+{
+  return table->table;
+}

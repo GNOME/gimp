@@ -401,6 +401,7 @@ EXPORTS
 	gimp_unit_entry_table_get_entry_count
 	gimp_unit_entry_table_get_nth_entry
 	gimp_unit_entry_table_get_pixels
+	gimp_unit_entry_table_get_table
 	gimp_unit_entry_table_get_type
 	gimp_unit_entry_table_get_value_in_unit
 	gimp_unit_entry_table_grab_focus
