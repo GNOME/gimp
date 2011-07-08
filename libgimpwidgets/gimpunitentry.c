@@ -104,7 +104,7 @@ gimp_unit_entry_init (GimpUnitEntry *unitEntry)
 
   /* some default values */
   unitEntry->dontUpdateText = FALSE;  
-  unitEntry->resMode        = FALSE;                               
+  unitEntry->mode           = GIMP_UNIT_ENTRY_MODE_UNIT;                               
 
   /* connect signals */
   /* we don't need all of them... */
@@ -242,7 +242,7 @@ on_output (GtkSpinButton *spin, gpointer data)
   }
   
   /* set text of the entry */
-  if (!entry->resMode)
+  if (entry->mode == GIMP_UNIT_ENTRY_MODE_UNIT)
   {
     text = gimp_unit_adjustment_to_string (adj);
   }
@@ -281,14 +281,14 @@ void on_text_changed (GtkEditable *editable, gpointer user_data)
 
   DEBUG (("on_text_changed\n");)
 
-  if (!entry->resMode)
+  if (!entry->mode == GIMP_UNIT_ENTRY_MODE_RESOLUTION)
   {
-  /* disable updating the displayed text (user input must not be overwriten) */
-  entry->dontUpdateText = TRUE;
-  /* parse input */
-  gimp_unit_entry_parse (entry);
-  /* reenable updating */
-  entry->dontUpdateText = FALSE;
+    /* disable updating the displayed text (user input must not be overwriten) */
+    entry->dontUpdateText = TRUE;
+    /* parse input */
+    gimp_unit_entry_parse (entry);
+    /* reenable updating */
+    entry->dontUpdateText = FALSE;
   }
 }
 
@@ -297,12 +297,12 @@ gint on_input        (GtkSpinButton *spinButton,
                       gpointer       arg1,
                       gpointer       user_data)
 {
-  if (!GIMP_UNIT_ENTRY (spinButton)->resMode)
+  if (!GIMP_UNIT_ENTRY (spinButton)->mode == GIMP_UNIT_ENTRY_MODE_RESOLUTION)
   {
-  /* parse and set value ourselves before GtkSpinButton does so, because
-     GtkSpinButton would truncate our input and ignore parts of it */
-  gimp_unit_entry_parse (GIMP_UNIT_ENTRY (spinButton));
-  on_output (spinButton, (gpointer)GIMP_UNIT_ENTRY(spinButton)->unitAdjustment);
+    /* parse and set value ourselves before GtkSpinButton does so, because
+       GtkSpinButton would truncate our input and ignore parts of it */
+    gimp_unit_entry_parse (GIMP_UNIT_ENTRY (spinButton));
+    on_output (spinButton, (gpointer)GIMP_UNIT_ENTRY(spinButton)->unitAdjustment);
   }
 
   /* we want GtkSpinButton to handle the input nontheless (there is no problem anymore
@@ -323,7 +323,7 @@ void on_populate_popup (GtkEntry *entry,
   gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuItem);
 
   /* ignore PIXEL when in resolution mode */
-  (GIMP_UNIT_ENTRY (entry)->resMode) ? (i = 1) : (i = 0); 
+  (GIMP_UNIT_ENTRY (entry)->mode == GIMP_UNIT_ENTRY_MODE_RESOLUTION) ? (i = 1) : (i = 0); 
 
   for (; i < gimp_unit_get_number_of_units(); i++)
   {
@@ -474,8 +474,8 @@ gimp_unit_entry_set_bounds (GimpUnitEntry *entry, GimpUnit unit, gdouble upper, 
 }
 
 void
-gimp_unit_entry_set_res_mode (GimpUnitEntry *entry,
-                              gboolean activate)
+gimp_unit_entry_set_mode (GimpUnitEntry     *entry,
+                          GimpUnitEntryMode  mode)
 {
-  entry->resMode = TRUE;
+  entry->mode = mode;
 }

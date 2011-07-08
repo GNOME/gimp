@@ -41,6 +41,12 @@ G_BEGIN_DECLS
 typedef struct _GimpUnitEntry       GimpUnitEntry;
 typedef struct _GimpUnitEntryClass  GimpUnitEntryClass;
 
+typedef enum
+{
+  GIMP_UNIT_ENTRY_MODE_UNIT = 0, 
+  GIMP_UNIT_ENTRY_MODE_RESOLUTION
+} GimpUnitEntryMode;
+
 struct _GimpUnitEntry
 {
   GtkSpinButton parent_instance;
@@ -50,11 +56,12 @@ struct _GimpUnitEntry
 
   /* flag set TRUE when entry's text should not be overwritten
      (i.e. during user input) */
-  gboolean          dontUpdateText;
+  gboolean            dontUpdateText;
 
-  /* set TRUE when the entry shall be used for resolution input */
-  gboolean          resMode;
-  const gchar *id; /* identifier string of unit entry (used by GimpUnitEntryTable) */
+  /* input mode */
+  GimpUnitEntryMode   mode;
+  /* identifier string of unit entry (used by GimpUnitEntryTable) */
+  const gchar        *id;
 };
 
 struct _GimpUnitEntryClass
@@ -62,9 +69,6 @@ struct _GimpUnitEntryClass
   GtkSpinButtonClass parent_class;
 };
 
-/**
- * prototypes
- **/
 GType     gimp_unit_entry_get_type (void);
 GtkWidget *gimp_unit_entry_new (const gchar *id);
 GimpUnitAdjustment *gimp_unit_entry_get_adjustment (GimpUnitEntry *entry);
@@ -80,7 +84,7 @@ gdouble gimp_unit_entry_get_value (GimpUnitEntry *entry);
 gdouble gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, GimpUnit unit);
 GimpUnit gimp_unit_entry_get_unit (GimpUnitEntry *entry);
 void gimp_unit_entry_set_bounds (GimpUnitEntry *entry, GimpUnit unit, gdouble upper, gdouble lower);
-void gimp_unit_entry_set_res_mode (GimpUnitEntry *entry, gboolean activate);
+void gimp_unit_entry_set_mode (GimpUnitEntry *entry, GimpUnitEntryMode mode);
 
 G_END_DECLS
 

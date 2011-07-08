@@ -134,7 +134,6 @@ gimp_template_editor_constructed (GObject *object)
   GtkWidget                 *hbox;
   GtkWidget                 *vbox;
   GtkWidget                 *table;
-  GtkWidget                 *label;
   GtkObject                 *adjustment;
   GtkWidget                 *width;
   GtkWidget                 *height;
@@ -291,7 +290,7 @@ gimp_template_editor_constructed (GObject *object)
   gimp_unit_entry_table_add_entry_defaults (private->resolution_entries,
                                            "yres",
                                            _("Y resolution:"));
-  gimp_unit_entry_table_set_res_mode (private->resolution_entries, TRUE);                              
+  gimp_unit_entry_table_set_mode (private->resolution_entries, GIMP_UNIT_ENTRY_MODE_RESOLUTION);                              
 
   gtk_box_pack_start (GTK_BOX (hbox), private->resolution_entries->table, TRUE, TRUE, 0);
   gtk_widget_show (private->resolution_entries->table);

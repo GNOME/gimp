@@ -98,11 +98,11 @@ void            gimp_unit_entry_table_set_unit              (GimpUnitEntryTable 
                                                              GimpUnit            unit);
 void            gimp_unit_entry_table_set_resolution        (GimpUnitEntryTable *table, 
                                                              gdouble             res);
-void            gimp_unit_entry_table_set_res_mode          (GimpUnitEntryTable *table, 
-                                                             gboolean            enable);
+void            gimp_unit_entry_table_set_mode              (GimpUnitEntryTable *table, 
+                                                             GimpUnitEntryMode   mode);
 void            gimp_unit_entry_table_set_activates_default (GimpUnitEntryTable *table, 
                                                              gboolean            setting);
-                                                             
+
 void            gimp_unit_entry_table_grab_focus            (GimpUnitEntryTable *table);
 
 G_END_DECLS

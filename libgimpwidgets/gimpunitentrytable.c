@@ -386,8 +386,8 @@ gimp_unit_entry_table_set_resolution (GimpUnitEntryTable *table, gdouble res)
 
 /* sets resolution mode for all entries */
 void 
-gimp_unit_entry_table_set_res_mode (GimpUnitEntryTable *table,
-                                    gboolean enable)
+gimp_unit_entry_table_set_mode (GimpUnitEntryTable *table,
+                                GimpUnitEntryMode   mode)
 {
   GimpUnitEntry *entry;
   gint i, count = g_list_length (table->entries);
@@ -396,7 +396,7 @@ gimp_unit_entry_table_set_res_mode (GimpUnitEntryTable *table,
   for (i = 0; i < count; i++) 
   {
     entry = gimp_unit_entry_table_get_nth_entry (table, i);
-    gimp_unit_entry_set_res_mode (entry, enable);
+    gimp_unit_entry_set_mode (entry, mode);
   }
 }
 

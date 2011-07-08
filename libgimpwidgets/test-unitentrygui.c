@@ -65,8 +65,8 @@ create_interface(void)
   b = gimp_unit_entry_table_get_entry (entryTable, "yres");
   gimp_unit_entry_set_value (a, 72);
   gimp_unit_entry_set_value (b, 72);
-  gimp_unit_entry_set_res_mode (a, TRUE);
-  gimp_unit_entry_set_res_mode (b, TRUE);
+  gimp_unit_entry_set_mode (a, GIMP_UNIT_ENTRY_MODE_RESOLUTION);
+  gimp_unit_entry_set_mode (b, GIMP_UNIT_ENTRY_MODE_RESOLUTION);
 
   gtk_box_pack_end (GTK_BOX (vbox), entryTable->table, FALSE, TRUE, 5);
 
