@@ -358,10 +358,10 @@ gimp_warp_tool_button_press (GimpTool            *tool,
   gegl_path_append (wt->current_stroke,
                     'M', coords->x, coords->y);
 
+  gimp_warp_tool_add_op (wt);
+
   wt->stroke_timer = g_timeout_add (STROKE_PERIOD, gimp_warp_tool_stroke_timer, wt);
   wt->preview_timer = g_timeout_add (PREVIEW_PERIOD, gimp_warp_tool_preview_timer, wt);
-
-  gimp_warp_tool_add_op (wt);
 
   gimp_tool_control_activate (tool->control);
 }
@@ -384,7 +384,6 @@ gimp_warp_tool_button_release (GimpTool              *tool,
   g_source_remove (wt->preview_timer);
 
   printf ("%s\n", gegl_path_to_string (wt->current_stroke));
-  gimp_warp_tool_preview_timer (wt);
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
@@ -392,6 +391,7 @@ gimp_warp_tool_button_release (GimpTool              *tool,
     }
   else
     {
+      gimp_warp_tool_image_map_update (wt);
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
