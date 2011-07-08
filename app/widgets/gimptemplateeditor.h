@@ -43,17 +43,17 @@ struct _GimpTemplateEditorClass
 };
 
 
-GType          gimp_template_editor_get_type      (void) G_GNUC_CONST;
+GType                   gimp_template_editor_get_type          (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_template_editor_new           (GimpTemplate       *template,
-                                                   Gimp               *gimp,
-                                                   gboolean            edit_template);
+GtkWidget             * gimp_template_editor_new               (GimpTemplate       *template,
+                                                                Gimp               *gimp,
+                                                                gboolean            edit_template);
 
-GimpTemplate * gimp_template_editor_get_template  (GimpTemplateEditor *editor);
+GimpTemplate          * gimp_template_editor_get_template      (GimpTemplateEditor *editor);
 
-void           gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
-                                                   gboolean            expanded);
-GimpUnitEntryTable    * gimp_template_editor_get_size_se   (GimpTemplateEditor *editor);
+void                    gimp_template_editor_show_advanced     (GimpTemplateEditor *editor,
+                                                                gboolean            expanded);
+GimpUnitEntryTable    * gimp_template_editor_get_unit_entries  (GimpTemplateEditor *editor);
 
 
 #endif  /*  __GIMP_TEMPLATE_EDITOR_H__  */

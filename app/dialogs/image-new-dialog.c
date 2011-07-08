@@ -158,7 +158,7 @@ image_new_dialog_new (GimpContext *context)
   gtk_box_pack_start (GTK_BOX (main_vbox), dialog->editor, FALSE, FALSE, 0);
   gtk_widget_show (dialog->editor);
 
-  unit_entry_table = gimp_template_editor_get_size_se (GIMP_TEMPLATE_EDITOR (dialog->editor));
+  unit_entry_table = gimp_template_editor_get_unit_entries (GIMP_TEMPLATE_EDITOR (dialog->editor));
   gimp_unit_entry_table_set_activates_default (unit_entry_table, TRUE);
   gimp_unit_entry_table_grab_focus (unit_entry_table);
 

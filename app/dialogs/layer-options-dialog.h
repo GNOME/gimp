@@ -24,18 +24,18 @@ typedef struct _LayerOptionsDialog LayerOptionsDialog;
 
 struct _LayerOptionsDialog
 {
-  GtkWidget    *dialog;
-  GtkWidget    *name_entry;
-  GimpUnitEntryTable    *size_se;
-  GtkWidget    *rename_toggle;
+  GtkWidget             *dialog;
+  GtkWidget             *name_entry;
+  GimpUnitEntryTable    *unit_entries;
+  GtkWidget             *rename_toggle;
 
-  GimpFillType  fill_type;
-  gint          xsize;
-  gint          ysize;
+  GimpFillType          fill_type;
+  gint                  xsize;
+  gint                  ysize;
 
-  GimpImage    *image;
-  GimpContext  *context;
-  GimpLayer    *layer;
+  GimpImage             *image;
+  GimpContext           *context;
+  GimpLayer             *layer;
 };
 
 

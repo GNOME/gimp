@@ -67,13 +67,10 @@ layer_options_dialog_new (GimpImage    *image,
   GimpViewable       *viewable;
   GtkWidget          *vbox;
   GtkWidget          *table;
-  GtkWidget          *label;
-  GtkObject          *adjustment;
-  GtkWidget          *spinbutton;
   GtkWidget          *frame;
   GtkWidget          *button;
-  GtkWidget          *entry1;
-  GtkWidget          *entry2;
+  GtkWidget          *width_entry;
+  GtkWidget          *height_entry;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
@@ -118,7 +115,7 @@ layer_options_dialog_new (GimpImage    *image,
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (layer ? 1 : 4, 2, FALSE);
+  table = gtk_table_new (layer ? 1 : 3, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -140,83 +137,24 @@ layer_options_dialog_new (GimpImage    *image,
 
       gimp_image_get_resolution (image, &xres, &yres);
 
-      /*  The size labels  */
-      /*label = gtk_label_new (_("Width:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-      gtk_widget_show (label);
-
-      label = gtk_label_new (_("Height:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-      gtk_widget_show (label);*/
-
-      /*  The size sizeentry  */
-      /*spinbutton = gimp_spin_button_new (&adjustment,
-                                         1, 1, 1, 1, 10, 0,
-                                         1, 2);
-      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
-
-      options->size_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
-                                              TRUE, TRUE, FALSE, 10,
-                                              GIMP_SIZE_ENTRY_UPDATE_SIZE);
-      gtk_table_set_col_spacing (GTK_TABLE (options->size_se), 1, 4);
-      gtk_table_set_row_spacing (GTK_TABLE (options->size_se), 0, 2);
-
-      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (options->size_se),
-                                 GTK_SPIN_BUTTON (spinbutton), NULL);
-      gtk_table_attach_defaults (GTK_TABLE (options->size_se), spinbutton,
-                                 1, 2, 0, 1);
-      gtk_widget_show (spinbutton);
-
-      /*gtk_table_attach (GTK_TABLE (table), options->size_se, 1, 2, 1, 3,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (options->size_se);
-
-      gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (options->size_se),
-                                GIMP_UNIT_PIXEL);
-
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                      xres, FALSE);
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                      yres, FALSE);
-
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                             GIMP_MIN_IMAGE_SIZE,
-                                             GIMP_MAX_IMAGE_SIZE);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                             GIMP_MIN_IMAGE_SIZE,
-                                             GIMP_MAX_IMAGE_SIZE);
-
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                0, gimp_image_get_width  (image));
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                0, gimp_image_get_height (image));
-
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                  gimp_image_get_width  (image));
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                  gimp_image_get_height (image));*/
-
       /* UnitEntry */
-      options->size_se = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
-      entry1 = gimp_unit_entry_table_add_entry_defaults (options->size_se, "width", _("Width:"));
-      entry2 = gimp_unit_entry_table_add_entry_defaults (options->size_se, "height", _("Height:"));
-      gimp_unit_entry_table_add_label (options->size_se, GIMP_UNIT_PIXEL, "width", "height");
+      options->unit_entries = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
+      width_entry = gimp_unit_entry_table_add_entry_defaults  (options->unit_entries, "width", _("Width:"));
+      height_entry = gimp_unit_entry_table_add_entry_defaults (options->unit_entries, "height", _("Height:"));
+      gimp_unit_entry_table_add_label (options->unit_entries, GIMP_UNIT_PIXEL, "width", "height");
       
-      gimp_unit_entry_set_unit        (GIMP_UNIT_ENTRY (entry1), GIMP_UNIT_PIXEL);
-      gimp_unit_entry_set_resolution  (GIMP_UNIT_ENTRY (entry1), xres);
-      gimp_unit_entry_set_resolution  (GIMP_UNIT_ENTRY (entry2), yres);
-      gimp_unit_entry_set_value       (GIMP_UNIT_ENTRY (entry1), gimp_image_get_width  (image));
-      gimp_unit_entry_set_value       (GIMP_UNIT_ENTRY (entry2), gimp_image_get_height  (image));
-      gimp_unit_entry_set_bounds      (GIMP_UNIT_ENTRY (entry1), GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
-      gimp_unit_entry_set_bounds      (GIMP_UNIT_ENTRY (entry2), GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
+      gimp_unit_entry_set_unit        (GIMP_UNIT_ENTRY (width_entry), GIMP_UNIT_PIXEL);
+      
+      gimp_unit_entry_set_resolution  (GIMP_UNIT_ENTRY (width_entry), xres);
+      gimp_unit_entry_set_resolution  (GIMP_UNIT_ENTRY (height_entry), yres);
+      gimp_unit_entry_set_value       (GIMP_UNIT_ENTRY (width_entry), gimp_image_get_width  (image));
+      gimp_unit_entry_set_value       (GIMP_UNIT_ENTRY (height_entry), gimp_image_get_height  (image));
+      gimp_unit_entry_set_bounds      (GIMP_UNIT_ENTRY (width_entry), GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
+      gimp_unit_entry_set_bounds      (GIMP_UNIT_ENTRY (height_entry), GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
 
-      gtk_table_attach (GTK_TABLE (table), options->size_se->table, 0, 2, 1, 3,
+      gtk_table_attach (GTK_TABLE (table), gimp_unit_entry_table_get_table (options->unit_entries), 0, 2, 1, 3,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (options->size_se->table);
+      gtk_widget_show (gimp_unit_entry_table_get_table (options->unit_entries));
 
       /*  The radio frame  */
       frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,

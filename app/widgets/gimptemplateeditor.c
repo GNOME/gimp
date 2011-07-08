@@ -53,17 +53,17 @@ typedef struct _GimpTemplateEditorPrivate GimpTemplateEditorPrivate;
 
 struct _GimpTemplateEditorPrivate
 {
-  GimpTemplate  *template;
+  GimpTemplate          *template;
 
-  GtkWidget     *aspect_button;
-  gboolean       block_aspect;
+  GtkWidget             *aspect_button;
+  gboolean               block_aspect;
 
-  GtkWidget     *expander;
-  GimpUnitEntryTable     *size_se;
-  GtkWidget     *memsize_label;
-  GtkWidget     *pixel_label;
-  GtkWidget     *more_label;
-  GimpUnitEntryTable     *resolution_se;
+  GtkWidget             *expander;
+  GimpUnitEntryTable    *unit_entries;
+  GtkWidget             *memsize_label;
+  GtkWidget             *pixel_label;
+  GtkWidget             *more_label;
+  GimpUnitEntryTable    *resolution_entries;
 };
 
 #define GET_PRIVATE(editor) \
@@ -178,26 +178,22 @@ gimp_template_editor_constructed (GObject *object)
 
   /*  create the sizeentry which keeps it all together  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  //gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
   gtk_widget_show (hbox);
 
-  private->size_se = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
+  private->unit_entries = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
                         
-  gtk_table_attach_defaults (GTK_TABLE (table), private->size_se->table, 0, 2, 0, 2);
+  gtk_table_attach_defaults (GTK_TABLE (table), private->unit_entries->table, 0, 2, 0, 2);
 
-  /*gtk_table_set_row_spacing (GTK_TABLE (private->size_se), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (private->size_se), 1, 6);*/
-
-  gimp_unit_entry_table_add_entry_defaults (private->size_se, 
+  gimp_unit_entry_table_add_entry_defaults (private->unit_entries, 
                                            "width", 
                                            _("Width:"));
-  gimp_unit_entry_table_add_entry_defaults (private->size_se,
-                                           "heigth",
+  gimp_unit_entry_table_add_entry_defaults (private->unit_entries,
+                                           "height",
                                            _("Height:"));
 
   gimp_prop_coordinates_connect2 (G_OBJECT (template),
                                  "width", "height", "unit",
-                                 G_OBJECT (private->size_se), NULL,
+                                 G_OBJECT (private->unit_entries), NULL,
                                  gimp_template_get_resolution_x (template),
                                  gimp_template_get_resolution_y (template));
 
@@ -287,45 +283,41 @@ gimp_template_editor_constructed (GObject *object)
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 0, 2, 0, 2);
   gtk_widget_show (hbox);
 
-  private->resolution_se = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ()); 
+  private->resolution_entries = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ()); 
 
-  gimp_unit_entry_table_add_entry_defaults (private->resolution_se,
+  gimp_unit_entry_table_add_entry_defaults (private->resolution_entries,
                                            "xres",
                                            _("X resolution:"));
-  gimp_unit_entry_table_add_entry_defaults (private->resolution_se,
+  gimp_unit_entry_table_add_entry_defaults (private->resolution_entries,
                                            "yres",
                                            _("Y resolution:"));
-  gimp_unit_entry_table_set_res_mode (private->resolution_se, TRUE);                              
+  gimp_unit_entry_table_set_res_mode (private->resolution_entries, TRUE);                              
 
-  /*gtk_table_set_row_spacing (GTK_TABLE (private->resolution_se), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 1, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 2, 2);*/
+  gtk_box_pack_start (GTK_BOX (hbox), private->resolution_entries->table, TRUE, TRUE, 0);
+  gtk_widget_show (private->resolution_entries->table);
 
-  gtk_box_pack_start (GTK_BOX (hbox), private->resolution_se->table, TRUE, TRUE, 0);
-  gtk_widget_show (private->resolution_se->table);
-
-  gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->size_se, 0),
+  gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->unit_entries, 0),
                                   gimp_template_get_resolution_x (template));
-  gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->size_se, 1),
+  gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->unit_entries, 1),
                                   gimp_template_get_resolution_y (template));
 
   /*  the resolution chainbutton  */
-  chainbutton = gimp_unit_entry_table_add_chainbutton (private->resolution_se,
+  chainbutton = gimp_unit_entry_table_add_chainbutton (private->resolution_entries,
                                                        "xres", "yres");
 
   gimp_prop_coordinates_connect2 (G_OBJECT (template),
                                  "xresolution", "yresolution",
                                  "resolution-unit",
-                                 G_OBJECT (private->resolution_se), chainbutton,
+                                 G_OBJECT (private->resolution_entries), chainbutton,
                                  1.0, 1.0);
 
   /*focus_chain = g_list_prepend (focus_chain,
-                                GIMP_SIZE_ENTRY (private->resolution_se)->unitmenu);
+                                GIMP_SIZE_ENTRY (private->resolution_entries)->unitmenu);
   focus_chain = g_list_prepend (focus_chain, chainbutton);
   focus_chain = g_list_prepend (focus_chain, yres);
   focus_chain = g_list_prepend (focus_chain, xres);
 
-  gtk_container_set_focus_chain (GTK_CONTAINER (private->resolution_se),
+  gtk_container_set_focus_chain (GTK_CONTAINER (private->resolution_entries),
                                  focus_chain);*/
   g_list_free (focus_chain);
 
@@ -499,11 +491,11 @@ gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
 }
 
 GimpUnitEntryTable *
-gimp_template_editor_get_size_se (GimpTemplateEditor *editor)
+gimp_template_editor_get_unit_entries (GimpTemplateEditor *editor)
 {
   g_return_val_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor), NULL);
 
-  return GET_PRIVATE (editor)->size_se;
+  return GET_PRIVATE (editor)->unit_entries;
 }
 
 
@@ -553,9 +545,9 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
                                        gimp_template_editor_template_notify,
                                        editor);
 
-      gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->size_se, 0),
+      gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->unit_entries, 0),
                                       yresolution); 
-      gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->size_se, 1),
+      gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->unit_entries, 1),
                                       xresolution);                                                                
 
       g_object_set (template,
@@ -591,12 +583,12 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
     {
       if (! strcmp (param_spec->name, "xresolution"))
         {
-          gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->size_se, 0),
+          gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->unit_entries, 0),
                                           gimp_template_get_resolution_x (template));
         }
       else if (! strcmp (param_spec->name, "yresolution"))
         {
-          gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->size_se, 1),
+          gimp_unit_entry_set_resolution (gimp_unit_entry_table_get_nth_entry (private->unit_entries, 1),
                                           gimp_template_get_resolution_y (template));                               
         }
     }
