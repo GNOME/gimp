@@ -555,7 +555,7 @@ gimp_warp_tool_add_op (GimpWarpTool *wt)
   g_return_if_fail (GEGL_IS_NODE (wt->render_node));
 
   new_op = gegl_node_new_child (wt->graph,
-                                "operation", "gimp:warp",
+                                "operation", "gegl:warp",
                                 "behavior", options->behavior,
                                 "strength", options->effect_strength,
                                 "size", options->effect_size,
