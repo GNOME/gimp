@@ -327,6 +327,10 @@ void on_populate_popup (GtkEntry *entry,
   {
     menuItem = gtk_menu_item_new_with_label (gimp_unit_get_singular (i));
     gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuItem);
+
+    /* save corresponding unit in menu item */
+    g_object_set_data (G_OBJECT (menuItem), "unit", GINT_TO_POINTER (i));
+
     g_signal_connect(menuItem, "activate",
                      (GCallback) on_menu_item, 
                      gimp_unit_entry_get_adjustment (GIMP_UNIT_ENTRY (entry)));
@@ -344,15 +348,14 @@ void on_menu_item      (GtkWidget *menuItem,
                         gpointer *user_data)
 {
   GimpUnitAdjustment *adj   = GIMP_UNIT_ADJUSTMENT (user_data);
-  gint               i      = 0;
+  GimpUnit            unit;
   const gchar        *label = gtk_menu_item_get_label (GTK_MENU_ITEM (menuItem));
               
   /* get selected unit */
-  while (strcmp (gimp_unit_get_singular (i), label) != 0)
-    i++;
+  unit = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menuItem), "unit"));
 
   /* change unit according to selected unit */
-  gimp_unit_adjustment_set_unit (adj, i);
+  gimp_unit_adjustment_set_unit (adj, unit);
 }                        
 
 
