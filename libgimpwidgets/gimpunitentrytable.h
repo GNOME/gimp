@@ -64,7 +64,7 @@ struct _GimpUnitEntryTableClass
 };
 
 GType           gimp_unit_entry_table_get_type              (void);
-GObject         *gimp_unit_entry_table_new                  (void);
+GObject*        gimp_unit_entry_table_new                   (void);
 
 GtkWidget*      gimp_unit_entry_table_add_entry             (GimpUnitEntryTable *table, 
                                                              const gchar        *id,

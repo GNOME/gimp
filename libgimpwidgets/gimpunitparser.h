@@ -35,7 +35,6 @@ struct _GimpUnitParserResult
   gboolean  unitFound;
 };
 
-/* parse given string */
 gboolean gimp_unit_parser_parse (const char *str, GimpUnitParserResult *result);
 
 #endif /*__GIMP_UNIT_PARSER_H__*/

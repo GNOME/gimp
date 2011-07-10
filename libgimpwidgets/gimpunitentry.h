@@ -69,22 +69,34 @@ struct _GimpUnitEntryClass
   GtkSpinButtonClass parent_class;
 };
 
-GType     gimp_unit_entry_get_type (void);
-GtkWidget *gimp_unit_entry_new (const gchar *id);
-GimpUnitAdjustment *gimp_unit_entry_get_adjustment (GimpUnitEntry *entry);
-/* connect to another entry */
-void gimp_unit_entry_connect (GimpUnitEntry *entry, GimpUnitEntry *target);
-/* convenience getters/setters */
-const gchar* gimp_unit_entry_get_id (GimpUnitEntry *entry);
-void gimp_unit_entry_set_unit (GimpUnitEntry *entry, GimpUnit unit);
-void gimp_unit_entry_set_resolution (GimpUnitEntry *entry, gdouble resolution);
-void gimp_unit_entry_set_value (GimpUnitEntry *entry, gdouble value);
-void gimp_unit_entry_set_value_in_unit (GimpUnitEntry *entry, gdouble value, GimpUnit unit);
-gdouble gimp_unit_entry_get_value (GimpUnitEntry *entry);
-gdouble gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, GimpUnit unit);
-GimpUnit gimp_unit_entry_get_unit (GimpUnitEntry *entry);
-void gimp_unit_entry_set_bounds (GimpUnitEntry *entry, GimpUnit unit, gdouble upper, gdouble lower);
-void gimp_unit_entry_set_mode (GimpUnitEntry *entry, GimpUnitEntryMode mode);
+GType                 gimp_unit_entry_get_type          (void);
+GtkWidget *           gimp_unit_entry_new               (const gchar        *id);
+
+GimpUnitAdjustment *  gimp_unit_entry_get_adjustment    (GimpUnitEntry      *entry);
+const gchar *         gimp_unit_entry_get_id            (GimpUnitEntry      *entry);
+gdouble               gimp_unit_entry_get_value         (GimpUnitEntry      *entry);
+gdouble               gimp_unit_entry_get_value_in_unit (GimpUnitEntry      *entry, 
+                                                         GimpUnit            unit);
+GimpUnit              gimp_unit_entry_get_unit          (GimpUnitEntry      *entry);
+
+void                  gimp_unit_entry_set_bounds        (GimpUnitEntry      *entry, 
+                                                         GimpUnit            unit, 
+                                                         gdouble             upper, 
+                                                         gdouble             lower);
+void                  gimp_unit_entry_set_mode          (GimpUnitEntry      *entry, 
+                                                         GimpUnitEntryMode   mode);
+void                  gimp_unit_entry_set_unit          (GimpUnitEntry      *entry, 
+                                                         GimpUnit           unit);
+void                  gimp_unit_entry_set_resolution    (GimpUnitEntry      *entry,
+                                                         gdouble             resolution);
+void                  gimp_unit_entry_set_value         (GimpUnitEntry      *entry, 
+                                                         gdouble             value);
+void                  gimp_unit_entry_set_value_in_unit (GimpUnitEntry      *entry, 
+                                                         gdouble             value, 
+                                                         GimpUnit            unit);  
+                                                         
+void                  gimp_unit_entry_connect           (GimpUnitEntry      *entry, 
+                                                         GimpUnitEntry      *target);                                                                                                               
 
 G_END_DECLS
 
