@@ -27,8 +27,8 @@ static void
 gimp_test_unitentry_setup (GimpTestFixture *fixture,
                            gconstpointer    data)
 {
-  fixture->entry1 = GIMP_UNIT_ENTRY (gimp_unit_entry_new ("entry1"));
-  fixture->entry2 = GIMP_UNIT_ENTRY (gimp_unit_entry_new ("entry2"));
+  fixture->entry1 = GIMP_UNIT_ENTRY (gimp_unit_entry_new ());
+  fixture->entry2 = GIMP_UNIT_ENTRY (gimp_unit_entry_new ());
   gimp_unit_entry_connect (fixture->entry1, fixture->entry2);
   gimp_unit_entry_connect (fixture->entry2, fixture->entry1);
 }

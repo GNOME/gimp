@@ -145,11 +145,9 @@ gimp_unit_entry_class_init (GimpUnitEntryClass *class)
 }
 
 GtkWidget*
-gimp_unit_entry_new (const gchar *id)
+gimp_unit_entry_new (void)
 {
   GtkWidget *entry = g_object_new (GIMP_TYPE_UNIT_ENTRY, NULL);
-
-  GIMP_UNIT_ENTRY (entry)->id = id;
 
   return entry;
 }
@@ -416,12 +414,6 @@ gimp_unit_entry_key_release (GtkWidget          *widget,
 }
 
 /* convenience getters/setters */
-const gchar* 
-gimp_unit_entry_get_id (GimpUnitEntry *entry)
-{
-  return entry->id;
-}
-
 void 
 gimp_unit_entry_set_unit (GimpUnitEntry *entry, GimpUnit unit)
 {

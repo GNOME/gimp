@@ -49,7 +49,7 @@ struct _GimpUnitEntryTable
 
   /* private */
   GtkWidget  *table;
-  GList      *entries;        /* list of entries */
+  GHashTable *entries;
 
   /* dimensions of "sub-table" containing the actual entries */ 
   gint       bottom, right;

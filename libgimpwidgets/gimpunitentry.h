@@ -60,8 +60,6 @@ struct _GimpUnitEntry
 
   /* input mode */
   GimpUnitEntryMode   mode;
-  /* identifier string of unit entry (used by GimpUnitEntryTable) */
-  const gchar        *id;
 };
 
 struct _GimpUnitEntryClass
@@ -70,10 +68,9 @@ struct _GimpUnitEntryClass
 };
 
 GType                 gimp_unit_entry_get_type          (void);
-GtkWidget *           gimp_unit_entry_new               (const gchar        *id);
+GtkWidget *           gimp_unit_entry_new               (void);
 
 GimpUnitAdjustment *  gimp_unit_entry_get_adjustment    (GimpUnitEntry      *entry);
-const gchar *         gimp_unit_entry_get_id            (GimpUnitEntry      *entry);
 gdouble               gimp_unit_entry_get_value         (GimpUnitEntry      *entry);
 gdouble               gimp_unit_entry_get_value_in_unit (GimpUnitEntry      *entry, 
                                                          GimpUnit            unit);

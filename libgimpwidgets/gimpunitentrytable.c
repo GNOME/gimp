@@ -47,8 +47,8 @@ static void
 gimp_unit_entry_table_init (GimpUnitEntryTable *table)
 {
    /* initialize our fields */
-  table->table        = gtk_table_new (1, 1, FALSE);
-  table->entries      = NULL;
+  table->table        = gtk_table_new     (1, 1, FALSE);
+  table->entries      = g_hash_table_new  (NULL, NULL);;
   table->bottom       = 0;
   table->right        = 0;
 }
@@ -87,7 +87,7 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
                                  gint x,
                                  gint y)
 {
-  GimpUnitEntry *entry = GIMP_UNIT_ENTRY (gimp_unit_entry_new (id)); 
+  GimpUnitEntry *entry = GIMP_UNIT_ENTRY (gimp_unit_entry_new ()); 
   GtkWidget     *label;
 
   /* position of the entry (leave one row/column empty for labels etc) */
@@ -136,7 +136,7 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
 
   gtk_widget_show_all (table->table); 
 
-  table->entries = g_list_append (table->entries, (gpointer) entry);
+  g_hash_table_insert (table->entries, (gpointer) id, (gpointer) entry);
 
   return GTK_WIDGET (entry);
 }
@@ -156,7 +156,7 @@ gimp_unit_entry_table_add_entry_defaults (GimpUnitEntryTable *table,
                                                            table->bottom));
 
   /* connect entry to others */
-  for (i = 0; i < g_list_length (table->entries); i++)
+  for (i = 0; i < g_hash_table_size (table->entries); i++)
   {
     entry2 = gimp_unit_entry_table_get_nth_entry (table, i);
     gimp_unit_entry_connect (GIMP_UNIT_ENTRY (entry), GIMP_UNIT_ENTRY (entry2));
@@ -257,17 +257,15 @@ gimp_unit_entry_table_get_entry (GimpUnitEntryTable *table,
                                  const gchar *id)
 {
   GimpUnitEntry *entry;
-  gint i, count = g_list_length (table->entries);
 
-  /* iterate over list to find our entry */
-  for (i = 0; i < count; i++) 
+  entry = GIMP_UNIT_ENTRY (g_hash_table_lookup (table->entries, id));
+
+  if (entry == NULL)
   {
-    entry = gimp_unit_entry_table_get_nth_entry (table, i);
-    if (g_strcmp0 (gimp_unit_entry_get_id (entry), id) == 0)
-      return entry;
+    g_warning ("gimp_unit_entry_table_get_entry: entry with id '%s' does not exist", id);
   }
-  g_warning ("gimp_unit_entry_table_get_entry: entry with id '%s' does not exist", id);
-  return NULL;
+
+  return entry;
 }
 
 /* get UnitEntry by index */
@@ -275,12 +273,29 @@ GimpUnitEntry*
 gimp_unit_entry_table_get_nth_entry (GimpUnitEntryTable *table, 
                                      gint index)
 {
-  if (g_list_length (table->entries) <= index)
+  GHashTableIter   iter;
+  gpointer         key, value;
+  gint             i;
+
+  if (g_hash_table_size (table->entries) <= index || index < 0)
   {
+    g_warning ("gimp_unit_entry_table_get_nth_entry: index < 0 or hash table size smaller than index");
     return NULL;
   }
 
-  return GIMP_UNIT_ENTRY (g_list_nth (table->entries, index)->data);
+  /* reverse order because first added element is last in g_hash_table */
+  i = g_hash_table_size (table->entries) - 1;
+
+  g_hash_table_iter_init (&iter, table->entries);
+
+  while (g_hash_table_iter_next (&iter, &key, &value))
+  {
+    if (i == index)
+      return GIMP_UNIT_ENTRY (value);
+    i--;
+  }
+
+  return NULL;
 }
 
 /* updates the text of the preview label */
@@ -311,9 +326,9 @@ void label_updater (GtkAdjustment *adj, gpointer userData)
 static 
 void on_entry_changed  (GtkAdjustment *adj, gpointer userData)
 {
-  GimpUnitEntryTable *table = GIMP_UNIT_ENTRY_TABLE (userData);
-  GimpUnitEntry *entry;
-  gint i, count = g_list_length (table->entries);
+  GimpUnitEntryTable *table     = GIMP_UNIT_ENTRY_TABLE (userData);
+  GimpUnitEntry      *entry;
+  gint                i, count  = gimp_unit_entry_table_get_entry_count (table);
 
   /* find corresponding entry */
   for (i = 0; i < count; i++) 
@@ -331,7 +346,7 @@ void on_entry_changed  (GtkAdjustment *adj, gpointer userData)
 gint
 gimp_unit_entry_table_get_entry_count (GimpUnitEntryTable *table)
 {
-  return g_list_length (table->entries);
+  return g_hash_table_size (table->entries);
 }
 
 /* get value of given entry in pixels */
@@ -359,7 +374,7 @@ void
 gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, GimpUnit unit)
 {
   GimpUnitEntry *entry;
-  gint i, count = g_list_length (table->entries);
+  gint           i, count = gimp_unit_entry_table_get_entry_count (table);
 
   /* iterate over list of entries */
   for (i = 0; i < count; i++) 
@@ -374,7 +389,7 @@ void
 gimp_unit_entry_table_set_resolution (GimpUnitEntryTable *table, gdouble res)
 {
   GimpUnitEntry *entry;
-  gint i, count = g_list_length (table->entries);
+  gint           i, count = gimp_unit_entry_table_get_entry_count (table);
 
   /* iterate over list of entries */
   for (i = 0; i < count; i++) 
@@ -390,7 +405,7 @@ gimp_unit_entry_table_set_mode (GimpUnitEntryTable *table,
                                 GimpUnitEntryMode   mode)
 {
   GimpUnitEntry *entry;
-  gint i, count = g_list_length (table->entries);
+  gint           i, count = gimp_unit_entry_table_get_entry_count (table);
 
   /* iterate over list of entries */
   for (i = 0; i < count; i++) 
@@ -406,7 +421,7 @@ gimp_unit_entry_table_set_activates_default (GimpUnitEntryTable *table,
                                              gboolean setting)
 {
   GimpUnitEntry *entry;
-  gint i, count = g_list_length (table->entries);
+  gint           i, count = gimp_unit_entry_table_get_entry_count (table);
 
   /* iterate over list of entries */
   for (i = 0; i < count; i++) 
