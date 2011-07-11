@@ -2,13 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Dimitris Spingos (Δημήτρης Σπίγγος)  <dmtrs32@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tags.el\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-05-22 20:13+0000\n"
-"PO-Revision-Date: 2011-06-30 16:57+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-02 18:11+0000\n"
+"PO-Revision-Date: 2011-07-11 00:47+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος)  <dmtrs32@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,9 +22,8 @@ msgstr ""
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "fuzzy"
-msgstr "ασαφές"
+msgstr "θολή"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:2
 msgid "round"
-msgstr "στρογγυλό"
-
+msgstr "στρογγυλή"
