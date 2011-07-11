@@ -49,6 +49,7 @@ struct _GimpUnitEntryTable
 
   /* private */
   GtkWidget  *table;
+  GtkWidget  *chain_button;
   GHashTable *entries;
 
   /* dimensions of "sub-table" containing the actual entries */ 
@@ -78,7 +79,7 @@ void            gimp_unit_entry_table_add_label             (GimpUnitEntryTable 
                                                              GimpUnit            unit, 
                                                              const char         *id1, 
                                                              const char         *id2);
-GtkWidget*      gimp_unit_entry_table_add_chainbutton       (GimpUnitEntryTable *table,
+GtkWidget*      gimp_unit_entry_table_add_chain_button      (GimpUnitEntryTable *table,
                                                              const char         *id1, 
                                                              const char         *id2);
 
@@ -89,10 +90,13 @@ GimpUnitEntry*  gimp_unit_entry_table_get_nth_entry         (GimpUnitEntryTable 
 gint            gimp_unit_entry_table_get_entry_count       (GimpUnitEntryTable *table);
 gdouble         gimp_unit_entry_table_get_pixels            (GimpUnitEntryTable *table, 
                                                              const gchar        *id);
+gdouble         gimp_unit_entry_table_get_nth_pixels        (GimpUnitEntryTable *table, 
+                                                             gint               index);                                                             
 GtkWidget*      gimp_unit_entry_table_get_table             (GimpUnitEntryTable *table);                                                             
 gdouble         gimp_unit_entry_table_get_value_in_unit     (GimpUnitEntryTable *table,
                                                              const gchar        *id,
                                                              GimpUnit            unit);
+GtkWidget*      gimp_unit_entry_table_get_chain_button      (GimpUnitEntryTable *table);                                                              
 
 void            gimp_unit_entry_table_set_unit              (GimpUnitEntryTable *table, 
                                                              GimpUnit            unit);
@@ -102,6 +106,16 @@ void            gimp_unit_entry_table_set_mode              (GimpUnitEntryTable 
                                                              GimpUnitEntryMode   mode);
 void            gimp_unit_entry_table_set_activates_default (GimpUnitEntryTable *table, 
                                                              gboolean            setting);
+void            gimp_unit_entry_table_set_bounds            (GimpUnitEntryTable *table, 
+                                                             GimpUnit            unit, 
+                                                             gdouble             upper, 
+                                                             gdouble             lower);
+void            gimp_unit_entry_table_set_pixels            (GimpUnitEntryTable *table, 
+                                                             const gchar        *id,
+                                                             gdouble             value);
+void            gimp_unit_entry_table_set_nth_pixels        (GimpUnitEntryTable *table, 
+                                                             gint                index,
+                                                             gdouble             value);                                                                                                                          
 
 void            gimp_unit_entry_table_grab_focus            (GimpUnitEntryTable *table);
 

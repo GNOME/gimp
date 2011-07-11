@@ -381,6 +381,7 @@ EXPORTS
 	gimp_unit_combo_box_set_active
 	gimp_unit_entry_connect
 	gimp_unit_entry_get_adjustment
+	gimp_unit_entry_get_pixels
 	gimp_unit_entry_get_type
 	gimp_unit_entry_get_unit
 	gimp_unit_entry_get_value
@@ -388,17 +389,20 @@ EXPORTS
 	gimp_unit_entry_new
 	gimp_unit_entry_set_bounds
 	gimp_unit_entry_set_mode
+	gimp_unit_entry_set_pixels
 	gimp_unit_entry_set_resolution
 	gimp_unit_entry_set_unit
 	gimp_unit_entry_set_value
 	gimp_unit_entry_set_value_in_unit
-	gimp_unit_entry_table_add_chainbutton
+	gimp_unit_entry_table_add_chain_button
 	gimp_unit_entry_table_add_entry
 	gimp_unit_entry_table_add_entry_defaults
 	gimp_unit_entry_table_add_label
+	gimp_unit_entry_table_get_chain_button
 	gimp_unit_entry_table_get_entry
 	gimp_unit_entry_table_get_entry_count
 	gimp_unit_entry_table_get_nth_entry
+	gimp_unit_entry_table_get_nth_pixels
 	gimp_unit_entry_table_get_pixels
 	gimp_unit_entry_table_get_table
 	gimp_unit_entry_table_get_type
@@ -406,7 +410,10 @@ EXPORTS
 	gimp_unit_entry_table_grab_focus
 	gimp_unit_entry_table_new
 	gimp_unit_entry_table_set_activates_default
+	gimp_unit_entry_table_set_bounds
 	gimp_unit_entry_table_set_mode
+	gimp_unit_entry_table_set_nth_pixels
+	gimp_unit_entry_table_set_pixels
 	gimp_unit_entry_table_set_resolution
 	gimp_unit_entry_table_set_unit
 	gimp_unit_menu_get_pixel_digits

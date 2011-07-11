@@ -301,8 +301,8 @@ gimp_template_editor_constructed (GObject *object)
                                   gimp_template_get_resolution_y (template));
 
   /*  the resolution chainbutton  */
-  chainbutton = gimp_unit_entry_table_add_chainbutton (private->resolution_entries,
-                                                       "xres", "yres");
+  chainbutton = gimp_unit_entry_table_add_chain_button (private->resolution_entries,
+                                                        "xres", "yres");
 
   gimp_prop_coordinates_connect2 (G_OBJECT (template),
                                  "xresolution", "yresolution",

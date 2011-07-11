@@ -72,6 +72,7 @@ GtkWidget *           gimp_unit_entry_new               (void);
 
 GimpUnitAdjustment *  gimp_unit_entry_get_adjustment    (GimpUnitEntry      *entry);
 gdouble               gimp_unit_entry_get_value         (GimpUnitEntry      *entry);
+gdouble               gimp_unit_entry_get_pixels        (GimpUnitEntry      *entry);
 gdouble               gimp_unit_entry_get_value_in_unit (GimpUnitEntry      *entry, 
                                                          GimpUnit            unit);
 GimpUnit              gimp_unit_entry_get_unit          (GimpUnitEntry      *entry);
@@ -90,7 +91,9 @@ void                  gimp_unit_entry_set_value         (GimpUnitEntry      *ent
                                                          gdouble             value);
 void                  gimp_unit_entry_set_value_in_unit (GimpUnitEntry      *entry, 
                                                          gdouble             value, 
-                                                         GimpUnit            unit);  
+                                                         GimpUnit            unit);
+void                  gimp_unit_entry_set_pixels        (GimpUnitEntry      *entry,
+                                                         gdouble             value);                                                           
                                                          
 void                  gimp_unit_entry_connect           (GimpUnitEntry      *entry, 
                                                          GimpUnitEntry      *target);                                                                                                               

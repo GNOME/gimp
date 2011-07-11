@@ -48,7 +48,8 @@ gimp_unit_entry_table_init (GimpUnitEntryTable *table)
 {
    /* initialize our fields */
   table->table        = gtk_table_new     (1, 1, FALSE);
-  table->entries      = g_hash_table_new  (NULL, NULL);;
+  table->entries      = g_hash_table_new  (NULL, NULL);
+  table->chain_button = NULL;
   table->bottom       = 0;
   table->right        = 0;
 }
@@ -220,7 +221,7 @@ gimp_unit_entry_table_add_label (GimpUnitEntryTable *table,
 
 /* add chain button connecting the two given UnitEntries */
 GtkWidget* 
-gimp_unit_entry_table_add_chainbutton  (GimpUnitEntryTable *table,
+gimp_unit_entry_table_add_chain_button  (GimpUnitEntryTable *table,
                                         const char* id1,
                                         const char* id2)
 {
@@ -235,7 +236,7 @@ gimp_unit_entry_table_add_chainbutton  (GimpUnitEntryTable *table,
 
   chainButton = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
 
-  /* add chainbutton to right of entries, spanning from the first to the second */
+  /* add chain_button to right of entries, spanning from the first to the second */
   gtk_table_attach (GTK_TABLE (table->table),
                              GTK_WIDGET (chainButton),
                              rightAttach,
@@ -246,7 +247,9 @@ gimp_unit_entry_table_add_chainbutton  (GimpUnitEntryTable *table,
 
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainButton), TRUE);
 
-  gtk_widget_show (chainButton);                          
+  gtk_widget_show (chainButton);  
+  
+  table->chain_button = chainButton;                        
 
   return chainButton;
 }
@@ -356,6 +359,14 @@ gimp_unit_entry_table_get_pixels (GimpUnitEntryTable *table,
 {
   return gimp_unit_entry_table_get_value_in_unit (table, id, GIMP_UNIT_PIXEL);
 }
+
+gdouble         
+gimp_unit_entry_table_get_nth_pixels (GimpUnitEntryTable *table, 
+                                      gint               index)
+{
+  return gimp_unit_entry_get_pixels (gimp_unit_entry_table_get_nth_entry (table, index));
+}
+
 gdouble 
 gimp_unit_entry_table_get_value_in_unit (GimpUnitEntryTable *table,
                                          const gchar *id, 
@@ -430,6 +441,24 @@ gimp_unit_entry_table_set_activates_default (GimpUnitEntryTable *table,
     gtk_entry_set_activates_default (GTK_ENTRY (entry), setting);
   }
 }
+
+void            
+gimp_unit_entry_table_set_bounds (GimpUnitEntryTable *table, 
+                                  GimpUnit            unit, 
+                                  gdouble             upper, 
+                                  gdouble             lower)
+{
+  GimpUnitEntry *entry;
+  gint           i, count = gimp_unit_entry_table_get_entry_count (table);
+
+  /* iterate over list of entries */
+  for (i = 0; i < count; i++) 
+  {
+    entry = gimp_unit_entry_table_get_nth_entry (table, i);
+    gimp_unit_entry_set_bounds (entry, unit, upper, lower);
+  }
+}                                  
+
 void 
 gimp_unit_entry_table_grab_focus (GimpUnitEntryTable *table)
 {
@@ -441,3 +470,33 @@ gimp_unit_entry_table_get_table  (GimpUnitEntryTable *table)
 {
   return table->table;
 }
+
+GtkWidget*      
+gimp_unit_entry_table_get_chain_button  (GimpUnitEntryTable *table)
+{
+  return table->chain_button;
+}
+
+void            
+gimp_unit_entry_table_set_pixels (GimpUnitEntryTable *table, 
+                                  const gchar        *id,
+                                  gdouble             value)
+{
+  GimpUnitEntry *entry;
+
+  entry = gimp_unit_entry_table_get_entry (table, id);
+
+  gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
+}               
+                   
+void            
+gimp_unit_entry_table_set_nth_pixels (GimpUnitEntryTable *table, 
+                                      gint                index,
+                                      gdouble             value)
+{
+  GimpUnitEntry *entry;
+
+  entry = gimp_unit_entry_table_get_nth_entry (table, index);
+
+  gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
+}                                       

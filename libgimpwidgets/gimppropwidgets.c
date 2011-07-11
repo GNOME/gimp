@@ -2919,17 +2919,17 @@ gimp_prop_coordinates_new2 (GObject                   *config,
                            gdouble                    yresolution,
                            gboolean                   has_chainbutton)
 {
-  GimpUnitEntryTable *UETable;
+  GimpUnitEntryTable *unit_entry_table;
   GtkWidget          *chainbutton = NULL;
 
-  UETable = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
+  unit_entry_table = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
 
-  gimp_unit_entry_table_add_entry_defaults (UETable, x_property_name, x_label_str);
-  gimp_unit_entry_table_add_entry_defaults (UETable, y_property_name, y_label_str);
+  gimp_unit_entry_table_add_entry_defaults (unit_entry_table, x_property_name, x_label_str);
+  gimp_unit_entry_table_add_entry_defaults (unit_entry_table, y_property_name, y_label_str);
 
   if (has_chainbutton)
     {
-      chainbutton = gimp_unit_entry_table_add_chainbutton  (UETable,
+      chainbutton = gimp_unit_entry_table_add_chain_button  (unit_entry_table,
                                                             x_property_name,
                                                             y_property_name);
     }
@@ -2938,16 +2938,18 @@ gimp_prop_coordinates_new2 (GObject                   *config,
                                        x_property_name,
                                        y_property_name,
                                        unit_property_name,
-                                       G_OBJECT (UETable),
+                                       G_OBJECT (unit_entry_table),
                                        chainbutton,
                                        xresolution,
                                        yresolution))
     {
-      gtk_widget_destroy (UETable->table);
+      gtk_widget_destroy (unit_entry_table->table);
       return NULL;
     }
 
-  return G_OBJECT (UETable);
+  gimp_prop_coordinates_callback2 (unit_entry_table, NULL, config);
+
+  return G_OBJECT (unit_entry_table);
 }
 
 gboolean
@@ -3129,11 +3131,11 @@ gboolean        gimp_prop_coordinates_connect2    (GObject       *config,
   GimpUnit            *old_unit_value;
   gboolean            chain_checked;
   GimpUnitEntry       *entry1, *entry2;
-  GimpUnitEntryTable  *ue_table;
+  GimpUnitEntryTable  *unit_entry_table;
 
   g_return_val_if_fail (GIMP_IS_UNIT_ENTRY_TABLE (unitentrytable), FALSE);
-  ue_table = GIMP_UNIT_ENTRY_TABLE (unitentrytable);
-  g_return_val_if_fail (gimp_unit_entry_table_get_entry_count(ue_table) == 2, FALSE);
+  unit_entry_table = GIMP_UNIT_ENTRY_TABLE (unitentrytable);
+  g_return_val_if_fail (gimp_unit_entry_table_get_entry_count(unit_entry_table) == 2, FALSE);
   g_return_val_if_fail (chainbutton == NULL ||
                         GIMP_IS_CHAIN_BUTTON (chainbutton), FALSE);
 
@@ -3168,8 +3170,8 @@ gboolean        gimp_prop_coordinates_connect2    (GObject       *config,
       unit_value      = GIMP_UNIT_INCH;
     }
 
-  entry1 = gimp_unit_entry_table_get_nth_entry (ue_table, 0);
-  entry2 = gimp_unit_entry_table_get_nth_entry (ue_table, 1);
+  entry1 = gimp_unit_entry_table_get_nth_entry (unit_entry_table, 0);
+  entry2 = gimp_unit_entry_table_get_nth_entry (unit_entry_table, 1);
   g_return_val_if_fail (GIMP_IS_UNIT_ENTRY (entry1), FALSE);
   g_return_val_if_fail (GIMP_IS_UNIT_ENTRY (entry2), FALSE);
 
@@ -3180,7 +3182,7 @@ gboolean        gimp_prop_coordinates_connect2    (GObject       *config,
                   GTK_WIDGET (entry2),
                   y_param_spec);
 
-  gimp_unit_entry_table_set_unit (ue_table, unit_value);
+  gimp_unit_entry_table_set_unit (unit_entry_table, unit_value);
 
   gimp_unit_entry_set_resolution (entry1, xresolution);
   gimp_unit_entry_set_resolution (entry2, yresolution);
@@ -3200,20 +3202,20 @@ gboolean        gimp_prop_coordinates_connect2    (GObject       *config,
   gimp_unit_entry_set_value_in_unit (entry1, x_value, GIMP_UNIT_PIXEL);
   gimp_unit_entry_set_value_in_unit (entry2, y_value, GIMP_UNIT_PIXEL);                                       
 
-  g_object_set_data (G_OBJECT (ue_table), "gimp-config-param-spec-x",
+  g_object_set_data (G_OBJECT (unit_entry_table), "gimp-config-param-spec-x",
                      x_param_spec);
-  g_object_set_data (G_OBJECT (ue_table), "gimp-config-param-spec-y",
+  g_object_set_data (G_OBJECT (unit_entry_table), "gimp-config-param-spec-y",
                      y_param_spec);
 
   old_x_value  = g_new0 (gdouble, 1);
   *old_x_value = x_value;
-  g_object_set_data_full (G_OBJECT (ue_table), "old-x-value",
+  g_object_set_data_full (G_OBJECT (unit_entry_table), "old-x-value",
                           old_x_value,
                           (GDestroyNotify) g_free);
 
   old_y_value  = g_new0 (gdouble, 1);
   *old_y_value = y_value;
-  g_object_set_data_full (G_OBJECT (ue_table), "old-y-value",
+  g_object_set_data_full (G_OBJECT (unit_entry_table), "old-y-value",
                           old_y_value,
                           (GDestroyNotify) g_free);
 
@@ -3222,38 +3224,38 @@ gboolean        gimp_prop_coordinates_connect2    (GObject       *config,
       if (chain_checked)
         gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
 
-      g_object_set_data (G_OBJECT (ue_table), "chainbutton", chainbutton);
+      g_object_set_data (G_OBJECT (unit_entry_table), "chainbutton", chainbutton);
     }
 
-  g_signal_connect (ue_table, "changed",
+  g_signal_connect (unit_entry_table, "changed",
                     G_CALLBACK (gimp_prop_coordinates_callback2),
                     config);
 
   connect_notify (config, x_property_name,
                   G_CALLBACK (gimp_prop_coordinates_notify_x2),
-                  ue_table);
+                  unit_entry_table);
   connect_notify (config, y_property_name,
                   G_CALLBACK (gimp_prop_coordinates_notify_y2),
-                  ue_table);
+                  unit_entry_table);
 
   if (unit_property_name)
     {
-      g_object_set_data (G_OBJECT (ue_table), "gimp-config-param-spec-unit",
+      g_object_set_data (G_OBJECT (unit_entry_table), "gimp-config-param-spec-unit",
                          unit_param_spec);
 
       old_unit_value  = g_new0 (GimpUnit, 1);
       *old_unit_value = unit_value;
-      g_object_set_data_full (G_OBJECT (ue_table), "old-unit-value",
+      g_object_set_data_full (G_OBJECT (unit_entry_table), "old-unit-value",
                               old_unit_value,
                               (GDestroyNotify) g_free);
 
-      g_signal_connect (ue_table, "changed",
+      g_signal_connect (unit_entry_table, "changed",
                         G_CALLBACK (gimp_prop_coordinates_callback2),
                         config);
 
       connect_notify (config, unit_property_name,
                       G_CALLBACK (gimp_prop_coordinates_notify_unit2),
-                      ue_table);
+                      unit_entry_table);
     }
 
   return TRUE;
@@ -3372,16 +3374,16 @@ gimp_prop_coordinates_callback2 (GimpUnitEntryTable *entry,
                                  GimpUnitEntry      *e,
                                  GObject            *config)
 {
-  GParamSpec *x_param_spec;
-  GParamSpec *y_param_spec;
-  GParamSpec *unit_param_spec;
-  gdouble     x_value;
-  gdouble     y_value;
-  GimpUnit    unit_value;
-  gdouble    *old_x_value;
-  gdouble    *old_y_value;
-  GimpUnit   *old_unit_value;
-  gboolean    backwards;
+  GParamSpec    *x_param_spec;
+  GParamSpec    *y_param_spec;
+  GParamSpec    *unit_param_spec;
+  gdouble        x_value;
+  gdouble        y_value;
+  GimpUnit       unit_value;
+  gdouble       *old_x_value;
+  gdouble       *old_y_value;
+  GimpUnit      *old_unit_value;
+  gboolean       backwards;
   GimpUnitEntry *entry1, *entry2;
 
   x_param_spec = g_object_get_data (G_OBJECT (entry),

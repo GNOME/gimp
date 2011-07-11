@@ -335,6 +335,12 @@ gimp_unit_entry_get_value (GimpUnitEntry *entry)
 }
 
 gdouble
+gimp_unit_entry_get_pixels (GimpUnitEntry *entry)
+{
+  return gimp_unit_entry_get_value_in_unit (entry, GIMP_UNIT_PIXEL);
+}
+
+gdouble
 gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, 
                                    GimpUnit       unit)
 {
@@ -367,6 +373,13 @@ gimp_unit_entry_set_bounds (GimpUnitEntry *entry,
   GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
   gimp_unit_adjustment_set_bounds (adj, unit, upper, lower);
 }
+
+void
+gimp_unit_entry_set_pixels (GimpUnitEntry      *entry,
+                            gdouble             value)
+{
+  gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
+}                           
 
 void
 gimp_unit_entry_set_mode (GimpUnitEntry     *entry,
