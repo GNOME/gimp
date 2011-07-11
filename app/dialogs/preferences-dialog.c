@@ -94,7 +94,7 @@ static void        prefs_message                  (GtkMessageType  type,
 static void   prefs_resolution_source_callback    (GtkWidget  *widget,
                                                    GObject    *config);
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
-                                                   GtkWidget  *entry);
+                                                   GObject    *entries);
 static void   prefs_input_devices_dialog          (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_keyboard_shortcuts_dialog     (GtkWidget  *widget,
@@ -451,13 +451,18 @@ prefs_resolution_source_callback (GtkWidget *widget,
     }
   else
     {
-      GimpSizeEntry *entry = g_object_get_data (G_OBJECT (widget),
-                                                "monitor_resolution_sizeentry");
+      GimpUnitEntryTable *entries = GIMP_UNIT_ENTRY_TABLE (
+                                    g_object_get_data (G_OBJECT (widget),
+                                                      "monitor_resolution_sizeentry"));
 
-      g_return_if_fail (GIMP_IS_SIZE_ENTRY (entry));
+      g_return_if_fail (GIMP_IS_UNIT_ENTRY_TABLE (entries));
 
-      xres = gimp_size_entry_get_refval (entry, 0);
-      yres = gimp_size_entry_get_refval (entry, 1);
+      xres = gimp_unit_entry_get_value_in_unit (
+              gimp_unit_entry_table_get_nth_entry (entries, 0),
+              GIMP_UNIT_PIXEL);
+      yres = gimp_unit_entry_get_value_in_unit (
+              gimp_unit_entry_table_get_nth_entry (entries, 1),
+              GIMP_UNIT_PIXEL);                                         
     }
 
   g_object_set (config,
@@ -469,18 +474,19 @@ prefs_resolution_source_callback (GtkWidget *widget,
 
 static void
 prefs_resolution_calibrate_callback (GtkWidget *widget,
-                                     GtkWidget *entry)
+                                     GObject   *unit_entries)
 {
   GtkWidget *dialog;
   GtkWidget *prefs_box;
   GtkWidget *image;
 
-  dialog = gtk_widget_get_toplevel (entry);
+  dialog = gtk_widget_get_toplevel (gimp_unit_entry_table_get_table (
+                                      GIMP_UNIT_ENTRY_TABLE (unit_entries)));
 
   prefs_box = g_object_get_data (G_OBJECT (dialog), "prefs-box");
   image     = gimp_prefs_box_get_image (GIMP_PREFS_BOX (prefs_box));
 
-  resolution_calibrate_dialog (entry, gtk_image_get_pixbuf (GTK_IMAGE (image)));
+  resolution_calibrate_dialog (unit_entries, gtk_image_get_pixbuf (GTK_IMAGE (image)));
 }
 
 static void
@@ -1290,6 +1296,7 @@ prefs_dialog_new (Gimp       *gimp,
   GSList            *group;
   GtkWidget         *editor;
   gint               i;
+  GimpUnitEntryTable *unit_entry_table;
 
   GObject           *object;
   GimpCoreConfig    *core_config;
@@ -2164,35 +2171,24 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   {
-    gchar *pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
-
-    entry = gimp_prop_coordinates_new (object,
+    unit_entry_table = GIMP_UNIT_ENTRY_TABLE (
+            gimp_prop_coordinates_new2 (object,
                                        "monitor-xresolution",
                                        "monitor-yresolution",
+                                       _("Horizontal"),
+                                       _("Vertical"),
                                        NULL,
-                                       pixels_per_unit,
-                                       GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-                                       0.0, 0.0,
-                                       TRUE);
+                                       1.0, 1.0, /* FIXME: UnitEntry needs 1.0 as "resolution of resolution" , otherwise calculation is not correct */
+                                       TRUE));
+    gimp_unit_entry_table_set_mode (unit_entry_table, GIMP_UNIT_ENTRY_MODE_RESOLUTION);
 
-    g_free (pixels_per_unit);
   }
-
-  gtk_table_set_col_spacings (GTK_TABLE (entry), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
-
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                _("Horizontal"), 0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                _("Vertical"), 0, 2, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                _("ppi"), 1, 4, 0.0);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 24);
-  gtk_widget_show (entry);
-  gtk_widget_set_sensitive (entry, ! display_config->monitor_res_from_gdk);
+  gtk_box_pack_start (GTK_BOX (hbox), unit_entry_table->table, TRUE, TRUE, 24);
+  gtk_widget_show (unit_entry_table->table);
+  gtk_widget_set_sensitive (unit_entry_table->table, ! display_config->monitor_res_from_gdk);
 
   group = NULL;
 
@@ -2214,7 +2210,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (button), "monitor_resolution_sizeentry", entry);
+  g_object_set_data (G_OBJECT (button), "monitor_resolution_sizeentry", unit_entry_table);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (prefs_resolution_source_callback),
@@ -2244,7 +2240,7 @@ prefs_dialog_new (Gimp       *gimp,
                             ! display_config->monitor_res_from_gdk);
 
   g_object_bind_property (button, "active",
-                          entry,  "sensitive",
+                          unit_entry_table->table,  "sensitive",
                           G_BINDING_SYNC_CREATE);
   g_object_bind_property (button,           "active",
                           calibrate_button, "sensitive",
@@ -2252,7 +2248,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_signal_connect (calibrate_button, "clicked",
                     G_CALLBACK (prefs_resolution_calibrate_callback),
-                    entry);
+                    unit_entry_table);
 
   g_object_unref (size_group);
   size_group = NULL;

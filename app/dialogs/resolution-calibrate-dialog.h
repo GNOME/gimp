@@ -19,7 +19,7 @@
 #define __RESOLUTION_CALIBRATE_DIALOG_H__
 
 
-void  resolution_calibrate_dialog (GtkWidget  *resolution_entry,
+void  resolution_calibrate_dialog (GObject    *resolution_entries,
                                    GdkPixbuf  *pixbuf);
 
 

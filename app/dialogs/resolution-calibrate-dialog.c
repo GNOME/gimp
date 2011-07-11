@@ -28,11 +28,11 @@
 #include "gimp-intl.h"
 
 
-static GtkWidget *calibrate_entry = NULL;
-static gdouble    calibrate_xres  = 1.0;
-static gdouble    calibrate_yres  = 1.0;
-static gint       ruler_width     = 1;
-static gint       ruler_height    = 1;
+static GimpUnitEntryTable  *calibrate_entries = NULL;
+static gdouble              calibrate_xres    = 1.0;
+static gdouble              calibrate_yres    = 1.0;
+static gint                 ruler_width       = 1;
+static gint                 ruler_height      = 1;
 
 
 /**
@@ -45,30 +45,33 @@ static gint       ruler_height    = 1;
  * is connected to a #GimpSizeEntry handling the resolution to be set.
  **/
 void
-resolution_calibrate_dialog (GtkWidget *resolution_entry,
+resolution_calibrate_dialog (GObject   *unit_entry_table,
                              GdkPixbuf *pixbuf)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *table;
-  GtkWidget    *vbox;
-  GtkWidget    *hbox;
-  GtkWidget    *ruler;
-  GtkWidget    *label;
-  GdkScreen    *screen;
-  GdkRectangle  rect;
-  gint          monitor;
+  GtkWidget           *dialog;
+  GtkWidget           *table;
+  GtkWidget           *vbox;
+  GtkWidget           *hbox;
+  GtkWidget           *ruler;
+  GtkWidget           *label;
+  GdkScreen           *screen;
+  GdkRectangle         rect;
+  gint                 monitor;
+  GimpUnitEntryTable  *resolution_entries;
+  GimpUnitEntry       *horizontal_entry, *vertical_entry;
 
-  g_return_if_fail (GIMP_IS_SIZE_ENTRY (resolution_entry));
-  g_return_if_fail (gtk_widget_get_realized (resolution_entry));
+  g_return_if_fail (GIMP_IS_UNIT_ENTRY_TABLE (unit_entry_table));
   g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
 
   /*  this dialog can only exist once  */
-  if (calibrate_entry)
+  if (calibrate_entries)
     return;
+
+  resolution_entries = GIMP_UNIT_ENTRY_TABLE (unit_entry_table);
 
   dialog = gimp_dialog_new (_("Calibrate Monitor Resolution"),
                             "gimp-resolution-calibration",
-                            gtk_widget_get_toplevel (resolution_entry),
+                            gtk_widget_get_toplevel (gimp_unit_entry_table_get_table (resolution_entries)),
                             GTK_DIALOG_DESTROY_WITH_PARENT,
                             NULL, NULL,
 
@@ -84,7 +87,7 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
 
   screen = gtk_widget_get_screen (dialog);
   monitor = gdk_screen_get_monitor_at_window (screen,
-                                              gtk_widget_get_window (resolution_entry));
+                                              gtk_widget_get_window (gimp_unit_entry_table_get_table (resolution_entries)));
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
   ruler_width  = rect.width  - 300 - (rect.width  % 100);
@@ -140,33 +143,28 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
   gtk_widget_show (hbox);
 
   calibrate_xres =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 0);
+    gimp_unit_entry_table_get_nth_pixels (resolution_entries, 0);
   calibrate_yres =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 1);
+    gimp_unit_entry_table_get_nth_pixels (resolution_entries, 1);
 
-  calibrate_entry =
-    gimp_coordinates_new  (GIMP_UNIT_INCH, "%p",
-                           FALSE, FALSE, 10,
-                           GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                           FALSE,
-                           FALSE,
-                           _("_Horizontal:"),
-                           ruler_width,
-                           calibrate_xres,
-                           1, GIMP_MAX_IMAGE_SIZE,
-                           0, 0,
-                           _("_Vertical:"),
-                           ruler_height,
-                           calibrate_yres,
-                           1, GIMP_MAX_IMAGE_SIZE,
-                           0, 0);
-  gtk_widget_hide (GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (calibrate_entry)));
+  calibrate_entries = 
+    GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ()); 
+  gimp_unit_entry_table_set_bounds (calibrate_entries, GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, 1);
+  
+  horizontal_entry = 
+    GIMP_UNIT_ENTRY (gimp_unit_entry_table_add_entry_defaults (calibrate_entries, "horizontal", _("Horizontal")));  
+  vertical_entry = 
+    GIMP_UNIT_ENTRY (gimp_unit_entry_table_add_entry_defaults (calibrate_entries, "vertical", _("Vertical")));                       
+  gimp_unit_entry_set_resolution         (horizontal_entry, calibrate_xres);
+  gimp_unit_entry_set_resolution         (vertical_entry,   calibrate_yres);
+  gimp_unit_entry_set_pixels             (horizontal_entry, ruler_width);
+  gimp_unit_entry_set_pixels             (vertical_entry,   ruler_height);
+
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
-                    &calibrate_entry);
+                    &calibrate_entries);
 
-  gtk_box_pack_end (GTK_BOX (hbox), calibrate_entry, FALSE, FALSE, 0);
-  gtk_widget_show (calibrate_entry);
+  gtk_box_pack_end (GTK_BOX (hbox), gimp_unit_entry_table_get_table (calibrate_entries), FALSE, FALSE, 0);
 
   gtk_widget_show (dialog);
 
@@ -177,22 +175,20 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
         GtkWidget *chain_button;
         gdouble    x, y;
 
-        x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 0);
-        y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 1);
+        x = gimp_unit_entry_get_pixels (horizontal_entry);
+        y = gimp_unit_entry_get_pixels (vertical_entry);
 
         calibrate_xres = (gdouble) ruler_width  * calibrate_xres / x;
         calibrate_yres = (gdouble) ruler_height * calibrate_yres / y;
 
-        chain_button = GIMP_COORDINATES_CHAINBUTTON (resolution_entry);
+        chain_button = gimp_unit_entry_table_get_chain_button (resolution_entries);
 
         if (ABS (x - y) > GIMP_MIN_RESOLUTION)
           gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button),
                                         FALSE);
 
-        gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
-                                    0, calibrate_xres);
-        gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
-                                    1, calibrate_yres);
+        gimp_unit_entry_table_set_nth_pixels (resolution_entries, 0, calibrate_xres);
+        gimp_unit_entry_table_set_nth_pixels (resolution_entries, 1, calibrate_yres);
       }
 
     default:
