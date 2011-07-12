@@ -52,10 +52,6 @@ struct _GimpUnitAdjustment
 struct _GimpUnitAdjustmentClass
 {
   GtkAdjustmentClass parent_class;
-
-  /* signals */
-  guint sig_unit_changed_id;
-  guint sig_resolution_changed_id;
 };
 
 
