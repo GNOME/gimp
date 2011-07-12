@@ -287,8 +287,7 @@ gimp_unit_entry_table_get_nth_entry (GimpUnitEntryTable *table,
     return NULL;
   }
 
-  /* reverse order because first added element is last in g_hash_table */
-  i = g_hash_table_size (table->entries) - 1;
+  i = 0;
 
   g_hash_table_iter_init (&iter, table->entries);
 
@@ -296,7 +295,7 @@ gimp_unit_entry_table_get_nth_entry (GimpUnitEntryTable *table,
   {
     if (i == index)
       return GIMP_UNIT_ENTRY (value);
-    i--;
+    i++;
   }
 
   return NULL;
