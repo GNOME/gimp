@@ -35,18 +35,22 @@
 #define DEBUG(x) /* nothing */
 #endif
 
+enum
+{
+  CHANGED,
+  LAST_SIGNAL
+};
+
 G_DEFINE_TYPE (GimpUnitEntryTable, gimp_unit_entry_table, G_TYPE_OBJECT);
 
-/**
- * signal handler
- **/
-static void label_updater     (GtkAdjustment *adj, gpointer userData);
-static void on_entry_changed  (GtkAdjustment *adj, gpointer userData);
+static void gimp_unit_entry_table_label_updater  (GtkAdjustment *adj, gpointer user_data);
+static void gimp_unit_entry_table_entry_changed  (GtkAdjustment *adj, gpointer user_data);
+
+static guint unit_entry_table_signals[LAST_SIGNAL] = {0};
 
 static void
 gimp_unit_entry_table_init (GimpUnitEntryTable *table)
 {
-   /* initialize our fields */
   table->table        = gtk_table_new     (1, 1, FALSE);
   table->entries      = g_hash_table_new  (NULL, NULL);
   table->chain_button = NULL;
@@ -57,16 +61,16 @@ gimp_unit_entry_table_init (GimpUnitEntryTable *table)
 static void
 gimp_unit_entry_table_class_init (GimpUnitEntryTableClass *klass)
 {
-  klass->sig_changed_id = g_signal_new ("changed",
-                                        GIMP_TYPE_UNIT_ENTRY_TABLE,
-                                        G_SIGNAL_RUN_LAST,
-                                        0,
-                                        NULL, 
-                                        NULL,
-                                        g_cclosure_marshal_VOID__OBJECT,
-                                        G_TYPE_NONE, 
-                                        1, 
-                                        G_TYPE_OBJECT);
+  unit_entry_table_signals[CHANGED] = 
+    g_signal_new ("changed",
+                  GIMP_TYPE_UNIT_ENTRY_TABLE,
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 
+                  1, 
+                  G_TYPE_OBJECT);
 }
 
 GObject*
@@ -80,13 +84,12 @@ gimp_unit_entry_table_new (void)
 }
 
 /* add an UnitEntry */
-/* TODO: have options for default and custom layout */
 GtkWidget* 
 gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
-                                 const gchar *id,
-                                 const gchar *labelStr,
-                                 gint x,
-                                 gint y)
+                                 const gchar        *id,
+                                 const gchar        *labelStr,
+                                 gint                x,
+                                 gint                y)
 {
   GimpUnitEntry *entry = GIMP_UNIT_ENTRY (gimp_unit_entry_new ()); 
   GtkWidget     *label;
@@ -131,9 +134,9 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
   
   /* connect to ourselves */
   g_signal_connect (gimp_unit_entry_get_adjustment (entry), "value-changed",
-                    G_CALLBACK (on_entry_changed), (gpointer) table);
+                    G_CALLBACK (gimp_unit_entry_table_entry_changed), (gpointer) table);
   g_signal_connect (gimp_unit_entry_get_adjustment (entry), "resolution-changed",
-                    G_CALLBACK (on_entry_changed), (gpointer) table);                 
+                    G_CALLBACK (gimp_unit_entry_table_entry_changed), (gpointer) table);                 
 
   gtk_widget_show_all (table->table); 
 
@@ -144,17 +147,17 @@ gimp_unit_entry_table_add_entry (GimpUnitEntryTable *table,
 
 GtkWidget* 
 gimp_unit_entry_table_add_entry_defaults (GimpUnitEntryTable *table,
-                                          const gchar *id,
-                                          const gchar *labelStr)
+                                          const gchar        *id,
+                                          const gchar        *labelStr)
 {
   GimpUnitEntry *entry, *entry2;
   gint i;
 
   entry = GIMP_UNIT_ENTRY (gimp_unit_entry_table_add_entry (table,
-                                                           id,
-                                                           labelStr,
-                                                           1,
-                                                           table->bottom));
+                                                            id,
+                                                            labelStr,
+                                                            1,
+                                                            table->bottom));
 
   /* connect entry to others */
   for (i = 0; i < g_hash_table_size (table->entries); i++)
@@ -170,9 +173,9 @@ gimp_unit_entry_table_add_entry_defaults (GimpUnitEntryTable *table,
 /* add preview label showing value of the two given entries in given unit */
 void 
 gimp_unit_entry_table_add_label (GimpUnitEntryTable *table,
-                                 GimpUnit unit,
-                                 const char* id1,
-                                 const char* id2)
+                                 GimpUnit            unit,
+                                 const gchar        *id1,
+                                 const gchar        *id2)
 {
   GtkWidget     *label = gtk_label_new("preview");
   GimpUnitEntry *entry1 = gimp_unit_entry_table_get_entry (table, id1);
@@ -211,19 +214,19 @@ gimp_unit_entry_table_add_label (GimpUnitEntryTable *table,
 
   /* connect label updater to changed signal */
   g_signal_connect (G_OBJECT (gimp_unit_entry_get_adjustment (entry1)), "value-changed",
-                    G_CALLBACK (label_updater), (gpointer) label);
+                    G_CALLBACK (gimp_unit_entry_table_label_updater), (gpointer) label);
 
   g_signal_connect (G_OBJECT (gimp_unit_entry_get_adjustment (entry2)), "value-changed",
-                    G_CALLBACK (label_updater), (gpointer) label);
+                    G_CALLBACK (gimp_unit_entry_table_label_updater), (gpointer) label);
 
-  label_updater (NULL, (gpointer) label);
+  gimp_unit_entry_table_label_updater (NULL, (gpointer) label);
 }
 
 /* add chain button connecting the two given UnitEntries */
 GtkWidget* 
 gimp_unit_entry_table_add_chain_button  (GimpUnitEntryTable *table,
-                                        const char* id1,
-                                        const char* id2)
+                                         const gchar         *id1,
+                                         const gchar         *id2)
 {
   GtkWidget        *chainButton;
   GimpUnitEntry    *entry1      = gimp_unit_entry_table_get_entry (table, id1);
@@ -238,12 +241,10 @@ gimp_unit_entry_table_add_chain_button  (GimpUnitEntryTable *table,
 
   /* add chain_button to right of entries, spanning from the first to the second */
   gtk_table_attach (GTK_TABLE (table->table),
-                             GTK_WIDGET (chainButton),
-                             rightAttach,
-                             rightAttach + 1,
-                             topAttach,
-                             bottomAttach,
-                             GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_WIDGET (chainButton),
+                    rightAttach, rightAttach + 1,
+                    topAttach, bottomAttach,
+                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainButton), TRUE);
 
@@ -257,7 +258,7 @@ gimp_unit_entry_table_add_chain_button  (GimpUnitEntryTable *table,
 /* get UnitEntry by identifier */
 GimpUnitEntry* 
 gimp_unit_entry_table_get_entry (GimpUnitEntryTable *table,
-                                 const gchar *id)
+                                 const gchar        *id)
 {
   GimpUnitEntry *entry;
 
@@ -274,7 +275,7 @@ gimp_unit_entry_table_get_entry (GimpUnitEntryTable *table,
 /* get UnitEntry by index */
 GimpUnitEntry* 
 gimp_unit_entry_table_get_nth_entry (GimpUnitEntryTable *table, 
-                                     gint index)
+                                     gint                index)
 {
   GHashTableIter   iter;
   gpointer         key, value;
@@ -302,11 +303,12 @@ gimp_unit_entry_table_get_nth_entry (GimpUnitEntryTable *table,
 }
 
 /* updates the text of the preview label */
-static 
-void label_updater (GtkAdjustment *adj, gpointer userData)
+static void 
+gimp_unit_entry_table_label_updater (GtkAdjustment *adj,
+                                     gpointer       user_data)
 {
   gchar               str[40];
-  GtkLabel           *label       = GTK_LABEL (userData);
+  GtkLabel           *label       = GTK_LABEL (user_data);
   GimpUnitEntry      *entry1      = GIMP_UNIT_ENTRY (g_object_get_data (G_OBJECT (label), "entry1"));
   GimpUnitEntry      *entry2      = GIMP_UNIT_ENTRY (g_object_get_data (G_OBJECT (label), "entry2"));
   GimpUnitAdjustment *adjustment;   
@@ -326,10 +328,11 @@ void label_updater (GtkAdjustment *adj, gpointer userData)
 }
 
 /* signal handler for signals of one of our entries/adjustments */
-static 
-void on_entry_changed  (GtkAdjustment *adj, gpointer userData)
+static void 
+gimp_unit_entry_table_entry_changed  (GtkAdjustment *adj, 
+                                      gpointer       user_data)
 {
-  GimpUnitEntryTable *table     = GIMP_UNIT_ENTRY_TABLE (userData);
+  GimpUnitEntryTable *table     = GIMP_UNIT_ENTRY_TABLE (user_data);
   GimpUnitEntry      *entry;
   gint                i, count  = gimp_unit_entry_table_get_entry_count (table);
 
@@ -342,7 +345,7 @@ void on_entry_changed  (GtkAdjustment *adj, gpointer userData)
   }
 
   /* emit "changed" */
-  g_signal_emit(table, GIMP_UNIT_ENTRY_TABLE_GET_CLASS(table)->sig_changed_id, 0, entry);
+  g_signal_emit(table, unit_entry_table_signals[CHANGED], 0, entry);
 }
 
 /* get count of attached unit entries */
@@ -355,7 +358,7 @@ gimp_unit_entry_table_get_entry_count (GimpUnitEntryTable *table)
 /* get value of given entry in pixels */
 gdouble 
 gimp_unit_entry_table_get_pixels (GimpUnitEntryTable *table, 
-                                  const gchar *id)
+                                  const gchar        *id)
 {
   return gimp_unit_entry_table_get_value_in_unit (table, id, GIMP_UNIT_PIXEL);
 }
@@ -369,8 +372,8 @@ gimp_unit_entry_table_get_nth_pixels (GimpUnitEntryTable *table,
 
 gdouble 
 gimp_unit_entry_table_get_value_in_unit (GimpUnitEntryTable *table,
-                                         const gchar *id, 
-                                         GimpUnit unit)
+                                         const gchar        *id, 
+                                         GimpUnit            unit)
 {
   GimpUnitEntry *entry = gimp_unit_entry_table_get_entry (table, id);
 
@@ -382,7 +385,8 @@ gimp_unit_entry_table_get_value_in_unit (GimpUnitEntryTable *table,
 
 /* sets the unit of all entries */
 void 
-gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, GimpUnit unit)
+gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, 
+                                GimpUnit            unit)
 {
   GimpUnitEntry *entry;
   gint           i, count = gimp_unit_entry_table_get_entry_count (table);
@@ -397,7 +401,8 @@ gimp_unit_entry_table_set_unit (GimpUnitEntryTable *table, GimpUnit unit)
 
 /* sets the resolution of all entries */
 void 
-gimp_unit_entry_table_set_resolution (GimpUnitEntryTable *table, gdouble res)
+gimp_unit_entry_table_set_resolution (GimpUnitEntryTable *table,
+                                      gdouble             res)
 {
   GimpUnitEntry *entry;
   gint           i, count = gimp_unit_entry_table_get_entry_count (table);
@@ -429,7 +434,7 @@ gimp_unit_entry_table_set_mode (GimpUnitEntryTable *table,
 /* calls gtk_entry_set_activates_default for all UnitEntries */
 void 
 gimp_unit_entry_table_set_activates_default (GimpUnitEntryTable *table, 
-                                             gboolean setting)
+                                             gboolean            setting)
 {
   GimpUnitEntry *entry;
   gint           i, count = gimp_unit_entry_table_get_entry_count (table);

@@ -59,9 +59,6 @@ struct _GimpUnitEntryTable
 struct _GimpUnitEntryTableClass
 {
   GObjectClass parent_class;
-
-  /* signals */
-  guint sig_changed_id;
 };
 
 GType           gimp_unit_entry_table_get_type              (void);
