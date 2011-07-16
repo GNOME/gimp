@@ -125,7 +125,7 @@ gimp_grid_editor_constructed (GObject *object)
   GtkWidget          *table;
   GtkWidget          *style;
   GtkWidget          *color_button;
-  GimpUnitEntryTable *ue_table = NULL;
+  GimpUnitEntries    *entries = NULL;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -178,7 +178,7 @@ gimp_grid_editor_constructed (GObject *object)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
-  ue_table = editor->spacing_table = GIMP_UNIT_ENTRY_TABLE (
+  entries = editor->spacing_entries = GIMP_UNIT_ENTRIES (
               gimp_prop_coordinates_new2 (G_OBJECT (editor->grid),
                                          "xspacing",
                                          "yspacing",
@@ -189,8 +189,8 @@ gimp_grid_editor_constructed (GObject *object)
                                          editor->yresolution,
                                          TRUE));
 
-  gtk_box_pack_start (GTK_BOX (hbox), ue_table->table, TRUE, TRUE, 0);
-  gtk_widget_show (ue_table->table);
+  gtk_box_pack_start (GTK_BOX (hbox), entries->table, TRUE, TRUE, 0);
+  gtk_widget_show (entries->table);
 
   gtk_widget_show (hbox);
 
@@ -201,7 +201,7 @@ gimp_grid_editor_constructed (GObject *object)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
-  ue_table = editor->offset_table = GIMP_UNIT_ENTRY_TABLE (
+  entries = editor->offset_entries = GIMP_UNIT_ENTRIES (
               gimp_prop_coordinates_new2 (G_OBJECT (editor->grid),
                                          "xoffset",
                                          "yoffset",
@@ -212,8 +212,8 @@ gimp_grid_editor_constructed (GObject *object)
                                          editor->yresolution,
                                          TRUE));
 
-  gtk_box_pack_start (GTK_BOX (hbox), ue_table->table, TRUE, TRUE, 0);
-  gtk_widget_show (ue_table->table);
+  gtk_box_pack_start (GTK_BOX (hbox), entries->table, TRUE, TRUE, 0);
+  gtk_widget_show (entries->table);
 
   gtk_widget_show (hbox);
 }
@@ -234,15 +234,15 @@ gimp_grid_editor_finalize (GObject *object)
       g_object_unref (editor->context);
       editor->context = NULL;
     }
-  if (editor->spacing_table)
+  if (editor->spacing_entries)
     {
-      g_object_unref (editor->spacing_table);
-      editor->spacing_table = NULL;
+      g_object_unref (editor->spacing_entries);
+      editor->spacing_entries = NULL;
     }
-  if (editor->offset_table)
+  if (editor->offset_entries)
     {
-      g_object_unref (editor->offset_table);
-      editor->offset_table = NULL;
+      g_object_unref (editor->offset_entries);
+      editor->offset_entries = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);

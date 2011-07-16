@@ -1020,10 +1020,10 @@ layers_new_layer_response (GtkWidget          *widget,
       layer_fill_type = dialog->fill_type;
 
       dialog->xsize =
-        RINT (gimp_unit_entry_table_get_pixels (dialog->unit_entries, "width"));
+        RINT (gimp_unit_entries_get_pixels (dialog->unit_entries, "width"));
 
       dialog->ysize =
-        RINT (gimp_unit_entry_table_get_pixels (dialog->unit_entries, "height"));
+        RINT (gimp_unit_entries_get_pixels (dialog->unit_entries, "height"));
 
       layer = gimp_layer_new (dialog->image,
                               dialog->xsize,

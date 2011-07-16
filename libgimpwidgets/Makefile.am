@@ -171,8 +171,8 @@ libgimpwidgets_sources = \
 	gimpunitadjustment.h		\
 	gimpunitentry.c			\
 	gimpunitentry.h			\
-	gimpunitentrytable.c			\
-	gimpunitentrytable.h			\
+	gimpunitentries.c			\
+	gimpunitentries.h			\
 	gimpunitmenu.c			\
 	gimpunitmenu.h			\
 	gimpunitparser.c   \

@@ -53,7 +53,7 @@ GimpTemplate          * gimp_template_editor_get_template      (GimpTemplateEdit
 
 void                    gimp_template_editor_show_advanced     (GimpTemplateEditor *editor,
                                                                 gboolean            expanded);
-GimpUnitEntryTable    * gimp_template_editor_get_unit_entries  (GimpTemplateEditor *editor);
+GimpUnitEntries       * gimp_template_editor_get_unit_entries  (GimpTemplateEditor *editor);
 
 
 #endif  /*  __GIMP_TEMPLATE_EDITOR_H__  */

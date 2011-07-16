@@ -208,7 +208,7 @@ gboolean        gimp_prop_coordinates_connect2     (GObject       *config,
                                                    const gchar   *x_property_name,
                                                    const gchar   *y_property_name,
                                                    const gchar   *unit_property_name,
-                                                   GObject       *sizeentry,
+                                                   GObject       *entries,
                                                    GtkWidget     *chainbutton,
                                                    gdouble        xresolution,
                                                    gdouble        yresolution);

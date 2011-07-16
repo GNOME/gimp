@@ -138,10 +138,10 @@ layer_options_dialog_new (GimpImage    *image,
       gimp_image_get_resolution (image, &xres, &yres);
 
       /* UnitEntry */
-      options->unit_entries = GIMP_UNIT_ENTRY_TABLE (gimp_unit_entry_table_new ());
-      width_entry = gimp_unit_entry_table_add_entry_defaults  (options->unit_entries, "width", _("Width:"));
-      height_entry = gimp_unit_entry_table_add_entry_defaults (options->unit_entries, "height", _("Height:"));
-      gimp_unit_entry_table_add_label (options->unit_entries, GIMP_UNIT_PIXEL, "width", "height");
+      options->unit_entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ());
+      width_entry = gimp_unit_entries_add_entry_defaults  (options->unit_entries, "width", _("Width:"));
+      height_entry = gimp_unit_entries_add_entry_defaults (options->unit_entries, "height", _("Height:"));
+      gimp_unit_entries_add_label (options->unit_entries, GIMP_UNIT_PIXEL, "width", "height");
       
       gimp_unit_entry_set_unit        (GIMP_UNIT_ENTRY (width_entry), GIMP_UNIT_PIXEL);
       
@@ -152,9 +152,9 @@ layer_options_dialog_new (GimpImage    *image,
       gimp_unit_entry_set_bounds      (GIMP_UNIT_ENTRY (width_entry), GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
       gimp_unit_entry_set_bounds      (GIMP_UNIT_ENTRY (height_entry), GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
 
-      gtk_table_attach (GTK_TABLE (table), gimp_unit_entry_table_get_table (options->unit_entries), 0, 2, 1, 3,
+      gtk_table_attach (GTK_TABLE (table), gimp_unit_entries_get_table (options->unit_entries), 0, 2, 1, 3,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (gimp_unit_entry_table_get_table (options->unit_entries));
+      gtk_widget_show (gimp_unit_entries_get_table (options->unit_entries));
 
       /*  The radio frame  */
       frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,

@@ -38,7 +38,7 @@ struct _GimpGridEditor
 
   GimpGrid            *grid;
   GimpContext         *context;
-  GimpUnitEntryTable  *spacing_table, *offset_table;
+  GimpUnitEntries     *spacing_entries, *offset_entries;
   gdouble             xresolution;
   gdouble             yresolution;
 };

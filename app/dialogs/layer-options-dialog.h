@@ -26,7 +26,7 @@ struct _LayerOptionsDialog
 {
   GtkWidget             *dialog;
   GtkWidget             *name_entry;
-  GimpUnitEntryTable    *unit_entries;
+  GimpUnitEntries       *unit_entries;
   GtkWidget             *rename_toggle;
 
   GimpFillType          fill_type;
