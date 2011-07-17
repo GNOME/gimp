@@ -227,7 +227,7 @@ uri_backend_load_image (const gchar  *uri,
       proto = "FTPS";
     }
   else
-  if (! g_ascii_strncasecmp (eff_url ,"gopher://, 9"))
+  if (! g_ascii_strncasecmp (eff_url ,"gopher://", 9))
     {
       is_gopher = TRUE;
       proto = "GOPHER";
