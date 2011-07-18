@@ -530,7 +530,7 @@ randomize (GimpDrawable *drawable,
        *  prepare the first row and previous row
        */
       randomize_prepare_row (sp, pr, x1, y1 - 1, (x2 - x1));
-      randomize_prepare_row (dp, cr, x1, y1, (x2 - x1));
+      randomize_prepare_row (sp, cr, x1, y1, (x2 - x1));
       /*
        *  loop through the rows, applying the selected convolution
        */
