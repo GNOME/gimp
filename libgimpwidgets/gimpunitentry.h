@@ -60,6 +60,11 @@ struct _GimpUnitEntry
 
   /* input mode */
   GimpUnitEntryMode   mode;
+
+  /* is our input valid? (for error indication) */
+  gboolean            input_valid;
+  /* the timer source which handles the error indication */
+  GSource             *timer;
 };
 
 struct _GimpUnitEntryClass

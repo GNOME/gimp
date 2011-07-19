@@ -46,7 +46,9 @@
 #define DEBUG(x) /* nothing */
 #endif
 
-#define UNIT_ENTRY_STRING_LENGTH 30
+#define UNIT_ENTRY_STRING_LENGTH  30
+#define UNIT_ENTRY_ERROR_TIMEOUT  2
+#define UNIT_ENTRY_ERROR_COLOR    "LightSalmon"
 
 G_DEFINE_TYPE (GimpUnitEntry, gimp_unit_entry, GTK_TYPE_SPIN_BUTTON);
 
@@ -64,6 +66,7 @@ static void     gimp_unit_entry_populate_popup  (GtkEntry               *entry,
                                                  gpointer                user_data); 
 static void     gimp_unit_entry_menu_item       (GtkWidget              *menuItem,
                                                  gpointer               *user_data);
+static gboolean gimp_unit_entry_timer_callback  (GtkWidget              *entry);                                               
 
 static void
 gimp_unit_entry_init (GimpUnitEntry *unitEntry)
@@ -77,7 +80,9 @@ gimp_unit_entry_init (GimpUnitEntry *unitEntry)
 
   /* some default values */
   unitEntry->dontUpdateText = FALSE;  
-  unitEntry->mode           = GIMP_UNIT_ENTRY_MODE_UNIT;                               
+  unitEntry->mode           = GIMP_UNIT_ENTRY_MODE_UNIT;  
+  unitEntry->input_valid    = TRUE; 
+  unitEntry->timer          = NULL;                            
 
   /* connect signals */
   /* we don't need all of them... */
@@ -146,6 +151,7 @@ gimp_unit_entry_parse (GimpUnitEntry *entry)
   {
     /* reset color */
     gtk_widget_modify_base (GTK_WIDGET (entry), GTK_STATE_NORMAL, NULL);
+    entry->input_valid = TRUE;
 
     /* set new unit */  
     if (result.unit != entry->unitAdjustment->unit)
@@ -169,11 +175,7 @@ gimp_unit_entry_parse (GimpUnitEntry *entry)
   }
   else
   {
-    /* paint entry red */
-    GdkColor color;
-    gdk_color_parse ("LightSalmon", &color);
-    gtk_widget_modify_base (GTK_WIDGET (entry), GTK_STATE_NORMAL, &color);
-
+    entry->input_valid = FALSE;
     return FALSE;
   }
 
@@ -225,6 +227,23 @@ gimp_unit_entry_text_changed (GtkEditable *editable,
 
   DEBUG (("on_text_changed\n");)
 
+  /* timer for error indication */
+  if (gtk_widget_has_focus (GTK_WIDGET (entry)))
+  {
+    /* if timer exists, reset */
+    if (entry->timer != NULL)
+    {
+      g_source_destroy (entry->timer);
+    }
+    /* create timer */
+    entry->timer = g_timeout_source_new_seconds (UNIT_ENTRY_ERROR_TIMEOUT);
+    g_source_set_callback (entry->timer, 
+                           (GSourceFunc) gimp_unit_entry_timer_callback,
+                           (gpointer) entry,
+                           NULL);
+    g_source_attach (entry->timer, NULL);
+  }
+
   if (!entry->mode == GIMP_UNIT_ENTRY_MODE_RESOLUTION)
   {
     /* disable updating the displayed text (user input must not be overwriten) */
@@ -251,6 +270,25 @@ gimp_unit_entry_input (GtkSpinButton *spinButton,
 
   /* we want GtkSpinButton to handle the input nontheless (there is no problem anymore
      since we done the parsing), so we return FALSE */
+  return FALSE;
+}
+
+static gboolean 
+gimp_unit_entry_timer_callback  (GtkWidget *entry)                                   
+{
+  GimpUnitEntry *unit_entry = GIMP_UNIT_ENTRY (entry);
+
+  /* paint entry red if input is invalid */
+  if (!unit_entry->input_valid)
+  {
+    GdkColor color;
+    gdk_color_parse (UNIT_ENTRY_ERROR_COLOR, &color);
+    gtk_widget_modify_base (GTK_WIDGET (entry), GTK_STATE_NORMAL, &color);
+  }
+
+  /* delete timer */
+  unit_entry->timer = NULL;
+
   return FALSE;
 }
 
