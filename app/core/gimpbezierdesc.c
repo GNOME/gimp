@@ -168,15 +168,16 @@ gimp_bezier_desc_translate (GimpBezierDesc *desc,
                             gdouble         offset_x,
                             gdouble         offset_y)
 {
-  gint i;
+  gint i, j;
 
   g_return_if_fail (desc != NULL);
 
-  for (i = 0; i < desc->num_data; i++)
-    {
-      desc->data[i].point.x += offset_x;
-      desc->data[i].point.y += offset_y;
-    }
+  for (i = 0; i < desc->num_data; i += desc->data[i].header.length)
+    for (j = 1; j < desc->data[i].header.length; ++j)
+      {
+        desc->data[i+j].point.x += offset_x;
+        desc->data[i+j].point.y += offset_y;
+      }
 }
 
 GimpBezierDesc *
