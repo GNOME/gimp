@@ -141,7 +141,6 @@ layer_options_dialog_new (GimpImage    *image,
       options->unit_entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ());
       width_entry = gimp_unit_entries_add_entry_defaults  (options->unit_entries, "width", _("Width:"));
       height_entry = gimp_unit_entries_add_entry_defaults (options->unit_entries, "height", _("Height:"));
-      gimp_unit_entries_add_label (options->unit_entries, GIMP_UNIT_PIXEL, "width", "height");
       
       gimp_unit_entry_set_unit        (GIMP_UNIT_ENTRY (width_entry), GIMP_UNIT_PIXEL);
       

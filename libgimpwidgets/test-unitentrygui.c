@@ -43,7 +43,7 @@ create_interface(void)
   entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ());
   gimp_unit_entries_add_entry_defaults (entries, "width", "Width");
   gimp_unit_entries_add_entry_defaults (entries, "height", "Height");
-  gimp_unit_entries_add_label (entries, GIMP_UNIT_PIXEL, "width", "height");
+  gimp_unit_entries_add_preview_label (entries, GIMP_UNIT_PIXEL, "width", "height");
 
   gimp_unit_entries_add_chain_button (entries, "width", "height");
 

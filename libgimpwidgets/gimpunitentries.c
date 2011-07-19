@@ -172,10 +172,10 @@ gimp_unit_entries_add_entry_defaults (GimpUnitEntries *entries,
 
 /* add preview label showing value of the two given entries in given unit */
 void 
-gimp_unit_entries_add_label (GimpUnitEntries *entries,
-                             GimpUnit         unit,
-                             const gchar     *id1,
-                             const gchar     *id2)
+gimp_unit_entries_add_preview_label (GimpUnitEntries *entries,
+                                     GimpUnit         unit,
+                                     const gchar     *id1,
+                                     const gchar     *id2)
 {
   GtkWidget     *label = gtk_label_new("preview");
   GimpUnitEntry *entry1 = gimp_unit_entries_get_entry (entries, id1);

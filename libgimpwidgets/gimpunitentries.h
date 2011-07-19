@@ -69,7 +69,7 @@ GtkWidget*      gimp_unit_entries_add_entry             (GimpUnitEntries *entrie
 GtkWidget*      gimp_unit_entries_add_entry_defaults    (GimpUnitEntries *entries, 
                                                          const gchar     *id, 
                                                          const gchar     *label);
-void            gimp_unit_entries_add_label             (GimpUnitEntries *entries, 
+void            gimp_unit_entries_add_preview_label     (GimpUnitEntries *entries, 
                                                          GimpUnit         unit, 
                                                          const char      *id1, 
                                                          const char      *id2);

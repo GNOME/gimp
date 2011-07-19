@@ -382,7 +382,7 @@ EXPORTS
 	gimp_unit_entries_add_chain_button
 	gimp_unit_entries_add_entry
 	gimp_unit_entries_add_entry_defaults
-	gimp_unit_entries_add_label
+	gimp_unit_entries_add_preview_label
 	gimp_unit_entries_get_chain_button
 	gimp_unit_entries_get_entry
 	gimp_unit_entries_get_entry_count
