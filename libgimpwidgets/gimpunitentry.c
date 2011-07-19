@@ -46,6 +46,8 @@
 #define DEBUG(x) /* nothing */
 #endif
 
+#define UNIT_ENTRY_STRING_LENGTH 30
+
 G_DEFINE_TYPE (GimpUnitEntry, gimp_unit_entry, GTK_TYPE_SPIN_BUTTON);
 
 static gboolean gimp_unit_entry_parse           (GimpUnitEntry *unitEntry);
@@ -183,9 +185,10 @@ static gboolean
 gimp_unit_entry_output (GtkSpinButton *spin,
                         gpointer       data)
 {
-  gchar              *text;
-  GimpUnitAdjustment *adj   = GIMP_UNIT_ADJUSTMENT (data);
-  GimpUnitEntry      *entry = GIMP_UNIT_ENTRY (spin); 
+  GimpUnitAdjustment *adj         = GIMP_UNIT_ADJUSTMENT (data);
+  GimpUnitEntry      *entry       = GIMP_UNIT_ENTRY (spin); 
+  gchar              *adj_string;
+  gchar               res_string [UNIT_ENTRY_STRING_LENGTH];
 
   /* if updating disabled => return (user input must not be overwritten) */
   if (entry->dontUpdateText)
@@ -196,21 +199,19 @@ gimp_unit_entry_output (GtkSpinButton *spin,
   /* set text of the entry */
   if (entry->mode == GIMP_UNIT_ENTRY_MODE_UNIT)
   {
-    text = gimp_unit_adjustment_to_string (adj);
+    adj_string = gimp_unit_adjustment_to_string (adj);
+    gtk_entry_set_text (GTK_ENTRY (entry), adj_string);
+    g_free (adj_string);
   }
   else
   {
-    text = g_malloc (30 * sizeof (gchar));
-    sprintf (text, "%.1f px/%s", 
-             gimp_unit_adjustment_get_value (adj),
-             gimp_unit_get_abbreviation (gimp_unit_adjustment_get_unit (adj)));
+    snprintf (res_string, UNIT_ENTRY_STRING_LENGTH, "%.1f px/%s", 
+              gimp_unit_adjustment_get_value (adj),
+              gimp_unit_get_abbreviation (gimp_unit_adjustment_get_unit (adj)));
+    gtk_entry_set_text (GTK_ENTRY (entry), res_string);
   }
 
   DEBUG (("on_output: %s\n", text);)
-
-  gtk_entry_set_text (GTK_ENTRY (spin), text);
-
-  g_free (text);
 
   return TRUE;
 }
