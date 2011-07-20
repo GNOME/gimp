@@ -31,6 +31,8 @@ UI:
    no export target has been set yet
  - In single-window mode, add new dockable dialogs to the image window
    instead of in a new window
+ - When switching off single-window mode, distribute dock windows
+   better
 
 
 Core:
