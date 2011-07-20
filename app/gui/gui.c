@@ -448,7 +448,7 @@ gui_restore_after_callback (Gimp               *gimp,
                                                     "<Image>",
                                                     gimp,
                                                     gui_config->tearoff_menus);
-  gimp_ui_manager_update (image_ui_manager, NULL);
+  gimp_ui_manager_update (image_ui_manager, gimp);
 
 #ifdef GDK_WINDOWING_QUARTZ
   {
