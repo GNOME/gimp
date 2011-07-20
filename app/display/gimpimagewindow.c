@@ -44,6 +44,7 @@
 #include "widgets/gimpsessioninfo-aux.h"
 #include "widgets/gimpsessionmanaged.h"
 #include "widgets/gimpsessioninfo-dock.h"
+#include "widgets/gimptoolbox.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpview.h"
 
@@ -1167,6 +1168,41 @@ gimp_image_window_is_iconified (GimpImageWindow *window)
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return (private->window_state & GDK_WINDOW_STATE_ICONIFIED) != 0;
+}
+
+/**
+ * gimp_image_window_has_toolbox:
+ * @window:
+ *
+ * Returns: %TRUE if the image window contains a GimpToolbox.
+ **/
+gboolean
+gimp_image_window_has_toolbox (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+  GList                  *iter = NULL;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  for (iter = gimp_dock_columns_get_docks (GIMP_DOCK_COLUMNS (private->left_docks));
+       iter;
+       iter = g_list_next (iter))
+    {
+      if (GIMP_IS_TOOLBOX (iter->data))
+        return TRUE;
+    }
+
+  for (iter = gimp_dock_columns_get_docks (GIMP_DOCK_COLUMNS (private->right_docks));
+       iter;
+       iter = g_list_next (iter))
+    {
+      if (GIMP_IS_TOOLBOX (iter->data))
+        return TRUE;
+    }
+
+  return FALSE;
 }
 
 void

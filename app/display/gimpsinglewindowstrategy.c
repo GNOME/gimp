@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -27,8 +29,10 @@
 
 #include "core/gimp.h"
 
-#include "widgets/gimpdockcolumns.h"
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimpdockbook.h"
+#include "widgets/gimpdockcolumns.h"
 
 #include "display/gimpimagewindow.h"
 
@@ -75,8 +79,7 @@ gimp_single_window_strategy_create_dockable_dialog (GimpWindowStrategy *strategy
                                                     const gchar        *identifiers)
 {
   GList           *windows = gimp_get_image_windows (gimp);
-  GtkWidget       *dockbook;
-  GtkWidget       *dockable;
+  GtkWidget       *widget;
   GimpImageWindow *window;
 
   g_return_val_if_fail (g_list_length (windows) > 0, NULL);
@@ -84,27 +87,54 @@ gimp_single_window_strategy_create_dockable_dialog (GimpWindowStrategy *strategy
   /* In single-window mode, there should only be one window... */
   window = GIMP_IMAGE_WINDOW (windows->data);
 
-  /* There shall not is more than one window in single-window mode */
-  dockbook = gimp_image_window_get_default_dockbook (window);
-
-  if (! dockbook)
+  if (strcmp ("gimp-toolbox", identifiers) == 0)
     {
-      GimpDockColumns *dock_columns;
+      /* Only allow one toolbox... */
+      if (! gimp_image_window_has_toolbox (window))
+        {
+          GimpDockColumns *columns;
+          GimpUIManager   *ui_manager = gimp_image_window_get_ui_manager (window);
 
-      /* No dock, need to add one */
-      dock_columns = gimp_image_window_get_right_docks (window);
-      gimp_dock_columns_prepare_dockbook (dock_columns,
-                                          -1 /*index*/,
-                                          &dockbook);
+          widget = gimp_dialog_factory_dialog_new (factory,
+                                                   screen,
+                                                   ui_manager,
+                                                   "gimp-toolbox",
+                                                   -1 /*view_size*/,
+                                                   FALSE /*present*/);
+          gtk_widget_show (widget);
+
+          columns = gimp_image_window_get_left_docks (window);
+          gimp_dock_columns_add_dock (columns,
+                                      GIMP_DOCK (widget),
+                                      -1 /*index*/);
+        }
+    }
+  else
+    {
+      GtkWidget *dockbook;
+
+      dockbook = gimp_image_window_get_default_dockbook (window);
+
+      if (! dockbook)
+        {
+          GimpDockColumns *dock_columns;
+
+          /* No dock, need to add one */
+          dock_columns = gimp_image_window_get_right_docks (window);
+          gimp_dock_columns_prepare_dockbook (dock_columns,
+                                              -1 /*index*/,
+                                              &dockbook);
+        }
+
+      widget = gimp_dockbook_add_from_dialog_factory (GIMP_DOCKBOOK (dockbook),
+                                                        identifiers,
+                                                        -1 /*index*/);
     }
 
-  dockable = gimp_dockbook_add_from_dialog_factory (GIMP_DOCKBOOK (dockbook),
-                                                    identifiers,
-                                                    -1 /*index*/);
 
   g_list_free (windows);
 
-  return dockable;
+  return widget;
 }
 
 GimpObject *

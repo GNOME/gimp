@@ -23,19 +23,24 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
+
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimptoolbox.h"
 
+#include "display/gimpimagewindow.h"
+
+#include "actions.h"
 #include "dialogs-actions.h"
 #include "dialogs-commands.h"
 
 #include "gimp-intl.h"
 
 
-static gboolean dialogs_actions_toolbox_exists (void);
+static gboolean dialogs_actions_toolbox_exists (Gimp *gimp);
 
 
 const GimpStringActionEntry dialogs_dockable_actions[] =
@@ -264,18 +269,34 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
 
 
 static gboolean
-dialogs_actions_toolbox_exists (void)
+dialogs_actions_toolbox_exists (Gimp *gimp)
 {
-  GimpDialogFactory *factory = gimp_dialog_factory_get_singleton ();
-  GtkWidget         *widget  = NULL;
-  GimpSessionInfo   *info    = NULL;
+  GimpDialogFactory *factory       = gimp_dialog_factory_get_singleton ();
+  GimpSessionInfo   *info          = NULL;
+  GList             *windows       = gimp ? gimp_get_image_windows (gimp) : NULL;
+  gboolean           toolbox_found = FALSE;
+  GList             *iter;
 
+  /* First look in session managed windows */
   info = gimp_dialog_factory_find_session_info (factory, "gimp-toolbox-window");
+  toolbox_found = info && gimp_session_info_get_widget (info);
 
-  if (info)
-    widget = gimp_session_info_get_widget (info);
+  /* Then in image windows */
+  if (! toolbox_found)
+    {
+      for (iter = windows; iter; iter = g_list_next (iter))
+        {
+          GimpImageWindow *window = GIMP_IMAGE_WINDOW (windows->data);
+      
+          if (gimp_image_window_has_toolbox (window))
+            {
+              toolbox_found = TRUE;
+              break;
+            }
+        }
+    }
 
-  return widget != NULL;
+  return toolbox_found;
 }
 
 void
@@ -296,10 +317,11 @@ void
 dialogs_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
+  Gimp        *gimp            = action_data_get_gimp (data);
   const gchar *toolbox_label   = NULL;
   const gchar *toolbox_tooltip = NULL;
 
-  if (dialogs_actions_toolbox_exists ())
+  if (dialogs_actions_toolbox_exists (gimp))
     {
       toolbox_label   = _("Toolbox");
       toolbox_tooltip = _("Raise the toolbox");

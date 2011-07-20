@@ -82,6 +82,8 @@ gboolean           gimp_image_window_get_show_statusbar   (GimpImageWindow  *win
 
 gboolean           gimp_image_window_is_iconified         (GimpImageWindow  *window);
 
+gboolean           gimp_image_window_has_toolbox          (GimpImageWindow  *window);
+
 void               gimp_image_window_shrink_wrap          (GimpImageWindow  *window,
                                                            gboolean          grow_only);
 
