@@ -25,6 +25,7 @@ TESTS = \
 	test-session-2-6-compatibility			\
 	test-session-2-8-compatibility-multi-window	\
 	test-session-2-8-compatibility-single-window	\
+	test-single-window-mode				\
 	test-tools					\
 	test-ui						\
 	test-xcf
