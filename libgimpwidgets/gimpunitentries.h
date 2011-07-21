@@ -37,6 +37,13 @@ G_BEGIN_DECLS
 #define GIMP_IS_UNIT_ENTRIES_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNIT_ENTRIES))
 #define GIMP_UNIT_ENTRIES_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNIT_ENTRIES, GimpUnitEntriesClass))
 
+#define GIMP_UNIT_ENTRIES_HEIGHT        "height"
+#define GIMP_UNIT_ENTRIES_WIDTH         "width"
+#define GIMP_UNIT_ENTRIES_OFFSET_X      "offset_x"
+#define GIMP_UNIT_ENTRIES_OFFSET_Y      "offset_y"
+#define GIMP_UNIT_ENTRIES_RESOLUTION_X  "resolution_x"
+#define GIMP_UNIT_ENTRIES_RESOLUTION_Y  "resolution_y"
+
 typedef struct _GimpUnitEntries       GimpUnitEntries;
 typedef struct _GimpUnitEntriesClass  GimpUnitEntriesClass;
 

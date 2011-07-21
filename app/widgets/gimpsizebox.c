@@ -60,9 +60,10 @@ typedef struct _GimpSizeBoxPrivate GimpSizeBoxPrivate;
 struct _GimpSizeBoxPrivate
 {
   GimpSizeEntry   *size_entry;
-  GimpChainButton *size_chain;
+  GimpChainButton *chain_button;
   GtkWidget       *pixel_label;
   GtkWidget       *res_label;
+  GimpUnitEntries *unit_entries;
 };
 
 
@@ -79,8 +80,6 @@ static void   gimp_size_box_get_property      (GObject         *object,
 
 static void   gimp_size_box_update_size       (GimpSizeBox     *box);
 static void   gimp_size_box_update_resolution (GimpSizeBox     *box);
-static void   gimp_size_box_chain_toggled     (GimpChainButton *button,
-                                               GimpSizeBox     *box);
 
 
 G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_BOX)
@@ -173,7 +172,7 @@ gimp_size_box_constructed (GObject *object)
   GimpSizeBox        *box  = GIMP_SIZE_BOX (object);
   GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
   GtkWidget          *vbox;
-  GtkWidget          *entry;
+  GimpUnitEntries    *unit_entries;
   GtkWidget          *hbox;
   GtkWidget          *label;
   GList              *children;
@@ -185,50 +184,30 @@ gimp_size_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  entry = gimp_coordinates_new (box->unit, "%p",
-                                TRUE, TRUE, SB_WIDTH,
-                                GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                TRUE, TRUE,
-                                _("_Width:"),
-                                box->width, box->xresolution,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                                0, box->width,
-                                _("H_eight:"),
-                                box->height, box->yresolution,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                                0, box->height);
+  priv->unit_entries = unit_entries = GIMP_UNIT_ENTRIES (
+        gimp_prop_coordinates_new2 (G_OBJECT (box),
+                                    GIMP_UNIT_ENTRIES_WIDTH, GIMP_UNIT_ENTRIES_HEIGHT,
+                                    _("Width:"), _("Height:"),
+                                    "unit",
+                                    box->xresolution, box->yresolution,
+                                    TRUE));
 
-  priv->size_entry = GIMP_SIZE_ENTRY (entry);
-  priv->size_chain = GIMP_COORDINATES_CHAINBUTTON (GIMP_SIZE_ENTRY (entry));
+  gimp_unit_entries_set_bounds (unit_entries, GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
+  gimp_unit_entries_set_pixels (unit_entries, GIMP_UNIT_ENTRIES_WIDTH, box->width);
+  gimp_unit_entries_set_pixels (unit_entries, GIMP_UNIT_ENTRIES_HEIGHT, box->height);
 
-  /*
-   * let gimp_prop_coordinates_callback know how to interpret the chainbutton
-   */
-  g_object_set_data (G_OBJECT (priv->size_chain),
-                     "constrains-ratio", GINT_TO_POINTER (TRUE));
+  priv->chain_button = GIMP_CHAIN_BUTTON (gimp_unit_entries_get_chain_button (unit_entries));
 
-  gimp_prop_coordinates_connect (G_OBJECT (box),
-                                 "width", "height",
-                                 "unit",
-                                 entry, NULL,
-                                 box->xresolution,
-                                 box->yresolution);
+  gtk_box_pack_start (GTK_BOX (hbox), gimp_unit_entries_get_table (unit_entries), FALSE, FALSE, 0);
 
-  g_signal_connect (priv->size_chain, "toggled",
-                    G_CALLBACK (gimp_size_box_chain_toggled),
-                    box);
-
-  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
-
-  children = gtk_container_get_children (GTK_CONTAINER (entry));
+  children = gtk_container_get_children (GTK_CONTAINER (gimp_unit_entries_get_table (unit_entries)));
   for (list = children; list; list = g_list_next (list))
     if (GTK_IS_LABEL (list->data))
       gtk_size_group_add_widget (box->size_group, list->data);
   g_list_free (children);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_table_attach_defaults (GTK_TABLE (entry), vbox, 1, 3, 2, 3);
+  gtk_table_attach_defaults (GTK_TABLE (gimp_unit_entries_get_table (unit_entries)), vbox, 4, 6, 3, 4);
   gtk_widget_show (vbox);
 
   label = gtk_label_new (NULL);
@@ -247,32 +226,26 @@ gimp_size_box_constructed (GObject *object)
       gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      entry = gimp_coordinates_new (box->resolution_unit, _("pixels/%a"),
-                                    FALSE, FALSE, SB_WIDTH,
-                                    GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-                                    TRUE, FALSE,
-                                    _("_X resolution:"),
-                                    box->xresolution, 1.0,
-                                    1, 1, 1, 10,
-                                    _("_Y resolution:"),
-                                    box->yresolution, 1.0,
-                                    1, 1, 1, 10);
+      unit_entries = GIMP_UNIT_ENTRIES (
+        gimp_prop_coordinates_new2 (G_OBJECT (box),
+                                    "xresolution", "yresolution",
+                                    _("X resolution:"), _("Y resolution:"),
+                                    "resolution-unit",
+                                    1, 1,
+                                    TRUE));   
+                                 
+      gimp_unit_entries_set_mode   (unit_entries, GIMP_UNIT_ENTRY_MODE_RESOLUTION);                           
+      gimp_unit_entries_set_pixels (unit_entries, "xresolution", box->xresolution);
+      gimp_unit_entries_set_pixels (unit_entries, "xresolution", box->yresolution);                            
 
+      gtk_box_pack_start (GTK_BOX (hbox), gimp_unit_entries_get_table (unit_entries), FALSE, FALSE, 0);
+      gtk_widget_show (gimp_unit_entries_get_table (unit_entries));
 
-      gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-      gtk_widget_show (entry);
-
-      children = gtk_container_get_children (GTK_CONTAINER (entry));
+      children = gtk_container_get_children (GTK_CONTAINER (gimp_unit_entries_get_table (unit_entries)));
       for (list = children; list; list = g_list_next (list))
         if (GTK_IS_LABEL (list->data))
           gtk_size_group_add_widget (box->size_group, list->data);
       g_list_free (children);
-
-      gimp_prop_coordinates_connect (G_OBJECT (box),
-                                     "xresolution", "yresolution",
-                                     "resolution-unit",
-                                     entry, NULL,
-                                     1.0, 1.0);
     }
   else
     {
@@ -332,17 +305,19 @@ gimp_size_box_set_property (GObject      *object,
 
     case PROP_XRESOLUTION:
       box->xresolution = g_value_get_double (value);
-      if (priv->size_entry)
-        gimp_size_entry_set_resolution (priv->size_entry, 0,
-                                        box->xresolution, TRUE);
+      if (priv->unit_entries)
+        gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (priv->unit_entries, 
+                                                                     GIMP_UNIT_ENTRIES_WIDTH),
+                                        box->xresolution);
       gimp_size_box_update_resolution (box);
       break;
 
     case PROP_YRESOLUTION:
       box->yresolution = g_value_get_double (value);
-      if (priv->size_entry)
-        gimp_size_entry_set_resolution (priv->size_entry, 1,
-                                        box->yresolution, TRUE);
+      if (priv->unit_entries)
+        gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (priv->unit_entries, 
+                                                                     GIMP_UNIT_ENTRIES_HEIGHT),
+                                        box->xresolution);
       gimp_size_box_update_resolution (box);
       break;
 
@@ -351,8 +326,8 @@ gimp_size_box_set_property (GObject      *object,
       break;
 
     case PROP_KEEP_ASPECT:
-      if (priv->size_chain)
-        gimp_chain_button_set_active (priv->size_chain,
+      if (priv->chain_button)
+        gimp_chain_button_set_active (priv->chain_button,
                                       g_value_get_boolean (value));
       break;
 
@@ -403,7 +378,7 @@ gimp_size_box_get_property (GObject    *object,
 
     case PROP_KEEP_ASPECT:
       g_value_set_boolean (value,
-                           gimp_chain_button_get_active (priv->size_chain));
+                           gimp_chain_button_get_active (priv->chain_button));
       break;
 
     case PROP_EDIT_RESOLUTION:
@@ -436,10 +411,10 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
 {
   GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
 
-  if (priv->size_entry)
+  if (priv->unit_entries)
     {
-      gimp_size_entry_set_refval (priv->size_entry, 0, box->width);
-      gimp_size_entry_set_refval (priv->size_entry, 1, box->height);
+      gimp_unit_entries_set_pixels (priv->unit_entries, GIMP_UNIT_ENTRIES_WIDTH, box->width);
+      gimp_unit_entries_set_pixels (priv->unit_entries, GIMP_UNIT_ENTRIES_HEIGHT, box->height);
     }
 
   if (priv->res_label)
@@ -456,13 +431,4 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
       gtk_label_set_text (GTK_LABEL (priv->res_label), text);
       g_free (text);
     }
-}
-
-static void
-gimp_size_box_chain_toggled (GimpChainButton *button,
-                             GimpSizeBox     *box)
-{
-  g_object_set (box,
-                "keep-aspect", gimp_chain_button_get_active (button),
-                NULL);
 }
