@@ -49,6 +49,7 @@
 #define UNIT_ENTRY_STRING_LENGTH  30
 #define UNIT_ENTRY_ERROR_TIMEOUT  2
 #define UNIT_ENTRY_ERROR_COLOR    "LightSalmon"
+#define UNIT_ENTRY_SIZE_REQUEST   200
 
 G_DEFINE_TYPE (GimpUnitEntry, gimp_unit_entry, GTK_TYPE_SPIN_BUTTON);
 
@@ -85,7 +86,6 @@ gimp_unit_entry_init (GimpUnitEntry *unitEntry)
   unitEntry->timer          = NULL;                            
 
   /* connect signals */
-  /* we don't need all of them... */
   g_signal_connect (&unitEntry->parent_instance, 
                     "output",
                     G_CALLBACK(gimp_unit_entry_output), 
@@ -102,6 +102,8 @@ gimp_unit_entry_init (GimpUnitEntry *unitEntry)
                     "populate-popup",
                     G_CALLBACK(gimp_unit_entry_populate_popup), 
                     NULL);
+
+  gtk_widget_set_size_request (GTK_WIDGET (unitEntry), UNIT_ENTRY_SIZE_REQUEST, -1);
 }
 
 static void
