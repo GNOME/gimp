@@ -177,16 +177,7 @@ GtkWidget     * gimp_prop_size_entry_new          (GObject       *config,
 
 /*  x,y: GParamInt, GParamDouble   unit: GimpParamUnit  */
 
-GtkWidget      * gimp_prop_coordinates_new         (GObject       *config,
-                                                   const gchar   *x_property_name,
-                                                   const gchar   *y_property_name,
-                                                   const gchar   *unit_property_name,
-                                                   const gchar   *unit_format,
-                                                   GimpSizeEntryUpdatePolicy  update_policy,
-                                                   gdouble        xresolution,
-                                                   gdouble        yresolution,
-                                                   gboolean       has_chainbutton);
-GObject       * gimp_prop_coordinates_new2         (GObject       *config,
+GObject       * gimp_prop_coordinates_new         (GObject       *config,
                                                    const gchar   *x_property_name,
                                                    const gchar   *y_property_name,
                                                    const gchar   *x_label_str,
@@ -194,17 +185,9 @@ GObject       * gimp_prop_coordinates_new2         (GObject       *config,
                                                    const gchar   *unit_property_name,
                                                    gdouble        xresolution,
                                                    gdouble        yresolution,
-                                                   gboolean       has_chainbutton);                                                   
-gboolean        gimp_prop_coordinates_connect     (GObject       *config,
-                                                   const gchar   *x_property_name,
-                                                   const gchar   *y_property_name,
-                                                   const gchar   *unit_property_name,
-                                                   GtkWidget     *sizeentry,
-                                                   GtkWidget     *chainbutton,
-                                                   gdouble        xresolution,
-                                                   gdouble        yresolution);
+                                                   gboolean       has_chainbutton); 
 
-gboolean        gimp_prop_coordinates_connect2     (GObject       *config,
+gboolean        gimp_prop_coordinates_connect     (GObject       *config,
                                                    const gchar   *x_property_name,
                                                    const gchar   *y_property_name,
                                                    const gchar   *unit_property_name,

@@ -185,7 +185,7 @@ gimp_size_box_constructed (GObject *object)
   gtk_widget_show (hbox);
 
   priv->unit_entries = unit_entries = GIMP_UNIT_ENTRIES (
-        gimp_prop_coordinates_new2 (G_OBJECT (box),
+        gimp_prop_coordinates_new  (G_OBJECT (box),
                                     GIMP_UNIT_ENTRIES_WIDTH, GIMP_UNIT_ENTRIES_HEIGHT,
                                     _("Width:"), _("Height:"),
                                     "unit",
@@ -227,7 +227,7 @@ gimp_size_box_constructed (GObject *object)
       gtk_widget_show (hbox);
 
       unit_entries = GIMP_UNIT_ENTRIES (
-        gimp_prop_coordinates_new2 (G_OBJECT (box),
+        gimp_prop_coordinates_new  (G_OBJECT (box),
                                     "xresolution", "yresolution",
                                     _("X resolution:"), _("Y resolution:"),
                                     "resolution-unit",

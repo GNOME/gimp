@@ -2172,7 +2172,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   {
     unit_entries = GIMP_UNIT_ENTRIES (
-            gimp_prop_coordinates_new2 (object,
+            gimp_prop_coordinates_new (object,
                                        "monitor-xresolution",
                                        "monitor-yresolution",
                                        _("Horizontal"),

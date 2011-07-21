@@ -2820,29 +2820,18 @@ gimp_prop_size_entry_num_chars (gdouble lower,
 /*  coordinates  */
 /*****************/
 
-static void   gimp_prop_coordinates_callback    (GimpSizeEntry *entry,
-                                                 GObject       *config);
-static void   gimp_prop_coordinates_callback2   (GimpUnitEntries *entries,
+static void   gimp_prop_coordinates_callback    (GimpUnitEntries *entries,
                                                  GimpUnitEntry *e,
-                                                 GObject       *config);              
+                                                 GObject       *config);
 static void   gimp_prop_coordinates_notify_x    (GObject       *config,
                                                  GParamSpec    *param_spec,
-                                                 GimpSizeEntry *entry);
+                                                 GimpUnitEntries *entries);
 static void   gimp_prop_coordinates_notify_y    (GObject       *config,
                                                  GParamSpec    *param_spec,
-                                                 GimpSizeEntry *entry);
-static void   gimp_prop_coordinates_notify_x2    (GObject       *config,
-                                                 GParamSpec    *param_spec,
-                                                 GimpUnitEntries *entries);
-static void   gimp_prop_coordinates_notify_y2    (GObject       *config,
-                                                 GParamSpec    *param_spec,
-                                                 GimpUnitEntries *entries);                                                 
+                                                 GimpUnitEntries *entries); 
 static void   gimp_prop_coordinates_notify_unit (GObject       *config,
                                                  GParamSpec    *param_spec,
-                                                 GimpSizeEntry *entry);
-static void   gimp_prop_coordinates_notify_unit2 (GObject       *config,
-                                                  GParamSpec    *param_spec,
-                                                  GimpUnitEntries *entries);                                                 
+                                                 GimpUnitEntries *entries);                                                 
 
 
 /**
@@ -2850,66 +2839,27 @@ static void   gimp_prop_coordinates_notify_unit2 (GObject       *config,
  * @config:             Object to which property is attached.
  * @x_property_name:    Name of int or double property for X coordinate.
  * @y_property_name:    Name of int or double property for Y coordinate.
+ * @x_label_str:        String displayed in label left to X coordinate
+                        entry. Use NULL if label should not be created.
+ * @y_label_str:        String displayed in label left to Y coordinate
+                        entry. Use NULL if label should not be created.
  * @unit_property_name: Name of unit property.
- * @unit_format:        A printf-like unit-format string as is used with
- *                      gimp_unit_menu_new().
- * @update_policy:      How the automatic pixel <-> real-world-unit
- *                      calculations should be done.
  * @xresolution:        The resolution (in dpi) for the X coordinate.
  * @yresolution:        The resolution (in dpi) for the Y coordinate.
- * @has_chainbutton:    Whether to add a chainbutton to the size entry.
+ * @has_chainbutton:    Whether to add a chainbutton connecting the two
+                        entries.
  *
- * Creates a #GimpSizeEntry to set and display two double or int
+ * Creates a #GimpUnitEntries to set and display two double or int
  * properties, which will usually represent X and Y coordinates, and
  * their associated unit property.
  *
- * Return value:  A new #GimpSizeEntry widget.
+ * Return value:  A new #GimpUnitEntries object.
  *
  * Since GIMP 2.4
  */
-GtkWidget *
-gimp_prop_coordinates_new (GObject                   *config,
-                           const gchar               *x_property_name,
-                           const gchar               *y_property_name,
-                           const gchar               *unit_property_name,
-                           const gchar               *unit_format,
-                           GimpSizeEntryUpdatePolicy  update_policy,
-                           gdouble                    xresolution,
-                           gdouble                    yresolution,
-                           gboolean                   has_chainbutton)
-{
-  GtkWidget *entry;
-  GtkWidget *chainbutton = NULL;
-
-  entry = gimp_size_entry_new (2, GIMP_UNIT_INCH, unit_format,
-                               FALSE, FALSE, TRUE, 10,
-                               update_policy);
-
-  if (has_chainbutton)
-    {
-      chainbutton = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-      gtk_table_attach_defaults (GTK_TABLE (entry), chainbutton, 1, 3, 3, 4);
-      gtk_widget_show (chainbutton);
-    }
-
-  if (! gimp_prop_coordinates_connect (config,
-                                       x_property_name,
-                                       y_property_name,
-                                       unit_property_name,
-                                       entry,
-                                       chainbutton,
-                                       xresolution,
-                                       yresolution))
-    {
-      gtk_widget_destroy (entry);
-      return NULL;
-    }
-
-  return entry;
-}
 
 GObject *
-gimp_prop_coordinates_new2 (GObject                   *config,
+gimp_prop_coordinates_new (GObject                   *config,
                            const gchar               *x_property_name,
                            const gchar               *y_property_name,
                            const gchar               *x_label_str,
@@ -2934,7 +2884,7 @@ gimp_prop_coordinates_new2 (GObject                   *config,
                                                          y_property_name);
     }
 
-  if (! gimp_prop_coordinates_connect2 (config,
+  if (! gimp_prop_coordinates_connect (config,
                                        x_property_name,
                                        y_property_name,
                                        unit_property_name,
@@ -2947,178 +2897,20 @@ gimp_prop_coordinates_new2 (GObject                   *config,
       return NULL;
     }
 
-  gimp_prop_coordinates_callback2 (unit_entries, NULL, config);
+  gimp_prop_coordinates_callback (unit_entries, NULL, config);
 
   return G_OBJECT (unit_entries);
 }
 
-gboolean
-gimp_prop_coordinates_connect (GObject     *config,
-                               const gchar *x_property_name,
-                               const gchar *y_property_name,
-                               const gchar *unit_property_name,
-                               GtkWidget   *entry,
-                               GtkWidget   *chainbutton,
-                               gdouble      xresolution,
-                               gdouble      yresolution)
-{
-  GParamSpec *x_param_spec;
-  GParamSpec *y_param_spec;
-  GParamSpec *unit_param_spec;
-  gdouble     x_value, x_lower, x_upper;
-  gdouble     y_value, y_lower, y_upper;
-  GimpUnit    unit_value;
-  gdouble    *old_x_value;
-  gdouble    *old_y_value;
-  GimpUnit   *old_unit_value;
-  gboolean    chain_checked;
-
-  g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (entry), FALSE);
-  g_return_val_if_fail (GIMP_SIZE_ENTRY (entry)->number_of_fields == 2, FALSE);
-  g_return_val_if_fail (chainbutton == NULL ||
-                        GIMP_IS_CHAIN_BUTTON (chainbutton), FALSE);
-
-  x_param_spec = find_param_spec (config, x_property_name, G_STRFUNC);
-  if (! x_param_spec)
-    return FALSE;
-
-  y_param_spec = find_param_spec (config, y_property_name, G_STRFUNC);
-  if (! y_param_spec)
-    return FALSE;
-
-  if (! get_numeric_values (config, x_param_spec,
-                            &x_value, &x_lower, &x_upper, G_STRFUNC) ||
-      ! get_numeric_values (config, y_param_spec,
-                            &y_value, &y_lower, &y_upper, G_STRFUNC))
-    return FALSE;
-
-  if (unit_property_name)
-    {
-      unit_param_spec = check_param_spec_w (config, unit_property_name,
-                                            GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
-      if (! unit_param_spec)
-        return FALSE;
-
-      g_object_get (config,
-                    unit_property_name, &unit_value,
-                    NULL);
-    }
-  else
-    {
-      unit_param_spec = NULL;
-      unit_value      = GIMP_UNIT_INCH;
-    }
-
-  set_param_spec (NULL,
-                  gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (entry), 0),
-                  x_param_spec);
-  set_param_spec (NULL,
-                  gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (entry), 1),
-                  y_param_spec);
-
-  if (unit_param_spec)
-    set_param_spec (NULL,
-                    GIMP_SIZE_ENTRY (entry)->unitmenu, unit_param_spec);
-
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (entry), unit_value);
-
-  switch (GIMP_SIZE_ENTRY (entry)->update_policy)
-    {
-    case GIMP_SIZE_ENTRY_UPDATE_SIZE:
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
-                                      xresolution, FALSE);
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1,
-                                      yresolution, FALSE);
-      chain_checked = (ABS (x_value - y_value) < 1);
-      break;
-
-    case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
-      chain_checked = (ABS (x_value - y_value) < GIMP_MIN_RESOLUTION);
-      break;
-
-    default:
-      chain_checked = (x_value == y_value);
-      break;
-    }
-
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0,
-                                         x_lower, x_upper);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 1,
-                                         y_lower, y_upper);
-
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, x_value);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, y_value);
-
-  g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec-x",
-                     x_param_spec);
-  g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec-y",
-                     y_param_spec);
-
-  old_x_value  = g_new0 (gdouble, 1);
-  *old_x_value = x_value;
-  g_object_set_data_full (G_OBJECT (entry), "old-x-value",
-                          old_x_value,
-                          (GDestroyNotify) g_free);
-
-  old_y_value  = g_new0 (gdouble, 1);
-  *old_y_value = y_value;
-  g_object_set_data_full (G_OBJECT (entry), "old-y-value",
-                          old_y_value,
-                          (GDestroyNotify) g_free);
-
-  if (chainbutton)
-    {
-      if (chain_checked)
-        gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
-
-      g_object_set_data (G_OBJECT (entry), "chainbutton", chainbutton);
-    }
-
-  g_signal_connect (entry, "value-changed",
-                    G_CALLBACK (gimp_prop_coordinates_callback),
-                    config);
-  g_signal_connect (entry, "refval-changed",
-                    G_CALLBACK (gimp_prop_coordinates_callback),
-                    config);
-
-  connect_notify (config, x_property_name,
-                  G_CALLBACK (gimp_prop_coordinates_notify_x),
-                  entry);
-  connect_notify (config, y_property_name,
-                  G_CALLBACK (gimp_prop_coordinates_notify_y),
-                  entry);
-
-  if (unit_property_name)
-    {
-      g_object_set_data (G_OBJECT (entry), "gimp-config-param-spec-unit",
-                         unit_param_spec);
-
-      old_unit_value  = g_new0 (GimpUnit, 1);
-      *old_unit_value = unit_value;
-      g_object_set_data_full (G_OBJECT (entry), "old-unit-value",
-                              old_unit_value,
-                              (GDestroyNotify) g_free);
-
-      g_signal_connect (entry, "unit-changed",
-                        G_CALLBACK (gimp_prop_coordinates_callback),
-                        config);
-
-      connect_notify (config, unit_property_name,
-                      G_CALLBACK (gimp_prop_coordinates_notify_unit),
-                      entry);
-    }
-
-  return TRUE;
-}
-
-gboolean        gimp_prop_coordinates_connect2    (GObject       *config,
-                                                   const gchar   *x_property_name,
-                                                   const gchar   *y_property_name,
-                                                   const gchar   *unit_property_name,
-                                                   GObject       *unitentries,
-                                                   GtkWidget     *chainbutton,
-                                                   gdouble        xresolution,
-                                                   gdouble        yresolution)
+gboolean        
+gimp_prop_coordinates_connect     (GObject       *config,
+                                   const gchar   *x_property_name,
+                                   const gchar   *y_property_name,
+                                   const gchar   *unit_property_name,
+                                   GObject       *unitentries,
+                                   GtkWidget     *chainbutton,
+                                   gdouble        xresolution,
+                                   gdouble        yresolution)
 {
   GParamSpec          *x_param_spec;
   GParamSpec          *y_param_spec;
@@ -3228,14 +3020,14 @@ gboolean        gimp_prop_coordinates_connect2    (GObject       *config,
     }
 
   g_signal_connect (unit_entries, "changed",
-                    G_CALLBACK (gimp_prop_coordinates_callback2),
+                    G_CALLBACK (gimp_prop_coordinates_callback),
                     config);
 
   connect_notify (config, x_property_name,
-                  G_CALLBACK (gimp_prop_coordinates_notify_x2),
+                  G_CALLBACK (gimp_prop_coordinates_notify_x),
                   unit_entries);
   connect_notify (config, y_property_name,
-                  G_CALLBACK (gimp_prop_coordinates_notify_y2),
+                  G_CALLBACK (gimp_prop_coordinates_notify_y),
                   unit_entries);
 
   if (unit_property_name)
@@ -3250,127 +3042,19 @@ gboolean        gimp_prop_coordinates_connect2    (GObject       *config,
                               (GDestroyNotify) g_free);
 
       g_signal_connect (unit_entries, "changed",
-                        G_CALLBACK (gimp_prop_coordinates_callback2),
+                        G_CALLBACK (gimp_prop_coordinates_callback),
                         config);
 
       connect_notify (config, unit_property_name,
-                      G_CALLBACK (gimp_prop_coordinates_notify_unit2),
+                      G_CALLBACK (gimp_prop_coordinates_notify_unit),
                       unit_entries);
     }
 
   return TRUE;
-}                                                   
+} 
 
 static void
-gimp_prop_coordinates_callback (GimpSizeEntry *entry,
-                                GObject       *config)
-{
-  GParamSpec *x_param_spec;
-  GParamSpec *y_param_spec;
-  GParamSpec *unit_param_spec;
-  gdouble     x_value;
-  gdouble     y_value;
-  GimpUnit    unit_value;
-  gdouble    *old_x_value;
-  gdouble    *old_y_value;
-  GimpUnit   *old_unit_value;
-  gboolean    backwards;
-
-  x_param_spec = g_object_get_data (G_OBJECT (entry),
-                                    "gimp-config-param-spec-x");
-  y_param_spec = g_object_get_data (G_OBJECT (entry),
-                                    "gimp-config-param-spec-y");
-
-  if (! x_param_spec || ! y_param_spec)
-    return;
-
-  unit_param_spec = g_object_get_data (G_OBJECT (entry),
-                                       "gimp-config-param-spec-unit");
-
-  x_value    = gimp_size_entry_get_refval (entry, 0);
-  y_value    = gimp_size_entry_get_refval (entry, 1);
-  unit_value = gimp_size_entry_get_unit (entry);
-
-  old_x_value    = g_object_get_data (G_OBJECT (entry), "old-x-value");
-  old_y_value    = g_object_get_data (G_OBJECT (entry), "old-y-value");
-  old_unit_value = g_object_get_data (G_OBJECT (entry), "old-unit-value");
-
-  if (! old_x_value || ! old_y_value || (unit_param_spec && ! old_unit_value))
-    return;
-
-  /*
-   * FIXME: if the entry was created using gimp_coordinates_new, then
-   * the chain button is handled automatically and the following block
-   * of code is unnecessary (and, in fact, redundant).
-   */
-  if (x_value != y_value)
-    {
-      GtkWidget *chainbutton;
-
-      chainbutton = g_object_get_data (G_OBJECT (entry), "chainbutton");
-
-      if (chainbutton &&
-          gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton)) &&
-          ! g_object_get_data (G_OBJECT (chainbutton), "constrains-ratio"))
-        {
-          if (x_value != *old_x_value)
-            y_value = x_value;
-          else if (y_value != *old_y_value)
-            x_value = y_value;
-        }
-    }
-
-  backwards = (*old_x_value == x_value);
-
-  if (*old_x_value == x_value &&
-      *old_y_value == y_value &&
-      (old_unit_value == NULL || *old_unit_value == unit_value))
-    return;
-
-  *old_x_value = x_value;
-  *old_y_value = y_value;
-
-  if (old_unit_value)
-    *old_unit_value = unit_value;
-
-  if (unit_param_spec)
-    g_object_set (config,
-                  unit_param_spec->name, unit_value,
-                  NULL);
-
-  if (G_IS_PARAM_SPEC_INT (x_param_spec) &&
-      G_IS_PARAM_SPEC_INT (y_param_spec))
-    {
-      if (backwards)
-        g_object_set (config,
-                      y_param_spec->name, ROUND (y_value),
-                      x_param_spec->name, ROUND (x_value),
-                      NULL);
-      else
-        g_object_set (config,
-                      x_param_spec->name, ROUND (x_value),
-                      y_param_spec->name, ROUND (y_value),
-                      NULL);
-
-    }
-  else if (G_IS_PARAM_SPEC_DOUBLE (x_param_spec) &&
-           G_IS_PARAM_SPEC_DOUBLE (y_param_spec))
-    {
-      if (backwards)
-        g_object_set (config,
-                      y_param_spec->name, y_value,
-                      x_param_spec->name, x_value,
-                      NULL);
-      else
-        g_object_set (config,
-                      x_param_spec->name, x_value,
-                      y_param_spec->name, y_value,
-                      NULL);
-    }
-}
-
-static void
-gimp_prop_coordinates_callback2 (GimpUnitEntries *entries,
+gimp_prop_coordinates_callback  (GimpUnitEntries *entries,
                                  GimpUnitEntry   *e,
                                  GObject         *config)
 {
@@ -3483,126 +3167,7 @@ gimp_prop_coordinates_callback2 (GimpUnitEntries *entries,
 }
 
 static void
-gimp_prop_coordinates_notify_x (GObject       *config,
-                                GParamSpec    *param_spec,
-                                GimpSizeEntry *entry)
-{
-  gdouble value;
-
-  if (G_IS_PARAM_SPEC_INT (param_spec))
-    {
-      gint int_value;
-
-      g_object_get (config,
-                    param_spec->name, &int_value,
-                    NULL);
-
-      value = int_value;
-    }
-  else
-    {
-      g_object_get (config,
-                    param_spec->name, &value,
-                    NULL);
-    }
-
-  if (value != gimp_size_entry_get_refval (entry, 0))
-    {
-      gdouble *old_x_value = g_object_get_data (G_OBJECT (entry),
-                                                "old-x-value");
-
-      g_signal_handlers_block_by_func (entry,
-                                       gimp_prop_coordinates_callback,
-                                       config);
-
-      gimp_size_entry_set_refval (entry, 0, value);
-
-      if (old_x_value)
-        *old_x_value = value;
-
-      g_signal_emit_by_name (entry, "value-changed",
-                             gimp_size_entry_get_value (entry, 0));
-
-      g_signal_handlers_unblock_by_func (entry,
-                                         gimp_prop_coordinates_callback,
-                                         config);
-    }
-}
-
-static void
-gimp_prop_coordinates_notify_y (GObject       *config,
-                                GParamSpec    *param_spec,
-                                GimpSizeEntry *entry)
-{
-  gdouble value;
-
-  if (G_IS_PARAM_SPEC_INT (param_spec))
-    {
-      gint int_value;
-
-      g_object_get (config,
-                    param_spec->name, &int_value,
-                    NULL);
-
-      value = int_value;
-    }
-  else
-    {
-      g_object_get (config,
-                    param_spec->name, &value,
-                    NULL);
-    }
-
-  if (value != gimp_size_entry_get_refval (entry, 1))
-    {
-      gdouble *old_y_value = g_object_get_data (G_OBJECT (entry),
-                                                "old-y-value");
-
-      g_signal_handlers_block_by_func (entry,
-                                       gimp_prop_coordinates_callback,
-                                       config);
-
-      gimp_size_entry_set_refval (entry, 1, value);
-
-      if (old_y_value)
-        *old_y_value = value;
-
-      g_signal_emit_by_name (entry, "value-changed",
-                             gimp_size_entry_get_value (entry, 1));
-
-      g_signal_handlers_unblock_by_func (entry,
-                                         gimp_prop_coordinates_callback,
-                                         config);
-    }
-}
-
-static void
-gimp_prop_coordinates_notify_unit (GObject       *config,
-                                   GParamSpec    *param_spec,
-                                   GimpSizeEntry *entry)
-{
-  GimpUnit value;
-
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  if (value != gimp_size_entry_get_unit (entry))
-    {
-      g_signal_handlers_block_by_func (entry,
-                                       gimp_prop_coordinates_callback,
-                                       config);
-
-      gimp_size_entry_set_unit (entry, value);
-
-      g_signal_handlers_unblock_by_func (entry,
-                                         gimp_prop_coordinates_callback,
-                                         config);
-    }
-}
-
-static void
-gimp_prop_coordinates_notify_unit2 (GObject             *config,
+gimp_prop_coordinates_notify_unit  (GObject             *config,
                                     GParamSpec          *param_spec,
                                     GimpUnitEntries     *entries)
 {
@@ -3620,19 +3185,19 @@ gimp_prop_coordinates_notify_unit2 (GObject             *config,
   if (value != gimp_unit_entry_get_unit (entry))
     {
       g_signal_handlers_block_by_func (entries,
-                                       gimp_prop_coordinates_callback2,
+                                       gimp_prop_coordinates_callback,
                                        config);
 
       gimp_unit_entry_set_unit (entry, value);
 
       g_signal_handlers_unblock_by_func (entries,
-                                         gimp_prop_coordinates_callback2,
+                                         gimp_prop_coordinates_callback,
                                          config);
     }
 }
 
 static void
-gimp_prop_coordinates_notify_x2 (GObject           *config,
+gimp_prop_coordinates_notify_x  (GObject           *config,
                                  GParamSpec        *param_spec,
                                  GimpUnitEntries   *entries)
 {
@@ -3666,7 +3231,7 @@ gimp_prop_coordinates_notify_x2 (GObject           *config,
                                                 "old-x-value");
 
       g_signal_handlers_block_by_func (entries,
-                                       gimp_prop_coordinates_callback2,
+                                       gimp_prop_coordinates_callback,
                                        config);
 
       gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
@@ -3675,15 +3240,15 @@ gimp_prop_coordinates_notify_x2 (GObject           *config,
         *old_x_value = value;
 
       g_signal_handlers_unblock_by_func (entries,
-                                         gimp_prop_coordinates_callback2,
+                                         gimp_prop_coordinates_callback,
                                          config);
     }
 }
 
 static void
-gimp_prop_coordinates_notify_y2 (GObject           *config,
-                                 GParamSpec        *param_spec,
-                                 GimpUnitEntries   *entries)
+gimp_prop_coordinates_notify_y (GObject           *config,
+                                GParamSpec        *param_spec,
+                                GimpUnitEntries   *entries)
 {
   gdouble        value;
   GimpUnitEntry *entry;
@@ -3715,7 +3280,7 @@ gimp_prop_coordinates_notify_y2 (GObject           *config,
                                                 "old-y-value");
 
       g_signal_handlers_block_by_func (entries,
-                                       gimp_prop_coordinates_callback2,
+                                       gimp_prop_coordinates_callback,
                                        config);
 
       gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
@@ -3724,7 +3289,7 @@ gimp_prop_coordinates_notify_y2 (GObject           *config,
         *old_y_value = value;
 
       g_signal_handlers_unblock_by_func (entries,
-                                         gimp_prop_coordinates_callback2,
+                                         gimp_prop_coordinates_callback,
                                          config);
     }
 }

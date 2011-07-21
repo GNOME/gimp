@@ -190,7 +190,7 @@ gimp_template_editor_constructed (GObject *object)
                                         "height",
                                         _("Height:"));
 
-  gimp_prop_coordinates_connect2 (G_OBJECT (template),
+  gimp_prop_coordinates_connect (G_OBJECT (template),
                                  "width", "height", "unit",
                                  G_OBJECT (private->unit_entries), NULL,
                                  gimp_template_get_resolution_x (template),
@@ -304,7 +304,7 @@ gimp_template_editor_constructed (GObject *object)
   chainbutton = gimp_unit_entries_add_chain_button (private->resolution_entries,
                                                         "xres", "yres");
 
-  gimp_prop_coordinates_connect2 (G_OBJECT (template),
+  gimp_prop_coordinates_connect (G_OBJECT (template),
                                  "xresolution", "yresolution",
                                  "resolution-unit",
                                  G_OBJECT (private->resolution_entries), chainbutton,

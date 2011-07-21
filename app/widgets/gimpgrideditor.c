@@ -179,7 +179,7 @@ gimp_grid_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   entries = editor->spacing_entries = GIMP_UNIT_ENTRIES (
-              gimp_prop_coordinates_new2 (G_OBJECT (editor->grid),
+              gimp_prop_coordinates_new (G_OBJECT (editor->grid),
                                          "xspacing",
                                          "yspacing",
                                          _("Width"),
@@ -202,7 +202,7 @@ gimp_grid_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   entries = editor->offset_entries = GIMP_UNIT_ENTRIES (
-              gimp_prop_coordinates_new2 (G_OBJECT (editor->grid),
+              gimp_prop_coordinates_new (G_OBJECT (editor->grid),
                                          "xoffset",
                                          "yoffset",
                                          _("Width"),
