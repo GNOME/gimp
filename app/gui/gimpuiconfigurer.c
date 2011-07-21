@@ -298,7 +298,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
 
       if (GIMP_IS_TOOLBOX (dock))
         {
-          contains_toolbox = FALSE;
+          contains_toolbox = TRUE;
           break;
         }
     }
