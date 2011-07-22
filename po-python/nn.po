@@ -1,15 +1,16 @@
-# Norwegian translation of gimp-po-python.
-# Copyright (C) 2000 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 2000.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: achtung 1.1.25\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2009-04-17 09:06+0000\n"
-"PO-Revision-Date: 2009-05-16 23:03+0100\n"
-"Last-Translator: Kolbjørn Stuestøl <stuestoel@online.no>\n"
-"Language-Team: Norwegian <no@li.org>\n"
+"Project-Id-Version: GIMP 2.7\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-05-29 05:47+0000\n"
+"PO-Revision-Date: 2011-05-31 22:36+0100\n"
+"Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
+"Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -56,45 +57,45 @@ msgstr "Ugyldig inndata for «%s»"
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu fargeutval"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:110
 msgid "Saving as colored XHTML"
 msgstr "Lagrar som farga XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:187
 msgid "Save as colored XHTML"
 msgstr "Lagra som farga XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
 msgid "Colored XHTML"
 msgstr "Farga XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Character _source"
 msgstr "Teikn_kjelde"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Source code"
 msgstr "Kjeldekode"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Text file"
 msgstr "Tekstfil"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Entry box"
 msgstr "Innskrivingsboks"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_File to read or characters to use"
 msgstr "_Fil som skal lesast eller teikn som skal brukast"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "Fo_nt size in pixels"
 msgstr "_Skriftstorleik i pikslar"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:206
 msgid "_Write a separate CSS file"
-msgstr "_Skriv ei eigen CSS-fil"
+msgstr "Lag ei eigen _CSS-fil"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:57
 msgid "Add a layer of fog"
@@ -102,7 +103,7 @@ msgstr "Legg til eit tåkelag"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Fog..."
-msgstr "_Tåke..."
+msgstr "_Tåke …"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "_Layer name"
@@ -130,7 +131,7 @@ msgstr "Forskyv fargane i ein palett"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
-msgstr "_Forskyv paletten..."
+msgstr "_Forskyv paletten …"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
@@ -149,7 +150,7 @@ msgstr "Sorter fargane i paletten"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
 msgid "_Sort Palette..."
-msgstr "_Sorter paletten..."
+msgstr "_Sorter paletten …"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "Color _model"
@@ -199,53 +200,53 @@ msgstr "Opprett ein fargeovergang med fargar frå paletten"
 msgid "Palette to _Gradient"
 msgstr "Palett til _fargeovergang"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:60
 msgid "Slice"
 msgstr "Del opp"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:418
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Del biletet lags hjelpelinjene, opprett nødvendige småbilete og HTML tabell"
+msgstr "Del biletet lags hjelpelinjene, lag småbilete og HTML tabell"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:429
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
-msgstr "_Del opp..."
+msgstr "_Del opp …"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Stig for HTML-eksport"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Filnamn for eksport"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Prefiks for filnamnet"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Biletformat"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Særskild biletmappe"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Mappe for bileteksport"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Avstand mellom tabellelementa"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript for «onmouseover» og «clicked»"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Hopp over animasjon for tabellen"
 
@@ -255,7 +256,7 @@ msgstr "Python konsoll"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
-msgstr "Bla gjennom..."
+msgstr "_Bla gjennom …"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:139
 msgid "Python Procedure Browser"
@@ -264,7 +265,7 @@ msgstr "Python Procedure Browser"
 #: ../plug-ins/pygimp/plug-ins/python-console.py:168
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kunne ikkje opna «%s» for skriving: %s"
+msgstr "Kan ikkje opna «%s» for skriving: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
@@ -285,7 +286,7 @@ msgstr "_Konsollen"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Legg slagskygge til laget og eventuelt også fasettkant"
+msgstr "Legg slagskygge og eventuelt slagskygge til laget"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
@@ -311,7 +312,17 @@ msgstr "_X-lengde for slagskyggen"
 msgid "Drop shadow _Y displacement"
 msgstr "_Y-lengde for slagskyggen"
 
-#, fuzzy
-#~ msgid "Gimp-Python Console"
-#~ msgstr "Python konsoll"
+#~ msgid "Create a new brush with characters from a text sequence"
+#~ msgstr "Lag ein ny pensel med teikna frå ein tekstsekvens"
 
+#~ msgid "New Brush from _Text..."
+#~ msgstr "Ny pensel frå _tekst …"
+
+#~ msgid "Font"
+#~ msgstr "Skrifttypar"
+
+#~ msgid "Pixel Size"
+#~ msgstr "Pikselstorleik"
+
+#~ msgid "Text"
+#~ msgstr "Tekst"
