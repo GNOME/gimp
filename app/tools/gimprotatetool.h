@@ -39,7 +39,7 @@ struct _GimpRotateTool
 
   GtkAdjustment     *angle_adj;
   GtkWidget         *angle_spin_button;
-  GtkWidget         *sizeentry;
+  GObject           *unit_entries;
 };
 
 struct _GimpRotateToolClass

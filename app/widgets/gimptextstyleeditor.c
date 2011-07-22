@@ -206,7 +206,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                            _("Change font of selected text"), NULL);
 
   editor->unit_entry = gimp_unit_entry_new ();
-  gimp_unit_entry_set_unit (editor->unit_entry, GIMP_UNIT_PIXEL);
+  gimp_unit_entry_set_unit (GIMP_UNIT_ENTRY (editor->unit_entry), GIMP_UNIT_PIXEL);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->unit_entry,
                       FALSE, FALSE, 0);
   gtk_widget_show (editor->unit_entry);
