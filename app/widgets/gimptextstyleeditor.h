@@ -50,7 +50,7 @@ struct _GimpTextStyleEditor
   GtkWidget      *lower_hbox;
 
   GtkWidget      *font_entry;
-  GtkWidget      *size_entry;
+  GtkWidget      *unit_entry;
 
   GtkWidget      *color_button;
 
