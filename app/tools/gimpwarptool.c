@@ -500,6 +500,8 @@ gimp_warp_tool_create_image_map (GimpWarpTool *wt,
                                       NULL,
                                       NULL);
 
+  g_object_set (wt->image_map, "gegl-caching", TRUE, NULL);
+
   g_signal_connect (wt->image_map, "flush",
                     G_CALLBACK (gimp_warp_tool_image_map_flush),
                     wt);
