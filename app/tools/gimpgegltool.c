@@ -253,6 +253,9 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:path",
     "gegl:text",
     "gegl:layer",
+    "gegl:contrast-curve",
+    "gegl:fill-path",
+    "gegl:vector-stroke",
     "gimp-",
     "gimp:"
   };
