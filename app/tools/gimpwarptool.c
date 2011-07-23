@@ -108,7 +108,7 @@ G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
 #define parent_class gimp_warp_tool_parent_class
 
 #define STROKE_PERIOD 100
-#define PREVIEW_PERIOD 1000
+#define PREVIEW_PERIOD 200
 
 void
 gimp_warp_tool_register (GimpToolRegisterCallback  callback,
@@ -510,32 +510,23 @@ gimp_warp_tool_create_image_map (GimpWarpTool *wt,
 static void
 gimp_warp_tool_image_map_update (GimpWarpTool *wt)
 {
-  GimpTool         *tool  = GIMP_TOOL (wt);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-  GimpItem         *item  = GIMP_ITEM (tool->drawable);
-  gint              x, y;
-  gint              w, h;
-  gint              off_x, off_y;
-  GeglRectangle     visible;
+  GimpTool         *tool    = GIMP_TOOL (wt);
+  GimpWarpOptions  *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
+  GimpCoords        coords, result;
+  GeglRectangle     region;
 
-  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+  coords.x = wt->cursor_x;
+  coords.y = wt->cursor_y;
 
-  gimp_item_get_offset (item, &off_x, &off_y);
+  gimp_display_shell_untransform_coords (shell, &coords, &result);
 
-  gimp_rectangle_intersect (x, y, w, h,
-                            off_x,
-                            off_y,
-                            gimp_item_get_width  (item),
-                            gimp_item_get_height (item),
-                            &visible.x,
-                            &visible.y,
-                            &visible.width,
-                            &visible.height);
+  region.x = result.x - options->effect_size / 2.0;
+  region.y = result.y - options->effect_size / 2.0;
+  region.width = options->effect_size;
+  region.height = options->effect_size;
 
-  visible.x -= off_x;
-  visible.y -= off_y;
-
-  gimp_image_map_apply (wt->image_map, &visible);
+  gimp_image_map_apply_region (wt->image_map, &region);
 }
 
 static void
