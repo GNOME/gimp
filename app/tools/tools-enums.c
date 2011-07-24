@@ -262,35 +262,6 @@ gimp_transform_preview_type_get_type (void)
 }
 
 GType
-gimp_transform_grid_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_TRANSFORM_GRID_TYPE_N_LINES, "GIMP_TRANSFORM_GRID_TYPE_N_LINES", "n-lines" },
-    { GIMP_TRANSFORM_GRID_TYPE_SPACING, "GIMP_TRANSFORM_GRID_TYPE_SPACING", "spacing" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_TRANSFORM_GRID_TYPE_N_LINES, NC_("transform-grid-type", "Number of grid lines"), NULL },
-    { GIMP_TRANSFORM_GRID_TYPE_SPACING, NC_("transform-grid-type", "Grid line spacing"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpTransformGridType", values);
-      gimp_type_set_translation_context (type, "transform-grid-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_vector_mode_get_type (void)
 {
   static const GEnumValue values[] =

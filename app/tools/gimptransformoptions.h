@@ -44,7 +44,7 @@ struct _GimpTransformOptions
   gboolean                  clip;
   GimpTransformPreviewType  preview_type;
   gdouble                   preview_opacity;
-  GimpTransformGridType     grid_type;
+  GimpGuidesType            grid_type;
   gint                      grid_size;
   gboolean                  constrain;
 };

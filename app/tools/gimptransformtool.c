@@ -1350,8 +1350,8 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
 
   switch (options->grid_type)
     {
-    case GIMP_TRANSFORM_GRID_TYPE_N_LINES:
-    case GIMP_TRANSFORM_GRID_TYPE_SPACING:
+    case GIMP_GUIDES_N_LINES:
+    case GIMP_GUIDES_SPACING:
       {
         gint     i, gci;
         gdouble *coords;
@@ -1360,7 +1360,7 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
         width  = MAX (1, tr_tool->x2 - tr_tool->x1);
         height = MAX (1, tr_tool->y2 - tr_tool->y1);
 
-        if (options->grid_type == GIMP_TRANSFORM_GRID_TYPE_N_LINES)
+        if (options->grid_type == GIMP_GUIDES_N_LINES)
           {
             if (width <= height)
               {
@@ -1373,7 +1373,7 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
                 tr_tool->ngx = tr_tool->ngy * MAX (1, width / height);
               }
           }
-        else /* GIMP_TRANSFORM_GRID_TYPE_SPACING */
+        else /* GIMP_GUIDES_SPACING */
           {
             gint grid_size = MAX (2, options->grid_size);
 

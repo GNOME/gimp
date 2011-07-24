@@ -120,17 +120,6 @@ typedef enum
 } GimpTransformPreviewType;
 
 
-#define GIMP_TYPE_TRANSFORM_GRID_TYPE (gimp_transform_grid_type_get_type ())
-
-GType gimp_transform_grid_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_TRANSFORM_GRID_TYPE_N_LINES,  /*< desc="Number of grid lines" >*/
-  GIMP_TRANSFORM_GRID_TYPE_SPACING   /*< desc="Grid line spacing"    >*/
-} GimpTransformGridType;
-
-
 #define GIMP_TYPE_VECTOR_MODE (gimp_vector_mode_get_type ())
 
 GType gimp_vector_mode_get_type (void) G_GNUC_CONST;

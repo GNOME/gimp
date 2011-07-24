@@ -129,8 +129,8 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRID_TYPE,
                                  "grid-type",
                                   N_("How to define grid settings"),
-                                 GIMP_TYPE_TRANSFORM_GRID_TYPE,
-                                 GIMP_TRANSFORM_GRID_TYPE_N_LINES,
+                                 GIMP_TYPE_GUIDES_TYPE,
+                                 GIMP_GUIDES_N_LINES,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_GRID_SIZE,
                                 "grid-size",
@@ -334,7 +334,9 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gimp_transform_options_preview_opacity_notify (options, NULL, scale);
 
   /*  the grid type menu  */
-  combo = gimp_prop_enum_combo_box_new (config, "grid-type", 0, 0);
+  combo = gimp_prop_enum_combo_box_new (config, "grid-type",
+                                        GIMP_GUIDES_N_LINES,
+                                        GIMP_GUIDES_SPACING);
   gtk_box_pack_start (GTK_BOX (preview_box), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
