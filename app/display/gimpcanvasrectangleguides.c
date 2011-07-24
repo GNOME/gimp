@@ -43,7 +43,8 @@ enum
   PROP_Y,
   PROP_WIDTH,
   PROP_HEIGHT,
-  PROP_TYPE
+  PROP_TYPE,
+  PROP_N_GUIDES
 };
 
 
@@ -56,6 +57,7 @@ struct _GimpCanvasRectangleGuidesPrivate
   gdouble        width;
   gdouble        height;
   GimpGuidesType type;
+  gint           n_guides;
 };
 
 #define GET_PRIVATE(rectangle) \
@@ -129,6 +131,11 @@ gimp_canvas_rectangle_guides_class_init (GimpCanvasRectangleGuidesClass *klass)
                                                       GIMP_GUIDES_NONE,
                                                       GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_N_GUIDES,
+                                   g_param_spec_int ("n-guides", NULL, NULL,
+                                                     1, 128, 4,
+                                                     GIMP_PARAM_READWRITE));
+
   g_type_class_add_private (klass, sizeof (GimpCanvasRectangleGuidesPrivate));
 }
 
@@ -162,6 +169,9 @@ gimp_canvas_rectangle_guides_set_property (GObject      *object,
     case PROP_TYPE:
       private->type = g_value_get_enum (value);
       break;
+    case PROP_N_GUIDES:
+      private->n_guides = g_value_get_int (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -193,6 +203,9 @@ gimp_canvas_rectangle_guides_get_property (GObject    *object,
       break;
     case PROP_TYPE:
       g_value_set_enum (value, private->type);
+      break;
+    case PROP_N_GUIDES:
+      g_value_set_int (value, private->n_guides);
       break;
 
     default:
@@ -265,6 +278,7 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem   *item,
   GimpCanvasRectangleGuidesPrivate *private = GET_PRIVATE (item);
   gdouble                           x1, y1;
   gdouble                           x2, y2;
+  gint                              i;
 
   gimp_canvas_rectangle_guides_transform (item, shell, &x1, &y1, &x2, &y2);
 
@@ -287,15 +301,11 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem   *item,
       break;
 
     case GIMP_GUIDES_FIFTHS:
-      draw_hline (cr, x1, x2, y1 +     (y2 - y1) / 5);
-      draw_hline (cr, x1, x2, y1 + 2 * (y2 - y1) / 5);
-      draw_hline (cr, x1, x2, y1 + 3 * (y2 - y1) / 5);
-      draw_hline (cr, x1, x2, y1 + 4 * (y2 - y1) / 5);
-
-      draw_vline (cr, y1, y2, x1 +     (x2 - x1) / 5);
-      draw_vline (cr, y1, y2, x1 + 2 * (x2 - x1) / 5);
-      draw_vline (cr, y1, y2, x1 + 3 * (x2 - x1) / 5);
-      draw_vline (cr, y1, y2, x1 + 4 * (x2 - x1) / 5);
+      for (i = 0; i < 5; i++)
+        {
+          draw_hline (cr, x1, x2, y1 + i * (y2 - y1) / 5);
+          draw_vline (cr, y1, y2, x1 + i * (x2 - x1) / 5);
+        }
       break;
 
     case GIMP_GUIDES_GOLDEN:
@@ -333,6 +343,17 @@ gimp_canvas_rectangle_guides_draw (GimpCanvasItem   *item,
         cairo_line_to (cr, x2 - square_side, y2 - square_side);
       }
       break;
+
+    case GIMP_GUIDES_N_LINES:
+      for (i = 0; i < private->n_guides; i++)
+        {
+          draw_hline (cr, x1, x2, y1 + i * (y2 - y1) / private->n_guides);
+          draw_vline (cr, y1, y2, x1 + i * (x2 - x1) / private->n_guides);
+        }
+      break;
+
+    case GIMP_GUIDES_SPACING:
+      break;
     }
 
   _gimp_canvas_item_stroke (item, cr);
@@ -369,17 +390,19 @@ gimp_canvas_rectangle_guides_new (GimpDisplayShell *shell,
                                   gdouble           y,
                                   gdouble           width,
                                   gdouble           height,
-                                  GimpGuidesType    type)
+                                  GimpGuidesType    type,
+                                  gint              n_guides)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   return g_object_new (GIMP_TYPE_CANVAS_RECTANGLE_GUIDES,
-                       "shell",  shell,
-                       "x",      x,
-                       "y",      y,
-                       "width",  width,
-                       "height", height,
-                       "type",   type,
+                       "shell",    shell,
+                       "x",        x,
+                       "y",        y,
+                       "width",    width,
+                       "height",   height,
+                       "type",     type,
+                       "n-guides", n_guides,
                        NULL);
 }
 
@@ -389,18 +412,20 @@ gimp_canvas_rectangle_guides_set (GimpCanvasItem *rectangle,
                                   gdouble         y,
                                   gdouble         width,
                                   gdouble         height,
-                                  GimpGuidesType  type)
+                                  GimpGuidesType  type,
+                                  gint            n_guides)
 {
   g_return_if_fail (GIMP_IS_CANVAS_RECTANGLE_GUIDES (rectangle));
 
   gimp_canvas_item_begin_change (rectangle);
 
   g_object_set (rectangle,
-                "x",      x,
-                "y",      y,
-                "width",  width,
-                "height", height,
-                "type",   type,
+                "x",        x,
+                "y",        y,
+                "width",    width,
+                "height",   height,
+                "type",     type,
+                "n-guides", n_guides,
                 NULL);
 
   gimp_canvas_item_end_change (rectangle);

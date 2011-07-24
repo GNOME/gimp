@@ -54,14 +54,16 @@ GimpCanvasItem * gimp_canvas_rectangle_guides_new      (GimpDisplayShell *shell,
                                                         gdouble           y,
                                                         gdouble           width,
                                                         gdouble           height,
-                                                        GimpGuidesType    type);
+                                                        GimpGuidesType    type,
+                                                        gint              n_guides);
 
 void             gimp_canvas_rectangle_guides_set      (GimpCanvasItem   *rectangle,
                                                         gdouble           x,
                                                         gdouble           y,
                                                         gdouble           width,
                                                         gdouble           height,
-                                                        GimpGuidesType    type);
+                                                        GimpGuidesType    type,
+                                                        gint              n_guides);
 
 
 #endif /* __GIMP_CANVAS_RECTANGLE_GUIDES_H__ */

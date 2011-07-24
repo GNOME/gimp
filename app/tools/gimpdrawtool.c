@@ -615,7 +615,7 @@ gimp_draw_tool_add_rectangle_guides (GimpDrawTool   *draw_tool,
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_rectangle_guides_new (gimp_display_get_shell (draw_tool->display),
-                                           x, y, width, height, type);
+                                           x, y, width, height, type, 4);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
