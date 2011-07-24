@@ -36,6 +36,9 @@
 #include "core/gimp-utils.h"
 
 
+#define SQRT5 2.236067977
+
+
 enum
 {
   PROP_0,
@@ -311,6 +314,28 @@ draw_line (cairo_t          *cr,
 }
 
 static void
+draw_hline (cairo_t          *cr,
+            GimpDisplayShell *shell,
+            GimpMatrix3      *transform,
+            gdouble           x1,
+            gdouble           x2,
+            gdouble           y)
+{
+  draw_line (cr, shell, transform, x1, y, x2, y);
+}
+
+static void
+draw_vline (cairo_t          *cr,
+            GimpDisplayShell *shell,
+            GimpMatrix3      *transform,
+            gdouble           y1,
+            gdouble           y2,
+            gdouble           x)
+{
+  draw_line (cr, shell, transform, x, y1, x, y2);
+}
+
+static void
 gimp_canvas_transform_guides_draw (GimpCanvasItem   *item,
                                    GimpDisplayShell *shell,
                                    cairo_t          *cr)
@@ -321,6 +346,7 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem   *item,
   gdouble                           x3, y3;
   gdouble                           x4, y4;
   gboolean                          convex;
+  gint                              i;
 
   convex = gimp_canvas_transform_guides_transform (item, shell,
                                                    &x1, &y1,
@@ -360,23 +386,87 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem   *item,
       break;
 
     case GIMP_GUIDES_CENTER_LINES:
-      /* TODO */
+      draw_hline (cr, shell, &private->transform,
+                  private->x1, private->x2, (private->y1 + private->y2) / 2);
+      draw_vline (cr, shell, &private->transform,
+                  private->y1, private->y2, (private->x1 + private->x2) / 2);
       break;
 
     case GIMP_GUIDES_THIRDS:
-      /* TODO */
+      draw_hline (cr, shell, &private->transform,
+                  private->x1, private->x2, (2 * private->y1 + private->y2) / 3);
+      draw_hline (cr, shell, &private->transform,
+                  private->x1, private->x2, (private->y1 + 2 * private->y2) / 3);
+
+      draw_vline (cr, shell, &private->transform,
+                  private->y1, private->y2, (2 * private->x1 + private->x2) / 3);
+      draw_vline (cr, shell, &private->transform,
+                  private->y1, private->y2, (private->x1 + 2 * private->x2) / 3);
       break;
 
     case GIMP_GUIDES_FIFTHS:
-      /* TODO */
+      for (i = 0; i < 5; i++)
+        {
+          draw_hline (cr, shell, &private->transform,
+                      private->x1, private->x2,
+                      private->y1 + i * (private->y2 - private->y1) / 5);
+          draw_vline (cr, shell, &private->transform,
+                      private->y1, private->y2,
+                      private->x1 + i * (private->x2 - private->x1) / 5);
+        }
       break;
 
     case GIMP_GUIDES_GOLDEN:
-      /* TODO */
+      draw_hline (cr, shell, &private->transform,
+                  private->x1, private->x2,
+                  (2 * private->y1 + (1 + SQRT5) * private->y2) / (3 + SQRT5));
+      draw_hline (cr, shell, &private->transform,
+                  private->x1, private->x2,
+                  ((1 + SQRT5) * private->y1 + 2 * private->y2) / (3 + SQRT5));
+
+      draw_vline (cr, shell, &private->transform,
+                  private->y1, private->y2,
+                  (2 * private->x1 + (1 + SQRT5) * private->x2) / (3 + SQRT5));
+      draw_vline (cr, shell, &private->transform,
+                  private->y1, private->y2,
+                  ((1 + SQRT5) * private->x1 + 2 * private->x2) / (3 + SQRT5));
       break;
 
+    /* This code implements the method of diagonals discovered by
+     * Edwin Westhoff - see http://www.diagonalmethod.info/
+     */
     case GIMP_GUIDES_DIAGONALS:
-      /* TODO */
+      {
+        /* the side of the largest square that can be
+         * fitted in whole into the rectangle (x1, y1), (x2, y2)
+         */
+        const gdouble square_side = MIN (private->x2 - private->x1,
+                                         private->y2 - private->y1);
+
+        /* diagonal from the top-left edge */
+        draw_line (cr, shell, &private->transform,
+                   private->x1, private->y1,
+                   private->x1 + square_side,
+                   private->y1 + square_side);
+
+        /* diagonal from the top-right edge */
+        draw_line (cr, shell, &private->transform,
+                   private->x2, private->y1,
+                   private->x2 - square_side,
+                   private->y1 + square_side);
+
+        /* diagonal from the bottom-left edge */
+        draw_line (cr, shell, &private->transform,
+                   private->x1, private->y2,
+                   private->x1 + square_side,
+                   private->y2 - square_side);
+
+        /* diagonal from the bottom-right edge */
+        draw_line (cr, shell, &private->transform,
+                   private->x2, private->y2,
+                   private->x2 - square_side,
+                   private->y2 - square_side);
+      }
       break;
 
     case GIMP_GUIDES_N_LINES:
@@ -384,7 +474,6 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem   *item,
       {
         gint width, height;
         gint ngx, ngy;
-        gint i;
 
         width  = MAX (1, private->x2 - private->x1);
         height = MAX (1, private->y2 - private->y1);

@@ -335,7 +335,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
   /*  the grid type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "grid-type",
-                                        GIMP_GUIDES_N_LINES,
+                                        GIMP_GUIDES_CENTER_LINES,
                                         GIMP_GUIDES_SPACING);
   gtk_box_pack_start (GTK_BOX (preview_box), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
