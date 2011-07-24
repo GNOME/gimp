@@ -2112,7 +2112,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Show pointer for paint _tools"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "cursor-mode", 0, 0,
                             _("Pointer _mode:"),
@@ -2120,6 +2120,9 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_enum_combo_box_add (object, "cursor-format", 0, 0,
                             _("Pointer re_ndering:"),
                             GTK_TABLE (table), 1, size_group);
+  prefs_enum_combo_box_add (object, "cursor-handedness", 0, 0,
+                            _("Pointer _handedness:"),
+                            GTK_TABLE (table), 2, NULL);
 
   g_object_unref (size_group);
   size_group = NULL;

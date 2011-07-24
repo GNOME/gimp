@@ -102,4 +102,15 @@ typedef enum
 } GimpCursorFormat;
 
 
+#define GIMP_TYPE_HANDEDNESS (gimp_handedness_get_type ())
+
+GType gimp_handedness_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_HANDEDNESS_LEFT, /*< desc="Left-handed"  >*/
+  GIMP_HANDEDNESS_RIGHT /*< desc="Right-handed" >*/
+} GimpHandedness;
+
+
 #endif /* __CONFIG_ENUMS_H__ */

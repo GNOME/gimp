@@ -51,6 +51,9 @@ N_("Sets the pixel format to use for mouse pointers.")
 #define CURSOR_MODE_BLURB \
 N_("Sets the type of mouse pointers to use.")
 
+#define CURSOR_HANDEDNESS_BLURB \
+N_("Sets the handedness for cursor positioning.")
+
 #define CURSOR_UPDATING_BLURB \
 N_("Context-dependent mouse pointers are helpful.  They are enabled by " \
    "default.  However, they require overhead that you may want to do without.")

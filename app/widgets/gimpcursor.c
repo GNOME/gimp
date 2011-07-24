@@ -247,6 +247,7 @@ get_cursor_pixbuf (GimpCursor *cursor,
 GdkCursor *
 gimp_cursor_new (GdkDisplay         *display,
                  GimpCursorFormat    cursor_format,
+                 GimpHandedness      cursor_handedness,
                  GimpCursorType      cursor_type,
                  GimpToolCursorType  tool_cursor,
                  GimpCursorModifier  modifier)
@@ -291,6 +292,38 @@ gimp_cursor_new (GdkDisplay         *display,
       modifier    == GIMP_CURSOR_MODIFIER_MOVE)
     {
       modifier = GIMP_CURSOR_MODIFIER_NONE;
+    }
+
+  /*  when cursor is "corner" or "side" sides must be exchanged for
+   *  left-hand-mice-flipping of pixbuf below
+   */
+
+  if (cursor_handedness == GIMP_HANDEDNESS_LEFT)
+    {
+      if (cursor_type == GIMP_CURSOR_CORNER_TOP_LEFT)
+        {
+          cursor_type = GIMP_CURSOR_CORNER_TOP_RIGHT;
+        }
+      else if (cursor_type == GIMP_CURSOR_CORNER_TOP_RIGHT)
+        {
+          cursor_type = GIMP_CURSOR_CORNER_TOP_LEFT;
+        }
+      else if (cursor_type == GIMP_CURSOR_CORNER_BOTTOM_LEFT)
+        {
+          cursor_type = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
+        }
+      else if (cursor_type == GIMP_CURSOR_CORNER_BOTTOM_RIGHT)
+        {
+          cursor_type = GIMP_CURSOR_CORNER_BOTTOM_LEFT;
+        }
+      else if (cursor_type == GIMP_CURSOR_SIDE_LEFT)
+        {
+          cursor_type = GIMP_CURSOR_SIDE_RIGHT;
+        }
+      else if (cursor_type == GIMP_CURSOR_SIDE_RIGHT)
+        {
+          cursor_type = GIMP_CURSOR_SIDE_LEFT;
+        }
     }
 
   /*  prepare the main cursor  */
@@ -345,9 +378,25 @@ gimp_cursor_new (GdkDisplay         *display,
                               GDK_INTERP_NEAREST, bw ? 255 : 200);
     }
 
-  cursor = gdk_cursor_new_from_pixbuf (display, pixbuf,
-                                       bmcursor->x_hot,
-                                       bmcursor->y_hot);
+  /*  flip the cursor if mouse setting is left-handed  */
+
+  if (cursor_handedness == GIMP_HANDEDNESS_LEFT)
+    {
+      GdkPixbuf *flipped = gdk_pixbuf_flip (pixbuf, TRUE);
+      gint       width   = gdk_pixbuf_get_width (flipped);
+
+      cursor = gdk_cursor_new_from_pixbuf (display, flipped,
+                                           (width - 1) - bmcursor->x_hot,
+                                           bmcursor->y_hot);
+      g_object_unref (flipped);
+    }
+  else
+    {
+      cursor = gdk_cursor_new_from_pixbuf (display, pixbuf,
+                                           bmcursor->x_hot,
+                                           bmcursor->y_hot);
+    }
+
   g_object_unref (pixbuf);
 
   return cursor;
@@ -356,6 +405,7 @@ gimp_cursor_new (GdkDisplay         *display,
 void
 gimp_cursor_set (GtkWidget          *widget,
                  GimpCursorFormat    cursor_format,
+                 GimpHandedness      cursor_handedness,
                  GimpCursorType      cursor_type,
                  GimpToolCursorType  tool_cursor,
                  GimpCursorModifier  modifier)
@@ -367,6 +417,7 @@ gimp_cursor_set (GtkWidget          *widget,
 
   cursor = gimp_cursor_new (gtk_widget_get_display (widget),
                             cursor_format,
+                            cursor_handedness,
                             cursor_type,
                             tool_cursor,
                             modifier);

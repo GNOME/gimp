@@ -93,6 +93,7 @@ gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
 
       gimp_cursor_set (shell->canvas,
                        shell->cursor_format,
+                       shell->cursor_handedness,
                        cursor_type,
                        GIMP_TOOL_CURSOR_NONE,
                        GIMP_CURSOR_MODIFIER_NONE);
@@ -221,6 +222,7 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
                                     gboolean            always_install)
 {
   GimpCursorFormat cursor_format;
+  GimpHandedness   cursor_handedness;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -266,20 +268,24 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
         }
     }
 
-  cursor_format = GIMP_GUI_CONFIG (shell->display->config)->cursor_format;
+  cursor_format     = GIMP_GUI_CONFIG (shell->display->config)->cursor_format;
+  cursor_handedness = GIMP_GUI_CONFIG (shell->display->config)->cursor_handedness;
 
-  if (shell->cursor_format   != cursor_format ||
-      shell->current_cursor  != cursor_type   ||
-      shell->tool_cursor     != tool_cursor   ||
-      shell->cursor_modifier != modifier      ||
+  if (shell->cursor_format     != cursor_format     ||
+      shell->cursor_handedness != cursor_handedness ||
+      shell->current_cursor    != cursor_type       ||
+      shell->tool_cursor       != tool_cursor       ||
+      shell->cursor_modifier   != modifier          ||
       always_install)
     {
-      shell->cursor_format   = cursor_format;
-      shell->current_cursor  = cursor_type;
-      shell->tool_cursor     = tool_cursor;
-      shell->cursor_modifier = modifier;
+      shell->cursor_format     = cursor_format;
+      shell->cursor_handedness = cursor_handedness;
+      shell->current_cursor    = cursor_type;
+      shell->tool_cursor       = tool_cursor;
+      shell->cursor_modifier   = modifier;
 
-      gimp_cursor_set (shell->canvas, cursor_format,
+      gimp_cursor_set (shell->canvas,
+                       cursor_format, cursor_handedness,
                        cursor_type, tool_cursor, modifier);
     }
 }

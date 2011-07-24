@@ -221,6 +221,35 @@ gimp_cursor_format_get_type (void)
   return type;
 }
 
+GType
+gimp_handedness_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_HANDEDNESS_LEFT, "GIMP_HANDEDNESS_LEFT", "left" },
+    { GIMP_HANDEDNESS_RIGHT, "GIMP_HANDEDNESS_RIGHT", "right" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_HANDEDNESS_LEFT, NC_("handedness", "Left-handed"), NULL },
+    { GIMP_HANDEDNESS_RIGHT, NC_("handedness", "Right-handed"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpHandedness", values);
+      gimp_type_set_translation_context (type, "handedness");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

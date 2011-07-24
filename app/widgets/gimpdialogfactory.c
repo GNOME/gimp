@@ -1503,6 +1503,7 @@ gimp_dialog_factory_set_busy (GimpDialogFactory *factory)
 
               cursor = gimp_cursor_new (display,
                                         GIMP_CURSOR_FORMAT_BITMAP,
+                                        GIMP_HANDEDNESS_RIGHT,
                                         GDK_WATCH,
                                         GIMP_TOOL_CURSOR_NONE,
                                         GIMP_CURSOR_MODIFIER_NONE);
