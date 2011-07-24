@@ -63,6 +63,8 @@ libappdisplay_a_sources = \
 	gimpcanvassamplepoint.h			\
 	gimpcanvastextcursor.c			\
 	gimpcanvastextcursor.h			\
+	gimpcanvastransformguides.c		\
+	gimpcanvastransformguides.h		\
 	gimpcanvastransformpreview.c		\
 	gimpcanvastransformpreview.h		\
 	gimpcursorview.c			\

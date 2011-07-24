@@ -87,14 +87,6 @@ struct _GimpTransformTool
   gboolean        use_center;      /*  uses the center handle            */
   gboolean        use_mid_handles; /*  use handles at midpoints of edges */
 
-  gint            ngx, ngy;        /*  number of grid lines in original
-                                    *  x and y directions
-                                    */
-  gdouble        *grid_coords;     /*  x and y coordinates of the grid
-                                    *  endpoints (a total of (ngx+ngy)*2
-                                    *  coordinate pairs)
-                                    */
-
   GimpCanvasItem *handles[TRANSFORM_HANDLE_CENTER + 1];
 
   const gchar    *undo_desc;
