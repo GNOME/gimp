@@ -50,6 +50,8 @@ gimp_guides_type_get_type (void)
     { GIMP_GUIDES_FIFTHS, "GIMP_GUIDES_FIFTHS", "fifths" },
     { GIMP_GUIDES_GOLDEN, "GIMP_GUIDES_GOLDEN", "golden" },
     { GIMP_GUIDES_DIAGONALS, "GIMP_GUIDES_DIAGONALS", "diagonals" },
+    { GIMP_GUIDES_N_LINES, "GIMP_GUIDES_N_LINES", "n-lines" },
+    { GIMP_GUIDES_SPACING, "GIMP_GUIDES_SPACING", "spacing" },
     { 0, NULL, NULL }
   };
 
@@ -61,6 +63,8 @@ gimp_guides_type_get_type (void)
     { GIMP_GUIDES_FIFTHS, NC_("guides-type", "Rule of fifths"), NULL },
     { GIMP_GUIDES_GOLDEN, NC_("guides-type", "Golden sections"), NULL },
     { GIMP_GUIDES_DIAGONALS, NC_("guides-type", "Diagonal lines"), NULL },
+    { GIMP_GUIDES_N_LINES, NC_("guides-type", "Number of lines"), NULL },
+    { GIMP_GUIDES_SPACING, NC_("guides-type", "Line spacing"), NULL },
     { 0, NULL, NULL }
   };
 

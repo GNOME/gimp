@@ -1030,7 +1030,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  Guide  */
-  combo = gimp_prop_enum_combo_box_new (config, "guide", 0, 0);
+  combo = gimp_prop_enum_combo_box_new (config, "guide",
+                                        GIMP_GUIDES_NONE,
+                                        GIMP_GUIDES_DIAGONALS);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 

@@ -42,7 +42,9 @@ typedef enum
   GIMP_GUIDES_THIRDS,        /*< desc="Rule of thirds"  >*/
   GIMP_GUIDES_FIFTHS,        /*< desc="Rule of fifths"  >*/
   GIMP_GUIDES_GOLDEN,        /*< desc="Golden sections" >*/
-  GIMP_GUIDES_DIAGONALS      /*< desc="Diagonal lines"  >*/
+  GIMP_GUIDES_DIAGONALS,     /*< desc="Diagonal lines"  >*/
+  GIMP_GUIDES_N_LINES,       /*< desc="Number of lines" >*/
+  GIMP_GUIDES_SPACING        /*< desc="Line spacing"    >*/
 } GimpGuidesType;
 
 
