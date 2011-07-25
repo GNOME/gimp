@@ -157,7 +157,7 @@ gimp_gegl_tool_initialize (GimpTool     *tool,
   if (gimp_drawable_is_indexed (drawable))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("GEGL operations do not operate on indexed layers."));
+                           _("GEGL operations do not operate on indexed layers."));
       return FALSE;
     }
 
@@ -256,6 +256,8 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:contrast-curve",
     "gegl:fill-path",
     "gegl:vector-stroke",
+    "gegl:lens-correct",
+    "gegl:hstack",
     "gimp-",
     "gimp:"
   };
@@ -377,7 +379,7 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (label);
 
   store = gtk_list_store_new (N_COLUMNS,
-			      G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+                              G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 
   opclasses = gimp_get_geglopclasses ();
 
@@ -389,9 +391,9 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
 
       if (g_str_has_prefix (opclass->name, "gegl:"))
         {
-	  label    = opclass->name + strlen ("gegl:");
-	  stock_id = GIMP_STOCK_GEGL;
-	}
+          label    = opclass->name + strlen ("gegl:");
+          stock_id = GIMP_STOCK_GEGL;
+        }
       else
         {
           label    = opclass->name;
@@ -400,8 +402,8 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
 
       gtk_list_store_insert_with_values (store, NULL, -1,
                                          COLUMN_NAME,     opclass->name,
-					 COLUMN_LABEL,    label,
-					 COLUMN_STOCK_ID, stock_id,
+                                         COLUMN_LABEL,    label,
+                                         COLUMN_STOCK_ID, stock_id,
                                          -1);
     }
 
