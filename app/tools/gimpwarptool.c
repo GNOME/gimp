@@ -510,21 +510,15 @@ gimp_warp_tool_create_image_map (GimpWarpTool *wt,
 static void
 gimp_warp_tool_image_map_update (GimpWarpTool *wt)
 {
-  GimpTool         *tool    = GIMP_TOOL (wt);
   GimpWarpOptions  *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
-  GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
-  GimpCoords        coords, result;
   GeglRectangle     region;
 
-  coords.x = wt->cursor_x;
-  coords.y = wt->cursor_y;
-
-  gimp_display_shell_untransform_coords (shell, &coords, &result);
-
-  region.x = result.x - options->effect_size / 2.0;
-  region.y = result.y - options->effect_size / 2.0;
+  region.x = wt->cursor_x - options->effect_size / 2.0;
+  region.y = wt->cursor_y - options->effect_size / 2.0;
   region.width = options->effect_size;
   region.height = options->effect_size;
+
+  printf("rect: (%d,%d), %dx%d\n", region.x, region.y, region.width, region.height);
 
   gimp_image_map_apply_region (wt->image_map, &region);
 }
@@ -563,6 +557,7 @@ gimp_warp_tool_add_op (GimpWarpTool *wt)
   gegl_node_connect_to (last_op, "output", new_op, "input");
   gegl_node_connect_to (new_op, "output", wt->render_node, "aux");
 }
+
 static void
 gimp_warp_tool_undo (GimpWarpTool *wt)
 {
@@ -573,7 +568,7 @@ gimp_warp_tool_undo (GimpWarpTool *wt)
   to_delete = gegl_node_get_producer (wt->render_node, "aux", NULL);
   type = gegl_node_get_operation(to_delete);
 
-  if (strcmp (type, "gimp:warp"))
+  if (strcmp (type, "gegl:warp"))
     return;
 
   previous = gegl_node_get_producer (to_delete, "input", NULL);
