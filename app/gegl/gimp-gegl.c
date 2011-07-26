@@ -87,7 +87,7 @@ gimp_gegl_init (Gimp *gimp)
   g_object_set (gegl_config (),
                 "tile-width",  TILE_WIDTH,
                 "tile-height", TILE_HEIGHT,
-                "cache-size",  config->tile_cache_size,
+                "cache-size", (gint) MIN (config->tile_cache_size, G_MAXINT),
                 NULL);
 
   g_signal_connect (config, "notify::tile-cache-size",
@@ -140,6 +140,6 @@ static void
 gimp_gegl_notify_tile_cache_size (GimpBaseConfig *config)
 {
   g_object_set (gegl_config (),
-                "cache-size", config->tile_cache_size,
+                "cache-size", (gint) MIN (config->tile_cache_size, G_MAXINT),
                 NULL);
 }
