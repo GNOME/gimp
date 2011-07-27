@@ -351,16 +351,16 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
                            gint       enum_value,
                            gboolean   below)
 {
-  GtkWidget *vbox;
+  GtkWidget *box;
 
   g_return_if_fail (GTK_IS_FRAME (frame));
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  vbox = gtk_bin_get_child (GTK_BIN (frame));
+  box = gtk_bin_get_child (GTK_BIN (frame));
 
-  g_return_if_fail (GTK_IS_VBOX (vbox));
+  g_return_if_fail (GTK_IS_BOX (box));
 
-  gimp_enum_radio_box_add (GTK_BOX (vbox), widget, enum_value, below);
+  gimp_enum_radio_box_add (GTK_BOX (box), widget, enum_value, below);
 }
 
 GtkIconSize

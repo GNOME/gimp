@@ -152,13 +152,13 @@ about_dialog_create (GimpContext *context)
       container = gtk_dialog_get_content_area (GTK_DIALOG (widget));
       children = gtk_container_get_children (GTK_CONTAINER (container));
 
-      if (GTK_IS_VBOX (children->data))
+      if (GTK_IS_BOX (children->data))
         {
           about_dialog_add_animation (children->data, dialog);
           about_dialog_add_message (children->data);
         }
       else
-        g_warning ("%s: ooops, no vbox in this container?", G_STRLOC);
+        g_warning ("%s: ooops, no box in this container?", G_STRLOC);
 
       g_list_free (children);
     }
