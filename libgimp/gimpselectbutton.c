@@ -44,7 +44,7 @@
 static void   gimp_select_button_dispose (GObject *object);
 
 
-G_DEFINE_TYPE (GimpSelectButton, gimp_select_button, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GimpSelectButton, gimp_select_button, GTK_TYPE_BOX)
 
 static void
 gimp_select_button_class_init (GimpSelectButtonClass *klass)
@@ -57,6 +57,9 @@ gimp_select_button_class_init (GimpSelectButtonClass *klass)
 static void
 gimp_select_button_init (GimpSelectButton *select_button)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (select_button),
+                                  GTK_ORIENTATION_HORIZONTAL);
+
   select_button->temp_callback = NULL;
 }
 

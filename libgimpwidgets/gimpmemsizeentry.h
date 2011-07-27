@@ -41,23 +41,23 @@ typedef struct _GimpMemsizeEntryClass  GimpMemsizeEntryClass;
 
 struct _GimpMemsizeEntry
 {
-  GtkHBox            parent_instance;
+  GtkBox         parent_instance;
 
   /*< private >*/
-  guint64            value;
-  guint64            lower;
-  guint64            upper;
+  guint64        value;
+  guint64        lower;
+  guint64        upper;
 
-  guint              shift;
+  guint          shift;
 
-  GtkAdjustment     *adjustment;
-  GtkWidget         *spinbutton;
-  GtkWidget         *menu;
+  GtkAdjustment *adjustment;
+  GtkWidget     *spinbutton;
+  GtkWidget     *menu;
 };
 
 struct _GimpMemsizeEntryClass
 {
-  GtkHBoxClass       parent_class;
+  GtkBoxClass  parent_class;
 
   void (* value_changed)  (GimpMemsizeEntry *entry);
 

@@ -55,7 +55,7 @@ enum
 };
 
 
-G_DEFINE_TYPE (GimpColorSelector, gimp_color_selector, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpColorSelector, gimp_color_selector, GTK_TYPE_BOX)
 
 #define parent_class gimp_color_selector_parent_class
 
@@ -106,6 +106,9 @@ gimp_color_selector_init (GimpColorSelector *selector)
   selector->toggles_visible   = TRUE;
   selector->toggles_sensitive = TRUE;
   selector->show_alpha        = TRUE;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (selector),
+                                  GTK_ORIENTATION_VERTICAL);
 
   gimp_rgba_set (&selector->rgb, 0.0, 0.0, 0.0, 1.0);
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);

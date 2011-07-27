@@ -35,14 +35,14 @@
  **/
 
 
-typedef GtkHBoxClass  GimpHintBoxClass;
+typedef GtkBoxClass  GimpHintBoxClass;
 
 typedef struct
 {
-  GtkHBox    parent_instance;
+  GtkBox    parent_instance;
 
-  gchar     *stock_id;
-  gchar     *hint;
+  gchar    *stock_id;
+  gchar    *hint;
 } GimpHintBox;
 
 #define GIMP_HINT_BOX(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HINT_BOX, GimpHintBox))
@@ -68,7 +68,7 @@ static void   gimp_hint_box_get_property (GObject      *object,
                                           GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpHintBox, gimp_hint_box, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GimpHintBox, gimp_hint_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_hint_box_parent_class
 
@@ -98,6 +98,9 @@ gimp_hint_box_class_init (GimpHintBoxClass *klass)
 static void
 gimp_hint_box_init (GimpHintBox *box)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_HORIZONTAL);
+
   box->stock_id = NULL;
   box->hint     = NULL;
 }

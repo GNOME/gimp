@@ -113,7 +113,7 @@ static void   gimp_color_selection_update            (GimpColorSelection *select
                                                       UpdateType          update);
 
 
-G_DEFINE_TYPE (GimpColorSelection, gimp_color_selection, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpColorSelection, gimp_color_selection, GTK_TYPE_BOX)
 
 #define parent_class gimp_color_selection_parent_class
 
@@ -160,6 +160,9 @@ gimp_color_selection_init (GimpColorSelection *selection)
   GtkSizeGroup *old_group;
 
   selection->show_alpha = TRUE;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (selection),
+                                  GTK_ORIENTATION_VERTICAL);
 
   gimp_rgba_set (&selection->rgb, 0.0, 0.0, 0.0, 1.0);
   gimp_rgb_to_hsv (&selection->rgb, &selection->hsv);

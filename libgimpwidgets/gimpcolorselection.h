@@ -43,7 +43,7 @@ typedef struct _GimpColorSelectionClass GimpColorSelectionClass;
 
 struct _GimpColorSelection
 {
-  GtkVBox                   parent_instance;
+  GtkBox                    parent_instance;
 
   gboolean                  show_alpha;
 
@@ -63,7 +63,7 @@ struct _GimpColorSelection
 
 struct _GimpColorSelectionClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   void (* color_changed) (GimpColorSelection *selection);
 

@@ -78,7 +78,7 @@ static void   gimp_file_entry_browse_clicked  (GtkWidget     *widget,
 static void   gimp_file_entry_check_filename  (GimpFileEntry *entry);
 
 
-G_DEFINE_TYPE (GimpFileEntry, gimp_file_entry, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GimpFileEntry, gimp_file_entry, GTK_TYPE_BOX)
 
 #define parent_class gimp_file_entry_parent_class
 
@@ -118,6 +118,9 @@ gimp_file_entry_init (GimpFileEntry *entry)
   entry->file_dialog = NULL;
   entry->check_valid = FALSE;
   entry->file_exists = NULL;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (entry),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
   gtk_box_set_spacing (GTK_BOX (entry), 4);
   gtk_box_set_homogeneous (GTK_BOX (entry), FALSE);

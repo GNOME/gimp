@@ -89,7 +89,7 @@ static void   gimp_path_editor_writable_toggled   (GtkCellRendererToggle *toggle
                                                    GimpPathEditor      *editor);
 
 
-G_DEFINE_TYPE (GimpPathEditor, gimp_path_editor, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpPathEditor, gimp_path_editor, GTK_TYPE_BOX)
 
 #define parent_class gimp_path_editor_parent_class
 
@@ -148,6 +148,9 @@ gimp_path_editor_init (GimpPathEditor *editor)
   editor->file_entry = NULL;
   editor->sel_path   = NULL;
   editor->num_items  = 0;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_VERTICAL);
 
   editor->upper_hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (editor), editor->upper_hbox, FALSE, TRUE, 0);

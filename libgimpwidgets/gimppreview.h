@@ -43,7 +43,7 @@ typedef struct _GimpPreviewClass  GimpPreviewClass;
 
 struct _GimpPreview
 {
-  GtkVBox       parent_instance;
+  GtkBox        parent_instance;
 
   gboolean      update_preview;
 
@@ -65,7 +65,7 @@ struct _GimpPreview
 
 struct _GimpPreviewClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   /* virtual methods */
   void   (* draw)        (GimpPreview     *preview);

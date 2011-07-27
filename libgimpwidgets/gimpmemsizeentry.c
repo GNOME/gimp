@@ -58,7 +58,7 @@ static void  gimp_memsize_entry_unit_callback (GtkWidget        *widget,
                                                GimpMemsizeEntry *entry);
 
 
-G_DEFINE_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GTK_TYPE_BOX)
 
 #define parent_class gimp_memsize_entry_parent_class
 
@@ -87,6 +87,9 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 static void
 gimp_memsize_entry_init (GimpMemsizeEntry *entry)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (entry),
+                                  GTK_ORIENTATION_HORIZONTAL);
+
   gtk_box_set_spacing (GTK_BOX (entry), 4);
 
   entry->value      = 0;

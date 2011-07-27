@@ -40,14 +40,14 @@ typedef struct _GimpPageSelectorClass  GimpPageSelectorClass;
 
 struct _GimpPageSelector
 {
-  GtkVBox   parent_instance;
+  GtkBox    parent_instance;
 
   gpointer  priv;
 };
 
 struct _GimpPageSelectorClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   void (* selection_changed) (GimpPageSelector *selector);
   void (* activate)          (GimpPageSelector *selector);

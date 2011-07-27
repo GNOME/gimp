@@ -45,7 +45,7 @@ typedef struct _GimpFileEntryClass  GimpFileEntryClass;
 
 struct _GimpFileEntry
 {
-  GtkHBox    parent_instance;
+  GtkBox     parent_instance;
 
   GtkWidget *file_exists;
   GtkWidget *entry;
@@ -60,7 +60,7 @@ struct _GimpFileEntry
 
 struct _GimpFileEntryClass
 {
-  GtkHBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   void (* filename_changed) (GimpFileEntry *entry);
 

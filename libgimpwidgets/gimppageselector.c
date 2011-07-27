@@ -127,7 +127,7 @@ static GdkPixbuf * gimp_page_selector_add_frame    (GtkWidget        *widget,
                                                     GdkPixbuf        *pixbuf);
 
 
-G_DEFINE_TYPE (GimpPageSelector, gimp_page_selector, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpPageSelector, gimp_page_selector, GTK_TYPE_BOX)
 
 #define parent_class gimp_page_selector_parent_class
 
@@ -234,6 +234,9 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   priv->n_pages = 0;
   priv->target  = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (selector),
+                                  GTK_ORIENTATION_VERTICAL);
 
   gtk_box_set_spacing (GTK_BOX (selector), 12);
 
