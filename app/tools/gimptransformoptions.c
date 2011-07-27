@@ -111,7 +111,7 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLIP,
                                  "clip",
-                                 N_("How to clip..."),
+                                 N_("How to clip"),
                                  GIMP_TYPE_TRANSFORM_RESIZE,
                                  GIMP_TRANSFORM_RESIZE_ADJUST,
                                  GIMP_PARAM_STATIC_STRINGS);
