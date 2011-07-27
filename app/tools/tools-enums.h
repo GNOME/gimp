@@ -107,19 +107,6 @@ typedef enum
 } GimpTransformType;
 
 
-#define GIMP_TYPE_TRANSFORM_PREVIEW_TYPE (gimp_transform_preview_type_get_type ())
-
-GType gimp_transform_preview_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_TRANSFORM_PREVIEW_TYPE_OUTLINE,     /*< desc="Outline"      >*/
-  GIMP_TRANSFORM_PREVIEW_TYPE_GRID,        /*< desc="Grid"         >*/
-  GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE,       /*< desc="Image"        >*/
-  GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID   /*< desc="Image + Grid" >*/
-} GimpTransformPreviewType;
-
-
 #define GIMP_TYPE_VECTOR_MODE (gimp_vector_mode_get_type ())
 
 GType gimp_vector_mode_get_type (void) G_GNUC_CONST;

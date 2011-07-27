@@ -42,7 +42,7 @@ struct _GimpTransformOptions
   GimpInterpolationType     interpolation;
   gint                      recursion_level;
   GimpTransformResize       clip;
-  GimpTransformPreviewType  preview_type;
+  gboolean                  show_preview;
   gdouble                   preview_opacity;
   GimpGuidesType            grid_type;
   gint                      grid_size;
