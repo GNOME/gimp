@@ -118,7 +118,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC,
-                             "<Image>/Filters/Light and Shadow/Glass");
+                             "<Image>/Filters/Distorts");
 }
 
 static void
