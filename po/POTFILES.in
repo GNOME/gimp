@@ -498,6 +498,3 @@ app/xcf/xcf.c
 data/tags/gimp-tags-default.xml.in
 
 desktop/gimp.desktop.in.in
-
-tools/gimp-remote.c
-tools/gimp-remote-x11.c
