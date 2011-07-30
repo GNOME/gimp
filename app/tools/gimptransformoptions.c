@@ -119,7 +119,7 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PREVIEW_OPACITY,
                                    "preview-opacity",
-                                   N_("Preview opacity"),
+                                   N_("Opacity of the preview image"),
                                    0.0, 1.0, 1.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRID_TYPE,
@@ -264,10 +264,9 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget   *box;
   GtkWidget   *label;
   GtkWidget   *frame;
-  GtkWidget   *button;
   GtkWidget   *combo;
   GtkWidget   *scale;
-  GtkWidget   *preview_box;
+  GtkWidget   *grid_box;
   const gchar *constrain = NULL;
 
   hbox = gtk_hbox_new (FALSE, 2);
@@ -306,42 +305,36 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   /*  the preview frame  */
-  frame = gimp_frame_new (_("Preview:"));
+  scale = gimp_prop_opacity_spin_scale_new (config, "preview-opacity",
+                                            _("Image opacity"));
+  frame = gimp_prop_expanding_frame_new (config, "show-preview",
+                                         _("Show image preview"),
+                                         scale, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  preview_box = gtk_vbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (frame), preview_box);
-  gtk_widget_show (preview_box);
+  /*  the guides frame  */
+  frame = gimp_frame_new (_("Guides"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  button = gimp_prop_check_button_new (config, "show-preview",
-                                       _("Show image"));
-  gtk_box_pack_start (GTK_BOX (preview_box), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  grid_box = gtk_vbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), grid_box);
+  gtk_widget_show (grid_box);
 
-  /*  the preview opacity scale  */
-  scale = gimp_prop_opacity_spin_scale_new (config, "preview-opacity",
-                                            _("Image opacity"));
-  gtk_box_pack_start (GTK_BOX (preview_box), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
-
-  g_object_bind_property (config, "show-preview",
-                          scale,  "sensitive",
-                          G_BINDING_SYNC_CREATE);
-
-  /*  the grid type menu  */
+  /*  the guides type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "grid-type", 0, 0);
-  gtk_box_pack_start (GTK_BOX (preview_box), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (grid_box), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   /*  the grid density scale  */
   scale = gimp_prop_spin_scale_new (config, "grid-size", NULL,
                                     1.8, 8.0, 0);
-  gtk_box_pack_start (GTK_BOX (preview_box), scale, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (grid_box), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   g_object_bind_property_full (config, "grid-type",
-                               scale,  "sensitive",
+                               scale,  "visible",
                                G_BINDING_SYNC_CREATE,
                                gimp_transform_options_sync_grid,
                                NULL,
