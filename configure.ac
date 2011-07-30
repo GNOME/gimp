@@ -947,16 +947,6 @@ if test "x$enable_mp" != "xno"; then
 fi
 
 
-###################################################
-# gimp-remote is obsolete, but can still be enabled
-###################################################
-
-AC_ARG_ENABLE(gimp-remote,
-	      [  --enable-gimp-remote    build gimp-remote utility (default=no)],
-	      enable_gimp_remote=yes,
-	      enable_gimp_remote="no (not enabled)")
-
-
 ################################
 # Some plug-ins are X11 specific
 ################################
@@ -1013,20 +1003,8 @@ AC_SUBST(SCREENSHOT_LIBS)
 AC_SUBST(DOC_SHOOTER)
 
 
-if test x"$enable_gimp_remote" = xyes; then
-  enable_gimp_remote="$have_libxmu"
-fi
+GIMP_COMMAND='gimp-gimp_app_version'
 
-if test x"$enable_gimp_remote" = xyes; then
-  GIMP_REMOTE='gimp-remote-gimp_app_version$(EXEEXT)'
-  GIMP_REMOTE_MANPAGE='gimp-remote-gimp_app_version.1'
-  GIMP_COMMAND='gimp-remote-gimp_app_version'
-else
-  GIMP_COMMAND='gimp-gimp_app_version'
-fi
-
-AC_SUBST(GIMP_REMOTE)
-AC_SUBST(GIMP_REMOTE_MANPAGE)
 AC_SUBST(GIMP_COMMAND)
 
 
@@ -2245,7 +2223,6 @@ AC_CONFIG_FILES(
 docs/gimp-gimp_app_version.1:docs/gimp.1.in
 docs/gimprc-gimp_app_version.5:docs/gimprc.5.in
 docs/gimptool-gimp_tool_version.1:docs/gimptool.1.in
-docs/gimp-remote-gimp_app_version.1:docs/gimp-remote.1.in
 gimp-gimp_pkgconfig_version.pc:gimp.pc.in
 gimpthumb-gimp_pkgconfig_version.pc:gimpthumb.pc.in
 gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
@@ -2267,7 +2244,6 @@ Desktop files install into $DESKTOP_DATADIR
 
 Extra Binaries:
   gimp-console:        $enable_gimp_console
-  gimp-remote:         $enable_gimp_remote
 
 Optional Features:
   D-Bus service:       $have_dbus_glib

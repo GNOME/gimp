@@ -8,22 +8,12 @@ endif
 
 SUBDIRS = $(D_pdbgen)
 
-bin_PROGRAMS = $(GIMP_REMOTE) gimptool-2.0
+bin_PROGRAMS = gimptool-2.0
 
 noinst_PROGRAMS = test-clipboard
 
 EXTRA_PROGRAMS = \
-	gimp-remote-2.7	\
 	kernelgen
-
-gimp_remote_2_7_SOURCES = \
-	gimp-remote.c	\
-	gimp-remote.h	\
-	gimp-remote-x11.c
-
-gimp_remote_2_7_LDADD = \
-	$(GTK_LIBS)	\
-	$(XMU_LIBS)
 
 gimptool_2_0_SOURCES = \
 	gimptool.c
@@ -69,21 +59,3 @@ EXTRA_DIST = \
 	defcheck.py	\
 	gimp-mkenums	\
 	gimppath2svg.py
-
-
-install-exec-hook:
-if DEFAULT_BINARY
-	if test -f "$(DESTDIR)$(bindir)/gimp-remote-@GIMP_APP_VERSION@"; then \
-	  echo "cd $(DESTDIR)$(bindir)"; \
-	  cd $(DESTDIR)$(bindir); \
-	  echo "rm -f gimp-remote"; \
-	  rm -f gimp-remote; \
-	  echo "$(LN_S) gimp-remote-@GIMP_APP_VERSION@ gimp-remote"; \
-	  $(LN_S) gimp-remote-@GIMP_APP_VERSION@ gimp-remote; \
-	fi
-endif
-
-uninstall-local:
-if DEFAULT_BINARY
-	rm -f $(DESTDIR)$(bindir)/gimp-remote
-endif
