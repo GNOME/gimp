@@ -101,7 +101,7 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 
   operation_class->name                    = "gimp:cage-transform";
   operation_class->categories              = "transform";
-  operation_class->description             = _("Convert a set of coefficient buffer to a coordinate buffer for the Gimp cage tool");
+  operation_class->description             = _("Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage tool");
 
   operation_class->prepare                 = gimp_operation_cage_transform_prepare;
 
