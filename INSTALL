@@ -251,10 +251,6 @@ These are:
      gimp-console binary to be built in addition to the standard binary.
      gimp-console is useful for command-line batch mode or as a server.
 
-  --enable-gimp-remote.  Use this option if you want the gimp-remote
-     binary to be built. This only works with X11 and it is obsolete if#
-     your platform has DBus support.
-
   --disable-python.  If for some reason you don't want to build the
      Python based PyGIMP plug-in, you can use --disable-python.
 
