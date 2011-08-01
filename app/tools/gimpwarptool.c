@@ -310,8 +310,12 @@ gimp_warp_tool_motion (GimpTool         *tool,
 {
   GimpWarpTool    *wt       = GIMP_WARP_TOOL (tool);
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
   wt->cursor_x = coords->x;
   wt->cursor_y = coords->y;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void
@@ -577,6 +581,8 @@ gimp_warp_tool_undo (GimpWarpTool *wt)
 
   gegl_node_disconnect (to_delete, "input");
   gegl_node_connect_to (previous, "output", wt->render_node, "aux");
+
+
 
   g_object_unref (to_delete);
   gimp_warp_tool_image_map_update (wt);
