@@ -271,9 +271,9 @@ gimp_warp_tool_key_press (GimpTool    *tool,
   switch (kevent->keyval)
     {
     case GDK_KEY_BackSpace:
-    case GDK_KEY_Return:
       return TRUE;
 
+    case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
       gimp_tool_control_set_preserve (tool->control, TRUE);
