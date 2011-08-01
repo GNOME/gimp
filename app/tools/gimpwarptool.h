@@ -53,9 +53,9 @@ struct _GimpWarpTool
   GeglPath       *current_stroke;
 
   guint           stroke_timer;
-  guint           preview_timer;
 
   GimpImageMap   *image_map; /* For preview */
+  GeglRectangle   last_region;
 };
 
 struct _GimpWarpToolClass

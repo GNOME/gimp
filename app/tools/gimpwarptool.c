@@ -23,6 +23,7 @@
 #include <stdlib.h>
 
 #include <gegl.h>
+#include "gegl-utils.h"
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -91,7 +92,6 @@ static void       gimp_warp_tool_oper_update        (GimpTool              *tool
                                                      GimpDisplay           *display);
 
 static gboolean   gimp_warp_tool_stroke_timer       (gpointer               data);
-static gboolean   gimp_warp_tool_preview_timer      (gpointer               data);
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
 
 static void       gimp_warp_tool_create_graph       (GimpWarpTool          *wt);
@@ -108,7 +108,6 @@ G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
 #define parent_class gimp_warp_tool_parent_class
 
 #define STROKE_PERIOD 100
-#define PREVIEW_PERIOD 200
 
 void
 gimp_warp_tool_register (GimpToolRegisterCallback  callback,
@@ -257,6 +256,8 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   printf ("Initialize coordinate buffer (%d,%d) at %d,%d\n", bbox.width, bbox.height, bbox.x, bbox.y);
   wt->coords_buffer = gegl_buffer_new (&bbox, format);
 
+  gegl_rectangle_set (&wt->last_region, 0, 0, 0, 0);
+
   gimp_warp_tool_create_image_map (wt, drawable);
   gimp_draw_tool_start (GIMP_DRAW_TOOL (wt), display);
 }
@@ -360,8 +361,9 @@ gimp_warp_tool_button_press (GimpTool            *tool,
 
   gimp_warp_tool_add_op (wt);
 
+  gimp_warp_tool_image_map_update (wt);
+
   wt->stroke_timer = g_timeout_add (STROKE_PERIOD, gimp_warp_tool_stroke_timer, wt);
-  wt->preview_timer = g_timeout_add (PREVIEW_PERIOD, gimp_warp_tool_preview_timer, wt);
 
   gimp_tool_control_activate (tool->control);
 }
@@ -381,7 +383,6 @@ gimp_warp_tool_button_release (GimpTool              *tool,
   gimp_tool_control_halt (tool->control);
 
   g_source_remove (wt->stroke_timer);
-  g_source_remove (wt->preview_timer);
 
   printf ("%s\n", gegl_path_to_string (wt->current_stroke));
 
@@ -393,6 +394,8 @@ gimp_warp_tool_button_release (GimpTool              *tool,
     {
       gimp_warp_tool_image_map_update (wt);
     }
+
+  gegl_rectangle_set (&wt->last_region, 0, 0, 0, 0);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -422,15 +425,9 @@ gimp_warp_tool_stroke_timer (gpointer data)
 
   gegl_path_append (wt->current_stroke,
                     'L', wt->cursor_x, wt->cursor_y);
-  return TRUE;
-}
-
-static gboolean
-gimp_warp_tool_preview_timer (gpointer data)
-{
-  GimpWarpTool     *wt    = GIMP_WARP_TOOL (data);
 
   gimp_warp_tool_image_map_update (wt);
+
   return TRUE;
 }
 
@@ -512,15 +509,20 @@ gimp_warp_tool_image_map_update (GimpWarpTool *wt)
 {
   GimpWarpOptions  *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
   GeglRectangle     region;
+  GeglRectangle     to_update;
 
   region.x = wt->cursor_x - options->effect_size / 2.0;
   region.y = wt->cursor_y - options->effect_size / 2.0;
   region.width = options->effect_size;
   region.height = options->effect_size;
 
-  printf("rect: (%d,%d), %dx%d\n", region.x, region.y, region.width, region.height);
+  gegl_rectangle_bounding_box (&to_update, &region, &wt->last_region);
 
-  gimp_image_map_apply_region (wt->image_map, &region);
+  gegl_rectangle_copy (&wt->last_region, &region);
+
+  printf("update rect: (%d,%d), %dx%d\n", to_update.x, to_update.y, to_update.width, to_update.height);
+
+  gimp_image_map_apply_region (wt->image_map, &to_update);
 }
 
 static void
