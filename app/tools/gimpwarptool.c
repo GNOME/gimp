@@ -443,8 +443,8 @@ gimp_warp_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_draw_tool_add_arc (draw_tool,
                           FALSE,
-                          wt->cursor_x - options->effect_size / 2.0,
-                          wt->cursor_y - options->effect_size / 2.0,
+                          wt->cursor_x - options->effect_size * 0.5,
+                          wt->cursor_y - options->effect_size * 0.5,
                           options->effect_size,
                           options->effect_size,
                           0.0, 2.0 * G_PI);
@@ -515,8 +515,8 @@ gimp_warp_tool_image_map_update (GimpWarpTool *wt)
   GeglRectangle     region;
   GeglRectangle     to_update;
 
-  region.x = wt->cursor_x - options->effect_size / 2.0;
-  region.y = wt->cursor_y - options->effect_size / 2.0;
+  region.x = wt->cursor_x - options->effect_size * 0.5;
+  region.y = wt->cursor_y - options->effect_size * 0.5;
   region.width = options->effect_size;
   region.height = options->effect_size;
 
@@ -567,9 +567,16 @@ gimp_warp_tool_add_op (GimpWarpTool *wt)
 static void
 gimp_warp_tool_undo (GimpWarpTool *wt)
 {
-  GeglNode    *to_delete;
-  GeglNode    *previous;
-  const gchar *type;
+  GeglNode      *to_delete;
+  GeglNode      *previous;
+  const gchar   *type;
+  GeglPath      *stroke;
+  gdouble        min_x;
+  gdouble        max_x;
+  gdouble        min_y;
+  gdouble        max_y;
+  gdouble        size;
+  GeglRectangle  bbox;
 
   to_delete = gegl_node_get_producer (wt->render_node, "aux", NULL);
   type = gegl_node_get_operation(to_delete);
@@ -582,8 +589,20 @@ gimp_warp_tool_undo (GimpWarpTool *wt)
   gegl_node_disconnect (to_delete, "input");
   gegl_node_connect_to (previous, "output", wt->render_node, "aux");
 
+  gegl_node_get (to_delete, "stroke", &stroke, NULL);
+  gegl_node_get (to_delete, "size", &size, NULL);
 
+  if (stroke)
+  {
+    gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
+    bbox.x      = min_x - size * 0.5;
+    bbox.y      = min_y - size * 0.5;
+    bbox.width  = max_x - min_x + size;
+    bbox.height = max_y - min_y + size;
 
+    gimp_image_map_apply_region (wt->image_map, &bbox);
+  }
+
+  g_object_unref (stroke);
   g_object_unref (to_delete);
-  gimp_warp_tool_image_map_update (wt);
 }
