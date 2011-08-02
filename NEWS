@@ -33,6 +33,8 @@ UI:
    instead of in a new window
  - When switching off single-window mode, distribute dock windows
    better
+ - Add a canvas item for the transform grid, fixing a major speed
+   regression, and add the same guides options as in the rectangle tools
 
 
 Core:
@@ -76,6 +78,7 @@ Source and build system:
 
  - Make cairo a global dependency, starting at libgimpcolor
  - Require poppler >= 0.12.4
+ - Remove gimp-remote for good, it has been disabled for years
 
 
 General:
