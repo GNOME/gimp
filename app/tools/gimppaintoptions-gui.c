@@ -52,7 +52,6 @@
 #include "gimp-intl.h"
 
 
-
 static void gimp_paint_options_gui_reset_size  (GtkWidget        *button,
                                                 GimpPaintOptions *paint_options);
 static void gimp_paint_options_gui_reset_aspect_ratio
@@ -417,7 +416,6 @@ static void
 gimp_paint_options_gui_reset_aspect_ratio (GtkWidget        *button,
                                            GimpPaintOptions *paint_options)
 {
-
    g_object_set (paint_options,
                  "brush-aspect-ratio", 0.0,
                  NULL);
@@ -427,7 +425,6 @@ static void
 gimp_paint_options_gui_reset_angle (GtkWidget        *button,
                                     GimpPaintOptions *paint_options)
 {
-
    g_object_set (paint_options,
                  "brush-angle", 0.0,
                  NULL);
