@@ -4613,13 +4613,13 @@ msgstr "Netipisks PCX paveids, padodos"
 #: ../plug-ins/common/file-pcx.c:685
 #, c-format
 msgid "Invalid X offset: %d"
-msgstr "Nederīga X nobīde:"
+msgstr "Nederīga X nobīde: %d"
 
 #: ../plug-ins/common/file-pcx.c:689
 #: ../plug-ins/common/file-pcx.c:691
 #, c-format
 msgid "Invalid Y offset: %d"
-msgstr "Nederīga Y nobīde:"
+msgstr "Nederīga Y nobīde: %d"
 
 #: ../plug-ins/common/file-pcx.c:695
 #: ../plug-ins/common/file-pcx.c:697
@@ -10340,7 +10340,7 @@ msgstr "Neatbalstīts vai nederīgs maskas izmērs: %dx%d"
 #: ../plug-ins/file-psd/psd-load.c:1613
 #, c-format
 msgid "Unsupported compression mode: %d"
-msgstr "Neatbalstīts saspiešanas režīms: %s"
+msgstr "Neatbalstīts saspiešanas režīms: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:1644
 #: ../plug-ins/file-psd/psd-load.c:1706
@@ -10520,7 +10520,7 @@ msgstr "Lejupielādēts %s no attēla datiem"
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:182
 #, c-format
 msgid "Uploading %s of image data"
-msgstr "Augšupielādē % no attēla datiem"
+msgstr "Augšupielādē %s no attēla datiem"
 
 #: ../plug-ins/file-uri/uri-backend-gnomevfs.c:183
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:230
