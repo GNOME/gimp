@@ -3781,12 +3781,12 @@ msgstr "Netipisks PCX paveids, padodos"
 #: ../plug-ins/common/file-pcx.c:685
 #, c-format
 msgid "Invalid X offset: %d"
-msgstr "Nederīga X nobīde:"
+msgstr "Nederīga X nobīde: %d"
 
 #: ../plug-ins/common/file-pcx.c:691
 #, c-format
 msgid "Invalid Y offset: %d"
-msgstr "Nederīga Y nobīde:"
+msgstr "Nederīga Y nobīde: %d"
 
 #: ../plug-ins/common/file-pcx.c:697
 #, c-format
@@ -8875,7 +8875,7 @@ msgstr "Neatbalstīts vai nederīgs maskas izmērs: %dx%d"
 #: ../plug-ins/file-psd/psd-load.c:1231 ../plug-ins/file-psd/psd-load.c:1613
 #, c-format
 msgid "Unsupported compression mode: %d"
-msgstr "Neatbalstīts saspiešanas režīms: %s"
+msgstr "Neatbalstīts saspiešanas režīms: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:1706
 msgid "Extra"
