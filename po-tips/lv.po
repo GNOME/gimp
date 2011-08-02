@@ -1,0 +1,307 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Rūdofls Mazurs <rudolfs.mazurs@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
+"cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-08 21:23+0000\n"
+"PO-Revision-Date: 2011-08-02 15:39+0300\n"
+"Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
+"Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.1\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+
+#: ../data/tips/gimp-tips.xml.in.h:1
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the foreground "
+"color."
+msgstr ""
+"Lietojot aizpildīšanas rīku, pieturiet <tt>Ctrl</tt> taustiņu, lai "
+"aizpildītu ar fona, nevis priekšplāna krāsu. Līdzīgi, kad aktīvs krāsu "
+"pipetes rīks, <tt>Ctrl</tt>+klikšķis iestata fona krāsu."
+
+#: ../data/tips/gimp-tips.xml.in.h:2
+msgid ""
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr ""
+"<tt>Ctrl</tt>+klikšķis uz slāņa maskas ikonas slāņu dialogā atslēdz un "
+"ieslēdz maskas efektu. Savukārt <tt>Alt</tt>+klikšķis pārslēdz maskas un "
+"slāņa skatu."
+
+#: ../data/tips/gimp-tips.xml.in.h:3
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr ""
+"Lietojot pagriešanas rīku, pieturiet <tt>Ctrl</tt> taustiņu, lai pagrieztu "
+"ar 15 grādu soli."
+
+#: ../data/tips/gimp-tips.xml.in.h:4
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"Veiciet <tt>Shift</tt>+klikšķi uz acs ikonas slāņu dialogā, lai paslēptu "
+"visus pārējos slāņus. Atkārtojiet <tt>Shift</tt>+klikšķi. lai padarītu visus "
+"slāņus redzamus."
+
+#: ../data/tips/gimp-tips.xml.in.h:5
+msgid ""
+"A floating selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
+msgstr ""
+"Peldošs iezīmējums ir jāpiesaista kādam slānim, pirms veikt turpmākās "
+"darbības. Lietojiet pogas &quot;Jauns slānis&quot; vai &quot;Fiksēt "
+"slāni&quot; slāņu dialogā vai atbilstošās izvēlnes komandas."
+
+#: ../data/tips/gimp-tips.xml.in.h:6
+msgid ""
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
+"shortcuts."
+msgstr ""
+"Lai ērti pielāgotu tastatūras īsinājumtaustiņus saskarnē: "
+"1. Atzīmējiet &quot;Izmantot dinamiskos tastatūras īsinājumtaustiņus&quot; "
+"dialogā &quot;Iestatījumi&quot;. "
+"2. Atveriet izvēlni un novietojiet peles rādītāju uz kādas komandas. "
+"3. Nospiediet vēlamo taustiņu kombināciju. "
+"4. Saglabājiet jaunos īsinājumtaustiņus dialogā &quot;Iestatījumi&quot;. "
+"5. Atslēdziet dinamiskos tastatūras īsinājumtaustiņus, lai netīšām "
+"neizmainītu savus iestatījumus."
+
+#: ../data/tips/gimp-tips.xml.in.h:7
+msgid ""
+"Click and drag on a ruler to place a guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"Lai izvietotu attēlā palīglīniju, klikšķiniet un velciet no mērjoslas. "
+"Piesaiste palīglīnijām palīdz precīzi novietot objektus. Nevajadzīgās "
+"palīglīnijas var izvilkt no attēla ar pārvietošanas rīku."
+
+#: ../data/tips/gimp-tips.xml.in.h:8
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"GIMP atbalsta tūlītēju gzip saspiešanu. Vienkārši pievienojiet faila "
+"nosaukumam paplašinājumu <tt>.gz</tt> (vai <tt>.bz2</tt>, ja jums ir bzip2), "
+"un attēls tiks saglabāts kā arhīvs. Protams, GIMP prot arī atvērt šādi "
+"saglabātus attēlus."
+
+#: ../data/tips/gimp-tips.xml.in.h:9
+msgid ""
+"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"slides or filters, such that looking through them you see a composite of "
+"their contents."
+msgstr ""
+"GIMP atbalsta slāņus, kas palīdz attēla kompozīcijas veidošanā. Slāņi ir kā "
+"viens uz otra salikti filtri vai kodoskopa plēves, kas veido vienu kombinētu "
+"attēlu."
+
+#: ../data/tips/gimp-tips.xml.in.h:10
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer→Transparency→Add Alpha Channel."
+msgstr ""
+"Ja slānim ir Alfa kanāls, tā daļas var būt caurspīdīgas. Ja slāņu dialogā "
+"slāņa nosaukums ir <b>treknrakstā</b>, tam <b>nav</b> Alfa kanāla. To var "
+"pievienot ar izvēlnes komandu Slānis→Caurspīdīgums→Pievienot Alfa kanālu."
+
+#: ../data/tips/gimp-tips.xml.in.h:11
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Colors→Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Colors→Curves)."
+msgstr ""
+"Ja ieskanētās fotogrāfijas izskatās blāvas vai tumšas, to var labot ar "
+"&quot;Auto&quot; pogu dialogā &quot;Līmeņi&quot; (Krāsas→Līmeņi). Savukārt "
+"nepareizas nokrāsas var novērst ar līkņu rīku (Krāsas→Līknes)."
+
+#: ../data/tips/gimp-tips.xml.in.h:12
+msgid ""
+"If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
+"their current settings. You can use the Paintbrush in gradient mode or even "
+"the Eraser or the Smudge tool."
+msgstr ""
+"Ceļa apvilkšanai (Rediģēt→Apvilkt ceļu) var lietot jebkuru zīmēšanas rīku ar "
+"pašreizējiem iestatījumiem, piemēram, otu krāsu pārejas režīmā, dzēšanas vai "
+"izsmērēšanas rīku."
+
+#: ../data/tips/gimp-tips.xml.in.h:13
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
+msgstr ""
+"Lai paslēptu rīku kasti un citus papildlogus, nospiediet <tt>Tab</tt> "
+"taustiņu, kad aktīvs attēla logs. Lai tos atkal parādītu, nospiediet <tt>"
+"Tab</tt> vēlreiz."
+
+#: ../data/tips/gimp-tips.xml.in.h:14
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Image→Flatten Image) if you want the plug-"
+"in to work on the whole image."
+msgstr ""
+"Vairums spraudņu strādā tikai ar aktīvo slāni. Lai apstrādātu attēlu kopumā, "
+"var būt nepieciešama visu slāņu apvienošana (Attēls→Saplacināt attēlu)."
+
+#: ../data/tips/gimp-tips.xml.in.h:15
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB "
+"(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
+"Channel) or flatten it (Image→Flatten Image)."
+msgstr ""
+"Ne katru efektu var lietot jebkuram attēlam. Nepieejamo efektu komandas "
+"izvēlnē ir pelēkotas. Lai padarītu efektu pieejamu, iespējams, jāmaina "
+"attēla režīms (Attēls→Režīms→RGB), jāpiešķir slānim caurspīdīguma atbalsts "
+"(Slānis→Caurspīdīgums→Pievienot Alfa kanālu) vai jāapvieno visi slāņi "
+"(Attēls→Saplacināt attēlu)."
+
+#: ../data/tips/gimp-tips.xml.in.h:16
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr ""
+"Lai pievienotu jaunu iezīmējumu esošajam, pirms iezīmēšanas pieturiet <tt>"
+"Shift</tt> taustiņu. Lai atņemtu jaunu iezīmējumu no pašreizējā, pieturiet <"
+"tt>Ctrl</tt>."
+
+#: ../data/tips/gimp-tips.xml.in.h:17
+msgid ""
+"When you save an image to work on it again later, try using XCF, GIMP's "
+"native file format (use the file extension <tt>.xcf</tt>). This preserves "
+"the layers and every aspect of your work-in-progress. Once a project is "
+"completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr ""
+"Lai ar attēlu varētu turpināt darbu, ieteicams to saglabāt GIMP formātā ar "
+"paplašinājumu <tt>.xcf</tt>. Tas nodrošina slāņu un citu rediģēšanas iespēju "
+"atbalstu. Kad darbs ir pabeigts, to var eksportēt JPG, PNG, GIF un citos "
+"formātos."
+
+#: ../data/tips/gimp-tips.xml.in.h:18
+msgid ""
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Most "
+"window managers can be configured to ignore the <tt>Alt</tt> key or to use "
+"the <tt>Super</tt> key (or \"Windows logo\") instead."
+msgstr ""
+"Iezīmējumu var pārvietot, pieturot <tt>Alt</tt> taustiņu. Ja šī darbība "
+"pārvieto logu, var nomainīt <tt>Alt</tt> uz <tt>Super</tt> (vai \"mājas\", "
+"vai \"Windows\") taustiņu logu pārvaldnieka iestatījumos."
+
+#: ../data/tips/gimp-tips.xml.in.h:19
+msgid ""
+"You can create and edit complex selections using the Path tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr ""
+"Ar ceļa rīku var veidot un rediģēt sarežģītas formas iezīmējumus. Dialogs "
+"&quot;Ceļi&quot; satur rīkus darbam ar vairākiem ceļiem un to pārvēršanai "
+"iezīmējumos."
+
+#: ../data/tips/gimp-tips.xml.in.h:20
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr ""
+"Lai pārvērstu slāni par jaunu attēlu, izvelciet tā ierakstu no slāņu dialoga "
+"un nometiet to uz rīku kastes."
+
+#: ../data/tips/gimp-tips.xml.in.h:21
+msgid ""
+"You can drag and drop many things in GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current selection with that color."
+msgstr ""
+"Daudzas darbības GIMP var veikt ar vilkšanas un nomešanas paņēmienu. "
+"Piemēram, nometot krāsu no paletes vai rīku kastes uz attēla, ar šo krāsu "
+"tiks aizpildīts aktīvais iezīmējums."
+
+#: ../data/tips/gimp-tips.xml.in.h:22
+msgid ""
+"You can draw simple squares or circles using Edit→Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters→Render→Gfig."
+msgstr ""
+"Taisnstūrus un riņķus var zīmēt ar komandu Rediģēt→Apvilkt iezīmējumu. "
+"Sarežģītākas figūras var zīmēt ar ceļa rīku, kā arī figūru dialogā "
+"Filtri→Renderēšana→Gfig."
+
+#: ../data/tips/gimp-tips.xml.in.h:23
+msgid ""
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
+msgstr ""
+"Vajadzīga palīdzība? Nospiežot F1 taustiņu jebkurā GIMP dialogā vai izvēlnē, "
+"tiks atvērta atbilstošā rokasgrāmatas sadaļa."
+
+#: ../data/tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the Layers dialog."
+msgstr ""
+"Daudzas darbības ar slāņiem var veikt, izpildot labo peles klikšķi uz "
+"attiecīgā slāņa nosaukuma dialogā &quot;Slāņi&quot;."
+
+#: ../data/tips/gimp-tips.xml.in.h:25
+msgid ""
+"You can save a selection to a channel (Select→Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
+msgstr ""
+"Iezīmējumu var saglabāt kā kanālu (Iezīmēt→Saglabāt kanālā), pārveidot šo "
+"kanālu ar zīmēšanas rīkiem, un pārvērst to atpakaļ par iezīmējumu, "
+"izmantojot kanālu dialoga rīkus."
+
+#: ../data/tips/gimp-tips.xml.in.h:26
+msgid ""
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"Ar taustiņu kombināciju <tt>Ctrl</tt>+<tt>Tab</tt> var iziet cauri visiem "
+"attēla slāņiem (ja vien jūsu sistēma to pieļauj)."
+
+#: ../data/tips/gimp-tips.xml.in.h:27
+msgid ""
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr ""
+"Lai pārskatītu attēlu, kas iziet ārpus loga robežām, var lietot vidējo peles "
+"pogu, vai arī pieturēt atstarpes taustiņu, pārvietojot peli."
+
+#: ../data/tips/gimp-tips.xml.in.h:28
+msgid ""
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
+msgstr ""
+"Iezīmējumu var mainīt ar zīmēšanas rīkiem. Nospiediet ātrās maskas pogu "
+"attēla loga apakšējā kreisajā stūrī, rediģējiet masku ar otu vai citiem "
+"rīkiem, un nospiediet pogu vēlreiz, lai pārvērstu ātro masku par jauno "
+"iezīmējumu."
+
