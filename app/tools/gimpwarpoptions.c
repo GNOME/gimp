@@ -72,7 +72,7 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
                                    "effect-strength", _("Effect Strength"),
-                                   0.0, 10.0, 1.0,
+                                   1.0, 100.0, 50.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_SIZE,
@@ -172,8 +172,8 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
 
   strength = gimp_prop_spin_scale_new (config, "effect-strength",
                                        _("Strength"),
-                                       0.01, 1.0, 2);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (strength), 0.0, 1.0);
+                                       1, 10, 1);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (strength), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), strength, FALSE, FALSE, 0);
   gtk_widget_show (strength);
 
