@@ -64,9 +64,6 @@ static void   gimp_bucket_fill_options_get_property (GObject         *object,
                                                      GParamSpec      *pspec);
 
 static void   gimp_bucket_fill_options_reset        (GimpToolOptions *tool_options);
-static void   gimp_bucket_fill_options_notify (GimpBucketFillOptions *options,
-                                               GParamSpec            *pspec,
-                                               GtkWidget             *widget);
 
 
 G_DEFINE_TYPE (GimpBucketFillOptions, gimp_bucket_fill_options,
@@ -87,8 +84,7 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
   options_class->reset       = gimp_bucket_fill_options_reset;
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_MODE,
-                                 "fill-mode",
-                                 N_("What to fill a selection or a layer with"),
+                                 "fill-mode", NULL,
                                  GIMP_TYPE_BUCKET_FILL_MODE,
                                  GIMP_FG_BUCKET_FILL,
                                  GIMP_PARAM_STATIC_STRINGS);
@@ -116,7 +112,7 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_CRITERION,
                                  "fill-criterion",
-                                 N_("What to use for calculating an area to fill"),
+                                 N_("Criterion used for determining color similarity"),
                                  GIMP_TYPE_SELECT_CRITERION,
                                  GIMP_SELECT_CRITERION_COMPOSITE,
                                  GIMP_PARAM_STATIC_STRINGS);
@@ -260,11 +256,10 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gtk_widget_set_sensitive (frame,
-                            ! GIMP_BUCKET_FILL_OPTIONS (config)->fill_selection);
-  g_signal_connect_object (config, "notify::fill-selection",
-                           G_CALLBACK (gimp_bucket_fill_options_notify),
-                           G_OBJECT (frame), 0);
+  g_object_bind_property (config, "fill-selection",
+                          frame,  "sensitive",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_INVERT_BOOLEAN);
 
   vbox2 = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
@@ -301,12 +296,4 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                              combo, 2, FALSE);
 
   return vbox;
-}
-
-static void
-gimp_bucket_fill_options_notify (GimpBucketFillOptions *options,
-                                 GParamSpec            *pspec,
-                                 GtkWidget             *widget)
-{
-  gtk_widget_set_sensitive (widget, ! options->fill_selection);
 }
