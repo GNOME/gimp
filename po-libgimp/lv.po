@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.lv\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
-"cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2009-04-17 09:06+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-28 18:56+0000\n"
 "PO-Revision-Date: 2010-02-14 00:20+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latviešu <lata-l10n@googlegroups.com>\n"
@@ -21,22 +21,22 @@ msgstr ""
 "2);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1045
+#: ../libgimp/gimp.c:1068
 msgid "success"
 msgstr "izdevās"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1049
+#: ../libgimp/gimp.c:1072
 msgid "execution error"
 msgstr "izpildīšanas kļūda"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1053
+#: ../libgimp/gimp.c:1076
 msgid "calling error"
 msgstr "izsaukšanas kļūda"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1057
+#: ../libgimp/gimp.c:1080
 msgid "cancelled"
 msgstr "atcelts"
 
@@ -51,7 +51,6 @@ msgstr "_Pārlūkot..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
-#| msgid "%s can't handle layers"
 msgid "%s plug-in can't handle layers"
 msgstr "%s spraudnis nevar apstrādāt slāņus"
 
@@ -62,13 +61,11 @@ msgstr "Apvienot redzamos slāņus"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
-#| msgid "%s can't handle layer offsets, size or opacity"
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s spraudnis nevar apstrādāt slāņu nobīdi, izmēru vai necaurspīdīgumu"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
-#| msgid "%s can only handle layers as animation frames"
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s spraudnis var apstrādāt slāņus tikai kā animētus kadrus"
 
@@ -83,13 +80,11 @@ msgstr "Saplacināt attēlu"
 
 #: ../libgimp/gimpexport.c:262
 #, c-format
-#| msgid "%s can't handle transparency"
 msgid "%s plug-in can't handle transparency"
 msgstr "%s spraudnis nevar apstrādāt caurspīdīgumu"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
-#| msgid "%s can't handle layer masks"
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s spraudnis nevar apstrādāt slāņa maskas"
 
@@ -99,7 +94,6 @@ msgstr "Apstiprināt slāņa maskas"
 
 #: ../libgimp/gimpexport.c:280
 #, c-format
-#| msgid "%s can only handle RGB images"
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s spraudnis var apstrādāt tikai RGB attēlus"
 
@@ -110,7 +104,6 @@ msgstr "Pārveidot uz RGB"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
-#| msgid "%s can only handle grayscale images"
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s spraudnis var apstrādāt tikai pelēktoņu attēlus"
 
@@ -121,7 +114,6 @@ msgstr "Pārveidot uz pelēktoņu"
 
 #: ../libgimp/gimpexport.c:298
 #, c-format
-#| msgid "%s can only handle indexed images"
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s spraudnis var apstrādāt tikai indeksētus attēlus"
 
@@ -136,7 +128,6 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
-#| msgid "%s can only handle bitmap (two color) indexed images"
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s spraudnis var apstrādāt tikai bitkaršu (divu krāsu) indeksētos attēlus"
@@ -151,25 +142,21 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
-#| msgid "%s can only handle RGB or grayscale images"
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s spraudnis var apstrādāt tikai RGB vai pelēktoņu attēlus"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
-#| msgid "%s can only handle RGB or indexed images"
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s spraudnis var apstrādāt tikai RGB vai indeksētos attēlus"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
-#| msgid "%s can only handle grayscale or indexed images"
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s spraudnis var apstrādāt tikai pelēktoņu vai indeksētos attēlus"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
-#| msgid "%s needs an alpha channel"
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s spraudnim ir nepieciešams alfa kanāls"
 
@@ -234,7 +221,6 @@ msgid "Font Selection"
 msgstr "Fonta izvēle"
 
 #: ../libgimp/gimpfontselectbutton.c:145
-#| msgid "Scales"
 msgid "Sans"
 msgstr "Bezrēdzes"
 
@@ -352,7 +338,6 @@ msgid "Additional Information"
 msgstr "Papildus informācija"
 
 #: ../libgimp/gimpprocview.c:209
-#| msgid "Anchor"
 msgid "Author:"
 msgstr "Autors:"
 
@@ -477,47 +462,38 @@ msgid "Large"
 msgstr "Liels"
 
 #: ../libgimpbase/gimpbaseenums.c:231
-#| msgid "Light Checks"
 msgid "Light checks"
 msgstr "Gaišas rūtiņas"
 
 #: ../libgimpbase/gimpbaseenums.c:232
-#| msgid "Mid-Tone Checks"
 msgid "Mid-tone checks"
 msgstr "Pelēkas rūtiņas"
 
 #: ../libgimpbase/gimpbaseenums.c:233
-#| msgid "Dark Checks"
 msgid "Dark checks"
 msgstr "Tumšas rūtiņas"
 
 #: ../libgimpbase/gimpbaseenums.c:234
-#| msgid "White Only"
 msgid "White only"
 msgstr "Tikai balts"
 
 #: ../libgimpbase/gimpbaseenums.c:235
-#| msgid "Gray Only"
 msgid "Gray only"
 msgstr "Tikai pelēks"
 
 #: ../libgimpbase/gimpbaseenums.c:236
-#| msgid "Black Only"
 msgid "Black only"
 msgstr "Tikai melns"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-#| msgid "Image file"
 msgid "Image"
 msgstr "Attēls"
 
 #: ../libgimpbase/gimpbaseenums.c:265
-#| msgid "Pattern fill"
 msgid "Pattern"
 msgstr "Šablons"
 
 #: ../libgimpbase/gimpbaseenums.c:294
-#| msgid "Light Checks"
 msgid "Lightness"
 msgstr "Gaišums"
 
@@ -766,7 +742,6 @@ msgid "Right justified"
 msgstr "Līdzināt pie labās"
 
 #: ../libgimpbase/gimpbaseenums.c:1107
-#| msgid "C_enter"
 msgid "Centered"
 msgstr "Vidū"
 
@@ -776,8 +751,8 @@ msgstr "Aizpildīts"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/display-filter-lcms.c:183
-#: ../modules/color-selector-cmyk-lcms.c:407
-#: ../modules/color-selector-cmyk-lcms.c:413
+#: ../modules/color-selector-cmyk-lcms.c:422
+#: ../modules/color-selector-cmyk-lcms.c:428
 msgid "(invalid UTF-8 string)"
 msgstr "(nekorekta UTF-8 rinda)"
 
@@ -786,7 +761,6 @@ msgid "Mode of operation for color management."
 msgstr "Krāsu pārvaldības darbības režīms"
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
-#| msgid "Sets the color profile for the display."
 msgid "The color profile of your (primary) monitor."
 msgstr "Jūsu (galvenā) ekrāna krāsu profils."
 
@@ -800,12 +774,10 @@ msgstr ""
 "Konfigurētais monitora profils tiks izmantots tikai kā rezerves variants."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
-#| msgid "Sets default RGB workspace color profile."
 msgid "The default RGB working space color profile."
 msgstr "Darbavietas noklusētais RGB krāsu profils."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
-#| msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK krāsu profils konvertēšanai no RGB uz CMYK"
 
@@ -818,7 +790,6 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Uzstādīt monitoram atbilstošas krāsas."
 
 #: ../libgimpconfig/gimpcolorconfig.c:58
-#| msgid "Sets how colors are converted from workspace to simulation device."
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
@@ -856,17 +827,14 @@ msgid "Perceptual"
 msgstr "Perceptuāls"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
-#| msgid "Relative Colorimetric"
 msgid "Relative colorimetric"
 msgstr "Relatīvi kolorimetrisks"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#| msgid "Saturation"
 msgid "intent|Saturation"
 msgstr "Piesātinātība"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
-#| msgid "Absolute Colorimetric"
 msgid "Absolute colorimetric"
 msgstr "Absolūti kolorimetrisks"
 
@@ -1006,7 +974,6 @@ msgid "Could not create thumbnail for %s: %s"
 msgstr "Neizdevās izveidot sīkattēlu priekš '%s': %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:98
-#| msgid "_Shear"
 msgid "_Search:"
 msgstr "_Meklēt:"
 
@@ -1027,12 +994,10 @@ msgid "_White"
 msgstr "_Balts"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:144
-#| msgid "Sets the color profile for the display."
 msgid "Select color profile from disk..."
 msgstr "Izvēlieties krāsu profilu no diska..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-#| msgid "None"
 msgctxt "profile"
 msgid "None"
 msgstr "Nav"
@@ -1050,16 +1015,14 @@ msgid "Old:"
 msgstr "Iepriekšējais:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:286
-#| msgid "Hexadecimal color notation as used in HTML and CSS"
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Krāsu heksadecimālais pieraksts kā HTML un CSS. Šis lauks pieņem "
-"arī CSS krāsu nosaukumus."
+"Krāsu heksadecimālais pieraksts kā HTML un CSS. Šis lauks pieņem arī CSS "
+"krāsu nosaukumus."
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
-#| msgid "HTML _Notation:"
 msgid "HTML _notation:"
 msgstr "HTML _notācija:"
 
@@ -1102,12 +1065,10 @@ msgid "Nothing selected"
 msgstr "Nekas nav izvēlēts"
 
 #: ../libgimpwidgets/gimppageselector.c:287
-#| msgid "Select File"
 msgid "Select _All"
 msgstr "Izvēlēties _visu"
 
 #: ../libgimpwidgets/gimppageselector.c:307
-#| msgid "Select File"
 msgid "Select _range:"
 msgstr "Izvēlēties _apgabalu:"
 
@@ -1168,7 +1129,6 @@ msgstr "_Priekšskatījums"
 
 #: ../libgimpwidgets/gimppropwidgets.c:1860
 #, c-format
-#| msgid "This text input field is limited to %d characters."
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Šajā teksta laukā iespējams ierakstīt tikai %d rakstzīmes."
@@ -1232,7 +1192,6 @@ msgid "_Scale"
 msgstr "_Mainīt izmēru"
 
 #: ../libgimpwidgets/gimpstock.c:296
-#| msgid "Crop"
 msgid "Cr_op"
 msgstr "_Apcirst"
 
@@ -1285,7 +1244,6 @@ msgid "_Randomize"
 msgstr "_Sajaukt"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:25
-#| msgid "Contrast"
 msgid "Portrait"
 msgstr "Portrets"
 
@@ -1338,7 +1296,6 @@ msgid "Layers"
 msgstr "Slāņi"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:158
-#| msgid "Image source"
 msgid "Images"
 msgstr "Attēli"
 
@@ -1351,7 +1308,6 @@ msgid "Zoom out"
 msgstr "Tālināt"
 
 #: ../modules/display-filter-color-blind.c:67
-#| msgid "Protanopia (insensitivity to red"
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopija (nejūtīgums uz sarkano)"
 
@@ -1372,7 +1328,6 @@ msgid "Color Deficient Vision"
 msgstr "Skats ar pazeminātu krāsas uztveri"
 
 #: ../modules/display-filter-color-blind.c:483
-#| msgid "Color _Deficiency Type:"
 msgid "Color _deficiency type:"
 msgstr "Pazeminātas krāsas _uztveres tips:"
 
@@ -1397,7 +1352,6 @@ msgid "Contrast"
 msgstr "Kontrasts"
 
 #: ../modules/display-filter-high-contrast.c:232
-#| msgid "Contrast C_ycles:"
 msgid "Contrast c_ycles:"
 msgstr "Kontrasta c_ikli:"
 
@@ -1414,15 +1368,14 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Šis filtrs savu konfigurāciju ņem no krāsu pārvaldības sadaļas "
-"iestatījumu dialogā."
+"Šis filtrs savu konfigurāciju ņem no krāsu pārvaldības sadaļas iestatījumu "
+"dialogā."
 
 #: ../modules/display-filter-lcms.c:226
 msgid "Mode of operation:"
 msgstr "Darbības režīms:"
 
 #: ../modules/display-filter-lcms.c:233
-#| msgid "Image file"
 msgid "Image profile:"
 msgstr "Attēla profils:"
 
@@ -1431,7 +1384,6 @@ msgid "Monitor profile:"
 msgstr "Monitora profils:"
 
 #: ../modules/display-filter-lcms.c:249
-#| msgid "Print simulation"
 msgid "Print simulation profile:"
 msgstr "Drukāt simulācijas profilu:"
 
@@ -1521,7 +1473,6 @@ msgid "Black"
 msgstr "Melns"
 
 #: ../modules/color-selector-cmyk.c:172
-#| msgid "Black _Pullout:"
 msgid "Black _pullout:"
 msgstr "Melnā a_pjoms:"
 
@@ -1530,18 +1481,15 @@ msgid "The percentage of black to pull out of the colored inks."
 msgstr "Cik daudz procentus no melnās krāsas izvilkt no krāsainajām tintēm."
 
 #: ../modules/color-selector-cmyk-lcms.c:87
-#| msgid "Color proof filter using ICC color profile"
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK krāsu izvēle (izmantojot krāsu profilu)"
 
-#: ../modules/color-selector-cmyk-lcms.c:395
-#| msgid "_Profile:"
+#: ../modules/color-selector-cmyk-lcms.c:410
 msgid "Profile: (none)"
 msgstr "Profils: (nav)"
 
-#: ../modules/color-selector-cmyk-lcms.c:416
+#: ../modules/color-selector-cmyk-lcms.c:431
 #, c-format
-#| msgid "_Profile:"
 msgid "Profile: %s"
 msgstr "Profils: %s"
 
