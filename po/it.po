@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-01 22:46+0200\n"
-"PO-Revision-Date: 2011-08-01 23:21+0200\n"
+"POT-Creation-Date: 2011-08-02 18:24+0200\n"
+"PO-Revision-Date: 2011-08-02 23:34+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -7467,7 +7467,7 @@ msgstr "Parasites"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2727
-#: ../app/tools/gimppaintoptions-gui.c:204
+#: ../app/tools/gimppaintoptions-gui.c:203
 msgid "Dynamics"
 msgstr "Dinamica del pennello"
 
@@ -7806,7 +7806,7 @@ msgstr "Imposta opacità canale"
 msgid "Selection Mask"
 msgstr "Maschera di selezione"
 
-#: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:114
+#: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:113
 #: ../app/widgets/gimplayertreeview.c:283
 msgid "Opacity"
 msgstr "Opacità"
@@ -7981,7 +7981,7 @@ msgstr "Disegna il delineato"
 
 #: ../app/core/gimpdrawable-threshold.c:70
 #: ../app/core/gimpdrawable-threshold.c:81 ../app/tools/gimpblendoptions.c:275
-#: ../app/tools/gimpbucketfilloptions.c:287
+#: ../app/tools/gimpbucketfilloptions.c:282
 #: ../app/tools/gimpregionselectoptions.c:215
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
@@ -10377,7 +10377,7 @@ msgstr "_Verticale:"
 msgid "Image Size"
 msgstr "Dimensione immagine"
 
-#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:387
+#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:386
 msgid "Quality"
 msgstr "Qualità"
 
@@ -10859,7 +10859,9 @@ msgstr "Un oggetto GimpCageConfig, che definisce la trasformazione"
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
-msgstr "Converte un insieme di buffer di coefficienti in un buffer di coordinate per lo strumento GIMP gabbia"
+msgstr ""
+"Converte un insieme di buffer di coefficienti in un buffer di coordinate per "
+"lo strumento GIMP gabbia"
 
 #: ../app/gegl/gimpoperationcagetransform.c:125
 msgid "Fill with plain color"
@@ -11811,7 +11813,7 @@ msgstr "Fare clic per prendere questo tracciato come prima voce"
 msgid "Click to add this path to the list"
 msgstr "Fare clic per aggiungere questo tracciato alla lista"
 
-#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:340
+#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:339
 msgid "Gradient"
 msgstr "Gradiente"
 
@@ -11819,7 +11821,7 @@ msgstr "Gradiente"
 msgid "Shape:"
 msgstr "Forma:"
 
-#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:324
+#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:323
 msgid "Repeat:"
 msgstr "Ripeti"
 
@@ -11906,67 +11908,63 @@ msgstr "Con_trasto:"
 msgid "Edit these Settings as Levels"
 msgstr "Modifica queste impostazioni come livelli"
 
-#: ../app/tools/gimpbucketfilloptions.c:91
-msgid "What to fill a selection or a layer with"
-msgstr "Con cosa riempire una selezione o un livello"
-
-#: ../app/tools/gimpbucketfilloptions.c:97
+#: ../app/tools/gimpbucketfilloptions.c:93
 msgid "Which area will be filled"
 msgstr "Quale area da riempire"
 
-#: ../app/tools/gimpbucketfilloptions.c:102
+#: ../app/tools/gimpbucketfilloptions.c:98
 msgid "Allow completely transparent regions to be filled"
 msgstr "Permetti che le regioni completamente trasparenti vengano riempite"
 
-#: ../app/tools/gimpbucketfilloptions.c:108
+#: ../app/tools/gimpbucketfilloptions.c:104
 msgid "Base filled area on all visible layers"
 msgstr "Basa l'area da riempire su tutti i livelli visibili"
 
-#: ../app/tools/gimpbucketfilloptions.c:114
+#: ../app/tools/gimpbucketfilloptions.c:110
 #: ../app/tools/gimpregionselectoptions.c:95
 msgid "Maximum color difference"
 msgstr "Massima differenza di colore"
 
-#: ../app/tools/gimpbucketfilloptions.c:119
-msgid "What to use for calculating an area to fill"
-msgstr "Cosa usare per calcolare l'area da riempire"
+#: ../app/tools/gimpbucketfilloptions.c:115
+msgid "Criterion used for determining color similarity"
+msgstr "Criterio usato per determinare la somiglianza di colore"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:230
+#: ../app/tools/gimpbucketfilloptions.c:226
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Tipo di riempimento (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:245
+#: ../app/tools/gimpbucketfilloptions.c:241
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Area coinvolta  (%s)"
 
-#: ../app/tools/gimpbucketfilloptions.c:249
+#: ../app/tools/gimpbucketfilloptions.c:245
 msgid "Fill whole selection"
 msgstr "Riempi intera selezione"
 
-#: ../app/tools/gimpbucketfilloptions.c:250
+#: ../app/tools/gimpbucketfilloptions.c:246
 msgid "Fill similar colors"
 msgstr "Riempi i colori simili"
 
-#: ../app/tools/gimpbucketfilloptions.c:259
+#: ../app/tools/gimpbucketfilloptions.c:255
 msgid "Finding Similar Colors"
 msgstr "Trova colori simili"
 
-#: ../app/tools/gimpbucketfilloptions.c:275
+#: ../app/tools/gimpbucketfilloptions.c:270
 msgid "Fill transparent areas"
 msgstr "Riempi aree trasparenti"
 
-#: ../app/tools/gimpbucketfilloptions.c:281 ../app/tools/gimpclonetool.c:113
+#: ../app/tools/gimpbucketfilloptions.c:276 ../app/tools/gimpclonetool.c:113
 #: ../app/tools/gimpcolorpickeroptions.c:155 ../app/tools/gimphealtool.c:98
 #: ../app/tools/gimpperspectiveclonetool.c:898
 #: ../app/tools/gimpregionselectoptions.c:209
 msgid "Sample merged"
 msgstr "Campionamento diffuso"
 
-#: ../app/tools/gimpbucketfilloptions.c:300
+#: ../app/tools/gimpbucketfilloptions.c:295
 msgid "Fill by:"
 msgstr "Riempimento per:"
 
@@ -12329,7 +12327,9 @@ msgstr "Ritaglia solo il livello attualmente selezionato"
 
 #: ../app/tools/gimpcropoptions.c:88
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
-msgstr "Permetti la ridimensione del disegnabile trascinando il riquadro di ritaglio oltre i limiti dell'immagine"
+msgstr ""
+"Permetti la ridimensione del disegnabile trascinando il riquadro di ritaglio "
+"oltre i limiti dell'immagine"
 
 #: ../app/tools/gimpcropoptions.c:164
 msgid "Current layer only"
@@ -12590,11 +12590,10 @@ msgid "Select a single contiguous area"
 msgstr "Seleziona una singola area contigua"
 
 #: ../app/tools/gimpforegroundselectoptions.c:91
-#, fuzzy
 msgid ""
 "Paint over areas to mark color values for inclusion or exclusion from "
 "selection"
-msgstr "Paint over areas to mark color values for inclusion or exclusion from selection"
+msgstr "Dipingere sopra le aree per contrassegnare i valori di colore da includere o escludere dalla selezione"
 
 #: ../app/tools/gimpforegroundselectoptions.c:98
 msgid "Size of the brush used for refinements"
@@ -12609,9 +12608,8 @@ msgstr ""
 "buchi"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
-#, fuzzy
 msgid "Color of selection preview mask"
-msgstr "Color of selection preview mask"
+msgstr "Maschera di anteprima di selezione colore"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
 msgid "Sensitivity for brightness component"
@@ -12894,12 +12892,12 @@ msgid "Adjustment"
 msgstr "Regolazione"
 
 #: ../app/tools/gimpinkoptions-gui.c:64 ../app/tools/gimpinkoptions-gui.c:87
-#: ../app/tools/gimppaintoptions-gui.c:135
+#: ../app/tools/gimppaintoptions-gui.c:134
 msgid "Size"
 msgstr "Dimensione"
 
 #: ../app/tools/gimpinkoptions-gui.c:71
-#: ../app/tools/gimppaintoptions-gui.c:184
+#: ../app/tools/gimppaintoptions-gui.c:183
 #: ../app/widgets/gimpbrusheditor.c:199
 msgid "Angle"
 msgstr "Angolo"
@@ -13085,7 +13083,9 @@ msgstr "_Zoom"
 
 #: ../app/tools/gimpmeasureoptions.c:67
 msgid "Open a floating dialog to view details about measurements"
-msgstr "Apre una finestra di dialogo flottante per visualizzare i dettagli sulle misurazioni"
+msgstr ""
+"Apre una finestra di dialogo flottante per visualizzare i dettagli sulle "
+"misurazioni"
 
 #: ../app/tools/gimpmeasureoptions.c:125
 msgid "Use info window"
@@ -13216,74 +13216,74 @@ msgstr "Strumento pennello: dipinge a tratti morbidi con un effetto pennello"
 msgid "_Paintbrush"
 msgstr "_Pennello"
 
-#: ../app/tools/gimppaintoptions-gui.c:100
+#: ../app/tools/gimppaintoptions-gui.c:99
 #: ../app/tools/gimpselectionoptions.c:212
 #: ../app/widgets/gimpbrushselect.c:185 ../app/widgets/gimplayertreeview.c:267
 msgid "Mode:"
 msgstr "Modalità:"
 
-#: ../app/tools/gimppaintoptions-gui.c:124
+#: ../app/tools/gimppaintoptions-gui.c:123
 msgid "Brush"
 msgstr "Pennello"
 
-#: ../app/tools/gimppaintoptions-gui.c:153
+#: ../app/tools/gimppaintoptions-gui.c:152
 msgid "Reset size to brush's native size"
 msgstr "Reimposta alla dimensione nativa del pennello"
 
-#: ../app/tools/gimppaintoptions-gui.c:160
+#: ../app/tools/gimppaintoptions-gui.c:159
 msgid "Aspect Ratio"
 msgstr "Rapporto dimensioni"
 
-#: ../app/tools/gimppaintoptions-gui.c:177
+#: ../app/tools/gimppaintoptions-gui.c:176
 msgid "Reset aspect ratio to brush's native"
 msgstr "Reimposta il rapporto dimensioni originale del pennello"
 
-#: ../app/tools/gimppaintoptions-gui.c:201
+#: ../app/tools/gimppaintoptions-gui.c:200
 msgid "Reset angle to zero"
 msgstr "Reimposta l'angolo a zero"
 
-#: ../app/tools/gimppaintoptions-gui.c:236
+#: ../app/tools/gimppaintoptions-gui.c:235
 msgid "Incremental"
 msgstr "Incrementale"
 
-#: ../app/tools/gimppaintoptions-gui.c:252
+#: ../app/tools/gimppaintoptions-gui.c:251
 msgid "Hard edge"
 msgstr "Margine netto"
 
-#: ../app/tools/gimppaintoptions-gui.c:281
+#: ../app/tools/gimppaintoptions-gui.c:280
 msgid "Dynamics Options"
 msgstr "Opzioni della dinamica"
 
-#: ../app/tools/gimppaintoptions-gui.c:287
+#: ../app/tools/gimppaintoptions-gui.c:286
 msgid "Fade Options"
 msgstr "Opzioni della dissolvenza"
 
-#: ../app/tools/gimppaintoptions-gui.c:301
+#: ../app/tools/gimppaintoptions-gui.c:300
 msgid "Fade length"
 msgstr "Lunghezza dissolvenza "
 
-#: ../app/tools/gimppaintoptions-gui.c:328
+#: ../app/tools/gimppaintoptions-gui.c:327
 #: ../app/widgets/gimpviewablebox.c:310
 msgid "Reverse"
 msgstr "Inverso"
 
-#: ../app/tools/gimppaintoptions-gui.c:335
+#: ../app/tools/gimppaintoptions-gui.c:334
 msgid "Color Options"
 msgstr "Opzioni colore"
 
-#: ../app/tools/gimppaintoptions-gui.c:361
+#: ../app/tools/gimppaintoptions-gui.c:360
 msgid "Amount"
 msgstr "Ammontare"
 
-#: ../app/tools/gimppaintoptions-gui.c:365
+#: ../app/tools/gimppaintoptions-gui.c:364
 msgid "Apply Jitter"
 msgstr "Applica jitter"
 
-#: ../app/tools/gimppaintoptions-gui.c:383
+#: ../app/tools/gimppaintoptions-gui.c:382
 msgid "Smooth stroke"
 msgstr "Sfoca delineatura"
 
-#: ../app/tools/gimppaintoptions-gui.c:393
+#: ../app/tools/gimppaintoptions-gui.c:392
 msgid "Weight"
 msgstr "Peso"
 
@@ -13377,9 +13377,8 @@ msgid "Posterize _levels:"
 msgstr "_Livelli di posterizzazione:"
 
 #: ../app/tools/gimprectangleoptions.c:104
-#, fuzzy
 msgid "Automatically shrink to the nearest rectangular shape in a layer"
-msgstr "Automatically shrink to the nearest rectangular shape in a layer"
+msgstr "Stringere automaticamente alla forma rettangolare più prossima nel livello"
 
 #: ../app/tools/gimprectangleoptions.c:113
 msgid "Use all visible layers when shrinking the selection"
@@ -13387,9 +13386,8 @@ msgstr "Usa tutti i livelli visibili quando si riduce la selezione"
 
 #: ../app/tools/gimprectangleoptions.c:122
 #: ../app/tools/gimptransformoptions.c:127
-#, fuzzy
 msgid "Composition guides such as rule of thirds"
-msgstr "Composition guides such as rule of thirds"
+msgstr "Composizione di guide come per la regola dei terzi"
 
 #: ../app/tools/gimprectangleoptions.c:131
 msgid "X coordinate of top left corner"
@@ -13704,11 +13702,10 @@ msgid "Adjust letter spacing"
 msgstr "Regola la spaziatura caratteri"
 
 #: ../app/tools/gimptextoptions.c:188
-#, fuzzy
 msgid ""
 "Whether text flows into rectangular shape ormoves into a new line when you "
 "press Enter"
-msgstr "Whether text flows into rectangular shape ormoves into a new line when you press Enter"
+msgstr "Se il flusso di testo debba avere forma rettangolare o debba spostarsi su una nuova riga all'inserimento di un ritorno a capo"
 
 #: ../app/tools/gimptextoptions.c:196
 msgid "Use an external editor window for text entry"
@@ -13831,9 +13828,8 @@ msgid "Interpolation method"
 msgstr "Metodo di interpolazione"
 
 #: ../app/tools/gimptransformoptions.c:111
-#, fuzzy
 msgid "How to clip"
-msgstr "How to clip"
+msgstr "Come ritagliare"
 
 #: ../app/tools/gimptransformoptions.c:117
 msgid "Show a preview of the transformed image"
@@ -13844,11 +13840,8 @@ msgid "Opacity of the preview image"
 msgstr "Opacità della finestra di anteprima"
 
 #: ../app/tools/gimptransformoptions.c:133
-#, fuzzy
 msgid "Size of a grid cell for variable number of composition guides"
-msgstr ""
-"Dimensione della griglia di celle per numero variabile di guide di "
-"composizione"
+msgstr "Dimensione di una cella di griglia per guide di composizione di numero variabile"
 
 #: ../app/tools/gimptransformoptions.c:138
 msgid "Limit rotation steps to 15 degrees"
