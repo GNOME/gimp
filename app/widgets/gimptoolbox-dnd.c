@@ -94,16 +94,6 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox,
 
   context = gimp_toolbox_get_context (toolbox);
 
-  /* We need to set this on the toolbox to make gimp-remote
-   * work. Remove this when we have gotten rid of gimp-remote.
-   */
-  gtk_drag_dest_set (GTK_WIDGET (toolbox),
-                     0, NULL, 0,
-                     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-  gimp_dnd_uri_list_dest_add (GTK_WIDGET (toolbox),
-                              gimp_toolbox_drop_uri_list,
-                              context);
-
   /* Before caling any dnd helper functions, setup the drag
    * destination manually since we want to handle all drag events
    * manually, otherwise we would not be able to give the drag handler
