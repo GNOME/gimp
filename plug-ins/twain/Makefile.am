@@ -55,7 +55,7 @@ EXTRA_DIST = \
 
 INCLUDES = \
 	-I$(top_srcdir)	\
-	$(GLIB_CFLAGS)	\
+	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \
