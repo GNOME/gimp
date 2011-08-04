@@ -79,7 +79,7 @@ gimp_single_window_strategy_create_dockable_dialog (GimpWindowStrategy *strategy
                                                     const gchar        *identifiers)
 {
   GList           *windows = gimp_get_image_windows (gimp);
-  GtkWidget       *widget;
+  GtkWidget       *widget  = NULL;
   GimpImageWindow *window;
 
   g_return_val_if_fail (g_list_length (windows) > 0, NULL);
