@@ -600,6 +600,7 @@ gimp_warp_tool_undo (GimpWarpTool *wt)
     bbox.width  = max_x - min_x + size;
     bbox.height = max_y - min_y + size;
 
+    gimp_image_map_abort (wt->image_map);
     gimp_image_map_apply_region (wt->image_map, &bbox);
   }
 
