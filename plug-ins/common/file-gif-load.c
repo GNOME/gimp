@@ -713,7 +713,8 @@ LZWReadByte (FILE *fd,
   static gint firstcode, oldcode;
   static gint clear_code, end_code;
   static gint table[2][(1 << MAX_LZW_BITS)];
-  static gint stack[(1 << (MAX_LZW_BITS)) * 2], *sp;
+#define STACK_SIZE ((1 << (MAX_LZW_BITS)) * 2)
+  static gint stack[STACK_SIZE], *sp;
   gint        i;
 
   if (just_reset_LZW)
@@ -788,7 +789,7 @@ LZWReadByte (FILE *fd,
 
           return firstcode & 255;
         }
-      else if (code == end_code)
+      else if (code == end_code || code > max_code)
         {
           gint   count;
           guchar buf[260];
@@ -807,13 +808,14 @@ LZWReadByte (FILE *fd,
 
       incode = code;
 
-      if (code >= max_code)
+      if (code == max_code)
         {
-          *sp++ = firstcode;
+          if (sp < &(stack[STACK_SIZE]))
+            *sp++ = firstcode;
           code = oldcode;
         }
 
-      while (code >= clear_code)
+      while (code >= clear_code && sp < &(stack[STACK_SIZE]))
         {
           *sp++ = table[1][code];
           if (code == table[0][code])
@@ -824,7 +826,8 @@ LZWReadByte (FILE *fd,
           code = table[0][code];
         }
 
-      *sp++ = firstcode = table[1][code];
+      if (sp < &(stack[STACK_SIZE]))
+        *sp++ = firstcode = table[1][code];
 
       if ((code = max_code) < (1 << MAX_LZW_BITS))
         {
