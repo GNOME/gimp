@@ -335,6 +335,10 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
   GtkWidget    *dock_window      = NULL;
   GtkAllocation original_size    = { 0, 0, 0, 0 };
 
+  /* Are there docks to move at all? */
+  if (! docks)
+    return;
+
   /* Remember the size so we can set the new dock window to the same
    * size
    */
