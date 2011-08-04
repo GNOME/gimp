@@ -303,7 +303,8 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
       window = gimp_display_shell_get_window (display_shell);
 
-      image_map_tool->overlay = gimp_image_window_get_fullscreen (window);
+      /*  disabled for at least GIMP 2.8  */
+      image_map_tool->overlay = FALSE;
 
       if (image_map_tool->overlay)
         {
