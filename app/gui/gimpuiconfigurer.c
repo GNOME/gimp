@@ -285,11 +285,17 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
                                          GimpDockColumns   *dock_columns,
                                          GimpAlignmentType  screen_side_destination)
 {
-  GdkScreen *screen           = gtk_widget_get_screen (GTK_WIDGET (dock_columns));
-  GList     *docks            = g_list_copy (gimp_dock_columns_get_docks (dock_columns));
-  GList     *iter             = NULL;
-  gboolean   contains_toolbox = FALSE;
-  GtkWidget *dock_window      = NULL;
+  GdkScreen    *screen           = gtk_widget_get_screen (GTK_WIDGET (dock_columns));
+  GList        *docks            = g_list_copy (gimp_dock_columns_get_docks (dock_columns));
+  GList        *iter             = NULL;
+  gboolean      contains_toolbox = FALSE;
+  GtkWidget    *dock_window      = NULL;
+  GtkAllocation original_size    = { 0, 0, 0, 0 };
+
+  /* Remember the size so we can set the new dock window to the same
+   * size
+   */
+  gtk_widget_get_allocation (GTK_WIDGET (dock_columns), &original_size);
 
   /* Do we need a toolbox window? */
   for (iter = docks; iter; iter = iter->next)
@@ -336,6 +342,11 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
     gtk_window_parse_geometry (GTK_WINDOW (dock_window), "-0+0");
   else
     g_assert_not_reached ();
+
+  /* Try to keep the same size */
+  gtk_window_set_default_size (GTK_WINDOW (dock_window),
+                               original_size.width,
+                               original_size.height);
 
   /* Don't forget to show the window */
   gtk_widget_show (dock_window);
