@@ -743,11 +743,11 @@ LZWReadByte (FILE *fd,
         }
       while (firstcode == clear_code);
 
-      return firstcode;
+      return firstcode & 255;
     }
 
   if (sp > stack)
-    return *--sp;
+    return (*--sp) & 255;
 
   while ((code = GetCode (fd, code_size, FALSE)) >= 0)
     {
@@ -770,7 +770,7 @@ LZWReadByte (FILE *fd,
           sp            = stack;
           firstcode     = oldcode = GetCode (fd, code_size, FALSE);
 
-          return firstcode;
+          return firstcode & 255;
         }
       else if (code == end_code)
         {
@@ -826,10 +826,10 @@ LZWReadByte (FILE *fd,
       oldcode = incode;
 
       if (sp > stack)
-        return *--sp;
+        return (*--sp) & 255;
     }
 
-  return code;
+  return code & 255;
 }
 
 static gint32
