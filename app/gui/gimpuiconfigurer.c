@@ -66,8 +66,7 @@ static void              gimp_ui_configurer_get_property                (GObject
                                                                          GValue            *value,
                                                                          GParamSpec        *pspec);
 static void              gimp_ui_configurer_move_docks_to_columns       (GimpUIConfigurer  *ui_configurer,
-                                                                         GimpDockColumns   *dock_columns,
-                                                                         gboolean           only_toolbox);
+                                                                         GimpImageWindow   *uber_image_window);
 static void              gimp_ui_configurer_move_shells                 (GimpUIConfigurer  *ui_configurer,
                                                                          GimpImageWindow   *source_image_window,
                                                                          GimpImageWindow   *target_image_window);
@@ -153,10 +152,45 @@ gimp_ui_configurer_get_property (GObject    *object,
     }
 }
 
+
 static void
-gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
-                                          GimpDockColumns   *dock_columns,
-                                          gboolean           only_toolbox)
+gimp_ui_configurer_get_window_center_pos (GtkWindow *window,
+                                          gint      *out_x,
+                                          gint      *out_y)
+{
+  gint x, y, w, h;
+  gtk_window_get_position (window, &x, &y);
+  gtk_window_get_size (window, &w, &h);
+
+  if (out_x)
+    *out_x = x + w / 2;
+  if (out_y)
+    *out_y = y + h / 2;
+}
+
+/**
+ * gimp_ui_configurer_get_relative_window_pos:
+ * @window_a:
+ * @window_b:
+ *
+ * Returns: At what side @window_b is relative to @window_a. Either
+ * GIMP_ALIGN_LEFT or GIMP_ALIGN_RIGHT.
+ **/
+static GimpAlignmentType
+gimp_ui_configurer_get_relative_window_pos (GtkWindow *window_a,
+                                            GtkWindow *window_b)
+{
+  gint a_x, b_x;
+
+  gimp_ui_configurer_get_window_center_pos (window_a, &a_x, NULL);
+  gimp_ui_configurer_get_window_center_pos (window_b, &b_x, NULL);
+
+  return b_x < a_x ? GIMP_ALIGN_LEFT : GIMP_ALIGN_RIGHT;
+}
+
+static void
+gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer *ui_configurer,
+                                          GimpImageWindow  *uber_image_window)
 {
   GList *dialogs     = NULL;
   GList *dialog_iter = NULL;
@@ -166,15 +200,28 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
 
   for (dialog_iter = dialogs; dialog_iter; dialog_iter = dialog_iter->next)
     {
-      GimpDockWindow    *dock_window    = NULL;
-      GimpDockContainer *dock_container = NULL;
-      GList             *docks          = NULL;
-      GList             *dock_iter      = NULL;
+      GimpDockWindow    *dock_window;
+      GimpDockContainer *dock_container;
+      GimpDockColumns   *dock_columns;
+      GList             *docks;
+      GList             *dock_iter;
 
       if (!GIMP_IS_DOCK_WINDOW (dialog_iter->data))
         continue;
 
-      dock_window    = GIMP_DOCK_WINDOW (dialog_iter->data);
+      dock_window = GIMP_DOCK_WINDOW (dialog_iter->data);
+
+      /* If the dock window is on the left side of the image window,
+       * move the docks to the left side. If the dock window is on the
+       * right side, move the docks to the right side of the image
+       * window.
+       */
+      if (gimp_ui_configurer_get_relative_window_pos (GTK_WINDOW (uber_image_window),
+                                                      GTK_WINDOW (dock_window)) == GIMP_ALIGN_LEFT)
+        dock_columns = gimp_image_window_get_left_docks (uber_image_window);
+      else
+        dock_columns = gimp_image_window_get_right_docks (uber_image_window);
+
       dock_container = GIMP_DOCK_CONTAINER (dock_window);
       g_object_add_weak_pointer (G_OBJECT (dock_window),
                                  (gpointer) &dock_window);
@@ -183,10 +230,6 @@ gimp_ui_configurer_move_docks_to_columns (GimpUIConfigurer  *ui_configurer,
       for (dock_iter = docks; dock_iter; dock_iter = dock_iter->next)
         {
           GimpDock *dock = GIMP_DOCK (dock_iter->data);
-
-          if (only_toolbox &&
-              ! GIMP_IS_TOOLBOX (dock))
-            continue;
 
           /* Move the dock from the image window to the dock columns
            * widget. Note that we need a ref while the dock is parentless
@@ -407,31 +450,15 @@ gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer *ui_configurer)
   GList           *windows           = gimp_get_image_windows (gimp);
   GList           *iter              = NULL;
   GimpImageWindow *uber_image_window = NULL;
-  GimpDockColumns *left_docks        = NULL;
-  GimpDockColumns *right_docks       = NULL;
 
   /* Get and setup the window to put everything in */
   uber_image_window = gimp_ui_configurer_get_uber_window (ui_configurer);
 
-  /* Get dock areas */
-  left_docks  = gimp_image_window_get_left_docks (uber_image_window);
-  right_docks = gimp_image_window_get_right_docks (uber_image_window);
-
-  /* First move the toolbox to the left side of the image
-   * window
-   */
+  /* Mve docks to the left and right side of the image window */
   gimp_ui_configurer_move_docks_to_columns (ui_configurer,
-                                            left_docks,
-                                            TRUE /*only_toolbox*/);
+                                            uber_image_window);
 
-  /* Then move the other docks to the right side of the image
-   * window
-   */
-  gimp_ui_configurer_move_docks_to_columns (ui_configurer,
-                                            right_docks,
-                                            FALSE /*only_toolbox*/);
-
-  /* Move stuff from other windows to the uber image window */
+  /* Move image shells from other windows to the uber image window */
   for (iter = windows; iter; iter = g_list_next (iter))
     {
       GimpImageWindow *image_window = GIMP_IMAGE_WINDOW (iter->data);
