@@ -22,7 +22,7 @@
 #include "gimpdrawtool.h"
 
 
-#define TRANS_INFO_SIZE  8
+#define TRANS_INFO_SIZE 10
 
 typedef enum
 {
@@ -64,6 +64,12 @@ struct _GimpTransformTool
 
   gdouble         lastx;           /*  last x coord                      */
   gdouble         lasty;           /*  last y coord                      */
+
+  gdouble         previousx;       /*  previous x coord                  */
+  gdouble         previousy;       /*  previous y coord                  */
+
+  gdouble         mousex;          /*  x coord where mouse was clicked   */
+  gdouble         mousey;          /*  y coord where mouse was clicked   */
 
   gint            x1, y1;          /*  upper left hand coordinate        */
   gint            x2, y2;          /*  lower right hand coords           */

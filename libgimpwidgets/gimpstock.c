@@ -342,6 +342,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOL_SMUDGE,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_TEXT,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_THRESHOLD,           NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TOOL_UNIFIED_TRANSFORM, N_("_Transform"), 0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_ZOOM,                NULL,        0, 0, LIBGIMP_DOMAIN }
 };
 
@@ -497,6 +498,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOL_SMUDGE,              stock_tool_smudge_22              },
   { GIMP_STOCK_TOOL_TEXT,                stock_tool_text_22                },
   { GIMP_STOCK_TOOL_THRESHOLD,           stock_tool_threshold_22           },
+  { GIMP_STOCK_TOOL_UNIFIED_TRANSFORM,   stock_tool_unified_transform_22   },
   { GIMP_STOCK_TOOL_ZOOM,                stock_tool_zoom_22                },
 
   { GIMP_STOCK_INFO,                     stock_info_24                     },
@@ -664,6 +666,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_TOOL_SMUDGE,              stock_tool_smudge_16              },
   { GIMP_STOCK_TOOL_TEXT,                stock_tool_text_16                },
   { GIMP_STOCK_TOOL_THRESHOLD,           stock_tool_threshold_16           },
+  { GIMP_STOCK_TOOL_UNIFIED_TRANSFORM,   stock_tool_unified_transform_16   },
   { GIMP_STOCK_TOOL_ZOOM,                stock_tool_zoom_16                },
 
   { GIMP_STOCK_INFO,                     stock_info_16                     },

@@ -47,6 +47,7 @@ struct _GimpTransformOptions
   GimpGuidesType            grid_type;
   gint                      grid_size;
   gboolean                  constrain;
+  gboolean                  alternate;
 };
 
 

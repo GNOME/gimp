@@ -35,6 +35,7 @@
 
 #include "gimprotatetool.h"
 #include "gimpscaletool.h"
+#include "gimpunifiedtransformtool.h"
 #include "gimptooloptions-gui.h"
 #include "gimptransformoptions.h"
 
@@ -53,6 +54,7 @@ enum
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
   PROP_CONSTRAIN,
+  PROP_ALTERNATE,
 };
 
 
@@ -139,6 +141,11 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                     NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ALTERNATE,
+                                    "alternate",
+                                    N_("Use alternate set of controls"),
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -184,6 +191,9 @@ gimp_transform_options_set_property (GObject      *object,
     case PROP_CONSTRAIN:
       options->constrain = g_value_get_boolean (value);
       break;
+    case PROP_ALTERNATE:
+      options->alternate = g_value_get_boolean (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -226,6 +236,9 @@ gimp_transform_options_get_property (GObject    *object,
       break;
     case PROP_CONSTRAIN:
       g_value_set_boolean (value, options->constrain);
+      break;
+    case PROP_ALTERNATE:
+      g_value_set_boolean (value, options->alternate);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -270,6 +283,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget   *grid_box;
   const gchar *constrain_label = NULL;
   const gchar *constrain_tip   = NULL;
+  const gchar *alternate = NULL;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -351,6 +365,26 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
     {
       constrain_label = _("Keep aspect  (%s)");
       constrain_tip   = _("Keep the original aspect ratio");
+    }
+  else if (tool_options->tool_info->tool_type == GIMP_TYPE_UNIFIED_TRANSFORM_TOOL)
+    {
+      alternate = (_("Move points  (%s)"));
+      constrain_label = constrain_tip = (_("Keep aspect when scaling  (%s)"));
+    }
+
+  if (alternate)
+    {
+      GtkWidget *button;
+      gchar     *label;
+
+      label = g_strdup_printf (alternate,
+                               gimp_get_mod_string (GDK_MOD1_MASK));
+
+      button = gimp_prop_check_button_new (config, "alternate", label);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      g_free (label);
     }
 
   if (constrain_label)

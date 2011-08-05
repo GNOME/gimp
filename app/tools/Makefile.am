@@ -194,6 +194,8 @@ libapptools_a_sources = \
 	gimptransformtool.h		\
 	gimptransformtoolundo.c		\
 	gimptransformtoolundo.h		\
+	gimpunifiedtransformtool.c		\
+	gimpunifiedtransformtool.h		\
 	gimpvectoroptions.c		\
 	gimpvectoroptions.h		\
 	gimpvectortool.c		\

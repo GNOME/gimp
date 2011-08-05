@@ -142,6 +142,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_SMUDGE              "gimp-tool-smudge"
 #define GIMP_STOCK_TOOL_TEXT                "gimp-tool-text"
 #define GIMP_STOCK_TOOL_THRESHOLD           "gimp-tool-threshold"
+#define GIMP_STOCK_TOOL_UNIFIED_TRANSFORM   "gimp-tool-unified-transform"
 #define GIMP_STOCK_TOOL_ZOOM                "gimp-tool-zoom"
 
 

@@ -59,6 +59,7 @@
 
 #include "gimptoolcontrol.h"
 #include "gimpperspectivetool.h"
+#include "gimpunifiedtransformtool.h"
 #include "gimptransformoptions.h"
 #include "gimptransformtool.h"
 #include "gimptransformtoolundo.h"
@@ -208,10 +209,9 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
                                      GIMP_CURSOR_PRECISION_SUBPIXEL);
 
   tr_tool->function      = TRANSFORM_CREATING;
+  tr_tool->progress_text = _("Transforming");
 
   gimp_matrix3_identity (&tr_tool->transform);
-
-  tr_tool->progress_text = _("Transforming");
 }
 
 static void
@@ -499,6 +499,11 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
     g_object_set (options,
                   "constrain", ! options->constrain,
                   NULL);
+
+  if (key == GDK_MOD1_MASK)
+    g_object_set (options,
+                  "alternate", ! options->alternate,
+                  NULL);
 }
 
 static void
@@ -723,7 +728,7 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 
-  if (! strcmp (pspec->name, "constrain"))
+  if (! strcmp (pspec->name, "constrain") || ! strcmp (pspec->name, "alternate"))
     {
       gimp_transform_tool_dialog_update (tr_tool);
     }
@@ -754,7 +759,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                                 tr_tool->y1,
                                                 tr_tool->x2,
                                                 tr_tool->y2,
-                                                GIMP_IS_PERSPECTIVE_TOOL (tr_tool),
+                                                GIMP_IS_PERSPECTIVE_TOOL (tr_tool) || GIMP_IS_UNIFIED_TRANSFORM_TOOL (tr_tool),
                                                 options->preview_opacity);
         }
 
@@ -851,7 +856,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   if (tr_tool->use_pivot)
     {
       GimpCanvasGroup *stroke_group;
-      gint d = MIN (handle_w, handle_h);
+      gint d = MIN (handle_w, handle_h) * 2; /* so you can grab it from under the center handle */
 
       stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
 
@@ -1310,11 +1315,11 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
   gimp_matrix3_transform_point (&tr_tool->transform,
                                 tr_tool->x2, tr_tool->y2,
                                 &tr_tool->tx4, &tr_tool->ty4);
-
-  /* don't transform these */
   gimp_matrix3_transform_point (&tr_tool->transform,
                                 tr_tool->px, tr_tool->py,
                                 &tr_tool->tpx, &tr_tool->tpy);
+
+  /* don't transform these */
   tr_tool->tpx = tr_tool->px;
   tr_tool->tpy = tr_tool->py;
 
