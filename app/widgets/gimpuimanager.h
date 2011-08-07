@@ -44,6 +44,10 @@ struct _GimpUIManagerUIEntry
 
 typedef struct _GimpUIManagerClass GimpUIManagerClass;
 
+/**
+ * Among other things, is responsible for updating menu bars. A more
+ * appropriate name would perhaps be GimpMenubarManager.
+ */
 struct _GimpUIManager
 {
   GtkUIManager  parent_instance;
