@@ -249,6 +249,12 @@ gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_MOVE);
 
+  /* In order to achieve as much instant reponse as possible, only care
+   * about the location of the mouse at present (while it's being moved)
+   * and ignore motion events that happened while we were dealing with
+   * previous motion events */
+  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
+
   self->paste           = NULL;
   
   self->tricache        = NULL;
@@ -301,14 +307,12 @@ gimp_seamless_clone_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
+      /* We only have what to stop if we are active on some display */
+      if (tool->display != NULL)
+        gimp_seamless_clone_tool_stop (sc, FALSE);
 
-      gimp_seamless_clone_tool_stop (sc, FALSE);
-
-      /* When a tool Halts, it means it should finish completly. So set
-       * the display to NULL. Why? Not sure exactly, especially when the
-       * father classes also do it. But other tools do this, so reamin
-       * with this for now.
-       */
+      /* Now, mark that we have no display, so any needed initialization
+       * will happen on the next time a display is picked */
       tool->display = NULL;
 
       /* TODO: If we have any tool options that should be reset, here is
@@ -347,14 +351,23 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
   gint          off_x;
   gint          off_y;
 
+  /* First handle the paste - we need to make sure we have one in order
+   * to do anything else. */
+  if (sc->paste == NULL)
+    {
+      /* TODO: Call to preprocessing should be done here, along with a
+       * call to cache the paste. If there is no paste, prompt nicely
+       * for a message requesting the user to actually copy something to
+       * the clipboard */
+    }
+  
   /* Free resources which are relevant only for the previous display */
   gimp_seamless_clone_tool_stop (sc, TRUE);
 
   /* Set the new tool display */
   tool->display = display;
 
-  /* Create the image map for the current display? The answer is no!
-   * Create yourself once preprocessing is finished! */
+  sc->image_map = gimp_seamless_clone_tool_create_image_map (sc, drawable);
 
   /* Now call the start method of the draw tool */
   gimp_draw_tool_start (GIMP_DRAW_TOOL (sc), display);
@@ -494,10 +507,10 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
 
 static void
 gimp_seamless_clone_tool_motion (GimpTool         *tool,
-                       const GimpCoords *coords,
-                       guint32           time,
-                       GdkModifierType   state,
-                       GimpDisplay      *display)
+                                 const GimpCoords *coords,
+                                 guint32           time,
+                                 GdkModifierType   state,
+                                 GimpDisplay      *display)
 {
   sc_debug_fstart ();
 
@@ -508,7 +521,16 @@ gimp_seamless_clone_tool_motion (GimpTool         *tool,
    * won't be done using data in intermidiate states */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /* TODO: Modify data here */
+  /* There is nothing to do, unless we were actually moving a paste */
+  if (sc->tool_state == SC_STATE_RENDER_MOTION)
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
+
+      sc->xoff = sc->xoff_p + (gint) (coords->x - sc->xclick);
+      sc->yoff = sc->yoff_p + (gint) (coords->y - sc->yclick);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
 
   /* Done modifying data? If so, now restore the tool drawing */
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -518,10 +540,10 @@ gimp_seamless_clone_tool_motion (GimpTool         *tool,
 
 static void
 gimp_seamless_clone_tool_oper_update (GimpTool         *tool,
-                            const GimpCoords *coords,
-                            GdkModifierType   state,
-                            gboolean          proximity,
-                            GimpDisplay      *display)
+                                      const GimpCoords *coords,
+                                      GdkModifierType   state,
+                                      gboolean          proximity,
+                                      GimpDisplay      *display)
 {
   sc_debug_fstart ();
 
@@ -553,56 +575,90 @@ gimp_seamless_clone_tool_button_press (GimpTool            *tool,
   if (display != tool->display)
     gimp_seamless_clone_tool_start (sc, display);
 
+  if (sc->tool_state == SC_STATE_RENDER_WAIT
+      && gimp_seamless_clone_tool_is_in_paste_c (sc, coords))
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
+
+      /* Record previous location, in case the user cancel's the
+       * movement */
+      sc->xoff_p = sc->xoff;
+      sc->yoff_p = sc->yoff;
+
+      /* Record the mouse location, so that the dragging offset can be
+       * calculated */
+      sc->xclick = coords->x;
+      sc->yclick = coords->y;
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
+
   sc_debug_fend ();
 }
 
 void
 gimp_seamless_clone_tool_button_release (GimpTool              *tool,
-                               const GimpCoords      *coords,
-                               guint32                time,
-                               GdkModifierType        state,
-                               GimpButtonReleaseType  release_type,
-                               GimpDisplay           *display)
+                                         const GimpCoords      *coords,
+                                         guint32                time,
+                                         GdkModifierType        state,
+                                         GimpButtonReleaseType  release_type,
+                                         GimpDisplay           *display)
 {
   sc_debug_fstart ();
 
   GimpSeamlessCloneTool    *sc      = GIMP_SEAMLESS_CLONE_TOOL (tool);
-  GimpSeamlessCloneOptions *options = GIMP_SEAMLESS_CLONE_TOOL_GET_OPTIONS (sc);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
-
-  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+  /* There is nothing to do, unless we were actually moving a paste */
+  if (sc->tool_state == SC_STATE_RENDER_MOTION)
     {
-      /* Cancelling */
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
 
+      if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+        {
+          sc->xoff = sc->xoff_p;
+          sc->yoff = sc->yoff_p;
+        }
+      else
+        {
+          sc->xoff = sc->xoff_p + (gint) (coords->x - sc->xclick);
+          sc->yoff = sc->yoff_p + (gint) (coords->y - sc->yclick);
+        }
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
-  else
-    {
-      /* Normal release */
-
-    }
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   sc_debug_fend ();
 
 }
 
+/* Mouse cursor policy:
+ * - Always use the move cursor
+ * - While dragging the paste, use a move modified
+ * - Else, While hovering above it, display no modifier
+ * - Else, display a "bad" modifier
+ */
 static void
 gimp_seamless_clone_tool_cursor_update (GimpTool         *tool,
-                              const GimpCoords *coords,
-                              GdkModifierType   state,
-                              GimpDisplay      *display)
+                                        const GimpCoords *coords,
+                                        GdkModifierType   state,
+                                        GimpDisplay      *display)
 {
   sc_debug_fstart ();
+  GimpSeamlessCloneTool *sc       = GIMP_SEAMLESS_CLONE_TOOL (tool);
+  GimpCursorModifier     modifier = GIMP_CURSOR_MODIFIER_BAD;
 
-  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_PLUS;
-
+  /* Only update if the tool is actually active on some display */
   if (tool->display)
     {
-    }
+      if (sc->tool_state == SC_STATE_RENDER_MOTION)
+        modifier = GIMP_CURSOR_MODIFIER_MOVE;
+        
+      else if (sc->tool_state == SC_STATE_RENDER_WAIT
+               && gimp_seamless_clone_tool_is_in_paste_c (sc, coords))
+        modified = GIMP_CURSOR_MODIFIER_NONE;
 
-  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+      gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+    }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 
@@ -610,6 +666,9 @@ gimp_seamless_clone_tool_cursor_update (GimpTool         *tool,
 
 }
 
+/* Draw any required on canvas interaction. For now, this is kept empty.
+ * It's a place holder for the future of this tool, for some more
+ * advanced features that may be added later */
 static void
 gimp_seamless_clone_tool_draw (GimpDrawTool *draw_tool)
 {
@@ -619,6 +678,11 @@ gimp_seamless_clone_tool_draw (GimpDrawTool *draw_tool)
 
 }
 
+/* This function creates a Gegl node graph of the composition which is
+ * needed to render the drawable. The graph should have an "input" pad
+ * which will receive the drawable on which the preview is applied, and
+ * it should also have an "output" pad to which the final result will be
+ * rendered */
 static void
 gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 {
@@ -637,17 +701,21 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 
 }
 
+/* Create an image map to render the operation of the current tool with
+ * a preview on the given drawable */
 static void
 gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
-                                 GimpDrawable          *drawable)
+                                           GimpDrawable          *drawable)
 {
   sc_debug_fstart ();
 
+  /* FIrst, make sure we actually have the GEGL graph needed to render
+   * the operation's result */
   if (!sc->render_node)
     gimp_seamless_clone_tool_create_render_node (sc);
 
   sc->image_map = gimp_image_map_new (drawable,
-                                      _("Cage transform"),
+                                      _("Seamless Clone"),
                                       sc->render_node,
                                       NULL,
                                       NULL);
@@ -660,9 +728,10 @@ gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
 
 }
 
+/* Flush (Refresh) the image map preview */
 static void
 gimp_seamless_clone_tool_image_map_flush (GimpImageMap *image_map,
-                                GimpTool     *tool)
+                                          GimpTool     *tool)
 {
   sc_debug_fstart ();
 
@@ -675,6 +744,14 @@ gimp_seamless_clone_tool_image_map_flush (GimpImageMap *image_map,
 
 }
 
+/**
+ * gimp_seamless_clone_tool_image_map_update:
+ * @sc: A GimpSeamlessCloneTool to update
+ *
+ * This functions updates the image map preview displayed by a given
+ * GimpSeamlessCloneTool. The image_map must be initialized prior to the
+ * call to this function!
+ */
 static void
 gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
 {
@@ -688,10 +765,15 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   gint              off_x, off_y;
   GeglRectangle     visible;
 
+  /* Find out at which x,y is the top left corner of the currently
+   * displayed part */
   gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
 
+  /* Find out where is our drawable positioned */
   gimp_item_get_offset (item, &off_x, &off_y);
 
+  /* Create a rectangle from the intersection of the currently displayed
+   * part with the drawable */
   gimp_rectangle_intersect (x, y, w, h,
                             off_x,
                             off_y,
@@ -702,9 +784,14 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
                             &visible.width,
                             &visible.height);
 
+  /* Since the image_map_apply function receives a rectangle describing
+   * where it should update the preview, and since that rectangle should
+   * be relative to the drawable's location, we now offset back by the
+   * drawable's offsetts. */
   visible.x -= off_x;
   visible.y -= off_y;
 
+  /* Now update the image map and show this area */
   gimp_image_map_apply (sc->image_map, &visible);
 
   sc_debug_fend ();
