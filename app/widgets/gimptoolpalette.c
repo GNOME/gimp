@@ -255,10 +255,6 @@ gimp_tool_palette_constructed (GObject *object)
                            G_CALLBACK (gimp_tool_palette_tool_changed),
                            object,
                            0);
-
-#if 0
-  gimp_tool_palette_dnd_init (GIMP_TOOL_PALETTE (palette));
-#endif
 }
 
 static void
