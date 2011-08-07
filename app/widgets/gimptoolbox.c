@@ -60,17 +60,13 @@
 enum
 {
   PROP_0,
-  PROP_CONTEXT,
-  PROP_DIALOG_FACTORY,
-  PROP_UI_MANAGER
+  PROP_CONTEXT
 };
 
 
 struct _GimpToolboxPrivate
 {
   GimpContext       *context;
-  GimpDialogFactory *dialog_factory;
-  GimpUIManager     *ui_manager;
 
   GtkWidget         *vbox;
 
@@ -90,8 +86,8 @@ struct _GimpToolboxPrivate
 };
 
 
-static void        gimp_toolbox_constructed             (GObject               *object);
-static void        gimp_toolbox_dispose                 (GObject               *object);
+static void        gimp_toolbox_constructed             (GObject        *object);
+static void        gimp_toolbox_dispose                 (GObject        *object);
 static void        gimp_toolbox_set_property            (GObject        *object,
                                                          guint           property_id,
                                                          const GValue   *value,
@@ -182,20 +178,6 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
-                                   g_param_spec_object ("dialog-factory",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_DIALOG_FACTORY,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
-
-  g_object_class_install_property (object_class, PROP_UI_MANAGER,
-                                   g_param_spec_object ("ui-manager",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_UI_MANAGER,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
-
   g_type_class_add_private (klass, sizeof (GimpToolboxPrivate));
 }
 
@@ -220,8 +202,6 @@ gimp_toolbox_constructed (GObject *object)
   GList         *list;
 
   g_assert (GIMP_IS_CONTEXT (toolbox->p->context));
-  g_assert (GIMP_IS_UI_MANAGER (toolbox->p->ui_manager));
-  g_assert (GIMP_IS_DIALOG_FACTORY (toolbox->p->dialog_factory));
 
   config = GIMP_GUI_CONFIG (toolbox->p->context->gimp->config);
 
@@ -273,9 +253,9 @@ gimp_toolbox_constructed (GObject *object)
                            G_CALLBACK (toolbox_wilber_notify),
                            toolbox->p->header, 0);
 
-  toolbox->p->tool_palette = gimp_tool_palette_new (toolbox->p->context,
-                                                    toolbox->p->ui_manager,
-                                                    toolbox->p->dialog_factory);
+  toolbox->p->tool_palette = gimp_tool_palette_new ();
+  gimp_tool_palette_set_toolbox (GIMP_TOOL_PALETTE (toolbox->p->tool_palette),
+                                 toolbox);
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->tool_palette,
                       FALSE, FALSE, 0);
   gtk_widget_show (toolbox->p->tool_palette);
@@ -361,18 +341,6 @@ gimp_toolbox_dispose (GObject *object)
       toolbox->p->context = NULL;
     }
 
-  if (toolbox->p->dialog_factory)
-    {
-      g_object_unref (toolbox->p->dialog_factory);
-      toolbox->p->dialog_factory = NULL;
-    }
-
-  if (toolbox->p->ui_manager)
-    {
-      g_object_unref (toolbox->p->ui_manager);
-      toolbox->p->ui_manager = NULL;
-    }
-
   G_OBJECT_CLASS (parent_class)->dispose (object);
 
   toolbox->p->in_destruction = FALSE;
@@ -390,14 +358,6 @@ gimp_toolbox_set_property (GObject      *object,
     {
     case PROP_CONTEXT:
       toolbox->p->context = g_value_dup_object (value);
-      break;
-
-    case PROP_DIALOG_FACTORY:
-      toolbox->p->dialog_factory = g_value_dup_object (value);
-      break;
-
-    case PROP_UI_MANAGER:
-      toolbox->p->ui_manager = g_value_dup_object (value);
       break;
 
     default:
@@ -418,14 +378,6 @@ gimp_toolbox_get_property (GObject    *object,
     {
     case PROP_CONTEXT:
       g_value_set_object (value, toolbox->p->context);
-      break;
-
-    case PROP_DIALOG_FACTORY:
-      g_value_set_object (value, toolbox->p->dialog_factory);
-      break;
-
-    case PROP_UI_MANAGER:
-      g_value_set_object (value, toolbox->p->ui_manager);
       break;
 
     default:
@@ -683,9 +635,7 @@ gimp_toolbox_new (GimpDialogFactory *factory,
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (ui_manager), NULL);
 
   return g_object_new (GIMP_TYPE_TOOLBOX,
-                       "dialog-factory", factory,
-                       "context",        context,
-                       "ui-manager",     ui_manager,
+                       "context", context,
                        NULL);
 }
 
@@ -695,14 +645,6 @@ gimp_toolbox_get_context (GimpToolbox *toolbox)
   g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
 
   return toolbox->p->context;
-}
-
-GimpDialogFactory *
-gimp_toolbox_get_dialog_factory (GimpToolbox *toolbox)
-{
-  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
-
-  return toolbox->p->dialog_factory;
 }
 
 void

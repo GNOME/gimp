@@ -51,7 +51,7 @@ brush_preview_clicked (GtkWidget       *widget,
                        GdkModifierType  state,
                        GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (gimp_toolbox_get_dialog_factory (toolbox),
+  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                     gtk_widget_get_screen (widget),
                                     "gimp-brush-grid|gimp-brush-list", -1);
 }
@@ -73,7 +73,7 @@ pattern_preview_clicked (GtkWidget       *widget,
                          GdkModifierType  state,
                          GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (gimp_toolbox_get_dialog_factory (toolbox),
+  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                     gtk_widget_get_screen (widget),
                                     "gimp-pattern-grid|gimp-pattern-list", -1);
 }
@@ -95,7 +95,7 @@ gradient_preview_clicked (GtkWidget       *widget,
                           GdkModifierType  state,
                           GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (gimp_toolbox_get_dialog_factory (toolbox),
+  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                     gtk_widget_get_screen (widget),
                                     "gimp-gradient-list|gimp-gradient-grid", -1);
 }
