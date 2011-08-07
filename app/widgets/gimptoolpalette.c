@@ -32,6 +32,7 @@
 
 #include "gimpdialogfactory.h"
 #include "gimptoolpalette.h"
+#include "gimptoolpalette.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
