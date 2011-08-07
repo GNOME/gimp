@@ -453,4 +453,9 @@ gimp_tool_palette_initialize_tools (GimpToolPalette *palette)
                                      tool_info->help, tool_info->help_id);
         }
     }
+
+  /* We only need to initialize tools once */
+  g_signal_handlers_disconnect_by_func (private->toolbox,
+                                        gimp_tool_palette_initialize_tools,
+                                        palette);
 }
