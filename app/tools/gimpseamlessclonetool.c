@@ -35,6 +35,7 @@
 #include "base/tile-manager.h"
 
 #include "core/gimp.h"
+#include "core/gimpbuffer.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-shadow.h"
 #include "core/gimpimage.h"
@@ -44,6 +45,7 @@
 #include "core/gimpprojection.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpclipboard.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -327,6 +329,64 @@ gimp_seamless_clone_tool_control (GimpTool       *tool,
 }
 
 /**
+ * paste_to_gegl_buf:
+ * @tool: The GimpTool which wishes to acquire the paste
+ *
+ * This function takes a GimpTool as a parameter, and using it's Gimp
+ * object, it will convert the current buffer in the clipboard into a
+ * GeglBuffer.
+ *
+ * Returns: A GeglBuffer* object representing the active paste in Gimp's
+ *          clipboard, or NULL if the clipboard does not contain image
+ *          data
+ */
+static GeglBuffer*
+paste_to_gegl_buf (GimpTool *tool)
+{
+  GeglNode      *gegl, *input, *output;
+  GeglProcessor *processor;
+
+  GimpContext   *context = & gimp_tool_get_options (tool) -> parent_instance;
+  GimpBuffer    *buffer = gimp_clipboard_get_buffer (context->gimp);
+  TileManager   *tiles;
+  gdouble        value;
+  GeglBuffer    *result = NULL;
+
+  if (buffer)
+    {
+      gegl = gegl_node_new ();
+ 
+      input = gegl_node_new_child (gegl,
+                                   "operation", "gimp:tilemanager-source",
+                                   "tile-manager", tiles = gimp_buffer_get_tiles (buffer),
+                                   NULL);
+    
+      output = gegl_node_new_child (gegl,
+                                    "operation", "gegl:buffer-sink",
+                                    "buffer",    &result,
+                                    NULL);
+    
+      gegl_node_connect_to (input,  "output",
+                            output, "input");
+
+      processor = gegl_node_new_processor (output, NULL);
+
+       while (gegl_processor_work (processor, &value))
+         {
+         }
+     
+       gegl_processor_destroy (processor);
+
+       tile_manager_unref (tiles);
+
+       g_object_unref (gegl);
+       
+       g_object_unref (buffer);
+    }
+
+  return result;
+}
+/**
  * gimp_seamless_clone_tool_start:
  * @sc: The GimpSeamlessCloneTool to initialize for usage on the given
  *      display
@@ -353,16 +413,18 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
    * to do anything else. */
   if (sc->paste == NULL)
     {
-      /* TODO: Call to preprocessing should be done here, along with a
-       * call to cache the paste. If there is no paste, prompt nicely
-       * for a message requesting the user to actually copy something to
-       * the clipboard */
-
-       if (sc->paste == NULL)
-         {
-           /* TODO: prompt for some error message */
-           return;
-         }
+      sc->paste = paste_to_gegl_buf (GIMP_TOOL (sc));
+      
+      if (sc->paste == NULL)
+        {
+          /* TODO: prompt for some error message */
+          return;
+        }
+      else
+        {
+          sc->width = gegl_buffer_get_width (sc->paste);
+          sc->height = gegl_buffer_get_height (sc->paste);
+        }
     }
   
   /* Free resources which are relevant only for the previous display */
@@ -376,6 +438,8 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
 
   /* Now call the start method of the draw tool */
   gimp_draw_tool_start (GIMP_DRAW_TOOL (sc), display);
+
+  sc->tool_state = SC_STATE_RENDER_WAIT;
 
   sc_debug_fend ();
 }
@@ -402,6 +466,10 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
                                gboolean               display_change_only)
 {
   sc_debug_fstart ();
+
+  /* See if we actually have any reason to stop */
+  if (GIMP_TOOL(sc)->display == NULL)
+    return;
 
   if (! display_change_only)
     {
@@ -577,7 +645,11 @@ gimp_seamless_clone_tool_button_press (GimpTool            *tool,
   sc_debug_fstart ();
 
   if (display != tool->display)
-    gimp_seamless_clone_tool_start (sc, display);
+    {
+      gimp_seamless_clone_tool_start (sc, display);
+      sc->xoff = (gint) coords->x + sc->width / 2;
+      sc->yoff = (gint) coords->y + sc->height / 2;
+    }
 
   if (sc->tool_state == SC_STATE_RENDER_WAIT
       && gimp_seamless_clone_tool_is_in_paste_c (sc, coords))
@@ -702,7 +774,7 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
    * +--+--------------------------+
    * |  |output                    |
    * |  |                          |
-   * |  |  <buffer-sink>  <- paste |
+   * |  | <buffer-source> <- paste |
    * |  |       |output            |
    * |  |       |                  |
    * |  |       |input             |
@@ -729,7 +801,7 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
   output = gegl_node_get_output_proxy (node, "output");
 
   paste     = gegl_node_new_child (node,
-                                   "operation", "gegl:buffer-sink",
+                                   "operation", "gegl:buffer-source",
                                    "buffer",    sc->paste,
                                    NULL);
 
@@ -744,7 +816,7 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
    * No need to introduce potential GEGL side bugs before we know the
    * GIMP side works. */
   op = gegl_node_new_child (node,
-                            "operation", "gegl:nop",
+                            "operation", "gegl:over",
                             NULL);
 
   gegl_node_connect_to (input,     "output",
