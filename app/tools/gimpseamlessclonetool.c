@@ -199,10 +199,10 @@ gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_seamless_clone_tool_class_init (GimpSeamlessCloneToolClass *klass)
 {
-  sc_debug_fstart ();
-
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+
+  sc_debug_fstart ();
 
   tool_class->options_notify = gimp_seamless_clone_tool_options_notify;
   tool_class->button_press   = gimp_seamless_clone_tool_button_press;
@@ -229,9 +229,9 @@ gimp_seamless_clone_tool_class_init (GimpSeamlessCloneToolClass *klass)
 static void
 gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
 {
-  sc_debug_fstart ();
-
   GimpTool *tool = GIMP_TOOL (self);
+
+  sc_debug_fstart ();
 
   /* TODO: If we want our tool to be invalidated by something, enable
    * the following line. Note that the enum of the dirty properties is
@@ -279,9 +279,9 @@ gimp_seamless_clone_tool_control (GimpTool       *tool,
                                   GimpToolAction  action,
                                   GimpDisplay    *display)
 {
-  sc_debug_fstart ();
-
   GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
+
+  sc_debug_fstart ();
 
 #if SC_DEBUG
   switch (action)
@@ -343,13 +343,11 @@ static void
 gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
                                 GimpDisplay           *display)
 {
-  sc_debug_fstart ();
-
   GimpTool     *tool     = GIMP_TOOL (sc);
   GimpImage    *image    = gimp_display_get_image (display);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-  gint          off_x;
-  gint          off_y;
+
+  sc_debug_fstart ();
 
   /* First handle the paste - we need to make sure we have one in order
    * to do anything else. */
@@ -359,6 +357,12 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
        * call to cache the paste. If there is no paste, prompt nicely
        * for a message requesting the user to actually copy something to
        * the clipboard */
+
+       if (sc->paste == NULL)
+         {
+           /* TODO: prompt for some error message */
+           return;
+         }
     }
   
   /* Free resources which are relevant only for the previous display */
@@ -367,7 +371,8 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
   /* Set the new tool display */
   tool->display = display;
 
-  sc->image_map = gimp_seamless_clone_tool_create_image_map (sc, drawable);
+  /* Initialize the image map preview */
+  gimp_seamless_clone_tool_create_image_map (sc, drawable);
 
   /* Now call the start method of the draw tool */
   gimp_draw_tool_start (GIMP_DRAW_TOOL (sc), display);
@@ -469,9 +474,9 @@ gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
                                          GimpToolOptions  *options,
                                          const GParamSpec *pspec)
 {
-  sc_debug_fstart ();
+  // GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
 
-  GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
+  sc_debug_fstart ();
 
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
@@ -500,9 +505,9 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
   /* TODO: After checking the key code, return TRUE if the event was
    * handled, or FALSE if not */
 
-  return FALSE;
-
   sc_debug_fend ();
+
+  return FALSE;
 }
 
 static void
@@ -512,10 +517,9 @@ gimp_seamless_clone_tool_motion (GimpTool         *tool,
                                  GdkModifierType   state,
                                  GimpDisplay      *display)
 {
-  sc_debug_fstart ();
-
   GimpSeamlessCloneTool    *sc       = GIMP_SEAMLESS_CLONE_TOOL (tool);
-  GimpSeamlessCloneOptions *options  = GIMP_SEAMLESS_CLONE_TOOL_GET_OPTIONS (sc);
+
+  sc_debug_fstart ();
 
   /* Pause the tool before modifying the tool data, so that drawing
    * won't be done using data in intermidiate states */
@@ -568,10 +572,10 @@ gimp_seamless_clone_tool_button_press (GimpTool            *tool,
                                        GimpButtonPressType  press_type,
                                        GimpDisplay         *display)
 {
-  sc_debug_fstart ();
-
   GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
   
+  sc_debug_fstart ();
+
   if (display != tool->display)
     gimp_seamless_clone_tool_start (sc, display);
 
@@ -604,9 +608,9 @@ gimp_seamless_clone_tool_button_release (GimpTool              *tool,
                                          GimpButtonReleaseType  release_type,
                                          GimpDisplay           *display)
 {
-  sc_debug_fstart ();
-
   GimpSeamlessCloneTool    *sc      = GIMP_SEAMLESS_CLONE_TOOL (tool);
+
+  sc_debug_fstart ();
 
   /* There is nothing to do, unless we were actually moving a paste */
   if (sc->tool_state == SC_STATE_RENDER_MOTION)
@@ -643,10 +647,11 @@ gimp_seamless_clone_tool_cursor_update (GimpTool         *tool,
                                         GdkModifierType   state,
                                         GimpDisplay      *display)
 {
-  sc_debug_fstart ();
   GimpSeamlessCloneTool *sc       = GIMP_SEAMLESS_CLONE_TOOL (tool);
   GimpCursorModifier     modifier = GIMP_CURSOR_MODIFIER_BAD;
 
+  sc_debug_fstart ();
+  
   /* Only update if the tool is actually active on some display */
   if (tool->display)
     {
@@ -655,7 +660,7 @@ gimp_seamless_clone_tool_cursor_update (GimpTool         *tool,
         
       else if (sc->tool_state == SC_STATE_RENDER_WAIT
                && gimp_seamless_clone_tool_is_in_paste_c (sc, coords))
-        modified = GIMP_CURSOR_MODIFIER_NONE;
+        modifier = GIMP_CURSOR_MODIFIER_NONE;
 
       gimp_tool_control_set_cursor_modifier (tool->control, modifier);
     }
@@ -678,15 +683,84 @@ gimp_seamless_clone_tool_draw (GimpDrawTool *draw_tool)
 
 }
 
-/* This function creates a Gegl node graph of the composition which is
+/**
+ * gimp_seamless_clone_tool_create_render_node:
+ * @sc: The GimpSeamlessCloneTool to intialize
+ *
+ * This function creates a Gegl node graph of the composition which is
  * needed to render the drawable. The graph should have an "input" pad
  * which will receive the drawable on which the preview is applied, and
  * it should also have an "output" pad to which the final result will be
- * rendered */
+ * rendered
+ */ 
 static void
 gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 {
+  /* Here is a textual description of the graph we are going to create:
+   *
+   * <input>  <- drawable
+   * +--+--------------------------+
+   * |  |output                    |
+   * |  |                          |
+   * |  |  <buffer-sink>  <- paste |
+   * |  |       |output            |
+   * |  |       |                  |
+   * |  |       |input             |
+   * |  |   <translate>            |
+   * |  |       |output            |
+   * |  |       |                  |
+   * |  |input  |aux               |
+   * |<seamless-paste>             |
+   * |    |output                  |
+   * |    |                        |
+   * |    |input                   |
+   * +----+------------------------+
+   *   <output>
+   */
+  GeglNode *node;
+  GeglNode *translate, *op, *paste;
+  GeglNode *input, *output;
+  
   sc_debug_fstart ();
+  
+  node = gegl_node_new ();
+
+  input  = gegl_node_get_input_proxy  (node, "input");
+  output = gegl_node_get_output_proxy (node, "output");
+
+  paste     = gegl_node_new_child (node,
+                                   "operation", "gegl:buffer-sink",
+                                   "buffer",    sc->paste,
+                                   NULL);
+
+  translate = gegl_node_new_child (node,
+                                   "operation", "gegl:translate",
+                                   "x",         (gdouble) sc->xoff,
+                                   "y",         (gdouble) sc->yoff,
+                                   NULL);
+
+  /* For now, avoid fancy stuff and use a nop passthrough op.
+   * Seamless-Clone operation would be integrated once the rest works.
+   * No need to introduce potential GEGL side bugs before we know the
+   * GIMP side works. */
+  op = gegl_node_new_child (node,
+                            "operation", "gegl:nop",
+                            NULL);
+
+  gegl_node_connect_to (input,     "output",
+                        op,        "input");
+
+  gegl_node_connect_to (paste,     "output",
+                        translate, "input");
+
+  gegl_node_connect_to (translate, "output",
+                        op,        "aux");
+
+  gegl_node_connect_to (op,        "output",
+                        output,    "input");
+
+  sc->render_node = node;
+  sc->translate_node = translate;
 
   sc_debug_fend ();
 
@@ -696,6 +770,12 @@ static void
 gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
   sc_debug_fstart ();
+
+  /* The only thing to update right now, is the location of the paste */
+  gegl_node_set (sc->translate_node,
+                 "x", (gdouble) sc->xoff,
+                 "y", (gdouble) sc->yoff,
+                 NULL);
 
   sc_debug_fend ();
 
@@ -733,9 +813,9 @@ static void
 gimp_seamless_clone_tool_image_map_flush (GimpImageMap *image_map,
                                           GimpTool     *tool)
 {
-  sc_debug_fstart ();
-
   GimpImage *image = gimp_display_get_image (tool->display);
+
+  sc_debug_fstart ();
 
   gimp_projection_flush_now (gimp_image_get_projection (image));
   gimp_display_flush_now (tool->display);
@@ -755,8 +835,6 @@ gimp_seamless_clone_tool_image_map_flush (GimpImageMap *image_map,
 static void
 gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
 {
-  sc_debug_fstart ();
-
   GimpTool         *tool  = GIMP_TOOL (sc);
   GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
   GimpItem         *item  = GIMP_ITEM (tool->drawable);
@@ -764,6 +842,8 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   gint              w, h;
   gint              off_x, off_y;
   GeglRectangle     visible;
+
+  sc_debug_fstart ();
 
   /* Find out at which x,y is the top left corner of the currently
    * displayed part */
