@@ -37,6 +37,8 @@ UI:
    better
  - Add a canvas item for the transform grid, fixing a major speed
    regression, and add the same guides options as in the rectangle tools
+ - Don't unmaximize the single-window mode image window when closing
+   images
 
 
 Core:
