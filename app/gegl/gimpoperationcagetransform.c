@@ -114,8 +114,8 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 
   g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config",
-                                                        _("Config"),
-                                                        _("A GimpCageConfig object, that define the transformation"),
+                                                        "Config",
+                                                        "A GimpCageConfig object, that define the transformation",
                                                         GIMP_TYPE_CAGE_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
