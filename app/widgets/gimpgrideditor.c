@@ -189,8 +189,8 @@ gimp_grid_editor_constructed (GObject *object)
                                          editor->yresolution,
                                          TRUE));
 
-  gtk_box_pack_start (GTK_BOX (hbox), entries->table, TRUE, TRUE, 0);
-  gtk_widget_show (entries->table);
+  gtk_box_pack_start (GTK_BOX (hbox), gimp_unit_entries_get_table (entries), TRUE, TRUE, 0);
+  gtk_widget_show (gimp_unit_entries_get_table (entries));
 
   gtk_widget_show (hbox);
 
@@ -212,8 +212,8 @@ gimp_grid_editor_constructed (GObject *object)
                                          editor->yresolution,
                                          TRUE));
 
-  gtk_box_pack_start (GTK_BOX (hbox), entries->table, TRUE, TRUE, 0);
-  gtk_widget_show (entries->table);
+  gtk_box_pack_start (GTK_BOX (hbox), gimp_unit_entries_get_table (entries), TRUE, TRUE, 0);
+  gtk_widget_show (gimp_unit_entries_get_table (entries));
 
   gtk_widget_show (hbox);
 }

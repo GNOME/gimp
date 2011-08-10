@@ -75,48 +75,48 @@
 
 /*  preferences local functions  */
 
-static GtkWidget * prefs_dialog_new               (Gimp       *gimp,
-                                                   GimpConfig *config);
-static void        prefs_config_notify            (GObject    *config,
-                                                   GParamSpec *param_spec,
-                                                   GObject    *config_copy);
-static void        prefs_config_copy_notify       (GObject    *config_copy,
-                                                   GParamSpec *param_spec,
-                                                   GObject    *config);
-static void        prefs_response                 (GtkWidget  *widget,
-                                                   gint        response_id,
-                                                   GtkWidget  *dialog);
+static GtkWidget * prefs_dialog_new               (Gimp               *gimp,
+                                                   GimpConfig         *config);
+static void   prefs_config_notify                 (GObject            *config,
+                                                   GParamSpec         *param_spec,
+                                                   GObject            *config_copy);
+static void   prefs_config_copy_notify            (GObject            *config_copy,
+                                                   GParamSpec         *param_spec,
+                                                   GObject            *config);
+static void   prefs_response                      (GtkWidget          *widget,
+                                                   gint                response_id,
+                                                   GtkWidget          *dialog);
 
-static void        prefs_message                  (GtkMessageType  type,
-                                                   gboolean        destroy,
-                                                   const gchar    *message);
+static void   prefs_message                       (GtkMessageType      type,
+                                                   gboolean            destroy,
+                                                   const gchar        *message);
 
-static void   prefs_resolution_source_callback    (GtkWidget  *widget,
-                                                   GObject    *config);
-static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
-                                                   GObject    *entries);
-static void   prefs_input_devices_dialog          (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_keyboard_shortcuts_dialog     (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_menus_save_callback           (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_menus_clear_callback          (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_menus_remove_callback         (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_session_save_callback         (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_session_clear_callback        (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_devices_save_callback         (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_devices_clear_callback        (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_tool_options_save_callback    (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_tool_options_clear_callback   (GtkWidget  *widget,
-                                                   Gimp       *gimp);
+static void   prefs_resolution_source_callback    (GtkWidget          *widget,
+                                                   GObject            *config);
+static void   prefs_resolution_calibrate_callback (GtkWidget          *widget,
+                                                   GimpUnitEntries    *entries);
+static void   prefs_input_devices_dialog          (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_keyboard_shortcuts_dialog     (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_menus_save_callback           (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_menus_clear_callback          (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_menus_remove_callback         (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_session_save_callback         (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_session_clear_callback        (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_devices_save_callback         (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_devices_clear_callback        (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_tool_options_save_callback    (GtkWidget          *widget,
+                                                   Gimp               *gimp);
+static void   prefs_tool_options_clear_callback   (GtkWidget          *widget,
+                                                   Gimp               *gimp);
 
 
 /*  private variables  */
@@ -451,18 +451,13 @@ prefs_resolution_source_callback (GtkWidget *widget,
     }
   else
     {
-      GimpUnitEntries *entries = GIMP_UNIT_ENTRIES (
-                                 g_object_get_data (G_OBJECT (widget),
-                                                    "monitor_resolution_sizeentry"));
+      GimpUnitEntries *entries = g_object_get_data (G_OBJECT (widget),
+                                                    "monitor_resolution_sizeentry");
 
       g_return_if_fail (GIMP_IS_UNIT_ENTRIES (entries));
 
-      xres = gimp_unit_entry_get_value_in_unit (
-              gimp_unit_entries_get_nth_entry (entries, 0),
-              GIMP_UNIT_PIXEL);
-      yres = gimp_unit_entry_get_value_in_unit (
-              gimp_unit_entries_get_nth_entry (entries, 1),
-              GIMP_UNIT_PIXEL);                                         
+      xres = gimp_unit_entries_get_pixels (entries, "monitor-xresolution");
+      yres = gimp_unit_entries_get_pixels (entries, "monitor-yresolution");
     }
 
   g_object_set (config,
@@ -473,15 +468,14 @@ prefs_resolution_source_callback (GtkWidget *widget,
 }
 
 static void
-prefs_resolution_calibrate_callback (GtkWidget *widget,
-                                     GObject   *unit_entries)
+prefs_resolution_calibrate_callback (GtkWidget         *widget,
+                                     GimpUnitEntries   *unit_entries)
 {
   GtkWidget *dialog;
   GtkWidget *prefs_box;
   GtkWidget *image;
 
-  dialog = gtk_widget_get_toplevel (gimp_unit_entries_get_table (
-                                    GIMP_UNIT_ENTRIES (unit_entries)));
+  dialog = gtk_widget_get_toplevel (gimp_unit_entries_get_table (unit_entries));
 
   prefs_box = g_object_get_data (G_OBJECT (dialog), "prefs-box");
   image     = gimp_prefs_box_get_image (GIMP_PREFS_BOX (prefs_box));
@@ -1296,7 +1290,7 @@ prefs_dialog_new (Gimp       *gimp,
   GSList            *group;
   GtkWidget         *editor;
   gint               i;
-  GimpUnitEntries *unit_entries;
+  GimpUnitEntries   *unit_entries;
 
   GObject           *object;
   GimpCoreConfig    *core_config;
@@ -2177,8 +2171,8 @@ prefs_dialog_new (Gimp       *gimp,
                                        "monitor-yresolution",
                                        _("Horizontal"),
                                        _("Vertical"),
-                                       NULL,
-                                       1.0, 1.0, /* FIXME: UnitEntry needs 1.0 as "resolution of resolution" , otherwise calculation is not correct */
+                                       NULL,  /* unit_property_name */
+                                       -1.0, -1.0, 
                                        TRUE));
     gimp_unit_entries_set_mode (unit_entries, GIMP_UNIT_ENTRY_MODE_RESOLUTION);
 
@@ -2186,9 +2180,10 @@ prefs_dialog_new (Gimp       *gimp,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
-  gtk_box_pack_start (GTK_BOX (hbox), unit_entries->table, TRUE, TRUE, 24);
-  gtk_widget_show (unit_entries->table);
-  gtk_widget_set_sensitive (unit_entries->table, ! display_config->monitor_res_from_gdk);
+  gtk_box_pack_start (GTK_BOX (hbox), gimp_unit_entries_get_table (unit_entries), TRUE, TRUE, 24);
+  gtk_widget_show (gimp_unit_entries_get_table (unit_entries));
+  gtk_widget_set_sensitive (gimp_unit_entries_get_table (unit_entries),
+                           ! display_config->monitor_res_from_gdk);
 
   group = NULL;
 
@@ -2239,11 +2234,15 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_set_sensitive (calibrate_button,
                             ! display_config->monitor_res_from_gdk);
 
-  g_object_bind_property (button, "active",
-                          unit_entries->table,  "sensitive",
+  g_object_bind_property (button,                                      
+                          "active",
+                          gimp_unit_entries_get_table (unit_entries),  
+                          "sensitive",
                           G_BINDING_SYNC_CREATE);
-  g_object_bind_property (button,           "active",
-                          calibrate_button, "sensitive",
+  g_object_bind_property (button,           
+                          "active",
+                          calibrate_button, 
+                          "sensitive",
                           G_BINDING_SYNC_CREATE);
 
   g_signal_connect (calibrate_button, "clicked",

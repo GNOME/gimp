@@ -2874,8 +2874,8 @@ gimp_prop_coordinates_new (GObject                   *config,
 
   unit_entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ());
 
-  gimp_unit_entries_add_entry_defaults (unit_entries, x_property_name, x_label_str);
-  gimp_unit_entries_add_entry_defaults (unit_entries, y_property_name, y_label_str);
+  gimp_unit_entries_add_entry (unit_entries, x_property_name, x_label_str);
+  gimp_unit_entries_add_entry (unit_entries, y_property_name, y_label_str);
 
   if (has_chainbutton)
     {
@@ -2893,7 +2893,7 @@ gimp_prop_coordinates_new (GObject                   *config,
                                        xresolution,
                                        yresolution))
     {
-      gtk_widget_destroy (unit_entries->table);
+      gtk_widget_destroy (gimp_unit_entries_get_table (unit_entries));
       return NULL;
     }
 

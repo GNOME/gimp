@@ -31,10 +31,6 @@
 #define DEBUG(x) /* nothing */
 #endif
 
-/**
- * prototypes
- */
-
 /* unit resolver for GimpEevl */
 static gboolean unit_resolver (const gchar      *ident,
                                GimpEevlQuantity *result,
@@ -46,38 +42,38 @@ gboolean
 gimp_unit_parser_parse (const char *str, GimpUnitParserResult *result)
 {
   /* GimpEevl related stuff */
-  GimpEevlQuantity  eevlResult;
+  GimpEevlQuantity  eevl_result;
   GError            *error    = NULL;
   const gchar       *errorpos = 0;
 
   if (strlen (str) <= 0)
     return FALSE;
     
-  /* set unitFound to FALSE so we can determine the first unit the user entered and use that
+  /* set unit_found to FALSE so we can determine the first unit the user entered and use that
      as unit for our result */
-  result->unitFound = FALSE;
+  result->unit_found = FALSE;
 
   DEBUG (("parsing: %s", str));
 
   /* parse text via GimpEevl */
   gimp_eevl_evaluate (str,
                       unit_resolver,
-                      &eevlResult,
+                      &eevl_result,
                       (gpointer) result,
                       &errorpos,
                       &error);
 
-  if (error || errorpos || eevlResult.dimension > 1)
+  if (error || errorpos || eevl_result.dimension > 1)
   {
     DEBUG (("gimpeevl parsing error \n"));
     return FALSE;
   }
   else
   {
-    DEBUG (("gimpeevl parser result: %s = %lg (%d)", str, eevlResult.value, eevlResult.dimension));
+    DEBUG (("gimpeevl parser result: %s = %lg (%d)", str, eevl_result.value, eevl_result.dimension));
     DEBUG (("determined unit: %s\n", gimp_unit_get_abbreviation (result->unit)));
 
-    result->value = eevlResult.value;
+    result->value = eevl_result.value;
   }
 
   return TRUE;
@@ -89,11 +85,11 @@ gboolean unit_resolver (const gchar      *ident,
                         GimpEevlQuantity *result,
                         gpointer          user_data)
 {
-  GimpUnitParserResult   *parserResult = (GimpUnitParserResult*) user_data;
-  GimpUnit               *unit        = &(parserResult->unit);
+  GimpUnitParserResult   *parser_result = (GimpUnitParserResult*) user_data;
+  GimpUnit               *unit        = &(parser_result->unit);
   gboolean               resolved     = FALSE;
   gboolean               default_unit = (ident == NULL);
-  gint                   numUnits     = gimp_unit_get_number_of_units ();
+  gint                   num_units    = gimp_unit_get_number_of_units ();
   const gchar            *abbr; 
   gint                   i            = 0;
 
@@ -110,17 +106,18 @@ gboolean unit_resolver (const gchar      *ident,
     result->dimension = 1;
 
     if (*unit == GIMP_UNIT_PIXEL) /* handle case that unit is px */
-      result->value = parserResult->resolution;
-    else                          /* otherwise use factor */
+      result->value = parser_result->resolution;
+    else                          /* otherwise use unit factor */
       result->value = gimp_unit_get_factor (*unit);
 
-    parserResult->unitFound = TRUE;
-    resolved                = TRUE; 
+    parser_result->unit_found = TRUE;
+    resolved                  = TRUE; 
+    
     return resolved;
   }
 
   /* find matching unit */
-  for (i = 0; i < numUnits; i++)
+  for (i = 0; i < num_units; i++)
   {
     abbr = gimp_unit_get_abbreviation (i);
 
@@ -128,17 +125,17 @@ gboolean unit_resolver (const gchar      *ident,
     {
       /* handle case that unit is px */
       if (i == GIMP_UNIT_PIXEL)
-        result->value = parserResult->resolution;
+        result->value = parser_result->resolution;
       else
         result->value = gimp_unit_get_factor (i);
 
-      if (!parserResult->unitFound)
+      if (!parser_result->unit_found)
       {
         *unit = i;
-        parserResult->unitFound = TRUE;
+        parser_result->unit_found = TRUE;
       }
 
-      i = numUnits;
+      i = num_units;
       resolved = TRUE;
     }
   }

@@ -49,14 +49,14 @@
 
 typedef struct
 {
-  GimpContext    *context;
+  GimpContext     *context;
 
-  GtkWidget      *dialog;
-  GObject        *offset_entries;
+  GtkWidget       *dialog;
+  GimpUnitEntries *offset_entries;
 
-  GimpOffsetType  fill_type;
+  GimpOffsetType   fill_type;
 
-  GimpImage      *image;
+  GimpImage       *image;
 } OffsetDialog;
 
 
@@ -160,11 +160,10 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  dialog->offset_entries = gimp_unit_entries_new ();
-  entries = GIMP_UNIT_ENTRIES (dialog->offset_entries);
+  dialog->offset_entries = entries = gimp_unit_entries_new ();
   
-  gimp_unit_entries_add_entry_defaults (entries, GIMP_UNIT_ENTRIES_OFFSET_X, _("X:"));
-  gimp_unit_entries_add_entry_defaults (entries, GIMP_UNIT_ENTRIES_OFFSET_Y, _("X:"));
+  gimp_unit_entries_add_entry (entries, GIMP_UNIT_ENTRIES_OFFSET_X, _("X:"));
+  gimp_unit_entries_add_entry (entries, GIMP_UNIT_ENTRIES_OFFSET_Y, _("X:"));
 
   gtk_box_pack_start (GTK_BOX (vbox), gimp_unit_entries_get_table (entries), FALSE, FALSE, 0);
 

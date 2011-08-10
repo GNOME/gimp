@@ -137,12 +137,12 @@ layer_options_dialog_new (GimpImage    *image,
 
       gimp_image_get_resolution (image, &xres, &yres);
 
-      /* UnitEntry */
+      /* the size unit-entries */
       options->unit_entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ());
-      width_entry = gimp_unit_entries_add_entry_defaults  (options->unit_entries, "width", _("Width:"));
-      height_entry = gimp_unit_entries_add_entry_defaults (options->unit_entries, "height", _("Height:"));
+      width_entry = gimp_unit_entries_add_entry  (options->unit_entries, "width", _("Width:"));
+      height_entry = gimp_unit_entries_add_entry (options->unit_entries, "height", _("Height:"));
       
-      gimp_unit_entry_set_unit        (GIMP_UNIT_ENTRY (width_entry), GIMP_UNIT_PIXEL);
+      gimp_unit_entries_set_unit        (options->unit_entries, GIMP_UNIT_PIXEL);
       
       gimp_unit_entry_set_resolution  (GIMP_UNIT_ENTRY (width_entry), xres);
       gimp_unit_entry_set_resolution  (GIMP_UNIT_ENTRY (height_entry), yres);

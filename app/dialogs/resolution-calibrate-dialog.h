@@ -19,8 +19,8 @@
 #define __RESOLUTION_CALIBRATE_DIALOG_H__
 
 
-void  resolution_calibrate_dialog (GObject    *resolution_entries,
-                                   GdkPixbuf  *pixbuf);
+void  resolution_calibrate_dialog (GimpUnitEntries    *resolution_entries,
+                                   GdkPixbuf          *pixbuf);
 
 
 #endif /* __RESOLUTION_CALIBRATE_DIALOG_H__ */

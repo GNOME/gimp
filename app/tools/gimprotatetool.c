@@ -203,10 +203,9 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                     GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (scale);
 
-  rotate->unit_entries = gimp_unit_entries_new ();
-  entries = GIMP_UNIT_ENTRIES (rotate->unit_entries);
-  gimp_unit_entries_add_entry_defaults (entries, "center_x", _("Center X:"));
-  gimp_unit_entries_add_entry_defaults (entries, "center_y", _("Center Y:"));
+  rotate->unit_entries = entries = gimp_unit_entries_new ();
+  gimp_unit_entries_add_entry (entries, "center_x", _("Center X:"));
+  gimp_unit_entries_add_entry (entries, "center_y", _("Center Y:"));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3, NULL,
                              0.0, 0.5, gimp_unit_entries_get_table (entries), 1, TRUE);
 

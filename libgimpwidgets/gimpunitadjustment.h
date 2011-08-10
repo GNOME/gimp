@@ -26,9 +26,6 @@
 
 G_BEGIN_DECLS
 
-/**
- * boiler-plate
- **/
 #define GIMP_TYPE_UNIT_ADJUSTMENT            (gimp_unit_adjustment_get_type ())
 #define GIMP_UNIT_ADJUSTMENT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNIT_ADJUSTMENT, GimpUnitAdjustment))
 #define GIMP_UNIT_ADJUSTMENT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNIT_ADJUSTMENT, GimpUnitAdjustmentClass))
@@ -43,10 +40,7 @@ struct _GimpUnitAdjustment
 {
   GtkAdjustment parent_instance;
 
-  /* private */
-  /* TODO move private fields into own struct? */
-  GimpUnit  unit;           /* the unit our value is in */
-  gdouble   resolution;     /* resolution in dpi */
+  gpointer      private;
 };
 
 struct _GimpUnitAdjustmentClass
@@ -55,35 +49,32 @@ struct _GimpUnitAdjustmentClass
 };
 
 
-GType     gimp_unit_adjustment_get_type           (void);
-GObject  *gimp_unit_adjustment_new                (void);
+GType                gimp_unit_adjustment_get_type           (void);
+GimpUnitAdjustment  *gimp_unit_adjustment_new                (void);
 
-void      gimp_unit_adjustment_set_unit           (GimpUnitAdjustment *adj, 
-                                                   GimpUnit            unit);
-void      gimp_unit_adjustment_set_value          (GimpUnitAdjustment *adj, 
-                                                   gdouble             value);
-void      gimp_unit_adjustment_set_value_in_unit  (GimpUnitAdjustment *adj, 
-                                                   gdouble             value, 
-                                                   GimpUnit            unit);
-void      gimp_unit_adjustment_set_resolution     (GimpUnitAdjustment *adj, 
-                                                   gdouble             res);
-void      gimp_unit_adjustment_set_bounds         (GimpUnitAdjustment *adj, 
-                                                   GimpUnit            unit, 
-                                                   gdouble             upper, 
-                                                   gdouble             lower);                                                   
+void                 gimp_unit_adjustment_set_unit           (GimpUnitAdjustment *adj, 
+                                                              GimpUnit            unit);
+void                 gimp_unit_adjustment_set_value          (GimpUnitAdjustment *adj, 
+                                                              gdouble             value);
+void                 gimp_unit_adjustment_set_value_in_unit  (GimpUnitAdjustment *adj, 
+                                                              gdouble             value, 
+                                                              GimpUnit            unit);
+void                 gimp_unit_adjustment_set_resolution     (GimpUnitAdjustment *adj, 
+                                                              gdouble             res);
+void                 gimp_unit_adjustment_set_bounds         (GimpUnitAdjustment *adj, 
+                                                              GimpUnit            unit, 
+                                                              gdouble             lower, 
+                                                              gdouble             upper);                                                   
                                                                                                       
-gdouble   gimp_unit_adjustment_get_value          (GimpUnitAdjustment *adj);
-gdouble   gimp_unit_adjustment_get_value_in_unit  (GimpUnitAdjustment *adj, 
-                                                   GimpUnit            unit);
-gdouble   gimp_unit_adjustment_get_resolution     (GimpUnitAdjustment *adj);
-GimpUnit  gimp_unit_adjustment_get_unit           (GimpUnitAdjustment *adj);
+gdouble              gimp_unit_adjustment_get_value          (GimpUnitAdjustment *adj);
+gdouble              gimp_unit_adjustment_get_value_in_unit  (GimpUnitAdjustment *adj, 
+                                                              GimpUnit            unit);
+gdouble              gimp_unit_adjustment_get_resolution     (GimpUnitAdjustment *adj);
+GimpUnit             gimp_unit_adjustment_get_unit           (GimpUnitAdjustment *adj);
 
-gchar*    gimp_unit_adjustment_to_string          (GimpUnitAdjustment *adj);
-gchar*    gimp_unit_adjustment_to_string_in_unit  (GimpUnitAdjustment *adj, 
-                                                   GimpUnit            unit);
 
-void      gimp_unit_adjustment_connect            (GimpUnitAdjustment *adj, 
-                                                   GimpUnitAdjustment *target);
+void                 gimp_unit_adjustment_follow_unit_of     (GimpUnitAdjustment *adj, 
+                                                              GimpUnitAdjustment *other);
 
 G_END_DECLS
 

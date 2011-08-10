@@ -41,8 +41,8 @@ create_interface(void)
 
   /* entry table */
   entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ());
-  gimp_unit_entries_add_entry_defaults (entries, "width", "Width");
-  gimp_unit_entries_add_entry_defaults (entries, "height", "Height");
+  gimp_unit_entries_add_entry (entries, "width", "Width");
+  gimp_unit_entries_add_entry (entries, "height", "Height");
   gimp_unit_entries_add_preview_label (entries, GIMP_UNIT_PIXEL, "width", "height");
 
   gimp_unit_entries_add_chain_button (entries, "width", "height");
@@ -53,12 +53,12 @@ create_interface(void)
   gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (a), 20);
   gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (b), 20);
 
-  gtk_box_pack_start (GTK_BOX (vbox), entries->table, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), gimp_unit_entries_get_table (entries), FALSE, TRUE, 0);
 
   /* resolution entry */
   entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ());
-  gimp_unit_entries_add_entry_defaults (entries, "xres", "X Resolution");
-  gimp_unit_entries_add_entry_defaults (entries, "yres", "Y Resolution");
+  gimp_unit_entries_add_entry (entries, "xres", "X Resolution");
+  gimp_unit_entries_add_entry (entries, "yres", "Y Resolution");
 
   /* set some default values */
   a = gimp_unit_entries_get_entry (entries, "xres");
@@ -68,7 +68,7 @@ create_interface(void)
   gimp_unit_entry_set_mode (a, GIMP_UNIT_ENTRY_MODE_RESOLUTION);
   gimp_unit_entry_set_mode (b, GIMP_UNIT_ENTRY_MODE_RESOLUTION);
 
-  gtk_box_pack_end (GTK_BOX (vbox), entries->table, FALSE, TRUE, 5);
+  gtk_box_pack_end (GTK_BOX (vbox), gimp_unit_entries_get_table (entries), FALSE, TRUE, 5);
 
   /* signals */
   g_signal_connect_swapped (G_OBJECT(window), "destroy",

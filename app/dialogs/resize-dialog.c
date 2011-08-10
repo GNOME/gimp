@@ -91,21 +91,19 @@ resize_dialog_new (GimpViewable       *viewable,
                    GimpResizeCallback  callback,
                    gpointer            user_data)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
-  GtkWidget    *vbox;
-  GtkWidget    *abox;
-  GtkWidget    *frame;
-  GtkWidget    *button;
-  GtkWidget    *spinbutton;
-  GimpUnitEntries      *unit_entries;
-  GtkObject    *adjustment;
-  GdkPixbuf    *pixbuf;
-  ResizeDialog *private;
-  GimpImage    *image = NULL;
-  const gchar  *text  = NULL;
-  gint          width, height;
-  gdouble       xres, yres;
+  GtkWidget       *dialog;
+  GtkWidget       *main_vbox;
+  GtkWidget       *vbox;
+  GtkWidget       *abox;
+  GtkWidget       *frame;
+  GtkWidget       *button;
+  GimpUnitEntries *unit_entries;
+  GdkPixbuf       *pixbuf;
+  ResizeDialog    *private;
+  GimpImage       *image = NULL;
+  const gchar     *text  = NULL;
+  gint             width, height;
+  gdouble          xres, yres;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -208,12 +206,12 @@ resize_dialog_new (GimpViewable       *viewable,
 
   /*  the offset unit-entries  */
   private->offset_unit_entries = unit_entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ()); 
-  gimp_unit_entries_add_entry_defaults (unit_entries, 
-                                        GIMP_UNIT_ENTRIES_OFFSET_X,
-                                        _("X"));
-  gimp_unit_entries_add_entry_defaults (unit_entries, 
-                                        GIMP_UNIT_ENTRIES_OFFSET_Y,
-                                        _("Y"));                                                                                    
+  gimp_unit_entries_add_entry (unit_entries, 
+                               GIMP_UNIT_ENTRIES_OFFSET_X,
+                               _("X"));
+  gimp_unit_entries_add_entry (unit_entries, 
+                               GIMP_UNIT_ENTRIES_OFFSET_Y,
+                               _("Y"));                                                                                    
 
   gtk_box_pack_start (GTK_BOX (vbox), gimp_unit_entries_get_table (unit_entries), FALSE, FALSE, 0);
 

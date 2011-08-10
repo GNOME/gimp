@@ -11,3 +11,5 @@
 /makefile.mingw
 /test-eevl*
 /test-preview-area
+/test-unitentry
+/test-unitentrygui

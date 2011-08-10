@@ -49,15 +49,9 @@ typedef struct _GimpUnitEntriesClass  GimpUnitEntriesClass;
 
 struct _GimpUnitEntries
 {
-  GObject parent_instance;
+  GObject  parent_instance;
 
-  /* private */
-  GtkWidget  *table;
-  GtkWidget  *chain_button;
-  GHashTable *entries_store;
-
-  /* dimensions of "sub-table" containing the actual entries */ 
-  gint       bottom, right;
+  gpointer private;
 };
 
 struct _GimpUnitEntriesClass
@@ -66,15 +60,10 @@ struct _GimpUnitEntriesClass
 };
 
 GType           gimp_unit_entries_get_type              (void);
-GObject*        gimp_unit_entries_new                   (void);
+GimpUnitEntries*gimp_unit_entries_new                   (void);
 
 GtkWidget*      gimp_unit_entries_add_entry             (GimpUnitEntries *entries, 
                                                          const gchar     *id,
-                                                         const gchar     *label,
-                                                         gint             x, 
-                                                         gint             y);
-GtkWidget*      gimp_unit_entries_add_entry_defaults    (GimpUnitEntries *entries, 
-                                                         const gchar     *id, 
                                                          const gchar     *label);
 void            gimp_unit_entries_add_preview_label     (GimpUnitEntries *entries, 
                                                          GimpUnit         unit, 

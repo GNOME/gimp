@@ -144,7 +144,6 @@ gimp_template_editor_constructed (GObject *object)
   GtkWidget                 *scrolled_window;
   GtkWidget                 *text_view;
   GtkTextBuffer             *text_buffer;
-  GList                     *focus_chain = NULL;
   gchar                     *text;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -181,17 +180,17 @@ gimp_template_editor_constructed (GObject *object)
 
   private->unit_entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ());
                         
-  gtk_table_attach_defaults (GTK_TABLE (table), private->unit_entries->table, 0, 2, 0, 2);
+  gtk_table_attach_defaults (GTK_TABLE (table), gimp_unit_entries_get_table (private->unit_entries), 0, 2, 0, 2);
 
-  gimp_unit_entries_add_entry_defaults (private->unit_entries, 
-                                        "width", 
+  gimp_unit_entries_add_entry (private->unit_entries, 
+                                        GIMP_UNIT_ENTRIES_WIDTH, 
                                         _("Width:"));
-  gimp_unit_entries_add_entry_defaults (private->unit_entries,
-                                        "height",
+  gimp_unit_entries_add_entry (private->unit_entries,
+                                        GIMP_UNIT_ENTRIES_HEIGHT,
                                         _("Height:"));
 
   gimp_prop_coordinates_connect (G_OBJECT (template),
-                                 "width", "height", "unit",
+                                 GIMP_UNIT_ENTRIES_WIDTH, GIMP_UNIT_ENTRIES_HEIGHT, "unit",
                                  G_OBJECT (private->unit_entries), NULL,
                                  gimp_template_get_resolution_x (template),
                                  gimp_template_get_resolution_y (template));
@@ -284,16 +283,16 @@ gimp_template_editor_constructed (GObject *object)
 
   private->resolution_entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ()); 
 
-  gimp_unit_entries_add_entry_defaults (private->resolution_entries,
+  gimp_unit_entries_add_entry (private->resolution_entries,
                                            "xres",
                                            _("X resolution:"));
-  gimp_unit_entries_add_entry_defaults (private->resolution_entries,
+  gimp_unit_entries_add_entry (private->resolution_entries,
                                            "yres",
                                            _("Y resolution:"));
   gimp_unit_entries_set_mode (private->resolution_entries, GIMP_UNIT_ENTRY_MODE_RESOLUTION);                              
 
-  gtk_box_pack_start (GTK_BOX (hbox), private->resolution_entries->table, TRUE, TRUE, 0);
-  gtk_widget_show (private->resolution_entries->table);
+  gtk_box_pack_start (GTK_BOX (hbox), gimp_unit_entries_get_table (private->resolution_entries), TRUE, TRUE, 0);
+  gtk_widget_show (gimp_unit_entries_get_table (private->resolution_entries));
 
   gimp_unit_entry_set_resolution (gimp_unit_entries_get_nth_entry (private->unit_entries, 0),
                                   gimp_template_get_resolution_x (template));
@@ -309,16 +308,6 @@ gimp_template_editor_constructed (GObject *object)
                                  "resolution-unit",
                                  G_OBJECT (private->resolution_entries), chainbutton,
                                  1.0, 1.0);
-
-  /*focus_chain = g_list_prepend (focus_chain,
-                                GIMP_SIZE_ENTRY (private->resolution_entries)->unitmenu);
-  focus_chain = g_list_prepend (focus_chain, chainbutton);
-  focus_chain = g_list_prepend (focus_chain, yres);
-  focus_chain = g_list_prepend (focus_chain, xres);
-
-  gtk_container_set_focus_chain (GTK_CONTAINER (private->resolution_entries),
-                                 focus_chain);*/
-  g_list_free (focus_chain);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "image-type",
@@ -544,14 +533,16 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
                                        gimp_template_editor_template_notify,
                                        editor);
 
-      gimp_unit_entry_set_resolution (gimp_unit_entries_get_nth_entry (private->unit_entries, 0),
+      gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (private->unit_entries,
+                                                                   GIMP_UNIT_ENTRIES_WIDTH),
                                       yresolution); 
-      gimp_unit_entry_set_resolution (gimp_unit_entries_get_nth_entry (private->unit_entries, 1),
+      gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (private->unit_entries,
+                                                                   GIMP_UNIT_ENTRIES_WIDTH),
                                       xresolution);                                                                
 
       g_object_set (template,
-                    "width",       height,
-                    "height",      width,
+                    GIMP_UNIT_ENTRIES_WIDTH,  height,
+                    GIMP_UNIT_ENTRIES_HEIGHT, width,
                     "xresolution", yresolution,
                     "yresolution", xresolution,
                     NULL);

@@ -370,8 +370,6 @@ EXPORTS
 	gimp_unit_adjustment_set_unit
 	gimp_unit_adjustment_set_value
 	gimp_unit_adjustment_set_value_in_unit
-	gimp_unit_adjustment_to_string
-	gimp_unit_adjustment_to_string_in_unit
 	gimp_unit_combo_box_get_active
 	gimp_unit_combo_box_get_type
 	gimp_unit_combo_box_new
@@ -379,7 +377,6 @@ EXPORTS
 	gimp_unit_combo_box_set_active
 	gimp_unit_entries_add_chain_button
 	gimp_unit_entries_add_entry
-	gimp_unit_entries_add_entry_defaults
 	gimp_unit_entries_add_preview_label
 	gimp_unit_entries_get_chain_button
 	gimp_unit_entries_get_entry
@@ -414,6 +411,8 @@ EXPORTS
 	gimp_unit_entry_set_unit
 	gimp_unit_entry_set_value
 	gimp_unit_entry_set_value_in_unit
+	gimp_unit_entry_to_string
+	gimp_unit_entry_to_string_in_unit
 	gimp_unit_menu_get_pixel_digits
 	gimp_unit_menu_get_type
 	gimp_unit_menu_get_unit

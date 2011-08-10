@@ -165,10 +165,10 @@ libgimpwidgets_sources = \
 	gimpstock.h			\
 	gimpstringcombobox.c		\
 	gimpstringcombobox.h		\
-	gimpunitcombobox.c		\
-	gimpunitcombobox.h		\
 	gimpunitadjustment.c		\
 	gimpunitadjustment.h		\
+	gimpunitcombobox.c		\
+	gimpunitcombobox.h		\
 	gimpunitentry.c			\
 	gimpunitentry.h			\
 	gimpunitentries.c			\
@@ -255,6 +255,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpstock.h			\
 	gimpstringcombobox.h		\
 	gimpunitcombobox.h		\
+	gimpunitadjustment.h \
 	gimpunitentry.h			\
 	gimpunitmenu.h			\
 	gimpunitstore.h			\

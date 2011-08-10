@@ -48,20 +48,7 @@ struct _GimpUnitEntry
 {
   GtkSpinButton parent_instance;
 
-  /* private */
-  GimpUnitAdjustment *unitAdjustment; /* for convinience */
-
-  /* flag set TRUE when entry's text should not be overwritten
-     (i.e. during user input) */
-  gboolean            dontUpdateText;
-
-  /* input mode */
-  GimpUnitEntryMode   mode;
-
-  /* is our input valid? (for error indication) */
-  gboolean            input_valid;
-  /* the timer source which handles the error indication */
-  GSource             *timer;
+  gpointer      private;
 };
 
 struct _GimpUnitEntryClass
@@ -95,7 +82,11 @@ void                  gimp_unit_entry_set_value_in_unit (GimpUnitEntry      *ent
                                                          gdouble             value, 
                                                          GimpUnit            unit);
 void                  gimp_unit_entry_set_pixels        (GimpUnitEntry      *entry,
-                                                         gdouble             value);                                                           
+                                                         gdouble             value);
+                                                         
+gchar*                gimp_unit_entry_to_string         (GimpUnitEntry      *entry);
+gchar*                gimp_unit_entry_to_string_in_unit (GimpUnitEntry      *entry, 
+                                                         GimpUnit            unit);                                                                                                                    
                                                          
 void                  gimp_unit_entry_connect           (GimpUnitEntry      *entry, 
                                                          GimpUnitEntry      *target);                                                                                                               
