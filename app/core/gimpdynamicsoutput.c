@@ -480,10 +480,8 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
   if (private->use_wheel)
     {
       gdouble wheel;
-      if (coords->wheel >= 0.5)
-        wheel = (coords->wheel - 0.5) * 2;
-      else
-        wheel = 1 - coords->wheel * 2;
+
+      wheel = coords->wheel;
 
       total += gimp_curve_map_value (private->wheel_curve, wheel);
       factors++;
