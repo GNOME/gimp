@@ -330,8 +330,8 @@ gimp_transform_tool_button_press (GimpTool            *tool,
   if (tr_tool->function == TRANSFORM_CREATING)
     gimp_transform_tool_oper_update (tool, coords, state, TRUE, display);
 
-  tr_tool->lastx = coords->x;
-  tr_tool->lasty = coords->y;
+  tr_tool->lastx = tr_tool->mousex = coords->x;
+  tr_tool->lasty = tr_tool->mousey = coords->y;
 
   /*  Store current trans_info  */
   for (i = 0; i < TRANS_INFO_SIZE; i++)
@@ -540,6 +540,15 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
             }
         }
     }
+
+    if (tr_tool->use_pivot)
+      {
+        if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_PIVOT],
+                                  coords->x, coords->y))
+          {
+            function = TRANSFORM_HANDLE_PIVOT;
+          }
+      }
 
   if (tr_tool->use_center &&
       gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_CENTER],
@@ -797,6 +806,31 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                        handle_w, handle_h,
                                        GIMP_HANDLE_ANCHOR_CENTER);
         }
+    }
+
+  if (tr_tool->use_pivot)
+    {
+      GimpCanvasGroup *stroke_group;
+      gint d = MIN (handle_w, handle_h);
+
+      stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
+
+      tr_tool->handles[TRANSFORM_HANDLE_PIVOT] = GIMP_CANVAS_ITEM (stroke_group);
+
+      gimp_draw_tool_push_group (draw_tool, stroke_group);
+
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_SQUARE,
+                                 tr_tool->tpx, tr_tool->tpy,
+                                 d, d,
+                                 GIMP_HANDLE_ANCHOR_CENTER);
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_CROSS,
+                                 tr_tool->tpx, tr_tool->tpy,
+                                 d, d,
+                                 GIMP_HANDLE_ANCHOR_CENTER);
+
+      gimp_draw_tool_pop_group (draw_tool);
     }
 
   /*  draw the center  */
@@ -1237,9 +1271,21 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
                                 tr_tool->x2, tr_tool->y2,
                                 &tr_tool->tx4, &tr_tool->ty4);
 
+  /* don't transform these */
   gimp_matrix3_transform_point (&tr_tool->transform,
-                                tr_tool->cx, tr_tool->cy,
-                                &tr_tool->tcx, &tr_tool->tcy);
+                                tr_tool->px, tr_tool->py,
+                                &tr_tool->tpx, &tr_tool->tpy);
+  tr_tool->tpx = tr_tool->px;
+  tr_tool->tpy = tr_tool->py;
+
+  tr_tool->tcx = (tr_tool->tx1 +
+                  tr_tool->tx2 +
+                  tr_tool->tx3 +
+                  tr_tool->tx4) / 4.0;
+  tr_tool->tcy = (tr_tool->ty1 +
+                  tr_tool->ty2 +
+                  tr_tool->ty3 +
+                  tr_tool->ty4) / 4.0;
 }
 
 static void
@@ -1278,9 +1324,6 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
                            &tr_tool->x2, &tr_tool->y2);
       break;
     }
-
-  tr_tool->cx = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;
-  tr_tool->cy = (gdouble) (tr_tool->y1 + tr_tool->y2) / 2.0;
 
   tr_tool->aspect = ((gdouble) (tr_tool->x2 - tr_tool->x1) /
                      (gdouble) (tr_tool->y2 - tr_tool->y1));

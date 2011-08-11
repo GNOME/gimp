@@ -36,7 +36,8 @@ typedef enum
   TRANSFORM_HANDLE_S,  /* south      */
   TRANSFORM_HANDLE_E,  /* east       */
   TRANSFORM_HANDLE_W,  /* west       */
-  TRANSFORM_HANDLE_CENTER
+  TRANSFORM_HANDLE_PIVOT, /* pivot for rotation and scaling */
+  TRANSFORM_HANDLE_CENTER /* for moving */
 } TransformAction;
 
 typedef gdouble TransInfo[TRANS_INFO_SIZE];
@@ -66,7 +67,8 @@ struct _GimpTransformTool
 
   gint            x1, y1;          /*  upper left hand coordinate        */
   gint            x2, y2;          /*  lower right hand coords           */
-  gdouble         cx, cy;          /*  center point (for rotation)       */
+  gdouble         cx, cy;          /*  center point (for moving)         */
+  gdouble         px, py;          /*  pivot point (for rotation)        */
   gdouble         aspect;          /*  original aspect ratio             */
 
   gdouble         tx1, ty1;        /*  transformed handle coords         */
@@ -74,6 +76,7 @@ struct _GimpTransformTool
   gdouble         tx3, ty3;
   gdouble         tx4, ty4;
   gdouble         tcx, tcy;
+  gdouble         tpx, tpy;
 
   GimpMatrix3     transform;       /*  transformation matrix             */
   TransInfo       trans_info;      /*  transformation info               */
@@ -86,6 +89,7 @@ struct _GimpTransformTool
   gboolean        use_handles;     /*  uses the corner handles           */
   gboolean        use_center;      /*  uses the center handle            */
   gboolean        use_mid_handles; /*  use handles at midpoints of edges */
+  gboolean        use_pivot;       /*  use pivot point                   */
 
   GimpCanvasItem *handles[TRANSFORM_HANDLE_CENTER + 1];
 
