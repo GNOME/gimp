@@ -294,10 +294,10 @@ gimp_template_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox), gimp_unit_entries_get_table (private->resolution_entries), TRUE, TRUE, 0);
   gtk_widget_show (gimp_unit_entries_get_table (private->resolution_entries));
 
-  gimp_unit_entry_set_resolution (gimp_unit_entries_get_nth_entry (private->unit_entries, 0),
-                                  gimp_template_get_resolution_x (template));
-  gimp_unit_entry_set_resolution (gimp_unit_entries_get_nth_entry (private->unit_entries, 1),
-                                  gimp_template_get_resolution_y (template));
+  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (private->unit_entries, GIMP_UNIT_ENTRIES_WIDTH),
+                                       gimp_template_get_resolution_x (template));
+  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (private->unit_entries, GIMP_UNIT_ENTRIES_HEIGHT),
+                                       gimp_template_get_resolution_y (template));
 
   /*  the resolution chainbutton  */
   chainbutton = gimp_unit_entries_add_chain_button (private->resolution_entries,
@@ -533,12 +533,12 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
                                        gimp_template_editor_template_notify,
                                        editor);
 
-      gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (private->unit_entries,
-                                                                   GIMP_UNIT_ENTRIES_WIDTH),
-                                      yresolution); 
-      gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (private->unit_entries,
-                                                                   GIMP_UNIT_ENTRIES_WIDTH),
-                                      xresolution);                                                                
+      gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (private->unit_entries,
+                                                                             GIMP_UNIT_ENTRIES_WIDTH),
+                                           xresolution); 
+      gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (private->unit_entries,
+                                                                             GIMP_UNIT_ENTRIES_HEIGHT),
+                                           yresolution);                                                                
 
       g_object_set (template,
                     GIMP_UNIT_ENTRIES_WIDTH,  height,
@@ -573,13 +573,15 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
     {
       if (! strcmp (param_spec->name, "xresolution"))
         {
-          gimp_unit_entry_set_resolution (gimp_unit_entries_get_nth_entry (private->unit_entries, 0),
-                                          gimp_template_get_resolution_x (template));
+          gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (private->unit_entries,
+                                                                                 GIMP_UNIT_ENTRIES_HEIGHT),
+                                               gimp_template_get_resolution_x (template));
         }
       else if (! strcmp (param_spec->name, "yresolution"))
         {
-          gimp_unit_entry_set_resolution (gimp_unit_entries_get_nth_entry (private->unit_entries, 1),
-                                          gimp_template_get_resolution_y (template));                               
+          gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (private->unit_entries, 
+                                                                                 GIMP_UNIT_ENTRIES_WIDTH),
+                                               gimp_template_get_resolution_y (template));                               
         }
     }
 
@@ -610,8 +612,8 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                        gimp_template_get_base_type (template),
                        NULL, NULL, &desc, NULL);
 
-  xres = ROUND (gimp_template_get_resolution_x (template));
-  yres = ROUND (gimp_template_get_resolution_y (template));
+  xres = ROUND (gimp_template_get_resolution_y (template));
+  yres = ROUND (gimp_template_get_resolution_x (template));
 
   if (xres != yres)
     text = g_strdup_printf (_("%d × %d ppi, %s"), xres, yres, desc);

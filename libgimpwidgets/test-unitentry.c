@@ -20,15 +20,23 @@
 
 typedef struct
 {
-  GimpUnitEntry *entry1, *entry2;
+  GimpUnitEntry      *entry1, *entry2;
+  GimpUnitAdjustment *adj1, *adj2;
 } GimpTestFixture;
 
 static void
 gimp_test_unitentry_setup (GimpTestFixture *fixture,
                            gconstpointer    data)
 {
+
   fixture->entry1 = GIMP_UNIT_ENTRY (gimp_unit_entry_new ());
   fixture->entry2 = GIMP_UNIT_ENTRY (gimp_unit_entry_new ());
+
+  fixture->adj1 = gimp_unit_adjustment_new ();
+  gimp_unit_entry_set_adjustment (fixture->entry1, fixture->adj1);
+  fixture->adj2 = gimp_unit_adjustment_new ();
+  gimp_unit_entry_set_adjustment (fixture->entry2, fixture->adj2);
+
   gimp_unit_entry_connect (fixture->entry1, fixture->entry2);
   gimp_unit_entry_connect (fixture->entry2, fixture->entry1);
 }
@@ -56,8 +64,8 @@ parse (GimpTestFixture *f,
 {
   gtk_entry_set_text (GTK_ENTRY (f->entry1), "10 px");
 
-  g_assert (gimp_unit_entry_get_value_in_unit (f->entry1, GIMP_UNIT_PIXEL) == 10.0);
-  g_assert (gimp_unit_entry_get_unit          (f->entry1) == GIMP_UNIT_PIXEL);
+  g_assert (gimp_unit_entry_get_pixels      (f->entry1) == 10.0);
+  g_assert (gimp_unit_adjustment_get_unit   (f->adj1)   == GIMP_UNIT_PIXEL);
 }
 
 /**
@@ -70,12 +78,12 @@ static void
 parse_without_unit (GimpTestFixture *f,
                     gconstpointer    data)
 {
-  gimp_unit_entry_set_unit (f->entry1, GIMP_UNIT_PIXEL);
+  gimp_unit_adjustment_set_unit (f->adj1, GIMP_UNIT_PIXEL);
 
   gtk_entry_set_text (GTK_ENTRY (f->entry1), "10");
 
-  g_assert (gimp_unit_entry_get_value_in_unit (f->entry1, GIMP_UNIT_PIXEL) == 10.0);
-  g_assert (gimp_unit_entry_get_unit          (f->entry1) == GIMP_UNIT_PIXEL);
+  g_assert (gimp_unit_entry_get_pixels      (f->entry1) == 10.0);
+  g_assert (gimp_unit_adjustment_get_unit   (f->adj1)   == GIMP_UNIT_PIXEL);
 }
 
 /**
@@ -87,12 +95,12 @@ static void
 parse_addition_without_unit (GimpTestFixture *f,
                              gconstpointer    data)
 {
-  gimp_unit_entry_set_unit (f->entry1, GIMP_UNIT_INCH);
+  gimp_unit_adjustment_set_unit (f->adj1, GIMP_UNIT_INCH);
 
   gtk_entry_set_text (GTK_ENTRY (f->entry1), "10 in + 20");
 
-  g_assert (gimp_unit_entry_get_value (f->entry1) == 30.0);
-  g_assert (gimp_unit_entry_get_unit  (f->entry1) == GIMP_UNIT_INCH);
+  g_assert (gimp_unit_adjustment_get_value (f->adj1) == 30.0);
+  g_assert (gimp_unit_adjustment_get_unit  (f->adj1) == GIMP_UNIT_INCH);
 }
 
 /**
@@ -105,12 +113,12 @@ static void
 parse_different_units (GimpTestFixture *f,
                        gconstpointer    data)
 {
-  gimp_unit_entry_set_resolution (f->entry1, 72);
+  gimp_unit_adjustment_set_resolution (f->adj1, 72);
 
   gtk_entry_set_text (GTK_ENTRY (f->entry1), "10 in + 72 px");
 
-  g_assert (gimp_unit_entry_get_value_in_unit (f->entry1, GIMP_UNIT_INCH) == 11.0);
-  g_assert (gimp_unit_entry_get_unit          (f->entry1) == GIMP_UNIT_INCH);
+  g_assert (gimp_unit_adjustment_get_value (f->adj1) == 11.0);
+  g_assert (gimp_unit_adjustment_get_unit  (f->adj1) == GIMP_UNIT_INCH);
 }
 
 /**
@@ -123,40 +131,16 @@ static void
 change_units (GimpTestFixture *f,
               gconstpointer    data)
 {
-  gimp_unit_entry_set_resolution (f->entry1, 72);
-  gimp_unit_entry_set_resolution (f->entry2, 72);
-  gimp_unit_entry_set_unit       (f->entry1, GIMP_UNIT_PIXEL);
-  gimp_unit_entry_set_unit       (f->entry2, GIMP_UNIT_PIXEL);
-  gimp_unit_entry_set_value      (f->entry2, 72);
+  gimp_unit_adjustment_set_resolution (f->adj1, 72);
+  gimp_unit_adjustment_set_resolution (f->adj2, 72);
+  gimp_unit_adjustment_set_unit       (f->adj1, GIMP_UNIT_PIXEL);
+  gimp_unit_adjustment_set_unit       (f->adj2, GIMP_UNIT_PIXEL);
+  gimp_unit_adjustment_set_value      (f->adj2, 72);
 
   gtk_entry_set_text (GTK_ENTRY (f->entry1), "10 in");
 
-  g_assert (gimp_unit_entry_get_value         (f->entry2) == 1.0);
-  g_assert (gimp_unit_entry_get_unit          (f->entry2) == GIMP_UNIT_INCH);
-}
-
-/**
- * parse_addition_to_default_unit
- *
- * A term entered in the form "10 + 5mm" should be treated as "10 in + 5 mm"
- * (if default unit is inch)
- * FIXME: doesn't work right now because GimpEevl internally combines
- * "10 + 5 mm" to 15 mm so we are not informed of the single "10 " and
- * we can not apply our default unit .
- * In other words: unit resolver callback is not called for the "10 " but
- * instead directly with "15 mm"
- **/
-static void
-parse_addition_to_default_unit (GimpTestFixture *f,
-                                gconstpointer    data)
-{
-  gimp_unit_entry_set_resolution (f->entry1, 72);
-  gimp_unit_entry_set_unit       (f->entry1, GIMP_UNIT_INCH);
-
-  gtk_entry_set_text (GTK_ENTRY (f->entry1), "10 + 72 px");
-
-  g_assert (gimp_unit_entry_get_value_in_unit (f->entry1, GIMP_UNIT_INCH) == 11.0);
-  g_assert (gimp_unit_entry_get_unit          (f->entry1) == GIMP_UNIT_INCH);
+  g_assert (gimp_unit_adjustment_get_value (f->adj2) == 1.0);
+  g_assert (gimp_unit_adjustment_get_unit  (f->adj2) == GIMP_UNIT_INCH);
 }
 
 /**
@@ -168,12 +152,12 @@ static void
 parse_multiplication (GimpTestFixture *f,
                       gconstpointer    data)
 {
-  gimp_unit_entry_set_unit (f->entry1, GIMP_UNIT_INCH);
+  gimp_unit_adjustment_set_unit (f->adj1, GIMP_UNIT_INCH);
 
   gtk_entry_set_text (GTK_ENTRY (f->entry1), "10 in * 10");
 
-  g_assert (gimp_unit_entry_get_value (f->entry1) == 100.0);
-  g_assert (gimp_unit_entry_get_unit  (f->entry1) == GIMP_UNIT_INCH);
+  g_assert (gimp_unit_adjustment_get_value (f->adj1) == 100.0);
+  g_assert (gimp_unit_adjustment_get_unit  (f->adj1) == GIMP_UNIT_INCH);
 }
 
 /**
@@ -186,13 +170,13 @@ static void
 parse_multidim_multiplication (GimpTestFixture *f,
                                gconstpointer    data)
 {
-  gimp_unit_entry_set_unit  (f->entry1, GIMP_UNIT_INCH);
-  gimp_unit_entry_set_value (f->entry1, 10.0);
+  gimp_unit_adjustment_set_unit  (f->adj1, GIMP_UNIT_INCH);
+  gimp_unit_adjustment_set_value (f->adj1, 10.0);
 
   gtk_entry_set_text (GTK_ENTRY (f->entry1), "10 in * 10 px");
 
-  g_assert (gimp_unit_entry_get_value (f->entry1) == 10.0);
-  g_assert (gimp_unit_entry_get_unit  (f->entry1) == GIMP_UNIT_INCH);
+  g_assert (gimp_unit_adjustment_get_value (f->adj1) == 10.0);
+  g_assert (gimp_unit_adjustment_get_unit  (f->adj1) == GIMP_UNIT_INCH);
 }
 
 int main (int   argc,
@@ -208,7 +192,6 @@ int main (int   argc,
     ADD_TEST (parse_addition_without_unit)
     ADD_TEST (parse_different_units);
     ADD_TEST (change_units);
-    //ADD_TEST (parse_addition_to_default_unit);
     ADD_TEST (parse_multiplication);
     ADD_TEST (parse_multidim_multiplication)
     

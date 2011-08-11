@@ -102,9 +102,9 @@ gimp_unit_entry_init (GimpUnitEntry *unit_entry)
   private = GIMP_UNIT_ENTRY_GET_PRIVATE (unit_entry);                                                   
 
   /* create and set our adjustment subclass */
-  private->unit_adjustment = gimp_unit_adjustment_new ();
+  /*private->unit_adjustment = gimp_unit_adjustment_new ();
   gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (unit_entry), 
-                                  GTK_ADJUSTMENT  (private->unit_adjustment));
+                                  GTK_ADJUSTMENT  (private->unit_adjustment));*/
 
   /* some default values */
   private->dont_update_text = FALSE;  
@@ -113,10 +113,6 @@ gimp_unit_entry_init (GimpUnitEntry *unit_entry)
   private->timer            = NULL;                            
 
   /* connect signals */
-  g_signal_connect (&unit_entry->parent_instance, 
-                    "output",
-                    G_CALLBACK(gimp_unit_entry_output), 
-                    (gpointer) gimp_unit_entry_get_adjustment (unit_entry));
   g_signal_connect (&unit_entry->parent_instance, 
                     "input",
                     G_CALLBACK(gimp_unit_entry_input), 
@@ -150,10 +146,30 @@ gimp_unit_entry_new (void)
 GimpUnitAdjustment*
 gimp_unit_entry_get_adjustment (GimpUnitEntry *entry)
 {
-  GimpUnitEntryPrivate *private = GIMP_UNIT_ENTRY_GET_PRIVATE (entry);
+  GtkAdjustment *adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (entry));
+  
+  if (!GIMP_IS_UNIT_ADJUSTMENT (adjustment))
+  {
+    g_warning ("gimp_unit_entry_get_adjustment: GimpUnitEntry has no or invalid adjustment. "
+               "Create GimpUnitAdjustment instance and set via gimp_unit_entry_set_adjustment() first.");
+    return NULL;
+  }
 
-  return private->unit_adjustment;
+  return GIMP_UNIT_ADJUSTMENT (adjustment);
 }
+
+void                  
+gimp_unit_entry_set_adjustment  (GimpUnitEntry      *entry,
+                                 GimpUnitAdjustment *adjustment)
+{
+  gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (entry), 
+                                  GTK_ADJUSTMENT  (adjustment));
+
+  g_signal_connect (GTK_SPIN_BUTTON (entry), 
+                    "output",
+                    G_CALLBACK(gimp_unit_entry_output), 
+                    (gpointer) adjustment);                                
+}        
 
 /* connect to another entry */
 void 
@@ -382,66 +398,13 @@ gimp_unit_entry_menu_item      (GtkWidget *menu_item,
   gimp_unit_adjustment_set_unit (adj, unit);
 }                        
 
-/* convenience getters/setters */
-void 
-gimp_unit_entry_set_unit (GimpUnitEntry *entry, 
-                          GimpUnit       unit)
-{
-  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
-  gimp_unit_adjustment_set_unit (adj, unit);
-}
-
-void 
-gimp_unit_entry_set_resolution (GimpUnitEntry *entry, 
-                                gdouble        resolution)
-{
-  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
-  gimp_unit_adjustment_set_resolution (adj, resolution);
-}
-
-void 
-gimp_unit_entry_set_value (GimpUnitEntry *entry, 
-                           gdouble        value)
-{
-  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
-  gimp_unit_adjustment_set_value (adj, value);
-}
-
-gdouble 
-gimp_unit_entry_get_value (GimpUnitEntry *entry)
-{
-  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
-  return gimp_unit_adjustment_get_value (adj);
-}
-
+/* convenience getters/setters */                         
 gdouble
 gimp_unit_entry_get_pixels (GimpUnitEntry *entry)
 {
-  return gimp_unit_entry_get_value_in_unit (entry, GIMP_UNIT_PIXEL);
-}
-
-gdouble
-gimp_unit_entry_get_value_in_unit (GimpUnitEntry *entry, 
-                                   GimpUnit       unit)
-{
   GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
-  return gimp_unit_adjustment_get_value_in_unit (adj, unit);
-}
 
-void 
-gimp_unit_entry_set_value_in_unit (GimpUnitEntry *entry,
-                                   gdouble        value, 
-                                   GimpUnit       unit)
-{
-  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
-  gimp_unit_adjustment_set_value_in_unit (adj, value, unit);
-}
-
-GimpUnit 
-gimp_unit_entry_get_unit (GimpUnitEntry *entry)
-{
-  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
-  return gimp_unit_adjustment_get_unit (adj);
+  return gimp_unit_adjustment_get_value_in_unit (adj, GIMP_UNIT_PIXEL);
 }
 
 void
@@ -458,7 +421,8 @@ void
 gimp_unit_entry_set_pixels (GimpUnitEntry      *entry,
                             gdouble             value)
 {
-  gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
+  GimpUnitAdjustment *adj = gimp_unit_entry_get_adjustment (entry);
+  gimp_unit_adjustment_set_value_in_unit (adj, value, GIMP_UNIT_PIXEL);
 }                           
 
 void
@@ -466,8 +430,15 @@ gimp_unit_entry_set_mode (GimpUnitEntry     *entry,
                           GimpUnitEntryMode  mode)
 {
   GimpUnitEntryPrivate *private = GIMP_UNIT_ENTRY_GET_PRIVATE (entry);
+  GimpUnitAdjustment   *adj     = gimp_unit_entry_get_adjustment (entry);
 
   private->mode = mode;
+
+  /* set resolution in resolution mode to 1, otherwise calculation is not correct */
+  if (mode == GIMP_UNIT_ENTRY_MODE_RESOLUTION)
+  {
+    gimp_unit_adjustment_set_resolution (adj, 1.0);
+  }
 }
 
 /* get string in format "value unit" */

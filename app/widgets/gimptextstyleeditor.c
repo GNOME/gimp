@@ -183,8 +183,9 @@ gimp_text_style_editor_class_init (GimpTextStyleEditorClass *klass)
 static void
 gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 {
-  GtkWidget *image;
-  GimpRGB    color;
+  GtkWidget          *image;
+  GimpRGB             color;
+  GimpUnitAdjustment *unit_adjustment;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
@@ -206,7 +207,8 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                            _("Change font of selected text"), NULL);
 
   editor->unit_entry = gimp_unit_entry_new ();
-  gimp_unit_entry_set_unit (GIMP_UNIT_ENTRY (editor->unit_entry), GIMP_UNIT_PIXEL);
+  unit_adjustment = gimp_unit_entry_get_adjustment (GIMP_UNIT_ENTRY (editor->unit_entry));
+  gimp_unit_adjustment_set_unit (unit_adjustment, GIMP_UNIT_PIXEL);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->unit_entry,
                       FALSE, FALSE, 0);
   gtk_widget_show (editor->unit_entry);

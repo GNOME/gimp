@@ -110,8 +110,9 @@ gimp_unit_entries_add_entry (GimpUnitEntries *entries,
                              const gchar     *id,
                              const gchar     *label_str)
 {
-  GimpUnitEntriesPrivate  *private = GIMP_UNIT_ENTRIES_GET_PRIVATE (entries);
-  GimpUnitEntry           *entry   = GIMP_UNIT_ENTRY (gimp_unit_entry_new ()); 
+  GimpUnitEntriesPrivate  *private    = GIMP_UNIT_ENTRIES_GET_PRIVATE (entries);
+  GimpUnitAdjustment      *adjustment = gimp_unit_adjustment_new ();
+  GimpUnitEntry           *entry      = GIMP_UNIT_ENTRY (gimp_unit_entry_new ()); 
   GimpUnitEntry           *other_entry;
   GtkWidget               *label;
   guint                   bottom;
@@ -120,6 +121,8 @@ gimp_unit_entries_add_entry (GimpUnitEntries *entries,
                           right_attach,
                           top_attach,
                           bottom_attach;
+
+  gimp_unit_entry_set_adjustment (entry, adjustment);                        
 
   /* retrieve bottom row of table */
   gtk_table_get_size (GTK_TABLE (gimp_unit_entries_get_table (entries)), &bottom, NULL);
@@ -369,27 +372,22 @@ gdouble
 gimp_unit_entries_get_pixels (GimpUnitEntries *entries, 
                               const gchar     *id)
 {
-  return gimp_unit_entries_get_value_in_unit (entries, id, GIMP_UNIT_PIXEL);
+  GimpUnitEntry *entry;
+
+  entry = gimp_unit_entries_get_entry (entries, id);
+
+  return gimp_unit_entry_get_pixels (entry);
 }
 
 gdouble         
 gimp_unit_entries_get_nth_pixels (GimpUnitEntries *entries, 
                                   gint             index)
 {
-  return gimp_unit_entry_get_pixels (gimp_unit_entries_get_nth_entry (entries, index));
-}
+  GimpUnitEntry *entry;
 
-gdouble 
-gimp_unit_entries_get_value_in_unit (GimpUnitEntries *entries,
-                                     const gchar     *id, 
-                                     GimpUnit        unit)
-{
-  GimpUnitEntry *entry = gimp_unit_entries_get_entry (entries, id);
+  entry = gimp_unit_entries_get_nth_entry (entries, index);
 
-  if (entry != NULL)
-    return gimp_unit_entry_get_value_in_unit (entry, unit);
-  else
-    return -1;
+  return gimp_unit_entry_get_pixels (entry);
 }
 
 /* sets the unit of all entries */
@@ -397,14 +395,14 @@ void
 gimp_unit_entries_set_unit (GimpUnitEntries *entries, 
                             GimpUnit         unit)
 {
-  GimpUnitEntry *entry;
-  gint           i, count = gimp_unit_entries_get_entry_count (entries);
+  GimpUnitAdjustment *adj;
+  gint                i, count = gimp_unit_entries_get_entry_count (entries);
 
   /* iterate over list of entries */
   for (i = 0; i < count; i++) 
   {
-    entry = gimp_unit_entries_get_nth_entry (entries, i);
-    gimp_unit_entry_set_unit (entry, unit);
+    adj = gimp_unit_entries_get_nth_adjustment (entries, i);
+    gimp_unit_adjustment_set_unit (adj, unit);
   }
 }
 
@@ -413,14 +411,14 @@ void
 gimp_unit_entries_set_resolution (GimpUnitEntries *entries,
                                   gdouble          res)
 {
-  GimpUnitEntry *entry;
-  gint           i, count = gimp_unit_entries_get_entry_count (entries);
+  GimpUnitAdjustment *adj;
+  gint                i, count = gimp_unit_entries_get_entry_count (entries);
 
   /* iterate over list of entries */
   for (i = 0; i < count; i++) 
   {
-    entry = gimp_unit_entries_get_nth_entry (entries, i);
-    gimp_unit_entry_set_resolution (entry, res);
+    adj = gimp_unit_entries_get_nth_adjustment (entries, i);
+    gimp_unit_adjustment_set_resolution (adj, res);
   }
 }
 
@@ -437,7 +435,6 @@ gimp_unit_entries_set_mode (GimpUnitEntries   *entries,
   {
     entry = gimp_unit_entries_get_nth_entry (entries, i);
     gimp_unit_entry_set_mode (entry, mode);
-    gimp_unit_entry_set_resolution (entry, 1.0);  /* otherwise calculation is not correct */
   }
 }
 
@@ -502,11 +499,11 @@ gimp_unit_entries_set_pixels (GimpUnitEntries *entries,
                               const gchar     *id,
                               gdouble          value)
 {
-  GimpUnitEntry *entry;
+  GimpUnitAdjustment *adj;
 
-  entry = gimp_unit_entries_get_entry (entries, id);
+  adj = gimp_unit_entries_get_adjustment (entries, id);
 
-  gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
+  gimp_unit_adjustment_set_value_in_unit (adj, value, GIMP_UNIT_PIXEL);
 }               
                    
 void            
@@ -514,9 +511,31 @@ gimp_unit_entries_set_nth_pixels (GimpUnitEntries *entries,
                                   gint             index,
                                   gdouble          value)
 {
+  GimpUnitAdjustment *adj;
+
+  adj = gimp_unit_entries_get_nth_adjustment (entries, index);
+
+  gimp_unit_adjustment_set_value_in_unit (adj, value, GIMP_UNIT_PIXEL);
+}      
+
+GimpUnitAdjustment*  
+gimp_unit_entries_get_adjustment (GimpUnitEntries *entries,
+                                  const gchar     *id)
+{
   GimpUnitEntry *entry;
 
-  entry = gimp_unit_entries_get_nth_entry (entries, index);
+  entry = gimp_unit_entries_get_entry (entries, id);
 
-  gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
-}                                
+  return gimp_unit_entry_get_adjustment (entry);
+}
+
+GimpUnitAdjustment*  
+gimp_unit_entries_get_nth_adjustment  (GimpUnitEntries *entries,
+                                       gint             index)
+{
+  GimpUnitEntry *entry;
+  
+  entry = gimp_unit_entries_get_nth_entry (entries, index);
+  
+  return gimp_unit_entry_get_adjustment (entry);  
+}                       

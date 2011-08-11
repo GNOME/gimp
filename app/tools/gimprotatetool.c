@@ -262,8 +262,8 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool)
 
   gimp_unit_entries_set_unit (entries, gimp_display_get_shell (display)->unit);
 
-  gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (entries, "center_x"), xres);
-  gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (entries, "center_y"), yres);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (entries, "center_x"), xres);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (entries, "center_y"), yres);
 
   gimp_unit_entry_set_bounds (gimp_unit_entries_get_entry (entries, "center_x"),
                               GIMP_UNIT_PIXEL,

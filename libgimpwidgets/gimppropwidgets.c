@@ -2922,7 +2922,7 @@ gimp_prop_coordinates_connect     (GObject       *config,
   gdouble             *old_y_value;
   GimpUnit            *old_unit_value;
   gboolean            chain_checked;
-  GimpUnitEntry       *entry1, *entry2;
+  GimpUnitEntry       *x_entry, *y_entry;
   GimpUnitEntries     *unit_entries;
 
   g_return_val_if_fail (GIMP_IS_UNIT_ENTRIES (unitentries), FALSE);
@@ -2962,37 +2962,37 @@ gimp_prop_coordinates_connect     (GObject       *config,
       unit_value      = GIMP_UNIT_INCH;
     }
 
-  entry1 = gimp_unit_entries_get_nth_entry (unit_entries, 0);
-  entry2 = gimp_unit_entries_get_nth_entry (unit_entries, 1);
-  g_return_val_if_fail (GIMP_IS_UNIT_ENTRY (entry1), FALSE);
-  g_return_val_if_fail (GIMP_IS_UNIT_ENTRY (entry2), FALSE);
+  x_entry = gimp_unit_entries_get_nth_entry (unit_entries, 0);
+  y_entry = gimp_unit_entries_get_nth_entry (unit_entries, 1);
+  g_return_val_if_fail (GIMP_IS_UNIT_ENTRY (x_entry), FALSE);
+  g_return_val_if_fail (GIMP_IS_UNIT_ENTRY (y_entry), FALSE);
 
   set_param_spec (NULL,
-                  GTK_WIDGET (entry1),
+                  GTK_WIDGET (x_entry),
                   x_param_spec);
   set_param_spec (NULL,
-                  GTK_WIDGET (entry2),
+                  GTK_WIDGET (y_entry),
                   y_param_spec);
 
   gimp_unit_entries_set_unit (unit_entries, unit_value);
 
-  gimp_unit_entry_set_resolution (entry1, xresolution);
-  gimp_unit_entry_set_resolution (entry2, yresolution);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entry_get_adjustment (x_entry), xresolution);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entry_get_adjustment (y_entry), yresolution);
 
   chain_checked = (ABS (x_value - y_value) < 1);
 
-  gimp_unit_entry_set_bounds (entry1,
+  gimp_unit_entry_set_bounds (x_entry,
                               GIMP_UNIT_PIXEL,
-                              x_upper,
-                              x_lower);
+                              x_lower,
+                              x_upper);
 
-  gimp_unit_entry_set_bounds (entry2,
+  gimp_unit_entry_set_bounds (y_entry,
                               GIMP_UNIT_PIXEL,
-                              y_upper,
-                              y_lower);
+                              y_lower,
+                              y_upper);
 
-  gimp_unit_entry_set_value_in_unit (entry1, x_value, GIMP_UNIT_PIXEL);
-  gimp_unit_entry_set_value_in_unit (entry2, y_value, GIMP_UNIT_PIXEL);                                       
+  gimp_unit_entry_set_pixels (x_entry, x_value);
+  gimp_unit_entry_set_pixels (y_entry, y_value);                                       
 
   g_object_set_data (G_OBJECT (unit_entries), "gimp-config-param-spec-x",
                      x_param_spec);
@@ -3068,7 +3068,7 @@ gimp_prop_coordinates_callback  (GimpUnitEntries *entries,
   gdouble       *old_y_value;
   GimpUnit      *old_unit_value;
   gboolean       backwards;
-  GimpUnitEntry *entry1, *entry2;
+  GimpUnitEntry *x_entry, *y_entry;
 
   x_param_spec = g_object_get_data (G_OBJECT (entries),
                                     "gimp-config-param-spec-x");
@@ -3080,12 +3080,12 @@ gimp_prop_coordinates_callback  (GimpUnitEntries *entries,
   unit_param_spec = g_object_get_data (G_OBJECT (entries),
                                        "gimp-config-param-spec-unit");
 
-  entry1 = gimp_unit_entries_get_nth_entry (entries, 0);
-  entry2 = gimp_unit_entries_get_nth_entry (entries, 1);                                    
+  x_entry = gimp_unit_entries_get_nth_entry (entries, 0);
+  y_entry = gimp_unit_entries_get_nth_entry (entries, 1);                                    
 
-  x_value    = gimp_unit_entry_get_value_in_unit (entry1, GIMP_UNIT_PIXEL);
-  y_value    = gimp_unit_entry_get_value_in_unit (entry2, GIMP_UNIT_PIXEL);
-  unit_value = gimp_unit_entry_get_unit (entry1);
+  x_value    = gimp_unit_entry_get_pixels (x_entry);
+  y_value    = gimp_unit_entry_get_pixels (y_entry);
+  unit_value = gimp_unit_adjustment_get_unit (gimp_unit_entry_get_adjustment (x_entry));
 
   old_x_value    = g_object_get_data (G_OBJECT (entries), "old-x-value");
   old_y_value    = g_object_get_data (G_OBJECT (entries), "old-y-value");
@@ -3182,13 +3182,13 @@ gimp_prop_coordinates_notify_unit  (GObject             *config,
                 param_spec->name, &value,
                 NULL);
 
-  if (value != gimp_unit_entry_get_unit (entry))
+  if (value != gimp_unit_adjustment_get_unit (gimp_unit_entry_get_adjustment (entry)))
     {
       g_signal_handlers_block_by_func (entries,
                                        gimp_prop_coordinates_callback,
                                        config);
 
-      gimp_unit_entry_set_unit (entry, value);
+      gimp_unit_adjustment_set_unit (gimp_unit_entry_get_adjustment (entry), value);
 
       g_signal_handlers_unblock_by_func (entries,
                                          gimp_prop_coordinates_callback,
@@ -3225,7 +3225,7 @@ gimp_prop_coordinates_notify_x  (GObject           *config,
                     NULL);
     }
 
-  if (value != gimp_unit_entry_get_value_in_unit (entry, GIMP_UNIT_PIXEL))
+  if (value != gimp_unit_entry_get_pixels (entry))
     {
       gdouble *old_x_value = g_object_get_data (G_OBJECT (entries),
                                                 "old-x-value");
@@ -3234,7 +3234,7 @@ gimp_prop_coordinates_notify_x  (GObject           *config,
                                        gimp_prop_coordinates_callback,
                                        config);
 
-      gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
+      gimp_unit_entry_set_pixels (entry, value);
 
       if (old_x_value)
         *old_x_value = value;
@@ -3274,7 +3274,7 @@ gimp_prop_coordinates_notify_y (GObject           *config,
                     NULL);
     }
 
-  if (value != gimp_unit_entry_get_value_in_unit (entry, GIMP_UNIT_PIXEL))
+  if (value != gimp_unit_entry_get_pixels (entry))
     {
       gdouble *old_y_value = g_object_get_data (G_OBJECT (entries),
                                                 "old-y-value");
@@ -3283,7 +3283,7 @@ gimp_prop_coordinates_notify_y (GObject           *config,
                                        gimp_prop_coordinates_callback,
                                        config);
 
-      gimp_unit_entry_set_value_in_unit (entry, value, GIMP_UNIT_PIXEL);
+      gimp_unit_entry_set_pixels (entry, value);
 
       if (old_y_value)
         *old_y_value = value;

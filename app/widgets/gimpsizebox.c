@@ -207,7 +207,7 @@ gimp_size_box_constructed (GObject *object)
   g_list_free (children);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_table_attach_defaults (GTK_TABLE (gimp_unit_entries_get_table (unit_entries)), vbox, 4, 6, 3, 4);
+  gtk_table_attach_defaults (GTK_TABLE (gimp_unit_entries_get_table (unit_entries)), vbox, 4, 6, 2, 3);
   gtk_widget_show (vbox);
 
   label = gtk_label_new (NULL);
@@ -306,18 +306,18 @@ gimp_size_box_set_property (GObject      *object,
     case PROP_XRESOLUTION:
       box->xresolution = g_value_get_double (value);
       if (priv->unit_entries)
-        gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (priv->unit_entries, 
-                                                                     GIMP_UNIT_ENTRIES_WIDTH),
-                                        box->xresolution);
+        gimp_unit_adjustment_set_resolution (
+            gimp_unit_entries_get_adjustment (priv->unit_entries, GIMP_UNIT_ENTRIES_WIDTH),
+            box->xresolution);
       gimp_size_box_update_resolution (box);
       break;
 
     case PROP_YRESOLUTION:
       box->yresolution = g_value_get_double (value);
       if (priv->unit_entries)
-        gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (priv->unit_entries, 
-                                                                     GIMP_UNIT_ENTRIES_HEIGHT),
-                                        box->xresolution);
+        gimp_unit_adjustment_set_resolution (
+            gimp_unit_entries_get_adjustment (priv->unit_entries, GIMP_UNIT_ENTRIES_HEIGHT),
+            box->yresolution);
       gimp_size_box_update_resolution (box);
       break;
 

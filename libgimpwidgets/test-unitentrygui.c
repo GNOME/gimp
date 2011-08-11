@@ -63,8 +63,8 @@ create_interface(void)
   /* set some default values */
   a = gimp_unit_entries_get_entry (entries, "xres");
   b = gimp_unit_entries_get_entry (entries, "yres");
-  gimp_unit_entry_set_value (a, 72);
-  gimp_unit_entry_set_value (b, 72);
+  gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (a), 72);
+  gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (b), 72);
   gimp_unit_entry_set_mode (a, GIMP_UNIT_ENTRY_MODE_RESOLUTION);
   gimp_unit_entry_set_mode (b, GIMP_UNIT_ENTRY_MODE_RESOLUTION);
 

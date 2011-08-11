@@ -215,10 +215,10 @@ resize_dialog_new (GimpViewable       *viewable,
 
   gtk_box_pack_start (GTK_BOX (vbox), gimp_unit_entries_get_table (unit_entries), FALSE, FALSE, 0);
 
-  gimp_unit_entry_set_resolution (
-    gimp_unit_entries_get_entry (unit_entries, GIMP_UNIT_ENTRIES_OFFSET_X), xres);
-  gimp_unit_entry_set_resolution (
-    gimp_unit_entries_get_entry (unit_entries, GIMP_UNIT_ENTRIES_OFFSET_Y), yres);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (unit_entries, GIMP_UNIT_ENTRIES_OFFSET_X), 
+                                       xres);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (unit_entries, GIMP_UNIT_ENTRIES_OFFSET_Y), 
+                                       yres);
 
   gimp_unit_entries_set_unit (unit_entries, GIMP_UNIT_PIXEL);
   gimp_unit_entries_set_bounds (unit_entries, GIMP_UNIT_PIXEL, 0 , 0);

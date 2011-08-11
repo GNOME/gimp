@@ -60,27 +60,16 @@ GType                 gimp_unit_entry_get_type          (void);
 GtkWidget *           gimp_unit_entry_new               (void);
 
 GimpUnitAdjustment *  gimp_unit_entry_get_adjustment    (GimpUnitEntry      *entry);
-gdouble               gimp_unit_entry_get_value         (GimpUnitEntry      *entry);
 gdouble               gimp_unit_entry_get_pixels        (GimpUnitEntry      *entry);
-gdouble               gimp_unit_entry_get_value_in_unit (GimpUnitEntry      *entry, 
-                                                         GimpUnit            unit);
-GimpUnit              gimp_unit_entry_get_unit          (GimpUnitEntry      *entry);
 
-void                  gimp_unit_entry_set_bounds        (GimpUnitEntry      *entry, 
-                                                         GimpUnit            unit, 
-                                                         gdouble             upper, 
-                                                         gdouble             lower);
+void                  gimp_unit_entry_set_adjustment    (GimpUnitEntry      *entry,
+                                                         GimpUnitAdjustment *adjustment);
+void                  gimp_unit_entry_set_bounds        (GimpUnitEntry *entry, 
+                                                         GimpUnit       unit, 
+                                                         gdouble        lower,
+                                                         gdouble        upper);
 void                  gimp_unit_entry_set_mode          (GimpUnitEntry      *entry, 
                                                          GimpUnitEntryMode   mode);
-void                  gimp_unit_entry_set_unit          (GimpUnitEntry      *entry, 
-                                                         GimpUnit           unit);
-void                  gimp_unit_entry_set_resolution    (GimpUnitEntry      *entry,
-                                                         gdouble             resolution);
-void                  gimp_unit_entry_set_value         (GimpUnitEntry      *entry, 
-                                                         gdouble             value);
-void                  gimp_unit_entry_set_value_in_unit (GimpUnitEntry      *entry, 
-                                                         gdouble             value, 
-                                                         GimpUnit            unit);
 void                  gimp_unit_entry_set_pixels        (GimpUnitEntry      *entry,
                                                          gdouble             value);
                                                          

@@ -169,10 +169,10 @@ offset_dialog_new (GimpDrawable *drawable,
 
   gimp_unit_entries_set_unit (entries, GIMP_UNIT_PIXEL);
 
-  gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (entries, GIMP_UNIT_ENTRIES_OFFSET_X),
-                                  xres);
-  gimp_unit_entry_set_resolution (gimp_unit_entries_get_entry (entries, GIMP_UNIT_ENTRIES_OFFSET_Y),
-                                  yres);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (entries, GIMP_UNIT_ENTRIES_OFFSET_X),
+                                       xres);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (entries, GIMP_UNIT_ENTRIES_OFFSET_Y),
+                                       yres);
 
   gimp_unit_entry_set_bounds (gimp_unit_entries_get_entry (entries, GIMP_UNIT_ENTRIES_OFFSET_X),
                               GIMP_UNIT_PIXEL,

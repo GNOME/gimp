@@ -358,7 +358,7 @@ EXPORTS
 	gimp_toggle_button_sensitive_update
 	gimp_toggle_button_update
 	gimp_uint_adjustment_update
-	gimp_unit_adjustment_connect
+	gimp_unit_adjustment_follow_unit_of
 	gimp_unit_adjustment_get_resolution
 	gimp_unit_adjustment_get_type
 	gimp_unit_adjustment_get_unit
@@ -378,15 +378,16 @@ EXPORTS
 	gimp_unit_entries_add_chain_button
 	gimp_unit_entries_add_entry
 	gimp_unit_entries_add_preview_label
+	gimp_unit_entries_get_adjustment
 	gimp_unit_entries_get_chain_button
 	gimp_unit_entries_get_entry
 	gimp_unit_entries_get_entry_count
+	gimp_unit_entries_get_nth_adjustment
 	gimp_unit_entries_get_nth_entry
 	gimp_unit_entries_get_nth_pixels
 	gimp_unit_entries_get_pixels
 	gimp_unit_entries_get_table
 	gimp_unit_entries_get_type
-	gimp_unit_entries_get_value_in_unit
 	gimp_unit_entries_grab_focus
 	gimp_unit_entries_new
 	gimp_unit_entries_set_activates_default
@@ -400,17 +401,11 @@ EXPORTS
 	gimp_unit_entry_get_adjustment
 	gimp_unit_entry_get_pixels
 	gimp_unit_entry_get_type
-	gimp_unit_entry_get_unit
-	gimp_unit_entry_get_value
-	gimp_unit_entry_get_value_in_unit
 	gimp_unit_entry_new
+	gimp_unit_entry_set_adjustment
 	gimp_unit_entry_set_bounds
 	gimp_unit_entry_set_mode
 	gimp_unit_entry_set_pixels
-	gimp_unit_entry_set_resolution
-	gimp_unit_entry_set_unit
-	gimp_unit_entry_set_value
-	gimp_unit_entry_set_value_in_unit
 	gimp_unit_entry_to_string
 	gimp_unit_entry_to_string_in_unit
 	gimp_unit_menu_get_pixel_digits

@@ -59,55 +59,57 @@ struct _GimpUnitEntriesClass
   GObjectClass parent_class;
 };
 
-GType           gimp_unit_entries_get_type              (void);
-GimpUnitEntries*gimp_unit_entries_new                   (void);
+GType                gimp_unit_entries_get_type              (void);
+GimpUnitEntries*     gimp_unit_entries_new                   (void);
 
-GtkWidget*      gimp_unit_entries_add_entry             (GimpUnitEntries *entries, 
-                                                         const gchar     *id,
-                                                         const gchar     *label);
-void            gimp_unit_entries_add_preview_label     (GimpUnitEntries *entries, 
-                                                         GimpUnit         unit, 
-                                                         const char      *id1, 
-                                                         const char      *id2);
-GtkWidget*      gimp_unit_entries_add_chain_button      (GimpUnitEntries *entries,
-                                                         const char      *id1, 
-                                                         const char      *id2);
+GtkWidget*           gimp_unit_entries_add_entry             (GimpUnitEntries *entries, 
+                                                              const gchar     *id,
+                                                              const gchar     *label);
+void                 gimp_unit_entries_add_preview_label     (GimpUnitEntries *entries, 
+                                                              GimpUnit         unit, 
+                                                              const gchar     *id1, 
+                                                              const gchar     *id2);
+GtkWidget*           gimp_unit_entries_add_chain_button      (GimpUnitEntries *entries,
+                                                              const gchar     *id1, 
+                                                              const gchar     *id2);
 
-GimpUnitEntry*  gimp_unit_entries_get_entry             (GimpUnitEntries *entries, 
-                                                         const gchar     *id);
-GimpUnitEntry*  gimp_unit_entries_get_nth_entry         (GimpUnitEntries *entries, 
-                                                         gint             index);
-gint            gimp_unit_entries_get_entry_count       (GimpUnitEntries *entries);
-gdouble         gimp_unit_entries_get_pixels            (GimpUnitEntries *entries, 
-                                                         const gchar     *id);
-gdouble         gimp_unit_entries_get_nth_pixels        (GimpUnitEntries *entries, 
-                                                         gint             index);                                                             
-GtkWidget*      gimp_unit_entries_get_table             (GimpUnitEntries *entries);                                                             
-gdouble         gimp_unit_entries_get_value_in_unit     (GimpUnitEntries *entries,
-                                                         const gchar     *id,
-                                                         GimpUnit         unit);
-GtkWidget*      gimp_unit_entries_get_chain_button      (GimpUnitEntries *entries);                                                              
+GimpUnitAdjustment*  gimp_unit_entries_get_adjustment        (GimpUnitEntries *entries,
+                                                              const gchar     *id);
+GimpUnitAdjustment*  gimp_unit_entries_get_nth_adjustment    (GimpUnitEntries *entries,
+                                                              gint             index);
+GimpUnitEntry*       gimp_unit_entries_get_entry             (GimpUnitEntries *entries, 
+                                                              const gchar     *id);
+GimpUnitEntry*       gimp_unit_entries_get_nth_entry         (GimpUnitEntries *entries, 
+                                                              gint             index);
+gint                 gimp_unit_entries_get_entry_count       (GimpUnitEntries *entries);
+gdouble              gimp_unit_entries_get_pixels            (GimpUnitEntries *entries, 
+                                                              const gchar     *id);
+gdouble              gimp_unit_entries_get_nth_pixels        (GimpUnitEntries *entries, 
+                                                              gint             index);                                                             
+GtkWidget*           gimp_unit_entries_get_table             (GimpUnitEntries *entries);                                                             
 
-void            gimp_unit_entries_set_unit              (GimpUnitEntries *entries, 
-                                                         GimpUnit         unit);
-void            gimp_unit_entries_set_resolution        (GimpUnitEntries *entries, 
-                                                         gdouble          res);
-void            gimp_unit_entries_set_mode              (GimpUnitEntries *entries, 
-                                                         GimpUnitEntryMode mode);
-void            gimp_unit_entries_set_activates_default (GimpUnitEntries *entries, 
-                                                         gboolean         setting);
-void            gimp_unit_entries_set_bounds            (GimpUnitEntries *entries, 
-                                                         GimpUnit         unit, 
-                                                         gdouble          upper, 
-                                                         gdouble          lower);
-void            gimp_unit_entries_set_pixels            (GimpUnitEntries *entries, 
-                                                         const gchar     *id,
-                                                         gdouble          value);
-void            gimp_unit_entries_set_nth_pixels        (GimpUnitEntries *entries, 
-                                                         gint             index,
-                                                         gdouble          value);                                                                                                                          
+GtkWidget*           gimp_unit_entries_get_chain_button      (GimpUnitEntries *entries);                                                              
 
-void            gimp_unit_entries_grab_focus            (GimpUnitEntries *entries);
+void                 gimp_unit_entries_set_unit              (GimpUnitEntries *entries, 
+                                                              GimpUnit         unit);
+void                 gimp_unit_entries_set_resolution        (GimpUnitEntries *entries, 
+                                                              gdouble          res);
+void                 gimp_unit_entries_set_mode              (GimpUnitEntries *entries, 
+                                                              GimpUnitEntryMode mode);
+void                 gimp_unit_entries_set_activates_default (GimpUnitEntries *entries, 
+                                                              gboolean         setting);
+void                 gimp_unit_entries_set_bounds            (GimpUnitEntries *entries, 
+                                                              GimpUnit         unit, 
+                                                              gdouble          upper, 
+                                                              gdouble          lower);
+void                 gimp_unit_entries_set_pixels            (GimpUnitEntries *entries, 
+                                                              const gchar     *id,
+                                                              gdouble          value);
+void                 gimp_unit_entries_set_nth_pixels        (GimpUnitEntries *entries, 
+                                                              gint             index,
+                                                              gdouble          value);                                                                                                                          
+
+void                 gimp_unit_entries_grab_focus            (GimpUnitEntries *entries);
 
 G_END_DECLS
 

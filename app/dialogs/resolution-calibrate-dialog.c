@@ -152,8 +152,8 @@ resolution_calibrate_dialog (GimpUnitEntries   *resolution_entries,
     GIMP_UNIT_ENTRY (gimp_unit_entries_add_entry (calibrate_entries, "horizontal", _("Horizontal")));  
   vertical_entry = 
     GIMP_UNIT_ENTRY (gimp_unit_entries_add_entry (calibrate_entries, "vertical", _("Vertical")));                       
-  gimp_unit_entry_set_resolution         (horizontal_entry, calibrate_xres);
-  gimp_unit_entry_set_resolution         (vertical_entry,   calibrate_yres);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entry_get_adjustment (horizontal_entry), calibrate_xres);
+  gimp_unit_adjustment_set_resolution (gimp_unit_entry_get_adjustment (vertical_entry),   calibrate_yres);
   gimp_unit_entry_set_pixels             (horizontal_entry, ruler_width);
   gimp_unit_entry_set_pixels             (vertical_entry,   ruler_height);
 
