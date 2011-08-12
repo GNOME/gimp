@@ -881,6 +881,12 @@ Sets the pixel format to use for mouse pointers.  Possible values are bitmap
 and pixbuf.
 
 .TP
+(cursor-handedness right)
+
+Sets the handedness for cursor positioning.  Possible values are left and
+right.
+
+.TP
 (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
 
 Where to search for fractals used by the Fractal Explorer plug-in.  This is a

@@ -697,6 +697,11 @@
 # 
 # (cursor-format pixbuf)
 
+# Sets the handedness for cursor positioning.  Possible values are left and
+# right.
+# 
+# (cursor-handedness right)
+
 # Where to search for fractals used by the Fractal Explorer plug-in.  This is
 # a colon-separated list of folders to search.
 # 
