@@ -182,6 +182,9 @@ gchar*                   gimp_image_get_filename             (gint32            
 gboolean                 gimp_image_set_filename             (gint32                  image_ID,
                                                               const gchar            *filename);
 gchar*                   gimp_image_get_uri                  (gint32                  image_ID);
+gchar*                   gimp_image_get_xcf_uri              (gint32                  image_ID);
+gchar*                   gimp_image_get_imported_uri         (gint32                  image_ID);
+gchar*                   gimp_image_get_exported_uri         (gint32                  image_ID);
 gchar*                   gimp_image_get_name                 (gint32                  image_ID);
 gboolean                 gimp_image_get_resolution           (gint32                  image_ID,
                                                               gdouble                *xresolution,

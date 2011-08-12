@@ -359,10 +359,12 @@ EXPORTS
 	gimp_image_get_colormap
 	gimp_image_get_component_active
 	gimp_image_get_component_visible
+	gimp_image_get_exported_uri
 	gimp_image_get_filename
 	gimp_image_get_floating_sel
 	gimp_image_get_guide_orientation
 	gimp_image_get_guide_position
+	gimp_image_get_imported_uri
 	gimp_image_get_item_position
 	gimp_image_get_layer_by_tattoo
 	gimp_image_get_layer_position
@@ -380,6 +382,7 @@ EXPORTS
 	gimp_image_get_vectors
 	gimp_image_get_vectors_by_tattoo
 	gimp_image_get_vectors_position
+	gimp_image_get_xcf_uri
 	gimp_image_grid_get_background_color
 	gimp_image_grid_get_foreground_color
 	gimp_image_grid_get_offset

@@ -2079,8 +2079,8 @@ sub image_get_filename {
 
     $help = <<'HELP';
 This procedure returns the specified image's filename in the
-filesystem encoding. The image has a filename only if it was loaded
-from a local filesystem or has since been saved locally. Otherwise,
+filesystem encoding. The image has a filename only if it was loaded or
+imported from a file or has since been saved or exported. Otherwise,
 this function returns %NULL. See also gimp_image_get_uri().
 HELP
 
@@ -2099,7 +2099,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  filename = gimp_image_get_filename (image);
+  filename = g_filename_from_uri (gimp_image_get_any_uri (image), NULL, NULL);
 }
 CODE
     );
@@ -2154,8 +2154,12 @@ sub image_get_uri {
 
     $help = <<'HELP';
 This procedure returns the URI associated with the specified image.
-The image has an URI only if it was loaded from a file or has since
-been saved. Otherwise, this function returns %NULL.
+The image has an URI only if it was loaded or imported from a file or
+has since been saved or exported. Otherwise, this function returns
+%NULL.  See also gimp-image-get-imported-uri to get the URI of the
+current file if it was imported from a non-GIMP file format and not
+yet saved, or gimp-image-get-exported-uri if the image has been
+exported to a non-GIMP file format.
 HELP
 
     &neo_pdb_misc('2009', '2.8');
@@ -2173,7 +2177,106 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
+  uri = g_strdup (gimp_image_get_any_uri (image));
+}
+CODE
+    );
+}
+
+sub image_get_xcf_uri {
+    $blurb = "Returns the XCF URI for the specified image.";
+
+    $help = <<'HELP';
+This procedure returns the XCF URI associated with the image. If
+there is no such URI, this procedure returns %NULL.
+HELP
+
+    $author = 'Eric Grivel <gimp@lumenssolutions.com>';
+    $copyright = 'Eric Grivel';
+    $date = '2011';
+    $since = '2.8';
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'uri', type => 'string',
+          desc => 'The imported URI' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
   uri = g_strdup (gimp_image_get_uri (image));
+}
+CODE
+    );
+}
+
+sub image_get_imported_uri {
+    $blurb = "Returns the imported URI for the specified image.";
+
+    $help = <<'HELP';
+This procedure returns the URI associated with the specified image
+if the image was imported from a non-native Gimp format. If the
+image was not imported, or has since been saved in the native Gimp
+format, this procedure returns %NULL.
+HELP
+
+    $author = 'Eric Grivel <gimp@lumenssolutions.com>';
+    $copyright = 'Eric Grivel';
+    $date = '2011';
+    $since = '2.8';
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'uri', type => 'string',
+          desc => 'The imported URI' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  uri = g_strdup (gimp_image_get_imported_uri (image));
+}
+CODE
+    );
+}
+
+sub image_get_exported_uri {
+    $blurb = "Returns the exported URI for the specified image.";
+
+    $help = <<'HELP';
+This procedure returns the URI associated with the specified image
+if the image was exported a non-native GIMP format. If the
+image was not exported, this procedure returns %NULL.
+HELP
+
+    $author = 'Eric Grivel <gimp@lumenssolutions.com>';
+    $copyright = 'Eric Grivel';
+    $date = '2011';
+    $since = '2.8';
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'uri', type => 'string',
+          desc => 'The exported URI' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  uri = g_strdup (gimp_image_get_exported_uri (image));
 }
 CODE
     );
@@ -2742,6 +2845,9 @@ CODE
             image_get_component_visible image_set_component_visible
             image_get_filename image_set_filename
             image_get_uri
+            image_get_xcf_uri
+            image_get_imported_uri
+            image_get_exported_uri
             image_get_name
             image_get_resolution image_set_resolution
             image_get_unit image_set_unit
@@ -2753,7 +2859,11 @@ CODE
             image_get_parasite
             image_get_parasite_list);
 
-%exports = (app => [@procs], lib => [@procs[0..42,45..77]]);
+# For the lib parameter EXCLUDE functions #43 and #44, which are
+# image_add_layer_mask and image_remove_layer_mask.
+# If adding or removing functions, make sure the range below is
+# updated correctly!
+%exports = (app => [@procs], lib => [@procs[0..42,45..80]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

@@ -1624,6 +1624,34 @@ gimp_image_get_save_a_copy_uri (const GimpImage *image)
 }
 
 /**
+ * gimp_image_get_any_uri:
+ * @image: A #GimpImage.
+ *
+ * Returns: The XCF file URI, the imported file URI, or the exported
+ * file URI, in that order of precedence. Only to help implement
+ * backwards compatibility with GIMP 2.6 API.
+ **/
+const gchar *
+gimp_image_get_any_uri (const GimpImage *image)
+{
+  const gchar *uri;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  uri = gimp_image_get_uri (image);
+  if (! uri)
+    {
+      uri = gimp_image_get_imported_uri (image);
+      if (! uri)
+        {
+          uri = gimp_image_get_exported_uri (image);
+        }
+    }
+
+  return uri;
+}
+
+/**
  * gimp_image_set_imported_uri:
  * @image: A #GimpImage.
  * @uri:

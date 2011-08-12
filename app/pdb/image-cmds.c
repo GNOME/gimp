@@ -2102,7 +2102,7 @@ image_get_filename_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      filename = gimp_image_get_filename (image);
+      filename = g_filename_from_uri (gimp_image_get_any_uri (image), NULL, NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -2173,7 +2173,94 @@ image_get_uri_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      uri = g_strdup (gimp_image_get_any_uri (image));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], uri);
+
+  return return_vals;
+}
+
+static GValueArray *
+image_get_xcf_uri_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  gchar *uri = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+
+  if (success)
+    {
       uri = g_strdup (gimp_image_get_uri (image));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], uri);
+
+  return return_vals;
+}
+
+static GValueArray *
+image_get_imported_uri_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  gchar *uri = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+
+  if (success)
+    {
+      uri = g_strdup (gimp_image_get_imported_uri (image));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], uri);
+
+  return return_vals;
+}
+
+static GValueArray *
+image_get_exported_uri_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  gchar *uri = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+
+  if (success)
+    {
+      uri = g_strdup (gimp_image_get_exported_uri (image));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -4671,7 +4758,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-filename",
                                      "Returns the specified image's filename.",
-                                     "This procedure returns the specified image's filename in the filesystem encoding. The image has a filename only if it was loaded from a local filesystem or has since been saved locally. Otherwise, this function returns %NULL. See also 'gimp-image-get-uri'.",
+                                     "This procedure returns the specified image's filename in the filesystem encoding. The image has a filename only if it was loaded or imported from a file or has since been saved or exported. Otherwise, this function returns %NULL. See also 'gimp-image-get-uri'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -4731,7 +4818,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-uri",
                                      "Returns the URI for the specified image.",
-                                     "This procedure returns the URI associated with the specified image. The image has an URI only if it was loaded from a file or has since been saved. Otherwise, this function returns %NULL.",
+                                     "This procedure returns the URI associated with the specified image. The image has an URI only if it was loaded or imported from a file or has since been saved or exported. Otherwise, this function returns %NULL. See also gimp-image-get-imported-uri to get the URI of the current file if it was imported from a non-GIMP file format and not yet saved, or gimp-image-get-exported-uri if the image has been exported to a non-GIMP file format.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2009",
@@ -4746,6 +4833,96 @@ register_image_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("uri",
                                                            "uri",
                                                            "The URI",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-xcf-uri
+   */
+  procedure = gimp_procedure_new (image_get_xcf_uri_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-xcf-uri");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-xcf-uri",
+                                     "Returns the XCF URI for the specified image.",
+                                     "This procedure returns the XCF URI associated with the image. If there is no such URI, this procedure returns %NULL.",
+                                     "Eric Grivel <gimp@lumenssolutions.com>",
+                                     "Eric Grivel",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("uri",
+                                                           "uri",
+                                                           "The imported URI",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-imported-uri
+   */
+  procedure = gimp_procedure_new (image_get_imported_uri_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-imported-uri");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-imported-uri",
+                                     "Returns the imported URI for the specified image.",
+                                     "This procedure returns the URI associated with the specified image if the image was imported from a non-native Gimp format. If the image was not imported, or has since been saved in the native Gimp format, this procedure returns %NULL.",
+                                     "Eric Grivel <gimp@lumenssolutions.com>",
+                                     "Eric Grivel",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("uri",
+                                                           "uri",
+                                                           "The imported URI",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-exported-uri
+   */
+  procedure = gimp_procedure_new (image_get_exported_uri_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-exported-uri");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-exported-uri",
+                                     "Returns the exported URI for the specified image.",
+                                     "This procedure returns the URI associated with the specified image if the image was exported a non-native GIMP format. If the image was not exported, this procedure returns %NULL.",
+                                     "Eric Grivel <gimp@lumenssolutions.com>",
+                                     "Eric Grivel",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("uri",
+                                                           "uri",
+                                                           "The exported URI",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));

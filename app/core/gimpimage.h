@@ -175,6 +175,7 @@ const gchar   * gimp_image_get_uri_or_untitled   (const GimpImage    *image);
 const gchar   * gimp_image_get_imported_uri      (const GimpImage    *image);
 const gchar   * gimp_image_get_exported_uri      (const GimpImage    *image);
 const gchar   * gimp_image_get_save_a_copy_uri   (const GimpImage    *image);
+const gchar   * gimp_image_get_any_uri           (const GimpImage    *image);
 
 void            gimp_image_set_uri               (GimpImage          *image,
                                                   const gchar        *uri);

@@ -2229,8 +2229,9 @@ gimp_image_set_component_visible (gint32          image_ID,
  *
  * This procedure returns the specified image's filename in the
  * filesystem encoding. The image has a filename only if it was loaded
- * from a local filesystem or has since been saved locally. Otherwise,
- * this function returns %NULL. See also gimp_image_get_uri().
+ * or imported from a file or has since been saved or exported.
+ * Otherwise, this function returns %NULL. See also
+ * gimp_image_get_uri().
  *
  * Returns: The filename.
  **/
@@ -2294,8 +2295,12 @@ gimp_image_set_filename (gint32       image_ID,
  * Returns the URI for the specified image.
  *
  * This procedure returns the URI associated with the specified image.
- * The image has an URI only if it was loaded from a file or has since
- * been saved. Otherwise, this function returns %NULL.
+ * The image has an URI only if it was loaded or imported from a file
+ * or has since been saved or exported. Otherwise, this function
+ * returns %NULL. See also gimp-image-get-imported-uri to get the URI
+ * of the current file if it was imported from a non-GIMP file format
+ * and not yet saved, or gimp-image-get-exported-uri if the image has
+ * been exported to a non-GIMP file format.
  *
  * Returns: The URI.
  *
@@ -2309,6 +2314,108 @@ gimp_image_get_uri (gint32 image_ID)
   gchar *uri = NULL;
 
   return_vals = gimp_run_procedure ("gimp-image-get-uri",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    uri = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return uri;
+}
+
+/**
+ * gimp_image_get_xcf_uri:
+ * @image_ID: The image.
+ *
+ * Returns the XCF URI for the specified image.
+ *
+ * This procedure returns the XCF URI associated with the image. If
+ * there is no such URI, this procedure returns %NULL.
+ *
+ * Returns: The imported URI.
+ *
+ * Since: GIMP 2.8
+ **/
+gchar *
+gimp_image_get_xcf_uri (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *uri = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-xcf-uri",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    uri = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return uri;
+}
+
+/**
+ * gimp_image_get_imported_uri:
+ * @image_ID: The image.
+ *
+ * Returns the imported URI for the specified image.
+ *
+ * This procedure returns the URI associated with the specified image
+ * if the image was imported from a non-native Gimp format. If the
+ * image was not imported, or has since been saved in the native Gimp
+ * format, this procedure returns %NULL.
+ *
+ * Returns: The imported URI.
+ *
+ * Since: GIMP 2.8
+ **/
+gchar *
+gimp_image_get_imported_uri (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *uri = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-imported-uri",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    uri = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return uri;
+}
+
+/**
+ * gimp_image_get_exported_uri:
+ * @image_ID: The image.
+ *
+ * Returns the exported URI for the specified image.
+ *
+ * This procedure returns the URI associated with the specified image
+ * if the image was exported a non-native GIMP format. If the image was
+ * not exported, this procedure returns %NULL.
+ *
+ * Returns: The exported URI.
+ *
+ * Since: GIMP 2.8
+ **/
+gchar *
+gimp_image_get_exported_uri (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *uri = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-exported-uri",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_END);
