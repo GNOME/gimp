@@ -53,7 +53,7 @@ typedef enum
 static struct
 {
   RGBMode rgb_format;
-  gint    encoded;
+  gint    use_run_length_encoding;
 } BMPSaveData;
 
 static gint    cur_progress = 0;
@@ -64,7 +64,7 @@ static  void      write_image     (FILE   *f,
                                    guchar *src,
                                    gint    width,
                                    gint    height,
-                                   gint    encoded,
+                                   gint    use_run_length_encoding,
                                    gint    channels,
                                    gint    bpp,
                                    gint    spzeile,
@@ -245,8 +245,7 @@ WriteBMP (const gchar  *filename,
       g_assert_not_reached ();
     }
 
-  /* Perhaps someone wants RLE encoded Bitmaps */
-  BMPSaveData.encoded = 0;
+  BMPSaveData.use_run_length_encoding = 0;
   mask_info_size = 0;
 
   if (!interactive && lastvals)
@@ -342,7 +341,7 @@ WriteBMP (const gchar  *filename,
   Bitmap_Head.biPlanes = 1;
   Bitmap_Head.biBitCnt = BitsPerPixel;
 
-  if (BMPSaveData.encoded == 0)
+  if (BMPSaveData.use_run_length_encoding == 0)
   {
     if (mask_info_size > 0)
       Bitmap_Head.biCompr = 3; /* BI_BITFIELDS */
@@ -506,8 +505,9 @@ WriteBMP (const gchar  *filename,
 
   write_image (outfile,
                pixels, cols, rows,
-               BMPSaveData.encoded, channels, BitsPerPixel, SpZeile, MapSize,
-               BMPSaveData.rgb_format);
+               BMPSaveData.use_run_length_encoding,
+               channels, BitsPerPixel, SpZeile,
+               MapSize, BMPSaveData.rgb_format);
 
   /* ... and exit normally */
 
@@ -544,7 +544,7 @@ write_image (FILE   *f,
              guchar *src,
              gint    width,
              gint    height,
-             gint    encoded,
+             gint    use_run_length_encoding,
              gint    channels,
              gint    bpp,
              gint    spzeile,
@@ -645,7 +645,7 @@ write_image (FILE   *f,
     }
   else
     {
-      switch (encoded)  /* now it gets more difficult */
+      switch (use_run_length_encoding)  /* now it gets more difficult */
         {               /* uncompressed 1,4 and 8 bit */
         case 0:
           {
@@ -844,14 +844,14 @@ save_dialog (gint channels)
   toggle = gtk_check_button_new_with_mnemonic (_("_Run-Length Encoded"));
   gtk_box_pack_start (GTK_BOX (vbox_main), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                BMPSaveData.encoded);
+                                BMPSaveData.use_run_length_encoding);
   gtk_widget_show (toggle);
   if (channels > 1)
     gtk_widget_set_sensitive (toggle, FALSE);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &BMPSaveData.encoded);
+                    &BMPSaveData.use_run_length_encoding);
 
   expander = gtk_expander_new_with_mnemonic (_("_Advanced Options"));
 
