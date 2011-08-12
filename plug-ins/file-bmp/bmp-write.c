@@ -54,6 +54,9 @@ static struct
 {
   RGBMode rgb_format;
   gint    use_run_length_encoding;
+
+  /* Weather or not to write BITMAPV5HEADER color space data */
+  gint    dont_write_color_space_data;
 } BMPSaveData;
 
 static gint    cur_progress = 0;
@@ -157,6 +160,7 @@ WriteBMP (const gchar  *filename,
   guchar         puffer[128];
   gint           i;
   gint           mask_info_size;
+  gint           color_space_size;
   guint32        Mask[4];
 
   drawable = gimp_drawable_get (drawable_ID);
@@ -246,6 +250,7 @@ WriteBMP (const gchar  *filename,
     }
 
   BMPSaveData.use_run_length_encoding = 0;
+  BMPSaveData.dont_write_color_space_data = 0;
   mask_info_size = 0;
 
   if (interactive || lastvals)
@@ -330,11 +335,17 @@ WriteBMP (const gchar  *filename,
   else
     SpZeile = ((gint) (((Spcols * BitsPerPixel) / 8) / 4) + 1) * 4;
 
-  Bitmap_File_Head.bfSize    = 0x36 + MapSize + (rows * SpZeile) + mask_info_size + (68 /* V5 color space */);
-  Bitmap_File_Head.zzHotX    = 0;
-  Bitmap_File_Head.zzHotY    = 0;
-  Bitmap_File_Head.bfOffs    = 0x36 + MapSize + mask_info_size + 68;
-  Bitmap_File_Head.biSize    = 40 + mask_info_size + 68;
+  color_space_size = 0;
+  if (! BMPSaveData.dont_write_color_space_data)
+    color_space_size = 68;
+
+  Bitmap_File_Head.bfSize    = (0x36 + MapSize + (rows * SpZeile) +
+                                mask_info_size + color_space_size);
+  Bitmap_File_Head.zzHotX    =  0;
+  Bitmap_File_Head.zzHotY    =  0;
+  Bitmap_File_Head.bfOffs    = (0x36 + MapSize +
+                                mask_info_size + color_space_size);
+  Bitmap_File_Head.biSize    =  40 + mask_info_size + color_space_size;
 
   Bitmap_Head.biWidth  = cols;
   Bitmap_Head.biHeight = rows;
@@ -469,37 +480,40 @@ WriteBMP (const gchar  *filename,
       Write (outfile, puffer, mask_info_size);
     }
 
-  /* Write V5 colorspace fields */
+  if (! BMPSaveData.dont_write_color_space_data)
+    {
+      /* Write V5 color space fields */
 
-  /* bV5CSType = LCS_sRGB */
-  FromL (0x73524742, &puffer[0x00]);
+      /* bV5CSType = LCS_sRGB */
+      FromL (0x73524742, &puffer[0x00]);
 
-  /* bV5Endpoints is set to 0 (ignored) */
-  for (i = 0; i < 0x24; i++)
-    puffer[0x04 + i] = 0x00;
+      /* bV5Endpoints is set to 0 (ignored) */
+      for (i = 0; i < 0x24; i++)
+        puffer[0x04 + i] = 0x00;
 
-  /* bV5GammaRed is set to 0 (ignored) */
-  FromL (0x0, &puffer[0x28]);
+      /* bV5GammaRed is set to 0 (ignored) */
+      FromL (0x0, &puffer[0x28]);
 
-  /* bV5GammaGreen is set to 0 (ignored) */
-  FromL (0x0, &puffer[0x2c]);
+      /* bV5GammaGreen is set to 0 (ignored) */
+      FromL (0x0, &puffer[0x2c]);
 
-  /* bV5GammaBlue is set to 0 (ignored) */
-  FromL (0x0, &puffer[0x30]);
+      /* bV5GammaBlue is set to 0 (ignored) */
+      FromL (0x0, &puffer[0x30]);
 
-  /* bV5Intent = LCS_GM_GRAPHICS */
-  FromL (0x00000002, &puffer[0x34]);
+      /* bV5Intent = LCS_GM_GRAPHICS */
+      FromL (0x00000002, &puffer[0x34]);
 
-  /* bV5ProfileData is set to 0 (ignored) */
-  FromL (0x0, &puffer[0x38]);
+      /* bV5ProfileData is set to 0 (ignored) */
+      FromL (0x0, &puffer[0x38]);
 
-  /* bV5ProfileSize is set to 0 (ignored) */
-  FromL (0x0, &puffer[0x3c]);
+      /* bV5ProfileSize is set to 0 (ignored) */
+      FromL (0x0, &puffer[0x3c]);
 
-  /* bV5Reserved = 0 */
-  FromL (0x0, &puffer[0x40]);
+      /* bV5Reserved = 0 */
+      FromL (0x0, &puffer[0x40]);
 
-  Write (outfile, puffer, 68);
+      Write (outfile, puffer, color_space_size);
+    }
 
   /* After that is done, we write the image ... */
 
@@ -831,6 +845,7 @@ save_dialog (gint channels)
   GSList    *group;
   gboolean   run;
 
+  /* Dialog init */
   dialog = gimp_export_dialog_new (_("BMP"), PLUG_IN_BINARY, SAVE_PROC);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
@@ -841,6 +856,7 @@ save_dialog (gint channels)
                       vbox_main, TRUE, TRUE, 0);
   gtk_widget_show (vbox_main);
 
+  /* Run-Length Encoded */
   toggle = gtk_check_button_new_with_mnemonic (_("_Run-Length Encoded"));
   gtk_box_pack_start (GTK_BOX (vbox_main), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -853,6 +869,35 @@ save_dialog (gint channels)
                     G_CALLBACK (gimp_toggle_button_update),
                     &BMPSaveData.use_run_length_encoding);
 
+  /* Compatibility Options */
+  expander = gtk_expander_new_with_mnemonic (_("Co_mpatibility Options"));
+
+  gtk_box_pack_start (GTK_BOX (vbox_main), expander, TRUE, TRUE, 0);
+  gtk_widget_show (expander);
+
+  vbox2 = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
+  gtk_container_add (GTK_CONTAINER (expander), vbox2);
+  gtk_widget_show (vbox2);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("_Do not write color space information"));
+  gimp_help_set_help_data (toggle,
+                           _("Some applications can not read BMP images that "
+                             "include color space information. GIMP writes "
+                             "color space information by default. Enabling "
+                             "this option will cause GIMP to not write color "
+                             "space information to the file."),
+                           NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                BMPSaveData.dont_write_color_space_data);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &BMPSaveData.dont_write_color_space_data);
+
+  /* Advanced Options */
   expander = gtk_expander_new_with_mnemonic (_("_Advanced Options"));
 
   gtk_box_pack_start (GTK_BOX (vbox_main), expander, TRUE, TRUE, 0);
@@ -956,6 +1001,7 @@ save_dialog (gint channels)
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGBX_8888));
 
+  /* Dialog show */
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);

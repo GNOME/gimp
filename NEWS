@@ -28,7 +28,7 @@ Libgimp:
 
 Plug-ins:
 
- - <item>
+ - Make writing color space information to BMP files optional
 
 
 Developer documentation:
