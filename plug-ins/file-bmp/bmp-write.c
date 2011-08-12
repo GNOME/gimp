@@ -248,7 +248,7 @@ WriteBMP (const gchar  *filename,
   BMPSaveData.use_run_length_encoding = 0;
   mask_info_size = 0;
 
-  if (!interactive && lastvals)
+  if (interactive || lastvals)
     {
       gimp_get_data (SAVE_PROC, &BMPSaveData);
     }
