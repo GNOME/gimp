@@ -325,12 +325,17 @@ gimp_transform_tool_button_press (GimpTool            *tool,
                                   GimpDisplay         *display)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  gint i;
 
   if (tr_tool->function == TRANSFORM_CREATING)
     gimp_transform_tool_oper_update (tool, coords, state, TRUE, display);
 
   tr_tool->lastx = coords->x;
   tr_tool->lasty = coords->y;
+
+  /*  Store current trans_info  */
+  for (i = 0; i < TRANS_INFO_SIZE; i++)
+    tr_tool->prev_trans_info[i] = tr_tool->trans_info[i];
 
   gimp_tool_control_activate (tool->control);
 }
@@ -359,10 +364,6 @@ gimp_transform_tool_button_release (GimpTool              *tool,
         {
           gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
         }
-
-      /*  Store current trans_info  */
-      for (i = 0; i < TRANS_INFO_SIZE; i++)
-        tr_tool->prev_trans_info[i] = tr_tool->trans_info[i];
     }
   else
     {
