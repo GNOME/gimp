@@ -711,7 +711,6 @@ gimp_tool_motion (GimpTool         *tool,
   g_return_if_fail (gimp_tool_control_is_active (tool->control) == TRUE);
 
   tool->got_motion_event = TRUE;
-  gimp_tool_check_click_distance (tool, coords, time, display);
 
   GIMP_TOOL_GET_CLASS (tool)->motion (tool, coords, time, state, display);
 }
