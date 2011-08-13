@@ -2099,7 +2099,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  filename = g_filename_from_uri (gimp_image_get_any_uri (image), NULL, NULL);
+  const gchar *uri = gimp_image_get_any_uri (image);
+  if (uri)
+    filename = g_filename_from_uri (uri, NULL, NULL);
 }
 CODE
     );

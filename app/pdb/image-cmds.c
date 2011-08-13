@@ -2102,7 +2102,9 @@ image_get_filename_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      filename = g_filename_from_uri (gimp_image_get_any_uri (image), NULL, NULL);
+      const gchar *uri = gimp_image_get_any_uri (image);
+      if (uri)
+        filename = g_filename_from_uri (uri, NULL, NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
