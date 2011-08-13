@@ -67,6 +67,8 @@
 
 
 #define RESPONSE_RESET  1
+#define RESPONSE_UNDO 2
+#define RESPONSE_REDO 3
 #define MIN_HANDLE_SIZE 6
 
 
@@ -147,6 +149,8 @@ static void      gimp_transform_tool_handles_recalc         (GimpTransformTool  
 static void      gimp_transform_tool_response               (GtkWidget             *widget,
                                                              gint                   response_id,
                                                              GimpTransformTool     *tr_tool);
+static void free_trans (gpointer data);
+static void update_sensitivity (GimpTransformTool *tr_tool);
 
 
 G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
@@ -221,6 +225,9 @@ gimp_transform_tool_finalize (GObject *object)
       tr_tool->dialog = NULL;
     }
 
+  g_list_free_full (tr_tool->redo_list, free_trans);
+  g_list_free_full (tr_tool->undo_list, free_trans);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -275,11 +282,16 @@ gimp_transform_tool_initialize (GimpTool     *tool,
 
       tr_tool->function = TRANSFORM_CREATING;
 
+      /* Initialize undo and redo lists */
+      tr_tool->undo_list = g_list_prepend (NULL, g_slice_new (TransInfo));
+      tr_tool->redo_list = NULL;
+      tr_tool->old_trans_info = g_list_last (tr_tool->undo_list)->data;
+      tr_tool->prev_trans_info = g_list_first (tr_tool->undo_list)->data;
+      update_sensitivity (tr_tool);
       /*  Save the current transformation info  */
       for (i = 0; i < TRANS_INFO_SIZE; i++)
         {
-          tr_tool->old_trans_info[i]  = tr_tool->trans_info[i];
-          tr_tool->prev_trans_info[i] = tr_tool->trans_info[i];
+          (*tr_tool->prev_trans_info)[i] = tr_tool->trans_info[i];
         }
     }
 
@@ -325,7 +337,6 @@ gimp_transform_tool_button_press (GimpTool            *tool,
                                   GimpDisplay         *display)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  gint i;
 
   if (tr_tool->function == TRANSFORM_CREATING)
     gimp_transform_tool_oper_update (tool, coords, state, TRUE, display);
@@ -333,11 +344,33 @@ gimp_transform_tool_button_press (GimpTool            *tool,
   tr_tool->lastx = tr_tool->mousex = coords->x;
   tr_tool->lasty = tr_tool->mousey = coords->y;
 
-  /*  Store current trans_info  */
-  for (i = 0; i < TRANS_INFO_SIZE; i++)
-    tr_tool->prev_trans_info[i] = tr_tool->trans_info[i];
-
   gimp_tool_control_activate (tool->control);
+}
+
+void gimp_transform_tool_push_internal_undo (GimpTransformTool *tr_tool)
+{
+  gint i;
+
+  /* push current state on the undo list and set this
+   * state as the current state, but avoid doing this if there were no changes */
+  for (i = 0; i < TRANS_INFO_SIZE; i++)
+    if ((*tr_tool->prev_trans_info)[i] != tr_tool->trans_info[i])
+      break;
+
+  if (i < TRANS_INFO_SIZE)
+    {
+      tr_tool->prev_trans_info = g_slice_new (TransInfo);
+      for (i = 0; i < TRANS_INFO_SIZE; i++)
+        (*tr_tool->prev_trans_info)[i] = tr_tool->trans_info[i];
+      tr_tool->undo_list = g_list_prepend (tr_tool->undo_list, tr_tool->prev_trans_info);
+
+      /* If we undid anything and started interacting, we have to discard
+       * the redo history */
+      g_list_free_full (tr_tool->redo_list, free_trans);
+      tr_tool->redo_list = NULL;
+
+      update_sensitivity (tr_tool);
+    }
 }
 
 static void
@@ -364,14 +397,17 @@ gimp_transform_tool_button_release (GimpTool              *tool,
         {
           gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
         }
+
+      /* We're done with an interaction, save it on the undo list */
+      gimp_transform_tool_push_internal_undo (tr_tool);
     }
   else
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      /*  Restore the previous trans_info  */
+      /*  Restore the last saved state  */
       for (i = 0; i < TRANS_INFO_SIZE; i++)
-        tr_tool->trans_info[i] = tr_tool->prev_trans_info[i];
+        tr_tool->trans_info[i] = (*tr_tool->prev_trans_info)[i];
 
       /*  reget the selection bounds  */
       gimp_transform_tool_bounds (tr_tool, display);
@@ -434,7 +470,11 @@ gimp_transform_tool_key_press (GimpTool    *tool,
           return TRUE;
 
         case GDK_KEY_BackSpace:
-          gimp_transform_tool_response (NULL, RESPONSE_RESET, trans_tool);
+          gimp_transform_tool_response (NULL, RESPONSE_UNDO, trans_tool);
+          return TRUE;
+
+        case GDK_KEY_space:
+          gimp_transform_tool_response (NULL, RESPONSE_REDO, trans_tool);
           return TRUE;
 
         case GDK_KEY_Escape:
@@ -1382,6 +1422,8 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                           gimp_display_get_shell (tool->display),
                                           tool_info->blurb,
                                           GIMP_STOCK_RESET, RESPONSE_RESET,
+                                          GTK_STOCK_UNDO, RESPONSE_UNDO,
+                                          GTK_STOCK_REDO, RESPONSE_REDO,
                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                           stock_id,         GTK_RESPONSE_OK,
                                           NULL);
@@ -1389,6 +1431,8 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                    GTK_RESPONSE_OK);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (tr_tool->dialog),
                                            RESPONSE_RESET,
+                                           RESPONSE_UNDO,
+                                           RESPONSE_REDO,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -1443,26 +1487,59 @@ gimp_transform_tool_response (GtkWidget         *widget,
                               GimpTransformTool *tr_tool)
 {
   GimpTool *tool = GIMP_TOOL (tr_tool);
+  GList *it = tr_tool->redo_list;
+  gint i;
 
   switch (response_id)
     {
-    case RESPONSE_RESET:
+    case RESPONSE_UNDO:
       {
-        gint i;
+        it = g_list_next (tr_tool->undo_list);
 
-        gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+    case RESPONSE_REDO:
+        if (it)
+          {
+    case RESPONSE_RESET:
+            if (response_id == RESPONSE_UNDO)
+              {
+                /* Move prev_trans_info from undo_list to redo_list */
+                tr_tool->redo_list = g_list_prepend (tr_tool->redo_list, tr_tool->prev_trans_info);
+                tr_tool->undo_list = g_list_remove (tr_tool->undo_list, tr_tool->prev_trans_info);
+                tr_tool->prev_trans_info = it->data;
+              }
+            else if (response_id == RESPONSE_REDO)
+              {
+                /* And the opposite */
+                tr_tool->prev_trans_info = it->data;
+                tr_tool->undo_list = g_list_prepend (tr_tool->undo_list, tr_tool->prev_trans_info);
+                tr_tool->redo_list = g_list_remove (tr_tool->redo_list, tr_tool->prev_trans_info);
+              }
+            else if (response_id == RESPONSE_RESET)
+              {
+                /* Move all undo events to redo, and pop off the first one as that's the current one,
+                 * which always sits on the undo_list */
+                tr_tool->redo_list = g_list_remove (g_list_concat (g_list_reverse (tr_tool->undo_list), tr_tool->redo_list), tr_tool->old_trans_info);
+                tr_tool->prev_trans_info = tr_tool->old_trans_info;
+                tr_tool->undo_list = g_list_prepend (NULL, tr_tool->prev_trans_info);
+              }
+            update_sensitivity (tr_tool);
 
-        /*  Restore the previous transformation info  */
-        for (i = 0; i < TRANS_INFO_SIZE; i++)
-          tr_tool->trans_info[i] = tr_tool->old_trans_info[i];
+            gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-        /*  reget the selection bounds  */
-        gimp_transform_tool_bounds (tr_tool, tool->display);
+            /*  Restore the previous transformation info  */
+            for (i = 0; i < TRANS_INFO_SIZE; i++)
+              {
+                tr_tool->trans_info[i] = (*tr_tool->prev_trans_info)[i];
+              }
 
-        /*  recalculate the tool's transformation matrix  */
-        gimp_transform_tool_recalc_matrix (tr_tool);
+            /*  reget the selection bounds  */
+            gimp_transform_tool_bounds (tr_tool, tool->display);
 
-        gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+            /*  recalculate the tool's transformation matrix  */
+            gimp_transform_tool_recalc_matrix (tr_tool);
+
+            gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+          }
       }
       break;
 
@@ -1475,4 +1552,22 @@ gimp_transform_tool_response (GtkWidget         *widget,
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
       break;
     }
+}
+
+static void free_trans (gpointer data)
+{
+  g_slice_free (TransInfo, data);
+}
+
+static void update_sensitivity (GimpTransformTool *tr_tool)
+{
+  if (!tr_tool->dialog)
+    return;
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (tr_tool->dialog), RESPONSE_UNDO,
+      g_list_next (tr_tool->undo_list) != NULL);
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (tr_tool->dialog), RESPONSE_REDO,
+      tr_tool->redo_list != NULL);
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (tr_tool->dialog), RESPONSE_RESET,
+      g_list_next (tr_tool->undo_list) != NULL);
 }

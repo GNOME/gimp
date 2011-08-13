@@ -391,6 +391,8 @@ rotate_angle_changed (GtkAdjustment     *adj,
 
       tr_tool->trans_info[REAL_ANGLE] = tr_tool->trans_info[ANGLE] = value;
 
+      gimp_transform_tool_push_internal_undo (tr_tool);
+
       gimp_transform_tool_recalc_matrix (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
@@ -415,6 +417,8 @@ rotate_center_changed (GtkWidget         *widget,
       tr_tool->trans_info[PIVOT_Y] = py;
       tr_tool->px = px;
       tr_tool->py = py;
+
+      gimp_transform_tool_push_internal_undo (tr_tool);
 
       gimp_transform_tool_recalc_matrix (tr_tool);
 

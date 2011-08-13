@@ -369,6 +369,8 @@ gimp_scale_tool_size_notify (GtkWidget         *box,
           tr_tool->trans_info[X1] = tr_tool->trans_info[X0] + width;
           tr_tool->trans_info[Y1] = tr_tool->trans_info[Y0] + height;
 
+          gimp_transform_tool_push_internal_undo (tr_tool);
+
           gimp_transform_tool_recalc_matrix (tr_tool);
 
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));

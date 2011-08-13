@@ -282,6 +282,8 @@ shear_x_mag_changed (GtkAdjustment     *adj,
 
       tr_tool->trans_info[XSHEAR] = value;
 
+      gimp_transform_tool_push_internal_undo (tr_tool);
+
       gimp_transform_tool_recalc_matrix (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
@@ -302,6 +304,8 @@ shear_y_mag_changed (GtkAdjustment     *adj,
         tr_tool->trans_info[HORZ_OR_VERT] = GIMP_ORIENTATION_VERTICAL;
 
       tr_tool->trans_info[YSHEAR] = value;
+
+      gimp_transform_tool_push_internal_undo (tr_tool);
 
       gimp_transform_tool_recalc_matrix (tr_tool);
 

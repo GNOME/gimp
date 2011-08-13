@@ -80,8 +80,13 @@ struct _GimpTransformTool
 
   GimpMatrix3     transform;       /*  transformation matrix             */
   TransInfo       trans_info;      /*  transformation info               */
-  TransInfo       old_trans_info;  /*  for resetting everything          */
-  TransInfo       prev_trans_info; /*  for cancelling a drag operation   */
+  TransInfo      *old_trans_info;  /*  for resetting everything          */
+  TransInfo      *prev_trans_info; /*  the current finished state        */
+  GList          *undo_list;       /*  list of all states,
+                                       head is current == prev_trans_info,
+                                       tail is original == old_trans_info*/
+  GList          *redo_list;       /*  list of all undone states,
+                                       NULL when nothing undone */
 
   TransformAction function;        /*  current tool activity             */
 
@@ -122,6 +127,7 @@ struct _GimpTransformToolClass
 GType   gimp_transform_tool_get_type      (void) G_GNUC_CONST;
 
 void    gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool);
+void    gimp_transform_tool_push_internal_undo (GimpTransformTool *tr_tool);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */
