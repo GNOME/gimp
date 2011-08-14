@@ -177,7 +177,7 @@ G_DEFINE_TYPE (GimpSeamlessCloneTool, gimp_seamless_clone_tool, GIMP_TYPE_DRAW_T
 #define parent_class gimp_seamless_clone_tool_parent_class
 
 
-const gchar*
+static const gchar*
 sc_state_to_str (gint tool_state)
 {
   switch (tool_state)
@@ -193,14 +193,14 @@ sc_state_to_str (gint tool_state)
   }
 }
 
-void
+static void
 sc_debug (GimpSeamlessCloneTool *sc)
 {
   g_debug ("state: %s, paste? %d, mesh_cahe? %d, tri_cache? %d, render_node? %d, image_map? %d",
   sc_state_to_str (sc->tool_state), sc->paste != NULL, sc->mesh_cache != NULL, sc->tricache != NULL, sc->render_node != NULL, sc->image_map != NULL);
 }
 
-void
+static void
 sc_debug_coords (GimpSeamlessCloneTool *sc,
                  const GimpCoords      *c)
 {
@@ -212,8 +212,6 @@ void
 gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data)
 {
-  sc_debug_fstart ();
-  
   (* callback) (GIMP_TYPE_SEAMLESS_CLONE_TOOL,
                 GIMP_TYPE_SEAMLESS_CLONE_OPTIONS,
                 gimp_seamless_clone_options_gui,
@@ -225,8 +223,6 @@ gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
                 NULL, GIMP_HELP_TOOL_SEAMLESS_CLONE,
                 GIMP_STOCK_TOOL_MOVE,
                 data);
-
-  sc_debug_fend ();
 }
 
 static void
@@ -234,8 +230,6 @@ gimp_seamless_clone_tool_class_init (GimpSeamlessCloneToolClass *klass)
 {
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-
-  sc_debug_fstart ();
 
   tool_class->options_notify = gimp_seamless_clone_tool_options_notify;
   tool_class->button_press   = gimp_seamless_clone_tool_button_press;
@@ -247,8 +241,6 @@ gimp_seamless_clone_tool_class_init (GimpSeamlessCloneToolClass *klass)
   tool_class->oper_update    = gimp_seamless_clone_tool_oper_update;
 
   draw_tool_class->draw      = gimp_seamless_clone_tool_draw;
-
-  sc_debug_fend ();
 }
 
 /**
@@ -263,8 +255,6 @@ static void
 gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
 {
   GimpTool *tool = GIMP_TOOL (self);
-
-  sc_debug_fstart ();
 
   /* TODO: If we want our tool to be invalidated by something, enable
    * the following line. Note that the enum of the dirty properties is
@@ -300,8 +290,6 @@ gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
   self->image_map       = NULL;
 
   self->xoff = self->yoff = self->width = self->height = 0;
-
-  sc_debug_fend ();
 }
 
 /* This function is called when the tool should pause and resume it's
@@ -315,25 +303,6 @@ gimp_seamless_clone_tool_control (GimpTool       *tool,
                                   GimpDisplay    *display)
 {
   GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
-
-  sc_debug_fstart ();
-
-#if SC_DEBUG
-  switch (action)
-    {
-    case GIMP_TOOL_ACTION_PAUSE:
-      g_debug ("sc_tool_control:: GIMP_TOOL_ACTION_PAUSE");
-      break;
-      
-    case GIMP_TOOL_ACTION_RESUME:
-      g_debug ("sc_tool_control:: GIMP_TOOL_ACTION_RESUME");
-      break;
-
-    case GIMP_TOOL_ACTION_HALT:
-      g_debug ("sc_tool_control:: GIMP_TOOL_ACTION_HALT");
-      break;
-    }
-#endif
 
   switch (action)
     {
@@ -357,8 +326,6 @@ gimp_seamless_clone_tool_control (GimpTool       *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
-
-  sc_debug_fend ();
 }
 
 /**
@@ -410,7 +377,13 @@ paste_to_gegl_buf (GimpTool *tool)
      
        gegl_processor_destroy (processor);
 
-       tile_manager_unref (tiles);
+       /* gimp_buffer_get_tiles does not ref the tile manager before
+        * returning it, so unreffing it here will cause trouble. This
+        * should probably be fixed, carefully after finding all usages
+        * of that function
+        * TODO: Fixme
+        */
+       /* tile_manager_unref (tiles); */
 
        g_object_unref (gegl);
        
@@ -439,8 +412,6 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
   GimpTool     *tool     = GIMP_TOOL (sc);
   GimpImage    *image    = gimp_display_get_image (display);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-
-  sc_debug_fstart ();
 
   /* First handle the paste - we need to make sure we have one in order
    * to do anything else. */
@@ -473,8 +444,6 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
   gimp_draw_tool_start (GIMP_DRAW_TOOL (sc), display);
 
   sc->tool_state = SC_STATE_RENDER_WAIT;
-
-  sc_debug_fend ();
 }
 
 
@@ -498,10 +467,6 @@ static void
 gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
                                gboolean               display_change_only)
 {
-  sc_debug_fstart ();
-  sc_debug (sc);
-  g_debug ("Display change only? %d", display_change_only);
-
   /* See if we actually have any reason to stop */
   if (sc->tool_state == SC_STATE_INIT)
     return;
@@ -555,7 +520,6 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
       /* Stop the computation of the live preview, and mark it not
        * to be committed. Then free the image map object. */
       gimp_image_map_abort (sc->image_map);
-      g_debug ("Image map aborted!");
       g_object_unref (sc->image_map);
       sc->image_map = NULL;
 
@@ -565,14 +529,10 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
       if (GIMP_TOOL (sc)->display)
         {
           gimp_image_flush (gimp_display_get_image (GIMP_TOOL (sc)->display));
-          g_debug ("Image view flushed!");
         }
     }
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (sc));
-
-  sc_debug_fend ();
-
 }
 
 static void
@@ -581,8 +541,6 @@ gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
                                          const GParamSpec *pspec)
 {
   // GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
-
-  sc_debug_fstart ();
 
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
@@ -597,8 +555,6 @@ gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
 
   /* Done modifying data? If so, now restore the tool drawing */
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
-  sc_debug_fend ();
 }
 
 static gboolean
@@ -606,12 +562,39 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
                                     GdkEventKey *kevent,
                                     GimpDisplay *display)
 {
-  sc_debug_fstart ();
+  GimpSeamlessCloneTool *sct    = GIMP_SEAMLESS_CLONE_TOOL (tool);
+  gboolean               retval = TRUE;
+  
+  if (sct->tool_state == SC_STATE_RENDER_MOTION
+      || sct->tool_state == SC_STATE_RENDER_WAIT)
+    {
+      switch (kevent->keyval)
+        {
+        case GDK_KEY_Return:
+        case GDK_KEY_KP_Enter:
+        case GDK_KEY_ISO_Enter:
+          // gimp_tool_control_set_preserve (tool->control, TRUE);
 
-  /* TODO: After checking the key code, return TRUE if the event was
-   * handled, or FALSE if not */
+          gimp_image_map_commit (sct->image_map);
+          g_object_unref (sct->image_map);
+          sct->image_map = NULL;
 
-  sc_debug_fend ();
+          // gimp_tool_control_set_preserve (tool->control, FALSE);
+
+          gimp_image_flush (gimp_display_get_image (display));
+
+          gimp_seamless_clone_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+          break;
+
+        case GDK_KEY_Escape:
+          gimp_seamless_clone_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+          break;
+
+        default:
+          retval = FALSE;
+          break;
+        }
+    }
 
   return FALSE;
 }
@@ -624,10 +607,6 @@ gimp_seamless_clone_tool_motion (GimpTool         *tool,
                                  GimpDisplay      *display)
 {
   GimpSeamlessCloneTool    *sc       = GIMP_SEAMLESS_CLONE_TOOL (tool);
-
-  sc_debug_fstart ();
-  sc_debug (sc);
-  sc_debug_coords (sc,coords);
 
   /* Pause the tool before modifying the tool data, so that drawing
    * won't be done using data in intermidiate states */
@@ -648,8 +627,6 @@ gimp_seamless_clone_tool_motion (GimpTool         *tool,
 
   /* Done modifying data? If so, now restore the tool drawing */
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
-  sc_debug_fend ();
 }
 
 static void
@@ -659,10 +636,6 @@ gimp_seamless_clone_tool_oper_update (GimpTool         *tool,
                                       gboolean          proximity,
                                       GimpDisplay      *display)
 {
-  sc_debug_fstart ();
-  sc_debug (GIMP_SEAMLESS_CLONE_TOOL (tool));
-  sc_debug_coords (GIMP_SEAMLESS_CLONE_TOOL (tool),coords);
-
   /* Pause the tool before modifying the tool data, so that drawing
    * won't be done using data in intermidiate states */
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -671,9 +644,6 @@ gimp_seamless_clone_tool_oper_update (GimpTool         *tool,
 
   /* Done modifying data? If so, now restore the tool drawing */
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
-  sc_debug_fend ();
-
 }
 
 static void
@@ -685,10 +655,6 @@ gimp_seamless_clone_tool_button_press (GimpTool            *tool,
                                        GimpDisplay         *display)
 {
   GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
-  
-  sc_debug_fstart ();
-  sc_debug (sc);
-  sc_debug_coords (sc,coords);
 
   if (display != tool->display)
     {
@@ -722,8 +688,6 @@ gimp_seamless_clone_tool_button_press (GimpTool            *tool,
        * activate the tool control */
       gimp_tool_control_activate (tool->control);
     }
-  
-  sc_debug_fend ();
 }
 
 void
@@ -735,10 +699,6 @@ gimp_seamless_clone_tool_button_release (GimpTool              *tool,
                                          GimpDisplay           *display)
 {
   GimpSeamlessCloneTool    *sc      = GIMP_SEAMLESS_CLONE_TOOL (tool);
-
-  sc_debug_fstart ();
-  sc_debug (sc);
-  sc_debug_coords (sc,coords);
 
   /* There is nothing to do, unless we were actually moving a paste */
   if (sc->tool_state == SC_STATE_RENDER_MOTION)
@@ -764,9 +724,6 @@ gimp_seamless_clone_tool_button_release (GimpTool              *tool,
 
       sc->tool_state = SC_STATE_RENDER_WAIT;
     }
-
-  sc_debug_fend ();
-
 }
 
 /* Mouse cursor policy:
@@ -784,10 +741,6 @@ gimp_seamless_clone_tool_cursor_update (GimpTool         *tool,
   GimpSeamlessCloneTool *sc       = GIMP_SEAMLESS_CLONE_TOOL (tool);
   GimpCursorModifier     modifier = GIMP_CURSOR_MODIFIER_BAD;
 
-  sc_debug_fstart ();
-  sc_debug (sc);
-  sc_debug_coords (sc,coords);
-  
   /* Only update if the tool is actually active on some display */
   if (tool->display)
     {
@@ -802,9 +755,6 @@ gimp_seamless_clone_tool_cursor_update (GimpTool         *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
-
-  sc_debug_fend ();
-
 }
 
 /* Draw any required on canvas interaction. For now, this is kept empty.
@@ -817,7 +767,6 @@ gimp_seamless_clone_tool_draw (GimpDrawTool *draw_tool)
 
   if (sc->tool_state == SC_STATE_RENDER_WAIT || sc->tool_state == SC_STATE_RENDER_MOTION)
   {
-    GimpCanvasGroup *stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
     gimp_draw_tool_add_rectangle (draw_tool, FALSE, sc->xoff, sc->yoff, sc->width, sc->height);
   }
 }
@@ -860,8 +809,6 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
   GeglNode *translate, *op, *paste;
   GeglNode *input, *output;
   
-  sc_debug_fstart ();
-  
   node = gegl_node_new ();
 
   input  = gegl_node_get_input_proxy  (node, "input");
@@ -900,24 +847,16 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 
   sc->render_node = node;
   sc->translate_node = translate;
-
-  sc_debug_fend ();
-
 }
 
 static void
 gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
-  sc_debug_fstart ();
-
   /* The only thing to update right now, is the location of the paste */
   gegl_node_set (sc->translate_node,
                  "x", (gdouble) sc->xoff,
                  "y", (gdouble) sc->yoff,
                  NULL);
-
-  sc_debug_fend ();
-
 }
 
 /* Create an image map to render the operation of the current tool with
@@ -926,9 +865,7 @@ static void
 gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
                                            GimpDrawable          *drawable)
 {
-  sc_debug_fstart ();
-
-  /* FIrst, make sure we actually have the GEGL graph needed to render
+  /* First, make sure we actually have the GEGL graph needed to render
    * the operation's result */
   if (!sc->render_node)
     gimp_seamless_clone_tool_create_render_node (sc);
@@ -942,9 +879,6 @@ gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
   g_signal_connect (sc->image_map, "flush",
                     G_CALLBACK (gimp_seamless_clone_tool_image_map_flush),
                     sc);
-
-  sc_debug_fend ();
-
 }
 
 /* Flush (Refresh) the image map preview */
@@ -954,13 +888,8 @@ gimp_seamless_clone_tool_image_map_flush (GimpImageMap *image_map,
 {
   GimpImage *image = gimp_display_get_image (tool->display);
 
-  sc_debug_fstart ();
-
   gimp_projection_flush_now (gimp_image_get_projection (image));
   gimp_display_flush_now (tool->display);
-
-  sc_debug_fend ();
-
 }
 
 /**
@@ -981,8 +910,6 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   gint              w, h;
   gint              off_x, off_y;
   GeglRectangle     visible;
-
-  sc_debug_fstart ();
 
   /* Find out at which x,y is the top left corner of the currently
    * displayed part */
@@ -1012,7 +939,4 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
 
   /* Now update the image map and show this area */
   gimp_image_map_apply (sc->image_map, &visible);
-
-  sc_debug_fend ();
-
 }
