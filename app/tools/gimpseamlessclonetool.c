@@ -596,7 +596,7 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
         }
     }
 
-  return FALSE;
+  return retval;
 }
 
 static void
