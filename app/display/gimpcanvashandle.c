@@ -336,10 +336,10 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
 
     case GIMP_HANDLE_CROSS:
       cairo_move_to (cr, x - private->width / 2, y);
-      cairo_line_to (cr, x + private->width / 2, y);
+      cairo_line_to (cr, x + private->width / 2 - 0.5, y);
 
       cairo_move_to (cr, x, y - private->height / 2);
-      cairo_line_to (cr, x, y + private->height / 2);
+      cairo_line_to (cr, x, y + private->height / 2 - 0.5);
 
       _gimp_canvas_item_stroke (item, cr);
       break;
