@@ -282,6 +282,7 @@ gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
   
   self->tricache        = NULL;
   self->mesh_cache      = NULL;
+  self->abstract_cache  = NULL;
   
   self->render_node     = NULL;
   self->translate_node  = NULL;
@@ -343,7 +344,21 @@ gimp_seamless_clone_tool_control (GimpTool       *tool,
 static GeglBuffer*
 paste_to_gegl_buf (GimpTool *tool)
 {
-  GeglNode      *gegl, *input, *output;
+  /* Here is a textual description of the graph we are going to create:
+   *
+   * +--------------------------------------+
+   * |<tilemanager-source> <- paste         |
+   * |           |output                    |
+   * |     +-----+------------+             |
+   * |     |input             |input        |
+   * |<buffer-sink> <seamless-clone-prepare>|
+   * |     |                  |             |
+   * |     v                  v             |
+   * |   paste          abstract_cache      |
+   * +--------------------------------------+
+   */
+  GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
+  GeglNode      *gegl, *input, *output, *prepare;
   GeglProcessor *processor;
 
   GimpContext   *context = & gimp_tool_get_options (tool) -> parent_instance;
@@ -365,10 +380,16 @@ paste_to_gegl_buf (GimpTool *tool)
                                     "operation", "gegl:buffer-sink",
                                     "buffer",    &result,
                                     NULL);
-    
+
+      prepare = gegl_node_new_child (gegl,
+                                     "operation", "gegl:seamless-clone-prepare",
+                                     "result",    &sc->abstract_cache,
+                                     NULL);
+
       gegl_node_connect_to (input,  "output",
                             output, "input");
 
+      /* Convert the paste into a GeglBuffer */
       processor = gegl_node_new_processor (output, NULL);
 
        while (gegl_processor_work (processor, &value))
@@ -385,6 +406,16 @@ paste_to_gegl_buf (GimpTool *tool)
         */
        /* tile_manager_unref (tiles); */
 
+      /* Do the preprocessing */
+      processor = gegl_node_new_processor (prepare, NULL);
+
+       while (gegl_processor_work (processor, &value))
+         {
+         }
+     
+       gegl_processor_destroy (processor);
+
+       /* Finally, unref stuff */
        g_object_unref (gegl);
        
        g_object_unref (buffer);
@@ -793,12 +824,8 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
    * |  | <buffer-source> <- paste |
    * |  |       |output            |
    * |  |       |                  |
-   * |  |       |input             |
-   * |  |   <translate>            |
-   * |  |       |output            |
-   * |  |       |                  |
    * |  |input  |aux               |
-   * |<seamless-paste>             |
+   * |<seamless-paste-render>      |
    * |    |output                  |
    * |    |                        |
    * |    |input                   |
@@ -806,7 +833,7 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
    *   <output>
    */
   GeglNode *node;
-  GeglNode *translate, *op, *paste;
+  GeglNode *op, *paste, *overlay;
   GeglNode *input, *output;
   
   node = gegl_node_new ();
@@ -819,34 +846,34 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
                                    "buffer",    sc->paste,
                                    NULL);
 
-  translate = gegl_node_new_child (node,
-                                   "operation", "gegl:translate",
-                                   "x",         (gdouble) sc->xoff,
-                                   "y",         (gdouble) sc->yoff,
-                                   NULL);
-
-  /* For now, avoid fancy stuff and use a nop passthrough op.
-   * Seamless-Clone operation would be integrated once the rest works.
-   * No need to introduce potential GEGL side bugs before we know the
-   * GIMP side works. */
   op = gegl_node_new_child (node,
-                            "operation", "gegl:over",
+                            "operation", "gegl:seamless-clone-render",
+                            "x",         (gint) sc->xoff,
+                            "y",         (gint) sc->yoff,
+                            "prepare",   sc->abstract_cache,
                             NULL);
+
+  overlay = gegl_node_new_child (node,
+                                 "operation", "svg:dst-over",
+                                 NULL);
 
   gegl_node_connect_to (input,     "output",
                         op,        "input");
 
   gegl_node_connect_to (paste,     "output",
-                        translate, "input");
-
-  gegl_node_connect_to (translate, "output",
                         op,        "aux");
 
   gegl_node_connect_to (op,        "output",
+                        overlay,   "input");
+
+  gegl_node_connect_to (input,     "output",
+                        overlay,   "aux");
+
+  gegl_node_connect_to (overlay,   "output",
                         output,    "input");
 
   sc->render_node = node;
-  sc->translate_node = translate;
+  sc->translate_node = op;
 }
 
 static void
@@ -854,8 +881,8 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
   /* The only thing to update right now, is the location of the paste */
   gegl_node_set (sc->translate_node,
-                 "x", (gdouble) sc->xoff,
-                 "y", (gdouble) sc->yoff,
+                 "x", (gint) sc->xoff,
+                 "y", (gint) sc->yoff,
                  NULL);
 }
 

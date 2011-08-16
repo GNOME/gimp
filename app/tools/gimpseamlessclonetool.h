@@ -54,6 +54,8 @@ struct _GimpSeamlessCloneTool
                                   * returned by the preprocessing GEGL
                                   * operation */
 
+  gpointer        abstract_cache;
+
   GeglNode       *render_node;    /* The parent of the Gegl graph that
                                    * renders the seamless cloning */
                                    
