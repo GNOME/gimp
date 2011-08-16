@@ -185,7 +185,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
                                 "box-mode",
-                                 N_("Whether text flows into rectangular shape or"
+                                 N_("Whether text flows into rectangular shape or "
                                     "moves into a new line when you press Enter"),
                                  GIMP_TYPE_TEXT_BOX_MODE,
                                  GIMP_TEXT_BOX_DYNAMIC,
