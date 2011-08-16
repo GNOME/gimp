@@ -39,6 +39,8 @@ UI:
    regression, and add the same guides options as in the rectangle tools
  - Don't unmaximize the single-window mode image window when closing
    images
+ - Resurrect the "You can drop dockable dialogs here" help string
+   below the toolbox
 
 
 Core:

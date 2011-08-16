@@ -3,7 +3,7 @@
  *
  * gimppanedbox.c
  * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
- * Copyright (C)      2009 Martin Nordholts <martinn@src.gnome.org>
+ * Copyright (C) 2009-2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimp.h"
@@ -40,21 +42,29 @@
 
 #include "gimp-log.h"
 
+#include "gimp-intl.h"
+
 
 /**
  * Defines the size of the area that dockables can be dropped on in
  * order to be inserted and get space on their own (rather than
  * inserted among others and sharing space)
  */
-#define DROP_AREA_SIZE      5
+#define DROP_AREA_SIZE            5
 
-#define INSERT_INDEX_UNUSED G_MININT
+#define INSERT_INDEX_UNUSED       G_MININT
+
+#define INSTRUCTIONS_TEXT_PADDING 4
+#define INSTRUCTIONS_TEXT         _("You can drop dockable dialogs here")
 
 
 struct _GimpPanedBoxPrivate
 {
   /* Widgets that are separated by panes */
   GList                  *widgets;
+
+  /* Displays INSTRUCTIONS_TEXT when there are no dockables */
+  GtkWidget              *instructions;
 
   /* Window used for drag-and-drop output */
   GdkWindow              *dnd_window;
@@ -90,7 +100,7 @@ static void      gimp_paned_box_realize                 (GtkWidget      *widget)
 static void      gimp_paned_box_unrealize               (GtkWidget      *widget);
 static void      gimp_paned_box_set_widget_drag_handler (GtkWidget      *widget,
                                                          GimpPanedBox   *handler);
-
+static gint      gimp_paned_box_get_drop_area_size      (GimpPanedBox   *paned_box);
 
 
 G_DEFINE_TYPE (GimpPanedBox, gimp_paned_box, GTK_TYPE_BOX)
@@ -124,6 +134,26 @@ gimp_paned_box_init (GimpPanedBox *paned_box)
                                               GIMP_TYPE_PANED_BOX,
                                               GimpPanedBoxPrivate);
 
+  /* Instructions label
+   *
+   * Size a small size request so it don't mess up dock window layouts
+   * during startup
+   */
+  paned_box->p->instructions = gtk_label_new (INSTRUCTIONS_TEXT);
+  gtk_misc_set_padding (GTK_MISC (paned_box->p->instructions),
+                        INSTRUCTIONS_TEXT_PADDING, INSTRUCTIONS_TEXT_PADDING);
+  gtk_label_set_line_wrap (GTK_LABEL (paned_box->p->instructions), TRUE);
+  gtk_label_set_justify (GTK_LABEL (paned_box->p->instructions), GTK_JUSTIFY_CENTER);
+  gtk_widget_set_size_request (paned_box->p->instructions, 100, 100);
+  gimp_label_set_attributes (GTK_LABEL (paned_box->p->instructions),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (paned_box), paned_box->p->instructions,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (paned_box->p->instructions);
+
+
+  /* Setup DND */
   gtk_drag_dest_set (GTK_WIDGET (paned_box),
                      0,
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
@@ -201,6 +231,33 @@ gimp_paned_box_set_widget_drag_handler (GtkWidget    *widget,
     }
 }
 
+static gint
+gimp_paned_box_get_drop_area_size (GimpPanedBox *paned_box)
+{
+  gboolean no_widgets     = (g_list_length (paned_box->p->widgets) == 0);
+  gint     drop_area_size = 0;
+
+  if (no_widgets)
+    {
+      GtkAllocation  allocation;
+      GtkOrientation orientation;
+
+      gtk_widget_get_allocation (GTK_WIDGET (paned_box), &allocation);
+      orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (paned_box));
+
+      if (orientation == GTK_ORIENTATION_HORIZONTAL)
+        drop_area_size = allocation.width;
+      else if (orientation == GTK_ORIENTATION_VERTICAL)
+        drop_area_size = allocation.height;
+    }
+  else
+    {
+      drop_area_size = DROP_AREA_SIZE;
+    }
+
+  return drop_area_size;
+}
+
 static void
 gimp_paned_box_position_drop_indicator (GimpPanedBox *paned_box,
                                         gint          x,
@@ -273,15 +330,17 @@ gimp_paned_box_drag_motion (GtkWidget      *widget,
                             gint            y,
                             guint           time)
 {
-  GimpPanedBox  *paned_box         = GIMP_PANED_BOX (widget);
-  gint           insert_index      = INSERT_INDEX_UNUSED;
-  gint           dnd_window_x      = 0;
-  gint           dnd_window_y      = 0;
-  gint           dnd_window_w      = 0;
-  gint           dnd_window_h      = 0;
-  GtkOrientation orientation       = 0;
-  GtkAllocation  allocation        = { 0, };
-  gboolean       handle            = FALSE;
+  GimpPanedBox  *paned_box      = GIMP_PANED_BOX (widget);
+  gint           insert_index   = INSERT_INDEX_UNUSED;
+  gint           dnd_window_x   = 0;
+  gint           dnd_window_y   = 0;
+  gint           dnd_window_w   = 0;
+  gint           dnd_window_h   = 0;
+  GtkAllocation  allocation     = { 0, };
+  GtkOrientation orientation    = 0;
+  gboolean       handle         = FALSE;
+  gint           drop_area_size = gimp_paned_box_get_drop_area_size (paned_box);
+  gboolean       no_widgets     = (g_list_length (paned_box->p->widgets) == 0);
 
   if (gimp_paned_box_will_handle_drag (paned_box->p->drag_handler,
                                        widget,
@@ -296,40 +355,55 @@ gimp_paned_box_drag_motion (GtkWidget      *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  /* See if we're at the edge of the dock */
+  /* If there are no widgets, the drop area is as big as the paned
+   * box
+   */
+  no_widgets = (g_list_length (paned_box->p->widgets) == 0);
+
+  /* See if we're at the edge of the dock If there are no dockables,
+   * the entire paned box is a drop area
+   */
   orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (paned_box));
   if (orientation == GTK_ORIENTATION_HORIZONTAL)
     {
       dnd_window_y = 0;
-      dnd_window_w = DROP_AREA_SIZE;
       dnd_window_h = allocation.height;
 
-      if (x < DROP_AREA_SIZE)
+      if (no_widgets)
+        dnd_window_w = allocation.width;
+      else
+        dnd_window_w = drop_area_size;
+
+      if (x < drop_area_size)
         {
           insert_index = 0;
           dnd_window_x = 0;
         }
-      if (x > allocation.width - DROP_AREA_SIZE)
+      if (x > allocation.width - drop_area_size)
         {
           insert_index = -1;
-          dnd_window_x = allocation.width - DROP_AREA_SIZE;
+          dnd_window_x = allocation.width - drop_area_size;
         }
     }
   else /* if (orientation = GTK_ORIENTATION_VERTICAL) */
     {
       dnd_window_x = 0;
       dnd_window_w = allocation.width;
-      dnd_window_h = DROP_AREA_SIZE;
 
-      if (y < DROP_AREA_SIZE)
+      if (no_widgets)
+        dnd_window_h = allocation.height;
+      else
+        dnd_window_h = drop_area_size;
+
+      if (y < drop_area_size)
         {
           insert_index = 0;
           dnd_window_y = 0;
         }
-      if (y > allocation.height - DROP_AREA_SIZE)
+      if (y > allocation.height - drop_area_size)
         {
           insert_index = -1;
-          dnd_window_y = allocation.height - DROP_AREA_SIZE;
+          dnd_window_y = allocation.height - drop_area_size;
         }
     }
 
@@ -461,6 +535,9 @@ gimp_paned_box_add_widget (GimpPanedBox *paned_box,
   /* Insert into the GtkPaned hierarchy */
   if (old_length == 0)
     {
+      /* A widget is added, hide the instructions */
+      gtk_widget_hide (paned_box->p->instructions);
+
       gtk_box_pack_start (GTK_BOX (paned_box), widget, TRUE, TRUE, 0);
     }
   else
@@ -570,6 +647,9 @@ gimp_paned_box_remove_widget (GimpPanedBox *paned_box,
        */
       if (gtk_widget_get_parent (widget) != NULL)
         gtk_container_remove (GTK_CONTAINER (paned_box), widget);
+
+      /* The last widget is removed, show the instructions */
+      gtk_widget_show (paned_box->p->instructions);
     }
   else
     {
@@ -621,11 +701,12 @@ gimp_paned_box_will_handle_drag (GimpPanedBox   *paned_box,
                                  gint            y,
                                  gint            time)
 {
-  gint           paned_box_x = 0;
-  gint           paned_box_y = 0;
-  GtkAllocation  allocation  = { 0, };
-  GtkOrientation orientation = 0;
-  gboolean       will_handle = FALSE;
+  gint           paned_box_x    = 0;
+  gint           paned_box_y    = 0;
+  GtkAllocation  allocation     = { 0, };
+  GtkOrientation orientation    = 0;
+  gboolean       will_handle    = FALSE;
+  gint           drop_area_size = 0;
 
   g_return_val_if_fail (paned_box == NULL ||
                         GIMP_IS_PANED_BOX (paned_box), FALSE);
@@ -659,17 +740,17 @@ gimp_paned_box_will_handle_drag (GimpPanedBox   *paned_box,
    * handle the event
    */
   gtk_widget_get_allocation (GTK_WIDGET (paned_box), &allocation);
-
-  orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (paned_box));
+  orientation    = gtk_orientable_get_orientation (GTK_ORIENTABLE (paned_box));
+  drop_area_size = gimp_paned_box_get_drop_area_size (paned_box);
   if (orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      will_handle = (paned_box_x < DROP_AREA_SIZE ||
-                     paned_box_x > allocation.width - DROP_AREA_SIZE);
+      will_handle = (paned_box_x < drop_area_size ||
+                     paned_box_x > allocation.width - drop_area_size);
     }
   else /*if (orientation = GTK_ORIENTATION_VERTICAL)*/
     {
-      will_handle = (paned_box_y < DROP_AREA_SIZE ||
-                     paned_box_y > allocation.height - DROP_AREA_SIZE);
+      will_handle = (paned_box_y < drop_area_size ||
+                     paned_box_y > allocation.height - drop_area_size);
     }
 
   return will_handle;
