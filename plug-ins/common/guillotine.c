@@ -242,6 +242,8 @@ guillotine (gint32   image_ID,
               if (new_image == -1)
                 {
                   g_warning ("Couldn't create new image.");
+                  g_free (hformat);
+                  g_free (format);
                   return images;
                 }
 

@@ -115,6 +115,7 @@ fread_pascal_string (gint32         *bytes_read,
           if (fseek (f, 1, SEEK_CUR) < 0)
             {
               psd_set_error (feof (f), errno, error);
+              g_free (str);
               return NULL;
             }
           (*bytes_read)++;
@@ -174,12 +175,14 @@ fwrite_pascal_string (const gchar    *src,
           || fwrite (pascal_str, pascal_len, 1, f) < 1)
         {
           psd_set_error (feof (f), errno, error);
+          g_free (pascal_str);
           return -1;
         }
       bytes_written++;
       bytes_written += pascal_len;
       IFDBG(2) g_debug ("Pascal string: %s, bytes_written: %d",
                         pascal_str, bytes_written);
+      g_free (pascal_str);
     }
 
   /* Pad with nulls */
@@ -263,6 +266,7 @@ fread_unicode_string (gint32         *bytes_read,
           if (fseek (f, 1, SEEK_CUR) < 0)
             {
               psd_set_error (feof (f), errno, error);
+              g_free (utf16_str);
               return NULL;
             }
           (*bytes_read)++;
