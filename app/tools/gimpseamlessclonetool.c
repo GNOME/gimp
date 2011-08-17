@@ -389,6 +389,9 @@ paste_to_gegl_buf (GimpTool *tool)
       gegl_node_connect_to (input,  "output",
                             output, "input");
 
+      gegl_node_connect_to (input,   "output",
+                            prepare, "input");
+
       /* Convert the paste into a GeglBuffer */
       processor = gegl_node_new_processor (output, NULL);
 
