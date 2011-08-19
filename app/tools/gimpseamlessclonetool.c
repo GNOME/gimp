@@ -23,6 +23,7 @@
 #include <stdlib.h>
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -177,37 +178,6 @@ G_DEFINE_TYPE (GimpSeamlessCloneTool, gimp_seamless_clone_tool, GIMP_TYPE_DRAW_T
 #define parent_class gimp_seamless_clone_tool_parent_class
 
 
-static const gchar*
-sc_state_to_str (gint tool_state)
-{
-  switch (tool_state)
-  {
-    case SC_STATE_COMMIT: return "SCOMMIT";
-    case SC_STATE_INIT: return "INIT";
-    case SC_STATE_PREPROCESS: return "PREPROCESS";
-    case SC_STATE_QUIT: return "QUIT";
-    case SC_STATE_RENDER_MOTION: return "MOTION";
-    case SC_STATE_RENDER_WAIT: return "WAIT";
-    default:
-      g_assert_not_reached ();
-  }
-}
-
-static void
-sc_debug (GimpSeamlessCloneTool *sc)
-{
-  g_debug ("state: %s, paste? %d, mesh_cahe? %d, tri_cache? %d, render_node? %d, image_map? %d",
-  sc_state_to_str (sc->tool_state), sc->paste != NULL, sc->mesh_cache != NULL, sc->tricache != NULL, sc->render_node != NULL, sc->image_map != NULL);
-}
-
-static void
-sc_debug_coords (GimpSeamlessCloneTool *sc,
-                 const GimpCoords      *c)
-{
-  const gchar *status = gimp_seamless_clone_tool_is_in_paste_c (sc, c) ? "INSIDE" : "OUTSIDE";
-  g_debug ("%s: mouse at %g,%g, rect is %d,%d %dx%d", status, c->x, c->y, sc->xoff, sc->yoff, sc->width, sc->height);
-}
-
 void
 gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data)
@@ -280,12 +250,10 @@ gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
 
   self->paste           = NULL;
   
-  self->tricache        = NULL;
-  self->mesh_cache      = NULL;
   self->abstract_cache  = NULL;
   
   self->render_node     = NULL;
-  self->translate_node  = NULL;
+  self->sc_node  = NULL;
 
   self->tool_state      = SC_STATE_INIT;
   self->image_map       = NULL;
@@ -508,7 +476,7 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
   if (! display_change_only)
     {
       sc->render_node     = NULL;
-      sc->translate_node  = NULL;
+      sc->sc_node  = NULL;
 
       sc->tool_state      = SC_STATE_INIT;
 
@@ -518,23 +486,17 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
           sc->paste = NULL;
         }
 
-      if (sc->tricache)
-        {
-          gegl_buffer_destroy (sc->tricache);
-          sc->tricache = NULL;
-        }
-
       if (sc->render_node)
         {
           /* When the parent render_node is unreffed completly, it will
            * also free all of it's child nodes */
           g_object_unref (sc->render_node);
           sc->render_node = NULL;
-          sc->translate_node  = NULL;
+          sc->sc_node  = NULL;
         }
         
-      /* TODO: free the mesh_cache object */
-      if (sc->mesh_cache)
+      /* TODO: free the abstract_cache object */
+      if (sc->abstract_cache)
         {
         }
     }
@@ -609,6 +571,13 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
         case GDK_KEY_ISO_Enter:
           // gimp_tool_control_set_preserve (tool->control, TRUE);
 
+          /* TODO: there may be issues with committing the image map
+           *       result after some changes were made and the preview
+           *       was scrolled. We can fix these by either invalidating
+           *       the area which is a union of the previous paste
+           *       rectangle each time (in the update function) or by
+           *       invalidating and re-rendering all now (expensive and
+           *       perhaps useless */
           gimp_image_map_commit (sct->image_map);
           g_object_unref (sct->image_map);
           sct->image_map = NULL;
@@ -876,14 +845,14 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
                         output,    "input");
 
   sc->render_node = node;
-  sc->translate_node = op;
+  sc->sc_node = op;
 }
 
 static void
 gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
   /* The only thing to update right now, is the location of the paste */
-  gegl_node_set (sc->translate_node,
+  gegl_node_set (sc->sc_node,
                  "x", (gint) sc->xoff,
                  "y", (gint) sc->yoff,
                  NULL);
@@ -940,6 +909,7 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   gint              w, h;
   gint              off_x, off_y;
   GeglRectangle     visible;
+  GeglOperation    *op = NULL;
 
   /* Find out at which x,y is the top left corner of the currently
    * displayed part */
@@ -967,6 +937,12 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   visible.x -= off_x;
   visible.y -= off_y;
 
+  g_object_get (sc->sc_node, "gegl-operation", &op, NULL);
+  /* If any cache of the visible area was present, clear it!
+   * We need to clear the cache in the sc_node, since that is
+   * where the previous paste was located */
+  gegl_operation_invalidate (op, &visible, TRUE);
+  
   /* Now update the image map and show this area */
   gimp_image_map_apply (sc->image_map, &visible);
 }

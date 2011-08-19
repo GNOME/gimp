@@ -45,22 +45,14 @@ struct _GimpSeamlessCloneTool
                                   * paste that will be used in the
                                   * rendering process */
 
-  GeglBuffer     *tricache;      /* Gegl buffer where each pixel contains
-                                  * information to associate it with a
-                                  * triangle of the mesh */
-                                  
-  gpointer        mesh_cache;    /* The interpolation mesh, and sampling
-                                  * lists - an abstract data structure
-                                  * returned by the preprocessing GEGL
-                                  * operation */
-
   gpointer        abstract_cache;
 
   GeglNode       *render_node;    /* The parent of the Gegl graph that
                                    * renders the seamless cloning */
                                    
-  GeglNode       *translate_node; /* A Gegl node to translate the paste
-                                   * when the user moves it */
+  GeglNode       *sc_node;        /* A Gegl node to do the seamless
+                                   * cloning live with translation of
+                                   * the paste */
 
   gint            tool_state;     /* The current state in the tool's
                                    * state machine */
