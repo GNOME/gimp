@@ -38,6 +38,39 @@
 #include "gimpunitentry.h"
 #include "gimpunitadjustment.h"
 
+/**
+ * SECTION: gimpunitentry
+ * @title: GimpUnitEntry
+ * @short_description: A #GtkSpinButton subclass for entering a value
+ * and the corresponding unit.
+ * @see_also: #GimpUnitAdjustment, #GimpUnit, #GimpEevl
+ *
+ * #GimpUnitEntry is a subclass of #GtkSpinButton. It provides an entry field
+ * for entering a value and its unit. The input is parsed via the #GimpEevl
+ * parser, supporting basic mathematical operations including terms with different
+ * units (e.g. "20 cm + 10 px"). Parsing and updating the value is done "live" while
+ * the user enters the string and not just after the entry looses keyboard focus.
+ * 
+ * The unit of the entered string is automatically 
+ * determined (either the first entered unit or, if the user didn't input one, 
+ * the last set unit). Currently only entering the unit abbreviation is supported 
+ * ("in" is seen as valid input, "inch" however isn't). If the user inputs an invalid
+ * string, this is indicated by painting the entry red after a short delay.
+ * 
+ * #GimpUnitEntry uses the #GimpUnit system and thus supports all units the currently
+ * installed Gimp version supports (including user defined units). The user can also set
+ * the unit via the right-click menu.
+ *
+ * #GimpUnitEntry also supports basic resolution input (see #gimp_unit_entry_set_mode).
+ *
+ * For holding the actual value/unit, #GimpUnitAdjustment is used. Note that you need to
+ * manually create the GimpUnitAdjustment object and set it via 
+ * #gimp_unit_entry_set_adjustment. #GimpUnitEntry provides a few convenience getter/setter
+ * methods for accessing the actual value/unit of the adjustment, but for more options you
+ * need to access the #GimpUnitAdjustment directly.
+ *
+ **/
+
 /* debug macro */
 //#define UNITENTRY_DEBUG
 #ifdef  UNITENTRY_DEBUG
@@ -135,6 +168,15 @@ gimp_unit_entry_class_init (GimpUnitEntryClass *class)
   g_type_class_add_private (class, sizeof (GimpUnitEntryPrivate));
 }
 
+/**
+ * gimp_unit_entry_new:
+ *
+ * Creates a new #GimpUnitEntry object. Note that this does not create the corresponding
+ * #GimpUnitAdjustment which actually holds the value/unit. Like with #GtkSpinButton you
+ * need to manually create the adjustment and set it via #gimp_unit_entry_set_adjustment.
+ *
+ * Returns: A Pointer to the new #GimpUnitEntry object.
+ **/
 GtkWidget*
 gimp_unit_entry_new (void)
 {
@@ -143,6 +185,12 @@ gimp_unit_entry_new (void)
   return entry;
 }
 
+/**
+ * gimp_unit_entry_get_adjustment:
+ * @entry:  The #GimpUnitEntry you want to get the adjustment of.
+ *
+ * Returns: A Pointer to the #GimpUnitAdjustment object of the given entry.
+ **/
 GimpUnitAdjustment*
 gimp_unit_entry_get_adjustment (GimpUnitEntry *entry)
 {
@@ -158,6 +206,13 @@ gimp_unit_entry_get_adjustment (GimpUnitEntry *entry)
   return GIMP_UNIT_ADJUSTMENT (adjustment);
 }
 
+/**
+ * gimp_unit_entry_set_adjustment:
+ * @entry:      The #GimpUnitEntry you want to set the adjustment of.
+ * @adjustment: The #GimpUnitAdjustment you want to set.
+ *
+ * Sets the #GimpUnitAdjustment of an entry.
+ **/
 void                  
 gimp_unit_entry_set_adjustment  (GimpUnitEntry      *entry,
                                  GimpUnitAdjustment *adjustment)
@@ -171,7 +226,15 @@ gimp_unit_entry_set_adjustment  (GimpUnitEntry      *entry,
                     (gpointer) adjustment);                                
 }        
 
-/* connect to another entry */
+/**
+ * gimp_unit_entry_connect:
+ * @entry:   The #GimpUnitEntry you want to automatically change unit.
+ * @target:  The #GimpUnitEntry you want to follow.
+ *
+ * Connects one entry to another entry so that it automatically changes its unit
+ * whenever the second entry does. Just a convenience function for invoking
+ * #gimp_unit_adjustment_follow_unit_of so see there for details.
+ **/
 void 
 gimp_unit_entry_connect (GimpUnitEntry *entry, 
                          GimpUnitEntry *target)
@@ -398,7 +461,12 @@ gimp_unit_entry_menu_item      (GtkWidget *menu_item,
   gimp_unit_adjustment_set_unit (adj, unit);
 }                        
 
-/* convenience getters/setters */                         
+/**
+ * gimp_unit_entry_get_pixels:
+ * @entry:      The #GimpUnitEntry you want to get the value of.
+ *
+ * Returns: The current value of the entry converted to pixels.
+ **/                       
 gdouble
 gimp_unit_entry_get_pixels (GimpUnitEntry *entry)
 {
@@ -407,6 +475,17 @@ gimp_unit_entry_get_pixels (GimpUnitEntry *entry)
   return gimp_unit_adjustment_get_value_in_unit (adj, GIMP_UNIT_PIXEL);
 }
 
+/**
+ * gimp_unit_entry_set_bounds:
+ * @adjustment:     The entry you want to set the bounds of.
+ * @unit:           The unit your given bounds are in.
+ * @lower:          The lower bound.
+ * @upper:          The upper bound.
+ *
+ * Sets the lower and upper bounds (minimum and maximum values) of a #GimpUnitEntry.
+ * 
+ * See #gimp_unit_adjustment_set_bounds for details.
+ **/
 void
 gimp_unit_entry_set_bounds (GimpUnitEntry *entry, 
                             GimpUnit       unit, 
@@ -417,6 +496,13 @@ gimp_unit_entry_set_bounds (GimpUnitEntry *entry,
   gimp_unit_adjustment_set_bounds (adj, unit, lower, upper);
 }
 
+/**
+ * gimp_unit_entry_set_pixels:
+ * @entry:      The #GimpUnitEntry you want to set the value of.
+ *
+ * Set the pixel value of an #GimpUnitEntry. The value is converted to the current
+ * unit of the entry.
+ **/   
 void
 gimp_unit_entry_set_pixels (GimpUnitEntry      *entry,
                             gdouble             value)
@@ -425,6 +511,20 @@ gimp_unit_entry_set_pixels (GimpUnitEntry      *entry,
   gimp_unit_adjustment_set_value_in_unit (adj, value, GIMP_UNIT_PIXEL);
 }                           
 
+/**
+ * gimp_unit_entry_set_mode:
+ * @entry:      The #GimpUnitEntry you want to set the mode of.
+ * @mode:       The mode of the entry.
+ *
+ * Sets the input mode of the entry. Possible modes are GIMP_UNIT_ENTRY_MODE_UNIT and 
+ * GIMP_UNIT_ENTRY_MODE_RESOLUTION. Unit mode is default, but if you set the entry to 
+ * resolution mode, the input is interpreted as a resolution. 
+ * 
+ * Note that resolution mode is very basic and disables the parser and mathematical
+ * expressions completely. The user can then just input a value and set the unit
+ * via the right-click menu. The unit is to be interpreted as pixels per unit. 
+ * If the input e.g. is 72 px/in, then the value is 72.0 and the unit is inch.
+ **/   
 void
 gimp_unit_entry_set_mode (GimpUnitEntry     *entry,
                           GimpUnitEntryMode  mode)
@@ -441,7 +541,14 @@ gimp_unit_entry_set_mode (GimpUnitEntry     *entry,
   }
 }
 
-/* get string in format "value unit" */
+/**
+ * gimp_unit_entry_to_string:
+ * @entry:  The #GimpUnitEntry you want to get the value string of.
+ *
+ * IMPORTANT: The returned string needs to be g_free()'d after usage!
+ *
+ * Returns: A string containing the current value and unit of the entry
+ **/
 gchar* 
 gimp_unit_entry_to_string (GimpUnitEntry *entry)
 {
@@ -450,6 +557,15 @@ gimp_unit_entry_to_string (GimpUnitEntry *entry)
            gimp_unit_adjustment_get_unit (gimp_unit_entry_get_adjustment (entry)));
 }
 
+/**
+ * gimp_unit_entry_to_string_in_unit:
+ * @entry:  The #GimpUnitEntry you want to get the value string of.
+ * @unit:   The #GimpUnit the value shall be converted to.
+ *
+ * IMPORTANT: The returned string needs to be g_free()'d after usage!
+ *
+ * Returns: A string containing the current value converted to the given unit and the unit.
+ **/
 gchar*  
 gimp_unit_entry_to_string_in_unit (GimpUnitEntry *entry, 
                                    GimpUnit       unit)
