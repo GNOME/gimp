@@ -41,6 +41,8 @@ UI:
    images
  - Resurrect the "You can drop dockable dialogs here" help string
    below the toolbox
+ - Make pick-and-move with the Move Tool work for layers in a layer
+   group
 
 
 Core:
