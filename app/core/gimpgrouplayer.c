@@ -65,6 +65,7 @@ struct _GimpGroupLayerPrivate
 
 
 static void            gimp_projectable_iface_init   (GimpProjectableInterface  *iface);
+static void            gimp_pickable_iface_init      (GimpPickableInterface     *iface);
 
 static void            gimp_group_layer_finalize     (GObject         *object);
 static void            gimp_group_layer_set_property (GObject         *object,
@@ -135,6 +136,11 @@ static void            gimp_group_layer_convert_type (GimpDrawable      *drawabl
 
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
 static GList         * gimp_group_layer_get_layers   (GimpProjectable *projectable);
+static gint            gimp_group_layer_get_opacity_at
+                                                     (GimpPickable    *pickable,
+                                                      gint             x,
+                                                      gint             y);
+
 
 static void            gimp_group_layer_child_add    (GimpContainer   *container,
                                                       GimpLayer       *child,
@@ -168,7 +174,10 @@ static void            gimp_group_layer_proj_update  (GimpProjection    *proj,
 
 G_DEFINE_TYPE_WITH_CODE (GimpGroupLayer, gimp_group_layer, GIMP_TYPE_LAYER,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROJECTABLE,
-                                                gimp_projectable_iface_init))
+                                                gimp_projectable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
+                                                gimp_pickable_iface_init))
+
 
 #define parent_class gimp_group_layer_parent_class
 
@@ -227,6 +236,12 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
   iface->get_layers         = gimp_group_layer_get_layers;
   iface->get_channels       = NULL;
+}
+
+static void
+gimp_pickable_iface_init (GimpPickableInterface *iface)
+{
+  iface->get_opacity_at = gimp_group_layer_get_opacity_at;
 }
 
 static void
@@ -869,6 +884,15 @@ gimp_group_layer_get_layers (GimpProjectable *projectable)
   GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
 
   return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
+}
+
+static gint
+gimp_group_layer_get_opacity_at (GimpPickable *pickable,
+                                 gint          x,
+                                 gint          y)
+{
+  /* Only consider child layers as having content */
+  return 0;
 }
 
 

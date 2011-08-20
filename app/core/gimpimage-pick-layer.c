@@ -133,8 +133,7 @@ gimp_image_pick_text_layer (const GimpImage *image,
 
           return GIMP_TEXT_LAYER (layer);
         }
-      else if (! GIMP_IS_GROUP_LAYER (layer) &&
-               gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
+      else if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
                                              x - off_x, y - off_y) > 63)
         {
           /*  a normal layer covers any possible text layers below,
