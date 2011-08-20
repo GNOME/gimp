@@ -52,6 +52,14 @@ create_interface(void)
   b = gimp_unit_entries_get_entry (entries, "height");
   gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (a), 20);
   gimp_unit_adjustment_set_value (gimp_unit_entry_get_adjustment (b), 20);
+  gimp_unit_entries_set_resolution (entries,
+                                    "width",  100.0,
+                                    "height", 100.0,
+                                    NULL);
+  gimp_unit_entries_set_bounds (entries, GIMP_UNIT_PIXEL,
+                                "width", 0.0, 1000.0,
+                                "height", 0.0, 2000.0,
+                                NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), gimp_unit_entries_get_table (entries), FALSE, TRUE, 0);
 

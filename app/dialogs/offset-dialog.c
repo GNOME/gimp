@@ -254,10 +254,10 @@ offset_response (GtkWidget    *widget,
           gint          offset_y;
 
           offset_x =
-            RINT (gimp_unit_entries_get_pixels (GIMP_UNIT_ENTRIES (dialog->offset_entries),
+            RINT (gimp_unit_entries_get_pixels (dialog->offset_entries,
                                                 GIMP_UNIT_ENTRIES_OFFSET_X));
           offset_y =
-            RINT (gimp_unit_entries_get_pixels (GIMP_UNIT_ENTRIES (dialog->offset_entries),
+            RINT (gimp_unit_entries_get_pixels (dialog->offset_entries,
                                                 GIMP_UNIT_ENTRIES_OFFSET_Y));
 
           gimp_drawable_offset (drawable,
@@ -282,12 +282,10 @@ offset_half_xy_callback (GtkWidget    *widget,
     {
       GimpItem *item = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-      gimp_unit_entries_set_pixels (GIMP_UNIT_ENTRIES (dialog->offset_entries),
-                                    GIMP_UNIT_ENTRIES_OFFSET_X,
-                                    gimp_item_get_width (item) / 2);
-      gimp_unit_entries_set_pixels (GIMP_UNIT_ENTRIES (dialog->offset_entries),
-                                    GIMP_UNIT_ENTRIES_OFFSET_Y,
-                                    gimp_item_get_height (item) / 2);
+      gimp_unit_entries_set_pixels (dialog->offset_entries,
+                                    GIMP_UNIT_ENTRIES_OFFSET_X, (gdouble) (gimp_item_get_width (item) / 2),
+                                    GIMP_UNIT_ENTRIES_OFFSET_Y, (gdouble) (gimp_item_get_height (item) / 2),
+                                    NULL);
    }
 }
 

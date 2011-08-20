@@ -192,9 +192,14 @@ gimp_size_box_constructed (GObject *object)
                                     box->xresolution, box->yresolution,
                                     TRUE));
 
-  gimp_unit_entries_set_bounds (unit_entries, GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
-  gimp_unit_entries_set_pixels (unit_entries, GIMP_UNIT_ENTRIES_WIDTH, box->width);
-  gimp_unit_entries_set_pixels (unit_entries, GIMP_UNIT_ENTRIES_HEIGHT, box->height);
+  gimp_unit_entries_set_bounds (unit_entries, GIMP_UNIT_PIXEL, 
+                                GIMP_UNIT_ENTRIES_WIDTH,  (gdouble) GIMP_MIN_IMAGE_SIZE, (gdouble) GIMP_MAX_IMAGE_SIZE,
+                                GIMP_UNIT_ENTRIES_HEIGHT, (gdouble) GIMP_MIN_IMAGE_SIZE, (gdouble) GIMP_MAX_IMAGE_SIZE,
+                                NULL);
+  gimp_unit_entries_set_pixels (unit_entries,
+                                GIMP_UNIT_ENTRIES_WIDTH,  (gdouble) box->width,
+                                GIMP_UNIT_ENTRIES_HEIGHT, (gdouble) box->height,
+                                NULL);
 
   priv->chain_button = GIMP_CHAIN_BUTTON (gimp_unit_entries_get_chain_button (unit_entries));
 
@@ -235,8 +240,10 @@ gimp_size_box_constructed (GObject *object)
                                     TRUE));   
                                  
       gimp_unit_entries_set_mode   (unit_entries, GIMP_UNIT_ENTRY_MODE_RESOLUTION);                           
-      gimp_unit_entries_set_pixels (unit_entries, "xresolution", box->xresolution);
-      gimp_unit_entries_set_pixels (unit_entries, "xresolution", box->yresolution);                            
+      gimp_unit_entries_set_pixels (unit_entries, 
+                                    "xresolution", box->xresolution,
+                                    "yresolution", box->yresolution,
+                                    NULL);
 
       gtk_box_pack_start (GTK_BOX (hbox), gimp_unit_entries_get_table (unit_entries), FALSE, FALSE, 0);
       gtk_widget_show (gimp_unit_entries_get_table (unit_entries));
@@ -413,8 +420,10 @@ gimp_size_box_update_resolution (GimpSizeBox *box)
 
   if (priv->unit_entries)
     {
-      gimp_unit_entries_set_pixels (priv->unit_entries, GIMP_UNIT_ENTRIES_WIDTH, box->width);
-      gimp_unit_entries_set_pixels (priv->unit_entries, GIMP_UNIT_ENTRIES_HEIGHT, box->height);
+      gimp_unit_entries_set_pixels (priv->unit_entries, 
+                                    GIMP_UNIT_ENTRIES_WIDTH,  (gdouble) box->width,
+                                    GIMP_UNIT_ENTRIES_HEIGHT, (gdouble) box->height,
+                                    NULL);
     }
 
   if (priv->res_label)

@@ -93,18 +93,16 @@ GtkWidget*           gimp_unit_entries_get_chain_button      (GimpUnitEntries *e
 void                 gimp_unit_entries_set_unit              (GimpUnitEntries *entries, 
                                                               GimpUnit         unit);
 void                 gimp_unit_entries_set_resolution        (GimpUnitEntries *entries, 
-                                                              gdouble          res);
+                                                              ...);
 void                 gimp_unit_entries_set_mode              (GimpUnitEntries *entries, 
                                                               GimpUnitEntryMode mode);
 void                 gimp_unit_entries_set_activates_default (GimpUnitEntries *entries, 
-                                                              gboolean         setting);
+                                                              gboolean         setting);                                                                  
 void                 gimp_unit_entries_set_bounds            (GimpUnitEntries *entries, 
                                                               GimpUnit         unit, 
-                                                              gdouble          upper, 
-                                                              gdouble          lower);
+                                                              ...);                                                              
 void                 gimp_unit_entries_set_pixels            (GimpUnitEntries *entries, 
-                                                              const gchar     *id,
-                                                              gdouble          value);
+                                                              ...);
 void                 gimp_unit_entries_set_nth_pixels        (GimpUnitEntries *entries, 
                                                               gint             index,
                                                               gdouble          value);                                                                                                                          

@@ -57,7 +57,6 @@ resolution_calibrate_dialog (GimpUnitEntries   *resolution_entries,
   GdkScreen           *screen;
   GdkRectangle         rect;
   gint                 monitor;
-  GimpUnitEntry       *horizontal_entry, *vertical_entry;
 
   g_return_if_fail (GIMP_IS_UNIT_ENTRIES (resolution_entries));
   g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
@@ -144,19 +143,22 @@ resolution_calibrate_dialog (GimpUnitEntries   *resolution_entries,
   calibrate_yres =
     gimp_unit_entries_get_pixels (resolution_entries,  "monitor-yresolution");
 
-  calibrate_entries = 
-    GIMP_UNIT_ENTRIES (gimp_unit_entries_new ()); 
-  gimp_unit_entries_set_bounds (calibrate_entries, GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, 1);
+  calibrate_entries = gimp_unit_entries_new ();   
+  gimp_unit_entries_add_entry (calibrate_entries, "horizontal", _("Horizontal"));  
+  gimp_unit_entries_add_entry (calibrate_entries, "vertical", _("Vertical"));     
+  gimp_unit_entries_set_bounds     (calibrate_entries, GIMP_UNIT_PIXEL, 
+                                    "horizontal", 1.0, (gdouble) GIMP_MAX_IMAGE_SIZE,
+                                    "vertical",   1.0, (gdouble) GIMP_MAX_IMAGE_SIZE,
+                                    NULL);                  
+  gimp_unit_entries_set_resolution (calibrate_entries,
+                                    "horizontal", calibrate_xres,
+                                    "vertical",   calibrate_yres,
+                                    NULL);
+  gimp_unit_entries_set_pixels     (calibrate_entries,
+                                    "horizontal", (gdouble) ruler_width,
+                                    "vertical",   (gdouble) ruler_height,
+                                    NULL);                                 
   
-  horizontal_entry = 
-    GIMP_UNIT_ENTRY (gimp_unit_entries_add_entry (calibrate_entries, "horizontal", _("Horizontal")));  
-  vertical_entry = 
-    GIMP_UNIT_ENTRY (gimp_unit_entries_add_entry (calibrate_entries, "vertical", _("Vertical")));                       
-  gimp_unit_adjustment_set_resolution (gimp_unit_entry_get_adjustment (horizontal_entry), calibrate_xres);
-  gimp_unit_adjustment_set_resolution (gimp_unit_entry_get_adjustment (vertical_entry),   calibrate_yres);
-  gimp_unit_entry_set_pixels             (horizontal_entry, ruler_width);
-  gimp_unit_entry_set_pixels             (vertical_entry,   ruler_height);
-
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &calibrate_entries);
@@ -172,8 +174,8 @@ resolution_calibrate_dialog (GimpUnitEntries   *resolution_entries,
         GtkWidget *chain_button;
         gdouble    x, y;
 
-        x = gimp_unit_entry_get_pixels (horizontal_entry);
-        y = gimp_unit_entry_get_pixels (vertical_entry);
+        x = gimp_unit_entries_get_pixels (calibrate_entries, "horizontal");
+        y = gimp_unit_entries_get_pixels (calibrate_entries, "vertical");
 
         calibrate_xres = (gdouble) ruler_width  * calibrate_xres / x;
         calibrate_yres = (gdouble) ruler_height * calibrate_yres / y;
@@ -184,8 +186,10 @@ resolution_calibrate_dialog (GimpUnitEntries   *resolution_entries,
           gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button),
                                         FALSE);
 
-        gimp_unit_entries_set_pixels (resolution_entries, "monitor-xresolution", calibrate_xres);
-        gimp_unit_entries_set_pixels (resolution_entries, "monitor-xresolution", calibrate_yres);
+        gimp_unit_entries_set_pixels (resolution_entries, 
+                                      "monitor-xresolution", calibrate_xres,
+                                      "monitor-yresolution", calibrate_yres,
+                                      NULL);
       }
 
     default:

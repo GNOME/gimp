@@ -136,20 +136,23 @@ layer_options_dialog_new (GimpImage    *image,
       gimp_image_get_resolution (image, &xres, &yres);
 
       /* the size unit-entries */
-      options->unit_entries = GIMP_UNIT_ENTRIES (gimp_unit_entries_new ());
+      options->unit_entries = gimp_unit_entries_new ();
       gimp_unit_entries_add_entry (options->unit_entries, GIMP_UNIT_ENTRIES_WIDTH, _("Width:"));
       gimp_unit_entries_add_entry (options->unit_entries, GIMP_UNIT_ENTRIES_HEIGHT, _("Height:"));
       
-      gimp_unit_entries_set_unit        (options->unit_entries, GIMP_UNIT_PIXEL);
-
-      gimp_unit_adjustment_set_resolution  (gimp_unit_entries_get_adjustment (options->unit_entries, GIMP_UNIT_ENTRIES_WIDTH),
-                                            xres);
-      gimp_unit_adjustment_set_resolution  (gimp_unit_entries_get_adjustment (options->unit_entries, GIMP_UNIT_ENTRIES_HEIGHT),
-                                            yres);
-
-      gimp_unit_entries_set_pixels  (options->unit_entries, GIMP_UNIT_ENTRIES_WIDTH, gimp_image_get_width  (image));
-      gimp_unit_entries_set_pixels  (options->unit_entries, GIMP_UNIT_ENTRIES_HEIGHT, gimp_image_get_height  (image));
-      gimp_unit_entries_set_bounds  (options->unit_entries, GIMP_UNIT_PIXEL, GIMP_MAX_IMAGE_SIZE, GIMP_MIN_IMAGE_SIZE);
+      gimp_unit_entries_set_unit (options->unit_entries, GIMP_UNIT_PIXEL);
+      gimp_unit_entries_set_resolution (options->unit_entries,
+                                        GIMP_UNIT_ENTRIES_WIDTH,  xres,
+                                        GIMP_UNIT_ENTRIES_HEIGHT, yres,
+                                        NULL);
+      gimp_unit_entries_set_pixels     (options->unit_entries,
+                                        GIMP_UNIT_ENTRIES_WIDTH,  (gdouble) gimp_image_get_width (image),
+                                        GIMP_UNIT_ENTRIES_HEIGHT, (gdouble) gimp_image_get_height (image),
+                                        NULL);
+      gimp_unit_entries_set_bounds     (options->unit_entries, GIMP_UNIT_PIXEL,
+                                        GIMP_UNIT_ENTRIES_WIDTH,  (gdouble) GIMP_MIN_IMAGE_SIZE, (gdouble) GIMP_MAX_IMAGE_SIZE,
+                                        GIMP_UNIT_ENTRIES_HEIGHT, (gdouble) GIMP_MIN_IMAGE_SIZE, (gdouble) GIMP_MAX_IMAGE_SIZE,
+                                        NULL);
 
       gtk_table_attach (GTK_TABLE (table), gimp_unit_entries_get_table (options->unit_entries), 0, 2, 1, 3,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

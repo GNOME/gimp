@@ -215,13 +215,16 @@ resize_dialog_new (GimpViewable       *viewable,
 
   gtk_box_pack_start (GTK_BOX (vbox), gimp_unit_entries_get_table (unit_entries), FALSE, FALSE, 0);
 
-  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (unit_entries, GIMP_UNIT_ENTRIES_OFFSET_X), 
-                                       xres);
-  gimp_unit_adjustment_set_resolution (gimp_unit_entries_get_adjustment (unit_entries, GIMP_UNIT_ENTRIES_OFFSET_Y), 
-                                       yres);
+  gimp_unit_entries_set_resolution (unit_entries,
+                                    GIMP_UNIT_ENTRIES_OFFSET_X, xres,
+                                    GIMP_UNIT_ENTRIES_OFFSET_Y, yres,
+                                    NULL);
 
-  gimp_unit_entries_set_unit (unit_entries, GIMP_UNIT_PIXEL);
-  gimp_unit_entries_set_bounds (unit_entries, GIMP_UNIT_PIXEL, 0 , 0);
+  gimp_unit_entries_set_unit       (unit_entries, GIMP_UNIT_PIXEL);
+  gimp_unit_entries_set_bounds     (unit_entries, GIMP_UNIT_PIXEL, 
+                                    GIMP_UNIT_ENTRIES_OFFSET_X, 0.0, 0.0,
+                                    GIMP_UNIT_ENTRIES_OFFSET_Y, 0.0, 0.0,
+                                    NULL);
 
   g_signal_connect (unit_entries, "changed",
                     G_CALLBACK (offset_update),
@@ -447,8 +450,10 @@ offsets_changed (GtkWidget    *area,
                  gint          off_y,
                  ResizeDialog *private)
 {
-  gimp_unit_entries_set_pixels (private->offset_unit_entries, GIMP_UNIT_ENTRIES_OFFSET_X, off_x);
-  gimp_unit_entries_set_pixels (private->offset_unit_entries, GIMP_UNIT_ENTRIES_OFFSET_Y, off_y);
+  gimp_unit_entries_set_pixels (private->offset_unit_entries, 
+                                GIMP_UNIT_ENTRIES_OFFSET_X, (gdouble) off_x,
+                                GIMP_UNIT_ENTRIES_OFFSET_Y, (gdouble) off_y,
+                                NULL);
 }
 
 static void
@@ -462,8 +467,10 @@ offset_center_clicked (GtkWidget    *widget,
   off_x = resize_bound_off_x (private, (box->width  - private->old_width)  / 2);
   off_y = resize_bound_off_y (private, (box->height - private->old_height) / 2);
 
-  gimp_unit_entries_set_pixels (private->offset_unit_entries, GIMP_UNIT_ENTRIES_OFFSET_X, off_x);
-  gimp_unit_entries_set_pixels (private->offset_unit_entries, GIMP_UNIT_ENTRIES_OFFSET_Y, off_y);
+  gimp_unit_entries_set_pixels (private->offset_unit_entries, 
+                                GIMP_UNIT_ENTRIES_OFFSET_X, (gdouble) off_x,
+                                GIMP_UNIT_ENTRIES_OFFSET_Y, (gdouble) off_y,
+                                NULL);
 
   g_signal_emit_by_name (private->offset_unit_entries, "changed", 0);
 }

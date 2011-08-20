@@ -226,10 +226,10 @@ gimp_rotate_tool_dialog_update (GimpTransformTool *tr_tool)
                                    rotate_center_changed,
                                    tr_tool);
 
-  gimp_unit_entries_set_pixels (GIMP_UNIT_ENTRIES (rotate->unit_entries), "center_x",
-                                tr_tool->trans_info[CENTER_X]);
-  gimp_unit_entries_set_pixels (GIMP_UNIT_ENTRIES (rotate->unit_entries), "center_y",
-                                tr_tool->trans_info[CENTER_Y]);
+  gimp_unit_entries_set_pixels (rotate->unit_entries, 
+                                "center_x", (gdouble) tr_tool->trans_info[CENTER_X],
+                                "center_y", (gdouble) tr_tool->trans_info[CENTER_Y],
+                                NULL);
 
   g_signal_handlers_unblock_by_func (rotate->unit_entries,
                                      rotate_center_changed,
