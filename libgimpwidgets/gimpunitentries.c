@@ -27,6 +27,27 @@
 #include "gimpunitentries.h"
 #include "gimpwidgets.h"
 
+/**
+ * SECTION: gimpunitentries
+ * @title: GimpUnitEntries
+ * @short_description: A convenience class for managing a set of #GimpUnitEntry widgets
+ * @see_also: #GimpUnitEntry
+ *
+ * #GimpUnitEntries is a convenience class that creates and holds one or more 
+ * #GimpUnitEntry widgets. It provides functions for easily adding and accessing the widgets
+ * and also holds a #GtkTable containing the widgets for easy display. 
+ *
+ * It has been designed to cover the most common use-cases of #GimpUnitEntry so that you
+ * don't have to deal with setting the entries up manually. Such a use-case would be the
+ * input of width and height of an image, for example. It is also a replacement for
+ * the old GimpSizeEntry and aims to provide the same functionaly.
+ *
+ * Whenever you add a GimpUnitEntry, #GimpUnitEntries stores it in a hash table and aligns
+ * it vertically in its #GtkTable. You can also add a #GimpChainButton connecting two entries
+ * or a preview label showing the value of two entries in a specific unit.
+ *
+ **/
+
 /* debug macro */
 //#define UNITENTRY_DEBUG
 #ifdef  UNITENTRY_DEBUG
@@ -101,6 +122,14 @@ gimp_unit_entries_class_init (GimpUnitEntriesClass *klass)
                   G_TYPE_OBJECT);
 }
 
+/**
+ * gimp_unit_entries_new:
+ *
+ * Creates a new #GimpUnitEntries object. Note that the (empty) #GtkTable is also created
+ * now so you can already access it even if you didn't add any #GimpUnitEntry widgets. 
+ *
+ * Returns: A Pointer to the new #GimpUnitEntries object.
+ **/
 GimpUnitEntries*
 gimp_unit_entries_new (void)
 {
@@ -111,7 +140,33 @@ gimp_unit_entries_new (void)
   return GIMP_UNIT_ENTRIES (entries);
 }
 
-/* add an UnitEntry */
+/**
+ * gimp_unit_entries_add_entry:
+ * @entries:   The #GimpUnitEntries object you want to add the entry to.
+ * @id:        String used as an identifier for accessing the entry later.
+ * @label_str: String for the label left to the entry or NULL.
+ *
+ * Creates a new #GimpUnitEntry and its #GimpUnitAdjustment, stores it internally and
+ * adds it to the #GtkTable of the #GimpUnitEntries object.
+ *
+ * The entry is later identified by the id string. You can use any string for an id,
+ * but there are a couple of common #defined strings to catch typos at compile time:
+ * GIMP_UNIT_ENTRIES_HEIGHT,
+ * GIMP_UNIT_ENTRIES_WIDTH,
+ * GIMP_UNIT_ENTRIES_OFFSET_X,
+ * GIMP_UNIT_ENTRIES_OFFSET_Y,
+ * GIMP_UNIT_ENTRIES_RESOLUTION_X,
+ * GIMP_UNIT_ENTRIES_RESOLUTION_Y        
+ * You should use those whenever applicable or define you own strings.
+ *
+ * If label_str is not NULL, a #GtkLabel is automatically created and added to the table
+ * to the left of the entry displaying said string.
+ *
+ * The entry is automatically connected to all other entries so that they all have the
+ * same unit at all times.
+ *
+ * Returns: A Pointer to the newly created #GimpUnitEntry widget.
+ **/
 GtkWidget* 
 gimp_unit_entries_add_entry (GimpUnitEntries *entries,
                              const gchar     *id,
@@ -184,7 +239,17 @@ gimp_unit_entries_add_entry (GimpUnitEntries *entries,
   return GTK_WIDGET (entry);
 }
 
-/* add preview label showing value of the two given entries in given unit */
+/**
+ * gimp_unit_entry_add_preview_label:
+ * @entries:  The #GimpUnitEntries you want to add the label to.
+ * @unit:     The unit you want to display the values in.
+ * @id1:      The first entry you want to display the value of.
+ * @id2:      The second entry you want to display the value of.
+ *  
+ * Adds an #GtkLabel showing the values of the #GimpUnitEntry widgets with id1 and id2.
+ * The label is added to the table below the second entry and its string is automatically
+ * updated when either entry changes its value.
+ **/
 void 
 gimp_unit_entries_add_preview_label (GimpUnitEntries *entries,
                                      GimpUnit         unit,
@@ -237,7 +302,16 @@ gimp_unit_entries_add_preview_label (GimpUnitEntries *entries,
   gimp_unit_entries_label_updater (NULL, (gpointer) label);
 }
 
-/* add chain button connecting the two given UnitEntries */
+/**
+ * gimp_unit_entry_add_chain_button:
+ * @entries:  The #GimpUnitEntries you want to add the chain button to.
+ * @id1:      The first entry connected to the chain button.
+ * @id2:      The second entry connected to the chain button.
+ *
+ * Adds a #GimpChainButton to the #GimpUnitEntries' table. The chain button is attached
+ * to the right of both entries. Note that the state of chain button is not managed
+ * automatically so you have to update it manually.
+ **/
 GtkWidget* 
 gimp_unit_entries_add_chain_button  (GimpUnitEntries *entries,
                                      const gchar     *id1,
@@ -272,7 +346,13 @@ gimp_unit_entries_add_chain_button  (GimpUnitEntries *entries,
   return chain_button;
 }
 
-/* get UnitEntry by identifier */
+/**
+ * gimp_unit_entries_get_entry:
+ * @entries:  The #GimpUnitEntries object you want to get the entry from.
+ * @id:       The id string of the entry you want to get.
+ *
+ * Returns: A Pointer to the #GimpUnitEntry with the given id.
+ **/
 GimpUnitEntry* 
 gimp_unit_entries_get_entry (GimpUnitEntries *entries,
                              const gchar     *id)
@@ -291,7 +371,18 @@ gimp_unit_entries_get_entry (GimpUnitEntries *entries,
   return GIMP_UNIT_ENTRY (entry_pointer);
 }
 
-/* get UnitEntry by index */
+/**
+ * gimp_unit_entries_get_nth_entry:
+ * @entries: The #GimpUnitEntries object you want to get the entry from.
+ * @index:   The index of the entry you want to get.
+ *
+ * This function is only provided for easy porting from the old GimpSizeEntry widget. 
+ * You should always identifiy the entries by their respective id strings, as the internally
+ * used hash table does not guarantee the right order of the stored entries. Use
+ * #gimp_unit_entries_get_entry instead.
+ *
+ * Returns: A Pointer to the #GimpUnitEntry with the given index.
+ **/
 GimpUnitEntry* 
 gimp_unit_entries_get_nth_entry (GimpUnitEntries *entries, 
                                  gint             index)
@@ -364,7 +455,12 @@ gimp_unit_entries_entry_changed  (GtkAdjustment *adj,
   g_signal_emit (entries, unit_entries_signals[CHANGED], 0, entry);
 }
 
-/* get count of attached unit entries */
+/**
+ * gimp_unit_entries_get_entry_count:
+ * @entries:  The #GimpUnitEntries object you want to get the entry count from.
+ *
+ * Returns: The count of #GimpUnitEntry widgets currently stored.
+ **/
 gint
 gimp_unit_entries_get_entry_count (GimpUnitEntries *entries)
 {
@@ -373,7 +469,13 @@ gimp_unit_entries_get_entry_count (GimpUnitEntries *entries)
   return g_hash_table_size (private->entries_store);
 }
 
-/* get value of given entry in pixels */
+/**
+ * gimp_unit_entries_get_pixels:
+ * @entries:  The #GimpUnitEntries object containing the entry.
+ * @id     :  The id of the entry you want to get the value of.
+ *
+ * Returns: The value in pixels of the entry with the given id.
+ **/
 gdouble 
 gimp_unit_entries_get_pixels (GimpUnitEntries *entries, 
                               const gchar     *id)
@@ -385,6 +487,18 @@ gimp_unit_entries_get_pixels (GimpUnitEntries *entries,
   return gimp_unit_entry_get_pixels (entry);
 }
 
+/**
+ * gimp_unit_entries_get_nth_pixels:
+ * @entries: The #GimpUnitEntries object containing the entry.
+ * @index:   The index of the entry you want to get the value of.
+ *
+ * This function is only provided for easy porting from the old GimpSizeEntry widget. 
+ * You should always identifiy the entries by their respective id strings, as the internally
+ * used hash table does not guarantee the right order of the stored entries. Use
+ * #gimp_unit_entries_get_pixels instead.
+ *
+ * Returns: The value in pixels of the entry with the given index.
+ **/
 gdouble         
 gimp_unit_entries_get_nth_pixels (GimpUnitEntries *entries, 
                                   gint             index)
@@ -396,7 +510,14 @@ gimp_unit_entries_get_nth_pixels (GimpUnitEntries *entries,
   return gimp_unit_entry_get_pixels (entry);
 }
 
-/* sets the unit of all entries */
+/**
+ * gimp_unit_entries_set_unit:
+ * @entries:    The #GimpUnitEntries object containing your entries.
+ * @adjustment: The unit you want to set the entries to.
+ *
+ * Sets the unit of all entries of the GimpUnitEntries object. Note that all entries have
+ * the same unit so you cannot set one entry to a different unit.
+ **/
 void 
 gimp_unit_entries_set_unit (GimpUnitEntries *entries, 
                             GimpUnit         unit)
@@ -412,7 +533,30 @@ gimp_unit_entries_set_unit (GimpUnitEntries *entries,
   }
 }
 
-/* sets the resolution of all entries */
+/**
+ * gimp_unit_entries_set_resolution:
+ * @entries:  The #GimpUnitEntries object containing your entries.
+ * @...:      A NULL-terminated list of string/double pairs, the string being the
+ *            id of an #GimpUnitEntry and the double being the resolution to set.
+ *
+ * Sets the resolution of one or more entries of the #GimpUnitEntries object.
+ *
+ * This is a variable arguments method. Pass a NULL-terminated list of string/double pairs,
+ * the string being the id of an #GimpUnitEntry and the double being the resolution to set.
+ *
+ * Be cautious: this function is not type-safe. The resolution value must be a double. When
+ * you are not sure the value you are passing is a double, always use an explicit type-cast!
+ * Always end the argument list with NULL!
+ *
+ *<informalexample>
+ *  <programlisting>
+ *  gimp_unit_entry_set_resolution (unit_entries,
+ *                                  "id_of_entry_1",  100.0,
+ *                                  "id_of_entry_2",  100.0,
+ *                                  NULL);
+ *  </programlisting>
+ *</informalexample>
+ **/
 void 
 gimp_unit_entries_set_resolution (GimpUnitEntries *entries,
                                   ...)
@@ -438,7 +582,15 @@ gimp_unit_entries_set_resolution (GimpUnitEntries *entries,
   va_end (args);
 }
 
-/* sets resolution mode for all entries */
+/**
+ * gimp_unit_entries_set_mode:
+ * @entries:  The #GimpUnitEntries object containing your entries.
+ * @mode:     The mode you want to set the unit of.
+ *
+ * Sets all entries of the #GimpUnitEntries object to the given mode. See 
+ * #gimp_unit_entry_set_mode for details. Note that all entries are in the mode so
+ * you cannot set one entry to a different mode.
+ **/
 void 
 gimp_unit_entries_set_mode (GimpUnitEntries   *entries,
                             GimpUnitEntryMode  mode)
@@ -454,7 +606,14 @@ gimp_unit_entries_set_mode (GimpUnitEntries   *entries,
   }
 }
 
-/* calls gtk_entry_set_activates_default for all UnitEntries */
+/**
+ * gimp_unit_entries_set_activates_default:
+ * @entries: The #GimpUnitEntries object containing your entries.
+ * @setting: activate or deactivate the activates default setting
+ *
+ * Calls gtk_entry_set_activates_default on all #GimpUnitEntry widgets. See
+ * #gtk_entry_set_activates_default for details.
+ **/
 void 
 gimp_unit_entries_set_activates_default (GimpUnitEntries *entries, 
                                          gboolean         setting)
@@ -470,6 +629,35 @@ gimp_unit_entries_set_activates_default (GimpUnitEntries *entries,
   }
 }
 
+/**
+ * gimp_unit_entries_set_bounds:
+ * @entries:  The #GimpUnitEntries object containing your entries.
+ * @unit:     The unit your bounds are in.
+ * @...:      A NULL-terminated list of string/double/double triples, the string being the
+ *            id of an #GimpUnitEntry, the first double the lower bound and the second
+ *            double being the upper bound.
+ *
+ * Sets the bounds of one or more entries of the #GimpUnitEntries object.
+ *
+ * This is a variable arguments method. list of string/double/double triples, the string being the
+ * id of an #GimpUnitEntry, the first double the lower bound and the second
+ * double being the upper bound.
+ *
+ * See #gimp_unit_adjustment_set_bounds for more information.
+ *
+ * Be cautious: this function is not type-safe. The bound values must be doubles. When
+ * you are not sure the value you are passing is a double, always use an explicit type-cast!
+ * Always end the argument list with NULL!
+ *
+ *<informalexample>
+ *  <programlisting>
+ *  gimp_unit_entry_set_bounds (unit_entries, GIMP_UNIT_PIXEL,
+ *                              "id_of_entry_1",  2000.0,
+ *                              "id_of_entry_2",  1000.0,
+ *                              NULL);
+ *  </programlisting>
+ *</informalexample>
+ **/
 void            
 gimp_unit_entries_set_bounds (GimpUnitEntries *entries, 
                               GimpUnit         unit, 
@@ -498,6 +686,13 @@ gimp_unit_entries_set_bounds (GimpUnitEntries *entries,
   va_end (args);
 }                                  
 
+/**
+ * gimp_unit_entries_grab_focus:
+ * @entries: The #GimpUnitEntries object containing your entries.
+ *
+ * Calls gtk_widget_grab_focus on the first #GimpUnitEntry widget. See
+ * #gtk_widget_grab_focus for details.
+ **/
 void 
 gimp_unit_entries_grab_focus (GimpUnitEntries *entries)
 {
@@ -505,6 +700,12 @@ gimp_unit_entries_grab_focus (GimpUnitEntries *entries)
     gtk_widget_grab_focus (GTK_WIDGET (gimp_unit_entries_get_nth_entry (entries, 0)));
 }
 
+/**
+ * gimp_unit_entries_get_table:
+ * @entry:  The #GimpUnitEntries object you want to get the table of.
+ *
+ * Returns: A pointer to the #GtkTable containing the entries.
+ **/
 GtkWidget*      
 gimp_unit_entries_get_table  (GimpUnitEntries *entries)
 {
@@ -513,6 +714,12 @@ gimp_unit_entries_get_table  (GimpUnitEntries *entries)
   return private->table;
 }
 
+/**
+ * gimp_unit_entries_get_chain_button:
+ * @entry:  The #GimpUnitEntries object you want to get the chain button of.
+ *
+ * Returns: A pointer to the #GimpChainButton if there is any.
+ **/
 GtkWidget*      
 gimp_unit_entries_get_chain_button  (GimpUnitEntries *entries)
 {
@@ -521,6 +728,30 @@ gimp_unit_entries_get_chain_button  (GimpUnitEntries *entries)
   return private->chain_button;
 }
 
+/**
+ * gimp_unit_entries_set_pixels:
+ * @entries:  The #GimpUnitEntries object containing your entries.
+ * @...:      A NULL-terminated list of string/double pairs, the string being the
+ *            id of an #GimpUnitEntry and the double being the value in pixels to set.
+ *
+ * Sets the pixel values of one or more entries of the #GimpUnitEntries object.
+ *
+ * This is a variable arguments method. Pass a NULL-terminated list of string/double pairs,
+ * the string being the id of an #GimpUnitEntry and the double being the pixel value to set.
+ *
+ * Be cautious: this function is not type-safe. The pixel value must be a double. When
+ * you are not sure the value you are passing is a double, always use an explicit type-cast!
+ * Always end the argument list with NULL!
+ *
+ *<informalexample>
+ *  <programlisting>
+ *  gimp_unit_entry_set_pixels (unit_entries,
+ *                              "id_of_entry_1",  1280.0,
+ *                              "id_of_entry_2",  1024.0,
+ *                              NULL);
+ *  </programlisting>
+ *</informalexample>
+ **/
 void            
 gimp_unit_entries_set_pixels (GimpUnitEntries *entries, 
                               ...)
@@ -545,7 +776,18 @@ gimp_unit_entries_set_pixels (GimpUnitEntries *entries,
 
   va_end (args);
 }               
-                   
+
+/**
+ * gimp_unit_entries_set_nth_pixels:
+ * @entries: The #GimpUnitEntries object containing the entry.
+ * @index:   The index of the entry you want to set the value of.
+ * @value:   The value to set in pixels.
+ *
+ * This function is only provided for easy porting from the old GimpSizeEntry widget. 
+ * You should always identifiy the entries by their respective id strings, as the internally
+ * used hash table does not guarantee the right order of the stored entries. Use
+ * #gimp_unit_entries_set_pixels instead.
+ **/                   
 void            
 gimp_unit_entries_set_nth_pixels (GimpUnitEntries *entries, 
                                   gint             index,
@@ -558,6 +800,13 @@ gimp_unit_entries_set_nth_pixels (GimpUnitEntries *entries,
   gimp_unit_adjustment_set_value_in_unit (adj, value, GIMP_UNIT_PIXEL);
 }      
 
+/**
+ * gimp_unit_entries_get_adjustment:
+ * @entries:  The #GimpUnitEntries object containing the entry.
+ * @id     :  The id of the entry you want to get the adjustment of.
+ *
+ * Returns: The #GimpUnitAdjustment of the entry with the given id.
+ **/
 GimpUnitAdjustment*  
 gimp_unit_entries_get_adjustment (GimpUnitEntries *entries,
                                   const gchar     *id)
@@ -572,6 +821,18 @@ gimp_unit_entries_get_adjustment (GimpUnitEntries *entries,
   return gimp_unit_entry_get_adjustment (entry);
 }
 
+/**
+ * gimp_unit_entries_get_nth_adjustment:
+ * @entries: The #GimpUnitEntries object containing the entry.
+ * @index:   The index of the entry you want to get the adjustment of.
+ *
+ * This function is only provided for easy porting from the old GimpSizeEntry widget. 
+ * You should always identifiy the entries by their respective id strings, as the internally
+ * used hash table does not guarantee the right order of the stored entries. Use
+ * #gimp_unit_entries_get_adjustment instead.
+ *
+ * Returns: The #GimpUnitAdjustment of the entry with the given index.
+ **/
 GimpUnitAdjustment*  
 gimp_unit_entries_get_nth_adjustment  (GimpUnitEntries *entries,
                                        gint             index)

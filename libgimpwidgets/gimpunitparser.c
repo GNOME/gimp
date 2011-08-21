@@ -31,13 +31,68 @@
 #define DEBUG(x) /* nothing */
 #endif
 
+/**
+ * SECTION: gimpunitparser
+ * @title: GimpUnitParser
+ * @short_description: A wrapper around #GimpEevl providing unit/value parsing of strings.
+ * @see_also: ##GimpUnitEntry, #GimpEevl
+ *
+ * Provides the function to parse a string containing values in one or more units and determines
+ * the resulting value and unit. The input is parsed via the #GimpEevl
+ * parser, supporting basic mathematical operations including terms with different
+ * units (e.g. "20 cm + 10 px"). 
+ *
+ * It is used by #GimpUnitEntry.
+ **/
+
 /* unit resolver for GimpEevl */
 static gboolean unit_resolver (const gchar      *ident,
                                GimpEevlQuantity *result,
                                gpointer          data);
 
 
-/* parse given string */
+/**
+ * gimp_unit_parser_parse:
+ * @str:    The string to parse.
+ * @result: Pointer to a #GimpUnitParserResult in which the results are written.
+ *
+ * Parses the string via #GimpEevl and calculates the value and unit of it. The results
+ * are written in the passed #GimpUnitParserResult struct.
+ *
+ * Before you call the function, you need to fill the fields "resolution" and "unit" of the 
+ * GimpUnitParserResult struct in order for the calculations to be correct.
+ * 
+ * The field "resolution" must contain the resolution of the value in dpi. It is used to
+ * calculate the correct value if the user enters pixels.
+ *
+ * The field "unit" must contain the unit to use in case the user just enters a value without
+ * any unit.
+ *
+ * After the function returns, the field "value" contains the result value of the string and
+ * "unit" the determined unit. The unit of the string will be either the first entered or the
+ * given unit if the user didn't enter any.
+ *
+ *<example>
+ *  <title>Using GimpUnitParser.</title>
+ *    <programlisting>
+ *    gboolean             success;
+ *    GimpUnitParserResult result;
+ *    const gchar          *string = foo_get_some_input_string();
+ *
+ *    // set resolution (important for correct calculation of px)
+ *    result.resolution = 72.0;
+ *    // set unit (we want to use pixels if the user didn't enter one) 
+ *    result.unit = GIMP_UNIT_PIXELS;
+ *    // parse string
+ *    success = gimp_unit_parser_parse (string, &result);
+ *
+ *    // result now contains the value and unit of the string
+ *    </programlisting>
+ *</example>
+ *
+ * Returns: TRUE if the string was correctly parsed, FALSE if it was invalid
+ **/
+
 gboolean 
 gimp_unit_parser_parse (const char *str, GimpUnitParserResult *result)
 {
@@ -86,12 +141,12 @@ gboolean unit_resolver (const gchar      *ident,
                         gpointer          user_data)
 {
   GimpUnitParserResult   *parser_result = (GimpUnitParserResult*) user_data;
-  GimpUnit               *unit        = &(parser_result->unit);
-  gboolean               resolved     = FALSE;
-  gboolean               default_unit = (ident == NULL);
-  gint                   num_units    = gimp_unit_get_number_of_units ();
+  GimpUnit               *unit          = &(parser_result->unit);
+  gboolean               resolved       = FALSE;
+  gboolean               default_unit   = (ident == NULL);
+  gint                   num_units      = gimp_unit_get_number_of_units ();
   const gchar            *abbr; 
-  gint                   i            = 0;
+  gint                   i              = 0;
 
   result->dimension = 1;
   DEBUG (("unit resolver: %s", ident));

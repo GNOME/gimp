@@ -25,15 +25,25 @@
 #include <glib-object.h>
 #include "libgimpbase/gimpbase.h"
 
-typedef struct _GimpUnitParserResult GimpUnitParserResult;
-
-struct _GimpUnitParserResult
+/**
+ * GimpUnitParserResult:
+ * @value:      The value of the parsed string.
+ * @resolution: The resolution in dpi.
+ * @unit:       The unit of the parsed string.
+ *
+ * This struct is used by #gimp_unit_parser_parse to return its results.
+ * 
+ **/
+typedef struct _GimpUnitParserResult
 {
+  /*<public>*/
   gdouble   value;
   gdouble   resolution;
   GimpUnit  unit;
+
+  /*<private>*/
   gboolean  unit_found;
-};
+} GimpUnitParserResult;
 
 gboolean gimp_unit_parser_parse (const char *str, GimpUnitParserResult *result);
 

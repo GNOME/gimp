@@ -383,7 +383,7 @@ gimp_unit_adjustment_get_unit (GimpUnitAdjustment *adjustment)
  * @lower:          The lower bound.
  * @upper:          The upper bound.
  *
- * Sets the lower and upper bounds (minimum and maximum value) of a #GimpUnitAdjustment.
+ * Sets the lower and upper bounds (minimum and maximum values) of a #GimpUnitAdjustment.
  * 
  * The bounds are converted from the given unit to the adjustment's. If the adjustment's
  * value is smaller/bigger than the lower/upper bound, it is automatically changed to be 

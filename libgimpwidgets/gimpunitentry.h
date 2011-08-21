@@ -38,6 +38,14 @@ G_BEGIN_DECLS
 typedef struct _GimpUnitEntry       GimpUnitEntry;
 typedef struct _GimpUnitEntryClass  GimpUnitEntryClass;
 
+/**
+ * GimpUnitEntryMode:
+ * @GIMP_UNIT_ENTRY_MODE_UNIT:        unit input mode
+ * @GIMP_UNIT_ENTRY_MODE_RESOLUTION:  resolution input mode
+ *
+ * The input mode of a #GimpUnitEntry. See #gimp_unit_entry_set_mode.
+ *
+ **/
 typedef enum
 {
   GIMP_UNIT_ENTRY_MODE_UNIT = 0, 

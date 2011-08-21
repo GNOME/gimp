@@ -43,9 +43,9 @@
  * @title: GimpUnitEntry
  * @short_description: A #GtkSpinButton subclass for entering a value
  * and the corresponding unit.
- * @see_also: #GimpUnitAdjustment, #GimpUnit, #GimpEevl
+ * @see_also: #GimpUnitEntries, #GimpUnitAdjustment, #GimpUnit, #GimpUnitParser, #GimpEevl
  *
- * #GimpUnitEntry is a subclass of #GtkSpinButton. It provides an entry field
+ * #GimpUnitEntry is a subclass of #GtkSpinButton. It provides an input field
  * for entering a value and its unit. The input is parsed via the #GimpEevl
  * parser, supporting basic mathematical operations including terms with different
  * units (e.g. "20 cm + 10 px"). Parsing and updating the value is done "live" while
@@ -68,6 +68,12 @@
  * #gimp_unit_entry_set_adjustment. #GimpUnitEntry provides a few convenience getter/setter
  * methods for accessing the actual value/unit of the adjustment, but for more options you
  * need to access the #GimpUnitAdjustment directly.
+ *
+ * See #GimpUnitEntries for an easy way to create and display a set of #GimpUnitEntry
+ * widgets.
+ *
+ * If you are just interested in using the unit parsing logic without the widget itself,
+ * have a look at #GimpUnitParser.
  *
  **/
 
