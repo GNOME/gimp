@@ -237,7 +237,7 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
   g_signal_connect_swapped (private->toolbox, "parent-set",
                             G_CALLBACK (gimp_tool_palette_initialize_tools),
                             palette);
-                      
+
   g_signal_connect_object (context->gimp->tool_info_list, "reorder",
                            G_CALLBACK (gimp_tool_palette_tool_reorder),
                            palette, 0);
