@@ -7,6 +7,45 @@ This is the unstable development branch of GIMP.  Here we are working
 towards the next stable release, which will be GIMP 2.8.
 
 
+Changes in GIMP 2.7.4
+=====================
+
+
+UI:
+
+ - Add a close button to image tabs in single-window mode
+
+
+Core:
+
+ - <item>
+
+
+Libgimp:
+
+ - <item>
+
+
+Plug-ins:
+
+ - <item>
+
+
+Developer documentation:
+
+ - <item>
+
+
+Source and build system:
+
+ - <item>
+
+
+General:
+
+ - <item>
+
+
 Changes in GIMP 2.7.3
 =====================
 

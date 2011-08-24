@@ -212,6 +212,9 @@ static void      gimp_image_window_shell_title_notify  (GimpDisplayShell    *she
 static void      gimp_image_window_shell_icon_notify   (GimpDisplayShell    *shell,
                                                         const GParamSpec    *pspec,
                                                         GimpImageWindow     *window);
+static GtkWidget *
+                 gimp_image_window_create_tab_label    (GimpImageWindow     *window,
+                                                        GimpDisplayShell    *shell);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW,
@@ -993,8 +996,7 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
                              GimpDisplayShell *shell)
 {
   GimpImageWindowPrivate *private;
-  GtkWidget              *view;
-  GimpImage              *image;
+  GtkWidget              *tab_label;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -1005,17 +1007,10 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
 
   private->shells = g_list_append (private->shells, shell);
 
-  view = gimp_view_new_by_types (gimp_get_user_context (shell->display->gimp),
-                                 GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
-                                 GIMP_VIEW_SIZE_LARGE, 0, FALSE);
+  tab_label = gimp_image_window_create_tab_label (window, shell);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
-                            GTK_WIDGET (shell), view);
-
-  image = gimp_display_get_image (shell->display);
-
-  if (image)
-    gimp_view_set_viewable (GIMP_VIEW (view), GIMP_VIEWABLE (image));
+                            GTK_WIDGET (shell), tab_label);
 
   if (g_list_length (private->shells) > 1)
     gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), TRUE);
@@ -1663,14 +1658,19 @@ gimp_image_window_image_notify (GimpDisplay      *display,
                                 GimpImageWindow  *window)
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GtkWidget              *tab_label;
+  GList                  *children;
   GtkWidget              *view;
 
   gimp_image_window_session_update (window,
                                     display,
                                     NULL /*new_entry_id*/);
 
-  view = gtk_notebook_get_tab_label (GTK_NOTEBOOK (private->notebook),
-                                     GTK_WIDGET (gimp_display_get_shell (display)));
+  tab_label = gtk_notebook_get_tab_label (GTK_NOTEBOOK (private->notebook),
+                                          GTK_WIDGET (gimp_display_get_shell (display)));
+  children  = gtk_container_get_children (GTK_CONTAINER (tab_label));
+  view      = GTK_WIDGET (children->data);
+  g_list_free (children);
 
   gimp_view_set_viewable (GIMP_VIEW (view),
                           GIMP_VIEWABLE (gimp_display_get_image (display)));
@@ -1843,4 +1843,50 @@ gimp_image_window_shell_icon_notify (GimpDisplayShell *shell,
                                      GimpImageWindow  *window)
 {
   gtk_window_set_icon (GTK_WINDOW (window), shell->icon);
+}
+
+static void
+gimp_image_window_shell_close_button_callback (GimpDisplayShell *shell)
+{
+  if (shell)
+    gimp_display_shell_close (shell, FALSE);
+}
+
+static GtkWidget *
+gimp_image_window_create_tab_label (GimpImageWindow  *window,
+                                    GimpDisplayShell *shell)
+{
+  GtkWidget *hbox;
+  GtkWidget *view;
+  GimpImage *image;
+  GtkWidget *button;
+
+  /* Hbox */
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_widget_show (hbox);
+
+  /* View */
+  view = gimp_view_new_by_types (gimp_get_user_context (shell->display->gimp),
+                                 GIMP_TYPE_VIEW, GIMP_TYPE_IMAGE,
+                                 GIMP_VIEW_SIZE_LARGE, 0, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
+  gtk_widget_show (view);
+
+  image = gimp_display_get_image (shell->display);
+  if (image)
+    gimp_view_set_viewable (GIMP_VIEW (view), GIMP_VIEWABLE (image));
+
+  /* Button */
+  button = gtk_button_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GTK_STOCK_CLOSE,
+                                                  GTK_ICON_SIZE_MENU));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_image_window_shell_close_button_callback),
+                            shell);
+  gtk_widget_show (button);
+
+  return hbox;
 }
