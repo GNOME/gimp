@@ -1,8 +1,8 @@
 # translation of gimp-script-fu.gimp-2-6.pl.po to Polish
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
-# Artur Polaczyński <artie@kmfms.com>, 1999,2000.
+# Artur Polaczyński <artie@kmfms.com>, 1999, 2000.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2008.
-# Copyright (C) 2001-2007, 2008 Free Software Foundation, Inc.
+# Copyright (C) 2001-2011 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aviary.pl
 # Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
@@ -11,20 +11,20 @@
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu.gimp-2-6.pl\n"
+"Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-08 22:04+0100\n"
-"PO-Revision-Date: 2008-10-20 15:16+0200\n"
-"Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
-"Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
+"POT-Creation-Date: 2011-08-25 19:16+0200\n"
+"PO-Revision-Date: 2011-08-25 21:00+0200\n"
+"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
+"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 "X-Poedit-Language: Polish\n"
-"X-Poedit-Country: POLAND\n"
+"X-Poedit-Country: Poland\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:131
 #: ../plug-ins/script-fu/script-fu-console.c:198
@@ -1288,16 +1288,15 @@ msgstr "Kryształ..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
 msgid "Difference Clouds..."
-msgstr "Róznica chmur..."
+msgstr "Różnica chmur..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr ""
+msgstr "Jednolity szum zastosowany za pomocą trybu warstw różnicy"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
-#, fuzzy
 msgid "Distress the selection"
-msgstr "Zachowaj zaznaczenia"
+msgstr "Postarz zaznaczenia"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
@@ -1321,7 +1320,7 @@ msgstr "Próg (większy 1<-->255 mniejszy)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
-msgstr "_Zniekształcenie obwodu"
+msgstr "_Zniekształcenie obwodu..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "Add a drop shadow to the selected region (or alpha)"
@@ -1622,11 +1621,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
-msgstr ""
+msgstr "_Etykieta wypukłego podprzycisku..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr ""
+msgstr "Etykieta _wypukłego podprzycisku..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
@@ -2266,7 +2265,7 @@ msgstr "Za_okrąglenie..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
+msgstr "Dodaje do obrazu ramkę, dziury i etykiety jak na taśmie filmowej"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"

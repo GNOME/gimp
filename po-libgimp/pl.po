@@ -1,6 +1,6 @@
 # translation of gimp-libgimp.gimp-2-6.pl.po to Polish
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2008.
-# Copyright (C) 2001-2008 Free Software Foundation, Inc.
+# Copyright (C) 2001-2011 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aviary.pl
 # Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
@@ -9,36 +9,38 @@
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.gimp-2-6.pl\n"
+"Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-08 22:03+0100\n"
-"PO-Revision-Date: 2008-10-20 11:47+0200\n"
-"Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
-"Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
+"POT-Creation-Date: 2011-08-25 19:15+0200\n"
+"PO-Revision-Date: 2011-08-25 20:49+0200\n"
+"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
+"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: Poland\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1045
+#: ../libgimp/gimp.c:1068
 msgid "success"
 msgstr "sukces"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1049
+#: ../libgimp/gimp.c:1072
 msgid "execution error"
 msgstr "błąd wykonania"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1053
+#: ../libgimp/gimp.c:1076
 msgid "calling error"
 msgstr "błąd wywołania"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1057
+#: ../libgimp/gimp.c:1080
 msgid "cancelled"
 msgstr "anulowane"
 
@@ -759,8 +761,8 @@ msgstr "Wypełnione"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/display-filter-lcms.c:183
-#: ../modules/color-selector-cmyk-lcms.c:407
-#: ../modules/color-selector-cmyk-lcms.c:413
+#: ../modules/color-selector-cmyk-lcms.c:422
+#: ../modules/color-selector-cmyk-lcms.c:428
 msgid "(invalid UTF-8 string)"
 msgstr "(niepoprawny tekst UTF-8)"
 
@@ -811,10 +813,12 @@ msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
+"Kiedy jest włączone, to symulacja druku będzie oznaczała kolory, które nie "
+"mogą być przedstawione w docelowej przestrzeni kolorów."
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
-msgstr ""
+msgstr "Kolor używany do oznaczania kolorów, które są poza skalą."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -884,7 +888,7 @@ msgid "Cannot expand ${%s}"
 msgstr "Nie można rozwinąć ${%s}"
 
 #: ../libgimpconfig/gimpconfigwriter.c:78
-#: ../libgimpconfig/gimpconfigwriter.c:693
+#: ../libgimpconfig/gimpconfigwriter.c:718
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Podczas zapisu do \"%s\" wystąpił błąd: %s"
@@ -899,7 +903,8 @@ msgstr "Nie można utworzyć pliku tymczasowego dla \"%s\": %s"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nie można otworzyć \"%s\" do zapisu: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -908,7 +913,7 @@ msgstr ""
 "Przy zapisie do pliku tymczasowego dla \"%s\" wystąpił błąd: %s\n"
 "Oryginalny plik pozostał niezmieniony."
 
-#: ../libgimpconfig/gimpconfigwriter.c:682
+#: ../libgimpconfig/gimpconfigwriter.c:707
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -917,7 +922,7 @@ msgstr ""
 "Przy zapisie do pliku tymczasowego dla pliku \"%s\" wystąpił błąd: %s\n"
 "Nie utworzono pliku."
 
-#: ../libgimpconfig/gimpconfigwriter.c:711
+#: ../libgimpconfig/gimpconfigwriter.c:731
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Nie można utworzyć \"%s\": %s"
@@ -1495,11 +1500,11 @@ msgstr "Procent czerni zabieranej od pozostałych barw."
 msgid "CMYK color selector (using color profile)"
 msgstr "Wybór koloru CMYK (używa koloru profilu)"
 
-#: ../modules/color-selector-cmyk-lcms.c:395
+#: ../modules/color-selector-cmyk-lcms.c:410
 msgid "Profile: (none)"
 msgstr "Profil: (brak)"
 
-#: ../modules/color-selector-cmyk-lcms.c:416
+#: ../modules/color-selector-cmyk-lcms.c:431
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -1518,11 +1523,11 @@ msgstr "Nacisk"
 
 #: ../modules/color-selector-wheel.c:103
 msgid "HSV color wheel"
-msgstr ""
+msgstr "Kółko koloru HSV"
 
 #: ../modules/color-selector-wheel.c:134
 msgid "Wheel"
-msgstr ""
+msgstr "Kółko"
 
 #: ../modules/controller-linux-input.c:58
 msgid "Button 0"
