@@ -89,7 +89,6 @@ struct _GimpTransformTool
 
   GimpCanvasItem *handles[TRANSFORM_HANDLE_CENTER + 1];
 
-  const gchar    *undo_desc;
   const gchar    *progress_text;
 
   GtkWidget      *dialog;
@@ -105,6 +104,7 @@ struct _GimpTransformToolClass
   void          (* prepare)       (GimpTransformTool *tool);
   void          (* motion)        (GimpTransformTool *tool);
   void          (* recalc_matrix) (GimpTransformTool *tool);
+  gchar       * (* get_undo_desc) (GimpTransformTool *tool);
   TileManager * (* transform)     (GimpTransformTool *tool,
                                    GimpItem          *item,
                                    TileManager       *orig_tiles,

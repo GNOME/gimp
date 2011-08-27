@@ -56,6 +56,7 @@ static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
                                                    GdkModifierType    state,
                                                    GimpDisplay       *display);
 
+static gchar       * gimp_flip_tool_get_undo_desc (GimpTransformTool *tool);
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
                                                    GimpItem          *item,
                                                    TileManager       *orig_tiles,
@@ -94,17 +95,17 @@ gimp_flip_tool_class_init (GimpFlipToolClass *klass)
   GimpToolClass          *tool_class  = GIMP_TOOL_CLASS (klass);
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  tool_class->modifier_key  = gimp_flip_tool_modifier_key;
-  tool_class->cursor_update = gimp_flip_tool_cursor_update;
+  tool_class->modifier_key   = gimp_flip_tool_modifier_key;
+  tool_class->cursor_update  = gimp_flip_tool_cursor_update;
 
-  trans_class->transform    = gimp_flip_tool_transform;
+  trans_class->get_undo_desc = gimp_flip_tool_get_undo_desc;
+  trans_class->transform     = gimp_flip_tool_transform;
 }
 
 static void
 gimp_flip_tool_init (GimpFlipTool *flip_tool)
 {
   GimpTool *tool = GIMP_TOOL (flip_tool);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (flip_tool);
 
   gimp_tool_control_set_snap_to            (tool->control, FALSE);
   gimp_tool_control_set_precision          (tool->control,
@@ -115,8 +116,6 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
                                             GIMP_TOOL_CURSOR_FLIP_HORIZONTAL);
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                             GIMP_TOOL_CURSOR_FLIP_VERTICAL);
-
-  tr_tool->undo_desc = C_("command", "Flip");
 }
 
 static void
@@ -174,6 +173,27 @@ gimp_flip_tool_cursor_update (GimpTool         *tool,
                                  GIMP_ORIENTATION_VERTICAL);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+static gchar *
+gimp_flip_tool_get_undo_desc (GimpTransformTool *tr_tool)
+{
+  GimpFlipOptions *options = GIMP_FLIP_TOOL_GET_OPTIONS (tr_tool);
+
+  switch (options->flip_type)
+    {
+    case GIMP_ORIENTATION_HORIZONTAL:
+      return g_strdup (C_("undo-type", "Flip horizontally"));
+
+    case GIMP_ORIENTATION_VERTICAL:
+      return g_strdup (C_("undo-type", "Flip vertically"));
+
+    default:
+      /* probably this is not actually reached today, but
+       * could be if someone defined FLIP_DIAGONAL, say...
+       */
+      return g_strdup (C_("undo-desc", "Flip"));
+    }
 }
 
 static TileManager *

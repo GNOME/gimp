@@ -183,6 +183,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   klass->prepare                  = NULL;
   klass->motion                   = NULL;
   klass->recalc_matrix            = NULL;
+  klass->get_undo_desc            = NULL;
   klass->transform                = gimp_transform_tool_real_transform;
 }
 
@@ -1049,6 +1050,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   gint                  new_offset_y;
   const gchar          *null_message   = NULL;
   const gchar          *locked_message = NULL;
+  gchar                *undo_desc      = NULL;
   gboolean              new_layer;
 
   switch (options->type)
@@ -1098,8 +1100,9 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   /*  We're going to dirty this image, but we want to keep the tool around  */
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                               tr_tool->undo_desc);
+  undo_desc = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_undo_desc (tr_tool);
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, undo_desc);
+  g_free (undo_desc);
 
   switch (options->type)
     {

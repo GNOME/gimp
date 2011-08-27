@@ -60,15 +60,16 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_scale_tool_dialog        (GimpTransformTool  *tr_tool);
-static void   gimp_scale_tool_dialog_update (GimpTransformTool  *tr_tool);
-static void   gimp_scale_tool_prepare       (GimpTransformTool  *tr_tool);
-static void   gimp_scale_tool_motion        (GimpTransformTool  *tr_tool);
-static void   gimp_scale_tool_recalc_matrix (GimpTransformTool  *tr_tool);
+static void    gimp_scale_tool_dialog        (GimpTransformTool  *tr_tool);
+static void    gimp_scale_tool_dialog_update (GimpTransformTool  *tr_tool);
+static void    gimp_scale_tool_prepare       (GimpTransformTool  *tr_tool);
+static void    gimp_scale_tool_motion        (GimpTransformTool  *tr_tool);
+static void    gimp_scale_tool_recalc_matrix (GimpTransformTool  *tr_tool);
+static gchar * gimp_scale_tool_get_undo_desc (GimpTransformTool  *tr_tool);
 
-static void   gimp_scale_tool_size_notify   (GtkWidget          *box,
-                                             GParamSpec         *pspec,
-                                             GimpTransformTool  *tr_tool);
+static void    gimp_scale_tool_size_notify   (GtkWidget          *box,
+                                              GParamSpec         *pspec,
+                                              GimpTransformTool  *tr_tool);
 
 
 G_DEFINE_TYPE (GimpScaleTool, gimp_scale_tool, GIMP_TYPE_TRANSFORM_TOOL)
@@ -103,6 +104,7 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
   trans_class->prepare       = gimp_scale_tool_prepare;
   trans_class->motion        = gimp_scale_tool_motion;
   trans_class->recalc_matrix = gimp_scale_tool_recalc_matrix;
+  trans_class->get_undo_desc = gimp_scale_tool_get_undo_desc;
 }
 
 static void
@@ -113,7 +115,6 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RESIZE);
 
-  tr_tool->undo_desc       = C_("command", "Scale");
   tr_tool->progress_text   = _("Scaling");
 
   tr_tool->use_grid        = TRUE;
@@ -326,6 +327,16 @@ gimp_scale_tool_recalc_matrix (GimpTransformTool *tr_tool)
                                tr_tool->trans_info[Y0],
                                tr_tool->trans_info[X1] - tr_tool->trans_info[X0],
                                tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0]);
+}
+
+static gchar *
+gimp_scale_tool_get_undo_desc (GimpTransformTool *tr_tool)
+{
+  gint width  = ROUND (tr_tool->trans_info[X1] - tr_tool->trans_info[X0]);
+  gint height = ROUND (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0]);
+
+  return g_strdup_printf (C_("undo-type", "Scale to %d x %d"),
+                          width, height);
 }
 
 static void

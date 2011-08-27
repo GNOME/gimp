@@ -58,11 +58,12 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_perspective_tool_dialog        (GimpTransformTool *tr_tool);
-static void   gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool);
-static void   gimp_perspective_tool_prepare       (GimpTransformTool *tr_tool);
-static void   gimp_perspective_tool_motion        (GimpTransformTool *tr_tool);
-static void   gimp_perspective_tool_recalc_matrix (GimpTransformTool *tr_tool);
+static void    gimp_perspective_tool_dialog        (GimpTransformTool *tr_tool);
+static void    gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool);
+static void    gimp_perspective_tool_prepare       (GimpTransformTool *tr_tool);
+static void    gimp_perspective_tool_motion        (GimpTransformTool *tr_tool);
+static void    gimp_perspective_tool_recalc_matrix (GimpTransformTool *tr_tool);
+static gchar * gimp_perspective_tool_get_undo_desc (GimpTransformTool *tr_tool);
 
 
 G_DEFINE_TYPE (GimpPerspectiveTool, gimp_perspective_tool,
@@ -97,6 +98,7 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
   trans_class->prepare       = gimp_perspective_tool_prepare;
   trans_class->motion        = gimp_perspective_tool_motion;
   trans_class->recalc_matrix = gimp_perspective_tool_recalc_matrix;
+  trans_class->get_undo_desc = gimp_perspective_tool_get_undo_desc;
 }
 
 static void
@@ -108,7 +110,6 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
 
-  tr_tool->undo_desc     = C_("command", "Perspective");
   tr_tool->progress_text = _("Perspective transformation");
 
   tr_tool->use_grid      = TRUE;
@@ -247,4 +248,10 @@ gimp_perspective_tool_recalc_matrix (GimpTransformTool *tr_tool)
                                      tr_tool->trans_info[Y2],
                                      tr_tool->trans_info[X3],
                                      tr_tool->trans_info[Y3]);
+}
+
+static gchar *
+gimp_perspective_tool_get_undo_desc (GimpTransformTool *tr_tool)
+{
+  return g_strdup (C_("undo-type", "Perspective"));
 }
