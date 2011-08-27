@@ -79,7 +79,7 @@ static const GimpActionEntry select_actions[] =
 
   { "select-sharpen", NULL,
     NC_("select-action", "_Sharpen"), NULL,
-    NC_("select-action", "Remove fuzzyness from the selection"),
+    NC_("select-action", "Remove fuzziness from the selection"),
     G_CALLBACK (select_sharpen_cmd_callback),
     GIMP_HELP_SELECTION_SHARPEN },
 

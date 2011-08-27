@@ -76,7 +76,7 @@ gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
                                     "auto-resize",
-                                    N_("Resize image window to accomodate "
+                                    N_("Resize image window to accommodate "
                                        "new zoom level"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);

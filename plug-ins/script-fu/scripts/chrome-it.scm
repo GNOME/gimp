@@ -101,7 +101,7 @@
         (brush-size (sota-scale size 0.5 chrome-factor))
         (mask (car (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0))))
         (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 NORMAL-MODE)))
-        (layer1 (car (gimp-layer-new img banding-width banding-height banding-type _"Layer1" 100 NORMAL-MODE)))
+        (layer1 (car (gimp-layer-new img banding-width banding-height banding-type _"Layer 1" 100 NORMAL-MODE)))
         (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 2" 100 DIFFERENCE-MODE)))
         (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 3" 100 NORMAL-MODE)))
         (shadow (car (gimp-layer-new img width height GRAYA-IMAGE _"Drop Shadow" 100 NORMAL-MODE)))

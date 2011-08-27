@@ -162,7 +162,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HARD,
-                                    "hard", _("Ignore fuzzyness of the current brush"),
+                                    "hard", _("Ignore fuzziness of the current brush"),
                                     DEFAULT_HARD,
                                     GIMP_PARAM_STATIC_STRINGS);
 

@@ -1086,7 +1086,7 @@ save_dialog (const gint32 image_ID, GimpParamRegion *hotspotRange)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xmcparas.x);
   gimp_help_set_help_data (tmpwidget,
-                         _("Enter the X coordinate of the hot spot."
+                         _("Enter the X coordinate of the hot spot. "
                            "The origin is top left corner."),
                          NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -1104,7 +1104,7 @@ save_dialog (const gint32 image_ID, GimpParamRegion *hotspotRange)
                     &xmcparas.y);
   /* tooltip */
   gimp_help_set_help_data (tmpwidget,
-                         _("Enter the Y coordinate of the hot spot."
+                         _("Enter the Y coordinate of the hot spot. "
                            "The origin is top left corner."),
                          NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 1, 0,
@@ -1726,10 +1726,10 @@ save_image (const gchar *filename,
   if (size_warn)
     {
       g_message (_("Your cursor was successfully saved but it contains one "
-                   "or more frames which nominal size is not "
+                   "or more frames whose nominal size is not "
                    "supported by gnome-appearance-properties.\n"
                    "You can satisfy it by checking \"Replace the size of all "
-                   "frame...\" in save dialog, or Your cursor may not appear "
+                   "frame...\" in the save dialog, or your cursor may not appear "
                    "in gnome-appearance-properties."));
     }
   /*

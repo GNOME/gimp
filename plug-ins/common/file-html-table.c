@@ -616,7 +616,7 @@ save_dialog (gint32 image_ID)
                              spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
-                           _("The amount of cellpadding."), NULL);
+                           _("The amount of cell padding."), NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -629,7 +629,7 @@ save_dialog (gint32 image_ID)
                              spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
-                           _("The amount of cellspacing."), NULL);
+                           _("The amount of cell spacing."), NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),

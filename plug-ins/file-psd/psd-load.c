@@ -266,7 +266,7 @@ read_header_block (PSDimage  *img_a,
   if (memcmp (sig, "8BPS", 4) != 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                  _("Not a valid photoshop document file"));
+                  _("Not a valid Photoshop document file"));
       return -1;
     }
 

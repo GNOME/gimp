@@ -105,7 +105,7 @@
 
 (script-fu-register "script-fu-line-nova"
   _"Line _Nova..."
-  _"Fill a layer with rays emanating outward from its center using the FG color"
+  _"Fill a layer with rays emanating outward from its center using the foreground color"
   "Shuji Narazaki <narazaki@gimp.org>"
   "Shuji Narazaki"
   "1997,1998"
