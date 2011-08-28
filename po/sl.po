@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-25 19:33+0000\n"
-"PO-Revision-Date: 2011-08-26 23:40+0100\n"
+"POT-Creation-Date: 2011-08-28 10:37+0000\n"
+"PO-Revision-Date: 2011-08-28 16:10+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -3238,7 +3238,7 @@ msgstr "Prevračanje ..."
 #: ../app/pdb/image-cmds.c:538
 #: ../app/pdb/item-transform-cmds.c:433
 #: ../app/pdb/transform-tools-cmds.c:245
-#: ../app/tools/gimprotatetool.c:122
+#: ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
 msgstr "Sukanje ..."
 
@@ -3267,7 +3267,7 @@ msgstr "Spremeni merilo slike"
 #: ../app/pdb/layer-cmds.c:333
 #: ../app/pdb/layer-cmds.c:378
 #: ../app/pdb/transform-tools-cmds.c:334
-#: ../app/tools/gimpscaletool.c:117
+#: ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
 msgstr "Spreminjanje merila"
 
@@ -10400,8 +10400,8 @@ msgstr "Slikovnih točk skupin plasti ni mogoče spremeniti."
 #: ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287
 #: ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:244
-#: ../app/tools/gimptransformtool.c:1059
+#: ../app/tools/gimptransformtool.c:245
+#: ../app/tools/gimptransformtool.c:1061
 msgid "The active layer's pixels are locked."
 msgstr "Slikovne točke aktivne plasti so zaklenjene."
 
@@ -10771,7 +10771,7 @@ msgstr "Vtičnik"
 #: ../app/pdb/drawable-transform-cmds.c:447
 #: ../app/pdb/item-transform-cmds.c:262
 #: ../app/pdb/transform-tools-cmds.c:163
-#: ../app/tools/gimpperspectivetool.c:81
+#: ../app/tools/gimpperspectivetool.c:82
 msgid "Perspective"
 msgstr "Perspektiva"
 
@@ -10779,7 +10779,7 @@ msgstr "Perspektiva"
 #: ../app/pdb/drawable-transform-cmds.c:1052
 #: ../app/pdb/item-transform-cmds.c:611
 #: ../app/pdb/transform-tools-cmds.c:418
-#: ../app/tools/gimpsheartool.c:111
+#: ../app/tools/gimpsheartool.c:112
 msgid "Shearing"
 msgstr "Nagibanje ..."
 
@@ -12218,20 +12218,33 @@ msgstr "Afekt:"
 msgid "Flip Type  (%s)"
 msgstr "Vrsta zrcaljenja  (%s)"
 
-#: ../app/tools/gimpfliptool.c:82
+#: ../app/tools/gimpfliptool.c:83
 msgid "Flip"
 msgstr "Prezrcali"
 
-#: ../app/tools/gimpfliptool.c:83
+#: ../app/tools/gimpfliptool.c:84
 msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr "Orodje Prezrcali: Vodoravno ali navpično prezrcalite plast, izbor ali pot"
 
-#: ../app/tools/gimpfliptool.c:85
+#: ../app/tools/gimpfliptool.c:86
 msgid "_Flip"
 msgstr "_Prezrcali"
 
-#: ../app/tools/gimpfliptool.c:119
-msgctxt "command"
+#: ../app/tools/gimpfliptool.c:186
+msgctxt "undo-type"
+msgid "Flip horizontally"
+msgstr "Prezrcali vodoravno"
+
+#: ../app/tools/gimpfliptool.c:189
+msgctxt "undo-type"
+msgid "Flip vertically"
+msgstr "Prezrcali navpično"
+
+#. probably this is not actually reached today, but
+#. * could be if someone defined FLIP_DIAGONAL, say...
+#.
+#: ../app/tools/gimpfliptool.c:195
+msgctxt "undo-desc"
 msgid "Flip"
 msgstr "Prezrcali"
 
@@ -12969,26 +12982,26 @@ msgstr "Kloniranje v _perspektivi"
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl-klik za nastavitev vira kloniranja"
 
-#: ../app/tools/gimpperspectivetool.c:82
+#: ../app/tools/gimpperspectivetool.c:83
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
 msgstr "Orodje Perspektiva: Spremenite perspektivo plasti, izbora ali poti"
 
-#: ../app/tools/gimpperspectivetool.c:84
+#: ../app/tools/gimpperspectivetool.c:85
 msgid "_Perspective"
 msgstr "_Perspektiva"
 
-#: ../app/tools/gimpperspectivetool.c:111
-msgctxt "command"
-msgid "Perspective"
-msgstr "Perspektiva"
-
-#: ../app/tools/gimpperspectivetool.c:112
+#: ../app/tools/gimpperspectivetool.c:113
 msgid "Perspective transformation"
 msgstr "Transformacija perspektive"
 
-#: ../app/tools/gimpperspectivetool.c:130
+#: ../app/tools/gimpperspectivetool.c:131
 msgid "Transformation Matrix"
 msgstr "Matrika transformacije"
+
+#: ../app/tools/gimpperspectivetool.c:256
+msgctxt "undo-type"
+msgid "Perspective"
+msgstr "Perspektiva"
 
 #: ../app/tools/gimpposterizetool.c:85
 msgid "Posterize Tool: Reduce to a limited set of colors"
@@ -13159,51 +13172,53 @@ msgstr "Izbor po:"
 msgid "Move the mouse to change threshold"
 msgstr "Premaknite miško za spremembo praga"
 
-#: ../app/tools/gimprotatetool.c:90
+#: ../app/tools/gimprotatetool.c:93
 msgid "Rotate"
 msgstr "Zasukaj"
 
-#: ../app/tools/gimprotatetool.c:91
+#: ../app/tools/gimprotatetool.c:94
 msgid "Rotate Tool: Rotate the layer, selection or path"
 msgstr "Orodje za sukanje: Zasukaj plast, izbor ali pot"
 
-#: ../app/tools/gimprotatetool.c:92
+#: ../app/tools/gimprotatetool.c:95
 msgid "_Rotate"
 msgstr "_Zasukaj"
 
-#: ../app/tools/gimprotatetool.c:121
-msgctxt "command"
-msgid "Rotate"
-msgstr "Zasukaj"
-
-#: ../app/tools/gimprotatetool.c:188
+#: ../app/tools/gimprotatetool.c:191
 msgid "_Angle:"
 msgstr "_Kot:"
 
-#: ../app/tools/gimprotatetool.c:204
+#: ../app/tools/gimprotatetool.c:207
 msgid "Center _X:"
 msgstr "Središče _X:"
 
-#: ../app/tools/gimprotatetool.c:213
+#: ../app/tools/gimprotatetool.c:216
 msgid "Center _Y:"
 msgstr "Središče _Y:"
 
-#: ../app/tools/gimpscaletool.c:88
+#: ../app/tools/gimprotatetool.c:373
+#, c-format
+msgctxt "undo-type"
+msgid "Rotate by %-3.3g° around (%g, %g)"
+msgstr "Zasukaj za %-3.3g° okoli (%g, %g)"
+
+#: ../app/tools/gimpscaletool.c:89
 msgid "Scale"
 msgstr "Spremeni merilo"
 
-#: ../app/tools/gimpscaletool.c:89
+#: ../app/tools/gimpscaletool.c:90
 msgid "Scale Tool: Scale the layer, selection or path"
 msgstr "Orodje Spremeni merilo: Spremenite merilo plasti, izbora ali poti"
 
-#: ../app/tools/gimpscaletool.c:90
+#: ../app/tools/gimpscaletool.c:91
 msgid "_Scale"
 msgstr "_Spremeni merilo"
 
-#: ../app/tools/gimpscaletool.c:116
-msgctxt "command"
-msgid "Scale"
-msgstr "Spremeni merilo"
+#: ../app/tools/gimpscaletool.c:338
+#, c-format
+msgctxt "undo-type"
+msgid "Scale to %d x %d"
+msgstr "Spremeni merilo na %d x %d"
 
 #: ../app/tools/gimpselectionoptions.c:84
 msgid "Enable feathering of selection edges"
@@ -13258,30 +13273,44 @@ msgstr "Kliknite in povlecite, da premaknete kopijo izbranih slikovnih točk"
 msgid "Click to anchor the floating selection"
 msgstr "Kliknite, da zasidrate plavajoči izbor."
 
-#: ../app/tools/gimpsheartool.c:82
+#: ../app/tools/gimpsheartool.c:83
 msgid "Shear"
 msgstr "Nagni"
-
-#: ../app/tools/gimpsheartool.c:83
-msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "Orodje Nagni: Nagnite plast, izbor ali pot"
 
 #: ../app/tools/gimpsheartool.c:84
+msgid "Shear Tool: Shear the layer, selection or path"
+msgstr "Orodje Nagni: Prirežite plast, izbor ali pot"
+
+#: ../app/tools/gimpsheartool.c:85
 msgid "S_hear"
-msgstr "_Nagni"
+msgstr "P_rireži"
 
-#: ../app/tools/gimpsheartool.c:110
-msgctxt "command"
-msgid "Shear"
-msgstr "Nagni"
-
-#: ../app/tools/gimpsheartool.c:134
+#: ../app/tools/gimpsheartool.c:135
 msgid "Shear magnitude _X:"
-msgstr "Obseg nagnjenosti _X:"
+msgstr "Velikost prirezovanja _X:"
 
-#: ../app/tools/gimpsheartool.c:144
+#: ../app/tools/gimpsheartool.c:145
 msgid "Shear magnitude _Y:"
-msgstr "Obseg nagnjenosti _Y:"
+msgstr "Velikost prirezovanja _Y:"
+
+#: ../app/tools/gimpsheartool.c:255
+#, c-format
+msgctxt "undo-type"
+msgid "Shear horizontally by %-3.3g"
+msgstr "Prireži vodoravno za %-3.3g"
+
+#: ../app/tools/gimpsheartool.c:259
+#, c-format
+msgctxt "undo-type"
+msgid "Shear vertically by %-3.3g"
+msgstr "Prireži navpično za %-3.3g"
+
+#. e.g. user entered numbers but no notification callback
+#: ../app/tools/gimpsheartool.c:264
+#, c-format
+msgctxt "undo-type"
+msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
+msgstr "Prireži vodoravno za %-3.3g in navpično za %-3.3g"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -13357,11 +13386,11 @@ msgstr "Barva besedila"
 
 #: ../app/tools/gimptextoptions.c:564
 msgid "Color:"
-msgstr "Barva;"
+msgstr "Barva:"
 
 #: ../app/tools/gimptextoptions.c:570
 msgid "Justify:"
-msgstr "Poravnava:"
+msgstr "Poravnaj:"
 
 #: ../app/tools/gimptextoptions.c:593
 msgid "Box:"
@@ -13513,19 +13542,19 @@ msgstr "15 stopinj  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "Ohrani razmerje stranic (%s)"
 
-#: ../app/tools/gimptransformtool.c:210
+#: ../app/tools/gimptransformtool.c:211
 msgid "Transforming"
 msgstr "Preoblikovanje"
 
-#: ../app/tools/gimptransformtool.c:1058
+#: ../app/tools/gimptransformtool.c:1060
 msgid "There is no layer to transform."
 msgstr "Ni plasti za preoblikovanje."
 
-#: ../app/tools/gimptransformtool.c:1071
+#: ../app/tools/gimptransformtool.c:1073
 msgid "There is no path to transform."
 msgstr "Ni poti za preoblikovanje."
 
-#: ../app/tools/gimptransformtool.c:1072
+#: ../app/tools/gimptransformtool.c:1074
 msgid "The active path's strokes are locked."
 msgstr "Poteze aktivne poti so zaklenjene."
 
