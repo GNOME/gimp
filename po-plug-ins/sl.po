@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-25 19:37+0000\n"
-"PO-Revision-Date: 2011-08-26 23:42+0100\n"
+"POT-Creation-Date: 2011-08-28 10:38+0000\n"
+"PO-Revision-Date: 2011-08-28 15:26+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -1189,7 +1189,7 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-xmc.c:1459
 #: ../plug-ins/common/file-xwd.c:619
 #: ../plug-ins/common/sphere-designer.c:2116
-#: ../plug-ins/file-bmp/bmp-write.c:301
+#: ../plug-ins/file-bmp/bmp-write.c:306
 #: ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750
 #: ../plug-ins/file-ico/ico-save.c:1007
@@ -3257,7 +3257,7 @@ msgstr "Nepodprta bitna globina (%d)!"
 #: ../plug-ins/common/file-xmc.c:1464
 #: ../plug-ins/common/file-xpm.c:638
 #: ../plug-ins/common/file-xwd.c:624
-#: ../plug-ins/file-bmp/bmp-write.c:312
+#: ../plug-ins/file-bmp/bmp-write.c:317
 #: ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1001
@@ -8651,38 +8651,54 @@ msgstr "Nepodprta vrsta datoteke ali neveljavna bitna globina."
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitna slika se nepričakovano zaključi."
 
-#: ../plug-ins/file-bmp/bmp-write.c:187
-#: ../plug-ins/file-bmp/bmp-write.c:213
+#: ../plug-ins/file-bmp/bmp-write.c:191
+#: ../plug-ins/file-bmp/bmp-write.c:217
 msgid "Cannot save indexed image with transparency in BMP file format."
 msgstr "Indeksirane slike s prosojnostjo ni mogoče shraniti v zapisu BMP."
 
-#: ../plug-ins/file-bmp/bmp-write.c:189
-#: ../plug-ins/file-bmp/bmp-write.c:215
+#: ../plug-ins/file-bmp/bmp-write.c:193
+#: ../plug-ins/file-bmp/bmp-write.c:219
 msgid "Alpha channel will be ignored."
 msgstr "Kanal alfa ne bo upoštevan."
 
-#: ../plug-ins/file-bmp/bmp-write.c:834
+#. Dialog init
+#: ../plug-ins/file-bmp/bmp-write.c:849
 msgid "BMP"
 msgstr "BMP"
 
-#: ../plug-ins/file-bmp/bmp-write.c:844
+#. Run-Length Encoded
+#: ../plug-ins/file-bmp/bmp-write.c:860
 msgid "_Run-Length Encoded"
 msgstr "_Kodirano s tekočo dolžino (RLE)"
 
-#: ../plug-ins/file-bmp/bmp-write.c:856
+#. Compatibility Options
+#: ../plug-ins/file-bmp/bmp-write.c:873
+msgid "Co_mpatibility Options"
+msgstr "Možnosti z_družljivosti"
+
+#: ../plug-ins/file-bmp/bmp-write.c:883
+msgid "_Do not write color space information"
+msgstr "_Ne zapisuj podatkov o barvnem prostoru"
+
+#: ../plug-ins/file-bmp/bmp-write.c:885
+msgid "Some applications can not read BMP images that include color space information. GIMP writes color space information by default. Enabling this option will cause GIMP to not write color space information to the file."
+msgstr "Nekateri programi ne morejo brati slik BMP, ki vsebujejo podatke o barvnem prostoru. GIMP privzeto zapiše podatke o barvnem prostoru. S to možnostjo GIMP v datoteko ne bo zapisal podatkov o barvnem prostoru."
+
+#. Advanced Options
+#: ../plug-ins/file-bmp/bmp-write.c:901
 #: ../plug-ins/file-jpeg/jpeg-save.c:898
 msgid "_Advanced Options"
 msgstr "_Napredne možnosti"
 
-#: ../plug-ins/file-bmp/bmp-write.c:871
+#: ../plug-ins/file-bmp/bmp-write.c:916
 msgid "16 bits"
 msgstr "16-bitno"
 
-#: ../plug-ins/file-bmp/bmp-write.c:907
+#: ../plug-ins/file-bmp/bmp-write.c:952
 msgid "24 bits"
 msgstr "24-bitno"
 
-#: ../plug-ins/file-bmp/bmp-write.c:924
+#: ../plug-ins/file-bmp/bmp-write.c:969
 msgid "32 bits"
 msgstr "32-bitno"
 
