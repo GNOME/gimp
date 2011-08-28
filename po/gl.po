@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-27 18:36+0200\n"
+"POT-Creation-Date: 2011-08-28 03:42+0200\n"
 "PO-Revision-Date: 2011-08-28 03:27+0200\n"
 "Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
@@ -11177,7 +11177,8 @@ msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"O obxecto «%s» (%d) non se pode usar porque non foi engadido a unha imaxe"
+"Os elementos «%s» (%d) e «%s» (%d) non se poden usar porque son parte da "
+"mesma árbore de elementos"
 
 #: ../app/pdb/gimppdb-utils.c:410
 #, c-format
