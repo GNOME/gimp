@@ -14,6 +14,7 @@ Changes in GIMP 2.7.4
 UI:
 
  - Add a close button to image tabs in single-window mode
+ - Improve the transform tools' undo strings to be more descriptive
 
 
 Core:
