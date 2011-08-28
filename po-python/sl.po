@@ -8,10 +8,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2010-04-02 13:21+0000\n"
-"PO-Revision-Date: 2010-04-02 21:30+0100\n"
-"Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-08-25 19:40+0000\n"
+"PO-Revision-Date: 2011-08-26 23:43+0100\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak, Nedeljko Grabant <miles@filmsi.net, nedeljkograbant@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,7 +54,7 @@ msgstr "Izbor datoteke Python-Fu"
 msgid "Python-Fu Folder Selection"
 msgstr "Izbor mape Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:698
+#: ../plug-ins/pygimp/gimpfu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Neveljaven vnos za '%s'"
@@ -63,45 +63,53 @@ msgstr "Neveljaven vnos za '%s'"
 msgid "Python-Fu Color Selection"
 msgstr "Izbor barve Script-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Shranjevanje v obliki barvnega XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Shrani kot barvani XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "Barvani XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "Vir _znaka"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Izvorna koda"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Besedilna datoteka"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Vnosno polje"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "_Datoteka za branje ali znaki za uporabo"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "Veli_kost pisave v točkah"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "Zapiši _ločeno datoteko CSS"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+msgid "Gradient to use"
+msgstr "Uporabljen preliv"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+msgid "File Name"
+msgstr "Ime datoteke"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
@@ -141,8 +149,8 @@ msgstr "_Zamakni paleto ..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Paleta"
 
@@ -190,69 +198,69 @@ msgstr "Modra ali vrednost"
 msgid "_Ascending"
 msgstr "N_araščajoče"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:49
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Ustvari ponavljajoči preliv z uporabo barv iz palete"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:54
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "Paleta v _ponavljajoči preliv"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:71
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "Ustvari preliv z uporabo barv iz palete"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:76
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "Paleta v _preliv"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:56
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "Nareži"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:417
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "Nareže sliko po njenih vodilih, ustvari ločene slike in izrezek kode za tabelo HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:428
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "_Nareži ..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
 msgstr "Pot za izvoz HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Filename for export"
 msgstr "Ime datoteke za izvoz"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "Predpona imena slike"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "Oblika slike"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Separate image folder"
 msgstr "Ločena mapa slike"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
 msgid "Folder for image export"
 msgstr "Mapa za izvoz slike"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Space between table elements"
 msgstr "Presledek med elementi tabele"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript za dogodka klika in miške nad elementom"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
 msgstr "Preskoči animacijo za začetnice tabele"
 
