@@ -575,22 +575,6 @@ tile_manager_bpp (const TileManager *tm)
   return tm->bpp;
 }
 
-gint
-tile_manager_tiles_per_col (const TileManager *tm)
-{
-  g_return_val_if_fail (tm != NULL, 0);
-
-  return tm->ntile_cols;
-}
-
-gint
-tile_manager_tiles_per_row (const TileManager *tm)
-{
-  g_return_val_if_fail (tm != NULL, 0);
-
-  return tm->ntile_rows;
-}
-
 gint64
 tile_manager_get_memsize (const TileManager *tm,
                           gboolean           sparse)

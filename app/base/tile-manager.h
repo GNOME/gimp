@@ -95,8 +95,6 @@ void          tile_manager_invalidate_area   (TileManager       *tm,
 gint          tile_manager_width             (const TileManager *tm);
 gint          tile_manager_height            (const TileManager *tm);
 gint          tile_manager_bpp               (const TileManager *tm);
-gint          tile_manager_tiles_per_col     (const TileManager *tm);
-gint          tile_manager_tiles_per_row     (const TileManager *tm);
 
 gint64        tile_manager_get_memsize       (const TileManager *tm,
                                               gboolean           sparse);
