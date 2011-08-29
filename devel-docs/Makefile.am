@@ -30,6 +30,7 @@ EXTRA_DIST = \
 	includes.txt			\
 	parasites.txt			\
 	pat.txt				\
+	gegl-porting-plan.txt		\
 	gtkbuilder-porting-guide.txt	\
 	release-howto.txt		\
 	structure.xml			\

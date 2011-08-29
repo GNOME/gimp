@@ -1,0 +1,39 @@
+GEGL Porting Plan
+=================
+
+This file describes a detailed plan for how we will integrate GEGL
+into GIMP. Please update it with your own ideas and findings.
+
+Porting GIMP to GEGL will be a multi-stage process. On a high level,
+the stages are:
+
+Stages:
+=======
+
+ 1. Implement GIMP's 8 bpc code with GEGL data structures
+ 2. Gradually port GIMP's 8 bpc code to 32 bpc
+ 3. Once the GIMP base layer (almost) only knows 32 bpc and GEGL, add
+    goodies like adjustment layers and layer effects on top
+
+
+First stage:
+------------
+
+ 1. Kill Tile and TileManager
+ 2. Change PixelRegion::tiles : TileManager * to PixelRegion::gegl_buffer : GeglBuffer *
+ 3. Map PixelRegion::gegl_buffer of type RGBA float to PixelRegion::data of type RGBA u8
+ 4. Implement functions like scale_region() with GEGL (for the
+    gegl_buffer case. For the data case, we can keep the old code)
+ 5. ???
+
+
+Second stage:
+-------------
+
+ 1. ???
+
+
+Third stage:
+------------
+
+ 1. ???

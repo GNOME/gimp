@@ -34,7 +34,7 @@ Plug-ins:
 
 Developer documentation:
 
- - <item>
+ - Add devel-docs/gegl-porting-plan.txt
 
 
 Source and build system:
