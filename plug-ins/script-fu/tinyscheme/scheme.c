@@ -519,6 +519,7 @@ static num num_mod(num a, num b) {
  /* modulo should have same sign as second operand */
  if (res * e2 < 0) {
    res+=e2;
+ }
  ret.value.ivalue=res;
  return ret;
 }
