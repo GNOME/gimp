@@ -5,4 +5,5 @@ EXTRA_DIST = \
 	gimp-plug-ins.rc	\
 	gimp.manifest		\
 	fileicon.ico		\
+	plug-ins.ico		\
 	wilber.ico
