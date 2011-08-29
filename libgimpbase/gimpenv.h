@@ -33,11 +33,11 @@ G_BEGIN_DECLS
 
 
 #ifdef G_OS_WIN32
-#  ifdef GIMP_BASE_COMPILATION
+#  ifdef __GIMP_ENV_C__
 #    define GIMPVAR __declspec(dllexport)
-#  else  /* !GIMP_BASE_COMPILATION */
+#  else  /* !__GIMP_ENV_C__ */
 #    define GIMPVAR extern __declspec(dllimport)
-#  endif /* !GIMP_BASE_COMPILATION */
+#  endif /* !__GIMP_ENV_C__ */
 #else  /* !G_OS_WIN32 */
 #  define GIMPVAR extern
 #endif

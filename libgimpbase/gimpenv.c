@@ -31,6 +31,8 @@
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
+#define __GIMP_BASE_C__
+
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpbasetypes.h"
 
