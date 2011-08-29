@@ -34,6 +34,15 @@
                                 inFlatten
         )
 
+  (define (chris-color-edge inImage inLayer inColor inSize)
+    (gimp-selection-all inImage)
+    (gimp-selection-shrink inImage inSize)
+    (gimp-selection-invert inImage)
+    (gimp-context-set-background inColor)
+    (gimp-edit-fill inLayer BACKGROUND-FILL)
+    (gimp-selection-none inImage)
+  )
+
   (let (
        (theWidth (car (gimp-image-width inImage)))
        (theHeight (car (gimp-image-height inImage)))
@@ -42,6 +51,7 @@
        )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (gimp-selection-all inImage)
     (set! theImage (if (= inCopy TRUE)
@@ -80,7 +90,7 @@
     (chris-color-edge theImage theLayer inColor 1)
     (gimp-layer-scale theLayer theWidth theHeight TRUE)
 
-    (gimp-selection-layer-alpha theLayer)
+    (gimp-image-select-item theImage CHANNEL-OP-REPLACE theLayer)
     (gimp-selection-invert theImage)
     (gimp-edit-clear theLayer)
     (gimp-selection-invert theImage)
@@ -92,13 +102,12 @@
 
     (if (= inBlur TRUE)
         (plug-in-gauss-rle RUN-NONINTERACTIVE
-			   theImage theLayer inSize TRUE TRUE)
+                           theImage theLayer inSize TRUE TRUE)
     )
     (if (= inShadow TRUE)
         (begin
-          (gimp-selection-none inImage)
-          (gimp-image-insert-layer theImage -1
-                                (car (gimp-layer-copy theLayer FALSE)) 0)
+          (gimp-image-insert-layer theImage
+                                   (car (gimp-layer-copy theLayer FALSE)) 0 -1)
           (gimp-layer-scale theLayer
                             (- theWidth inSize) (- theHeight inSize) TRUE)
           (gimp-desaturate theLayer)
@@ -131,15 +140,6 @@
 
     (gimp-context-pop)
   )
-)
-
-(define (chris-color-edge inImage inLayer inColor inSize)
-  (gimp-selection-all inImage)
-  (gimp-selection-shrink inImage inSize)
-  (gimp-selection-invert inImage)
-  (gimp-context-set-background inColor)
-  (gimp-edit-fill inLayer BACKGROUND-FILL)
-  (gimp-selection-none inImage)
 )
 
 (script-fu-register "script-fu-fuzzy-border"
