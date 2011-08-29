@@ -517,15 +517,8 @@ static num num_mod(num a, num b) {
  e2=num_ivalue(b);
  res=e1%e2;
  /* modulo should have same sign as second operand */
- if (res > 0) {
-     if (e2 < 0) {
-          res*=-1L;
-     }
- } else {
-     if (e2 > 0) {
-          res*=-1L;
-     }
- }
+ if (res * e2 < 0) {
+   res+=e2;
  ret.value.ivalue=res;
  return ret;
 }
