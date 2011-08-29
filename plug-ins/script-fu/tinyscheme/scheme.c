@@ -495,7 +495,7 @@ static num num_rem(num a, num b) {
  e1=num_ivalue(a);
  e2=num_ivalue(b);
  res=e1%e2;
- /* modulo should have same sign as second operand */
+ /* remainder should have same sign as second operand */
  if (res > 0) {
      if (e1 < 0) {
         res -= labs(e2);
@@ -3985,7 +3985,7 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
           }
           x=car(sc->args);
           if(cdr(sc->args)==sc->NIL) {
-            s_return(sc,sc->args);
+            s_return(sc,x);
           }
           for (y = cdr(sc->args); y != sc->NIL; y = cdr(y)) {
                x=append(sc,x,car(y));
