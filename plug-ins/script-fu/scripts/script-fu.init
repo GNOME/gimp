@@ -70,10 +70,21 @@
 (define (abs n) (if (>= n 0) n (- n)))
 (define (exact->inexact n) (* n 1.0))
 (define (<> n1 n2) (not (= n1 n2)))
+
+; min and max must return inexact if any arg is inexact; use (+ n 0.0)
 (define (max . lst)
-     (foldr (lambda (a b) (if (> a b) a b)) (car lst) (cdr lst)))
+  (foldr (lambda (a b)
+           (if (> a b)
+             (if (exact? b) a (+ a 0.0))
+             (if (exact? a) b (+ b 0.0))))
+         (car lst) (cdr lst)))
 (define (min . lst)
-     (foldr (lambda (a b) (if (< a b) a b)) (car lst) (cdr lst)))
+  (foldr (lambda (a b)
+           (if (< a b)
+             (if (exact? b) a (+ a 0.0))
+             (if (exact? a) b (+ b 0.0))))
+         (car lst) (cdr lst)))
+
 (define (succ x) (+ x 1))
 (define (pred x) (- x 1))
 (define gcd
