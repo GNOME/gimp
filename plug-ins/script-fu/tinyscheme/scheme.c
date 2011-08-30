@@ -3340,11 +3340,23 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           if(cdr(sc->args)==sc->NIL) {
                Error_0(sc,"expt: needs two arguments");
           } else {
+               double result;
+               int real_result=1;
                pointer y=cadr(sc->args);
+               if (num_is_integer(x) && num_is_integer(y))
+                  real_result=0;
                /* This 'if' is an R5RS compatability fix. */
-               if (rvalue(x) == 0 && rvalue(y) < 0)
-                   s_return(sc, mk_real(sc, 0));
-               s_return(sc, mk_real(sc, pow(rvalue(x),rvalue(y))));
+               /* NOTE: Remove this 'if' fix for R6RS.    */
+               if (rvalue(x) == 0 && rvalue(y) < 0) {
+                  result = 0.0;
+               } else {
+                  result = pow(rvalue(x),rvalue(y));
+               }
+               if (real_result) {
+                  s_return(sc, mk_real(sc, result));
+               } else {
+                  s_return(sc, mk_integer(sc, result));
+               }
           }
 
      case OP_FLOOR:
