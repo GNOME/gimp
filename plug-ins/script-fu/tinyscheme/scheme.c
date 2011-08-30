@@ -216,7 +216,11 @@ INTERFACE static pointer vector_elem(pointer vec, int ielem);
 INTERFACE static pointer set_vector_elem(pointer vec, int ielem, pointer a);
 INTERFACE INLINE int is_number(pointer p)    { return (type(p)==T_NUMBER); }
 INTERFACE INLINE int is_integer(pointer p) {
-  return is_number(p) && ((p)->_object._number.is_fixnum);
+  if (!is_number(p))
+      return 0;
+  if (num_is_integer(p) || rvalue(p) == round_per_R5RS(rvalue(p)))
+      return 1;
+  return 0;
 }
 
 INTERFACE INLINE int is_real(pointer p) {
@@ -3379,8 +3383,11 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
      }
 
      case OP_ROUND:
-       x=car(sc->args);
-       s_return(sc, mk_real(sc, round_per_R5RS(rvalue(x))));
+        x=car(sc->args);
+        if (num_is_integer(x))
+            s_return(sc, mk_integer(sc, round_per_R5RS(rvalue(x))));
+        else
+            s_return(sc, mk_real(sc, round_per_R5RS(rvalue(x))));
 #endif
 
      case OP_ADD:        /* + */
