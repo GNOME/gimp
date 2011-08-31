@@ -291,14 +291,11 @@ app_init_language (const gchar *language)
   if (! language)
     {
       /* FIXME: This is a hack. gettext doesn't pick the right language
-         by default on Windows, so we enforce the right one. */
-
-      /* ISO 639-1
-       *    http:www.loc.gov/standards/iso639-2/
-       * List of existing mui packs:
-       *    http:www.microsoft.com/globaldev/reference/win2k/setup/Langid.mspx
-       * List of known id's
-       *    http:www.microsoft.com/globaldev/reference/lcid-all.mspx
+       * by default on Windows, so we enforce the right one. The
+       * following code is an adaptation of Python code from
+       * pynicotine. For reasons why this approach is needed, and why
+       * the GetLocaleInfo() approach in other libs falls flat, see:
+       * http://blogs.msdn.com/b/michkap/archive/2007/04/15/2146890.aspx
        */
 
       switch (GetUserDefaultUILanguage())
