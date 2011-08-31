@@ -145,8 +145,6 @@ static guint           paint_timeout   = 0;
 static GtkActionGroup *gfig_actions    = NULL;
 
 
-static void       gfig_destroy               (GtkWidget *widget,
-                                              gpointer   data);
 static void       gfig_response              (GtkWidget *widget,
                                               gint       response_id,
                                               gpointer   data);
@@ -305,9 +303,6 @@ gfig_dialog (void)
   g_signal_connect (top_level_dlg, "response",
                     G_CALLBACK (gfig_response),
                     top_level_dlg);
-  g_signal_connect (top_level_dlg, "destroy",
-                    G_CALLBACK (gfig_destroy),
-                    NULL);
 
   /* build the menu */
   ui_manager = create_ui_manager (top_level_dlg);
@@ -547,14 +542,6 @@ gfig_dialog (void)
 }
 
 static void
-gfig_destroy (GtkWidget *widget,
-              gpointer data)
-{
-  gfig_response (widget, GTK_RESPONSE_CANCEL, data);
-  gtk_main_quit ();
-}
-
-static void
 gfig_response (GtkWidget *widget,
                gint       response_id,
                gpointer   data)
@@ -563,6 +550,7 @@ gfig_response (GtkWidget *widget,
 
   switch (response_id)
     {
+    case GTK_RESPONSE_DELETE_EVENT:
     case GTK_RESPONSE_CANCEL:
       /* if we created a new layer, delete it */
       if (gfig_context->using_new_layer)
@@ -594,6 +582,7 @@ gfig_response (GtkWidget *widget,
     }
 
   gtk_widget_destroy (widget);
+  gtk_main_quit ();
 }
 
 void
@@ -1611,13 +1600,11 @@ save_file_chooser_response (GtkFileChooser *chooser,
   if (response_id == GTK_RESPONSE_OK)
     {
       gchar   *filename;
-      GFigObj *real_current;
 
       filename = gtk_file_chooser_get_filename (chooser);
 
       obj->filename = filename;
 
-      real_current = gfig_context->current_obj;
       gfig_context->current_obj = obj;
       gfig_save_callbk ();
       gfig_context->current_obj = gfig_context->current_obj;
