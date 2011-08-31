@@ -4478,7 +4478,8 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                ivalue_unchecked(cdr(sc->args))=i+1;
                s_save(sc,OP_PVECFROM, sc->args, sc->NIL);
                sc->args=elem;
-               putstr(sc," ");
+               if (i > 0)
+                    putstr(sc," ");
                s_goto(sc,OP_P0LIST);
           }
      }
