@@ -159,8 +159,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SINGLE_WINDOW_MODE,
                                     "single-window-mode", SINGLE_WINDOW_MODE_BLURB,
                                     FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_RESTART);
+                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TEAROFF_MENUS,
                                     "tearoff-menus", TEAROFF_MENUS_BLURB,
                                     TRUE,
