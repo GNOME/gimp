@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2011-01-17 22:24+0000\n"
-"PO-Revision-Date: 2011-01-18 22:46+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-08-31 17:38+0000\n"
+"PO-Revision-Date: 2011-08-31 21:46+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -54,16 +54,16 @@ msgstr "Brskalnik procedur Script-Fu"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Ocenjevalni način konzole Script-Fu omogoča le ne-interaktiven priklic"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:195
+#: ../plug-ins/script-fu/script-fu-interface.c:194
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu ne more obdelati dveh skriptov naenkrat."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:197
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Že poganjate skript \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:223
+#: ../plug-ins/script-fu/script-fu-interface.c:222
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -71,53 +71,53 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:287
+#: ../plug-ins/script-fu/script-fu-interface.c:286
 #, c-format
 msgid "%s:"
 msgstr "%s: "
 
-#: ../plug-ins/script-fu/script-fu-interface.c:335
+#: ../plug-ins/script-fu/script-fu-interface.c:333
 msgid "Script-Fu Color Selection"
 msgstr "Izbor barv Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:444
+#: ../plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu File Selection"
 msgstr "Izbor datoteke Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:447
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu Folder Selection"
 msgstr "Izbor mape Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:458
 msgid "Script-Fu Font Selection"
 msgstr "Izbor pisave Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:468
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu Palette Selection"
 msgstr "Izbor palete Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:477
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Pattern Selection"
 msgstr "Izbor vzorca Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:486
+#: ../plug-ins/script-fu/script-fu-interface.c:484
 msgid "Script-Fu Gradient Selection"
 msgstr "Izbor preliva Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:495
+#: ../plug-ins/script-fu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "Izbor čopiča Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:826
+#: ../plug-ins/script-fu/script-fu-interface.c:824
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Napaka pri izvajanju %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:149
+#: ../plug-ins/script-fu/script-fu-scripts.c:146
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Premalo argumentov za klic 'script-fu-register'"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:608
+#: ../plug-ins/script-fu/script-fu-scripts.c:605
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Napaka pri nalaganju %s:"
@@ -566,7 +566,7 @@ msgstr "Levo"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Orientation"
-msgstr "Postavitev"
+msgstr "Usmerjenost"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
@@ -1165,16 +1165,16 @@ msgid "Highlight balance"
 msgstr "Ravnovesje svetlih področij"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
+msgid "Layer 1"
+msgstr "Plast 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
 msgid "Layer 2"
 msgstr "Plast 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
 msgid "Layer 3"
 msgstr "Plast 3"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
-msgid "Layer1"
-msgstr "Plast 1"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
 msgid "Stencil C_hrome..."
@@ -1787,7 +1787,7 @@ msgstr "Navpično"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "Na naveden položaj in orientacijo dodaj vodilo (v slikovnih točkah)"
+msgstr "Na naveden položaj in usmerjenost dodaj vodilo (v slikovnih točkah)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "New _Guide..."
@@ -1859,7 +1859,7 @@ msgid "_Lava..."
 msgstr "_Lava ..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgid "Fill a layer with rays emanating outward from its center using the foreground color"
 msgstr "Zapolni plast z žarki, ki sevajo iz središča, z uporabo barve ospredja"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
