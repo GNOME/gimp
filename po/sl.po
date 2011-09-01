@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-28 10:37+0000\n"
-"PO-Revision-Date: 2011-08-28 16:10+0100\n"
+"POT-Creation-Date: 2011-08-31 17:37+0000\n"
+"PO-Revision-Date: 2011-08-31 21:52+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgstr ""
 "\n"
 "Kopijo Splošne javne licence GIMP ste prejeli s programom GIMP; če je niste prejeli, si oglejte <http://www.gnu.org/licenses/>."
 
-#: ../app/app.c:220
+#: ../app/app.c:230
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -4376,7 +4376,7 @@ msgstr "_Izostri"
 
 #: ../app/actions/select-actions.c:82
 msgctxt "select-action"
-msgid "Remove fuzzyness from the selection"
+msgid "Remove fuzziness from the selection"
 msgstr "Odstrani nerazločnost iz izbora"
 
 #: ../app/actions/select-actions.c:87
@@ -10661,7 +10661,7 @@ msgid "Every stamp has its own opacity"
 msgstr "Vsak žig ima lastno prekrivnost"
 
 #: ../app/paint/gimppaintoptions.c:165
-msgid "Ignore fuzzyness of the current brush"
+msgid "Ignore fuzziness of the current brush"
 msgstr "Prezri nejasnost trenutnega čopiča"
 
 #: ../app/paint/gimppaintoptions.c:170
@@ -12702,7 +12702,7 @@ msgid "Use _old levels file format"
 msgstr "Uporabi _stare datoteke krivulj"
 
 #: ../app/tools/gimpmagnifyoptions.c:79
-msgid "Resize image window to accomodate new zoom level"
+msgid "Resize image window to accommodate new zoom level"
 msgstr "Prilagodi velikost okna novi ravni povečave"
 
 #: ../app/tools/gimpmagnifyoptions.c:86
