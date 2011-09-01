@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-28 10:38+0000\n"
-"PO-Revision-Date: 2011-08-28 15:26+0100\n"
+"POT-Creation-Date: 2011-08-31 17:38+0000\n"
+"PO-Revision-Date: 2011-08-31 21:50+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -662,7 +662,7 @@ msgstr "_Navpične"
 #: ../plug-ins/file-psd/psd-image-res-load.c:997
 #: ../plug-ins/file-psd/psd-load.c:1637
 #: ../plug-ins/file-sgi/sgi.c:407
-#: ../plug-ins/gfig/gfig-dialog.c:1317
+#: ../plug-ins/gfig/gfig-dialog.c:1306
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/twain/twain.c:567
@@ -2388,7 +2388,7 @@ msgstr "Samodejni pre_dogled"
 #. Options section
 #: ../plug-ins/common/curve-bend.c:1310
 #: ../plug-ins/common/ripple.c:523
-#: ../plug-ins/gfig/gfig-dialog.c:1239
+#: ../plug-ins/gfig/gfig-dialog.c:1228
 msgid "Options"
 msgstr "Možnosti"
 
@@ -3700,16 +3700,16 @@ msgid "Cell-_padding:"
 msgstr "_Blazinjenje celic (do roba):"
 
 #: ../plug-ins/common/file-html-table.c:619
-msgid "The amount of cellpadding."
-msgstr "Količina razdalje besedila do robov celic."
+msgid "The amount of cell padding."
+msgstr "Količina blazinjenja celic."
 
 #: ../plug-ins/common/file-html-table.c:628
 msgid "Cell-_spacing:"
 msgstr "Razmik _celic:"
 
 #: ../plug-ins/common/file-html-table.c:632
-msgid "The amount of cellspacing."
-msgstr "Količina razdalje med celicami."
+msgid "The amount of cell spacing."
+msgstr "Količina razmika celic."
 
 #: ../plug-ins/common/file-jp2-load.c:96
 msgid "JPEG 2000 image"
@@ -4909,11 +4909,11 @@ msgid "XMC Options"
 msgstr "Možnosti XMC"
 
 #: ../plug-ins/common/file-xmc.c:1089
-msgid "Enter the X coordinate of the hot spot.The origin is top left corner."
+msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr "Vnesite koordinato X vroče točke. Izhodišče je levi zgornji kot."
 
 #: ../plug-ins/common/file-xmc.c:1107
-msgid "Enter the Y coordinate of the hot spot.The origin is top left corner."
+msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "Vnesite koordinato Y vroče točke. Izhodišče je levi zgornji kot."
 
 #: ../plug-ins/common/file-xmc.c:1118
@@ -5048,11 +5048,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1728
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames which nominal size is not supported by gnome-appearance-properties.\n"
-"You can satisfy it by checking \"Replace the size of all frame...\" in save dialog, or Your cursor may not appear in gnome-appearance-properties."
+"Your cursor was successfully saved but it contains one or more frames whose nominal size is not supported by gnome-appearance-properties.\n"
+"You can satisfy it by checking \"Replace the size of all frame...\" in the save dialog, or your cursor may not appear in gnome-appearance-properties."
 msgstr ""
 "Vaš kazalec je bil uspešno shranjen, vendar vsebuje eno ali več sličic, katerih nominalna velikost ni podprta na strani gnome-appearance-properties.\n"
-"Slednje lahko zadovoljite, če potrdite \"Zamenjaj velikost v vseh sličicah...\" v oknu shranjevanja, sicer vaš kazalec morda ne bo prisoten v gnome-appearance-properties."
+"Slednje lahko zadovoljite, če potrdite \"Zamenjaj velikost v vseh sličicah ...\" v oknu shranjevanja, sicer vaš kazalec morda ne bo prisoten v gnome-appearance-properties."
 
 #: ../plug-ins/common/file-xmc.c:1965
 #, c-format
@@ -5495,7 +5495,7 @@ msgid "Drawing grid"
 msgstr "Risanje mreže ..."
 
 #: ../plug-ins/common/grid.c:636
-#: ../plug-ins/gfig/gfig-dialog.c:1387
+#: ../plug-ins/gfig/gfig-dialog.c:1376
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Grid"
 msgstr "Mreža"
@@ -6304,7 +6304,7 @@ msgstr "_Tovarniško privzete vrednosti"
 
 #. anti-alias control
 #: ../plug-ins/common/newsprint.c:1434
-#: ../plug-ins/gfig/gfig-dialog.c:1289
+#: ../plug-ins/gfig/gfig-dialog.c:1278
 msgid "Antialiasing"
 msgstr "Glajenje robov"
 
@@ -8264,7 +8264,7 @@ msgstr "Razmaži"
 #: ../plug-ins/common/warp.c:502
 #: ../plug-ins/file-fits/fits.c:1020
 #: ../plug-ins/flame/flame.c:1174
-#: ../plug-ins/gfig/gfig-dialog.c:1493
+#: ../plug-ins/gfig/gfig-dialog.c:1482
 msgid "Black"
 msgstr "Črna"
 
@@ -8737,8 +8737,8 @@ msgid "Replacement for undefined pixels"
 msgstr "Zamenjava za nedoločene slikovne točke"
 
 #: ../plug-ins/file-fits/fits.c:1021
-#: ../plug-ins/gfig/gfig-dialog.c:1319
-#: ../plug-ins/gfig/gfig-dialog.c:1494
+#: ../plug-ins/gfig/gfig-dialog.c:1308
+#: ../plug-ins/gfig/gfig-dialog.c:1483
 msgid "White"
 msgstr "Bela"
 
@@ -9003,8 +9003,8 @@ msgstr "Napaka pri nalaganju datoteke PSD: %s"
 
 #: ../plug-ins/file-psd/psd-load.c:269
 #, c-format
-msgid "Not a valid photoshop document file"
-msgstr "Ta datoteka ni veljavna datoteka Photoshop"
+msgid "Not a valid Photoshop document file"
+msgstr "Ni veljavna datoteka dokumenta Photoshop"
 
 #: ../plug-ins/file-psd/psd-load.c:276
 #, c-format
@@ -9389,7 +9389,7 @@ msgid "Horseshoe"
 msgstr "Podkasto"
 
 #: ../plug-ins/flame/flame.c:752
-#: ../plug-ins/gfig/gfig-dialog.c:1475
+#: ../plug-ins/gfig/gfig-dialog.c:1464
 msgid "Polar"
 msgstr "Polarno"
 
@@ -9527,7 +9527,7 @@ msgid "C_amera"
 msgstr "K_amera"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:279
+#: ../plug-ins/gfig/gfig-dialog.c:277
 #: ../plug-ins/gimpressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
@@ -9868,299 +9868,299 @@ msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Nariše črte med kontrolnimi točkami. Le med ustvarjanjem krivulje"
 
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:291
+#: ../plug-ins/gfig/gfig-dialog.c:289
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:342
+#: ../plug-ins/gfig/gfig-dialog.c:337
 msgid "Tool Options"
 msgstr "Možnosti orodja"
 
-#: ../plug-ins/gfig/gfig-dialog.c:359
+#: ../plug-ins/gfig/gfig-dialog.c:354
 msgid "_Stroke"
 msgstr "_Poteza"
 
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:406
+#: ../plug-ins/gfig/gfig-dialog.c:401
 msgid "Fill"
 msgstr "Polnilo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:420
+#: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "No fill"
 msgstr "Brez polnila"
 
-#: ../plug-ins/gfig/gfig-dialog.c:421
+#: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Color fill"
 msgstr "Barvno polnilo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:422
+#: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Pattern fill"
 msgstr "Vzorčasto polnilo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:423
+#: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Shape gradient"
 msgstr "Preliv z obliko"
 
-#: ../plug-ins/gfig/gfig-dialog.c:424
+#: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Vertical gradient"
 msgstr "Navpični preliv"
 
-#: ../plug-ins/gfig/gfig-dialog.c:425
+#: ../plug-ins/gfig/gfig-dialog.c:420
 msgid "Horizontal gradient"
 msgstr "Vodoravni preliv"
 
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:485
+#: ../plug-ins/gfig/gfig-dialog.c:480
 msgid "Show image"
 msgstr "Pokaži sliko"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:498
+#: ../plug-ins/gfig/gfig-dialog.c:493
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "Pripni na mrežo"
 
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:507
+#: ../plug-ins/gfig/gfig-dialog.c:502
 msgid "Show grid"
 msgstr "Pokaži mrežo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:650
+#: ../plug-ins/gfig/gfig-dialog.c:639
 msgid "Load Gfig Object Collection"
 msgstr "Naloži zbirko predmetov Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:699
+#: ../plug-ins/gfig/gfig-dialog.c:688
 msgid "Save Gfig Drawing"
 msgstr "Shrani risbo Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:844
+#: ../plug-ins/gfig/gfig-dialog.c:833
 msgid "First Gfig"
 msgstr "Prvi Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:882
+#: ../plug-ins/gfig/gfig-dialog.c:871
 msgid "_Undo"
 msgstr "_Razveljavi"
 
-#: ../plug-ins/gfig/gfig-dialog.c:886
+#: ../plug-ins/gfig/gfig-dialog.c:875
 msgid "_Clear"
 msgstr "_Počisti"
 
-#: ../plug-ins/gfig/gfig-dialog.c:890
+#: ../plug-ins/gfig/gfig-dialog.c:879
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "_Grid"
 msgstr "_Mreža"
 
-#: ../plug-ins/gfig/gfig-dialog.c:898
+#: ../plug-ins/gfig/gfig-dialog.c:887
 msgid "Raise selected object"
 msgstr "Dvigni izbrani predmet"
 
-#: ../plug-ins/gfig/gfig-dialog.c:902
+#: ../plug-ins/gfig/gfig-dialog.c:891
 msgid "Lower selected object"
 msgstr "Spusti izbrani predmet"
 
-#: ../plug-ins/gfig/gfig-dialog.c:906
+#: ../plug-ins/gfig/gfig-dialog.c:895
 msgid "Raise selected object to top"
 msgstr "Dvigni izbrani predmet na vrh"
 
-#: ../plug-ins/gfig/gfig-dialog.c:910
+#: ../plug-ins/gfig/gfig-dialog.c:899
 msgid "Lower selected object to bottom"
 msgstr "Spusti izbrani predmet na dno"
 
-#: ../plug-ins/gfig/gfig-dialog.c:914
+#: ../plug-ins/gfig/gfig-dialog.c:903
 msgid "Show previous object"
 msgstr "Pokaži prejšnji predmet"
 
-#: ../plug-ins/gfig/gfig-dialog.c:918
+#: ../plug-ins/gfig/gfig-dialog.c:907
 msgid "Show next object"
 msgstr "Pokaži naslednji predmet"
 
-#: ../plug-ins/gfig/gfig-dialog.c:922
+#: ../plug-ins/gfig/gfig-dialog.c:911
 #: ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "Pokaži vse predmete"
 
-#: ../plug-ins/gfig/gfig-dialog.c:928
+#: ../plug-ins/gfig/gfig-dialog.c:917
 #: ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create line"
 msgstr "Ustvari črto"
 
-#: ../plug-ins/gfig/gfig-dialog.c:931
+#: ../plug-ins/gfig/gfig-dialog.c:920
 #: ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create rectangle"
 msgstr "Ustvari pravokotnik"
 
-#: ../plug-ins/gfig/gfig-dialog.c:934
+#: ../plug-ins/gfig/gfig-dialog.c:923
 #: ../plug-ins/gfig/gfig-stock.c:41
 msgid "Create circle"
 msgstr "Ustvari krog"
 
-#: ../plug-ins/gfig/gfig-dialog.c:937
+#: ../plug-ins/gfig/gfig-dialog.c:926
 #: ../plug-ins/gfig/gfig-stock.c:45
 msgid "Create ellipse"
 msgstr "Ustvari elipso"
 
-#: ../plug-ins/gfig/gfig-dialog.c:940
+#: ../plug-ins/gfig/gfig-dialog.c:929
 #: ../plug-ins/gfig/gfig-stock.c:43
 msgid "Create arc"
 msgstr "Ustvari lok"
 
-#: ../plug-ins/gfig/gfig-dialog.c:943
+#: ../plug-ins/gfig/gfig-dialog.c:932
 #: ../plug-ins/gfig/gfig-stock.c:49
 msgid "Create reg polygon"
 msgstr "Ustvari pravilni mnogokotnik"
 
-#: ../plug-ins/gfig/gfig-dialog.c:946
+#: ../plug-ins/gfig/gfig-dialog.c:935
 #: ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "Ustvari zvezdo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:949
+#: ../plug-ins/gfig/gfig-dialog.c:938
 #: ../plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "Ustvari spiralo"
 
-#: ../plug-ins/gfig/gfig-dialog.c:952
+#: ../plug-ins/gfig/gfig-dialog.c:941
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Ustvari krivuljo bezier. Shift + gum zaključi ustvarjanje predmeta."
 
-#: ../plug-ins/gfig/gfig-dialog.c:956
+#: ../plug-ins/gfig/gfig-dialog.c:945
 #: ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
 msgstr "Premakni predmet"
 
-#: ../plug-ins/gfig/gfig-dialog.c:959
+#: ../plug-ins/gfig/gfig-dialog.c:948
 #: ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move a single point"
 msgstr "Premakni posamezno točko"
 
-#: ../plug-ins/gfig/gfig-dialog.c:962
+#: ../plug-ins/gfig/gfig-dialog.c:951
 #: ../plug-ins/gfig/gfig-stock.c:42
 msgid "Copy an object"
 msgstr "Kopirajte predmet"
 
-#: ../plug-ins/gfig/gfig-dialog.c:965
+#: ../plug-ins/gfig/gfig-dialog.c:954
 #: ../plug-ins/gfig/gfig-stock.c:44
 msgid "Delete an object"
 msgstr "Izbrišite predmet"
 
-#: ../plug-ins/gfig/gfig-dialog.c:968
+#: ../plug-ins/gfig/gfig-dialog.c:957
 #: ../plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "Izberite predmet"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1050
+#: ../plug-ins/gfig/gfig-dialog.c:1039
 msgid "This tool has no options"
 msgstr "To orodje nima možnosti"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1261
+#: ../plug-ins/gfig/gfig-dialog.c:1250
 msgid "Show position"
 msgstr "Pokaži položaj"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1273
+#: ../plug-ins/gfig/gfig-dialog.c:1262
 msgid "Show control points"
 msgstr "Pokaži kontrolne točke"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1307
+#: ../plug-ins/gfig/gfig-dialog.c:1296
 msgid "Max undo:"
 msgstr "Največje število razveljavitev:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1316
+#: ../plug-ins/gfig/gfig-dialog.c:1305
 #: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Prosojno"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1318
+#: ../plug-ins/gfig/gfig-dialog.c:1307
 msgid "Foreground"
 msgstr "Ospredje"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1320
+#: ../plug-ins/gfig/gfig-dialog.c:1309
 #: ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: ../plug-ins/imagemap/imap_menu.c:159
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1329
+#: ../plug-ins/gfig/gfig-dialog.c:1318
 msgid "Layer background type. Copy causes the previous layer to be copied before the draw is performed."
 msgstr "Vrsta ozadja plasti. Kopiranje povzroči kopiranje prejšnje plasti pred samim risanjem."
 
-#: ../plug-ins/gfig/gfig-dialog.c:1335
+#: ../plug-ins/gfig/gfig-dialog.c:1324
 msgid "Background:"
 msgstr "Ozadje:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1338
+#: ../plug-ins/gfig/gfig-dialog.c:1327
 msgid "Feather"
 msgstr "Operjeno"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1361
+#: ../plug-ins/gfig/gfig-dialog.c:1350
 msgid "Radius:"
 msgstr "Radij:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1419
+#: ../plug-ins/gfig/gfig-dialog.c:1408
 msgid "Grid spacing:"
 msgstr "Razmik mreže:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1436
+#: ../plug-ins/gfig/gfig-dialog.c:1425
 msgid "Polar grid sectors desired:"
 msgstr "Želeni sektorji polarne mreže:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1458
+#: ../plug-ins/gfig/gfig-dialog.c:1447
 msgid "Polar grid radius interval:"
 msgstr "Interval polmera polarne mreže:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1474
+#: ../plug-ins/gfig/gfig-dialog.c:1463
 #: ../plug-ins/imagemap/imap_menu.c:219
 msgid "Rectangle"
 msgstr "Pravokotnik"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1476
+#: ../plug-ins/gfig/gfig-dialog.c:1465
 msgid "Isometric"
 msgstr "Enakostrani"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1485
+#: ../plug-ins/gfig/gfig-dialog.c:1474
 msgid "Grid type:"
 msgstr "Vrsta mreže:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1492
+#: ../plug-ins/gfig/gfig-dialog.c:1481
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
 msgid "Normal"
 msgstr "Navadna"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1495
+#: ../plug-ins/gfig/gfig-dialog.c:1484
 msgid "Grey"
 msgstr "Siva"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1496
+#: ../plug-ins/gfig/gfig-dialog.c:1485
 msgid "Darker"
 msgstr "Temnejša"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1497
+#: ../plug-ins/gfig/gfig-dialog.c:1486
 msgid "Lighter"
 msgstr "Svetlejša"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1498
+#: ../plug-ins/gfig/gfig-dialog.c:1487
 msgid "Very dark"
 msgstr "Zelo temna"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1507
+#: ../plug-ins/gfig/gfig-dialog.c:1496
 msgid "Grid color:"
 msgstr "Barva mreže:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1730
+#: ../plug-ins/gfig/gfig-dialog.c:1717
 msgid "Sides:"
 msgstr "Strani:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1740
+#: ../plug-ins/gfig/gfig-dialog.c:1727
 msgid "Right"
 msgstr "desna"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1741
+#: ../plug-ins/gfig/gfig-dialog.c:1728
 msgid "Left"
 msgstr "leva"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1751
+#: ../plug-ins/gfig/gfig-dialog.c:1738
 #: ../plug-ins/gimpressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Usmerjenost:"
