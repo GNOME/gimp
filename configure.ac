@@ -1794,6 +1794,9 @@ if test "x$with_mac_twain" != xno; then
   AC_TRY_CPP([
 #include <Carbon/Carbon.h>
 #include <TWAIN/TWAIN.h>
+#ifdef __x86_64__
+#error Please somebody port this to non-deprecated and non-removed APIs
+#endif
   ], mac_twain_ok=yes)
   AC_MSG_RESULT($mac_twain_ok)
 fi
