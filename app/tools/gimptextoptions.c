@@ -501,7 +501,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *button;
   GtkWidget       *entry;
   GtkWidget       *box;
-  GtkWidget       *label;
   GtkWidget       *spinbutton;
   GtkWidget       *combo;
   GtkSizeGroup    *size_group;
@@ -596,21 +595,25 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   /*  Only add the language entry if the iso-codes package is available.  */
 
 #ifdef HAVE_ISO_CODES
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  {
+    GtkWidget *label;
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+    vbox = gtk_vbox_new (FALSE, 2);
+    gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+    gtk_widget_show (vbox);
 
-  label = gtk_label_new (_("Language:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+    hbox = gtk_hbox_new (FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbox);
 
-  entry = gimp_prop_language_entry_new (config, "language");
-  gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
+    label = gtk_label_new (_("Language:"));
+    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+    gtk_widget_show (label);
+
+    entry = gimp_prop_language_entry_new (config, "language");
+    gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
+    gtk_widget_show (entry);
+  }
 #endif
 
   return main_vbox;
