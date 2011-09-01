@@ -1174,6 +1174,7 @@ prefs_boolean_combo_box_add (GObject      *config,
   return combo;
 }
 
+#ifdef HAVE_ISO_CODES
 static GtkWidget *
 prefs_language_combo_box_add (GObject      *config,
                               const gchar  *property_name,
@@ -1189,6 +1190,7 @@ prefs_language_combo_box_add (GObject      *config,
 
   return combo;
 }
+#endif
 
 static GtkWidget *
 prefs_spin_button_add (GObject      *config,
