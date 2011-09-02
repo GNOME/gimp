@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-28 18:16+0000\n"
-"PO-Revision-Date: 2010-08-03 15:49+0200\n"
+"POT-Creation-Date: 2011-09-01 22:19+0000\n"
+"PO-Revision-Date: 2011-09-02 16:27+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -51,19 +51,15 @@ msgstr "Context"
 
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:297
-#, fuzzy
-#| msgid "From:"
 msgctxt "color-range"
 msgid "From:"
 msgstr "De la:"
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:323
-#, fuzzy
-#| msgid "To:"
 msgctxt "color-range"
 msgid "To:"
-msgstr "La:"
+msgstr "Către:"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:375
 msgctxt "color-rotate"
@@ -648,7 +644,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-jpeg/jpeg-load.c:252 ../plug-ins/file-jpeg/jpeg-load.c:816
 #: ../plug-ins/file-psd/psd-image-res-load.c:997
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
-#: ../plug-ins/gfig/gfig-dialog.c:1317
+#: ../plug-ins/gfig/gfig-dialog.c:1306
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1156
@@ -2312,7 +2308,7 @@ msgstr "Pre_vizualizează automat"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve-bend.c:1310 ../plug-ins/common/ripple.c:523
-#: ../plug-ins/gfig/gfig-dialog.c:1239
+#: ../plug-ins/gfig/gfig-dialog.c:1228
 msgid "Options"
 msgstr "Opțiuni"
 
@@ -4784,7 +4780,7 @@ msgid ""
 "Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
-"Nu se poate stabili punctul activ !\n"
+"Nu se poate stabili punctul activ!\n"
 "Trebuie să aranjați straturile în așa fel încât toate să aibă o intersecție."
 
 #: ../plug-ins/common/file-xmc.c:674
@@ -4861,8 +4857,8 @@ msgstr ""
 "Elimină bordurile goale din toate cadrele.\n"
 "Acest lucru reduce dimensiunea fișierului și ar putea rezolva problema în "
 "care unele cursoare mari zăpăcesc ecranul.\n"
-"Debifați opțiunea dacă aveți în vedere să editați cursorul exportat cu "
-"ajutorul altor programe."
+"Debifați opțiunea dacă intenționați să editați cursorul exportat cu ajutorul "
+"altor programe."
 
 # hm ? actuală sau momentană ?
 #: ../plug-ins/common/file-xmc.c:1154
@@ -4876,8 +4872,8 @@ msgid ""
 "theme-size\"."
 msgstr ""
 "Alegeți dimensiunea nominală a cadrelor.\n"
-"Dacă nu aveți în vedere să faceți un cursor multidimensional, sau dacă nu "
-"aveți nicio idee, lăsați „32px”.\n"
+"Dacă nu intenționați să faceți un cursor multidimensional, sau dacă nu aveți "
+"nicio idee, lăsați „32px”.\n"
 "Dimensiunea nominală nu are nicio legătură cu dimensiunea actuală (lățime "
 "sau înălțime).\n"
 "Este folosită numai pentru a determina care cadru depinde de care secvență "
@@ -5467,7 +5463,7 @@ msgstr "_Grilă..."
 msgid "Drawing grid"
 msgstr "Desenare grilă"
 
-#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1387
+#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1376
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Grid"
 msgstr "Grilă"
@@ -5513,7 +5509,7 @@ msgstr "Culoare intersectată"
 
 #: ../plug-ins/common/guillotine.c:74
 msgid "Slice the image into subimages using guides"
-msgstr "Feliază imaginea în subimagini folosind ghidaje"
+msgstr "Feliază imaginea în subimagini pe baza ghidajelor"
 
 #: ../plug-ins/common/guillotine.c:81
 msgid "_Guillotine"
@@ -6030,15 +6026,11 @@ msgid "_Filename:"
 msgstr "Nume _fișier:"
 
 #: ../plug-ins/common/mail.c:456
-#, fuzzy
-#| msgid "_To:"
 msgctxt "email-address"
 msgid "_To:"
 msgstr "Că_tre:"
 
 #: ../plug-ins/common/mail.c:470
-#, fuzzy
-#| msgid "_From:"
 msgctxt "email-address"
 msgid "_From:"
 msgstr "_De la:"
@@ -6281,7 +6273,7 @@ msgid "_Factory Defaults"
 msgstr "_Valori implicite"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1289
+#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1278
 msgid "Antialiasing"
 msgstr "Anticrenelare"
 
@@ -6595,7 +6587,7 @@ msgstr "Procent de _alb:"
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
 msgstr ""
-"Simplifică imaginea transformând-o într-o arie de pătrate de culoare solidă"
+"Simplifică imaginea transformând-o într-o arie de pătrate de culoare uniformă"
 
 # apare la contextul lui undo
 #: ../plug-ins/common/pixelize.c:171
@@ -7452,7 +7444,7 @@ msgstr "Folosește culoarea de fundal"
 #: ../plug-ins/common/sphere-designer.c:293
 #: ../plug-ins/gimpressionist/general.c:165
 msgid "Solid"
-msgstr "Solid"
+msgstr "Uniform"
 
 #: ../plug-ins/common/sphere-designer.c:294
 msgid "Checker"
@@ -8301,7 +8293,7 @@ msgid "Smear"
 msgstr "Mânjit"
 
 #: ../plug-ins/common/warp.c:502 ../plug-ins/file-fits/fits.c:1020
-#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1493
+#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1482
 msgid "Black"
 msgstr "Negru"
 
@@ -8480,32 +8472,25 @@ msgid "Failed to open '%s': %s"
 msgstr "Deschiderea fișierului „%s” a eșuat: %s"
 
 #: ../plug-ins/common/web-page.c:99
-#, fuzzy
-#| msgid "Create an image of a textured sphere"
 msgid "Create an image of a webpage"
-msgstr "Creează o imagine a unei sfere texturate"
+msgstr "Creează o imagine a unei pagini web"
 
 #: ../plug-ins/common/web-page.c:105
-#, fuzzy
-#| msgid "From paper"
 msgid "From _Webpage..."
-msgstr "Din hârtie"
+msgstr "Dintr-o pagină _web..."
 
+# titlu pe bară
 #: ../plug-ins/common/web-page.c:234
-#, fuzzy
-#| msgid "Create rectangle"
 msgid "Create from webpage"
-msgstr "Creează un dreptunghi"
+msgstr "Creare imagine dintr-o pagină web"
 
 #: ../plug-ins/common/web-page.c:239
-#, fuzzy
-#| msgid "Create"
 msgid "_Create"
-msgstr "Creează"
+msgstr "_Creează"
 
 #: ../plug-ins/common/web-page.c:267
 msgid "Enter location (URI):"
-msgstr ""
+msgstr "Introduceți locația (URI):"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: ../plug-ins/common/web-page.c:290 ../plug-ins/maze/maze-dialog.c:198
@@ -8513,22 +8498,16 @@ msgid "Width (pixels):"
 msgstr "Lățime (pixeli):"
 
 #: ../plug-ins/common/web-page.c:309
-#, fuzzy
-#| msgid "Step size:"
 msgid "Font size:"
-msgstr "Dimensiune treaptă:"
+msgstr "Dimensiune font:"
 
 #: ../plug-ins/common/web-page.c:316
-#, fuzzy
-#| msgid "Hue"
 msgid "Huge"
-msgstr "Nuanță"
+msgstr "Enorm"
 
 #: ../plug-ins/common/web-page.c:317
-#, fuzzy
-#| msgid "Target"
 msgid "Large"
-msgstr "Țintă"
+msgstr "Mare"
 
 #: ../plug-ins/common/web-page.c:318
 #: ../plug-ins/gradient-flare/gradient-flare.c:2465
@@ -8536,44 +8515,31 @@ msgid "Default"
 msgstr "Implicit"
 
 #: ../plug-ins/common/web-page.c:319
-#, fuzzy
-#| msgid "Small Tiles"
 msgid "Small"
-msgstr "Dale mici"
+msgstr "Mic"
 
-# apare pe bara de progres
-# - la animația de valuri
-# - la filtrul hartă -> dale
 #: ../plug-ins/common/web-page.c:320
-#, fuzzy
-#| msgid "Tiling"
 msgid "Tiny"
-msgstr "Generare dale"
+msgstr "Minuscul"
 
 #: ../plug-ins/common/web-page.c:444
-#, fuzzy, c-format
-#| msgid ""
-#| "'%s':\n"
-#| "No image width specified"
+#, c-format
 msgid "No URL was specified"
-msgstr ""
-"„%s”:\n"
-"Nu s-a specificat lățimea imaginii"
+msgstr "Nu a fost specificat niciun URL"
 
 #: ../plug-ins/common/web-page.c:511
-#, fuzzy, c-format
-#| msgid "Downloading image (%s of %s)"
+#, c-format
 msgid "Downloading webpage '%s'"
-msgstr "Descărcare imagine (%s din %s)"
+msgstr "Descărcare pagină web %s"
 
 #: ../plug-ins/common/web-page.c:528
 #, c-format
 msgid "Transferring webpage image for '%s'"
-msgstr ""
+msgstr "Transferare imagine pagină web pentru „%s”"
 
 #: ../plug-ins/common/web-page.c:537
 msgid "Webpage"
-msgstr ""
+msgstr "Pagină web"
 
 #: ../plug-ins/common/whirl-pinch.c:138
 msgid "Distort an image by whirling and pinching"
@@ -8799,8 +8765,8 @@ msgstr "Încărcare fișier FITS"
 msgid "Replacement for undefined pixels"
 msgstr "Înlocuitor pentru pixeli nedefiniți"
 
-#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1319
-#: ../plug-ins/gfig/gfig-dialog.c:1494
+#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1308
+#: ../plug-ins/gfig/gfig-dialog.c:1483
 msgid "White"
 msgstr "Alb"
 
@@ -8834,18 +8800,14 @@ msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Încarcă fotograme"
 
 #: ../plug-ins/file-fli/fli-gimp.c:876 ../plug-ins/file-fli/fli-gimp.c:932
-#, fuzzy
-#| msgid "From:"
 msgctxt "frame-range"
 msgid "From:"
 msgstr "De la:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:885 ../plug-ins/file-fli/fli-gimp.c:941
-#, fuzzy
-#| msgid "To:"
 msgctxt "frame-range"
 msgid "To:"
-msgstr "La:"
+msgstr "Către:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:915
 msgid "GFLI 1.3"
@@ -8966,7 +8928,7 @@ msgstr "Nete_zire:"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:940
 msgid "Interval (MCU rows):"
-msgstr ""
+msgstr "Interval (rânduri MCU):"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:957
 msgid "Use _restart markers"
@@ -9013,22 +8975,20 @@ msgid "Su_bsampling:"
 msgstr "Su_beșantionare:"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1089
-#, fuzzy
-#| msgid "1x1,1x1,1x1 (best quality)"
 msgid "4:4:4 (best quality)"
-msgstr "1x1,1x1,1x1 (cea mai bună calitate)"
+msgstr "4:4:4 (cea mai bună calitate)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1091
 msgid "4:2:2 horizontal (chroma halved)"
-msgstr ""
+msgstr "4:2:2 orizontal (crominanța înjumătățită)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1093
 msgid "4:2:2 vertical (chroma halved)"
-msgstr ""
+msgstr "4:2:2 vertical (crominanța înjumătățită)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1095
 msgid "4:2:0 (chroma quartered)"
-msgstr ""
+msgstr "4:2:0 (crominanța pe sfert)"
 
 #. DCT method
 #: ../plug-ins/file-jpeg/jpeg-save.c:1125
@@ -9292,11 +9252,11 @@ msgstr "Nu s-a putut inițializa libcurl"
 msgid "Downloading %s of image data"
 msgstr "Descărcare %s de date de imagine"
 
+# hm ?
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:244
-#, fuzzy, c-format
-#| msgid "Opening '%s' for reading resulted in HTTP response code: %d"
+#, c-format
 msgid "Opening '%s' for reading resulted in %s response code: %ld"
-msgstr "Deschiderea „%s” pentru citire a rezultat în codul de răspuns: %d"
+msgstr "Deschiderea „%s” pentru citire a rezultat în codul de răspuns %s: %ld"
 
 #: ../plug-ins/file-uri/uri-backend-wget.c:162
 #: ../plug-ins/file-uri/uri-backend-wget.c:182
@@ -9468,7 +9428,7 @@ msgstr "Răsucit"
 msgid "Horseshoe"
 msgstr "Copită"
 
-#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1475
+#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1464
 msgid "Polar"
 msgstr "Polar"
 
@@ -9607,7 +9567,7 @@ msgstr "C_ameră"
 
 # hm ? niciun sau nicio ?
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:279 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:277 ../plug-ins/gimpressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
@@ -9971,208 +9931,208 @@ msgstr ""
 "curbe."
 
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:291
+#: ../plug-ins/gfig/gfig-dialog.c:289
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:342
+#: ../plug-ins/gfig/gfig-dialog.c:337
 msgid "Tool Options"
 msgstr "Opțiuni pentru instrumente"
 
 # hm ? substantiv sau verb ?
-#: ../plug-ins/gfig/gfig-dialog.c:359
+#: ../plug-ins/gfig/gfig-dialog.c:354
 msgid "_Stroke"
 msgstr "_Contur"
 
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:406
+#: ../plug-ins/gfig/gfig-dialog.c:401
 msgid "Fill"
 msgstr "Umplere"
 
-#: ../plug-ins/gfig/gfig-dialog.c:420
+#: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "No fill"
 msgstr "Fără umplere"
 
-#: ../plug-ins/gfig/gfig-dialog.c:421
+#: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Color fill"
 msgstr "Umplere cu culoare"
 
-#: ../plug-ins/gfig/gfig-dialog.c:422
+#: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Pattern fill"
 msgstr "Umplere cu model"
 
-#: ../plug-ins/gfig/gfig-dialog.c:423
+#: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Shape gradient"
 msgstr "Degrade de formă"
 
-#: ../plug-ins/gfig/gfig-dialog.c:424
+#: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Vertical gradient"
 msgstr "Degrade vertical"
 
-#: ../plug-ins/gfig/gfig-dialog.c:425
+#: ../plug-ins/gfig/gfig-dialog.c:420
 msgid "Horizontal gradient"
 msgstr "Degrade orizontal"
 
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:485
+#: ../plug-ins/gfig/gfig-dialog.c:480
 msgid "Show image"
 msgstr "Arată imaginea"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:498
+#: ../plug-ins/gfig/gfig-dialog.c:493
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "Acroșează la grilă"
 
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:507
+#: ../plug-ins/gfig/gfig-dialog.c:502
 msgid "Show grid"
 msgstr "Arată grila"
 
 # titlu pe bară
-#: ../plug-ins/gfig/gfig-dialog.c:650
+#: ../plug-ins/gfig/gfig-dialog.c:639
 msgid "Load Gfig Object Collection"
 msgstr "Încărcare colecție de obiecte Gfig"
 
 # titlu pe bară
-#: ../plug-ins/gfig/gfig-dialog.c:699
+#: ../plug-ins/gfig/gfig-dialog.c:688
 msgid "Save Gfig Drawing"
 msgstr "Salvare desen Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:844
+#: ../plug-ins/gfig/gfig-dialog.c:833
 msgid "First Gfig"
 msgstr "Primul Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:882
+#: ../plug-ins/gfig/gfig-dialog.c:871
 msgid "_Undo"
 msgstr "An_ulează"
 
-#: ../plug-ins/gfig/gfig-dialog.c:886
+#: ../plug-ins/gfig/gfig-dialog.c:875
 msgid "_Clear"
 msgstr "_Curăță"
 
-#: ../plug-ins/gfig/gfig-dialog.c:890 ../plug-ins/imagemap/imap_menu.c:208
+#: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/imagemap/imap_menu.c:208
 msgid "_Grid"
 msgstr "_Grilă"
 
-#: ../plug-ins/gfig/gfig-dialog.c:898
+#: ../plug-ins/gfig/gfig-dialog.c:887
 msgid "Raise selected object"
 msgstr "Ridică obiectul selectat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:902
+#: ../plug-ins/gfig/gfig-dialog.c:891
 msgid "Lower selected object"
 msgstr "Coboară obiectul selectat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:906
+#: ../plug-ins/gfig/gfig-dialog.c:895
 msgid "Raise selected object to top"
 msgstr "Ridică obiectul selectat sus de tot"
 
-#: ../plug-ins/gfig/gfig-dialog.c:910
+#: ../plug-ins/gfig/gfig-dialog.c:899
 msgid "Lower selected object to bottom"
 msgstr "Coboară obiectul selectat jos de tot"
 
-#: ../plug-ins/gfig/gfig-dialog.c:914
+#: ../plug-ins/gfig/gfig-dialog.c:903
 msgid "Show previous object"
 msgstr "Arată obiectul precedent"
 
-#: ../plug-ins/gfig/gfig-dialog.c:918
+#: ../plug-ins/gfig/gfig-dialog.c:907
 msgid "Show next object"
 msgstr "Arată obiectul următor"
 
-#: ../plug-ins/gfig/gfig-dialog.c:922 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:911 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "Arată toate obiectele"
 
-#: ../plug-ins/gfig/gfig-dialog.c:928 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:917 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create line"
 msgstr "Creează o linie"
 
-#: ../plug-ins/gfig/gfig-dialog.c:931 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create rectangle"
 msgstr "Creează un dreptunghi"
 
-#: ../plug-ins/gfig/gfig-dialog.c:934 ../plug-ins/gfig/gfig-stock.c:41
+#: ../plug-ins/gfig/gfig-dialog.c:923 ../plug-ins/gfig/gfig-stock.c:41
 msgid "Create circle"
 msgstr "Creează un cerc"
 
-#: ../plug-ins/gfig/gfig-dialog.c:937 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Create ellipse"
 msgstr "Creează o elipsă"
 
-#: ../plug-ins/gfig/gfig-dialog.c:940 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Create arc"
 msgstr "Creează un arc"
 
-#: ../plug-ins/gfig/gfig-dialog.c:943 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Create reg polygon"
 msgstr "Creează un poligon regulat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:946 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "Creează o stea"
 
-#: ../plug-ins/gfig/gfig-dialog.c:949 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "Creează o spirală"
 
-#: ../plug-ins/gfig/gfig-dialog.c:952
+#: ../plug-ins/gfig/gfig-dialog.c:941
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Creează o curbă Bezier. Shift + buton termină crearea obiectului."
 
-#: ../plug-ins/gfig/gfig-dialog.c:956 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:945 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
 msgstr "Mută un obiect"
 
-#: ../plug-ins/gfig/gfig-dialog.c:959 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:948 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move a single point"
 msgstr "Mută un singur punct"
 
-#: ../plug-ins/gfig/gfig-dialog.c:962 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:951 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Copy an object"
 msgstr "Cpiază un obiect"
 
-#: ../plug-ins/gfig/gfig-dialog.c:965 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Delete an object"
 msgstr "Șterge un obiect"
 
-#: ../plug-ins/gfig/gfig-dialog.c:968 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:957 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "Selectează un obiect"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1050
+#: ../plug-ins/gfig/gfig-dialog.c:1039
 msgid "This tool has no options"
 msgstr "Acest instrument nu are opțiuni"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1261
+#: ../plug-ins/gfig/gfig-dialog.c:1250
 msgid "Show position"
 msgstr "Arată poziția"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1273
+#: ../plug-ins/gfig/gfig-dialog.c:1262
 msgid "Show control points"
 msgstr "Arată punctele de control"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1307
+#: ../plug-ins/gfig/gfig-dialog.c:1296
 msgid "Max undo:"
 msgstr "Număr maxim de anulări:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1316
+#: ../plug-ins/gfig/gfig-dialog.c:1305
 #: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Transparent"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1318
+#: ../plug-ins/gfig/gfig-dialog.c:1307
 msgid "Foreground"
 msgstr "Prim-plan "
 
-#: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/imagemap/imap_cmd_copy.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:1309 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: ../plug-ins/imagemap/imap_menu.c:159
 msgid "Copy"
 msgstr "Copiază"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1329
+#: ../plug-ins/gfig/gfig-dialog.c:1318
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -10180,81 +10140,81 @@ msgstr ""
 "Tipul de fundal pentru strat. Copierea face ca stratul precedent să fie "
 "copiat înainte de executarea desenului."
 
-#: ../plug-ins/gfig/gfig-dialog.c:1335
+#: ../plug-ins/gfig/gfig-dialog.c:1324
 msgid "Background:"
 msgstr "Fundal:"
 
 # hm ? sau estompat ?
-#: ../plug-ins/gfig/gfig-dialog.c:1338
+#: ../plug-ins/gfig/gfig-dialog.c:1327
 msgid "Feather"
 msgstr "Estompează"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1361
+#: ../plug-ins/gfig/gfig-dialog.c:1350
 msgid "Radius:"
 msgstr "Rază:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1419
+#: ../plug-ins/gfig/gfig-dialog.c:1408
 msgid "Grid spacing:"
 msgstr "Spațiere grilă:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1436
+#: ../plug-ins/gfig/gfig-dialog.c:1425
 msgid "Polar grid sectors desired:"
 msgstr "Sectoare dorite pentru grila polară:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1458
+#: ../plug-ins/gfig/gfig-dialog.c:1447
 msgid "Polar grid radius interval:"
 msgstr "Interval de rază al grilei polare:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1474 ../plug-ins/imagemap/imap_menu.c:219
+#: ../plug-ins/gfig/gfig-dialog.c:1463 ../plug-ins/imagemap/imap_menu.c:219
 msgid "Rectangle"
 msgstr "Dreptunghi"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1476
+#: ../plug-ins/gfig/gfig-dialog.c:1465
 msgid "Isometric"
 msgstr "Izometric"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1485
+#: ../plug-ins/gfig/gfig-dialog.c:1474
 msgid "Grid type:"
 msgstr "Tip grilă:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1492
+#: ../plug-ins/gfig/gfig-dialog.c:1481
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
 msgid "Normal"
 msgstr "Normal"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1495
+#: ../plug-ins/gfig/gfig-dialog.c:1484
 msgid "Grey"
 msgstr "Gri"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1496
+#: ../plug-ins/gfig/gfig-dialog.c:1485
 msgid "Darker"
 msgstr "Mai întunecat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1497
+#: ../plug-ins/gfig/gfig-dialog.c:1486
 msgid "Lighter"
 msgstr "Mai luminos"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1498
+#: ../plug-ins/gfig/gfig-dialog.c:1487
 msgid "Very dark"
 msgstr "Foarte întunecat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1507
+#: ../plug-ins/gfig/gfig-dialog.c:1496
 msgid "Grid color:"
 msgstr "Culoare grilă:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1730
+#: ../plug-ins/gfig/gfig-dialog.c:1717
 msgid "Sides:"
 msgstr "Părți:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1740
+#: ../plug-ins/gfig/gfig-dialog.c:1727
 msgid "Right"
 msgstr "Dreapta"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1741
+#: ../plug-ins/gfig/gfig-dialog.c:1728
 msgid "Left"
 msgstr "Stânga"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1751
+#: ../plug-ins/gfig/gfig-dialog.c:1738
 #: ../plug-ins/gimpressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Orientare:"
@@ -10412,7 +10372,7 @@ msgstr "Copiază textura hârtiei selectate pe post de fundal"
 
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Solid colored background"
-msgstr "Fundal de culoare solidă"
+msgstr "Fundal de culoare uniformă"
 
 #: ../plug-ins/gimpressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
@@ -10498,7 +10458,7 @@ msgstr "_GIMPresionist..."
 
 #: ../plug-ins/gimpressionist/gimp.c:164
 msgid "The selection does not intersect the active layer or mask."
-msgstr ""
+msgstr "Selecția nu intersectează stratul sau masca activă."
 
 # apare în bara de progres
 #: ../plug-ins/gimpressionist/gimp.c:391
@@ -10794,7 +10754,7 @@ msgstr "Configurări implicite GIMPresionist"
 # titlu pe tab
 #: ../plug-ins/gimpressionist/presets.c:1015
 msgid "_Presets"
-msgstr "_Preconfigurări"
+msgstr "_Presetări"
 
 #: ../plug-ins/gimpressionist/presets.c:1030
 msgid "Save Current..."
@@ -10806,15 +10766,15 @@ msgstr "Salvează configurările curente în fișierul specificat"
 
 #: ../plug-ins/gimpressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
-msgstr "Citește în memorie preconfigurarea selectată"
+msgstr "Citește în memorie presetarea selectată"
 
 #: ../plug-ins/gimpressionist/presets.c:1072
 msgid "Deletes the selected Preset"
-msgstr "Șterge preconfigurarea selectată"
+msgstr "Șterge presetarea selectată"
 
 #: ../plug-ins/gimpressionist/presets.c:1078
 msgid "Reread the folder of Presets"
-msgstr "Recitește dosarul preconfigurărilor"
+msgstr "Recitește dosarul presetărilor"
 
 #: ../plug-ins/gimpressionist/preview.c:173
 #: ../plug-ins/gimpressionist/repaint.c:1183
@@ -12014,16 +11974,12 @@ msgid "Preferences"
 msgstr "Preferințe"
 
 #: ../plug-ins/imagemap/imap_menu.c:169
-#, fuzzy
-#| msgid "Move to Front"
 msgid "Move Area to Front"
-msgstr "Mută în față"
+msgstr "Mută zona în față"
 
 #: ../plug-ins/imagemap/imap_menu.c:171
-#, fuzzy
-#| msgid "Move to Front"
 msgid "Move Area to Bottom"
-msgstr "Mută în față"
+msgstr "Mută zona jos de tot"
 
 #: ../plug-ins/imagemap/imap_menu.c:173
 msgid "Delete Area"
@@ -12201,10 +12157,8 @@ msgid "Selected:"
 msgstr "Selectat:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:442
-#, fuzzy
-#| msgid "Iterations:"
 msgid "Interaction:"
-msgstr "Iterații:"
+msgstr "Interacțiune:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
@@ -12460,7 +12414,7 @@ msgstr "I_zolat"
 
 #: ../plug-ins/lighting/lighting-ui.c:577
 msgid "Lighting preset:"
-msgstr "Preconfigurări de iluminare:"
+msgstr "Presetare de iluminare:"
 
 #: ../plug-ins/lighting/lighting-ui.c:623
 msgid "Material Properties"
@@ -12594,12 +12548,12 @@ msgstr ""
 # titlu pe bară
 #: ../plug-ins/lighting/lighting-ui.c:1149
 msgid "Save Lighting Preset"
-msgstr "Salvare preconfigurări de iluminare"
+msgstr "Salvare presetare de iluminare"
 
 # titlu pe bară
 #: ../plug-ins/lighting/lighting-ui.c:1293
 msgid "Load Lighting Preset"
-msgstr "Încărcare preconfigurări de iluminare"
+msgstr "Încărcare presetare de iluminare"
 
 #: ../plug-ins/map-object/map-object-apply.c:251
 #: ../plug-ins/map-object/map-object-apply.c:272
@@ -12683,16 +12637,12 @@ msgid "Create new image"
 msgstr "Creează o imagine nouă"
 
 #: ../plug-ins/map-object/map-object-ui.c:483
-#, fuzzy
-#| msgid "Create _new layer"
 msgid "Create new layer"
-msgstr "Creează un strat _nou"
+msgstr "Creează un strat nou"
 
 #: ../plug-ins/map-object/map-object-ui.c:494
-#, fuzzy
-#| msgid "Create a new image when applying filter"
 msgid "Create a new layer when applying filter"
-msgstr "Creează o imagine nouă la aplicarea filtrului"
+msgstr "Creează un strat nou la aplicarea filtrului"
 
 #: ../plug-ins/map-object/map-object-ui.c:502
 msgid "Enable _antialiasing"
@@ -12859,16 +12809,12 @@ msgid "Map to Object"
 msgstr "Mapare pe obiect"
 
 #: ../plug-ins/map-object/map-object-ui.c:1375
-#, fuzzy
-#| msgid "Show preview _wireframe"
 msgid "Show _wireframe"
-msgstr "Arată previ_zualizarea cadrului de sârmă"
+msgstr "Arată cadrul de sârmă"
 
 #: ../plug-ins/map-object/map-object-ui.c:1384
-#, fuzzy
-#| msgid "Recompute preview image"
 msgid "Update preview _live"
-msgstr "Recalculează imaginea de previzualizare"
+msgstr "Actualizează previzualizarea în direct"
 
 #: ../plug-ins/maze/maze-algorithms.c:278
 msgid "Constructing maze using Prim's Algorithm"
@@ -13149,9 +13095,10 @@ msgstr "Configurări avansate pentru selecție la traseu"
 msgid "Capture an image from a TWAIN datasource"
 msgstr "Capturează o imagine dintr-o sursă de date TWAIN"
 
+# adăugare intenționată
 #: ../plug-ins/twain/twain.c:351
 msgid "_Scanner/Camera..."
-msgstr "_Scaner sau cameră..."
+msgstr "De la _scaner sau cameră..."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:485
@@ -13194,12 +13141,6 @@ msgstr "_Captură de ecran..."
 msgid "No data captured"
 msgstr "Nicio dată capturată"
 
-#~ msgid "pixels/%s"
-#~ msgstr "pixeli/%s"
-
-#~ msgid "There was an error taking the screenshot."
-#~ msgstr "A apărut o eroare la preluarea capturii de ecran."
-
 #~ msgid "Frequency (rows):"
 #~ msgstr "Frecvență (rânduri):"
 
@@ -13212,5 +13153,11 @@ msgstr "Nicio dată capturată"
 #~ msgid "2x2,1x1,1x1 (smallest file)"
 #~ msgstr "2x2,1x1,1x1 (cel mai mic fișier)"
 
+#~ msgid "There was an error taking the screenshot."
+#~ msgstr "A apărut o eroare la preluarea capturii de ecran."
+
 #~ msgid "Send to Back"
 #~ msgstr "Trimite în spate"
+
+#~ msgid "pixels/%s"
+#~ msgstr "pixeli/%s"
