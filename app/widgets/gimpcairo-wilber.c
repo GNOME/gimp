@@ -86,21 +86,20 @@ gimp_cairo_wilber_get_size (cairo_t *cr,
 
 
 static void
-wilber_get_extents (cairo_t *cr)
+wilber_get_extents (cairo_t *unused)
 {
   if (! wilber_cairo_path)
     {
-      cairo_save (cr);
+      cairo_surface_t *s = cairo_image_surface_create (CAIRO_FORMAT_A8, 1, 1);
+      cairo_t         *cr = cairo_create (s);
 
       wilber_parse_path_data (cr, wilber_path);
-
-      cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
       cairo_fill_extents (cr, &wilber_x1, &wilber_y1, &wilber_x2, &wilber_y2);
 
       wilber_cairo_path = cairo_copy_path (cr);
-      cairo_new_path (cr);
 
-      cairo_restore (cr);
+      cairo_destroy (cr);
+      cairo_surface_destroy (s);
     }
 }
 
