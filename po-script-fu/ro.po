@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-08-28 18:21+0000\n"
-"PO-Revision-Date: 2010-08-02 15:19+0200\n"
+"PO-Revision-Date: 2011-08-19 00:56+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -454,6 +454,7 @@ msgstr "Supereșantionare"
 msgid "Thickness"
 msgstr "Grosime"
 
+# deliberat fără adaugă
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
 msgstr "Bordură t_eșită..."
@@ -470,7 +471,7 @@ msgstr "Adaugă la imagine o bordură teșită"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "Bumpmap"
-msgstr ""
+msgstr "Hartă de protuberanțe"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
@@ -486,6 +487,7 @@ msgstr "Păstrează stratul de protuberanță"
 msgid "Work on copy"
 msgstr "Lucrează pe o copie"
 
+# deliberat fără adaugă
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
 msgstr "_Bordură..."
@@ -495,10 +497,8 @@ msgid "Add a border around an image"
 msgstr "Adaugă o bordură în jurul imaginii"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
-#, fuzzy
-#| msgid "Border size"
 msgid "Border Layer"
-msgstr "Dimensiune bordură"
+msgstr "Strat de bordură"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border X size"
@@ -510,7 +510,7 @@ msgstr "Dimensiune bordură pe axa Y"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Border color"
-msgstr "Culoare bordură"
+msgstr "Culoare de bordură"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:7
 msgid "Delta value on color"
@@ -519,17 +519,13 @@ msgstr "Valoare delta pe culoare"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#, fuzzy
-#| msgid "_Alien Glow"
 msgid "Alien Glow"
-msgstr "Strălucire exterio_ară"
+msgstr "Strălucire exterioară"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-#, fuzzy
-#| msgid "_Arrow..."
 msgid "Arrow"
-msgstr "Săge_ată..."
+msgstr "Săgeată"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
@@ -538,10 +534,8 @@ msgstr "Săge_ată..."
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
-#, fuzzy
-#| msgid "Background color"
 msgid "Background"
-msgstr "Culoare de fundal"
+msgstr "Fundal"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 msgid "Create an arrow graphic with an eerie glow for web pages"
@@ -605,8 +599,9 @@ msgid "_Arrow..."
 msgstr "Săge_ată..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+#, fuzzy
 msgid "Bar"
-msgstr ""
+msgstr "Bară"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
 msgid "Bar height"
@@ -629,10 +624,8 @@ msgstr "_Hrule..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-#, fuzzy
-#| msgid "_Bullet..."
 msgid "Bullet"
-msgstr "_Bulină..."
+msgstr "Bulină"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 msgid "Create a bullet graphic with an eerie glow for web pages"
@@ -655,10 +648,8 @@ msgid "B_utton..."
 msgstr "B_uton..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
-#, fuzzy
-#| msgid "_Buttons"
 msgid "Button"
-msgstr "_Butoane"
+msgstr "Buton"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 msgid "Create a button graphic with an eerie glow for web pages"
@@ -666,7 +657,7 @@ msgstr "Creează un buton grafic cu strălucire stranie pentru pagini web"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
 msgid "Glow"
-msgstr ""
+msgstr "Strălucire"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
 msgid "Glow radius"
@@ -851,8 +842,9 @@ msgid "Height"
 msgstr "Înălțime"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+#, fuzzy
 msgid "Rule"
-msgstr ""
+msgstr "Riglă"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
@@ -1055,17 +1047,13 @@ msgstr "_Camuflaj..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
-#, fuzzy
-#| msgid "Bevel width"
 msgid "Bevel Highlight"
-msgstr "Lățime teșitură"
+msgstr "Evidențiere teșitură"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
-#, fuzzy
-#| msgid "Shadow"
 msgid "Bevel Shadow"
-msgstr "Umbră"
+msgstr "Umbră teșitură"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Carve white areas"
@@ -1078,10 +1066,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-#, fuzzy
-#| msgid "Create shadow"
 msgid "Cast Shadow"
-msgstr "Creează umbră"
+msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:6
 msgid "Image to carve"
@@ -1089,10 +1075,8 @@ msgstr "Imagine la sculptură"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
-#, fuzzy
-#| msgid "Invert"
 msgid "Inset"
-msgstr "Inversează"
+msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
 msgid "Stencil C_arve..."
@@ -1184,10 +1168,8 @@ msgstr ""
 "matriță specificată (în scală de gri)"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
-#, fuzzy
-#| msgid "C_hrome..."
 msgid "Chrome"
-msgstr "Cr_om..."
+msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1215,8 +1197,6 @@ msgid "Chrome white areas"
 msgstr "Zone albe ale cromului"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
-#, fuzzy
-#| msgid "Drop shadow"
 msgid "Drop Shadow"
 msgstr "Umbră de perspectivă"
 
@@ -1226,12 +1206,11 @@ msgstr "Umbră de perspectivă"
 msgid "Environment map"
 msgstr "Hartă de mediu"
 
+# hm ? sau evidențiază ?
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
-#, fuzzy
-#| msgid "Highlight color"
 msgid "Highlight"
-msgstr "Culoarea de evidențiere"
+msgstr "Evidențiere"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:12
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
@@ -1275,11 +1254,10 @@ msgstr "Decalaje (pixeli × 2)"
 msgid "Circuit seed"
 msgstr "Sămânță circuit"
 
+# hm ? sau strat de efect ?
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-#, fuzzy
-#| msgid "Separate layer"
 msgid "Effect layer"
-msgstr "Strat separat"
+msgstr "Strat de efecte"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 msgid ""
@@ -1353,10 +1331,8 @@ msgid "Darken only"
 msgstr "Numai întunecare"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
-#, fuzzy
-#| msgid "Stains"
 msgid "Stain"
-msgstr "Pete"
+msgstr "Pată"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "Stains"
@@ -2578,7 +2554,7 @@ msgstr "Formă"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
-msgstr "Culoare solidă"
+msgstr "Culoare uniformă"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
