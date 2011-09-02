@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-08-25 19:37+0000\n"
-"PO-Revision-Date: 2010-08-02 00:14+0200\n"
+"PO-Revision-Date: 2011-08-26 22:41+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -420,20 +420,23 @@ msgctxt "blend-mode"
 msgid "Custom gradient"
 msgstr "Degrade personalizat"
 
+# imperativ pentru consecvență în cadrul aceluiași meniu
 #: ../libgimpbase/gimpbaseenums.c:98
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
-msgstr "Umplere cu culoarea de prim-plan"
+msgstr "Umple cu culoarea de prim-plan"
 
+# imperativ pentru consecvență în cadrul aceluiași meniu
 #: ../libgimpbase/gimpbaseenums.c:99
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
-msgstr "Umplere cu culoarea de fundal"
+msgstr "Umple cu culoarea de fundal"
 
+# imperativ pentru consecvență în cadrul aceluiași meniu
 #: ../libgimpbase/gimpbaseenums.c:100
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "Umplere cu model"
+msgstr "Umple cu un model"
 
 #: ../libgimpbase/gimpbaseenums.c:131
 msgctxt "channel-ops"
@@ -712,16 +715,19 @@ msgctxt "interpolation-type"
 msgid "None"
 msgstr "Fără"
 
+# dropdown pentru scalare, în preferințe -> opțiuni de instrument
 #: ../libgimpbase/gimpbaseenums.c:580
 msgctxt "interpolation-type"
 msgid "Linear"
-msgstr "Liniar"
+msgstr "Liniară"
 
+# dropdown pentru scalare, în preferințe -> opțiuni de instrument
 #: ../libgimpbase/gimpbaseenums.c:581
 msgctxt "interpolation-type"
 msgid "Cubic"
-msgstr "Cubic"
+msgstr "Cubică"
 
+# dropdown pentru scalare, în preferințe -> opțiuni de instrument
 #: ../libgimpbase/gimpbaseenums.c:582
 msgctxt "interpolation-type"
 msgid "Sinc (Lanczos3)"
@@ -805,25 +811,29 @@ msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Corectiv (înapoi)"
 
+# listă drop down după „Decupare:” la opțiunile unor instrumente
 #: ../libgimpbase/gimpbaseenums.c:799
 msgctxt "transform-resize"
 msgid "Adjust"
-msgstr "Ajustează"
+msgstr "Ajustare"
 
+# listă drop down după „Decupare:” la opțiunile unor instrumente
 #: ../libgimpbase/gimpbaseenums.c:800
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr "Decupează"
+msgstr "Decupare"
 
+# listă drop down după „Decupare:” la opțiunile unor instrumente
 #: ../libgimpbase/gimpbaseenums.c:801
 msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr "Decupează la rezultat"
+msgstr "Decupare la rezultat"
 
+# listă drop down după „Decupare:” la opțiunile unor instrumente
 #: ../libgimpbase/gimpbaseenums.c:802
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr "Decupează cu aspect"
+msgstr "Decupare cu aspect"
 
 #: ../libgimpbase/gimpbaseenums.c:935
 msgctxt "pdb-proc-type"
