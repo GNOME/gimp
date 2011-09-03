@@ -855,8 +855,11 @@ gimp_perspective_clone_tool_mode_notify (GimpPerspectiveCloneOptions *options,
                                          GIMP_TOOL_CURSOR_PERSPECTIVE);
 
       /*  start drawing the bounding box and handles...  */
-      if (tool->display)
-        gimp_draw_tool_start (GIMP_DRAW_TOOL (clone_tool), tool->display);
+      if (tool->display &&
+          ! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (clone_tool)))
+        {
+          gimp_draw_tool_start (GIMP_DRAW_TOOL (clone_tool), tool->display);
+        }
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (clone_tool));
