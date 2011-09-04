@@ -1069,6 +1069,45 @@ xmp_model_set_property (XMPModel    *xmp_model,
 }
 
 /**
+ * xmp_model_find_xmptype_by:
+ * @xmp_model: An #XMPModel
+ * @schema_name: An #XMPSchema the property belongs to. Can be a schema
+ *               URI or prefix.
+ * @property_name: The name of the property to find the type for
+ *
+ * Finds the corresponding XMPType for the given schema and property
+ * name.
+ *
+ * Return value: XMPType or -1 if the property type can not be found.
+ **/
+XMPType
+xmp_model_find_xmptype_by (XMPModel     *xmp_model,
+                           const gchar  *schema_name,
+                           const gchar  *property_name)
+{
+  XMPSchema     *schema;
+  XMPProperty   *property = NULL;
+  int            i;
+
+  schema = find_xmp_schema_by_uri (xmp_model, schema_name);
+  if (! schema)
+    schema = find_xmp_schema_prefix (xmp_model, schema_name);
+
+  if (schema)
+   {
+    if (schema->properties != NULL)
+      for (i = 0; schema->properties[i].name != NULL; ++i)
+        if (! strcmp (schema->properties[i].name, property_name))
+         {
+          property = &(schema->properties[i]);
+          return property->type;
+         }
+   }
+
+  return -1;
+}
+
+/**
  * xmp_model_property_changed:
  * @xmp_model: An #XMPModel
  * @schema: An #XMPSchema the property belongs to
