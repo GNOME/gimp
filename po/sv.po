@@ -3863,7 +3863,7 @@ msgstr "Ställ in storlek på lagergräns"
 
 #: ../app/actions/layers-commands.c:663
 msgid "Scale Layer"
-msgstr "Skala om lager"
+msgstr "Skala lager"
 
 #: ../app/actions/layers-commands.c:701
 msgid "Crop Layer"
@@ -7952,7 +7952,7 @@ msgstr "Flytta lagergrupp"
 #: ../app/core/gimpgrouplayer.c:216
 msgctxt "undo-type"
 msgid "Scale Layer Group"
-msgstr "Skala om lagergrupp"
+msgstr "Skala lagergrupp"
 
 #: ../app/core/gimpgrouplayer.c:217
 msgctxt "undo-type"
@@ -8316,7 +8316,7 @@ msgstr "Flytta lager"
 #: ../app/core/gimplayer.c:270
 msgctxt "undo-type"
 msgid "Scale Layer"
-msgstr "Skala om lager"
+msgstr "Skala lager"
 
 #: ../app/core/gimplayer.c:271
 msgctxt "undo-type"
@@ -11349,7 +11349,7 @@ msgstr "Flytta textlager"
 
 #: ../app/text/gimptextlayer.c:146
 msgid "Scale Text Layer"
-msgstr "Skala om textlager"
+msgstr "Skala textlager"
 
 #: ../app/text/gimptextlayer.c:147
 msgid "Resize Text Layer"
