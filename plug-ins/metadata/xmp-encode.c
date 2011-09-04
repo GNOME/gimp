@@ -161,6 +161,11 @@ gen_property (GString            *buffer,
                               schema->prefix, property->name);
       for (i = 0; value_array[i] != NULL; i += 2)
         {
+         if (value_array[i+1] == NULL)
+          {
+            g_printerr("Bailing out:%s:%s", schema->prefix, property->name);
+            break;
+          }
           gen_element (buffer, 4,
                        "rdf", "li", value_array[i + 1],
                        "xml:lang", value_array[i],
