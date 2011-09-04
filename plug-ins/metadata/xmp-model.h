@@ -109,11 +109,16 @@ const gchar  *xmp_model_get_scalar_property (XMPModel    *xmp_model,
                                              const gchar *schema_name,
                                              const gchar *property_name);
 
+gboolean      xmp_model_set_property        (XMPModel    *xmp_model,
+                                             XMPType      type,
+                                             const gchar *schema_name,
+                                             const gchar *property_name,
+                                             const gchar **value);
+
 gboolean      xmp_model_set_scalar_property (XMPModel    *xmp_model,
                                              const gchar *schema_name,
                                              const gchar *property_name,
                                              const gchar *property_value);
-
 
 /* Signals */
 void          xmp_model_property_changed    (XMPModel     *xmp_model,

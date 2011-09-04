@@ -698,35 +698,7 @@ parse_set_property (XMPParseContext     *context,
         g_print ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,
                 value[i], value[i + 1]);
 #endif
-      if (property != NULL)
-        /* FIXME */;
-      else
-        {
-          property = g_new (XMPProperty, 1);
-          property->name = g_strdup (name);
-          property->type = XMP_TYPE_LANG_ALT;
-          property->editable = TRUE;
-          xmp_model->custom_properties =
-            g_slist_prepend (xmp_model->custom_properties, property);
-        }
-      for (i = 0; value[i] != NULL; i += 2)
-        {
-          tmp_name = g_strconcat (name, " [", value[i], "]", NULL);
-          gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
-          gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
-                              COL_XMP_NAME, name,
-                              COL_XMP_VALUE, value[i + 1],
-                              COL_XMP_VALUE_RAW, value,
-                              COL_XMP_TYPE_XREF, property,
-                              COL_XMP_WIDGET_XREF, NULL,
-                              COL_XMP_EDITABLE, property->editable,
-                              COL_XMP_EDIT_ICON, NULL,
-                              COL_XMP_VISIBLE, TRUE,
-                              COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
-                              COL_XMP_WEIGHT_SET, FALSE,
-                              -1);
-          g_free (tmp_name);
-        }
+      xmp_model_set_property (xmp_model, schema->name, name, value);
       break;
 
     case XMP_PTYPE_STRUCTURE:
@@ -1033,6 +1005,140 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
                       COL_XMP_WEIGHT_SET, FALSE,
                       -1);
   return TRUE;
+}
+
+/**
+ * xmp_model_set_property:
+ * @xmp_model: pointer to an #XMPModel
+ * @schema_name: full URI or usual prefix of the schema
+ * @type: An #XMPTYPE used in the #XMPProperty
+ * @property_name: name of the property to store
+ * @value: value to store
+ *
+ * Store a new value for the specified XMP property.
+ *
+ * Note: Currently only sets property values for XMP_TYPE_TEXT and
+ * XMP_TYPE_LANG_ALT.
+ *
+ * Return value: %TRUE if the property was set, %FALSE if an error
+ *               occurred (for example, the @schema_name is invalid)
+ **/
+gboolean
+xmp_model_set_property (XMPModel    *xmp_model,
+                        XMPType      type,
+                        const gchar *schema_name,
+                        const gchar *property_name,
+                        const gchar **value)
+{
+  XMPSchema    *schema;
+  XMPProperty  *property = NULL;
+  GtkTreeIter   iter;
+  GtkTreeIter   child_iter;
+  int           i;
+  gboolean      result = FALSE;
+
+  g_return_val_if_fail (xmp_model != NULL, FALSE);
+  g_return_val_if_fail (schema_name != NULL, FALSE);
+  g_return_val_if_fail (property_name != NULL, FALSE);
+  g_return_val_if_fail (value != NULL, FALSE);
+  schema = find_xmp_schema_by_uri (xmp_model, schema_name);
+  if (! schema)
+    schema = find_xmp_schema_prefix (xmp_model, schema_name);
+
+  if (! schema)
+    return FALSE;
+
+  if (! find_iter_for_schema (xmp_model, schema, &iter))
+    add_known_schema (xmp_model, schema, &iter);
+
+  if (schema->properties != NULL)
+    for (i = 0; schema->properties[i].name != NULL; ++i)
+      if (! strcmp (schema->properties[i].name, property_name))
+        {
+          property = &(schema->properties[i]);
+          break;
+        }
+
+  if (property != NULL)
+    find_and_remove_property (xmp_model, property, &iter);
+
+  switch (type)
+    {
+    case XMP_TYPE_TEXT:
+#ifdef DEBUG_XMP_MODEL
+      g_print ("\t%s:%s = \"%s\"\n", ns_prefix, name, value[0]);
+#endif
+      if (property != NULL)
+        /* FIXME */;
+      else
+        {
+          property = g_new (XMPProperty, 1);
+          property->name = g_strdup (property_name);
+          property->type = XMP_TYPE_TEXT;
+          property->editable = TRUE;
+          xmp_model->custom_properties =
+            g_slist_prepend (xmp_model->custom_properties, property);
+        }
+      gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
+                          COL_XMP_NAME, property_name,
+                          COL_XMP_VALUE, value[0],
+                          COL_XMP_VALUE_RAW, value,
+                          COL_XMP_TYPE_XREF, property,
+                          COL_XMP_WIDGET_XREF, NULL,
+                          COL_XMP_EDITABLE, property->editable,
+                          COL_XMP_EDIT_ICON, NULL,
+                          COL_XMP_VISIBLE, TRUE,
+                          COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
+                          COL_XMP_WEIGHT_SET, FALSE,
+                          -1);
+      result = TRUE;
+      break;
+
+    case XMP_TYPE_LANG_ALT:
+#ifdef DEBUG_XMP_MODEL
+      for (i = 0; value[i] != NULL; i += 2)
+        g_print ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,
+                value[i], value[i + 1]);
+#endif
+      if (property != NULL)
+        /* FIXME */;
+      else
+        {
+          property = g_new (XMPProperty, 1);
+          property->name = g_strdup (property_name);
+          property->type = XMP_TYPE_LANG_ALT;
+          property->editable = TRUE;
+          xmp_model->custom_properties =
+            g_slist_prepend (xmp_model->custom_properties, property);
+        }
+      for (i = 0; value[i] != NULL; i += 2)
+        {
+          gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+          gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
+                              COL_XMP_NAME, property_name,
+                              COL_XMP_VALUE, value[i + 1],
+                              COL_XMP_VALUE_RAW, value,
+                              COL_XMP_TYPE_XREF, property,
+                              COL_XMP_WIDGET_XREF, NULL,
+                              COL_XMP_EDITABLE, property->editable,
+                              COL_XMP_EDIT_ICON, NULL,
+                              COL_XMP_VISIBLE, TRUE,
+                              COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
+                              COL_XMP_WEIGHT_SET, FALSE,
+                              -1);
+        }
+      result = TRUE;
+      break;
+
+    default:
+#ifdef DEBUG_XMP_MODEL
+      g_print ("\t%s:%s = ?\n", ns_prefix, name);
+#endif
+      break;
+    }
+
+  return result;
 }
 
 /**
