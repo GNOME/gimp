@@ -921,67 +921,17 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
                                const gchar *property_name,
                                const gchar *property_value)
 {
-  XMPSchema    *schema;
-  XMPProperty  *property = NULL;
-  GtkTreeIter   iter;
-  GtkTreeIter   child_iter;
-  int           i;
-  gchar       **value;
+  const gchar **value;
 
-  g_return_val_if_fail (xmp_model != NULL, FALSE);
-  g_return_val_if_fail (schema_name != NULL, FALSE);
-  g_return_val_if_fail (property_name != NULL, FALSE);
-  g_return_val_if_fail (property_value != NULL, FALSE);
-  schema = find_xmp_schema_by_uri (xmp_model, schema_name);
-  if (! schema)
-    schema = find_xmp_schema_prefix (xmp_model, schema_name);
-
-  if (! schema)
-    return FALSE;
-
-  if (! find_iter_for_schema (xmp_model, schema, &iter))
-    add_known_schema (xmp_model, schema, &iter);
-
-  if (schema->properties != NULL)
-    for (i = 0; schema->properties[i].name != NULL; ++i)
-      if (! strcmp (schema->properties[i].name, property_name))
-        {
-          property = &(schema->properties[i]);
-          break;
-        }
-
-  if (property != NULL)
-    {
-      find_and_remove_property (xmp_model, property, &iter);
-    }
-  else
-    {
-      property = g_new (XMPProperty, 1);
-      property->name     = g_strdup (property_name);
-      property->type     = XMP_TYPE_TEXT;
-      property->editable = TRUE;
-
-      xmp_model->custom_properties =
-        g_slist_prepend (xmp_model->custom_properties, property);
-    }
-
-  value = g_new (gchar *, 2);
+  value = g_new (const gchar *, 2);
   value[0] = g_strdup (property_value);
   value[1] = NULL;
-  gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
-  gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
-                      COL_XMP_NAME, g_strdup (property_name),
-                      COL_XMP_VALUE, value[0],
-                      COL_XMP_VALUE_RAW, value,
-                      COL_XMP_TYPE_XREF, property,
-                      COL_XMP_WIDGET_XREF, NULL,
-                      COL_XMP_EDITABLE, property->editable,
-                      COL_XMP_EDIT_ICON, NULL,
-                      COL_XMP_VISIBLE, TRUE,
-                      COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
-                      COL_XMP_WEIGHT_SET, FALSE,
-                      -1);
-  return TRUE;
+
+  return xmp_model_set_property (xmp_model,
+                                 XMP_TYPE_TEXT,
+                                 schema_name,
+                                 property_name,
+                                 value);
 }
 
 /**
