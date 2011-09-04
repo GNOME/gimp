@@ -210,7 +210,7 @@
   (if (null? lists)
       (cons cars cdrs)
       (let ((car1 (caar lists))
-        (cdr1 (cdar lists)))
+            (cdr1 (cdar lists)))
         (unzip1-with-cdr-iterative
           (cdr lists)
           (append cars (list car1))
@@ -338,13 +338,14 @@
 
 ;;;;;Helper for the dynamic-wind definition.  By Tom Breton (Tehom)
 (define (shared-tail x y)
-   (let (  (len-x (length x))
-           (len-y (length y)))
+   (let ((len-x (length x))
+         (len-y (length y)))
       (define (shared-tail-helper x y)
          (if
             (eq? x y)
             x
             (shared-tail-helper (cdr x) (cdr y))))
+
       (cond
          ((> len-x len-y)
             (shared-tail-helper
@@ -696,8 +697,9 @@
   (foldr (lambda (x y) (or (cond-eval x) (cond-eval y))) #f cond-list))
 
 (define (cond-eval condition)
-  (cond ((symbol? condition)
-    (if (member condition *features*) #t #f))
+  (cond
+    ((symbol? condition)
+       (if (member condition *features*) #t #f))
     ((eq? condition #t) #t)
     ((eq? condition #f) #f)
     (else (case (car condition)
