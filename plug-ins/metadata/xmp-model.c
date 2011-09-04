@@ -553,30 +553,7 @@ parse_set_property (XMPParseContext     *context,
 #ifdef DEBUG_XMP_MODEL
       g_print ("\t%s:%s = \"%s\"\n", schema->prefix, name, value[0]);
 #endif
-      if (property != NULL)
-        /* FIXME */;
-      else
-        {
-          property = g_new (XMPProperty, 1);
-          property->name = g_strdup (name);
-          property->type = XMP_TYPE_TEXT;
-          property->editable = TRUE;
-          xmp_model->custom_properties =
-            g_slist_prepend (xmp_model->custom_properties, property);
-        }
-      gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
-      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
-                          COL_XMP_NAME, name,
-                          COL_XMP_VALUE, value[0],
-                          COL_XMP_VALUE_RAW, value,
-                          COL_XMP_TYPE_XREF, property,
-                          COL_XMP_WIDGET_XREF, NULL,
-                          COL_XMP_EDITABLE, property->editable,
-                          COL_XMP_EDIT_ICON, NULL,
-                          COL_XMP_VISIBLE, TRUE,
-                          COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
-                          COL_XMP_WEIGHT_SET, FALSE,
-                          -1);
+      xmp_model_set_property (xmp_model, XMP_TYPE_TEXT, schema->uri, name, value);
       break;
 
     case XMP_PTYPE_RESOURCE:
@@ -698,7 +675,7 @@ parse_set_property (XMPParseContext     *context,
         g_print ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,
                 value[i], value[i + 1]);
 #endif
-      xmp_model_set_property (xmp_model, schema->name, name, value);
+      xmp_model_set_property (xmp_model, XMP_TYPE_LANG_ALT, schema->uri, name, value);
       break;
 
     case XMP_PTYPE_STRUCTURE:
