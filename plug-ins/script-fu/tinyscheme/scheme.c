@@ -3339,29 +3339,34 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           x=car(sc->args);
           s_return(sc, mk_real(sc, sqrt(rvalue(x))));
 
-     case OP_EXPT:
+     case OP_EXPT: {
+          double result;
+          int real_result=1;
+          pointer y=cadr(sc->args);
           x=car(sc->args);
-          if(cdr(sc->args)==sc->NIL) {
-               Error_0(sc,"expt: needs two arguments");
+          if (num_is_integer(x) && num_is_integer(y))
+             real_result=0;
+          /* This 'if' is an R5RS compatability fix. */
+          /* NOTE: Remove this 'if' fix for R6RS.    */
+          if (rvalue(x) == 0 && rvalue(y) < 0) {
+             result = 0.0;
           } else {
-               double result;
-               int real_result=1;
-               pointer y=cadr(sc->args);
-               if (num_is_integer(x) && num_is_integer(y))
-                  real_result=0;
-               /* This 'if' is an R5RS compatability fix. */
-               /* NOTE: Remove this 'if' fix for R6RS.    */
-               if (rvalue(x) == 0 && rvalue(y) < 0) {
-                  result = 0.0;
-               } else {
-                  result = pow(rvalue(x),rvalue(y));
-               }
-               if (real_result) {
-                  s_return(sc, mk_real(sc, result));
-               } else {
-                  s_return(sc, mk_integer(sc, result));
-               }
+             result = pow(rvalue(x),rvalue(y));
           }
+          /* Before returning integer result make sure we can. */
+          /* If the test fails, result is too big for integer. */
+          if (!real_result)
+          {
+            long result_as_long = (long)result;
+            if (result != (double)result_as_long)
+              real_result = 1;
+          }
+          if (real_result) {
+             s_return(sc, mk_real(sc, result));
+          } else {
+             s_return(sc, mk_integer(sc, result));
+          }
+     }
 
      case OP_FLOOR:
           x=car(sc->args);
