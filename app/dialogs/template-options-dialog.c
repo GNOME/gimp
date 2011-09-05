@@ -78,6 +78,7 @@ template_options_dialog_new (GimpTemplate *template,
     {
       template =
         gimp_config_duplicate (GIMP_CONFIG (options->gimp->config->default_image));
+      viewable = GIMP_VIEWABLE (template);
 
       gimp_object_set_static_name (GIMP_OBJECT (template), _("Unnamed"));
     }
@@ -93,6 +94,7 @@ template_options_dialog_new (GimpTemplate *template,
 
                               NULL);
 
+  gtk_window_set_resizable (GTK_WINDOW (options->dialog), FALSE);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (options->dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
