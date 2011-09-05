@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-28 16:13+0200\n"
-"PO-Revision-Date: 2009-01-27 23:21+0100\n"
+"PO-Revision-Date: 2011-09-05 21:43+0200\n"
 "Last-Translator: Joaquim Perez Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -14862,9 +14862,8 @@ msgstr "Inclinació:"
 
 #: ../app/widgets/gimpdynamicseditor.c:153
 #: ../app/widgets/gimpdynamicsoutputeditor.c:248
-#, fuzzy
 msgid "Random"
-msgstr "Aleatòri:"
+msgstr "Aleatori"
 
 #: ../app/widgets/gimpdynamicseditor.c:154
 #: ../app/widgets/gimpdynamicsoutputeditor.c:255
