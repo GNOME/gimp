@@ -105,6 +105,10 @@ gboolean      xmp_model_parse_file          (XMPModel     *xmp_model,
 
 GtkTreeModel *xmp_model_get_tree_model      (XMPModel     *xmp_model);
 
+const gchar **xmp_model_get_raw_property_value (XMPModel    *xmp_model,
+                                                const gchar *schema_name,
+                                                const gchar *property_name);
+
 const gchar  *xmp_model_get_scalar_property (XMPModel    *xmp_model,
                                              const gchar *schema_name,
                                              const gchar *property_name);

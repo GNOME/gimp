@@ -904,6 +904,72 @@ xmp_model_get_scalar_property (XMPModel    *xmp_model,
 }
 
 /**
+ * xmp_model_get_raw_property_value:
+ * @xmp_model: pointer to an #XMPModel
+ * @schema_name: full URI or usual prefix of the schema
+ * @property_name: name of the raw property value to return
+ *
+ * Returns a copy of the currently stored value.
+ *
+ * Return value: raw value or %NULL otherwise
+ **/
+const gchar **
+xmp_model_get_raw_property_value (XMPModel    *xmp_model,
+                                  const gchar *schema_name,
+                                  const gchar *property_name)
+{
+  XMPSchema    *schema;
+  GtkTreeIter   iter;
+  XMPProperty  *property = NULL;
+  GtkTreeIter   child_iter;
+  int           i;
+  XMPProperty  *property_xref;
+  const gchar **value;
+
+  g_return_val_if_fail (xmp_model != NULL, NULL);
+  g_return_val_if_fail (schema_name != NULL, NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+  schema = find_xmp_schema_by_uri (xmp_model, schema_name);
+  if (! schema)
+    schema = find_xmp_schema_prefix (xmp_model, schema_name);
+
+  if (! schema)
+    return NULL;
+
+  if (! find_iter_for_schema (xmp_model, schema, &iter))
+    return NULL;
+
+  if (schema->properties != NULL)
+    for (i = 0; schema->properties[i].name != NULL; ++i)
+      if (! strcmp (schema->properties[i].name, property_name))
+        {
+          property = &(schema->properties[i]);
+          break;
+        }
+
+  if (property == NULL)
+    return NULL;
+
+  if (! gtk_tree_model_iter_children (GTK_TREE_MODEL (xmp_model),
+                                      &child_iter, &iter))
+    return NULL;
+
+  do
+    {
+      gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), &child_iter,
+                          COL_XMP_TYPE_XREF, &property_xref,
+                          COL_XMP_VALUE_RAW, &value,
+                          -1);
+      if (property_xref == property)
+        return value;
+    }
+  while (gtk_tree_model_iter_next (GTK_TREE_MODEL(xmp_model),
+                                   &child_iter));
+
+  return NULL;
+}
+
+/**
  * xmp_model_set_scalar_property:
  * @xmp_model: pointer to an #XMPModel
  * @schema_name: full URI or usual prefix of the schema
