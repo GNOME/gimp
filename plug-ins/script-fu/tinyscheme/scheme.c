@@ -218,7 +218,7 @@ INTERFACE INLINE int is_number(pointer p)    { return (type(p)==T_NUMBER); }
 INTERFACE INLINE int is_integer(pointer p) {
   if (!is_number(p))
       return 0;
-  if (num_is_integer(p) || rvalue(p) == round_per_R5RS(rvalue(p)))
+  if (num_is_integer(p) || (double)ivalue(p) == rvalue(p))
       return 1;
   return 0;
 }
@@ -3390,9 +3390,8 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
      case OP_ROUND:
         x=car(sc->args);
         if (num_is_integer(x))
-            s_return(sc, mk_integer(sc, round_per_R5RS(rvalue(x))));
-        else
-            s_return(sc, mk_real(sc, round_per_R5RS(rvalue(x))));
+            s_return(sc, x);
+        s_return(sc, mk_real(sc, round_per_R5RS(rvalue(x))));
 #endif
 
      case OP_ADD:        /* + */
@@ -4557,7 +4556,7 @@ typedef int (*test_predicate)(pointer);
 static int is_any(pointer p) { return 1;}
 
 static int is_nonneg(pointer p) {
-  return is_integer(p) && ivalue(p)>=0;
+  return ivalue(p)>=0 && is_integer(p);
 }
 
 /* Correspond carefully with following defines! */
