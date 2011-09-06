@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-01 18:55+0300\n"
-"PO-Revision-Date: 2011-09-02 14:04+0300\n"
+"PO-Revision-Date: 2011-09-06 19:31+0300\n"
 "Last-Translator: Korostil Daniel <ted.korostiled@gmail.com>\n"
 "Language-Team: translation@linux.org.ua\n"
 "Language: uk\n"
@@ -34,7 +34,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "Copyright © 1995-%s\n"
-"Spencer Kimball, Peter Mattis та команда розробки GIMP"
+"Spencer Kimball, Peter Mattis та команда розробників GIMP"
 
 #: ../app/about.h:34
 msgid ""
@@ -7814,43 +7814,37 @@ msgid "Blend"
 msgstr "Суміш"
 
 #: ../app/core/gimpdrawable-brightness-contrast.c:70
-#, fuzzy
 msgctxt "undo-type"
 msgid "Brightness_Contrast"
-msgstr "Яскравість_контраст"
+msgstr "Яскравість_Контраст"
 
 #: ../app/core/gimpdrawable-brightness-contrast.c:81
-#, fuzzy
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
-msgstr "Яскравість-контраст"
+msgstr "Яскравість-Контраст"
 
 #: ../app/core/gimpdrawable-bucket-fill.c:89
 msgid "No patterns available for this operation."
 msgstr "Немає доступних текстур для цієї операції."
 
 #: ../app/core/gimpdrawable-bucket-fill.c:284
-#, fuzzy
 msgctxt "undo-type"
 msgid "Bucket Fill"
-msgstr "Заповнення"
+msgstr "Заливання"
 
 #: ../app/core/gimpdrawable-color-balance.c:79
 #: ../app/core/gimpdrawable-color-balance.c:89
-#, fuzzy
 msgctxt "undo-type"
 msgid "Color Balance"
-msgstr "Баланс кольорів"
+msgstr "Балансування кольорів"
 
 #: ../app/core/gimpdrawable-colorize.c:72
 #: ../app/core/gimpdrawable-colorize.c:84
-#, fuzzy
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Тонування"
 
 #: ../app/core/gimpdrawable-curves.c:162 ../app/core/gimpdrawable-curves.c:179
-#, fuzzy
 msgctxt "undo-type"
 msgid "Curves"
 msgstr "Криві"
@@ -7862,7 +7856,6 @@ msgid "Desaturate"
 msgstr "Знебарвлення"
 
 #: ../app/core/gimpdrawable-equalize.c:52
-#, fuzzy
 msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Вирівнювання"
@@ -7890,10 +7883,9 @@ msgid "Levels"
 msgstr "Рівні"
 
 #: ../app/core/gimpdrawable-offset.c:316
-#, fuzzy
 msgctxt "undo-type"
 msgid "Offset Drawable"
-msgstr "Зсув малювання"
+msgstr "Тянучкий зсув"
 
 #: ../app/core/gimpdrawable-posterize.c:69
 #: ../app/core/gimpdrawable-posterize.c:79 ../app/tools/gimpposterizetool.c:84
@@ -7906,15 +7898,13 @@ msgid "Not enough points to stroke"
 msgstr "Бракує точок для обведення"
 
 #: ../app/core/gimpdrawable-stroke.c:273
-#, fuzzy
 msgid "Not enough points to fill"
-msgstr "Бракує точок для обведення"
+msgstr "Бракує точок для заповнення"
 
 #: ../app/core/gimpdrawable-stroke.c:404
-#, fuzzy
 msgctxt "undo-type"
 msgid "Render Stroke"
-msgstr "Обведення контуру"
+msgstr "Відтворення мазків"
 
 #: ../app/core/gimpdrawable-threshold.c:70
 #: ../app/core/gimpdrawable-threshold.c:81 ../app/tools/gimpblendoptions.c:275
@@ -7925,19 +7915,16 @@ msgid "Threshold"
 msgstr "Поріг"
 
 #: ../app/core/gimpdrawable-transform.c:677
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip"
-msgstr "Дзеркало"
+msgstr "Віддзеркалення"
 
 #: ../app/core/gimpdrawable-transform.c:762
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Обертання"
 
 #: ../app/core/gimpdrawable-transform.c:902 ../app/core/gimplayer.c:274
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Перетворення шару"
@@ -7947,7 +7934,6 @@ msgid "Transformation"
 msgstr "Перетворення"
 
 #: ../app/core/gimpdrawable.c:484
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Масштаб"
@@ -7973,7 +7959,7 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:110
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Неправильний рядок UTF-8 у файлі градієнта '%s'."
+msgstr "Неправильний рядок UTF-8 у файлі градієнта «%s»."
 
 #: ../app/core/gimpgradient-load.c:137
 #, c-format
@@ -8038,49 +8024,41 @@ msgid "Layer Group"
 msgstr "Група шарів"
 
 #: ../app/core/gimpgrouplayer.c:214
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Перейменування групи шарів"
 
 #: ../app/core/gimpgrouplayer.c:215
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Layer Group"
-msgstr "Переміщення групи шарів"
+msgstr "Перенести групу шарів"
 
 #: ../app/core/gimpgrouplayer.c:216
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Layer Group"
-msgstr "Масштабування групи шарів"
+msgstr "Масштабувати групу шарів"
 
 #: ../app/core/gimpgrouplayer.c:217
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize Layer Group"
-msgstr "Зміна розміру групи шарів"
+msgstr "Змінити розмір групи шарів"
 
 #: ../app/core/gimpgrouplayer.c:218
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip Layer Group"
-msgstr "Віддзеркалення групи шарів"
+msgstr "Віддзеркалити групу шарів"
 
 #: ../app/core/gimpgrouplayer.c:219
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
-msgstr "Обертання групи шарів"
+msgstr "Обернути групу шарів"
 
 #: ../app/core/gimpgrouplayer.c:220
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform Layer Group"
-msgstr "Перетворення групи шарів"
+msgstr "Перетворити групу шарів"
 
 #: ../app/core/gimpimage-arrange.c:142
-#, fuzzy
 msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Розставити об'єкти"
@@ -8088,47 +8066,41 @@ msgstr "Розставити об'єкти"
 #: ../app/core/gimpimage-colormap.c:64
 #, c-format
 msgid "Colormap of Image #%d (%s)"
-msgstr ""
+msgstr "Карта кольорів зображення #%d (%s)"
 
 #: ../app/core/gimpimage-colormap.c:162
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set Colormap"
-msgstr "Встановлення мапи кольорів"
+msgstr "Вказати карту кольорів"
 
 #: ../app/core/gimpimage-colormap.c:243
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change Colormap entry"
-msgstr "Зміна елементу карти кольорів"
+msgstr "Змінити запис карти кольорів"
 
 #: ../app/core/gimpimage-colormap.c:271
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
-msgstr "Додавання кольору до карти кольорів"
+msgstr "Додати колір до карти кольорів"
 
 #: ../app/core/gimpimage-convert.c:793
 msgid "Cannot convert image: palette is empty."
 msgstr "Не можна перетворити зображення: палітра порожня."
 
 #: ../app/core/gimpimage-convert.c:809
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to RGB"
-msgstr "Перетворення зображення у RGB"
+msgstr "Перетворити зображення у RGB"
 
 #: ../app/core/gimpimage-convert.c:813
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
-msgstr "Перетворення зображення у відтінки сірого"
+msgstr "Перетворити зображення у відтінки сірого"
 
 #: ../app/core/gimpimage-convert.c:817
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
-msgstr "Перетворення зображення у індексоване"
+msgstr "Перетворити зображення у індексоване"
 
 #: ../app/core/gimpimage-convert.c:896
 msgid "Converting to indexed colors (stage 2)"
@@ -8139,76 +8111,64 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Триває перетворення у індексовані кольори (3 етап)..."
 
 #: ../app/core/gimpimage-crop.c:129
-#, fuzzy
 msgctxt "undo-type"
 msgid "Crop Image"
-msgstr "Кадрування зображення"
+msgstr "Обрізати зображення"
 
 #: ../app/core/gimpimage-crop.c:132 ../app/core/gimpimage-resize.c:86
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize Image"
-msgstr "Зміна розміру зображення"
+msgstr "Змінити розмір зображення"
 
 #: ../app/core/gimpimage-guides.c:52
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
-msgstr "Додавання горизонтальної напрямної"
+msgstr "Додати горизонтальну напрямну"
 
 #: ../app/core/gimpimage-guides.c:76
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
-msgstr "Додавання вертикальної напрямної"
+msgstr "Додати вертикальну напрямну"
 
 #: ../app/core/gimpimage-guides.c:117
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Guide"
 msgstr "Вилучити напрямну"
 
 #: ../app/core/gimpimage-guides.c:144
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Guide"
-msgstr "Переміщення напрямної"
+msgstr "Перемістити напрямну"
 
 #: ../app/core/gimpimage-item-list.c:51
-#, fuzzy
 msgctxt "undo-type"
 msgid "Translate Items"
-msgstr "Maxim Dziumanenko"
+msgstr "Перекласти об'єкти"
 
 #: ../app/core/gimpimage-item-list.c:78
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip Items"
 msgstr "Віддзеркалити об'єкти"
 
 #: ../app/core/gimpimage-item-list.c:105
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Items"
-msgstr "Обертання об'єктів"
+msgstr "Обернути об'єкти"
 
 #: ../app/core/gimpimage-item-list.c:135
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform Items"
-msgstr "Перетворення об'єктів"
+msgstr "Перетворити об'єкти"
 
 #: ../app/core/gimpimage-merge.c:132
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
-msgstr "Об'єднання видимих шарів"
+msgstr "Об'єднати видимі шари"
 
 #: ../app/core/gimpimage-merge.c:178
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flatten Image"
-msgstr "Зведення зображення"
+msgstr "Звести зображення"
 
 #: ../app/core/gimpimage-merge.c:248
 msgid "Cannot merge down to a layer group."
@@ -8223,22 +8183,19 @@ msgid "There is no visible layer to merge down to."
 msgstr "Немає видимого шару, у якому можна виконати зведення."
 
 #: ../app/core/gimpimage-merge.c:277
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge Down"
-msgstr "Об'єднання з попереднім"
+msgstr "Об'єднати з нижнім"
 
 #: ../app/core/gimpimage-merge.c:305
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge Layer Group"
-msgstr "Звести групу шарів"
+msgstr "Об'єднати групу шарів"
 
 #: ../app/core/gimpimage-merge.c:358
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
-msgstr "Об'єднання видимих контурів"
+msgstr "Об'єднати видимі контури"
 
 #: ../app/core/gimpimage-merge.c:394
 msgid "Not enough visible paths for a merge. There must be at least two."
@@ -8250,40 +8207,34 @@ msgid "Background"
 msgstr "Тло"
 
 #: ../app/core/gimpimage-quick-mask.c:86
-#, fuzzy
 msgctxt "undo-type"
 msgid "Enable Quick Mask"
-msgstr "Увімкнення швидкої маски"
+msgstr "Увімкнути швидку маску"
 
 #: ../app/core/gimpimage-quick-mask.c:136
-#, fuzzy
 msgctxt "undo-type"
 msgid "Disable Quick Mask"
-msgstr "Вимкнення швидкої маски"
+msgstr "Вимкнути швидку маску"
 
 #: ../app/core/gimpimage-sample-points.c:53
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Sample Point"
 msgstr "Додати зразкову точку"
 
 #: ../app/core/gimpimage-sample-points.c:98
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Sample Point"
 msgstr "Вилучити зразкову точку"
 
 #: ../app/core/gimpimage-sample-points.c:126
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Sample Point"
-msgstr "Переміщення зразкової точки"
+msgstr "Перенести зразкову точку"
 
 #: ../app/core/gimpimage-scale.c:87
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Image"
-msgstr "Зміна розміру зображення"
+msgstr "Масштабувати зображення"
 
 #: ../app/core/gimpimage-undo-push.c:862
 #, c-format
@@ -8291,67 +8242,56 @@ msgid "Can't undo %s"
 msgstr "Не вдалось скасувати %s"
 
 #: ../app/core/gimpimage.c:1806
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change Image Resolution"
-msgstr "Зміна роздільної здатності"
+msgstr "Змінити роздільність зображення"
 
 #: ../app/core/gimpimage.c:1858
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change Image Unit"
-msgstr "Зміна одиниць вимірювання"
+msgstr "Змінити одиницю вимірювання"
 
 #: ../app/core/gimpimage.c:2850
-#, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
-msgstr "Додати шуму до зображення"
+msgstr "Додати шум до зображення"
 
 #: ../app/core/gimpimage.c:2891
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
 #: ../app/core/gimpimage.c:3600
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Layer"
-msgstr "Додати шару"
+msgstr "Додати шар"
 
 #: ../app/core/gimpimage.c:3650 ../app/core/gimpimage.c:3670
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
 #: ../app/core/gimpimage.c:3663
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
 #: ../app/core/gimpimage.c:3832
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
 #: ../app/core/gimpimage.c:3870 ../app/core/gimpimage.c:3882
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
 #: ../app/core/gimpimage.c:3936
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Path"
-msgstr "Додавання контуру"
+msgstr "Додати контур"
 
 #: ../app/core/gimpimage.c:3967
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -8412,25 +8352,21 @@ msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдалось відкрити файл мініатюри '%s': %s"
 
 #: ../app/core/gimpitem.c:1815
-#, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite"
-msgstr "Додати шуму"
+msgstr "Додати шум"
 
 #: ../app/core/gimpitem.c:1825
-#, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Додати шум до об'єкта"
 
 #: ../app/core/gimpitem.c:1876 ../app/core/gimpitem.c:1883
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Вилучити шум з об'єкта"
 
 #: ../app/core/gimplayer-floating-sel.c:95
-#, fuzzy
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Прикріпити рухомий вибір"
@@ -8444,76 +8380,64 @@ msgstr ""
 "масці шару чи каналу."
 
 #: ../app/core/gimplayer-floating-sel.c:133
-#, fuzzy
 msgctxt "undo-type"
 msgid "Floating Selection to Layer"
-msgstr "Рухомий вибір у шарі"
+msgstr "Рухомий вибір у шар"
 
 #: ../app/core/gimplayer.c:268
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rename Layer"
-msgstr "Перейменування шару"
+msgstr "Перейменувати шар"
 
 #: ../app/core/gimplayer.c:269
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Layer"
-msgstr "Переміщення шару"
+msgstr "Перенести шар"
 
 #: ../app/core/gimplayer.c:270
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Layer"
-msgstr "Масштабування шару"
+msgstr "Масштабувати шар"
 
 #: ../app/core/gimplayer.c:271
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize Layer"
-msgstr "Зміна розміру шару"
+msgstr "Змінити розмір шару"
 
 #: ../app/core/gimplayer.c:272
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip Layer"
-msgstr "Віддзеркалення шару"
+msgstr "Віддзеркалити шар"
 
 #: ../app/core/gimplayer.c:273
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Layer"
-msgstr "Обертання шару"
+msgstr "Обернути шар"
 
 #: ../app/core/gimplayer.c:276
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder Layer"
-msgstr "Реорганізувати шар"
+msgstr "Перевпорядкувати шар"
 
 #: ../app/core/gimplayer.c:277
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Layer"
-msgstr "Піднімання шару"
+msgstr "Підняти шар"
 
 #: ../app/core/gimplayer.c:278
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
-msgstr "Піднімання шару догори"
+msgstr "Підняти шар догори"
 
 #: ../app/core/gimplayer.c:279
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Layer"
-msgstr "Опускання шару"
+msgstr "Опустити шар"
 
 #: ../app/core/gimplayer.c:280
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
-msgstr "Опускання шару додолу"
+msgstr "Опустити шар додолу"
 
 #: ../app/core/gimplayer.c:281
 msgid "Layer cannot be raised higher."
@@ -8548,58 +8472,49 @@ msgstr ""
 "Не можна додавати маску шару, яка відрізняється розмірами від вказаного шару."
 
 #: ../app/core/gimplayer.c:1442
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Layer Mask"
-msgstr "Додавання маски шару"
+msgstr "Додати маску шару"
 
 #: ../app/core/gimplayer.c:1560
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
-msgstr "Перетворення альфа-каналу у маску"
+msgstr "Перетворити альфу в маску"
 
 #: ../app/core/gimplayer.c:1730
-#, fuzzy
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
-msgstr "Застосування маски шару"
+msgstr "Застосувати маску шару"
 
 #: ../app/core/gimplayer.c:1731
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Вилучити маску шару"
 
 #: ../app/core/gimplayer.c:1850
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
-msgstr "Додавання альфа-каналу"
+msgstr "Додати канал альфи"
 
 #: ../app/core/gimplayer.c:1904
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Вилучити канал альфи"
 
 #: ../app/core/gimplayer.c:1924
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Шар до розміру зображення"
 
 #: ../app/core/gimplayermask.c:108
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Layer Mask"
-msgstr "Переміщення маски шару"
+msgstr "Перенести маску шару"
 
 #: ../app/core/gimplayermask.c:109
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
-msgstr "Маска шару -> Виділене"
+msgstr "Маска шару до вибору"
 
 #: ../app/core/gimplayermask.c:183
 #, c-format
@@ -8607,19 +8522,16 @@ msgid "Cannot rename layer masks."
 msgstr "Не вдалось перейменувати маски шарів."
 
 #: ../app/core/gimplayermask.c:264
-#, fuzzy
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
-msgstr "_Вимкнути маску шару"
+msgstr "Увімкнути маску шару"
 
 #: ../app/core/gimplayermask.c:265
-#, fuzzy
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
-msgstr "_Вимкнути маску шару"
+msgstr "Вимкнути маску шару"
 
 #: ../app/core/gimplayermask.c:327
-#, fuzzy
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Показати маску шару"
@@ -8733,64 +8645,54 @@ msgid "Please wait"
 msgstr "Будь ласка, зачекайте"
 
 #: ../app/core/gimpselection.c:155
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Selection"
-msgstr "Переміщення виділеного"
+msgstr "Перенести вибране"
 
 #: ../app/core/gimpselection.c:156
-#, fuzzy
 msgctxt "undo-type"
 msgid "Stroke Selection"
-msgstr "Обведення виділеної ділянки"
+msgstr "Обвести вибране"
 
 #: ../app/core/gimpselection.c:172
-#, fuzzy
 msgctxt "undo-type"
 msgid "Feather Selection"
-msgstr "Розмивання виділеної ділянки"
+msgstr "Розмити вибране"
 
 #: ../app/core/gimpselection.c:173
-#, fuzzy
 msgctxt "undo-type"
 msgid "Sharpen Selection"
-msgstr "Різкість виділеної ділянку"
+msgstr "Загострити вибране"
 
 #: ../app/core/gimpselection.c:174
-#, fuzzy
 msgctxt "undo-type"
 msgid "Select None"
-msgstr "Виділення знято"
+msgstr "Нічого не вибирати"
 
 #: ../app/core/gimpselection.c:175
-#, fuzzy
 msgctxt "undo-type"
 msgid "Select All"
-msgstr "Виділити все"
+msgstr "Вибрати все"
 
 #: ../app/core/gimpselection.c:176
-#, fuzzy
 msgctxt "undo-type"
 msgid "Invert Selection"
-msgstr "Інвертувати виділення"
+msgstr "Розвернути вибране"
 
 #: ../app/core/gimpselection.c:177
-#, fuzzy
 msgctxt "undo-type"
 msgid "Border Selection"
-msgstr "Межа виділення"
+msgstr "Межа вибраного"
 
 #: ../app/core/gimpselection.c:178
-#, fuzzy
 msgctxt "undo-type"
 msgid "Grow Selection"
-msgstr "Збільшення виділеного"
+msgstr "Збільшити вибране"
 
 #: ../app/core/gimpselection.c:179
-#, fuzzy
 msgctxt "undo-type"
 msgid "Shrink Selection"
-msgstr "Скорочення виділеного"
+msgstr "Скоротити вибране"
 
 #: ../app/core/gimpselection.c:286
 msgid "There is no selection to stroke."
@@ -8805,7 +8707,6 @@ msgid "Cannot float selection because the selected region is empty."
 msgstr "Не вдалось вирізати/скопіювати, тому що виділена ділянка порожня."
 
 #: ../app/core/gimpselection.c:854
-#, fuzzy
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Рухомий вибір"
@@ -9190,7 +9091,7 @@ msgstr "Відсічений по нижньому шару"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:114
 msgid "Merge within active _group only"
-msgstr ""
+msgstr "Об'єднати лише в межах чинних _груп"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:127
 msgid "_Discard invisible layers"
@@ -9919,9 +9820,8 @@ msgid "Pointer re_ndering:"
 msgstr "Відтворення _курсору:"
 
 #: ../app/dialogs/preferences-dialog.c:2124
-#, fuzzy
 msgid "Pointer _handedness:"
-msgstr "Відображення _курсору:"
+msgstr "Хіральність _курсору:"
 
 #: ../app/dialogs/preferences-dialog.c:2136
 msgid "Image Window Appearance"
@@ -10509,13 +10409,11 @@ msgid "Path name:"
 msgstr "Назва контуру:"
 
 #: ../app/display/display-enums.c:60
-#, fuzzy
 msgctxt "guides-type"
 msgid "No guides"
-msgstr "Без напрямних"
+msgstr "Немає напрямних"
 
 #: ../app/display/display-enums.c:61
-#, fuzzy
 msgctxt "guides-type"
 msgid "Center lines"
 msgstr "Ліній у центрі"
@@ -10524,37 +10422,33 @@ msgstr "Ліній у центрі"
 #, fuzzy
 msgctxt "guides-type"
 msgid "Rule of thirds"
-msgstr "Правило третіх частих"
+msgstr "Правило третин"
 
 #: ../app/display/display-enums.c:63
 #, fuzzy
 msgctxt "guides-type"
 msgid "Rule of fifths"
-msgstr "Правило третіх частих"
+msgstr "Правило п'ятин"
 
 #: ../app/display/display-enums.c:64
-#, fuzzy
 msgctxt "guides-type"
 msgid "Golden sections"
-msgstr "Золотий перетин"
+msgstr "Золоті розділи"
 
 #: ../app/display/display-enums.c:65
-#, fuzzy
 msgctxt "guides-type"
 msgid "Diagonal lines"
 msgstr "Діагональні лінії"
 
 #: ../app/display/display-enums.c:66
-#, fuzzy
 msgctxt "guides-type"
 msgid "Number of lines"
-msgstr "Число ліній сітки"
+msgstr "Кількість ліній"
 
 #: ../app/display/display-enums.c:67
-#, fuzzy
 msgctxt "guides-type"
 msgid "Line spacing"
-msgstr "Відстань між лініями сітки"
+msgstr "Міжрядковий інтервал"
 
 #: ../app/display/gimpcursorview.c:210 ../app/display/gimpcursorview.c:216
 #: ../app/display/gimpcursorview.c:235 ../app/display/gimpcursorview.c:241
@@ -10836,16 +10730,14 @@ msgid "Invalid character sequence in URI"
 msgstr "Неправильна послідовність символів у URL"
 
 #: ../app/gegl/gimp-gegl-enums.c:24
-#, fuzzy
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
-msgstr "Створення нового зображення"
+msgstr "Створити або врегулювати клітку"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
-#, fuzzy
 msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
-msgstr "Зробити розмір шару рівним розміру зображення"
+msgstr "Деформувати клітку для деформування зображення"
 
 #: ../app/gegl/gimpcurvesconfig.c:385
 msgid "not a GIMP Curves file"
@@ -10861,23 +10753,24 @@ msgstr "не є файлом кольорових рівнів IMP"
 
 #: ../app/gegl/gimpoperationcagecoefcalc.c:65
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
-msgstr ""
+msgstr "Обчислити набір коефіцієнтів буфера для інструменту клітки GIMP"
 
 #: ../app/gegl/gimpoperationcagetransform.c:104
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
 msgstr ""
+"Перетворити набір коефіцієнтів буфера, щоб координувати буфер для "
+"інструменту клітки GIMP"
 
 #: ../app/gegl/gimpoperationcagetransform.c:125
-#, fuzzy
 msgid "Fill with plain color"
-msgstr "Заповнити кольором _тла"
+msgstr "Заповнити простим кольорм"
 
 #: ../app/gegl/gimpoperationcagetransform.c:126
 #: ../app/tools/gimpcageoptions.c:144
 msgid "Fill the original position of the cage with a plain color"
-msgstr ""
+msgstr "Заповнити початкові позиції клітки простим кольором"
 
 #. initialize the document history
 #: ../app/gui/gui.c:421
@@ -10953,50 +10846,48 @@ msgid "Paint"
 msgstr "Малювання"
 
 #: ../app/paint/gimppaintoptions.c:145
-#, fuzzy
 msgid "Brush Size"
-msgstr "Промені пензля"
+msgstr "Розмір пензля"
 
 #: ../app/paint/gimppaintoptions.c:159
 msgid "Every stamp has its own opacity"
-msgstr ""
+msgstr "Кожен штамп має власну прозорість"
 
 #: ../app/paint/gimppaintoptions.c:165
 msgid "Ignore fuzziness of the current brush"
-msgstr ""
+msgstr "Зігнорувати розмитістю поточного пензля"
 
 #: ../app/paint/gimppaintoptions.c:170
 msgid "Scatter brush as you paint"
-msgstr ""
+msgstr "Розкидати пензель протягом малювання "
 
 #: ../app/paint/gimppaintoptions.c:174
 msgid "Distance of scattering"
-msgstr ""
+msgstr "Відстань розкидання"
 
 #: ../app/paint/gimppaintoptions.c:184
 msgid "Distance over which strokes fade out"
-msgstr ""
+msgstr "Відстань, на якій зникатимуть обведення"
 
 #: ../app/paint/gimppaintoptions.c:192
 msgid "Reverse direction of fading"
-msgstr ""
+msgstr "Зворотний напрям згасання"
 
 #: ../app/paint/gimppaintoptions.c:196
 msgid "How fade is repeated as you paint"
-msgstr ""
+msgstr "Як повторюється зникнення протягом малювання"
 
 #: ../app/paint/gimppaintoptions.c:255
-#, fuzzy
 msgid "Paint smoother strokes"
-msgstr "Транслювати обведення контуру"
+msgstr "Малювати гладкі обведення"
 
 #: ../app/paint/gimppaintoptions.c:259
 msgid "Depth of smoothing"
-msgstr ""
+msgstr "Глибина згладжування"
 
 #: ../app/paint/gimppaintoptions.c:263
 msgid "Gravity of the pen"
-msgstr ""
+msgstr "Тяжкість пера"
 
 #: ../app/paint/gimppencil.c:41 ../app/tools/gimppenciltool.c:50
 msgid "Pencil"
@@ -11201,41 +11092,40 @@ msgid "Paint method '%s' does not exist"
 msgstr "Метод малювання '%s' не існує"
 
 #: ../app/pdb/gimppdb-utils.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
-"Неможливо використовувати об'єкт '%s' (%d), оскільки він не доданий у "
-"зображення"
+"Об'єкт «%s» (%d) неможливо використовувати, бо його не додано до зображення"
 
 #: ../app/pdb/gimppdb-utils.c:328
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
-"Неможливо використовувати об'єкт '%s' (%d), оскільки він не доданий у "
+"Об'єкт «%s» (%d) неможливо використовувати, бо його долучено до іншого "
 "зображення"
 
 #: ../app/pdb/gimppdb-utils.c:357
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
 msgstr ""
-"Неможливо використовувати об'єкт '%s' (%d), оскільки він не доданий у "
-"зображення"
+"Об'єкт «%s» (%d) неможливо використовувати, бо він не є прямим нащадком "
+"дерева об'єктів"
 
 #: ../app/pdb/gimppdb-utils.c:385
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"Неможливо використовувати об'єкт '%s' (%d), оскільки він не доданий у "
-"зображення"
+"Об'єкти «%s» (%d) і «%s» (%d) неможливо використовувати, бо вони не є "
+"частиною одного й того ж дерева об'єктів"
 
 #: ../app/pdb/gimppdb-utils.c:410
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
-msgstr ""
+msgstr "Об'єкт «%s» (%d) повинен бути предком «%s» (%d)"
 
 #: ../app/pdb/gimppdb-utils.c:434
 #, c-format
@@ -11254,9 +11144,9 @@ msgstr ""
 "Неможливо змінити об'єкт '%s' (%d), оскільки його зміст замкнено від змін"
 
 #: ../app/pdb/gimppdb-utils.c:481
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
-msgstr "Неможливо змінити об'єкт '%s' (%d), оскільки група це група об'єктів"
+msgstr "Об'єкт «%s» (%d) неможливо використовувати, бо це не груповий об'єкт"
 
 #: ../app/pdb/gimppdb-utils.c:501
 #, c-format
@@ -11264,10 +11154,9 @@ msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "Неможливо змінити об'єкт '%s' (%d), оскільки група це група об'єктів"
 
 #: ../app/pdb/gimppdb-utils.c:522
-#, fuzzy, c-format
+#, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
-msgstr ""
-"Неможливо використовувати об'єкт '%s' (%d), оскільки він не є текстовим шаром"
+msgstr "Шар «%s» (%d) неможливо використовувати, бо це не текстовий шар"
 
 #: ../app/pdb/gimppdb-utils.c:563
 #, c-format
@@ -11688,27 +11577,24 @@ msgstr "Лише рух"
 
 #: ../app/tools/gimpairbrushtool.c:91 ../app/tools/gimpconvolvetool.c:222
 #: ../app/tools/gimpsmudgetool.c:91
-#, fuzzy
 msgid "Rate"
 msgstr "Швидкість"
 
 #: ../app/tools/gimpairbrushtool.c:97
-#, fuzzy
 msgid "Flow"
 msgstr "Потік"
 
 #: ../app/tools/gimpalignoptions.c:91
 msgid "Reference image object a layer will be aligned on"
-msgstr ""
+msgstr "Посилання об'єкта зображення на шар буде вирівняно на"
 
 #: ../app/tools/gimpalignoptions.c:98
-#, fuzzy
 msgid "Horizontal offset for distribution"
-msgstr "Кольоровий баланс: корекція розподілу кольору"
+msgstr "Горизонтальний зсув для розповсюдження"
 
 #: ../app/tools/gimpalignoptions.c:104
 msgid "Vertical offset for distribution"
-msgstr ""
+msgstr "Вертикальний зсув для росповсюдження"
 
 #: ../app/tools/gimpalignoptions.c:247 ../app/tools/gimpalignoptions.c:298
 msgid "Align left edge of target"
@@ -11813,9 +11699,8 @@ msgid "Click to add this path to the list"
 msgstr "Натисніть, щоб вибрати контур для редагування"
 
 #: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:339
-#, fuzzy
 msgid "Gradient"
-msgstr "Градієнти"
+msgstr "Градієнт"
 
 #: ../app/tools/gimpblendoptions.c:231 ../app/widgets/gimpbrusheditor.c:139
 msgid "Shape:"
@@ -11830,9 +11715,8 @@ msgid "Adaptive supersampling"
 msgstr "Адаптивна інтерполяція"
 
 #: ../app/tools/gimpblendoptions.c:268
-#, fuzzy
 msgid "Max depth"
-msgstr "Макс. глибина:"
+msgstr "Максимальна глибина"
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blend"
@@ -11851,9 +11735,8 @@ msgid "Blend does not operate on indexed layers."
 msgstr "Градієнтне заповнення не діє на індексовані шари."
 
 #: ../app/tools/gimpblendtool.c:187
-#, fuzzy
 msgid "No gradient available for use with this tool."
-msgstr "Немає текстур, доступних для використання з цим інструментом."
+msgstr "Немає градієнту, доступного для використання з цим інструментом."
 
 #: ../app/tools/gimpblendtool.c:441 ../app/tools/gimppainttool.c:618
 #, c-format
@@ -11911,7 +11794,7 @@ msgstr "Змінити ці параметри як рівні"
 
 #: ../app/tools/gimpbucketfilloptions.c:93
 msgid "Which area will be filled"
-msgstr ""
+msgstr "Яку ділянку буде заповнено"
 
 #: ../app/tools/gimpbucketfilloptions.c:98
 msgid "Allow completely transparent regions to be filled"
@@ -11928,7 +11811,7 @@ msgstr "Максимальна відмінність кольорів"
 
 #: ../app/tools/gimpbucketfilloptions.c:115
 msgid "Criterion used for determining color similarity"
-msgstr ""
+msgstr "Критерії для визначення подібності кольорів"
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:226
@@ -12000,31 +11883,28 @@ msgid "Select by Color"
 msgstr "Виділення за кольором"
 
 #: ../app/tools/gimpcagetool.c:152 ../app/tools/gimpcagetool.c:1154
-#, fuzzy
 msgid "Cage Transform"
-msgstr "Перетворення"
+msgstr "Перетворення клітки"
 
 #: ../app/tools/gimpcagetool.c:153
 msgid "Cage Transform: Deform a selection with a cage"
-msgstr ""
+msgstr "Перетворення клітки: деформує вибране разом з кліткою"
 
 #: ../app/tools/gimpcagetool.c:154
-#, fuzzy
 msgid "_Cage Transform"
-msgstr "Пере_творення"
+msgstr "Перетворення _клітки"
 
 #: ../app/tools/gimpcagetool.c:351
 msgid "Press ENTER to commit the transform"
-msgstr ""
+msgstr "Натисніть «ENTER», щоб здійснити перетворення"
 
 #: ../app/tools/gimpcagetool.c:1095
 msgid "Computing Cage Coefficients"
-msgstr ""
+msgstr "Обчислення коефіцієнту клітки"
 
 #: ../app/tools/gimpcagetool.c:1272
-#, fuzzy
 msgid "Cage transform"
-msgstr "Перетворення"
+msgstr "Перетворення клітки"
 
 #: ../app/tools/gimpclonetool.c:61
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -12187,9 +12067,8 @@ msgstr "Середній радіус піпетки"
 #: ../app/tools/gimprectangleselectoptions.c:163
 #: ../app/tools/gimpselectionoptions.c:272
 #: ../app/widgets/gimpbrusheditor.c:155
-#, fuzzy
 msgid "Radius"
-msgstr "Радіус:"
+msgstr "Радіус"
 
 #: ../app/tools/gimpcoloroptions.c:163
 msgid "Sample average"
