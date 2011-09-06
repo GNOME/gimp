@@ -6,6 +6,7 @@
 app/about.h
 app/app.c
 app/batch.c
+app/language.c
 app/main.c
 app/sanity.c
 app/version.c

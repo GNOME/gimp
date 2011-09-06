@@ -53,6 +53,8 @@ libapp_sources = \
 	batch.h		\
 	errors.c	\
 	errors.h	\
+	language.c	\
+	language.h	\
 	sanity.c	\
 	sanity.h	\
 	signals.c	\
