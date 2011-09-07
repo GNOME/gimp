@@ -5,18 +5,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
-"cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-07-08 21:22+0000\n"
-"PO-Revision-Date: 2011-08-01 19:38+0300\n"
-"Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-08-28 18:21+0000\n"
+"PO-Revision-Date: 2011-08-31 23:07+0300\n"
+"Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.1\n"
+"X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
+"Language: lv\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
 #: ../plug-ins/script-fu/script-fu-console.c:197
@@ -214,8 +215,7 @@ msgid ""
 "Please close all Script-Fu windows and try again."
 msgstr ""
 "Jūs nevarat lietot \"Atsvaidzināt skriptus\" kamēr Script-Fu dialoglodziņš "
-"ir "
-"atvērts. Lūdzu, aizveriet Script-Fu logus un mēģināt vēlreiz."
+"ir atvērts. Lūdzu, aizveriet Script-Fu logus un mēģināt vēlreiz."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -968,8 +968,8 @@ msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-"Izveidot starpslāņus, lai veidotu animētu 'iededzinātu' pāreju starp "
-"diviem slāņiem"
+"Izveidot starpslāņus, lai veidotu animētu 'iededzinātu' pāreju starp diviem "
+"slāņiem"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
@@ -1201,16 +1201,17 @@ msgid "Highlight balance"
 msgstr "Izgaismojumu balanss"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
+#| msgid "Layer1"
+msgid "Layer 1"
+msgstr "Slānis 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
 msgid "Layer 2"
 msgstr "Slānis 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
 msgid "Layer 3"
 msgstr "Slānis 3"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
-msgid "Layer1"
-msgstr "Slānis 1"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
 msgid "Stencil C_hrome..."
@@ -1924,8 +1925,12 @@ msgid "_Lava..."
 msgstr "_Lava..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
+#| msgid ""
+#| "Fill a layer with rays emanating outward from its center using the FG "
+#| "color"
 msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
 msgstr ""
 "Aizpildīt slāni ar stariem, ko izstaro no vidus, izmantojot priekšplāna krāsu"
 
@@ -2836,5 +2841,4 @@ msgstr "Izgaismojuma blīvums"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
 msgstr "_Xach efekts..."
-
 

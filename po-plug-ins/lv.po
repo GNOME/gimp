@@ -5,18 +5,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
-"cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-07-08 21:22+0000\n"
-"PO-Revision-Date: 2011-08-01 15:30+0300\n"
-"Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-08-28 18:16+0000\n"
+"PO-Revision-Date: 2011-08-31 23:04+0300\n"
+"Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 1.1\n"
+"X-Generator: Lokalize 1.2\n"
+"Language: lv\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:118
 msgid "Original"
@@ -611,7 +612,7 @@ msgstr "_Vertikāls"
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
 #: ../plug-ins/common/decompose.c:727 ../plug-ins/common/file-cel.c:363
 #: ../plug-ins/common/file-cel.c:366 ../plug-ins/common/file-dicom.c:614
-#: ../plug-ins/common/file-gif-load.c:927
+#: ../plug-ins/common/file-gif-load.c:930
 #: ../plug-ins/common/file-jp2-load.c:357 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:881 ../plug-ins/common/file-pnm.c:583
@@ -1075,7 +1076,7 @@ msgstr "Saglabāt kanālu miksera iestatījumus"
 #: ../plug-ins/common/file-tiff-save.c:684 ../plug-ins/common/file-xbm.c:1036
 #: ../plug-ins/common/file-xmc.c:1459 ../plug-ins/common/file-xwd.c:619
 #: ../plug-ins/common/sphere-designer.c:2116
-#: ../plug-ins/file-bmp/bmp-write.c:302 ../plug-ins/file-fits/fits.c:476
+#: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:329 ../plug-ins/file-psd/psd-save.c:1655
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
@@ -3053,7 +3054,7 @@ msgstr "Neatbalstīts bitu dziļums (%d)!"
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1464
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
-#: ../plug-ins/file-bmp/bmp-write.c:313 ../plug-ins/file-fits/fits.c:481
+#: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:286 ../plug-ins/file-psd/psd-save.c:1660
 #: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-xjt/xjt.c:1696
@@ -3220,28 +3221,28 @@ msgstr "Šis nav GIF fails"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Pikseļiem nav kvadrāta forma. Attēls var izskatīties saspiests."
 
-#: ../plug-ins/common/file-gif-load.c:929
+#: ../plug-ins/common/file-gif-load.c:932
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Fons (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:952
+#: ../plug-ins/common/file-gif-load.c:955
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Atver '%s' (kadrs %d)"
 
-#: ../plug-ins/common/file-gif-load.c:981 ../plug-ins/common/iwarp.c:794
+#: ../plug-ins/common/file-gif-load.c:984 ../plug-ins/common/iwarp.c:794
 #: ../plug-ins/common/iwarp.c:829
 #, c-format
 msgid "Frame %d"
 msgstr "Kadrs %d"
 
-#: ../plug-ins/common/file-gif-load.c:983
+#: ../plug-ins/common/file-gif-load.c:986
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Kadrs %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1014
+#: ../plug-ins/common/file-gif-load.c:1017
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3520,7 +3521,8 @@ msgid "Cell-_padding:"
 msgstr "Šūnu _iekšmale:"
 
 #: ../plug-ins/common/file-html-table.c:619
-msgid "The amount of cellpadding."
+#| msgid "The amount of cellpadding."
+msgid "The amount of cell padding."
 msgstr "Šūnu iekšmales apjoms."
 
 #: ../plug-ins/common/file-html-table.c:628
@@ -3528,7 +3530,8 @@ msgid "Cell-_spacing:"
 msgstr "Šūnu at_statums:"
 
 #: ../plug-ins/common/file-html-table.c:632
-msgid "The amount of cellspacing."
+#| msgid "The amount of cellspacing."
+msgid "The amount of cell spacing."
 msgstr "Šūnu atstatumu apjoms."
 
 #: ../plug-ins/common/file-jp2-load.c:96
@@ -3588,8 +3591,8 @@ msgid ""
 "Image component %d of image '%s' does not have the same size as the image. "
 "This is currently not supported."
 msgstr ""
-"Attēla komponentei %d attēlam '%s' nav tāds pat izmērs kā attēlam. "
-"Pašlaik tas nav atbalstīts."
+"Attēla komponentei %d attēlam '%s' nav tāds pat izmērs kā attēlam. Pašlaik "
+"tas nav atbalstīts."
 
 #: ../plug-ins/common/file-jp2-load.c:337
 #, c-format
@@ -3719,8 +3722,7 @@ msgid ""
 "layer. The image you are exporting only has one layer."
 msgstr ""
 "Šīs opcijas ir pieejamas tikai tad, kad eksportētajam attēlam ir ne vairāk "
-"kā "
-"viens slānis. Attēlam, ko eksportējat, ir tikai viens slānis."
+"kā viens slānis. Attēlam, ko eksportējat, ir tikai viens slānis."
 
 #: ../plug-ins/common/file-mng.c:1605
 msgid "MNG animation"
@@ -4716,13 +4718,17 @@ msgid "XMC Options"
 msgstr "XMC opcijas"
 
 #: ../plug-ins/common/file-xmc.c:1089
-msgid "Enter the X coordinate of the hot spot.The origin is top left corner."
+#| msgid ""
+#| "Enter the X coordinate of the hot spot.The origin is top left corner."
+msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Ievadiet karstvietas X koordinātu. Sākuma punkts ir augšējais kreisais "
 "stūris."
 
 #: ../plug-ins/common/file-xmc.c:1107
-msgid "Enter the Y coordinate of the hot spot.The origin is top left corner."
+#| msgid ""
+#| "Enter the Y coordinate of the hot spot.The origin is top left corner."
+msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Ievadiet karstvietas Y koordinātu. Sākuma punkts ir augšējais kreisais "
 "stūris."
@@ -4874,11 +4880,16 @@ msgstr ""
 "Dažās vidēs tas var aizņem pārāk daudz ekrāna vietas."
 
 #: ../plug-ins/common/file-xmc.c:1728
+#| msgid ""
+#| "Your cursor was successfully saved but it contains one or more frames "
+#| "which nominal size is not supported by gnome-appearance-properties.\n"
+#| "You can satisfy it by checking \"Replace the size of all frame...\" in "
+#| "save dialog, or Your cursor may not appear in gnome-appearance-properties."
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames which "
+"Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by gnome-appearance-properties.\n"
-"You can satisfy it by checking \"Replace the size of all frame...\" in save "
-"dialog, or Your cursor may not appear in gnome-appearance-properties."
+"You can satisfy it by checking \"Replace the size of all frame...\" in the "
+"save dialog, or your cursor may not appear in gnome-appearance-properties."
 msgstr ""
 "Kursors tika veiksmīgi saglabāts, bet tas satur vienu vai vairākus kadrus, "
 "kuru nominālo izmēru neatbalsta gnome-appearance-properties.\n"
@@ -5547,8 +5558,7 @@ msgid ""
 "image."
 msgstr ""
 "Klikšķiniet un velciet priekšskatījumā, lai definētu kropļojumus, ko "
-"izmantot "
-"attēlā."
+"izmantot attēlā."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -6587,8 +6597,7 @@ msgid ""
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
 "Ja nav atzīmēts, kartējot apakšējā rinda tiks novietota vidū un augšējā "
-"rinda "
-"— ārpusē. Ja atzīmēts, notiks otrādi."
+"rinda — ārpusē. Ja atzīmēts, notiks otrādi."
 
 #: ../plug-ins/common/polar-coords.c:695
 msgid "To _polar"
@@ -7655,8 +7664,8 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
-"Mērvienības definīcija pirms GIMP iziešanas tiks saglabāta tikai tad, ja "
-"šī kolonna ir atzīmēta."
+"Mērvienības definīcija pirms GIMP iziešanas tiks saglabāta tikai tad, ja šī "
+"kolonna ir atzīmēta."
 
 #: ../plug-ins/common/unit-editor.c:96
 msgid "ID"
@@ -7688,9 +7697,8 @@ msgid ""
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
 "Šis lauks dod norādi ievades laukiem. Tas norāda, cik daudz ciparu aiz "
-"komata "
-"laukam vajadzētu atstāt, lai nodrošinātu aptuveni tādu pašu precizitāti, kā "
-"\"colla\" ievades lauks, ar diviem decimāliem cipariem."
+"komata laukam vajadzētu atstāt, lai nodrošinātu aptuveni tādu pašu "
+"precizitāti, kā \"colla\" ievades lauks, ar diviem decimāliem cipariem."
 
 #: ../plug-ins/common/unit-editor.c:104
 msgid "Symbol"
@@ -8470,35 +8478,60 @@ msgstr "Neatbalstīts vai nederīgs bitu dziļums."
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitu karte negaidīti aprāvusies."
 
-#: ../plug-ins/file-bmp/bmp-write.c:187 ../plug-ins/file-bmp/bmp-write.c:213
+#: ../plug-ins/file-bmp/bmp-write.c:191 ../plug-ins/file-bmp/bmp-write.c:217
 msgid "Cannot save indexed image with transparency in BMP file format."
 msgstr "Nevar saglabāt indeksēto attēlu ar caurspīdīgumu BM failu formātā."
 
-#: ../plug-ins/file-bmp/bmp-write.c:189 ../plug-ins/file-bmp/bmp-write.c:215
+#: ../plug-ins/file-bmp/bmp-write.c:193 ../plug-ins/file-bmp/bmp-write.c:219
 msgid "Alpha channel will be ignored."
 msgstr "Alfa kanāls tiks ignorēts."
 
-#: ../plug-ins/file-bmp/bmp-write.c:834
+#. Dialog init
+#: ../plug-ins/file-bmp/bmp-write.c:849
 msgid "BMP"
 msgstr "BMP"
 
-#: ../plug-ins/file-bmp/bmp-write.c:844
+#. Run-Length Encoded
+#: ../plug-ins/file-bmp/bmp-write.c:860
 msgid "_Run-Length Encoded"
 msgstr "Secīgā atkā_rtojumu kodēšana"
 
-#: ../plug-ins/file-bmp/bmp-write.c:856 ../plug-ins/file-jpeg/jpeg-save.c:898
+#. Compatibility Options
+#: ../plug-ins/file-bmp/bmp-write.c:873
+#| msgid "Table Options"
+msgid "Co_mpatibility Options"
+msgstr "Savietoja_mības opcijas"
+
+#: ../plug-ins/file-bmp/bmp-write.c:883
+#| msgid "Enter license information."
+msgid "_Do not write color space information"
+msgstr "_Nerakstīt krāsu telpas informāciju"
+
+#: ../plug-ins/file-bmp/bmp-write.c:885
+msgid ""
+"Some applications can not read BMP images that include color space "
+"information. GIMP writes color space information by default. Enabling this "
+"option will cause GIMP to not write color space information to the file."
+msgstr ""
+"Dažas lietotnes nevar nolasīt BMP attēlus, kas iekļauj krāsu telpas "
+"informāciju. GIMP pēc noklusējuma raksta krāsu telpas informāciju. Šīs "
+"opcijas "
+"aktivēšana liks GIMP nerakstīt krāsu telpas informāciju failā."
+
+#. Advanced Options
+#: ../plug-ins/file-bmp/bmp-write.c:901 ../plug-ins/file-jpeg/jpeg-save.c:898
 msgid "_Advanced Options"
 msgstr "P_apildu opcijas"
 
-#: ../plug-ins/file-bmp/bmp-write.c:871
+#: ../plug-ins/file-bmp/bmp-write.c:916
 msgid "16 bits"
 msgstr "16 biti"
 
-#: ../plug-ins/file-bmp/bmp-write.c:907
+#: ../plug-ins/file-bmp/bmp-write.c:952
 msgid "24 bits"
 msgstr "24 biti"
 
-#: ../plug-ins/file-bmp/bmp-write.c:924
+#: ../plug-ins/file-bmp/bmp-write.c:969
 msgid "32 bits"
 msgstr "32 biti"
 
@@ -8734,8 +8767,8 @@ msgid ""
 "quality and file size."
 msgstr ""
 "Ja oriģinālais attēls tika ielādēts no JPEG faila, izmantojot nestandarta "
-"kvalitātes iestatījumus (kvantēšanas tabulas), šīs opcijas aktivēšanas "
-"dos apmēram to pašu kvalitāti un faila izmēru."
+"kvalitātes iestatījumus (kvantēšanas tabulas), šīs opcijas aktivēšanas dos "
+"apmēram to pašu kvalitāti un faila izmēru."
 
 #. Subsampling
 #: ../plug-ins/file-jpeg/jpeg-save.c:1082
@@ -8803,8 +8836,9 @@ msgstr "Kļūda, ielādējot PSD failu: %s"
 
 #: ../plug-ins/file-psd/psd-load.c:269
 #, c-format
-msgid "Not a valid photoshop document file"
-msgstr "Nav derīgs photoshop dokumenta fails"
+#| msgid "Not a valid photoshop document file"
+msgid "Not a valid Photoshop document file"
+msgstr "Nav derīgs Photoshop dokumenta fails"
 
 #: ../plug-ins/file-psd/psd-load.c:276
 #, c-format
@@ -8920,8 +8954,7 @@ msgid ""
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
 "Nevar saglabāt '%s'. PSD faila formāts neatbalsta attēlus ar slāņiem, kas ir "
-"\\ "
-"vairāk kā 30,000 pikseļus plati vai augsti."
+"\\ vairāk kā 30,000 pikseļus plati vai augsti."
 
 #: ../plug-ins/file-psd/psd-util.c:50
 msgid "Unexpected end of file"
@@ -9546,8 +9579,7 @@ msgid ""
 "ones and vice versa"
 msgstr ""
 "Ja aktivēsiet šo opciju, augstākas krāsu vērtības tiks apmainītas ar "
-"zemākām, "
-"un otrādi"
+"zemākām, un otrādi"
 
 #. Colormode toggle box
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1113
@@ -9886,8 +9918,8 @@ msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 msgstr ""
-"Slāņa fona veids. Dēļ kopēšanas iepriekšējais slānis tiks kopēts pirms "
-"tiks veikta zīmēšana."
+"Slāņa fona veids. Dēļ kopēšanas iepriekšējais slānis tiks kopēts pirms tiks "
+"veikta zīmēšana."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1335
 msgid "Background:"
@@ -10608,9 +10640,8 @@ msgid ""
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 "Smvektora lauks. Kreisais klikšķis, lai pārvietotu izvēlēto smvektoru; "
-"labais "
-"klikšķis, lai norādītu to uz peles pusi; vidējais klikšķis, lai pievienotu "
-"jaunu smvektoru."
+"labais klikšķis, lai norādītu to uz peles pusi; vidējais klikšķis, lai "
+"pievienotu jaunu smvektoru."
 
 #: ../plug-ins/gimpressionist/sizemap.c:481
 msgid "Select previous smvector"
@@ -11338,9 +11369,9 @@ msgid ""
 "suitable for navigation bars."
 msgstr ""
 "Palīglīnijas ir iepriekš definēti taisnstūri, kas nosedz attēlu. Tie tiek "
-"definēti ar platumu, augstumu un atstatumu starp tiem. Tas ļauj "
-"ātri izveidot biežāk izmantotos attēlu kartes veidus — attēlu sīktēlu "
-"kolekcijas, kas ir piemērotas navigācijas joslām."
+"definēti ar platumu, augstumu un atstatumu starp tiem. Tas ļauj ātri "
+"izveidot biežāk izmantotos attēlu kartes veidus — attēlu sīktēlu kolekcijas, "
+"kas ir piemērotas navigācijas joslām."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:169
 msgid "_Left start at:"
