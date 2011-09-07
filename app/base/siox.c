@@ -555,7 +555,7 @@ depth_first_search (TileManager *mask,
 
       oldx = xx;
 
-      read_pixel_data_1 (mask, xx, yy, &val);
+      tile_manager_read_pixel_data_1 (mask, xx, yy, &val);
 
       if (val && (val != mark))
         {
@@ -566,7 +566,7 @@ depth_first_search (TileManager *mask,
                 b->mustkeep = TRUE;
             }
 
-          write_pixel_data_1 (mask, xx, yy, &mark);
+          tile_manager_write_pixel_data_1 (mask, xx, yy, &mark);
 
           if (yy > y)
             stack = g_slist_prepend (g_slist_prepend

@@ -300,10 +300,10 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
           if (x >= offset_x && x < offset_x + width &&
               y >= offset_y && y < offset_y + height)
             {
-              read_pixel_data_1 (image_map->undo_tiles,
-                                 x - offset_x,
-                                 y - offset_y,
-                                 pixel);
+              tile_manager_read_pixel_data_1 (image_map->undo_tiles,
+                                              x - offset_x,
+                                              y - offset_y,
+                                              pixel);
 
               return TRUE;
             }

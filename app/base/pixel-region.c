@@ -167,7 +167,8 @@ pixel_region_get_row (PixelRegion *PR,
   if (subsample == 1)
     {
       if (PR->tiles)
-        read_pixel_data (PR->tiles, x, y, end - 1, y, data, PR->bytes);
+        tile_manager_read_pixel_data (PR->tiles, x, y, end - 1, y, data,
+                                      PR->bytes);
       else
         memcpy (data, PR->data + x * bpp + y * PR->rowstride, w * bpp);
     }
@@ -206,7 +207,8 @@ pixel_region_set_row (PixelRegion  *PR,
     {
       gint end = x + w;
 
-      write_pixel_data (PR->tiles, x, y, end - 1, y, data, PR->bytes);
+      tile_manager_write_pixel_data (PR->tiles, x, y, end - 1, y, data,
+                                     PR->bytes);
     }
   else
     {
@@ -268,7 +270,7 @@ pixel_region_set_col (PixelRegion  *PR,
   gint end = y + h;
   gint bpp = PR->bytes;
 
-  write_pixel_data (PR->tiles, x, y, x, end-1, data, bpp);
+  tile_manager_write_pixel_data (PR->tiles, x, y, x, end-1, data, bpp);
 }
 
 gboolean

@@ -112,33 +112,33 @@ void          tile_manager_map_over_tile        (TileManager *tm,
                                                  Tile        *tile,
                                                  Tile        *srctile);
 
-void              read_pixel_data    (TileManager  *tm,
-                                      gint          x1,
-                                      gint          y1,
-                                      gint          x2,
-                                      gint          y2,
-                                      guchar       *buffer,
-                                      guint         stride);
+void          tile_manager_read_pixel_data      (TileManager  *tm,
+                                                 gint          x1,
+                                                 gint          y1,
+                                                 gint          x2,
+                                                 gint          y2,
+                                                 guchar       *buffer,
+                                                 guint         stride);
 
-void              write_pixel_data   (TileManager  *tm,
-                                      gint          x1,
-                                      gint          y1,
-                                      gint          x2,
-                                      gint          y2,
-                                      const guchar *buffer,
-                                      guint         stride);
+void          tile_manager_write_pixel_data     (TileManager  *tm,
+                                                 gint          x1,
+                                                 gint          y1,
+                                                 gint          x2,
+                                                 gint          y2,
+                                                 const guchar *buffer,
+                                                 guint         stride);
 
 /*   Fill buffer with the pixeldata for the pixel at coordinates x,y
  *   if x,y is outside the area of the tilemanger, nothing is done.
  */
-void              read_pixel_data_1  (TileManager  *tm,
-                                      gint          x,
-                                      gint          y,
-                                      guchar       *buffer);
+void          tile_manager_read_pixel_data_1    (TileManager  *tm,
+                                                 gint          x,
+                                                 gint          y,
+                                                 guchar       *buffer);
 
-void              write_pixel_data_1 (TileManager  *tm,
-                                      gint          x,
-                                      gint          y,
-                                      const guchar *buffer);
+void          tile_manager_write_pixel_data_1   (TileManager  *tm,
+                                                 gint          x,
+                                                 gint          y,
+                                                 const guchar *buffer);
 
 #endif /* __TILE_MANAGER_H__ */

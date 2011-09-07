@@ -620,7 +620,7 @@ EXPORTS
 	pixel_regions_process
 	pixel_regions_register
 	posterize_lut_setup
-	read_pixel_data_1
+	tile_manager_read_pixel_data_1
 	temp_buf_data
 	temp_buf_data_clear
 	temp_buf_free

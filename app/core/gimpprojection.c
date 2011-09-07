@@ -331,7 +331,7 @@ gimp_projection_get_pixel_at (GimpPickable *pickable,
       y >= tile_manager_height (tiles))
     return FALSE;
 
-  read_pixel_data_1 (tiles, x, y, pixel);
+  tile_manager_read_pixel_data_1 (tiles, x, y, pixel);
 
   return TRUE;
 }

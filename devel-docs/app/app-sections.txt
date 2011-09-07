@@ -9114,10 +9114,10 @@ tile_manager_get_tile_coordinates
 tile_manager_tiles_per_col
 tile_manager_tiles_per_row
 tile_manager_map_over_tile
-read_pixel_data
-write_pixel_data
-read_pixel_data_1
-write_pixel_data_1
+tile_manager_read_pixel_data
+tile_manager_write_pixel_data
+tile_manager_read_pixel_data_1
+tile_manager_write_pixel_data_1
 </SECTION>
 
 <SECTION>

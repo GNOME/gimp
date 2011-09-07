@@ -340,7 +340,8 @@ gimp_transform_region_nearest (TileManager        *orig_tiles,
               if (iu >= u1 && iu < u2 &&
                   iv >= v1 && iv < v2)
                 {
-                  read_pixel_data_1 (orig_tiles, iu - u1, iv - v1, d);
+                  tile_manager_read_pixel_data_1 (orig_tiles, iu - u1, iv - v1,
+                                                  d);
 
                   d += destPR->bytes;
                 }
@@ -857,16 +858,17 @@ sample_bi (TileManager  *tm,
   guchar     C[4][4];
   gint       i;
 
-  /*  fill the color with default values, since read_pixel_data_1
-   *  does nothing, when accesses are out of bounds.
+  /*  fill the color with default values, since
+   *  tile_manager_read_pixel_data_1 does nothing, when accesses are
+   *  out of bounds.
    */
   for (i = 0; i < 4; i++)
     *(guint*) (&C[i]) = *(guint*) (bg_color);
 
-  read_pixel_data_1 (tm, x0, y0, C[0]);
-  read_pixel_data_1 (tm, x1, y0, C[2]);
-  read_pixel_data_1 (tm, x0, y1, C[1]);
-  read_pixel_data_1 (tm, x1, y1, C[3]);
+  tile_manager_read_pixel_data_1 (tm, x0, y0, C[0]);
+  tile_manager_read_pixel_data_1 (tm, x1, y0, C[2]);
+  tile_manager_read_pixel_data_1 (tm, x0, y1, C[1]);
+  tile_manager_read_pixel_data_1 (tm, x1, y1, C[3]);
 
 #define lerp(v1, v2, r) \
         (((guint)(v1) * (FIXED_UNIT - (guint)(r)) + \

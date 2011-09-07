@@ -1013,7 +1013,8 @@ interpolate_nearest (TileManager   *srcTM,
   const gint x = (xfrac <= 0.5) ? x0 : x0 + 1;
   const gint y = (yfrac <= 0.5) ? y0 : y0 + 1;
 
-  read_pixel_data_1 (srcTM, CLAMP (x, 0, w), CLAMP (y, 0, h), pixel);
+  tile_manager_read_pixel_data_1 (srcTM, CLAMP (x, 0, w), CLAMP (y, 0, h),
+                                  pixel);
 }
 
 static inline gdouble

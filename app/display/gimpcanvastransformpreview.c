@@ -946,7 +946,7 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
 
       while (dx--)
         {
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
           offset = pixel[0] + pixel[0] + pixel[0];
 
@@ -971,7 +971,7 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
           register gulong tmp;
           guchar          alpha;
 
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
           offset = pixel[0] + pixel[0] + pixel[0];
           alpha  = INT_MULT (opacity, pixel[1], tmp);
@@ -992,7 +992,7 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
     case GIMP_GRAY_IMAGE:
       while (dx--)
         {
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        pixel[0],
@@ -1013,7 +1013,7 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
           register gulong tmp;
           guchar          alpha;
 
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
           alpha = INT_MULT (opacity, pixel[1], tmp);
 
@@ -1033,7 +1033,7 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
     case GIMP_RGB_IMAGE:
       while (dx--)
         {
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        pixel[0],
@@ -1054,7 +1054,7 @@ gimp_canvas_transform_preview_draw_tri_row (GimpDrawable    *texture,
           register gulong tmp;
           guchar          alpha;
 
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
           alpha = INT_MULT (opacity, pixel[3], tmp);
 
@@ -1188,8 +1188,9 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
           register gulong tmp;
           guchar          alpha;
 
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
+                                          &maskval);
 
           offset = pixel[0] + pixel[0] + pixel[0];
           alpha  = INT_MULT (opacity, maskval, tmp);
@@ -1217,8 +1218,9 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
           register gulong tmp;
           guchar          alpha;
 
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
+                                          &maskval);
 
           offset = pixel[0] + pixel[0] + pixel[0];
           alpha  = INT_MULT3 (opacity, maskval, pixel[1], tmp);
@@ -1244,8 +1246,9 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
           register gulong tmp;
           guchar          alpha;
 
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
+                                          &maskval);
 
           alpha = INT_MULT (opacity, maskval, tmp);
 
@@ -1270,8 +1273,9 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
           register gulong tmp;
           guchar          alpha;
 
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
+                                          &maskval);
 
           alpha = INT_MULT3 (opacity, maskval, pixel[1], tmp);
 
@@ -1296,8 +1300,9 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
           register gulong tmp;
           guchar          alpha;
 
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
+                                          &maskval);
 
           alpha = INT_MULT (opacity, maskval, tmp);
 
@@ -1322,8 +1327,9 @@ gimp_canvas_transform_preview_draw_tri_row_mask (GimpDrawable    *texture,
           register gulong tmp;
           guchar          alpha;
 
-          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          tile_manager_read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          tile_manager_read_pixel_data_1 (masktiles, (gint) mu, (gint) mv,
+                                          &maskval);
 
           alpha = INT_MULT3 (opacity, maskval, pixel[3], tmp);
 
