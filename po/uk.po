@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-01 18:55+0300\n"
-"PO-Revision-Date: 2011-09-06 19:31+0300\n"
+"PO-Revision-Date: 2011-09-07 14:31+0300\n"
 "Last-Translator: Korostil Daniel <ted.korostiled@gmail.com>\n"
 "Language-Team: translation@linux.org.ua\n"
 "Language: uk\n"
@@ -10419,13 +10419,11 @@ msgid "Center lines"
 msgstr "Ліній у центрі"
 
 #: ../app/display/display-enums.c:62
-#, fuzzy
 msgctxt "guides-type"
 msgid "Rule of thirds"
 msgstr "Правило третин"
 
 #: ../app/display/display-enums.c:63
-#, fuzzy
 msgctxt "guides-type"
 msgid "Rule of fifths"
 msgstr "Правило п'ятин"
@@ -12075,18 +12073,20 @@ msgid "Sample average"
 msgstr "Вибіркове середнє"
 
 #: ../app/tools/gimpcolorpickeroptions.c:68
-#, fuzzy
 msgid "Use accumulated color value from all composited visible layers"
-msgstr "Використовувати всі видимі шари при виділенні_області"
+msgstr ""
+"Використовувати накопичені значення кольорів з усіх зібраних видимих шарів"
 
 #: ../app/tools/gimpcolorpickeroptions.c:74
 msgid "Choose what color picker will do"
-msgstr ""
+msgstr "Вибрати, що піпетка робитиме"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
 msgid ""
 "Open a floating dialog to view picked color values in various color models"
 msgstr ""
+"Відкрити рухоме вікно для перегляду значення піпетки у різних колірних "
+"моделях"
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:160
@@ -12197,17 +12197,18 @@ msgstr "Вид дії (%s)"
 
 #: ../app/tools/gimpcropoptions.c:76
 #: ../app/tools/gimprectangleselectoptions.c:77
-#, fuzzy
 msgid "Dim everything outside selection"
-msgstr "Інвертувати виділення"
+msgstr "Затемнити все за межами вибраного"
 
 #: ../app/tools/gimpcropoptions.c:82
 msgid "Crop only currently selected layer"
-msgstr ""
+msgstr "Обрізати лише поточно вибраний шар"
 
 #: ../app/tools/gimpcropoptions.c:88
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
 msgstr ""
+"Дозволити зміну розміру полотна через перетягування рамки обтинання за "
+"межами зображення"
 
 #: ../app/tools/gimpcropoptions.c:164
 msgid "Current layer only"
@@ -12313,9 +12314,8 @@ msgid "Desaturate (Remove Colors)"
 msgstr "Знебарвлення"
 
 #: ../app/tools/gimpdesaturatetool.c:124
-#, fuzzy
 msgid "Desaturate only operates on RGB layers."
-msgstr "Знебарвлення працює діє з шарами у форматі RGB."
+msgstr "Зненасичення діє лише з шарами у RGB."
 
 #: ../app/tools/gimpdesaturatetool.c:193
 msgid "Choose shade of gray based on:"
@@ -12371,9 +12371,8 @@ msgid "Range"
 msgstr "Діапазон"
 
 #: ../app/tools/gimpdodgeburntool.c:230
-#, fuzzy
 msgid "Exposure"
-msgstr "Експозиція:"
+msgstr "Експозиція"
 
 #: ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
@@ -12429,9 +12428,8 @@ msgid "Anti erase  (%s)"
 msgstr "Антигумка  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:66
-#, fuzzy
 msgid "Direction of flipping"
-msgstr "Напрямок"
+msgstr "Напрямок відзеркалення"
 
 #: ../app/tools/gimpflipoptions.c:130
 msgid "Affect:"
@@ -12459,13 +12457,11 @@ msgid "_Flip"
 msgstr "_Дзеркало"
 
 #: ../app/tools/gimpfliptool.c:186
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Віддзеркалити горизонтально"
 
 #: ../app/tools/gimpfliptool.c:189
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Віддзеркалити вертикально"
@@ -12474,10 +12470,9 @@ msgstr "Віддзеркалити вертикально"
 #. * could be if someone defined FLIP_DIAGONAL, say...
 #.
 #: ../app/tools/gimpfliptool.c:195
-#, fuzzy
 msgctxt "undo-desc"
 msgid "Flip"
-msgstr "Дзеркало"
+msgstr "Відзеркалити"
 
 #: ../app/tools/gimpforegroundselectoptions.c:85
 msgid "Select a single contiguous area"
@@ -12488,6 +12483,8 @@ msgid ""
 "Paint over areas to mark color values for inclusion or exclusion from "
 "selection"
 msgstr ""
+"Замалювати ділянки, щоб позначити значення кольору для внесення або "
+"вилучення з вибраного "
 
 #: ../app/tools/gimpforegroundselectoptions.c:98
 msgid "Size of the brush used for refinements"
@@ -12503,7 +12500,7 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Color of selection preview mask"
-msgstr ""
+msgstr "Колір маски перегляду вибраного"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
 msgid "Sensitivity for brightness component"
@@ -12784,14 +12781,12 @@ msgstr "Вирівнювання"
 
 #: ../app/tools/gimpinkoptions-gui.c:64 ../app/tools/gimpinkoptions-gui.c:87
 #: ../app/tools/gimppaintoptions-gui.c:134
-#, fuzzy
 msgid "Size"
 msgstr "Розмір"
 
 #: ../app/tools/gimpinkoptions-gui.c:71
 #: ../app/tools/gimppaintoptions-gui.c:183
 #: ../app/widgets/gimpbrusheditor.c:199
-#, fuzzy
 msgid "Angle"
 msgstr "Кут"
 
@@ -12807,9 +12802,8 @@ msgid "Tilt"
 msgstr "Нахил"
 
 #: ../app/tools/gimpinkoptions-gui.c:101
-#, fuzzy
 msgid "Speed"
-msgstr "Швидкість:"
+msgstr "Швидкість"
 
 #. Blob shape widgets
 #: ../app/tools/gimpinkoptions-gui.c:107
@@ -12825,9 +12819,9 @@ msgid "In_k"
 msgstr "_Перо"
 
 #: ../app/tools/gimpiscissorsoptions.c:68
-#, fuzzy
 msgid "Display future selection segment as you drag a control node"
-msgstr "Показати межу виділення"
+msgstr ""
+"Показати майбутній вибраний сегмент, коли перетягується контрольний вузол"
 
 #: ../app/tools/gimpiscissorsoptions.c:127
 msgid "Interactive boundary"
@@ -12944,10 +12938,11 @@ msgstr "_Використовувати старий формат рівнів"
 #: ../app/tools/gimpmagnifyoptions.c:79
 msgid "Resize image window to accommodate new zoom level"
 msgstr ""
+"Змінити розмір вікна зображення, щоб умістити новий рівень масштабування "
 
 #: ../app/tools/gimpmagnifyoptions.c:86
 msgid "Direction of magnification"
-msgstr ""
+msgstr "Напрямок збільшення"
 
 #: ../app/tools/gimpmagnifyoptions.c:169
 msgid "Auto-resize window"
@@ -12955,9 +12950,9 @@ msgstr "Змінювати розмір вікна"
 
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "Direction  (%s)"
-msgstr "Напрямок"
+msgstr "Напрямок  (%s)"
 
 #: ../app/tools/gimpmagnifytool.c:90
 msgid "Zoom"
@@ -12974,7 +12969,7 @@ msgstr "Мас_штаб"
 
 #: ../app/tools/gimpmeasureoptions.c:67
 msgid "Open a floating dialog to view details about measurements"
-msgstr ""
+msgstr "Відкрити рухоме вікно, щоб переглянути докладну інформацію про виміри"
 
 #: ../app/tools/gimpmeasureoptions.c:125
 msgid "Use info window"
@@ -12997,9 +12992,8 @@ msgid "Add Guides"
 msgstr "Додавання напрямних"
 
 #: ../app/tools/gimpmeasuretool.c:311
-#, fuzzy
 msgid "Drag to create a line"
-msgstr "Натисніть та перетягніть для створення нового виділення"
+msgstr "Перетягніть, щоб створити лінію"
 
 #: ../app/tools/gimpmeasuretool.c:555
 msgid "Click to place vertical and horizontal guides"
@@ -13113,27 +13107,24 @@ msgid "Mode:"
 msgstr "Режим:"
 
 #: ../app/tools/gimppaintoptions-gui.c:123
-#, fuzzy
 msgid "Brush"
-msgstr "_Пензель"
+msgstr "Пензель"
 
 #: ../app/tools/gimppaintoptions-gui.c:152
 msgid "Reset size to brush's native size"
-msgstr ""
+msgstr "Встановити початковий розмір пензля"
 
 #: ../app/tools/gimppaintoptions-gui.c:159
-#, fuzzy
 msgid "Aspect Ratio"
-msgstr "Пропорції:"
+msgstr "Співвідношення сторін"
 
 #: ../app/tools/gimppaintoptions-gui.c:176
 msgid "Reset aspect ratio to brush's native"
-msgstr ""
+msgstr "Встановити початкове співвідношення сторін"
 
 #: ../app/tools/gimppaintoptions-gui.c:200
-#, fuzzy
 msgid "Reset angle to zero"
-msgstr "Перезавантажити усі фільтри"
+msgstr "Встановити кут на нуль"
 
 #: ../app/tools/gimppaintoptions-gui.c:235
 msgid "Incremental"
@@ -13144,19 +13135,16 @@ msgid "Hard edge"
 msgstr "Чіткі краї"
 
 #: ../app/tools/gimppaintoptions-gui.c:280
-#, fuzzy
 msgid "Dynamics Options"
-msgstr "Теки з файлами динаміки малювання"
+msgstr "Параметри динаміки"
 
 #: ../app/tools/gimppaintoptions-gui.c:286
-#, fuzzy
 msgid "Fade Options"
-msgstr "Збережені параметри"
+msgstr "Параметри згасання"
 
 #: ../app/tools/gimppaintoptions-gui.c:300
-#, fuzzy
 msgid "Fade length"
-msgstr "Поступовий перехід"
+msgstr "Тривалість згасання"
 
 #: ../app/tools/gimppaintoptions-gui.c:327
 #: ../app/widgets/gimpviewablebox.c:310
@@ -13164,28 +13152,24 @@ msgid "Reverse"
 msgstr "Обернути"
 
 #: ../app/tools/gimppaintoptions-gui.c:334
-#, fuzzy
 msgid "Color Options"
-msgstr "Параметри інструменту"
+msgstr "Параметри кольорів"
 
 #: ../app/tools/gimppaintoptions-gui.c:360
-#, fuzzy
 msgid "Amount"
-msgstr "Ступінь:"
+msgstr "Об'єм"
 
 #: ../app/tools/gimppaintoptions-gui.c:364
 msgid "Apply Jitter"
 msgstr "Тремтіння"
 
 #: ../app/tools/gimppaintoptions-gui.c:382
-#, fuzzy
 msgid "Smooth stroke"
-msgstr " обведення контуру"
+msgstr "Гладкий контур"
 
 #: ../app/tools/gimppaintoptions-gui.c:392
-#, fuzzy
 msgid "Weight"
-msgstr "Висота"
+msgstr "Вага"
 
 #: ../app/tools/gimppainttool.c:138
 msgid "Click to paint"
@@ -13250,7 +13234,6 @@ msgid "Transformation Matrix"
 msgstr "Матриця перетворення"
 
 #: ../app/tools/gimpperspectivetool.c:256
-#, fuzzy
 msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Перспектива"
@@ -13277,7 +13260,7 @@ msgstr "_Рівні постеризації:"
 
 #: ../app/tools/gimprectangleoptions.c:104
 msgid "Automatically shrink to the nearest rectangular shape in a layer"
-msgstr ""
+msgstr "Автоматично стискати до найближчої прямокутної форми у шарі"
 
 #: ../app/tools/gimprectangleoptions.c:113
 msgid "Use all visible layers when shrinking the selection"
@@ -13286,60 +13269,55 @@ msgstr "Використовувати усі виділені шари при �
 #: ../app/tools/gimprectangleoptions.c:122
 #: ../app/tools/gimptransformoptions.c:127
 msgid "Composition guides such as rule of thirds"
-msgstr ""
+msgstr "Напрямна композиція, наприклад, правило третин"
 
 #: ../app/tools/gimprectangleoptions.c:131
 msgid "X coordinate of top left corner"
-msgstr ""
+msgstr "Координата X верхнього лівого кута"
 
 #: ../app/tools/gimprectangleoptions.c:141
 msgid "Y coordinate of top left corner"
-msgstr ""
+msgstr "Координата Y верхнього лівого кута"
 
 #: ../app/tools/gimprectangleoptions.c:151
-#, fuzzy
 msgid "Width of selection"
-msgstr "Контур -> Виділена область"
+msgstr "Ширина вибраного"
 
 #: ../app/tools/gimprectangleoptions.c:160
-#, fuzzy
 msgid "Height of selection"
-msgstr "Контур -> Виділена область"
+msgstr "Висота вибраного"
 
 #: ../app/tools/gimprectangleoptions.c:169
 msgid "Unit of top left corner coordinate"
-msgstr ""
+msgstr "Одиниця координати верхнього лівого кута"
 
 #: ../app/tools/gimprectangleoptions.c:178
-#, fuzzy
 msgid "Unit of selection size"
-msgstr "Контур -> Виділена область"
+msgstr "Одиниця розміру вибраного"
 
 #: ../app/tools/gimprectangleoptions.c:187
 msgid "Enable lock of aspect ratio, width, height or size"
-msgstr ""
+msgstr "Увімкнути блокування співвідношення сторін, ширини, висоти і розміру"
 
 #: ../app/tools/gimprectangleoptions.c:196
-#, fuzzy
 msgid "Choose what has to be locked"
-msgstr "Елементи активного контуру заблоковані від змін"
+msgstr "Вибрати, що слід блокувати"
 
 #: ../app/tools/gimprectangleoptions.c:205
 msgid "Custom fixed width"
-msgstr ""
+msgstr "Власна статична ширина"
 
 #: ../app/tools/gimprectangleoptions.c:214
 msgid "Custom fixed height"
-msgstr ""
+msgstr "Власна статична висота"
 
 #: ../app/tools/gimprectangleoptions.c:308
 msgid "Unit of fixed width, height or size"
-msgstr ""
+msgstr "Одиниця статичної ширини, висоти і розміру"
 
 #: ../app/tools/gimprectangleoptions.c:317
-#, fuzzy
 msgid "Expand selection from center outwards"
-msgstr "Малювати з центру"
+msgstr "Розширити вибране з центру назовні"
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:761
@@ -13376,13 +13354,12 @@ msgid "Shrink merged"
 msgstr "В усіх шарах"
 
 #: ../app/tools/gimprectangleselectoptions.c:83
-#, fuzzy
 msgid "Round corners of selection"
-msgstr "Закруглені кути"
+msgstr "Закруглені кути вибраного"
 
 #: ../app/tools/gimprectangleselectoptions.c:89
 msgid "Radius of rounding in pixels"
-msgstr ""
+msgstr "Радіус округлення у пікселях"
 
 #: ../app/tools/gimprectangleselectoptions.c:167
 msgid "Rounded corners"
@@ -13409,14 +13386,12 @@ msgid "Allow completely transparent regions to be selected"
 msgstr "Дозволити виділення абсолютно прозорих ділянок"
 
 #: ../app/tools/gimpregionselectoptions.c:89
-#, fuzzy
 msgid "Base selection on all visible layers"
-msgstr "Використовувати всі видимі шари при виділенні_області"
+msgstr "Базовий вибір на всі видимі шари"
 
 #: ../app/tools/gimpregionselectoptions.c:101
-#, fuzzy
 msgid "Selection criterion"
-msgstr "Редактор виділеної ділянки"
+msgstr "Критерій вибору"
 
 #: ../app/tools/gimpregionselectoptions.c:203
 msgid "Select transparent areas"
@@ -13458,7 +13433,7 @@ msgstr "Центр _Y:"
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g° around (%g, %g)"
-msgstr ""
+msgstr "Обернути на %-3.3g° довколо (%g, %g)"
 
 #: ../app/tools/gimpscaletool.c:89
 msgid "Scale"
@@ -13476,16 +13451,15 @@ msgstr "Мас_штаб"
 #, c-format
 msgctxt "undo-type"
 msgid "Scale to %d x %d"
-msgstr ""
+msgstr "Масштабувати до %d x %d"
 
 #: ../app/tools/gimpselectionoptions.c:84
-#, fuzzy
 msgid "Enable feathering of selection edges"
-msgstr "Збільшити виділення"
+msgstr "Увімкнути розмазування країв вибраного"
 
 #: ../app/tools/gimpselectionoptions.c:90
 msgid "Radius of feathering"
-msgstr ""
+msgstr "Радіус розмазування"
 
 #: ../app/tools/gimpselectionoptions.c:259 ../app/tools/gimptextoptions.c:539
 msgid "Antialiasing"
@@ -13555,20 +13529,20 @@ msgstr "Коефіцієнт викривлення по _Y:"
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g"
-msgstr ""
+msgstr "Нахилити горизонтально на %-3.3g"
 
 #: ../app/tools/gimpsheartool.c:259
 #, c-format
 msgctxt "undo-type"
 msgid "Shear vertically by %-3.3g"
-msgstr ""
+msgstr "Нахилити горизонтально на %-3.3g"
 
 #. e.g. user entered numbers but no notification callback
 #: ../app/tools/gimpsheartool.c:264
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
-msgstr ""
+msgstr "Нахилити горизонтально на %-3.3g і вертикально на %-3.3g"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -13588,12 +13562,11 @@ msgstr "Натисніть для розмазування ліній"
 
 #: ../app/tools/gimptextoptions.c:131
 msgid "Font size unit"
-msgstr ""
+msgstr "Одиниця розміру шрифту"
 
 #: ../app/tools/gimptextoptions.c:136
-#, fuzzy
 msgid "Font size"
-msgstr "Шрифти"
+msgstr "Розмір шрифту"
 
 #: ../app/tools/gimptextoptions.c:145
 msgid ""
@@ -13607,9 +13580,8 @@ msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Вибір мови тексту може змінити зовнішній вигляд вид тексту"
 
 #: ../app/tools/gimptextoptions.c:164
-#, fuzzy
 msgid "Text alignment"
-msgstr "Вирівнювання:"
+msgstr "Вирівнювання тексту"
 
 #: ../app/tools/gimptextoptions.c:170
 msgid "Indentation of the first line"
@@ -13628,18 +13600,16 @@ msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
 msgstr ""
+"Чи текст впадає в прямокутну форму, чи рухається до нової лінії, натиснувши "
+"«Enter»"
 
 #: ../app/tools/gimptextoptions.c:196
-#, fuzzy
 msgid "Use an external editor window for text entry"
-msgstr ""
-"Використовувати вікно з редактором тексту замість редагування прямо на "
-"полотні"
+msgstr "Використовувати вікно зовнішнього редактора для запису тексту"
 
 #: ../app/tools/gimptextoptions.c:511
-#, fuzzy
 msgid "Font"
-msgstr "Шрифти"
+msgstr "Шрифт"
 
 #: ../app/tools/gimptextoptions.c:535
 msgid "Use editor"
@@ -13745,35 +13715,32 @@ msgid "Can't work on an empty image, add a layer first"
 msgstr "Робота з порожнім зображенням неможлива, спочатку додайте шар"
 
 #: ../app/tools/gimptransformoptions.c:99
-#, fuzzy
 msgid "Direction of transformation"
-msgstr "Трансформація перспективи"
+msgstr "Напрямок перетворення"
 
 #: ../app/tools/gimptransformoptions.c:105
-#, fuzzy
 msgid "Interpolation method"
-msgstr "Інтерполяція:"
+msgstr "Спосіб інтерполяції"
 
 #: ../app/tools/gimptransformoptions.c:111
 msgid "How to clip"
-msgstr ""
+msgstr "Як обрізати"
 
 #: ../app/tools/gimptransformoptions.c:117
-#, fuzzy
 msgid "Show a preview of the transformed image"
-msgstr "Показати вікно перегляду для зображення"
+msgstr "Показати перегляд перетвореного зображення"
 
 #: ../app/tools/gimptransformoptions.c:122
 msgid "Opacity of the preview image"
-msgstr ""
+msgstr "Непрозорість перегляду зображення"
 
 #: ../app/tools/gimptransformoptions.c:133
 msgid "Size of a grid cell for variable number of composition guides"
-msgstr ""
+msgstr "Розмір клітинної сітки для різної кількості напрямних композицій"
 
 #: ../app/tools/gimptransformoptions.c:138
 msgid "Limit rotation steps to 15 degrees"
-msgstr ""
+msgstr "Обмежити крок обертання до 15 градусів"
 
 #: ../app/tools/gimptransformoptions.c:276
 msgid "Transform:"
@@ -13793,23 +13760,20 @@ msgstr "Інтерполяція:"
 #. the clipping menu
 #: ../app/tools/gimptransformoptions.c:299
 msgid "Clipping:"
-msgstr "Обрізка:"
+msgstr "Обрізування:"
 
 #: ../app/tools/gimptransformoptions.c:309
-#, fuzzy
 msgid "Image opacity"
-msgstr "Тип зображення"
+msgstr "Непрозорість зображення"
 
 #: ../app/tools/gimptransformoptions.c:311
-#, fuzzy
 msgid "Show image preview"
-msgstr "Показувати розмір зображення"
+msgstr "Показувати попередній перегляд зображення"
 
 #. the guides frame
 #: ../app/tools/gimptransformoptions.c:317
-#, fuzzy
 msgid "Guides"
-msgstr "_Напрямні"
+msgstr "Напрямні"
 
 #: ../app/tools/gimptransformoptions.c:345
 #, c-format
@@ -14074,88 +14038,74 @@ msgid "Move"
 msgstr "Перенести"
 
 #: ../app/vectors/gimpvectors.c:208
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rename Path"
-msgstr "Перейменування контуру"
+msgstr "Перейменувати контур"
 
 #: ../app/vectors/gimpvectors.c:209
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move Path"
-msgstr "Перейменування контуру"
+msgstr "Перенести контур"
 
 #: ../app/vectors/gimpvectors.c:210
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Path"
-msgstr "Зміна масштабу контуру"
+msgstr "Масштабувати контуру"
 
 #: ../app/vectors/gimpvectors.c:211
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize Path"
-msgstr "Зміна розміру контуру"
+msgstr "Змінити розмір контуру"
 
 #: ../app/vectors/gimpvectors.c:212
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip Path"
-msgstr "Віддзеркалення контуру"
+msgstr "Віддзеркалити контур"
 
 #: ../app/vectors/gimpvectors.c:213
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Path"
-msgstr "Обертання контуру"
+msgstr "Обернути контур"
 
 #: ../app/vectors/gimpvectors.c:214
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform Path"
-msgstr "Перетворення контуру"
+msgstr "Перетворити контур"
 
 #: ../app/vectors/gimpvectors.c:215
-#, fuzzy
 msgctxt "undo-type"
 msgid "Stroke Path"
-msgstr "Обведення за контуром"
+msgstr "Обвести контур"
 
 #: ../app/vectors/gimpvectors.c:216
-#, fuzzy
 msgctxt "undo-type"
 msgid "Path to Selection"
-msgstr "Контур -> Виділену область"
+msgstr "Контур до вибраного"
 
 #: ../app/vectors/gimpvectors.c:217
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder Path"
-msgstr "Реорганізувати контур"
+msgstr "Перевпорядкувати контур"
 
 #: ../app/vectors/gimpvectors.c:218
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Path"
-msgstr "Піднімання контуру"
+msgstr "Змінити розмір контуру"
 
 #: ../app/vectors/gimpvectors.c:219
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Path to Top"
-msgstr "Зробити контур верхнім"
+msgstr "Підняти контур доверху"
 
 #: ../app/vectors/gimpvectors.c:220
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Path"
-msgstr "Опускання контуру"
+msgstr "Опустити контур"
 
 #: ../app/vectors/gimpvectors.c:221
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
-msgstr "Зробити контур нижнім"
+msgstr "Опустити контур додолу"
 
 #: ../app/vectors/gimpvectors.c:222
 msgid "Path cannot be raised higher."
