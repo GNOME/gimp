@@ -51,15 +51,18 @@ desaturate_region (GimpDesaturateMode *mode,
   switch (*mode)
     {
     case GIMP_DESATURATE_LIGHTNESS:
-      desaturate_region_lightness (srcPR, destPR, srcPR->bytes == 4);
+      desaturate_region_lightness (srcPR, destPR,
+                                   pixel_region_has_alpha (srcPR));
       break;
 
     case GIMP_DESATURATE_LUMINOSITY:
-      desaturate_region_luminosity (srcPR, destPR, srcPR->bytes == 4);
+      desaturate_region_luminosity (srcPR, destPR,
+                                    pixel_region_has_alpha (srcPR));
       break;
 
     case GIMP_DESATURATE_AVERAGE:
-      desaturate_region_average (srcPR, destPR, srcPR->bytes == 4);
+      desaturate_region_average (srcPR, destPR,
+                                 pixel_region_has_alpha (srcPR));
       break;
     }
 }

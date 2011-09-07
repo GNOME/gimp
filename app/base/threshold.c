@@ -40,7 +40,7 @@ threshold (Threshold   *tr,
   h         = srcPR->h;
   src       = srcPR->data;
   dest      = destPR->data;
-  has_alpha = (srcPR->bytes == 2 || srcPR->bytes == 4);
+  has_alpha = pixel_region_has_alpha (srcPR);
   alpha     = has_alpha ? srcPR->bytes - 1 : srcPR->bytes;
 
   while (h--)
