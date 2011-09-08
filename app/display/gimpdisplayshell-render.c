@@ -384,8 +384,8 @@ gimp_display_shell_render_info_init (RenderInfo       *info,
   info->full_scaley = shell->scale_y;
 
   /* use Bresenham like stepping */
-  info->x_dest_inc  = shell->x_dest_inc;
-  info->x_src_dec   = shell->x_src_dec << level;
+  info->x_dest_inc  = shell->x_dest_inc >> level;
+  info->x_src_dec   = shell->x_src_dec;
 
   info->dx_start    = ((gint64) info->x_dest_inc * info->x
                        + info->x_dest_inc / 2);
@@ -394,8 +394,8 @@ gimp_display_shell_render_info_init (RenderInfo       *info,
   info->dx_start    = info->dx_start % info->x_src_dec;
 
   /* same for y */
-  info->y_dest_inc  = shell->y_dest_inc;
-  info->y_src_dec   = shell->y_src_dec << level;
+  info->y_dest_inc  = shell->y_dest_inc >> level;
+  info->y_src_dec   = shell->y_src_dec;
 
   info->dy_start    = ((gint64) info->y_dest_inc * info->y
                        + info->y_dest_inc / 2);
