@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-01 18:55+0300\n"
-"PO-Revision-Date: 2011-09-07 14:31+0300\n"
+"PO-Revision-Date: 2011-09-08 13:22+0300\n"
 "Last-Translator: Korostil Daniel <ted.korostiled@gmail.com>\n"
 "Language-Team: translation@linux.org.ua\n"
 "Language: uk\n"
@@ -14212,17 +14212,14 @@ msgid "Removing shortcut failed."
 msgstr "Не вдалось вилучити клавіші швидкого доступу."
 
 #: ../app/widgets/gimpbrusheditor.c:166
-#, fuzzy
 msgid "Spikes"
-msgstr "Промені:"
+msgstr "Шипи"
 
 #: ../app/widgets/gimpbrusheditor.c:177
-#, fuzzy
 msgid "Hardness"
 msgstr "Твердість"
 
 #: ../app/widgets/gimpbrusheditor.c:188
-#, fuzzy
 msgid "Aspect ratio"
 msgstr "Відношення сторін"
 
@@ -14524,13 +14521,12 @@ msgstr ""
 "У списку вже є такий контролер."
 
 #: ../app/widgets/gimpcontrollerlist.c:531
-#, fuzzy
 msgid ""
 "There can only be one active mouse controller.\n"
 "\n"
 "You already have a mouse controller in your list of active controllers."
 msgstr ""
-"Активний контролер «Колесо миші» може бути лише один.\n"
+"Задіяти можна лише один контролер миші.\n"
 "\n"
 "У списку вже є такий контролер."
 
@@ -14576,9 +14572,8 @@ msgstr "Налаштувати контролер вводу"
 #: ../app/widgets/gimpcontrollermouse.c:85
 #: ../app/widgets/gimpcontrollermouse.c:88
 #: ../app/widgets/gimpcontrollermouse.c:91
-#, fuzzy
 msgid "Button 8"
-msgstr "Пласке"
+msgstr "Кнопки 8"
 
 #: ../app/widgets/gimpcontrollermouse.c:95
 #: ../app/widgets/gimpcontrollermouse.c:98
@@ -14588,9 +14583,8 @@ msgstr "Пласке"
 #: ../app/widgets/gimpcontrollermouse.c:110
 #: ../app/widgets/gimpcontrollermouse.c:113
 #: ../app/widgets/gimpcontrollermouse.c:116
-#, fuzzy
 msgid "Button 9"
-msgstr "Пласке"
+msgstr "Кнопка 9"
 
 #: ../app/widgets/gimpcontrollermouse.c:120
 #: ../app/widgets/gimpcontrollermouse.c:123
@@ -14600,9 +14594,8 @@ msgstr "Пласке"
 #: ../app/widgets/gimpcontrollermouse.c:135
 #: ../app/widgets/gimpcontrollermouse.c:138
 #: ../app/widgets/gimpcontrollermouse.c:141
-#, fuzzy
 msgid "Button 10"
-msgstr "Пласке"
+msgstr "Кнопка 10"
 
 #: ../app/widgets/gimpcontrollermouse.c:145
 #: ../app/widgets/gimpcontrollermouse.c:148
@@ -14612,9 +14605,8 @@ msgstr "Пласке"
 #: ../app/widgets/gimpcontrollermouse.c:160
 #: ../app/widgets/gimpcontrollermouse.c:163
 #: ../app/widgets/gimpcontrollermouse.c:166
-#, fuzzy
 msgid "Button 11"
-msgstr "Пласке"
+msgstr "Кнопка 11"
 
 #: ../app/widgets/gimpcontrollermouse.c:170
 #: ../app/widgets/gimpcontrollermouse.c:173
@@ -14624,19 +14616,16 @@ msgstr "Пласке"
 #: ../app/widgets/gimpcontrollermouse.c:185
 #: ../app/widgets/gimpcontrollermouse.c:188
 #: ../app/widgets/gimpcontrollermouse.c:191
-#, fuzzy
 msgid "Button 12"
-msgstr "Пласке"
+msgstr "Кнопка 12"
 
 #: ../app/widgets/gimpcontrollermouse.c:203
-#, fuzzy
 msgid "Mouse Buttons"
-msgstr "Курсор миші"
+msgstr "Кнопки миші"
 
 #: ../app/widgets/gimpcontrollermouse.c:244
-#, fuzzy
 msgid "Mouse Button Events"
-msgstr "Події колеса миші"
+msgstr "Події кнопок миші"
 
 #: ../app/widgets/gimpcontrollerwheel.c:69
 #: ../app/widgets/gimpcontrollerwheel.c:72
@@ -14721,6 +14710,9 @@ msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
 msgstr ""
+"Ви збираєтесь вилучити ці збережені налаштування пристрою.\n"
+"Наступного разу, коли приєднаєте цей пристрій, буде використано типові "
+"налаштування.  "
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:141
@@ -15404,7 +15396,7 @@ msgstr "У цьому контексті атрибут \"%s\" некорект�
 #: ../app/widgets/gimptextbuffer-serialize.c:410
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
-msgstr ""
+msgstr "Зовнішнім елементом у тексті повинен бути <markup>, а не <%s>"
 
 #: ../app/widgets/gimptextbuffer.c:1454
 #, c-format
@@ -15416,9 +15408,8 @@ msgid "_Use selected font"
 msgstr "_Використовувати вибраний шрифт"
 
 #: ../app/widgets/gimptextstyleeditor.c:206
-#, fuzzy
 msgid "Change font of selected text"
-msgstr "Зміна розміру виділеного тексту"
+msgstr "Змінити розмір вибраного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:217
 msgid "Change size of selected text"
@@ -15430,9 +15421,8 @@ msgstr "Зміна стилю виділеного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:247
 #: ../app/widgets/gimptextstyleeditor.c:256
-#, fuzzy
 msgid "Change color of selected text"
-msgstr "Зміна розміру виділеного тексту"
+msgstr "Змінити розмір вибраного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:272
 msgid "Change kerning of selected text"
@@ -15444,20 +15434,19 @@ msgstr "Зміна базової лінії вибраного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:325
 msgid "Bold"
-msgstr ""
+msgstr "Жирний"
 
 #: ../app/widgets/gimptextstyleeditor.c:328
 msgid "Italic"
-msgstr ""
+msgstr "Курсив"
 
 #: ../app/widgets/gimptextstyleeditor.c:331
-#, fuzzy
 msgid "Underline"
-msgstr "Невизначено"
+msgstr "Підкреслений"
 
 #: ../app/widgets/gimptextstyleeditor.c:334
 msgid "Strikethrough"
-msgstr ""
+msgstr "Закреслений"
 
 #: ../app/widgets/gimpthumbbox.c:330
 #, c-format
@@ -15563,60 +15552,53 @@ msgid "Reset tool order and visibility"
 msgstr "Типовий порядок та видимість інструментів"
 
 #: ../app/widgets/gimptooloptionseditor.c:202
-#, fuzzy
 msgid "Save Tool Preset..."
-msgstr "Зберегти кольору..."
+msgstr "Зберегти шаблон інструментів…"
 
 #: ../app/widgets/gimptooloptionseditor.c:210
-#, fuzzy
 msgid "Restore Tool Preset..."
-msgstr "Відновити кольору..."
+msgstr "Відновити шаблон інструментів…"
 
 #: ../app/widgets/gimptooloptionseditor.c:218
-#, fuzzy
 msgid "Delete Tool Preset..."
-msgstr "В_илучити колір"
+msgstr "Вилучити шаблон інструментів…"
 
 #: ../app/widgets/gimptoolpreseteditor.c:126
-#, fuzzy
 msgid "Icon:"
 msgstr "Піктограма:"
 
 #: ../app/widgets/gimptoolpreseteditor.c:136
 msgid "Apply stored FG/BG"
-msgstr ""
+msgstr "Застосувати збережений FG/BG"
 
 #: ../app/widgets/gimptoolpreseteditor.c:141
-#, fuzzy
 msgid "Apply stored brush"
-msgstr "Застосування поріг"
+msgstr "Застосувати збережений пензель"
 
 #: ../app/widgets/gimptoolpreseteditor.c:146
 msgid "Apply stored dynamics"
-msgstr ""
+msgstr "Застосувати збережену динаміку"
 
 #: ../app/widgets/gimptoolpreseteditor.c:151
 msgid "Apply stored gradient"
-msgstr ""
+msgstr "Застосувати збережений градієнт"
 
 #: ../app/widgets/gimptoolpreseteditor.c:156
-#, fuzzy
 msgid "Apply stored pattern"
-msgstr "Тремтіння"
+msgstr "Застосувати збережену текстуру"
 
 #: ../app/widgets/gimptoolpreseteditor.c:161
-#, fuzzy
 msgid "Apply stored palette"
-msgstr "Додати до палітри"
+msgstr "Застосувати збережену палітру"
 
 #: ../app/widgets/gimptoolpreseteditor.c:166
 msgid "Apply stored font"
-msgstr ""
+msgstr "Застосувати збережений шрифт"
 
 #: ../app/widgets/gimptoolpreseteditor.c:258
-#, fuzzy, c-format
+#, c-format
 msgid "%s Preset"
-msgstr "_Профілі:"
+msgstr "Шаблон %s"
 
 #: ../app/widgets/gimptranslationstore.c:100
 msgid "System Language"
@@ -15652,9 +15634,8 @@ msgid "Open the brush selection dialog"
 msgstr "Відкрити діалог вибору пензля"
 
 #: ../app/widgets/gimpviewablebox.c:150
-#, fuzzy
 msgid "Open the dynamics selection dialog"
-msgstr "Відкрити діалог вибору шрифту"
+msgstr "Відкрити вікно вибору динаміки"
 
 #: ../app/widgets/gimpviewablebox.c:215
 msgid "Open the pattern selection dialog"
@@ -15793,7 +15774,6 @@ msgid "Status & desc"
 msgstr "Стан та опис"
 
 #: ../app/widgets/widgets-enums.c:223
-#, fuzzy
 msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Невизначено"
