@@ -1,22 +1,26 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2010
-#
+# Korostil Daniel <ted.korostiled@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-03 15:43+0300\n"
-"PO-Revision-Date: 2010-04-03 17:54+0200\n"
-"Last-Translator: Maxim Dziumanenko <dziumanenko@gmail.com>\n"
-"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
+"POT-Creation-Date: 2011-09-08 13:43+0300\n"
+"PO-Revision-Date: 2011-09-08 13:44+0300\n"
+"Last-Translator: Korostil Daniel <ted.korostiled@gmail.com>\n"
+"Language-Team: translation@linux.org.ua\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Virtaal 0.6.1\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
-msgstr "Відсутня інформація про виключну ситуацію"
+msgstr "Бракує інформації про виняток"
 
 #: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
@@ -44,7 +48,7 @@ msgstr "Вибір файлу в Python-Fu"
 msgid "Python-Fu Folder Selection"
 msgstr "Вибір каталогу в Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:698
+#: ../plug-ins/pygimp/gimpfu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Некоректний ввід для '%s'"
@@ -53,45 +57,53 @@ msgstr "Некоректний ввід для '%s'"
 msgid "Python-Fu Color Selection"
 msgstr "Виділення кольором у Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Збереження кольорового XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Зберегти як кольоровий XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "Кольоровий XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "_Джерело світла"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Первинний код"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Текстовий файл"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Поле вводу"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "_Файл що читається або символи, що використовуються"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "_Кегль шрифту у точках"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "З_аписати окремий файл CSS"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+msgid "Gradient to use"
+msgstr "Градієнт для використання"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+msgid "File Name"
+msgstr "Назва файла"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
@@ -123,7 +135,7 @@ msgstr "_Непрозорість"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
-msgstr "Зсунути кольори у палитрі"
+msgstr "Зсунути кольори на палітрі"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
@@ -131,8 +143,8 @@ msgstr "_Зсув палітри..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Палітра"
 
@@ -142,11 +154,11 @@ msgstr "Зс_ув"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
 msgid "Sort the colors in a palette"
-msgstr "Сортувати кольори у палитрі"
+msgstr "Впорядкувати кольори на палітрі"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
-msgstr "Сортувати _палітру..."
+msgstr "Впорядкувати _палітру…"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
 msgid "Color _model"
@@ -178,71 +190,71 @@ msgstr "Синій або яскравість"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "_Ascending"
-msgstr "_Зростаючий"
+msgstr "_Зростання"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:49
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Створити з кольорів палітри градієнт, що повторюється"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:54
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "П_алітра на градієнт, що повторюється"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:71
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "Створити градієнт, використовуючи кольори палітри"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:76
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
-msgstr "Палітра на _градиент"
+msgstr "Палітра на _градієнт"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:56
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "Нарізка"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:417
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Розрізати зображення за напрямними у HTML-таблицю з його фрагментами"
+msgstr "Розрізати зображення за напрямними у таблицю HTML з його фрагментами"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:428
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "_Нарізка для веб..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
 msgstr "Каталог експорту"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Filename for export"
 msgstr "Назва файлу, що експортується"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "Префікс назви файлу"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "Формат зображення"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Separate image folder"
 msgstr "Зображення у окремому каталозі"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
 msgid "Folder for image export"
 msgstr "Назва каталогу зображень"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Space between table elements"
 msgstr "Пробіл між елементами таблиці"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr "JavaScript для onmouseover та clicked"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
 msgstr "Пропустити анімацію для заголовків таблиці"
 
