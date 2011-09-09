@@ -19,7 +19,8 @@ UI:
 
 Core:
 
- - <item>
+ - Fix "render_image_tile_fault: assertion `tile[4] != NULL' failed"
+   warnings that occured for some image sizes
 
 
 Libgimp:
