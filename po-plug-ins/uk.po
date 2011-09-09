@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-09 13:42+0300\n"
-"PO-Revision-Date: 2011-09-09 15:01+0300\n"
+"PO-Revision-Date: 2011-09-09 22:27+0300\n"
 "Last-Translator: Korostil Daniel <ted.korostiled@gmail.com>\n"
 "Language-Team: translation@linux.org.ua\n"
 "Language: uk\n"
@@ -245,15 +245,15 @@ msgstr "Змінити кольори психоделічним способо�
 
 #: ../plug-ins/common/alien-map.c:188
 msgid "_Alien Map..."
-msgstr "_Чуже відображення..."
+msgstr "_Чуже відбиття…"
 
 #: ../plug-ins/common/alien-map.c:320
 msgid "Alien Map: Transforming"
-msgstr "Чуже відображення: перетворення"
+msgstr "Чуже відбиття: перетворення"
 
 #: ../plug-ins/common/alien-map.c:393
 msgid "Alien Map"
-msgstr "Чуже відображення"
+msgstr "Чуже відбиття"
 
 #: ../plug-ins/common/alien-map.c:442 ../plug-ins/common/alien-map.c:466
 #: ../plug-ins/common/alien-map.c:490
@@ -5340,11 +5340,11 @@ msgstr "В_ідобразити палітру:"
 
 #: ../plug-ins/common/gradient-map.c:162
 msgid "Gradient Map"
-msgstr "Відображення градієнту"
+msgstr "Відбиття градієнту"
 
 #: ../plug-ins/common/gradient-map.c:167
 msgid "Palette Map"
-msgstr "Відображення палітри"
+msgstr "Відбиття палітри"
 
 #: ../plug-ins/common/grid.c:142
 msgid "Draw a grid on the image"
@@ -6376,7 +6376,7 @@ msgstr "_Наднова..."
 
 #: ../plug-ins/common/nova.c:256
 msgid "Rendering supernova"
-msgstr "Відображення Наднової..."
+msgstr "Відтворення наднової"
 
 #: ../plug-ins/common/nova.c:299
 msgid "Supernova"
@@ -6613,7 +6613,7 @@ msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
-"Якщо відмічено, відображення розпочнеться з правої сторони, в іншому випадку "
+"Якщо відмічено, відбиття розпочнеться з правої сторони, в іншому випадку "
 "- з лівої."
 
 #: ../plug-ins/common/polar-coords.c:677
@@ -8412,11 +8412,11 @@ msgstr "Ві_тер..."
 
 #: ../plug-ins/common/wind.c:315
 msgid "Rendering blast"
-msgstr "Відображення пориву вітру"
+msgstr "Відтворення пориву вітру"
 
 #: ../plug-ins/common/wind.c:448
 msgid "Rendering wind"
-msgstr "Відображення вітру"
+msgstr "Відтворення вітру"
 
 #: ../plug-ins/common/wind.c:881
 msgid "Wind"
@@ -8811,15 +8811,15 @@ msgstr "4:4:4 (найвища якість)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1091
 msgid "4:2:2 horizontal (chroma halved)"
-msgstr ""
+msgstr "4:2:2 горизонтально (колірність поділена пополам)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1093
 msgid "4:2:2 vertical (chroma halved)"
-msgstr ""
+msgstr "4:2:2 вертикально (колірність поділена пополам)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1095
 msgid "4:2:0 (chroma quartered)"
-msgstr ""
+msgstr "4:2:0 (колірність поділена на чотири частини)"
 
 #. DCT method
 #: ../plug-ins/file-jpeg/jpeg-save.c:1125
@@ -8865,9 +8865,9 @@ msgid "Error loading PSD file: %s"
 msgstr "Помилка при відкритті файлу PSD: «%s»"
 
 #: ../plug-ins/file-psd/psd-load.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "Not a valid Photoshop document file"
-msgstr "Це некоректний документ Photoshop"
+msgstr "Цей файл — некоректний документ Photoshop"
 
 #: ../plug-ins/file-psd/psd-load.c:276
 #, c-format
@@ -9083,9 +9083,9 @@ msgid "Downloading %s of image data"
 msgstr "Завантажується файл розміром %s "
 
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:244
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s' for reading resulted in %s response code: %ld"
-msgstr "Операція відкривання '%s' завершилась кодом помилки HTTP: %d"
+msgstr "Операція «%s» для читання призвела %s до відповіді: %ld"
 
 #: ../plug-ins/file-uri/uri-backend-wget.c:162
 #: ../plug-ins/file-uri/uri-backend-wget.c:182
@@ -9595,7 +9595,7 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Використовувати лінійне відображення замість будь-якої тригонометричної "
+"Використовувати лінійне відбиття замість будь-якої тригонометричної "
 "функції для цього каналу кольору"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1018
@@ -9626,7 +9626,7 @@ msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Створити відображення кольорів із вказаними вище параметрами (щільність "
+"Створити відбиття кольорів із вказаними вище параметрами (щільність "
 "кольорів/функція). Результат демонструється у вікні перегляду."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1144
@@ -9636,7 +9636,7 @@ msgstr "Застосувати активний градієнт"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1156
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
-"Створити відображення кольорів використовуючи градієнт з редактора градієнтів"
+"Створити відбиття кольорів використовуючи градієнт з редактора градієнтів"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1167
 msgid "FractalExplorer Gradient"
@@ -10207,7 +10207,7 @@ msgstr "Виберіть, якщо готове зображення має бу
 
 #: ../plug-ins/gimpressionist/general.c:221
 msgid "Drop shadow"
-msgstr "Падаюча тінь"
+msgstr "Падіння тіні"
 
 #: ../plug-ins/gimpressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
@@ -10264,7 +10264,7 @@ msgstr "_Гімпресіоніст..."
 
 #: ../plug-ins/gimpressionist/gimp.c:164
 msgid "The selection does not intersect the active layer or mask."
-msgstr ""
+msgstr "Вибране не перетинається з дійсними шарами і масками."
 
 #: ../plug-ins/gimpressionist/gimp.c:391
 msgid "Painting"
@@ -10596,9 +10596,8 @@ msgid "_Size"
 msgstr "_Розмір"
 
 #: ../plug-ins/gimpressionist/size.c:108
-#, fuzzy
 msgid "Size variants:"
-msgstr "_Кількість променів:"
+msgstr "Варіанти розміру:"
 
 #: ../plug-ins/gimpressionist/size.c:112
 msgid "The number of sizes of brushes to use"
@@ -10622,7 +10621,7 @@ msgstr "Найбільший пензель, що створюється"
 
 #: ../plug-ins/gimpressionist/size.c:150
 msgid "Size depends on:"
-msgstr ""
+msgstr "Розмір залежить від:"
 
 #: ../plug-ins/gimpressionist/size.c:159
 msgid ""
@@ -11689,7 +11688,7 @@ msgstr "Змінити розмір сектора?"
 
 #: ../plug-ins/imagemap/imap_main.c:892
 msgid "Couldn't read file:"
-msgstr "Не вдається зчитати файл:"
+msgstr "Не вдалось зчитати файл:"
 
 #: ../plug-ins/imagemap/imap_main.c:939
 #, c-format
@@ -11712,7 +11711,7 @@ msgstr "_Файл"
 
 #: ../plug-ins/imagemap/imap_menu.c:146
 msgid "_Open..."
-msgstr "_Відкрити..."
+msgstr "_Відкрити…"
 
 #: ../plug-ins/imagemap/imap_menu.c:146
 msgid "Open"
@@ -11720,7 +11719,7 @@ msgstr "Відкрити"
 
 #: ../plug-ins/imagemap/imap_menu.c:148
 msgid "_Save..."
-msgstr "З_берегти..."
+msgstr "З_берегти…"
 
 #: ../plug-ins/imagemap/imap_menu.c:148
 msgid "Save"
@@ -11728,11 +11727,11 @@ msgstr "Зберегти"
 
 #: ../plug-ins/imagemap/imap_menu.c:150
 msgid "Save _As..."
-msgstr "Зберегти _як..."
+msgstr "Зберегти _як…"
 
 #: ../plug-ins/imagemap/imap_menu.c:155
 msgid "_Edit"
-msgstr "_Правка"
+msgstr "З_міни"
 
 #: ../plug-ins/imagemap/imap_menu.c:156
 msgid "Undo"
@@ -11744,41 +11743,39 @@ msgstr "Повернути"
 
 #: ../plug-ins/imagemap/imap_menu.c:163
 msgid "D_eselect All"
-msgstr "З_няти виділення"
+msgstr "З_няти вибране"
 
 #: ../plug-ins/imagemap/imap_menu.c:165
 msgid "Edit Area _Info..."
-msgstr "Правка _інформації про область..."
+msgstr "Змінити _інформації про ділянку…"
 
 #: ../plug-ins/imagemap/imap_menu.c:166
 msgid "Edit selected area info"
-msgstr "Правка інформації про вибрану ділянку"
+msgstr "Змінити інформацію про вибрану ділянку"
 
 #: ../plug-ins/imagemap/imap_menu.c:167
 msgid "Preferences"
-msgstr "Настройка"
+msgstr "Параметри"
 
 #: ../plug-ins/imagemap/imap_menu.c:169
-#, fuzzy
 msgid "Move Area to Front"
-msgstr "На передній план"
+msgstr "Перенести ділянку на передній план"
 
 #: ../plug-ins/imagemap/imap_menu.c:171
-#, fuzzy
 msgid "Move Area to Bottom"
-msgstr "На передній план"
+msgstr "Перенести ділянку додолу"
 
 #: ../plug-ins/imagemap/imap_menu.c:173
 msgid "Delete Area"
-msgstr "Видалити область"
+msgstr "Вилучити ділянку"
 
 #: ../plug-ins/imagemap/imap_menu.c:180
 msgid "_View"
-msgstr "_Вигляд"
+msgstr "П_ерегляд"
 
 #: ../plug-ins/imagemap/imap_menu.c:181
 msgid "Source..."
-msgstr "Джерело..."
+msgstr "Джерело…"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
 msgid "Zoom in"
@@ -11798,27 +11795,27 @@ msgstr "В_ідображення"
 
 #: ../plug-ins/imagemap/imap_menu.c:187
 msgid "Edit Map Info..."
-msgstr "Правка інформації про мапу..."
+msgstr "Змінити інформацію про карту…"
 
 #: ../plug-ins/imagemap/imap_menu.c:188
 msgid "Edit Map Info"
-msgstr "Правка інформації про мапу"
+msgstr "Змінити інформацію про мапу"
 
 #: ../plug-ins/imagemap/imap_menu.c:190
 msgid "_Tools"
-msgstr "С_ервіс"
+msgstr "_Засоби"
 
 #: ../plug-ins/imagemap/imap_menu.c:191
 msgid "Grid Settings..."
-msgstr "Параметри сітки..."
+msgstr "Параметри сітки…"
 
 #: ../plug-ins/imagemap/imap_menu.c:193
 msgid "Use GIMP Guides..."
-msgstr "Використовувати напрямні GIMP..."
+msgstr "Використовувати напрямні GIMP…"
 
 #: ../plug-ins/imagemap/imap_menu.c:195
 msgid "Create Guides..."
-msgstr "Створити напрямні..."
+msgstr "Створити напрямні…"
 
 #: ../plug-ins/imagemap/imap_menu.c:198
 msgid "_Help"
@@ -11842,19 +11839,19 @@ msgstr "Стрілка"
 
 #: ../plug-ins/imagemap/imap_menu.c:218
 msgid "Select existing area"
-msgstr "Виділити існуючу область"
+msgstr "Вибрати наявну ділянку"
 
 #: ../plug-ins/imagemap/imap_menu.c:220
 msgid "Define Rectangle area"
-msgstr "Визначити прямокутну область"
+msgstr "Визначити прямокутну ділянку"
 
 #: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Define Circle/Oval area"
-msgstr "Визначити круглу/овальну область"
+msgstr "Визначити круглу/овальну ділянку"
 
 #: ../plug-ins/imagemap/imap_menu.c:224
 msgid "Define Polygon area"
-msgstr "Визначити багатокутну область"
+msgstr "Визначити багатокутну ділянку"
 
 #: ../plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -11941,9 +11938,8 @@ msgid "Selected:"
 msgstr "Виділене:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:442
-#, fuzzy
 msgid "Interaction:"
-msgstr "Число повторів:"
+msgstr "Взаємодія:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
@@ -12243,7 +12239,7 @@ msgstr "_Металічний"
 
 #: ../plug-ins/lighting/lighting-ui.c:805
 msgid "E_nable bump mapping"
-msgstr "_Увімкнути рельєфне відображення"
+msgstr "_Увімкнути рельєфне вібиття"
 
 #: ../plug-ins/lighting/lighting-ui.c:819
 msgid "Enable/disable bump-mapping (image depth)"
@@ -12271,11 +12267,11 @@ msgstr "Максимальна висота рельєфу"
 
 #: ../plug-ins/lighting/lighting-ui.c:897
 msgid "E_nable environment mapping"
-msgstr "_Увімкнути відображення на середовище"
+msgstr "_Увімкнути відбиття на середовище"
 
 #: ../plug-ins/lighting/lighting-ui.c:911
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Увімкнути/вимкнути відображення на середовище (відбиття)"
+msgstr "Увімкнути/вимкнути відбиття на середовище (відбиття)"
 
 #: ../plug-ins/lighting/lighting-ui.c:929
 msgid "En_vironment image:"
@@ -12408,14 +12404,12 @@ msgid "Create new image"
 msgstr "Створити нове зображення"
 
 #: ../plug-ins/map-object/map-object-ui.c:483
-#, fuzzy
 msgid "Create new layer"
-msgstr "Створити _новий шар"
+msgstr "Створити новий шар"
 
 #: ../plug-ins/map-object/map-object-ui.c:494
-#, fuzzy
 msgid "Create a new layer when applying filter"
-msgstr "Створювати нове зображення на застосуванні фільтру"
+msgstr "Створювати нове зображення протягом застосування фільтра"
 
 #: ../plug-ins/map-object/map-object-ui.c:502
 msgid "Enable _antialiasing"
@@ -12579,14 +12573,12 @@ msgid "Map to Object"
 msgstr "Проекція"
 
 #: ../plug-ins/map-object/map-object-ui.c:1375
-#, fuzzy
 msgid "Show _wireframe"
-msgstr "Показати _каркас перегляду"
+msgstr "Показати _каркас"
 
 #: ../plug-ins/map-object/map-object-ui.c:1384
-#, fuzzy
 msgid "Update preview _live"
-msgstr "Переобчислити перегляд зображення"
+msgstr "Оновити перегляд _живих"
 
 #: ../plug-ins/maze/maze-algorithms.c:278
 msgid "Constructing maze using Prim's Algorithm"
