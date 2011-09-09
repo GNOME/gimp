@@ -84,7 +84,7 @@ msgstr "Script-Fu: Вибір файлу"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu Folder Selection"
-msgstr "Script-Fu: Вибір файлу"
+msgstr "Script-Fu: Вибір теки"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:458
 msgid "Script-Fu Font Selection"
