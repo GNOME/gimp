@@ -737,18 +737,6 @@ gimp_brush_transform_boundary (GimpBrush *brush,
   return boundary;
 }
 
-gdouble
-gimp_brush_clamp_scale (GimpBrush *brush,
-                        gdouble    scale)
-{
-  g_return_val_if_fail (GIMP_IS_BRUSH (brush), 1.0);
-
-  /* ensure that the final brush mask remains >= 0.5 pixel along both axes */
-  return MAX (0.5 / (gfloat) MIN (brush->mask->width,
-                                  brush->mask->height),
-              scale);
-}
-
 TempBuf *
 gimp_brush_get_mask (const GimpBrush *brush)
 {

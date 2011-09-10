@@ -798,8 +798,6 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
                                                coords);
     }
 
-  core->scale = gimp_brush_clamp_scale (core->main_brush, core->scale);
-
   gimp_brush_transform_size (core->brush,
                              core->scale, core->aspect_ratio, core->angle,
                              &brush_width, &brush_height);
