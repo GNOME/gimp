@@ -163,7 +163,7 @@ AM_PROG_LIBTOOL
 AM_PROG_AS
 
 # Initialize maintainer mode
-AM_MAINTAINER_MODE
+AM_MAINTAINER_MODE([enable])
 
 # Honor aclocal flags
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
