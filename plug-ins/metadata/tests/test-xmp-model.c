@@ -87,6 +87,40 @@ test_xmp_model_is_empty (GimpTestFixture *fixture,
   g_assert (xmp_model_is_empty (xmpmodel));
 }
 
+/**
+ * test_xmp_model_set_get_scalar_property:
+ * @fixture:
+ * @data:
+ *
+ * Test to assert that setting and getting scalar properties don't
+ * change and are always of XMP_TYPE_TEXT.
+ **/
+static void
+test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
+                                        gconstpointer    data)
+{
+  const gchar *property_name = NULL;
+
+  // Schema is nonsense, so nothing is set
+  g_assert (xmp_model_set_scalar_property (fixture->xmpmodel,
+                                           "SCHEMA",
+                                           "key",
+                                           "value") == FALSE);
+  g_assert (xmp_model_is_empty (fixture->xmpmodel) == TRUE);
+
+  // Contributor is a scalar property
+  property_name = "me";
+  g_assert (xmp_model_set_scalar_property (fixture->xmpmodel,
+                                           "dc",
+                                           "contributor",
+                                           property_name) == TRUE);
+  g_assert (xmp_model_is_empty (fixture->xmpmodel) == FALSE);
+
+  // we expect the same data returned
+  g_assert_cmpstr (xmp_model_get_scalar_property (fixture->xmpmodel,
+                                                  "dc",
+                                                  "contributor"), ==, property_name);
+}
 
 int main(int argc, char **argv)
 {
@@ -96,6 +130,7 @@ int main(int argc, char **argv)
   g_test_init (&argc, &argv, NULL);
 
   ADD_TEST (test_xmp_model_is_empty);
+  ADD_TEST (test_xmp_model_set_get_scalar_property);
 
   result = g_test_run ();
 
