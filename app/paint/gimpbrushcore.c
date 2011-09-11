@@ -665,8 +665,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
            */
           s0 += direction;
         }
-      else if (x == (gint) floor (paint_core->last_paint.x) &&
-               y == (gint) floor (paint_core->last_paint.y))
+      else if (x == (gint) floor (last_coords.y) &&
+               y == (gint) floor (last_coords.y))
         {
           /*  Exception B: If first stripe's brush position is within the
            *  same pixel square as the last plot of the previous line,
@@ -755,6 +755,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
         }
 
       gimp_paint_core_set_current_coords (paint_core, &current_coords);
+      gimp_paint_core_set_last_coords (paint_core, &current_coords);
 
       paint_core->distance   = initial       + t * dist;
       paint_core->pixel_dist = pixel_initial + t * pixel_dist;
@@ -772,7 +773,6 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   current_coords.velocity = last_coords.velocity + delta_velocity;
 
   gimp_paint_core_set_current_coords (paint_core, &current_coords);
-  gimp_paint_core_set_last_coords (paint_core, &current_coords);
 
   paint_core->distance   = total;
   paint_core->pixel_dist = pixel_initial + pixel_dist;

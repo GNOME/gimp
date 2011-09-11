@@ -322,13 +322,6 @@ gimp_paint_core_paint (GimpPaintCore    *core,
                              paint_state, time))
     {
 
-      if (paint_state == GIMP_PAINT_STATE_MOTION)
-        {
-          /* Save coordinates for gimp_paint_core_interpolate() */
-          core->last_paint.x = core->cur_coords.x;
-          core->last_paint.y = core->cur_coords.y;
-        }
-
       core_class->paint (core, drawable,
                          paint_options,
                          &core->cur_coords,
