@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-11 16:14+0300\n"
-"PO-Revision-Date: 2011-09-11 16:17+0300\n"
+"POT-Creation-Date: 2011-09-11 16:27+0300\n"
+"PO-Revision-Date: 2011-09-08 19:03+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -13,8 +13,8 @@ msgstr ""
 "X-Poedit-Language: Belarusian\n"
 "X-Poedit-Country: BELARUS\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Basepath: /tmp/gimp-2.7.3/po\n"
 
 #: ../app/about.h:23
@@ -8344,6 +8344,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d піксэль"
 msgstr[1] "%d × %d піксэлі"
 msgstr[2] "%d × %d піксэляў"
+msgstr[3] "%d × %d піксэль"
 
 #: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:339
 #, c-format
@@ -8352,6 +8353,7 @@ msgid_plural "%d layers"
 msgstr[0] "%d пласт"
 msgstr[1] "%d пласты"
 msgstr[2] "%d пластоў"
+msgstr[3] "%d пласт"
 
 #: ../app/core/gimpimagefile.c:845
 #, c-format
@@ -10251,12 +10253,13 @@ msgid "If you close these images now, changes will be lost."
 msgstr "Калі закрыеш зараз гэтыя відарысы, зьмены будуць страчаныя."
 
 #: ../app/dialogs/quit-dialog.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "Незамацаваныя зьмены ў %d відарысе:"
 msgstr[1] "Незамацаваныя зьмены ў %d відарысах:"
 msgstr[2] "Незамацаваныя зьмены ў %d відарысах:"
+msgstr[3] "Незамацаваныя зьмены ў адным відарысе:"
 
 #: ../app/dialogs/quit-dialog.c:235
 msgid "_Discard Changes"
@@ -10545,7 +10548,7 @@ msgid "Save the changes to image '%s' before closing?"
 msgstr "Ці замацаваць зьмены відарыса «%s» перад закрыцьцём?"
 
 #: ../app/display/gimpdisplayshell-close.c:254
-#, fuzzy, c-format
+#, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
@@ -10555,6 +10558,8 @@ msgstr[1] ""
 "Калі не запішаш відарыс, то зьмены за апошнія %d гадзіны будуць страчаныя."
 msgstr[2] ""
 "Калі не запішаш відарыс, то зьмены за апошнія %d гадзін будуць страчаныя."
+msgstr[3] ""
+"Калі не запішаш відарыс, то зьмены за апошнюю гадзіну будуць страчаныя."
 
 #: ../app/display/gimpdisplayshell-close.c:264
 #, c-format
@@ -10573,20 +10578,26 @@ msgstr[1] ""
 msgstr[2] ""
 "Калі не захаваеш відарыс, то зьмяненьні за апошнію гадзіну і %d хвілін "
 "будуць страчаныя."
+msgstr[3] ""
+"Калі не захаваеш відарыс, то зьмяненьні за апошнію гадзіну і %d хвіліну "
+"будуць страчаныя."
 
 #: ../app/display/gimpdisplayshell-close.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
-"Калі не захаваеш відарыс, то зьмяненьні за апошнюю %d хвіліну будуць страчаныя."
+"Калі не захаваеш відарыс, то зьмяненьні за апошнюю %d хвіліну будуць "
+"страчаныя."
 msgstr[1] ""
 "Калі не захаваеш відарыс, то зьмяненьні за апошнія %d хвіліны будуць "
 "страчаныя."
 msgstr[2] ""
 "Калі не захаваеш відарыс, то зьмяненьні за апошнія %d хвілін будуць "
 "страчаныя."
+msgstr[3] ""
+"Калі не захаваеш відарыс, то зьмяненьні за апошнюю хвіліну будуць страчаныя."
 
 #: ../app/display/gimpdisplayshell-dnd.c:232
 #: ../app/display/gimpdisplayshell-dnd.c:635
