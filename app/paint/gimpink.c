@@ -145,13 +145,15 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
                 guint32           time)
 {
   GimpInk *ink = GIMP_INK (paint_core);
+  GimpCoords last_coords;
+
+  gimp_paint_core_get_last_coords (paint_core, &last_coords);
+  gimp_paint_core_get_current_coords (paint_core, paint_options, coords);
 
   switch (paint_state)
     {
-      GimpCoords last_coords;
 
     case GIMP_PAINT_STATE_INIT:
-      gimp_paint_core_get_last_coords (paint_core, &last_coords);
 
       if (coords->x == last_coords.x &&
           coords->y == last_coords.y)
