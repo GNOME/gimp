@@ -1,4 +1,7 @@
 ## Process this file with automake to produce Makefile.in
+SUBDIRS = \
+	tests
+
 
 libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
