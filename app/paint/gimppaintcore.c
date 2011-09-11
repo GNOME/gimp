@@ -321,9 +321,6 @@ gimp_paint_core_paint (GimpPaintCore    *core,
                              paint_options,
                              paint_state, time))
     {
-      gimp_paint_core_smooth_coords (core,
-                                     paint_options,
-                                     &core->cur_coords);
 
       if (paint_state == GIMP_PAINT_STATE_MOTION)
         {
