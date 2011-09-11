@@ -755,13 +755,14 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
         }
 
       gimp_paint_core_set_current_coords (paint_core, &current_coords);
-      gimp_paint_core_set_last_coords (paint_core, &current_coords);
 
       paint_core->distance   = initial       + t * dist;
       paint_core->pixel_dist = pixel_initial + t * pixel_dist;
 
       gimp_paint_core_paint (paint_core, drawable, paint_options,
                              GIMP_PAINT_STATE_MOTION, time);
+
+      gimp_paint_core_set_last_coords (paint_core, &current_coords);
     }
 
   current_coords.x        = last_coords.x        + delta_vec.x;
