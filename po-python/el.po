@@ -6,100 +6,110 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 1.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-20 14:39+0300\n"
-"PO-Revision-Date: 2009-07-31 11:10+0300\n"
-"Last-Translator: Tournaris Pavlos <p.tournaris@gmail.com> \n"
-"Language-Team: Greek <team@lists.gnome.gr>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-08-13 21:07+0000\n"
+"PO-Revision-Date: 2011-08-13 10:31+0200\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs 32@gmail.com>\n"
+"Language-Team: Greek <team@gnome.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 0.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:391
+#: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
 msgstr "Έλλειψη πληροφορίας εξαίρεσης "
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
-msgid "An error occured running %s"
-msgstr "Ένα σφάλμα προέκυψε τρέχοντας το %s"
+msgid "An error occurred running %s"
+msgstr "Ένα σφάλμα τρέχοντας το %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:411
+#: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
 msgstr "_Περισσότερες πληροφορίες"
 
-#: ../plug-ins/pygimp/gimpfu.py:523 ../plug-ins/pygimp/gimpfu.py:535
-#: ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
+#: ../plug-ins/pygimp/gimpfu.py:544
 msgid "No"
 msgstr "Όχι"
 
-#: ../plug-ins/pygimp/gimpfu.py:533 ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
 msgid "Yes"
 msgstr "Ναι"
 
-#: ../plug-ins/pygimp/gimpfu.py:592 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
-msgstr "Python-Fu επιλογή αρχείου"
+msgstr "Eπιλογή αρχείου Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:603
+#: ../plug-ins/pygimp/gimpfu.py:607
 msgid "Python-Fu Folder Selection"
-msgstr "Python-Fu επιλογή φακέλου"
+msgstr "Eπιλογή φακέλου Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:694
+#: ../plug-ins/pygimp/gimpfu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Άκυρη εισαγωγή για το '%s'"
 
 #: ../plug-ins/pygimp/gimpui.py:176
-#, fuzzy
 msgid "Python-Fu Color Selection"
-msgstr "Κονσόλα Python"
+msgstr "Επιλογή χρώματος Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Αποθήκευση ως έγχρωμο XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Αποθήκευση ως έγχρωμο XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "Έγχρωμο XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "_Πηγή χαρακτήρα"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Πηγαίος κώδικας"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Αρχείο κειμένου"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Entry box"
-msgstr "Κουτί εισόδου"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "_File to read or characters to use"
-msgstr "_Αρχείο προς ανάγνωση ή χαρακτήρες προς χρήση"
-
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
-msgid "Fo_nt size in pixels"
-msgstr "Μέγεθος γραμμα_τοσειράς σε pixels"
+msgid "Entry box"
+msgstr "Πλαίσιο εισόδου"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "_File to read or characters to use"
+msgstr "_Αρχείο για ανάγνωση ή χαρακτήρες για χρήση"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+msgid "Fo_nt size in pixels"
+msgstr "Μέγεθος γραμματοσειράς σε εικο_νοστοιχεία"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
-msgstr "_Γράψτε ένα μεμονωμένο CSS αρχείο"
+msgstr "_Εγγραφή ξεχωριστού αρχείου CSS"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+msgid "Gradient to use"
+msgstr "Διαβάθμιση για χρήση"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+msgid "File Name"
+msgstr "Όνομα αρχείου"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
-msgstr "Προσθήκη ενός επιπέδου ομίχλης"
+msgstr "Προσθήκη μιας στρώσης ομίχλης"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Fog..."
@@ -107,7 +117,7 @@ msgstr "_Ομίχλη..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "_Layer name"
-msgstr "_Όνομα επιπέδου"
+msgstr "Όν_ομα στρώσης"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Clouds"
@@ -119,11 +129,11 @@ msgstr "_Χρώμα ομίχλης"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Turbulence"
-msgstr "_Αναταράξεις"
+msgstr "Ανα_ταράξεις"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "Op_acity"
-msgstr "Ορ_ατότητα"
+msgstr "Αδι_αφάνεια"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
@@ -135,8 +145,8 @@ msgstr "_Αντιστάθμιση παλέτας..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Παλέτα"
 
@@ -150,11 +160,11 @@ msgstr "Ταξινόμηση των χρωμάτων σε μια παλέτα"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
-msgstr "_Ταξινόμηση παλέτας"
+msgstr "Ταξινόμη_ση παλέτας..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
 msgid "Color _model"
-msgstr "_Μοντέλο χρώματος"
+msgstr "_Πρότυπο χρώματος"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "RGB"
@@ -166,7 +176,7 @@ msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "Channel to _sort"
-msgstr "Κανάλι για _ταξινόμηση"
+msgstr "Κανάλι για ταξινόμη_ση"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Red or Hue"
@@ -184,74 +194,75 @@ msgstr "Μπλέ ή τιμή"
 msgid "_Ascending"
 msgstr "_Αύξουσα"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:49
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr ""
-"Δημιουργία μιας επαναλαμβανόμενης κλίσης με χρήση των χρωμάτων της παλέτας"
+"Δημιουργία μιας επαναλαμβανόμενης διαβάθμισης με χρήση χρωμάτων από την "
+"παλέτα"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:54
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
-msgstr ""
+msgstr "Παλέτα στην επανα_λαμβανόμενη διαβάθμιση"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:71
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
-msgstr "Δημιουργία μιας κλίσης με χρήση των χρωμάτων της παλέτας"
+msgstr "Δημιουργία μιας διαβάθμισης με χρήση χρωμάτων από την παλέτα"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:76
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
-msgstr ""
+msgstr "Παλέτα στη _διαβάθμιση"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:56
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "Φέτα"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:417
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
-"Κόβει μια εικόνα κατά μήκος των οδηγών της, δημιουργεί εικόνες και ένα "
-"απόσπασμα HTML"
+"Κοπή εικόνας κατά μήκος των οδηγών της, δημιουργία εικόνων και ένα απόσπασμα "
+"πίνακα HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:428
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "_Φέτα..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
 msgstr "Μονοπάτι για εξαγωγή HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Filename for export"
-msgstr ""
+msgstr "Όνομα αρχείου για εξαγωγή"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "Πρόθεμα ονόματος εικόνας"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "Μορφή εικόνας"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Separate image folder"
-msgstr "Μεμωνωμένος φάκελος εικόνων"
+msgstr "Ξεχωριστός φάκελος εικόνων"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
 msgid "Folder for image export"
 msgstr "Φάκελος για εξαγωγή εικόνων"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Space between table elements"
-msgstr "Κενό μεταξύ των στοιχείων του τραπεζιού"
+msgstr "Κενό μεταξύ των στοιχείων πίνακα"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
-msgstr ""
+msgstr "Javascript για υπέρπτηση ποντικιού και κλικ"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
-msgstr "Παράλειψη κινοθμένων σχεδίων για κεφαλαιοποίηση τραπεζίου"
+msgstr "Παράλειψη κίνησης για κεφαλαία πίνακα"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:56
 msgid "Python Console"
@@ -264,12 +275,12 @@ msgstr "_Εξερεύνηση..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
-msgstr "Φυλλομετρητής διαδικασίας Python"
+msgstr "Περιηγητής διαδικασίας Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Αδύνατο το άνοιγμα του '%s' για εγγραφή: %s"
+msgstr "Αδυναμία άνοιγματος του '%s' για εγγραφή: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:182
 #, python-format
@@ -277,54 +288,52 @@ msgid "Could not write to '%s': %s"
 msgstr "Αδύνατη η εγγραφή στο '%s': %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:190
-#, fuzzy
 msgid "Save Python-Fu Console Output"
-msgstr "Κονσόλα Python"
+msgstr "Αποθήκευση εξόδου κονσόλας Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
 msgid "Interactive GIMP Python interpreter"
-msgstr ""
+msgstr "Διερμηνέας Python διαδραστικού GIMP"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:221
-#, fuzzy
 msgid "_Console"
-msgstr "Κονσόλα Python"
+msgstr "_Κονσόλα"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr ""
+msgstr "Προσθήκη πίπτουσας σκιάς στη στρώση και προαιρετικά λοξότμηση της"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Δημιουργία σκιάς και εμβάθυνση"
+msgstr "_Δημιουργία σκιάς και λοξότμηση..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
-msgstr "Θόλωμα _σκιάς"
+msgstr "Θόλωση _σκιάς"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
-msgstr "_Εμβάθυνση"
+msgstr "_Λοξότμηση"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
-msgstr "_Δημιουργία σκιάς"
+msgstr "_Ρίψη σκιάς"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
-msgstr ""
+msgstr "Μετατόπιση _Χ πίπτουσας σκιάς "
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
-msgstr ""
+msgstr "Μετατόπιση _Y πίπτουσας σκιάς "
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:75
 msgid "Create a new brush with characters from a text sequence"
-msgstr ""
+msgstr "Δημιουργία νέου πινέλου με χαρακτήρες από σειρά κειμένου"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:81
 msgid "New Brush from _Text..."
-msgstr ""
+msgstr "Νέο πινέλο από _Κείμενο..."
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:84
 msgid "Font"
