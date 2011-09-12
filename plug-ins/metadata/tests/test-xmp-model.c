@@ -122,6 +122,45 @@ test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
                                                   "contributor"), ==, property_name);
 }
 
+/**
+ * test_xmp_model_get_raw_property_value:
+ * @fixture:
+ * @data:
+ *
+ * Tests the xmp_model_get_raw_property_value, which returns raw values
+ * from the XMPModel.
+ **/
+static void
+test_xmp_model_get_raw_property_value (GimpTestFixture *fixture,
+                                       gconstpointer    data)
+{
+  const gchar **expected;
+  const gchar **result;
+
+  // NULL is returned if no value is set by given schema and property
+  // name
+  g_assert (xmp_model_get_raw_property_value (fixture->xmpmodel,
+                                              "dc", "title") == NULL);
+
+  // XMP_TYPE_LANG_ALT
+  // Note: XMP_TYPE_TEXT is tested with wrapper function
+  // xmp_model_set_scalar_property
+  expected = g_new (const gchar *, 2);
+  expected[0] = g_strdup ("en_GB");
+  expected[1] = g_strdup ("my title");
+  expected[2] = NULL;
+  xmp_model_set_property (fixture->xmpmodel,
+                          XMP_TYPE_LANG_ALT,
+                          "dc",
+                          "title",
+                          expected);
+
+  result = xmp_model_get_raw_property_value (fixture->xmpmodel,
+                                             "dc", "title");
+  g_assert_cmpstr (result[0], ==, expected[0]);
+  g_assert_cmpstr (result[1], ==, expected[1]);
+}
+
 int main(int argc, char **argv)
 {
   gint result = -1;
@@ -131,6 +170,7 @@ int main(int argc, char **argv)
 
   ADD_TEST (test_xmp_model_is_empty);
   ADD_TEST (test_xmp_model_set_get_scalar_property);
+  ADD_TEST (test_xmp_model_get_raw_property_value);
 
   result = g_test_run ();
 
