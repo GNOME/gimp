@@ -62,7 +62,6 @@ m4_define([libgudev_required_version], [167])
 m4_define([exif_required_version], [0.6.15])
 m4_define([lcms_required_version], [1.16])
 m4_define([libpng_required_version], [1.2.37])
-m4_define([gtkspell_required_version], [2.0.16])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -1285,28 +1284,6 @@ AC_SUBST(WEB_PAGE)
 AM_CONDITIONAL(HAVE_WEBKIT, test "x$have_webkit" = xyes)
 
 
-####################
-# Check for gtkspell
-####################
-
-AC_ARG_WITH(gtkspell, [  --without-gtkspell        don't use a spellchecker])
-
-have_gtkspell=no
-if test "x$with_gtkspell" != xno; then
-  PKG_CHECK_MODULES(GTKSPELL, gtkspell-2.0 >= gtkspell_required_version,
-    AC_DEFINE(HAVE_GTKSPELL, 1,
-              [Define to 1 if GtkSpell is available])
-    have_gtkspell=yes,
-    have_gtkspell="no (GtkSpell not found)")
-else
-  have_gtkspell="no (GtkSpell support disabled)"
-fi
-
-AM_CONDITIONAL(HAVE_GTKSPELL, test "x$have_gtkspell" = xyes)
-AC_SUBST(GTKSPELL_LIBS)
-AC_SUBST(GTKSPELL_CFLAGS)
-
-
 ###################
 # Check for librsvg
 ###################
@@ -2278,7 +2255,6 @@ Optional Features:
 Optional Plug-Ins:
   Ascii Art:           $have_libaa
   Help Browser:        $have_webkit
-  Spellchecker:        $have_gtkspell
   LCMS:                $have_lcms
   JPEG:                $jpeg_ok
   JPEG 2000:           $have_jp2

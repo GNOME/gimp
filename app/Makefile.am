@@ -201,10 +201,6 @@ gimp_2_7_LDADD = \
 	$(GIMPRC)
 
 
-if HAVE_GTKSPELL
-gimp_2_7_LDADD += $(GTKSPELL_LIBS)
-endif
-
 if ENABLE_GIMP_CONSOLE
 
 gimp_console_2_7_SOURCES = $(libapp_sources) main.c
