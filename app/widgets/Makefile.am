@@ -14,6 +14,10 @@ INCLUDES = \
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
+if HAVE_GTKSPELL
+INCLUDES += $(GTKSPELL_CFLAGS)
+endif
+
 noinst_LIBRARIES = libappwidgets.a
 
 libappwidgets_a_sources = \

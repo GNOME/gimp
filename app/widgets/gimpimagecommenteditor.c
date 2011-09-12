@@ -25,6 +25,10 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef HAVE_GTKSPELL
+#include <gtkspell/gtkspell.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -99,6 +103,11 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
   gtk_text_view_set_pixels_above_lines (GTK_TEXT_VIEW (text_view), 6);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (text_view), 6);
   gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 6);
+
+#ifdef HAVE_GTKSPELL
+  /* FIXME: Set language here */
+  gtkspell_new_attach (GTK_TEXT_VIEW (text_view), NULL, NULL);
+#endif
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
