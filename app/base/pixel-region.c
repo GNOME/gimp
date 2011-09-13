@@ -294,7 +294,6 @@ pixel_regions_register (gint num_regions,
     return NULL;
 
   PRI = g_slice_new0 (PixelRegionIterator);
-  PRI->dirty_tiles = 1;
 
   va_start (ap, num_regions);
 
@@ -364,9 +363,7 @@ pixel_regions_process (PixelRegionIterator *PRI)
               is a tile manager  */
           if (PRH->PR->tiles)
             {
-              /* only set the dirty flag if PRH->dirty_tiles == TRUE */
-              tile_release (PRH->PR->curtile,
-                            PRH->PR->dirty && PRI->dirty_tiles);
+              tile_release (PRH->PR->curtile, PRH->PR->dirty);
               PRH->PR->curtile = NULL;
             }
 

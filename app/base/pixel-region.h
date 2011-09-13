@@ -48,7 +48,6 @@ struct _PixelRegionHolder
 struct _PixelRegionIterator
 {
   GSList *pixel_regions;
-  gint    dirty_tiles;
   gint    region_width;
   gint    region_height;
   gint    portion_width;
