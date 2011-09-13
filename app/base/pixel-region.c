@@ -35,6 +35,7 @@
 
 static gint                  get_portion_width       (PixelRegionIterator *PRI);
 static gint                  get_portion_height      (PixelRegionIterator *PRI);
+static void                  pixel_regions_free      (PixelRegionIterator *PRI);
 static PixelRegionIterator * pixel_regions_configure (PixelRegionIterator *PRI);
 static void                  pixel_region_configure  (PixelRegionHolder   *PRH,
                                                       PixelRegionIterator *PRI);
@@ -410,15 +411,7 @@ pixel_regions_process_stop (PixelRegionIterator *PRI)
         }
     }
 
-  if (PRI->pixel_regions)
-    {
-      for (list = PRI->pixel_regions; list; list = g_slist_next (list))
-        g_slice_free (PixelRegionHolder, list->data);
-
-      g_slist_free (PRI->pixel_regions);
-
-      g_slice_free (PixelRegionIterator, PRI);
-    }
+  pixel_regions_free (PRI);
 }
 
 
@@ -510,6 +503,21 @@ get_portion_width (PixelRegionIterator *PRI)
   return min_width;
 }
 
+static void
+pixel_regions_free (PixelRegionIterator *PRI)
+{
+  if (PRI->pixel_regions)
+    {
+      GSList *list;
+
+      for (list = PRI->pixel_regions; list; list = g_slist_next (list))
+        g_slice_free (PixelRegionHolder, list->data);
+
+      g_slist_free (PRI->pixel_regions);
+
+      g_slice_free (PixelRegionIterator, PRI);
+    }
+}
 
 static PixelRegionIterator *
 pixel_regions_configure (PixelRegionIterator *PRI)
@@ -522,15 +530,7 @@ pixel_regions_configure (PixelRegionIterator *PRI)
 
   if (PRI->portion_width  == 0 || PRI->portion_height == 0)
     {
-      /*  free the pixel regions list  */
-      if (PRI->pixel_regions)
-        {
-          for (list = PRI->pixel_regions; list; list = g_slist_next (list))
-            g_slice_free (PixelRegionHolder, list->data);
-
-          g_slist_free (PRI->pixel_regions);
-          g_slice_free (PixelRegionIterator, PRI);
-        }
+      pixel_regions_free (PRI);
 
       return NULL;
     }
