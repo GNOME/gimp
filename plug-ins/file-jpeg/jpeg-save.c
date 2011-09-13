@@ -202,7 +202,7 @@ background_jpeg_save (PreviewPersistent *pp)
 
           g_stat (pp->file_name, &buf);
 
-          size_text = g_format_size_for_display (buf.st_size);
+          size_text = g_format_size (buf.st_size);
           text = g_strdup_printf (_("File size: %s"), size_text);
 
           gtk_label_set_text (GTK_LABEL (preview_size), text);

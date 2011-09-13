@@ -320,14 +320,14 @@ image_new_confirm_dialog (ImageNewDialog *data)
                     G_CALLBACK (image_new_confirm_response),
                     data);
 
-  size = g_format_size_for_display (gimp_template_get_initial_size (data->template));
+  size = g_format_size (gimp_template_get_initial_size (data->template));
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("You are trying to create an image "
                                        "with a size of %s."), size);
   g_free (size);
 
   config = GIMP_GUI_CONFIG (data->context->gimp->config);
-  size = g_format_size_for_display (config->max_new_image_size);
+  size = g_format_size (config->max_new_image_size);
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                               _("An image of the chosen size will use more "
                                 "memory than what is configured as "

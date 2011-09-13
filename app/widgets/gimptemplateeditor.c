@@ -650,7 +650,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
     }
 
 #ifdef ENABLE_MEMSIZE_LABEL
-  text = g_format_size_for_display (gimp_template_get_initial_size (template));
+  text = g_format_size (gimp_template_get_initial_size (template));
   gtk_label_set_text (GTK_LABEL (private->memsize_label), text);
   g_free (text);
 #endif

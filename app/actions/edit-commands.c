@@ -169,7 +169,7 @@ edit_undo_clear_cmd_callback (GtkAction *action,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (redo_stack), &guisize);
   memsize += guisize;
 
-  size = g_format_size_for_display (memsize);
+  size = g_format_size (memsize);
 
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                              _("Clearing the undo history of this "

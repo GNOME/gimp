@@ -123,14 +123,14 @@ progress_callback (void   *clientp,
 
   if (dltotal > 0.0)
     {
-      memsize = g_format_size_for_display (dltotal);
+      memsize = g_format_size (dltotal);
       gimp_progress_set_text_printf (_("Downloading %s of image data"),
                                      memsize);
       gimp_progress_update (dlnow / dltotal);
     }
   else
     {
-      memsize = g_format_size_for_display (dlnow);
+      memsize = g_format_size (dlnow);
       gimp_progress_set_text_printf (_("Downloaded %s of image data"),
                                      memsize);
       gimp_progress_pulse ();

@@ -311,11 +311,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 GimpObject *object = GIMP_OBJECT (image);
                 gchar      *str;
 
-                str = g_format_size_for_display (gimp_object_get_memsize (object,
-                                                                          NULL));
-
+                str = g_format_size (gimp_object_get_memsize (object, NULL));
                 i += print (title, title_len, i, "%s", str);
-
                 g_free (str);
               }
               break;

@@ -71,7 +71,7 @@ gimp_memsize_get_type (void)
  * Creates a string representation of a given memory size. This string
  * can be parsed by gimp_memsize_deserialize() and can thus be used in
  * config files. It should not be displayed to the user. If you need a
- * nice human-readable string please use g_format_size_for_display().
+ * nice human-readable string please use g_format_size().
  *
  * Return value: A newly allocated string representation of @memsize.
  *
@@ -162,14 +162,14 @@ gimp_memsize_deserialize (const gchar *string,
  * gimp_memsize_to_string:
  * @memsize: A memory size in bytes.
  *
- * This function is deprecated! Use g_format_size_for_display() instead.
+ * This function is deprecated! Use g_format_size() instead.
  *
  * Return value: A newly allocated human-readable, translated string.
  **/
 gchar *
 gimp_memsize_to_string (guint64 memsize)
 {
-  return g_format_size_for_display (memsize);
+  return g_format_size (memsize);
 }
 
 

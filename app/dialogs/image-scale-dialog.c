@@ -234,13 +234,13 @@ image_scale_confirm_large (ImageScaleDialog *dialog,
   GtkWidget *widget = image_scale_confirm_dialog (dialog);
   gchar     *size;
 
-  size = g_format_size_for_display (new_memsize);
+  size = g_format_size (new_memsize);
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (widget)->box,
                                      _("You are trying to create an image "
                                        "with a size of %s."), size);
   g_free (size);
 
-  size = g_format_size_for_display (max_memsize);
+  size = g_format_size (max_memsize);
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (widget)->box,
                              _("Scaling the image to the chosen size will "
                                "make it use more memory than what is "
