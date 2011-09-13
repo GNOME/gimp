@@ -473,7 +473,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
   GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
   TransformAction    function  = TRANSFORM_HANDLE_NONE;
 
-  if (display != tool->display)
+  if (display != tool->display || draw_tool->item == NULL)
     {
       gimp_transform_tool_set_function (tr_tool, function);
       return;
