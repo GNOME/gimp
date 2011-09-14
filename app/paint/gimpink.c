@@ -146,18 +146,16 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
 {
   GimpInk *ink = GIMP_INK (paint_core);
   GimpCoords last_coords;
-  GimpCoords current_coords = *coords;
 
   gimp_paint_core_get_last_coords (paint_core, &last_coords);
-  gimp_paint_core_get_current_coords (paint_core, paint_options, &current_coords);
 
   switch (paint_state)
     {
 
     case GIMP_PAINT_STATE_INIT:
 
-      if (current_coords.x == last_coords.x &&
-          current_coords.y == last_coords.y)
+      if (coords->x == last_coords.x &&
+          coords->y == last_coords.y)
         {
           /*  start with new blobs if we're not interpolating  */
 
@@ -185,7 +183,7 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_MOTION:
-      gimp_ink_motion (paint_core, drawable, paint_options, &current_coords, time);
+      gimp_ink_motion (paint_core, drawable, paint_options, coords, time);
       break;
 
     case GIMP_PAINT_STATE_FINISH:

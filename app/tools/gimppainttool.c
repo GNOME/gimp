@@ -416,6 +416,8 @@ gimp_paint_tool_motion (GimpTool         *tool,
 
   curr_coords = *coords;
 
+  gimp_paint_core_smooth_coords (core, paint_options, &curr_coords);
+
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   curr_coords.x -= off_x;

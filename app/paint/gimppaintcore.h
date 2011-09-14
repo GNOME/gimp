@@ -139,7 +139,6 @@ void      gimp_paint_core_interpolate               (GimpPaintCore    *core,
 void      gimp_paint_core_set_current_coords        (GimpPaintCore    *core,
                                                      const GimpCoords *coords);
 void      gimp_paint_core_get_current_coords        (GimpPaintCore    *core,
-                                                     GimpPaintOptions *paint_options,
                                                      GimpCoords       *coords);
 
 void      gimp_paint_core_set_last_coords           (GimpPaintCore    *core,
@@ -202,6 +201,10 @@ void      gimp_paint_core_validate_canvas_tiles     (GimpPaintCore    *core,
                                                      gint              y,
                                                      gint              w,
                                                      gint              h);
+
+void      gimp_paint_core_smooth_coords             (GimpPaintCore    *core,
+                                                     GimpPaintOptions *paint_options,
+                                                     GimpCoords       *coords);
 
 
 #endif  /*  __GIMP_PAINT_CORE_H__  */
