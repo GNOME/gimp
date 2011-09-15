@@ -1,4 +1,4 @@
-# translation of eu.po to Basque
+# translation of gimp.master.po to Basque
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -7,17 +7,17 @@
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
+"Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-15 17:02+0200\n"
-"PO-Revision-Date: 2011-09-13 11:37+0200\n"
-"Last-Translator: \n"
-"Language-Team: American English <kde-i18n-doc@kde.org>\n"
+"POT-Creation-Date: 2011-09-15 18:02+0200\n"
+"PO-Revision-Date: 2011-09-15 18:02+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: eu\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "\n"
 
@@ -810,7 +810,7 @@ msgstr "Gehitu uneko atzeko planoaren kolorea"
 #: ../app/actions/colormap-commands.c:73
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Editatu kolore-paletaren #%d sarrera"
+msgstr "Editatu kolore-paletaren %d. sarrera"
 
 #: ../app/actions/colormap-commands.c:80
 msgid "Edit Colormap Entry"
@@ -3558,7 +3558,7 @@ msgstr "_Moztu hautapenera"
 #: ../app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
-msgstr "Moztu geruza hautaparen mugetaraino"
+msgstr "Moztu geruza hautapenaren mugetaraino"
 
 #: ../app/actions/layers-actions.c:216
 msgctxt "layers-action"
@@ -11438,7 +11438,7 @@ msgstr "Luzapenak abiarazten"
 
 #: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
-msgstr "Plugininterpretatzaileak"
+msgstr "Pluginen interpretatzaileak"
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
@@ -15817,7 +15817,7 @@ msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr ""
-"XCF fitxategia hondatuta dago! Ahal den neurrian kargatu arren, oastu gabe "
+"XCF fitxategia hondatuta dago! Ahal den neurrian kargatu arren, osatu gabe "
 "dago."
 
 #: ../app/xcf/xcf-load.c:344
@@ -15892,235 +15892,3 @@ msgstr "Sortu irudiak eta editatu argazkiak"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
 msgstr "Irudi-editorea"
-
-#, fuzzy
-#~ msgctxt "tool-options-action"
-#~ msgid "_Save Options To"
-#~ msgstr "_Gorde aukerak hemen"
-
-#, fuzzy
-#~ msgctxt "tool-options-action"
-#~ msgid "_Restore Options From"
-#~ msgstr "_Leheneratu aukerak hemendik"
-
-#, fuzzy
-#~ msgctxt "tool-options-action"
-#~ msgid "Re_name Saved Options"
-#~ msgstr "_Aldatu gordetako aukeren izena"
-
-#, fuzzy
-#~ msgctxt "tool-options-action"
-#~ msgid "_Delete Saved Options"
-#~ msgstr "E_zabatu gordetako aukerak"
-
-#, fuzzy
-#~ msgctxt "tool-options-action"
-#~ msgid "_New Entry..."
-#~ msgstr "_Sarrera berria..."
-
-#~ msgid "Save Tool Options"
-#~ msgstr "Gorde tresna-aukerak"
-
-#~ msgid "Enter a name for the saved options"
-#~ msgstr "Sartu izena gordetako aukerentzako"
-
-#~ msgid "Rename Saved Tool Options"
-#~ msgstr "Aldatu gordetako tresna-aukeren izena"
-
-#~ msgid "Enter a new name for the saved options"
-#~ msgstr "Sartu izen berri bat gordetako aukerentzako"
-
-#~ msgid ""
-#~ "Install a private colormap; might be useful on 8-bit (256 colors) "
-#~ "displays."
-#~ msgstr ""
-#~ "Instalatu kolore-mapa pribatu bat; erabilgarria izan daiteke 8 bit-eko "
-#~ "(256 kolore) pantailetan."
-
-#~ msgid ""
-#~ "Generally only a concern for 8-bit displays, this sets the minimum number "
-#~ "of system colors allocated for GIMP."
-#~ msgstr ""
-#~ "Orokorrean 8 biteko pantailentzat bakarrik da garrantzitsua; GIMPerako "
-#~ "esleitutako sistema-koloreen gutxieneko kopurua ezartzen du."
-
-#, fuzzy
-#~ msgid "Brush Scale"
-#~ msgstr "Brotxak"
-
-#~ msgid "Rate:"
-#~ msgstr "Abiadura:"
-
-#, fuzzy
-#~ msgid "Flow:"
-#~ msgstr "Horia:"
-
-#~ msgid "Gradient:"
-#~ msgstr "Gradientea:"
-
-#~ msgid "Threshold:"
-#~ msgstr "Muga:"
-
-#~ msgctxt "command"
-#~ msgid "Flip"
-#~ msgstr "Irauli"
-
-#~ msgid "Tilt:"
-#~ msgstr "Okerdura:"
-
-#~ msgid "Type"
-#~ msgstr "Mota"
-
-#~ msgid "Brush:"
-#~ msgstr "Brotxa:"
-
-#~ msgid "Scale:"
-#~ msgstr "Eskalatu:"
-
-#~ msgid "Length:"
-#~ msgstr "Luzera:"
-
-#~ msgid "Use color from gradient"
-#~ msgstr "Erabili kolorea gradientetik"
-
-#~ msgctxt "command"
-#~ msgid "Perspective"
-#~ msgstr "Perspektiba"
-
-#~ msgctxt "command"
-#~ msgid "Rotate"
-#~ msgstr "Biratu"
-
-#~ msgctxt "command"
-#~ msgid "Scale"
-#~ msgstr "Eskalatu"
-
-#~ msgctxt "command"
-#~ msgid "Shear"
-#~ msgstr "Zizailatu"
-
-#~ msgid "Font:"
-#~ msgstr "Letra-tipoa:"
-
-#~ msgid "Preview:"
-#~ msgstr "Aurrebista:"
-
-#, fuzzy
-#~ msgctxt "transform-preview-type"
-#~ msgid "Outline"
-#~ msgstr "Eskema"
-
-#, fuzzy
-#~ msgctxt "transform-preview-type"
-#~ msgid "Grid"
-#~ msgstr "Sareta"
-
-#, fuzzy
-#~ msgctxt "transform-preview-type"
-#~ msgid "Image"
-#~ msgstr "Irudia"
-
-#, fuzzy
-#~ msgctxt "transform-preview-type"
-#~ msgid "Image + Grid"
-#~ msgstr "Irudia + sareta"
-
-#~ msgid "Hardness:"
-#~ msgstr "Gogortasuna:"
-
-#~ msgid "Aspect ratio:"
-#~ msgstr "Aspektu-erlazioa:"
-
-#~ msgid "Spacing:"
-#~ msgstr "Tartea:"
-
-#~ msgid "Instant update"
-#~ msgstr "Berehalako eguneratzea"
-
-#~ msgid "Save options to..."
-#~ msgstr "Gorde aukerak..."
-
-#~ msgid "Restore options from..."
-#~ msgstr "Leheneratu aukerak hemendik..."
-
-#~ msgid "Delete saved options..."
-#~ msgstr "Ezabatu gordetako aukerak..."
-
-#~ msgid "Error saving tool options presets: %s"
-#~ msgstr "Errorea tresnaren aukeren aurrezarpenak gordetzean: %s"
-
-#~ msgid "Use a running GIMP only, never start a new one"
-#~ msgstr "Erabili exekuzioan dagoen GIMPa, inoiz ez abiatu berri bat"
-
-#~ msgid "Only check if GIMP is running, then quit"
-#~ msgstr "Bakarrik GIMP exekutatzen dagoela egiaztatu, ondoren irten"
-
-#~ msgid "Print X window ID of GIMP toolbox window, then quit"
-#~ msgstr "Bistaratu GIMPen tresna-kutxaren leihoaren IDa eta gero irten"
-
-#~ msgid "Start GIMP without showing the startup window"
-#~ msgstr "Abiatu GIMP abioko leihoa bistaratu gabe"
-
-#~ msgid "Could not connect to GIMP."
-#~ msgstr "Ezin izan da GIMPekin konektatu."
-
-#~ msgid "Make sure that the Toolbox is visible!"
-#~ msgstr "Ziurtatu tresna-kutxa ikusgai dagoela!"
-
-#~ msgid "Couldn't start '%s': %s"
-#~ msgstr "Ezin izan da %s' abiarazi: %s"
-
-#, fuzzy
-#~ msgctxt "file-action"
-#~ msgid "Save this image with a different name, but keep its current name"
-#~ msgstr "Gorde irudia beste izen batekin, baina mantendu bere uneko izena"
-
-#, fuzzy
-#~ msgctxt "layers-action"
-#~ msgid "Te_xt to Selection"
-#~ msgstr "_Testua hautapenera"
-
-#, fuzzy
-#~ msgctxt "layers-action"
-#~ msgid "_Text to Selection"
-#~ msgstr "_Testua hautapenera"
-
-#~ msgctxt "layers-action"
-#~ msgid "Replace the selection with the text layer's outline"
-#~ msgstr "Ordeztu hautapena testu-geruzaren eskemarekin"
-
-#, fuzzy
-#~ msgctxt "layers-action"
-#~ msgid "Add the text layer's outline to the current selection"
-#~ msgstr "Gehitu testu-geruzaren eskema uneko hautapenari"
-
-#, fuzzy
-#~ msgctxt "layers-action"
-#~ msgid "Subtract the text layer's outline from the current selection"
-#~ msgstr "Kendu testu-geruzaren eskema uneko hautapenetik"
-
-#, fuzzy
-#~ msgctxt "layers-action"
-#~ msgid "Intersect the text layer's outline with the current selection"
-#~ msgstr "Gurutzatu testu-geruzaren eskema uneko hautapenetik"
-
-#~ msgid "Reset Tool Options"
-#~ msgstr "Berrasieratu tresna-aukerak"
-
-#~ msgid "Paste"
-#~ msgstr "Itsatsi"
-
-#~ msgid "Cut"
-#~ msgstr "Ebaki"
-
-#~ msgctxt "command"
-#~ msgid "Rectangle Select"
-#~ msgstr "Hautapen laukizuzena"
-
-#~ msgctxt "command"
-#~ msgid "Ellipse Select"
-#~ msgstr "Hautapen eliptikoa"
-
-#~ msgctxt "command"
-#~ msgid "Bucket Fill"
-#~ msgstr "Bete"
