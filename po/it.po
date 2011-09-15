@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-08-02 18:24+0200\n"
-"PO-Revision-Date: 2011-08-02 23:34+0200\n"
+"PO-Revision-Date: 2011-09-15 10:38+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -10458,8 +10458,7 @@ msgstr "Installazione utente fallita!"
 
 #: ../app/dialogs/user-install-dialog.c:95
 msgid "The GIMP user installation failed; see the log for details."
-msgstr ""
-"Istallazione utente di GIMP fallita; vedere il file log per i dettagli."
+msgstr "Installazione utente di GIMP fallita; vedere il file log per i dettagli."
 
 #: ../app/dialogs/user-install-dialog.c:98
 msgid "Installation Log"
@@ -15167,7 +15166,7 @@ msgstr "Leg_gi online"
 
 #: ../app/widgets/gimphelp.c:641
 msgid "The GIMP user manual is not installed on your computer."
-msgstr "Il manuale utente di GIMP non è istallato sul computer."
+msgstr "Il manuale utente di GIMP non è installato sul computer."
 
 #: ../app/widgets/gimphelp.c:644
 msgid ""
