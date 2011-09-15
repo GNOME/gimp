@@ -1,13 +1,13 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2010
+# Marco Ciampa <ciampix@libero.it>, 2003-2011
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-11-29 09:24+0100\n"
-"PO-Revision-Date: 2010-11-29 09:30+0100\n"
+"PO-Revision-Date: 2011-09-16 00:49+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -204,7 +204,7 @@ msgstr "Rileggere tutti gli Script-Fu disponibili"
 
 #: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
-msgstr "_Rinfresca gli scripts"
+msgstr "_Aggiorna gli script"
 
 #: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
