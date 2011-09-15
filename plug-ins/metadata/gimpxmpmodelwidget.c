@@ -337,11 +337,17 @@ gimp_xmp_model_widget_changed (GimpXmpModelWidget *widget,
        {
         current_value[1] = g_strdup (value);
        }
+      g_signal_handlers_block_by_func (priv->xmp_model,
+                                       gimp_xmp_model_widget_xmpmodel_changed,
+                                       widget);
       xmp_model_set_property (priv->xmp_model,
                               type,
                               priv->schema_uri,
                               priv->property_name,
                               current_value);
+      g_signal_handlers_unblock_by_func (priv->xmp_model,
+                                         gimp_xmp_model_widget_xmpmodel_changed,
+                                         widget);
       break;
 
     default:
