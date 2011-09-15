@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-28 18:08+0000\n"
-"PO-Revision-Date: 2011-08-29 17:54+0200\n"
+"POT-Creation-Date: 2011-08-29 18:55+0000\n"
+"PO-Revision-Date: 2011-09-15 10:45+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -84,8 +84,8 @@ msgid ""
 msgstr ""
 "No se ha podido abrir un archivo de intercambio de prueba.\n"
 "\n"
-"Para prevenir la pérdida de datos, compruebe la ubicación y los permisos del "
-"directorio de intercambio definido en sus preferencias (actualmente es «%s»)."
+"Para prevenir la pérdida de datos, compruebe la ubicación y los permisos de "
+"la carpeta de intercambio definida en sus preferencias (actualmente es «%s»)."
 
 #: ../app/batch.c:75
 #, c-format
@@ -247,7 +247,7 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"El nombre del directorio que contiene la configuración de usuario de GIMP no "
+"El nombre de la carpeta que contiene la configuración de usuario de GIMP no "
 "se puede convertir a UTF-8: %s\n"
 " \n"
 "Lo más probable es que su sistema de ficheros almacene los archivos en una "
@@ -4371,8 +4371,6 @@ msgid "_Sharpen"
 msgstr "_Enfocar [Sharpen]"
 
 #: ../app/actions/select-actions.c:82
-#| msgctxt "select-action"
-#| msgid "Remove fuzzyness from the selection"
 msgctxt "select-action"
 msgid "Remove fuzziness from the selection"
 msgstr "Eliminar la borrosidad de la selección"
@@ -5872,7 +5870,7 @@ msgstr ""
 "Imposible abrir el archivo de intercambio. GIMP ha agotado toda la memoria y "
 "no puede usar el archivo de intercambio. Algunas partes de sus imágenes "
 "pueden estar corrompidas. Intente guardar su trabajo usando nombres de "
-"archivo diferentes, reinicie GIMP y compruebe la ubicación del directorio de "
+"archivo diferentes, reinicie GIMP y compruebe la ubicación de la carpeta de "
 "intercambio en sus Preferencias."
 
 #: ../app/base/tile-swap.c:725
@@ -6450,7 +6448,7 @@ msgstr ""
 "disco. Tenga en cuenta que el archivo de intercambio puede volverse muy "
 "grande fácilmente si GIMP se utiliza con imágenes grandes. Las cosas pueden "
 "también ponerse horriblemente lentas si el archivo de intercambio se crea en "
-"un directorio montado sobre NFS. Por estas razones quizá sea conveniente "
+"una carpeta montada sobre NFS. Por estas razones quizá sea conveniente "
 "colocar su archivo de intercambio en «/tmp»."
 
 #: ../app/config/gimprc-blurbs.h:385
@@ -10988,7 +10986,6 @@ msgid "Every stamp has its own opacity"
 msgstr "Cada sello tiene su propia opacidad"
 
 #: ../app/paint/gimppaintoptions.c:165
-#| msgid "Ignore fuzzyness of the current brush"
 msgid "Ignore fuzziness of the current brush"
 msgstr "Ignorar la borrosidad del pincel actual"
 
@@ -13101,7 +13098,6 @@ msgid "Use _old levels file format"
 msgstr "Usar el formato antigu_o de archivo de niveles"
 
 #: ../app/tools/gimpmagnifyoptions.c:79
-#| msgid "Resize image window to accomodate new zoom level"
 msgid "Resize image window to accommodate new zoom level"
 msgstr ""
 "Redimensionar la ventana de imagen para ajustarse nuevo nivel de ampliación"

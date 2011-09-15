@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-29 10:50+0000\n"
-"PO-Revision-Date: 2011-08-29 17:17+0200\n"
+"POT-Creation-Date: 2011-08-29 18:59+0000\n"
+"PO-Revision-Date: 2011-09-15 10:52+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3982,7 +3982,7 @@ msgstr "Resolución X no válida."
 
 #: ../plug-ins/common/file-pnm.c:555
 msgid "Image width is larger than GIMP can handle."
-msgstr "La anchura de la imagen es amyor de lo que el GIMP puede manejar."
+msgstr "La anchura de la imagen es mayor de lo que GIMP puede manejar."
 
 #: ../plug-ins/common/file-pnm.c:562
 msgid "Invalid Y resolution."
@@ -3990,7 +3990,7 @@ msgstr "Resolución Y no válida."
 
 #: ../plug-ins/common/file-pnm.c:564
 msgid "Image height is larger than GIMP can handle."
-msgstr "La altura de la imagen es mayor de lo que el GIMP puede manejar."
+msgstr "La altura de la imagen es mayor de lo que GIMP puede manejar."
 
 #: ../plug-ins/common/file-pnm.c:574
 msgid "Unsupported maximum value."
@@ -4346,7 +4346,7 @@ msgid ""
 "Image width is larger than GIMP can handle"
 msgstr ""
 "«%s»:\n"
-"La anchura de la imagen es mayor de lo que el GIMP puede manejar"
+"La anchura de la imagen es mayor de lo que GIMP puede manejar"
 
 #: ../plug-ins/common/file-sunras.c:473 ../plug-ins/common/file-xbm.c:841
 #: ../plug-ins/common/file-xwd.c:508
@@ -4366,7 +4366,7 @@ msgid ""
 "Image height is larger than GIMP can handle"
 msgstr ""
 "«%s»:\n"
-"La altura de la imagen es mayor de lo que el GIMP puede manejar"
+"La altura de la imagen es mayor de lo que GIMP puede manejar"
 
 #: ../plug-ins/common/file-sunras.c:520
 msgid "This image depth is not supported"
@@ -4529,7 +4529,7 @@ msgstr "Imagen TIFF"
 #: ../plug-ins/common/file-tiff-load.c:311
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
-msgstr "El TIFF «%s» no contiene ningún directorio"
+msgstr "El TIFF «%s» no contiene ninguna carpeta"
 
 #: ../plug-ins/common/file-tiff-load.c:479
 msgid "Import from TIFF"
@@ -9026,7 +9026,7 @@ msgstr ""
 #: ../plug-ins/file-psd/psd-save.c:634
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
-"Error: no se puede convertir el tipo de imagen básico del GIMP al modo PSD"
+"Error: no se puede convertir el tipo de imagen básico de GIMP al modo PSD"
 
 #: ../plug-ins/file-psd/psd-save.c:1625
 #, c-format
@@ -11158,7 +11158,7 @@ msgstr "No están disponibles las páginas de ayuda para «%s»."
 
 #: ../plug-ins/help/gimphelpdomain.c:186
 msgid "The GIMP user manual is not available."
-msgstr "No está disponible el manual de usuario del GIMP."
+msgstr "No está disponible el manual de usuario de GIMP."
 
 #: ../plug-ins/help/gimphelpdomain.c:187
 msgid ""
