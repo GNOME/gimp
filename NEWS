@@ -40,7 +40,7 @@ Developer documentation:
 
 Source and build system:
 
- - <item>
+ - Make git-version.h generation work in shallow git clones
 
 
 General:
