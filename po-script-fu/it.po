@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-03 17:49+0200\n"
-"PO-Revision-Date: 2011-09-16 00:52+0200\n"
+"PO-Revision-Date: 2011-09-16 01:24+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -200,7 +200,7 @@ msgstr "Alfa a _logotipo"
 
 #: ../plug-ins/script-fu/script-fu.c:330
 msgid "Re-read all available Script-Fu scripts"
-msgstr "Rileggere tutti gli Script-Fu disponibili"
+msgstr "Rilegge tutti gli Script-Fu disponibili"
 
 #: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Refresh Scripts"
