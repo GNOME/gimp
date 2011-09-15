@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2010
+# Marco Ciampa <ciampix@libero.it>, 2003-2011
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
 # Convenzioni adottate per GIMP:
@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-11 01:40+0200\n"
-"PO-Revision-Date: 2010-06-29 12:03+0200\n"
+"PO-Revision-Date: 2011-09-15 10:35+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -8393,8 +8393,7 @@ msgstr "Installazione utente fallita!"
 
 #: ../app/dialogs/user-install-dialog.c:96
 msgid "The GIMP user installation failed; see the log for details."
-msgstr ""
-"Istallazione utente di GIMP fallita; vedere il file log per i dettagli."
+msgstr "Installazione utente di GIMP fallita; vedere il file log per i dettagli."
 
 #: ../app/dialogs/user-install-dialog.c:99
 msgid "Installation Log"
@@ -12244,7 +12243,7 @@ msgstr "Leg_gi online"
 
 #: ../app/widgets/gimphelp.c:645
 msgid "The GIMP user manual is not installed on your computer."
-msgstr "Il manuale utente di GIMP non è istallato sul computer."
+msgstr "Il manuale utente di GIMP non è installato sul computer."
 
 #: ../app/widgets/gimphelp.c:648
 msgid ""
