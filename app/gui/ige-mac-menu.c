@@ -344,7 +344,7 @@ carbon_menu_item_update_accelerator (CarbonMenuItem *carbon_item,
 			modifiers |= kMenuOptionModifier;
 		    }
 
-		  if (!(key->accel_mods & GDK_CONTROL_MASK))
+		  if (!(key->accel_mods & GDK_META_MASK))
 		    {
 		      modifiers |= kMenuNoCommandModifier;
 		    }
@@ -392,7 +392,7 @@ carbon_menu_item_accel_changed (GtkAccelGroup   *accel_group,
 
 	  g_closure_unref (closure);
 	}
-    } 
+    }
 }
 
 static void
