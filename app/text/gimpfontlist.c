@@ -31,7 +31,6 @@
 #include "text-types.h"
 
 #include "gimpfont.h"
-#include "gimpfont-utils.h"
 #include "gimpfontlist.h"
 
 #include "gimp-intl.h"
@@ -47,9 +46,6 @@
 #endif
 
 
-typedef char * (* GimpFontDescToStringFunc) (const PangoFontDescription *desc);
-
-
 static void   gimp_font_list_add_font   (GimpFontList         *list,
                                          PangoContext         *context,
                                          PangoFontDescription *desc);
@@ -60,8 +56,6 @@ static void   gimp_font_list_load_names (GimpFontList         *list,
 
 
 G_DEFINE_TYPE (GimpFontList, gimp_font_list, GIMP_TYPE_LIST)
-
-static GimpFontDescToStringFunc font_desc_to_string = NULL;
 
 
 static void
@@ -102,27 +96,6 @@ gimp_font_list_restore (GimpFontList *list)
 
   g_return_if_fail (GIMP_IS_FONT_LIST (list));
 
-  if (font_desc_to_string == NULL)
-    {
-      PangoFontDescription *desc;
-      gchar                *name;
-      gchar                 last_char;
-
-      desc = pango_font_description_new ();
-      pango_font_description_set_family (desc, "Wilber 12");
-
-      name = pango_font_description_to_string (desc);
-      last_char = name[strlen (name) - 1];
-
-      g_free (name);
-      pango_font_description_free (desc);
-
-      if (last_char != ',')
-        font_desc_to_string = &gimp_font_util_pango_font_description_to_string;
-      else
-        font_desc_to_string = &pango_font_description_to_string;
-    }
-
   fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
   if (! fontmap)
     g_error ("You are using a Pango that has been built against a cairo "
@@ -153,7 +126,7 @@ gimp_font_list_add_font (GimpFontList         *list,
   if (! desc)
     return;
 
-  name = font_desc_to_string (desc);
+  name = pango_font_description_to_string (desc);
 
   if (g_utf8_validate (name, -1, NULL))
     {

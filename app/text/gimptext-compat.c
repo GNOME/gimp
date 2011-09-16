@@ -36,8 +36,6 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer-floating-sel.h"
 
-#include "gimpfont-utils.h"
-
 #include "gimptext.h"
 #include "gimptext-compat.h"
 #include "gimptextlayer.h"
@@ -78,7 +76,7 @@ text_render (GimpImage    *image,
   size = PANGO_PIXELS (pango_font_description_get_size (desc));
 
   pango_font_description_unset_fields (desc, PANGO_FONT_MASK_SIZE);
-  font = gimp_font_util_pango_font_description_to_string (desc);
+  font = pango_font_description_to_string (desc);
 
   pango_font_description_free (desc);
 

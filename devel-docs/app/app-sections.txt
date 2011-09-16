@@ -4232,12 +4232,6 @@ GIMP_FONT_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpfont-utils</FILE>
-<TITLE>GimpFont-utils</TITLE>
-gimp_font_util_pango_font_description_to_string
-</SECTION>
-
-<SECTION>
 <FILE>gimpfontlist</FILE>
 <TITLE>GimpFontList</TITLE>
 GimpFontList
