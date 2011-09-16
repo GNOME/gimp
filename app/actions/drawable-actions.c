@@ -60,7 +60,7 @@ static const GimpActionEntry drawable_actions[] =
     GIMP_HELP_LAYER_WHITE_BALANCE},
 
   { "drawable-offset", NULL,
-    NC_("drawable-action", "_Offset..."), "<control><shift>O",
+    NC_("drawable-action", "_Offset..."), "<primary><shift>O",
     NC_("drawable-action",
         "Shift the pixels, optionally wrapping them at the borders"),
     G_CALLBACK (drawable_offset_cmd_callback),

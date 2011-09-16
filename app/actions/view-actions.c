@@ -79,13 +79,13 @@ static const GimpActionEntry view_actions[] =
     GIMP_HELP_VIEW_NEW },
 
   { "view-close", GTK_STOCK_CLOSE,
-    NC_("view-action",  "_Close"), "<control>W",
+    NC_("view-action",  "_Close"), "<primary>W",
     NC_("view-action", "Close this image window"),
     G_CALLBACK (window_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
   { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
-    NC_("view-action", "_Fit Image in Window"), "<shift><control>J",
+    NC_("view-action", "_Fit Image in Window"), "<primary><shift>J",
     NC_("view-action", "Adjust the zoom ratio so that the image becomes fully visible"),
     G_CALLBACK (view_zoom_fit_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
@@ -115,7 +115,7 @@ static const GimpActionEntry view_actions[] =
     GIMP_HELP_DISPLAY_FILTER_DIALOG },
 
   { "view-shrink-wrap", GTK_STOCK_ZOOM_FIT,
-    NC_("view-action", "Shrink _Wrap"), "<control>J",
+    NC_("view-action", "Shrink _Wrap"), "<primary>J",
     NC_("view-action", "Reduce the image window to the size of the image display"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
     GIMP_HELP_VIEW_SHRINK_WRAP },
@@ -137,7 +137,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_DOT_FOR_DOT },
 
   { "view-show-selection", NULL,
-    NC_("view-action", "Show _Selection"), "<control>T",
+    NC_("view-action", "Show _Selection"), "<primary>T",
     NC_("view-action", "Display the selection outline"),
     G_CALLBACK (view_toggle_selection_cmd_callback),
     TRUE,
@@ -151,7 +151,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_SHOW_LAYER_BOUNDARY },
 
   { "view-show-guides", NULL,
-    NC_("view-action", "Show _Guides"), "<control><shift>T",
+    NC_("view-action", "Show _Guides"), "<primary><shift>T",
     NC_("view-action", "Display the image's guides"),
     G_CALLBACK (view_toggle_guides_cmd_callback),
     TRUE,
@@ -207,7 +207,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_SHOW_MENUBAR },
 
   { "view-show-rulers", NULL,
-    NC_("view-action", "Show R_ulers"), "<control><shift>R",
+    NC_("view-action", "Show R_ulers"), "<primary><shift>R",
     NC_("view-action", "Show this window's rulers"),
     G_CALLBACK (view_toggle_rulers_cmd_callback),
     TRUE,

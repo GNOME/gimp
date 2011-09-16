@@ -46,7 +46,7 @@ static gboolean dialogs_actions_toolbox_exists (Gimp *gimp);
 const GimpStringActionEntry dialogs_dockable_actions[] =
 {
   { "dialogs-toolbox", NULL,
-    NC_("windows-action", "Tool_box"), "<control>B",
+    NC_("windows-action", "Tool_box"), "<primary>B",
     NULL /* set in dialogs_actions_update() */,
     "gimp-toolbox",
     GIMP_HELP_TOOLBOX },
@@ -64,7 +64,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_DEVICE_STATUS_DIALOG },
 
   { "dialogs-layers", GIMP_STOCK_LAYERS,
-    NC_("dialogs-action", "_Layers"), "<control>L",
+    NC_("dialogs-action", "_Layers"), "<primary>L",
     NC_("dialogs-action", "Open the layers dialog"),
     "gimp-layer-list",
     GIMP_HELP_LAYER_DIALOG },
@@ -130,7 +130,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_COLOR_DIALOG },
 
   { "dialogs-brushes", GIMP_STOCK_BRUSH,
-    NC_("dialogs-action", "_Brushes"), "<control><shift>B",
+    NC_("dialogs-action", "_Brushes"), "<primary><shift>B",
     NC_("dialogs-action", "Open the brushes dialog"),
     "gimp-brush-grid|gimp-brush-list",
     GIMP_HELP_BRUSH_DIALOG },
@@ -154,13 +154,13 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_DYNAMICS_EDITOR_DIALOG },
 
   { "dialogs-patterns", GIMP_STOCK_PATTERN,
-    NC_("dialogs-action", "P_atterns"), "<control><shift>P",
+    NC_("dialogs-action", "P_atterns"), "<primary><shift>P",
     NC_("dialogs-action", "Open the patterns dialog"),
     "gimp-pattern-grid|gimp-pattern-list",
     GIMP_HELP_PATTERN_DIALOG },
 
   { "dialogs-gradients", GIMP_STOCK_GRADIENT,
-    NC_("dialogs-action", "_Gradients"), "<control>G",
+    NC_("dialogs-action", "_Gradients"), "<primary>G",
     NC_("dialogs-action", "Open the gradients dialog"),
     "gimp-gradient-list|gimp-gradient-grid",
     GIMP_HELP_GRADIENT_DIALOG },

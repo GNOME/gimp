@@ -79,7 +79,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_EDIT },
 
   { "layers-new", GTK_STOCK_NEW,
-    NC_("layers-action", "_New Layer..."), "<control><shift>N",
+    NC_("layers-action", "_New Layer..."), "<primary><shift>N",
     NC_("layers-action", "Create a new layer and add it to the image"),
     G_CALLBACK (layers_new_cmd_callback),
     GIMP_HELP_LAYER_NEW },
@@ -104,7 +104,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_NEW },
 
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
-    NC_("layers-action", "D_uplicate Layer"), "<control><shift>D",
+    NC_("layers-action", "D_uplicate Layer"), "<primary><shift>D",
     NC_("layers-action",
         "Create a duplicate of the layer and add it to the image"),
     G_CALLBACK (layers_duplicate_cmd_callback),
@@ -141,7 +141,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_LOWER_TO_BOTTOM },
 
   { "layers-anchor", GIMP_STOCK_ANCHOR,
-    NC_("layers-action", "_Anchor Layer"), "<control>H",
+    NC_("layers-action", "_Anchor Layer"), "<primary>H",
     NC_("layers-action", "Anchor the floating layer"),
     G_CALLBACK (layers_anchor_cmd_callback),
     GIMP_HELP_LAYER_ANCHOR },

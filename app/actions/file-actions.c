@@ -79,7 +79,7 @@ static const GimpActionEntry file_actions[] =
     GIMP_HELP_FILE_OPEN },
 
   { "file-open-as-layers", GIMP_STOCK_LAYER,
-    NC_("file-action", "Op_en as Layers..."), "<control><alt>O",
+    NC_("file-action", "Op_en as Layers..."), "<primary><alt>O",
     NC_("file-action", "Open an image file as layers"),
     G_CALLBACK (file_open_as_layers_cmd_callback),
     GIMP_HELP_FILE_OPEN_AS_LAYER },
@@ -103,13 +103,13 @@ static const GimpActionEntry file_actions[] =
     GIMP_HELP_FILE_REVERT },
 
   { "file-close-all", GTK_STOCK_CLOSE,
-    NC_("file-action", "Close all"), "<shift><control>W",
+    NC_("file-action", "Close all"), "<primary><shift>W",
     NC_("file-action", "Close all opened images"),
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
   { "file-quit", GTK_STOCK_QUIT,
-    NC_("file-action", "_Quit"), "<control>Q",
+    NC_("file-action", "_Quit"), "<primary>Q",
     NC_("file-action", "Quit the GNU Image Manipulation Program"),
     G_CALLBACK (file_quit_cmd_callback),
     GIMP_HELP_FILE_QUIT }
@@ -118,13 +118,13 @@ static const GimpActionEntry file_actions[] =
 static const GimpEnumActionEntry file_save_actions[] =
 {
   { "file-save", GTK_STOCK_SAVE,
-    NC_("file-action", "_Save"), "<control>S",
+    NC_("file-action", "_Save"), "<primary>S",
     NC_("file-action", "Save this image"),
     GIMP_SAVE_MODE_SAVE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
   { "file-save-as", GTK_STOCK_SAVE_AS,
-    NC_("file-action", "Save _As..."), "<control><shift>S",
+    NC_("file-action", "Save _As..."), "<primary><shift>S",
     NC_("file-action", "Save this image with a different name"),
     GIMP_SAVE_MODE_SAVE_AS, FALSE,
     GIMP_HELP_FILE_SAVE_AS },
@@ -143,7 +143,7 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_SAVE },
 
   { "file-export-to", NULL,
-    NC_("file-action", "Export to"), "<control>E",
+    NC_("file-action", "Export to"), "<primary>E",
     NC_("file-action", "Export the image again"),
     GIMP_SAVE_MODE_EXPORT_TO, FALSE,
     GIMP_HELP_FILE_EXPORT_TO },
@@ -155,7 +155,7 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_OVERWRITE },
 
   { "file-export", NULL,
-    NC_("file-action", "Export..."), "<control><shift>E",
+    NC_("file-action", "Export..."), "<primary><shift>E",
     NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
     GIMP_SAVE_MODE_EXPORT, FALSE,
     GIMP_HELP_FILE_EXPORT }
@@ -192,9 +192,9 @@ file_actions_setup (GimpActionGroup *group)
       entries[i].value_variable = FALSE;
 
       if (i < 9)
-        entries[i].accelerator = g_strdup_printf ("<control>%d", i + 1);
+        entries[i].accelerator = g_strdup_printf ("<primary>%d", i + 1);
       else if (i == 9)
-        entries[i].accelerator = "<control>0";
+        entries[i].accelerator = "<primary>0";
       else
         entries[i].accelerator = "";
     }

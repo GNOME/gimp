@@ -255,6 +255,37 @@ gimp_action_group_check_unique_action (GimpActionGroup *group,
 
 }
 
+static void
+gimp_action_group_add_action_with_accel (GtkActionGroup *group,
+                                         GtkAction      *action,
+                                         const gchar    *accelerator)
+{
+  if (gtk_check_version (2, 24, 7))
+    {
+      gchar *accel = g_strdup (accelerator);
+
+      if (accel)
+        {
+          gchar *primary = strstr (accel, "<primary>");
+
+          if (primary)
+            strncpy (primary + 1, "control", strlen ("control"));
+        }
+
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                              GTK_ACTION (action),
+                                              accel);
+
+      g_free (accel);
+    }
+  else
+    {
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                              GTK_ACTION (action),
+                                              accelerator);
+    }
+}
+
 /**
  * gimp_action_group_new:
  * @gimp:        the @Gimp instance this action group belongs to
@@ -364,9 +395,9 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
                           entries[i].callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                               GTK_ACTION (action),
+                                               entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -419,9 +450,9 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
                           entries[i].callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                               GTK_ACTION (action),
+                                               entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -481,9 +512,9 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       if (value == entries[i].value)
         gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                               GTK_ACTION (action),
+                                               entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -544,9 +575,9 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
                           callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                               GTK_ACTION (action),
+                                               entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -599,9 +630,9 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
                           callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                               GTK_ACTION (action),
+                                               entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -640,9 +671,9 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup             *group,
                           callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                               GTK_ACTION (action),
+                                               entries[i].accelerator);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
