@@ -1134,7 +1134,8 @@ gimp_image_window_set_show_menubar (GimpImageWindow *window,
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  gtk_widget_set_visible (private->menubar, show);
+  if (private->menubar)
+    gtk_widget_set_visible (private->menubar, show);
 }
 
 gboolean
@@ -1146,7 +1147,10 @@ gimp_image_window_get_show_menubar (GimpImageWindow *window)
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  return gtk_widget_get_visible (private->menubar);
+  if (private->menubar)
+    return gtk_widget_get_visible (private->menubar);
+
+  return FALSE;
 }
 
 gboolean
