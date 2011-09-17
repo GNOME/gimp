@@ -516,12 +516,12 @@ parse_set_property (XMPParseContext     *context,
 {
   XMPModel    *xmp_model = user_data;
   XMPSchema   *schema = ns_user_data;
+  XMPType      xmptype;
   int          i;
   XMPProperty *property;
   GtkTreeIter  iter;
   GtkTreeIter  child_iter;
   gchar       *tmp_name;
-  gchar       *tmp_value;
 
   g_return_if_fail (xmp_model != NULL);
   g_return_if_fail (schema != NULL);
@@ -591,46 +591,10 @@ parse_set_property (XMPParseContext     *context,
 
     case XMP_PTYPE_ORDERED_LIST:
     case XMP_PTYPE_UNORDERED_LIST:
-#ifdef DEBUG_XMP_MODEL
-      g_print ("\t%s:%s [] =", ns_prefix, name);
-      for (i = 0; value[i] != NULL; i++)
-        if (i == 0)
-          g_print (" \"%s\"", value[i]);
-        else
-          g_print (", \"%s\"", value[i]);
-      g_print ("\n");
-#endif
-      if (property != NULL)
-        /* FIXME */;
-      else
-        {
-          property = g_new (XMPProperty, 1);
-          property->name = g_strdup (name);
-          property->type = ((type == XMP_PTYPE_ORDERED_LIST)
-                            ? XMP_TYPE_TEXT_BAG
-                            : XMP_TYPE_TEXT_SEQ);
-          property->editable = TRUE;
-          xmp_model->custom_properties =
-            g_slist_prepend (xmp_model->custom_properties, property);
-        }
-
-      tmp_name = g_strconcat (name, " []", NULL);
-      tmp_value = g_strjoinv ("; ", (gchar **) value);
-      gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
-      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
-                          COL_XMP_NAME, tmp_name,
-                          COL_XMP_VALUE, tmp_value,
-                          COL_XMP_VALUE_RAW, value,
-                          COL_XMP_TYPE_XREF, property,
-                          COL_XMP_WIDGET_XREF, NULL,
-                          COL_XMP_EDITABLE, property->editable,
-                          COL_XMP_EDIT_ICON, NULL,
-                          COL_XMP_VISIBLE, TRUE,
-                          COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
-                          COL_XMP_WEIGHT_SET, FALSE,
-                          -1);
-      g_free (tmp_value);
-      g_free (tmp_name);
+      xmptype = ((type == XMP_PTYPE_ORDERED_LIST)
+                 ? XMP_TYPE_TEXT_BAG
+                 : XMP_TYPE_TEXT_SEQ);
+      xmp_model_set_property (xmp_model, xmptype, schema->uri, name, value);
       break;
 
     case XMP_PTYPE_ALT_THUMBS:
@@ -1010,8 +974,8 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
  *
  * Store a new value for the specified XMP property.
  *
- * Note: Currently only sets property values for XMP_TYPE_TEXT and
- * XMP_TYPE_LANG_ALT.
+ * Note: Currently only sets property values for XMP_TYPE_TEXT,
+ * XMP_TYPE_LANG_ALT, XMP_TYPE_TEXT_SEQ, XMP_TYPE_TEXT_BAG.
  *
  * Return value: %TRUE if the property was set, %FALSE if an error
  *               occurred (for example, the @schema_name is invalid)
@@ -1025,10 +989,12 @@ xmp_model_set_property (XMPModel    *xmp_model,
 {
   XMPSchema    *schema;
   XMPProperty  *property = NULL;
+  gboolean      result = FALSE;
   GtkTreeIter   iter;
   GtkTreeIter   child_iter;
   int           i;
-  gboolean      result = FALSE;
+  gchar        *tmp_value;
+  gchar        *tmp_name;
 
   g_return_val_if_fail (xmp_model != NULL, FALSE);
   g_return_val_if_fail (schema_name != NULL, FALSE);
@@ -1057,6 +1023,49 @@ xmp_model_set_property (XMPModel    *xmp_model,
 
   switch (type)
     {
+     case XMP_TYPE_TEXT_BAG:
+     case XMP_TYPE_TEXT_SEQ:
+#ifdef DEBUG_XMP_MODEL
+      g_print ("\t%s:%s [] =", ns_prefix, name);
+      for (i = 0; value[i] != NULL; i++)
+        if (i == 0)
+          g_print (" \"%s\"", value[i]);
+        else
+          g_print (", \"%s\"", value[i]);
+      g_print ("\n");
+#endif
+      if (property != NULL)
+        /* FIXME */;
+      else
+        {
+          property = g_new (XMPProperty, 1);
+          property->name = g_strdup (property_name);
+          property->type = type;
+          property->editable = TRUE;
+          xmp_model->custom_properties =
+            g_slist_prepend (xmp_model->custom_properties, property);
+        }
+
+      tmp_name = g_strconcat (property_name, " []", NULL);
+      tmp_value = g_strjoinv ("; ", (gchar **) value);
+      gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
+      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
+                          COL_XMP_NAME, tmp_name,
+                          COL_XMP_VALUE, tmp_value,
+                          COL_XMP_VALUE_RAW, value,
+                          COL_XMP_TYPE_XREF, property,
+                          COL_XMP_WIDGET_XREF, NULL,
+                          COL_XMP_EDITABLE, property->editable,
+                          COL_XMP_EDIT_ICON, NULL,
+                          COL_XMP_VISIBLE, TRUE,
+                          COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
+                          COL_XMP_WEIGHT_SET, FALSE,
+                          -1);
+      g_free (tmp_value);
+      g_free (tmp_name);
+      result = TRUE;
+      break;
+
     case XMP_TYPE_TEXT:
 #ifdef DEBUG_XMP_MODEL
       g_print ("\t%s:%s = \"%s\"\n", ns_prefix, name, value[0]);

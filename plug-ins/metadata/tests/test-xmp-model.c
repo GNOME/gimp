@@ -159,6 +159,21 @@ test_xmp_model_get_raw_property_value (GimpTestFixture *fixture,
                                              "dc", "title");
   g_assert_cmpstr (result[0], ==, expected[0]);
   g_assert_cmpstr (result[1], ==, expected[1]);
+
+  // XMP_TYPE_TEXT_SEQ
+  expected = g_new (const gchar *, 1);
+  expected[0] = g_strdup ("Wilber");
+  expected[1] = NULL;
+  g_assert (xmp_model_set_property (fixture->xmpmodel,
+                                    XMP_TYPE_TEXT_SEQ,
+                                    "dc",
+                                    "creator",
+                                    expected) == TRUE);
+  result = xmp_model_get_raw_property_value (fixture->xmpmodel,
+                                             "dc", "creator");
+  g_assert (result != NULL);
+  g_assert_cmpstr (result[0], ==, expected[0]);
+  g_assert_cmpstr (result[1], ==, expected[1]);
 }
 
 /**
