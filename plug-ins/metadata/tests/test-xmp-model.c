@@ -161,6 +161,44 @@ test_xmp_model_get_raw_property_value (GimpTestFixture *fixture,
   g_assert_cmpstr (result[1], ==, expected[1]);
 }
 
+/**
+ * test_xmp_model_parse_file:
+ * @fixture:
+ * @data:
+ *
+ * A very simple test parsing a file with XMP DC metadata.
+ **/
+static void
+test_xmp_model_parse_file (GimpTestFixture *fixture,
+                           gconstpointer    data)
+{
+  gchar   *uri = NULL;
+  const gchar   *value = NULL;
+  GError  *error = NULL;
+
+  uri = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                          "plug-ins/metadata/tests/files/test.xmp",
+                          NULL);
+  g_assert (uri != NULL);
+
+  xmp_model_parse_file (fixture->xmpmodel, uri, &error);
+  g_assert (! xmp_model_is_empty (fixture->xmpmodel));
+
+  // title
+  value = xmp_model_get_scalar_property (fixture->xmpmodel, "dc", "title");
+  g_assert_cmpstr (value, == , "image title");
+
+  // creator
+  value = xmp_model_get_scalar_property (fixture->xmpmodel, "dc", "creator");
+  g_assert_cmpstr (value, == , "roman");
+
+  // description
+  value = xmp_model_get_scalar_property (fixture->xmpmodel, "dc", "description");
+  g_assert_cmpstr (value, == , "bla");
+
+  g_free (uri);
+}
+
 int main(int argc, char **argv)
 {
   gint result = -1;
@@ -171,6 +209,7 @@ int main(int argc, char **argv)
   ADD_TEST (test_xmp_model_is_empty);
   ADD_TEST (test_xmp_model_set_get_scalar_property);
   ADD_TEST (test_xmp_model_get_raw_property_value);
+  ADD_TEST (test_xmp_model_parse_file);
 
   result = g_test_run ();
 

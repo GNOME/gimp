@@ -29,7 +29,11 @@ INCLUDES = \
 	-I ../
 
 
-TESTS = test-xmp-model$(EXEEXT)
+TESTS_ENVIRONMENT = \
+	GIMP_TESTING_ABS_TOP_SRCDIR=@abs_top_srcdir@
+
+TESTS = \
+	test-xmp-model
 
 EXTRA_PROGRAMS = $(TESTS)
 
