@@ -21,9 +21,6 @@
 
 #ifdef HAVE_LIBEXIF
 
-#define EXIF_HEADER_SIZE 8
-
-
 void          gimp_metadata_store_exif    (gint32       image_ID,
                                            ExifData    *exif_data);
 

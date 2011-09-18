@@ -34,6 +34,8 @@
 #include "gimpexif.h"
 
 
+#define EXIF_HEADER_SIZE 8
+
 /*
  * gimp_metadata_store_exif:
  * @image_ID:    the GIMP image to work on.
