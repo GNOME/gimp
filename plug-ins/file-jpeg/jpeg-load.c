@@ -39,14 +39,13 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpexif.h"
-
 #include "jpeg.h"
 #include "jpeg-icc.h"
 #include "jpeg-settings.h"
 #include "jpeg-load.h"
 #ifdef HAVE_LIBEXIF
 #include "jpeg-exif.h"
+#include "gimpexif.h"
 #endif
 
 

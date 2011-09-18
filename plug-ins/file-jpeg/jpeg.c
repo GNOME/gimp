@@ -39,8 +39,8 @@
 #include "jpeg-save.h"
 #ifdef HAVE_LIBEXIF
 #include "jpeg-exif.h"
-#endif
 #include "gimpexif.h"
+#endif
 
 
 /* Declare local functions.
