@@ -36,8 +36,6 @@
 #include <libexif/exif-data.h>
 #include <libexif/exif-utils.h>
 
-#define EXIF_HEADER_SIZE 8
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
