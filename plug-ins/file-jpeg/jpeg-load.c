@@ -94,8 +94,9 @@ load_image (const gchar  *filename,
   gint             tile_height;
   gint             scanlines;
   gint             i, start, end;
+#ifdef HAVE_LIBEXIF
   gint             orientation = 0;
-
+#endif
 #ifdef HAVE_LCMS
   cmsHTRANSFORM    cmyk_transform = NULL;
 #else
