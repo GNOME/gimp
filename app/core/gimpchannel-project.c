@@ -69,7 +69,7 @@ gimp_channel_project_region (GimpDrawable *drawable,
     }
   else
     {
-      initial_region (projPR, &srcPR, NULL, col,
+      initial_region (&srcPR, projPR, NULL, col,
                       opacity,
                       GIMP_NORMAL_MODE,
                       NULL,
