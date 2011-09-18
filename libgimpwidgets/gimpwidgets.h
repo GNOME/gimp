@@ -262,6 +262,8 @@ GtkWidget * gimp_table_attach_aligned    (GtkTable        *table,
 void        gimp_label_set_attributes    (GtkLabel        *label,
                                           ...);
 
+gboolean    gimp_button_event_triggers_context_menu (GdkEventButton *event);
+
 
 G_END_DECLS
 

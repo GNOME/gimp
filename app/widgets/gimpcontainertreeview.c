@@ -1002,9 +1002,18 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
       g_object_ref (tree_view);
 
-      switch (bevent->button)
+      if (gimp_button_event_triggers_context_menu (bevent))
         {
-        case 1:
+          if (gimp_container_view_item_selected (container_view,
+                                                 renderer->viewable))
+            {
+              if (gimp_container_view_get_container (container_view))
+                gimp_container_view_item_context (container_view,
+                                                  renderer->viewable);
+            }
+        }
+      else if (bevent->button == 1)
+        {
           if (bevent->type == GDK_BUTTON_PRESS)
             {
               /*  don't select item if a toggle was clicked */
@@ -1111,9 +1120,9 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                     }
                 }
             }
-          break;
-
-        case 2:
+        }
+      else if (bevent->button == 2)
+        {
           if (bevent->type == GDK_BUTTON_PRESS)
             {
               if (clicked_cell)
@@ -1127,20 +1136,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                   g_free (path_str);
                 }
             }
-          break;
-
-        case 3:
-          if (gimp_container_view_item_selected (container_view,
-                                                 renderer->viewable))
-            {
-              if (gimp_container_view_get_container (container_view))
-                gimp_container_view_item_context (container_view,
-                                                  renderer->viewable);
-            }
-          break;
-
-        default:
-          break;
         }
 
       g_object_unref (tree_view);
@@ -1152,14 +1147,9 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
     }
   else
     {
-      switch (bevent->button)
+      if (gimp_button_event_triggers_context_menu (bevent))
         {
-        case 3:
           gimp_editor_popup_menu (GIMP_EDITOR (tree_view), NULL, NULL);
-          break;
-
-        default:
-          break;
         }
 
       return TRUE;

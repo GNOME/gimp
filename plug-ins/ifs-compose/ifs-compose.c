@@ -1602,25 +1602,22 @@ design_area_button_press (GtkWidget      *widget,
 
   gtk_widget_grab_focus (widget);
 
-  if (event->button != 1 || (ifsDesign->button_state & GDK_BUTTON1_MASK))
+  if (gimp_button_event_triggers_context_menu (event))
     {
-      if (event->button == 3)
-        {
-          GtkWidget *menu =
-            gtk_ui_manager_get_widget (ifsDesign->ui_manager,
-                                       "/dummy-menubar/ifs-compose-menu");
+      GtkWidget *menu =
+        gtk_ui_manager_get_widget (ifsDesign->ui_manager,
+                                   "/dummy-menubar/ifs-compose-menu");
 
-          if (GTK_IS_MENU_ITEM (menu))
-            menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
+      if (GTK_IS_MENU_ITEM (menu))
+        menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
-          gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
 
-          gtk_menu_popup (GTK_MENU (menu),
-                          NULL, NULL, NULL, NULL,
-                          event->button, event->time);
+      gtk_menu_popup (GTK_MENU (menu),
+                      NULL, NULL, NULL, NULL,
+                      event->button, event->time);
 
-          return FALSE;
-        }
+      return FALSE;
     }
 
   old_current = ifsD->current_element;

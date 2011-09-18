@@ -724,18 +724,13 @@ gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
 }
 
 static gboolean
-gimp_container_grid_view_button_press (GtkWidget              *widget,
-                                       GdkEventButton         *bevent,
-                                       GimpContainerGridView  *grid_view)
+gimp_container_grid_view_button_press (GtkWidget             *widget,
+                                       GdkEventButton        *bevent,
+                                       GimpContainerGridView *grid_view)
 {
-  switch (bevent->button)
+  if (gimp_button_event_triggers_context_menu (bevent))
     {
-    case 3:
       gimp_editor_popup_menu (GIMP_EDITOR (grid_view), NULL, NULL);
-      break;
-
-    default:
-      break;
     }
 
   return TRUE;

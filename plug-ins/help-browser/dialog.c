@@ -1078,7 +1078,7 @@ static gboolean
 view_button_press (GtkWidget      *widget,
                    GdkEventButton *event)
 {
-  if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
+  if (gimp_button_event_triggers_context_menu (event))
     return view_popup_menu (widget, event);
 
   return FALSE;

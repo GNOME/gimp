@@ -835,9 +835,12 @@ view_events (GtkWidget          *widget,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-        switch (bevent->button)
+        if (gimp_button_event_triggers_context_menu (bevent))
           {
-          case 1:
+            gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
+          }
+        else if (bevent->button == 1)
+          {
             editor->view_last_x      = bevent->x;
             editor->view_button_down = TRUE;
 
@@ -846,14 +849,6 @@ view_events (GtkWidget          *widget,
                              GIMP_COLOR_PICK_MODE_BACKGROUND :
                              GIMP_COLOR_PICK_MODE_FOREGROUND,
                              bevent->x);
-            break;
-
-          case 3:
-            gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
-            break;
-
-          default:
-            break;
           }
       }
       break;

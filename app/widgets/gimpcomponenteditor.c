@@ -502,27 +502,17 @@ gimp_component_editor_button_press (GtkWidget           *widget,
 
       editor->clicked_component = channel;
 
-      switch (bevent->button)
+      if (gimp_button_event_triggers_context_menu (bevent))
         {
-        case 1:
-          if (column != editor->eye_column && bevent->type == GDK_BUTTON_PRESS)
-            {
-              GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
-
-              gimp_image_set_component_active (image, channel, ! active);
-              gimp_image_flush (image);
-            }
-          break;
-
-        case 2:
-          break;
-
-        case 3:
           gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
-          break;
+        }
+      else if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1 &&
+               column != editor->eye_column)
+        {
+          GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
 
-        default:
-          break;
+          gimp_image_set_component_active (image, channel, ! active);
+          gimp_image_flush (image);
         }
     }
 

@@ -298,7 +298,7 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
 {
   if (! shell->display->gimp->busy)
     {
-      if (event->button == 1)
+      if (event->type == GDK_BUTTON_PRESS && event->button == 1)
         {
           gboolean unused;
 
@@ -320,7 +320,7 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
   if (! gimp_display_get_image (shell->display))
     return TRUE;
 
-  if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
+  if (gimp_button_event_triggers_context_menu (bevent))
     {
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
 
@@ -363,7 +363,7 @@ gimp_display_shell_navigation_button_press (GtkWidget        *widget,
   if (! gimp_display_get_image (shell->display))
     return TRUE;
 
-  if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 1))
+  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
       gimp_navigation_editor_popup (shell, widget, bevent->x, bevent->y);
     }

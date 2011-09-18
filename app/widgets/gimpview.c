@@ -441,7 +441,13 @@ gimp_view_button_press_event (GtkWidget      *widget,
 
   if (bevent->type == GDK_BUTTON_PRESS)
     {
-      if (bevent->button == 1)
+      if (gimp_button_event_triggers_context_menu (bevent))
+        {
+          view->press_state = 0;
+
+          g_signal_emit (widget, view_signals[CONTEXT], 0);
+        }
+      else if (bevent->button == 1)
         {
           gtk_grab_add (widget);
 
@@ -470,10 +476,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
                                   view->renderer->height,
                                   view->renderer->dot_for_dot);
 
-          if (bevent->button == 3)
-            g_signal_emit (widget, view_signals[CONTEXT], 0);
-          else
-            return FALSE;
+          return FALSE;
         }
     }
   else if (bevent->type == GDK_2BUTTON_PRESS)

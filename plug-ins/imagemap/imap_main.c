@@ -380,15 +380,19 @@ get_filename(void)
 static gboolean
 arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
-   if (event->button == 1) {
+  if (gimp_button_event_triggers_context_menu (event))
+    {
+      do_popup_menu (event);
+    }
+  else if (event->button == 1)
+    {
       if (event->type == GDK_2BUTTON_PRESS)
-         edit_shape((gint) event->x, (gint) event->y);
+        edit_shape((gint) event->x, (gint) event->y);
       else
-         select_shape(widget, event);
-   } else if (!(event->state & GDK_BUTTON1_MASK) && event->button == 3) {
-      do_popup_menu(event);
-   }
-   return FALSE;
+        select_shape(widget, event);
+    }
+
+  return FALSE;
 }
 
 static void

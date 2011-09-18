@@ -21,6 +21,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "display-types.h"
 #include "tools/tools-types.h"
 
@@ -242,7 +244,7 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-        if (bevent->button == 3)
+        if (gimp_button_event_triggers_context_menu (bevent))
           {
             gimp_ui_manager_ui_popup (shell->popup_manager,
                                       "/dummy-menubar/image-popup",
@@ -534,6 +536,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             gimp_display_shell_start_scrolling (shell, bevent->x, bevent->y);
             break;
 
+            /* FIXME: use gimp_button_event_triggers_context_menu() */
           case 3:
             {
               GimpUIManager *ui_manager;

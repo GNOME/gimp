@@ -230,7 +230,7 @@ gimp_error_console_button_press (GtkWidget        *widget,
                                  GdkEventButton   *bevent,
                                  GimpErrorConsole *console)
 {
-  if (bevent->button == 3 && bevent->type == GDK_BUTTON_PRESS)
+  if (gimp_button_event_triggers_context_menu (bevent))
     {
       return gimp_editor_popup_menu (GIMP_EDITOR (console), NULL, NULL);
     }

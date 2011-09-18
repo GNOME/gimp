@@ -1239,3 +1239,40 @@ gimp_label_set_attributes (GtkLabel *label,
   gtk_label_set_attributes (label, attrs);
   pango_attr_list_unref (attrs);
 }
+
+/**
+ * gimp_button_event_triggers_context_menu:
+ * @event: a #GdkEventButton
+ *
+ * Use this function instead of checking for event->button == 3.
+ *
+ * Note that this function is a temporary solution, GTK+ 3.4 will
+ * include a similar function which GIMP will use and this function
+ * will be deprecated/removed.
+ *
+ * Returns: #TRUE if the passed @event triggers a context menu, which
+ *          is a platform-dependent decision.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_button_event_triggers_context_menu (GdkEventButton *event)
+{
+  g_return_val_if_fail (event != NULL, FALSE);
+
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      if (event->button == 3 &&
+          ! (event->state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK)))
+        return TRUE;
+
+#ifdef GDK_WINDOWING_QUARTZ
+      if (event->button == 1 &&
+          ! (event->state & (GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)) &&
+          (event->state & GDK_CONTROL_MASK))
+        return TRUE;
+#endif
+    }
+
+  return FALSE;
+}
