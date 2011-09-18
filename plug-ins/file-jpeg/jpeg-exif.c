@@ -30,8 +30,6 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_LIBEXIF
-
 #include <libexif/exif-content.h>
 #include <libexif/exif-data.h>
 #include <libexif/exif-utils.h>
@@ -458,6 +456,3 @@ jpeg_exif_rotate_query_dialog (gint32 image_ID)
 
   return (response == GTK_RESPONSE_OK);
 }
-
-
-#endif /* HAVE_LIBEXIF */

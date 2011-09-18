@@ -22,8 +22,6 @@
 #ifndef __GIMP_EXIF_H__
 #define __GIMP_EXIF_H__
 
-#ifdef HAVE_LIBEXIF
-
 void          gimp_metadata_store_exif    (gint32       image_ID,
                                            ExifData    *exif_data);
 
@@ -37,7 +35,5 @@ const gchar * gimp_exif_content_get_value (ExifContent *content,
 void          gimp_exif_data_remove_entry (ExifData    *exif_data,
                                            ExifIfd      ifd,
                                            ExifTag      tag);
-
-#endif /* HAVE_LIBEXIF */
 
 #endif /* __GIMP_EXIF_H__ */

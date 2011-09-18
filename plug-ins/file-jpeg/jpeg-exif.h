@@ -18,8 +18,6 @@
 #ifndef __JPEG_EXIF_H__
 #define __JPEG_EXIF_H__
 
-#ifdef HAVE_LIBEXIF
-
 extern ExifData *exif_data;
 
 ExifData * jpeg_exif_data_new_from_file (const gchar   *filename,
@@ -39,7 +37,5 @@ void      jpeg_exif_rotate              (gint32         image_ID,
                                          gint           orientation);
 void      jpeg_exif_rotate_query        (gint32         image_ID,
                                          gint           orientation);
-
-#endif /* HAVE_LIBEXIF */
 
 #endif /* __JPEG_EXIF_H__ */

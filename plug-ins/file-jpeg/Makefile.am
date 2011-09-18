@@ -33,8 +33,6 @@ libexec_PROGRAMS = file-jpeg
 file_jpeg_SOURCES = \
 	jpeg.c		\
 	jpeg.h		\
-	jpeg-exif.c	\
-	jpeg-exif.h	\
 	jpeg-icc.c	\
 	jpeg-icc.h	\
 	jpeg-load.c	\
@@ -44,9 +42,15 @@ file_jpeg_SOURCES = \
 	jpeg-quality.c  \
 	jpeg-quality.h  \
 	jpeg-settings.c \
-	jpeg-settings.h \
+	jpeg-settings.h
+
+if HAVE_LIBEXIF
+file_jpeg_SOURCES += \
+	jpeg-exif.c	\
+	jpeg-exif.h	\
 	gimpexif.c	\
 	gimpexif.h
+endif
 
 file_jpeg_LDADD = \
 	$(libgimpui)		\
@@ -59,11 +63,14 @@ file_jpeg_LDADD = \
 	$(JPEG_LIBS)		\
 	$(LCMS_LIBS)		\
 	$(GTK_LIBS)		\
-	$(EXIF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_jpeg_RC)
 
+if HAVE_LIBEXIF
+file_jpeg_LDADD += \
+	$(EXIF_LIBS)
+endif
 
 noinst_PROGRAMS = jpegqual
 
