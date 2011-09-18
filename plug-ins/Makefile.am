@@ -47,7 +47,7 @@ if BUILD_XJT
 file_xjt = file-xjt
 endif
 
-if BUILD_METADATA
+if HAVE_LIBEXIF
 metadata = metadata
 endif
 
