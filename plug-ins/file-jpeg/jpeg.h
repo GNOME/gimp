@@ -67,28 +67,3 @@ void      my_error_exit                 (j_common_ptr   cinfo);
 void      my_emit_message               (j_common_ptr   cinfo,
                                          int            msg_level);
 void      my_output_message             (j_common_ptr   cinfo);
-
-#ifdef HAVE_LIBEXIF
-
-extern ExifData *exif_data;
-
-ExifData * jpeg_exif_data_new_from_file (const gchar   *filename,
-                                         GError       **error);
-
-gint      jpeg_exif_get_orientation     (ExifData      *exif_data);
-
-gboolean  jpeg_exif_get_resolution      (ExifData       *exif_data,
-                                         gdouble        *xresolution,
-                                         gdouble        *yresolution,
-                                         gint           *unit);
-
-void      jpeg_setup_exif_for_save      (ExifData      *exif_data,
-                                         const gint32   image_ID);
-
-void      jpeg_exif_rotate              (gint32         image_ID,
-                                         gint           orientation);
-void      jpeg_exif_rotate_query        (gint32         image_ID,
-                                         gint           orientation);
-
-#endif /* HAVE_LIBEXIF */
-

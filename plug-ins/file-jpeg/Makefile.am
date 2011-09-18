@@ -34,6 +34,7 @@ file_jpeg_SOURCES = \
 	jpeg.c		\
 	jpeg.h		\
 	jpeg-exif.c	\
+	jpeg-exif.h	\
 	jpeg-icc.c	\
 	jpeg-icc.h	\
 	jpeg-load.c	\

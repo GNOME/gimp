@@ -37,6 +37,9 @@
 #include "jpeg-settings.h"
 #include "jpeg-load.h"
 #include "jpeg-save.h"
+#ifdef HAVE_LIBEXIF
+#include "jpeg-exif.h"
+#endif
 #include "gimpexif.h"
 
 

@@ -45,6 +45,9 @@
 #include "jpeg-icc.h"
 #include "jpeg-settings.h"
 #include "jpeg-load.h"
+#ifdef HAVE_LIBEXIF
+#include "jpeg-exif.h"
+#endif
 
 
 static void  jpeg_load_resolution           (gint32    image_ID,

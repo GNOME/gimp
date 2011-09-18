@@ -47,6 +47,9 @@
 #include "jpeg-load.h"
 #include "jpeg-save.h"
 #include "jpeg-settings.h"
+#ifdef HAVE_LIBEXIF
+#include "jpeg-exif.h"
+#endif
 
 
 #define SCALE_WIDTH         125

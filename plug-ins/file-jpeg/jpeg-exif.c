@@ -41,8 +41,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "jpeg-exif.h"
 #include "gimpexif.h"
-
 #include "jpeg.h"
 #include "jpeg-settings.h"
 
