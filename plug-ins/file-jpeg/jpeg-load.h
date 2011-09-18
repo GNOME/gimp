@@ -21,11 +21,11 @@ gint32 load_image           (const gchar  *filename,
                              GError      **error);
 
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
 gint32 load_thumbnail_image (const gchar  *filename,
                              gint         *width,
                              gint         *height,
                              GError      **error);
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */

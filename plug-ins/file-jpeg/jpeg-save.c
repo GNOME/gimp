@@ -33,9 +33,9 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 #include <libexif/exif-data.h>
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -125,14 +125,14 @@ static void  use_orig_qual_changed  (GtkWidget     *toggle,
 static void  use_orig_qual_changed2 (GtkWidget     *toggle,
                                      GtkWidget     *combo);
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
 static gint  create_thumbnail    (gint32         image_ID,
                                   gint32         drawable_ID,
                                   gdouble        quality,
                                   guchar       **thumbnail_buffer);
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
 
 static GtkWidget *restart_markers_scale = NULL;
@@ -510,7 +510,7 @@ save_image (const gchar  *filename,
    */
   jpeg_start_compress (&cinfo, TRUE);
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
   /* Create the thumbnail JPEG in a buffer */
   if ((jsvals.save_exif && exif_data) || jsvals.save_thumbnail)
@@ -584,7 +584,7 @@ save_image (const gchar  *filename,
       if (exif_buf)
         free (exif_buf);
     }
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
   /* Step 4.1: Write the comment out - pw */
   if (image_comment && *image_comment)
@@ -998,7 +998,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.progressive);
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
   pg.save_exif = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _EXIF data"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
@@ -1030,7 +1030,7 @@ save_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.save_thumbnail);
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
   /* XMP metadata */
   pg.save_xmp = toggle =
@@ -1263,10 +1263,10 @@ load_save_defaults (void)
   jsvals.save_xmp         = DEFAULT_XMP;
   jsvals.use_orig_quality = DEFAULT_USE_ORIG_QUALITY;
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
   if (exif_data && (exif_data->data))
     jsvals.save_thumbnail = TRUE;
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
   parasite = gimp_get_parasite (JPEG_DEFAULTS_PARASITE);
 
@@ -1343,7 +1343,7 @@ load_gui_defaults (JpegSaveGui *pg)
   SET_ACTIVE_BTTN (progressive);
   SET_ACTIVE_BTTN (use_orig_quality);
   SET_ACTIVE_BTTN (preview);
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
   SET_ACTIVE_BTTN (save_exif);
   SET_ACTIVE_BTTN (save_thumbnail);
 #endif
@@ -1441,7 +1441,7 @@ use_orig_qual_changed2 (GtkWidget *toggle,
     }
 }
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
 static guchar *tbuffer = NULL;
 static guchar *tbuffer2 = NULL;
@@ -1658,4 +1658,4 @@ create_thumbnail (gint32    image_ID,
   return tbuffer_count;
 }
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */

@@ -26,9 +26,9 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 #include <libexif/exif-data.h>
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
 #ifdef HAVE_LCMS
 #include <lcms.h>
@@ -51,7 +51,7 @@ static void  jpeg_load_resolution           (gint32    image_ID,
                                              struct jpeg_decompress_struct
                                                        *cinfo);
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 static gboolean  jpeg_load_exif_resolution  (gint32    image_ID,
                                              ExifData *exif_data);
 #endif
@@ -264,7 +264,7 @@ load_image (const gchar  *filename,
       GString  *comment_buffer = NULL;
       guint8   *profile        = NULL;
       guint     profile_size   = 0;
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
       ExifData *exif_data      = NULL;
 #endif
 
@@ -303,7 +303,7 @@ load_image (const gchar  *filename,
               g_print ("jpeg-load: found EXIF block (%d bytes)\n",
                        (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
 #endif
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
               if (! exif_data)
                 exif_data = exif_data_new ();
               /* if there are multiple blocks, their data will be merged */
@@ -312,7 +312,7 @@ load_image (const gchar  *filename,
             }
         }
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
       if (!jpeg_load_exif_resolution (image_ID, exif_data))
 #endif
         jpeg_load_resolution (image_ID, &cinfo);
@@ -333,7 +333,7 @@ load_image (const gchar  *filename,
           g_string_free (comment_buffer, TRUE);
         }
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
       /* if we found any EXIF block, then attach the metadata to the image */
       if (exif_data)
         {
@@ -479,7 +479,7 @@ load_image (const gchar  *filename,
 
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
   jpeg_exif_rotate_query (image_ID, orientation);
 #endif
 
@@ -527,7 +527,7 @@ jpeg_load_resolution (gint32                         image_ID,
     }
 }
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
 static gboolean
 jpeg_load_exif_resolution (gint32        image_ID,
@@ -572,7 +572,7 @@ jpeg_load_exif_resolution (gint32        image_ID,
   return success;
 }
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
 /*
  * A number of JPEG files have comments written in a local character set
@@ -599,7 +599,7 @@ jpeg_load_sanitize_comment (gchar *comment)
 }
 
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
 typedef struct
 {
@@ -952,7 +952,7 @@ load_thumbnail_image (const gchar  *filename,
   return image_ID;
 }
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
 
 static gpointer

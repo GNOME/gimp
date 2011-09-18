@@ -24,9 +24,9 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 #include <libexif/exif-data.h>
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -63,7 +63,7 @@ JpegSubsampling  orig_subsmp;
 gint             num_quant_tables;
 
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 ExifData        *exif_data = NULL;
 #endif
 
@@ -93,7 +93,7 @@ query (void)
     { GIMP_PDB_IMAGE,   "image",         "Output image" }
   };
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
   static const GimpParamDef thumb_args[] =
   {
@@ -107,7 +107,7 @@ query (void)
     { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    }
   };
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
   static const GimpParamDef save_args[] =
   {
@@ -146,7 +146,7 @@ query (void)
                                     "",
                                     "6,string,JFIF,6,string,Exif");
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
   gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads a thumbnail from a JPEG image",
@@ -163,7 +163,7 @@ query (void)
 
   gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
   gimp_install_procedure (SAVE_PROC,
                           "saves files in the JPEG file format",
@@ -244,7 +244,7 @@ run (const gchar      *name,
 
     }
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
@@ -277,7 +277,7 @@ run (const gchar      *name,
         }
     }
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
   else if (strcmp (name, SAVE_PROC) == 0)
     {
@@ -338,13 +338,13 @@ run (const gchar      *name,
           gimp_parasite_free (parasite);
         }
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
       exif_data = gimp_metadata_generate_exif (orig_image_ID);
       if (exif_data)
         jpeg_setup_exif_for_save (exif_data, orig_image_ID);
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
       load_save_defaults ();
 

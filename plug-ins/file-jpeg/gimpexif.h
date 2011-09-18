@@ -19,7 +19,7 @@
  * EXIF-handling code for the metadata library.
  */
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
 #define EXIF_HEADER_SIZE 8
 
@@ -38,4 +38,4 @@ void          gimp_exif_data_remove_entry (ExifData    *exif_data,
                                            ExifIfd      ifd,
                                            ExifTag      tag);
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */

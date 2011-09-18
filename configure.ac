@@ -1201,7 +1201,7 @@ have_libexif=no
 if test "x$with_libexif" != xno && test -z "$EXIF_LIBS" && test -n "$JPEG_LIBS"; then
   have_libexif=yes
   PKG_CHECK_MODULES(EXIF, libexif >= exif_required_version,
-    AC_DEFINE(HAVE_EXIF, 1, [Define to 1 if libexif is available]),
+    AC_DEFINE(HAVE_LIBEXIF, 1, [Define to 1 if libexif is available]),
     have_libexif="no (libexif not found or too old)")
 fi
 

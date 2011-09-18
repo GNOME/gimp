@@ -50,9 +50,9 @@
 
 #include <jpeglib.h>
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 #include <libexif/exif-data.h>
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
 #include <libgimp/gimp.h>
 

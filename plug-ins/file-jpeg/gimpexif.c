@@ -25,7 +25,7 @@
 
 #include <libgimp/gimp.h>
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
 #include <libexif/exif-data.h>
 #include <libexif/exif-content.h>
@@ -160,4 +160,4 @@ gimp_exif_data_remove_entry (ExifData *exif_data,
 }
 
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */

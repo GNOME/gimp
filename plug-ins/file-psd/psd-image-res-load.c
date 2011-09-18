@@ -94,9 +94,9 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 #include <libexif/exif-data.h>
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 #ifdef HAVE_IPTCDATA
 #include <libiptcdata/iptc-data.h>
 #endif /* HAVE_IPTCDATA */
@@ -1207,7 +1207,7 @@ load_resource_1058 (const PSDimageres  *res_a,
 {
   /* Load EXIF data block */
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
   ExifData     *exif_data;
   ExifEntry    *exif_entry;
   guchar       *exif_buf;
@@ -1219,7 +1219,7 @@ load_resource_1058 (const PSDimageres  *res_a,
   gint          nreturn_vals;
 #else
   gchar        *name;
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
   GimpParasite *parasite;
   gchar        *res_data;
@@ -1234,7 +1234,7 @@ load_resource_1058 (const PSDimageres  *res_a,
       return -1;
     }
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
   /* Add JPEG header & trailer to the TIFF Exif data held in PSD
      resource to allow us to use libexif to serialize the data
      in the same manner as the JPEG load.
@@ -1318,7 +1318,7 @@ load_resource_1058 (const PSDimageres  *res_a,
   gimp_parasite_free (parasite);
   g_free (name);
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 
   g_free (res_data);
   return 0;

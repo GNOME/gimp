@@ -68,7 +68,7 @@ void      my_emit_message               (j_common_ptr   cinfo,
                                          int            msg_level);
 void      my_output_message             (j_common_ptr   cinfo);
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
 extern ExifData *exif_data;
 
@@ -90,5 +90,5 @@ void      jpeg_exif_rotate              (gint32         image_ID,
 void      jpeg_exif_rotate_query        (gint32         image_ID,
                                          gint           orientation);
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
 

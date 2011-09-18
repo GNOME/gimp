@@ -30,7 +30,7 @@
 #include <jpeglib.h>
 #include <jerror.h>
 
-#ifdef HAVE_EXIF
+#ifdef HAVE_LIBEXIF
 
 #include <libexif/exif-content.h>
 #include <libexif/exif-data.h>
@@ -462,4 +462,4 @@ jpeg_exif_rotate_query_dialog (gint32 image_ID)
 }
 
 
-#endif /* HAVE_EXIF */
+#endif /* HAVE_LIBEXIF */
