@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __JPEG_H__
+#define __JPEG_H__
+
 #define LOAD_PROC       "file-jpeg-load"
 #define LOAD_THUMB_PROC "file-jpeg-load-thumb"
 #define SAVE_PROC       "file-jpeg-save"
@@ -67,3 +70,6 @@ void      my_error_exit                 (j_common_ptr   cinfo);
 void      my_emit_message               (j_common_ptr   cinfo,
                                          int            msg_level);
 void      my_output_message             (j_common_ptr   cinfo);
+
+
+#endif /* __JPEG_H__ */

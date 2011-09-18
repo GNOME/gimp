@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __JPEG_LOAD_H__
+#define __JPEG_LOAD_H__
+
 gint32 load_image           (const gchar  *filename,
                              GimpRunMode   runmode,
                              gboolean      preview,
@@ -29,3 +32,5 @@ gint32 load_thumbnail_image (const gchar  *filename,
                              GError      **error);
 
 #endif /* HAVE_LIBEXIF */
+
+#endif /* __JPEG_LOAD_H__ */

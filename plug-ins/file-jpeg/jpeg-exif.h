@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __JPEG_EXIF_H__
+#define __JPEG_EXIF_H__
+
 #ifdef HAVE_LIBEXIF
 
 extern ExifData *exif_data;
@@ -38,3 +41,5 @@ void      jpeg_exif_rotate_query        (gint32         image_ID,
                                          gint           orientation);
 
 #endif /* HAVE_LIBEXIF */
+
+#endif /* __JPEG_EXIF_H__ */
