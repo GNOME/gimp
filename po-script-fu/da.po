@@ -4,12 +4,11 @@
 # Keld Simonsen <keld@dkuug.dk>, 2000.
 # Ole Laursen <olau@hardworking.dk>, 2001, 2002, 2004.
 # Mads Lundby <lundbymads@gmail.com>, 2009.
-# Joe Hansen <joedalton2@yahoo.dk>, 2010.
-#
-# Se ../po/da.po for en konventionsliste til hele Gimp'en.
+# Joe Hansen <joedalton2@yahoo.dk>, 2010, 2011.
 #
 # Konventioner:
 #
+#  bevel -> facet
 #  DB Browser -> proceduredatabase (browser er overflødigt)
 #  distress -> urolig
 #  header -> sidehoved
@@ -25,10 +24,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-24 17:34+0200\n"
-"PO-Revision-Date: 2010-10-10 20:42+0100\n"
+"POT-Creation-Date: 2011-09-18 17:31+0200\n"
+"PO-Revision-Date: 2011-07-25 20:42+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,16 +68,16 @@ msgstr "Script-Fu-procedurebrowser"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu evalueringstilstand kan kun startes ikke-interaktivt"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:195
+#: ../plug-ins/script-fu/script-fu-interface.c:194
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan ikke behandle to programmer på samme tid."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:197
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kører allerede programmet \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:223
+#: ../plug-ins/script-fu/script-fu-interface.c:222
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -85,53 +85,53 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:287
+#: ../plug-ins/script-fu/script-fu-interface.c:286
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:335
+#: ../plug-ins/script-fu/script-fu-interface.c:333
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-farvevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:444
+#: ../plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:447
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:458
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-skrifttypevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:468
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-paletvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:477
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu-mønstervælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:486
+#: ../plug-ins/script-fu/script-fu-interface.c:484
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-farveovergangsvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:495
+#: ../plug-ins/script-fu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:826
+#: ../plug-ins/script-fu/script-fu-interface.c:824
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fejl ved kørsel af %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:149
+#: ../plug-ins/script-fu/script-fu-scripts.c:146
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "For få argumenter for kaldet 'script-fu-register'"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:608
+#: ../plug-ins/script-fu/script-fu-scripts.c:605
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Fejl ved indlæsning af %s:"
@@ -494,7 +494,7 @@ msgstr "Tilføj en facetkant til et billede"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "Bumpmap"
-msgstr ""
+msgstr "Ujævnhedslag"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
@@ -519,9 +519,8 @@ msgid "Add a border around an image"
 msgstr "Tilføj en kant rundt om et billede"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
-#, fuzzy
 msgid "Border Layer"
-msgstr "Kantstørrelse"
+msgstr "Kantlag"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border X size"
@@ -542,15 +541,13 @@ msgstr "Deltaværdi for farve"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#, fuzzy
 msgid "Alien Glow"
-msgstr "_Rumvæsenglød"
+msgstr "Rumvæsenglød"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-#, fuzzy
 msgid "Arrow"
-msgstr "_Pil..."
+msgstr "Pil"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
@@ -559,9 +556,8 @@ msgstr "_Pil..."
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
-#, fuzzy
 msgid "Background"
-msgstr "Baggrundsfarve"
+msgstr "Baggrund"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 msgid "Create an arrow graphic with an eerie glow for web pages"
@@ -628,7 +624,7 @@ msgstr "_Pil..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Bar"
-msgstr ""
+msgstr "Bjælke"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
 msgid "Bar height"
@@ -650,9 +646,8 @@ msgstr "_Vandret skillelinje..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-#, fuzzy
 msgid "Bullet"
-msgstr "_Punkttegn..."
+msgstr "Punkttegn"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 msgid "Create a bullet graphic with an eerie glow for web pages"
@@ -675,9 +670,8 @@ msgid "B_utton..."
 msgstr "_Knap..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
-#, fuzzy
 msgid "Button"
-msgstr "_Knapper"
+msgstr "Knap"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 msgid "Create a button graphic with an eerie glow for web pages"
@@ -685,7 +679,7 @@ msgstr "Lav en knapgrafik med en mystisk glød til hjemmesider"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
 msgid "Glow"
-msgstr ""
+msgstr "Glød"
 
 # eller "Glødradius"
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
@@ -870,7 +864,7 @@ msgstr "Højde"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
 msgid "Rule"
-msgstr ""
+msgstr "Skillelinje"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
@@ -1079,15 +1073,13 @@ msgstr "_Kamuflage..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
-#, fuzzy
 msgid "Bevel Highlight"
-msgstr "Facetbredde"
+msgstr "Facetfremhævelse"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
-#, fuzzy
 msgid "Bevel Shadow"
-msgstr "Skygge"
+msgstr "Facetskygge"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Carve white areas"
@@ -1096,13 +1088,12 @@ msgstr "Udhug hvide flader"
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
 msgid "Carved Surface"
-msgstr ""
+msgstr "Udhugget overflade"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-#, fuzzy
 msgid "Cast Shadow"
-msgstr "Generér skygge"
+msgstr "Kast skygge"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:6
 msgid "Image to carve"
@@ -1110,9 +1101,8 @@ msgstr "Billede der skal udhugges"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
-#, fuzzy
 msgid "Inset"
-msgstr "Invertér"
+msgstr "Indlæg"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
 msgid "Stencil C_arve..."
@@ -1208,9 +1198,8 @@ msgstr ""
 "specifik (gråskala) skabelon"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
-#, fuzzy
 msgid "Chrome"
-msgstr "Forkr_om..."
+msgstr "Forkrom"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1238,9 +1227,8 @@ msgid "Chrome white areas"
 msgstr "Forkrom hvide flader"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
-#, fuzzy
 msgid "Drop Shadow"
-msgstr "Slagskygge"
+msgstr "Dråbeskygge"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
@@ -1250,9 +1238,8 @@ msgstr "Omgivelsesreflektioner"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
-#, fuzzy
 msgid "Highlight"
-msgstr "Højlysfarve"
+msgstr "Højlys"
 
 # nogle områder er stærkt belyste
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:12
@@ -1261,16 +1248,17 @@ msgid "Highlight balance"
 msgstr "Højlysbalance"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
-msgid "Layer 2"
-msgstr ""
+#, fuzzy
+msgid "Layer 1"
+msgstr "Lag1"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
-msgid "Layer 3"
-msgstr ""
+msgid "Layer 2"
+msgstr "Lag 2"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
-msgid "Layer1"
-msgstr ""
+msgid "Layer 3"
+msgstr "Lag 3"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
 msgid "Stencil C_hrome..."
@@ -1297,9 +1285,8 @@ msgid "Circuit seed"
 msgstr "Startværdi for kredsløb"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-#, fuzzy
 msgid "Effect layer"
-msgstr "Separat lag"
+msgstr "Effektlag"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 msgid ""
@@ -1376,7 +1363,6 @@ msgid "Darken only"
 msgstr "Formørk kun"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
-#, fuzzy
 msgid "Stain"
 msgstr "Stænk"
 
@@ -2002,8 +1988,10 @@ msgid "_Lava..."
 msgstr "_Lava..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
+#, fuzzy
 msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
 msgstr ""
 "Udfyld et lag med stråler, der stråler ud fra dets centrum med brug af "
 "forgrundsfarven"
@@ -2134,44 +2122,52 @@ msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
 msgstr ""
+"Alle tegn i navnet er enten blanktegn eller tegn som ikke kan være i "
+"filnavne."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
+"Eksporter den aktive palet som et CSS-stilark med farvepunktnavnet som deres "
+"klassenavn og selve farven som farveattributten"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr ""
+msgstr "Eksporter den aktive palet som en PHP-ordbog (navn => farve)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
 msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr ""
+msgstr "Eksporter den aktive palet som en Pythonordbog (navn: farve)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr ""
+msgstr "Eksporter den aktive palet som en java.util.Hashtable<streng, farve>"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
 msgid "Folder for the output file"
-msgstr ""
+msgstr "Mappe for uddatafilen"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
 msgid "The filename you entered is not a suitable name for a file."
-msgstr ""
+msgstr "Filnavnet du indtastede er ikke et egnet navn for en fil."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:8
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
+"Navnet på filen der skal oprettes (hvis en fil med dette navn allerede "
+"findes, så vil den blive erstattet)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
+"Skriv alle farverne i en palette til en tekstfil, en heksadecimal værdi per "
+"linje (ingen navne)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -2923,81 +2919,3 @@ msgstr "Uigennemsigtighed for højlys"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
 msgstr "_Xach-effekt..."
-
-#~ msgid "Autocrop"
-#~ msgstr "Automatisk beskæring"
-
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Opret et billede af et stort sidehoved med brug af temaet for "
-#~ "internetsiden gimp.org"
-
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Opret et billede af et lille sidehoved med brug af temaet for "
-#~ "internetsiden gimp.org"
-
-#~ msgid "Dark color"
-#~ msgstr "Mørk farve"
-
-#~ msgid "Index image"
-#~ msgstr "Indeksbillede"
-
-#~ msgid "Number of colors"
-#~ msgstr "Antal farver"
-
-#~ msgid "Remove background"
-#~ msgstr "Fjern baggrund"
-
-#~ msgid "Select-by-color threshold"
-#~ msgstr "Vælg efter farve-tærskel"
-
-#~ msgid "Shadow color"
-#~ msgstr "Skyggefarve"
-
-# http://books.google.dk/books?id=0sEnoWrMw-gC&pg=PA268&lpg=PA268&dq=big+header+gimp&source=bl&ots=1vpF5Hwh1Z&sig=12UBS-Hj-c0UM0Hy7LNiuJuBS-k&hl=da&ei=q99gSpuRLc3D-QbX9PD1DA&sa=X&oi=book_result&ct=result&resnum=3
-#~ msgid "_Big Header..."
-#~ msgstr "St_ort sidehoved..."
-
-#~ msgid "_Small Header..."
-#~ msgstr "L_ille sidehoved..."
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
-#~ "theme"
-#~ msgstr ""
-#~ "Opret et billede af et sidehoved med en rørknapetiket der bruger temaet "
-#~ "fra internetsiden gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Opret et billede af en rørknapetiket der bruger temaet fra internetsiden "
-#~ "gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Opret et billede af et rørknapetiket på andet niveau der bruger temaet "
-#~ "fra internetsiden gimp.org"
-
-# "3. niveau"
-#~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Opret et billede af et rørknapetiket på tredje niveau der bruger temaet "
-#~ "fra internetsiden gimp.org"
-
-#~ msgid "T_ube Sub-Button Label..."
-#~ msgstr "_Etiket for tunnelunderknap..."
-
-#~ msgid "Tub_e Sub-Sub-Button Label..."
-#~ msgstr "Etiket for _under tunnelunderknap..."
-
-#~ msgid "_General Tube Labels..."
-#~ msgstr "_Generel røretiket..."
-
-#~ msgid "_Tube Button Label..."
-#~ msgstr "_Rørknapetiket..."
