@@ -21,6 +21,7 @@ endif
 TESTS = \
 	test-core					\
 	test-gimpidtable				\
+	test-gimptilebackendtilemanager			\
 	test-save-and-export				\
 	test-session-2-6-compatibility			\
 	test-session-2-8-compatibility-multi-window	\

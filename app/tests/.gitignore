@@ -6,6 +6,7 @@ Makefile.in
 libgimpapptestutils.a
 test-core*
 test-gimpidtable*
+test-gimptilebackendtilemanager*
 test-layer-grouping*
 test-save-and-export*
 test-session-2-6-compatibility*

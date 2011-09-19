@@ -24,19 +24,23 @@
 
 #include <gegl.h>
 #include <gegl-buffer.h>
+#include <gegl-tile.h>
 
 #include "libgimpmath/gimpmath.h"
 
 #include "gimp-gegl-types.h"
 
 #include "base/tile.h"
+#include "base/tile-manager.h"
 
 #include "gimptilebackendtilemanager.h"
+#include "gimp-gegl-utils.h"
 
 
 struct _GimpTileBackendTileManagerPrivate 
 {
   GHashTable      *entries;
+  TileManager     *tile_manager;
 };
 
 
@@ -76,13 +80,6 @@ static RamEntry * lookup_entry      (GimpTileBackendTileManager *self,
 static guint      hash_func         (gconstpointer               key);
 static gboolean   equal_func        (gconstpointer               a,
                                      gconstpointer               b);
-static void       ram_entry_read    (GimpTileBackendTileManager *ram,
-                                     gint                        x,
-                                     gint                        y,
-                                     gint                        z,
-                                     gfloat                      w,
-                                     gfloat                      h,
-                                     guchar                     *dest);
 static void       ram_entry_write   (GimpTileBackendTileManager *ram,
                                      RamEntry                   *entry,
                                      guchar                     *source);
@@ -179,12 +176,29 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
     case GEGL_TILE_GET:
       {
         GeglTile *tile;
-        gint      tile_size = gegl_tile_backend_get_tile_size (backend);
+        gint      tile_size;
+        Tile     *gimp_tile;
+        gint      tile_stride;
+        gint      gimp_tile_stride;
+        int       row;
 
+        gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
+                                         x, y, TRUE, FALSE);
+
+        g_return_val_if_fail (gimp_tile != NULL, NULL);
+
+        tile_size        = gegl_tile_backend_get_tile_size (backend);
+        tile_stride      = TILE_WIDTH * tile_bpp (gimp_tile);
+        gimp_tile_stride = tile_ewidth (gimp_tile) * tile_bpp (gimp_tile);
+
+        /* XXX: Point to Tile data directly instead of using memcpy */
         tile = gegl_tile_new (tile_size);
-
-        ram_entry_read (backend_tm, x, y, z, TILE_WIDTH, TILE_HEIGHT,
-                        gegl_tile_get_data (tile));
+        for (row = 0; row < tile_eheight (gimp_tile); row++)
+          {
+            memcpy (gegl_tile_get_data (tile) + row * tile_stride,
+                    tile_data_pointer (gimp_tile, 0, row),
+                    gimp_tile_stride);
+          }
 
         return tile;
       }
@@ -324,66 +338,6 @@ equal_func (gconstpointer a,
   return FALSE;
 }
 
-static gfloat
-mandel_calc (gfloat x,
-             gfloat y)
-{
-  gfloat fCReal = x;
-  gfloat fCImg  = y;
-  gfloat fZReal = fCReal;
-  gfloat fZImg  = fCImg;
-#define MAX_ITER 100
-
-  gint n;
-
-  for (n=0; n< MAX_ITER; n++)
-    {
-      gfloat fZRealSquared = fZReal * fZReal;
-      gfloat fZImgSquared = fZImg * fZImg;
-
-      if (fZRealSquared + fZImgSquared > 4)
-        return 1.0*n/(MAX_ITER);
-
-/*              -- z = z^2 + c*/
-      fZImg = 2 * fZReal * fZImg + fCImg;
-      fZReal = fZRealSquared - fZImgSquared + fCReal;
-    }
-  return 1.0;
-}
-
-static void
-ram_entry_read (GimpTileBackendTileManager *ram,
-                gint                        x,
-                gint                        y,
-                gint                        z,
-                gfloat                      w,
-                gfloat                      h,
-                guchar                     *dest)
-{
-  GeglTileBackend *backend = GEGL_TILE_BACKEND (ram);
-  Babl            *format  = gegl_tile_backend_get_format (backend);
-  gint             u, v;
-  gint             i = 0;
-
-  g_printerr ("%s\n", babl_get_name (format));
-  g_printerr ("READ %i %i %i\n", x, y, z);
-
-  for (v = 0; v < h; v++)
-    for (u = 0; u < w; u++)
-      {
-        float a   = ((u + x * w) * powf (2,z) - 2 * w);
-        float b   = ((v + y * h) * powf (2,z) - 1 * h);
-        float val =
-          mandel_calc (a / w,
-                       b / h);
-        dest[i*4+0] = val * 255;
-        dest[i*4+1] = val * 255;
-        dest[i*4+2] = val * 255;
-        dest[i*4+3] = 255;
-        i++;
-      }
-}
-
 static void
 ram_entry_write (GimpTileBackendTileManager *ram,
                  RamEntry                   *entry,
@@ -418,19 +372,25 @@ ram_entry_destroy (RamEntry           *entry,
 }
 
 GeglTileBackend *
-gimp_tile_backend_tile_manager_new (void)
+gimp_tile_backend_tile_manager_new (TileManager *tm)
 {
-  GimpTileBackendTileManager *ret =
-    g_object_new (GIMP_TYPE_TILE_BACKEND_TILE_MANAGER,
-                  "tile-width",  TILE_WIDTH,
-                  "tile-height", TILE_HEIGHT,
-                  "format", babl_format ("RGBA u8"),
-                  NULL);
-  GeglRectangle rect = { 100,100, 200, 200 };
+  GeglTileBackend *ret;
+  gint             width  = tile_manager_width (tm);
+  gint             height = tile_manager_height (tm);
+  gint             bpp    = tile_manager_bpp (tm);
+  GeglRectangle    rect   = { 0, 0, width, height };
 
-  gegl_tile_backend_set_extent (GEGL_TILE_BACKEND (ret), &rect);
+  ret = g_object_new (GIMP_TYPE_TILE_BACKEND_TILE_MANAGER,
+                      "tile-width",  TILE_WIDTH,
+                      "tile-height", TILE_HEIGHT,
+                      "format",      gimp_bpp_to_babl_format (bpp, FALSE),
+                      NULL);
 
-  return GEGL_TILE_BACKEND (ret);
+  GIMP_TILE_BACKEND_TILE_MANAGER (ret)->priv->tile_manager = tile_manager_ref (tm);
+
+  gegl_tile_backend_set_extent (ret, &rect);
+
+  return ret;
 }
 
 void
