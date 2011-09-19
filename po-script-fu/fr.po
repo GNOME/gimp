@@ -6,22 +6,23 @@
 # Christophe Merlet <redfox@redfoxcenter.org>, 2000-2004.
 # Raymond Ostertag <r.ostertag@caramail.com>, 2002-2007.
 # Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
-# Julien Hardelin <jhardlinATwanadooPOINTfr>, 2007-2011.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007.
 # Laurent Monin <gimp@norz.org>, 2007.
+# Julien Hardelin <jhardlin@orange.fr>, 2007-2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-03-11 10:33+0000\n"
-"PO-Revision-Date: 2011-03-13 20:12+0100\n"
-"Last-Translator: Julien Hardelin <jm.hardATwanadooPOINTfr>\n"
+"POT-Creation-Date: 2011-09-18 23:25+0000\n"
+"PO-Revision-Date: 2011-09-18 08:05+0200\n"
+"Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
 #: ../plug-ins/script-fu/script-fu-console.c:197
@@ -58,16 +59,16 @@ msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Le mode d'évaluation de Script-Fu autorise uniquement un appel non-interactif"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:195
+#: ../plug-ins/script-fu/script-fu-interface.c:194
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu ne peut pas exécuter deux scripts à la fois."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:197
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Vous utilisez déjà le script « %s »"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:223
+#: ../plug-ins/script-fu/script-fu-interface.c:222
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu : %s"
@@ -75,44 +76,44 @@ msgstr "Script-Fu : %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:287
+#: ../plug-ins/script-fu/script-fu-interface.c:286
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:335
+#: ../plug-ins/script-fu/script-fu-interface.c:333
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la couleur Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:444
+#: ../plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu File Selection"
 msgstr "Sélection du fichier Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:447
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu Folder Selection"
 msgstr "Sélection du répertoire du Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:458
 msgid "Script-Fu Font Selection"
 msgstr "Sélection de la police Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:468
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu Palette Selection"
 msgstr "Sélection de la palette Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:477
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Pattern Selection"
 msgstr "Sélection du motif Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:486
+#: ../plug-ins/script-fu/script-fu-interface.c:484
 msgid "Script-Fu Gradient Selection"
 msgstr "Sélection du dégradé Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:495
+#: ../plug-ins/script-fu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection de la brosse Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:826
+#: ../plug-ins/script-fu/script-fu-interface.c:824
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Erreur lors de l'exécution de %s :"
@@ -1213,16 +1214,16 @@ msgid "Highlight balance"
 msgstr "Balance d'éclairage"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
+msgid "Layer 1"
+msgstr "Calque 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
 msgid "Layer 2"
 msgstr "Calque 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
 msgid "Layer 3"
 msgstr "Calque 3"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
-msgid "Layer1"
-msgstr "Calque 1"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
 msgid "Stencil C_hrome..."
@@ -1881,7 +1882,7 @@ msgstr "Position"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "Remove all horizontal and vertical guides"
-msgstr "Supprimer tous les guides horizontaux et verticaux"
+msgstr "Supprime tous les guides horizontaux et verticaux"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
@@ -1942,10 +1943,11 @@ msgstr "_Lave..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
 msgstr ""
 "Remplit un calque avec des rayons émanant de son centre en utilisant la "
-"couleur PP"
+"couleur de premier plan"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -2347,7 +2349,8 @@ msgstr "Coins a_rrondis..."
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
-"Change la palette de couleurs d'un image aux couleurs de la palette indiquée."
+"Attribue à la palette de couleurs d'une image les couleurs de la palette "
+"indiquée."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
