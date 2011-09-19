@@ -158,13 +158,13 @@ msgstr "Το πρόσθετο %s υποστηρίζει μόνο εικόνες 
 #: ../libgimp/gimpexport.c:333
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "Το πρόσθετο %s υποστηρίζει μόνο εικόνες RGB ή πίνακα χρωμάτων"
+msgstr "Το πρόσθετο %s υποστηρίζει μόνο εικόνες RGB ή πίνακα χρωμάτων"
 
 #: ../libgimp/gimpexport.c:343
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
-"Το πρόσθετο %s υποστηρίζει μόνο εικόνες πίνακα χρωμάτων ή σε αποχρώσεις του "
+"Το πρόσθετο %s υποστηρίζει μόνο εικόνες πίνακα χρωμάτων ή σε αποχρώσεις του "
 "γκρι"
 
 #: ../libgimp/gimpexport.c:354
@@ -378,7 +378,7 @@ msgstr "Πνευματικά δικαιώματα:"
 
 #: ../libgimp/gimpunitcache.c:56
 msgid "percent"
-msgstr "τοις εκατό"
+msgstr "τοις εκατό"
 
 #
 #: ../libgimpbase/gimpbaseenums.c:28
@@ -428,19 +428,19 @@ msgstr "Κ_ανάλι"
 #| msgid "FG to BG (RGB)"
 msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
-msgstr "Προσκήνιο→παρασκήνιο (RGB)"
+msgstr "Προσκήνιο→παρασκήνιο (RGB)"
 
 #: ../libgimpbase/gimpbaseenums.c:66
 #| msgid "FG to BG (HSV)"
 msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
-msgstr "Προσκήνιο→παρασκήνιο (HSV)"
+msgstr "Προσκήνιο→παρασκήνιο (HSV)"
 
 #: ../libgimpbase/gimpbaseenums.c:67
 #| msgid "FG to transparent"
 msgctxt "blend-mode"
 msgid "FG to transparent"
-msgstr "Προσκήνιο→διαφάνεια"
+msgstr "Προσκήνιο→διαφάνεια"
 
 #: ../libgimpbase/gimpbaseenums.c:68
 #| msgid "Custom gradient"
@@ -1066,7 +1066,7 @@ msgstr "Ο τρόπος αντιστοίχισης των χρωμάτων στ�
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
-msgstr "Ο τρόπος μετατροπής των χρωμάτων RGB κατά την προσομοίωση εκτύπωσης."
+msgstr "Ο τρόπος μετατροπής των χρωμάτων RGB κατά την προσομοίωση εκτύπωσης."
 
 #: ../libgimpconfig/gimpcolorconfig.c:60
 msgid ""
@@ -1288,7 +1288,7 @@ msgstr "Επιλέξτε προφίλ χρωμάτων από το δίσκο...
 #: ../libgimpwidgets/gimpcolorprofilestore.c:279
 msgctxt "profile"
 msgid "None"
-msgstr "Χωρίς"
+msgstr "Χωρίς"
 
 #: ../libgimpwidgets/gimpcolorscales.c:97
 msgid "Scales"
@@ -1316,7 +1316,7 @@ msgstr "Κωδικός HTML:"
 
 #: ../libgimpwidgets/gimpfileentry.c:173
 msgid "Open a file selector to browse your folders"
-msgstr "Άνοιγμα επιλογέα αρχείων για να βρείτε τους φακέλους σας"
+msgstr "Άνοιγμα επιλογέα αρχείων για να βρείτε τους φακέλους σας"
 
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your files"
@@ -1453,7 +1453,7 @@ msgstr "Επικόλληση ως νέο"
 
 #: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste Into"
-msgstr "Επικόλληση εντός"
+msgstr "Επικόλληση εντός"
 
 #: ../libgimpwidgets/gimpstock.c:118
 msgid "_Reset"
@@ -1465,7 +1465,7 @@ msgstr "Ορατή (test)"
 
 #: ../libgimpwidgets/gimpstock.c:155 ../libgimpwidgets/gimpstock.c:159
 msgid "_Stroke"
-msgstr "_Περίγραμμα"
+msgstr "_Περίγραμμα"
 
 #: ../libgimpwidgets/gimpstock.c:171
 msgid "L_etter Spacing"
@@ -1477,11 +1477,11 @@ msgstr "Απόσταση _γραμμών"
 
 #: ../libgimpwidgets/gimpstock.c:188
 msgid "_Resize"
-msgstr "_Αλλαγή διαστάσεων"
+msgstr "_Αλλαγή διαστάσεων"
 
 #: ../libgimpwidgets/gimpstock.c:189 ../libgimpwidgets/gimpstock.c:320
 msgid "_Scale"
-msgstr "Αυ_ξομείωση μεγέθους"
+msgstr "Αυ_ξομείωση μεγέθους"
 
 #
 #: ../libgimpwidgets/gimpstock.c:296
@@ -1490,7 +1490,7 @@ msgstr "_Περικοπή"
 
 #: ../libgimpwidgets/gimpstock.c:315
 msgid "_Transform"
-msgstr "_Μετασχηματισμός"
+msgstr "_Μετασχηματισμός"
 
 #: ../libgimpwidgets/gimpstock.c:319
 msgid "_Rotate"
@@ -1662,13 +1662,13 @@ msgstr "Εικόνες"
 #| msgid "Zoom in"
 msgctxt "zoom-type"
 msgid "Zoom in"
-msgstr "Μεγέθυνση"
+msgstr "Μεγέθυνση"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:224
 #| msgid "Zoom out"
 msgctxt "zoom-type"
 msgid "Zoom out"
-msgstr "Σμίκρυνση"
+msgstr "Σμίκρυνση"
 
 #: ../modules/color-selector-cmyk-lcms.c:86
 msgid "CMYK color selector (using color profile)"
@@ -1711,7 +1711,7 @@ msgstr "Κυανό"
 #: ../modules/color-selector-cmyk-lcms.c:179
 #: ../modules/color-selector-cmyk.c:135
 msgid "Magenta"
-msgstr "Ματζέντα"
+msgstr "Ματζέντα"
 
 #: ../modules/color-selector-cmyk-lcms.c:180
 #: ../modules/color-selector-cmyk.c:136
@@ -1789,12 +1789,12 @@ msgstr "Κουμπί %d"
 #: ../modules/controller-dx-dinput.c:422
 #, c-format
 msgid "Button %d Press"
-msgstr "Κουμπί %d: Πάτημα"
+msgstr "Κουμπί %d: Πάτημα"
 
 #: ../modules/controller-dx-dinput.c:425
 #, c-format
 msgid "Button %d Release"
-msgstr "Κουμπί %d: Απελευθέρωση"
+msgstr "Κουμπί %d: Απελευθέρωση"
 
 #: ../modules/controller-dx-dinput.c:442
 #: ../modules/controller-linux-input.c:89
@@ -1835,12 +1835,12 @@ msgstr "X: Κλίση/προσέγγιση"
 #: ../modules/controller-dx-dinput.c:478
 #: ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
-msgstr "Y: Κλίση δεξιά"
+msgstr "Y: Κλίση δεξιά"
 
 #: ../modules/controller-dx-dinput.c:481
 #: ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
-msgstr "Y: Κλίση αριστερά"
+msgstr "Y: Κλίση αριστερά"
 
 #: ../modules/controller-dx-dinput.c:487
 #: ../modules/controller-linux-input.c:100
@@ -1973,7 +1973,7 @@ msgstr "Κουμπί: Τροχός"
 
 #: ../modules/controller-linux-input.c:80
 msgid "Button Gear Down"
-msgstr "Κουμπί: Χαμηλότερη ταχύτητα"
+msgstr "Κουμπί: Χαμηλότερη ταχύτητα"
 
 #: ../modules/controller-linux-input.c:83
 msgid "Button Gear Up"
@@ -1981,7 +1981,7 @@ msgstr "Κουμπί: Υψηλότερη ταχύτητα"
 
 #: ../modules/controller-linux-input.c:91
 msgid "Y Move Forward"
-msgstr "Y: Μετακίνηση εμπρός"
+msgstr "Y: Μετακίνηση εμπρός"
 
 #: ../modules/controller-linux-input.c:92
 msgid "Y Move Back"
@@ -1997,7 +1997,7 @@ msgstr "X: Κλίση πίσω"
 
 #: ../modules/controller-linux-input.c:103
 msgid "Horiz. Wheel Turn Back"
-msgstr "Οριζ. τροχός: Στροφή πίσω"
+msgstr "Οριζ. τροχός: Στροφή πίσω"
 
 #: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Forward"
@@ -2005,11 +2005,11 @@ msgstr "Οριζ. τροχός: Στροφή εμπρός"
 
 #: ../modules/controller-linux-input.c:105
 msgid "Dial Turn Left"
-msgstr "Καντράν: Στροφή αριστερά"
+msgstr "Καντράν: Στροφή αριστερά"
 
 #: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Right"
-msgstr "Καντράν: Στροφή δεξιά"
+msgstr "Καντράν: Στροφή δεξιά"
 
 #: ../modules/controller-linux-input.c:107
 msgid "Wheel Turn Left"
@@ -2119,7 +2119,7 @@ msgstr "Πρωτανωπία (μη διάκριση του κόκκινου)"
 
 #: ../modules/display-filter-color-blind.c:68
 msgid "Deuteranopia (insensitivity to green)"
-msgstr "Δευτερανωπία (μη διάκριση του πράσινου)"
+msgstr "Δευτερανωπία (μη διάκριση του πράσινου)"
 
 #: ../modules/display-filter-color-blind.c:70
 msgid "Tritanopia (insensitivity to blue)"
@@ -2171,7 +2171,7 @@ msgstr "Διαχείριση χρωμάτων"
 
 #: ../modules/display-filter-lcms.c:190
 msgid "None"
-msgstr "Χωρίς"
+msgstr "Χωρίς"
 
 #: ../modules/display-filter-lcms.c:211
 msgid ""
@@ -2191,7 +2191,7 @@ msgstr "Προφίλ εικόνας:"
 
 #: ../modules/display-filter-lcms.c:240
 msgid "Monitor profile:"
-msgstr "Προφίλ οθόνης:"
+msgstr "Προφίλ οθόνης:"
 
 #: ../modules/display-filter-lcms.c:248
 msgid "Print simulation profile:"

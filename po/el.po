@@ -504,12 +504,12 @@ msgstr "Μενού πινέλων"
 #: ../app/actions/brushes-actions.c:46
 msgctxt "brushes-action"
 msgid "_Open Brush as Image"
-msgstr "_Άνοιγμα πινέλου ως εικόνα"
+msgstr "_Άνοιγμα πινέλου ως εικόνα"
 
 #: ../app/actions/brushes-actions.c:47
 msgctxt "brushes-action"
 msgid "Open brush as image"
-msgstr "Άνοιγμα πινέλου ως εικόνα"
+msgstr "Άνοιγμα πινέλου ως εικόνα"
 
 #: ../app/actions/brushes-actions.c:52
 msgctxt "brushes-action"
@@ -852,7 +852,7 @@ msgstr "_Χρήση GEGL"
 #: ../app/actions/config-actions.c:39
 msgctxt "config-action"
 msgid "If possible, use GEGL for image processing"
-msgstr "Όπου δυνατόν, επεξεργασία των εικόνων με χρήση του GEGL"
+msgstr "Όπου δυνατόν, επεξεργασία των εικόνων με χρήση του GEGL"
 
 #: ../app/actions/context-actions.c:46
 msgctxt "context-action"
@@ -1030,7 +1030,7 @@ msgstr "_Ρυθμίσεις εργαλείων"
 #: ../app/actions/dialogs-actions.c:51
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
-msgstr "Άνοιγμα του διαλόγου ρυθμίσεων των εργαλείων της εργαλειοθήκης"
+msgstr "Άνοιγμα του διαλόγου ρυθμίσεων των εργαλείων της εργαλειοθήκης"
 
 #: ../app/actions/dialogs-actions.c:56
 msgctxt "dialogs-action"
@@ -1040,7 +1040,7 @@ msgstr "Σ_υσκευές"
 #: ../app/actions/dialogs-actions.c:57
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
-msgstr "Άνοιγμα του διαλόγου κατάστασης των συσκευών"
+msgstr "Άνοιγμα του διαλόγου κατάστασης των συσκευών"
 
 #: ../app/actions/dialogs-actions.c:62
 msgctxt "dialogs-action"
@@ -1050,7 +1050,7 @@ msgstr "_Στρώσεις"
 #: ../app/actions/dialogs-actions.c:63
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
-msgstr "Άνοιγμα του διαλόγου στρώσεων"
+msgstr "Άνοιγμα του διαλόγου στρώσεων"
 
 #: ../app/actions/dialogs-actions.c:68
 msgctxt "dialogs-action"
@@ -1060,7 +1060,7 @@ msgstr "_Κανάλια"
 #: ../app/actions/dialogs-actions.c:69
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
-msgstr "Άνοιγμα του διαλόγου καναλιών"
+msgstr "Άνοιγμα του διαλόγου καναλιών"
 
 #: ../app/actions/dialogs-actions.c:74
 msgctxt "dialogs-action"
@@ -1070,7 +1070,7 @@ msgstr "_Μονοπάτια"
 #: ../app/actions/dialogs-actions.c:75
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
-msgstr "Άνοιγμα του διαλόγου μονοπατιών"
+msgstr "Άνοιγμα του διαλόγου μονοπατιών"
 
 #: ../app/actions/dialogs-actions.c:80
 msgctxt "dialogs-action"
@@ -1080,7 +1080,7 @@ msgstr "_Πίνακας χρωμάτων"
 #: ../app/actions/dialogs-actions.c:81
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
-msgstr "Άνοιγμα του διαλόγου του πίνακα χρωμάτων"
+msgstr "Άνοιγμα του διαλόγου του πίνακα χρωμάτων"
 
 #: ../app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
@@ -1090,7 +1090,7 @@ msgstr "_Ιστόγραμμα"
 #: ../app/actions/dialogs-actions.c:87
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
-msgstr "Άνοιγμα του διαλόγου ιστογράμματος"
+msgstr "Άνοιγμα του διαλόγου ιστογράμματος"
 
 #: ../app/actions/dialogs-actions.c:92
 msgctxt "dialogs-action"
@@ -1100,7 +1100,7 @@ msgstr "Επε_ξεργασία επιλογής"
 #: ../app/actions/dialogs-actions.c:93
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "Άνοιγμα του επεξεργαστή επιλογών"
+msgstr "Άνοιγμα του επεξεργαστή επιλογών"
 
 #: ../app/actions/dialogs-actions.c:98
 msgctxt "dialogs-action"
@@ -1110,7 +1110,7 @@ msgstr "_Περιήγηση"
 #: ../app/actions/dialogs-actions.c:99
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
-msgstr "Άνοιγμα του διαλόγου περιήγησης της εικόνας"
+msgstr "Άνοιγμα του διαλόγου περιήγησης της εικόνας"
 
 #: ../app/actions/dialogs-actions.c:104
 msgctxt "dialogs-action"
@@ -1120,7 +1120,7 @@ msgstr "_Ιστορικό αναιρέσεων"
 #: ../app/actions/dialogs-actions.c:105
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
-msgstr "Άνοιγμα του ιστορικού αναιρέσεων"
+msgstr "Άνοιγμα του ιστορικού αναιρέσεων"
 
 #: ../app/actions/dialogs-actions.c:110
 msgctxt "dialogs-action"
@@ -1130,7 +1130,7 @@ msgstr "Δείκτης"
 #: ../app/actions/dialogs-actions.c:111
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
-msgstr "Άνοιγμα του διαλόγου πληροφοριών του δείκτη"
+msgstr "Άνοιγμα του διαλόγου πληροφοριών του δείκτη"
 
 #: ../app/actions/dialogs-actions.c:116
 msgctxt "dialogs-action"
@@ -1140,7 +1140,7 @@ msgstr "_Δειγματοληψία"
 #: ../app/actions/dialogs-actions.c:117
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
-msgstr "Άνοιγμα του διαλόγου των σημείων δειγματοληψίας"
+msgstr "Άνοιγμα του διαλόγου των σημείων δειγματοληψίας"
 
 #: ../app/actions/dialogs-actions.c:122
 msgctxt "dialogs-action"
@@ -1150,7 +1150,7 @@ msgstr "_Χρώματα"
 #: ../app/actions/dialogs-actions.c:123
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "Άνοιγμα του διαλόγου χρωμάτων προσκηνίου/παρασκηνίου"
+msgstr "Άνοιγμα του διαλόγου χρωμάτων προσκηνίου/παρασκηνίου"
 
 #: ../app/actions/dialogs-actions.c:128
 msgctxt "dialogs-action"
@@ -1160,7 +1160,7 @@ msgstr "_Πινέλα"
 #: ../app/actions/dialogs-actions.c:129
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
-msgstr "Άνοιγμα του διαλόγου πινέλων"
+msgstr "Άνοιγμα του διαλόγου πινέλων"
 
 #: ../app/actions/dialogs-actions.c:134
 msgctxt "dialogs-action"
@@ -1170,7 +1170,7 @@ msgstr "Επεξεργαστής πινέλων"
 #: ../app/actions/dialogs-actions.c:135
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
-msgstr "Άνοιγμα του επεξεργαστή πινέλων"
+msgstr "Άνοιγμα του επεξεργαστή πινέλων"
 
 #: ../app/actions/dialogs-actions.c:140
 #, fuzzy
@@ -1194,7 +1194,7 @@ msgstr "Επεξεργαστής δυναμικής ζωγραφικής"
 #, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
-msgstr "Άνοιγμα του επεξεργαστή δυναμικής ζωγραφικής"
+msgstr "Άνοιγμα του επεξεργαστή δυναμικής ζωγραφικής"
 
 #: ../app/actions/dialogs-actions.c:152
 msgctxt "dialogs-action"
@@ -1204,7 +1204,7 @@ msgstr "_Μοτίβα"
 #: ../app/actions/dialogs-actions.c:153
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
-msgstr "Άνοιγμα του διαλόγου μοτίβων"
+msgstr "Άνοιγμα του διαλόγου μοτίβων"
 
 #: ../app/actions/dialogs-actions.c:158
 msgctxt "dialogs-action"
@@ -1214,7 +1214,7 @@ msgstr "_Διαβαθμίσεις"
 #: ../app/actions/dialogs-actions.c:159
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
-msgstr "Άνοιγμα του διαλόγου διαβαθμίσεων"
+msgstr "Άνοιγμα του διαλόγου διαβαθμίσεων"
 
 #: ../app/actions/dialogs-actions.c:164
 msgctxt "dialogs-action"
@@ -1224,7 +1224,7 @@ msgstr "Επεξεργαστής διαβαθμίσεων"
 #: ../app/actions/dialogs-actions.c:165
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
-msgstr "Άνοιγμα του επεξεργαστή διαβαθμίσεων"
+msgstr "Άνοιγμα του επεξεργαστή διαβαθμίσεων"
 
 #: ../app/actions/dialogs-actions.c:170
 msgctxt "dialogs-action"
@@ -1234,7 +1234,7 @@ msgstr "Πα_λέτες"
 #: ../app/actions/dialogs-actions.c:171
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
-msgstr "Άνοιγμα του διαλόγου παλετών"
+msgstr "Άνοιγμα του διαλόγου παλετών"
 
 #: ../app/actions/dialogs-actions.c:176
 msgctxt "dialogs-action"
@@ -1244,7 +1244,7 @@ msgstr "Επεξεργαστής παλετών"
 #: ../app/actions/dialogs-actions.c:177
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
-msgstr "Άνοιγμα του επεξεργαστή παλετών"
+msgstr "Άνοιγμα του επεξεργαστή παλετών"
 
 #: ../app/actions/dialogs-actions.c:182
 msgctxt "dialogs-action"
@@ -1264,7 +1264,7 @@ msgstr "_Γραμματοσειρές"
 #: ../app/actions/dialogs-actions.c:189
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
-msgstr "Άνοιγμα του διαλόγου γραμματοσειρών"
+msgstr "Άνοιγμα του διαλόγου γραμματοσειρών"
 
 #: ../app/actions/dialogs-actions.c:194
 msgctxt "dialogs-action"
@@ -1274,7 +1274,7 @@ msgstr "_Μνήμες"
 #: ../app/actions/dialogs-actions.c:195
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Άνοιγμα του διαλόγου επώνυμων μνημών"
+msgstr "Άνοιγμα του διαλόγου επώνυμων μνημών"
 
 #: ../app/actions/dialogs-actions.c:200
 msgctxt "dialogs-action"
@@ -1284,7 +1284,7 @@ msgstr "_Εικόνες"
 #: ../app/actions/dialogs-actions.c:201
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
-msgstr "Άνοιγμα του διαλόγου εικόνων"
+msgstr "Άνοιγμα του διαλόγου εικόνων"
 
 #: ../app/actions/dialogs-actions.c:206
 msgctxt "dialogs-action"
@@ -1294,7 +1294,7 @@ msgstr "_Ιστορικό εγγράφων"
 #: ../app/actions/dialogs-actions.c:207
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
-msgstr "Άνοιγμα του ιστορικού εγγράφων"
+msgstr "Άνοιγμα του ιστορικού εγγράφων"
 
 #: ../app/actions/dialogs-actions.c:212
 msgctxt "dialogs-action"
@@ -1304,7 +1304,7 @@ msgstr "_Πρότυπα"
 #: ../app/actions/dialogs-actions.c:213
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
-msgstr "Άνοιγμα του διαλόγου προτύπων εικόνων"
+msgstr "Άνοιγμα του διαλόγου προτύπων εικόνων"
 
 #: ../app/actions/dialogs-actions.c:218
 msgctxt "dialogs-action"
@@ -1314,7 +1314,7 @@ msgstr "Κονσόλα σφα_λμάτων"
 #: ../app/actions/dialogs-actions.c:219
 msgctxt "dialogs-action"
 msgid "Open the error console"
-msgstr "Άνοιγμα της κονσόλας σφαλμάτων"
+msgstr "Άνοιγμα της κονσόλας σφαλμάτων"
 
 #: ../app/actions/dialogs-actions.c:229
 msgctxt "dialogs-action"
@@ -1324,7 +1324,7 @@ msgstr "_Προτιμήσεις"
 #: ../app/actions/dialogs-actions.c:230
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
-msgstr "Άνοιγμα του διαλόγου προτιμήσεων"
+msgstr "Άνοιγμα του διαλόγου προτιμήσεων"
 
 #: ../app/actions/dialogs-actions.c:235
 msgctxt "dialogs-action"
@@ -1344,7 +1344,7 @@ msgstr "Σ_υντομεύσεις πληκτρολογίου"
 #: ../app/actions/dialogs-actions.c:242
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "Άνοιγμα του επεξεργαστή συντομεύσεων πληκτρολογίου"
+msgstr "Άνοιγμα του επεξεργαστή συντομεύσεων πληκτρολογίου"
 
 #: ../app/actions/dialogs-actions.c:247
 msgctxt "dialogs-action"
@@ -1354,7 +1354,7 @@ msgstr "_Αρθρώματα"
 #: ../app/actions/dialogs-actions.c:248
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
-msgstr "Άνοιγμα του διαχειριστή αρθρωμάτων (modules)"
+msgstr "Άνοιγμα του διαχειριστή αρθρωμάτων (modules)"
 
 #: ../app/actions/dialogs-actions.c:253
 msgctxt "dialogs-action"
@@ -1406,7 +1406,7 @@ msgstr "Κλείσιμο εργαλειοθήκης"
 #: ../app/actions/dock-actions.c:54
 msgctxt "dock-action"
 msgid "_Open Display..."
-msgstr "_Άνοιγμα οθόνης..."
+msgstr "_Άνοιγμα οθόνης..."
 
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
@@ -1563,12 +1563,12 @@ msgstr "Μενού εγγράφων"
 #: ../app/actions/documents-actions.c:45
 msgctxt "documents-action"
 msgid "_Open Image"
-msgstr "Άν_οιγμα εικόνας"
+msgstr "Άν_οιγμα εικόνας"
 
 #: ../app/actions/documents-actions.c:46
 msgctxt "documents-action"
 msgid "Open the selected entry"
-msgstr "Άνοιγμα της επιλεγμένης εικόνας"
+msgstr "Άνοιγμα της επιλεγμένης εικόνας"
 
 #: ../app/actions/documents-actions.c:51
 msgctxt "documents-action"
@@ -2289,37 +2289,37 @@ msgstr "_Δημιουργία"
 #: ../app/actions/file-actions.c:73
 msgctxt "file-action"
 msgid "Open _Recent"
-msgstr "Άνοιγμα _πρόσφατων"
+msgstr "Άνοιγμα _πρόσφατων"
 
 #: ../app/actions/file-actions.c:76
 msgctxt "file-action"
 msgid "_Open..."
-msgstr "_Άνοιγμα..."
+msgstr "_Άνοιγμα..."
 
 #: ../app/actions/file-actions.c:77
 msgctxt "file-action"
 msgid "Open an image file"
-msgstr "Άνοιγμα ενός αρχείου εικόνας"
+msgstr "Άνοιγμα ενός αρχείου εικόνας"
 
 #: ../app/actions/file-actions.c:82
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "_Άνοιγμα ως στρώσεις..."
+msgstr "_Άνοιγμα ως στρώσεις..."
 
 #: ../app/actions/file-actions.c:83
 msgctxt "file-action"
 msgid "Open an image file as layers"
-msgstr "Άνοιγμα ενός αρχείου εικόνας ως στρώσεις"
+msgstr "Άνοιγμα ενός αρχείου εικόνας ως στρώσεις"
 
 #: ../app/actions/file-actions.c:88
 msgctxt "file-action"
 msgid "Open _Location..."
-msgstr "Άνοιγμα _τοποθεσίας..."
+msgstr "Άνοιγμα _τοποθεσίας..."
 
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
 msgid "Open an image file from a specified location"
-msgstr "Άνοιγμα ενός αρχείου εικόνας από συγκεκριμένη τοποθεσία"
+msgstr "Άνοιγμα ενός αρχείου εικόνας από συγκεκριμένη τοποθεσία"
 
 #: ../app/actions/file-actions.c:94
 msgctxt "file-action"
@@ -2354,12 +2354,12 @@ msgstr "Κλείσιμο όλων των ανοιχτών εικόνων"
 #: ../app/actions/file-actions.c:112
 msgctxt "file-action"
 msgid "_Quit"
-msgstr "Έ_ξοδος"
+msgstr "Έ_ξοδος"
 
 #: ../app/actions/file-actions.c:113
 msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "Έξοδος από το πρόγραμμα επεξεργασίας εικόνων GNU"
+msgstr "Έξοδος από το πρόγραμμα επεξεργασίας εικόνων GNU"
 
 #: ../app/actions/file-actions.c:121
 msgctxt "file-action"
@@ -2980,7 +2980,7 @@ msgstr "_Βοήθεια"
 #: ../app/actions/help-actions.c:41
 msgctxt "help-action"
 msgid "Open the GIMP user manual"
-msgstr "Άνοιγμα του εγχειριδίου του GIMP"
+msgstr "Άνοιγμα του εγχειριδίου του GIMP"
 
 #: ../app/actions/help-actions.c:46
 msgctxt "help-action"
@@ -4056,7 +4056,7 @@ msgstr "Μενού μοτίβων"
 #: ../app/actions/patterns-actions.c:46
 msgctxt "patterns-action"
 msgid "_Open Pattern as Image"
-msgstr "_Άνοιγμα μοτίβου ως εικόνα"
+msgstr "_Άνοιγμα μοτίβου ως εικόνα"
 
 #: ../app/actions/patterns-actions.c:47
 msgctxt "patterns-action"
@@ -4352,7 +4352,7 @@ msgstr "_Επιλογή"
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
 msgid "_All"
-msgstr "Ό_λα"
+msgstr "Ό_λα"
 
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
@@ -4392,7 +4392,7 @@ msgstr "Δημιουργία μιας αιωρούμενης επιλογής"
 #: ../app/actions/select-actions.c:74
 msgctxt "select-action"
 msgid "Fea_ther..."
-msgstr "Άμ_βλυνση..."
+msgstr "Άμ_βλυνση..."
 
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
@@ -4402,7 +4402,7 @@ msgstr "Θόλωμα των ορίων της επιλογής έτσι ώστε
 #: ../app/actions/select-actions.c:81
 msgctxt "select-action"
 msgid "_Sharpen"
-msgstr "Ό_ξυνση"
+msgstr "Ό_ξυνση"
 
 #: ../app/actions/select-actions.c:82
 msgctxt "select-action"
@@ -4474,12 +4474,12 @@ msgstr ""
 #
 #: ../app/actions/select-commands.c:155
 msgid "Feather Selection"
-msgstr "Άμβλυνση επιλογής"
+msgstr "Άμβλυνση επιλογής"
 
 #
 #: ../app/actions/select-commands.c:159
 msgid "Feather selection by"
-msgstr "Άμβλυνση επιλογής κατά"
+msgstr "Άμβλυνση επιλογής κατά"
 
 #: ../app/actions/select-commands.c:196
 msgid "Shrink Selection"
@@ -4512,7 +4512,7 @@ msgstr "Περίγραμμα εκατέρωθεν κατά"
 #. Feather button
 #: ../app/actions/select-commands.c:279
 msgid "_Feather border"
-msgstr "Άμ_βλυνση περιγράμματος"
+msgstr "Άμ_βλυνση περιγράμματος"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:292
@@ -4614,7 +4614,7 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:43
 msgctxt "text-editor-action"
 msgid "Open"
-msgstr "Άνοιγμα"
+msgstr "Άνοιγμα"
 
 #: ../app/actions/text-editor-actions.c:44
 msgctxt "text-editor-action"
@@ -5297,7 +5297,7 @@ msgstr "Συρρίκνωση του παραθύρου στο μέγεθος τ�
 #: ../app/actions/view-actions.c:124
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "_Άνοιγμα οθόνης..."
+msgstr "_Άνοιγμα οθόνης..."
 
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
@@ -5307,12 +5307,12 @@ msgstr "Σύνδεση σε διαφορετική οθόνη"
 #: ../app/actions/view-actions.c:133
 msgctxt "view-action"
 msgid "_Dot for Dot"
-msgstr "Ένα π_ρος ένα"
+msgstr "Ένα π_ρος ένα"
 
 #: ../app/actions/view-actions.c:134
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
-msgstr "Ένα pixel στην οθόνη αντιστοιχεί σε ένα pixel της εικόνας"
+msgstr "Ένα pixel στην οθόνη αντιστοιχεί σε ένα pixel της εικόνας"
 
 #: ../app/actions/view-actions.c:140
 msgctxt "view-action"
@@ -5577,7 +5577,7 @@ msgstr "Σμίκρυνση 1:16"
 #: ../app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
-msgstr "Ά_λλη..."
+msgstr "Ά_λλη..."
 
 #: ../app/actions/view-actions.c:355
 msgctxt "view-zoom-action"
@@ -5767,7 +5767,7 @@ msgstr "Μπλε"
 #: ../app/base/base-enums.c:60
 msgctxt "histogram-channel"
 msgid "Alpha"
-msgstr "Άλφα"
+msgstr "Άλφα"
 
 #: ../app/base/base-enums.c:61
 msgctxt "histogram-channel"
@@ -6254,7 +6254,7 @@ msgid ""
 "Conversely, on some X servers enabling this option results in faster "
 "painting."
 msgstr ""
-"Όταν ενεργοποιείται, ο εξυπηρετητής X ερωτάται για τη θέση του δείκτη μετά "
+"Όταν ενεργοποιείται, ο εξυπηρετητής X ερωτάται για τη θέση του δείκτη μετά "
 "από κάθε κίνηση, αντί να χρησιμοποιεί και εκτιμήσεις της θέσης. Αυτό "
 "σημαίνει ότι η ζωγραφική με παχιά πινέλα μπορεί να είναι πιο ακριβής, αλλά "
 "μπορεί να είναι πιο αργή. Ωστόσο, σε μερικούς εξυπηρετητές X αυτή η επιλογή "
@@ -6591,7 +6591,7 @@ msgstr "η τιμή της έκφρασης %s δεν είναι έγκυρη σ
 #: ../app/core/core-enums.c:54
 msgctxt "convert-dither-type"
 msgid "None"
-msgstr "Όχι"
+msgstr "Όχι"
 
 #: ../app/core/core-enums.c:55
 msgctxt "convert-dither-type"
@@ -6686,7 +6686,7 @@ msgstr "Μοτίβο"
 #: ../app/core/core-enums.c:258
 msgctxt "fill-type"
 msgid "None"
-msgstr "Όχι"
+msgstr "Όχι"
 
 #: ../app/core/core-enums.c:286
 msgctxt "fill-style"
@@ -6821,17 +6821,17 @@ msgstr "Κατακόρυφη"
 #: ../app/core/core-enums.c:487
 msgctxt "orientation-type"
 msgid "Unknown"
-msgstr "Άγνωστο"
+msgstr "Άγνωστο"
 
 #: ../app/core/core-enums.c:518
 msgctxt "item-set"
 msgid "None"
-msgstr "Όχι"
+msgstr "Όχι"
 
 #: ../app/core/core-enums.c:519
 msgctxt "item-set"
 msgid "All layers"
-msgstr "Όλες οι στρώσεις"
+msgstr "Όλες οι στρώσεις"
 
 #: ../app/core/core-enums.c:520
 msgctxt "item-set"
@@ -6841,12 +6841,12 @@ msgstr "Στρώσεις στο μέγεθος της εικόνας"
 #: ../app/core/core-enums.c:521
 msgctxt "item-set"
 msgid "All visible layers"
-msgstr "Όλες οι ορατές στρώσεις"
+msgstr "Όλες οι ορατές στρώσεις"
 
 #: ../app/core/core-enums.c:522
 msgctxt "item-set"
 msgid "All linked layers"
-msgstr "Όλεςοι συνδεδεμένες στρώσεις"
+msgstr "Όλεςοι συνδεδεμένες στρώσεις"
 
 #: ../app/core/core-enums.c:588
 msgctxt "view-size"
@@ -7784,12 +7784,12 @@ msgstr "Το κανάλι δεν μπορεί να χαμηλώσει άλλο."
 #: ../app/core/gimpchannel.c:310
 msgctxt "undo-type"
 msgid "Feather Channel"
-msgstr "Άμβλυνση καναλιού"
+msgstr "Άμβλυνση καναλιού"
 
 #: ../app/core/gimpchannel.c:311
 msgctxt "undo-type"
 msgid "Sharpen Channel"
-msgstr "Όξυνση καναλιού"
+msgstr "Όξυνση καναλιού"
 
 #: ../app/core/gimpchannel.c:312
 msgctxt "undo-type"
@@ -8788,12 +8788,12 @@ msgstr "Περίγραμμα επιλογής"
 #: ../app/core/gimpselection.c:172
 msgctxt "undo-type"
 msgid "Feather Selection"
-msgstr "Άμβλυνση επιλογής"
+msgstr "Άμβλυνση επιλογής"
 
 #: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
 msgid "Sharpen Selection"
-msgstr "Όξυνση επιλογής"
+msgstr "Όξυνση επιλογής"
 
 #: ../app/core/gimpselection.c:174
 msgctxt "undo-type"
@@ -11114,7 +11114,7 @@ msgstr "Προοπτική κλωνοποίηση"
 #: ../app/paint/paint-enums.c:83
 msgctxt "source-align-mode"
 msgid "None"
-msgstr "Όχι"
+msgstr "Όχι"
 
 #: ../app/paint/paint-enums.c:84
 msgctxt "source-align-mode"
@@ -11139,7 +11139,7 @@ msgstr "Θόλωση"
 #: ../app/paint/paint-enums.c:115
 msgctxt "convolve-type"
 msgid "Sharpen"
-msgstr "Όξυνση"
+msgstr "Όξυνση"
 
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
@@ -12591,7 +12591,7 @@ msgstr "Έκταση"
 
 #: ../app/tools/gimpdodgeburntool.c:230
 msgid "Exposure"
-msgstr "Έκθεση"
+msgstr "Έκθεση"
 
 #: ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
@@ -15927,7 +15927,7 @@ msgstr "Άνοιγμα του διαλόγου επιλογής πινέλου"
 
 #: ../app/widgets/gimpviewablebox.c:150
 msgid "Open the dynamics selection dialog"
-msgstr "Άνοιγμα του διαλόγου επιλογής δυναμικής"
+msgstr "Άνοιγμα του διαλόγου επιλογής δυναμικής"
 
 #
 #: ../app/widgets/gimpviewablebox.c:215
