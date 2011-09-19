@@ -127,7 +127,7 @@ msgstr "Εκτέλεση χωρίς γραφικό περιβάλλον"
 
 #: ../app/main.c:178
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "Να μην φορτώνονται πινέλα, διαβαθμίσεις, μοτίβα, ..."
+msgstr "Να μην φορτώνονται πινέλα, διαβαθμίσεις, μοτίβα, …"
 
 #: ../app/main.c:183
 msgid "Do not load any fonts"
@@ -198,7 +198,7 @@ msgstr ""
 
 #: ../app/main.c:389
 msgid "[FILE|URI...]"
-msgstr "[ΑΡΧΕΙΟ|URI...]"
+msgstr "[ΑΡΧΕΙΟ|URI…]"
 
 #: ../app/main.c:407
 msgid ""
@@ -564,7 +564,7 @@ msgstr "Ανανέωση των πινέλων"
 #: ../app/actions/brushes-actions.c:85
 msgctxt "brushes-action"
 msgid "_Edit Brush..."
-msgstr "_Επεξεργασία πινέλου..."
+msgstr "_Επεξεργασία πινέλου…"
 
 #: ../app/actions/brushes-actions.c:86
 msgctxt "brushes-action"
@@ -624,7 +624,7 @@ msgstr "Μενού καναλιών"
 #: ../app/actions/channels-actions.c:48
 msgctxt "channels-action"
 msgid "_Edit Channel Attributes..."
-msgstr "_Επεξεργασία ιδιοτήτων καναλιού..."
+msgstr "_Επεξεργασία ιδιοτήτων καναλιού…"
 
 #: ../app/actions/channels-actions.c:49
 msgctxt "channels-action"
@@ -634,7 +634,7 @@ msgstr "Επεξεργασία του ονόματος, του χρώματος 
 #: ../app/actions/channels-actions.c:54
 msgctxt "channels-action"
 msgid "_New Channel..."
-msgstr "_Νέο κανάλι..."
+msgstr "_Νέο κανάλι…"
 
 #: ../app/actions/channels-actions.c:55
 msgctxt "channels-action"
@@ -806,7 +806,7 @@ msgstr "Μενού πίνακα χρωμάτων"
 #: ../app/actions/colormap-actions.c:48
 msgctxt "colormap-action"
 msgid "_Edit Color..."
-msgstr "_Επεξεργασία χρώματος..."
+msgstr "_Επεξεργασία χρώματος…"
 
 #: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
@@ -1406,7 +1406,7 @@ msgstr "Κλείσιμο εργαλειοθήκης"
 #: ../app/actions/dock-actions.c:54
 msgctxt "dock-action"
 msgid "_Open Display..."
-msgstr "_Άνοιγμα οθόνης..."
+msgstr "_Άνοιγμα οθόνης…"
 
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
@@ -1699,7 +1699,7 @@ msgstr "Αυτόματη διόρθωση ισορροπίας λευκού"
 #: ../app/actions/drawable-actions.c:63
 msgctxt "drawable-action"
 msgid "_Offset..."
-msgstr "_Μετατόπιση..."
+msgstr "_Μετατόπιση…"
 
 #: ../app/actions/drawable-actions.c:65
 msgctxt "drawable-action"
@@ -1860,7 +1860,7 @@ msgstr "Ανανέωση των δυναμικών"
 #: ../app/actions/dynamics-actions.c:79
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "_Επεξεργασία δυναμικής..."
+msgstr "_Επεξεργασία δυναμικής…"
 
 #: ../app/actions/dynamics-actions.c:80
 msgctxt "dynamics-action"
@@ -1953,7 +1953,7 @@ msgstr "Αφαίρεση όλων των ενεργειών από το ιστο
 #: ../app/actions/edit-actions.c:103
 msgctxt "edit-action"
 msgid "_Fade..."
-msgstr "_Ξεθώριασμα..."
+msgstr "_Ξεθώριασμα…"
 
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
@@ -2041,7 +2041,7 @@ msgstr "Δημιουργία νέας στρώσης από τα περιεχό�
 #: ../app/actions/edit-actions.c:159
 msgctxt "edit-action"
 msgid "Cu_t Named..."
-msgstr "Απο_κοπή σε μνήμη..."
+msgstr "Απο_κοπή σε μνήμη…"
 
 #: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
@@ -2051,7 +2051,7 @@ msgstr "Μετακίνηση των επιλεγμένων pixel σε μία α�
 #: ../app/actions/edit-actions.c:165
 msgctxt "edit-action"
 msgid "_Copy Named..."
-msgstr "_Αντιγραφή σε μνήμη..."
+msgstr "_Αντιγραφή σε μνήμη…"
 
 #: ../app/actions/edit-actions.c:166
 msgctxt "edit-action"
@@ -2062,7 +2062,7 @@ msgstr "Αντιγραφή των επιλεγμένων pixel σε μία απ�
 #: ../app/actions/edit-actions.c:171
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "Αντιγραφή _ορατών σε μνήμη..."
+msgstr "Αντιγραφή _ορατών σε μνήμη…"
 
 #: ../app/actions/edit-actions.c:173
 msgctxt "edit-action"
@@ -2074,7 +2074,7 @@ msgstr ""
 #: ../app/actions/edit-actions.c:178
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "Ε_πικόλληση σε μνήμη..."
+msgstr "Ε_πικόλληση σε μνήμη…"
 
 #: ../app/actions/edit-actions.c:179
 msgctxt "edit-action"
@@ -2134,7 +2134,7 @@ msgstr "Α_κύρωση αναίρεσης (%s)"
 #: ../app/actions/edit-actions.c:326
 #, c-format
 msgid "_Fade %s..."
-msgstr "Ξεθώριασμα (%s)..."
+msgstr "_Ξεθώριασμα (%s)…"
 
 #
 #: ../app/actions/edit-actions.c:338
@@ -2149,7 +2149,7 @@ msgstr "Α_κύρωση αναίρεσης"
 #
 #: ../app/actions/edit-actions.c:340
 msgid "_Fade..."
-msgstr "_Ξεθώριασμα..."
+msgstr "_Ξεθώριασμα…"
 
 #: ../app/actions/edit-commands.c:136
 msgid "Clear Undo History"
@@ -2240,7 +2240,7 @@ msgstr "Επιλογή όλων των μηνυμάτων σφάλματος"
 #: ../app/actions/error-console-actions.c:58
 msgctxt "error-console-action"
 msgid "_Save Error Log to File..."
-msgstr "Απο_θήκευση καταγραφής σφαλμάτων σε αρχείο..."
+msgstr "Απο_θήκευση καταγραφής σφαλμάτων σε αρχείο…"
 
 #: ../app/actions/error-console-actions.c:59
 msgctxt "error-console-action"
@@ -2250,7 +2250,7 @@ msgstr "Εγγραφή όλων των μηνυμάτων σφάλματος σ�
 #: ../app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
-msgstr "Αποθήκευση _επιλογής σε αρχείο..."
+msgstr "Αποθήκευση _επιλογής σε αρχείο…"
 
 #: ../app/actions/error-console-actions.c:65
 msgctxt "error-console-action"
@@ -2294,7 +2294,7 @@ msgstr "Άνοιγμα _πρόσφατων"
 #: ../app/actions/file-actions.c:76
 msgctxt "file-action"
 msgid "_Open..."
-msgstr "_Άνοιγμα..."
+msgstr "_Άνοιγμα…"
 
 #: ../app/actions/file-actions.c:77
 msgctxt "file-action"
@@ -2304,7 +2304,7 @@ msgstr "Άνοιγμα ενός αρχείου εικόνας"
 #: ../app/actions/file-actions.c:82
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "_Άνοιγμα ως στρώσεις..."
+msgstr "_Άνοιγμα ως στρώσεις…"
 
 #: ../app/actions/file-actions.c:83
 msgctxt "file-action"
@@ -2314,7 +2314,7 @@ msgstr "Άνοιγμα ενός αρχείου εικόνας ως στρώσε�
 #: ../app/actions/file-actions.c:88
 msgctxt "file-action"
 msgid "Open _Location..."
-msgstr "Άνοιγμα _τοποθεσίας..."
+msgstr "Άνοιγμα _τοποθεσίας…"
 
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
@@ -2324,7 +2324,7 @@ msgstr "Άνοιγμα ενός αρχείου εικόνας από συγκε�
 #: ../app/actions/file-actions.c:94
 msgctxt "file-action"
 msgid "Create Template..."
-msgstr "Δημιουργία προτύπου..."
+msgstr "Δημιουργία προτύπου…"
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
@@ -2374,7 +2374,7 @@ msgstr "Αποθήκευση αυτής της εικόνας"
 #: ../app/actions/file-actions.c:127
 msgctxt "file-action"
 msgid "Save _As..."
-msgstr "Αποθήκευση _ως..."
+msgstr "Αποθήκευση _ως…"
 
 #: ../app/actions/file-actions.c:128
 msgctxt "file-action"
@@ -2384,7 +2384,7 @@ msgstr "Αποθήκευση αυτής της εικόνας με διαφορ�
 #: ../app/actions/file-actions.c:133
 msgctxt "file-action"
 msgid "Save a Cop_y..."
-msgstr "Αποθήκευση α_ντιγράφου..."
+msgstr "Αποθήκευση α_ντιγράφου…"
 
 #: ../app/actions/file-actions.c:135
 msgctxt "file-action"
@@ -2398,7 +2398,7 @@ msgstr ""
 #: ../app/actions/file-actions.c:140
 msgctxt "file-action"
 msgid "Save and Close..."
-msgstr "Αποθήκευση και κλείσιμο..."
+msgstr "Αποθήκευση και κλείσιμο…"
 
 #: ../app/actions/file-actions.c:141
 msgctxt "file-action"
@@ -2428,7 +2428,7 @@ msgstr "Εξαγωγή της εικόνας στο εισηγμένο αρχε�
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
 msgid "Export..."
-msgstr "Εξαγωγή..."
+msgstr "Εξαγωγή…"
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
@@ -2571,12 +2571,12 @@ msgstr "Αποθήκευση _δεξιού χρώματος σε"
 #: ../app/actions/gradient-editor-actions.c:66
 msgctxt "gradient-editor-action"
 msgid "L_eft Endpoint's Color..."
-msgstr "Χρώμα αριστ_ερού άκρου..."
+msgstr "Χρώμα αριστ_ερού άκρου…"
 
 #: ../app/actions/gradient-editor-actions.c:71
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
-msgstr "Χρώμα δεξ_ιού άκρου..."
+msgstr "Χρώμα δεξ_ιού άκρου…"
 
 #: ../app/actions/gradient-editor-actions.c:111
 msgctxt "gradient-editor-action"
@@ -2746,7 +2746,7 @@ msgstr "Αναστρο_φή τμήματος"
 
 #: ../app/actions/gradient-editor-actions.c:783
 msgid "_Replicate Segment..."
-msgstr "_Επανάληψη τμήματος..."
+msgstr "_Επανάληψη τμήματος…"
 
 #: ../app/actions/gradient-editor-actions.c:785
 msgid "Split Segment at _Midpoint"
@@ -2754,7 +2754,7 @@ msgstr "Διαίρεση τμήματος στα _δύο"
 
 #: ../app/actions/gradient-editor-actions.c:787
 msgid "Split Segment _Uniformly..."
-msgstr "Διαίρεση τμήματος σε ίσα _μέρη..."
+msgstr "Διαίρεση τμήματος σε ίσα _μέρη…"
 
 #: ../app/actions/gradient-editor-actions.c:789
 msgid "_Delete Segment"
@@ -2782,7 +2782,7 @@ msgstr "Αναστρο_φή επιλογής"
 
 #: ../app/actions/gradient-editor-actions.c:805
 msgid "_Replicate Selection..."
-msgstr "_Αντίγραφο επιλογής..."
+msgstr "_Αντίγραφο επιλογής…"
 
 #: ../app/actions/gradient-editor-actions.c:807
 msgid "Split Segments at _Midpoints"
@@ -2790,7 +2790,7 @@ msgstr "Διαίρεση επιλεγμένων τμημάτων στα _δύο"
 
 #: ../app/actions/gradient-editor-actions.c:809
 msgid "Split Segments _Uniformly..."
-msgstr "Διαίρεση επιλεγμένων τμημάτων σε ίσα _μέρη..."
+msgstr "Διαίρεση επιλεγμένων τμημάτων σε ίσα _μέρη…"
 
 #: ../app/actions/gradient-editor-actions.c:811
 msgid "_Delete Selection"
@@ -2930,7 +2930,7 @@ msgstr "Αντιγραφή της τοποθεσίας του αρχείου τ�
 #: ../app/actions/gradients-actions.c:65
 msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
-msgstr "Αποθήκευση ως _POV-Ray..."
+msgstr "Αποθήκευση ως _POV-Ray…"
 
 #: ../app/actions/gradients-actions.c:66
 msgctxt "gradients-action"
@@ -2960,7 +2960,7 @@ msgstr "Ανανέωση των διαβαθμίσεων"
 #: ../app/actions/gradients-actions.c:86
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
-msgstr "_Επεξεργασία διαβάθμισης..."
+msgstr "_Επεξεργασία διαβάθμισης…"
 
 #: ../app/actions/gradients-actions.c:87
 msgctxt "gradients-action"
@@ -3045,7 +3045,7 @@ msgstr "Σ_υστατικά"
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "_New..."
-msgstr "_Νέα..."
+msgstr "_Νέα…"
 
 #: ../app/actions/image-actions.c:68
 msgctxt "image-action"
@@ -3055,7 +3055,7 @@ msgstr "Δημιουργία νέας εικόνας"
 #: ../app/actions/image-actions.c:73
 msgctxt "image-action"
 msgid "Can_vas Size..."
-msgstr "Διαστάσεις _καμβά..."
+msgstr "Διαστάσεις _καμβά…"
 
 #: ../app/actions/image-actions.c:74
 msgctxt "image-action"
@@ -3086,7 +3086,7 @@ msgstr "Αλλαγή των διαστάσεων της εικόνας ώστε 
 #: ../app/actions/image-actions.c:91
 msgctxt "image-action"
 msgid "_Print Size..."
-msgstr "_Διαστάσεις εκτύπωσης..."
+msgstr "_Διαστάσεις εκτύπωσης…"
 
 #: ../app/actions/image-actions.c:92
 msgctxt "image-action"
@@ -3096,7 +3096,7 @@ msgstr "Ρύθμιση της ανάλυσης εκτύπωσης"
 #: ../app/actions/image-actions.c:97
 msgctxt "image-action"
 msgid "_Scale Image..."
-msgstr "Μέγεθος ει_κόνας..."
+msgstr "Μέγεθος ει_κόνας…"
 
 #: ../app/actions/image-actions.c:98
 msgctxt "image-action"
@@ -3126,7 +3126,7 @@ msgstr "Δημιουργία ενός αντιγράφου αυτής της ε�
 #: ../app/actions/image-actions.c:115
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
-msgstr "Συγχώνευση ορατών _στρώσεων..."
+msgstr "Συγχώνευση ορατών _στρώσεων…"
 
 #: ../app/actions/image-actions.c:116
 msgctxt "image-action"
@@ -3146,7 +3146,7 @@ msgstr "Συγχώνευση όλων των στρώσεων και αφαίρ�
 #: ../app/actions/image-actions.c:127
 msgctxt "image-action"
 msgid "Configure G_rid..."
-msgstr "Ρύθμιση _πλέγματος..."
+msgstr "Ρύθμιση _πλέγματος…"
 
 #: ../app/actions/image-actions.c:128
 msgctxt "image-action"
@@ -3186,7 +3186,7 @@ msgstr "Μετατροπή των χρωμάτων της εικόνας σε α
 #: ../app/actions/image-actions.c:152
 msgctxt "image-convert-action"
 msgid "_Indexed..."
-msgstr "Από _πίνακα χρωμάτων..."
+msgstr "Από _πίνακα χρωμάτων…"
 
 #: ../app/actions/image-actions.c:153
 msgctxt "image-convert-action"
@@ -3389,7 +3389,7 @@ msgstr "Εμφάνιση του εργαλείου κειμένου για αυ�
 #: ../app/actions/layers-actions.c:76
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
-msgstr "_Επεξεργασία ιδιοτήτων στρώσης..."
+msgstr "_Επεξεργασία ιδιοτήτων στρώσης…"
 
 #: ../app/actions/layers-actions.c:77
 msgctxt "layers-action"
@@ -3399,7 +3399,7 @@ msgstr "Αλλαγή του ονόματος της στρώσης"
 #: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:598
 msgctxt "layers-action"
 msgid "_New Layer..."
-msgstr "_Νέα στρώση..."
+msgstr "_Νέα στρώση…"
 
 #: ../app/actions/layers-actions.c:83
 msgctxt "layers-action"
@@ -3430,7 +3430,7 @@ msgstr "Δημιουργία νέας στρώσης που να περιέχε�
 #: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
 msgid "New Layer _Group..."
-msgstr "Νέα _ομάδα στρώσεων..."
+msgstr "Νέα _ομάδα στρώσεων…"
 
 #: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
@@ -3531,7 +3531,7 @@ msgstr "Συγχώνευση των στρώσεων της ομάδας σε μ
 #: ../app/actions/layers-actions.c:162
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
-msgstr "Συγχώνευση _ορατών στρώσεων..."
+msgstr "Συγχώνευση _ορατών στρώσεων…"
 
 #: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
@@ -3582,7 +3582,7 @@ msgstr ""
 #: ../app/actions/layers-actions.c:192
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
-msgstr "Διαστάσεις _στρώσης..."
+msgstr "Διαστάσεις _στρώσης…"
 
 #: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
@@ -3602,7 +3602,7 @@ msgstr "Εξίσωση των διαστάσεων της στρώσης με τ
 #: ../app/actions/layers-actions.c:204
 msgctxt "layers-action"
 msgid "_Scale Layer..."
-msgstr "Αυξομείωση _μεγέθους στρώσης..."
+msgstr "Αυξομείωση _μεγέθους στρώσης…"
 
 #: ../app/actions/layers-actions.c:205
 msgctxt "layers-action"
@@ -3622,7 +3622,7 @@ msgstr "Περικοπή της στρώσης στα όρια της επιλο
 #: ../app/actions/layers-actions.c:216
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
-msgstr "Προσθήκη _μάσκας στρώσης..."
+msgstr "Προσθήκη _μάσκας στρώσης…"
 
 #: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
@@ -3893,7 +3893,7 @@ msgstr "Μενού επεξεργασίας παλετών"
 #: ../app/actions/palette-editor-actions.c:47
 msgctxt "palette-editor-action"
 msgid "_Edit Color..."
-msgstr "_Επεξεργασία χρώματος..."
+msgstr "_Επεξεργασία χρώματος…"
 
 #: ../app/actions/palette-editor-actions.c:48
 msgctxt "palette-editor-action"
@@ -3973,7 +3973,7 @@ msgstr "Δημιουργία νέας παλέτας"
 #: ../app/actions/palettes-actions.c:53
 msgctxt "palettes-action"
 msgid "_Import Palette..."
-msgstr "_Εισαγωγή παλέτας..."
+msgstr "_Εισαγωγή παλέτας…"
 
 #: ../app/actions/palettes-actions.c:54
 msgctxt "palettes-action"
@@ -3993,7 +3993,7 @@ msgstr "Δημιουργία ενός αντιγράφου αυτής της π�
 #: ../app/actions/palettes-actions.c:65
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
-msgstr "_Συγχώνευση παλετών..."
+msgstr "_Συγχώνευση παλετών…"
 
 #: ../app/actions/palettes-actions.c:66
 msgctxt "palettes-action"
@@ -4033,7 +4033,7 @@ msgstr "Ανανέωση παλετών"
 #: ../app/actions/palettes-actions.c:92
 msgctxt "palettes-action"
 msgid "_Edit Palette..."
-msgstr "_Επεξεργασία παλέτας..."
+msgstr "_Επεξεργασία παλέτας…"
 
 #: ../app/actions/palettes-actions.c:93
 msgctxt "palettes-action"
@@ -4116,7 +4116,7 @@ msgstr "Ανανέωση των μοτίβων"
 #: ../app/actions/patterns-actions.c:85
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
-msgstr "_Επεξεργασία μοτίβου..."
+msgstr "_Επεξεργασία μοτίβου…"
 
 #: ../app/actions/patterns-actions.c:86
 msgctxt "patterns-action"
@@ -4285,7 +4285,7 @@ msgstr "Μενού γρήγορης μάσκας"
 #: ../app/actions/quick-mask-actions.c:47
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "_Ρύθμιση χρώματος και διαφάνειας..."
+msgstr "_Ρύθμιση χρώματος και διαφάνειας…"
 
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
@@ -4392,7 +4392,7 @@ msgstr "Δημιουργία μιας αιωρούμενης επιλογής"
 #: ../app/actions/select-actions.c:74
 msgctxt "select-action"
 msgid "Fea_ther..."
-msgstr "Άμ_βλυνση..."
+msgstr "Άμ_βλυνση…"
 
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
@@ -4412,7 +4412,7 @@ msgstr "Αφαίρεση του θολώματος των ορίων της επ
 #: ../app/actions/select-actions.c:87
 msgctxt "select-action"
 msgid "S_hrink..."
-msgstr "_Συρρίκνωση..."
+msgstr "_Συρρίκνωση…"
 
 #: ../app/actions/select-actions.c:88
 msgctxt "select-action"
@@ -4422,7 +4422,7 @@ msgstr "Συρρίκνωση των ορίων της επιλογής"
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "_Επέκταση..."
+msgstr "_Επέκταση…"
 
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
@@ -4432,7 +4432,7 @@ msgstr "Επέκταση των ορίων της επιλογής"
 #: ../app/actions/select-actions.c:99
 msgctxt "select-action"
 msgid "Bo_rder..."
-msgstr "_Περίγραμμα..."
+msgstr "_Περίγραμμα…"
 
 #: ../app/actions/select-actions.c:100
 msgctxt "select-action"
@@ -4452,7 +4452,7 @@ msgstr "Αποθήκευση της επιλογής σε ένα κανάλι"
 #: ../app/actions/select-actions.c:111
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "_Περίγραμμα επιλογής..."
+msgstr "_Περίγραμμα επιλογής…"
 
 #: ../app/actions/select-actions.c:112
 msgctxt "select-action"
@@ -4548,7 +4548,7 @@ msgstr "Δημιουργία νέας εικόνας από το επιλεγμ�
 #: ../app/actions/templates-actions.c:51
 msgctxt "templates-action"
 msgid "_New Template..."
-msgstr "_Νέο πρότυπο..."
+msgstr "_Νέο πρότυπο…"
 
 #: ../app/actions/templates-actions.c:52
 msgctxt "templates-action"
@@ -4558,7 +4558,7 @@ msgstr "Δημιουργία νέου προτύπου"
 #: ../app/actions/templates-actions.c:57
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
-msgstr "_Αντίγραφο προτύπου..."
+msgstr "_Αντίγραφο προτύπου…"
 
 #: ../app/actions/templates-actions.c:58
 msgctxt "templates-action"
@@ -4568,7 +4568,7 @@ msgstr "Δημιουργία ενός αντιγράφου αυτού του π�
 #: ../app/actions/templates-actions.c:63
 msgctxt "templates-action"
 msgid "_Edit Template..."
-msgstr "_Επεξεργασία προτύπου..."
+msgstr "_Επεξεργασία προτύπου…"
 
 #: ../app/actions/templates-actions.c:64
 msgctxt "templates-action"
@@ -4704,7 +4704,7 @@ msgstr "_Διαγραφή"
 #: ../app/actions/text-tool-actions.c:78
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "Άνοιγμ_α αρχείου κειμένου..."
+msgstr "Άνοιγμ_α αρχείου κειμένου…"
 
 #: ../app/actions/text-tool-actions.c:83
 msgctxt "text-tool-action"
@@ -4774,7 +4774,7 @@ msgstr "_Διαγραφή προεπιλογών εργαλείου"
 #: ../app/actions/tool-options-actions.c:74
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "_Νέες προεπιλογές εργαλείου..."
+msgstr "_Νέες προεπιλογές εργαλείου…"
 
 #: ../app/actions/tool-options-actions.c:79
 msgctxt "tool-options-action"
@@ -4864,7 +4864,7 @@ msgstr "Ανανέωση των προεπιλογών του εργαλείου
 #: ../app/actions/tool-preset-actions.c:81
 msgctxt "tool-preset-action"
 msgid "_Edit Tool Preset..."
-msgstr "_Επεξεργασία προεπιλογών εργαλείου..."
+msgstr "_Επεξεργασία προεπιλογών εργαλείου…"
 
 #: ../app/actions/tool-preset-actions.c:82
 msgctxt "tool-preset-action"
@@ -4919,7 +4919,7 @@ msgstr "Επιλογή περιοχών με παρόμοια χρώματα"
 #: ../app/actions/tools-actions.c:61
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
-msgstr "_Ελεύθερη περιστροφή..."
+msgstr "_Ελεύθερη περιστροφή…"
 
 #: ../app/actions/tools-actions.c:62
 msgctxt "tools-action"
@@ -4939,7 +4939,7 @@ msgstr "Εργαλείο _μονοπατιών"
 #: ../app/actions/vectors-actions.c:53
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
-msgstr "_Επεξεργασία ιδιοτήτων μονοπατιού..."
+msgstr "_Επεξεργασία ιδιοτήτων μονοπατιού…"
 
 #: ../app/actions/vectors-actions.c:54
 msgctxt "vectors-action"
@@ -4949,12 +4949,12 @@ msgstr "Επεξεργασία ιδιοτήτων μονοπατιού"
 #: ../app/actions/vectors-actions.c:59
 msgctxt "vectors-action"
 msgid "_New Path..."
-msgstr "_Νέο μονοπάτι..."
+msgstr "_Νέο μονοπάτι…"
 
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
 msgid "Create a new path..."
-msgstr "Δημιουργία νέου μονοπατιού..."
+msgstr "Δημιουργία νέου μονοπατιού…"
 
 #: ../app/actions/vectors-actions.c:65
 msgctxt "vectors-action"
@@ -5036,7 +5036,7 @@ msgstr "Χαμήλωμα του μονοπατιού στην κατώτατη �
 #: ../app/actions/vectors-actions.c:112
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
-msgstr "_Περίγραμμα μονοπατιού..."
+msgstr "_Περίγραμμα μονοπατιού…"
 
 #: ../app/actions/vectors-actions.c:113
 msgctxt "vectors-action"
@@ -5068,12 +5068,12 @@ msgstr "_Επικόλληση μονοπατιού"
 #: ../app/actions/vectors-actions.c:134
 msgctxt "vectors-action"
 msgid "E_xport Path..."
-msgstr "Ε_ξαγωγή μονοπατιού..."
+msgstr "Ε_ξαγωγή μονοπατιού…"
 
 #: ../app/actions/vectors-actions.c:139
 msgctxt "vectors-action"
 msgid "I_mport Path..."
-msgstr "_Εισαγωγή μονοπατιού..."
+msgstr "_Εισαγωγή μονοπατιού…"
 
 #: ../app/actions/vectors-actions.c:147
 msgctxt "vectors-action"
@@ -5277,7 +5277,7 @@ msgstr "Προβολή ενός παραθύρου επισκόπησης της
 #: ../app/actions/view-actions.c:112
 msgctxt "view-action"
 msgid "Display _Filters..."
-msgstr "Εμφάνιση _φίλτρων..."
+msgstr "Εμφάνιση _φίλτρων…"
 
 #: ../app/actions/view-actions.c:113
 msgctxt "view-action"
@@ -5297,7 +5297,7 @@ msgstr "Συρρίκνωση του παραθύρου στο μέγεθος τ�
 #: ../app/actions/view-actions.c:124
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "_Άνοιγμα οθόνης..."
+msgstr "_Άνοιγμα οθόνης…"
 
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
@@ -5577,7 +5577,7 @@ msgstr "Σμίκρυνση 1:16"
 #: ../app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
-msgstr "Ά_λλη..."
+msgstr "Ά_λλη…"
 
 #: ../app/actions/view-actions.c:355
 msgctxt "view-zoom-action"
@@ -5617,7 +5617,7 @@ msgstr "Χρήση του χρώματος των \"μαύρων\" τετραγ�
 #: ../app/actions/view-actions.c:381
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
-msgstr "Επιλογή _προσαρμοσμένου χρώματος..."
+msgstr "Επιλογή _προσαρμοσμένου χρώματος…"
 
 #: ../app/actions/view-actions.c:382
 msgctxt "view-padding-color"
@@ -5647,7 +5647,7 @@ msgstr "Προη_γούμενη μεγέθυνση"
 #: ../app/actions/view-actions.c:732
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr "Ά_λλη (%s)..."
+msgstr "Ά_λλη (%s)…"
 
 #: ../app/actions/view-actions.c:741
 #, c-format
@@ -7462,12 +7462,12 @@ msgstr ""
 #: ../app/core/gimp-user-install.c:316
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Αντιγραφή αρχείου '%s' από το '%s'..."
+msgstr "Αντιγραφή αρχείου '%s' από το '%s'…"
 
 #: ../app/core/gimp-user-install.c:331 ../app/core/gimp-user-install.c:357
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "Δημιουργία φακέλου '%s'..."
+msgstr "Δημιουργία φακέλου '%s'…"
 
 #: ../app/core/gimp-user-install.c:342 ../app/core/gimp-user-install.c:368
 #, c-format
@@ -8443,7 +8443,7 @@ msgstr "Κλικ για δημιουργία προεπισκόπησης"
 
 #: ../app/core/gimpimagefile.c:743
 msgid "Loading preview..."
-msgstr "Φόρτωση προεπισκόπησης..."
+msgstr "Φόρτωση προεπισκόπησης…"
 
 #: ../app/core/gimpimagefile.c:749
 msgid "Preview is out of date"
@@ -9756,7 +9756,7 @@ msgstr "Δυναμικές συντομεύσεις _πληκτρολογίου"
 
 #: ../app/dialogs/preferences-dialog.c:1626
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Ρύθμιση συντομεύσεων _πληκτρολογίου..."
+msgstr "Ρύθμιση συντομεύσεων _πληκτρολογίου…"
 
 #
 #: ../app/dialogs/preferences-dialog.c:1633
@@ -10098,7 +10098,7 @@ msgstr "_Επιλογή ανάλυσης"
 
 #: ../app/dialogs/preferences-dialog.c:2380
 msgid "C_alibrate..."
-msgstr "_Βαθμονόμηση..."
+msgstr "_Βαθμονόμηση…"
 
 #: ../app/dialogs/preferences-dialog.c:2408
 msgid "Color Management"
@@ -10175,7 +10175,7 @@ msgstr "Εκτεταμένες συσκευές εισόδου"
 
 #: ../app/dialogs/preferences-dialog.c:2552
 msgid "Configure E_xtended Input Devices..."
-msgstr "Ρύθμιση εκτεταμένων συσκευών εισόδου..."
+msgstr "Ρύθμιση εκτεταμένων συσκευών εισόδου…"
 
 #: ../app/dialogs/preferences-dialog.c:2559
 msgid "_Save input device settings on exit"
@@ -11971,7 +11971,7 @@ msgstr "Φωτεινότητα / Αντίθεση: Ρυθμίστε τη φωτ�
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:113
 msgid "B_rightness-Contrast..."
-msgstr "_Φωτεινότητα-Αντίθεση..."
+msgstr "_Φωτεινότητα-Αντίθεση…"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:133
 msgid "Adjust Brightness and Contrast"
@@ -12169,7 +12169,7 @@ msgstr "Ισορροπία χρωμάτων: Ρυθμίστε την καταν�
 
 #: ../app/tools/gimpcolorbalancetool.c:96
 msgid "Color _Balance..."
-msgstr "_Ισορροπία χρωμάτων..."
+msgstr "_Ισορροπία χρωμάτων…"
 
 #: ../app/tools/gimpcolorbalancetool.c:113
 msgid "Adjust Color Balance"
