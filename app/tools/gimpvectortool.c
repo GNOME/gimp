@@ -154,6 +154,7 @@ gimp_vector_tool_register (GimpToolRegisterCallback callback,
                 GIMP_TYPE_VECTOR_OPTIONS,
                 gimp_vector_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK |
+                GIMP_CONTEXT_PATTERN_MASK |
                 GIMP_CONTEXT_GRADIENT_MASK, /* for stroking */
                 "gimp-vector-tool",
                 _("Paths"),
