@@ -12,16 +12,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-28 20:09+0400\n"
-"PO-Revision-Date: 2011-05-28 20:17+0400\n"
+"POT-Creation-Date: 2011-09-18 11:35+0400\n"
+"PO-Revision-Date: 2011-09-20 13:43+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: UTF-8\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n%"
-"100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n"
+"%100>=20) ? 1 : 2);\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:118
 msgid "Original"
@@ -618,7 +619,7 @@ msgstr "По _вертикали"
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
 #: ../plug-ins/common/decompose.c:727 ../plug-ins/common/file-cel.c:363
 #: ../plug-ins/common/file-cel.c:366 ../plug-ins/common/file-dicom.c:614
-#: ../plug-ins/common/file-gif-load.c:927
+#: ../plug-ins/common/file-gif-load.c:930
 #: ../plug-ins/common/file-jp2-load.c:357 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
 #: ../plug-ins/common/file-png.c:881 ../plug-ins/common/file-pnm.c:583
@@ -628,10 +629,10 @@ msgstr "По _вертикали"
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:267
 #: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
 #: ../plug-ins/file-faxg3/faxg3.c:477 ../plug-ins/file-fits/fits.c:530
-#: ../plug-ins/file-jpeg/jpeg-load.c:252 ../plug-ins/file-jpeg/jpeg-load.c:816
+#: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
 #: ../plug-ins/file-psd/psd-image-res-load.c:997
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
-#: ../plug-ins/gfig/gfig-dialog.c:1294
+#: ../plug-ins/gfig/gfig-dialog.c:1306
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1156
@@ -1042,18 +1043,18 @@ msgstr "Загрузить установки микшера каналов"
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1037
 #: ../plug-ins/common/file-ps.c:3052 ../plug-ins/common/file-psp.c:1709
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
-#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
-#: ../plug-ins/common/file-svg.c:731 ../plug-ins/common/file-tga.c:442
+#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:334
+#: ../plug-ins/common/file-svg.c:732 ../plug-ins/common/file-tga.c:442
 #: ../plug-ins/common/file-tiff-load.c:292 ../plug-ins/common/file-xbm.c:737
 #: ../plug-ins/common/file-xmc.c:667 ../plug-ins/common/file-xmc.c:852
 #: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2005
 #: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:232
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
-#: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:114
-#: ../plug-ins/file-jpeg/jpeg-load.c:886 ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:117
+#: ../plug-ins/file-jpeg/jpeg-load.c:889 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:189
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:193
 #: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
@@ -1087,10 +1088,10 @@ msgstr "Сохранить установки микшера каналов"
 #: ../plug-ins/common/file-tiff-save.c:684 ../plug-ins/common/file-xbm.c:1036
 #: ../plug-ins/common/file-xmc.c:1459 ../plug-ins/common/file-xwd.c:619
 #: ../plug-ins/common/sphere-designer.c:2116
-#: ../plug-ins/file-bmp/bmp-write.c:302 ../plug-ins/file-fits/fits.c:476
+#: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1655
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:162
+#: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1655
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
 #: ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
@@ -1885,8 +1886,8 @@ msgstr "Redness_cr709f:"
 #: ../plug-ins/common/compose.c:404
 msgid "Create an image using multiple gray images as color channels"
 msgstr ""
-"Создать новое изображение, используя изображения в режиме «Градации серого» в "
-"качестве каналов"
+"Создать новое изображение, используя изображения в режиме «Градации серого» "
+"в качестве каналов"
 
 #: ../plug-ins/common/compose.c:410
 msgid "C_ompose..."
@@ -1905,8 +1906,8 @@ msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
-"Функция «Воссоединить» доступна только для тех изображений, которые созданы с "
-"помощью фильтра «Разобрать»'."
+"Функция «Воссоединить» доступна только для тех изображений, которые созданы "
+"с помощью фильтра «Разобрать»'."
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
@@ -2270,7 +2271,7 @@ msgstr "_Автообновление просмотра"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve-bend.c:1310 ../plug-ins/common/ripple.c:523
-#: ../plug-ins/gfig/gfig-dialog.c:1216
+#: ../plug-ins/gfig/gfig-dialog.c:1228
 msgid "Options"
 msgstr "Параметры"
 
@@ -3047,7 +3048,7 @@ msgstr "Загрузка палитры KISS"
 #: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
 #: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:216
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:644
-#: ../plug-ins/file-jpeg/jpeg-load.c:120 ../plug-ins/file-psd/psd-load.c:135
+#: ../plug-ins/file-jpeg/jpeg-load.c:123 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3333
 #, c-format
 msgid "Opening '%s'"
@@ -3073,9 +3074,9 @@ msgstr "Неподдерживаемое число цветов (%d)!"
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1464
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
-#: ../plug-ins/file-bmp/bmp-write.c:313 ../plug-ins/file-fits/fits.c:481
+#: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1001
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1660
+#: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1660
 #: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-xjt/xjt.c:1696
 #, c-format
 msgid "Saving '%s'"
@@ -3243,28 +3244,28 @@ msgstr "Не является файлом GIF"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Неквадратные пикселы. Вероятно, изображение искажено."
 
-#: ../plug-ins/common/file-gif-load.c:929
+#: ../plug-ins/common/file-gif-load.c:932
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Фон (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:952
+#: ../plug-ins/common/file-gif-load.c:955
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Открывается '%s' (кадр %d)"
 
-#: ../plug-ins/common/file-gif-load.c:981 ../plug-ins/common/iwarp.c:794
+#: ../plug-ins/common/file-gif-load.c:984 ../plug-ins/common/iwarp.c:794
 #: ../plug-ins/common/iwarp.c:829
 #, c-format
 msgid "Frame %d"
 msgstr "Кадр %d"
 
-#: ../plug-ins/common/file-gif-load.c:983
+#: ../plug-ins/common/file-gif-load.c:986
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Кадр %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1014
+#: ../plug-ins/common/file-gif-load.c:1017
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3548,7 +3549,8 @@ msgstr ""
 "(cellpadding):"
 
 #: ../plug-ins/common/file-html-table.c:619
-msgid "The amount of cellpadding."
+#, fuzzy
+msgid "The amount of cell padding."
 msgstr "Размер заполнения ячеек."
 
 #: ../plug-ins/common/file-html-table.c:628
@@ -3558,7 +3560,8 @@ msgstr ""
 "(cellspacing):"
 
 #: ../plug-ins/common/file-html-table.c:632
-msgid "The amount of cellspacing."
+#, fuzzy
+msgid "The amount of cell spacing."
 msgstr "Размер интервала ячеек."
 
 #: ../plug-ins/common/file-jp2-load.c:96
@@ -4049,7 +4052,7 @@ msgid "Rendering"
 msgstr "Визуализация"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3158 ../plug-ins/common/file-svg.c:929
+#: ../plug-ins/common/file-ps.c:3158 ../plug-ins/common/file-svg.c:930
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "Разрешение:"
@@ -4376,28 +4379,28 @@ msgstr "Форматирование данных"
 msgid "RunLength Encoded"
 msgstr "Кодирование RLE"
 
-#: ../plug-ins/common/file-svg.c:140
+#: ../plug-ins/common/file-svg.c:141
 msgid "SVG image"
 msgstr "Изображение SVG"
 
-#: ../plug-ins/common/file-svg.c:335 ../plug-ins/common/file-svg.c:733
+#: ../plug-ins/common/file-svg.c:336 ../plug-ins/common/file-svg.c:734
 msgid "Unknown reason"
 msgstr "Неизвестная причина"
 
-#: ../plug-ins/common/file-svg.c:341
+#: ../plug-ins/common/file-svg.c:342
 msgid "Rendering SVG"
 msgstr "Визуализация SVG"
 
-#: ../plug-ins/common/file-svg.c:353
+#: ../plug-ins/common/file-svg.c:354
 msgid "Rendered SVG"
 msgstr "Визуализованный SVG"
 
-#: ../plug-ins/common/file-svg.c:567 ../plug-ins/common/file-wmf.c:358
+#: ../plug-ins/common/file-svg.c:568 ../plug-ins/common/file-wmf.c:358
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: ../plug-ins/common/file-svg.c:575
+#: ../plug-ins/common/file-svg.c:576
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -4406,51 +4409,51 @@ msgstr ""
 "не указан размер!"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/file-svg.c:742
+#: ../plug-ins/common/file-svg.c:743
 msgid "Render Scalable Vector Graphics"
 msgstr "Создать Scalable Vector Graphics"
 
 #. Width and Height
-#: ../plug-ins/common/file-svg.c:808 ../plug-ins/common/file-wmf.c:571
+#: ../plug-ins/common/file-svg.c:809 ../plug-ins/common/file-wmf.c:571
 #: ../plug-ins/common/grid.c:726
 msgid "Width:"
 msgstr "Ширина:"
 
-#: ../plug-ins/common/file-svg.c:814 ../plug-ins/common/file-wmf.c:577
+#: ../plug-ins/common/file-svg.c:815 ../plug-ins/common/file-wmf.c:577
 msgid "Height:"
 msgstr "Высота:"
 
-#: ../plug-ins/common/file-svg.c:888 ../plug-ins/common/file-wmf.c:651
+#: ../plug-ins/common/file-svg.c:889 ../plug-ins/common/file-wmf.c:651
 msgid "_X ratio:"
 msgstr "_Масштаб по X:"
 
-#: ../plug-ins/common/file-svg.c:910 ../plug-ins/common/file-wmf.c:673
+#: ../plug-ins/common/file-svg.c:911 ../plug-ins/common/file-wmf.c:673
 msgid "_Y ratio:"
 msgstr "М_асштаб по Y:"
 
-#: ../plug-ins/common/file-svg.c:924 ../plug-ins/common/file-wmf.c:687
+#: ../plug-ins/common/file-svg.c:925 ../plug-ins/common/file-wmf.c:687
 msgid "Constrain aspect ratio"
 msgstr "Фиксированное соотношение сторон"
 
-#: ../plug-ins/common/file-svg.c:935 ../plug-ins/common/file-wmf.c:698
+#: ../plug-ins/common/file-svg.c:936 ../plug-ins/common/file-wmf.c:698
 #: ../plug-ins/print/print-page-layout.c:285
 #, c-format
 msgid "pixels/%a"
 msgstr "точек растра/%a"
 
 #. Path Import
-#: ../plug-ins/common/file-svg.c:955
+#: ../plug-ins/common/file-svg.c:956
 msgid "Import _paths"
 msgstr "Импорт _контуров"
 
-#: ../plug-ins/common/file-svg.c:962
+#: ../plug-ins/common/file-svg.c:963
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Импортировать элементы контура из SVG, так чтобы они могли быть использованы "
 "инструментом \"Контур\""
 
-#: ../plug-ins/common/file-svg.c:970
+#: ../plug-ins/common/file-svg.c:971
 msgid "Merge imported paths"
 msgstr "Объединить импортированные контуры"
 
@@ -4756,11 +4759,11 @@ msgid "XMC Options"
 msgstr "Параметры XMC"
 
 #: ../plug-ins/common/file-xmc.c:1089
-msgid "Enter the X coordinate of the hot spot.The origin is top left corner."
+msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1107
-msgid "Enter the Y coordinate of the hot spot.The origin is top left corner."
+msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1118
@@ -4901,11 +4904,12 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1728
+#, fuzzy
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames which "
+"Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by gnome-appearance-properties.\n"
-"You can satisfy it by checking \"Replace the size of all frame...\" in save "
-"dialog, or Your cursor may not appear in gnome-appearance-properties."
+"You can satisfy it by checking \"Replace the size of all frame...\" in the "
+"save dialog, or your cursor may not appear in gnome-appearance-properties."
 msgstr ""
 "Курсор был успешно сохранен, но размер некоторых его кадров не "
 "поддерживается апплетом gnome-appearance-properties.\n"
@@ -5000,7 +5004,7 @@ msgid "Composing images"
 msgstr "Сборка изображений"
 
 #: ../plug-ins/common/film.c:425 ../plug-ins/common/guillotine.c:215
-#: ../plug-ins/help-browser/dialog.c:1113
+#: ../plug-ins/help-browser/dialog.c:1114
 msgid "Untitled"
 msgstr "Безымянное"
 
@@ -5352,7 +5356,7 @@ msgstr "_Сетка..."
 msgid "Drawing grid"
 msgstr "Рисование сетки"
 
-#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1365
+#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1376
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Grid"
 msgstr "Сетка"
@@ -5729,7 +5733,7 @@ msgstr "_Оставить как есть"
 msgid "_Convert"
 msgstr "_Преобразовать"
 
-#: ../plug-ins/common/lcms.c:1264 ../plug-ins/file-jpeg/jpeg-exif.c:440
+#: ../plug-ins/common/lcms.c:1264 ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
 msgstr "_Больше не спрашивать"
 
@@ -6155,7 +6159,7 @@ msgid "_Factory Defaults"
 msgstr "_По умолчанию"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1266
+#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1278
 msgid "Antialiasing"
 msgstr "Сглаживание"
 
@@ -8129,7 +8133,7 @@ msgid "Smear"
 msgstr "Размазывать"
 
 #: ../plug-ins/common/warp.c:502 ../plug-ins/file-fits/fits.c:1020
-#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1471
+#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1482
 msgid "Black"
 msgstr "Черный"
 
@@ -8304,72 +8308,72 @@ msgstr "Неизвестная ошибка Windows."
 msgid "Failed to open '%s': %s"
 msgstr "Не удалось открыть '%s': %s"
 
-#: ../plug-ins/common/web-page.c:98
+#: ../plug-ins/common/web-page.c:99
 msgid "Create an image of a webpage"
 msgstr "Создать изображение существующей веб-страницы"
 
-#: ../plug-ins/common/web-page.c:104
+#: ../plug-ins/common/web-page.c:105
 msgid "From _Webpage..."
 msgstr "Из _веб-сайта"
 
-#: ../plug-ins/common/web-page.c:233
+#: ../plug-ins/common/web-page.c:234
 msgid "Create from webpage"
 msgstr "Создать из веб-страницы"
 
-#: ../plug-ins/common/web-page.c:238
+#: ../plug-ins/common/web-page.c:239
 msgid "_Create"
 msgstr "_Создать"
 
-#: ../plug-ins/common/web-page.c:266
+#: ../plug-ins/common/web-page.c:267
 msgid "Enter location (URI):"
 msgstr "Введите расположение (URI):"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/common/web-page.c:289 ../plug-ins/maze/maze-dialog.c:198
+#: ../plug-ins/common/web-page.c:290 ../plug-ins/maze/maze-dialog.c:198
 msgid "Width (pixels):"
 msgstr "Ширина (точек растра):"
 
-#: ../plug-ins/common/web-page.c:308
+#: ../plug-ins/common/web-page.c:309
 msgid "Font size:"
 msgstr "Кегль шрифта:"
 
-#: ../plug-ins/common/web-page.c:315
+#: ../plug-ins/common/web-page.c:316
 msgid "Huge"
 msgstr "Огромный"
 
-#: ../plug-ins/common/web-page.c:316
+#: ../plug-ins/common/web-page.c:317
 msgid "Large"
 msgstr "Большой"
 
-#: ../plug-ins/common/web-page.c:317
+#: ../plug-ins/common/web-page.c:318
 #: ../plug-ins/gradient-flare/gradient-flare.c:2465
 msgid "Default"
 msgstr "Исходная"
 
-#: ../plug-ins/common/web-page.c:318
+#: ../plug-ins/common/web-page.c:319
 msgid "Small"
 msgstr "Маленький"
 
-#: ../plug-ins/common/web-page.c:319
+#: ../plug-ins/common/web-page.c:320
 msgid "Tiny"
 msgstr "Крохотный"
 
-#: ../plug-ins/common/web-page.c:443
+#: ../plug-ins/common/web-page.c:444
 #, c-format
 msgid "No URL was specified"
 msgstr "URL не был указан"
 
-#: ../plug-ins/common/web-page.c:510
+#: ../plug-ins/common/web-page.c:511
 #, c-format
 msgid "Downloading webpage '%s'"
 msgstr "Скачивается веб-страница \"%s\""
 
-#: ../plug-ins/common/web-page.c:527
+#: ../plug-ins/common/web-page.c:528
 #, c-format
 msgid "Transferring webpage image for '%s'"
 msgstr "Передаётся изображение веб-страницы для \"%s\""
 
-#: ../plug-ins/common/web-page.c:536
+#: ../plug-ins/common/web-page.c:537
 msgid "Webpage"
 msgstr "Веб-страница"
 
@@ -8507,37 +8511,56 @@ msgstr "Неподдерживаемая или некорректная раз�
 msgid "The bitmap ends unexpectedly."
 msgstr "Данные изображения неожиданно закончились."
 
-#: ../plug-ins/file-bmp/bmp-write.c:187 ../plug-ins/file-bmp/bmp-write.c:213
+#: ../plug-ins/file-bmp/bmp-write.c:191 ../plug-ins/file-bmp/bmp-write.c:217
 msgid "Cannot save indexed image with transparency in BMP file format."
 msgstr ""
 "Невозможно сохранить полупрозрачное индексированное изображение в файл "
 "формата BMP."
 
-#: ../plug-ins/file-bmp/bmp-write.c:189 ../plug-ins/file-bmp/bmp-write.c:215
+#: ../plug-ins/file-bmp/bmp-write.c:193 ../plug-ins/file-bmp/bmp-write.c:219
 msgid "Alpha channel will be ignored."
 msgstr "Альфа-канал будет проигнорирован."
 
-#: ../plug-ins/file-bmp/bmp-write.c:834
+#. Dialog init
+#: ../plug-ins/file-bmp/bmp-write.c:849
 msgid "BMP"
 msgstr "BMP"
 
-#: ../plug-ins/file-bmp/bmp-write.c:844
+#. Run-Length Encoded
+#: ../plug-ins/file-bmp/bmp-write.c:860
 msgid "_Run-Length Encoded"
 msgstr "_RLE-кодирование"
 
-#: ../plug-ins/file-bmp/bmp-write.c:856 ../plug-ins/file-jpeg/jpeg-save.c:897
+#. Compatibility Options
+#: ../plug-ins/file-bmp/bmp-write.c:873
+msgid "Co_mpatibility Options"
+msgstr "Параметры _совместимости"
+
+#: ../plug-ins/file-bmp/bmp-write.c:883
+msgid "_Do not write color space information"
+msgstr "_Не сохранять данные о цветовом пространстве"
+
+#: ../plug-ins/file-bmp/bmp-write.c:885
+msgid ""
+"Some applications can not read BMP images that include color space "
+"information. GIMP writes color space information by default. Enabling this "
+"option will cause GIMP to not write color space information to the file."
+msgstr ""
+
+#. Advanced Options
+#: ../plug-ins/file-bmp/bmp-write.c:901 ../plug-ins/file-jpeg/jpeg-save.c:901
 msgid "_Advanced Options"
 msgstr "_Дополнительные параметры"
 
-#: ../plug-ins/file-bmp/bmp-write.c:871
+#: ../plug-ins/file-bmp/bmp-write.c:916
 msgid "16 bits"
 msgstr "16 разрядов"
 
-#: ../plug-ins/file-bmp/bmp-write.c:907
+#: ../plug-ins/file-bmp/bmp-write.c:952
 msgid "24 bits"
 msgstr "24 разряда"
 
-#: ../plug-ins/file-bmp/bmp-write.c:924
+#: ../plug-ins/file-bmp/bmp-write.c:969
 msgid "32 bits"
 msgstr "32 разряда"
 
@@ -8573,8 +8596,8 @@ msgstr "Загрузка файла в формате FITS"
 msgid "Replacement for undefined pixels"
 msgstr "Замещение для неопределенных пикселов"
 
-#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1296
-#: ../plug-ins/gfig/gfig-dialog.c:1472
+#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1308
+#: ../plug-ins/gfig/gfig-dialog.c:1483
 msgid "White"
 msgstr "Белый"
 
@@ -8608,13 +8631,11 @@ msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Загрузка стопки кадров"
 
 #: ../plug-ins/file-fli/fli-gimp.c:876 ../plug-ins/file-fli/fli-gimp.c:932
-#, fuzzy
 msgctxt "frame-range"
 msgid "From:"
 msgstr "От:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:885 ../plug-ins/file-fli/fli-gimp.c:941
-#, fuzzy
 msgctxt "frame-range"
 msgid "To:"
 msgstr "До:"
@@ -8669,7 +8690,7 @@ msgstr "Сжатый (PNG)"
 msgid "Icon #%i"
 msgstr "Значок #%i"
 
-#: ../plug-ins/file-ico/ico-load.c:722 ../plug-ins/file-jpeg/jpeg-load.c:688
+#: ../plug-ins/file-ico/ico-load.c:722 ../plug-ins/file-jpeg/jpeg-load.c:691
 #: ../plug-ins/file-psd/psd-thumb-load.c:84
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -8679,96 +8700,96 @@ msgstr "Открывается пред.просмотр для '%s'"
 msgid "Microsoft Windows icon"
 msgstr "Значок Microsoft Windows"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:356
+#: ../plug-ins/file-jpeg/jpeg-exif.c:352
 msgid "Rotate Image?"
 msgstr "Повернуть изображение?"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:359
+#: ../plug-ins/file-jpeg/jpeg-exif.c:355
 msgid "_Keep Orientation"
 msgstr "_Сохранить ориентацию"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:415
+#: ../plug-ins/file-jpeg/jpeg-exif.c:411
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Согласно данным EXIF это изображение повёрнуто."
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:430
+#: ../plug-ins/file-jpeg/jpeg-exif.c:426
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Надо ли вернуть его в прежнее состояние?"
 
-#: ../plug-ins/file-jpeg/jpeg-load.c:244
+#: ../plug-ins/file-jpeg/jpeg-load.c:247
 msgid "JPEG preview"
 msgstr "Просмотр JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:202
+#: ../plug-ins/file-jpeg/jpeg-save.c:206
 #, c-format
 msgid "File size: %s"
 msgstr "Размер файла: %s"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:686
+#: ../plug-ins/file-jpeg/jpeg-save.c:690
 msgid "Calculating file size..."
 msgstr "Рассчитывается размер файла..."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:778 ../plug-ins/file-jpeg/jpeg-save.c:873
+#: ../plug-ins/file-jpeg/jpeg-save.c:782 ../plug-ins/file-jpeg/jpeg-save.c:877
 msgid "File size: unknown"
 msgstr "Размер: неизвестен"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:836
+#: ../plug-ins/file-jpeg/jpeg-save.c:840
 msgid "JPEG"
 msgstr "JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:859
+#: ../plug-ins/file-jpeg/jpeg-save.c:863
 msgid "_Quality:"
 msgstr "_Качество:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:863
+#: ../plug-ins/file-jpeg/jpeg-save.c:867
 msgid "JPEG quality parameter"
 msgstr "Качество изображения JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:882
+#: ../plug-ins/file-jpeg/jpeg-save.c:886
 msgid "Enable preview to obtain the file size."
 msgstr "Включите пред. просмотр, чтобы видеть размер файла."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:885
+#: ../plug-ins/file-jpeg/jpeg-save.c:889
 msgid "Sho_w preview in image window"
 msgstr "Просмотр _в окне изображения"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:926
+#: ../plug-ins/file-jpeg/jpeg-save.c:930
 msgid "S_moothing:"
 msgstr "Сг_лаживание:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:939
-msgid "Frequency (rows):"
-msgstr "Частота (строки):"
+#: ../plug-ins/file-jpeg/jpeg-save.c:943
+msgid "Interval (MCU rows):"
+msgstr ""
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:955
+#: ../plug-ins/file-jpeg/jpeg-save.c:960
 msgid "Use _restart markers"
 msgstr "Использовать _маркеры перезапуска"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:971
+#: ../plug-ins/file-jpeg/jpeg-save.c:976
 msgid "_Optimize"
 msgstr "О_птимизировать"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:985
+#: ../plug-ins/file-jpeg/jpeg-save.c:990
 msgid "_Progressive"
 msgstr "Про_грессивная"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1001
+#: ../plug-ins/file-jpeg/jpeg-save.c:1006
 msgid "Save _EXIF data"
 msgstr "Сохранить данные _Exif"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1018
+#: ../plug-ins/file-jpeg/jpeg-save.c:1023
 msgid "Save _thumbnail"
 msgstr "Сохранить _эскиз"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1035
+#: ../plug-ins/file-jpeg/jpeg-save.c:1040
 msgid "Save _XMP data"
 msgstr "Сохранить данные _XMP"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1050
+#: ../plug-ins/file-jpeg/jpeg-save.c:1055
 msgid "_Use quality settings from original image"
 msgstr "Использовать _качественные характеристики исходного изображения"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1056
+#: ../plug-ins/file-jpeg/jpeg-save.c:1061
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -8779,60 +8800,60 @@ msgstr ""
 "параметр для получения максимально схожего качества и размера файла."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1080
+#: ../plug-ins/file-jpeg/jpeg-save.c:1085
 msgid "Su_bsampling:"
 msgstr "С_убвыборка:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1087
-msgid "1x1,1x1,1x1 (best quality)"
-msgstr "1x1,1x1,1x1 (наилучшее качество)"
+#: ../plug-ins/file-jpeg/jpeg-save.c:1092
+msgid "4:4:4 (best quality)"
+msgstr "4:4:4 (наилучшее качество)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1089
-msgid "2x1,1x1,1x1 (4:2:2)"
-msgstr "2x1,1x1,1x1 (4:2:2)"
+#: ../plug-ins/file-jpeg/jpeg-save.c:1094
+msgid "4:2:2 horizontal (chroma halved)"
+msgstr ""
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1091
-msgid "1x2,1x1,1x1"
-msgstr "1x2,1x1,1x1"
+#: ../plug-ins/file-jpeg/jpeg-save.c:1096
+msgid "4:2:2 vertical (chroma halved)"
+msgstr ""
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1093
-msgid "2x2,1x1,1x1 (smallest file)"
-msgstr "2x2,1x1,1x1 (наименьший размер файла)"
+#: ../plug-ins/file-jpeg/jpeg-save.c:1098
+msgid "4:2:0 (chroma quartered)"
+msgstr ""
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1123
+#: ../plug-ins/file-jpeg/jpeg-save.c:1128
 msgid "_DCT method:"
 msgstr "_Метод DCT:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1129
+#: ../plug-ins/file-jpeg/jpeg-save.c:1134
 msgid "Fast Integer"
 msgstr "Быстрое целое"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1130
+#: ../plug-ins/file-jpeg/jpeg-save.c:1135
 msgid "Integer"
 msgstr "Целое"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1131
+#: ../plug-ins/file-jpeg/jpeg-save.c:1136
 msgid "Floating-Point"
 msgstr "С плавающей точкой"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1147
+#: ../plug-ins/file-jpeg/jpeg-save.c:1152
 msgid "Comment"
 msgstr "Комментарий"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1184
+#: ../plug-ins/file-jpeg/jpeg-save.c:1189
 msgid "_Load Defaults"
 msgstr "З_агрузить исходные параметры"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1193
+#: ../plug-ins/file-jpeg/jpeg-save.c:1198
 msgid "Sa_ve Defaults"
 msgstr "_Запомнить эти параметры"
 
-#: ../plug-ins/file-jpeg/jpeg.c:136 ../plug-ins/file-jpeg/jpeg.c:174
+#: ../plug-ins/file-jpeg/jpeg.c:139 ../plug-ins/file-jpeg/jpeg.c:177
 msgid "JPEG image"
 msgstr "JPEG image"
 
-#: ../plug-ins/file-jpeg/jpeg.c:300
+#: ../plug-ins/file-jpeg/jpeg.c:303
 msgid "Export Preview"
 msgstr "Просмотр экспортируемого файла"
 
@@ -8844,8 +8865,8 @@ msgstr "Ошибка при открытии файла PSD: %s"
 
 #: ../plug-ins/file-psd/psd-load.c:269
 #, c-format
-msgid "Not a valid photoshop document file"
-msgstr "Это не корректный документ Photoshop"
+msgid "Not a valid Photoshop document file"
+msgstr "Это некорректный документ Photoshop"
 
 #: ../plug-ins/file-psd/psd-load.c:276
 #, c-format
@@ -9033,8 +9054,8 @@ msgid "Uploading image (%s of %s)"
 msgstr "Закачивается изображение (%s из %s)"
 
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:259
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:135
-#: ../plug-ins/file-uri/uri-backend-wget.c:345
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:134
+#: ../plug-ins/file-uri/uri-backend-wget.c:404
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Загружено %s изображения"
@@ -9045,37 +9066,39 @@ msgid "Uploaded %s of image data"
 msgstr "Отправлено %s изображения"
 
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:317
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:157
-#: ../plug-ins/file-uri/uri-backend-wget.c:194
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:161
+#: ../plug-ins/file-uri/uri-backend-wget.c:200
 msgid "Connecting to server"
 msgstr "Соединение с сервером"
 
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:59
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:58
 msgid "Could not initialize libcurl"
 msgstr "Не удалось инициализировать libcurl"
 
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:128
-#: ../plug-ins/file-uri/uri-backend-wget.c:302
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:127
+#: ../plug-ins/file-uri/uri-backend-wget.c:361
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "Загружается файл размером %s "
 
-#: ../plug-ins/file-uri/uri-backend-libcurl.c:201
-#, c-format
-msgid "Opening '%s' for reading resulted in HTTP response code: %ld"
+#: ../plug-ins/file-uri/uri-backend-libcurl.c:244
+#, fuzzy, c-format
+msgid "Opening '%s' for reading resulted in %s response code: %ld"
 msgstr "Открытие \"%s\" завершилась кодом отклика HTTP: %ld"
 
-#: ../plug-ins/file-uri/uri-backend-wget.c:161
-#: ../plug-ins/file-uri/uri-backend-wget.c:181
-#: ../plug-ins/file-uri/uri-backend-wget.c:200
-#: ../plug-ins/file-uri/uri-backend-wget.c:223
-#: ../plug-ins/file-uri/uri-backend-wget.c:252
+#: ../plug-ins/file-uri/uri-backend-wget.c:162
+#: ../plug-ins/file-uri/uri-backend-wget.c:182
+#: ../plug-ins/file-uri/uri-backend-wget.c:206
+#: ../plug-ins/file-uri/uri-backend-wget.c:229
+#: ../plug-ins/file-uri/uri-backend-wget.c:281
+#: ../plug-ins/file-uri/uri-backend-wget.c:299
+#: ../plug-ins/file-uri/uri-backend-wget.c:351
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget завершился с ошибкой на URI '%s'"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/file-uri/uri-backend-wget.c:189
+#: ../plug-ins/file-uri/uri-backend-wget.c:195
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
@@ -9084,17 +9107,19 @@ msgstr[1] "(тайм-аут %d сек.)"
 msgstr[2] "(тайм-аут %d сек.)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/file-uri/uri-backend-wget.c:218
+#: ../plug-ins/file-uri/uri-backend-wget.c:224
 msgid "Opening URI"
 msgstr "Открывается URL"
 
-#: ../plug-ins/file-uri/uri-backend-wget.c:229
-#: ../plug-ins/file-uri/uri-backend-wget.c:262
+#: ../plug-ins/file-uri/uri-backend-wget.c:235
+#: ../plug-ins/file-uri/uri-backend-wget.c:245
+#: ../plug-ins/file-uri/uri-backend-wget.c:271
+#: ../plug-ins/file-uri/uri-backend-wget.c:309
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "Ошибка сети: %s"
 
-#: ../plug-ins/file-uri/uri-backend-wget.c:307
+#: ../plug-ins/file-uri/uri-backend-wget.c:366
 msgid "Downloading unknown amount of image data"
 msgstr "Загружается изображения неизвестного размера"
 
@@ -9229,7 +9254,7 @@ msgstr "Вихрь"
 msgid "Horseshoe"
 msgstr "Подкова"
 
-#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1453
+#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1464
 msgid "Polar"
 msgstr "Полярность"
 
@@ -9366,7 +9391,7 @@ msgid "C_amera"
 msgstr "_Камера"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:276 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:277 ../plug-ins/gimpressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
@@ -9728,205 +9753,205 @@ msgstr ""
 "Нарисовать линию между контрольными точками. Только при создании кривой"
 
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:288
+#: ../plug-ins/gfig/gfig-dialog.c:289
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:339
+#: ../plug-ins/gfig/gfig-dialog.c:337
 msgid "Tool Options"
 msgstr "Параметры инструмента"
 
-#: ../plug-ins/gfig/gfig-dialog.c:356
+#: ../plug-ins/gfig/gfig-dialog.c:354
 msgid "_Stroke"
 msgstr "Обвести"
 
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:403
+#: ../plug-ins/gfig/gfig-dialog.c:401
 msgid "Fill"
 msgstr "Заливка"
 
-#: ../plug-ins/gfig/gfig-dialog.c:417
+#: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "No fill"
 msgstr "Нет"
 
-#: ../plug-ins/gfig/gfig-dialog.c:418
+#: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Color fill"
 msgstr "Цвет"
 
-#: ../plug-ins/gfig/gfig-dialog.c:419
+#: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Pattern fill"
 msgstr "Заливка текстурой"
 
-#: ../plug-ins/gfig/gfig-dialog.c:420
+#: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Shape gradient"
 msgstr "Градиент по форме"
 
-#: ../plug-ins/gfig/gfig-dialog.c:421
+#: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Vertical gradient"
 msgstr "Вертикальный градиент"
 
-#: ../plug-ins/gfig/gfig-dialog.c:422
+#: ../plug-ins/gfig/gfig-dialog.c:420
 msgid "Horizontal gradient"
 msgstr "Горизонт. градиент"
 
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:482
+#: ../plug-ins/gfig/gfig-dialog.c:480
 msgid "Show image"
 msgstr "Показать изображение"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:495
+#: ../plug-ins/gfig/gfig-dialog.c:493
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "Прилипать к сетке"
 
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:504
+#: ../plug-ins/gfig/gfig-dialog.c:502
 msgid "Show grid"
 msgstr "Показать сетку"
 
-#: ../plug-ins/gfig/gfig-dialog.c:647
+#: ../plug-ins/gfig/gfig-dialog.c:639
 msgid "Load Gfig Object Collection"
 msgstr "Загрузка набора объектов Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:696
+#: ../plug-ins/gfig/gfig-dialog.c:688
 msgid "Save Gfig Drawing"
 msgstr "Сохранить рисунок Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:841
+#: ../plug-ins/gfig/gfig-dialog.c:833
 msgid "First Gfig"
 msgstr "Первый Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:879
+#: ../plug-ins/gfig/gfig-dialog.c:871
 msgid "_Undo"
 msgstr "О_тменить"
 
-#: ../plug-ins/gfig/gfig-dialog.c:883
+#: ../plug-ins/gfig/gfig-dialog.c:875
 msgid "_Clear"
 msgstr "О_чистить"
 
-#: ../plug-ins/gfig/gfig-dialog.c:887 ../plug-ins/imagemap/imap_menu.c:208
+#: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/imagemap/imap_menu.c:208
 msgid "_Grid"
 msgstr "_Сетка"
 
-#: ../plug-ins/gfig/gfig-dialog.c:895
+#: ../plug-ins/gfig/gfig-dialog.c:887
 msgid "Raise selected object"
 msgstr "Поднять выделенный объект"
 
-#: ../plug-ins/gfig/gfig-dialog.c:899
+#: ../plug-ins/gfig/gfig-dialog.c:891
 msgid "Lower selected object"
 msgstr "Опустить выделенный объект"
 
-#: ../plug-ins/gfig/gfig-dialog.c:903
+#: ../plug-ins/gfig/gfig-dialog.c:895
 msgid "Raise selected object to top"
 msgstr "Поднять выбранный объект на передний план"
 
-#: ../plug-ins/gfig/gfig-dialog.c:907
+#: ../plug-ins/gfig/gfig-dialog.c:899
 msgid "Lower selected object to bottom"
 msgstr "Опустить выбранный объект до самого низа"
 
-#: ../plug-ins/gfig/gfig-dialog.c:911
+#: ../plug-ins/gfig/gfig-dialog.c:903
 msgid "Show previous object"
 msgstr "Показать предыдущий объект"
 
-#: ../plug-ins/gfig/gfig-dialog.c:915
+#: ../plug-ins/gfig/gfig-dialog.c:907
 msgid "Show next object"
 msgstr "Показать следующий объект"
 
-#: ../plug-ins/gfig/gfig-dialog.c:919 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:911 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "Показать все объекты"
 
-#: ../plug-ins/gfig/gfig-dialog.c:925 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:917 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create line"
 msgstr "Создать линию"
 
-#: ../plug-ins/gfig/gfig-dialog.c:928 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create rectangle"
 msgstr "Создать прямоугольник"
 
-#: ../plug-ins/gfig/gfig-dialog.c:931 ../plug-ins/gfig/gfig-stock.c:41
+#: ../plug-ins/gfig/gfig-dialog.c:923 ../plug-ins/gfig/gfig-stock.c:41
 msgid "Create circle"
 msgstr "Создать окружность"
 
-#: ../plug-ins/gfig/gfig-dialog.c:934 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Create ellipse"
 msgstr "Создать эллипс"
 
-#: ../plug-ins/gfig/gfig-dialog.c:937 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Create arc"
 msgstr "Создать дугу"
 
-#: ../plug-ins/gfig/gfig-dialog.c:940 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Create reg polygon"
 msgstr "Создать прав. многоугольник"
 
-#: ../plug-ins/gfig/gfig-dialog.c:943 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "Создать звёздочку"
 
-#: ../plug-ins/gfig/gfig-dialog.c:946 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "Создать спираль"
 
-#: ../plug-ins/gfig/gfig-dialog.c:949
+#: ../plug-ins/gfig/gfig-dialog.c:941
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Создать кривую Безье. Shift + кнопка мыши — завершение создания."
 
-#: ../plug-ins/gfig/gfig-dialog.c:953 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:945 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
 msgstr "Переместить объект"
 
-#: ../plug-ins/gfig/gfig-dialog.c:956 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:948 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move a single point"
 msgstr "Переместить одну точку"
 
-#: ../plug-ins/gfig/gfig-dialog.c:959 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:951 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Copy an object"
 msgstr "Скопировать объект"
 
-#: ../plug-ins/gfig/gfig-dialog.c:962 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Delete an object"
 msgstr "Удалить объект"
 
-#: ../plug-ins/gfig/gfig-dialog.c:965 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:957 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "Выбрать объект"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1047
+#: ../plug-ins/gfig/gfig-dialog.c:1039
 msgid "This tool has no options"
 msgstr "У этого инструмента нет параметров"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1238
+#: ../plug-ins/gfig/gfig-dialog.c:1250
 msgid "Show position"
 msgstr "Показывать позицию"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1250
+#: ../plug-ins/gfig/gfig-dialog.c:1262
 msgid "Show control points"
 msgstr "Показывать контрольные точки"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1284
+#: ../plug-ins/gfig/gfig-dialog.c:1296
 msgid "Max undo:"
 msgstr "Макс. отмен:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1293
+#: ../plug-ins/gfig/gfig-dialog.c:1305
 #: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Прозрачный"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1295
+#: ../plug-ins/gfig/gfig-dialog.c:1307
 msgid "Foreground"
 msgstr "Передний план"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1297 ../plug-ins/imagemap/imap_cmd_copy.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:1309 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: ../plug-ins/imagemap/imap_menu.c:159
 msgid "Copy"
 msgstr "Скопировать"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1306
+#: ../plug-ins/gfig/gfig-dialog.c:1318
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -9934,80 +9959,80 @@ msgstr ""
 "Тип фона слоя. «Скопировать» будет вызывать копирование предыдущего слоя "
 "перед выполнением рисования."
 
-#: ../plug-ins/gfig/gfig-dialog.c:1312
+#: ../plug-ins/gfig/gfig-dialog.c:1324
 msgid "Background:"
 msgstr "Фон:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1315
+#: ../plug-ins/gfig/gfig-dialog.c:1327
 msgid "Feather"
 msgstr "Растушёвка"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1339
+#: ../plug-ins/gfig/gfig-dialog.c:1350
 msgid "Radius:"
 msgstr "Радиус:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1397
+#: ../plug-ins/gfig/gfig-dialog.c:1408
 msgid "Grid spacing:"
 msgstr "Размер ячейки:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1414
+#: ../plug-ins/gfig/gfig-dialog.c:1425
 msgid "Polar grid sectors desired:"
 msgstr "Секторы полярной сетки:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1436
+#: ../plug-ins/gfig/gfig-dialog.c:1447
 msgid "Polar grid radius interval:"
 msgstr "Интервал радиусов пол. сетки:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1452 ../plug-ins/imagemap/imap_menu.c:219
+#: ../plug-ins/gfig/gfig-dialog.c:1463 ../plug-ins/imagemap/imap_menu.c:219
 msgid "Rectangle"
 msgstr "Прямоугольник"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1454
+#: ../plug-ins/gfig/gfig-dialog.c:1465
 msgid "Isometric"
 msgstr "Изометрическая"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1463
+#: ../plug-ins/gfig/gfig-dialog.c:1474
 msgid "Grid type:"
 msgstr "Тип сетки:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1470
+#: ../plug-ins/gfig/gfig-dialog.c:1481
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
 msgid "Normal"
 msgstr "Обычная"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1473
+#: ../plug-ins/gfig/gfig-dialog.c:1484
 msgid "Grey"
 msgstr "Серый"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1474
+#: ../plug-ins/gfig/gfig-dialog.c:1485
 msgid "Darker"
 msgstr "Темнее"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1475
+#: ../plug-ins/gfig/gfig-dialog.c:1486
 msgid "Lighter"
 msgstr "Светлее"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1476
+#: ../plug-ins/gfig/gfig-dialog.c:1487
 msgid "Very dark"
 msgstr "Очень тёмный"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1485
+#: ../plug-ins/gfig/gfig-dialog.c:1496
 msgid "Grid color:"
 msgstr "Цвет сетки:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1708
+#: ../plug-ins/gfig/gfig-dialog.c:1717
 msgid "Sides:"
 msgstr "Стороны:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1718
+#: ../plug-ins/gfig/gfig-dialog.c:1727
 msgid "Right"
 msgstr "Справа"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1719
+#: ../plug-ins/gfig/gfig-dialog.c:1728
 msgid "Left"
 msgstr "Слева"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1729
+#: ../plug-ins/gfig/gfig-dialog.c:1738
 #: ../plug-ins/gimpressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Ориентация:"
@@ -10979,77 +11004,77 @@ msgstr "Случайное зерно:"
 msgid "_Second Flares"
 msgstr "Вторичные вспышки"
 
-#: ../plug-ins/help-browser/dialog.c:185
-#: ../plug-ins/help-browser/dialog.c:1114
+#: ../plug-ins/help-browser/dialog.c:186
+#: ../plug-ins/help-browser/dialog.c:1115
 msgid "GIMP Help Browser"
 msgstr "Просмотрщик справки GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:563
+#: ../plug-ins/help-browser/dialog.c:564
 msgid "Go back one page"
 msgstr "Назад на одну страницу"
 
-#: ../plug-ins/help-browser/dialog.c:568
+#: ../plug-ins/help-browser/dialog.c:569
 msgid "Go forward one page"
 msgstr "Вперед на одну страницу"
 
-#: ../plug-ins/help-browser/dialog.c:573
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "_Reload"
 msgstr "О_бновить"
 
-#: ../plug-ins/help-browser/dialog.c:573
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "Reload current page"
 msgstr "Повторно загрузить эту страницу"
 
-#: ../plug-ins/help-browser/dialog.c:578
+#: ../plug-ins/help-browser/dialog.c:579
 msgid "_Stop"
 msgstr "Ост_ановить"
 
-#: ../plug-ins/help-browser/dialog.c:578
+#: ../plug-ins/help-browser/dialog.c:579
 msgid "Stop loading this page"
 msgstr "Остановить загрузку этой страницы"
 
-#: ../plug-ins/help-browser/dialog.c:583
+#: ../plug-ins/help-browser/dialog.c:584
 msgid "Go to the index page"
 msgstr "К содержанию"
 
-#: ../plug-ins/help-browser/dialog.c:588
+#: ../plug-ins/help-browser/dialog.c:589
 msgid "C_opy location"
 msgstr "С_копировать расположение"
 
-#: ../plug-ins/help-browser/dialog.c:589
+#: ../plug-ins/help-browser/dialog.c:590
 msgid "Copy the location of this page to the clipboard"
 msgstr "Скопировать расположение этой страницы в буфер обмена"
 
-#: ../plug-ins/help-browser/dialog.c:609
+#: ../plug-ins/help-browser/dialog.c:610
 msgid "Find text in current page"
 msgstr "Найти текст на текущей странице"
 
-#: ../plug-ins/help-browser/dialog.c:614
+#: ../plug-ins/help-browser/dialog.c:615
 msgid "Find _Again"
 msgstr "Искать _дальше"
 
-#: ../plug-ins/help-browser/dialog.c:633
+#: ../plug-ins/help-browser/dialog.c:634
 msgid "S_how Index"
 msgstr "_Показать содержание"
 
-#: ../plug-ins/help-browser/dialog.c:634
+#: ../plug-ins/help-browser/dialog.c:635
 msgid "Toggle the visibility of the sidebar"
 msgstr "Переключить видимость боковой панели"
 
-#: ../plug-ins/help-browser/dialog.c:655
+#: ../plug-ins/help-browser/dialog.c:656
 msgid "Visit the GIMP documentation website"
 msgstr "Посетите сайт документации GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:1155
+#: ../plug-ins/help-browser/dialog.c:1156
 msgid "Find:"
 msgstr "Искать:"
 
-#: ../plug-ins/help-browser/dialog.c:1172
+#: ../plug-ins/help-browser/dialog.c:1173
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Предыдущее"
 
-#: ../plug-ins/help-browser/dialog.c:1184
+#: ../plug-ins/help-browser/dialog.c:1185
 msgctxt "search"
 msgid "_Next"
 msgstr "_Следующее"
@@ -11753,14 +11778,12 @@ msgid "Preferences"
 msgstr "Параметры"
 
 #: ../plug-ins/imagemap/imap_menu.c:169
-#, fuzzy
 msgid "Move Area to Front"
-msgstr "На передний план"
+msgstr "Переместить область на передний план"
 
 #: ../plug-ins/imagemap/imap_menu.c:171
-#, fuzzy
 msgid "Move Area to Bottom"
-msgstr "На передний план"
+msgstr "Переместить область на задний план"
 
 #: ../plug-ins/imagemap/imap_menu.c:173
 msgid "Delete Area"
@@ -12902,6 +12925,18 @@ msgstr "_Снимок экрана..."
 #: ../plug-ins/win-snap/winsnap.c:1143
 msgid "No data captured"
 msgstr "Данные не захвачены"
+
+#~ msgid "Frequency (rows):"
+#~ msgstr "Частота (строки):"
+
+#~ msgid "2x1,1x1,1x1 (4:2:2)"
+#~ msgstr "2x1,1x1,1x1 (4:2:2)"
+
+#~ msgid "1x2,1x1,1x1"
+#~ msgstr "1x2,1x1,1x1"
+
+#~ msgid "2x2,1x1,1x1 (smallest file)"
+#~ msgstr "2x2,1x1,1x1 (наименьший размер файла)"
 
 #~ msgid "There was an error taking the screenshot."
 #~ msgstr "При снятии снимка экрана произошла ошибка."
