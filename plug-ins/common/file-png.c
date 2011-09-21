@@ -725,7 +725,7 @@ load_image (const gchar  *filename,
       g_set_error (error, 0, 0,
                    _("Error creating PNG read struct while saving '%s'."),
                    gimp_filename_to_utf8 (filename));
-      return FALSE;
+      return -1;
     }
 
   info = png_create_info_struct (pp);
