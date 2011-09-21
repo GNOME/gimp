@@ -720,6 +720,14 @@ load_image (const gchar  *filename,
   gint       num_texts;
 
   pp = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  if (!pp)
+    {
+      g_set_error (error, 0, 0,
+                   _("Error creating PNG read struct while saving '%s'."),
+                   gimp_filename_to_utf8 (filename));
+      return FALSE;
+    }
+
   info = png_create_info_struct (pp);
 
   if (setjmp (png_jmpbuf (pp)))
@@ -1247,6 +1255,14 @@ save_image (const gchar  *filename,
   png_textp  text = NULL;
 
   pp = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+  if (!pp)
+    {
+      g_set_error (error, 0, 0,
+                   _("Error creating PNG write struct while saving '%s'."),
+                   gimp_filename_to_utf8 (filename));
+      return FALSE;
+    }
+
   info = png_create_info_struct (pp);
 
   if (setjmp (png_jmpbuf (pp)))
