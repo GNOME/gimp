@@ -1,4 +1,4 @@
-# 'gimp/po-plug-ins
+#'gimp/po-plug-ins
 # Slovenian translation of gimp-plugins.
 # Copyright (C) 2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-31 17:38+0000\n"
-"PO-Revision-Date: 2011-08-31 21:50+0100\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"POT-Creation-Date: 2011-09-21 11:40+0000\n"
+"PO-Revision-Date: 2011-09-21 21:20+0100\n"
+"Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -643,7 +643,7 @@ msgstr "_Navpične"
 #: ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431
 #: ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:881
+#: ../plug-ins/common/file-png.c:889
 #: ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763
 #: ../plug-ins/common/file-sunras.c:977
@@ -657,8 +657,8 @@ msgstr "_Navpične"
 #: ../plug-ins/file-bmp/bmp-read.c:647
 #: ../plug-ins/file-faxg3/faxg3.c:477
 #: ../plug-ins/file-fits/fits.c:530
-#: ../plug-ins/file-jpeg/jpeg-load.c:252
-#: ../plug-ins/file-jpeg/jpeg-load.c:816
+#: ../plug-ins/file-jpeg/jpeg-load.c:255
+#: ../plug-ins/file-jpeg/jpeg-load.c:819
 #: ../plug-ins/file-psd/psd-image-res-load.c:997
 #: ../plug-ins/file-psd/psd-load.c:1637
 #: ../plug-ins/file-sgi/sgi.c:407
@@ -1112,7 +1112,7 @@ msgstr "Naloži nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-pat.c:337
 #: ../plug-ins/common/file-pcx.c:361
 #: ../plug-ins/common/file-pix.c:343
-#: ../plug-ins/common/file-png.c:746
+#: ../plug-ins/common/file-png.c:754
 #: ../plug-ins/common/file-pnm.c:494
 #: ../plug-ins/common/file-ps.c:1037
 #: ../plug-ins/common/file-ps.c:3052
@@ -1136,8 +1136,8 @@ msgstr "Naloži nastavitve mešalca kanalov"
 #: ../plug-ins/file-fli/fli-gimp.c:496
 #: ../plug-ins/file-ico/ico-load.c:651
 #: ../plug-ins/file-ico/ico-load.c:729
-#: ../plug-ins/file-jpeg/jpeg-load.c:114
-#: ../plug-ins/file-jpeg/jpeg-load.c:886
+#: ../plug-ins/file-jpeg/jpeg-load.c:117
+#: ../plug-ins/file-jpeg/jpeg-load.c:889
 #: ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:193
@@ -1177,7 +1177,7 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-pat.c:486
 #: ../plug-ins/common/file-pcx.c:712
 #: ../plug-ins/common/file-pix.c:526
-#: ../plug-ins/common/file-png.c:1268
+#: ../plug-ins/common/file-png.c:1284
 #: ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1214
 #: ../plug-ins/common/file-raw.c:591
@@ -1193,7 +1193,7 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750
 #: ../plug-ins/file-ico/ico-save.c:1007
-#: ../plug-ins/file-jpeg/jpeg-save.c:329
+#: ../plug-ins/file-jpeg/jpeg-save.c:332
 #: ../plug-ins/file-psd/psd-save.c:1655
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/file-xjt/xjt.c:1276
@@ -1201,7 +1201,7 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:798
-#: ../plug-ins/ifs-compose/ifs-compose.c:2413
+#: ../plug-ins/ifs-compose/ifs-compose.c:2410
 #: ../plug-ins/lighting/lighting-ui.c:1223
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -3204,7 +3204,7 @@ msgstr "Naloži paleto KISS"
 #: ../plug-ins/common/file-pcx.c:366
 #: ../plug-ins/common/file-pdf-load.c:844
 #: ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:753
+#: ../plug-ins/common/file-png.c:761
 #: ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1043
 #: ../plug-ins/common/file-raw.c:716
@@ -3220,7 +3220,7 @@ msgstr "Naloži paleto KISS"
 #: ../plug-ins/file-faxg3/faxg3.c:216
 #: ../plug-ins/file-fli/fli-gimp.c:501
 #: ../plug-ins/file-ico/ico-load.c:644
-#: ../plug-ins/file-jpeg/jpeg-load.c:120
+#: ../plug-ins/file-jpeg/jpeg-load.c:123
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:330
 #: ../plug-ins/file-xjt/xjt.c:3333
@@ -3247,7 +3247,7 @@ msgstr "Nepodprta bitna globina (%d)!"
 #: ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644
 #: ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1275
+#: ../plug-ins/common/file-png.c:1291
 #: ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1219
 #: ../plug-ins/common/file-sunras.c:570
@@ -3261,7 +3261,7 @@ msgstr "Nepodprta bitna globina (%d)!"
 #: ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1001
-#: ../plug-ins/file-jpeg/jpeg-save.c:286
+#: ../plug-ins/file-jpeg/jpeg-save.c:289
 #: ../plug-ins/file-psd/psd-save.c:1660
 #: ../plug-ins/file-sgi/sgi.c:577
 #: ../plug-ins/file-xjt/xjt.c:1696
@@ -3768,7 +3768,7 @@ msgstr "Barvna komponenta %d slike '%s' je podpisana. To trenutno ni podprto."
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: ../plug-ins/common/file-mng.c:534
-#: ../plug-ins/common/file-png.c:1812
+#: ../plug-ins/common/file-png.c:1828
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Prosojnosti ni mogoče shraniti brez izgub, zato bo shranjena prekrivnost."
 
@@ -3802,7 +3802,7 @@ msgstr "Shrani čas nastanka"
 
 #. Dialog init
 #: ../plug-ins/common/file-mng.c:1411
-#: ../plug-ins/common/file-png.c:1861
+#: ../plug-ins/common/file-png.c:1877
 msgid "PNG"
 msgstr "PNG"
 
@@ -4022,26 +4022,36 @@ msgstr "Slika PNG"
 msgid "Error loading PNG file: %s"
 msgstr "Napaka pri nalaganju datoteke PNG: %s"
 
-#: ../plug-ins/common/file-png.c:728
+#: ../plug-ins/common/file-png.c:726
+#, c-format
+msgid "Error creating PNG read struct while saving '%s'."
+msgstr "Napaka pri ustvarjanju bralne strukture PNG pri shranjevanju '%s'."
+
+#: ../plug-ins/common/file-png.c:736
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Napaka pri branju '%s'. Je datoteka poškodovana?"
 
-#: ../plug-ins/common/file-png.c:861
+#: ../plug-ins/common/file-png.c:869
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Neznan barvni model v datoteki PNG '%s'."
 
-#: ../plug-ins/common/file-png.c:921
+#: ../plug-ins/common/file-png.c:929
 msgid "The PNG file specifies an offset that caused the layer to be positioned outside the image."
 msgstr "Datoteka PNG navaja zamik, ki je povzročil, da je plast vzpostavljena zunaj slike."
 
-#: ../plug-ins/common/file-png.c:1255
+#: ../plug-ins/common/file-png.c:1261
+#, c-format
+msgid "Error creating PNG write struct while saving '%s'."
+msgstr "Napaka pri ustvarjanju pisalne strukture PNG pri shranjevanju '%s'."
+
+#: ../plug-ins/common/file-png.c:1271
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Napaka pri shranjevanju '%s'. Slike ni mogoče shraniti."
 
-#: ../plug-ins/common/file-png.c:1878
+#: ../plug-ins/common/file-png.c:1894
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Napaka pri nalaganju datoteke up. vmesnika '%s': %s"
@@ -5875,7 +5885,7 @@ msgid "_Convert"
 msgstr "_Pretvori"
 
 #: ../plug-ins/common/lcms.c:1264
-#: ../plug-ins/file-jpeg/jpeg-exif.c:440
+#: ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
 msgstr "_Ne vprašuj več"
 
@@ -8686,7 +8696,7 @@ msgstr "Nekateri programi ne morejo brati slik BMP, ki vsebujejo podatke o barvn
 
 #. Advanced Options
 #: ../plug-ins/file-bmp/bmp-write.c:901
-#: ../plug-ins/file-jpeg/jpeg-save.c:898
+#: ../plug-ins/file-jpeg/jpeg-save.c:901
 msgid "_Advanced Options"
 msgstr "_Napredne možnosti"
 
@@ -8831,7 +8841,7 @@ msgid "Icon #%i"
 msgstr "Ikona #%i"
 
 #: ../plug-ins/file-ico/ico-load.c:722
-#: ../plug-ins/file-jpeg/jpeg-load.c:688
+#: ../plug-ins/file-jpeg/jpeg-load.c:691
 #: ../plug-ins/file-psd/psd-thumb-load.c:84
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -8842,156 +8852,156 @@ msgstr "Odpri sličico predogleda za '%s' ..."
 msgid "Microsoft Windows icon"
 msgstr "Ikona Microsoft Windows"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:356
+#: ../plug-ins/file-jpeg/jpeg-exif.c:352
 msgid "Rotate Image?"
 msgstr "Želite zasukati sliko?"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:359
+#: ../plug-ins/file-jpeg/jpeg-exif.c:355
 msgid "_Keep Orientation"
 msgstr "_Ohrani postavitev"
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:415
+#: ../plug-ins/file-jpeg/jpeg-exif.c:411
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Glede na podatke EXIF je ta slika zasukana."
 
-#: ../plug-ins/file-jpeg/jpeg-exif.c:430
+#: ../plug-ins/file-jpeg/jpeg-exif.c:426
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Jo želite zasukati v običajen položaj?"
 
-#: ../plug-ins/file-jpeg/jpeg-load.c:244
+#: ../plug-ins/file-jpeg/jpeg-load.c:247
 msgid "JPEG preview"
 msgstr "Predogled JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:203
+#: ../plug-ins/file-jpeg/jpeg-save.c:206
 #, c-format
 msgid "File size: %s"
 msgstr "Velikost datoteke: %s"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:687
+#: ../plug-ins/file-jpeg/jpeg-save.c:690
 msgid "Calculating file size..."
 msgstr "Izračun velikosti datoteke ..."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:779
-#: ../plug-ins/file-jpeg/jpeg-save.c:874
+#: ../plug-ins/file-jpeg/jpeg-save.c:782
+#: ../plug-ins/file-jpeg/jpeg-save.c:877
 msgid "File size: unknown"
 msgstr "Velikost datoteke: neznana"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:837
+#: ../plug-ins/file-jpeg/jpeg-save.c:840
 msgid "JPEG"
 msgstr "JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:860
+#: ../plug-ins/file-jpeg/jpeg-save.c:863
 msgid "_Quality:"
 msgstr "_Kakovost:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:864
+#: ../plug-ins/file-jpeg/jpeg-save.c:867
 msgid "JPEG quality parameter"
 msgstr "Parameter kakovosti JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:883
+#: ../plug-ins/file-jpeg/jpeg-save.c:886
 msgid "Enable preview to obtain the file size."
 msgstr "Omogoči predogled za izračun velikosti datoteke."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:886
+#: ../plug-ins/file-jpeg/jpeg-save.c:889
 msgid "Sho_w preview in image window"
 msgstr "Poka_ži predogled v oknu slike"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:927
+#: ../plug-ins/file-jpeg/jpeg-save.c:930
 msgid "S_moothing:"
 msgstr "_Glajenje:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:940
+#: ../plug-ins/file-jpeg/jpeg-save.c:943
 msgid "Interval (MCU rows):"
 msgstr "Interval (vrstice MCU):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:957
+#: ../plug-ins/file-jpeg/jpeg-save.c:960
 msgid "Use _restart markers"
 msgstr "Uporabi _označevalnike ponovnega začetka"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:973
+#: ../plug-ins/file-jpeg/jpeg-save.c:976
 msgid "_Optimize"
 msgstr "_Optimiziraj"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:987
+#: ../plug-ins/file-jpeg/jpeg-save.c:990
 msgid "_Progressive"
 msgstr "_Progresivno"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1003
+#: ../plug-ins/file-jpeg/jpeg-save.c:1006
 msgid "Save _EXIF data"
 msgstr "Shrani podatke _EXIF"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1020
+#: ../plug-ins/file-jpeg/jpeg-save.c:1023
 msgid "Save _thumbnail"
 msgstr "Shrani sli_čico za predogled"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1037
+#: ../plug-ins/file-jpeg/jpeg-save.c:1040
 msgid "Save _XMP data"
 msgstr "Shrani podatke _XMP"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1052
+#: ../plug-ins/file-jpeg/jpeg-save.c:1055
 msgid "_Use quality settings from original image"
 msgstr "_Uporabi nastavitve kakovosti izvorne slike"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1058
+#: ../plug-ins/file-jpeg/jpeg-save.c:1061
 msgid "If the original image was loaded from a JPEG file using non-standard quality settings (quantization tables), enable this option to get almost the same quality and file size."
 msgstr "Če je izvorna slika naložena iz datoteke JPEG z nestandardnimi nastavitvami kakovosti (tabele kvantizacije), omogočite to izbiro, da boste določili skoraj isto kakovost in velikost datoteke."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1082
+#: ../plug-ins/file-jpeg/jpeg-save.c:1085
 msgid "Su_bsampling:"
 msgstr "Po_dvzorčenje:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1089
+#: ../plug-ins/file-jpeg/jpeg-save.c:1092
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (najvišja kakovost)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1091
+#: ../plug-ins/file-jpeg/jpeg-save.c:1094
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 vodoravno (polovična kroma)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1093
+#: ../plug-ins/file-jpeg/jpeg-save.c:1096
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 navpično (polovična kroma)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1095
+#: ../plug-ins/file-jpeg/jpeg-save.c:1098
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (četrtinska kroma)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1125
+#: ../plug-ins/file-jpeg/jpeg-save.c:1128
 msgid "_DCT method:"
 msgstr "Metoda _DCT:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1131
+#: ../plug-ins/file-jpeg/jpeg-save.c:1134
 msgid "Fast Integer"
 msgstr "hitri integer"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1132
+#: ../plug-ins/file-jpeg/jpeg-save.c:1135
 msgid "Integer"
 msgstr "integer"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1133
+#: ../plug-ins/file-jpeg/jpeg-save.c:1136
 msgid "Floating-Point"
 msgstr "plavajoča vejica"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1149
+#: ../plug-ins/file-jpeg/jpeg-save.c:1152
 msgid "Comment"
 msgstr "Komentar"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1186
+#: ../plug-ins/file-jpeg/jpeg-save.c:1189
 msgid "_Load Defaults"
 msgstr "_Naloži privzete vrednosti"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1195
+#: ../plug-ins/file-jpeg/jpeg-save.c:1198
 msgid "Sa_ve Defaults"
 msgstr "S_hrani privzete vrednosti"
 
-#: ../plug-ins/file-jpeg/jpeg.c:136
-#: ../plug-ins/file-jpeg/jpeg.c:174
+#: ../plug-ins/file-jpeg/jpeg.c:139
+#: ../plug-ins/file-jpeg/jpeg.c:177
 msgid "JPEG image"
 msgstr "Slika JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:300
+#: ../plug-ins/file-jpeg/jpeg.c:303
 msgid "Export Preview"
 msgstr "Izvozi predogled"
 
@@ -11362,25 +11372,25 @@ msgstr "Upodabljanje IFS (%d/%d)"
 msgid "Transformation %s"
 msgstr "Transformacija %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2418
+#: ../plug-ins/ifs-compose/ifs-compose.c:2415
 msgid "Save failed"
 msgstr "Shranjevanje neuspešno"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2501
-#: ../plug-ins/ifs-compose/ifs-compose.c:2514
+#: ../plug-ins/ifs-compose/ifs-compose.c:2498
+#: ../plug-ins/ifs-compose/ifs-compose.c:2511
 msgid "Open failed"
 msgstr "Odpiranje neuspešno"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2509
+#: ../plug-ins/ifs-compose/ifs-compose.c:2506
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Datoteka '%s' najbrž ni fraktalska datoteka IFS."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2549
+#: ../plug-ins/ifs-compose/ifs-compose.c:2546
 msgid "Save as IFS Fractal file"
 msgstr "Shrani kot datoteko fraktala IFS"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2586
+#: ../plug-ins/ifs-compose/ifs-compose.c:2583
 msgid "Open IFS Fractal file"
 msgstr "Odpri datoteko fraktala IFS"
 
@@ -11756,41 +11766,41 @@ msgstr "Ustvari aktivno sliko, ki se odziva na klike na različnih svojih delih"
 msgid "_Image Map..."
 msgstr "_Aktivna slika ..."
 
-#: ../plug-ins/imagemap/imap_main.c:484
+#: ../plug-ins/imagemap/imap_main.c:488
 #: ../plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<Neimenovano>"
 
-#: ../plug-ins/imagemap/imap_main.c:626
+#: ../plug-ins/imagemap/imap_main.c:630
 msgid "Some data has been changed!"
 msgstr "Nekateri podatki so bili spremenjeni!"
 
-#: ../plug-ins/imagemap/imap_main.c:629
+#: ../plug-ins/imagemap/imap_main.c:633
 msgid "Do you really want to discard your changes?"
 msgstr "Resnično želite opustiti spremembe?"
 
-#: ../plug-ins/imagemap/imap_main.c:841
+#: ../plug-ins/imagemap/imap_main.c:845
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Datoteka \"%s\" je shranjena."
 
-#: ../plug-ins/imagemap/imap_main.c:845
+#: ../plug-ins/imagemap/imap_main.c:849
 msgid "Couldn't save file:"
 msgstr "Datoteke ni mogoče shraniti:"
 
-#: ../plug-ins/imagemap/imap_main.c:858
+#: ../plug-ins/imagemap/imap_main.c:862
 msgid "Image size has changed."
 msgstr "Velikost slike je spremenjena."
 
-#: ../plug-ins/imagemap/imap_main.c:859
+#: ../plug-ins/imagemap/imap_main.c:863
 msgid "Resize area's?"
 msgstr "Želite spremeniti velikost področja?"
 
-#: ../plug-ins/imagemap/imap_main.c:892
+#: ../plug-ins/imagemap/imap_main.c:896
 msgid "Couldn't read file:"
 msgstr "Datoteke ni mogoče brati:"
 
-#: ../plug-ins/imagemap/imap_main.c:939
+#: ../plug-ins/imagemap/imap_main.c:943
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -13000,4 +13010,3 @@ msgstr "_Zajem zaslonske slike ..."
 #: ../plug-ins/win-snap/winsnap.c:1143
 msgid "No data captured"
 msgstr "Zajetih ni bilo nič podatkov"
-
