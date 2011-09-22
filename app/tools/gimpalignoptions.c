@@ -244,7 +244,7 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
   gtk_box_pack_start (GTK_BOX (parent), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (button, _("Align left edge of target"), NULL);
+  gimp_help_set_help_data (button, tooltip, NULL);
 
   g_object_set_data (G_OBJECT (button), "align-action",
                      GINT_TO_POINTER (action));
