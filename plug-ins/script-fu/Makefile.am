@@ -15,7 +15,7 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la $(libm)
 
-libtinyscheme=tinyscheme/libtinyscheme.a
+libtinyscheme=tinyscheme/libtinyscheme.a $(libm)
 libftx=ftx/libftx.a
 
 if HAVE_WINDRES
