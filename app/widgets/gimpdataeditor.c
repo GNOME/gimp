@@ -224,8 +224,8 @@ gimp_data_editor_constructed (GObject *object)
                             G_CALLBACK (gimp_data_editor_revert_clicked),
                             NULL,
                             editor);
-  /* Set insensitive because revert buttons are not yet implemented */
-  gtk_widget_set_sensitive (editor->revert_button, FALSE);
+  /* Hide because revert buttons are not yet implemented */
+  gtk_widget_hide (editor->revert_button);
 }
 
 static void
