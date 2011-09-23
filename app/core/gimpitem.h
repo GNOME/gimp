@@ -291,6 +291,7 @@ void            gimp_item_set_visible        (GimpItem           *item,
                                               gboolean            visible,
                                               gboolean            push_undo);
 gboolean        gimp_item_get_visible        (const GimpItem     *item);
+gboolean        gimp_item_is_visible         (const GimpItem     *item);
 
 void            gimp_item_set_linked         (GimpItem           *item,
                                               gboolean            linked,

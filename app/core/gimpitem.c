@@ -1963,6 +1963,24 @@ gimp_item_get_visible (const GimpItem *item)
   return GET_PRIVATE (item)->visible;
 }
 
+gboolean
+gimp_item_is_visible (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  if (gimp_item_get_visible (item))
+    {
+      GimpItem *parent = gimp_item_get_parent (item);
+
+      if (parent)
+        return gimp_item_is_visible (parent);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 void
 gimp_item_set_linked (GimpItem *item,
                       gboolean  linked,
