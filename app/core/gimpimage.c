@@ -3636,7 +3636,7 @@ gimp_image_remove_layer (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (gimp_drawable_has_floating_sel (GIMP_DRAWABLE (layer)))
+  if (gimp_drawable_get_floating_sel (GIMP_DRAWABLE (layer)))
     {
       if (! push_undo)
         {
@@ -3650,7 +3650,8 @@ gimp_image_remove_layer (GimpImage *image,
                                    C_("undo-type", "Remove Layer"));
       undo_group = TRUE;
 
-      gimp_image_remove_layer (image, gimp_image_get_floating_selection (image),
+      gimp_image_remove_layer (image,
+                               gimp_drawable_get_floating_sel (GIMP_DRAWABLE (layer)),
                                TRUE, NULL);
     }
 
@@ -3662,8 +3663,7 @@ gimp_image_remove_layer (GimpImage *image,
     {
       undo_desc = C_("undo-type", "Remove Floating Selection");
 
-      gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
-                                         layer);
+      gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer));
     }
   else
     {
@@ -3856,7 +3856,7 @@ gimp_image_remove_channel (GimpImage   *image,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (gimp_item_get_image (GIMP_ITEM (channel)) == image);
 
-  if (gimp_drawable_has_floating_sel (GIMP_DRAWABLE (channel)))
+  if (gimp_drawable_get_floating_sel (GIMP_DRAWABLE (channel)))
     {
       if (! push_undo)
         {
@@ -3870,7 +3870,8 @@ gimp_image_remove_channel (GimpImage   *image,
                                    C_("undo-type", "Remove Channel"));
       undo_group = TRUE;
 
-      gimp_image_remove_layer (image, gimp_image_get_floating_selection (image),
+      gimp_image_remove_layer (image,
+                               gimp_drawable_get_floating_sel (GIMP_DRAWABLE (channel)),
                                TRUE, NULL);
     }
 

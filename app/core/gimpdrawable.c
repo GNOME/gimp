@@ -965,8 +965,7 @@ static void
 gimp_drawable_sync_source_node (GimpDrawable *drawable,
                                 gboolean      detach_fs)
 {
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpLayer *fs    = gimp_image_get_floating_selection (image);
+  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
   GeglNode  *output;
 
   if (! drawable->private->source_node)
@@ -974,7 +973,7 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
 
   output = gegl_node_get_output_proxy (drawable->private->source_node, "output");
 
-  if (gimp_drawable_has_floating_sel (drawable) && ! detach_fs)
+  if (fs && ! detach_fs)
     {
       gint off_x, off_y;
       gint fs_off_x, fs_off_y;
@@ -1345,19 +1344,21 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
                                gint           height,
                                TileManager  **temp_tiles)
 {
+  GimpLayer *fs;
+
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (srcPR != NULL);
   g_return_if_fail (temp_tiles != NULL);
 
-  if (gimp_drawable_has_floating_sel (drawable))
+  fs = gimp_drawable_get_floating_sel (drawable);
+
+  if (fs)
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      GimpLayer *fs    = gimp_image_get_floating_selection (image);
-      gint       off_x, off_y;
-      gint       fs_off_x, fs_off_y;
-      gint       combine_x, combine_y;
-      gint       combine_width, combine_height;
+      gint off_x, off_y;
+      gint fs_off_x, fs_off_y;
+      gint combine_x, combine_y;
+      gint combine_width, combine_height;
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
       gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
@@ -1807,22 +1808,6 @@ gimp_drawable_bytes_without_alpha (const GimpDrawable *drawable)
   return GIMP_IMAGE_TYPE_BYTES (type);
 }
 
-gboolean
-gimp_drawable_has_floating_sel (const GimpDrawable *drawable)
-{
-  GimpImage *image;
-  GimpLayer *floating_sel;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  floating_sel = gimp_image_get_floating_selection (image);
-
-  return (floating_sel &&
-          gimp_layer_get_floating_sel_drawable (floating_sel) == drawable);
-}
-
 const guchar *
 gimp_drawable_get_colormap (const GimpDrawable *drawable)
 {
@@ -1835,6 +1820,14 @@ gimp_drawable_get_colormap (const GimpDrawable *drawable)
   return image ? gimp_image_get_colormap (image) : NULL;
 }
 
+GimpLayer *
+gimp_drawable_get_floating_sel (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return drawable->private->floating_selection;
+}
+
 void
 gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
                                    GimpLayer    *floating_sel)
@@ -1843,12 +1836,14 @@ gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (gimp_drawable_get_floating_sel (drawable) == NULL);
   g_return_if_fail (GIMP_IS_LAYER (floating_sel));
 
   GIMP_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
+  drawable->private->floating_selection = floating_sel;
   gimp_image_set_floating_selection (image, floating_sel);
 
   /*  clear the selection  */
@@ -1868,17 +1863,18 @@ gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
-                                   GimpLayer    *floating_sel)
+gimp_drawable_detach_floating_sel (GimpDrawable *drawable)
 {
   GimpImage *image;
+  GimpLayer *floating_sel;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_LAYER (floating_sel));
+  g_return_if_fail (gimp_drawable_get_floating_sel (drawable) != NULL);
 
   GIMP_LOG (FLOATING_SELECTION, "%s", G_STRFUNC);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
+  image        = gimp_item_get_image (GIMP_ITEM (drawable));
+  floating_sel = drawable->private->floating_selection;
 
   gimp_drawable_sync_source_node (drawable, TRUE);
 
@@ -1896,4 +1892,5 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_sel));
 
   gimp_image_set_floating_selection (image, NULL);
+  drawable->private->floating_selection = NULL;
 }

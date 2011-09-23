@@ -230,14 +230,12 @@ gint            gimp_drawable_bytes              (const GimpDrawable *drawable);
 gint            gimp_drawable_bytes_with_alpha   (const GimpDrawable *drawable);
 gint            gimp_drawable_bytes_without_alpha(const GimpDrawable *drawable);
 
-gboolean        gimp_drawable_has_floating_sel   (const GimpDrawable *drawable);
-
 const guchar  * gimp_drawable_get_colormap       (const GimpDrawable *drawable);
 
+GimpLayer    * gimp_drawable_get_floating_sel    (const GimpDrawable *drawable);
 void           gimp_drawable_attach_floating_sel (GimpDrawable       *drawable,
                                                   GimpLayer          *floating_sel);
-void           gimp_drawable_detach_floating_sel (GimpDrawable       *drawable,
-                                                  GimpLayer          *floating_sel);
+void           gimp_drawable_detach_floating_sel (GimpDrawable       *drawable);
 
 
 #endif /* __GIMP_DRAWABLE_H__ */

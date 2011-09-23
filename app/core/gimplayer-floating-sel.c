@@ -134,9 +134,7 @@ floating_sel_to_layer (GimpLayer  *layer,
 
   gimp_image_undo_push_fs_to_layer (image, NULL, layer);
 
-  gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
-                                     layer);
-
+  gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer));
   gimp_layer_set_floating_sel_drawable (layer, NULL);
 
   gimp_item_set_visible (item, TRUE, TRUE);

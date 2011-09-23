@@ -108,9 +108,7 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
         }
       else
         {
-          gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (floating_layer),
-                                             floating_layer);
-
+          gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (floating_layer));
           gimp_layer_set_floating_sel_drawable (floating_layer, NULL);
         }
 
