@@ -368,7 +368,8 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
 
       if (gdk_rectangle_intersect (&draw_rect, &toggle_rect, &draw_rect))
         {
-          cairo_t *cr = gdk_cairo_create (window);
+          cairo_t  *cr = gdk_cairo_create (window);
+          gboolean  inconsistent;
 
           gdk_cairo_rectangle (cr, &draw_rect);
           cairo_clip (cr);
@@ -376,6 +377,23 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
           gdk_cairo_set_source_pixbuf (cr, toggle->pixbuf,
                                        toggle_rect.x, toggle_rect.y);
           cairo_paint (cr);
+
+          g_object_get (toggle,
+                        "inconsistent", &inconsistent,
+                        NULL);
+
+          if (inconsistent)
+            {
+              gdk_cairo_set_source_color (cr, &style->fg[state]);
+              cairo_set_line_width (cr, 2.0);
+              cairo_move_to (cr,
+                             toggle_rect.x + toggle_rect.width,
+                             toggle_rect.y);
+              cairo_line_to (cr,
+                             toggle_rect.x,
+                             toggle_rect.y + toggle_rect.height);
+              cairo_stroke (cr);
+            }
 
           cairo_destroy (cr);
         }
