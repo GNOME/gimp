@@ -74,6 +74,7 @@ enum
 
 static void  gimp_drawable_pickable_iface_init (GimpPickableInterface *iface);
 
+static void       gimp_drawable_dispose            (GObject           *object);
 static void       gimp_drawable_finalize           (GObject           *object);
 
 static gint64     gimp_drawable_get_memsize        (GimpObject        *object,
@@ -218,6 +219,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->dispose              = gimp_drawable_dispose;
   object_class->finalize             = gimp_drawable_finalize;
 
   gimp_object_class->get_memsize     = gimp_drawable_get_memsize;
@@ -275,12 +277,20 @@ gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
 }
 
 static void
-gimp_drawable_finalize (GObject *object)
+gimp_drawable_dispose (GObject *object)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (object);
 
-  if (drawable->private->fs_opacity_node)
-    gimp_drawable_sync_source_node (drawable, TRUE);
+  if (gimp_drawable_get_floating_sel (drawable))
+    gimp_drawable_detach_floating_sel (drawable);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_drawable_finalize (GObject *object)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (object);
 
   if (drawable->private->tiles)
     {

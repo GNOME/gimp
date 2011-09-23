@@ -402,6 +402,13 @@ gimp_layer_dispose (GObject *object)
                                           gimp_layer_layer_mask_update,
                                           layer);
 
+  if (gimp_layer_is_floating_sel (layer))
+    {
+      GimpDrawable *fs_drawable = gimp_layer_get_floating_sel_drawable (layer);
+
+      gimp_drawable_detach_floating_sel (fs_drawable);
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
