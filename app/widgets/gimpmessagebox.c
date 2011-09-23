@@ -430,10 +430,10 @@ gimp_message_box_repeat (GimpMessageBox *box)
 
   box->repeat++;
 
-  if (box->repeat > 1)
-    message = g_strdup_printf (_("Message repeated %d times."), box->repeat);
-  else
-    message = g_strdup (_("Message repeated once."));
+  message = g_strdup_printf (ngettext ("Message repeated once.",
+                                       "Message repeated %d times.",
+                                       box->repeat),
+                             box->repeat);
 
   if (box->label[2])
     {

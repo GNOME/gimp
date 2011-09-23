@@ -175,7 +175,9 @@ gimp_brush_load_brush (GimpContext  *context,
   if (read (fd, &header, sizeof (header)) != sizeof (header))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Could not read %d bytes from '%s': %s"),
+                   ngettext ("Could not read %d byte from '%s': %s",
+                             "Could not read %d bytes from '%s': %s",
+                             (gint) sizeof (header)),
                    (gint) sizeof (header),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
