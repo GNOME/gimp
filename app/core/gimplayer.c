@@ -406,7 +406,11 @@ gimp_layer_dispose (GObject *object)
     {
       GimpDrawable *fs_drawable = gimp_layer_get_floating_sel_drawable (layer);
 
-      gimp_drawable_detach_floating_sel (fs_drawable);
+      /* only detach if this is actually the drawable's fs because the
+       * layer might be on the undo stack and not attached to anyhing
+       */
+      if (gimp_drawable_get_floating_sel (fs_drawable) == layer)
+        gimp_drawable_detach_floating_sel (fs_drawable);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
