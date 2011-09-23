@@ -809,11 +809,21 @@ gimp_layer_get_node (GimpItem *item)
   GeglNode     *offset_node;
   GeglNode     *source;
   GeglNode     *mode_node;
+  gboolean      source_node_hijacked = FALSE;
 
   node = GIMP_ITEM_CLASS (parent_class)->get_node (item);
 
   source = gimp_drawable_get_source_node (drawable);
-  gegl_node_add_child (node, source);
+
+  /* if the source node already has a parent, we are a floating
+   * selection and the source node has been hijacked by the fs'
+   * drawable
+   */
+  if (gegl_node_get_parent (source))
+    source_node_hijacked = TRUE;
+
+  if (! source_node_hijacked)
+    gegl_node_add_child (node, source);
 
   g_warn_if_fail (layer->opacity_node == NULL);
 
@@ -821,8 +831,10 @@ gimp_layer_get_node (GimpItem *item)
                                              "operation", "gegl:opacity",
                                              "value",     layer->opacity,
                                              NULL);
-  gegl_node_connect_to (source,              "output",
-                        layer->opacity_node, "input");
+
+  if (! source_node_hijacked)
+    gegl_node_connect_to (source,              "output",
+                          layer->opacity_node, "input");
 
   if (layer->mask)
     {
