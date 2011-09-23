@@ -15,12 +15,16 @@ UI:
 
  - Add a close button to image tabs in single-window mode
  - Improve the transform tools' undo strings to be more descriptive
+ - Render the layer's "eye" icon in inconsistent state if the layer is
+   visible, but one of its parents isn't.
 
 
 Core:
 
  - Fix "render_image_tile_fault: assertion `tile[4] != NULL' failed"
    warnings that occured for some image sizes
+ - Fix attachment of the floating selection when the gegl projection
+   is enabled
 
 
 Libgimp:
