@@ -235,6 +235,9 @@ gimp_int_store_add_empty (GimpIntStore *store)
   gtk_list_store_prepend (GTK_LIST_STORE (store), &iter);
   gtk_list_store_set (GTK_LIST_STORE (store), &iter,
                       GIMP_INT_STORE_VALUE, -1,
+                      /* This string appears in an empty menu as in
+                       * "nothing selected and nothing to select"
+                       */
                       GIMP_INT_STORE_LABEL, (_("(Empty)")),
                       -1);
 
