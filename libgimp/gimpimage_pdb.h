@@ -204,6 +204,12 @@ gint32                   gimp_image_get_channel_by_tattoo    (gint32            
                                                               gint                    tattoo);
 gint32                   gimp_image_get_vectors_by_tattoo    (gint32                  image_ID,
                                                               gint                    tattoo);
+gint32                   gimp_image_get_layer_by_name        (gint32                  image_ID,
+                                                              const gchar            *name);
+gint32                   gimp_image_get_channel_by_name      (gint32                  image_ID,
+                                                              const gchar            *name);
+gint32                   gimp_image_get_vectors_by_name      (gint32                  image_ID,
+                                                              const gchar            *name);
 gboolean                 gimp_image_attach_parasite          (gint32                  image_ID,
                                                               const GimpParasite     *parasite);
 gboolean                 gimp_image_detach_parasite          (gint32                  image_ID,

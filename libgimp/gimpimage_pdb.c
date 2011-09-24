@@ -2789,6 +2789,114 @@ gimp_image_get_vectors_by_tattoo (gint32 image_ID,
 }
 
 /**
+ * gimp_image_get_layer_by_name:
+ * @image_ID: The image.
+ * @name: The name of the layer to find.
+ *
+ * Find a layer with a given name in an image.
+ *
+ * This procedure returns the layer with the given name in the
+ * specified image.
+ *
+ * Returns: The layer with the specified name.
+ *
+ * Since: GIMP 2.8
+ **/
+gint32
+gimp_image_get_layer_by_name (gint32       image_ID,
+                              const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 layer_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-layer-by-name",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    layer_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_ID;
+}
+
+/**
+ * gimp_image_get_channel_by_name:
+ * @image_ID: The image.
+ * @name: The name of the channel to find.
+ *
+ * Find a channel with a given name in an image.
+ *
+ * This procedure returns the channel with the given name in the
+ * specified image.
+ *
+ * Returns: The channel with the specified name.
+ *
+ * Since: GIMP 2.8
+ **/
+gint32
+gimp_image_get_channel_by_name (gint32       image_ID,
+                                const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 channel_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-channel-by-name",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    channel_ID = return_vals[1].data.d_channel;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return channel_ID;
+}
+
+/**
+ * gimp_image_get_vectors_by_name:
+ * @image_ID: The image.
+ * @name: The name of the vectors to find.
+ *
+ * Find a vectors with a given name in an image.
+ *
+ * This procedure returns the vectors with the given name in the
+ * specified image.
+ *
+ * Returns: The vectors with the specified name.
+ *
+ * Since: GIMP 2.8
+ **/
+gint32
+gimp_image_get_vectors_by_name (gint32       image_ID,
+                                const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 vectors_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-vectors-by-name",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    vectors_ID = return_vals[1].data.d_vectors;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return vectors_ID;
+}
+
+/**
  * gimp_image_attach_parasite:
  * @image_ID: The image.
  * @parasite: The parasite to attach to an image.

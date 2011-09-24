@@ -2601,6 +2601,97 @@ CODE
     );
 }
 
+sub image_get_layer_by_name {
+    $blurb = 'Find a layer with a given name in an image.';
+
+    $help = <<'HELP';
+This procedure returns the layer with the given name in the specified image.
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'name', type => 'string', non_empty => 1,
+          desc => 'The name of the layer to find' }
+    );
+
+    @outargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The layer with the specified name' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  layer = gimp_image_get_layer_by_name (image, name);
+}
+CODE
+    );
+}
+
+sub image_get_channel_by_name {
+    $blurb = 'Find a channel with a given name in an image.';
+
+    $help = <<'HELP';
+This procedure returns the channel with the given name in the specified image.
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'name', type => 'string', non_empty => 1,
+          desc => 'The name of the channel to find' }
+    );
+
+    @outargs = (
+        { name => 'channel', type => 'channel',
+          desc => 'The channel with the specified name' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  channel = gimp_image_get_channel_by_name (image, name);
+}
+CODE
+    );
+}
+
+sub image_get_vectors_by_name {
+    $blurb = 'Find a vectors with a given name in an image.';
+
+    $help = <<'HELP';
+This procedure returns the vectors with the given name in the
+specified image.
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'name', type => 'string', non_empty => 1,
+          desc => 'The name of the vectors to find' }
+    );
+
+    @outargs = (
+        { name => 'vectors', type => 'vectors',
+          desc => 'The vectors with the specified name' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  vectors = gimp_image_get_vectors_by_name (image, name);
+}
+CODE
+    );
+}
+
 sub image_attach_parasite {
     $blurb = 'Add a parasite to an image.';
 
@@ -2857,6 +2948,9 @@ CODE
             image_get_layer_by_tattoo
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo
+            image_get_layer_by_name
+            image_get_channel_by_name
+            image_get_vectors_by_name
             image_attach_parasite image_detach_parasite
             image_get_parasite
             image_get_parasite_list);
@@ -2865,7 +2959,7 @@ CODE
 # image_add_layer_mask and image_remove_layer_mask.
 # If adding or removing functions, make sure the range below is
 # updated correctly!
-%exports = (app => [@procs], lib => [@procs[0..42,45..80]]);
+%exports = (app => [@procs], lib => [@procs[0..42,45..83]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

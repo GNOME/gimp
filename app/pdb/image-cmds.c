@@ -2575,6 +2575,99 @@ image_get_vectors_by_tattoo_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+image_get_layer_by_name_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  const gchar *name;
+  GimpLayer *layer = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
+
+  if (success)
+    {
+      layer = gimp_image_get_layer_by_name (image, name);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    gimp_value_set_layer (&return_vals->values[1], layer);
+
+  return return_vals;
+}
+
+static GValueArray *
+image_get_channel_by_name_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  const gchar *name;
+  GimpChannel *channel = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
+
+  if (success)
+    {
+      channel = gimp_image_get_channel_by_name (image, name);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    gimp_value_set_channel (&return_vals->values[1], channel);
+
+  return return_vals;
+}
+
+static GValueArray *
+image_get_vectors_by_name_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  const gchar *name;
+  GimpVectors *vectors = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  name = g_value_get_string (&args->values[1]);
+
+  if (success)
+    {
+      vectors = gimp_image_get_vectors_by_name (image, name);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    gimp_value_set_vectors (&return_vals->values[1], vectors);
+
+  return return_vals;
+}
+
+static GValueArray *
 image_attach_parasite_invoker (GimpProcedure      *procedure,
                                Gimp               *gimp,
                                GimpContext        *context,
@@ -5251,6 +5344,114 @@ register_image_procs (GimpPDB *pdb)
                                    gimp_param_spec_vectors_id ("vectors",
                                                                "vectors",
                                                                "The vectors with the specified tattoo",
+                                                               pdb->gimp, FALSE,
+                                                               GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-layer-by-name
+   */
+  procedure = gimp_procedure_new (image_get_layer_by_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-layer-by-name");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-layer-by-name",
+                                     "Find a layer with a given name in an image.",
+                                     "This procedure returns the layer with the given name in the specified image.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the layer to find",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_layer_id ("layer",
+                                                             "layer",
+                                                             "The layer with the specified name",
+                                                             pdb->gimp, FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-channel-by-name
+   */
+  procedure = gimp_procedure_new (image_get_channel_by_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-channel-by-name");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-channel-by-name",
+                                     "Find a channel with a given name in an image.",
+                                     "This procedure returns the channel with the given name in the specified image.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the channel to find",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_channel_id ("channel",
+                                                               "channel",
+                                                               "The channel with the specified name",
+                                                               pdb->gimp, FALSE,
+                                                               GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-vectors-by-name
+   */
+  procedure = gimp_procedure_new (image_get_vectors_by_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-vectors-by-name");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-vectors-by-name",
+                                     "Find a vectors with a given name in an image.",
+                                     "This procedure returns the vectors with the given name in the specified image.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the vectors to find",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_vectors_id ("vectors",
+                                                               "vectors",
+                                                               "The vectors with the specified name",
                                                                pdb->gimp, FALSE,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

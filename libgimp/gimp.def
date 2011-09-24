@@ -352,6 +352,7 @@ EXPORTS
 	gimp_image_get_active_drawable
 	gimp_image_get_active_layer
 	gimp_image_get_active_vectors
+	gimp_image_get_channel_by_name
 	gimp_image_get_channel_by_tattoo
 	gimp_image_get_channel_position
 	gimp_image_get_channels
@@ -366,6 +367,7 @@ EXPORTS
 	gimp_image_get_guide_position
 	gimp_image_get_imported_uri
 	gimp_image_get_item_position
+	gimp_image_get_layer_by_name
 	gimp_image_get_layer_by_tattoo
 	gimp_image_get_layer_position
 	gimp_image_get_layers
@@ -380,6 +382,7 @@ EXPORTS
 	gimp_image_get_unit
 	gimp_image_get_uri
 	gimp_image_get_vectors
+	gimp_image_get_vectors_by_name
 	gimp_image_get_vectors_by_tattoo
 	gimp_image_get_vectors_position
 	gimp_image_get_xcf_uri
