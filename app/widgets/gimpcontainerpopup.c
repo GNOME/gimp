@@ -35,6 +35,7 @@
 #include "gimpcontainerbox.h"
 #include "gimpcontainereditor.h"
 #include "gimpcontainerpopup.h"
+#include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpdialogfactory.h"
 #include "gimpviewrenderer.h"
@@ -559,6 +560,18 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
 
   gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (popup->editor->view),
                                        FALSE);
+
+  if (popup->view_type == GIMP_VIEW_TYPE_LIST)
+    {
+      GtkWidget *search_entry;
+
+      search_entry = gtk_entry_new ();
+      gtk_box_pack_end (GTK_BOX (popup->editor->view), search_entry,
+                        FALSE, FALSE, 0);
+      gtk_tree_view_set_search_entry (GTK_TREE_VIEW (GIMP_CONTAINER_TREE_VIEW (GIMP_CONTAINER_VIEW (popup->editor->view))->view),
+                                      GTK_ENTRY (search_entry));
+      gtk_widget_show (search_entry);
+    }
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (popup->editor->view),
                                        6  * (popup->default_view_size +
