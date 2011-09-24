@@ -92,35 +92,102 @@ test_xmp_model_is_empty (GimpTestFixture *fixture,
  * @fixture:
  * @data:
  *
- * Test to assert that setting and getting scalar properties don't
- * change and are always of XMP_TYPE_TEXT.
+ * The test asserts the API to get/set scalar values. This should also
+ * work for many XMPProperties as we operate on one column in the
+ * XMPModel. The COL_XMP_VALUE column is the string representation of
+ * the COL_XMP_VALUE_RAW column, which will be updated upon export.
  **/
 static void
 test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
                                         gconstpointer    data)
 {
-  const gchar *property_name = NULL;
+  const gchar  *property_name = NULL;
+  const gchar  *scalar_value;
+  const gchar **value;
+  gboolean      result;
 
-  // Schema is nonsense, so nothing is set
-  g_assert (xmp_model_set_scalar_property (fixture->xmpmodel,
+  /* Schema is nonsense, so nothing is set */
+  result = xmp_model_set_scalar_property (fixture->xmpmodel,
                                            "SCHEMA",
                                            "key",
-                                           "value") == FALSE);
+                                           "value");
+  g_assert (result == FALSE);
   g_assert (xmp_model_is_empty (fixture->xmpmodel) == TRUE);
 
-  // Contributor is a scalar property
+  /* Contributor is a scalar property. When set, we expect the XMPModel
+   * not to be empty any more and that we can retrieve the same value.
+   **/
   property_name = "me";
-  g_assert (xmp_model_set_scalar_property (fixture->xmpmodel,
+  result = xmp_model_set_scalar_property (fixture->xmpmodel,
                                            "dc",
                                            "contributor",
-                                           property_name) == TRUE);
+                                           property_name);
+  g_assert (result == TRUE);
   g_assert (xmp_model_is_empty (fixture->xmpmodel) == FALSE);
 
-  // we expect the same data returned
-  g_assert_cmpstr (xmp_model_get_scalar_property (fixture->xmpmodel,
-                                                  "dc",
-                                                  "contributor"), ==, property_name);
+  scalar_value = xmp_model_get_scalar_property (fixture->xmpmodel,
+                                                "dc",
+                                                "contributor");
+  g_assert_cmpstr (scalar_value, ==, property_name);
+
+  /* Now we assure, that we can even set titles, which is of type
+   * XMP_TYPE_LANG_ALT. This could be internally stored as a dictionary.
+   **/
+  result = xmp_model_set_scalar_property (fixture->xmpmodel,
+                                          "dc",
+                                          "title",
+                                          property_name);
+  g_assert (result == TRUE);
+
+  scalar_value = xmp_model_get_scalar_property (fixture->xmpmodel,
+                                                "dc",
+                                                "title");
+  g_assert_cmpstr (scalar_value, ==, property_name);
+
+  /* The raw data for this type looks different tho. Because we only
+   * changed the string represenation we expect it to return FALSE as
+   * there is currently no RAW value set.
+   **/
+  value = xmp_model_get_raw_property_value (fixture->xmpmodel,
+                                            "dc", "title");
+  g_assert (value == NULL);
+
+  result = xmp_model_set_scalar_property (fixture->xmpmodel,
+                                           "dc",
+                                           "title",
+                                           "me too");
+  g_assert (result == TRUE);
+
+  value = xmp_model_get_raw_property_value (fixture->xmpmodel,
+                                             "dc", "title");
+  g_assert (value == NULL);
 }
+
+
+/**
+ * test_xmp_model_find_xmptype_by:
+ * @fixture:
+ * @data:
+ *
+ * Tests returning the correct property type by given schema and
+ * property_name
+ **/
+static void
+test_xmp_model_find_xmptype_by (GimpTestFixture *fixture,
+                                gconstpointer    data)
+{
+  XMPType   type;
+
+  type = xmp_model_find_xmptype_by (fixture->xmpmodel, "non", "sense");
+  g_assert (type == -1);
+
+  type = xmp_model_find_xmptype_by (fixture->xmpmodel, "dc", "title");
+  g_assert (type == XMP_TYPE_LANG_ALT);
+
+  type = xmp_model_find_xmptype_by (fixture->xmpmodel, "dc", "contributor");
+  g_assert (type == XMP_TYPE_TEXT);
+}
+
 
 /**
  * test_xmp_model_get_raw_property_value:
@@ -222,6 +289,7 @@ int main(int argc, char **argv)
   g_test_init (&argc, &argv, NULL);
 
   ADD_TEST (test_xmp_model_is_empty);
+  ADD_TEST (test_xmp_model_find_xmptype_by);
   ADD_TEST (test_xmp_model_set_get_scalar_property);
   ADD_TEST (test_xmp_model_get_raw_property_value);
   ADD_TEST (test_xmp_model_parse_file);
