@@ -59,7 +59,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
-#include "display/gimpimagewindow.h"
 #include "display/gimptooldialog.h"
 
 #include "gimpcoloroptions.h"
@@ -294,14 +293,11 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   if (! image_map_tool->dialog)
     {
       GimpImageMapToolClass *klass;
-      GimpImageWindow       *window;
       GtkWidget             *dialog;
       GtkWidget             *vbox;
       GtkWidget             *toggle;
 
       klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
-
-      window = gimp_display_shell_get_window (display_shell);
 
       /*  disabled for at least GIMP 2.8  */
       image_map_tool->overlay = FALSE;
