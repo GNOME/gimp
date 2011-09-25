@@ -67,6 +67,10 @@ static void   gimp_message_box_forall               (GtkContainer   *container,
                                                      gboolean        include_internals,
                                                      GtkCallback     callback,
                                                      gpointer        callback_data);
+static GtkWidgetPath *
+              gimp_message_box_get_path_for_child   (GtkContainer   *container,
+                                                     GtkWidget      *child);
+
 static void   gimp_message_box_set_label_text       (GimpMessageBox *box,
                                                      gint            n,
                                                      const gchar    *format,
@@ -89,17 +93,18 @@ gimp_message_box_class_init (GimpMessageBoxClass *klass)
   GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
-  object_class->constructed          = gimp_message_box_constructed;
-  object_class->dispose              = gimp_message_box_dispose;
-  object_class->finalize             = gimp_message_box_finalize;
-  object_class->set_property         = gimp_message_box_set_property;
-  object_class->get_property         = gimp_message_box_get_property;
+  object_class->constructed           = gimp_message_box_constructed;
+  object_class->dispose               = gimp_message_box_dispose;
+  object_class->finalize              = gimp_message_box_finalize;
+  object_class->set_property          = gimp_message_box_set_property;
+  object_class->get_property          = gimp_message_box_get_property;
 
-  widget_class->get_preferred_width  = gimp_message_box_get_preferred_width;
-  widget_class->get_preferred_height = gimp_message_box_get_preferred_height;
-  widget_class->size_allocate        = gimp_message_box_size_allocate;
+  widget_class->get_preferred_width   = gimp_message_box_get_preferred_width;
+  widget_class->get_preferred_height  = gimp_message_box_get_preferred_height;
+  widget_class->size_allocate         = gimp_message_box_size_allocate;
 
-  container_class->forall            = gimp_message_box_forall;
+  container_class->forall             = gimp_message_box_forall;
+  container_class->get_path_for_child = gimp_message_box_get_path_for_child;
 
   gtk_container_class_handle_border_width (container_class);
 
@@ -348,6 +353,27 @@ gimp_message_box_forall (GtkContainer *container,
 
   GTK_CONTAINER_CLASS (parent_class)->forall (container, include_internals,
                                               callback, callback_data);
+}
+
+static GtkWidgetPath *
+gimp_message_box_get_path_for_child (GtkContainer *container,
+                                     GtkWidget    *child)
+{
+  GimpMessageBox *box = GIMP_MESSAGE_BOX (container);
+
+  if (child == box->image)
+    {
+      GtkWidgetPath *path;
+
+      path = gtk_widget_path_copy (gtk_widget_get_path (GTK_WIDGET (container)));
+
+      gtk_widget_path_append_for_widget (path, child);
+
+      return path;
+    }
+
+  return GTK_CONTAINER_CLASS (parent_class)->get_path_for_child (container,
+                                                                 child);
 }
 
 static void
