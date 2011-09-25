@@ -956,7 +956,7 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
   GtkTreeIter   iter;
   GtkTreeIter   child_iter;
   int           i;
-  gchar       **value;
+  XMPType       type;
 
   g_return_val_if_fail (xmp_model != NULL, FALSE);
   g_return_val_if_fail (schema_name != NULL, FALSE);
@@ -986,23 +986,22 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
     }
   else
     {
+      type = xmp_model_find_xmptype_by (xmp_model, schema_name, property_name);
+
       property = g_new (XMPProperty, 1);
       property->name     = g_strdup (property_name);
-      property->type     = XMP_TYPE_TEXT;
+      property->type     = type;
       property->editable = TRUE;
 
       xmp_model->custom_properties =
         g_slist_prepend (xmp_model->custom_properties, property);
     }
 
-  value = g_new (gchar *, 2);
-  value[0] = g_strdup (property_value);
-  value[1] = NULL;
   gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
   gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
                       COL_XMP_NAME, g_strdup (property_name),
-                      COL_XMP_VALUE, value[0],
-                      COL_XMP_VALUE_RAW, value,
+                      COL_XMP_VALUE, g_strdup (property_value),
+                      COL_XMP_VALUE_RAW, NULL,
                       COL_XMP_TYPE_XREF, property,
                       COL_XMP_WIDGET_XREF, NULL,
                       COL_XMP_EDITABLE, property->editable,
