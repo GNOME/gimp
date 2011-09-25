@@ -18,10 +18,14 @@ LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)		\
+	../base64.o		\
+	../xmp-parse.o		\
+	../xmp-schemas.o	\
+	../xmp-model.o
 
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(EXIF_CFLAGS)	\
@@ -33,20 +37,10 @@ TESTS_ENVIRONMENT = \
 	GIMP_TESTING_ABS_TOP_SRCDIR=@abs_top_srcdir@
 
 TESTS = \
-	test-xmp-model
+	test-xmp-model			\
+	test-xmp-model-functional
 
 EXTRA_PROGRAMS = $(TESTS)
-
-test_xmp_model_SOURCES = \
-	test-xmp-model.c	\
-	../base64.c		\
-	../base64.h		\
-	../xmp-parse.c		\
-	../xmp-parse.h		\
-	../xmp-schemas.c	\
-	../xmp-schemas.h	\
-	../xmp-model.c		\
-	../xmp-model.h
 
 CLEANFILES = $(EXTRA_PROGRAMS)
 
