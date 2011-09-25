@@ -314,45 +314,21 @@ void
 gimp_xmp_model_widget_changed (GimpXmpModelWidget *widget,
                                const gchar        *value)
 {
-  const gchar               **current_value;
   GimpXmpModelWidgetPrivate  *priv = GIMP_XMP_MODEL_WIDGET_GET_PRIVATE (widget);
-  XMPType                     type = xmp_model_find_xmptype_by (priv->xmp_model,
-                                                                priv->schema_uri,
-                                                                priv->property_name);
 
-  current_value = xmp_model_get_raw_property_value (priv->xmp_model,
-                                                    priv->schema_uri,
-                                                    priv->property_name);
 
-  switch (type)
-   {
-    case XMP_TYPE_LANG_ALT:
-      if (current_value == NULL)
-       {
-        current_value = g_new (const gchar *, 2);
-        current_value[0] = "x-default";
-        current_value[1] = g_strdup (value);
-       }
-      else
-       {
-        current_value[1] = g_strdup (value);
-       }
-      g_signal_handlers_block_by_func (priv->xmp_model,
-                                       gimp_xmp_model_widget_xmpmodel_changed,
-                                       widget);
-      xmp_model_set_property (priv->xmp_model,
-                              type,
-                              priv->schema_uri,
-                              priv->property_name,
-                              current_value);
-      g_signal_handlers_unblock_by_func (priv->xmp_model,
-                                         gimp_xmp_model_widget_xmpmodel_changed,
-                                         widget);
-      break;
+  g_signal_handlers_block_by_func (priv->xmp_model,
+                                   gimp_xmp_model_widget_xmpmodel_changed,
+                                   widget);
 
-    default:
-      break;
-   }
+  xmp_model_set_scalar_property (priv->xmp_model,
+                                 priv->schema_uri,
+                                 priv->property_name,
+                                 value);
+
+  g_signal_handlers_unblock_by_func (priv->xmp_model,
+                                     gimp_xmp_model_widget_xmpmodel_changed,
+                                     widget);
 
 }
 
