@@ -26,6 +26,7 @@
 #define LARGE_HEIGHT  240
 
 
+#if 0
 static gboolean
 adjust_size_callback (WidgetInfo *info)
 {
@@ -80,6 +81,7 @@ realize_callback (WidgetInfo *info)
 {
   g_timeout_add (500, (GSourceFunc)adjust_size_callback, info);
 }
+#endif
 
 static WidgetInfo *
 new_widget_info (const char *name,
@@ -99,8 +101,10 @@ new_widget_info (const char *name,
       info->window = widget;
 
       gtk_window_set_resizable (GTK_WINDOW (info->window), FALSE);
+#if 0
       g_signal_connect_swapped (info->window, "realize",
                                 G_CALLBACK (realize_callback), info);
+#endif
     }
   else
     {
@@ -168,7 +172,7 @@ create_browser (void)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
   browser = gimp_browser_new ();
-  gtk_box_pack_start (GTK_BOX (GIMP_BROWSER (browser)->left_vbox),
+  gtk_box_pack_start (GTK_BOX (gimp_browser_get_left_vbox (GIMP_BROWSER (browser))),
                       gtk_label_new ("TreeView goes here"), TRUE, TRUE, 0);
   gtk_container_add (GTK_CONTAINER (align), browser);
   gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
@@ -703,24 +707,6 @@ create_string_combo_box (void)
   return new_widget_info ("gimp-widget-string-combo-box", vbox, SMALL);
 }
 
-static WidgetInfo *
-create_unit_menu (void)
-{
-  GtkWidget *vbox;
-  GtkWidget *menu;
-  GtkWidget *align;
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
-  menu =  gimp_unit_menu_new ("%p", GIMP_UNIT_MM, TRUE, FALSE, FALSE);
-  gtk_container_add (GTK_CONTAINER (align), menu);
-  gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox),
-                      gtk_label_new ("Unit Menu"), FALSE, FALSE, 0);
-
-  return new_widget_info ("gimp-widget-unit-menu", vbox, SMALL);
-}
-
 GList *
 get_all_widgets (void)
 {
@@ -750,7 +736,6 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_pick_button ());
   retval = g_list_append (retval, create_preview_area ());
   retval = g_list_append (retval, create_string_combo_box ());
-  retval = g_list_append (retval, create_unit_menu ());
 
   return retval;
 }

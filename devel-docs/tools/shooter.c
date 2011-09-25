@@ -175,8 +175,8 @@ take_window_shot (Window   child,
   if (y_orig + height > gdk_screen_get_height (screen))
     height = gdk_screen_get_height (screen) - y_orig;
 
-  tmp = gdk_pixbuf_get_from_drawable (NULL, window, NULL,
-                                      x, y, 0, 0, width, height);
+  tmp = gdk_pixbuf_get_from_window (window,
+                                    x, y, width, height);
 
   if (include_decoration)
     tmp2 = remove_shaped_area (tmp, xid);
@@ -284,7 +284,7 @@ main (int argc, char **argv)
           gtk_main_iteration ();
         }
 
-      xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (window));
+      xid = gdk_x11_window_get_xid (window);
       screenshot = take_window_shot (xid, info->include_decorations);
 
       filename = g_strdup_printf ("%s.png", info->name);
