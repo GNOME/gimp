@@ -83,7 +83,8 @@ static gboolean        xcf_load_layer_props   (XcfInfo      *info,
                                                gboolean     *apply_mask,
                                                gboolean     *edit_mask,
                                                gboolean     *show_mask,
-                                               guint32      *text_layer_flags);
+                                               guint32      *text_layer_flags,
+                                               guint32      *group_layer_flags);
 static gboolean        xcf_load_channel_props (XcfInfo      *info,
                                                GimpImage    *image,
                                                GimpChannel **channel);
@@ -693,7 +694,8 @@ xcf_load_layer_props (XcfInfo    *info,
                       gboolean   *apply_mask,
                       gboolean   *edit_mask,
                       gboolean   *show_mask,
-                      guint32    *text_layer_flags)
+                      guint32    *text_layer_flags,
+                      guint32    *group_layer_flags)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -868,6 +870,10 @@ xcf_load_layer_props (XcfInfo    *info,
 
             *item_path = path;
           }
+          break;
+
+        case PROP_GROUP_ITEM_FLAGS:
+          info->cp += xcf_read_int32 (info->fp, group_layer_flags, 1);
           break;
 
         default:
@@ -1061,6 +1067,7 @@ xcf_load_layer (XcfInfo    *info,
   gboolean       show_mask  = FALSE;
   gboolean       active;
   gboolean       floating;
+  guint32        group_layer_flags = 0;
   guint32        text_layer_flags = 0;
   gint           width;
   gint           height;
@@ -1089,7 +1096,7 @@ xcf_load_layer (XcfInfo    *info,
   /* read in the layer properties */
   if (! xcf_load_layer_props (info, image, &layer, item_path,
                               &apply_mask, &edit_mask, &show_mask,
-                              &text_layer_flags))
+                              &text_layer_flags, &group_layer_flags))
     goto error;
 
   xcf_progress_update (info);
@@ -1127,6 +1134,10 @@ xcf_load_layer (XcfInfo    *info,
         goto error;
 
       xcf_progress_update (info);
+    }
+  else
+    {
+      gimp_viewable_set_expanded (GIMP_VIEWABLE (layer), group_layer_flags != 0);
     }
 
   /* read in the layer mask */

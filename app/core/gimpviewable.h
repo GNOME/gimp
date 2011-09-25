@@ -97,6 +97,10 @@ struct _GimpViewableClass
                                           gchar        **tooltip);
 
   GimpContainer * (* get_children)       (GimpViewable  *viewable);
+
+  void            (* set_expanded)       (GimpViewable  *viewable,
+                                          gboolean       expand);
+  gboolean        (* get_expanded)       (GimpViewable  *viewable);
 };
 
 
@@ -176,6 +180,9 @@ void            gimp_viewable_set_parent         (GimpViewable  *viewable,
                                                   GimpViewable  *parent);
 
 GimpContainer * gimp_viewable_get_children       (GimpViewable  *viewable);
+gboolean        gimp_viewable_get_expanded       (GimpViewable  *viewable);
+void            gimp_viewable_set_expanded       (GimpViewable  *viewable,
+                                                  gboolean       expanded);
 
 gboolean        gimp_viewable_is_ancestor        (GimpViewable  *ancestor,
                                                   GimpViewable  *descendant);
