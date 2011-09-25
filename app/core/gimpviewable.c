@@ -169,6 +169,8 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->get_new_pixbuf          = gimp_viewable_real_get_new_pixbuf;
   klass->get_description         = gimp_viewable_real_get_description;
   klass->get_children            = gimp_viewable_real_get_children;
+  klass->set_expanded            = NULL;
+  klass->get_expanded            = NULL;
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
                                    NULL, NULL,
@@ -1175,6 +1177,27 @@ gimp_viewable_get_children (GimpViewable *viewable)
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
 
   return GIMP_VIEWABLE_GET_CLASS (viewable)->get_children (viewable);
+}
+
+gboolean
+gimp_viewable_get_expanded (GimpViewable *viewable)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
+
+  if (GIMP_VIEWABLE_GET_CLASS (viewable)->get_expanded)
+    return GIMP_VIEWABLE_GET_CLASS (viewable)->get_expanded (viewable);
+
+  return FALSE;
+}
+
+void
+gimp_viewable_set_expanded (GimpViewable *viewable,
+                            gboolean       expanded)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  if (GIMP_VIEWABLE_GET_CLASS (viewable)->set_expanded)
+    GIMP_VIEWABLE_GET_CLASS (viewable)->set_expanded (viewable, expanded);
 }
 
 gboolean
