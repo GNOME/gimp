@@ -537,15 +537,6 @@ xcf_save_layer_props (XcfInfo    *info,
                                         flags));
     }
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
-    {
-      gint32 flags = gimp_viewable_get_expanded (GIMP_VIEWABLE (layer));
-
-      xcf_check_error (xcf_save_prop (info,
-                                      image, PROP_GROUP_ITEM_FLAGS, error,
-                                      flags));
-    }
-
   parasites = gimp_item_get_parasites (GIMP_ITEM (layer));
 
   if (gimp_parasite_list_length (parasites) > 0)
@@ -1120,19 +1111,6 @@ xcf_save_prop (XcfInfo    *info,
 
             path = g_list_next (path);
           }
-      }
-      break;
-
-    case PROP_GROUP_ITEM_FLAGS:
-      {
-        guint32 flags;
-
-        flags = va_arg (args, guint32);
-        size = 4;
-
-        xcf_write_prop_type_check_error (info, prop_type);
-        xcf_write_int32_check_error (info, &size, 1);
-        xcf_write_int32_check_error (info, &flags, 1);
       }
       break;
     }

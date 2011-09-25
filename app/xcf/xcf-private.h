@@ -51,8 +51,7 @@ typedef enum
   PROP_SAMPLE_POINTS      = 27,
   PROP_LOCK_CONTENT       = 28,
   PROP_GROUP_ITEM         = 29,
-  PROP_ITEM_PATH          = 30,
-  PROP_GROUP_ITEM_FLAGS   = 31
+  PROP_ITEM_PATH          = 30
 } PropType;
 
 typedef enum

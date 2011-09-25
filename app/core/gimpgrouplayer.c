@@ -52,7 +52,6 @@ struct _GimpGroupLayerPrivate
   GeglNode       *graph;
   GeglNode       *offset_node;
   gint            suspend_resize;
-  gboolean        expanded;
 
   /*  hackish temp states to make the projection/tiles stuff work  */
   gboolean        reallocate_projection;
@@ -85,9 +84,6 @@ static gboolean        gimp_group_layer_get_size     (GimpViewable    *viewable,
                                                       gint            *width,
                                                       gint            *height);
 static GimpContainer * gimp_group_layer_get_children (GimpViewable    *viewable);
-static gboolean        gimp_group_layer_get_expanded (GimpViewable    *viewable);
-static void            gimp_group_layer_set_expanded (GimpViewable    *viewable,
-                                                      gboolean         expanded);
 
 static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
                                                       GType            new_type);
@@ -204,8 +200,6 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   viewable_class->default_stock_id = "gtk-directory";
   viewable_class->get_size         = gimp_group_layer_get_size;
   viewable_class->get_children     = gimp_group_layer_get_children;
-  viewable_class->set_expanded     = gimp_group_layer_set_expanded;
-  viewable_class->get_expanded     = gimp_group_layer_get_expanded;
 
   item_class->duplicate            = gimp_group_layer_duplicate;
   item_class->convert              = gimp_group_layer_convert;
@@ -256,7 +250,6 @@ gimp_group_layer_init (GimpGroupLayer *group)
   GimpGroupLayerPrivate *private = GET_PRIVATE (group);
 
   private->children = gimp_drawable_stack_new (GIMP_TYPE_LAYER);
-  private->expanded = TRUE;
 
   g_signal_connect (private->children, "add",
                     G_CALLBACK (gimp_group_layer_child_add),
@@ -387,23 +380,6 @@ static GimpContainer *
 gimp_group_layer_get_children (GimpViewable *viewable)
 {
   return GET_PRIVATE (viewable)->children;
-}
-
-static gboolean
-gimp_group_layer_get_expanded (GimpViewable *viewable)
-{
-  GimpGroupLayer *group = GIMP_GROUP_LAYER (viewable);
-
-  return GET_PRIVATE (group)->expanded;
-}
-
-static void
-gimp_group_layer_set_expanded (GimpViewable *viewable,
-                               gboolean      expanded)
-{
-  GimpGroupLayer *group = GIMP_GROUP_LAYER (viewable);
-
-  GET_PRIVATE (group)->expanded = expanded;
 }
 
 static GimpItem *
