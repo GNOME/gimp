@@ -135,7 +135,8 @@ xmp_model_finalize (GObject *object)
                   gtk_tree_model_get (model, &child,
                                       COL_XMP_VALUE_RAW, &value_array,
                                       -1);
-                  if (value_array != last_value_array)
+                  if (value_array != last_value_array
+                      && value_array != NULL)
                     {
                       /* FIXME: this does not free everything */
                       for (i = 0; value_array[i] != NULL; i++)
