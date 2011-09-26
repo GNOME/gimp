@@ -954,6 +954,7 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
 {
   XMPSchema    *schema;
   XMPProperty  *property = NULL;
+  const gchar **value = NULL;
   GtkTreeIter   iter;
   GtkTreeIter   child_iter;
   int           i;
@@ -983,6 +984,7 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
 
   if (property != NULL)
     {
+      value = xmp_model_get_raw_property_value (xmp_model, schema_name, property_name);
       find_and_remove_property (xmp_model, property, &iter);
     }
   else
@@ -1002,7 +1004,7 @@ xmp_model_set_scalar_property (XMPModel    *xmp_model,
   gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
                       COL_XMP_NAME, g_strdup (property_name),
                       COL_XMP_VALUE, g_strdup (property_value),
-                      COL_XMP_VALUE_RAW, NULL,
+                      COL_XMP_VALUE_RAW, value,
                       COL_XMP_TYPE_XREF, property,
                       COL_XMP_WIDGET_XREF, NULL,
                       COL_XMP_EDITABLE, property->editable,
