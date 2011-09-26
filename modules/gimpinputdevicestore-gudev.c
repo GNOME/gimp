@@ -334,13 +334,16 @@ gimp_input_device_store_remove (GimpInputDeviceStore *store,
   const gchar *name = g_udev_device_get_sysfs_attr (device, "name");
   GtkTreeIter  iter;
 
-  if (gimp_input_device_store_lookup (store, name, &iter))
+  if (name)
     {
-      gtk_list_store_remove (GTK_LIST_STORE (store), &iter);
+      if (gimp_input_device_store_lookup (store, name, &iter))
+        {
+          gtk_list_store_remove (GTK_LIST_STORE (store), &iter);
 
-      g_signal_emit (store, store_signals[DEVICE_REMOVED], 0, name);
+          g_signal_emit (store, store_signals[DEVICE_REMOVED], 0, name);
 
-      return TRUE;
+          return TRUE;
+        }
     }
 
   return FALSE;
