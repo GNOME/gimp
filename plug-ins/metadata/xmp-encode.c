@@ -105,6 +105,7 @@ static void
 gen_property (GString            *buffer,
               const XMPSchema    *schema,
               const XMPProperty  *property,
+              const gchar        *value,
               const gchar       **value_array)
 {
   gint         i;
@@ -159,18 +160,31 @@ gen_property (GString            *buffer,
     case XMP_TYPE_LANG_ALT:
       g_string_append_printf (buffer, "  <%s:%s>\n   <rdf:Alt>\n",
                               schema->prefix, property->name);
-      for (i = 0; value_array[i] != NULL; i += 2)
-        {
-         if (value_array[i+1] == NULL)
-          {
+      if (value_array == NULL && value != NULL)
+       {
+         gen_element (buffer, 4,
+                      "rdf", "li", value,
+                      "xml:lang", "x-default",
+                      NULL);
+       }
+      else
+       {
+        for (i = 0; value_array[i] != NULL; i += 2)
+         {
+          if (value_array[i+1] == NULL)
+           {
             g_printerr("Bailing out:%s:%s", schema->prefix, property->name);
             break;
-          }
+           }
+          if (i == 0 && value_array[i+1] != value)
+            value_array[i+1] = g_strdup (value);
+
           gen_element (buffer, 4,
                        "rdf", "li", value_array[i + 1],
                        "xml:lang", value_array[i],
                        NULL);
-        }
+         }
+       }
       g_string_append_printf (buffer, "   </rdf:Alt>\n  </%s:%s>\n",
                               schema->prefix, property->name);
       break;
@@ -280,9 +294,11 @@ xmp_generate_packet (XMPModel *xmp_model,
                 {
                   const XMPProperty  *property;
                   const gchar       **value_array;
+                  const gchar        *value;
 
                   gtk_tree_model_get (model, &child,
                                       COL_XMP_TYPE_XREF, &property,
+                                      COL_XMP_VALUE,     &value,
                                       COL_XMP_VALUE_RAW, &value_array,
                                       -1);
                   /* do not process structured types multiple times */
@@ -290,7 +306,7 @@ xmp_generate_packet (XMPModel *xmp_model,
                     {
                       saved_ref = value_array;
                       g_return_if_fail (property->name != NULL);
-                      gen_property (buffer, schema, property, value_array);
+                      gen_property (buffer, schema, property, value, value_array);
                     }
                 }
               while (gtk_tree_model_iter_next (model, &child));
