@@ -36,7 +36,7 @@
 
 typedef struct
 {
-  XMPModel *xmpmodel;
+  XMPModel *xmp_model;
 } GimpTestFixture;
 
 static void gimp_test_xmp_model_setup       (GimpTestFixture *fixture,
@@ -59,13 +59,15 @@ gimp_test_xmp_model_setup (GimpTestFixture *fixture,
   gchar  *uri = NULL;
   GError *error = NULL;
 
-  fixture->xmpmodel = xmp_model_new ();
+  fixture->xmp_model = xmp_model_new ();
 
   uri = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
                           "plug-ins/metadata/tests/files/test.xmp",
                           NULL);
 
-  xmp_model_parse_file (fixture->xmpmodel, uri, &error);
+  xmp_model_parse_file (fixture->xmp_model, uri, &error);
+
+  g_free (uri);
 }
 
 
@@ -73,7 +75,7 @@ static void
 gimp_test_xmp_model_teardown (GimpTestFixture *fixture,
                               gconstpointer    data)
 {
-  g_object_unref (fixture->xmpmodel);
+  g_object_unref (fixture->xmp_model);
 }
 
 /**

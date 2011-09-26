@@ -36,7 +36,7 @@
 
 typedef struct
 {
-  XMPModel *xmpmodel;
+  XMPModel *xmp_model;
 } GimpTestFixture;
 
 
@@ -57,7 +57,7 @@ static void
 gimp_test_xmp_model_setup (GimpTestFixture *fixture,
                            gconstpointer    data)
 {
-  fixture->xmpmodel = xmp_model_new ();
+  fixture->xmp_model = xmp_model_new ();
 }
 
 
@@ -65,7 +65,7 @@ static void
 gimp_test_xmp_model_teardown (GimpTestFixture *fixture,
                               gconstpointer    data)
 {
-  g_object_unref (fixture->xmpmodel);
+  g_object_unref (fixture->xmp_model);
 }
 
 
@@ -80,11 +80,11 @@ static void
 test_xmp_model_is_empty (GimpTestFixture *fixture,
                          gconstpointer    data)
 {
-  XMPModel *xmpmodel;
+  XMPModel *xmp_model;
 
-  xmpmodel = xmp_model_new ();
+  xmp_model = xmp_model_new ();
 
-  g_assert (xmp_model_is_empty (xmpmodel));
+  g_assert (xmp_model_is_empty (xmp_model));
 }
 
 /**
@@ -107,25 +107,25 @@ test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
   gboolean      result;
 
   /* Schema is nonsense, so nothing is set */
-  result = xmp_model_set_scalar_property (fixture->xmpmodel,
+  result = xmp_model_set_scalar_property (fixture->xmp_model,
                                            "SCHEMA",
                                            "key",
                                            "value");
   g_assert (result == FALSE);
-  g_assert (xmp_model_is_empty (fixture->xmpmodel) == TRUE);
+  g_assert (xmp_model_is_empty (fixture->xmp_model) == TRUE);
 
   /* Contributor is a scalar property. When set, we expect the XMPModel
    * not to be empty any more and that we can retrieve the same value.
    **/
   property_name = "me";
-  result = xmp_model_set_scalar_property (fixture->xmpmodel,
+  result = xmp_model_set_scalar_property (fixture->xmp_model,
                                            "dc",
                                            "contributor",
                                            property_name);
   g_assert (result == TRUE);
-  g_assert (xmp_model_is_empty (fixture->xmpmodel) == FALSE);
+  g_assert (xmp_model_is_empty (fixture->xmp_model) == FALSE);
 
-  scalar_value = xmp_model_get_scalar_property (fixture->xmpmodel,
+  scalar_value = xmp_model_get_scalar_property (fixture->xmp_model,
                                                 "dc",
                                                 "contributor");
   g_assert_cmpstr (scalar_value, ==, property_name);
@@ -133,13 +133,13 @@ test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
   /* Now we assure, that we can even set titles, which is of type
    * XMP_TYPE_LANG_ALT. This could be internally stored as a dictionary.
    **/
-  result = xmp_model_set_scalar_property (fixture->xmpmodel,
+  result = xmp_model_set_scalar_property (fixture->xmp_model,
                                           "dc",
                                           "title",
                                           property_name);
   g_assert (result == TRUE);
 
-  scalar_value = xmp_model_get_scalar_property (fixture->xmpmodel,
+  scalar_value = xmp_model_get_scalar_property (fixture->xmp_model,
                                                 "dc",
                                                 "title");
   g_assert_cmpstr (scalar_value, ==, property_name);
@@ -148,17 +148,17 @@ test_xmp_model_set_get_scalar_property (GimpTestFixture *fixture,
    * changed the string represenation we expect it to return FALSE as
    * there is currently no RAW value set.
    **/
-  value = xmp_model_get_raw_property_value (fixture->xmpmodel,
+  value = xmp_model_get_raw_property_value (fixture->xmp_model,
                                             "dc", "title");
   g_assert (value == NULL);
 
-  result = xmp_model_set_scalar_property (fixture->xmpmodel,
+  result = xmp_model_set_scalar_property (fixture->xmp_model,
                                            "dc",
                                            "title",
                                            "me too");
   g_assert (result == TRUE);
 
-  value = xmp_model_get_raw_property_value (fixture->xmpmodel,
+  value = xmp_model_get_raw_property_value (fixture->xmp_model,
                                              "dc", "title");
   g_assert (value == NULL);
 }
@@ -178,13 +178,13 @@ test_xmp_model_find_xmptype_by (GimpTestFixture *fixture,
 {
   XMPType   type;
 
-  type = xmp_model_find_xmptype_by (fixture->xmpmodel, "non", "sense");
+  type = xmp_model_find_xmptype_by (fixture->xmp_model, "non", "sense");
   g_assert (type == -1);
 
-  type = xmp_model_find_xmptype_by (fixture->xmpmodel, "dc", "title");
+  type = xmp_model_find_xmptype_by (fixture->xmp_model, "dc", "title");
   g_assert (type == XMP_TYPE_LANG_ALT);
 
-  type = xmp_model_find_xmptype_by (fixture->xmpmodel, "dc", "contributor");
+  type = xmp_model_find_xmptype_by (fixture->xmp_model, "dc", "contributor");
   g_assert (type == XMP_TYPE_TEXT);
 }
 
@@ -206,7 +206,7 @@ test_xmp_model_get_raw_property_value (GimpTestFixture *fixture,
 
   // NULL is returned if no value is set by given schema and property
   // name
-  g_assert (xmp_model_get_raw_property_value (fixture->xmpmodel,
+  g_assert (xmp_model_get_raw_property_value (fixture->xmp_model,
                                               "dc", "title") == NULL);
 
   // XMP_TYPE_LANG_ALT
@@ -216,13 +216,13 @@ test_xmp_model_get_raw_property_value (GimpTestFixture *fixture,
   expected[0] = g_strdup ("en_GB");
   expected[1] = g_strdup ("my title");
   expected[2] = NULL;
-  xmp_model_set_property (fixture->xmpmodel,
+  xmp_model_set_property (fixture->xmp_model,
                           XMP_TYPE_LANG_ALT,
                           "dc",
                           "title",
                           expected);
 
-  result = xmp_model_get_raw_property_value (fixture->xmpmodel,
+  result = xmp_model_get_raw_property_value (fixture->xmp_model,
                                              "dc", "title");
   g_assert_cmpstr (result[0], ==, expected[0]);
   g_assert_cmpstr (result[1], ==, expected[1]);
@@ -231,12 +231,12 @@ test_xmp_model_get_raw_property_value (GimpTestFixture *fixture,
   expected = g_new (const gchar *, 1);
   expected[0] = g_strdup ("Wilber");
   expected[1] = NULL;
-  g_assert (xmp_model_set_property (fixture->xmpmodel,
+  g_assert (xmp_model_set_property (fixture->xmp_model,
                                     XMP_TYPE_TEXT_SEQ,
                                     "dc",
                                     "creator",
                                     expected) == TRUE);
-  result = xmp_model_get_raw_property_value (fixture->xmpmodel,
+  result = xmp_model_get_raw_property_value (fixture->xmp_model,
                                              "dc", "creator");
   g_assert (result != NULL);
   g_assert_cmpstr (result[0], ==, expected[0]);
@@ -263,19 +263,19 @@ test_xmp_model_parse_file (GimpTestFixture *fixture,
                           NULL);
   g_assert (uri != NULL);
 
-  xmp_model_parse_file (fixture->xmpmodel, uri, &error);
-  g_assert (! xmp_model_is_empty (fixture->xmpmodel));
+  xmp_model_parse_file (fixture->xmp_model, uri, &error);
+  g_assert (! xmp_model_is_empty (fixture->xmp_model));
 
   // title
-  value = xmp_model_get_scalar_property (fixture->xmpmodel, "dc", "title");
+  value = xmp_model_get_scalar_property (fixture->xmp_model, "dc", "title");
   g_assert_cmpstr (value, == , "image title");
 
   // creator
-  value = xmp_model_get_scalar_property (fixture->xmpmodel, "dc", "creator");
+  value = xmp_model_get_scalar_property (fixture->xmp_model, "dc", "creator");
   g_assert_cmpstr (value, == , "roman");
 
   // description
-  value = xmp_model_get_scalar_property (fixture->xmpmodel, "dc", "description");
+  value = xmp_model_get_scalar_property (fixture->xmp_model, "dc", "description");
   g_assert_cmpstr (value, == , "bla");
 
   g_free (uri);
