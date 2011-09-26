@@ -16,6 +16,7 @@
   <dc:description>
    <rdf:Alt>
     <rdf:li xml:lang='x-default'>bla</rdf:li>
+    <rdf:li xml:lang='de_DE'>Deutsche Beschreibung</rdf:li>
    </rdf:Alt>
   </dc:description>
  </rdf:Description>

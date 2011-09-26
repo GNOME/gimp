@@ -22,6 +22,7 @@ LDADD = \
 	../base64.o		\
 	../xmp-parse.o		\
 	../xmp-schemas.o	\
+	../xmp-encode.o		\
 	../xmp-model.o
 
 

@@ -90,7 +90,64 @@ static void
 test_xmp_model_import_export (GimpTestFixture *fixture,
                               gconstpointer    data)
 {
-  g_assert (TRUE);
+  gboolean     result;
+  const gchar **oldvalue;
+  const gchar **value;
+  const gchar  *scalar;
+  GString      *buffer;
+  GError      **error = NULL;
+
+  /* The XMPModel is already loaded with imported XMP metadata */
+  g_assert (! xmp_model_is_empty (fixture->xmp_model));
+  oldvalue = xmp_model_get_raw_property_value (fixture->xmp_model,
+                                               "dc",
+                                               "description");
+  g_assert_cmpstr (oldvalue[0], ==, "x-default");
+  g_assert_cmpstr (oldvalue[2], ==, "de_DE");
+
+  /* We can now change the string representation of the raw values,
+   * which will not change the raw value itself. The current GtkEntry
+   * widgets of XMP_TYPE_LANG_ALT only change the x-default value, which
+   * may change in the future */
+  result = xmp_model_set_scalar_property (fixture->xmp_model,
+                                          "dc",
+                                          "description",
+                                          "My good description");
+  g_assert (result == TRUE);
+
+  value = xmp_model_get_raw_property_value (fixture->xmp_model,
+                                            "dc",
+                                            "description");
+  g_assert (value != NULL);
+  g_assert (oldvalue == value);
+
+  scalar = xmp_model_get_scalar_property (fixture->xmp_model,
+                                          "dc",
+                                          "description");
+  g_assert_cmpstr ("My good description", ==, scalar);
+
+  /* Once we write the XMPModel to a file, we take care of the changes
+   * in the string representation and merge it with the raw value
+   */
+  buffer = g_string_new ("GIMP_TEST");
+  xmp_generate_packet (fixture->xmp_model, buffer);
+
+  /* We reread the buffer into the XMPModel and expect it to have
+   * updated raw values */
+  xmp_model_parse_buffer (fixture->xmp_model,
+                          buffer->str,
+                          buffer->len,
+                          TRUE,
+                          error);
+
+  value = xmp_model_get_raw_property_value (fixture->xmp_model,
+                                            "dc",
+                                            "description");
+  g_assert (value != NULL);
+  g_assert_cmpstr (value[0], ==, "x-default");
+  g_assert_cmpstr (value[1], ==, "My good description");
+  g_assert_cmpstr (value[2], ==, "de_DE");
+  g_assert_cmpstr (value[3], ==, "Deutsche Beschreibung");
 }
 
 int main(int argc, char **argv)
