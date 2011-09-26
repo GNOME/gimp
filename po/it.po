@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-17 01:16+0200\n"
-"PO-Revision-Date: 2011-09-17 01:16+0200\n"
+"POT-Creation-Date: 2011-09-26 08:07+0200\n"
+"PO-Revision-Date: 2011-09-26 08:24+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -460,7 +460,7 @@ msgid "Tools"
 msgstr "Strumenti"
 
 #: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:350
-#: ../app/tools/gimpvectortool.c:159
+#: ../app/tools/gimpvectortool.c:160
 msgid "Paths"
 msgstr "Tracciati"
 
@@ -4615,7 +4615,7 @@ msgstr "Apri file di testo (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:140 ../app/core/gimpbrush-load.c:422
+#: ../app/core/gimpbrush-load.c:140 ../app/core/gimpbrush-load.c:424
 #: ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
 #: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
@@ -5139,7 +5139,7 @@ msgid "New Path Options"
 msgstr "Nuove opzioni tracciato"
 
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:198
-#: ../app/tools/gimpvectortool.c:1980
+#: ../app/tools/gimpvectortool.c:1981
 msgid "Stroke Path"
 msgstr "Delinea tracciato"
 
@@ -7488,56 +7488,58 @@ msgstr "Aggiornamento cache dei marcatori"
 
 #: ../app/core/gimpbrush-load.c:178
 #, c-format
-msgid "Could not read %d bytes from '%s': %s"
-msgstr "Impossibile leggere %d byte da '%s': %s"
+msgid "Could not read %d byte from '%s': %s"
+msgid_plural "Could not read %d bytes from '%s': %s"
+msgstr[0] "Impossibile leggere %d byte da \"%s\": %s"
+msgstr[1] "Impossibile leggere %d byte da \"%s\": %s"
 
-#: ../app/core/gimpbrush-load.c:198
+#: ../app/core/gimpbrush-load.c:200
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr "Errore fatale nel file pennello '%s': profondità = 0."
 
-#: ../app/core/gimpbrush-load.c:207
+#: ../app/core/gimpbrush-load.c:209
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr "Errore fatale nel file pennello '%s': altezza = 0."
 
-#: ../app/core/gimpbrush-load.c:216
+#: ../app/core/gimpbrush-load.c:218
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr "Errore fatale nel file pennello '%s': bytes = 0."
 
-#: ../app/core/gimpbrush-load.c:240
+#: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr ""
 "Errore fatale di analisi nel file pennello '%s': profondità sconosciuta %d."
 
-#: ../app/core/gimpbrush-load.c:253
+#: ../app/core/gimpbrush-load.c:255
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr ""
 "Errore fatale di analisi nel file pennello '%s': versione sconosciuta %d."
 
-#: ../app/core/gimpbrush-load.c:269 ../app/core/gimpbrush-load.c:389
-#: ../app/core/gimpbrush-load.c:723
+#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrush-load.c:391
+#: ../app/core/gimpbrush-load.c:725
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "Errore di analisi fatale nel file pennello '%s': il file sembra troncato."
 
-#: ../app/core/gimpbrush-load.c:277 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:279 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
-#: ../app/core/gimpbrush-load.c:284 ../app/core/gimppattern-load.c:146
+#: ../app/core/gimpbrush-load.c:286 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
-#: ../app/tools/gimpvectortool.c:317
+#: ../app/tools/gimpvectortool.c:318
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: ../app/core/gimpbrush-load.c:378
+#: ../app/core/gimpbrush-load.c:380
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7547,7 +7549,7 @@ msgstr ""
 "supportata %d\n"
 "I pennelli di GIMP devono essere grigi o RGBA."
 
-#: ../app/core/gimpbrush-load.c:450
+#: ../app/core/gimpbrush-load.c:452
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7555,7 +7557,7 @@ msgstr ""
 "Errore fatale di analisi del file pennello '%s': impossibile decodificare "
 "versione formato abr %d."
 
-#: ../app/core/gimpbrush-load.c:617
+#: ../app/core/gimpbrush-load.c:619
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -8006,7 +8008,7 @@ msgstr "Trasforma livello"
 msgid "Transformation"
 msgstr "Trasformazione"
 
-#: ../app/core/gimpdrawable.c:484
+#: ../app/core/gimpdrawable.c:494
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Scala"
@@ -8101,41 +8103,41 @@ msgstr ""
 "Scostamento verticale della prima linea della griglia; dev'essere un numero "
 "negativo."
 
-#: ../app/core/gimpgrouplayer.c:213
+#: ../app/core/gimpgrouplayer.c:219
 msgid "Layer Group"
 msgstr "Gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:214
+#: ../app/core/gimpgrouplayer.c:220
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Rinomina gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:215
+#: ../app/core/gimpgrouplayer.c:221
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Sposta gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:216
+#: ../app/core/gimpgrouplayer.c:222
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Scala gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:217
+#: ../app/core/gimpgrouplayer.c:223
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Ridimensiona gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:218
+#: ../app/core/gimpgrouplayer.c:224
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Rifletti gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:219
+#: ../app/core/gimpgrouplayer.c:225
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Ruota gruppo livelli"
 
-#: ../app/core/gimpgrouplayer.c:220
+#: ../app/core/gimpgrouplayer.c:226
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Trasforma gruppo livelli"
@@ -8354,7 +8356,7 @@ msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:3663
+#: ../app/core/gimpimage.c:3664
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
@@ -8364,17 +8366,17 @@ msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:3870 ../app/core/gimpimage.c:3882
+#: ../app/core/gimpimage.c:3870 ../app/core/gimpimage.c:3883
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:3936
+#: ../app/core/gimpimage.c:3937
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Aggiungi tracciato"
 
-#: ../app/core/gimpimage.c:3967
+#: ../app/core/gimpimage.c:3968
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Rimuovi tracciato"
@@ -8452,7 +8454,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Àncora selezione fluttuante"
 
-#: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:609
+#: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:620
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -8528,13 +8530,13 @@ msgstr "Il livello non può essere alzato ulteriormente."
 msgid "Layer cannot be lowered more."
 msgstr "Il livello non può essere abbassato ulteriormente."
 
-#: ../app/core/gimplayer.c:439 ../app/core/gimplayer.c:1505
+#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1528
 #: ../app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
 msgstr "%s maschera"
 
-#: ../app/core/gimplayer.c:478
+#: ../app/core/gimplayer.c:489
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -8543,49 +8545,49 @@ msgstr ""
 "Selezione fluttuante\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1425
+#: ../app/core/gimplayer.c:1448
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Impossibile aggiungere una maschera di livello dato che il livello ne ha già "
 "una."
 
-#: ../app/core/gimplayer.c:1436
+#: ../app/core/gimplayer.c:1459
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossibile aggiungere maschera livello con dimensioni diverse dal livello "
 "specificato."
 
-#: ../app/core/gimplayer.c:1442
+#: ../app/core/gimplayer.c:1465
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Aggiungi maschera di livello"
 
-#: ../app/core/gimplayer.c:1560
+#: ../app/core/gimplayer.c:1583
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Trasferimento alfa su maschera"
 
-#: ../app/core/gimplayer.c:1730
+#: ../app/core/gimplayer.c:1753
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Applica maschera di livello"
 
-#: ../app/core/gimplayer.c:1731
+#: ../app/core/gimplayer.c:1754
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Elimina maschera di livello"
 
-#: ../app/core/gimplayer.c:1850
+#: ../app/core/gimplayer.c:1873
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Aggiungi canale alfa"
 
-#: ../app/core/gimplayer.c:1904
+#: ../app/core/gimplayer.c:1927
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Rimuovi canale alfa"
 
-#: ../app/core/gimplayer.c:1924
+#: ../app/core/gimplayer.c:1947
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Livello a dimensione immagine"
@@ -10677,14 +10679,14 @@ msgstr "Nuovo tracciato"
 
 #: ../app/display/gimpdisplayshell-dnd.c:347
 #: ../app/display/gimpdisplayshell-dnd.c:449 ../app/tools/gimpblendtool.c:173
-#: ../app/tools/gimpbucketfilltool.c:135 ../app/tools/gimpimagemaptool.c:280
+#: ../app/tools/gimpbucketfilltool.c:135 ../app/tools/gimpimagemaptool.c:279
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Impossibile modificare i pixel di un gruppo di livelli."
 
 #: ../app/display/gimpdisplayshell-dnd.c:355
 #: ../app/display/gimpdisplayshell-dnd.c:457 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
+#: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
 #: ../app/tools/gimptransformtool.c:245 ../app/tools/gimptransformtool.c:1061
 msgid "The active layer's pixels are locked."
 msgstr "I pixel del livello attivo sono bloccati."
@@ -11585,7 +11587,7 @@ msgstr ""
 "Mai posto quiz vaghi\n"
 "o indecifrabili."
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1367
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1367
 msgid "Add Text Layer"
 msgstr "Aggiungi livello testo"
 
@@ -11702,10 +11704,6 @@ msgstr "Distribuzione orizzontale del colore"
 msgid "Vertical offset for distribution"
 msgstr "Distribuzione verticale del colore"
 
-#: ../app/tools/gimpalignoptions.c:247 ../app/tools/gimpalignoptions.c:298
-msgid "Align left edge of target"
-msgstr "Allinea al bordo sinistro dell'oggetto"
-
 #: ../app/tools/gimpalignoptions.c:272 ../app/tools/gimpaligntool.c:124
 msgid "Align"
 msgstr "Allinea"
@@ -11713,6 +11711,10 @@ msgstr "Allinea"
 #: ../app/tools/gimpalignoptions.c:284
 msgid "Relative to:"
 msgstr "Relativo a:"
+
+#: ../app/tools/gimpalignoptions.c:298
+msgid "Align left edge of target"
+msgstr "Allinea al bordo sinistro dell'oggetto"
 
 #: ../app/tools/gimpalignoptions.c:302
 msgid "Align center of target"
@@ -12884,7 +12886,7 @@ msgstr "Preimpo_stazioni:"
 msgid "Settings saved to '%s'"
 msgstr "Impostazioni salvate su \"%s\""
 
-#: ../app/tools/gimpimagemaptool.c:366
+#: ../app/tools/gimpimagemaptool.c:362
 msgid "_Preview"
 msgstr "Ante_prima"
 
@@ -13960,144 +13962,144 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "Selezione dal tracciato"
 
-#: ../app/tools/gimpvectortool.c:160
+#: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
 msgstr "Strumento tracciati: crea e modifica tracciati"
 
-#: ../app/tools/gimpvectortool.c:161
+#: ../app/tools/gimpvectortool.c:162
 msgid "Pat_hs"
 msgstr "_Tracciati"
 
-#: ../app/tools/gimpvectortool.c:250
+#: ../app/tools/gimpvectortool.c:251
 msgid "The active path is locked."
 msgstr "Il tracciato attivo è bloccato"
 
-#: ../app/tools/gimpvectortool.c:340
+#: ../app/tools/gimpvectortool.c:341
 msgid "Add Stroke"
 msgstr "Aggiungi tratto"
 
-#: ../app/tools/gimpvectortool.c:364
+#: ../app/tools/gimpvectortool.c:365
 msgid "Add Anchor"
 msgstr "Aggiungi àncora"
 
-#: ../app/tools/gimpvectortool.c:390
+#: ../app/tools/gimpvectortool.c:391
 msgid "Insert Anchor"
 msgstr "Inserisci àncora"
 
-#: ../app/tools/gimpvectortool.c:421
+#: ../app/tools/gimpvectortool.c:422
 msgid "Drag Handle"
 msgstr "Trascina maniglia"
 
-#: ../app/tools/gimpvectortool.c:452
+#: ../app/tools/gimpvectortool.c:453
 msgid "Drag Anchor"
 msgstr "Trascina àncora"
 
-#: ../app/tools/gimpvectortool.c:470
+#: ../app/tools/gimpvectortool.c:471
 msgid "Drag Anchors"
 msgstr "Trascina àncore"
 
-#: ../app/tools/gimpvectortool.c:493
+#: ../app/tools/gimpvectortool.c:494
 msgid "Drag Curve"
 msgstr "Trascina curve"
 
-#: ../app/tools/gimpvectortool.c:522
+#: ../app/tools/gimpvectortool.c:523
 msgid "Connect Strokes"
 msgstr "Collega tratti"
 
-#: ../app/tools/gimpvectortool.c:554
+#: ../app/tools/gimpvectortool.c:555
 msgid "Drag Path"
 msgstr "Trascina tracciato"
 
-#: ../app/tools/gimpvectortool.c:565
+#: ../app/tools/gimpvectortool.c:566
 msgid "Convert Edge"
 msgstr "Converti margine"
 
-#: ../app/tools/gimpvectortool.c:596
+#: ../app/tools/gimpvectortool.c:597
 msgid "Delete Anchor"
 msgstr "Elimina àncora"
 
-#: ../app/tools/gimpvectortool.c:619
+#: ../app/tools/gimpvectortool.c:620
 msgid "Delete Segment"
 msgstr "Elimina segmento"
 
-#: ../app/tools/gimpvectortool.c:838
+#: ../app/tools/gimpvectortool.c:839
 msgid "Move Anchors"
 msgstr "Sposta àncore"
 
-#: ../app/tools/gimpvectortool.c:1201
+#: ../app/tools/gimpvectortool.c:1202
 msgid "Click to pick path to edit"
 msgstr "Fare clic sul tracciato per modificarlo"
 
-#: ../app/tools/gimpvectortool.c:1205
+#: ../app/tools/gimpvectortool.c:1206
 msgid "Click to create a new path"
 msgstr "Fare clic per creare un nuovo tracciato"
 
-#: ../app/tools/gimpvectortool.c:1209
+#: ../app/tools/gimpvectortool.c:1210
 msgid "Click to create a new component of the path"
 msgstr "Fare clic per creare un nuovo componente del tracciato"
 
-#: ../app/tools/gimpvectortool.c:1213
+#: ../app/tools/gimpvectortool.c:1214
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Fare clic o clic e trascinare per creare una nuova àncora"
 
-#: ../app/tools/gimpvectortool.c:1223 ../app/tools/gimpvectortool.c:1230
+#: ../app/tools/gimpvectortool.c:1224 ../app/tools/gimpvectortool.c:1231
 msgid "Click-Drag to move the anchor around"
 msgstr "Fare clic e trascinare per spostare l'àncora"
 
-#: ../app/tools/gimpvectortool.c:1234 ../app/tools/gimpvectortool.c:1257
+#: ../app/tools/gimpvectortool.c:1235 ../app/tools/gimpvectortool.c:1258
 msgid "Click-Drag to move the anchors around"
 msgstr "Fare clic e trascinare per spostare le àncore"
 
-#: ../app/tools/gimpvectortool.c:1240
+#: ../app/tools/gimpvectortool.c:1241
 msgid "Click-Drag to move the handle around"
 msgstr "Fare clic e trascinare per spostare l'àncora"
 
-#: ../app/tools/gimpvectortool.c:1247
+#: ../app/tools/gimpvectortool.c:1248
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Fare clic e trascinare per spostare le ancore simmetricamente"
 
-#: ../app/tools/gimpvectortool.c:1262
+#: ../app/tools/gimpvectortool.c:1263
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Fare clic e trascinare per modificare la forma della curva"
 
-#: ../app/tools/gimpvectortool.c:1265
+#: ../app/tools/gimpvectortool.c:1266
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: simmetricamente"
 
-#: ../app/tools/gimpvectortool.c:1270
+#: ../app/tools/gimpvectortool.c:1271
 msgid "Click-Drag to move the component around"
 msgstr "Fare clic e trascinare per spostare il componente"
 
-#: ../app/tools/gimpvectortool.c:1278
+#: ../app/tools/gimpvectortool.c:1279
 msgid "Click-Drag to move the path around"
 msgstr "Fare clic e trascinare per spostare il tracciato"
 
-#: ../app/tools/gimpvectortool.c:1282
+#: ../app/tools/gimpvectortool.c:1283
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Fare clic per inserire un'àncora nel tracciato"
 
-#: ../app/tools/gimpvectortool.c:1290
+#: ../app/tools/gimpvectortool.c:1291
 msgid "Click to delete this anchor"
 msgstr "Fare clic per cancellare quest'àncora"
 
-#: ../app/tools/gimpvectortool.c:1294
+#: ../app/tools/gimpvectortool.c:1295
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Fare clic per collegare quest'àncora con il punto finale selezionato"
 
-#: ../app/tools/gimpvectortool.c:1299
+#: ../app/tools/gimpvectortool.c:1300
 msgid "Click to open up the path"
 msgstr "Fare clic per aprire il tracciato"
 
-#: ../app/tools/gimpvectortool.c:1303
+#: ../app/tools/gimpvectortool.c:1304
 msgid "Click to make this node angular"
 msgstr "Fare clic per rendere angolare questo nodo"
 
-#: ../app/tools/gimpvectortool.c:1803
+#: ../app/tools/gimpvectortool.c:1804
 msgid "Delete Anchors"
 msgstr "Elimina àncora"
 
-#: ../app/tools/gimpvectortool.c:1974
+#: ../app/tools/gimpvectortool.c:1975
 msgid "There is no active layer or channel to stroke to"
 msgstr "Non c'è un livello o un canale attivo da disegnare"
 
@@ -14486,11 +14488,11 @@ msgstr "Solo le immagini indicizzate hanno una mappa colori."
 msgid "Palette"
 msgstr "Tavolozza"
 
-#: ../app/widgets/gimpcontainerpopup.c:578
+#: ../app/widgets/gimpcontainerpopup.c:591
 msgid "Smaller Previews"
 msgstr "Anteprime più piccole"
 
-#: ../app/widgets/gimpcontainerpopup.c:583
+#: ../app/widgets/gimpcontainerpopup.c:596
 msgid "Larger Previews"
 msgstr "Anteprime più grandi"
 
@@ -15052,74 +15054,74 @@ msgstr "Fattore di zoom: %d:1"
 msgid "Displaying [%0.4f, %0.4f]"
 msgstr "Visualizzazione [%0.4f, %0.4f]"
 
-#: ../app/widgets/gimpgradienteditor.c:957
+#: ../app/widgets/gimpgradienteditor.c:952
 #, c-format
 msgid "Position: %0.4f"
 msgstr "Posizione: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:958
+#: ../app/widgets/gimpgradienteditor.c:953
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:960
+#: ../app/widgets/gimpgradienteditor.c:955
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
 msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
-#: ../app/widgets/gimpgradienteditor.c:962
+#: ../app/widgets/gimpgradienteditor.c:957
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
 msgstr "Luminosità: %0.1f   Opacità: %0.1f"
 
-#: ../app/widgets/gimpgradienteditor.c:993
+#: ../app/widgets/gimpgradienteditor.c:988
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:1004
+#: ../app/widgets/gimpgradienteditor.c:999
 msgid "Foreground color set to:"
 msgstr "Colore di primo piano impostato a:"
 
-#: ../app/widgets/gimpgradienteditor.c:1011
+#: ../app/widgets/gimpgradienteditor.c:1006
 msgid "Background color set to:"
 msgstr "Colore di sfondo impostato a:"
 
-#: ../app/widgets/gimpgradienteditor.c:1239
-#: ../app/widgets/gimpgradienteditor.c:1305
+#: ../app/widgets/gimpgradienteditor.c:1234
+#: ../app/widgets/gimpgradienteditor.c:1300
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sTrascina: sposta e comprime"
 
-#: ../app/widgets/gimpgradienteditor.c:1245
+#: ../app/widgets/gimpgradienteditor.c:1240
 msgid "Drag: move"
 msgstr "Trascina: sposta"
 
-#: ../app/widgets/gimpgradienteditor.c:1252
-#: ../app/widgets/gimpgradienteditor.c:1266
-#: ../app/widgets/gimpgradienteditor.c:1280
-#: ../app/widgets/gimpgradienteditor.c:1302
+#: ../app/widgets/gimpgradienteditor.c:1247
+#: ../app/widgets/gimpgradienteditor.c:1261
+#: ../app/widgets/gimpgradienteditor.c:1275
+#: ../app/widgets/gimpgradienteditor.c:1297
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sClic: estende la selezione"
 
-#: ../app/widgets/gimpgradienteditor.c:1258
-#: ../app/widgets/gimpgradienteditor.c:1272
+#: ../app/widgets/gimpgradienteditor.c:1253
+#: ../app/widgets/gimpgradienteditor.c:1267
 msgid "Click: select"
 msgstr "Clic: selezione"
 
-#: ../app/widgets/gimpgradienteditor.c:1286
-#: ../app/widgets/gimpgradienteditor.c:1310
+#: ../app/widgets/gimpgradienteditor.c:1281
+#: ../app/widgets/gimpgradienteditor.c:1305
 msgid "Click: select    Drag: move"
 msgstr "Clic: selezione   Trascina: sposta"
 
-#: ../app/widgets/gimpgradienteditor.c:1525
-#: ../app/widgets/gimpgradienteditor.c:1533
+#: ../app/widgets/gimpgradienteditor.c:1520
+#: ../app/widgets/gimpgradienteditor.c:1528
 #, c-format
 msgid "Handle position: %0.4f"
 msgstr "Posizione appiglio: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:1550
+#: ../app/widgets/gimpgradienteditor.c:1545
 #, c-format
 msgid "Distance: %0.4f"
 msgstr "Distanza: %0.4f"
@@ -15322,15 +15324,15 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "colori"
 
-#: ../app/widgets/gimpitemtreeview.c:707
+#: ../app/widgets/gimpitemtreeview.c:715
 msgid "Lock:"
 msgstr "Blocca:"
 
-#: ../app/widgets/gimpitemtreeview.c:1484
+#: ../app/widgets/gimpitemtreeview.c:1509
 msgid "Set Item Exclusive Visible"
 msgstr "Imposta voce esclusiva visibile"
 
-#: ../app/widgets/gimpitemtreeview.c:1492
+#: ../app/widgets/gimpitemtreeview.c:1517
 msgid "Set Item Exclusive Linked"
 msgstr "Imposta voce esclusiva collegata"
 
@@ -15338,14 +15340,12 @@ msgstr "Imposta voce esclusiva collegata"
 msgid "Lock alpha channel"
 msgstr "Blocca canale alfa"
 
-#: ../app/widgets/gimpmessagebox.c:434
+#: ../app/widgets/gimpmessagebox.c:433
 #, c-format
-msgid "Message repeated %d times."
-msgstr "Messaggio ripetuto %d volte."
-
-#: ../app/widgets/gimpmessagebox.c:436
 msgid "Message repeated once."
-msgstr "Messaggio ripetuto una volta."
+msgid_plural "Message repeated %d times."
+msgstr[0] "Messaggio ripetuto una volta."
+msgstr[1] "Messaggio ripetuto %d volte."
 
 #: ../app/widgets/gimppaletteeditor.c:226
 #: ../app/widgets/gimppaletteeditor.c:682
@@ -15911,7 +15911,7 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Indefinito"
 
-#: ../app/xcf/xcf-load.c:333
+#: ../app/xcf/xcf-load.c:334
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -15919,7 +15919,7 @@ msgstr ""
 "Questo file XCF è danneggiato! È stato caricato tutto quello che si è "
 "potuto, ma è incompleto."
 
-#: ../app/xcf/xcf-load.c:344
+#: ../app/xcf/xcf-load.c:345
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -15927,7 +15927,7 @@ msgstr ""
 "Questo file XCF è danneggiato! Non è stato possibile ripristinare neanche "
 "una parte di esso."
 
-#: ../app/xcf/xcf-load.c:417
+#: ../app/xcf/xcf-load.c:418
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -15990,32 +15990,3 @@ msgstr "Crea immagini o modifica fotografie"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
 msgstr "Editor immagine"
-
-#~ msgid "Config"
-#~ msgstr "Config"
-
-#~ msgid "A GimpCageConfig object, that define the transformation"
-#~ msgstr "Un oggetto GimpCageConfig, che definisce la trasformazione"
-
-#~ msgid "Fill from first point"
-#~ msgstr "Riempi dal primo punto"
-
-#~ msgctxt "command"
-#~ msgid "Flip"
-#~ msgstr "Rifletti"
-
-#~ msgctxt "command"
-#~ msgid "Perspective"
-#~ msgstr "Prospettiva"
-
-#~ msgctxt "command"
-#~ msgid "Rotate"
-#~ msgstr "Ruota"
-
-#~ msgctxt "command"
-#~ msgid "Scale"
-#~ msgstr "Scala"
-
-#~ msgctxt "command"
-#~ msgid "Shear"
-#~ msgstr "Inclina"
