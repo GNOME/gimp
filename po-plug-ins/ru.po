@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-18 11:35+0400\n"
-"PO-Revision-Date: 2011-09-20 13:43+0400\n"
+"PO-Revision-Date: 2011-09-28 01:59+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -5470,7 +5470,7 @@ msgstr "Режим _2"
 
 #: ../plug-ins/common/iwarp.c:264
 msgid "Use mouse control to warp image areas"
-msgstr "Используйте кнопки мыши для исказить изображение"
+msgstr "Используйте клавиши мыши для искажения изображения"
 
 #: ../plug-ins/common/iwarp.c:269
 msgid "_IWarp..."
@@ -8248,7 +8248,7 @@ msgstr "Создание волн"
 
 #: ../plug-ins/common/web-browser.c:137
 msgid "The operating system is out of memory or resources."
-msgstr ""
+msgstr "У операционной системы закончились свободные ресурсы."
 
 #: ../plug-ins/common/web-browser.c:140
 msgid "The specified file was not found."
@@ -8546,6 +8546,10 @@ msgid ""
 "information. GIMP writes color space information by default. Enabling this "
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
+"Некоторые приложения не могут читать файлы в формате BMP, куда записана "
+"информация о цветовом пространстве. По умолчанию GIMP пишет эту информацию. "
+"После включения этой функции GIMP не запишет данные о цветовом пространстве "
+"в этот файл."
 
 #. Advanced Options
 #: ../plug-ins/file-bmp/bmp-write.c:901 ../plug-ins/file-jpeg/jpeg-save.c:901
