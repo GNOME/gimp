@@ -722,6 +722,9 @@ load_image (const gchar  *filename,
   pp = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if (!pp)
     {
+      /* this could happen if the compile time and run-time libpng
+         versions do not match. */
+
       g_set_error (error, 0, 0,
                    _("Error creating PNG read struct while saving '%s'."),
                    gimp_filename_to_utf8 (filename));
@@ -1257,6 +1260,9 @@ save_image (const gchar  *filename,
   pp = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if (!pp)
     {
+      /* this could happen if the compile time and run-time libpng
+         versions do not match. */
+
       g_set_error (error, 0, 0,
                    _("Error creating PNG write struct while saving '%s'."),
                    gimp_filename_to_utf8 (filename));
