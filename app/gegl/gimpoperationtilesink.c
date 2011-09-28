@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#undef G_DISABLE_DEPRECATED /* GStaticMutex */
 #include <gegl.h>
 #include <gegl-buffer.h>
 

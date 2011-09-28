@@ -21,6 +21,7 @@
 
 #include <string.h>
 
+#undef G_DISABLE_DEPRECATED /* GStaticMutex */
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
