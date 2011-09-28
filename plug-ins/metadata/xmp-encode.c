@@ -278,6 +278,7 @@ xmp_generate_packet (XMPModel *xmp_model,
   GtkTreeIter      child;
   const XMPSchema *schema;
   gpointer         saved_ref;
+  const gchar     *saved_value;
 
   g_return_if_fail (xmp_model != NULL);
   g_return_if_fail (buffer != NULL);
@@ -302,6 +303,7 @@ xmp_generate_packet (XMPModel *xmp_model,
           if (gtk_tree_model_iter_children (model, &child, &iter))
             {
               saved_ref = NULL;
+              saved_value = NULL;
               do
                 {
                   const XMPProperty  *property;
@@ -314,9 +316,11 @@ xmp_generate_packet (XMPModel *xmp_model,
                                       COL_XMP_VALUE_RAW, &value_array,
                                       -1);
                   /* do not process structured types multiple times */
-                  if (saved_ref != value_array)
+                  if (saved_ref != value_array
+                      || (value != NULL && saved_value != value))
                     {
                       saved_ref = value_array;
+                      saved_value = value;
                       g_return_if_fail (property->name != NULL);
                       gen_property (buffer, schema, property, value, value_array);
                     }
