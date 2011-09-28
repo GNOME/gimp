@@ -645,7 +645,7 @@ gimp_align_tool_status_update (GimpTool        *tool,
         }
 
       if (status)
-        gimp_tool_push_status (tool, display, status);
+        gimp_tool_push_status (tool, display, "%s", status);
 
       if (free_status)
         g_free ((gchar *) status);

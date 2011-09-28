@@ -321,6 +321,7 @@ stroke_dialog_response (GtkWidget  *widget,
             gimp_message (context->gimp,
                           G_OBJECT (widget),
                           GIMP_MESSAGE_WARNING,
+                          "%s",
                           error ? error->message : "NULL");
             g_clear_error (&error);
             return;

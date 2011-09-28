@@ -158,7 +158,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
         {
           gimp_message (display->image->gimp, G_OBJECT (display),
                         GIMP_MESSAGE_WARNING,
-                        error->message);
+                        "%s", error->message);
           g_clear_error (&error);
         }
       else

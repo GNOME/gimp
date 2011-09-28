@@ -174,7 +174,7 @@ image_convert_cmd_callback (GtkAction *action,
                                 NULL, &error))
         {
           gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                        error->message);
+                        "%s", error->message);
           g_clear_error (&error);
           return;
         }

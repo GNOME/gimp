@@ -165,7 +165,7 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
   dialog->num_messages++;
 
   if (overflow)
-    gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box), domain);
+    gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box), "%s", domain);
   else
     gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
                                        _("%s Message"), domain);

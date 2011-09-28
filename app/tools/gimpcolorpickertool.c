@@ -270,7 +270,7 @@ gimp_color_picker_tool_oper_update (GimpTool        *tool,
         }
       if (status_help != NULL)
         {
-          gimp_tool_push_status (tool, display, status_help);
+          gimp_tool_push_status (tool, display, "%s", status_help);
           g_free (status_help);
         }
     }

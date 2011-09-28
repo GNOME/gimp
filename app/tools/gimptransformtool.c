@@ -1179,7 +1179,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
 
   if (! active_item)
     {
-      gimp_tool_message (tool, display, message);
+      gimp_tool_message (tool, display, "%s", message);
       return;
     }
 

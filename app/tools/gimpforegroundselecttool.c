@@ -334,7 +334,7 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
   if (proximity)
     {
       if (status)
-        gimp_tool_replace_status (tool, display, status);
+        gimp_tool_replace_status (tool, display, "%s", status);
 
       gimp_draw_tool_start (draw_tool, display);
     }

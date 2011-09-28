@@ -1132,7 +1132,7 @@ gimp_free_select_tool_status_update (GimpFreeSelectTool *fst,
 
       if (status_text)
         {
-          gimp_tool_push_status (tool, display, status_text);
+          gimp_tool_push_status (tool, display, "%s", status_text);
         }
     }
 }

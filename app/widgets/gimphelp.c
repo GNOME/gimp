@@ -380,8 +380,9 @@ gimp_help_browser_error (Gimp         *gimp,
     }
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     primary);
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box, text);
+                                     "%s", primary);
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             "%s", text);
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {

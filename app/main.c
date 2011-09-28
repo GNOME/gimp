@@ -719,14 +719,14 @@ gimp_sigfatal_handler (gint sig_num)
     case SIGQUIT:
     case SIGABRT:
     case SIGTERM:
-      gimp_terminate (g_strsignal (sig_num));
+      gimp_terminate ("%s", g_strsignal (sig_num));
       break;
 
     case SIGBUS:
     case SIGSEGV:
     case SIGFPE:
     default:
-      gimp_fatal_error (g_strsignal (sig_num));
+      gimp_fatal_error ("%s", g_strsignal (sig_num));
       break;
     }
 }

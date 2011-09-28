@@ -331,7 +331,7 @@ gimp_curves_tool_oper_update (GimpTool        *tool,
   GIMP_COLOR_TOOL (tool)->pick_mode = mode;
 
   if (status && proximity)
-    gimp_tool_push_status (tool, display, status);
+    gimp_tool_push_status (tool, display, "%s", status);
 }
 
 static void

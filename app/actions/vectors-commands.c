@@ -281,7 +281,7 @@ vectors_merge_visible_cmd_callback (GtkAction *action,
   if (! gimp_image_merge_visible_vectors (image, &error))
     {
       gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                    error->message);
+                    "%s", error->message);
       g_clear_error (&error);
       return;
     }
@@ -425,7 +425,7 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
                           NULL, &error))
     {
       gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                    error->message);
+                    "%s", error->message);
       g_clear_error (&error);
     }
   else

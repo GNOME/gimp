@@ -136,7 +136,7 @@ file_open_image (Gimp                *gimp,
             {
               g_free (filename);
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_ACCES,
-                           g_strerror (errno));
+                           "%s", g_strerror (errno));
               return NULL;
             }
         }
@@ -617,13 +617,15 @@ file_open_profile_apply_rgb (GimpImage    *image,
           g_object_set (config, "mode", GIMP_COLOR_MANAGEMENT_OFF, NULL);
 
           gimp_message (image->gimp, G_OBJECT (progress),
-                        GIMP_MESSAGE_WARNING, msg);
+                        GIMP_MESSAGE_WARNING,
+                        "%s", msg);
           g_free (msg);
         }
       else
         {
           gimp_message (image->gimp, G_OBJECT (progress),
-                        GIMP_MESSAGE_ERROR, error->message);
+                        GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
         }
 
       g_error_free (error);

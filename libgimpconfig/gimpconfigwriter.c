@@ -568,6 +568,7 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
     {
       if (write (writer->fd, "\n", 1) < 0)
         g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+                     "%s",
                      g_strerror (errno));
     }
   else

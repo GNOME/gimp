@@ -830,7 +830,7 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
   if (thumbnail->image_mimetype)
     {
       keys[i]   = TAG_THUMB_MIMETYPE;
-      values[i] = g_strdup_printf (thumbnail->image_mimetype);
+      values[i] = g_strdup_printf ("%s", thumbnail->image_mimetype);
       i++;
     }
 

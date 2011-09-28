@@ -313,7 +313,7 @@ gimp_source_tool_oper_update (GimpTool        *tool,
         {
           if (state & GDK_CONTROL_MASK)
             gimp_tool_replace_status (tool, display,
-                                      source_tool->status_set_source);
+                                      "%s", source_tool->status_set_source);
           else
             {
               gchar *status;
@@ -322,7 +322,7 @@ gimp_source_tool_oper_update (GimpTool        *tool,
                                     gimp_get_mod_separator (),
                                     source_tool->status_set_source,
                                     NULL);
-              gimp_tool_replace_status (tool, display, status);
+              gimp_tool_replace_status (tool, display, "%s", status);
               g_free (status);
             }
         }

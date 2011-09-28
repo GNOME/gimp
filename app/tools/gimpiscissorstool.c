@@ -940,7 +940,7 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
       status = gimp_suggest_modifiers (_("Click-Drag to move this point"),
                                        GDK_SHIFT_MASK & ~state,
                                        _("%s: disable auto-snap"), NULL, NULL);
-      gimp_tool_replace_status (tool, display, status);
+      gimp_tool_replace_status (tool, display, "%s", status);
       g_free (status);
       iscissors->op = ISCISSORS_OP_MOVE_POINT;
     }
@@ -1006,7 +1006,7 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
                                                GDK_SHIFT_MASK & ~state,
                                                _("%s: disable auto-snap"),
                                                NULL, NULL);
-              gimp_tool_replace_status (tool, display, status);
+              gimp_tool_replace_status (tool, display, "%s", status);
               g_free (status);
             }
           iscissors->op = ISCISSORS_OP_ADD_POINT;

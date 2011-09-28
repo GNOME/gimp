@@ -216,7 +216,7 @@ quit_close_all_dialog_container_changed (GimpContainer  *images,
   text = g_strdup_printf (ngettext ("There is one image with unsaved changes:",
                                     "There are %d images with unsaved changes:",
                                     num_images), num_images);
-  gimp_message_box_set_primary_text (box, text);
+  gimp_message_box_set_primary_text (box, "%s", text);
   g_free (text);
 
   if (num_images == 0)

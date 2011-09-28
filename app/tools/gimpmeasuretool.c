@@ -572,7 +572,7 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
                                                        GDK_MOD1_MASK & ~state,
                                                        NULL, NULL, NULL);
                     }
-                  gimp_tool_replace_status (tool, display, status);
+                  gimp_tool_replace_status (tool, display, "%s", status);
                   g_free (status);
                   measure->status_help = TRUE;
                   break;
@@ -585,7 +585,7 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
                                                      "vertical guide"),
                                                    GDK_CONTROL_MASK & ~state,
                                                    NULL, NULL, NULL);
-                  gimp_tool_replace_status (tool, display, status);
+                  gimp_tool_replace_status (tool, display, "%s", status);
                   g_free (status);
                   measure->status_help = TRUE;
                   break;
@@ -613,7 +613,7 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
                                                     | GDK_MOD1_MASK) & ~state,
                                                    NULL, NULL, NULL);
                 }
-              gimp_tool_replace_status (tool, display, status);
+              gimp_tool_replace_status (tool, display, "%s", status);
               g_free (status);
               measure->status_help = TRUE;
               break;

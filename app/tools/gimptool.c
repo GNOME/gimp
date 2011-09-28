@@ -429,7 +429,7 @@ gimp_tool_initialize (GimpTool    *tool,
     {
       if (error)
         {
-          gimp_tool_message (tool, display, error->message);
+          gimp_tool_message (tool, display, "%s", error->message);
           g_clear_error (&error);
         }
 

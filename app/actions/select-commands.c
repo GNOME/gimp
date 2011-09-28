@@ -374,7 +374,7 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
                           drawable, context, desc, FALSE, NULL, &error))
     {
       gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                    error->message);
+                    "%s", error->message);
       g_clear_error (&error);
     }
   else

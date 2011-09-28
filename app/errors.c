@@ -185,7 +185,7 @@ gimp_error_log_func (const gchar    *domain,
                      const gchar    *message,
                      gpointer        data)
 {
-  gimp_fatal_error (message);
+  gimp_fatal_error ("%s", message);
 }
 
 static void

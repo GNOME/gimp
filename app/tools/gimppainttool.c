@@ -325,7 +325,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   if (! gimp_paint_core_start (core, drawable, paint_options, &curr_coords,
                                &error))
     {
-      gimp_tool_message (tool, display, error->message);
+      gimp_tool_message (tool, display, "%s", error->message);
       g_clear_error (&error);
       return;
     }
@@ -662,7 +662,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
                                            _("%s for a straight line"),
                                            paint_tool->status_ctrl,
                                            NULL);
-          gimp_tool_push_status (tool, display, status);
+          gimp_tool_push_status (tool, display, "%s", status);
           g_free (status);
 
           paint_tool->draw_line = FALSE;

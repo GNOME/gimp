@@ -1362,7 +1362,7 @@ prefs_message (GtkMessageType  type,
                                    destroy_with_parent ?
                                    GTK_DIALOG_DESTROY_WITH_PARENT : 0,
                                    type, GTK_BUTTONS_OK,
-                                   message);
+                                   "%s", message);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),

@@ -658,7 +658,7 @@ gimp_plug_in_procedure_get_pixbuf (const GimpPlugInProcedure *proc)
 
   if (! pixbuf && error)
     {
-      g_printerr (error->message);
+      g_printerr ("%s", error->message);
       g_clear_error (&error);
     }
 

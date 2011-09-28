@@ -170,7 +170,7 @@ gui_abort (const gchar *abort_message)
                       "border-width", 12,
                       NULL);
 
-  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), abort_message);
+  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), "%s", abort_message);
 
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
   gtk_widget_show (box);

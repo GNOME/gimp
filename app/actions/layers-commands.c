@@ -235,7 +235,7 @@ layers_new_cmd_callback (GtkAction *action,
       if (! floating_sel_to_layer (floating_sel, &error))
         {
           gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                        error->message);
+                        "%s", error->message);
           g_clear_error (&error);
           return;
         }
@@ -287,7 +287,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
       if (! floating_sel_to_layer (floating_sel, &error))
         {
           gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                        error->message);
+                        "%s", error->message);
           g_clear_error (&error);
           return;
         }
