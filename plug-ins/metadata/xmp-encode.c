@@ -110,6 +110,7 @@ gen_property (GString            *buffer,
 {
   gint         i;
   const gchar *ns_prefix;
+  gchar      **updated_values = NULL;
 
   switch (property->type)
     {
@@ -147,12 +148,20 @@ gen_property (GString            *buffer,
     case XMP_TYPE_RATIONAL_SEQ:
       g_string_append_printf (buffer, "  <%s:%s>\n   <rdf:Seq>\n",
                               schema->prefix, property->name);
-      for (i = 0; value_array[i] != NULL; i++)
-        {
-          gen_element (buffer, 4,
-                       "rdf", "li", value_array[i],
-                       NULL);
-        }
+
+      if (value != NULL)
+        updated_values = g_strsplit (value, ";", 0);
+      else
+       {
+        updated_values = (gchar **) value_array;
+       }
+
+      for (i = 0; updated_values[i] != NULL; i++)
+       {
+        gen_element (buffer, 4,
+                     "rdf", "li", updated_values[i],
+                     NULL);
+       }
       g_string_append_printf (buffer, "   </rdf:Seq>\n  </%s:%s>\n",
                               schema->prefix, property->name);
       break;
@@ -247,6 +256,9 @@ gen_property (GString            *buffer,
       g_printerr ("Unknown property type for %s", property->name);
       break;
     }
+
+  g_strfreev (updated_values);
+
 }
 
 /**
