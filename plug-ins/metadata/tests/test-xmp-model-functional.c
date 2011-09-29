@@ -49,9 +49,10 @@ typedef struct
 
 static TestDataEntry propertiestotest[] =
 {
-   { "dc",  "title",       1 },
-   { "dc",  "creator",     0 },
-   { "dc",  "description", 1 },
+   { XMP_PREFIX_DUBLIN_CORE,  "title",          1 },
+   { XMP_PREFIX_DUBLIN_CORE,  "creator",        0 },
+   { XMP_PREFIX_DUBLIN_CORE,  "description",    1 },
+   { XMP_PREFIX_PHOTOSHOP,    "CaptionWriter",  0 },
    { NULL,  NULL,          0 }
 };
 TestDataEntry * const import_exportdata = propertiestotest;

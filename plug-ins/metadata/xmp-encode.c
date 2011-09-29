@@ -122,7 +122,9 @@ gen_property (GString            *buffer,
     case XMP_TYPE_TEXT:
     case XMP_TYPE_RATIONAL:
       gen_element (buffer, 2,
-                   schema->prefix, property->name, value_array[0],
+                   schema->prefix,
+                   property->name,
+                   (value != NULL) ? value : value_array[0],
                    NULL);
       break;
 

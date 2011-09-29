@@ -21,6 +21,10 @@
   </dc:description>
  </rdf:Description>
 
+ <rdf:Description rdf:about=""
+   xmlns:photoshop="http://ns.adobe.com/photoshop/1.0/">
+   <photoshop:CaptionWriter>Description Writer</photoshop:CaptionWriter>
+ </rdf:Description>
 </rdf:RDF>
 </x:xmpmeta>
 <?xpacket end='r'?>
