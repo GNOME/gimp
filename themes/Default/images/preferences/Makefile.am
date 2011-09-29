@@ -16,6 +16,8 @@ PREFS_IMAGES = \
 	environment.png			\
 	folders-brushes-22.png		\
 	folders-brushes.png		\
+	folders-dynamics-22.png		\
+	folders-dynamics.png		\
 	folders-environ-22.png		\
 	folders-environ.png		\
 	folders-fonts-22.png		\
