@@ -449,6 +449,7 @@
 #define GIMP_HELP_PREFS_FOLDERS_PALETTES          "gimp-prefs-folders-palettes"
 #define GIMP_HELP_PREFS_FOLDERS_GRADIENTS         "gimp-prefs-folders-gradients"
 #define GIMP_HELP_PREFS_FOLDERS_FONTS             "gimp-prefs-folders-fonts"
+#define GIMP_HELP_PREFS_FOLDERS_TOOL_PRESETS      "gimp-prefs-folders-tool-presets"
 #define GIMP_HELP_PREFS_FOLDERS_PLUG_INS          "gimp-prefs-folders-plug-ins"
 #define GIMP_HELP_PREFS_FOLDERS_SCRIPTS           "gimp-prefs-folders-scripts"
 #define GIMP_HELP_PREFS_FOLDERS_MODULES           "gimp-prefs-folders-modules"
