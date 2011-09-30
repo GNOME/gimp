@@ -163,7 +163,7 @@ create_browser (void)
   GtkWidget *align;
   GtkWidget *browser;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
   browser = gimp_browser_new ();
   gtk_box_pack_start (GTK_BOX (GIMP_BROWSER (browser)->left_vbox),
@@ -201,7 +201,7 @@ create_chain_button (void)
   GtkWidget *chain;
   GtkWidget *separator;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.8);
   gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
   table = gtk_table_new (2, 5, FALSE);
@@ -248,7 +248,7 @@ create_color_area (void)
 
   color_init (&color);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 1.0);
   area = gimp_color_area_new (&color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
   gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
@@ -271,7 +271,7 @@ create_color_button (void)
 
   color_init (&color);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 1.0);
   button =  gimp_color_button_new ("Color Button",
                                    80, 20, &color,
@@ -294,7 +294,7 @@ create_color_hex_entry (void)
 
   color_init (&color);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   entry = gimp_color_hex_entry_new ();
   gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (entry), &color);
@@ -313,7 +313,7 @@ create_color_profile_combo_box (void)
   GtkWidget *combo;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   combo = gimp_color_profile_combo_box_new (gtk_dialog_new (), NULL);
   gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
@@ -340,7 +340,7 @@ create_color_scale (void)
   color_init (&rgb);
   gimp_rgb_to_hsv (&rgb, &hsv);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.8, 0.0);
   scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
                                 GIMP_COLOR_SELECTOR_HUE);
@@ -364,7 +364,7 @@ create_color_selection (void)
 
   color_init (&color);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   selection = gimp_color_selection_new ();
   gimp_color_selection_set_show_alpha(GIMP_COLOR_SELECTION (selection), TRUE);
@@ -411,7 +411,7 @@ create_enum_combo_box (void)
   GtkWidget *combo;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   combo = gimp_enum_combo_box_new (GIMP_TYPE_CHANNEL_TYPE);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), GIMP_BLUE_CHANNEL);
@@ -430,7 +430,7 @@ create_enum_label (void)
   GtkWidget *label;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   label = gimp_enum_label_new (GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB);
   gtk_container_add (GTK_CONTAINER (align), label);
@@ -448,7 +448,7 @@ create_file_entry (void)
   GtkWidget *entry;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   entry = gimp_file_entry_new ("File Entry",
                                "wilber.png",
@@ -490,7 +490,7 @@ create_number_pair_entry (void)
   GtkWidget *entry;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   entry =  gimp_number_pair_entry_new (":/", TRUE, 0.001, GIMP_MAX_IMAGE_SIZE);
   gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry), 4, 3);
@@ -509,7 +509,7 @@ create_int_combo_box (void)
   GtkWidget *combo;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   combo = gimp_int_combo_box_new ("Sobel",        1,
                                   "Prewitt",      2,
@@ -535,7 +535,7 @@ create_memsize_entry (void)
   GtkWidget *entry;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   entry = gimp_memsize_entry_new ((3 * 1024 + 512) * 1024,
                                   0, 1024 * 1024 * 1024);
@@ -555,7 +555,7 @@ create_offset_area (void)
   GtkWidget *area;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -577,7 +577,7 @@ create_page_selector (void)
   GtkWidget *vbox;
   GtkWidget *selector;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   selector = gimp_page_selector_new ();
   gtk_widget_set_size_request (selector, -1, 240);
   gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), 16);
@@ -599,7 +599,7 @@ create_path_editor (void)
   gchar     *config = gimp_config_build_data_path ("patterns");
   gchar     *path   = gimp_config_path_expand (config, TRUE, NULL);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   editor = gimp_path_editor_new ("Path Editor", path);
   gtk_widget_set_size_request (editor, -1, 240);
@@ -621,7 +621,7 @@ create_pick_button (void)
   GtkWidget *button;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 1.0);
   button =  gimp_pick_button_new ();
   gtk_container_add (GTK_CONTAINER (align), button);
@@ -657,7 +657,7 @@ create_preview_area (void)
   GtkWidget *align;
   GdkPixbuf *pixbuf;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   area =  gimp_preview_area_new ();
   g_signal_connect (area, "realize",
@@ -683,7 +683,7 @@ create_string_combo_box (void)
   GtkWidget    *align;
   GtkListStore *store;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   store = gtk_list_store_new (1, G_TYPE_STRING);
   gtk_list_store_insert_with_values (store, NULL, 0, 0, "Foo", -1);
@@ -707,7 +707,7 @@ create_unit_menu (void)
   GtkWidget *menu;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   menu =  gimp_unit_menu_new ("%p", GIMP_UNIT_MM, TRUE, FALSE, FALSE);
   gtk_container_add (GTK_CONTAINER (align), menu);
