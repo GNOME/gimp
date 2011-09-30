@@ -269,7 +269,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget   *grid_box;
   const gchar *constrain = NULL;
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -318,7 +318,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  grid_box = gtk_vbox_new (FALSE, 2);
+  grid_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), grid_box);
   gtk_widget_show (grid_box);
 

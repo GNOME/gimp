@@ -1728,7 +1728,7 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
       GtkWidget *hbox;
       GtkWidget *label;
 
-      hbox = gtk_hbox_new (FALSE, 3);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
       gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
       gtk_widget_show (view);

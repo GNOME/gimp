@@ -127,12 +127,12 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
 
   editor->shape_group = NULL;
 
-  editor->options_box = gtk_vbox_new (FALSE, 2);
+  editor->options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), editor->options_box, FALSE, FALSE, 0);
   gtk_widget_show (editor->options_box);
 
   /* Stock Box for the brush shape */
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor->options_box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

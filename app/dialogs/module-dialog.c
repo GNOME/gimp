@@ -141,7 +141,7 @@ module_dialog_new (Gimp *gimp)
                     G_CALLBACK (dialog_response),
                     dialog);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
                       vbox, TRUE, TRUE, 0);
@@ -201,7 +201,7 @@ module_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), dialog->table, FALSE, FALSE, 0);
   gtk_widget_show (dialog->table);
 
-  dialog->error_box = gtk_hbox_new (FALSE, 6);
+  dialog->error_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->error_box, FALSE, FALSE, 0);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_WARNING, GTK_ICON_SIZE_BUTTON);

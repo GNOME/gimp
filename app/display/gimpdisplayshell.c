@@ -454,7 +454,7 @@ gimp_display_shell_constructed (GObject *object)
   /*  first, set up the container hierarchy  *********************************/
 
   /*  a hbox for the inner_table and the vertical scrollbar  */
-  upper_hbox = gtk_hbox_new (FALSE, 0);
+  upper_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (shell), upper_hbox, TRUE, TRUE, 0);
   gtk_widget_show (upper_hbox);
 
@@ -466,14 +466,14 @@ gimp_display_shell_constructed (GObject *object)
   gtk_widget_show (inner_table);
 
   /*  the vbox containing the color button and the vertical scrollbar  */
-  right_vbox = gtk_vbox_new (FALSE, 1);
+  right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
   gtk_box_pack_start (GTK_BOX (upper_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
   /*  the hbox containing the quickmask button, vertical scrollbar and
    *  the navigation button
    */
-  lower_hbox = gtk_hbox_new (FALSE, 1);
+  lower_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
   gtk_box_pack_start (GTK_BOX (shell), lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (lower_hbox);
 

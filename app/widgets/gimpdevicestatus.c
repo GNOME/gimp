@@ -126,7 +126,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
   status->gimp           = NULL;
   status->current_device = NULL;
 
-  status->vbox = gtk_vbox_new (FALSE, 0);
+  status->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (status->vbox), 2);
   gtk_box_pack_start (GTK_BOX (status), status->vbox, TRUE, TRUE, 0);
   gtk_widget_show (status->vbox);
@@ -250,7 +250,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                       FALSE, FALSE, 0);
   gtk_widget_show (entry->ebox);
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (entry->ebox), vbox);
   gtk_widget_show (vbox);
@@ -278,7 +278,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the row of properties  */
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

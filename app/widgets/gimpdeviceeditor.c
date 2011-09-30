@@ -170,7 +170,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
 
   gtk_widget_set_sensitive (private->delete_button, FALSE);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_paned_pack2 (GTK_PANED (editor), vbox, TRUE, TRUE);
   gtk_widget_show (vbox);
 
@@ -179,7 +179,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
   gtk_widget_show (ebox);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
   gtk_container_add (GTK_CONTAINER (ebox), hbox);
   gtk_widget_show (hbox);

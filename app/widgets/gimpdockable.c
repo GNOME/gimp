@@ -513,7 +513,7 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
     case GIMP_TAB_STYLE_ICON_BLURB:
     case GIMP_TAB_STYLE_PREVIEW_NAME:
     case GIMP_TAB_STYLE_PREVIEW_BLURB:
-      tab_widget = gtk_hbox_new (FALSE, dnd ? 6 : 2);
+      tab_widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, dnd ? 6 : 2);
 
       gtk_box_pack_start (GTK_BOX (tab_widget), icon, FALSE, FALSE, 0);
       gtk_widget_show (icon);

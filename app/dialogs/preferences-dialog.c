@@ -706,7 +706,7 @@ prefs_notebook_append_page (Gimp          *gimp,
 
   gimp_help_set_help_data (event_box, NULL, help_id);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_add (GTK_CONTAINER (event_box), vbox);
   gtk_widget_show (vbox);
 
@@ -904,7 +904,7 @@ prefs_frame_new (const gchar  *label,
 
   frame = gimp_frame_new (label);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -1080,7 +1080,7 @@ prefs_check_button_add_with_icon (GObject      *config,
   if (!button)
     return NULL;
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (vbox, hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1253,11 +1253,11 @@ prefs_display_options_frame_add (Gimp         *gimp,
 
   vbox = prefs_frame_new (label, parent, FALSE);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  checks_vbox = gtk_vbox_new (FALSE, 2);
+  checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
   gtk_widget_show (checks_vbox);
 
@@ -1276,7 +1276,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
                           _("Show s_tatusbar"),
                           GTK_BOX (checks_vbox));
 
-  checks_vbox = gtk_vbox_new (FALSE, 2);
+  checks_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
   gtk_widget_show (checks_vbox);
 
@@ -1413,7 +1413,7 @@ prefs_dialog_new (Gimp       *gimp,
                     dialog);
 
   /* The main hbox */
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       hbox, TRUE, TRUE, 0);
@@ -1450,7 +1450,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   gtk_container_add (GTK_CONTAINER (frame), tv);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -1459,7 +1459,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, TRUE, 0);
   gtk_widget_show (ebox);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (ebox), hbox);
   gtk_widget_show (hbox);
@@ -1750,7 +1750,7 @@ prefs_dialog_new (Gimp       *gimp,
                       gimp);
   }
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1815,7 +1815,7 @@ prefs_dialog_new (Gimp       *gimp,
         text = _("The user manual is not installed locally.");
       }
 
-    hbox = gtk_hbox_new (FALSE, 6);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 1, 2);
     gtk_widget_show (hbox);
 
@@ -2335,7 +2335,7 @@ prefs_dialog_new (Gimp       *gimp,
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
                                 _("ppi"), 1, 4, 0.0);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 24);
   gtk_widget_show (entry);
@@ -2378,7 +2378,7 @@ prefs_dialog_new (Gimp       *gimp,
   if (! display_config->monitor_res_from_gdk)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -2504,7 +2504,7 @@ prefs_dialog_new (Gimp       *gimp,
 
     g_object_unref (store);
 
-    hbox = gtk_hbox_new (FALSE, 6);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, row, row + 1);
     gtk_widget_show (hbox);
     row++;

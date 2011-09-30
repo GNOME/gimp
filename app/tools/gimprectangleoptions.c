@@ -782,7 +782,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   frame = gimp_frame_new (NULL);
 
   /*  title  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -795,7 +795,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   gtk_widget_show (menu);
 
   /*  content  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -854,7 +854,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
     /* Setup frame title widgets */
 
-    hbox = gtk_hbox_new (FALSE, 2);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
     gtk_widget_show (hbox);
 
@@ -877,14 +877,14 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
     /* Setup frame content */
 
-    vbox2 = gtk_vbox_new (FALSE, 0);
+    vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add (GTK_CONTAINER (frame), vbox2);
     gtk_widget_show (vbox2);
 
     size_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
 
     /* Fixed aspect entry/buttons */
-    private->fixed_aspect_hbox = gtk_hbox_new (FALSE, 2);
+    private->fixed_aspect_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_aspect_hbox,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_aspect_hbox);
@@ -962,7 +962,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                (gpointer) &private->fixed_height_entry);
 
     /* Fixed size entry */
-    private->fixed_size_hbox = gtk_hbox_new (FALSE, 2);
+    private->fixed_size_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_size_hbox,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_size_hbox);

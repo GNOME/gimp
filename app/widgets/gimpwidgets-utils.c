@@ -230,7 +230,7 @@ gimp_table_attach_stock (GtkTable    *table,
 
   if (left_align)
     {
-      GtkWidget *hbox = gtk_hbox_new (FALSE, 0);
+      GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
       gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
       gtk_widget_show (widget);
@@ -269,7 +269,7 @@ gimp_enum_radio_box_add (GtkBox    *box,
           GtkWidget *radio = list->data;
           GtkWidget *hbox;
 
-          hbox = gtk_hbox_new (FALSE, 0);
+          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
           gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
           gtk_box_reorder_child (GTK_BOX (box), hbox, pos);
 
@@ -291,7 +291,7 @@ gimp_enum_radio_box_add (GtkBox    *box,
 
               border_width = gtk_container_get_border_width (GTK_CONTAINER (radio));
 
-              spacer = gtk_vbox_new (FALSE, 0);
+              spacer = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
               gtk_widget_set_size_request (spacer,
                                            indicator_size +
                                            3 * indicator_spacing +

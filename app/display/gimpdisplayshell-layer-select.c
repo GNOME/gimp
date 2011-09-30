@@ -21,6 +21,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "display-types.h"
 
 #include "config/gimpcoreconfig.h"
@@ -138,7 +140,7 @@ layer_select_new (GimpImage *image,
   gtk_container_add (GTK_CONTAINER (frame1), frame2);
   gtk_widget_show (frame2);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (frame2), hbox);
   gtk_widget_show (hbox);

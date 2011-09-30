@@ -73,7 +73,7 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
 
   tool_info = GIMP_TOOL (image_map_tool)->tool_info;
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (hbox);

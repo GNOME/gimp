@@ -101,7 +101,7 @@ vectors_import_dialog_new (GimpImage *image,
 
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog->dialog), filter);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog->dialog), vbox);
   gtk_widget_show (vbox);
 

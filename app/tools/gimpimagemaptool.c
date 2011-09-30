@@ -321,7 +321,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
           gimp_overlay_box_set_child_angle (GIMP_OVERLAY_BOX (display_shell->canvas),
                                             dialog, 0.0);
 
-          image_map_tool->main_vbox = vbox = gtk_vbox_new (FALSE, 6);
+          image_map_tool->main_vbox = vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
           gtk_container_add (GTK_CONTAINER (dialog), vbox);
         }
       else
@@ -343,7 +343,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                                    GTK_RESPONSE_CANCEL,
                                                    -1);
 
-          image_map_tool->main_vbox = vbox = gtk_vbox_new (FALSE, 6);
+          image_map_tool->main_vbox = vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
           gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
           gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                               vbox, TRUE, TRUE, 0);

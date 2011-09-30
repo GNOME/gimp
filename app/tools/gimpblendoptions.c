@@ -256,7 +256,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  supersampling options  */
-  vbox2 = gtk_vbox_new (FALSE, 2);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   frame = gimp_prop_expanding_frame_new (config, "supersample",
                                          _("Adaptive supersampling"),
                                          vbox2, NULL);

@@ -119,7 +119,7 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (ruler);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, 1, 2,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (vbox);
@@ -135,7 +135,7 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

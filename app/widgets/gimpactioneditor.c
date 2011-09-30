@@ -62,7 +62,7 @@ gimp_action_editor_init (GimpActionEditor *editor)
 
   gtk_box_set_spacing (GTK_BOX (editor), 12);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

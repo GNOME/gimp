@@ -261,7 +261,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-  vbox2 = gtk_vbox_new (FALSE, 0);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 

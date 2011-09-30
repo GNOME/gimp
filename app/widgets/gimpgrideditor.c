@@ -175,7 +175,7 @@ gimp_grid_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   sizeentry = gimp_prop_coordinates_new (G_OBJECT (editor->grid),
@@ -207,7 +207,7 @@ gimp_grid_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   sizeentry = gimp_prop_coordinates_new (G_OBJECT (editor->grid),

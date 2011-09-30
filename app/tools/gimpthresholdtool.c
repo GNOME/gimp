@@ -234,7 +234,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -261,7 +261,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
                                        t_tool->histogram_box->view);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

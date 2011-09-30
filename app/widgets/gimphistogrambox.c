@@ -90,7 +90,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_box_pack_start (GTK_BOX (box), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -106,7 +106,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   box->view = GIMP_HISTOGRAM_VIEW (view);
 
   /*  The gradient below the histogram */
-  vbox2 = gtk_vbox_new (FALSE, 0);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2),
                                   GIMP_HISTOGRAM_VIEW (view)->border_width);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
@@ -144,7 +144,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
                             box->slider_bar);
 
   /*  The range selection */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

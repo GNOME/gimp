@@ -857,7 +857,9 @@ gimp_editor_ensure_button_box (GimpEditor     *editor,
 
   if (! editor->priv->button_box)
     {
-      editor->priv->button_box = gtk_hbox_new (TRUE, button_spacing);
+      editor->priv->button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,
+                                              button_spacing);
+      gtk_box_set_homogeneous (GTK_BOX (editor->priv->button_box), TRUE);
       gtk_box_pack_end (GTK_BOX (editor), editor->priv->button_box, FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (editor), editor->priv->button_box, 0);
 

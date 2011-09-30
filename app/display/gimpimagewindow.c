@@ -328,7 +328,7 @@ gimp_image_window_constructed (GObject *object)
   config = GIMP_GUI_CONFIG (gimp_dialog_factory_get_context (private->dialog_factory)->gimp->config);
 
   /* Create the window toplevel container */
-  private->main_vbox = gtk_vbox_new (FALSE, 0);
+  private->main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (window), private->main_vbox);
   gtk_widget_show (private->main_vbox);
 
@@ -363,7 +363,7 @@ gimp_image_window_constructed (GObject *object)
     }
 
   /* Create the hbox that contains docks and images */
-  private->hbox = gtk_hbox_new (FALSE, 0);
+  private->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (private->main_vbox), private->hbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (private->hbox);
@@ -1866,7 +1866,7 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
   GtkWidget *button;
   GtkWidget *gtk_image;
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_widget_show (hbox);
 
   view = gimp_view_new_by_types (gimp_get_user_context (shell->display->gimp),

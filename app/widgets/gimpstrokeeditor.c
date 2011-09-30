@@ -122,7 +122,7 @@ gimp_stroke_editor_constructed (GObject *object)
 
   options = GIMP_STROKE_OPTIONS (fill_editor->options);
 
-  box = gtk_hbox_new (FALSE, 6);
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
@@ -178,7 +178,7 @@ gimp_stroke_editor_constructed (GObject *object)
                              _("Dash pattern:"), 0.0, 0.5,
                              frame, 2, FALSE);
 
-  box = gtk_hbox_new (FALSE, 0);
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), box);
   gtk_widget_show (box);
 

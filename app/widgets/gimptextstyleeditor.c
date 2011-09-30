@@ -192,7 +192,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   /*  upper row  */
 
-  editor->upper_hbox = gtk_hbox_new (FALSE, 2);
+  editor->upper_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), editor->upper_hbox, FALSE, FALSE, 0);
   gtk_widget_show (editor->upper_hbox);
 
@@ -222,7 +222,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   /*  lower row  */
 
-  editor->lower_hbox = gtk_hbox_new (FALSE, 2);
+  editor->lower_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), editor->lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (editor->lower_hbox);
 

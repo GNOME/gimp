@@ -148,7 +148,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
   gtk_box_reorder_child (GTK_BOX (editor), frame, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);

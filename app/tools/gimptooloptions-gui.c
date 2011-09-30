@@ -19,6 +19,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "tools-types.h"
 
 #include "core/gimptooloptions.h"
@@ -35,7 +37,7 @@ gimp_tool_options_gui (GimpToolOptions *tool_options)
 
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), NULL);
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
   return vbox;
 }

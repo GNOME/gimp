@@ -527,7 +527,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   options->size_entry = entry;
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -598,11 +598,11 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   {
     GtkWidget *label;
 
-    vbox = gtk_vbox_new (FALSE, 2);
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
     gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
     gtk_widget_show (vbox);
 
-    hbox = gtk_hbox_new (FALSE, 0);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 

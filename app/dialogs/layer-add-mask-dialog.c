@@ -101,7 +101,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
                       vbox, TRUE, TRUE, 0);

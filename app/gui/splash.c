@@ -24,6 +24,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
 
@@ -133,7 +134,7 @@ splash_create (gboolean be_verbose)
   gtk_container_add (GTK_CONTAINER (splash->window), frame);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 

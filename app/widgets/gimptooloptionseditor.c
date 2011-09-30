@@ -183,7 +183,7 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
   gtk_widget_show (viewport);
 
   /*  The vbox containing the tool options  */
-  editor->p->options_vbox = gtk_vbox_new (FALSE, 0);
+  editor->p->options_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (viewport), editor->p->options_vbox);
   gtk_widget_show (editor->p->options_vbox);
 }

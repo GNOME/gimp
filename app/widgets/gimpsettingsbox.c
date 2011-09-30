@@ -273,7 +273,8 @@ gimp_settings_box_constructed (GObject *object)
                           G_CALLBACK (gimp_settings_box_setting_selected),
                           box);
 
-  hbox2 = gtk_hbox_new (TRUE, 0);
+  hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_set_homogeneous (GTK_BOX (hbox2), TRUE);
   gtk_box_pack_start (GTK_BOX (box), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 

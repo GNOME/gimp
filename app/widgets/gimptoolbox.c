@@ -207,7 +207,7 @@ gimp_toolbox_constructed (GObject *object)
 
   main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
 
-  toolbox->p->vbox = gtk_vbox_new (FALSE, 2);
+  toolbox->p->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), toolbox->p->vbox, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (main_vbox), toolbox->p->vbox, 0);
   gtk_widget_show (toolbox->p->vbox);

@@ -647,7 +647,7 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
 
       item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (view);
 
-      view->priv->options_box = gtk_vbox_new (FALSE, content_spacing);
+      view->priv->options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, content_spacing);
       gtk_box_pack_start (GTK_BOX (view), view->priv->options_box,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (view), view->priv->options_box, 0);
@@ -666,7 +666,7 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
       GtkWidget *label_widget;
       gboolean   group_created = FALSE;
 
-      hbox = gtk_hbox_new (FALSE, button_spacing);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
       gtk_box_pack_start (GTK_BOX (view->priv->options_box), hbox,
                           FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -710,7 +710,7 @@ gimp_item_tree_view_get_lock_box (GimpItemTreeView *view)
                             "button-spacing", &button_spacing,
                             NULL);
 
-      view->priv->lock_box = gtk_hbox_new (FALSE, button_spacing);
+      view->priv->lock_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
 
       gimp_item_tree_view_add_options (view, _("Lock:"), view->priv->lock_box);
 

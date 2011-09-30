@@ -178,11 +178,11 @@ gimp_dock_init (GimpDock *dock)
   gtk_widget_set_name (GTK_WIDGET (dock), name);
   g_free (name);
 
-  dock->p->temp_vbox = gtk_vbox_new (FALSE, 0);
+  dock->p->temp_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (dock), dock->p->temp_vbox, FALSE, FALSE, 0);
   /* Never show it */
 
-  dock->p->main_vbox = gtk_vbox_new (FALSE, 0);
+  dock->p->main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (dock), dock->p->main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (dock->p->main_vbox);
 

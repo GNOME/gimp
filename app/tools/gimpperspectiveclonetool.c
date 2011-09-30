@@ -881,7 +881,7 @@ gimp_perspective_clone_options_gui (GimpToolOptions *tool_options)
   GtkWidget *table;
   GtkWidget *combo;
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   paint_options = gimp_paint_options_gui (tool_options);
 
   /* radio buttons to set if you are modifying perspe plane or painting */

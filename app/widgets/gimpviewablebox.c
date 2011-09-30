@@ -297,7 +297,7 @@ gradient_box_new (GimpContainer *container,
       GtkWidget *image;
       gchar     *signal_name;
 
-      vbox = gtk_vbox_new (FALSE, 0);
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
       gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
       gtk_widget_show (vbox);
 
@@ -528,7 +528,7 @@ gimp_viewable_box_new (GimpContainer *container,
   GtkWidget *l;
   GtkWidget *entry;
 
-  hbox = gtk_hbox_new (FALSE, spacing);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, spacing);
 
   button = gimp_viewable_button_new (container, context,
                                      view_type, button_view_size, view_size, 1,
@@ -542,7 +542,7 @@ gimp_viewable_box_new (GimpContainer *container,
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -569,7 +569,7 @@ gimp_viewable_box_new (GimpContainer *container,
       GtkWidget *edit_button;
       GtkWidget *image;
 
-      edit_vbox = gtk_vbox_new (FALSE, 0);
+      edit_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
       gtk_box_pack_end (GTK_BOX (hbox), edit_vbox, FALSE, FALSE, 0);
       gtk_widget_show (edit_vbox);
 

@@ -193,7 +193,7 @@ gimp_stock_button_new (const gchar *stock_id,
       GtkWidget *hbox;
       GtkWidget *lab;
 
-      hbox = gtk_hbox_new (FALSE, 6);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_container_add (GTK_CONTAINER (button), hbox);
       gtk_widget_show (hbox);
 

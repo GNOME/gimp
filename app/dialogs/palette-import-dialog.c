@@ -187,13 +187,13 @@ palette_import_dialog_new (GimpContext *context)
                               import_dialog_drop_callback,
                               dialog);
 
-  main_hbox = gtk_hbox_new (FALSE, 12);
+  main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
                       main_hbox, TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -362,7 +362,7 @@ palette_import_dialog_new (GimpContext *context)
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 

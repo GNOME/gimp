@@ -319,7 +319,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (picker_tool->dialog));
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (content_area), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);

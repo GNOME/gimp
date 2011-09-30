@@ -126,7 +126,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      hbox = gtk_hbox_new (FALSE, 2);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -151,7 +151,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gimp_help_set_help_data (button,
                                _("Reset size to brush's native size"), NULL);
 
-      hbox = gtk_hbox_new (FALSE, 2);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -175,7 +175,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gimp_help_set_help_data (button,
                                _("Reset aspect ratio to brush's native"), NULL);
 
-      hbox = gtk_hbox_new (FALSE, 2);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -279,7 +279,7 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   frame = gimp_prop_expander_new (config, "dynamics-expanded",
                                   _("Dynamics Options"));
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -287,12 +287,12 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);
   gtk_widget_show (inner_frame);
 
-  inner_vbox = gtk_vbox_new (FALSE, 2);
+  inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (inner_frame), inner_vbox);
   gtk_widget_show (inner_vbox);
 
   /*  the fade-out scale & unitmenu  */
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -376,7 +376,7 @@ smoothing_options_gui (GimpPaintOptions *paint_options,
   GtkWidget *vbox;
   GtkWidget *scale;
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
   frame = gimp_prop_expanding_frame_new (config, "use-smoothing",
                                          _("Smooth stroke"),

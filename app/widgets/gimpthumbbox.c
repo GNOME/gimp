@@ -337,7 +337,7 @@ gimp_thumb_box_new (GimpContext *context)
 
   g_free (str);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (ebox), vbox);
   gtk_widget_show (vbox);
 
@@ -363,12 +363,13 @@ gimp_thumb_box_new (GimpContext *context)
                     G_CALLBACK (gtk_true),
                     NULL);
 
-  vbox2 = gtk_vbox_new (FALSE, 6);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
 
-  hbox = gtk_hbox_new (TRUE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

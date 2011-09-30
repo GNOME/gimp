@@ -102,7 +102,7 @@ gimp_tool_preset_editor_constructed (GObject *object)
                     G_CALLBACK (gimp_tool_preset_editor_notify_model),
                     editor);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (data_editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -119,7 +119,7 @@ gimp_tool_preset_editor_constructed (GObject *object)
                       FALSE, FALSE, 0);
   gtk_widget_show (editor->tool_label);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (data_editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

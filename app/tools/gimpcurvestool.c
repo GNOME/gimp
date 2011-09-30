@@ -455,7 +455,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   label_group = gimp_image_map_tool_dialog_get_label_group (image_map_tool);
 
   /*  The combo box for selecting channels  */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -507,7 +507,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, TRUE, TRUE, 0);
 
   /*  The left color bar  */
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_table_attach (GTK_TABLE (table), vbox, 0, 1, 0, 1,
                     GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (vbox);
@@ -549,7 +549,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                                        GIMP_HISTOGRAM_VIEW (tool->graph));
 
   /*  The bottom color bar  */
-  hbox2 = gtk_hbox_new (FALSE, 0);
+  hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_table_attach (GTK_TABLE (table), hbox2, 1, 2, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (hbox2);
@@ -559,7 +559,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), frame, TRUE, TRUE, RADIUS);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (TRUE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_box_set_homogeneous (GTK_BOX (vbox), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -574,7 +575,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gtk_widget_show (table);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_end (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

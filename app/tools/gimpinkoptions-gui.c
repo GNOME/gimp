@@ -55,7 +55,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 2);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
@@ -78,7 +78,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 2);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
@@ -108,7 +108,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 

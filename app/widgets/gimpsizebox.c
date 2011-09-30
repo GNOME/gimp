@@ -182,7 +182,7 @@ gimp_size_box_constructed (GObject *object)
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -228,7 +228,7 @@ gimp_size_box_constructed (GObject *object)
       gtk_size_group_add_widget (box->size_group, list->data);
   g_list_free (children);
 
-  vbox = gtk_vbox_new (2, FALSE);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_table_attach_defaults (GTK_TABLE (entry), vbox, 1, 3, 2, 3);
   gtk_widget_show (vbox);
 
@@ -244,7 +244,7 @@ gimp_size_box_constructed (GObject *object)
 
   if (box->edit_resolution)
     {
-      hbox = gtk_hbox_new (FALSE, 0);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
       gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 

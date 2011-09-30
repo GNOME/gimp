@@ -171,7 +171,7 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   GtkWidget *frame;
   gchar     *title;
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

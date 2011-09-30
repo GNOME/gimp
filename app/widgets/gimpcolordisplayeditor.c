@@ -127,7 +127,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), paned, TRUE, TRUE, 0);
   gtk_widget_show (paned);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_paned_pack1 (GTK_PANED (paned), hbox, FALSE, FALSE);
   gtk_widget_show (hbox);
 
@@ -175,7 +175,8 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                     G_CALLBACK (gimp_color_display_editor_src_changed),
                     editor);
 
-  vbox = gtk_vbox_new (TRUE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_set_homogeneous (GTK_BOX (vbox), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -293,11 +294,11 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   /*  the config frame  */
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_paned_pack2 (GTK_PANED (paned), vbox, TRUE, FALSE);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -305,11 +306,11 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_box_pack_start (GTK_BOX (vbox), editor->config_frame, TRUE, TRUE, 0);
   gtk_widget_show (editor->config_frame);
 
-  editor->config_box = gtk_vbox_new (FALSE, 6);
+  editor->config_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (editor->config_frame), editor->config_box);
   gtk_widget_show (editor->config_box);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_end (GTK_BOX (editor->config_box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

@@ -216,7 +216,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                               palette_editor_drop_palette,
                               editor);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

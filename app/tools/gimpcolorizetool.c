@@ -226,7 +226,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (frame);
 
   /*  The table containing sliders  */
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 

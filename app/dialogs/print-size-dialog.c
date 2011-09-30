@@ -176,7 +176,7 @@ print_size_dialog_new (GimpImage              *image,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
   gtk_widget_show (hbox);
 
@@ -233,7 +233,7 @@ print_size_dialog_new (GimpImage              *image,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 2, 4);
   gtk_widget_show (hbox);
 

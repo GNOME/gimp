@@ -370,7 +370,7 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
   /*  The operation combo box  */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

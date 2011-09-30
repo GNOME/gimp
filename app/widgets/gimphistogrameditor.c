@@ -115,7 +115,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
 
   view = GIMP_HISTOGRAM_BOX (editor->box)->view;
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

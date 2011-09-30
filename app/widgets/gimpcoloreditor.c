@@ -165,7 +165,8 @@ gimp_color_editor_init (GimpColorEditor *editor)
                         "button-icon-size", &button_icon_size,
                         NULL);
 
-  editor->hbox = gtk_hbox_new (TRUE, button_spacing);
+  editor->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, button_spacing);
+  gtk_box_set_homogeneous (GTK_BOX (editor->hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (editor), editor->hbox, FALSE, FALSE, 0);
   gtk_widget_show (editor->hbox);
 
@@ -226,7 +227,8 @@ gimp_color_editor_init (GimpColorEditor *editor)
                         editor);
     }
 
-  hbox = gtk_hbox_new (TRUE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -239,7 +241,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
                     G_CALLBACK (gimp_color_editor_fg_bg_notify),
                     editor);
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 

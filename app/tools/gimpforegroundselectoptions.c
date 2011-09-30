@@ -292,12 +292,12 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   /*  stroke width  */
-  inner_frame = gtk_vbox_new (FALSE, 0);
+  inner_frame = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (gtk_bin_get_child (GTK_BIN (frame))),
                       inner_frame, FALSE, FALSE, 2);
   gtk_widget_show (inner_frame);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (inner_frame), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

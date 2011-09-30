@@ -192,7 +192,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (label);
 
   /*  create the sizeentry which keeps it all together  */
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
   gtk_widget_show (hbox);
 
@@ -224,11 +224,11 @@ gimp_template_editor_constructed (GObject *object)
                                  gimp_template_get_resolution_x (template),
                                  gimp_template_get_resolution_y (template));
 
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 3, 2, 3);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (0, FALSE);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -242,7 +242,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (vbox), aspect_box, FALSE, FALSE, 0);
   gtk_widget_show (aspect_box);
 
-  vbox = gtk_vbox_new (2, FALSE);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -321,7 +321,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (label);
 
   /*  the resolution sizeentry  */
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
   gtk_widget_show (hbox);
 

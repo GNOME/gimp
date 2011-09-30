@@ -354,7 +354,7 @@ gimp_dock_window_constructed (GObject *object)
     GtkWidget *vbox = NULL;
 
     /* Top-level GtkVBox */
-    vbox = gtk_vbox_new (FALSE, 0);
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add (GTK_CONTAINER (dock_window), vbox);
     gtk_widget_show (vbox);
 
@@ -363,7 +363,7 @@ gimp_dock_window_constructed (GObject *object)
       GtkWidget *hbox = NULL;
 
       /* GtkHBox */
-      hbox = gtk_hbox_new (FALSE, 2);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       if (dock_window->p->show_image_menu)
         gtk_widget_show (hbox);

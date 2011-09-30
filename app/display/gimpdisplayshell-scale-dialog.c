@@ -156,7 +156,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   row = 0;
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Zoom ratio:"), 0.0, 0.5,
                              hbox, 1, FALSE);
@@ -181,7 +181,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Zoom:"), 0.0, 0.5,
                              hbox, 1, FALSE);

@@ -415,7 +415,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
 
       /* the zoom scale */
 
-      hbox = gtk_hbox_new (FALSE, 6);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_end (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 

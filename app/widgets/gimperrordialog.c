@@ -70,7 +70,7 @@ gimp_error_dialog_init (GimpErrorDialog *dialog)
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  dialog->vbox = gtk_vbox_new (FALSE, 0);
+  dialog->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->vbox, TRUE, TRUE, 0);
   gtk_widget_show (dialog->vbox);

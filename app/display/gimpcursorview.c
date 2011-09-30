@@ -186,12 +186,18 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   /* cursor information */
 
-  view->priv->coord_hbox = gtk_hbox_new (TRUE, content_spacing);
-  gtk_box_pack_start (GTK_BOX (view), view->priv->coord_hbox, FALSE, FALSE, 0);
+  view->priv->coord_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,
+                                        content_spacing);
+  gtk_box_set_homogeneous (GTK_BOX (view->priv->coord_hbox), TRUE);
+  gtk_box_pack_start (GTK_BOX (view), view->priv->coord_hbox,
+                      FALSE, FALSE, 0);
   gtk_widget_show (view->priv->coord_hbox);
 
-  view->priv->selection_hbox = gtk_hbox_new (TRUE, content_spacing);
-  gtk_box_pack_start (GTK_BOX (view), view->priv->selection_hbox, FALSE, FALSE, 0);
+  view->priv->selection_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,
+                                            content_spacing);
+  gtk_box_set_homogeneous (GTK_BOX (view->priv->selection_hbox), TRUE);
+  gtk_box_pack_start (GTK_BOX (view), view->priv->selection_hbox,
+                      FALSE, FALSE, 0);
   gtk_widget_show (view->priv->selection_hbox);
 
 
@@ -296,7 +302,9 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   /* color information */
 
-  view->priv->color_hbox = gtk_hbox_new (TRUE, content_spacing);
+  view->priv->color_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,
+                                        content_spacing);
+  gtk_box_set_homogeneous (GTK_BOX (view->priv->color_hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (view), view->priv->color_hbox, FALSE, FALSE, 0);
   gtk_widget_show (view->priv->color_hbox);
 

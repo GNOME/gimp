@@ -298,7 +298,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -380,7 +380,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_widget_show (editor->scrollbar);
 
   /* Box for current color and the hint labels */
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -400,7 +400,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_widget_show (editor->current_color);
 
   /* Hint box */
-  hint_vbox = gtk_vbox_new (FALSE, 0);
+  hint_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), hint_vbox, TRUE, TRUE, 0);
   gtk_widget_show (hint_vbox);
 
