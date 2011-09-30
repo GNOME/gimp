@@ -84,6 +84,11 @@ typedef struct _GimpPosterizeConfig           GimpPosterizeConfig;
 typedef struct _GimpThresholdConfig           GimpThresholdConfig;
 
 
+/*  temporary stuff  */
+
+typedef struct _GimpTileBackendTileManager      GimpTileBackendTileManager;
+
+
 /*  non-object types  */
 
 typedef struct _GimpCagePoint                 GimpCagePoint;

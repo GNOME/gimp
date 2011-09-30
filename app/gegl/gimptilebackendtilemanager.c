@@ -34,6 +34,12 @@
 #include "gimptilebackendtilemanager.h"
 
 
+struct _GimpTileBackendTileManagerPrivate 
+{
+  GHashTable      *entries;
+};
+
+
 typedef struct _RamEntry RamEntry;
 
 struct _RamEntry
@@ -99,6 +105,8 @@ gimp_tile_backend_tile_manager_class_init (GimpTileBackendTileManagerClass *klas
   object_class->finalize     = gimp_tile_backend_tile_manager_finalize;
   object_class->get_property = gimp_tile_backend_tile_manager_get_property;
   object_class->set_property = gimp_tile_backend_tile_manager_set_property;
+
+  g_type_class_add_private (klass, sizeof (GimpTileBackendTileManagerPrivate));
 }
 
 static void
@@ -106,9 +114,12 @@ gimp_tile_backend_tile_manager_init (GimpTileBackendTileManager *backend)
 {
   GeglTileSource *source = GEGL_TILE_SOURCE (backend);
 
+  backend->priv = G_TYPE_INSTANCE_GET_PRIVATE (backend,
+                                               GIMP_TYPE_TILE_BACKEND_TILE_MANAGER,
+                                               GimpTileBackendTileManagerPrivate);
   source->command  = gimp_tile_backend_tile_manager_command;
 
-  backend->entries = g_hash_table_new (hash_func, equal_func);
+  backend->priv->entries = g_hash_table_new (hash_func, equal_func);
 }
 
 static void
@@ -116,7 +127,7 @@ gimp_tile_backend_tile_manager_finalize (GObject *object)
 {
   GimpTileBackendTileManager *backend = GIMP_TILE_BACKEND_TILE_MANAGER (object);
 
-  g_hash_table_unref (backend->entries);
+  g_hash_table_unref (backend->priv->entries);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -190,7 +201,7 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
             entry->y = y;
             entry->z = z;
 
-            g_hash_table_insert (backend_tm->entries, entry, entry);
+            g_hash_table_insert (backend_tm->priv->entries, entry, entry);
           }
 
         ram_entry_write (backend_tm, entry, gegl_tile_get_data (tile));
@@ -263,7 +274,7 @@ lookup_entry (GimpTileBackendTileManager *self,
   key.z      = z;
   key.offset = 0;
 
-  return g_hash_table_lookup (self->entries, &key);
+  return g_hash_table_lookup (self->priv->entries, &key);
 }
 
 static guint
@@ -400,7 +411,7 @@ ram_entry_destroy (RamEntry           *entry,
 {
   gint tile_size = gegl_tile_backend_get_tile_size (GEGL_TILE_BACKEND (ram));
   g_free (entry->offset);
-  g_hash_table_remove (ram->entries, entry);
+  g_hash_table_remove (ram->priv->entries, entry);
 
   dbg_dealloc (tile_size);
   g_slice_free (RamEntry, entry);
