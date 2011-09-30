@@ -657,7 +657,7 @@ create_save_preset (GtkWidget *parent)
                     G_CALLBACK (gtk_widget_destroyed),
                     &window);
 
-  box = gtk_vbox_new (FALSE, 6);
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (box), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (window))),
                       box, TRUE, TRUE, 0);
@@ -1014,11 +1014,11 @@ create_presetpage (GtkNotebook *notebook)
 
   label = gtk_label_new_with_mnemonic (_("_Presets"));
 
-  thispage = gtk_vbox_new (FALSE, 12);
+  thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
   gtk_widget_show (thispage);
 
-  box1 = gtk_hbox_new (FALSE, 12);
+  box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, FALSE, FALSE, 0);
   gtk_widget_show (box1);
 
@@ -1037,7 +1037,7 @@ create_presetpage (GtkNotebook *notebook)
   gimp_help_set_help_data
     (tmpw, _("Save the current settings to the specified file"), NULL);
 
-  box1 = gtk_hbox_new (FALSE, 12);
+  box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
@@ -1046,15 +1046,15 @@ create_presetpage (GtkNotebook *notebook)
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   add_factory_defaults ();
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (box1), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  box2 = gtk_vbox_new (FALSE, 6);
+  box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), box2, FALSE, FALSE, 0);
   gtk_widget_show (box2);
 

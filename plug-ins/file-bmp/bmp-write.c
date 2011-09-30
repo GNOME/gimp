@@ -850,7 +850,7 @@ save_dialog (gint channels)
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  vbox_main = gtk_vbox_new (FALSE, 12);
+  vbox_main = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox_main), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       vbox_main, TRUE, TRUE, 0);
@@ -875,7 +875,7 @@ save_dialog (gint channels)
   gtk_box_pack_start (GTK_BOX (vbox_main), expander, TRUE, TRUE, 0);
   gtk_widget_show (expander);
 
-  vbox2 = gtk_vbox_new (FALSE, 12);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
   gtk_container_add (GTK_CONTAINER (expander), vbox2);
   gtk_widget_show (vbox2);
@@ -906,7 +906,7 @@ save_dialog (gint channels)
   if (channels < 3)
     gtk_widget_set_sensitive (expander, FALSE);
 
-  vbox2 = gtk_vbox_new (FALSE, 12);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
   gtk_container_add (GTK_CONTAINER (expander), vbox2);
   gtk_widget_show (vbox2);
@@ -917,7 +917,7 @@ save_dialog (gint channels)
   gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -970,7 +970,7 @@ save_dialog (gint channels)
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 

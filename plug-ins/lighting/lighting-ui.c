@@ -289,7 +289,7 @@ create_options_page (void)
   GtkWidget *table;
   GtkObject *adj;
 
-  page = gtk_vbox_new (FALSE, 12);
+  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
   /* General options */
@@ -298,7 +298,7 @@ create_options_page (void)
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -374,7 +374,7 @@ create_light_page (void)
   GtkWidget *label;
   gint       k = mapvals.light_selected;
 
-  page = gtk_vbox_new (FALSE, 12);
+  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
   frame = gimp_frame_new (_("Light Settings"));
@@ -617,14 +617,14 @@ create_material_page (void)
   GtkWidget    *button;
   GtkObject    *adj;
 
-  page = gtk_vbox_new (FALSE, 12);
+  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
   frame = gimp_frame_new (_("Material Properties"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -795,7 +795,7 @@ create_bump_page (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
 
-  page = gtk_vbox_new (FALSE, 12);
+  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
   frame = gimp_frame_new (NULL);
@@ -887,7 +887,7 @@ create_environment_page (void)
   GtkWidget *frame;
   GtkWidget *combo;
 
-  page = gtk_vbox_new (FALSE, 12);
+  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
   frame = gimp_frame_new (NULL);
@@ -1036,7 +1036,7 @@ main_dialog (GimpDrawable *drawable)
 
   gimp_window_set_transient (GTK_WINDOW (appwin));
 
-  main_hbox = gtk_hbox_new (FALSE, 12);
+  main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (appwin))),
                       main_hbox, FALSE, FALSE, 0);
@@ -1045,7 +1045,7 @@ main_dialog (GimpDrawable *drawable)
   /* Create the Preview */
   /* ================== */
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -1075,7 +1075,7 @@ main_dialog (GimpDrawable *drawable)
   gtk_widget_show (previewarea);
 
   /* create preview options, frame and vbox */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

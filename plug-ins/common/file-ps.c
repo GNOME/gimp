@@ -3112,7 +3112,7 @@ load_dialog (const gchar *filename,
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
@@ -3134,7 +3134,8 @@ load_dialog (const gchar *filename,
                                 dialog);
     }
 
-  hbox = gtk_hbox_new (TRUE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -3142,7 +3143,7 @@ load_dialog (const gchar *filename,
   frame = gimp_frame_new (_("Rendering"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Resolution/Width/Height/Pages labels */
@@ -3242,7 +3243,8 @@ load_dialog (const gchar *filename,
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (TRUE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -3339,7 +3341,7 @@ save_dialog (void)
   dialog = gimp_export_dialog_new (_("PostScript"), PLUG_IN_BINARY, SAVE_PS_PROC);
 
   /* Main hbox */
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       hbox, FALSE, FALSE, 0);
@@ -3347,7 +3349,7 @@ save_dialog (void)
 
   for (j = 0; j < G_N_ELEMENTS (main_vbox); j++)
     {
-      main_vbox[j] = gtk_vbox_new (FALSE, 12);
+      main_vbox[j] = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
       gtk_box_pack_start (GTK_BOX (hbox), main_vbox[j], FALSE, TRUE, 0);
       gtk_widget_show (main_vbox[j]);
     }
@@ -3356,7 +3358,7 @@ save_dialog (void)
   frame = gimp_frame_new (_("Image Size"));
   gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Width/Height/X-/Y-offset labels */
@@ -3452,7 +3454,7 @@ save_dialog (void)
   frame = gimp_frame_new (_("Output"));
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_PostScript level 2"));

@@ -151,7 +151,7 @@ make_gimp_guides_dialog(void)
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 1, 0, 1);
 
-   hbox = gtk_hbox_new( FALSE, 6);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
 
@@ -169,7 +169,7 @@ make_gimp_guides_dialog(void)
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 1, 1, 2);
 
-   vbox = gtk_vbox_new(FALSE, 2);
+   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
    gtk_container_add(GTK_CONTAINER(frame), vbox);
    gtk_widget_show(vbox);
 
@@ -189,7 +189,7 @@ make_gimp_guides_dialog(void)
    gtk_container_add(GTK_CONTAINER(vbox), data->lower_border);
    gtk_widget_show(data->lower_border);
 
-   hbox = gtk_hbox_new (FALSE, 6);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_table_attach_defaults(GTK_TABLE(table), hbox, 0, 2, 2, 3);
    gtk_widget_show(hbox);
 

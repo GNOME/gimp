@@ -132,7 +132,7 @@ create_generalpage (GtkNotebook *notebook)
 
   label = gtk_label_new_with_mnemonic (_("_General"));
 
-  thispage = gtk_vbox_new (FALSE, 12);
+  thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
   gtk_widget_show (thispage);
 
@@ -140,7 +140,7 @@ create_generalpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (thispage), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  box3 = gtk_vbox_new (FALSE, 6);
+  box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), box3);
   gtk_widget_show (box3);
 
@@ -156,7 +156,7 @@ create_generalpage (GtkNotebook *notebook)
                          _("Copy the texture of the selected paper as a background"),
                          &radio_group);
 
-  box4 = gtk_hbox_new (FALSE, 6);
+  box4 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (box3), box4, FALSE, FALSE, 0);
   gtk_widget_show (box4);
 
@@ -191,11 +191,11 @@ create_generalpage (GtkNotebook *notebook)
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (general_bg_radio[pcvals.general_background_type]), TRUE);
 
-  box1 = gtk_hbox_new (FALSE, 12);
+  box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, FALSE, FALSE, 0);
   gtk_widget_show (box1);
 
-  box2 = gtk_vbox_new (FALSE, 6);
+  box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
   gtk_widget_show (box2);
 

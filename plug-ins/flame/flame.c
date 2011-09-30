@@ -660,7 +660,7 @@ edit_callback (GtkWidget *widget,
                         G_CALLBACK (edit_response),
                         edit_dialog);
 
-      main_vbox = gtk_vbox_new (FALSE, 12);
+      main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (edit_dialog))),
                           main_vbox, FALSE, FALSE, 0);
@@ -705,7 +705,7 @@ edit_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      vbox = gtk_vbox_new (FALSE, 6);
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
@@ -728,7 +728,7 @@ edit_callback (GtkWidget *widget,
                         G_CALLBACK (set_edit_preview),
                         NULL);
 
-      hbox = gtk_hbox_new (FALSE, 6);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -980,13 +980,13 @@ flame_dialog (void)
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
-  box = gtk_hbox_new (FALSE, 12);
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
@@ -1024,7 +1024,7 @@ flame_dialog (void)
     GtkWidget *vbox;
     GtkWidget *vbbox;
 
-    vbox = gtk_vbox_new (FALSE, 6);
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
     gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
     gtk_widget_show (vbox);
 
@@ -1063,7 +1063,7 @@ flame_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
   gtk_widget_show (notebook);
 
-  box = gtk_vbox_new (FALSE, 12);
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (box), 12);
   label = gtk_label_new_with_mnemonic(_("_Rendering"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), box, label);
@@ -1156,7 +1156,7 @@ flame_dialog (void)
     GtkWidget *label;
     GtkWidget *combo;
 
-    hbox = gtk_hbox_new (FALSE, 6);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 

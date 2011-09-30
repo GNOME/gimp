@@ -348,7 +348,7 @@ aa_dialog (gint selected)
   /* Create the actual window. */
   dialog = gimp_export_dialog_new (_("Text"), PLUG_IN_BINARY, SAVE_PROC);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       hbox, FALSE, FALSE, 0);

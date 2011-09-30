@@ -27,6 +27,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimpwidgets/gimpwidgets.h>
+
 #include "imap_statusbar.h"
 #include "imap_stock.h"
 
@@ -36,7 +38,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    StatusBar_t  *statusbar = g_new(StatusBar_t, 1);
    GtkWidget    *hbox, *iconw;
 
-   hbox = gtk_hbox_new(FALSE, 1);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
    gtk_box_pack_start(GTK_BOX(main_vbox), hbox, FALSE, FALSE, 0);
 
    /* Status info */

@@ -431,7 +431,7 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_table_attach (GTK_TABLE (table1), tmpw, 0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
   gtk_widget_show (tmpw);
 
-  tmpw = hbox = gtk_hbox_new (FALSE,0);
+  tmpw = hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,0);
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
   gtk_widget_show (tmpw);
 
@@ -468,7 +468,8 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
   gtk_widget_show (tmpw);
 
-  hbox = gtk_hbox_new (TRUE,0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_table_attach_defaults (GTK_TABLE (table1), hbox, 0, 1, 1, 2);
   gtk_widget_show (hbox);

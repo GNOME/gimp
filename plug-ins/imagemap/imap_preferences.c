@@ -338,7 +338,7 @@ create_tab(GtkWidget *notebook, const gchar *label, gint rows, gint cols)
    GtkWidget *table;
    GtkWidget *vbox;
 
-   vbox = gtk_vbox_new(FALSE, 1);
+   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
    gtk_widget_show(vbox);
 
    table = gtk_table_new(rows, cols, FALSE);
@@ -364,7 +364,7 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    frame = gimp_frame_new( _("Default Map Type"));
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 2, 0, 1);
-   hbox = gtk_hbox_new(FALSE, 1);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
    data->ncsa = gtk_radio_button_new_with_mnemonic_from_widget(NULL, "_NCSA");

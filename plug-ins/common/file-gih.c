@@ -900,7 +900,7 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Cell size: __ x __ pixels
    */
-  box = gtk_hbox_new (FALSE, 4);
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
   spinbutton = gimp_spin_button_new (&adjustment,
                                      gihparams.cellwidth,
@@ -975,7 +975,7 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Display as: __ rows x __ cols
    */
-  box = gtk_hbox_new (FALSE, 0);
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
   g_snprintf (buffer, sizeof (buffer), "%2d", gihparams.rows);
   label = gtk_label_new (buffer);

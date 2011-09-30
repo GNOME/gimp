@@ -1402,7 +1402,7 @@ smp_dialog (void)
   ty++;
 
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, ty, ty + 1,
                     GTK_FILL, 0, 0, 0);
   gtk_widget_show (hbox);
@@ -1429,7 +1429,7 @@ smp_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
                                 g_di.dst_show_color);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, ty, ty + 1,
                     GTK_FILL, 0, 0, 0);
   gtk_widget_show (hbox);
@@ -1491,7 +1491,7 @@ smp_dialog (void)
   /*  The levels graylevel prevev  */
   frame = gtk_frame_new (NULL);
 
-  vbox2 = gtk_vbox_new (FALSE, 2);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_table_attach (GTK_TABLE (table),
                     frame, 0, 2, ty, ty + 1, 0, 0, 0, 0);
@@ -1525,7 +1525,7 @@ smp_dialog (void)
   /*  The sample_colortable prevev  */
   frame = gtk_frame_new (NULL);
 
-  vbox2 = gtk_vbox_new (FALSE, 2);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_table_attach (GTK_TABLE (table),
                     frame, 3, 5, ty, ty + 1, 0, 0, 0, 0);
@@ -1555,7 +1555,8 @@ smp_dialog (void)
   ty++;
 
   /*  Horizontal box for INPUT levels text widget  */
-  hbox = gtk_hbox_new (TRUE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, ty, ty+1,
                     GTK_FILL, 0, 0, 0);
 
@@ -1605,7 +1606,8 @@ smp_dialog (void)
   gtk_widget_show (hbox);
 
   /*  Horizontal box for OUTPUT levels text widget  */
-  hbox = gtk_hbox_new (TRUE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, ty, ty+1,
                     GTK_FILL, 0, 0, 0);
 
@@ -1643,7 +1645,7 @@ smp_dialog (void)
 
   ty++;
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, ty, ty+1,
                     GTK_FILL, 0, 0, 0);
   gtk_widget_show (hbox);
@@ -1672,7 +1674,7 @@ smp_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
                                 g_values.orig_inten);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, ty, ty+1,
                     GTK_FILL, 0, 0, 0);
   gtk_widget_show (hbox);

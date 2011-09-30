@@ -93,7 +93,7 @@ create_sizepage (GtkNotebook *notebook)
 
   label = gtk_label_new_with_mnemonic (_("_Size"));
 
-  thispage = gtk_vbox_new (FALSE, 12);
+  thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
   gtk_widget_show (thispage);
 
@@ -139,11 +139,11 @@ create_sizepage (GtkNotebook *notebook)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.size_last);
 
-  box2 = gtk_hbox_new (FALSE, 12);
+  box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box2,FALSE,FALSE,0);
   gtk_widget_show (box2);
 
-  box3 = gtk_vbox_new (FALSE, 6);
+  box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (box2), box3, FALSE, FALSE, 0);
   gtk_widget_show (box3);
 
@@ -151,7 +151,7 @@ create_sizepage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box3), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
-  box3 = gtk_vbox_new (FALSE, 6);
+  box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX( box2), box3, FALSE, FALSE, 0);
   gtk_widget_show (box3);
 
@@ -171,7 +171,7 @@ create_sizepage (GtkNotebook *notebook)
     _("Let the direction from the center determine the size of the stroke"),
     &radio_group);
 
-  box3 = gtk_vbox_new (FALSE, 6);
+  box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (box2), box3,FALSE,FALSE, 0);
   gtk_widget_show (box3);
 
@@ -188,7 +188,7 @@ create_sizepage (GtkNotebook *notebook)
     &radio_group);
 
 
-  box4 = gtk_hbox_new (FALSE, 6);
+  box4 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (box3), box4, FALSE, FALSE, 0);
   gtk_widget_show (box4);
 

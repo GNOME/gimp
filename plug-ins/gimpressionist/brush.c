@@ -505,11 +505,11 @@ create_brushpage (GtkNotebook *notebook)
 
   label = gtk_label_new_with_mnemonic (_("_Brush"));
 
-  thispage = gtk_vbox_new (FALSE, 12);
+  thispage = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (thispage), 12);
   gtk_widget_show (thispage);
 
-  box1 = gtk_hbox_new (FALSE, 12);
+  box1 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box1, TRUE,TRUE,0);
   gtk_widget_show (box1);
 
@@ -520,7 +520,7 @@ create_brushpage (GtkNotebook *notebook)
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-  box2 = gtk_vbox_new (FALSE, 12);
+  box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
   gtk_widget_show (box2);
 
@@ -536,7 +536,7 @@ create_brushpage (GtkNotebook *notebook)
   g_signal_connect (brush_preview, "size-allocate",
                     G_CALLBACK (brush_preview_size_allocate), NULL);
 
-  box3 = gtk_vbox_new (FALSE, 2);
+  box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_end (GTK_BOX (box2), box3, FALSE, FALSE,0);
   gtk_widget_show (box3);
 
@@ -560,7 +560,7 @@ create_brushpage (GtkNotebook *notebook)
   gimp_help_set_help_data
     (tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
 
-  box3 = gtk_hbox_new (FALSE, 6);
+  box3 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (thispage), box3, FALSE, FALSE,0);
   gtk_widget_show (box3);
 

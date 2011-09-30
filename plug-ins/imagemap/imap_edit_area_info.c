@@ -175,7 +175,7 @@ append_page (GtkWidget *notebook, GtkWidget *page, const gchar *icon_name,
 {
    GtkWidget *hbox, *icon, *label;
 
-   hbox = gtk_hbox_new(FALSE, 1);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
    gtk_widget_show(hbox);
 
    icon = gtk_image_new_from_stock (icon_name, GTK_ICON_SIZE_MENU);
@@ -312,7 +312,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    GtkWidget *vbox, *frame, *preview;
    Object_t *obj = dialog->obj;
 
-   vbox = gtk_vbox_new(FALSE, 1);
+   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
    gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
    gtk_widget_show(vbox);
 
@@ -337,7 +337,7 @@ create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 {
    GtkWidget *vbox, *table, *label;
 
-   vbox = gtk_vbox_new(FALSE, 1);
+   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
    gtk_widget_show(vbox);
 
    table = gtk_table_new(11, 1, FALSE);

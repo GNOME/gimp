@@ -557,7 +557,7 @@ create_orientmap_dialog (GtkWidget *parent)
                     GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -599,7 +599,8 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
   gtk_widget_show (tmpw);
 
-  hbox = tmpw = gtk_hbox_new (TRUE,0);
+  hbox = tmpw = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_table_attach_defaults (GTK_TABLE (table1), tmpw, 0,1, 1,2);
   gtk_widget_show (tmpw);
@@ -628,12 +629,12 @@ create_orientmap_dialog (GtkWidget *parent)
   g_signal_connect (tmpw, "clicked", G_CALLBACK (delete_click_callback), NULL);
   gimp_help_set_help_data (tmpw, _("Delete selected vector"), NULL);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_spacing (GTK_BOX (hbox), 12);
   gtk_table_attach_defaults (GTK_TABLE (table1), hbox, 0, 2, 2, 3);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 

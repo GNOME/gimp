@@ -1186,7 +1186,7 @@ save_dialog (const gint32 image_ID, GimpParamRegion *hotspotRange)
    * delay
    */
   /* spin button */
-  box = gtk_hbox_new (FALSE, 6);
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_widget_show (box);
   tmpwidget = gimp_spin_button_new (&adjustment,
                                     xmcvals.delay, CURSOR_MINIMUM_DELAY,

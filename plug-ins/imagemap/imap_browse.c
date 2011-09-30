@@ -124,7 +124,7 @@ browse_widget_new (const gchar *name)
    browse->name = name;
    browse->filter = NULL;
 
-   browse->hbox = gtk_hbox_new (FALSE, 1);
+   browse->hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
    gtk_widget_show (browse->hbox);
 
    browse->file = gtk_entry_new ();

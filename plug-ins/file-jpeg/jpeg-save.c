@@ -848,7 +848,7 @@ save_dialog (void)
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       vbox, TRUE, TRUE, 0);
@@ -906,7 +906,7 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), expander, TRUE, TRUE, 0);
   gtk_widget_show (expander);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_add (GTK_CONTAINER (expander), vbox);
   gtk_widget_show (vbox);
 
@@ -1175,7 +1175,7 @@ save_dialog (void)
 
   g_object_unref (text_buffer);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       vbox, TRUE, TRUE, 0);

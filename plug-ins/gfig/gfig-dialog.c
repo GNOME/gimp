@@ -319,7 +319,7 @@ gfig_dialog (void)
   gfig_dialog_action_set_sensitive ("undo", undo_level >= 0);
 
   /* Main box */
-  main_hbox = gtk_hbox_new (FALSE, 12);
+  main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (top_level_dlg))),
                     main_hbox, TRUE, TRUE, 0);
@@ -329,7 +329,7 @@ gfig_dialog (void)
 
   gtk_widget_show (gfig_context->preview);
 
-  right_vbox = gtk_vbox_new (FALSE, 12);
+  right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
@@ -357,11 +357,11 @@ gfig_dialog (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
   gtk_widget_show (toggle);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -402,11 +402,11 @@ gfig_dialog (void)
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -472,7 +472,7 @@ gfig_dialog (void)
                             gfig_context->gradient_select, NULL);
 
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (right_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -1240,7 +1240,7 @@ gfig_prefs_action_callback (GtkAction *widget,
                         G_CALLBACK (gtk_widget_destroy),
                         NULL);
 
-      main_vbox = gtk_vbox_new (FALSE, 0);
+      main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           main_vbox, TRUE, TRUE, 0);
@@ -1388,13 +1388,13 @@ gfig_grid_action_callback (GtkAction *action,
                         G_CALLBACK (gtk_widget_destroy),
                         NULL);
 
-      main_vbox = gtk_vbox_new (FALSE, 0);
+      main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           main_vbox, TRUE, TRUE, 0);
       gtk_widget_show (main_vbox);
 
-      hbox = gtk_hbox_new (FALSE, 6);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 

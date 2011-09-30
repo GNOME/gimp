@@ -194,7 +194,7 @@ browser_dialog_open (const gchar *plug_in_binary)
 
   window_set_icons (window);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (window), vbox);
   gtk_widget_show (vbox);
 
@@ -266,7 +266,7 @@ browser_dialog_open (const gchar *plug_in_binary)
                     NULL);
 
   /*  HTML view  */
-  main_vbox = gtk_vbox_new (FALSE, 0);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_widget_show (main_vbox);
   gtk_paned_pack2 (GTK_PANED (paned), main_vbox, TRUE, TRUE);
 
@@ -1151,7 +1151,7 @@ build_searchbar (void)
   GtkWidget *hbox;
   GtkWidget *label;
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
   label = gtk_label_new (_("Find:"));
   gtk_widget_show (label);

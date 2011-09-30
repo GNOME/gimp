@@ -120,8 +120,8 @@ make_preview (void)
   gtk_widget_show (frame);
   gtk_widget_show (table);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  hbox = gtk_hbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
@@ -327,7 +327,8 @@ make_pos_info (void)
 
   frame = gimp_frame_new (_("Object Details"));
 
-  hbox = gtk_hbox_new (TRUE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   /* Add labels */
@@ -371,7 +372,7 @@ gfig_pos_labels (void)
   GtkWidget *hbox;
   gchar      buf[256];
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_widget_show (hbox);
 
   /* Position labels */

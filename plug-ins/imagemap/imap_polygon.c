@@ -27,6 +27,8 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimpwidgets/gimpwidgets.h>
+
 #include "imap_commands.h"
 #include "imap_main.h"
 #include "imap_misc.h"
@@ -449,7 +451,7 @@ polygon_create_info_widget(GtkWidget *frame)
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
 
-   hbox = gtk_hbox_new(FALSE, 12);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
 

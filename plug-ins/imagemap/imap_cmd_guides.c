@@ -204,7 +204,7 @@ make_guides_dialog (void)
    g_signal_connect (data->no_down, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   hbox = gtk_hbox_new (FALSE, 6);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_box_pack_start (GTK_BOX (dialog->vbox), hbox, TRUE, TRUE, 0);
    gtk_widget_show(hbox);
 

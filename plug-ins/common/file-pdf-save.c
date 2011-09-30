@@ -701,7 +701,7 @@ gui_single (void)
 
   window = gimp_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_PROC);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (window)),
                       vbox, TRUE, TRUE, 0);
 
@@ -763,13 +763,13 @@ gui_multi (void)
 
   window = gimp_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_MULTI_PROC);
 
-  vbox = gtk_vbox_new (FALSE, 10);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (window)),
                       vbox, TRUE, TRUE, 0);
 
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
-  file_hbox = gtk_hbox_new (FALSE, 5);
+  file_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
   file_label = gtk_label_new ("Choose the place to save the file in:");
   file_entry = gtk_entry_new ();
   if (file_name != NULL)
@@ -813,7 +813,7 @@ gui_multi (void)
 
   gtk_box_pack_start (GTK_BOX (vbox), h_but_box, FALSE, FALSE, 0);
 
-  h_box = gtk_hbox_new (FALSE, 5);
+  h_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
 
   img_combo = gimp_image_combo_box_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (h_box), img_combo, FALSE, FALSE, 0);

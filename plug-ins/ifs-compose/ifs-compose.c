@@ -508,7 +508,7 @@ ifs_compose_trans_page (void)
   GtkWidget *table;
   GtkWidget *label;
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (3, 6, FALSE);
@@ -626,7 +626,7 @@ ifs_compose_color_page (void)
   GSList    *group = NULL;
   GimpRGB    color;
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (3, 5, FALSE);
@@ -806,14 +806,14 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_widget_show (toolbar);
 
   /*  The main vbox */
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
 
   /*  The design area */
 
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
   aspect_frame = gtk_aspect_frame_new (NULL,
@@ -853,7 +853,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), ifsD->current_frame,
                       FALSE, FALSE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (ifsD->current_frame), vbox);
 
   /* The notebook */
@@ -877,7 +877,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   /* The probability entry */
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Relative probability:"));
@@ -2002,7 +2002,7 @@ color_map_create (const gchar *name,
   gimp_rgb_set_alpha (data, 1.0);
   color_map->color       = data;
   color_map->fixed_point = fixed_point;
-  color_map->hbox        = gtk_hbox_new (FALSE, 2);
+  color_map->hbox        = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);

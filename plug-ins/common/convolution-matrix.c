@@ -922,7 +922,7 @@ convolve_image_dialog (GimpDrawable *drawable)
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
@@ -936,17 +936,17 @@ convolve_image_dialog (GimpDrawable *drawable)
                             G_CALLBACK (convolve_image),
                             drawable);
 
-  main_hbox = gtk_hbox_new (FALSE, 12);
+  main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, FALSE, 0);
   gtk_widget_show (main_hbox),
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
 
   frame = gimp_frame_new (_("Matrix"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-  inbox = gtk_vbox_new (FALSE, 12);
+  inbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_add (GTK_CONTAINER (frame), inbox);
 
   table = gtk_table_new (MATRIX_SIZE, MATRIX_SIZE, FALSE);
@@ -973,7 +973,7 @@ convolve_image_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (table);
 
-  box = gtk_hbox_new (FALSE, 6);
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (inbox), box, FALSE, FALSE, 0);
 
 
@@ -1032,7 +1032,7 @@ convolve_image_dialog (GimpDrawable *drawable)
   gtk_widget_show (inbox);
   gtk_widget_show (frame);
 
-  box = gtk_vbox_new (FALSE, 6);
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 
   widget_set.autoset = button =
@@ -1064,13 +1064,13 @@ convolve_image_dialog (GimpDrawable *drawable)
   gtk_widget_show (box);
   gtk_widget_show (vbox);
 
-  inbox = gtk_vbox_new (FALSE, 12);
+  inbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), inbox, FALSE, FALSE, 0);
 
   frame = gimp_frame_new (_("Border"));
   gtk_box_pack_start (GTK_BOX (inbox), frame, FALSE, FALSE, 0);
 
-  box = gtk_vbox_new (FALSE, 2);
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), box);
 
   group = NULL;
@@ -1097,7 +1097,7 @@ convolve_image_dialog (GimpDrawable *drawable)
   frame = gimp_frame_new (_("Channels"));
   gtk_box_pack_start (GTK_BOX (inbox), frame, FALSE, FALSE, 0);
 
-  box = gtk_vbox_new (FALSE, 2);
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), box);
 
   for (i = 0; i < CHANNELS; i++)

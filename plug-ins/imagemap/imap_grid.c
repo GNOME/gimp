@@ -206,7 +206,7 @@ create_grid_settings_dialog(void)
    data->type_frame = frame = gimp_frame_new(_("Grid Visibility and Type"));
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 0, 2, 1, 2);
-   hbox = gtk_hbox_new(FALSE, 6);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
 

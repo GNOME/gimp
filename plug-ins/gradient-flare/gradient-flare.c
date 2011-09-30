@@ -2371,7 +2371,7 @@ dlg_run (void)
    *    main hbox
    */
 
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
                       hbox, FALSE, FALSE, 0);
@@ -2381,7 +2381,7 @@ dlg_run (void)
    *    Preview
    */
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -2706,7 +2706,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gdouble    xres, yres;
   gint       row;
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
 
   frame = gimp_frame_new (_("Center"));
@@ -2931,7 +2931,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
 
   DEBUG_PRINT (("dlg_make_page_selector\n"));
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*
@@ -2975,7 +2975,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
    *    The buttons for the possible listbox operations
    */
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -3342,7 +3342,7 @@ ed_run (GtkWindow            *parent,
    *    main hbox
    */
 
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
                       hbox, FALSE, FALSE, 0);
@@ -3439,7 +3439,7 @@ ed_make_page_general (GFlareEditor *ed,
   GtkWidget *combo;
   GtkObject *adj;
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*  Glow  */
@@ -3546,7 +3546,7 @@ ed_make_page_glow (GFlareEditor *ed,
   GtkObject    *adj;
   gint          row;
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*
@@ -3649,7 +3649,7 @@ ed_make_page_rays (GFlareEditor *ed,
   GtkObject    *adj;
   gint          row;
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*
@@ -3788,7 +3788,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gchar         buf[256];
   gint          row;
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   /*
@@ -3880,7 +3880,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  shape_vbox = gtk_vbox_new (FALSE, 2);
+  shape_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), shape_vbox);
   gtk_widget_show (shape_vbox);
 
@@ -3896,7 +3896,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (shape_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
-  polygon_hbox = gtk_hbox_new (FALSE, 6);
+  polygon_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (shape_vbox), polygon_hbox, FALSE, FALSE, 0);
   gtk_widget_show (polygon_hbox);
 
@@ -3931,7 +3931,7 @@ ed_make_page_sflare (GFlareEditor *ed,
    *    Random Seed Entry
    */
 
-  seed_hbox = gtk_hbox_new (FALSE, 6);
+  seed_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), seed_hbox, FALSE, FALSE, 0);
   gtk_widget_show (seed_hbox);
 

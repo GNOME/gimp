@@ -977,7 +977,7 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
   /* create the channel state record */
   chst = new_preview (ct->spotfn);
 
-  chst->vbox = gtk_vbox_new (FALSE, 6);
+  chst->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (chst->vbox), 12);
 
   table = gtk_table_new (1, 3, FALSE);
@@ -1007,7 +1007,7 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
                             preview);
 
   /* spot function popup */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (chst->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1015,7 +1015,7 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
   gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  hbox2 = gtk_hbox_new (FALSE, 6);
+  hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add (GTK_CONTAINER (abox), hbox2);
   gtk_widget_show (hbox2);
 
@@ -1198,11 +1198,11 @@ newsprint_dialog (GimpDrawable *drawable)
                       paned, TRUE, TRUE, 0);
   gtk_widget_show (paned);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_paned_pack1 (GTK_PANED (paned), hbox, TRUE, FALSE);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_end (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
@@ -1215,16 +1215,16 @@ newsprint_dialog (GimpDrawable *drawable)
                             G_CALLBACK (newsprint),
                             drawable);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_paned_pack2 (GTK_PANED (paned), hbox, FALSE, FALSE);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -1291,7 +1291,7 @@ newsprint_dialog (GimpDrawable *drawable)
   frame = gimp_frame_new (_("Screen"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-  st.vbox = gtk_vbox_new (FALSE, 12);
+  st.vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_add (GTK_CONTAINER (frame), st.vbox);
 
   /* optional portion begins */
@@ -1323,7 +1323,7 @@ newsprint_dialog (GimpDrawable *drawable)
                                 preview);
 
       /* RGB / CMYK / Luminance select */
-      hbox = gtk_hbox_new (FALSE, 6);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
 
       /*  pack the scaleentry table  */

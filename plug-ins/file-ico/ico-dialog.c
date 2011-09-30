@@ -64,7 +64,7 @@ ico_dialog_new (IcoSaveInfo *info)
 
   g_object_set_data (G_OBJECT (dialog), "save_info", info);
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
@@ -80,7 +80,7 @@ ico_dialog_new (IcoSaveInfo *info)
   gtk_container_add (GTK_CONTAINER (frame), scrolledwindow);
   gtk_widget_show (scrolledwindow);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   g_object_set_data (G_OBJECT (dialog), "icons_vbox", vbox);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolledwindow),
@@ -135,7 +135,7 @@ ico_create_icon_hbox (GtkWidget   *icon_preview,
   GtkWidget *combo;
   GtkWidget *checkbox;
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
   alignment = gtk_alignment_new (1.0, 0.5, 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
@@ -158,7 +158,7 @@ ico_create_icon_hbox (GtkWidget   *icon_preview,
 
   gtk_size_group_add_widget (size, alignment);
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 

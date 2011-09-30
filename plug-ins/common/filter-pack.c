@@ -631,7 +631,7 @@ fp_create_rough (void)
   frame = gimp_frame_new (_("Roughness"));
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -693,7 +693,7 @@ fp_create_control (void)
 
   frame = gimp_frame_new (_("Windows"));
 
-  box = gtk_vbox_new (FALSE, 6);
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), box);
   gtk_widget_show (box);
 
@@ -924,7 +924,7 @@ fp_create_table_entry (GtkWidget   **box,
   GtkWidget *button;
   GtkWidget *table;
 
-  *box = gtk_vbox_new (FALSE, 1);
+  *box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
   gtk_container_set_border_width (GTK_CONTAINER (*box), PR_BX_BRDR);
   gtk_widget_show (*box);
 
@@ -1310,7 +1310,7 @@ fp_advanced_dialog (GtkWidget *parent)
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (AW.window), hbox);
   gtk_widget_show (hbox);
@@ -1319,7 +1319,7 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -1329,7 +1329,7 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_box_pack_start (GTK_BOX (vbox), graphFrame, FALSE, FALSE, 0);
   gtk_widget_show (graphFrame);
 
-  inner_vbox = gtk_vbox_new (FALSE, 0);
+  inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (graphFrame), inner_vbox);
   gtk_widget_show (inner_vbox);
 
@@ -1337,7 +1337,7 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_box_pack_start (GTK_BOX (inner_vbox), alignment, TRUE, TRUE, 0);
   gtk_widget_show (alignment);
 
-  innermost_vbox = gtk_vbox_new (FALSE, 0);
+  innermost_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (alignment), innermost_vbox);
   gtk_widget_show (innermost_vbox);
 
@@ -1418,7 +1418,7 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 

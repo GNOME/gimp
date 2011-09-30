@@ -583,18 +583,18 @@ explorer_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  top_hbox = gtk_hbox_new (FALSE, 12);
+  top_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (top_hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       top_hbox, FALSE, FALSE, 0);
   gtk_widget_show (top_hbox);
 
-  left_vbox = gtk_vbox_new (FALSE, 12);
+  left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (top_hbox), left_vbox, FALSE, FALSE, 0);
   gtk_widget_show (left_vbox);
 
   /*  Preview  */
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (left_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -657,11 +657,12 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  bbox = gtk_hbox_new (TRUE, 6);
+  bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_set_homogeneous (GTK_BOX (bbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
@@ -681,7 +682,8 @@ explorer_dialog (void)
                     G_CALLBACK (dialog_step_out_callback),
                     dialog);
 
-  bbox = gtk_hbox_new (TRUE, 6);
+  bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_set_homogeneous (GTK_BOX (bbox), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
@@ -711,7 +713,7 @@ explorer_dialog (void)
   gtk_widget_show (notebook);
 
   /*  "Parameters" page  */
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("_Parameters")));
@@ -795,7 +797,8 @@ explorer_dialog (void)
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cy);
 
-  bbox = gtk_hbox_new (TRUE, 6);
+  bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_set_homogeneous (GTK_BOX (bbox), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (table), bbox, 0, 3, 7, 8);
   gtk_widget_show (bbox);
 
@@ -829,7 +832,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -859,7 +862,7 @@ explorer_dialog (void)
 
                               NULL);
 
-  toggle_vbox2 = gtk_vbox_new (FALSE, 2);
+  toggle_vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   for (i = TYPE_BARNSLEY_2; i <= TYPE_SPIDER; i++)
     {
       g_object_ref (elements->type[i]);
@@ -873,7 +876,7 @@ explorer_dialog (void)
       g_object_unref (elements->type[i]);
     }
 
-  toggle_vbox3 = gtk_vbox_new (FALSE, 2);
+  toggle_vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   for (i = TYPE_MAN_O_WAR; i <= TYPE_SIERPINSKI; i++)
     {
       g_object_ref (elements->type[i]);
@@ -897,7 +900,7 @@ explorer_dialog (void)
   gtk_widget_show (toggle_vbox3);
 
   /*  Color page  */
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("Co_lors")));
@@ -982,7 +985,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -1114,7 +1117,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle_vbox = gtk_vbox_new (FALSE, 2);
+  toggle_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
   gtk_widget_show (toggle_vbox);
 
@@ -1135,7 +1138,7 @@ explorer_dialog (void)
                              "specified above (color density/function). The "
                              "result is visible in the preview image"), NULL);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (toggle_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

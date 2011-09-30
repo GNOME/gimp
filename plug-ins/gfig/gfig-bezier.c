@@ -434,7 +434,7 @@ tool_options_bezier (GtkWidget *notebook)
   GtkWidget *vbox;
   GtkWidget *toggle;
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, NULL);
   gtk_widget_show (vbox);

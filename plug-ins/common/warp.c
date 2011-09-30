@@ -389,7 +389,7 @@ warp_dialog (GimpDrawable *drawable)
 
   gimp_window_set_transient (GTK_WINDOW (dlg));
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
                       vbox, TRUE, TRUE, 0);
@@ -464,7 +464,7 @@ warp_dialog (GimpDrawable *drawable)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  toggle_hbox = gtk_hbox_new (FALSE, 6);
+  toggle_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 1, 3, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (toggle_hbox);
@@ -601,7 +601,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_widget_show (combo);
 
   /*  Magnitude Usage  */
-  toggle_hbox = gtk_hbox_new (FALSE, 4);
+  toggle_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_container_set_border_width (GTK_CONTAINER (toggle_hbox), 1);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 2, 3, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);

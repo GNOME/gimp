@@ -1247,7 +1247,7 @@ dialog(GimpDrawable *drawable)
                      G_CALLBACK (gtk_main_quit),
                      NULL);
 
-   main_vbox = gtk_vbox_new (FALSE, 0);
+   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
    gtk_container_add (GTK_CONTAINER (dlg), main_vbox);
    gtk_widget_show (main_vbox);
 
@@ -1260,7 +1260,7 @@ dialog(GimpDrawable *drawable)
    make_toolbar(main_vbox, dlg);
 
    /*  Dialog area  */
-   hbox = gtk_hbox_new(FALSE, 1);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
    gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
    gtk_widget_show(hbox);
 
