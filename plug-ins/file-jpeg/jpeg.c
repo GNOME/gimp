@@ -349,7 +349,7 @@ run (const gchar      *name,
 
 #endif /* HAVE_LIBEXIF */
 
-      load_save_defaults ();
+      load_defaults ();
 
       switch (run_mode)
         {

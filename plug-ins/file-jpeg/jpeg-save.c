@@ -1244,7 +1244,7 @@ save_dialog_response (GtkWidget *widget,
 }
 
 void
-load_save_defaults (void)
+load_defaults (void)
 {
   GimpParasite *parasite;
   gchar        *def_str;
@@ -1337,7 +1337,7 @@ load_gui_defaults (JpegSaveGui *pg)
 {
   GtkAdjustment *restart_markers;
 
-  load_save_defaults ();
+  load_defaults ();
 
 #define SET_ACTIVE_BTTN(field) \
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pg->field), jsvals.field)
