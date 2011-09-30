@@ -135,7 +135,7 @@ colorsel_water_init (ColorselWater *water)
 
   water->pressure_adjust = 1.0;
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (water), hbox, TRUE, TRUE, 0);
 
   frame = gtk_frame_new (NULL);

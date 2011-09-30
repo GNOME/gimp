@@ -481,7 +481,7 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
   GtkWidget          *label;
   GtkWidget          *combo;
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
   label = gtk_label_new_with_mnemonic (_("Color _deficiency type:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);

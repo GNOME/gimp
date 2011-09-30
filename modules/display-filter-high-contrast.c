@@ -232,7 +232,7 @@ cdisplay_contrast_configure (GimpColorDisplay *display)
   GtkWidget        *label;
   GtkWidget        *spinbutton;
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
   label = gtk_label_new_with_mnemonic (_("Contrast c_ycles:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);

@@ -202,7 +202,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   if (! config)
     return NULL;
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
 
   hint = gimp_hint_box_new (_("This filter takes its configuration "
                               "from the Color Management section "
