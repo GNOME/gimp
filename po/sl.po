@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-23 21:10+0000\n"
-"PO-Revision-Date: 2011-09-24 00:44+0100\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"POT-Creation-Date: 2011-09-29 17:30+0000\n"
+"PO-Revision-Date: 2011-09-30 10:53+0100\n"
+"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -353,6 +353,7 @@ msgstr "Prelivi"
 #: ../app/actions/actions.c:175
 #: ../app/core/gimp.c:983
 #: ../app/dialogs/dialogs.c:337
+#: ../app/dialogs/preferences-dialog.c:2749
 msgid "Tool Presets"
 msgstr "Prednastavitve orodja"
 
@@ -405,7 +406,7 @@ msgid "Patterns"
 msgstr "Vzorci"
 
 #: ../app/actions/actions.c:202
-#: ../app/dialogs/preferences-dialog.c:2749
+#: ../app/dialogs/preferences-dialog.c:2753
 msgid "Plug-Ins"
 msgstr "Vtičniki"
 
@@ -7267,7 +7268,7 @@ msgstr "Pisave (to lahko traja dlje časa)"
 
 #. initialize the module list
 #: ../app/core/gimp.c:993
-#: ../app/dialogs/preferences-dialog.c:2757
+#: ../app/dialogs/preferences-dialog.c:2761
 msgid "Modules"
 msgstr "Gradniki"
 
@@ -7278,7 +7279,6 @@ msgstr "Posodabljanje medpomnilnika značk"
 
 #: ../app/core/gimpbrush-load.c:178
 #, c-format
-#| msgid "Could not read %d bytes from '%s': %s"
 msgid "Could not read %d byte from '%s': %s"
 msgid_plural "Could not read %d bytes from '%s': %s"
 msgstr[0] "Ni mogoče brati %d bajtov iz '%s': %s"
@@ -7876,41 +7876,41 @@ msgstr "Vodoravni zamik prve črte v mreži. Lahko je negativen."
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Navpični zamik prve črte mreže. Lahko je tudi negativen."
 
-#: ../app/core/gimpgrouplayer.c:213
+#: ../app/core/gimpgrouplayer.c:219
 msgid "Layer Group"
 msgstr "Skupina plasti"
 
-#: ../app/core/gimpgrouplayer.c:214
+#: ../app/core/gimpgrouplayer.c:220
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Preimenuj skupino plasti"
 
-#: ../app/core/gimpgrouplayer.c:215
+#: ../app/core/gimpgrouplayer.c:221
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Premakni skupino plasti"
 
-#: ../app/core/gimpgrouplayer.c:216
+#: ../app/core/gimpgrouplayer.c:222
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Spremeni merilo skupine plasti"
 
-#: ../app/core/gimpgrouplayer.c:217
+#: ../app/core/gimpgrouplayer.c:223
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Spremeni velikost skupine plasti"
 
-#: ../app/core/gimpgrouplayer.c:218
+#: ../app/core/gimpgrouplayer.c:224
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Prezrcali skupino plasti"
 
-#: ../app/core/gimpgrouplayer.c:219
+#: ../app/core/gimpgrouplayer.c:225
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Zasukaj skupino plasti"
 
-#: ../app/core/gimpgrouplayer.c:220
+#: ../app/core/gimpgrouplayer.c:226
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Preoblikuj skupino plasti"
@@ -9301,7 +9301,7 @@ msgid "Preferences"
 msgstr "Nastavitve"
 
 #: ../app/dialogs/preferences-dialog.c:1507
-#: ../app/dialogs/preferences-dialog.c:2765
+#: ../app/dialogs/preferences-dialog.c:2769
 msgid "Environment"
 msgstr "Okolje"
 
@@ -9938,62 +9938,72 @@ msgid "Select Font Folders"
 msgstr "Izberite mape pisav"
 
 #: ../app/dialogs/preferences-dialog.c:2749
+#| msgid "Tool Presets"
+msgid "Tool Preset Folders"
+msgstr "Mape prednastavitev orodij"
+
+#: ../app/dialogs/preferences-dialog.c:2751
+#| msgid "Select Theme Folders"
+msgid "Select Tool Preset Folders"
+msgstr "Izberite mape prednastavitev orodij"
+
+#: ../app/dialogs/preferences-dialog.c:2753
 msgid "Plug-In Folders"
 msgstr "Mape vtičnikov"
 
-#: ../app/dialogs/preferences-dialog.c:2751
+#: ../app/dialogs/preferences-dialog.c:2755
 msgid "Select Plug-In Folders"
 msgstr "Izberite mape vtičnikov"
 
-#: ../app/dialogs/preferences-dialog.c:2753
+#: ../app/dialogs/preferences-dialog.c:2757
 msgid "Scripts"
 msgstr "Skripti"
 
-#: ../app/dialogs/preferences-dialog.c:2753
+#: ../app/dialogs/preferences-dialog.c:2757
 msgid "Script-Fu Folders"
 msgstr "Mape Skript-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2755
+#: ../app/dialogs/preferences-dialog.c:2759
 msgid "Select Script-Fu Folders"
 msgstr "Izberite mape Skript-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2757
+#: ../app/dialogs/preferences-dialog.c:2761
 msgid "Module Folders"
 msgstr "Mape gradnikov"
 
-#: ../app/dialogs/preferences-dialog.c:2759
+#: ../app/dialogs/preferences-dialog.c:2763
 msgid "Select Module Folders"
 msgstr "Izberite mape gradnikov"
 
-#: ../app/dialogs/preferences-dialog.c:2761
+#: ../app/dialogs/preferences-dialog.c:2765
 msgid "Interpreters"
 msgstr "Prevajalniki"
 
-#: ../app/dialogs/preferences-dialog.c:2761
+#: ../app/dialogs/preferences-dialog.c:2765
 msgid "Interpreter Folders"
 msgstr "Mape prevajalnika"
 
-#: ../app/dialogs/preferences-dialog.c:2763
+#: ../app/dialogs/preferences-dialog.c:2767
 msgid "Select Interpreter Folders"
 msgstr "Izberite mape prevajalnika"
 
-#: ../app/dialogs/preferences-dialog.c:2765
+#: ../app/dialogs/preferences-dialog.c:2769
 msgid "Environment Folders"
 msgstr "Okoljske mape"
 
-#: ../app/dialogs/preferences-dialog.c:2767
+#: ../app/dialogs/preferences-dialog.c:2771
 msgid "Select Environment Folders"
 msgstr "Izberite mape okolja"
 
-#: ../app/dialogs/preferences-dialog.c:2769
+#: ../app/dialogs/preferences-dialog.c:2773
 msgid "Themes"
 msgstr "Teme"
 
-#: ../app/dialogs/preferences-dialog.c:2769
+#: ../app/dialogs/preferences-dialog.c:2773
 msgid "Theme Folders"
 msgstr "Mape tem"
 
-#: ../app/dialogs/preferences-dialog.c:2771
+#: ../app/dialogs/preferences-dialog.c:2775
 msgid "Select Theme Folders"
 msgstr "Izberite mape tem"
 
@@ -10394,7 +10404,7 @@ msgstr "Spusti novo pot"
 #: ../app/display/gimpdisplayshell-dnd.c:449
 #: ../app/tools/gimpblendtool.c:173
 #: ../app/tools/gimpbucketfilltool.c:135
-#: ../app/tools/gimpimagemaptool.c:280
+#: ../app/tools/gimpimagemaptool.c:279
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Slikovnih točk skupin plasti ni mogoče spremeniti."
 
@@ -10403,7 +10413,7 @@ msgstr "Slikovnih točk skupin plasti ni mogoče spremeniti."
 #: ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:142
 #: ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:287
+#: ../app/tools/gimpimagemaptool.c:286
 #: ../app/tools/gimppainttool.c:266
 #: ../app/tools/gimptransformtool.c:245
 #: ../app/tools/gimptransformtool.c:1061
@@ -12537,7 +12547,7 @@ msgstr "Pre_dnastavitve:"
 msgid "Settings saved to '%s'"
 msgstr "Nastavitve shranjene v '%s'"
 
-#: ../app/tools/gimpimagemaptool.c:366
+#: ../app/tools/gimpimagemaptool.c:362
 msgid "_Preview"
 msgstr "_Predogled"
 
@@ -14121,11 +14131,11 @@ msgstr "Katalog barv imajo samo indeksirane slike."
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../app/widgets/gimpcontainerpopup.c:578
+#: ../app/widgets/gimpcontainerpopup.c:591
 msgid "Smaller Previews"
 msgstr "Manjši predogledi"
 
-#: ../app/widgets/gimpcontainerpopup.c:583
+#: ../app/widgets/gimpcontainerpopup.c:596
 msgid "Larger Previews"
 msgstr "Večji predogledi"
 
@@ -14937,15 +14947,15 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "barve"
 
-#: ../app/widgets/gimpitemtreeview.c:707
+#: ../app/widgets/gimpitemtreeview.c:715
 msgid "Lock:"
 msgstr "Zakleni:"
 
-#: ../app/widgets/gimpitemtreeview.c:1484
+#: ../app/widgets/gimpitemtreeview.c:1509
 msgid "Set Item Exclusive Visible"
 msgstr "Predmet naj bo izključno viden"
 
-#: ../app/widgets/gimpitemtreeview.c:1492
+#: ../app/widgets/gimpitemtreeview.c:1517
 msgid "Set Item Exclusive Linked"
 msgstr "Predmet naj bo izključno povezan"
 
@@ -14955,7 +14965,6 @@ msgstr "Zakleni kanal alfa"
 
 #: ../app/widgets/gimpmessagebox.c:433
 #, c-format
-#| msgid "Message repeated once."
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
 msgstr[0] "Sporočilo ponovljeno %d-krat."
@@ -15529,15 +15538,15 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Nedoločeno"
 
-#: ../app/xcf/xcf-load.c:333
+#: ../app/xcf/xcf-load.c:334
 msgid "This XCF file is corrupt!  I have loaded as much of it as I can, but it is incomplete."
 msgstr "Datoteka XCF je okvarjena!  Naložen je njen začetni pravilno oblikovan del, vendar ne v celoti."
 
-#: ../app/xcf/xcf-load.c:344
+#: ../app/xcf/xcf-load.c:345
 msgid "This XCF file is corrupt!  I could not even salvage any partial image data from it."
 msgstr "Datoteka XCF je okvarjena!  Iz nje ni bilo mogoče rešiti niti najmanjšega dela podatkov."
 
-#: ../app/xcf/xcf-load.c:417
+#: ../app/xcf/xcf-load.c:418
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -15603,3 +15612,4 @@ msgstr "Ustvari slike in uredi fotografije"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
 msgstr "Urejevalnik slik"
+
