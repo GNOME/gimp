@@ -389,3 +389,4 @@ EXPORTS
 	gimp_zoom_model_zoom
 	gimp_zoom_model_zoom_step
 	gimp_zoom_type_get_type
+	gtk_box_new

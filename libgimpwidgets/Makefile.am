@@ -176,7 +176,9 @@ libgimpwidgets_2_0_la_sources = \
 	gimpwidgetsenums.h		\
 	gimpwidgetstypes.h		\
 	gimpzoommodel.c			\
-	gimpzoommodel.h
+	gimpzoommodel.h			\
+	gimp3migration.c		\
+	gimp3migration.h
 
 libgimpwidgets_2_0_la_built_sources = \
 	gimp-wilber-pixbufs.h	\
@@ -247,7 +249,8 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpwidgets.h			\
 	gimpwidgetsenums.h		\
 	gimpwidgetstypes.h		\
-	gimpzoommodel.h
+	gimpzoommodel.h			\
+	gimp3migration.h
 
 libgimpwidgets_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)\
