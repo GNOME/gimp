@@ -1387,7 +1387,7 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_widget_show (hbox);
 
       /* channel lock & factory defaults button */
-      hbox = gtk_hbutton_box_new ();
+      hbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
       gtk_box_set_spacing (GTK_BOX (hbox), 6);
       gtk_box_pack_start (GTK_BOX (st.vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);

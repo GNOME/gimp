@@ -1222,7 +1222,7 @@ CML_explorer_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
-  bbox = gtk_vbutton_box_new ();
+  bbox = gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
@@ -1259,7 +1259,7 @@ CML_explorer_dialog (void)
   random_sensitives[2].widget = button;
   random_sensitives[2].logic  = FALSE;
 
-  bbox = gtk_vbutton_box_new ();
+  bbox = gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 

@@ -32,6 +32,7 @@
 #include "gimppropwidgets.h"
 #include "gimpstock.h"
 #include "gimpwidgets.h"
+#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -292,7 +293,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
   gtk_box_pack_start (GTK_BOX (selector), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  hbbox = gtk_hbutton_box_new ();
+  hbbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
 

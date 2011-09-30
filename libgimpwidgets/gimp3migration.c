@@ -37,3 +37,12 @@ gtk_box_new (GtkOrientation  orientation,
   else
     return gtk_vbox_new (FALSE, spacing);
 }
+
+GtkWidget *
+gtk_button_box_new (GtkOrientation  orientation)
+{
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    return gtk_hbutton_box_new ();
+  else
+    return gtk_vbutton_box_new ();
+}

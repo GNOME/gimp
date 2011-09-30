@@ -805,7 +805,7 @@ gui_multi (void)
 
   gtk_box_pack_start (GTK_BOX (vbox), scroll, TRUE, TRUE, 0);
 
-  h_but_box = gtk_hbutton_box_new ();
+  h_but_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (h_but_box), GTK_BUTTONBOX_START);
 
   del = gtk_button_new_with_label ("Remove the selected pages");

@@ -1028,7 +1028,7 @@ flame_dialog (void)
     gtk_box_pack_start (GTK_BOX (box), vbox, FALSE, FALSE, 0);
     gtk_widget_show (vbox);
 
-    vbbox= gtk_vbutton_box_new ();
+    vbbox= gtk_button_box_new (GTK_ORIENTATION_VERTICAL);
     gtk_box_set_homogeneous (GTK_BOX (vbbox), FALSE);
     gtk_box_set_spacing (GTK_BOX (vbbox), 6);
     gtk_box_pack_start (GTK_BOX (vbox), vbbox, FALSE, FALSE, 0);
