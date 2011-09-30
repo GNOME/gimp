@@ -1281,7 +1281,7 @@ load_defaults (void)
 
   gimp_parasite_free (parasite);
 
-  num_fields = sscanf (def_str, "%lf %lf %d %d %d %d %d %d %d %d %d %d",
+  num_fields = sscanf (def_str, "%lf %lf %d %d %d %d %d %d %d %d %d %d %d",
                        &tmpvals.quality,
                        &tmpvals.smoothing,
                        &tmpvals.optimize,
@@ -1293,7 +1293,8 @@ load_defaults (void)
                        &tmpvals.preview,
                        &tmpvals.save_exif,
                        &tmpvals.save_thumbnail,
-                       &tmpvals.save_xmp);
+                       &tmpvals.save_xmp,
+                       &tmpvals.use_orig_quality);
 
   tmpvals.subsmp = subsampling;
 
@@ -1309,7 +1310,7 @@ save_defaults (void)
   GimpParasite *parasite;
   gchar        *def_str;
 
-  def_str = g_strdup_printf ("%lf %lf %d %d %d %d %d %d %d %d %d %d",
+  def_str = g_strdup_printf ("%lf %lf %d %d %d %d %d %d %d %d %d %d %d",
                              jsvals.quality,
                              jsvals.smoothing,
                              jsvals.optimize,
@@ -1321,7 +1322,8 @@ save_defaults (void)
                              jsvals.preview,
                              jsvals.save_exif,
                              jsvals.save_thumbnail,
-                             jsvals.save_xmp);
+                             jsvals.save_xmp,
+                             jsvals.use_orig_quality);
   parasite = gimp_parasite_new (JPEG_DEFAULTS_PARASITE,
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (def_str), def_str);
