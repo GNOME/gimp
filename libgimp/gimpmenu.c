@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gimp.h"
 
 #include "gimppixbuf.h"
@@ -428,11 +430,11 @@ gimp_menu_add_item (GtkWidget   *menu,
                     G_CALLBACK (gimp_menu_callback),
                     GINT_TO_POINTER (any_ID));
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_container_add (GTK_CONTAINER (menuitem), hbox);
   gtk_widget_show (hbox);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 

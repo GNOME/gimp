@@ -689,7 +689,7 @@ gimp_zoom_preview_set_model (GimpZoomPreview *preview,
   box = gimp_preview_get_controls (GIMP_PREVIEW (preview));
   g_return_if_fail (GTK_IS_BOX (box));
 
-  button_bar = gtk_hbox_new (FALSE, 2);
+  button_bar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_end (GTK_BOX (box), button_bar, FALSE, FALSE, 0);
   gtk_widget_show (button_bar);
 

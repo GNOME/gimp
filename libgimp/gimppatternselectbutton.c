@@ -692,7 +692,7 @@ gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_butto
 
   gtk_widget_push_composite_child ();
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);

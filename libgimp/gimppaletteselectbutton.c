@@ -460,7 +460,7 @@ gimp_palette_select_button_create_inside (GimpPaletteSelectButton *palette_butto
 
   button = gtk_button_new ();
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_container_add (GTK_CONTAINER (button), hbox);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_PALETTE, GTK_ICON_SIZE_BUTTON);
