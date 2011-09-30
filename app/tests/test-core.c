@@ -63,9 +63,6 @@ static void gimp_test_image_teardown (GimpTestFixture *fixture,
                                       gconstpointer    data);
 
 
-static Gimp *gimp = NULL;
-
-
 /**
  * gimp_test_image_setup:
  * @fixture:
@@ -77,6 +74,8 @@ static void
 gimp_test_image_setup (GimpTestFixture *fixture,
                        gconstpointer    data)
 {
+  Gimp *gimp = GIMP (data);
+
   fixture->image = gimp_image_new (gimp,
                                    GIMP_TEST_IMAGE_SIZE,
                                    GIMP_TEST_IMAGE_SIZE,
@@ -110,7 +109,8 @@ static void
 rotate_non_overlapping (GimpTestFixture *fixture,
                         gconstpointer    data)
 {
-  GimpImage   *image = fixture->image;
+  Gimp        *gimp    = GIMP (data);
+  GimpImage   *image   = fixture->image;
   GimpLayer   *layer;
   GimpContext *context = gimp_context_new (gimp, "Test", NULL /*template*/);
   gboolean     result;
@@ -225,7 +225,8 @@ int
 main (int    argc,
       char **argv)
 {
-  int result;
+  Gimp *gimp;
+  int   result;
 
   g_thread_init (NULL);
   g_type_init ();

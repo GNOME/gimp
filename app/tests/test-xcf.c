@@ -138,7 +138,7 @@
 #define ADD_TEST(function) \
   g_test_add ("/gimp-xcf/" #function, \
               GimpTestFixture, \
-              NULL, \
+              gimp, \
               NULL, \
               function, \
               NULL);
@@ -152,19 +152,18 @@ typedef struct
 
 GimpImage        * gimp_test_load_image                        (Gimp            *gimp,
                                                                 const gchar     *uri);
-static void        gimp_write_and_read_file                    (gboolean         with_unusual_stuff,
+static void        gimp_write_and_read_file                    (Gimp            *gimp,
+                                                                gboolean         with_unusual_stuff,
                                                                 gboolean         compat_paths,
                                                                 gboolean         use_gimp_2_8_features);
-static GimpImage * gimp_create_mainimage                       (gboolean         with_unusual_stuff,
+static GimpImage * gimp_create_mainimage                       (Gimp            *gimp,
+                                                                gboolean         with_unusual_stuff,
                                                                 gboolean         compat_paths,
                                                                 gboolean         use_gimp_2_8_features);
 static void        gimp_assert_mainimage                       (GimpImage       *image,
                                                                 gboolean         with_unusual_stuff,
                                                                 gboolean         compat_paths,
                                                                 gboolean         use_gimp_2_8_features);
-
-
-static Gimp *gimp = NULL;
 
 
 /**
@@ -179,7 +178,10 @@ static void
 write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
                                 gconstpointer    data)
 {
-  gimp_write_and_read_file (FALSE /*with_unusual_stuff*/,
+  Gimp *gimp = GIMP (data);
+
+  gimp_write_and_read_file (gimp,
+                            FALSE /*with_unusual_stuff*/,
                             FALSE /*compat_paths*/,
                             FALSE /*use_gimp_2_8_features*/);
 }
@@ -197,7 +199,10 @@ static void
 write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
                                         gconstpointer    data)
 {
-  gimp_write_and_read_file (TRUE /*with_unusual_stuff*/,
+  Gimp *gimp = GIMP (data);
+
+  gimp_write_and_read_file (gimp,
+                            TRUE /*with_unusual_stuff*/,
                             TRUE /*compat_paths*/,
                             FALSE /*use_gimp_2_8_features*/);
 }
@@ -214,6 +219,7 @@ static void
 load_gimp_2_6_file (GimpTestFixture *fixture,
                     gconstpointer    data)
 {
+  Gimp      *gimp  = GIMP (data);
   GimpImage *image = NULL;
   gchar     *uri   = NULL;
 
@@ -248,7 +254,10 @@ static void
 write_and_read_gimp_2_8_format (GimpTestFixture *fixture,
                                 gconstpointer    data)
 {
-  gimp_write_and_read_file (FALSE /*with_unusual_stuff*/,
+  Gimp *gimp = GIMP (data);
+
+  gimp_write_and_read_file (gimp,
+                            FALSE /*with_unusual_stuff*/,
                             FALSE /*compat_paths*/,
                             TRUE /*use_gimp_2_8_features*/);
 }
@@ -288,9 +297,10 @@ gimp_test_load_image (Gimp        *gimp,
  * function can be used for different formats.
  **/
 static void
-gimp_write_and_read_file (gboolean with_unusual_stuff,
-                          gboolean compat_paths,
-                          gboolean use_gimp_2_8_features)
+gimp_write_and_read_file (Gimp     *gimp,
+                          gboolean  with_unusual_stuff,
+                          gboolean  compat_paths,
+                          gboolean  use_gimp_2_8_features)
 {
   GimpImage           *image        = NULL;
   GimpImage           *loaded_image = NULL;
@@ -298,7 +308,8 @@ gimp_write_and_read_file (gboolean with_unusual_stuff,
   gchar               *uri          = NULL;
 
   /* Create the image */
-  image = gimp_create_mainimage (with_unusual_stuff,
+  image = gimp_create_mainimage (gimp,
+                                 with_unusual_stuff,
                                  compat_paths,
                                  use_gimp_2_8_features);
 
@@ -348,9 +359,10 @@ gimp_write_and_read_file (gboolean with_unusual_stuff,
  * Returns: The #GimpImage
  **/
 static GimpImage *
-gimp_create_mainimage (gboolean with_unusual_stuff,
-                       gboolean compat_paths,
-                       gboolean use_gimp_2_8_features)
+gimp_create_mainimage (Gimp     *gimp,
+                       gboolean  with_unusual_stuff,
+                       gboolean  compat_paths,
+                       gboolean  use_gimp_2_8_features)
 {
   GimpImage     *image             = NULL;
   GimpLayer     *layer             = NULL;
@@ -972,7 +984,8 @@ int
 main (int    argc,
       char **argv)
 {
-  int result;
+  Gimp *gimp;
+  int   result;
 
   g_thread_init (NULL);
   g_type_init ();
