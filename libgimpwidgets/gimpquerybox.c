@@ -184,7 +184,7 @@ create_query_box (const gchar   *title,
 
       content_area = gtk_dialog_get_content_area (GTK_DIALOG (query_box->qbox));
 
-      hbox = gtk_hbox_new (FALSE, 12);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
       gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
       gtk_widget_show (hbox);
@@ -195,7 +195,7 @@ create_query_box (const gchar   *title,
       gtk_widget_show (image);
     }
 
-  query_box->vbox = gtk_vbox_new (FALSE, 12);
+  query_box->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
 
   g_object_set_data (G_OBJECT (query_box->qbox), "gimp-query-box-vbox",
                      query_box->vbox);

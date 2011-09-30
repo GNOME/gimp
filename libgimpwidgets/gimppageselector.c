@@ -242,7 +242,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   /*  Pages  */
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (selector), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -288,7 +288,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   /*  Select all button & range entry  */
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (selector), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -324,7 +324,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   /*  Target combo  */
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (selector), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

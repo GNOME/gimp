@@ -33,6 +33,7 @@
 #include "gimpfileentry.h"
 
 #include "gimppatheditor.h"
+#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -152,11 +153,12 @@ gimp_path_editor_init (GimpPathEditor *editor)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
 
-  editor->upper_hbox = gtk_hbox_new (FALSE, 2);
+  editor->upper_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), editor->upper_hbox, FALSE, TRUE, 0);
   gtk_widget_show (editor->upper_hbox);
 
-  button_box = gtk_hbox_new (TRUE, 0);
+  button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_set_homogeneous (GTK_BOX (button_box), TRUE);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), button_box, FALSE, TRUE, 0);
   gtk_widget_show (button_box);
 

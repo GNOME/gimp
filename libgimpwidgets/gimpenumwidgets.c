@@ -30,6 +30,7 @@
 #include "gimpenumwidgets.h"
 #include "gimpframe.h"
 #include "gimphelpui.h"
+#include "gimp3migration.h"
 
 
 /**
@@ -119,7 +120,7 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
 
   enum_class = g_type_class_ref (enum_type);
 
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
   g_object_weak_ref (G_OBJECT (vbox),
                      (GWeakNotify) g_type_class_unref, enum_class);
 
@@ -346,7 +347,7 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
 
   enum_class = g_type_class_ref (enum_type);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   g_object_weak_ref (G_OBJECT (hbox),
                      (GWeakNotify) g_type_class_unref, enum_class);
 

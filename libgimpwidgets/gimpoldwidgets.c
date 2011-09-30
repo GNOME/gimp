@@ -35,6 +35,7 @@
 #include "gimpoldwidgets.h"
 #include "gimppixmap.h"
 #include "gimpunitmenu.h"
+#include "gimp3migration.h"
 
 
 /**
@@ -585,7 +586,7 @@ gimp_pixmap_button_new (gchar       **xpm_data,
       gtk_container_add (GTK_CONTAINER (button), abox);
       gtk_widget_show (abox);
 
-      hbox = gtk_hbox_new (FALSE, 0);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
       gtk_container_add (GTK_CONTAINER (abox), hbox);
       gtk_widget_show (hbox);
 

@@ -281,7 +281,7 @@ gimp_preview_init (GimpPreview *preview)
                          G_CALLBACK (gimp_preview_area_set_cursor),
                          preview, NULL, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
-  priv->controls = gtk_hbox_new (FALSE, 6);
+  priv->controls = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_table_attach (GTK_TABLE (preview->table), priv->controls, 0, 2, 2, 3,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (priv->controls);

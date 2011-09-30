@@ -87,7 +87,7 @@ gimp_radio_group_new (gboolean            in_frame,
 
   va_list args;
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
   group = NULL;
 
@@ -193,7 +193,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
 
   va_list args;
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
   group = NULL;
 
@@ -301,7 +301,7 @@ gimp_int_radio_group_new (gboolean         in_frame,
 
   va_list args;
 
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
   group = NULL;
 
@@ -497,7 +497,7 @@ gimp_random_seed_new (guint    *seed,
   g_return_val_if_fail (seed != NULL, NULL);
   g_return_val_if_fail (random_seed != NULL, NULL);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
   /* If we're being asked to generate a random seed, generate one. */
   if (*random_seed)
@@ -1089,7 +1089,7 @@ gimp_table_attach_aligned (GtkTable    *table,
 
   if (left_align)
     {
-      GtkWidget *hbox = gtk_hbox_new (FALSE, 0);
+      GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
       gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
       gtk_widget_show (widget);

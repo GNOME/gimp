@@ -169,12 +169,12 @@ gimp_color_selection_init (GimpColorSelection *selection)
 
   selection->channel = GIMP_COLOR_SELECTOR_HUE;
 
-  main_hbox = gtk_hbox_new (FALSE, 6);
+  main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_container_add (GTK_CONTAINER (selection), main_hbox);
   gtk_widget_show (main_hbox);
 
   /*  The left vbox with the notebook  */
-  selection->left_vbox = gtk_vbox_new (FALSE, 6);
+  selection->left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (main_hbox), selection->left_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (selection->left_vbox);
@@ -208,12 +208,12 @@ gimp_color_selection_init (GimpColorSelection *selection)
                     selection);
 
   /*  The hbox for the color_areas  */
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_end (GTK_BOX (selection->left_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  The labels  */
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -241,7 +241,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -271,7 +271,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_widget_show (selection->old_color);
 
   /*  The right vbox with color scales  */
-  selection->right_vbox = gtk_vbox_new (FALSE, 6);
+  selection->right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_box_pack_start (GTK_BOX (main_hbox), selection->right_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (selection->right_vbox);
@@ -295,7 +295,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
                     G_CALLBACK (gimp_color_selection_scales_changed),
                     selection);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (selection->right_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 

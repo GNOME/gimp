@@ -33,6 +33,7 @@
 #include "gimpcolornotebook.h"
 #include "gimpcolorscales.h"
 #include "gimpwidgetsmarshal.h"
+#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -401,7 +402,7 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
   gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (page),
                                       GIMP_COLOR_SELECTOR (notebook)->show_alpha);
 
-  menu_widget = gtk_hbox_new (FALSE, 4);
+  menu_widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
   image = gtk_image_new_from_stock (selector_class->stock_id,
                                     GTK_ICON_SIZE_MENU);

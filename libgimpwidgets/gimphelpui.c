@@ -418,7 +418,7 @@ gimp_help_menu_item_query_tooltip (GtkWidget  *widget,
   if (! text)
     return FALSE;
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
 
   label = gtk_label_new (text);
   gtk_label_set_use_markup (GTK_LABEL (label), use_markup);

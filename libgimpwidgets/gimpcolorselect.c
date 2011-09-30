@@ -37,6 +37,7 @@
 #include "gimphelpui.h"
 #include "gimppreviewarea.h"
 #include "gimpstock.h"
+#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -253,7 +254,7 @@ gimp_color_select_init (GimpColorSelect *select)
   select->xy_color_fill = COLOR_SELECT_SATURATION_VALUE;
   select->drag_mode     = DRAG_NONE;
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (select), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
@@ -309,7 +310,7 @@ gimp_color_select_init (GimpColorSelect *select)
                     G_CALLBACK (gimp_color_select_z_events),
                     select);
 
-  select->toggle_box = gtk_vbox_new (FALSE, 2);
+  select->toggle_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), select->toggle_box, FALSE, FALSE, 0);
   gtk_widget_show (select->toggle_box);
 
