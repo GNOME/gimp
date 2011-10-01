@@ -134,10 +134,15 @@ gen_property (GString            *buffer,
     case XMP_TYPE_JOB_BAG:
       g_string_append_printf (buffer, "  <%s:%s>\n   <rdf:Bag>\n",
                               schema->prefix, property->name);
-      for (i = 0; value_array[i] != NULL; i++)
+      if (value != NULL)
+        updated_values = g_strsplit (value, ";", 0);
+      else
+        updated_values = (gchar **) value_array;
+
+      for (i = 0; updated_values[i] != NULL; i++)
         {
           gen_element (buffer, 4,
-                       "rdf", "li", value_array[i],
+                       "rdf", "li", updated_values[i],
                        NULL);
         }
       g_string_append_printf (buffer, "   </rdf:Bag>\n  </%s:%s>\n",

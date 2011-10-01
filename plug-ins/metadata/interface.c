@@ -264,8 +264,8 @@ add_description_tab (GtkWidget   *notebook,
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   text_view = g_object_new (GIMP_TYPE_XMP_MODEL_TEXT,
-                            "schema-uri", XMP_SCHEMA_PDF,
-                            "property-name", "Keywords",
+                            "schema-uri", XMP_SCHEMA_DUBLIN_CORE,
+                            "property-name", "subject",
                             "xmp-model", mgui->xmp_model,
                             NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);

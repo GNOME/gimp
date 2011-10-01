@@ -18,7 +18,14 @@
     <rdf:li xml:lang='x-default'>bla</rdf:li>
     <rdf:li xml:lang='de_DE'>Deutsche Beschreibung</rdf:li>
    </rdf:Alt>
-  </dc:description>
+ </dc:description>
+ <dc:subject>
+   <rdf:Bag>
+     <rdf:li>Test</rdf:li>
+     <rdf:li>Image</rdf:li>
+     <rdf:li>Photoshop</rdf:li>
+   </rdf:Bag>
+ </dc:subject>
  </rdf:Description>
 
  <rdf:Description rdf:about=""
