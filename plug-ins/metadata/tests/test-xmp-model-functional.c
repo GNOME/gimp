@@ -52,6 +52,7 @@ static TestDataEntry propertiestotest[] =
    { XMP_PREFIX_DUBLIN_CORE,  "title",          1 },
    { XMP_PREFIX_DUBLIN_CORE,  "creator",        0 },
    { XMP_PREFIX_DUBLIN_CORE,  "description",    1 },
+   { XMP_PREFIX_DUBLIN_CORE,  "subject",        0 },
    { XMP_PREFIX_PHOTOSHOP,    "CaptionWriter",  0 },
    { NULL,  NULL,          0 }
 };
@@ -176,6 +177,7 @@ static void
 test_xmp_model_import_export (GimpTestFixture *fixture,
                               gconstpointer    data)
 {
+  int             i;
   gboolean        result;
   GString        *buffer;
   TestDataEntry  *testdata;
@@ -183,33 +185,36 @@ test_xmp_model_import_export (GimpTestFixture *fixture,
   const gchar    *scalarvalue = "test";
   GError        **error       = NULL;
 
-  /* dc:title */
-  testdata = &(import_exportdata[0]);
 
-  /* set a new scalar value */
-  result = xmp_model_set_scalar_property (fixture->xmp_model,
-                                          testdata->schema_name,
-                                          testdata->name,
-                                          scalarvalue);
-  g_assert (result == TRUE);
+  for (i = 0; import_exportdata[i].name != NULL; ++i)
+   {
+    testdata = &(import_exportdata[i]);
 
-  /* export */
-  buffer = g_string_new ("GIMP_TEST");
-  xmp_generate_packet (fixture->xmp_model, buffer);
+    /* set a new scalar value */
+    result = xmp_model_set_scalar_property (fixture->xmp_model,
+                                            testdata->schema_name,
+                                            testdata->name,
+                                            scalarvalue);
+    g_assert (result == TRUE);
 
-  /* import */
-  xmp_model_parse_buffer (fixture->xmp_model,
-                          buffer->str,
-                          buffer->len,
-                          TRUE,
-                          error);
-  after_value = xmp_model_get_raw_property_value (fixture->xmp_model,
-                                                  testdata->schema_name,
-                                                  testdata->name);
+    /* export */
+    buffer = g_string_new ("GIMP_TEST");
+    xmp_generate_packet (fixture->xmp_model, buffer);
 
-  /* check that the scalar value is correctly exported */
-  g_assert (after_value != NULL);
-  g_assert_cmpstr (after_value[testdata->pos], ==, scalarvalue);
+    /* import */
+    xmp_model_parse_buffer (fixture->xmp_model,
+                            buffer->str,
+                            buffer->len,
+                            TRUE,
+                            error);
+    after_value = xmp_model_get_raw_property_value (fixture->xmp_model,
+                                                    testdata->schema_name,
+                                                    testdata->name);
+
+    /* check that the scalar value is correctly exported */
+    g_assert (after_value != NULL);
+    g_assert_cmpstr (after_value[testdata->pos], ==, scalarvalue);
+   }
 }
 
 int main(int argc, char **argv)
