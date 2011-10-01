@@ -1082,10 +1082,11 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
       if (private->function == GIMP_RECTANGLE_TOOL_DEAD)
         break;
 
-      /* Suppresed, don't execute yet!*/
+      /* Suppresed, don't execute yet! But commit any changes setup made.*/
       if (private->suppress_execute)
         {
            private->suppress_execute = FALSE;
+           gimp_rectangle_tool_rectangle_change_complete (rect_tool);
            break;
         }
 
