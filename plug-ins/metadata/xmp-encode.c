@@ -31,13 +31,45 @@
 #include "xmp-schemas.h"
 
 
-static void  gen_element (GString     *buffer,
-                          gint         indent,
-                          const gchar *prefix,
-                          const gchar *name,
-                          const gchar *value,
-                          ...) G_GNUC_NULL_TERMINATED;
+static void  gen_element            (GString     *buffer,
+                                     gint         indent,
+                                     const gchar *prefix,
+                                     const gchar *name,
+                                     const gchar *value,
+                                     ...) G_GNUC_NULL_TERMINATED;
 
+gchar **     get_extracted_values   (const gchar    *value,
+                                     const gchar   **value_array);
+
+/*
+ * Helper function to return the updated array of values. In case value
+ * != NULL the values are separated by ';' and cleaned of leading
+ * whitespace, otherwise the value_array will be returned.
+ *
+ * Return value: a newly-allocated %NULL-terminated array of strings.
+ * Use g_strfreev() to free it.
+ */
+gchar **
+get_extracted_values (const gchar    *value,
+                      const gchar   **value_array)
+{
+  int     i;
+  gchar **str_array;
+
+  if (value != NULL)
+   {
+    str_array = g_strsplit (value, ";", 0);
+
+    for (i = 0; str_array[i] != NULL; i++)
+      str_array[i] = g_strchug (str_array[i]);
+   }
+  else
+   {
+    str_array = (gchar **) value_array;
+   }
+
+  return str_array;
+}
 
 static void
 gen_schema_start (GString         *buffer,
@@ -134,10 +166,8 @@ gen_property (GString            *buffer,
     case XMP_TYPE_JOB_BAG:
       g_string_append_printf (buffer, "  <%s:%s>\n   <rdf:Bag>\n",
                               schema->prefix, property->name);
-      if (value != NULL)
-        updated_values = g_strsplit (value, ";", 0);
-      else
-        updated_values = (gchar **) value_array;
+
+      updated_values = get_extracted_values (value, value_array);
 
       for (i = 0; updated_values[i] != NULL; i++)
         {
@@ -156,12 +186,7 @@ gen_property (GString            *buffer,
       g_string_append_printf (buffer, "  <%s:%s>\n   <rdf:Seq>\n",
                               schema->prefix, property->name);
 
-      if (value != NULL)
-        updated_values = g_strsplit (value, ";", 0);
-      else
-       {
-        updated_values = (gchar **) value_array;
-       }
+      updated_values = get_extracted_values (value, value_array);
 
       for (i = 0; updated_values[i] != NULL; i++)
        {
