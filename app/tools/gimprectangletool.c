@@ -198,6 +198,9 @@ struct _GimpRectangleToolPrivate
   gdouble                 saved_y2;
 
   gint                    suppress_updates;
+
+  /* Supress execute for one mouse release, needed to prevent single click create&commit */
+  gboolean                suppress_execute;
 };
 
 
@@ -907,6 +910,8 @@ gimp_rectangle_tool_button_press (GimpTool         *tool,
   GIMP_LOG (RECTANGLE_TOOL, "coords->x = %f, coords->y = %f",
             coords->x, coords->y);
 
+  private->suppress_execute = FALSE;
+
   if (display != tool->display)
     {
       if (gimp_draw_tool_is_active (draw_tool))
@@ -948,6 +953,9 @@ gimp_rectangle_tool_button_press (GimpTool         *tool,
     {
       /* Remember that this rectangle was created from scratch. */
       private->is_new = TRUE;
+
+      /*Suppress execute on release for the creating click*/
+      private->suppress_execute = TRUE;
 
       if (gimp_rectangle_options_fixed_rule_active (options,
                                                     GIMP_RECTANGLE_TOOL_FIXED_SIZE))
@@ -1073,6 +1081,13 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
       /* When a dead area is clicked, don't execute. */
       if (private->function == GIMP_RECTANGLE_TOOL_DEAD)
         break;
+
+      /* Suppresed, don't execute yet!*/
+      if (private->suppress_execute)
+        {
+           private->suppress_execute = FALSE;
+           break;
+        }
 
       if (gimp_rectangle_tool_execute (rect_tool))
         gimp_rectangle_tool_halt (rect_tool);
