@@ -369,7 +369,7 @@ gimp_image_window_constructed (GObject *object)
   gtk_widget_show (private->hbox);
 
   /* Create the left pane */
-  private->left_hpane = gtk_hpaned_new ();
+  private->left_hpane = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_start (GTK_BOX (private->hbox), private->left_hpane,
                       TRUE, TRUE, 0);
   gtk_widget_show (private->left_hpane);
@@ -384,7 +384,7 @@ gimp_image_window_constructed (GObject *object)
   gtk_widget_set_visible (private->left_docks, config->single_window_mode);
 
   /* Create the right pane */
-  private->right_hpane = gtk_hpaned_new ();
+  private->right_hpane = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_paned_pack2 (GTK_PANED (private->left_hpane), private->right_hpane,
                    TRUE, FALSE);
   gtk_widget_show (private->right_hpane);

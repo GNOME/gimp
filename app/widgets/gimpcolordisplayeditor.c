@@ -123,7 +123,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
 
-  paned = gtk_vpaned_new ();
+  paned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
   gtk_box_pack_start (GTK_BOX (editor), paned, TRUE, TRUE, 0);
   gtk_widget_show (paned);
 

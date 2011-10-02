@@ -235,7 +235,7 @@ browser_dialog_open (const gchar *plug_in_binary)
                                       "/help-browser-toolbar/website");
 
   /*  the horizontal paned  */
-  paned = gtk_hpaned_new ();
+  paned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_pack_start (GTK_BOX (vbox), paned, TRUE, TRUE, 0);
   gtk_widget_show (paned);
 

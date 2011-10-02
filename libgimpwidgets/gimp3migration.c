@@ -48,6 +48,15 @@ gtk_button_box_new (GtkOrientation  orientation)
 }
 
 GtkWidget *
+gtk_paned_new (GtkOrientation  orientation)
+{
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    return gtk_hpaned_new ();
+  else
+    return gtk_vpaned_new ();
+}
+
+GtkWidget *
 gtk_scale_new (GtkOrientation  orientation,
                GtkAdjustment  *adjustment)
 {

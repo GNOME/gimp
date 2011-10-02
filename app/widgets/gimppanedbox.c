@@ -573,9 +573,7 @@ gimp_paned_box_add_widget (GimpPanedBox *paned_box,
 
       /* GtkPaned is abstract :( */
       orientation = gtk_orientable_get_orientation (GTK_ORIENTABLE (paned_box));
-      paned = (orientation == GTK_ORIENTATION_VERTICAL ?
-               gtk_vpaned_new () :
-               gtk_hpaned_new ());
+      paned = gtk_paned_new (orientation);
 
       if (GTK_IS_PANED (parent))
         {

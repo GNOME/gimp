@@ -1192,7 +1192,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  paned = gtk_hpaned_new ();
+  paned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_container_set_border_width (GTK_CONTAINER (paned), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       paned, TRUE, TRUE, 0);

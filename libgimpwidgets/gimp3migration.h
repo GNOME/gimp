@@ -36,6 +36,7 @@
 GtkWidget * gtk_box_new        (GtkOrientation  orientation,
                                 gint            spacing);
 GtkWidget * gtk_button_box_new (GtkOrientation  orientation);
+GtkWidget * gtk_paned_new      (GtkOrientation  orientation);
 GtkWidget * gtk_scale_new      (GtkOrientation  orientation,
                                 GtkAdjustment  *adjustment);
 GtkWidget * gtk_scrollbar_new  (GtkOrientation  orientation,
