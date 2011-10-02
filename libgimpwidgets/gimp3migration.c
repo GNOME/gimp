@@ -75,3 +75,12 @@ gtk_scrollbar_new (GtkOrientation  orientation,
   else
     return gtk_vscrollbar_new (adjustment);
 }
+
+GtkWidget *
+gtk_separator_new (GtkOrientation  orientation)
+{
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    return gtk_hseparator_new ();
+  else
+    return gtk_vseparator_new ();
+}

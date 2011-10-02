@@ -218,7 +218,7 @@ create_chain_button (void)
   label = gtk_label_new ("Linked ");
   gtk_table_attach (GTK_TABLE (table), label, 1,2, 1,2,
                     GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  separator = gtk_vseparator_new ();
+  separator = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
   gtk_table_attach (GTK_TABLE (table), separator, 2,3, 0,2,
                     GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   label = gtk_label_new (" Unlinked");

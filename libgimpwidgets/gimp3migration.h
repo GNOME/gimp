@@ -41,6 +41,7 @@ GtkWidget * gtk_scale_new      (GtkOrientation  orientation,
                                 GtkAdjustment  *adjustment);
 GtkWidget * gtk_scrollbar_new  (GtkOrientation  orientation,
                                 GtkAdjustment  *adjustment);
+GtkWidget * gtk_separator_new  (GtkOrientation  orientation);
 
 
 #endif /* __GIMP_3_MIGRATION_H__ */
