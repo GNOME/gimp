@@ -859,7 +859,7 @@ render_image_tile_fault (RenderInfo *info)
             }
           else
             {
-              tilexL =- 1;  /* this forces a refetch of the left most source
+              tilexL = -1;  /* this forces a refetch of the left most source
                                samples */
             }
 
