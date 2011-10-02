@@ -51,22 +51,30 @@ typedef struct
 } GimpTestFixture;
 
 
+static const guchar  opaque_magenta8[4]    = { 0xff,   0x00,   0xff,   0xff   };
+static const guchar  transparent_black8[4] = { 0x00,   0x00,   0x00,   0x00   };
+
+static const guint16 opaque_magenta16[4]   = { 0xffff, 0x0000, 0xffff, 0xffff };
+
+/* FIXME: Add tests for non-tile sized rects, they currently won't
+ * pass
+ */
+static const GeglRectangle rect            = { 0, 0, 64, 64 };
+static const GeglRectangle center_pixel    = { 5, 5, 1,  1  };
+
+
 /**
- * basic_usage:
+ * basic_read:
  * @fixture:
  * @data:
  *
- * Test basic usage.
+ * Test that the backend can be used for basic reading of TileManager
+ * data.
  **/
 static void
-basic_usage (GimpTestFixture *fixture,
-             gconstpointer    data)
+basic_read (GimpTestFixture *fixture,
+            gconstpointer    data)
 {
-  GeglRectangle rect                = { 0, 0, 10, 10 };
-  GeglRectangle pixel_rect          = { 5, 5, 1, 1 };
-  guchar        opaque_magenta8[4]  = { 0xff, 0, 0xff, 0xff };
-  guint16       opaque_magenta16[4] = { 0xffff, 0, 0xffff, 0xffff };
-
   PixelRegion      pr;
   TileManager     *tm;
   GeglTileBackend *backend;
@@ -84,8 +92,59 @@ basic_usage (GimpTestFixture *fixture,
    */
   backend = gimp_tile_backend_tile_manager_new (tm);
   buffer  = gegl_buffer_new_for_backend (NULL, backend);
-  gegl_buffer_get (buffer, 1.0 /*scale*/, &pixel_rect, babl_format ("RGBA u16"), actual_data, GEGL_AUTO_ROWSTRIDE);
-  g_assert_cmpint (0, ==, memcmp (opaque_magenta16, actual_data, sizeof (actual_data)));
+  gegl_buffer_get (buffer, 1.0 /*scale*/, &center_pixel,
+                   babl_format ("RGBA u16"), actual_data,
+                   GEGL_AUTO_ROWSTRIDE);
+  g_assert_cmpint (0, ==, memcmp (opaque_magenta16,
+                                  actual_data,
+                                  sizeof (actual_data)));
+}
+
+/**
+ * basic_write:
+ * @fixture:
+ * @data:
+ *
+ * Test that the backend can be used for basic writing of TileManager
+ * data.
+ **/
+static void
+basic_write (GimpTestFixture *fixture,
+             gconstpointer    data)
+{
+  PixelRegion      pr;
+  TileManager     *tm;
+  GeglTileBackend *backend;
+  GeglBuffer      *buffer;
+  guchar           actual_data[4];
+  gint             x, y;
+
+  /* Clear the TileManager */
+  tm = tile_manager_new (rect.width, rect.height, 4);
+  pixel_region_init (&pr, tm, rect.x, rect.y, rect.width, rect.height, TRUE);
+  color_region (&pr, transparent_black8);
+
+  /* Write some data using the GeglBuffer and the backend. Use u16 to
+   * complicate code paths, decreasing risk of the test accidentally
+   * passing
+   */
+  backend = gimp_tile_backend_tile_manager_new (tm);
+  buffer  = gegl_buffer_new_for_backend (NULL, backend);
+  for (y = 0; y < rect.height; y++)
+    for (x = 0; x < rect.width; x++)
+      {
+        GeglRectangle moving_rect = { x, y, 1, 1 };
+        gegl_buffer_set (buffer, &moving_rect,
+                         babl_format ("RGBA u16"), (gpointer) opaque_magenta16,
+                         GEGL_AUTO_ROWSTRIDE);
+      }
+
+  /* Make sure we can read the written data from the TileManager */
+  tile_manager_read_pixel_data_1 (tm, center_pixel.x, center_pixel.y,
+                                  actual_data);
+  g_assert_cmpint (0, ==, memcmp (opaque_magenta8,
+                                  actual_data,
+                                  sizeof (actual_data)));
 }
 
 int
@@ -97,7 +156,8 @@ main (int    argc,
   gegl_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
 
-  ADD_TEST (basic_usage);
+  ADD_TEST (basic_read);
+  ADD_TEST (basic_write);
 
   return g_test_run ();
 }
