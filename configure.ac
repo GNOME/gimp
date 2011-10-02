@@ -485,13 +485,13 @@ PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
 
-AC_MSG_CHECKING([if GLib is version 2.32.0 or newer])
-if $PKG_CONFIG --atleast-version=2.32.0 glib-2.0; then
-  have_glib_2_32=yes
+AC_MSG_CHECKING([if GLib is version 2.30.0 or newer])
+if $PKG_CONFIG --atleast-version=2.30.0 glib-2.0; then
+  have_glib_2_30=yes
 else
-  have_glib_2_32=no
+  have_glib_2_30=no
 fi
-AC_MSG_RESULT($have_glib_2_32)
+AC_MSG_RESULT($have_glib_2_30)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -1943,7 +1943,7 @@ CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEA
 # We must build without problems with future releases of libraries
 # and disabling deprecated API risks breaking the build
 
-if test "x$have_glib_2_32" != "xyes"; then
+if test "x$have_glib_2_30" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
