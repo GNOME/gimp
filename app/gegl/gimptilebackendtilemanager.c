@@ -37,7 +37,7 @@
 #include "gimp-gegl-utils.h"
 
 
-struct _GimpTileBackendTileManagerPrivate
+struct _GimpTileBackendTileManagerPrivate 
 {
   GHashTable      *entries;
   TileManager     *tile_manager;
@@ -176,23 +176,29 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
     case GEGL_TILE_GET:
       {
         GeglTile *tile;
+        gint      tile_size;
         Tile     *gimp_tile;
+        gint      tile_stride;
+        gint      gimp_tile_stride;
+        int       row;
 
         gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
                                          x, y, TRUE, FALSE);
 
         g_return_val_if_fail (gimp_tile != NULL, NULL);
 
-        if (tile_ewidth (gimp_tile)  != TILE_WIDTH ||
-            tile_eheight (gimp_tile) != TILE_HEIGHT)
+        tile_size        = gegl_tile_backend_get_tile_size (backend);
+        tile_stride      = TILE_WIDTH * tile_bpp (gimp_tile);
+        gimp_tile_stride = tile_ewidth (gimp_tile) * tile_bpp (gimp_tile);
+
+        /* XXX: Point to Tile data directly instead of using memcpy */
+        tile = gegl_tile_new (tile_size);
+        for (row = 0; row < tile_eheight (gimp_tile); row++)
           {
-            g_warning ("GimpTileBackendTileManager does not support != %dx%d tiles yet",
-                       TILE_WIDTH, TILE_HEIGHT);
+            memcpy (gegl_tile_get_data (tile) + row * tile_stride,
+                    tile_data_pointer (gimp_tile, 0, row),
+                    gimp_tile_stride);
           }
-        tile = gegl_tile_new_bare ();
-        gegl_tile_set_data (tile,
-                            tile_data_pointer (gimp_tile, 0, 0),
-                            tile_size (gimp_tile));
 
         return tile;
       }
