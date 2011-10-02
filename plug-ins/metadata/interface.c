@@ -65,8 +65,6 @@ typedef struct
 {
   GtkWidget    *dlg;
   XMPModel     *xmp_model;
-  GdkPixbuf    *edit_icon;
-  GdkPixbuf    *auto_icon;
   gboolean      run_ok;
 } MetadataGui;
 
@@ -161,35 +159,55 @@ icon_foreach_func (GtkTreeModel *model,
                    GtkTreeIter  *iter,
                    gpointer      user_data)
 {
-  gboolean     editable;
-  MetadataGui *mgui = user_data;
+  gboolean      editable;
+  GtkTreeView  *treeview = GTK_TREE_VIEW (user_data);
+  GdkPixbuf    *icon = NULL;
 
   gtk_tree_model_get (model, iter,
                       COL_XMP_EDITABLE, &editable,
                       -1);
+
   if (editable == XMP_AUTO_UPDATE)
+   {
+    icon = gtk_widget_render_icon (GTK_WIDGET (treeview),
+                                   GIMP_STOCK_WILBER,
+                                   GTK_ICON_SIZE_MENU, NULL);
     gtk_tree_store_set (GTK_TREE_STORE (model), iter,
-                        COL_XMP_EDIT_ICON, mgui->auto_icon,
+                        COL_XMP_EDIT_ICON, icon,
                         -1);
+   }
   else if (editable == TRUE)
+   {
+    icon = gtk_widget_render_icon (GTK_WIDGET (treeview),
+                                   GTK_STOCK_EDIT,
+                                   GTK_ICON_SIZE_MENU, NULL);
     gtk_tree_store_set (GTK_TREE_STORE (model), iter,
-                        COL_XMP_EDIT_ICON, mgui->edit_icon,
+                        COL_XMP_EDIT_ICON, icon,
                         -1);
+   }
   else
+   {
     gtk_tree_store_set (GTK_TREE_STORE (model), iter,
                         COL_XMP_EDIT_ICON, NULL,
                         -1);
+   }
+
+  if (icon != NULL)
+    g_object_unref (icon);
+
   return FALSE;
 }
 
 static void
-update_icons (MetadataGui *mgui)
+update_icons (GtkTreeView       *treeview,
+              GtkDirectionType   direction,
+              gpointer           user_data)
 {
   GtkTreeModel *model;
 
   /* add the edit icon to the rows that are editable */
-  model = xmp_model_get_tree_model (mgui->xmp_model);
-  gtk_tree_model_foreach (model, icon_foreach_func, mgui);
+  model = gtk_tree_view_get_model (treeview);
+  gtk_tree_model_foreach (GTK_TREE_MODEL (model), icon_foreach_func, treeview);
 }
 
 static void
@@ -340,11 +358,14 @@ add_thumbnail_tab (GtkWidget *notebook)
 }
 
 static void
-add_advanced_tab (GtkWidget    *notebook,
-                  GtkTreeModel *model)
+add_advanced_tab (GtkWidget     *notebook,
+                  MetadataGui   *mgui)
 {
-  GtkWidget *sw;
-  GtkWidget *treeview;
+  GtkWidget     *sw;
+  GtkWidget     *treeview;
+  GtkTreeModel  *model;
+
+  model = xmp_model_get_tree_model (mgui->xmp_model);
 
   /* Advanced tab */
   sw = gtk_scrolled_window_new (NULL, NULL);
@@ -363,6 +384,10 @@ add_advanced_tab (GtkWidget    *notebook,
   add_view_columns (GTK_TREE_VIEW (treeview));
 
   gtk_container_add (GTK_CONTAINER (sw), treeview);
+
+  /* update property icons when the user views this tab */
+  g_signal_connect (treeview, "focus",
+                    G_CALLBACK (update_icons), NULL);
 
   /* expand all rows after the treeview widget has been realized */
   g_signal_connect (treeview, "realize",
@@ -427,8 +452,6 @@ import_dialog_response (GtkWidget *dlg,
           g_free (filename);
           return;
         }
-
-      update_icons (mgui);
 
       g_free (buffer);
       g_free (filename);
@@ -641,12 +664,6 @@ metadata_dialog (gint32    image_ID,
   gtk_widget_show (notebook);
 
   mgui.xmp_model = xmp_model;
-  mgui.edit_icon = gtk_widget_render_icon (mgui.dlg, GTK_STOCK_EDIT,
-                                           GTK_ICON_SIZE_MENU, NULL);
-  mgui.auto_icon = gtk_widget_render_icon (mgui.dlg, GIMP_STOCK_WILBER,
-                                           GTK_ICON_SIZE_MENU, NULL);
-  update_icons (&mgui);
-
   mgui.run_ok = FALSE;
 
   /* add the tabs to the notebook */
@@ -656,17 +673,13 @@ metadata_dialog (gint32    image_ID,
   add_camera1_tab (notebook);
   add_camera2_tab (notebook);
   add_thumbnail_tab (notebook);
-  add_advanced_tab (notebook, xmp_model_get_tree_model (mgui.xmp_model));
+  add_advanced_tab (notebook, &mgui);
 
   gtk_window_set_default_size (GTK_WINDOW (mgui.dlg), 400, 500);
   gtk_widget_show (mgui.dlg);
 
   /* run, baby, run! */
   gtk_main ();
-
-  /* clean up and return */
-  g_object_unref (mgui.auto_icon);
-  g_object_unref (mgui.edit_icon);
 
   return mgui.run_ok;
 }
