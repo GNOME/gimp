@@ -24,9 +24,12 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "gimpwidgets.h"
+#include "gimpwidgetstypes.h"
 
+#include "gimppreviewarea.h"
 #include "gimpscrolledpreview.h"
+#include "gimpstock.h"
+#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -146,7 +149,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
 {
   GimpScrolledPreviewPrivate *priv;
   GtkWidget                  *image;
-  GtkObject                  *adj;
+  GtkAdjustment              *adj;
 
   preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
                                                GIMP_TYPE_SCROLLED_PREVIEW,
@@ -163,28 +166,28 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   priv->frozen      = 1;  /* we are frozen during init */
 
   /*  scrollbars  */
-  adj = gtk_adjustment_new (0, 0, GIMP_PREVIEW (preview)->width - 1, 1.0,
-                            GIMP_PREVIEW (preview)->width,
-                            GIMP_PREVIEW (preview)->width);
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, GIMP_PREVIEW (preview)->width - 1, 1.0,
+                                            GIMP_PREVIEW (preview)->width,
+                                            GIMP_PREVIEW (preview)->width));
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_scrolled_preview_h_scroll),
                     preview);
 
-  preview->hscr = gtk_hscrollbar_new (GTK_ADJUSTMENT (adj));
+  preview->hscr = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL, adj);
   gtk_table_attach (GTK_TABLE (GIMP_PREVIEW (preview)->table),
                     preview->hscr, 0, 1, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
 
-  adj = gtk_adjustment_new (0, 0, GIMP_PREVIEW (preview)->height - 1, 1.0,
-                            GIMP_PREVIEW (preview)->height,
-                            GIMP_PREVIEW (preview)->height);
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, GIMP_PREVIEW (preview)->height - 1, 1.0,
+                                            GIMP_PREVIEW (preview)->height,
+                                            GIMP_PREVIEW (preview)->height));
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_scrolled_preview_v_scroll),
                     preview);
 
-  preview->vscr = gtk_vscrollbar_new (GTK_ADJUSTMENT (adj));
+  preview->vscr = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL, adj);
   gtk_table_attach (GTK_TABLE (GIMP_PREVIEW (preview)->table),
                     preview->vscr, 1, 2, 0, 1,
                     GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);

@@ -36,6 +36,8 @@
 GtkWidget * gtk_box_new        (GtkOrientation  orientation,
                                 gint            spacing);
 GtkWidget * gtk_button_box_new (GtkOrientation  orientation);
+GtkWidget * gtk_scrollbar_new  (GtkOrientation  orientation,
+                                GtkAdjustment  *adjustment);
 
 
 #endif /* __GIMP_3_MIGRATION_H__ */

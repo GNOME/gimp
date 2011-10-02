@@ -482,13 +482,13 @@ gimp_display_shell_constructed (GObject *object)
   /*  the horizontal scrollbar  */
   shell->hsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_width,
                                                        1, 1, image_width));
-  shell->hsb = gtk_hscrollbar_new (shell->hsbdata);
+  shell->hsb = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL, shell->hsbdata);
   gtk_widget_set_can_focus (shell->hsb, FALSE);
 
   /*  the vertical scrollbar  */
   shell->vsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_height,
                                                        1, 1, image_height));
-  shell->vsb = gtk_vscrollbar_new (shell->vsbdata);
+  shell->vsb = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL, shell->vsbdata);
   gtk_widget_set_can_focus (shell->vsb, FALSE);
 
   /*  create the contents of the inner_table  ********************************/

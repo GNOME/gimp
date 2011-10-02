@@ -375,7 +375,8 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                     G_CALLBACK (gradient_editor_scrollbar_update),
                     editor);
 
-  editor->scrollbar = gtk_hscrollbar_new (editor->scroll_data);
+  editor->scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL,
+                                         editor->scroll_data);
   gtk_box_pack_start (GTK_BOX (editor), editor->scrollbar, FALSE, FALSE, 0);
   gtk_widget_show (editor->scrollbar);
 

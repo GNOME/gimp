@@ -520,12 +520,12 @@ make_preview (GimpDrawable *drawable)
 
    gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(window), preview);
 
-   scrollbar = gtk_hscrollbar_new (hadj);
+   scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL, hadj);
    gtk_table_attach(GTK_TABLE(table), scrollbar, 1, 2, 2, 3,
                     GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
    gtk_widget_show (scrollbar);
 
-   scrollbar = gtk_vscrollbar_new (vadj);
+   scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL, vadj);
    gtk_table_attach(GTK_TABLE(table), scrollbar,  2, 3, 1, 2,
                     GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
    gtk_widget_show (scrollbar);
