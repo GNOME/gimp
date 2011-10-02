@@ -48,6 +48,16 @@ gtk_button_box_new (GtkOrientation  orientation)
 }
 
 GtkWidget *
+gtk_scale_new (GtkOrientation  orientation,
+               GtkAdjustment  *adjustment)
+{
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    return gtk_hscale_new (adjustment);
+  else
+    return gtk_vscale_new (adjustment);
+}
+
+GtkWidget *
 gtk_scrollbar_new (GtkOrientation  orientation,
                    GtkAdjustment  *adjustment)
 {

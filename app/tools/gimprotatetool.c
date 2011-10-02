@@ -196,7 +196,7 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                     G_CALLBACK (rotate_angle_changed),
                     tr_tool);
 
-  scale = gtk_hscale_new (rotate->angle_adj);
+  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, rotate->angle_adj);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);

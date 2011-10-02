@@ -1316,21 +1316,21 @@ mng_save_image (const gchar  *filename,
 static gboolean
 mng_save_dialog (gint32 image_id)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *toggle;
-  GtkWidget *hbox;
-  GtkWidget *combo;
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkObject *scale_adj;
-  GtkWidget *spinbutton;
-  GtkObject *spinbutton_adj;
-  gint       num_layers;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *frame;
+  GtkWidget     *vbox;
+  GtkWidget     *table;
+  GtkWidget     *toggle;
+  GtkWidget     *hbox;
+  GtkWidget     *combo;
+  GtkWidget     *label;
+  GtkWidget     *scale;
+  GtkAdjustment *scale_adj;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *spinbutton_adj;
+  gint           num_layers;
+  gboolean       run;
 
   dialog = gimp_export_dialog_new (_("MNG"), PLUG_IN_BINARY, SAVE_PROC);
 
@@ -1445,10 +1445,11 @@ mng_save_dialog (gint32 image_id)
                              _("Default frame disposal:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
-  scale_adj = gtk_adjustment_new (mng_data.compression_level,
-                                  0.0, 9.0, 1.0, 1.0, 0.0);
+  scale_adj = (GtkAdjustment *)
+    gtk_adjustment_new (mng_data.compression_level,
+                        0.0, 9.0, 1.0, 1.0, 0.0);
 
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_adj));
+  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adj);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
@@ -1465,10 +1466,11 @@ mng_save_dialog (gint32 image_id)
                              "for small file size"),
                            NULL);
 
-  scale_adj = gtk_adjustment_new (mng_data.quality,
-                                  0.0, 1.0, 0.01, 0.01, 0.0);
+  scale_adj = (GtkAdjustment *)
+    gtk_adjustment_new (mng_data.quality,
+                        0.0, 1.0, 0.01, 0.01, 0.0);
 
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_adj));
+  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adj);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
@@ -1481,10 +1483,11 @@ mng_save_dialog (gint32 image_id)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mng_data.quality);
 
-  scale_adj = gtk_adjustment_new (mng_data.smoothing,
-                                  0.0, 1.0, 0.01, 0.01, 0.0);
+  scale_adj = (GtkAdjustment *)
+    gtk_adjustment_new (mng_data.smoothing,
+                        0.0, 1.0, 0.01, 0.01, 0.0);
 
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_adj));
+  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adj);
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
@@ -1524,7 +1527,7 @@ mng_save_dialog (gint32 image_id)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spinbutton = gimp_spin_button_new (&spinbutton_adj,
+  spinbutton = gimp_spin_button_new ((GtkObject **) &spinbutton_adj,
                                      mng_data.default_delay,
                                      0, 65000, 10, 100, 0, 1, 0);
 

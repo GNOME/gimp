@@ -1218,12 +1218,12 @@ gfig_prefs_action_callback (GtkAction *widget,
 
   if (!dialog)
     {
-      GtkWidget *main_vbox;
-      GtkWidget *table;
-      GtkWidget *toggle;
-      GtkObject *size_data;
-      GtkWidget *scale;
-      GtkObject *scale_data;
+      GtkWidget     *main_vbox;
+      GtkWidget     *table;
+      GtkWidget     *toggle;
+      GtkObject     *size_data;
+      GtkWidget     *scale;
+      GtkAdjustment *scale_data;
 
       dialog = gimp_dialog_new (_("Options"), "gimp-gfig-options",
                                 GTK_WIDGET (data), 0, NULL, NULL,
@@ -1335,9 +1335,9 @@ gfig_prefs_action_callback (GtkAction *widget,
                         NULL);
       gtk_widget_show (toggle);
 
-      scale_data =
+      scale_data = (GtkAdjustment *)
         gtk_adjustment_new (selopt.feather_radius, 0.0, 100.0, 1.0, 1.0, 0.0);
-      scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+      scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_data);
       gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
 
       g_signal_connect (scale_data, "value-changed",

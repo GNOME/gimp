@@ -127,11 +127,11 @@ colorsel_water_class_finalize (ColorselWaterClass *klass)
 static void
 colorsel_water_init (ColorselWater *water)
 {
-  GtkWidget *hbox;
-  GtkWidget *area;
-  GtkWidget *frame;
-  GtkObject *adj;
-  GtkWidget *scale;
+  GtkWidget     *hbox;
+  GtkWidget     *area;
+  GtkWidget     *frame;
+  GtkAdjustment *adj;
+  GtkWidget     *scale;
 
   water->pressure_adjust = 1.0;
 
@@ -173,13 +173,13 @@ colorsel_water_init (ColorselWater *water)
   gtk_widget_set_extension_events (area, GDK_EXTENSION_EVENTS_ALL);
   gtk_widget_grab_focus (area);
 
-  adj = gtk_adjustment_new (200.0 - water->pressure_adjust * 100.0,
-                            0.0, 200.0, 1.0, 1.0, 0.0);
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (200.0 - water->pressure_adjust * 100.0,
+                                            0.0, 200.0, 1.0, 1.0, 0.0));
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (pressure_adjust_update),
                     water);
 
-  scale = gtk_vscale_new (GTK_ADJUSTMENT (adj));
+  scale = gtk_scale_new (GTK_ORIENTATION_VERTICAL, adj);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gimp_help_set_help_data (scale, _("Pressure"), NULL);

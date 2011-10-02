@@ -208,7 +208,8 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
     }
   else
     {
-      scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+      scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL,
+                             GTK_ADJUSTMENT (adjustment));
     }
 
   if (scale_width > 0)

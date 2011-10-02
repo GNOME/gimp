@@ -229,7 +229,7 @@ create_levels_scale (gdouble        value,
                                      value, -100.0, 100.0,
                                      1.0, 10.0, 0.0, 1.0, 0);
 
-  slider = gtk_hscale_new (adj);
+  slider = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, adj);
   gtk_scale_set_draw_value (GTK_SCALE (slider), FALSE);
   gtk_widget_set_size_request (slider, 100, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, col, col + 1);

@@ -72,9 +72,9 @@ typedef enum
 
 typedef struct
 {
-  GtkObject *adjustment;
-  GtkWidget *scale;
-  GtkWidget *spin;
+  GtkAdjustment *adjustment;
+  GtkWidget     *scale;
+  GtkWidget     *spin;
 
   ValuePairType type;
   guint         timeout_id;
@@ -2123,7 +2123,7 @@ value_pair_create (gpointer      data,
   value_pair->type   = type;
   value_pair->timeout_id = 0;
 
-  value_pair->spin = gimp_spin_button_new (&value_pair->adjustment,
+  value_pair->spin = gimp_spin_button_new ((GtkObject **) &value_pair->adjustment,
                                            1.0, lower, upper,
                                            (upper - lower) / 100,
                                            (upper - lower) / 10,
@@ -2136,8 +2136,8 @@ value_pair_create (gpointer      data,
 
   if (create_scale)
     {
-      value_pair->scale =
-        gtk_hscale_new (GTK_ADJUSTMENT (value_pair->adjustment));
+      value_pair->scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL,
+                                         value_pair->adjustment);
 
       if (type == VALUE_PAIR_INT)
         gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 0);
@@ -2158,11 +2158,9 @@ static void
 value_pair_update (ValuePair *value_pair)
 {
   if (value_pair->type == VALUE_PAIR_INT)
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (value_pair->adjustment),
-                              *value_pair->data.i);
+    gtk_adjustment_set_value (value_pair->adjustment, *value_pair->data.i);
   else
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (value_pair->adjustment),
-                              *value_pair->data.d);
+    gtk_adjustment_set_value (value_pair->adjustment, *value_pair->data.d);
 
 }
 
@@ -2175,19 +2173,19 @@ value_pair_scale_callback_real (gpointer data)
   if (value_pair->type == VALUE_PAIR_DOUBLE)
     {
       if ((gdouble) *value_pair->data.d !=
-          gtk_adjustment_get_value (GTK_ADJUSTMENT (value_pair->adjustment)))
+          gtk_adjustment_get_value (value_pair->adjustment))
         {
           changed = TRUE;
-          *value_pair->data.d = gtk_adjustment_get_value (GTK_ADJUSTMENT (value_pair->adjustment));
+          *value_pair->data.d = gtk_adjustment_get_value (value_pair->adjustment);
         }
     }
   else
     {
       if (*value_pair->data.i !=
-          (gint) gtk_adjustment_get_value (GTK_ADJUSTMENT (value_pair->adjustment)))
+          (gint) gtk_adjustment_get_value (value_pair->adjustment))
         {
           changed = TRUE;
-          *value_pair->data.i = gtk_adjustment_get_value (GTK_ADJUSTMENT (value_pair->adjustment));
+          *value_pair->data.i = gtk_adjustment_get_value (value_pair->adjustment);
         }
     }
 

@@ -625,8 +625,8 @@ fp_create_circle_palette (GtkWidget *parent)
 static GtkWidget *
 fp_create_rough (void)
 {
-  GtkWidget *frame, *vbox, *scale;
-  GtkObject *data;
+  GtkWidget     *frame, *vbox, *scale;
+  GtkAdjustment *data;
 
   frame = gimp_frame_new (_("Roughness"));
   gtk_widget_show (frame);
@@ -635,8 +635,10 @@ fp_create_rough (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  data = gtk_adjustment_new (fpvals.roughness, 0, 1.0, 0.05, 0.01, 0.0);
-  fp_widgets.roughness_scale = scale = gtk_hscale_new (GTK_ADJUSTMENT (data));
+  data = (GtkAdjustment *)
+    gtk_adjustment_new (fpvals.roughness, 0, 1.0, 0.05, 0.01, 0.0);
+  fp_widgets.roughness_scale = scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL,
+                                                      data);
 
   gtk_widget_set_size_request (scale, 60, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
@@ -1291,12 +1293,12 @@ fp_advanced_dialog (GtkWidget *parent)
   const gchar *rangeNames[] = { N_("Shadows:"),
                                 N_("Midtones:"),
                                 N_("Highlights:") };
-  GtkWidget *frame, *hbox;
-  GtkObject *smoothnessData;
-  GtkWidget *graphFrame, *scale;
-  GtkWidget *vbox, *label, *labelTable, *alignment;
-  GtkWidget *inner_vbox, *innermost_vbox;
-  gint       i;
+  GtkWidget     *frame, *hbox;
+  GtkAdjustment *smoothnessData;
+  GtkWidget     *graphFrame, *scale;
+  GtkWidget     *vbox, *label, *labelTable, *alignment;
+  GtkWidget     *inner_vbox, *innermost_vbox;
+  gint           i;
 
   AW.window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
@@ -1397,11 +1399,12 @@ fp_advanced_dialog (GtkWidget *parent)
                         GTK_EXPAND | GTK_FILL, 0, 0, 0);
     }
 
-  smoothnessData = gtk_adjustment_new (fpvals.aliasing,
-                                       0, 1.0, 0.05, 0.01, 0.0);
+  smoothnessData = (GtkAdjustment *)
+    gtk_adjustment_new (fpvals.aliasing,
+                        0, 1.0, 0.05, 0.01, 0.0);
 
   fp_widgets.aliasing_scale = scale =
-    gtk_hscale_new (GTK_ADJUSTMENT (smoothnessData));
+    gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, smoothnessData);
   gtk_widget_set_size_request (scale, 200, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
@@ -1422,12 +1425,13 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  smoothnessData = gtk_adjustment_new (fpvals.preview_size,
-                                       50, MAX_PREVIEW_SIZE,
-                                       5, 5, 0.0);
+  smoothnessData = (GtkAdjustment *)
+    gtk_adjustment_new (fpvals.preview_size,
+                        50, MAX_PREVIEW_SIZE,
+                        5, 5, 0.0);
 
   fp_widgets.preview_size_scale = scale =
-    gtk_hscale_new (GTK_ADJUSTMENT (smoothnessData));
+    gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, smoothnessData);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_set_size_request (scale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);

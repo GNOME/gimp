@@ -442,7 +442,7 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
   GtkWidget          *vbox;
   GtkWidget          *label;
   GtkWidget          *scale;
-  GtkObject          *scale_data;
+  GtkAdjustment      *scale_data;
   const gchar        *title;
   const gchar        *desc;
 
@@ -499,9 +499,9 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
 
   /*  Scale  */
   editor->replicate_times = 2;
-  scale_data  = gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
+  scale_data  = GTK_ADJUSTMENT (gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0));
 
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_data);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, TRUE, 4);
@@ -544,7 +544,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
   GtkWidget          *vbox;
   GtkWidget          *label;
   GtkWidget          *scale;
-  GtkObject          *scale_data;
+  GtkAdjustment      *scale_data;
   const gchar        *title;
   const gchar        *desc;
 
@@ -602,9 +602,9 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
 
   /*  Scale  */
   editor->split_parts = 2;
-  scale_data = gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
+  scale_data = GTK_ADJUSTMENT (gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0));
 
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_data);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 4);

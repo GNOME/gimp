@@ -44,12 +44,12 @@ static GtkWidget *next_button;
 static GtkWidget *add_button;
 static GtkWidget *kill_button;
 
-static GtkObject *smvectprevbrightadjust = NULL;
+static GtkAdjustment *smvectprevbrightadjust = NULL;
 
-static GtkObject *sizadjust = NULL;
-static GtkObject *smstradjust = NULL;
-static GtkObject *smstrexpadjust = NULL;
-static GtkWidget *size_voronoi = NULL;
+static GtkAdjustment *sizadjust = NULL;
+static GtkAdjustment *smstradjust = NULL;
+static GtkAdjustment *smstrexpadjust = NULL;
+static GtkWidget     *size_voronoi = NULL;
 
 #define OMWIDTH 150
 #define OMHEIGHT 150
@@ -61,7 +61,7 @@ static double
 getsiz_from_gui (double x, double y)
 {
   return getsiz_proto (x,y, numsmvect, smvector,
-                       gtk_adjustment_get_value (GTK_ADJUSTMENT (smstrexpadjust)),
+                       gtk_adjustment_get_value (smstrexpadjust),
                        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (size_voronoi)));
 }
 
@@ -116,7 +116,7 @@ updatesmvectorprev (void)
   guchar         white[3] = {255, 255, 255};
 
   if (smvectprevbrightadjust)
-    val = 1.0 - gtk_adjustment_get_value (GTK_ADJUSTMENT (smvectprevbrightadjust)) / 100.0;
+    val = 1.0 - gtk_adjustment_get_value (smvectprevbrightadjust) / 100.0;
   else
     val = 0.5;
 
@@ -181,10 +181,8 @@ static void
 updatesmsliders (void)
 {
   smadjignore = TRUE;
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (sizadjust),
-                            smvector[selectedsmvector].siz);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (smstradjust),
-                            smvector[selectedsmvector].str);
+  gtk_adjustment_set_value (sizadjust, smvector[selectedsmvector].siz);
+  gtk_adjustment_set_value (smstradjust, smvector[selectedsmvector].str);
   smadjignore = FALSE;
 }
 
@@ -280,7 +278,7 @@ angsmadjmove (GtkWidget *w, gpointer data)
 {
   if (!smadjignore)
     {
-      smvector[selectedsmvector].siz = gtk_adjustment_get_value (GTK_ADJUSTMENT (sizadjust));
+      smvector[selectedsmvector].siz = gtk_adjustment_get_value (sizadjust);
       updatesmvectorprev ();
       updatesmpreviewprev ();
     }
@@ -291,7 +289,7 @@ strsmadjmove (GtkWidget *w, gpointer data)
 {
   if (!smadjignore)
     {
-      smvector[selectedsmvector].str = gtk_adjustment_get_value (GTK_ADJUSTMENT (smstradjust));
+      smvector[selectedsmvector].str = gtk_adjustment_get_value (smstradjust);
       updatesmvectorprev ();
       updatesmpreviewprev ();
     }
@@ -323,7 +321,7 @@ smresponse (GtkWidget *widget,
           pcvals.size_vectors[i] = smvector[i];
 
         pcvals.num_size_vectors = numsmvect;
-        pcvals.size_strength_exponent  = gtk_adjustment_get_value (GTK_ADJUSTMENT (smstrexpadjust));
+        pcvals.size_strength_exponent  = gtk_adjustment_get_value (smstrexpadjust);
         pcvals.size_voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (size_voronoi));
       }
       break;
@@ -367,8 +365,7 @@ update_sizemap_dialog (void)
     {
       initsmvectors ();
 
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (smstrexpadjust),
-                                pcvals.size_strength_exponent);
+      gtk_adjustment_set_value (smstrexpadjust, pcvals.size_strength_exponent);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (size_voronoi),
                                     pcvals.size_voronoi);
 
@@ -449,8 +446,9 @@ create_sizemap_dialog (GtkWidget *parent)
                     G_CALLBACK (smmapclick), NULL);
   gtk_widget_show (tmpw2);
 
-  smvectprevbrightadjust = gtk_adjustment_new (50.0, 0.0, 100.0, 1.0, 1.0, 1.0);
-  tmpw = gtk_vscale_new (GTK_ADJUSTMENT (smvectprevbrightadjust));
+  smvectprevbrightadjust = (GtkAdjustment *)
+    gtk_adjustment_new (50.0, 0.0, 100.0, 1.0, 1.0, 1.0);
+  tmpw = gtk_scale_new (GTK_ORIENTATION_VERTICAL, smvectprevbrightadjust);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
@@ -507,7 +505,7 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_table_attach_defaults (GTK_TABLE (table1), table2, 0, 2, 2, 3);
   gtk_widget_show (table2);
 
-  sizadjust =
+  sizadjust = (GtkAdjustment *)
     gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
                           _("_Size:"),
                           150, 6, 50.0,
@@ -518,7 +516,7 @@ create_sizemap_dialog (GtkWidget *parent)
   g_signal_connect (sizadjust, "value-changed",
                     G_CALLBACK (angsmadjmove), NULL);
 
-  smstradjust =
+  smstradjust = (GtkAdjustment *)
     gimp_scale_entry_new (GTK_TABLE (table2), 0, 1,
                           _("S_trength:"),
                           150, 6, 1.0,
@@ -529,7 +527,7 @@ create_sizemap_dialog (GtkWidget *parent)
   g_signal_connect (smstradjust, "value-changed",
                     G_CALLBACK (strsmadjmove), NULL);
 
-  smstrexpadjust =
+  smstrexpadjust = (GtkAdjustment *)
     gimp_scale_entry_new (GTK_TABLE (table2), 0, 2,
                           _("St_rength exp.:"),
                           150, 6, 1.0,

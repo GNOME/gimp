@@ -426,7 +426,8 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
                         G_CALLBACK (gimp_navigation_editor_zoom_adj_changed),
                         editor);
 
-      hscale = gtk_hscale_new (editor->zoom_adjustment);
+      hscale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL,
+                              editor->zoom_adjustment);
       gtk_scale_set_draw_value (GTK_SCALE (hscale), FALSE);
       gtk_box_pack_start (GTK_BOX (hbox), hscale, TRUE, TRUE, 0);
       gtk_widget_show (hscale);

@@ -56,7 +56,7 @@ typedef void (* EntscaleIntCallback) (gint     value,
 
 typedef struct
 {
-  GtkObject           *adjustment;
+  GtkAdjustment       *adjustment;
   GtkWidget           *entry;
   gboolean             constraint;
   EntscaleIntCallback  callback;
@@ -562,12 +562,12 @@ entscale_int_new (GtkWidget           *table,
 		  gpointer             call_data)
 {
   EntscaleIntData *userdata;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *entry;
-  GtkWidget *scale;
-  GtkObject *adjustment;
-  gint	     constraint_val;
+  GtkWidget       *hbox;
+  GtkWidget       *label;
+  GtkWidget       *entry;
+  GtkWidget       *scale;
+  GtkAdjustment   *adjustment;
+  gint	           constraint_val;
 
   userdata = g_new (EntscaleIntData, 1);
 
@@ -588,8 +588,8 @@ entscale_int_new (GtkWidget           *table,
     constraint_val = ( *intvar < min ? min : *intvar > max ? max : *intvar );
 
   userdata->adjustment = adjustment =
-    gtk_adjustment_new (constraint_val, min, max, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+    GTK_ADJUSTMENT (gtk_adjustment_new (constraint_val, min, max, 1.0, 1.0, 0.0));
+  scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, adjustment);
   gtk_widget_set_size_request (scale, ENTSCALE_INT_SCALE_WIDTH, -1);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
 
@@ -678,7 +678,7 @@ entscale_int_entry_update (GtkWidget *widget,
   gint		  *intvar = data;
 
   userdata = g_object_get_data (G_OBJECT (widget), "userdata");
-  adjustment = GTK_ADJUSTMENT (userdata->adjustment);
+  adjustment = userdata->adjustment;
 
   new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
   constraint_val = new_val;

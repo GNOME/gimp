@@ -41,11 +41,11 @@ static void  update_brush_preview (const char *fn);
 static GtkWidget    *brush_preview    = NULL;
 static GtkListStore *brush_list_store = NULL;
 
-static GtkWidget *brush_list          = NULL;
-static GtkObject *brush_relief_adjust = NULL;
-static GtkObject *brush_aspect_adjust = NULL;
-static GtkObject *brush_gamma_adjust  = NULL;
-static gboolean   brush_dont_update   = FALSE;
+static GtkWidget     *brush_list          = NULL;
+static GtkAdjustment *brush_relief_adjust = NULL;
+static GtkAdjustment *brush_aspect_adjust = NULL;
+static GtkAdjustment *brush_gamma_adjust  = NULL;
+static gboolean       brush_dont_update   = FALSE;
 
 static gchar *last_selected_brush = NULL;
 
@@ -57,15 +57,15 @@ void
 brush_restore (void)
 {
   reselect (brush_list, pcvals.selected_brush);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_gamma_adjust), pcvals.brushgamma);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_relief_adjust), pcvals.brush_relief);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_aspect_adjust), pcvals.brush_aspect);
+  gtk_adjustment_set_value (brush_gamma_adjust, pcvals.brushgamma);
+  gtk_adjustment_set_value (brush_relief_adjust, pcvals.brush_relief);
+  gtk_adjustment_set_value (brush_aspect_adjust, pcvals.brush_aspect);
 }
 
 void
 brush_store (void)
 {
-  pcvals.brushgamma = gtk_adjustment_get_value (GTK_ADJUSTMENT (brush_gamma_adjust));
+  pcvals.brushgamma = gtk_adjustment_get_value (brush_gamma_adjust);
 }
 
 void
@@ -103,8 +103,7 @@ brushdmenuselect (GtkWidget *widget,
   guchar       *src_row;
   guchar       *src;
   gint          id;
-  gint          alpha, bpp;
-  gboolean      has_alpha;
+  gint          bpp;
   gint          x, y;
   ppm_t        *p;
   gint          x1, y1, x2, y2;
@@ -128,16 +127,14 @@ brushdmenuselect (GtkWidget *widget,
       preset_save_button_set_sensitive (FALSE);
     }
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_gamma_adjust), 1.0);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_aspect_adjust), 0.0);
+  gtk_adjustment_set_value (brush_gamma_adjust, 1.0);
+  gtk_adjustment_set_value (brush_aspect_adjust, 0.0);
 
   drawable = gimp_drawable_get (id);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   bpp = gimp_drawable_bpp (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha = (has_alpha) ? bpp - 1 : bpp;
 
   ppm_kill (&brushppm);
   ppm_new (&brushppm, x2 - x1, y2 - y1);
@@ -363,7 +360,7 @@ update_brush_preview (const gchar *fn)
 
       set_colorbrushes (fn);
 
-      sc = gtk_adjustment_get_value (GTK_ADJUSTMENT (brush_gamma_adjust));
+      sc = gtk_adjustment_get_value (brush_gamma_adjust);
       if (sc != 1.0)
         for (i = 0; i < 256; i++)
           gammatable[i] = pow (i / 255.0, sc) * 255;
@@ -372,7 +369,7 @@ update_brush_preview (const gchar *fn)
           gammatable[i] = i;
 
       newheight = p.height *
-        pow (10, gtk_adjustment_get_value (GTK_ADJUSTMENT (brush_aspect_adjust)));
+        pow (10, gtk_adjustment_get_value (brush_aspect_adjust));
 
       sc = p.width > newheight ? p.width : newheight;
       sc = 100.0 / sc;
@@ -447,8 +444,8 @@ brush_select (GtkTreeSelection *selection, gboolean force)
         }
 
       brush_dont_update = TRUE;
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_gamma_adjust), 1.0);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_aspect_adjust), 0.0);
+      gtk_adjustment_set_value (brush_gamma_adjust, 1.0);
+      gtk_adjustment_set_value (brush_aspect_adjust, 0.0);
       brush_dont_update = FALSE;
 
       if (brush)
@@ -545,9 +542,9 @@ create_brushpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
 
-  brush_gamma_adjust = gtk_adjustment_new (pcvals.brushgamma,
-                                           0.5, 3.0, 0.1, 0.1, 1.0);
-  tmpw = gtk_hscale_new (GTK_ADJUSTMENT (brush_gamma_adjust));
+  brush_gamma_adjust = GTK_ADJUSTMENT (gtk_adjustment_new (pcvals.brushgamma,
+                                                           0.5, 3.0, 0.1, 0.1, 1.0));
+  tmpw = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, brush_gamma_adjust);
   gtk_widget_set_size_request (GTK_WIDGET (tmpw), 100, 30);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_scale_set_digits (GTK_SCALE (tmpw), 2);
@@ -593,7 +590,7 @@ create_brushpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (thispage), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  brush_aspect_adjust =
+  brush_aspect_adjust = (GtkAdjustment *)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                           _("Aspect ratio:"),
                           150, -1, pcvals.brush_aspect,
@@ -606,7 +603,7 @@ create_brushpage (GtkNotebook *notebook)
   g_signal_connect (brush_aspect_adjust, "value-changed",
                     G_CALLBACK (brush_asepct_adjust_cb), &pcvals.brush_aspect);
 
-  brush_relief_adjust =
+  brush_relief_adjust = (GtkAdjustment *)
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                           _("Relief:"),
                           150, -1, pcvals.brush_relief,
