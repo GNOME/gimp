@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "imap_browse.h"
 
 static const GtkTargetEntry target_table[] =
