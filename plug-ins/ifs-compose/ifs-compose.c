@@ -1602,7 +1602,7 @@ design_area_button_press (GtkWidget      *widget,
 
   gtk_widget_grab_focus (widget);
 
-  if (gimp_button_event_triggers_context_menu (event))
+  if (gdk_event_triggers_context_menu ((GdkEvent *) event))
     {
       GtkWidget *menu =
         gtk_ui_manager_get_widget (ifsDesign->ui_manager,

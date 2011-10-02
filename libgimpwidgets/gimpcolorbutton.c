@@ -36,8 +36,8 @@
 #include "gimpdialog.h"
 #include "gimphelpui.h"
 #include "gimpstock.h"
-#include "gimpwidgets.h" /* remove in 3.0 */
 #include "gimpwidgets-private.h"
+#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -488,7 +488,7 @@ gimp_color_button_button_press (GtkWidget      *widget,
 {
   GimpColorButton *button = GIMP_COLOR_BUTTON (widget);
 
-  if (gimp_button_event_triggers_context_menu (bevent))
+  if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
       GtkWidget *menu = gtk_ui_manager_get_widget (button->popup_menu,
                                                    "/color-button-popup");

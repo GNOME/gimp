@@ -320,7 +320,7 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
   if (! gimp_display_get_image (shell->display))
     return TRUE;
 
-  if (gimp_button_event_triggers_context_menu (bevent))
+  if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
 

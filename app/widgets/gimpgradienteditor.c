@@ -836,7 +836,7 @@ view_events (GtkWidget          *widget,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-        if (gimp_button_event_triggers_context_menu (bevent))
+        if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
           {
             gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
           }

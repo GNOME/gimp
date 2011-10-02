@@ -44,4 +44,14 @@ GtkWidget * gtk_scrollbar_new  (GtkOrientation  orientation,
 GtkWidget * gtk_separator_new  (GtkOrientation  orientation);
 
 
+/* These functions are even more evil. They exist only since GTK+ 3.3
+ * and need to be taken care of carefully when building against GTK+
+ * 3.x. This is not an issue as long as we don't have any GIMP 3.x
+ * release, and this file will be gone until then.
+ */
+
+#if ! GTK_CHECK_VERSION (3, 3, 0)
+gboolean    gdk_event_triggers_context_menu (const GdkEvent *event);
+#endif
+
 #endif /* __GIMP_3_MIGRATION_H__ */

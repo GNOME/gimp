@@ -441,7 +441,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
 
   if (bevent->type == GDK_BUTTON_PRESS)
     {
-      if (gimp_button_event_triggers_context_menu (bevent))
+      if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
         {
           view->press_state = 0;
 

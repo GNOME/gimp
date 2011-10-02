@@ -378,9 +378,11 @@ get_filename(void)
 }
 
 static gboolean
-arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
+arrow_on_button_press (GtkWidget      *widget,
+                       GdkEventButton *event,
+                       gpointer        data)
 {
-  if (gimp_button_event_triggers_context_menu (event))
+  if (gdk_event_triggers_context_menu ((GdkEvent *) event))
     {
       do_popup_menu (event);
     }

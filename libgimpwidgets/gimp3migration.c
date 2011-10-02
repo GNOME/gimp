@@ -84,3 +84,31 @@ gtk_separator_new (GtkOrientation  orientation)
   else
     return gtk_vseparator_new ();
 }
+
+#if ! GTK_CHECK_VERSION (3, 3, 0)
+
+gboolean
+gdk_event_triggers_context_menu (const GdkEvent *event)
+{
+  g_return_val_if_fail (event != NULL, FALSE);
+
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      GdkEventButton *bevent = (GdkEventButton *) event;
+
+      if (bevent->button == 3 &&
+          ! (bevent->state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK)))
+        return TRUE;
+
+#ifdef GDK_WINDOWING_QUARTZ
+      if (bevent->button == 1 &&
+          ! (bevent->state & (GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)) &&
+          (bevent->state & GDK_CONTROL_MASK))
+        return TRUE;
+#endif
+    }
+
+  return FALSE;
+}
+
+#endif /* GTK+ 3.3 */

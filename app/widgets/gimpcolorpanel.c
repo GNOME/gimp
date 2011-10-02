@@ -98,7 +98,7 @@ static gboolean
 gimp_color_panel_button_press (GtkWidget      *widget,
                                GdkEventButton *bevent)
 {
-  if (gimp_button_event_triggers_context_menu (bevent))
+  if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
       GimpColorButton *color_button;
       GimpColorPanel  *color_panel;

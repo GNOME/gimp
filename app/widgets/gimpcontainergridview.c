@@ -728,7 +728,7 @@ gimp_container_grid_view_button_press (GtkWidget             *widget,
                                        GdkEventButton        *bevent,
                                        GimpContainerGridView *grid_view)
 {
-  if (gimp_button_event_triggers_context_menu (bevent))
+  if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
       gimp_editor_popup_menu (GIMP_EDITOR (grid_view), NULL, NULL);
     }

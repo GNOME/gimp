@@ -261,7 +261,7 @@ static gboolean
 button_press (GtkWidget      *widget,
               GdkEventButton *event)
 {
-  if (gimp_button_event_triggers_context_menu (event))
+  if (gdk_event_triggers_context_menu ((GdkEvent *) event))
     return popup_menu (widget, event);
 
   return FALSE;

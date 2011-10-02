@@ -234,7 +234,7 @@ gimp_palette_view_button_press (GtkWidget      *widget,
     g_signal_emit (view, view_signals[ENTRY_CLICKED], 0,
                    entry, bevent->state);
 
-  if (gimp_button_event_triggers_context_menu (bevent))
+  if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
       if (entry != view->selected)
         gimp_palette_view_select_entry (view, entry);

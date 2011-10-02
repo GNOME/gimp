@@ -1018,7 +1018,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
       g_object_ref (tree_view);
 
-      if (gimp_button_event_triggers_context_menu (bevent))
+      if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
         {
           if (gimp_container_view_item_selected (container_view,
                                                  renderer->viewable))
@@ -1163,7 +1163,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
     }
   else
     {
-      if (gimp_button_event_triggers_context_menu (bevent))
+      if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
         {
           gimp_editor_popup_menu (GIMP_EDITOR (tree_view), NULL, NULL);
         }
