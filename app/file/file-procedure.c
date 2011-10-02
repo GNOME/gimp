@@ -113,7 +113,8 @@ file_procedure_find (GSList       *procs,
     {
       GimpPlugInProcedure *size_matched_proc = NULL;
       FILE                *ifp               = NULL;
-      gint                 head_size         = -2;
+      gboolean             opened            = FALSE;
+      gint                 head_size         = 0;
       gint                 size_match_count  = 0;
       guchar               head[256];
 
@@ -124,21 +125,17 @@ file_procedure_find (GSList       *procs,
 
           if (file_proc->magics_list)
             {
-              if (head_size == -2)
+              if (G_UNLIKELY (!opened))
                 {
-                  head_size = 0;
-
-                  if ((ifp = g_fopen (filename, "rb")) != NULL)
-                    {
-                      head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
-                    }
+                  ifp = g_fopen (filename, "rb");
+                  if (ifp != NULL)
+                    head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
                   else
-                    {
-                      g_set_error_literal (error,
-                                           G_FILE_ERROR,
-                                           g_file_error_from_errno (errno),
-                                           g_strerror (errno));
-                    }
+                    g_set_error_literal (error,
+                                         G_FILE_ERROR,
+                                         g_file_error_from_errno (errno),
+                                         g_strerror (errno));
+                  opened = TRUE;
                 }
 
               if (head_size >= 4)
