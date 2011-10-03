@@ -2218,14 +2218,12 @@ save_rgb (FILE   *ofp,
   L_XWDFILEHEADER  xwdhdr;
   GimpPixelRgn     pixel_rgn;
   GimpDrawable    *drawable;
-  GimpImageType    drawable_type;
 
 #ifdef XWD_DEBUG
   printf ("save_rgb ()\n");
 #endif
 
   drawable      = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
   width         = drawable->width;
   height        = drawable->height;
   tile_height   = gimp_tile_height ();
