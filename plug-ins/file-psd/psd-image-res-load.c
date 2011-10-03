@@ -1376,7 +1376,6 @@ load_resource_2000 (const PSDimageres  *res_a,
   gint          image_height;
   gint          i;
   gboolean      closed;
-  gboolean      fill;
 
   /* Load path data from image resources 2000-2998 */
 
@@ -1396,8 +1395,6 @@ load_resource_2000 (const PSDimageres  *res_a,
       IFDBG(1) g_debug ("Unexpected path record type: %d", type);
       return -1;
     }
-  else
-    fill = FALSE;
 
   if (fseek (f, 24, SEEK_CUR) < 0)
     {
@@ -1428,7 +1425,6 @@ load_resource_2000 (const PSDimageres  *res_a,
 
       if (type == PSD_PATH_FILL_RULE)
         {
-          fill = FALSE;
           if (fseek (f, 24, SEEK_CUR) < 0)
             {
               psd_set_error (feof (f), errno, error);
@@ -1443,8 +1439,6 @@ load_resource_2000 (const PSDimageres  *res_a,
               psd_set_error (feof (f), errno, error);
               return -1;
             }
-          if (init_fill != 0)
-            fill = TRUE;
 
           if (fseek (f, 22, SEEK_CUR) < 0)
             {
