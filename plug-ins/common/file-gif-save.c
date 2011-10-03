@@ -1402,7 +1402,6 @@ gif_encode_header (FILE     *fp,
   int LeftOfs, TopOfs;
   int Resolution;
   int ColorMapSize;
-  int InitCodeSize;
   int i;
 
   ColorMapSize = 1 << BitsPerPixel;
@@ -1422,14 +1421,6 @@ gif_encode_header (FILE     *fp,
    * Indicate which pass we are on (if interlace)
    */
   Pass = 0;
-
-  /*
-   * The initial code size
-   */
-  if (BitsPerPixel <= 1)
-    InitCodeSize = 2;
-  else
-    InitCodeSize = BitsPerPixel;
 
   /*
    * Set up the current x and y position
@@ -1502,7 +1493,6 @@ gif_encode_graphic_control_ext (FILE    *fp,
 {
   int LeftOfs, TopOfs;
   int ColorMapSize;
-  int InitCodeSize;
 
   ColorMapSize = 1 << BitsPerPixel;
 
@@ -1519,14 +1509,6 @@ gif_encode_graphic_control_ext (FILE    *fp,
    * Indicate which pass we are on (if interlace)
    */
   Pass = 0;
-
-  /*
-   * The initial code size
-   */
-  if (BitsPerPixel <= 1)
-    InitCodeSize = 2;
-  else
-    InitCodeSize = BitsPerPixel;
 
   /*
    * Set up the current x and y position
