@@ -2048,7 +2048,7 @@ find_poly_dir (Polygon *poly,
   gint    xe, ye;
   gint    min_x, min_y;
   gint    max_x, max_y;
-  gint    size_x, size_y;
+  gint    size_y;
   gint   *max_scanlines;
   gint   *min_scanlines;
   guchar *dm, *dv, *dh;
@@ -2072,7 +2072,6 @@ find_poly_dir (Polygon *poly,
   max_y = (gint) dmax_y;
 
   size_y = max_y - min_y;
-  size_x = max_x - min_x;
 
   min_scanlines = g_new (gint, size_y);
   max_scanlines = g_new (gint, size_y);
@@ -2164,7 +2163,7 @@ find_poly_color (Polygon      *poly,
   gint          xe, ye;
   gint          min_x, min_y;
   gint          max_x, max_y;
-  gint          size_x, size_y;
+  gint          size_y;
   gint         *max_scanlines;
   gint         *min_scanlines;
   gint          col_sum[4] = {0, 0, 0, 0};
@@ -2184,7 +2183,6 @@ find_poly_color (Polygon      *poly,
   max_y = (gint) dmax_y;
 
   size_y = max_y - min_y;
-  size_x = max_x - min_x;
 
   min_scanlines = g_new (int, size_y);
   max_scanlines = g_new (int, size_y);
