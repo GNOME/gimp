@@ -164,8 +164,8 @@ add_to_inhibit_string (gpointer data,
 
   if (module->load_inhibit)
     {
-      str = g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
-      str = g_string_append (str, module->filename);
+      g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
+      g_string_append (str, module->filename);
     }
 }
 
