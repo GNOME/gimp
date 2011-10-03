@@ -437,7 +437,6 @@ gih_load_one_brush (gint   fd,
   gint32         layer_ID;
   GimpDrawable  *drawable;
   GimpPixelRgn   pixel_rgn;
-  gint           version_extra;
   gint           bn_size;
   GimpImageType  image_type;
   gint           width, height;
@@ -458,16 +457,12 @@ gih_load_one_brush (gint   fd,
   bh.magic_number = g_ntohl (bh.magic_number);
   bh.spacing      = g_ntohl (bh.spacing);
 
-  /* How much extra to add to the header seek - 1 needs a bit more */
-  version_extra = 0;
-
   if (bh.version == 1)
     {
       /* Version 1 didn't know about spacing */
       bh.spacing = 25;
       /* And we need to rewind the handle a bit too */
       lseek (fd, -8, SEEK_CUR);
-      version_extra = 8;
     }
   /* Version 1 didn't know about magic either */
   if ((bh.version != 1 &&
