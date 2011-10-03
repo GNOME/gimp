@@ -1382,7 +1382,7 @@ calcphong (common * obj, ray * r2, GimpVector4 * col)
 {
   gint    i, j, o;
   ray     r;
-  gdouble d, b;
+  gdouble b;
   GimpVector4  lcol;
   GimpVector4  norm;
   GimpVector4  pcol;
@@ -1402,7 +1402,6 @@ calcphong (common * obj, ray * r2, GimpVector4 * col)
       vcopy (&r.v1, &r2->v1);
       vcopy (&r.v2, &world.light[i].a);
       vmix (&r.v1, &r.v1, &r.v2, 0.9999);
-      d = vdist (&r.v1, &r.v2);
 
       o = traceray (&r, NULL, -1, 1.0);
       if (o)
