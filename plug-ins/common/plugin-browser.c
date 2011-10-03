@@ -258,7 +258,6 @@ get_parent (PluginBrowser *browser,
   GtkTreeIter   last_parent;
   gchar        *tmp_ptr;
   gchar        *str_ptr;
-  const gchar  *leaf_ptr;
   GtkTreeStore *tree_store;
 
   if (! mpath)
@@ -281,7 +280,6 @@ get_parent (PluginBrowser *browser,
 
   if (str_ptr == NULL)
     {
-      leaf_ptr = mpath;
       gtk_tree_store_append (tree_store, parent, NULL);
       gtk_tree_store_set (tree_store, parent,
                           TREE_COLUMN_MPATH,     mpath,
@@ -290,8 +288,9 @@ get_parent (PluginBrowser *browser,
     }
   else
     {
-      leaf_ptr = g_strdup (str_ptr + 1);
+      const gchar  *leaf_ptr;
 
+      leaf_ptr = g_strdup (str_ptr + 1);
       *str_ptr = '\0';
 
       get_parent (browser, tmp_ptr, &last_parent);
@@ -315,7 +314,6 @@ insert_into_tree_view (PluginBrowser *browser,
   gchar        *labels[3];
   gchar        *str_ptr;
   gchar        *tmp_ptr;
-  gchar        *leaf_ptr;
   GtkTreeIter   parent, iter;
   GtkTreeStore *tree_store;
 
@@ -331,8 +329,6 @@ insert_into_tree_view (PluginBrowser *browser,
     g_free (tmp_ptr);
     return; /* No node */
   }
-
-  leaf_ptr = g_strdup (str_ptr + 1);
 
   *str_ptr = '\0';
 
@@ -356,8 +352,6 @@ insert_into_tree_view (PluginBrowser *browser,
                       TREE_COLUMN_DATE_STRING, xtimestr,
                       TREE_COLUMN_PINFO,       pinfo,
                       -1);
-
-  g_free (leaf_ptr);
 }
 
 static void
