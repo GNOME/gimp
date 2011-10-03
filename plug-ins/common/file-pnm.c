@@ -1019,7 +1019,7 @@ save_image (const gchar  *filename,
   yres = drawable->height;
 
   /* write out magic number */
-  if (psvals.raw == FALSE)
+  if (!psvals.raw)
     {
       if (pbm)
         {
@@ -1059,7 +1059,7 @@ save_image (const gchar  *filename,
             }
         }
     }
-  else if (psvals.raw == TRUE)
+  else
     {
       if (pbm)
         {
