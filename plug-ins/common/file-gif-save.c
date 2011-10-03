@@ -1500,7 +1500,6 @@ gif_encode_graphic_control_ext (FILE    *fp,
                                 int      BitsPerPixel,
                                 ifunptr  get_pixel)
 {
-  int RWidth, RHeight;
   int LeftOfs, TopOfs;
   int Resolution;
   int ColorMapSize;
@@ -1508,8 +1507,8 @@ gif_encode_graphic_control_ext (FILE    *fp,
 
   ColorMapSize = 1 << BitsPerPixel;
 
-  RWidth = Width = GWidth;
-  RHeight = Height = GHeight;
+  Width = GWidth;
+  Height = GHeight;
   LeftOfs = TopOfs = 0;
 
   Resolution = BitsPerPixel;
