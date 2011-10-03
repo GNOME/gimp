@@ -168,7 +168,6 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam  values[4];
-  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32            image_ID;
   GError           *error  = NULL;
@@ -178,8 +177,6 @@ run (const gchar      *name,
 #endif /* PSD_SAVE */
 
   INIT_I18N ();
-
-  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -240,6 +237,9 @@ run (const gchar      *name,
   /* File save */
   else if (strcmp (name, SAVE_PROC) == 0)
     {
+      GimpRunMode run_mode;
+
+      run_mode = param[0].data.d_int32;
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
