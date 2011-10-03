@@ -1437,7 +1437,7 @@ strucpi (GimpDrawable *drawable,
     }
 
   /*  Loop through the rows */
-  rrow = 0; rcol = 0;
+  rrow = 0;
   for (row = y1; row < y2; row++)
     {
       gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, row, width);
