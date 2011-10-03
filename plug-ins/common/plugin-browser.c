@@ -288,7 +288,7 @@ get_parent (PluginBrowser *browser,
     }
   else
     {
-      const gchar  *leaf_ptr;
+      gchar  *leaf_ptr;
 
       leaf_ptr = g_strdup (str_ptr + 1);
       *str_ptr = '\0';
@@ -299,6 +299,8 @@ get_parent (PluginBrowser *browser,
                           TREE_COLUMN_MPATH,     mpath,
                           TREE_COLUMN_PATH_NAME, leaf_ptr,
                           -1);
+
+      g_free (leaf_ptr);
     }
 }
 
