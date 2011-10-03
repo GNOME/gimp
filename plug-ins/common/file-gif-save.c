@@ -1576,7 +1576,6 @@ gif_encode_image_data (FILE    *fp,
                        gint     offset_x,
                        gint     offset_y)
 {
-  int RWidth, RHeight;
   int LeftOfs, TopOfs;
   int Resolution;
   int ColorMapSize;
@@ -1586,8 +1585,8 @@ gif_encode_image_data (FILE    *fp,
 
   ColorMapSize = 1 << BitsPerPixel;
 
-  RWidth = Width = GWidth;
-  RHeight = Height = GHeight;
+  Width = GWidth;
+  Height = GHeight;
   LeftOfs = (int) offset_x;
   TopOfs = (int) offset_y;
 
@@ -1657,8 +1656,8 @@ gif_encode_image_data (FILE    *fp,
   /***************************/
   Interlace = GInterlace;
   ColorMapSize = 1 << BitsPerPixel;
-  RWidth = Width = GWidth;
-  RHeight = Height = GHeight;
+  Width = GWidth;
+  Height = GHeight;
   LeftOfs = TopOfs = 0;
   Resolution = BitsPerPixel;
 
