@@ -410,12 +410,11 @@ free_rotate (ppm_t *p, double amount)
 {
   int    x, y;
   double nx, ny;
-  double R, a;
+  double R;
   ppm_t  tmp = {0, 0, NULL};
   double f = amount * G_PI * 2 / 360.0;
   int    rowstride = p->width * 3;
 
-  a = p->width / (float)p->height;
   R = p->width < p->height ? p->width / 2 : p->height / 2;
 
   ppm_new (&tmp, p->width, p->height);
