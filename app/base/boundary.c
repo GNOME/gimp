@@ -938,7 +938,6 @@ simplify_subdivide (const BoundSeg *segs,
     }
 
   maxdist = 0;
-  maxdist_idx = -1;
 
   if (segs[start_idx].x1 == segs[end_idx].x1 &&
       segs[start_idx].y1 == segs[end_idx].y1)
@@ -953,7 +952,6 @@ simplify_subdivide (const BoundSeg *segs,
           if (dist > maxdist)
             {
               maxdist = dist;
-              maxdist_idx = i;
             }
         }
 
@@ -977,7 +975,6 @@ simplify_subdivide (const BoundSeg *segs,
           if (dist > maxdist)
             {
               maxdist = dist;
-              maxdist_idx = i;
             }
         }
 
