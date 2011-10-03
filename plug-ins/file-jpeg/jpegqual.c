@@ -897,7 +897,7 @@ analyze_file (gchar *filename)
 
       if (option_ctable)
         {
-          g_print ("  {\n    /* %s */\n    \"?\", \"?\",\n    %hd, %hd,\n    %d,\n",
+          g_print ("  {\n    /* %s */\n    \"?\", \"?\",\n    %d, %d,\n    %d,\n",
                    filename,
                    cinfo.comp_info[0].h_samp_factor,
                    cinfo.comp_info[0].v_samp_factor,
@@ -1017,7 +1017,7 @@ print_unknown_tables (void)
           } /* FIXME */
 
           g_print ("    \"?\", \"? (hash %x)\",\n"
-                   "    %hd, %hd,\n    %d,\n",
+                   "    %d, %d,\n    %d,\n",
                    table_data->hashval,
                    table_data->subsmp_h,
                    table_data->subsmp_v,
