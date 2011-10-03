@@ -4417,7 +4417,7 @@ combine_regions (PixelRegion          *src1,
                  const gboolean       *affect,
                  CombinationMode       type)
 {
-  gboolean has_alpha1, has_alpha2;
+  gboolean has_alpha1;
   guint i;
   struct combine_regions_struct st;
 
@@ -4426,24 +4426,22 @@ combine_regions (PixelRegion          *src1,
     {
     case COMBINE_INTEN_INTEN:
     case COMBINE_INDEXED_INDEXED:
-      has_alpha1 = has_alpha2 = FALSE;
+      has_alpha1 = FALSE;
       break;
     case COMBINE_INTEN_A_INTEN:
     case COMBINE_INTEN_A_INDEXED:
       has_alpha1 = TRUE;
-      has_alpha2 = FALSE;
       break;
     case COMBINE_INTEN_INTEN_A:
     case COMBINE_INDEXED_INDEXED_A:
       has_alpha1 = FALSE;
-      has_alpha2 = TRUE;
       break;
     case COMBINE_INTEN_A_INTEN_A:
     case COMBINE_INDEXED_A_INDEXED_A:
-      has_alpha1 = has_alpha2 = TRUE;
+      has_alpha1 = TRUE;
       break;
     default:
-      has_alpha1 = has_alpha2 = FALSE;
+      has_alpha1 = FALSE;
     }
 
   st.opacity    = opacity;
