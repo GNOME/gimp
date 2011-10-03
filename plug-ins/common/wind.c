@@ -286,7 +286,7 @@ render_blast (GimpDrawable *drawable,
               edge_t        edge,
               GimpPreview  *preview)
 {
-  gint          x1, x2, y1, y2;
+  gint          x1, y1, y2;
   gint          width;
   gint          height;
   gint          bytes = drawable->bpp;
@@ -302,7 +302,6 @@ render_blast (GimpDrawable *drawable,
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &width, &height);
 
-      x2 = x1 + width;
       y2 = y1 + height;
 
       preview_buffer = g_new (guchar, width * height * bytes);
@@ -314,7 +313,6 @@ render_blast (GimpDrawable *drawable,
         {
           gimp_progress_init (_("Rendering blast"));
 
-          x2 = x1 + width;
           y2 = y1 + height;
 
           gimp_pixel_rgn_init (&dest_region, drawable,
@@ -426,7 +424,7 @@ render_wind (GimpDrawable *drawable,
   gint          row;
   guchar       *sb, *preview_buffer = NULL;
   gint          lpi;
-  gint          x1, y1, x2, y2;
+  gint          x1, y1, y2;
 
   bytes = drawable->bpp;
 
@@ -435,7 +433,6 @@ render_wind (GimpDrawable *drawable,
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &width, &height);
 
-      x2 = x1 + width;
       y2 = y1 + height;
 
       preview_buffer = g_new (guchar, width * height * bytes);
@@ -447,7 +444,6 @@ render_wind (GimpDrawable *drawable,
         {
           gimp_progress_init (_("Rendering wind"));
 
-          x2 = x1 + width;
           y2 = y1 + height;
 
           gimp_pixel_rgn_init (&dest_region, drawable,
