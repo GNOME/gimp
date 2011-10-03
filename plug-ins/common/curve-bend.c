@@ -2445,11 +2445,6 @@ p_stretch_curves (BenderDialog *cd,
          l_yb = cd->curve[l_outline][l_x2 +1];     /* y of next point */
          cd->curve_ptr[l_outline][l_x1] = ROUND (((l_ya + ((l_yb -l_ya) * l_rest)) * ymax) / 255);
        }
-
-       {
-        int      l_debugY;
-        l_debugY = ROUND((cd->curve[l_outline][l_x2] * ymax) / 255);
-       }
     }
   }
 }
