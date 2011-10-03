@@ -2386,7 +2386,6 @@ save_ps_preview (FILE   *ofp,
                  gint32  drawable_ID)
 {
   register guchar *bwptr, *greyptr;
-  GimpImageType drawable_type;
   GimpDrawable *drawable;
   GimpPixelRgn src_rgn;
   int width, height, x, y, nbsl, out_count;
@@ -2399,7 +2398,6 @@ save_ps_preview (FILE   *ofp,
   if (psvals.preview_size <= 0) return;
 
   drawable = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
 
   /* Calculate size of preview */
   if (   (drawable->width <= psvals.preview_size)
@@ -2522,11 +2520,9 @@ save_gray  (FILE   *ofp,
   unsigned char *packb = NULL;
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
-  GimpImageType drawable_type;
   int level2 = (psvals.level > 1);
 
   drawable = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
   width = drawable->width;
   height = drawable->height;
   tile_height = gimp_tile_height ();
@@ -2626,13 +2622,11 @@ save_bw (FILE   *ofp,
   guchar *hex_scanline;
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
-  GimpImageType drawable_type;
   gint level2 = (psvals.level > 1);
 
   cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   drawable = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
   width = drawable->width;
   height = drawable->height;
   tile_height = gimp_tile_height ();
@@ -2758,7 +2752,6 @@ save_index (FILE   *ofp,
   char coltab[256*6], *ct;
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
-  GimpImageType drawable_type;
   int level2 = (psvals.level > 1);
 
   cmap = cmap_start = gimp_image_get_colormap (image_ID, &ncols);
@@ -2788,7 +2781,6 @@ save_index (FILE   *ofp,
     return (save_bw (ofp, image_ID, drawable_ID));
 
   drawable = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
   width = drawable->width;
   height = drawable->height;
   tile_height = gimp_tile_height ();
@@ -2906,11 +2898,9 @@ save_rgb (FILE   *ofp,
   guchar *packb = NULL, *plane = NULL;
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
-  GimpImageType drawable_type;
   int level2 = (psvals.level > 1);
 
   drawable = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
   width = drawable->width;
   height = drawable->height;
   tile_height = gimp_tile_height ();
