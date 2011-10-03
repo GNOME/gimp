@@ -599,6 +599,9 @@ preview_update (GimpPreview *preview)
     case 4:
       filter = rgba_filter;
       break;
+    default:
+      g_error ("Programmer stupidity error: img_bpp is %d\n",
+               img_bpp);
     }
 
   /*
