@@ -151,7 +151,6 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[4];
-  gint32             image_ID;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -184,8 +183,9 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          image_ID = ico_load_image (param[1].data.d_string, &error);
+          gint32 image_ID;
 
+          image_ID = ico_load_image (param[1].data.d_string, &error);
           if (image_ID != -1)
             {
               *nreturn_vals = 2;
@@ -234,6 +234,7 @@ run (const gchar      *name,
   else if (strcmp (name, SAVE_PROC) == 0)
     {
       gchar *file_name;
+      gint32 image_ID;
 
       image_ID    = param[1].data.d_int32;
       file_name   = param[3].data.d_string;
