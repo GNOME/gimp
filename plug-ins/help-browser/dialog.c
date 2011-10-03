@@ -172,7 +172,6 @@ browser_dialog_open (const gchar *plug_in_binary)
   GtkWidget   *toolbar;
   GtkWidget   *paned;
   GtkWidget   *scrolled;
-  GtkWidget   *button;
   GtkToolItem *item;
   GtkAction   *action;
   DialogData   data = { 720, 560, 240, TRUE, 1.0 };
@@ -230,9 +229,6 @@ browser_dialog_open (const gchar *plug_in_binary)
                                               "/help-browser-toolbar/space"));
   gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
   gtk_tool_item_set_expand (item, TRUE);
-
-  button = gtk_ui_manager_get_widget (ui_manager,
-                                      "/help-browser-toolbar/website");
 
   /*  the horizontal paned  */
   paned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
