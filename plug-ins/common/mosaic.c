@@ -1977,7 +1977,7 @@ clip_point (gdouble *dir,
             gdouble  y2,
             Polygon *poly_new)
 {
-  gdouble det, m11, m12, m21, m22;
+  gdouble det, m11, m12;
   gdouble side1, side2;
   gdouble t;
   gdouble vec[2];
@@ -2014,8 +2014,6 @@ clip_point (gdouble *dir,
 
       m11 = vec[1] / det;
       m12 = -vec[0] / det;
-      m21 = -dir[1] / det;
-      m22 = dir[0] / det;
 
       t = m11 * x1 + m12 * y1;
 
