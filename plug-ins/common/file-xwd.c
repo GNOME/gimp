@@ -1225,7 +1225,7 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
   register int     pix8;
   register guchar *dest, *src;
   guchar           c1, c2, c3, c4;
-  gint             width, height, linepad, scan_lines, tile_height;
+  gint             width, height, scan_lines, tile_height;
   gint             i, j, ncols;
   gchar           *temp;
   guchar           bit2byte[256 * 8];
@@ -1274,10 +1274,6 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
         for (i = 7; i >= 0; i--)
           *(temp++) = ((j & (1 << i)) != 0);
     }
-
-  linepad = xwdhdr->l_bytes_per_line - (xwdhdr->l_pixmap_width+7)/8;
-  if (linepad < 0)
-    linepad = 0;
 
   dest = data;
   scan_lines = 0;
