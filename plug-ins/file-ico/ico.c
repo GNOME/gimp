@@ -152,7 +152,6 @@ run (const gchar      *name,
 {
   static GimpParam   values[4];
   gint32             image_ID;
-  gint32             drawable_ID;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
@@ -237,7 +236,6 @@ run (const gchar      *name,
       gchar *file_name;
 
       image_ID    = param[1].data.d_int32;
-      drawable_ID = param[2].data.d_int32;
       file_name   = param[3].data.d_string;
 
       switch (run_mode)
