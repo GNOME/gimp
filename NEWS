@@ -17,7 +17,7 @@ UI:
  - Improve the transform tools' undo strings to be more descriptive
  - Render the layer's "eye" icon in inconsistent state if the layer is
    visible, but one of its parents isn't.
- - Improve cut and rectangle/oval select tool interaction on initial click
+ - Improve crop and rectangle/oval select tool interaction on initial click
 
 
 Core:
