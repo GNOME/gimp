@@ -1814,7 +1814,7 @@ update_box_rgb (const CFHistogram histogram,
 
   if (dist0 && dist1 && dist2)
   {
-    axisType longest_ax=AXIS_UNDEF, longest_ax2=AXIS_UNDEF;
+    axisType longest_ax=AXIS_UNDEF;
     int longest_length=0, longest_length2=0;
     int ratio;
 
@@ -1827,40 +1827,34 @@ update_box_rgb (const CFHistogram histogram,
     if ( dist0 >= longest_length)
       {
         longest_length2 = longest_length;
-        longest_ax2 = longest_ax;
         longest_length = dist0;
         longest_ax = AXIS_RED;
       }
     else if ( dist0 >= longest_length2)
       {
         longest_length2 = dist0;
-        longest_ax2 = AXIS_RED;
       }
 
     if ( dist1 >= longest_length)
       {
         longest_length2 = longest_length;
-        longest_ax2 = longest_ax;
         longest_length = dist1;
         longest_ax = AXIS_GREEN;
       }
     else if ( dist1 >= longest_length2)
       {
         longest_length2 = dist1;
-        longest_ax2 = AXIS_GREEN;
       }
 
     if ( dist2 >= longest_length)
       {
         longest_length2 = longest_length;
-        longest_ax2 = longest_ax;
         longest_length = dist2;
         longest_ax = AXIS_BLUE;
       }
     else if ( dist2 >= longest_length2)
       {
         longest_length2 = dist2;
-        longest_ax2 = AXIS_BLUE;
       }
 
     if (longest_length2 == 0)
