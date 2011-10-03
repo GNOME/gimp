@@ -1096,7 +1096,6 @@ get_drawable_image (GimpDrawable *drawable)
   gint             y;
   gint             bpp;
 
-  gint32           drawable_id;
   GimpPixelRgn     region;
   gint             width;
   gint             height;
@@ -1105,7 +1104,6 @@ get_drawable_image (GimpDrawable *drawable)
   gint             num_colors;
   gboolean         indexed;
 
-  drawable_id = drawable->drawable_id;
   width  = drawable->width;
   height = drawable->height;
   gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
