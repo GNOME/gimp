@@ -197,8 +197,6 @@ gimp_transform_region (GimpPickable          *pickable,
   m = *matrix;
   gimp_matrix3_invert (&m);
 
-  alpha = 0;
-
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
   if (gimp_matrix3_is_simple (matrix))
     interpolation_type = GIMP_INTERPOLATION_NONE;
