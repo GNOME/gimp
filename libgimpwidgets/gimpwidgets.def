@@ -1,4 +1,5 @@
 EXPORTS
+	gdk_event_triggers_context_menu
 	gimp_aspect_type_get_type
 	gimp_browser_add_search_types
 	gimp_browser_get_type
@@ -388,7 +389,6 @@ EXPORTS
 	gimp_zoom_model_zoom
 	gimp_zoom_model_zoom_step
 	gimp_zoom_type_get_type
-	gdk_event_triggers_context_menu
 	gtk_box_new
 	gtk_button_box_new
 	gtk_paned_new
