@@ -1380,7 +1380,7 @@ calclight (GimpVector4 * col, GimpVector4 * point, common * obj)
 static void
 calcphong (common * obj, ray * r2, GimpVector4 * col)
 {
-  gint    i, j, o;
+  gint    i, j;
   ray     r;
   gdouble b;
   GimpVector4  lcol;
@@ -1403,11 +1403,8 @@ calcphong (common * obj, ray * r2, GimpVector4 * col)
       vcopy (&r.v2, &world.light[i].a);
       vmix (&r.v1, &r.v1, &r.v2, 0.9999);
 
-      o = traceray (&r, NULL, -1, 1.0);
-      if (o)
-        {
-          continue;
-        }
+      if (traceray (&r, NULL, -1, 1.0))
+        continue;
 
       /* OK, light is visible */
 
