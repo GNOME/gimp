@@ -519,8 +519,6 @@ compute_coefs3 (gauss3_coefs *c, gfloat sigma)
    */
   gfloat q, q2, q3;
 
-  q = 0;
-
   if (sigma >= 2.5)
     {
       q = 0.98711 * sigma - 0.96330;
