@@ -481,7 +481,6 @@ mosaic (GimpDrawable *drawable,
 {
   gint     x1, y1, x2, y2;
   gint     width, height;
-  gint     alpha;
   GimpRGB  color;
 
   /*  Find the mask bounds  */
@@ -546,8 +545,6 @@ mosaic (GimpDrawable *drawable,
       gimp_drawable_get_color_uchar (drawable->drawable_id, &color, back);
       break;
     }
-
-  alpha = drawable->bpp - 1;
 
   light_x = -cos (mvals.light_dir * G_PI / 180.0);
   light_y =  sin (mvals.light_dir * G_PI / 180.0);
