@@ -814,14 +814,11 @@ find_gradients (GimpDrawable *drawable,
 {
   GimpPixelRgn  src_rgn;
   GimpPixelRgn  dest_rgn;
-  gint          bytes;
   gint          i, j;
   guchar       *gr, *dh, *dv;
   gint          hmax, vmax;
   gint          row, rows;
   gint          ith_row;
-
-  bytes = drawable->bpp;
 
   /*  allocate the gradient maps  */
   h_grad = g_new (guchar, width * height);
