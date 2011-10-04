@@ -875,7 +875,6 @@ siox_foreground_extract (SioxState          *state,
   clustersize = get_clustersize (limits);
 
   siox_progress_update (progress_callback, progress_data, 0.0);
-  total = width * height;
 
   if (refinement & SIOX_REFINEMENT_CHANGE_SENSITIVITY)
     {
