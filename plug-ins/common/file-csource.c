@@ -393,7 +393,7 @@ save_image (Config  *config,
   GimpDrawable *drawable      = gimp_drawable_get (drawable_ID);
   GimpImageType drawable_type = gimp_drawable_type (drawable_ID);
   GimpPixelRgn pixel_rgn;
-  gchar  *s_uint_8, *s_uint_32, *s_uint, *s_char, *s_null;
+  gchar  *s_uint_8, *s_uint, *s_char, *s_null;
   FILE   *fp;
   guint   c;
   gchar  *macro_name;
@@ -491,7 +491,6 @@ save_image (Config  *config,
   if (!config->use_macros && config->glib_types)
     {
       s_uint_8 =  "guint8 ";
-      s_uint_32 = "guint32";
       s_uint  =   "guint  ";
       s_char =    "gchar  ";
       s_null =    "NULL";
@@ -499,7 +498,6 @@ save_image (Config  *config,
   else if (!config->use_macros)
     {
       s_uint_8 =  "unsigned char";
-      s_uint_32 = "unsigned int ";
       s_uint =    "unsigned int ";
       s_char =    "char         ";
       s_null =    "(char*) 0";
@@ -507,7 +505,6 @@ save_image (Config  *config,
   else if (config->use_macros && config->glib_types)
     {
       s_uint_8 =  "guint8";
-      s_uint_32 = "guint32";
       s_uint  =   "guint";
       s_char =    "gchar";
       s_null =    "NULL";
@@ -515,7 +512,6 @@ save_image (Config  *config,
   else /* config->use_macros && !config->glib_types */
     {
       s_uint_8 =  "unsigned char";
-      s_uint_32 = "unsigned int";
       s_uint =    "unsigned int";
       s_char =    "char";
       s_null =    "(char*) 0";
