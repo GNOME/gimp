@@ -2173,7 +2173,7 @@ save_ps_setup (FILE   *ofp,
 {
   double x_offset, y_offset, x_size, y_size;
   double urx, ury;
-  double x_scale, y_scale;
+  double x_scale;
   double width_inch, height_inch;
   double f1, f2, dx, dy;
   int xtrans, ytrans;
@@ -2246,7 +2246,6 @@ save_ps_setup (FILE   *ofp,
       break;
     case  90: dx = dy = 0.0;
       x_scale = 72.0 * width_inch;
-      y_scale = -72.0 * height_inch;
       break;
     case 180: dx = x_size*72.0; dy = 0.0;
       break;
