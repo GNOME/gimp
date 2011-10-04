@@ -472,7 +472,6 @@ convolve_pixel (guchar       **src_row,
 
   gfloat sum              = 0;
   gfloat alphasum         = 0;
-  gfloat temp;
   gint   x, y;
   gint   alpha_channel;
 
@@ -482,10 +481,7 @@ convolve_pixel (guchar       **src_row,
 
       for (y = 0; y < MATRIX_SIZE; y++)
         for (x = 0; x < MATRIX_SIZE; x++)
-          {
-            temp = config.matrix[x][y];
-            matrixsum += ABS (config.matrix[x][y]);
-          }
+          matrixsum += ABS (config.matrix[x][y]);
     }
 
   alpha_channel = bpp - 1;
@@ -493,7 +489,7 @@ convolve_pixel (guchar       **src_row,
   for (y = 0; y < MATRIX_SIZE; y++)
     for (x = 0; x < MATRIX_SIZE; x++)
       {
-        temp = config.matrix[x][y];
+        gfloat temp = config.matrix[x][y];
 
         if (channel != alpha_channel && config.alpha_weighting == 1)
           {
