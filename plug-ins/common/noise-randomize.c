@@ -482,7 +482,6 @@ randomize (GimpDrawable *drawable,
   gint row, col;
   gint x1, y1, x2, y2;
   gint cnt;
-  gint has_alpha;
   gint i, j, k;
 
   if (preview)
@@ -500,7 +499,6 @@ randomize (GimpDrawable *drawable,
     }
 
   bytes = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
 
   /*
    *  allocate row buffers
