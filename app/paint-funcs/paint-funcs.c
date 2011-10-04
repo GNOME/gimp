@@ -3366,7 +3366,6 @@ border_region (PixelRegion *src,
   /* TODO: Figure out role clearly in algorithm. */
   guchar **density;
 
-  guchar   last_max;
   gint16   last_index;
 
   if (xradius < 0 || yradius < 0)
@@ -3607,12 +3606,13 @@ border_region (PixelRegion *src,
             max[x] = -yradius - 1;
         }
 
-      last_max =  max[0][density[-1]];
       last_index = 1;
 
        /* render scan line */
       for (x = 0 ; x < src->w; x++)
         {
+          guchar last_max;
+
           last_index--;
 
           if (last_index >= 0)
