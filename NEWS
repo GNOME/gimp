@@ -50,7 +50,7 @@ Source and build system:
 
 General:
 
- - <item>
+ - Make gimptool install scripts in the correct system-wide directory
 
 
 Changes in GIMP 2.7.3
