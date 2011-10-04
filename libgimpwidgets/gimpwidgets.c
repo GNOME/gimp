@@ -614,16 +614,12 @@ gimp_coordinates_callback (GtkWidget           *widget,
         {
           if (new_x != data->last_x)
             {
-              new_y = new_x;
-
               gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, new_x);
               data->last_y = data->last_x
                 = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
             }
           else if (new_y != data->last_y)
             {
-              new_x = new_y;
-
               gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, new_y);
               data->last_x = data->last_y
                 = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
