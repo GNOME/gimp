@@ -677,11 +677,11 @@ get_sys_script_dir (gboolean forward_slashes)
   const gchar slash = '/';
 #endif
 
-  return g_strdup_printf ("%s%cshare%cgimp%c%d.%d%cscripts",
-			  get_runtime_prefix (slash),
-			  slash, slash, slash,
-			  GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION,
-			  slash);
+  return g_strdup_printf ("%s%cshare%cgimp%c%s%cscripts",
+                          get_runtime_prefix (slash),
+                          slash, slash, slash,
+                          GIMP_API_VERSION,
+                          slash);
 }
 
 static void
