@@ -972,8 +972,6 @@ gimp_rgb_to_hsv4 (const guchar *rgb,
   green = rgb[1] / 255.0;
   blue  = rgb[2] / 255.0;
 
-  h = 0.0; /* Shut up -Wall */
-
   if (red > green)
     {
       max = MAX (red,   blue);
