@@ -69,20 +69,10 @@ tool_preset_editor_actions_setup (GimpActionGroup *group)
 
 void
 tool_preset_editor_actions_update (GimpActionGroup *group,
-                                gpointer         user_data)
+                                   gpointer         user_data)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (user_data);
-  GimpData       *data;
-  gboolean        editable    = FALSE;
   gboolean        edit_active = FALSE;
-
-  data = data_editor->data;
-
-  if (data)
-    {
-      if (data_editor->data_editable)
-        editable = TRUE;
-    }
 
   edit_active = gimp_data_editor_get_edit_active (data_editor);
 
