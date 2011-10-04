@@ -320,7 +320,7 @@ gimp_source_tool_oper_update (GimpTool         *tool,
           else
             {
               gimp_tool_replace_status (tool, display, "%s%s%s",
-                                        gimp_get_mod_name_control (),
+                                        gimp_get_mod_string (GDK_CONTROL_MASK),
                                         gimp_get_mod_separator (),
                                         source_tool->status_set_source);
             }

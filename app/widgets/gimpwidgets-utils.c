@@ -456,57 +456,6 @@ gimp_preview_tab_style_to_icon (GimpTabStyle tab_style)
 }
 
 const gchar *
-gimp_get_mod_name_shift (void)
-{
-  static gchar *mod_name_shift = NULL;
-
-  if (! mod_name_shift)
-    {
-      GtkAccelLabelClass *accel_label_class;
-
-      accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
-      mod_name_shift = g_strdup (accel_label_class->mod_name_shift);
-      g_type_class_unref (accel_label_class);
-    }
-
-  return (const gchar *) mod_name_shift;
-}
-
-const gchar *
-gimp_get_mod_name_control (void)
-{
-  static gchar *mod_name_control = NULL;
-
-  if (! mod_name_control)
-    {
-      GtkAccelLabelClass *accel_label_class;
-
-      accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
-      mod_name_control = g_strdup (accel_label_class->mod_name_control);
-      g_type_class_unref (accel_label_class);
-    }
-
-  return (const gchar *) mod_name_control;
-}
-
-const gchar *
-gimp_get_mod_name_alt (void)
-{
-  static gchar *mod_name_alt = NULL;
-
-  if (! mod_name_alt)
-    {
-      GtkAccelLabelClass *accel_label_class;
-
-      accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
-      mod_name_alt = g_strdup (accel_label_class->mod_name_alt);
-      g_type_class_unref (accel_label_class);
-    }
-
-  return (const gchar *) mod_name_alt;
-}
-
-const gchar *
 gimp_get_mod_separator (void)
 {
   static gchar *mod_separator = NULL;
@@ -526,61 +475,42 @@ gimp_get_mod_separator (void)
 const gchar *
 gimp_get_mod_string (GdkModifierType modifiers)
 {
-  static struct
-  {
-    GdkModifierType  modifiers;
-    gchar           *name;
-  }
-  modifier_strings[] =
-  {
-    { GDK_SHIFT_MASK,                                      NULL },
-    { GDK_CONTROL_MASK,                                    NULL },
-    { GDK_MOD1_MASK,                                       NULL },
-    { GDK_SHIFT_MASK   | GDK_CONTROL_MASK,                 NULL },
-    { GDK_SHIFT_MASK   | GDK_MOD1_MASK,                    NULL },
-    { GDK_CONTROL_MASK | GDK_MOD1_MASK,                    NULL },
-    { GDK_SHIFT_MASK   | GDK_CONTROL_MASK | GDK_MOD1_MASK, NULL }
-  };
+  static GHashTable *mod_labels;
 
-  gint i;
+  GtkAccelLabelClass *accel_label_class;
+  gchar              *label;
 
-  for (i = 0; i < G_N_ELEMENTS (modifier_strings); i++)
+  if (! modifiers)
+    return NULL;
+
+  if (G_UNLIKELY (! mod_labels))
+    mod_labels = g_hash_table_new (g_int_hash, g_int_equal);
+
+  label = g_hash_table_lookup (mod_labels, &modifiers);
+
+  if (label)
+    return label;
+
+  label = gtk_accelerator_get_label (0, modifiers);
+
+  accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
+
+  if (accel_label_class->mod_separator &&
+      strlen (accel_label_class->mod_separator))
     {
-      if (modifiers == modifier_strings[i].modifiers)
-        {
-          if (! modifier_strings[i].name)
-            {
-              GString *str = g_string_new (NULL);
+      gchar *sep = g_strrstr (label, accel_label_class->mod_separator);
 
-              if (modifiers & GDK_SHIFT_MASK)
-                {
-                  g_string_append (str, gimp_get_mod_name_shift ());
-                }
-
-              if (modifiers & GDK_CONTROL_MASK)
-                {
-                  if (str->len)
-                    g_string_append (str, gimp_get_mod_separator ());
-
-                  g_string_append (str, gimp_get_mod_name_control ());
-                }
-
-              if (modifiers & GDK_MOD1_MASK)
-                {
-                  if (str->len)
-                    g_string_append (str, gimp_get_mod_separator ());
-
-                  g_string_append (str, gimp_get_mod_name_alt ());
-                }
-
-              modifier_strings[i].name = g_string_free (str, FALSE);
-            }
-
-          return modifier_strings[i].name;
-        }
+      if (sep - label == strlen (label) - strlen (accel_label_class->mod_separator))
+        *sep = '\0';
     }
 
-  return NULL;
+  g_type_class_unref (accel_label_class);
+
+  g_hash_table_insert (mod_labels,
+                       g_memdup (&modifiers, sizeof (GdkModifierType)),
+                       label);
+
+  return label;
 }
 
 #define BUF_SIZE 100
@@ -619,11 +549,11 @@ gimp_suggest_modifiers (const gchar     *message,
       if (shift_format && *shift_format)
         {
           g_snprintf (msg_buf[num_msgs], BUF_SIZE, shift_format,
-                      gimp_get_mod_name_shift ());
+                      gimp_get_mod_string (GDK_SHIFT_MASK));
         }
       else
         {
-          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_shift (), BUF_SIZE);
+          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_string (GDK_SHIFT_MASK), BUF_SIZE);
           try = TRUE;
         }
 
@@ -635,11 +565,11 @@ gimp_suggest_modifiers (const gchar     *message,
       if (control_format && *control_format)
         {
           g_snprintf (msg_buf[num_msgs], BUF_SIZE, control_format,
-                      gimp_get_mod_name_control ());
+                      gimp_get_mod_string (GDK_CONTROL_MASK));
         }
       else
         {
-          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_control (), BUF_SIZE);
+          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_string (GDK_CONTROL_MASK), BUF_SIZE);
           try = TRUE;
         }
 
@@ -651,11 +581,11 @@ gimp_suggest_modifiers (const gchar     *message,
       if (alt_format && *alt_format)
         {
           g_snprintf (msg_buf[num_msgs], BUF_SIZE, alt_format,
-                      gimp_get_mod_name_alt ());
+                      gimp_get_mod_string (GDK_MOD1_MASK));
         }
       else
         {
-          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_name_alt (), BUF_SIZE);
+          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_string (GDK_MOD1_MASK), BUF_SIZE);
           try = TRUE;
         }
 
