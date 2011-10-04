@@ -54,10 +54,6 @@ static void     gimp_xmp_model_widget_xmpmodel_changed  (XMPModel           *xmp
 
 const gchar *   find_schema_prefix                      (const gchar        *schema_uri);
 
-void            set_property_edit_icon                  (GtkWidget          *widget,
-                                                         XMPModel           *xmp_model,
-                                                         GtkTreeIter        *iter);
-
 
 GType
 gimp_xmp_model_widget_interface_get_type (void)
@@ -266,19 +262,14 @@ gimp_xmp_model_widget_xmpmodel_changed (XMPModel     *xmp_model,
   GimpXmpModelWidgetPrivate *priv  = GIMP_XMP_MODEL_WIDGET_GET_PRIVATE (widget);
   const gchar               *tree_value;
   const gchar               *property_name;
-  GdkPixbuf                 *icon;
 
   gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), iter,
                       COL_XMP_NAME,      &property_name,
                       COL_XMP_VALUE,     &tree_value,
-                      COL_XMP_EDIT_ICON, &icon,
                       -1);
 
   if (! strcmp (priv->property_name, property_name))
     gimp_xmp_model_widget_set_text (widget, tree_value);
-
-  if (icon == NULL)
-    set_property_edit_icon (GTK_WIDGET (widget), priv->xmp_model, iter);
 
   return;
 }
@@ -350,35 +341,3 @@ find_schema_prefix (const gchar *schema_uri)
   return NULL;
 }
 
-void
-set_property_edit_icon (GtkWidget       *widget,
-                        XMPModel        *xmp_model,
-                        GtkTreeIter     *iter)
-{
-  GdkPixbuf                *icon;
-  gboolean                  editable;
-
-  gtk_tree_model_get (GTK_TREE_MODEL (xmp_model), iter,
-                      COL_XMP_EDITABLE, &editable,
-                      COL_XMP_EDIT_ICON, &icon,
-                      -1);
-
-  if (editable == XMP_AUTO_UPDATE)
-    {
-      icon = gtk_widget_render_icon (GTK_WIDGET (widget), GIMP_STOCK_WILBER,
-                                     GTK_ICON_SIZE_MENU, NULL);
-      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), iter,
-                          COL_XMP_EDIT_ICON, icon,
-                          -1);
-    }
-  else if (editable == TRUE)
-    {
-      icon = gtk_widget_render_icon (GTK_WIDGET (widget), GTK_STOCK_EDIT,
-                                     GTK_ICON_SIZE_MENU, NULL);
-      gtk_tree_store_set (GTK_TREE_STORE (xmp_model), iter,
-                          COL_XMP_EDIT_ICON, icon,
-                          -1);
-    }
-
-  return;
-}
