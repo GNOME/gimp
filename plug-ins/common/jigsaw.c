@@ -630,19 +630,10 @@ draw_vertical_border (guchar  *buffer,
   gdouble delta;
   gdouble sigma = blend_amount / blend_lines;
   gint right;
-  bump_t style_index;
 
   for (i = 0; i < ytiles; i++)
     {
       right = g_random_int_range (0, 2);
-      if (right)
-        {
-          style_index = RIGHT;
-        }
-      else
-        {
-          style_index = LEFT;
-        }
 
       /* first straight line from top downwards */
       px[0] = px[1] = x_offset;
@@ -754,6 +745,7 @@ draw_horizontal_border (guchar   *buffer,
   for (i = 0; i < xtiles; i++)
     {
       up = g_random_int_range (0, 2);
+
       /* first horizontal line across */
       px[0] = x_offset; px[1] = x_offset + curve_start_offset - 1;
       py[0] = py[1] = y_offset;
@@ -2111,7 +2103,6 @@ draw_bezier_vertical_border (guchar   *buffer,
   gdouble delta;
   gdouble sigma = blend_amount / blend_lines;
   gint right;
-  bump_t style_index;
   gint *cachex, *cachey;
 
   cachex = g_new (gint, steps);
@@ -2120,14 +2111,7 @@ draw_bezier_vertical_border (guchar   *buffer,
   for (i = 0; i < ytiles; i++)
     {
       right = g_random_int_range (0, 2);
-      if (right)
-        {
-          style_index = RIGHT;
-        }
-      else
-        {
-          style_index = LEFT;
-        }
+
       px[0] = px[3] = x_offset;
       px[1] = x_offset + WALL_XFACTOR2 * tile_width * FUDGE;
       px[2] = x_offset + WALL_XFACTOR3 * tile_width * FUDGE;
@@ -2247,7 +2231,6 @@ draw_bezier_horizontal_border (guchar   *buffer,
   gdouble delta;
   gdouble sigma = blend_amount / blend_lines;
   gint up;
-  style_t style_index;
   gint *cachex, *cachey;
 
   cachex = g_new (gint, steps);
@@ -2256,14 +2239,7 @@ draw_bezier_horizontal_border (guchar   *buffer,
   for (i = 0; i < xtiles; i++)
     {
       up = g_random_int_range (0, 2);
-      if (up)
-        {
-          style_index = UP;
-        }
-      else
-        {
-          style_index = DOWN;
-        }
+
       px[0] = x_offset;
       px[1] = x_offset + WALL_XCONS2 * tile_width;
       px[2] = x_offset + WALL_XCONS3 * tile_width;
