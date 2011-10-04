@@ -482,7 +482,7 @@ randomize (GimpDrawable *drawable,
   gint row, col;
   gint x1, y1, x2, y2;
   gint cnt;
-  gint has_alpha, ind;
+  gint has_alpha;
   gint i, j, k;
 
   if (preview)
@@ -540,7 +540,6 @@ randomize (GimpDrawable *drawable,
           randomize_prepare_row (sp, nr, x1, row + 1, (x2 - x1));
 
           d = dest;
-          ind = 0;
           for (col = 0; col < (x2 - x1); col++)
             {
               if (g_rand_int_range (gr, 0, 100) <= (gint) pivals.rndm_pct)
