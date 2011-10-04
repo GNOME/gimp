@@ -1215,7 +1215,6 @@ warp (GimpDrawable *orig_draw)
   gboolean      first_time = TRUE;
   gint          width;
   gint          height;
-  gint          bytes;
   gint          orig_image_id;
   gint          image_type;
   gint          x1, y1, x2, y2;
@@ -1243,7 +1242,6 @@ warp (GimpDrawable *orig_draw)
 
   width  = orig_draw->width;
   height = orig_draw->height;
-  bytes  = orig_draw->bpp;
   image_type = gimp_drawable_type (orig_draw->drawable_id);
 
   /* generate x,y differential images (arrays) */
