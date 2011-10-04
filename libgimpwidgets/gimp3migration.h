@@ -51,7 +51,20 @@ GtkWidget * gtk_separator_new  (GtkOrientation  orientation);
  */
 
 #if ! GTK_CHECK_VERSION (3, 3, 0)
-gboolean    gdk_event_triggers_context_menu (const GdkEvent *event);
+typedef enum
+{
+  GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR,
+  GDK_MODIFIER_INTENT_CONTEXT_MENU,
+  GDK_MODIFIER_INTENT_EXTEND_SELECTION,
+  GDK_MODIFIER_INTENT_MODIFY_SELECTION,
+  GDK_MODIFIER_INTENT_NO_TEXT_INPUT
+} GdkModifierIntent;
+
+gboolean        gdk_event_triggers_context_menu (const GdkEvent    *event);
+GdkModifierType gdk_keymap_get_modifier_mask    (GdkKeymap         *keymap,
+                                                 GdkModifierIntent  intent);
+GdkModifierType gtk_widget_get_modifier_mask    (GtkWidget         *widget,
+                                                 GdkModifierIntent  intent);
 #endif
 
 #endif /* __GIMP_3_MIGRATION_H__ */

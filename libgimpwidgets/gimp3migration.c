@@ -111,4 +111,69 @@ gdk_event_triggers_context_menu (const GdkEvent *event)
   return FALSE;
 }
 
+GdkModifierType
+gdk_keymap_get_modifier_mask (GdkKeymap         *keymap,
+                              GdkModifierIntent  intent)
+{
+  g_return_val_if_fail (GDK_IS_KEYMAP (keymap), 0);
+
+#ifdef GDK_WINDOWING_QUARTZ
+  switch (intent)
+    {
+    case GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR:
+      return GDK_MOD2_MASK;
+
+    case GDK_MODIFIER_INTENT_CONTEXT_MENU:
+      return GDK_CONTROL_MASK;
+
+    case GDK_MODIFIER_INTENT_EXTEND_SELECTION:
+      return GDK_SHIFT_MASK;
+
+    case GDK_MODIFIER_INTENT_MODIFY_SELECTION:
+      return GDK_MOD2_MASK;
+
+    case GDK_MODIFIER_INTENT_NO_TEXT_INPUT:
+      return GDK_MOD2_MASK | GDK_CONTROL_MASK;
+
+    default:
+      g_return_val_if_reached (0);
+    }
+#else
+  switch (intent)
+    {
+    case GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR:
+      return GDK_CONTROL_MASK;
+
+    case GDK_MODIFIER_INTENT_CONTEXT_MENU:
+      return 0;
+
+    case GDK_MODIFIER_INTENT_EXTEND_SELECTION:
+      return GDK_SHIFT_MASK;
+
+    case GDK_MODIFIER_INTENT_MODIFY_SELECTION:
+      return GDK_CONTROL_MASK;
+
+    case GDK_MODIFIER_INTENT_NO_TEXT_INPUT:
+      return GDK_MOD1_MASK | GDK_CONTROL_MASK;
+
+    default:
+      g_return_val_if_reached (0);
+    }
+#endif
+}
+
+GdkModifierType
+gtk_widget_get_modifier_mask (GtkWidget         *widget,
+                              GdkModifierIntent  intent)
+{
+  GdkDisplay *display;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), 0);
+
+  display = gtk_widget_get_display (widget);
+
+  return gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                       intent);
+}
+
 #endif /* GTK+ 3.3 */
