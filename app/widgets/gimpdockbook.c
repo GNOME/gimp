@@ -312,6 +312,12 @@ gimp_dockbook_dispose (GObject *object)
   while (dockbook->p->dockables)
     gimp_dockbook_remove (dockbook, dockbook->p->dockables->data);
 
+  if (dockbook->p->menu_button)
+    {
+      gtk_widget_unparent (dockbook->p->menu_button);
+      dockbook->p->menu_button = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -324,12 +330,6 @@ gimp_dockbook_finalize (GObject *object)
     {
       g_object_unref (dockbook->p->ui_manager);
       dockbook->p->ui_manager = NULL;
-    }
-
-    if (dockbook->p->menu_button)
-    {
-      gtk_widget_unparent (dockbook->p->menu_button);
-      dockbook->p->menu_button = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
