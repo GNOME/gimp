@@ -133,13 +133,11 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  gint32             image_ID;
   GimpRGB            background;
   GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
 
   run_mode = param[0].data.d_int32;
-  image_ID = param[1].data.d_int32;
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
