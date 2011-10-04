@@ -661,7 +661,7 @@ get_sys_script_dir (void)
 {
   return g_build_filename (get_runtime_prefix (G_DIR_SEPARATOR),
                            "share", "gimp",
-                           GIMP_API_VERSION,
+                           GIMP_PLUGIN_VERSION,
                            "scripts",
                            NULL);
 }
