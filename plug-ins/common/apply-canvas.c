@@ -1353,7 +1353,7 @@ strucpi (GimpDrawable *drawable,
   guchar       *dest, *d;
   guchar       *cur_row;
   gint          row, col, rrow, rcol;
-  gint          x1, y1, x2, y2, varde;
+  gint          x1, y1, y2, varde;
   gint          xm, ym, offs;
   gfloat        mult;
   guchar       *preview_buffer = NULL;
@@ -1363,7 +1363,6 @@ strucpi (GimpDrawable *drawable,
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &width, &height);
 
-      x2 = x1 + width;
       y2 = y1 + height;
     }
   else
@@ -1378,7 +1377,6 @@ strucpi (GimpDrawable *drawable,
                                           &x1, &y1, &width, &height))
         return;
 
-      x2 = x1 + width;
       y2 = y1 + height;
     }
 
