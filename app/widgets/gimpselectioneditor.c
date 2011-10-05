@@ -247,7 +247,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
   GimpSelectionOptions    *sel_options;
   GimpRegionSelectOptions *options;
   GimpDrawable            *drawable;
-  GimpChannelOps           operation = GIMP_CHANNEL_OP_REPLACE;
+  GimpChannelOps           operation;
   gint                     x, y;
   GimpRGB                  color;
 
@@ -270,21 +270,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
   if (! drawable)
     return TRUE;
 
-  if (bevent->state & GDK_SHIFT_MASK)
-    {
-      if (bevent->state & GDK_CONTROL_MASK)
-        {
-          operation = GIMP_CHANNEL_OP_INTERSECT;
-        }
-      else
-        {
-          operation = GIMP_CHANNEL_OP_ADD;
-        }
-    }
-  else if (bevent->state & GDK_CONTROL_MASK)
-    {
-      operation = GIMP_CHANNEL_OP_SUBTRACT;
-    }
+  operation = gimp_modifiers_to_channel_op (widget, bevent->state);
 
   x = gimp_image_get_width  (image_editor->image) * bevent->x / renderer->width;
   y = gimp_image_get_height (image_editor->image) * bevent->y / renderer->height;

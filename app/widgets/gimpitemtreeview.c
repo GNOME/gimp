@@ -1416,23 +1416,10 @@ gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
 
       if (renderer)
         {
-          GimpItem       *item;
-          GimpChannelOps  op = GIMP_CHANNEL_OP_REPLACE;
+          GimpItem       *item = GIMP_ITEM (renderer->viewable);
+          GimpChannelOps  op;
 
-          item = GIMP_ITEM (renderer->viewable);
-
-          if ((state & GDK_SHIFT_MASK) && (state & GDK_CONTROL_MASK))
-            {
-              op = GIMP_CHANNEL_OP_INTERSECT;
-            }
-          else if (state & GDK_SHIFT_MASK)
-            {
-              op = GIMP_CHANNEL_OP_ADD;
-            }
-          else if (state & GDK_CONTROL_MASK)
-            {
-              op = GIMP_CHANNEL_OP_SUBTRACT;
-            }
+          op = gimp_modifiers_to_channel_op (GTK_WIDGET (item_view), state);
 
           gimp_item_to_selection (item, op,
                                   TRUE, FALSE, 0.0, 0.0);
