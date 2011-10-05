@@ -476,9 +476,7 @@ const gchar *
 gimp_get_mod_string (GdkModifierType modifiers)
 {
   static GHashTable *mod_labels;
-
-  GtkAccelLabelClass *accel_label_class;
-  gchar              *label;
+  gchar             *label;
 
   if (! modifiers)
     return NULL;
@@ -488,27 +486,30 @@ gimp_get_mod_string (GdkModifierType modifiers)
 
   label = g_hash_table_lookup (mod_labels, &modifiers);
 
-  if (label)
-    return label;
-
-  label = gtk_accelerator_get_label (0, modifiers);
-
-  accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
-
-  if (accel_label_class->mod_separator &&
-      strlen (accel_label_class->mod_separator))
+  if (! label)
     {
-      gchar *sep = g_strrstr (label, accel_label_class->mod_separator);
+      GtkAccelLabelClass *accel_label_class;
 
-      if (sep - label == strlen (label) - strlen (accel_label_class->mod_separator))
-        *sep = '\0';
+      label = gtk_accelerator_get_label (0, modifiers);
+
+      accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
+
+      if (accel_label_class->mod_separator &&
+          *accel_label_class->mod_separator)
+        {
+          gchar *sep = g_strrstr (label, accel_label_class->mod_separator);
+
+          if (sep - label ==
+              strlen (label) - strlen (accel_label_class->mod_separator))
+            *sep = '\0';
+        }
+
+      g_type_class_unref (accel_label_class);
+
+      g_hash_table_insert (mod_labels,
+                           g_memdup (&modifiers, sizeof (GdkModifierType)),
+                           label);
     }
-
-  g_type_class_unref (accel_label_class);
-
-  g_hash_table_insert (mod_labels,
-                       g_memdup (&modifiers, sizeof (GdkModifierType)),
-                       label);
 
   return label;
 }
