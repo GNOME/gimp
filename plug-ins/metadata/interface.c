@@ -77,14 +77,9 @@ tree_value_edited (GtkCellRendererText *cell,
   GtkTreeModel *model = data;
   GtkTreePath  *path  = gtk_tree_path_new_from_string (path_string);
   GtkTreeIter   iter;
-  gchar        *old_text;
 
   gtk_tree_model_get_iter (model, &iter, path);
-  gtk_tree_model_get (model, &iter, COL_XMP_VALUE, &old_text, -1);
-  g_free (old_text);
 
-  /* FIXME: update value[] array */
-  /* FIXME: check widget xref and update other widget if not NULL */
   gtk_tree_store_set (GTK_TREE_STORE (model), &iter,
                       COL_XMP_VALUE, new_text,
                       -1);
