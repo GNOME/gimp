@@ -1046,7 +1046,6 @@ xmp_model_set_property (XMPModel    *xmp_model,
   GtkTreeIter   child_iter;
   int           i;
   gchar        *tmp_value;
-  gchar        *tmp_name;
 
   g_return_val_if_fail (xmp_model != NULL, FALSE);
   g_return_val_if_fail (schema_name != NULL, FALSE);
@@ -1098,11 +1097,10 @@ xmp_model_set_property (XMPModel    *xmp_model,
             g_slist_prepend (xmp_model->custom_properties, property);
         }
 
-      tmp_name = g_strconcat (property_name, " []", NULL);
       tmp_value = g_strjoinv ("; ", (gchar **) value);
       gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
       gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
-                          COL_XMP_NAME, tmp_name,
+                          COL_XMP_NAME, property_name,
                           COL_XMP_VALUE, tmp_value,
                           COL_XMP_VALUE_RAW, value,
                           COL_XMP_TYPE_XREF, property,
@@ -1114,7 +1112,6 @@ xmp_model_set_property (XMPModel    *xmp_model,
                           COL_XMP_WEIGHT_SET, FALSE,
                           -1);
       g_free (tmp_value);
-      g_free (tmp_name);
       result = TRUE;
       break;
 
