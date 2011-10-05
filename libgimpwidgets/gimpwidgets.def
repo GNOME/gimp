@@ -1,5 +1,6 @@
 EXPORTS
 	gdk_event_triggers_context_menu
+	gdk_keymap_get_modifier_mask
 	gimp_aspect_type_get_type
 	gimp_browser_add_search_types
 	gimp_browser_get_type
@@ -395,3 +396,4 @@ EXPORTS
 	gtk_scale_new
 	gtk_scrollbar_new
 	gtk_separator_new
+	gtk_widget_get_modifier_mask
