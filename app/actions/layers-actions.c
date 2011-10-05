@@ -432,6 +432,8 @@ layers_actions_fix_tooltip (GimpActionGroup *group,
   const gchar *old_hint;
   gchar       *new_hint;
 
+  modifiers = gimp_replace_virtual_modifiers (modifiers);
+
   old_hint = gimp_action_group_get_action_tooltip (group,
                                                    action);
   new_hint = g_strconcat (old_hint,
@@ -454,6 +456,17 @@ layers_actions_fix_tooltip (GimpActionGroup *group,
 void
 layers_actions_setup (GimpActionGroup *group)
 {
+  GdkDisplay      *display = gdk_display_get_default ();
+  GdkModifierType  extend_mask;
+  GdkModifierType  modify_mask;
+
+  extend_mask =
+    gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                  GDK_MODIFIER_INTENT_EXTEND_SELECTION);
+  modify_mask =
+    gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                  GDK_MODIFIER_INTENT_MODIFY_SELECTION);
+
   gimp_action_group_add_actions (group, "layers-action",
                                  layers_actions,
                                  G_N_ELEMENTS (layers_actions));
@@ -476,14 +489,15 @@ layers_actions_setup (GimpActionGroup *group)
                                       layers_alpha_to_selection_actions,
                                       G_N_ELEMENTS (layers_alpha_to_selection_actions),
                                       G_CALLBACK (layers_alpha_to_selection_cmd_callback));
+
   layers_actions_fix_tooltip (group, "layers-alpha-selection-replace",
                               GDK_MOD1_MASK);
   layers_actions_fix_tooltip (group, "layers-alpha-selection-add",
-                              GDK_SHIFT_MASK | GDK_MOD1_MASK);
+                              extend_mask | GDK_MOD1_MASK);
   layers_actions_fix_tooltip (group, "layers-alpha-selection-subtract",
-                              GDK_CONTROL_MASK | GDK_MOD1_MASK);
+                              modify_mask | GDK_MOD1_MASK);
   layers_actions_fix_tooltip (group, "layers-alpha-selection-intersect",
-                              GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK);
+                              extend_mask | modify_mask | GDK_MOD1_MASK);
 
   gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_select_actions,
