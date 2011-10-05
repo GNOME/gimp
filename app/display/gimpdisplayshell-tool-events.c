@@ -153,7 +153,9 @@ gimp_display_shell_events (GtkWidget        *widget,
                 kevent->keyval == GDK_KEY_Control_L ||
                 kevent->keyval == GDK_KEY_Control_R ||
                 kevent->keyval == GDK_KEY_Alt_L     ||
-                kevent->keyval == GDK_KEY_Alt_R)
+                kevent->keyval == GDK_KEY_Alt_R     ||
+                kevent->keyval == GDK_KEY_Meta_L    ||
+                kevent->keyval == GDK_KEY_Meta_R)
               {
                 break;
               }
@@ -191,6 +193,7 @@ gimp_display_shell_events (GtkWidget        *widget,
           case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
           case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
           case GDK_KEY_Control_L: case GDK_KEY_Control_R:
+          case GDK_KEY_Meta_L:    case GDK_KEY_Meta_R:
           case GDK_KEY_Return:
           case GDK_KEY_KP_Enter:
           case GDK_KEY_ISO_Enter:
@@ -997,6 +1000,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
               case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
               case GDK_KEY_Control_L: case GDK_KEY_Control_R:
+              case GDK_KEY_Meta_L:    case GDK_KEY_Meta_R:
                 {
                   GdkModifierType key;
 
@@ -1072,6 +1076,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
               case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
               case GDK_KEY_Control_L: case GDK_KEY_Control_R:
+              case GDK_KEY_Meta_L:    case GDK_KEY_Meta_R:
                 {
                   GdkModifierType key;
 
@@ -1107,6 +1112,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
               case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
               case GDK_KEY_Control_L: case GDK_KEY_Control_R:
+              case GDK_KEY_Meta_L:    case GDK_KEY_Meta_R:
                 {
                   GdkModifierType key;
 
@@ -1152,6 +1158,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
               case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
               case GDK_KEY_Control_L: case GDK_KEY_Control_R:
+              case GDK_KEY_Meta_L:    case GDK_KEY_Meta_R:
                 {
                   GdkModifierType key;
 
@@ -1339,6 +1346,8 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
 static GdkModifierType
 gimp_display_shell_key_to_state (gint key)
 {
+  /* FIXME: need some proper GDK API to figure this */
+
   switch (key)
     {
     case GDK_KEY_Alt_L:
@@ -1350,6 +1359,11 @@ gimp_display_shell_key_to_state (gint key)
     case GDK_KEY_Control_L:
     case GDK_KEY_Control_R:
       return GDK_CONTROL_MASK;
+#ifdef GDK_WINDOWING_QUARTZ
+    case GDK_KEY_Meta_L:
+    case GDK_KEY_Meta_R:
+      return GDK_MOD2_MASK;
+#endif
     default:
       return 0;
     }
