@@ -616,6 +616,69 @@ gimp_suggest_modifiers (const gchar     *message,
 }
 #undef BUF_SIZE
 
+GimpChannelOps
+gimp_modifiers_to_channel_op (GtkWidget       *widget,
+                              GdkModifierType  modifiers)
+{
+  GdkModifierType  extend_mask;
+  GdkModifierType  modify_mask;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), GIMP_CHANNEL_OP_REPLACE);
+
+  extend_mask =
+    gtk_widget_get_modifier_mask (widget,
+                                  GDK_MODIFIER_INTENT_EXTEND_SELECTION);
+  modify_mask =
+    gtk_widget_get_modifier_mask (widget,
+                                  GDK_MODIFIER_INTENT_MODIFY_SELECTION);
+
+  if (modifiers & extend_mask)
+    {
+      if (modifiers & modify_mask)
+        {
+          return GIMP_CHANNEL_OP_INTERSECT;
+        }
+      else
+        {
+          return GIMP_CHANNEL_OP_ADD;
+        }
+    }
+  else if (modifiers & modify_mask)
+    {
+      return GIMP_CHANNEL_OP_SUBTRACT;
+    }
+
+  return GIMP_CHANNEL_OP_REPLACE;
+}
+
+GdkModifierType
+gimp_replace_virtual_modifiers (GdkModifierType modifiers)
+{
+  GdkDisplay      *display = gdk_display_get_default ();
+  GdkModifierType  result  = 0;
+  gint             i;
+
+  for (i = 0; i < 8; i++)
+    {
+      GdkModifierType real = 1 << i;
+
+      if (modifiers & real)
+        {
+          GdkModifierType virtual = real;
+
+          gdk_keymap_add_virtual_modifiers (gdk_keymap_get_for_display (display),
+                                            &virtual);
+
+          if (virtual == real)
+            result |= virtual;
+          else
+            result |= virtual & ~real;
+        }
+    }
+
+  return result;
+}
+
 /**
  * gimp_get_screen_resolution:
  * @screen: a #GdkScreen or %NULL
