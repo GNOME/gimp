@@ -86,7 +86,15 @@ static void
 gimp_xmp_model_entry_set_text (GimpXmpModelWidget *widget,
                                const gchar        *tree_value)
 {
+  g_signal_handlers_block_by_func (widget,
+                                   gimp_xmp_model_entry_changed,
+                                   NULL);
+
   gtk_entry_set_text (GTK_ENTRY (widget), tree_value);
+
+  g_signal_handlers_unblock_by_func (widget,
+                                     gimp_xmp_model_entry_changed,
+                                     NULL);
 }
 
 static void
