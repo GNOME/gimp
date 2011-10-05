@@ -684,7 +684,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
         {
           ExtendedAction *ext = g_slice_new (ExtendedAction);
 
-          ext->mod_mask = mod_mask;
+          ext->mod_mask = gimp_replace_virtual_modifiers (mod_mask);
           ext->action   = action;
 
           extended = g_list_prepend (extended, ext);
@@ -696,7 +696,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
               if (ext_tooltip)
                 {
                   gchar *tmp = g_strconcat (tooltip, "\n<b>",
-                                            gimp_get_mod_string (mod_mask),
+                                            gimp_get_mod_string (ext->mod_mask),
                                             "</b>  ", ext_tooltip, NULL);
                   g_free (tooltip);
                   tooltip = tmp;
