@@ -415,11 +415,16 @@ gimp_blend_tool_update_items (GimpBlendTool *blend_tool)
 {
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     {
+      gimp_canvas_handle_set_position (blend_tool->start_handle,
+                                       blend_tool->start_x,
+                                       blend_tool->start_y);
+
       gimp_canvas_line_set (blend_tool->line,
                             blend_tool->start_x,
                             blend_tool->start_y,
                             blend_tool->end_x,
                             blend_tool->end_y);
+
       gimp_canvas_handle_set_position (blend_tool->end_handle,
                                        blend_tool->end_x,
                                        blend_tool->end_y);
