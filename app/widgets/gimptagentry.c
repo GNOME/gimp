@@ -25,6 +25,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimp-utils.h"
@@ -1312,8 +1314,13 @@ static gboolean
 gimp_tag_entry_key_press (GtkWidget   *widget,
                           GdkEventKey *event)
 {
-  GimpTagEntry *entry = GIMP_TAG_ENTRY (widget);
-  guchar        c;
+  GimpTagEntry    *entry = GIMP_TAG_ENTRY (widget);
+  GdkModifierType  extend_mask;
+  guchar           c;
+
+  extend_mask =
+    gtk_widget_get_modifier_mask (widget,
+                                  GDK_MODIFIER_INTENT_EXTEND_SELECTION);
 
   c = gdk_keyval_to_unicode (event->keyval);
   if (gimp_tag_is_tag_separator (c))
@@ -1349,12 +1356,12 @@ gimp_tag_entry_key_press (GtkWidget   *widget,
 
     case GDK_KEY_Left:
       gimp_tag_entry_previous_tag (entry,
-                                   (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE);
+                                   (event->state & extend_mask) ? TRUE : FALSE);
       return TRUE;
 
     case GDK_KEY_Right:
       gimp_tag_entry_next_tag (entry,
-                               (event->state & GDK_SHIFT_MASK) ? TRUE : FALSE);
+                               (event->state & extend_mask) ? TRUE : FALSE);
       return TRUE;
 
     case GDK_KEY_BackSpace:
