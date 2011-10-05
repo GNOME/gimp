@@ -153,9 +153,16 @@ gimp_channel_tree_view_constructed (GObject *object)
 {
   GimpChannelTreeView   *view      = GIMP_CHANNEL_TREE_VIEW (object);
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
+  GdkModifierType        extend_mask;
+  GdkModifierType        modify_mask;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  extend_mask = gtk_widget_get_modifier_mask (GTK_WIDGET (object),
+                                              GDK_MODIFIER_INTENT_EXTEND_SELECTION);
+  modify_mask = gtk_widget_get_modifier_mask (GTK_WIDGET (object),
+                                              GDK_MODIFIER_INTENT_MODIFY_SELECTION);
 
   gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_LAYER,
                                NULL, tree_view);
@@ -168,11 +175,11 @@ gimp_channel_tree_view_constructed (GObject *object)
     gimp_editor_add_action_button (GIMP_EDITOR (view), "channels",
                                    "channels-selection-replace",
                                    "channels-selection-add",
-                                   GDK_SHIFT_MASK,
+                                   extend_mask,
                                    "channels-selection-subtract",
-                                   GDK_CONTROL_MASK,
+                                   modify_mask,
                                    "channels-selection-intersect",
-                                   GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+                                   extend_mask | modify_mask,
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (view),
                                   GTK_BUTTON (view->priv->toselection_button),

@@ -130,9 +130,16 @@ gimp_vectors_tree_view_constructed (GObject *object)
   GimpEditor            *editor    = GIMP_EDITOR (object);
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
   GimpVectorsTreeView   *view      = GIMP_VECTORS_TREE_VIEW (object);
+  GdkModifierType        extend_mask;
+  GdkModifierType        modify_mask;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  extend_mask = gtk_widget_get_modifier_mask (GTK_WIDGET (object),
+                                              GDK_MODIFIER_INTENT_EXTEND_SELECTION);
+  modify_mask = gtk_widget_get_modifier_mask (GTK_WIDGET (object),
+                                              GDK_MODIFIER_INTENT_MODIFY_SELECTION);
 
   /*  hide basically useless edit button  */
   gtk_widget_hide (gimp_item_tree_view_get_edit_button (GIMP_ITEM_TREE_VIEW (view)));
@@ -141,11 +148,11 @@ gimp_vectors_tree_view_constructed (GObject *object)
     gimp_editor_add_action_button (editor, "vectors",
                                    "vectors-selection-replace",
                                    "vectors-selection-add",
-                                   GDK_SHIFT_MASK,
+                                   extend_mask,
                                    "vectors-selection-subtract",
-                                   GDK_CONTROL_MASK,
+                                   modify_mask,
                                    "vectors-selection-intersect",
-                                   GDK_SHIFT_MASK | GDK_CONTROL_MASK,
+                                   extend_mask | modify_mask,
                                    NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (editor),
                                   GTK_BUTTON (view->toselection_button),
