@@ -69,6 +69,8 @@
 
 static GdkModifierType
                   gimp_display_shell_key_to_state             (gint               key);
+static GdkModifierType
+                  gimp_display_shell_button_to_state          (gint               button);
 
 static void       gimp_display_shell_proximity_in             (GimpDisplayShell  *shell);
 static void       gimp_display_shell_proximity_out            (GimpDisplayShell  *shell);
@@ -466,11 +468,35 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gimp);
 
-        switch (bevent->button)
-          {
-          case 1:
-            state |= GDK_BUTTON1_MASK;
+        state |= gimp_display_shell_button_to_state (bevent->button);
 
+        if (gdk_event_triggers_context_menu (event))
+          {
+            GimpUIManager *ui_manager;
+            const gchar   *ui_path;
+
+            ui_manager = tool_manager_get_popup_active (gimp,
+                                                        &image_coords, state,
+                                                        display,
+                                                        &ui_path);
+
+            if (ui_manager)
+              {
+                gimp_ui_manager_ui_popup (ui_manager,
+                                          ui_path,
+                                          GTK_WIDGET (shell),
+                                          NULL, NULL, NULL, NULL);
+              }
+            else
+              {
+                gimp_ui_manager_ui_popup (shell->popup_manager,
+                                          "/dummy-menubar/image-popup",
+                                          GTK_WIDGET (shell),
+                                          NULL, NULL, NULL, NULL);
+              }
+          }
+        else if (bevent->button == 1)
+          {
             event_mask = (GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK);
 
             if (active_tool &&
@@ -532,45 +558,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                   GIMP_BUTTON_PRESS_NORMAL,
                                                   display);
               }
-            break;
-
-          case 2:
-            state |= GDK_BUTTON2_MASK;
+          }
+        else if (bevent->button == 2)
+          {
             gimp_display_shell_start_scrolling (shell, bevent->x, bevent->y);
-            break;
-
-            /* FIXME: use gdk_event_triggers_context_menu() */
-          case 3:
-            {
-              GimpUIManager *ui_manager;
-              const gchar   *ui_path;
-
-              state |= GDK_BUTTON3_MASK;
-
-              ui_manager = tool_manager_get_popup_active (gimp,
-                                                          &image_coords, state,
-                                                          display,
-                                                          &ui_path);
-
-              if (ui_manager)
-                {
-                  gimp_ui_manager_ui_popup (ui_manager,
-                                            ui_path,
-                                            GTK_WIDGET (shell),
-                                            NULL, NULL, NULL, NULL);
-                }
-              else
-                {
-                  gimp_ui_manager_ui_popup (shell->popup_manager,
-                                            "/dummy-menubar/image-popup",
-                                            GTK_WIDGET (shell),
-                                            NULL, NULL, NULL, NULL);
-                }
-            }
-            break;
-
-          default:
-            break;
           }
 
         return_val = TRUE;
@@ -643,11 +634,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gimp);
 
-        switch (bevent->button)
-          {
-          case 1:
-            state &= ~GDK_BUTTON1_MASK;
+        state &= ~gimp_display_shell_key_to_state (bevent->button);
 
+        if (bevent->button == 1)
+          {
             if (! shell->pointer_grabbed)
               return TRUE;
 
@@ -687,31 +677,27 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             if (shell->space_release_pending)
               gimp_display_shell_space_released (shell, event, &image_coords);
-            break;
-
-          case 2:
-            state &= ~GDK_BUTTON2_MASK;
+          }
+        else if (bevent->button == 2)
+          {
             if (shell->scrolling)
               gimp_display_shell_stop_scrolling (shell);
-            break;
+          }
+        else if (bevent->button == 3)
+          {
+            /* nop */
+          }
+        else
+          {
+            GdkEventButton *bevent = (GdkEventButton *) event;
+            GimpController *mouse;
 
-          case 3:
-            state &= ~GDK_BUTTON3_MASK;
-            break;
+            mouse = gimp_controllers_get_mouse (gimp);
 
-          default:
-            {
-              GdkEventButton *bevent = (GdkEventButton *) event;
-              GimpController *mouse;
-
-              mouse = gimp_controllers_get_mouse (gimp);
-
-              if (!(shell->scrolling || shell->pointer_grabbed) &&
-                  mouse && gimp_controller_mouse_button (GIMP_CONTROLLER_MOUSE (mouse),
-                                                         bevent))
-                return TRUE;
-            }
-            break;
+            if (!(shell->scrolling || shell->pointer_grabbed) &&
+                mouse && gimp_controller_mouse_button (GIMP_CONTROLLER_MOUSE (mouse),
+                                                       bevent))
+              return TRUE;
           }
 
         return_val = TRUE;
@@ -1367,6 +1353,19 @@ gimp_display_shell_key_to_state (gint key)
     default:
       return 0;
     }
+}
+
+static GdkModifierType
+gimp_display_shell_button_to_state (gint button)
+{
+  if (button == 1)
+    return GDK_BUTTON1_MASK;
+  else if (button == 2)
+    return GDK_BUTTON2_MASK;
+  else if (button == 3)
+    return GDK_BUTTON3_MASK;
+
+  return 0;
 }
 
 static void
