@@ -1376,11 +1376,9 @@ save_index (FILE    *ofp,
   unsigned char *suncolmap = sun_colormap;
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
-  GimpImageType drawable_type;
   WRITE_FUN *write_fun;
 
   drawable = gimp_drawable_get (drawable_ID);
-  drawable_type = gimp_drawable_type (drawable_ID);
   width = drawable->width;
   height = drawable->height;
   tile_height = gimp_tile_height ();
