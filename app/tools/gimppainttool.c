@@ -310,13 +310,14 @@ gimp_paint_tool_button_press (GimpTool            *tool,
     }
   else if (paint_tool->draw_line)
     {
+      gboolean constrain = (state & gimp_get_constrain_behavior_mask ()) != 0;
+
       /*  If shift is down and this is not the first paint
        *  stroke, then draw a line from the last coords to the pointer
        */
       core->start_coords = core->last_coords;
 
-      gimp_paint_core_round_line (core, paint_options,
-                                  (state & GDK_CONTROL_MASK) != 0);
+      gimp_paint_core_round_line (core, paint_options, constrain);
     }
 
   /*  chain up to activate the tool  */
@@ -451,7 +452,7 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
 
-  if (key != GDK_CONTROL_MASK)
+  if (key != gimp_get_constrain_behavior_mask ())
     return;
 
   if (paint_tool->pick_colors && ! paint_tool->draw_line)
@@ -591,15 +592,17 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
   if (drawable && proximity)
     {
+      gboolean constrain_mask = gimp_get_constrain_behavior_mask ();
+
       if (display == tool->display && (state & GDK_SHIFT_MASK))
         {
           /*  If shift is down and this is not the first paint stroke,
            *  draw a line.
            */
 
-          gchar    *status_help;
-          gdouble   dx, dy, dist;
-          gint      off_x, off_y;
+          gchar   *status_help;
+          gdouble  dx, dy, dist;
+          gint     off_x, off_y;
 
           core->cur_coords = *coords;
 
@@ -609,13 +612,13 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
           core->cur_coords.y -= off_y;
 
           gimp_paint_core_round_line (core, paint_options,
-                                      (state & GDK_CONTROL_MASK) != 0);
+                                      (state & constrain_mask) != 0);
 
           dx = core->cur_coords.x - core->last_coords.x;
           dy = core->cur_coords.y - core->last_coords.y;
 
           status_help = gimp_suggest_modifiers (paint_tool->status_line,
-                                                GDK_CONTROL_MASK & ~state,
+                                                constrain_mask & ~state,
                                                 NULL,
                                                 _("%s for constrained angles"),
                                                 NULL);
@@ -663,7 +666,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
            * gimp_suggest_modifiers() would interpret this parameter.
            */
           if (paint_tool->status_ctrl != NULL)
-            modifiers |= GDK_CONTROL_MASK;
+            modifiers |= constrain_mask;
 
           /* suggest drawing lines only after the first point is set
            */

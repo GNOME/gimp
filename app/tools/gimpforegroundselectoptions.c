@@ -258,18 +258,21 @@ gimp_foreground_select_options_get_property (GObject    *object,
 GtkWidget *
 gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *frame;
-  GtkWidget *scale;
-  GtkWidget *label;
-  GtkWidget *menu;
-  GtkWidget *inner_frame;
-  GtkWidget *table;
-  gchar     *title;
-  gint       row = 0;
+  GObject         *config = G_OBJECT (tool_options);
+  GtkWidget       *vbox   = gimp_selection_options_gui (tool_options);
+  GtkWidget       *hbox;
+  GtkWidget       *button;
+  GtkWidget       *frame;
+  GtkWidget       *scale;
+  GtkWidget       *label;
+  GtkWidget       *menu;
+  GtkWidget       *inner_frame;
+  GtkWidget       *table;
+  gchar           *title;
+  gint             row = 0;
+  GdkModifierType  toggle_mask;
+
+  toggle_mask = gimp_get_toggle_behavior_mask ();
 
   gtk_widget_set_sensitive (GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle,
                             FALSE);
@@ -281,7 +284,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 
   /*  foreground / background  */
   title = g_strdup_printf (_("Interactive refinement  (%s)"),
-                           gimp_get_mod_string (GDK_CONTROL_MASK));
+                           gimp_get_mod_string (toggle_mask));
 
   frame = gimp_prop_boolean_radio_frame_new (config, "background", title,
                                              _("Mark background"),

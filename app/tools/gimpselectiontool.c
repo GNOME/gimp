@@ -90,20 +90,23 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
                                   GimpDisplay     *display)
 {
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
-  GimpSelectionOptions *options;
+  GimpSelectionOptions *options        = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GdkModifierType       extend_mask;
+  GdkModifierType       modify_mask;
 
-  options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  extend_mask = gimp_get_extend_selection_mask ();
+  modify_mask = gimp_get_modify_selection_mask ();
 
-  if (key == GDK_SHIFT_MASK   ||
-      key == GDK_CONTROL_MASK ||
+  if (key == extend_mask ||
+      key == modify_mask ||
       key == GDK_MOD1_MASK)
     {
       GimpChannelOps button_op = options->operation;
 
       if (press)
         {
-          if (key == (state & (GDK_SHIFT_MASK   |
-                               GDK_CONTROL_MASK |
+          if (key == (state & (extend_mask |
+                               modify_mask |
                                GDK_MOD1_MASK)))
             {
               /*  first modifier pressed  */
@@ -113,8 +116,8 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
         }
       else
         {
-          if (! (state & (GDK_SHIFT_MASK   |
-                          GDK_CONTROL_MASK |
+          if (! (state & (extend_mask |
+                          modify_mask |
                           GDK_MOD1_MASK)))
             {
               /*  last modifier released  */
@@ -130,17 +133,9 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
            */
           button_op = selection_tool->saved_operation;
         }
-      else if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
+      else
         {
-          button_op = GIMP_CHANNEL_OP_INTERSECT;
-        }
-      else if (state & GDK_SHIFT_MASK)
-        {
-          button_op = GIMP_CHANNEL_OP_ADD;
-        }
-      else if (state & GDK_CONTROL_MASK)
-        {
-          button_op = GIMP_CHANNEL_OP_SUBTRACT;
+          button_op = gimp_modifiers_to_channel_op (state);
         }
 
       if (button_op != options->operation)
@@ -158,23 +153,26 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
                                  GimpDisplay      *display)
 {
   GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
-  GimpSelectionOptions *options;
+  GimpSelectionOptions *options        = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpImage            *image;
   GimpChannel          *selection;
   GimpDrawable         *drawable;
   GimpLayer            *layer;
   GimpLayer            *floating_sel;
+  GdkModifierType       extend_mask;
+  GdkModifierType       modify_mask;
   gboolean              move_layer        = FALSE;
   gboolean              move_floating_sel = FALSE;
   gboolean              selection_empty;
-
-  options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
   image        = gimp_display_get_image (display);
   selection    = gimp_image_get_mask (image);
   drawable     = gimp_image_get_active_drawable (image);
   layer        = gimp_image_pick_layer (image, coords->x, coords->y);
   floating_sel = gimp_image_get_floating_selection (image);
+
+  extend_mask = gimp_get_extend_selection_mask ();
+  modify_mask = gimp_get_modify_selection_mask ();
 
   if (drawable)
     {
@@ -195,13 +193,13 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
   selection_tool->function = SELECTION_SELECT;
 
   if (selection_tool->allow_move &&
-      (state & GDK_MOD1_MASK) && (state & GDK_CONTROL_MASK) && move_layer)
+      (state & GDK_MOD1_MASK) && (state & modify_mask) && move_layer)
     {
       /* move the selection */
       selection_tool->function = SELECTION_MOVE;
     }
   else if (selection_tool->allow_move &&
-           (state & GDK_MOD1_MASK) && (state & GDK_SHIFT_MASK) && move_layer)
+           (state & GDK_MOD1_MASK) && (state & extend_mask) && move_layer)
     {
       /* move a copy of the selection */
       selection_tool->function = SELECTION_MOVE_COPY;
@@ -213,13 +211,13 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
       selection_tool->function = SELECTION_MOVE_MASK;
     }
   else if (selection_tool->allow_move &&
-           ! (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
+           ! (state & (extend_mask | modify_mask)) &&
            move_floating_sel)
     {
       /* move the selection */
       selection_tool->function = SELECTION_MOVE;
     }
-  else if ((state & GDK_CONTROL_MASK) || (state & GDK_SHIFT_MASK))
+  else if ((state & modify_mask) || (state & extend_mask))
     {
       /* select */
       selection_tool->function = SELECTION_SELECT;
@@ -236,7 +234,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
     {
       const gchar     *status      = NULL;
       gboolean         free_status = FALSE;
-      GdkModifierType  modifiers   = (GDK_SHIFT_MASK | GDK_CONTROL_MASK);
+      GdkModifierType  modifiers   = (extend_mask | modify_mask);
 
       if (! selection_empty)
         modifiers |= GDK_MOD1_MASK;
@@ -265,7 +263,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
               status = gimp_suggest_modifiers (_("Click-Drag to add to the "
                                                  "current selection"),
                                                modifiers
-                                               & ~(state | GDK_SHIFT_MASK),
+                                               & ~(state | extend_mask),
                                                NULL, NULL, NULL);
               free_status = TRUE;
               break;
@@ -274,7 +272,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
               status = gimp_suggest_modifiers (_("Click-Drag to subtract from the "
                                                  "current selection"),
                                                modifiers
-                                               & ~(state | GDK_CONTROL_MASK),
+                                               & ~(state | modify_mask),
                                                NULL, NULL, NULL);
               free_status = TRUE;
               break;

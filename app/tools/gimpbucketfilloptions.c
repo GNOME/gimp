@@ -211,20 +211,23 @@ gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
 GtkWidget *
 gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
-  GtkWidget *vbox2;
-  GtkWidget *table;
-  GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *button;
-  GtkWidget *scale;
-  GtkWidget *combo;
-  gchar     *str;
+  GObject         *config = G_OBJECT (tool_options);
+  GtkWidget       *vbox   = gimp_paint_options_gui (tool_options);
+  GtkWidget       *vbox2;
+  GtkWidget       *table;
+  GtkWidget       *frame;
+  GtkWidget       *hbox;
+  GtkWidget       *button;
+  GtkWidget       *scale;
+  GtkWidget       *combo;
+  gchar           *str;
+  GdkModifierType  toggle_mask;
+
+  toggle_mask = gimp_get_toggle_behavior_mask ();
 
   /*  fill type  */
   str = g_strdup_printf (_("Fill Type  (%s)"),
-                         gimp_get_mod_string (GDK_CONTROL_MASK)),
+                         gimp_get_mod_string (toggle_mask)),
   frame = gimp_prop_enum_radio_frame_new (config, "fill-mode", str, 0, 0);
   g_free (str);
 

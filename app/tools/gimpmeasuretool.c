@@ -220,12 +220,14 @@ gimp_measure_tool_button_press (GimpTool            *tool,
        */
       if (measure->point != -1)
         {
-          if (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
+          GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+
+          if (state & (toggle_mask | GDK_MOD1_MASK))
             {
               gboolean create_hguide;
               gboolean create_vguide;
 
-              create_hguide = ((state & GDK_CONTROL_MASK) &&
+              create_hguide = ((state & toggle_mask) &&
                                (measure->y[measure->point] ==
                                 CLAMP (measure->y[measure->point],
                                        0,
@@ -435,7 +437,7 @@ gimp_measure_tool_motion (GimpTool         *tool,
       measure->x[measure->point] = ROUND (coords->x);
       measure->y[measure->point] = ROUND (coords->y);
 
-      if (state & GDK_CONTROL_MASK)
+      if (state & gimp_get_constrain_behavior_mask ())
         {
           gdouble  x = measure->x[measure->point];
           gdouble  y = measure->y[measure->point];
@@ -503,7 +505,8 @@ gimp_measure_tool_active_modifier_key (GimpTool        *tool,
 {
   GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
 
-  if (key == GDK_CONTROL_MASK && measure->function == MOVING)
+  if (key == gimp_get_constrain_behavior_mask () &&
+      measure->function == MOVING)
     {
       gdouble x, y;
 
@@ -546,9 +549,11 @@ gimp_measure_tool_oper_update (GimpTool         *tool,
           if (gimp_canvas_item_hit (measure->handles[i],
                                     coords->x, coords->y))
             {
+              GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+
               point = i;
 
-              if (state & GDK_CONTROL_MASK)
+              if (state & toggle_mask)
                 {
                   if (state & GDK_MOD1_MASK)
                     {
@@ -576,7 +581,7 @@ gimp_measure_tool_oper_update (GimpTool         *tool,
                 {
                   status = gimp_suggest_modifiers (_("Click to place a "
                                                      "vertical guide"),
-                                                   GDK_CONTROL_MASK & ~state,
+                                                   toggle_mask & ~state,
                                                    NULL, NULL, NULL);
                   gimp_tool_replace_status (tool, display, "%s", status);
                   g_free (status);
@@ -589,8 +594,8 @@ gimp_measure_tool_oper_update (GimpTool         *tool,
                 {
                   status = gimp_suggest_modifiers (_("Click-Drag to add a "
                                                      "new point"),
-                                                   (GDK_CONTROL_MASK
-                                                    | GDK_MOD1_MASK) & ~state,
+                                                   (toggle_mask |
+                                                    GDK_MOD1_MASK) & ~state,
                                                    NULL, NULL, NULL);
                 }
               else
@@ -599,9 +604,9 @@ gimp_measure_tool_oper_update (GimpTool         *tool,
                     state |= GDK_SHIFT_MASK;
                   status = gimp_suggest_modifiers (_("Click-Drag to move this "
                                                      "point"),
-                                                   (GDK_SHIFT_MASK
-                                                    | GDK_CONTROL_MASK
-                                                    | GDK_MOD1_MASK) & ~state,
+                                                   (GDK_SHIFT_MASK |
+                                                    toggle_mask    |
+                                                    GDK_MOD1_MASK) & ~state,
                                                    NULL, NULL, NULL);
                 }
 
@@ -667,7 +672,9 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
     {
       if (measure->point != -1)
         {
-          if (state & GDK_CONTROL_MASK)
+          GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+
+          if (state & toggle_mask)
             {
               if (state & GDK_MOD1_MASK)
                 cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;

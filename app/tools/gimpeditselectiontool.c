@@ -46,6 +46,8 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
@@ -765,7 +767,8 @@ gimp_edit_selection_tool_active_modifier_key (GimpTool        *tool,
 {
   GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
 
-  edit_select->constrain = state & GDK_CONTROL_MASK ? TRUE : FALSE;
+  edit_select->constrain = (state & gimp_get_constrain_behavior_mask () ?
+                            TRUE : FALSE);
 
   /* If we didn't came here due to a mouse release, immediately update
    * the position of the thing we move.
@@ -1104,7 +1107,7 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
 
   if (kevent->state & GDK_MOD1_MASK)
     translate_type = GIMP_TRANSFORM_TYPE_SELECTION;
-  else if (kevent->state & GDK_CONTROL_MASK)
+  else if (kevent->state & gimp_get_toggle_behavior_mask ())
     translate_type = GIMP_TRANSFORM_TYPE_PATH;
   else
     translate_type = GIMP_TRANSFORM_TYPE_LAYER;

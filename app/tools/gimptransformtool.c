@@ -51,6 +51,7 @@
 #include "vectors/gimpstroke.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
@@ -456,7 +457,7 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
 
-  if (key == GDK_CONTROL_MASK)
+  if (key == gimp_get_constrain_behavior_mask ())
     g_object_set (options,
                   "constrain", ! options->constrain,
                   NULL);

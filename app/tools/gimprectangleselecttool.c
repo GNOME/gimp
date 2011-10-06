@@ -388,8 +388,12 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
 
   /* if the shift or ctrl keys are down, we don't want to adjust, we
    * want to create a new rectangle, regardless of pointer loc */
-  if (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK))
-    gimp_rectangle_tool_set_function (rectangle, GIMP_RECTANGLE_TOOL_CREATING);
+  if (state & (gimp_get_extend_selection_mask () |
+               gimp_get_modify_selection_mask ()))
+    {
+      gimp_rectangle_tool_set_function (rectangle,
+                                        GIMP_RECTANGLE_TOOL_CREATING);
+    }
 
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
 
@@ -549,8 +553,12 @@ gimp_rectangle_select_tool_cursor_update (GimpTool         *tool,
   gimp_rectangle_tool_cursor_update (tool, coords, state, display);
 
   /* override the previous if shift or ctrl are down */
-  if (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK))
-    gimp_tool_control_set_cursor (tool->control, GIMP_CURSOR_CROSSHAIR_SMALL);
+  if (state & (gimp_get_extend_selection_mask () |
+               gimp_get_modify_selection_mask ()))
+    {
+      gimp_tool_control_set_cursor (tool->control,
+                                    GIMP_CURSOR_CROSSHAIR_SMALL);
+    }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

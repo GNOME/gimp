@@ -41,6 +41,7 @@
 #include "core/gimpscanconvert.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -319,7 +320,7 @@ gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
                                           GdkModifierType  state,
                                           GimpDisplay     *display)
 {
-  if (key == GDK_CONTROL_MASK)
+  if (key == gimp_get_toggle_behavior_mask ())
     {
       GimpForegroundSelectOptions *options;
 

@@ -42,6 +42,7 @@
 #include "core/gimpundostack.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
@@ -582,7 +583,8 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
     {
       g_object_set (options, "move-current", ! options->move_current, NULL);
     }
-  else if (key == GDK_MOD1_MASK || key == GDK_CONTROL_MASK)
+  else if (key == GDK_MOD1_MASK ||
+           key == gimp_get_toggle_behavior_mask ())
     {
       GimpTransformType button_type;
 
@@ -590,7 +592,8 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
 
       if (press)
         {
-          if (key == (state & (GDK_MOD1_MASK | GDK_CONTROL_MASK)))
+          if (key == (state & (GDK_MOD1_MASK |
+                               gimp_get_toggle_behavior_mask ())))
             {
               /*  first modifier pressed  */
 
@@ -599,7 +602,8 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
         }
       else
         {
-          if (! (state & (GDK_MOD1_MASK | GDK_CONTROL_MASK)))
+          if (! (state & (GDK_MOD1_MASK |
+                          gimp_get_toggle_behavior_mask ())))
             {
               /*  last modifier released  */
 
@@ -611,7 +615,7 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
         {
           button_type = GIMP_TRANSFORM_TYPE_SELECTION;
         }
-      else if (state & GDK_CONTROL_MASK)
+      else if (state & gimp_get_toggle_behavior_mask ())
         {
           button_type = GIMP_TRANSFORM_TYPE_PATH;
         }

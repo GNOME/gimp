@@ -48,6 +48,7 @@
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpcurveview.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -280,7 +281,7 @@ gimp_curves_tool_button_release (GimpTool              *tool,
       gimp_curve_set_point (curve, closest,
                             value, gimp_curve_map_value (curve, value));
     }
-  else if (state & GDK_CONTROL_MASK)
+  else if (state & gimp_get_toggle_behavior_mask ())
     {
       gint i;
 
@@ -338,7 +339,7 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
       mode   = GIMP_COLOR_PICK_MODE_PALETTE;
       status = _("Click to add a control point");
     }
-  else if (state & GDK_CONTROL_MASK)
+  else if (state & gimp_get_toggle_behavior_mask ())
     {
       mode   = GIMP_COLOR_PICK_MODE_PALETTE;
       status = _("Click to add control points to all channels");

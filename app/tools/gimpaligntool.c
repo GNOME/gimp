@@ -247,7 +247,10 @@ gimp_align_tool_button_release (GimpTool              *tool,
   GimpDisplayShell *shell      = gimp_display_get_shell (display);
   GObject          *object     = NULL;
   GimpImage        *image      = gimp_display_get_image (display);
+  GdkModifierType   extend_mask;
   gint              i;
+
+  extend_mask = gimp_get_extend_selection_mask ();
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -262,7 +265,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
       return;
     }
 
-  if (! (state & GDK_SHIFT_MASK)) /* start a new list */
+  if (! (state & extend_mask)) /* start a new list */
     {
       gimp_align_tool_clear_selected (align_tool);
       align_tool->set_reference = FALSE;
@@ -317,7 +320,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
               /* if an object has been selected using unmodified click,
                * it should be used as the reference
                */
-              if (! (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)))
+              if (! (state & extend_mask))
                 align_tool->set_reference = TRUE;
             }
         }
@@ -426,7 +429,8 @@ gimp_align_tool_oper_update (GimpTool         *tool,
   gint              snap_distance = display->config->snap_distance;
   gboolean          add;
 
-  add = (state & GDK_SHIFT_MASK) && align_tool->selected_objects;
+  add = ((state & gimp_get_extend_selection_mask ()) &&
+         align_tool->selected_objects);
 
   if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
                                  coords, snap_distance, snap_distance,
@@ -481,7 +485,7 @@ gimp_align_tool_cursor_update (GimpTool         *tool,
   GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
   /* always add '+' when Shift is pressed, even if nothing is selected */
-  if (state & GDK_SHIFT_MASK)
+  if (state & gimp_get_extend_selection_mask ())
     modifier = GIMP_CURSOR_MODIFIER_PLUS;
 
   switch (align_tool->function)
@@ -522,7 +526,10 @@ gimp_align_tool_status_update (GimpTool        *tool,
                                GdkModifierType  state,
                                gboolean         proximity)
 {
-  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (tool);
+  GimpAlignTool   *align_tool = GIMP_ALIGN_TOOL (tool);
+  GdkModifierType  extend_mask;
+
+  extend_mask = gimp_get_extend_selection_mask ();
 
   gimp_tool_pop_status (tool, display);
 
@@ -533,7 +540,7 @@ gimp_align_tool_status_update (GimpTool        *tool,
       if (! align_tool->selected_objects)
         {
           /* no need to suggest Shift if nothing is selected */
-          state |= GDK_SHIFT_MASK;
+          state |= extend_mask;
         }
 
       switch (align_tool->function)
@@ -542,14 +549,14 @@ gimp_align_tool_status_update (GimpTool        *tool,
           status = gimp_suggest_modifiers (_("Click on a layer, path or guide, "
                                              "or Click-Drag to pick several "
                                              "layers"),
-                                           GDK_SHIFT_MASK & ~state,
+                                           extend_mask & ~state,
                                            NULL, NULL, NULL);
           break;
 
         case ALIGN_TOOL_PICK_LAYER:
           status = gimp_suggest_modifiers (_("Click to pick this layer as "
                                              "first item"),
-                                           GDK_SHIFT_MASK & ~state,
+                                           extend_mask & ~state,
                                            NULL, NULL, NULL);
           break;
 
@@ -560,7 +567,7 @@ gimp_align_tool_status_update (GimpTool        *tool,
         case ALIGN_TOOL_PICK_GUIDE:
           status = gimp_suggest_modifiers (_("Click to pick this guide as "
                                              "first item"),
-                                           GDK_SHIFT_MASK & ~state,
+                                           extend_mask & ~state,
                                            NULL, NULL, NULL);
           break;
 
@@ -571,7 +578,7 @@ gimp_align_tool_status_update (GimpTool        *tool,
         case ALIGN_TOOL_PICK_PATH:
           status = gimp_suggest_modifiers (_("Click to pick this path as "
                                              "first item"),
-                                           GDK_SHIFT_MASK & ~state,
+                                           extend_mask & ~state,
                                            NULL, NULL, NULL);
           break;
 

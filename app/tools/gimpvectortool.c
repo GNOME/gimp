@@ -63,7 +63,7 @@
 
 #define TOGGLE_MASK  GDK_SHIFT_MASK
 #define MOVE_MASK    GDK_MOD1_MASK
-#define INSDEL_MASK  GDK_CONTROL_MASK
+#define INSDEL_MASK  gimp_get_toggle_behavior_mask ()
 
 
 /*  local function prototypes  */
@@ -813,7 +813,7 @@ gimp_vector_tool_key_press (GimpTool     *tool,
   if (kevent->state & GDK_SHIFT_MASK)
     pixels = 10.0;
 
-  if (kevent->state & GDK_CONTROL_MASK)
+  if (kevent->state & gimp_get_toggle_behavior_mask ())
     pixels = 50.0;
 
   switch (kevent->keyval)
@@ -1221,9 +1221,11 @@ gimp_vector_tool_status_update (GimpTool        *tool,
         case VECTORS_MOVE_ANCHOR:
           if (options->edit_mode != GIMP_VECTOR_MODE_EDIT)
             {
+              GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+
               status = gimp_suggest_modifiers (_("Click-Drag to move the "
                                                  "anchor around"),
-                                               GDK_CONTROL_MASK & ~state,
+                                               toggle_mask & ~state,
                                                NULL, NULL, NULL);
               free_status = TRUE;
             }
@@ -1926,28 +1928,15 @@ static void
 gimp_vector_tool_to_selection_extended (GimpVectorTool *vector_tool,
                                         gint            state)
 {
-  GimpImage    *image;
-  GimpChannelOps operation = GIMP_CHANNEL_OP_REPLACE;
+  GimpImage *image;
 
   if (! vector_tool->vectors)
     return;
 
   image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
 
-  if (state & GDK_SHIFT_MASK)
-    {
-      if (state & GDK_CONTROL_MASK)
-        operation = GIMP_CHANNEL_OP_INTERSECT;
-      else
-        operation = GIMP_CHANNEL_OP_ADD;
-    }
-  else if (state & GDK_CONTROL_MASK)
-    {
-      operation = GIMP_CHANNEL_OP_SUBTRACT;
-    }
-
   gimp_item_to_selection (GIMP_ITEM (vector_tool->vectors),
-                          operation,
+                          gimp_modifiers_to_channel_op (state),
                           TRUE, FALSE, 0, 0);
   gimp_image_flush (image);
 }

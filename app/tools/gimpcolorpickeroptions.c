@@ -144,11 +144,14 @@ gimp_color_picker_options_get_property (GObject    *object,
 GtkWidget *
 gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_color_options_gui (tool_options);
-  GtkWidget *button;
-  GtkWidget *frame;
-  gchar     *str;
+  GObject         *config = G_OBJECT (tool_options);
+  GtkWidget       *vbox   = gimp_color_options_gui (tool_options);
+  GtkWidget       *button;
+  GtkWidget       *frame;
+  gchar           *str;
+  GdkModifierType  toggle_mask;
+
+  toggle_mask = gimp_get_toggle_behavior_mask ();
 
   /*  the sample merged toggle button  */
   button = gimp_prop_check_button_new (config, "sample-merged",
@@ -158,7 +161,7 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 
   /*  the pick FG/BG frame  */
   str = g_strdup_printf (_("Pick Mode  (%s)"),
-                         gimp_get_mod_string (GDK_CONTROL_MASK));
+                         gimp_get_mod_string (toggle_mask));
   frame = gimp_prop_enum_radio_frame_new (config, "pick-mode", str, -1, -1);
   g_free (str);
 

@@ -176,10 +176,11 @@ gimp_source_tool_button_press (GimpTool            *tool,
   GimpPaintTool  *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpSourceTool *source_tool = GIMP_SOURCE_TOOL (tool);
   GimpSourceCore *source      = GIMP_SOURCE_CORE (paint_tool->core);
+  GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
+  if ((state & (toggle_mask | GDK_SHIFT_MASK)) == toggle_mask)
     {
       source->set_source = TRUE;
 
@@ -231,7 +232,7 @@ gimp_source_tool_modifier_key (GimpTool        *tool,
   GimpPaintTool     *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (tool);
 
-  if (options->use_source && key == GDK_CONTROL_MASK)
+  if (options->use_source && key == gimp_get_toggle_behavior_mask ())
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -267,7 +268,9 @@ gimp_source_tool_cursor_update (GimpTool         *tool,
 
   if (options->use_source)
     {
-      if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
+      GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+
+      if ((state & (toggle_mask | GDK_SHIFT_MASK)) == toggle_mask)
         {
           cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
         }
@@ -312,7 +315,9 @@ gimp_source_tool_oper_update (GimpTool         *tool,
 
       if (source->src_drawable == NULL)
         {
-          if (state & GDK_CONTROL_MASK)
+          GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+
+          if (state & toggle_mask)
             {
               gimp_tool_replace_status (tool, display, "%s",
                                         source_tool->status_set_source);
@@ -320,7 +325,7 @@ gimp_source_tool_oper_update (GimpTool         *tool,
           else
             {
               gimp_tool_replace_status (tool, display, "%s%s%s",
-                                        gimp_get_mod_string (GDK_CONTROL_MASK),
+                                        gimp_get_mod_string (toggle_mask),
                                         gimp_get_mod_separator (),
                                         source_tool->status_set_source);
             }

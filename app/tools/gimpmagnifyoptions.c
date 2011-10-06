@@ -158,11 +158,14 @@ gimp_magnify_options_reset (GimpToolOptions *tool_options)
 GtkWidget *
 gimp_magnify_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *frame;
-  GtkWidget *button;
-  gchar     *str;
+  GObject         *config = G_OBJECT (tool_options);
+  GtkWidget       *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget       *frame;
+  GtkWidget       *button;
+  gchar           *str;
+  GdkModifierType  toggle_mask;
+
+  toggle_mask = gimp_get_toggle_behavior_mask ();
 
   /*  the auto_resize toggle button  */
   button = gimp_prop_check_button_new (config, "auto-resize",
@@ -172,7 +175,7 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
 
   /*  tool toggle  */
   str = g_strdup_printf (_("Direction  (%s)"),
-                         gimp_get_mod_string (GDK_CONTROL_MASK));
+                         gimp_get_mod_string (toggle_mask));
 
   frame = gimp_prop_enum_radio_frame_new (config, "zoom-type",
                                           str, 0, 0);

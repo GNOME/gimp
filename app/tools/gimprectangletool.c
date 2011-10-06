@@ -40,6 +40,8 @@
 #include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -1278,7 +1280,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
         }
     }
 
-  if (key == GDK_CONTROL_MASK)
+  if (key == gimp_get_toggle_behavior_mask ())
     {
       g_object_set (options,
                     "fixed-center", ! options_private->fixed_center,

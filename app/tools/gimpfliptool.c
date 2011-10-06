@@ -34,6 +34,7 @@
 #include "core/gimppickable.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -127,7 +128,7 @@ gimp_flip_tool_modifier_key (GimpTool        *tool,
 {
   GimpFlipOptions *options = GIMP_FLIP_TOOL_GET_OPTIONS (tool);
 
-  if (key == GDK_CONTROL_MASK)
+  if (key == gimp_get_toggle_behavior_mask ())
     {
       switch (options->flip_type)
         {

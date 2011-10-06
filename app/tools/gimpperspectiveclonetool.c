@@ -340,11 +340,12 @@ gimp_perspective_clone_tool_button_press (GimpTool            *tool,
 
     case GIMP_PERSPECTIVE_CLONE_MODE_PAINT:
       {
-        gdouble nnx, nny;
+        GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+        gdouble         nnx, nny;
 
         gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-        if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
+        if ((state & (toggle_mask | GDK_SHIFT_MASK)) == toggle_mask)
           {
             source_core->set_source = TRUE;
 
@@ -568,7 +569,9 @@ gimp_perspective_clone_tool_cursor_update (GimpTool         *tool,
     {
       if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE)
         {
-          if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
+          GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+
+          if ((state & (toggle_mask | GDK_SHIFT_MASK)) == toggle_mask)
             {
               cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
             }

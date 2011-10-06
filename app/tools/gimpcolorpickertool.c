@@ -177,7 +177,7 @@ gimp_color_picker_tool_modifier_key (GimpTool        *tool,
       g_object_set (options, "use-info-window", ! options->use_info_window,
                     NULL);
     }
-  else if (key == GDK_CONTROL_MASK)
+  else if (key == gimp_get_toggle_behavior_mask ())
     {
       switch (options->pick_mode)
         {
@@ -207,6 +207,9 @@ gimp_color_picker_tool_oper_update (GimpTool         *tool,
 {
   GimpColorPickerTool    *picker_tool = GIMP_COLOR_PICKER_TOOL (tool);
   GimpColorPickerOptions *options = GIMP_COLOR_PICKER_TOOL_GET_OPTIONS (tool);
+  GdkModifierType         toggle_mask;
+
+  toggle_mask = gimp_get_toggle_behavior_mask ();
 
   GIMP_COLOR_TOOL (tool)->pick_mode = options->pick_mode;
 
@@ -231,16 +234,16 @@ gimp_color_picker_tool_oper_update (GimpTool         *tool,
         case GIMP_COLOR_PICK_MODE_FOREGROUND:
           status_help = gimp_suggest_modifiers (_("Click in any image to pick"
                                                   " the foreground color"),
-                                                (shift_mod
-                                                 | GDK_CONTROL_MASK) & ~state,
+                                                (shift_mod | toggle_mask) &
+                                                ~state,
                                                 NULL, NULL, NULL);
           break;
 
         case GIMP_COLOR_PICK_MODE_BACKGROUND:
           status_help = gimp_suggest_modifiers (_("Click in any image to pick"
                                                   " the background color"),
-                                                (shift_mod
-                                                 | GDK_CONTROL_MASK) & ~state,
+                                                (shift_mod | toggle_mask) &
+                                                ~state,
                                                 NULL, NULL, NULL);
           break;
 

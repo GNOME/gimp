@@ -309,7 +309,7 @@ gimp_blend_tool_motion (GimpTool         *tool,
       blend_tool->end_y = coords->y;
     }
 
-  if (state & GDK_CONTROL_MASK)
+  if (state & gimp_get_constrain_behavior_mask ())
     {
       gimp_constrain_line (blend_tool->start_x, blend_tool->start_y,
                            &blend_tool->end_x, &blend_tool->end_y,
@@ -334,7 +334,7 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 
-  if (key == GDK_CONTROL_MASK)
+  if (key == gimp_get_constrain_behavior_mask ())
     {
       blend_tool->end_x = blend_tool->mouse_x;
       blend_tool->end_y = blend_tool->mouse_y;
@@ -440,8 +440,9 @@ gimp_blend_tool_push_status (GimpBlendTool   *blend_tool,
   gchar    *status_help;
 
   status_help = gimp_suggest_modifiers ("",
-                                        ((GDK_CONTROL_MASK | GDK_MOD1_MASK)
-                                         & ~state),
+                                        (gimp_get_constrain_behavior_mask () |
+                                         GDK_MOD1_MASK) &
+                                        ~state,
                                         NULL,
                                         _("%s for constrained angles"),
                                         _("%s to move the whole line"));

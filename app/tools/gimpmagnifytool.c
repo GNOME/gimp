@@ -28,6 +28,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpcanvasrectangle.h"
 #include "display/gimpdisplay.h"
@@ -324,7 +325,7 @@ gimp_magnify_tool_modifier_key (GimpTool        *tool,
 {
   GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
 
-  if (key == GDK_CONTROL_MASK)
+  if (key == gimp_get_toggle_behavior_mask ())
     {
       switch (options->zoom_type)
         {

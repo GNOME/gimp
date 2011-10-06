@@ -351,11 +351,14 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
   if (constrain)
     {
-      GtkWidget *button;
-      gchar     *label;
+      GtkWidget       *button;
+      gchar           *label;
+      GdkModifierType  constrain_mask;
+
+      constrain_mask = gimp_get_constrain_behavior_mask ();
 
       label = g_strdup_printf (constrain,
-                               gimp_get_mod_string (GDK_CONTROL_MASK));
+                               gimp_get_mod_string (constrain_mask));
 
       button = gimp_prop_check_button_new (config, "constrain", label);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);

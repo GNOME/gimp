@@ -115,13 +115,16 @@ gimp_flip_options_get_property (GObject    *object,
 GtkWidget *
 gimp_flip_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *hbox;
-  GtkWidget *box;
-  GtkWidget *label;
-  GtkWidget *frame;
-  gchar     *str;
+  GObject         *config = G_OBJECT (tool_options);
+  GtkWidget       *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget       *hbox;
+  GtkWidget       *box;
+  GtkWidget       *label;
+  GtkWidget       *frame;
+  gchar           *str;
+  GdkModifierType  toggle_mask;
+
+  toggle_mask = gimp_get_toggle_behavior_mask ();
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -137,7 +140,7 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
 
   /*  tool toggle  */
   str = g_strdup_printf (_("Flip Type  (%s)"),
-                         gimp_get_mod_string (GDK_CONTROL_MASK));
+                         gimp_get_mod_string (toggle_mask));
 
   frame = gimp_prop_enum_radio_frame_new (config, "flip-type",
                                           str,
