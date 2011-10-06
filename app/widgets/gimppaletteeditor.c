@@ -259,7 +259,7 @@ gimp_palette_editor_constructed (GObject *object)
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
                                  "palette-editor-new-color-fg",
                                  "palette-editor-new-color-bg",
-                                 GDK_CONTROL_MASK,
+                                 gimp_get_toggle_behavior_mask (),
                                  NULL);
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
@@ -656,7 +656,7 @@ palette_editor_entry_clicked (GimpPaletteView   *view,
     {
       GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
 
-      if (state & GDK_CONTROL_MASK)
+      if (state & gimp_get_toggle_behavior_mask ())
         gimp_context_set_background (data_editor->context, &entry->color);
       else
         gimp_context_set_foreground (data_editor->context, &entry->color);

@@ -41,6 +41,7 @@
 #include "gimppaletteview.h"
 #include "gimpuimanager.h"
 #include "gimpviewrendererpalette.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -229,7 +230,7 @@ gimp_colormap_editor_constructed (GObject *object)
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap",
                                  "colormap-add-color-from-fg",
                                  "colormap-add-color-from-bg",
-                                 GDK_CONTROL_MASK,
+                                 gimp_get_toggle_behavior_mask (),
                                  NULL);
 }
 
@@ -569,7 +570,7 @@ gimp_colormap_editor_entry_clicked (GimpPaletteView    *view,
 
   gimp_colormap_editor_set_index (editor, entry->position, NULL);
 
-  if (state & GDK_CONTROL_MASK)
+  if (state & gimp_get_toggle_behavior_mask ())
     gimp_context_set_background (image_editor->context, &entry->color);
   else
     gimp_context_set_foreground (image_editor->context, &entry->color);

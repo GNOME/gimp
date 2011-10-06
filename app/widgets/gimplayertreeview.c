@@ -56,6 +56,7 @@
 #include "gimpuimanager.h"
 #include "gimpviewrenderer.h"
 #include "gimpwidgets-constructors.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -1358,7 +1359,7 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
           if (state & GDK_MOD1_MASK)
             gimp_action_group_set_action_active (group, "layers-mask-show",
                                                  ! gimp_layer_mask_get_show (mask));
-          else if (state & GDK_CONTROL_MASK)
+          else if (state & gimp_get_toggle_behavior_mask ())
             gimp_action_group_set_action_active (group, "layers-mask-disable",
                                                  gimp_layer_mask_get_apply (mask));
           else if (! gimp_layer_mask_get_edit (mask))
