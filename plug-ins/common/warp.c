@@ -1337,7 +1337,6 @@ warp_one (GimpDrawable *draw,
 
   gdouble dx, dy;           /* X and Y Displacement, integer from GRAY map */
 
-  gint    xm_alpha = 0;
   gint    mmag_alpha = 0;
   gint    xm_bytes = 1;
   gint    ym_bytes = 1;
@@ -1383,9 +1382,6 @@ warp_one (GimpDrawable *draw,
 
    gimp_pixel_rgn_init (&map_x_rgn,
                         map_x, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-
-   if (gimp_drawable_has_alpha(map_x->drawable_id))
-     xm_alpha = 1;
 
    xm_bytes = gimp_drawable_bpp(map_x->drawable_id);
 
