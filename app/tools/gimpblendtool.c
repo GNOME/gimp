@@ -352,6 +352,11 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
 
       gimp_blend_tool_update_items (blend_tool);
     }
+  else if (key == GDK_MOD1_MASK)
+    {
+      gimp_tool_pop_status (tool, display);
+      gimp_blend_tool_push_status (blend_tool, state, display);
+    }
 }
 
 static void
