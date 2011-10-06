@@ -617,20 +617,10 @@ gimp_suggest_modifiers (const gchar     *message,
 #undef BUF_SIZE
 
 GimpChannelOps
-gimp_modifiers_to_channel_op (GtkWidget       *widget,
-                              GdkModifierType  modifiers)
+gimp_modifiers_to_channel_op (GdkModifierType  modifiers)
 {
-  GdkModifierType  extend_mask;
-  GdkModifierType  modify_mask;
-
-  g_return_val_if_fail (GTK_IS_WIDGET (widget), GIMP_CHANNEL_OP_REPLACE);
-
-  extend_mask =
-    gtk_widget_get_modifier_mask (widget,
-                                  GDK_MODIFIER_INTENT_EXTEND_SELECTION);
-  modify_mask =
-    gtk_widget_get_modifier_mask (widget,
-                                  GDK_MODIFIER_INTENT_MODIFY_SELECTION);
+  GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
+  GdkModifierType modify_mask = gimp_get_modify_selection_mask ();
 
   if (modifiers & extend_mask)
     {

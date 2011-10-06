@@ -270,7 +270,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
   if (! drawable)
     return TRUE;
 
-  operation = gimp_modifiers_to_channel_op (widget, bevent->state);
+  operation = gimp_modifiers_to_channel_op (bevent->state);
 
   x = gimp_image_get_width  (image_editor->image) * bevent->x / renderer->width;
   y = gimp_image_get_height (image_editor->image) * bevent->y / renderer->height;
