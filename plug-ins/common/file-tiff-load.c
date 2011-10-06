@@ -138,7 +138,6 @@ static void      load_paths    (TIFF         *tif,
 static void      read_separate (const guchar *source,
                                 channel_data *channel,
                                 gushort       bps,
-                                gushort       photomet,
                                 gint          startcol,
                                 gint          startrow,
                                 gint          rows,
@@ -1555,7 +1554,7 @@ load_lines (TIFF         *tif,
               for (i = 0; i < rows; ++i)
                 TIFFReadScanline(tif, buffer + i * lineSize, y + i, s);
 
-              read_separate (buffer, channel, bps, photomet,
+              read_separate (buffer, channel, bps,
                              y, 0, rows, cols, alpha, extra, s);
             }
         }
@@ -2144,7 +2143,6 @@ static void
 read_separate (const guchar *source,
                channel_data *channel,
                gushort       bps,
-               gushort       photomet,
                gint          startrow,
                gint          startcol,
                gint          rows,
@@ -2164,14 +2162,9 @@ read_separate (const guchar *source,
     }
 
   if (sample < channel[0].drawable->bpp)
-    {
-      c = 0;
-    }
+    c = 0;
   else
-    {
-      c = (sample - channel[0].drawable->bpp) + 4;
-      photomet = PHOTOMETRIC_MINISBLACK;
-    }
+    c = (sample - channel[0].drawable->bpp) + 4;
 
   gimp_pixel_rgn_init (&(channel[c].pixel_rgn), channel[c].drawable,
                          startcol, startrow, cols, rows, TRUE, FALSE);
