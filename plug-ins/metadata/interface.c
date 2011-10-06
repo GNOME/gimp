@@ -381,7 +381,7 @@ add_advanced_tab (GtkWidget     *notebook,
   gtk_container_add (GTK_CONTAINER (sw), treeview);
 
   /* update property icons when the user views this tab */
-  g_signal_connect (treeview, "focus",
+  g_signal_connect (treeview, "realize",
                     G_CALLBACK (update_icons), NULL);
 
   /* expand all rows after the treeview widget has been realized */
