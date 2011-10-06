@@ -314,22 +314,17 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
 
           if (ext)
             {
-              gchar *ext_uri      = g_strconcat (uri,      ".", ext, NULL);
-              gchar *ext_basename = g_strconcat (basename, ".", ext, NULL);
+              gchar *ext_basename;
               gchar *utf8;
 
               GIMP_LOG (SAVE_DIALOG, "appending .%s to basename", ext);
 
+              ext_basename = g_strconcat (basename, ".", ext, NULL);
+
               g_free (uri);
               g_free (basename);
 
-              uri      = ext_uri;
               basename = ext_basename;
-
-              uri_proc      = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
-                                                    uri, NULL);
-              basename_proc = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
-                                                   basename, NULL);
 
               utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
               gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (save_dialog),
@@ -345,7 +340,6 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
                */
               gtk_dialog_response (GTK_DIALOG (save_dialog), GTK_RESPONSE_OK);
 
-              g_free (uri);
               g_free (basename);
 
               return FALSE;
