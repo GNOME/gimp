@@ -77,6 +77,7 @@ gimp_heal_tool_init (GimpHealTool *heal)
   paint_tool->status_ctrl = _("%s to set a new heal source");
 
   source_tool->status_paint           = _("Click to heal");
+  /* Translators: the translation of "Click" must be the first word */
   source_tool->status_set_source      = _("Click to set a new heal source");
   source_tool->status_set_source_ctrl = _("%s to set a new heal source");
 }
