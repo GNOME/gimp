@@ -869,7 +869,7 @@ write_sun_header (FILE            *ofp,
   cp = (L_CARD32 *)sunhdr;
 
   /* Write out all 32-bit values of the header and check for byte order */
-  for (j = 0; j < sizeof (L_SUNFILEHEADER)/sizeof(sunhdr->l_ras_magic); j++)
+  for (j = 0; j < hdr_entries; j++)
     {
       write_card32 (ofp, *(cp++));
     }
