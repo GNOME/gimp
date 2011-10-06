@@ -269,7 +269,6 @@ edge (GimpDrawable *drawable)
   gint              chan;
   gint              x, y;
   gint              x1, y1, x2, y2;
-  gint              maxval;
   gint              cur_progress;
   gint              max_progress;
   gdouble           per_progress;
@@ -288,8 +287,6 @@ edge (GimpDrawable *drawable)
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   if (has_alpha)
     alpha--;
-
-  maxval = 255;
 
   cur_progress = 0;
   per_progress = 0.0;
