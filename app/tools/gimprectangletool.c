@@ -2872,8 +2872,7 @@ gimp_rectangle_tool_rect_rubber_banding_func (GimpRectangleTool *rect_tool)
   GimpRectangleToolPrivate *private;
   gboolean                  rect_rubber_banding_func;
 
-  rect_rubber_banding_func = FALSE;
-  private                  = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   switch (private->function)
     {
