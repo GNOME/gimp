@@ -1497,9 +1497,6 @@ add_merged_image (const gint32  image_id,
   guint16               extra_channels;
   guint16               total_channels;
   guint16              *rle_pack_len[MAX_CHANNELS];
-  guint32               block_len;
-  guint32               block_start;
-  guint32               block_end;
   guint32               alpha_id;
   gint32                layer_size;
   gint32                layer_id = -1;
@@ -1548,6 +1545,10 @@ add_merged_image (const gint32  image_id,
   if (img_a->num_layers == 0
       || extra_channels > 0)
     {
+      guint32 block_len;
+      guint32 block_start;
+      guint32 block_end;
+
       block_start = img_a->merged_image_start;
       block_len = img_a->merged_image_len;
       block_end = block_start + block_len;
