@@ -387,9 +387,7 @@ calc_undistorted_coords (gdouble  wx,
 
   /* initialize */
 
-  phi = 0.0;
-  r   = 0.0;
-
+  phi    = 0.0;
   x1     = 0;
   y1     = 0;
   x2     = img_width;
@@ -438,7 +436,7 @@ calc_undistorted_coords (gdouble  wx,
             }
         }
 
-      r   = sqrt (SQR (wx - cen_x) + SQR (wy - cen_y));
+      r = sqrt (SQR (wx - cen_x) + SQR (wy - cen_y));
 
       if (wx != cen_x)
         {
