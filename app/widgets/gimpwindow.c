@@ -21,6 +21,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "display/display-types.h"
@@ -54,10 +56,8 @@ static gboolean
 gimp_window_key_press_event (GtkWidget   *widget,
                              GdkEventKey *event)
 {
-  GtkWindow       *window  = GTK_WINDOW (widget);
-  GtkWidget       *focus   = gtk_window_get_focus (window);
-  GdkDisplay      *display = gtk_widget_get_display (widget);
-  GdkModifierType  state   = event->state;
+  GtkWindow       *window = GTK_WINDOW (widget);
+  GtkWidget       *focus  = gtk_window_get_focus (window);
   GdkModifierType  accel_mods;
   gboolean         enable_mnemonics;
   gboolean         handled = FALSE;
@@ -79,19 +79,9 @@ gimp_window_key_press_event (GtkWidget   *widget,
                   "handled by gtk_window_propagate_key_event(text_widget)");
     }
 
-  /* we process raw key events here, and they contain only real
-   * modifiers; call the mapping function in order to get virtual
-   * modifiers added (e.g. META) in case the accel modifier is virtual
-   */
-  gdk_keymap_add_virtual_modifiers (gdk_keymap_get_for_display (display),
-				    &state);
-
-  /* FIXME: get this from GTK API */
-#ifndef GDK_WINDOWING_QUARTZ
-  accel_mods = GDK_CONTROL_MASK;
-#else
-  accel_mods = GDK_META_MASK;
-#endif
+  accel_mods =
+    gtk_widget_get_modifier_mask (widget,
+                                  GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR);
 
   g_object_get (gtk_widget_get_settings (widget),
 		"gtk-enable-mnemonics", &enable_mnemonics,
@@ -101,7 +91,7 @@ gimp_window_key_press_event (GtkWidget   *widget,
     accel_mods |= gtk_window_get_mnemonic_modifier (window);
 
   /* invoke modified accelerators */
-  if (! handled && state & accel_mods)
+  if (! handled && event->state & accel_mods)
     {
       handled = gtk_window_activate_key (window, event);
 
@@ -121,7 +111,7 @@ gimp_window_key_press_event (GtkWidget   *widget,
     }
 
   /* invoke non-modified accelerators */
-  if (! handled && ! (state & accel_mods))
+  if (! handled && ! (event->state & accel_mods))
     {
       handled = gtk_window_activate_key (window, event);
 
