@@ -540,7 +540,6 @@ save_image (const gchar  *filename,
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
                        drawable->height, FALSE, FALSE);
 
-  zsize = 0;
   switch (gimp_drawable_type (drawable_ID))
     {
     case GIMP_GRAY_IMAGE :
