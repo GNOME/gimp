@@ -100,15 +100,16 @@ base64_decode (const gchar *src_b64,
   gint32 decoded;
   gssize i;
   gint   n;
-  gint   bits;
 
   g_return_val_if_fail (src_b64 != NULL, -1);
   g_return_val_if_fail (dest != NULL, -1);
   decoded = 0;
   n = 0;
-  bits = 0;
+
   for (i = 0; (src_size != 0) && (i + 3 <= dest_size); src_b64++, src_size--)
     {
+      gint bits;
+
       bits = base64_6bits[(int) *src_b64 & 0xff];
       if (bits < 0)
         {
