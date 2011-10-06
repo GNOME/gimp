@@ -144,7 +144,7 @@ static void
 gimp_button_clicked (GtkButton *button)
 {
   if (GIMP_BUTTON (button)->press_state &
-      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
+      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK | GDK_MOD2_MASK))
     {
       g_signal_stop_emission_by_name (button, "clicked");
 
