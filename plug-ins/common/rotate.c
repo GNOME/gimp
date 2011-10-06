@@ -266,10 +266,6 @@ rotate_drawable (GimpDrawable *drawable)
   guchar       *buffer;
   guchar       *src_row, *dest_row;
 
-  /* initialize */
-
-  row = 0;
-
   /* Get the size of the input drawable. */
   width = drawable->width;
   height = drawable->height;
