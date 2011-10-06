@@ -1201,6 +1201,32 @@ gimp_rectangle_tool_motion (GimpTool         *tool,
        * function to one of the corner-grabbed functions, depending on
        * in what direction the user starts dragging the rectangle.
        */
+      if (dx < 0)
+        {
+          function = (dy < 0 ?
+                      GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
+                      GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT);
+        }
+      else if (dx > 0)
+        {
+          function = (dy < 0 ?
+                      GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT :
+                      GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT);
+        }
+      else if (dy < 0)
+        {
+          function = (dx < 0 ?
+                      GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
+                      GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT);
+        }
+      else if (dy > 0)
+        {
+          function = (dx < 0 ?
+                      GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT :
+                      GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT);
+        }
+
+      gimp_rectangle_tool_set_function (rect_tool, function);
 
       if (gimp_rectangle_options_fixed_rule_active (options,
                                                     GIMP_RECTANGLE_TOOL_FIXED_SIZE))
@@ -1220,36 +1246,8 @@ gimp_rectangle_tool_motion (GimpTool         *tool,
                                               private->x2 - private->x1,
                                               private->y2 - private->y1);
 
-          gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_MOVING);
-        }
-      else
-        {
-          if (dx < 0)
-            {
-              function = (dy < 0 ?
-                          GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
-                          GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT);
-            }
-          else if (dx > 0)
-            {
-              function = (dy < 0 ?
-                          GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT :
-                          GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT);
-            }
-          else if (dy < 0)
-            {
-              function = (dx < 0 ?
-                          GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
-                          GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT);
-            }
-          else if (dy > 0)
-            {
-              function = (dx < 0 ?
-                          GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT :
-                          GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT);
-            }
-
-          gimp_rectangle_tool_set_function (rect_tool, function);
+          gimp_rectangle_tool_set_function (rect_tool,
+                                            GIMP_RECTANGLE_TOOL_MOVING);
         }
     }
 
