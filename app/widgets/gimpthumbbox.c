@@ -328,10 +328,9 @@ gimp_thumb_box_new (GimpContext *context)
                     box);
 
   str = g_strdup_printf (_("Click to update preview\n"
-                           "%s%sClick to force update even "
+                           "%s-Click to force update even "
                            "if preview is up-to-date"),
-                         gimp_get_mod_string (GDK_CONTROL_MASK),
-                         gimp_get_mod_separator ());
+                         gimp_get_mod_string (gimp_get_toggle_behavior_mask ()));
 
   gimp_help_set_help_data (ebox, str, NULL);
 
@@ -507,7 +506,8 @@ gimp_thumb_box_thumbnail_clicked (GtkWidget       *widget,
                                   GimpThumbBox    *box)
 {
   gimp_thumb_box_create_thumbnails (box,
-                                    (state & GDK_CONTROL_MASK) ? TRUE : FALSE);
+                                    (state & gimp_get_toggle_behavior_mask ()) ?
+                                    TRUE : FALSE);
 }
 
 static void
