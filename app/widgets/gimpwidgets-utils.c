@@ -456,23 +456,6 @@ gimp_preview_tab_style_to_icon (GimpTabStyle tab_style)
 }
 
 const gchar *
-gimp_get_mod_separator (void)
-{
-  static gchar *mod_separator = NULL;
-
-  if (! mod_separator)
-    {
-      GtkAccelLabelClass *accel_label_class;
-
-      accel_label_class = g_type_class_ref (GTK_TYPE_ACCEL_LABEL);
-      mod_separator = g_strdup (accel_label_class->mod_separator);
-      g_type_class_unref (accel_label_class);
-    }
-
-  return (const gchar *) mod_separator;
-}
-
-const gchar *
 gimp_get_mod_string (GdkModifierType modifiers)
 {
   static GHashTable *mod_labels;

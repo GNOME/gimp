@@ -51,7 +51,6 @@ GtkIconSize       gimp_get_icon_size               (GtkWidget            *widget
                                                     gint                  height);
 GimpTabStyle      gimp_preview_tab_style_to_icon   (GimpTabStyle          tab_style);
 
-const gchar     * gimp_get_mod_separator           (void);
 const gchar     * gimp_get_mod_string              (GdkModifierType       modifiers);
 gchar           * gimp_suggest_modifiers           (const gchar          *message,
                                                     GdkModifierType       modifiers,
