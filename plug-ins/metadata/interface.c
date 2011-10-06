@@ -256,6 +256,8 @@ add_description_tab (GtkWidget   *notebook,
                             "property-name", "description",
                             "xmp-model", mgui->xmp_model,
                             NULL);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view),
+                               GTK_WRAP_WORD_CHAR);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Description:"), 0.0, 0.5,
