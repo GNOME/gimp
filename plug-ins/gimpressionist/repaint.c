@@ -367,7 +367,6 @@ repaint (ppm_t *p, ppm_t *a)
   ppm_t       dirmap = {0, 0, NULL};
   ppm_t       sizmap = {0, 0, NULL};
   int        *xpos = NULL, *ypos = NULL;
-  int         step = 1;
   int         progstep;
   static int  running = 0;
 
@@ -789,9 +788,8 @@ repaint (ppm_t *p, ppm_t *a)
     {
       i = (int)(tmp.width * density / maxbrushwidth) *
           (int)(tmp.height * density / maxbrushheight);
-      step = i;
 #if 0
-    g_printerr("step=%d i=%d\n", step, i);
+    g_printerr("i=%d\n", i);
 #endif
     }
 
