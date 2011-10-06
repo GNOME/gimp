@@ -314,7 +314,7 @@ mblur_linear (GimpDrawable *drawable,
   gint32  sum[4];
   gint    progress, max_progress;
   gint    c, p;
-  gint    x, y, i, xx, yy, n;
+  gint    x, y, i, n;
   gint    dx, dy, px, py, swapdir, err, e, s1, s2;
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
@@ -389,7 +389,12 @@ mblur_linear (GimpDrawable *drawable,
 
           for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
             {
-              xx = x; yy = y; e = err;
+              gint xx, yy;
+
+              xx = x;
+              yy = y;
+              e = err;
+
               for (c = 0; c < img_bpp; c++)
                 sum[c]= 0;
 
@@ -504,14 +509,11 @@ mblur_radial (GimpDrawable *drawable,
   gint      progress, max_progress, c;
 
   gint      x, y, i, p, n, count;
-  gdouble   angle, theta, r, xx, yy, xr, yr;
+  gdouble   angle, theta, r, xr, yr;
   gdouble   phi, phi_start, s_val, c_val;
   gdouble   dx, dy;
 
   /* initialize */
-
-  xx = 0.0;
-  yy = 0.0;
 
   center_x = mbvals.center_x;
   center_y = mbvals.center_y;
@@ -541,6 +543,9 @@ mblur_radial (GimpDrawable *drawable,
 
           for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
             {
+              gdouble xx = 0.0;
+              gdouble yy = 0.0;
+
               xr = (gdouble) x - center_x;
               yr = (gdouble) y - center_y;
 
@@ -711,7 +716,6 @@ mblur_zoom (GimpDrawable *drawable,
   gint      progress, max_progress;
   gint      x, y, i, n, p, c;
   gdouble   xx_start, xx_end, yy_start, yy_end;
-  gdouble   xx, yy;
   gdouble   dxx, dyy;
   gdouble   dx, dy;
   gint      xy_len;
@@ -721,8 +725,6 @@ mblur_zoom (GimpDrawable *drawable,
 
   /* initialize */
 
-  xx = 0.0;
-  yy = 0.0;
   center_x = mbvals.center_x;
   center_y = mbvals.center_y;
 
@@ -761,6 +763,8 @@ mblur_zoom (GimpDrawable *drawable,
 
           for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
             {
+              gdouble xx, yy;
+
               for (c = 0; c < img_bpp; c++)
                 sum[c] = 0;
 
