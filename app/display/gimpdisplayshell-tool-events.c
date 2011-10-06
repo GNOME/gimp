@@ -1250,7 +1250,7 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
       gboolean  sample_point;
 
       active_tool  = tool_manager_get_active (display->gimp);
-      sample_point = (event->state & GDK_CONTROL_MASK);
+      sample_point = (event->state & gimp_get_toggle_behavior_mask ());
 
       if (! ((sample_point && (GIMP_IS_COLOR_TOOL (active_tool) &&
                                ! GIMP_IS_IMAGE_MAP_TOOL (active_tool) &&
