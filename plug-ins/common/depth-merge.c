@@ -1080,7 +1080,6 @@ util_fillReducedBuffer (guchar       *dest,
     {
       yPrime = y * (sourceHeight - 1) / (destHeight - 1);
       sourceBufferRow = &(sourceBuffer[yPrime * sourceWidth * sourceBpp]);
-      sourceBufferPos = sourceBufferRow;
       reducedRowBufferPos = reducedRowBuffer;
       for (x = 0; x < destWidth; x++)
         {
