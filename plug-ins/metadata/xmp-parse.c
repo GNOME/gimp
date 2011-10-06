@@ -54,7 +54,6 @@
 #  define _(String) (String)
 #  define N_(String) (String)
 #endif
-#include "base64.h"
 #include "xmp-parse.h"
 
 GQuark
@@ -1065,17 +1064,24 @@ text_handler           (GMarkupParseContext  *markup_context,
 
     case STATE_INSIDE_ALT_LI_RSC_IMG:
       {
-        gint   max_size;
+        size_t len, max_size;
         gchar *decoded;
         gint   decoded_size;
+        gint   state;
+        guint  save;
 
 #ifdef DEBUG_XMP_PARSER
         /* g_print ("XMP: Pushing text:\n%s\n", text); */
 #endif
-        max_size = text_len - text_len / 4 + 1;
+        len = text_len - text_len;
+        max_size = (len / 4) * 3 + 3;
         decoded = g_malloc (max_size);
-        decoded_size = base64_decode (text, text_len, decoded, max_size,
-                                      FALSE);
+
+        state = 0;
+        save = 0;
+        decoded_size = g_base64_decode_step (text, text_len,
+                                             decoded,
+                                             &state, &save);
 #ifdef DEBUG_XMP_PARSER
         if (decoded_size > 0)
           {
