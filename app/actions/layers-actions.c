@@ -432,8 +432,6 @@ layers_actions_fix_tooltip (GimpActionGroup *group,
   const gchar *old_hint;
   gchar       *new_hint;
 
-  modifiers = gimp_replace_virtual_modifiers (modifiers);
-
   old_hint = gimp_action_group_get_action_tooltip (group,
                                                    action);
   new_hint = g_strconcat (old_hint,

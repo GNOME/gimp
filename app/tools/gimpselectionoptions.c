@@ -190,7 +190,7 @@ gimp_selection_options_get_modifiers (GimpChannelOps operation)
       break;
     }
 
-  return gimp_get_mod_string (gimp_replace_virtual_modifiers (modifiers));
+  return gimp_get_mod_string (modifiers);
 }
 
 GtkWidget *

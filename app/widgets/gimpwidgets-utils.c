@@ -484,6 +484,8 @@ gimp_get_mod_string (GdkModifierType modifiers)
   if (G_UNLIKELY (! mod_labels))
     mod_labels = g_hash_table_new (g_int_hash, g_int_equal);
 
+  modifiers = gimp_replace_virtual_modifiers (modifiers);
+
   label = g_hash_table_lookup (mod_labels, &modifiers);
 
   if (! label)

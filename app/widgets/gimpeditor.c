@@ -684,7 +684,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
         {
           ExtendedAction *ext = g_slice_new (ExtendedAction);
 
-          ext->mod_mask = gimp_replace_virtual_modifiers (mod_mask);
+          ext->mod_mask = mod_mask;
           ext->action   = action;
 
           extended = g_list_prepend (extended, ext);
