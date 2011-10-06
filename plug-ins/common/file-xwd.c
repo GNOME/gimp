@@ -624,14 +624,20 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if (drawable_type == GIMP_INDEXED_IMAGE)
-    retval = save_index (ofp, image_ID, drawable_ID, 0);
-  else if (drawable_type == GIMP_GRAY_IMAGE)
-    retval = save_index (ofp, image_ID, drawable_ID, 1);
-  else if (drawable_type == GIMP_RGB_IMAGE)
-    retval = save_rgb (ofp, image_ID, drawable_ID);
-  else
-    retval = FALSE;
+  switch (drawable_type)
+    {
+    case GIMP_INDEXED_IMAGE:
+      retval = save_index (ofp, image_ID, drawable_ID, 0);
+      break;
+    case GIMP_GRAY_IMAGE:
+      retval = save_index (ofp, image_ID, drawable_ID, 1);
+      break;
+    case GIMP_RGB_IMAGE:
+      retval = save_rgb (ofp, image_ID, drawable_ID);
+      break;
+    default:
+      retval = FALSE;
+    }
 
   gimp_progress_update (1.0);
 
