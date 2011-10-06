@@ -1456,7 +1456,7 @@ grid_localize (gint x1,
                gint x2,
                gint y2)
 {
-  gint     width, height;
+  gint     width;
   gint     i, j;
   gint     k, l;
   gint     x3, y3, x4, y4;
@@ -1468,7 +1468,6 @@ grid_localize (gint x1,
   Vertex  *pt;
 
   width  = x2 - x1;
-  height = y2 - y1;
   size = (gint) mvals.tile_size;
   rand_localize = size * (1.0 - mvals.tile_neatness);
 
