@@ -817,7 +817,7 @@ view_events (GtkWidget          *widget,
             if (editor->view_button_down)
               {
                 view_pick_color (editor,
-                                 (mevent->state & GDK_CONTROL_MASK) ?
+                                 (mevent->state & gimp_get_toggle_behavior_mask ()) ?
                                  GIMP_COLOR_PICK_MODE_BACKGROUND :
                                  GIMP_COLOR_PICK_MODE_FOREGROUND,
                                  mevent->x);
@@ -846,7 +846,7 @@ view_events (GtkWidget          *widget,
             editor->view_button_down = TRUE;
 
             view_pick_color (editor,
-                             (bevent->state & GDK_CONTROL_MASK) ?
+                             (bevent->state & gimp_get_toggle_behavior_mask ()) ?
                              GIMP_COLOR_PICK_MODE_BACKGROUND :
                              GIMP_COLOR_PICK_MODE_FOREGROUND,
                              bevent->x);
@@ -912,7 +912,7 @@ view_events (GtkWidget          *widget,
           editor->view_button_down = FALSE;
 
           view_pick_color (editor,
-                           (bevent->state & GDK_CONTROL_MASK) ?
+                           (bevent->state & gimp_get_toggle_behavior_mask ()) ?
                            GIMP_COLOR_PICK_MODE_BACKGROUND :
                            GIMP_COLOR_PICK_MODE_FOREGROUND,
                            bevent->x);
@@ -1232,9 +1232,8 @@ control_do_hint (GimpGradientEditor *editor,
             {
               if (seg->prev != NULL)
                 {
-                  str = g_strdup_printf (_("%s%sDrag: move & compress"),
-                                         gimp_get_mod_string (GDK_SHIFT_MASK),
-                                         gimp_get_mod_separator ());
+                  str = g_strdup_printf (_("%s-Drag: move & compress"),
+                                         gimp_get_mod_string (GDK_SHIFT_MASK));
 
                   gradient_editor_set_hint (editor,
                                             NULL,
@@ -1245,9 +1244,8 @@ control_do_hint (GimpGradientEditor *editor,
                 }
               else
                 {
-                  str = g_strdup_printf (_("%s%sClick: extend selection"),
-                                         gimp_get_mod_string (GDK_SHIFT_MASK),
-                                         gimp_get_mod_separator ());
+                  str = g_strdup_printf (_("%s-Click: extend selection"),
+                                         gimp_get_mod_string (GDK_SHIFT_MASK));
 
                   gradient_editor_set_hint (editor,
                                             NULL,
@@ -1259,9 +1257,8 @@ control_do_hint (GimpGradientEditor *editor,
             }
           else
             {
-              str = g_strdup_printf (_("%s%sClick: extend selection"),
-                                     gimp_get_mod_string (GDK_SHIFT_MASK),
-                                     gimp_get_mod_separator ());
+              str = g_strdup_printf (_("%s-Click: extend selection"),
+                                     gimp_get_mod_string (GDK_SHIFT_MASK));
 
               gradient_editor_set_hint (editor,
                                         NULL,
@@ -1273,9 +1270,8 @@ control_do_hint (GimpGradientEditor *editor,
           break;
 
         case GRAD_DRAG_MIDDLE:
-          str = g_strdup_printf (_("%s%sClick: extend selection"),
-                                 gimp_get_mod_string (GDK_SHIFT_MASK),
-                                 gimp_get_mod_separator ());
+          str = g_strdup_printf (_("%s-Click: extend selection"),
+                                 gimp_get_mod_string (GDK_SHIFT_MASK));
 
           gradient_editor_set_hint (editor,
                                     NULL,
@@ -1295,12 +1291,10 @@ control_do_hint (GimpGradientEditor *editor,
     {
       gchar *str2;
 
-      str  = g_strdup_printf (_("%s%sClick: extend selection"),
-                              gimp_get_mod_string (GDK_SHIFT_MASK),
-                              gimp_get_mod_separator ());
-      str2 = g_strdup_printf (_("%s%sDrag: move & compress"),
-                              gimp_get_mod_string (GDK_SHIFT_MASK),
-                              gimp_get_mod_separator ());
+      str  = g_strdup_printf (_("%s-Click: extend selection"),
+                              gimp_get_mod_string (GDK_SHIFT_MASK));
+      str2 = g_strdup_printf (_("%s-Drag: move & compress"),
+                              gimp_get_mod_string (GDK_SHIFT_MASK));
 
       gradient_editor_set_hint (editor,
                                 _("Click: select    Drag: move"),
