@@ -556,23 +556,29 @@ gimp_suggest_modifiers (const gchar     *message,
         }
       else
         {
-          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_string (GDK_SHIFT_MASK), BUF_SIZE);
+          g_strlcpy (msg_buf[num_msgs],
+                     gimp_get_mod_string (GDK_SHIFT_MASK), BUF_SIZE);
           try = TRUE;
         }
 
       num_msgs++;
     }
 
-  if (modifiers & GDK_CONTROL_MASK)
+  /* FIXME: using toggle_behavior_mask is such a hack. The fact that
+   * it happens to do the right thing on all platforms doesn't make it
+   * any better.
+   */
+  if (modifiers & gimp_get_toggle_behavior_mask ())
     {
       if (control_format && *control_format)
         {
           g_snprintf (msg_buf[num_msgs], BUF_SIZE, control_format,
-                      gimp_get_mod_string (GDK_CONTROL_MASK));
+                      gimp_get_mod_string (gimp_get_toggle_behavior_mask ()));
         }
       else
         {
-          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_string (GDK_CONTROL_MASK), BUF_SIZE);
+          g_strlcpy (msg_buf[num_msgs],
+                     gimp_get_mod_string (gimp_get_toggle_behavior_mask ()), BUF_SIZE);
           try = TRUE;
         }
 
@@ -588,7 +594,8 @@ gimp_suggest_modifiers (const gchar     *message,
         }
       else
         {
-          g_strlcpy (msg_buf[num_msgs], gimp_get_mod_string (GDK_MOD1_MASK), BUF_SIZE);
+          g_strlcpy (msg_buf[num_msgs],
+                     gimp_get_mod_string (GDK_MOD1_MASK), BUF_SIZE);
           try = TRUE;
         }
 
