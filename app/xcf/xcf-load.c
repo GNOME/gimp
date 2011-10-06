@@ -1524,7 +1524,6 @@ xcf_load_tile_rle (XcfInfo *info,
   if (data_length <= 0)
     return TRUE;
 
-  data = tile_data_pointer (tile, 0, 0);
   bpp = tile_bpp (tile);
 
   xcfdata = xcfodata = g_malloc (data_length);
