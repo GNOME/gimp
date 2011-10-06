@@ -115,11 +115,7 @@ gimp_rc_add_unknown_token (GimpConfig  *config,
   token->key   = g_strdup (key);
   token->value = g_strdup (value);
 
-  if (last)
-    {
-      last = g_slist_last (g_slist_append (last, token));
-    }
-  else
+  if (!last)
     {
       unknown_tokens = g_slist_append (NULL, token);
 
