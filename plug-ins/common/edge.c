@@ -263,7 +263,6 @@ edge (GimpDrawable *drawable)
   guchar            pix00[4], pix01[4], pix02[4];
   guchar            pix10[4], pix11[4], pix12[4];
   guchar            pix20[4], pix21[4], pix22[4];
-  glong             width, height;
   gint              alpha;
   gboolean          has_alpha;
   gint              chan;
@@ -281,8 +280,6 @@ edge (GimpDrawable *drawable)
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  width     = gimp_drawable_width (drawable->drawable_id);
-  height    = gimp_drawable_height (drawable->drawable_id);
   alpha     = gimp_drawable_bpp (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   if (has_alpha)
