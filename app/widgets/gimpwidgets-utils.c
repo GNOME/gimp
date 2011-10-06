@@ -697,6 +697,16 @@ gimp_get_toggle_behavior_mask (void)
                                        GDK_MODIFIER_INTENT_MODIFY_SELECTION);
 }
 
+GdkModifierType
+gimp_get_constrain_behavior_mask (void)
+{
+  GdkDisplay *display = gdk_display_get_default ();
+
+  /* use the modify selection modifier */
+  return gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                       GDK_MODIFIER_INTENT_MODIFY_SELECTION);
+}
+
 /**
  * gimp_get_screen_resolution:
  * @screen: a #GdkScreen or %NULL

@@ -63,6 +63,7 @@ GdkModifierType   gimp_replace_virtual_modifiers   (GdkModifierType       modifi
 GdkModifierType   gimp_get_extend_selection_mask   (void);
 GdkModifierType   gimp_get_modify_selection_mask   (void);
 GdkModifierType   gimp_get_toggle_behavior_mask    (void);
+GdkModifierType   gimp_get_constrain_behavior_mask (void);
 
 void              gimp_get_screen_resolution       (GdkScreen            *screen,
                                                     gdouble              *xres,
