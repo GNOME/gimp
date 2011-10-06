@@ -2881,7 +2881,6 @@ render (void)
   guchar *dest_row;
   ray     r;
   gint    x, y, p;
-  gint    hit;
   gint    tx  = PREVIEWSIZE;
   gint    ty  = PREVIEWSIZE;
   gint    bpp = 4;
@@ -2912,7 +2911,7 @@ render (void)
 
               p = x * bpp;
 
-              hit = traceray (&r, &col, 10, 1.0);
+              traceray (&r, &col, 10, 1.0);
 
               if (col.w < 0.0)
                 col.w = 0.0;
