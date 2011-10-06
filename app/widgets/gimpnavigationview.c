@@ -36,6 +36,7 @@
 
 #include "gimpnavigationview.h"
 #include "gimpviewrenderer.h"
+#include "gimpwidgets-utils.h"
 
 
 #define BORDER_WIDTH 2
@@ -302,7 +303,7 @@ static gboolean
 gimp_navigation_view_scroll (GtkWidget      *widget,
                              GdkEventScroll *sevent)
 {
-  if (sevent->state & GDK_CONTROL_MASK)
+  if (sevent->state & gimp_get_toggle_behavior_mask ())
     {
       switch (sevent->direction)
         {

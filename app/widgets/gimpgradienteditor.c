@@ -858,7 +858,7 @@ view_events (GtkWidget          *widget,
       {
         GdkEventScroll *sevent = (GdkEventScroll *) event;
 
-        if (sevent->state & GDK_CONTROL_MASK)
+        if (sevent->state & gimp_get_toggle_behavior_mask ())
           {
             switch (sevent->direction)
               {
@@ -1063,7 +1063,7 @@ control_events (GtkWidget          *widget,
       {
         GdkEventScroll *sevent = (GdkEventScroll *) event;
 
-        if (sevent->state & GDK_SHIFT_MASK)
+        if (sevent->state & gimp_get_toggle_behavior_mask ())
           {
             if (sevent->direction == GDK_SCROLL_UP)
               gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN);

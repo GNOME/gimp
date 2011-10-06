@@ -717,7 +717,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             GdkScrollDirection  direction = sevent->direction;
 
-            if (state & GDK_CONTROL_MASK)
+            if (state & gimp_get_toggle_behavior_mask ())
               {
                 switch (direction)
                   {
