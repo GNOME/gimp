@@ -613,7 +613,6 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   gint          scale,row,col;
   gint          i,j;
   gint          size;
-  gint          pos;
   gint          channel;
   guchar       *psrc = NULL;            /* backup pointer for src buffer */
   gfloat       *dst  = NULL;            /* float buffer for algorithm */
@@ -683,9 +682,10 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
     The recursive filtering algorithm needs different coefficients according
     to the selected scale (~ = standard deviation of Gaussian).
    */
-  pos = 0;
   for (channel = 0; channel < 3; channel++)
     {
+      gint pos;
+
       for (i = 0, pos = channel; i < channelsize ; i++, pos += bytes)
          {
             /* 0-255 => 1-256 */
