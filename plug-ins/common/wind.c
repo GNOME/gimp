@@ -386,7 +386,6 @@ render_blast (GimpDrawable *drawable,
                     }
                 }
             }
-          marker = 0;
         }
     }
 
