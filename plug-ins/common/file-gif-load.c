@@ -542,12 +542,17 @@ DoExtension (FILE *fd,
              gint  label)
 {
   static guchar  buf[256];
+#ifdef GIFDEBUG
   gchar         *str;
+#endif
 
   switch (label)
     {
     case 0x01:                  /* Plain Text Extension */
+#ifdef GIFDEBUG
       str = "Plain Text Extension";
+#endif
+
 #ifdef notdef
       if (GetDataBlock (fd, (guchar *) buf) == 0)
         ;
@@ -576,10 +581,14 @@ DoExtension (FILE *fd,
 #endif
 
     case 0xff:                  /* Application Extension */
+#ifdef GIFDEBUG
       str = "Application Extension";
+#endif
       break;
     case 0xfe:                  /* Comment Extension */
+#ifdef GIFDEBUG
       str = "Comment Extension";
+#endif
       while (GetDataBlock (fd, (guchar *) buf) > 0)
         {
           gchar *comment = (gchar *) buf;
@@ -598,7 +607,9 @@ DoExtension (FILE *fd,
       break;
 
     case 0xf9:                  /* Graphic Control Extension */
+#ifdef GIFDEBUG
       str = "Graphic Control Extension";
+#endif
       (void) GetDataBlock (fd, (guchar *) buf);
       Gif89.disposal  = (buf[0] >> 2) & 0x7;
       Gif89.inputFlag = (buf[0] >> 1) & 0x1;
@@ -614,7 +625,9 @@ DoExtension (FILE *fd,
       break;
 
     default:
+#ifdef GIFDEBUG
       str = (gchar *)buf;
+#endif
       sprintf ((gchar *)buf, "UNKNOWN (0x%02x)", label);
       break;
     }
