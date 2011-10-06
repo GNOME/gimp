@@ -1126,7 +1126,8 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                   else if (! toggled_cell &&
                            ((bevent->state & (GDK_SHIFT_MASK   |
                                               GDK_CONTROL_MASK |
-                                              GDK_MOD1_MASK)) == 0))
+                                              GDK_MOD1_MASK    |
+                                              GDK_MOD2_MASK)) == 0))
                     {
                       /* Only activate if we're not in a toggled cell
                        * and no modifier keys are pressed
