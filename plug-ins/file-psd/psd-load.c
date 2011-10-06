@@ -1547,11 +1547,10 @@ add_merged_image (const gint32  image_id,
     {
       guint32 block_len;
       guint32 block_start;
-      guint32 block_end;
 
       block_start = img_a->merged_image_start;
       block_len = img_a->merged_image_len;
-      block_end = block_start + block_len;
+
       fseek (f, block_start, SEEK_SET);
 
       if (fread (&comp_mode, COMP_MODE_SIZE, 1, f) < 1)
