@@ -761,16 +761,11 @@ static void
 check_matrix (void)
 {
   gint      x, y;
-  gboolean  valid = FALSE;
   gfloat    sum   = 0.0;
 
   for (y = 0; y < MATRIX_SIZE; y++)
     for (x = 0; x < MATRIX_SIZE; x++)
-      {
-        sum += config.matrix[x][y];
-        if (config.matrix[x][y] != 0.0)
-          valid = TRUE;
-      }
+      sum += config.matrix[x][y];
 
   if (config.autoset)
     {
