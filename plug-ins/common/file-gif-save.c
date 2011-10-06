@@ -1492,9 +1492,6 @@ gif_encode_graphic_control_ext (FILE    *fp,
                                 ifunptr  get_pixel)
 {
   int LeftOfs, TopOfs;
-  int ColorMapSize;
-
-  ColorMapSize = 1 << BitsPerPixel;
 
   Width = GWidth;
   Height = GHeight;
@@ -1560,12 +1557,9 @@ gif_encode_image_data (FILE    *fp,
 {
   int LeftOfs, TopOfs;
   int Resolution;
-  int ColorMapSize;
   int InitCodeSize;
 
   Interlace = GInterlace;
-
-  ColorMapSize = 1 << BitsPerPixel;
 
   Width = GWidth;
   Height = GHeight;
@@ -1637,7 +1631,6 @@ gif_encode_image_data (FILE    *fp,
 #if 0
   /***************************/
   Interlace = GInterlace;
-  ColorMapSize = 1 << BitsPerPixel;
   Width = GWidth;
   Height = GHeight;
   LeftOfs = TopOfs = 0;
