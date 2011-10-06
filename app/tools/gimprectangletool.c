@@ -886,21 +886,17 @@ gimp_rectangle_tool_button_press (GimpTool         *tool,
                                   GdkModifierType   state,
                                   GimpDisplay      *display)
 {
-  GimpRectangleTool           *rect_tool;
-  GimpRectangleOptions        *options;
-  GimpDrawTool                *draw_tool;
-  GimpRectangleToolPrivate    *private;
-  GimpRectangleOptionsPrivate *priv_opts;
-  gdouble                      snapped_x, snapped_y;
-  gint                         snap_x, snap_y;
+  GimpRectangleTool        *rect_tool;
+  GimpDrawTool             *draw_tool;
+  GimpRectangleToolPrivate *private;
+  gdouble                   snapped_x, snapped_y;
+  gint                      snap_x, snap_y;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
   rect_tool = GIMP_RECTANGLE_TOOL (tool);
-  options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
   draw_tool = GIMP_DRAW_TOOL (tool);
   private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
-  priv_opts = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
   gimp_draw_tool_pause (draw_tool);
 
@@ -949,33 +945,8 @@ gimp_rectangle_tool_button_press (GimpTool         *tool,
       /* Remember that this rectangle was created from scratch. */
       private->is_new = TRUE;
 
-      if (gimp_rectangle_options_fixed_rule_active (options,
-                                                    GIMP_RECTANGLE_TOOL_FIXED_SIZE))
-        {
-          private->x1 = snapped_x - priv_opts->desired_fixed_size_width / 2;
-          private->y1 = snapped_y - priv_opts->desired_fixed_size_height / 2;
-          private->x2 = snapped_x + priv_opts->desired_fixed_size_width / 2;
-          private->y2 = snapped_y + priv_opts->desired_fixed_size_height / 2;
-        }
-      else if (gimp_rectangle_options_fixed_rule_active (options,
-                                                         GIMP_RECTANGLE_TOOL_FIXED_WIDTH))
-        {
-          private->x1 = snapped_x - priv_opts->desired_fixed_width / 2;
-          private->x2 = snapped_x + priv_opts->desired_fixed_width / 2;
-          private->y1 = private->y2 = snapped_y;
-        }
-      else if (gimp_rectangle_options_fixed_rule_active (options,
-                                                         GIMP_RECTANGLE_TOOL_FIXED_HEIGHT))
-        {
-          private->y1 = snapped_y - priv_opts->desired_fixed_height / 2;
-          private->y2 = snapped_y + priv_opts->desired_fixed_height / 2;
-          private->x1 = private->x2 = snapped_x;
-        }
-      else
-        {
-          private->x1 = private->x2 = snapped_x;
-          private->y1 = private->y2 = snapped_y;
-        }
+      private->x1 = private->x2 = snapped_x;
+      private->y1 = private->y2 = snapped_y;
 
       gimp_rectangle_tool_update_handle_sizes (rect_tool);
 
