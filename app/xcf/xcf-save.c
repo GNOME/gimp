@@ -539,7 +539,10 @@ xcf_save_layer_props (XcfInfo    *info,
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
     {
-      gint32 flags = gimp_viewable_get_expanded (GIMP_VIEWABLE (layer));
+      gint32 flags = 0;
+
+      if (gimp_viewable_get_expanded (GIMP_VIEWABLE (layer)))
+        flags |= XCF_GROUP_ITEM_EXPANDED;
 
       xcf_check_error (xcf_save_prop (info,
                                       image, PROP_GROUP_ITEM_FLAGS, error,

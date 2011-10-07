@@ -1137,7 +1137,9 @@ xcf_load_layer (XcfInfo    *info,
     }
   else
     {
-      gimp_viewable_set_expanded (GIMP_VIEWABLE (layer), group_layer_flags != 0);
+      gboolean expanded = group_layer_flags & XCF_GROUP_ITEM_EXPANDED;
+
+      gimp_viewable_set_expanded (GIMP_VIEWABLE (layer), expanded);
     }
 
   /* read in the layer mask */

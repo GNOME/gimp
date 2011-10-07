@@ -75,6 +75,11 @@ typedef enum
   XCF_STROKETYPE_BEZIER_STROKE = 1
 } XcfStrokeType;
 
+typedef enum
+{
+  XCF_GROUP_ITEM_EXPANDED      = 1
+} XcfGroupItemFlagsType;
+
 typedef struct _XcfInfo  XcfInfo;
 
 struct _XcfInfo
