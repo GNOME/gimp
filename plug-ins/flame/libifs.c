@@ -788,6 +788,8 @@ interpolate (control_point  cps[],
   for (i = 0; i < NXFORMS; i++)
     {
       double r;
+      double rh_time;
+
       INTERP(xform[i].density);
       if (result->xform[i].density > 0)
         result->xform[i].density = 1.0;
@@ -804,30 +806,27 @@ interpolate (control_point  cps[],
       interpolate_matrix(c1, cps[i1].xform[i].c, cps[i2].xform[i].c,
                          result->xform[i].c);
 
-      if (1)
+      rh_time = time * 2 * G_PI / (60.0 * 30.0);
+
+      /* apply pulse factor. */
+      r = 1.0;
+      for (j = 0; j < 2; j++)
+        r += result->pulse[j][0] * sin(result->pulse[j][1] * rh_time);
+      for (j = 0; j < 3; j++)
         {
-          double rh_time = time * 2 * G_PI / (60.0 * 30.0);
+          result->xform[i].c[j][0] *= r;
+          result->xform[i].c[j][1] *= r;
+        }
 
-          /* apply pulse factor. */
-          r = 1.0;
-          for (j = 0; j < 2; j++)
-            r += result->pulse[j][0] * sin(result->pulse[j][1] * rh_time);
-          for (j = 0; j < 3; j++)
-            {
-              result->xform[i].c[j][0] *= r;
-              result->xform[i].c[j][1] *= r;
-            }
-
-          /* apply wiggle factor */
-          for (j = 0; j < 2; j++)
-            {
-              double tt = result->wiggle[j][1] * rh_time;
-              double m = result->wiggle[j][0];
-              result->xform[i].c[0][0] += m *  cos(tt);
-              result->xform[i].c[1][0] += m * -sin(tt);
-              result->xform[i].c[0][1] += m *  sin(tt);
-              result->xform[i].c[1][1] += m *  cos(tt);
-            }
+      /* apply wiggle factor */
+      for (j = 0; j < 2; j++)
+        {
+          double tt = result->wiggle[j][1] * rh_time;
+          double m = result->wiggle[j][0];
+          result->xform[i].c[0][0] += m *  cos(tt);
+          result->xform[i].c[1][0] += m * -sin(tt);
+          result->xform[i].c[0][1] += m *  sin(tt);
+          result->xform[i].c[1][1] += m *  cos(tt);
         }
     } /* for i */
 }
