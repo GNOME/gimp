@@ -329,7 +329,6 @@ nlfiltRow (guchar *srclast, guchar *srcthis, guchar *srcnext, guchar *dst,
   gint    pf[9];
   guchar *ip0, *ip1, *ip2, *or, *orend;
 
-  or = dst;
   orend = dst + width * bpp;
   ip0 = srclast;
   ip1 = srcthis;
