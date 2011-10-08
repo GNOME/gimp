@@ -2926,14 +2926,12 @@ p_vertical_bend (BenderDialog *cd,
   t_Last  *first_arr;
   guchar   color[4];
   guchar   mixcolor[4];
-  guchar   l_alpha_lo;
   gint     l_alias_dir;
   guchar   l_mixmask;
 
   l_topshift = p_upper_curve_extend (cd, src_gdrw->drawable->width,
                                      src_gdrw->drawable->height);
   l_diff = l_curvy = l_nb_curvy = l_nb2_curvy= l_miny = l_maxy = 0;
-  l_alpha_lo = 20;
 
   /* allocate array of last values (one element foreach x koordinate) */
   last_arr  = g_new (t_Last, src_gdrw->x2);
@@ -3075,12 +3073,13 @@ p_vertical_bend (BenderDialog *cd,
 
                       if (l_alias_dir != 0)
                         {
+                          guchar l_alpha_lo;
+
                           l_alpha_lo = 20;
                           if (gimp_drawable_has_alpha(src_gdrw->drawable->drawable_id))
                             {
                               l_alpha_lo = MIN(20, mixcolor[src_gdrw->index_alpha]);
                             }
-
 
                           for(l_dy = 0; l_dy < l_diff; l_dy++)
                             {
