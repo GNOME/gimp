@@ -1017,9 +1017,6 @@ get_compress_channel_data (guchar  *channel_data,
   gint    i;
   gint32  len;                 /* Length of compressed data */
   guchar *start;               /* Starting position of a row in channel_data */
-  gint32  channel_length;      /* Total channel's length */
-
-  channel_length = channel_cols * channel_rows;
 
   /* For every row in the channel */
 
