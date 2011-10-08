@@ -1694,7 +1694,8 @@ load_xwd_f2_d24_b32 (const gchar     *filename,
     bluemap[blue] = (blue * 255) / maxblue;
 
   ncols = xwdhdr->l_colormap_entries;
-  if (xwdhdr->l_ncolors < ncols) ncols = xwdhdr->l_ncolors;
+  if (xwdhdr->l_ncolors < ncols)
+    ncols = xwdhdr->l_ncolors;
 
   set_pixelmap (ncols, xwdcolmap, &pixel_map);
 
