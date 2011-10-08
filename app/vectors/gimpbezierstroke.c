@@ -1052,13 +1052,11 @@ gimp_bezier_stroke_is_extendable (GimpStroke *stroke,
                   listneighbor->prev->prev == NULL)
                 {
                   loose_end = -1;
-                  listneighbor = listneighbor->prev;
                 }
               else if (listneighbor->next &&
                        listneighbor->next->next == NULL)
                 {
                   loose_end = 1;
-                  listneighbor = listneighbor->next;
                 }
             }
         }
