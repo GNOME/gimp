@@ -1696,7 +1696,7 @@ load_xwd_f2_d24_b32 (const gchar     *filename,
   ncols = xwdhdr->l_colormap_entries;
   if (xwdhdr->l_ncolors < ncols) ncols = xwdhdr->l_ncolors;
 
-  ncols = set_pixelmap (ncols, xwdcolmap, &pixel_map);
+  set_pixelmap (ncols, xwdcolmap, &pixel_map);
 
   /* What do we have to consume after a line has finished ? */
   linepad =   xwdhdr->l_bytes_per_line
@@ -1939,7 +1939,7 @@ load_xwd_f1_d24_b1 (const gchar     *filename,
     }
   else
     {
-      ncols = set_pixelmap (ncols, xwdcolmap, &pixel_map);
+      set_pixelmap (ncols, xwdcolmap, &pixel_map);
     }
 
   do_reverse = !xwdhdr->l_bitmap_bit_order;
