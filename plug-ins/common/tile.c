@@ -129,8 +129,6 @@ run (const gchar      *name,
   GimpRunMode       run_mode;
   GimpPDBStatusType status    = GIMP_PDB_SUCCESS;
   gint32            new_layer = -1;
-  gint              width;
-  gint              height;
 
   run_mode = param[0].data.d_int32;
 
@@ -143,9 +141,6 @@ run (const gchar      *name,
   values[0].data.d_status = status;
   values[1].type          = GIMP_PDB_IMAGE;
   values[2].type          = GIMP_PDB_LAYER;
-
-  width  = gimp_drawable_width  (param[2].data.d_drawable);
-  height = gimp_drawable_height (param[2].data.d_drawable);
 
   switch (run_mode)
     {
