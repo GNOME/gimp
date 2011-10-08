@@ -382,8 +382,6 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
 
   gimp_tool_control_activate (tool->control);
 
-  function = gimp_rectangle_tool_get_function (rectangle);
-
   priv->saved_show_selection = gimp_display_shell_get_show_selection (shell);
 
   /* if the shift or ctrl keys are down, we don't want to adjust, we
