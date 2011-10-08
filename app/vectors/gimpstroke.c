@@ -1319,8 +1319,6 @@ gimp_stroke_real_control_points_get (const GimpStroke *stroke,
   GList *list;
 
   num_anchors = g_list_length (stroke->anchors);
-  list = g_list_first (stroke->anchors);
-
   ret_array = g_array_sized_new (FALSE, FALSE,
                                  sizeof (GimpAnchor), num_anchors);
 
