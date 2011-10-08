@@ -432,7 +432,7 @@ sub image_free_shadow {
     &std_pdb_deprecated ('gimp-drawable-free-shadow');
 
     @inargs = (
-        { name => 'image', type => 'image',
+        { name => 'image', type => 'image', dead => 1,
           desc => 'The image' }
     );
 

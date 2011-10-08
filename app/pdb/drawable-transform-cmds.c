@@ -919,7 +919,6 @@ drawable_transform_shear_invoker (GimpProcedure      *procedure,
   gdouble magnitude;
   gint32 transform_direction;
   gint32 interpolation;
-  gboolean supersample;
   gint32 recursion_level;
   gint32 clip_result;
 
@@ -928,7 +927,6 @@ drawable_transform_shear_invoker (GimpProcedure      *procedure,
   magnitude = g_value_get_double (&args->values[2]);
   transform_direction = g_value_get_enum (&args->values[3]);
   interpolation = g_value_get_enum (&args->values[4]);
-  supersample = g_value_get_boolean (&args->values[5]);
   recursion_level = g_value_get_int (&args->values[6]);
   clip_result = g_value_get_enum (&args->values[7]);
 
@@ -1096,7 +1094,6 @@ drawable_transform_2d_invoker (GimpProcedure      *procedure,
   gdouble dest_y;
   gint32 transform_direction;
   gint32 interpolation;
-  gboolean supersample;
   gint32 recursion_level;
   gint32 clip_result;
 
@@ -1110,7 +1107,6 @@ drawable_transform_2d_invoker (GimpProcedure      *procedure,
   dest_y = g_value_get_double (&args->values[7]);
   transform_direction = g_value_get_enum (&args->values[8]);
   interpolation = g_value_get_enum (&args->values[9]);
-  supersample = g_value_get_boolean (&args->values[10]);
   recursion_level = g_value_get_int (&args->values[11]);
   clip_result = g_value_get_enum (&args->values[12]);
 

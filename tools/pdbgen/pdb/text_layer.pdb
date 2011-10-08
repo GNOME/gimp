@@ -397,7 +397,7 @@ HELP
           desc => 'The text layer' },
         { name => 'hinting', type => 'boolean',
           desc => 'Enable/disable the use of hinting on the text' },
-        { name => 'autohint', type => 'boolean',
+        { name => 'autohint', type => 'boolean', dead => 1,
           desc => 'Force the use of the autohinter provided through FreeType' }
     );
 

@@ -320,14 +320,9 @@ image_free_shadow_invoker (GimpProcedure      *procedure,
                            GError            **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-
   if (success)
     {
     }
-
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }

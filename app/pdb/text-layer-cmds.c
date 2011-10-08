@@ -1184,11 +1184,9 @@ text_layer_set_hinting_invoker (GimpProcedure      *procedure,
   gboolean success = TRUE;
   GimpLayer *layer;
   gboolean hinting;
-  gboolean autohint;
 
   layer = gimp_value_get_layer (&args->values[0], gimp);
   hinting = g_value_get_boolean (&args->values[1]);
-  autohint = g_value_get_boolean (&args->values[2]);
 
   if (success)
     {

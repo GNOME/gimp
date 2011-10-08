@@ -257,13 +257,11 @@ path_set_points_invoker (GimpProcedure      *procedure,
   gboolean success = TRUE;
   GimpImage *image;
   const gchar *name;
-  gint32 ptype;
   gint32 num_path_points;
   const gdouble *points_pairs;
 
   image = gimp_value_get_image (&args->values[0], gimp);
   name = g_value_get_string (&args->values[1]);
-  ptype = g_value_get_int (&args->values[2]);
   num_path_points = g_value_get_int (&args->values[3]);
   points_pairs = gimp_value_get_floatarray (&args->values[4]);
 

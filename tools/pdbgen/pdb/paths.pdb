@@ -177,7 +177,7 @@ sub path_set_points {
 		   name will be created - query the list of paths if you want
 		   to make sure that the name of the path you create is 
 		   unique. This will be set as the current path.' },
-	{ name => 'ptype', type => 'int32',
+	{ name => 'ptype', type => 'int32', dead => 1,
 	  desc => 'The type of the path. Currently only one type (1 = Bezier)
 		   is supported.' },
 	{ name => 'points_pairs', type => 'floatarray',

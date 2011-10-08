@@ -58,7 +58,7 @@ HELP
           desc => 'Antialiasing' },
         { name => 'size', type => '0 < float',
           desc => 'The size of text in either pixels or points' },
-        { name => 'size_type', type => 'enum GimpSizeType',
+        { name => 'size_type', type => 'enum GimpSizeType', dead => 1,
           desc => 'The units of specified size' },
         { name => 'fontname', type => 'string',
           desc => 'The name of the font' }
@@ -180,9 +180,9 @@ sub text {
           desc => 'The font set-width' },
         { name => 'spacing', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font spacing' },
-        { name => 'registry', type => 'string', allow_non_utf8 => 1,
+        { name => 'registry', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font registry' },
-        { name => 'encoding', type => 'string', allow_non_utf8 => 1,
+        { name => 'encoding', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font encoding' }
     );
 
@@ -222,23 +222,23 @@ sub text_get_extents {
           desc => 'The text to generate (in UTF-8 encoding)' },
         { name => 'size', type => '0 < float',
           desc => 'The size of text in either pixels or points' },
-        { name => 'size_type', type => 'enum GimpSizeType',
+        { name => 'size_type', type => 'enum GimpSizeType', dead => 1,
           desc => 'The units of specified size' },
-        { name => 'foundry', type => 'string', allow_non_utf8 => 1,
+        { name => 'foundry', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font foundry' },
         { name => 'family', type => 'string', allow_non_utf8 => 1,
           desc => 'The font family' },
         { name => 'weight', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font weight' },
-        { name => 'slant', type => 'string', allow_non_utf8 => 1,
+        { name => 'slant', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font slant' },
-        { name => 'set_width', type => 'string', allow_non_utf8 => 1,
+        { name => 'set_width', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font set-width' },
         { name => 'spacing', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font spacing' },
-        { name => 'registry', type => 'string', allow_non_utf8 => 1,
+        { name => 'registry', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font registry' },
-        { name => 'encoding', type => 'string', allow_non_utf8 => 1,
+        { name => 'encoding', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font encoding' }
     );
 

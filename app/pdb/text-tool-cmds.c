@@ -55,7 +55,6 @@ text_fontname_invoker (GimpProcedure      *procedure,
   gint32 border;
   gboolean antialias;
   gdouble size;
-  gint32 size_type;
   const gchar *fontname;
   GimpLayer *text_layer = NULL;
 
@@ -67,7 +66,6 @@ text_fontname_invoker (GimpProcedure      *procedure,
   border = g_value_get_int (&args->values[5]);
   antialias = g_value_get_boolean (&args->values[6]);
   size = g_value_get_double (&args->values[7]);
-  size_type = g_value_get_enum (&args->values[8]);
   fontname = g_value_get_string (&args->values[9]);
 
   if (success)
@@ -164,8 +162,6 @@ text_invoker (GimpProcedure      *procedure,
   gboolean antialias;
   gdouble size;
   const gchar *family;
-  const gchar *registry;
-  const gchar *encoding;
   GimpLayer *text_layer = NULL;
 
   image = gimp_value_get_image (&args->values[0], gimp);
@@ -177,8 +173,6 @@ text_invoker (GimpProcedure      *procedure,
   antialias = g_value_get_boolean (&args->values[6]);
   size = g_value_get_double (&args->values[7]);
   family = g_value_get_string (&args->values[10]);
-  registry = g_value_get_string (&args->values[15]);
-  encoding = g_value_get_string (&args->values[16]);
 
   if (success)
     {
@@ -220,13 +214,7 @@ text_get_extents_invoker (GimpProcedure      *procedure,
   GValueArray *return_vals;
   const gchar *text;
   gdouble size;
-  gint32 size_type;
-  const gchar *foundry;
   const gchar *family;
-  const gchar *slant;
-  const gchar *set_width;
-  const gchar *registry;
-  const gchar *encoding;
   gint32 width = 0;
   gint32 height = 0;
   gint32 ascent = 0;
@@ -234,13 +222,7 @@ text_get_extents_invoker (GimpProcedure      *procedure,
 
   text = g_value_get_string (&args->values[0]);
   size = g_value_get_double (&args->values[1]);
-  size_type = g_value_get_enum (&args->values[2]);
-  foundry = g_value_get_string (&args->values[3]);
   family = g_value_get_string (&args->values[4]);
-  slant = g_value_get_string (&args->values[6]);
-  set_width = g_value_get_string (&args->values[7]);
-  registry = g_value_get_string (&args->values[9]);
-  encoding = g_value_get_string (&args->values[10]);
 
   if (success)
     {
