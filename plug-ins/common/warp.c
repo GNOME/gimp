@@ -896,7 +896,7 @@ diff (GimpDrawable *drawable,
   gdouble gscalefac;                /* scaling factor for x,y differential of 'gradient' map */
   gdouble r, theta, dtheta;         /* rectangular<-> spherical coordinate transform for vector rotation */
   gdouble scale_vec_x, scale_vec_y; /* fixed vector X,Y component scaling factors */
-  gint has_alpha, ind;
+  gint ind;
 
   /* ----------------------------------------------------------------------- */
 
@@ -927,7 +927,6 @@ diff (GimpDrawable *drawable,
   width     = drawable->width;
   height    = drawable->height;
   src_bytes = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   /* -- Add two layers: X and Y Displacement vectors -- */
   /* -- I'm using a RGB  drawable and using the first two bytes for a
