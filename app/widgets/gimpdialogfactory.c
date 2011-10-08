@@ -609,7 +609,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       toplevel = gtk_widget_get_toplevel (dialog);
     }
 
-  if (present && toplevel != NULL && GTK_IS_WINDOW (toplevel))
+  if (present && GTK_IS_WINDOW (toplevel))
     gtk_window_present (GTK_WINDOW (toplevel));
 
   return dialog;
