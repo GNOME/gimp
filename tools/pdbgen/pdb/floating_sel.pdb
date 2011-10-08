@@ -164,9 +164,9 @@ sub floating_sel_rigor {
     &std_pdb_deprecated ();
 
     @inargs = (
-	{ name => 'floating_sel', type => 'layer',
+	{ name => 'floating_sel', type => 'layer', dead => 1,
 	  desc => 'The floating selection' },
-	{ name => 'undo', type => 'boolean' }
+	{ name => 'undo', type => 'boolean', dead => 1 }
     );
 
     %invoke = (

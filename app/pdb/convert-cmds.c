@@ -187,12 +187,10 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
   gboolean success = TRUE;
   gint32 width;
   gint32 height;
-  gint32 matrix_length;
   const guint8 *matrix;
 
   width = g_value_get_int (&args->values[0]);
   height = g_value_get_int (&args->values[1]);
-  matrix_length = g_value_get_int (&args->values[2]);
   matrix = gimp_value_get_int8array (&args->values[3]);
 
   if (success)

@@ -120,7 +120,6 @@ drawable_transform_flip_invoker (GimpProcedure      *procedure,
   gdouble y1;
   gint32 transform_direction;
   gint32 interpolation;
-  gboolean supersample;
   gint32 recursion_level;
   gboolean clip_result;
 
@@ -131,7 +130,6 @@ drawable_transform_flip_invoker (GimpProcedure      *procedure,
   y1 = g_value_get_double (&args->values[4]);
   transform_direction = g_value_get_enum (&args->values[5]);
   interpolation = g_value_get_enum (&args->values[6]);
-  supersample = g_value_get_boolean (&args->values[7]);
   recursion_level = g_value_get_int (&args->values[8]);
   clip_result = g_value_get_boolean (&args->values[9]);
 
@@ -302,7 +300,6 @@ drawable_transform_perspective_invoker (GimpProcedure      *procedure,
   gdouble y3;
   gint32 transform_direction;
   gint32 interpolation;
-  gboolean supersample;
   gint32 recursion_level;
   gint32 clip_result;
 
@@ -317,7 +314,6 @@ drawable_transform_perspective_invoker (GimpProcedure      *procedure,
   y3 = g_value_get_double (&args->values[8]);
   transform_direction = g_value_get_enum (&args->values[9]);
   interpolation = g_value_get_enum (&args->values[10]);
-  supersample = g_value_get_boolean (&args->values[11]);
   recursion_level = g_value_get_int (&args->values[12]);
   clip_result = g_value_get_enum (&args->values[13]);
 
@@ -563,7 +559,6 @@ drawable_transform_rotate_invoker (GimpProcedure      *procedure,
   gint32 center_y;
   gint32 transform_direction;
   gint32 interpolation;
-  gboolean supersample;
   gint32 recursion_level;
   gint32 clip_result;
 
@@ -574,7 +569,6 @@ drawable_transform_rotate_invoker (GimpProcedure      *procedure,
   center_y = g_value_get_int (&args->values[4]);
   transform_direction = g_value_get_enum (&args->values[5]);
   interpolation = g_value_get_enum (&args->values[6]);
-  supersample = g_value_get_boolean (&args->values[7]);
   recursion_level = g_value_get_int (&args->values[8]);
   clip_result = g_value_get_enum (&args->values[9]);
 
@@ -749,7 +743,6 @@ drawable_transform_scale_invoker (GimpProcedure      *procedure,
   gdouble y1;
   gint32 transform_direction;
   gint32 interpolation;
-  gboolean supersample;
   gint32 recursion_level;
   gint32 clip_result;
 
@@ -760,7 +753,6 @@ drawable_transform_scale_invoker (GimpProcedure      *procedure,
   y1 = g_value_get_double (&args->values[4]);
   transform_direction = g_value_get_enum (&args->values[5]);
   interpolation = g_value_get_enum (&args->values[6]);
-  supersample = g_value_get_boolean (&args->values[7]);
   recursion_level = g_value_get_int (&args->values[8]);
   clip_result = g_value_get_enum (&args->values[9]);
 
@@ -1300,7 +1292,6 @@ drawable_transform_matrix_invoker (GimpProcedure      *procedure,
   gdouble coeff_2_2;
   gint32 transform_direction;
   gint32 interpolation;
-  gboolean supersample;
   gint32 recursion_level;
   gint32 clip_result;
 
@@ -1316,7 +1307,6 @@ drawable_transform_matrix_invoker (GimpProcedure      *procedure,
   coeff_2_2 = g_value_get_double (&args->values[9]);
   transform_direction = g_value_get_enum (&args->values[10]);
   interpolation = g_value_get_enum (&args->values[11]);
-  supersample = g_value_get_boolean (&args->values[12]);
   recursion_level = g_value_get_int (&args->values[13]);
   clip_result = g_value_get_enum (&args->values[14]);
 

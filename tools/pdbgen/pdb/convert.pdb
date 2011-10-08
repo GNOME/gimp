@@ -193,7 +193,7 @@ HELP
 	  desc => 'Height of the matrix (0 to reset to default matrix)' },
 	{ name => 'matrix', type => 'int8array',
 	  desc => 'The matrix -- all values must be >= 1',
-	  array => { name => 'matrix_length', type => '1 <= int32 <= 1024',
+	  array => { name => 'matrix_length', type => '1 <= int32 <= 1024', dead => 1,
                      desc => "The length of 'matrix'" }
 	  },
     );

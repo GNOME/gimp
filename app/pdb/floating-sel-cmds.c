@@ -172,16 +172,9 @@ floating_sel_rigor_invoker (GimpProcedure      *procedure,
                             GError            **error)
 {
   gboolean success = TRUE;
-  GimpLayer *floating_sel;
-  gboolean undo;
-
-  floating_sel = gimp_value_get_layer (&args->values[0], gimp);
-  undo = g_value_get_boolean (&args->values[1]);
-
   if (success)
     {
     }
-
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
