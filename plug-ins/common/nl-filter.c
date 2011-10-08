@@ -77,17 +77,17 @@ static void nlfilter            (GimpDrawable *drawable,
                                  GimpPreview  *preview);
 static gboolean nlfilter_dialog (GimpDrawable *drawable);
 
-static inline gint nlfiltInit   (gdouble       alpha,
-                                 gdouble       radius,
-                                 FilterType    filter);
+static gint nlfiltInit   (gdouble       alpha,
+                          gdouble       radius,
+                          FilterType    filter);
 
-static inline void nlfiltRow    (guchar       *srclast,
-                                 guchar       *srcthis,
-                                 guchar       *srcnext,
-                                 guchar       *dst,
-                                 gint          width,
-                                 gint          bpp,
-                                 gint          filtno);
+static void nlfiltRow    (guchar       *srclast,
+                          guchar       *srcthis,
+                          guchar       *srcnext,
+                          guchar       *dst,
+                          gint          width,
+                          gint          bpp,
+                          gint          filtno);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -322,7 +322,7 @@ static gint noisevariance;
  * srclast, srcthis, and srcnext from [-bpp] to [width*bpp-1].
  * Beware if you use this code anywhere else!
  */
-static inline void
+static void
 nlfiltRow (guchar *srclast, guchar *srcthis, guchar *srcnext, guchar *dst,
            gint width, gint bpp, gint filtno)
 {
@@ -375,7 +375,7 @@ gint AVEDIV[7 * NOCSVAL];              /* divide by 7 to give average value */
 gint SQUARE[2 * NOCSVAL];              /* scaled square lookup table */
 
 /* Table initialisation function - return alpha range */
-static inline gint
+static gint
 nlfiltInit (gdouble alpha, gdouble radius, FilterType filter)
 {
    gint alpharange;                 /* alpha range value 0 - 3 */
