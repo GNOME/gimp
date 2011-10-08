@@ -63,12 +63,6 @@ void
 fonts_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpContext *context = action_data_get_context (data);
-  GimpFont    *font    = NULL;
-
-  if (context)
-    font = gimp_context_get_font (context);
-
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
