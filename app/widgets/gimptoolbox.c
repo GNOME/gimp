@@ -583,7 +583,7 @@ gimp_toolbox_book_removed (GimpDock     *dock,
   if (GIMP_DOCK_CLASS (parent_class)->book_removed)
     GIMP_DOCK_CLASS (parent_class)->book_removed (dock, dockbook);
 
-  if (g_list_length (gimp_dock_get_dockbooks (dock)) == 0 &&
+  if (! gimp_dock_get_dockbooks (dock) &&
       ! toolbox->p->in_destruction)
     {
       gimp_dock_invalidate_geometry (dock);

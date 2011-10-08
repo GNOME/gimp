@@ -234,10 +234,9 @@ gimp_paned_box_set_widget_drag_handler (GtkWidget    *widget,
 static gint
 gimp_paned_box_get_drop_area_size (GimpPanedBox *paned_box)
 {
-  gboolean no_widgets     = (g_list_length (paned_box->p->widgets) == 0);
-  gint     drop_area_size = 0;
+  gint drop_area_size = 0;
 
-  if (no_widgets)
+  if (! paned_box->p->widgets)
     {
       GtkAllocation  allocation;
       GtkOrientation orientation;
@@ -340,7 +339,6 @@ gimp_paned_box_drag_motion (GtkWidget      *widget,
   GtkOrientation orientation    = 0;
   gboolean       handle         = FALSE;
   gint           drop_area_size = gimp_paned_box_get_drop_area_size (paned_box);
-  gboolean       no_widgets     = (g_list_length (paned_box->p->widgets) == 0);
 
   if (gimp_paned_box_will_handle_drag (paned_box->p->drag_handler,
                                        widget,
@@ -355,11 +353,6 @@ gimp_paned_box_drag_motion (GtkWidget      *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  /* If there are no widgets, the drop area is as big as the paned
-   * box
-   */
-  no_widgets = (g_list_length (paned_box->p->widgets) == 0);
-
   /* See if we're at the edge of the dock If there are no dockables,
    * the entire paned box is a drop area
    */
@@ -369,7 +362,10 @@ gimp_paned_box_drag_motion (GtkWidget      *widget,
       dnd_window_y = 0;
       dnd_window_h = allocation.height;
 
-      if (no_widgets)
+      /* If there are no widgets, the drop area is as big as the paned
+       * box
+       */
+      if (! paned_box->p->widgets)
         dnd_window_w = allocation.width;
       else
         dnd_window_w = drop_area_size;
@@ -390,7 +386,10 @@ gimp_paned_box_drag_motion (GtkWidget      *widget,
       dnd_window_x = 0;
       dnd_window_w = allocation.width;
 
-      if (no_widgets)
+      /* If there are no widgets, the drop area is as big as the paned
+       * box
+       */
+      if (! paned_box->p->widgets)
         dnd_window_h = allocation.height;
       else
         dnd_window_h = drop_area_size;

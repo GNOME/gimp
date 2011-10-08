@@ -837,7 +837,7 @@ gimp_dock_window_should_add_to_recent (GimpDockWindow *dock_window)
 
   docks = gimp_dock_container_get_docks (GIMP_DOCK_CONTAINER (dock_window));
 
-  if (g_list_length (docks) < 1)
+  if (! docks)
     {
       should_add = FALSE;
     }
