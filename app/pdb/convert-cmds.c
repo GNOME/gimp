@@ -197,7 +197,7 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (matrix_length == width * height)
+      if (width == 0 || height == 0 || matrix_length == width * height)
         {
           gimp_image_convert_set_dither_matrix (matrix, width, height);
         }
