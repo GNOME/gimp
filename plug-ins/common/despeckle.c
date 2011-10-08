@@ -857,7 +857,7 @@ despeckle_median (guchar   *src,
   guint  progress;
   guint  max_progress;
   gint   x, y;
-  gint   input_radius = radius;
+  gint   adapt_radius;
   gint   pos;
   gint   ymin;
   gint   ymax;
@@ -871,14 +871,14 @@ despeckle_median (guchar   *src,
   if (! preview)
     gimp_progress_init(_("Despeckle"));
 
-
+  adapt_radius = radius;
   for (y = 0; y < height; y++)
     {
       x = 0;
-      ymin = MAX (0, y - radius);
-      ymax = MIN (height - 1, y + radius);
-      xmin = MAX (0, x - radius);
-      xmax = MIN (width - 1, x + radius);
+      ymin = MAX (0, y - adapt_radius);
+      ymax = MIN (height - 1, y + adapt_radius);
+      xmin = MAX (0, x - adapt_radius);
+      xmax = MIN (width - 1, x + adapt_radius);
       hist0   = 0;
       histrest = 0;
       hist255 = 0;
@@ -895,10 +895,10 @@ despeckle_median (guchar   *src,
         {
           const guchar *pixel;
 
-          ymin = MAX (0, y - radius); /* update ymin, ymax when radius changed (FILTER_ADAPTIVE) */
-          ymax = MIN (height - 1, y + radius);
-          xmin = MAX (0, x - radius);
-          xmax = MIN (width - 1, x + radius);
+          ymin = MAX (0, y - adapt_radius); /* update ymin, ymax when adapt_radius changed (FILTER_ADAPTIVE) */
+          ymax = MIN (height - 1, y + adapt_radius);
+          xmin = MAX (0, x - adapt_radius);
+          xmax = MIN (width - 1, x + adapt_radius);
 
           update_histogram (&histogram,
                             src, width, bpp, xmin, ymin, xmax, ymax);
@@ -920,14 +920,14 @@ despeckle_median (guchar   *src,
            */
           if (filter_type & FILTER_ADAPTIVE)
             {
-              if (hist0 >= radius || hist255 >= radius)
+              if (hist0 >= adapt_radius || hist255 >= adapt_radius)
                 {
-                  if (radius < input_radius)
-                    radius++;
+                  if (adapt_radius < radius)
+                    adapt_radius++;
                 }
-              else if (radius > 1)
+              else if (adapt_radius > 1)
                 {
-                  radius--;
+                  adapt_radius--;
                 }
             }
         }
