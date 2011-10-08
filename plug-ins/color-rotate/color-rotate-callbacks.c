@@ -413,8 +413,6 @@ rcm_motion_notify_event (GtkWidget      *widget,
   alpha  = &(circle->angle->alpha);
   beta   = &(circle->angle->beta);
   cw_ccw = circle->angle->cw_ccw;
-  delta  = angle_mod_2PI (cw_ccw * (*beta - *alpha));
-
 
   clicked_angle = angle_mod_2PI (arctg (CENTER - event->y, event->x - CENTER));
 
