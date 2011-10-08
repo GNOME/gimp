@@ -237,7 +237,6 @@ text_get_extents_invoker (GimpProcedure      *procedure,
   gint32 size_type;
   const gchar *foundry;
   const gchar *family;
-  const gchar *weight;
   const gchar *slant;
   const gchar *set_width;
   const gchar *spacing;
@@ -253,7 +252,6 @@ text_get_extents_invoker (GimpProcedure      *procedure,
   size_type = g_value_get_enum (&args->values[2]);
   foundry = g_value_get_string (&args->values[3]);
   family = g_value_get_string (&args->values[4]);
-  weight = g_value_get_string (&args->values[5]);
   slant = g_value_get_string (&args->values[6]);
   set_width = g_value_get_string (&args->values[7]);
   spacing = g_value_get_string (&args->values[8]);

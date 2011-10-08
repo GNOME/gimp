@@ -76,7 +76,7 @@ sub declare_args {
 		warn "Array without number of elements param in $proc->{name}";
 	    }
 
-	    unless (exists $_->{no_declare}) {
+	    unless (exists $_->{no_declare} || exists $_->{dead}) {
 		if ($outargs) {
 		    $result .= "  $arg->{type}$_->{name} = $arg->{init_value}";
 		}
@@ -112,7 +112,9 @@ sub marshal_inargs {
 	my $value;
 
 	$value = "&args->values[$argc]";
-	$result .= eval qq/"  $arg->{get_value_func};\n"/;
+	if (!exists $_->{dead}) {
+	    $result .= eval qq/"  $arg->{get_value_func};\n"/;
+	}
 
 	$argc++;
 

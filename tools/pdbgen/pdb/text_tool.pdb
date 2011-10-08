@@ -228,7 +228,7 @@ sub text_get_extents {
           desc => 'The font foundry' },
         { name => 'family', type => 'string', allow_non_utf8 => 1,
           desc => 'The font family' },
-        { name => 'weight', type => 'string', allow_non_utf8 => 1,
+        { name => 'weight', type => 'string', allow_non_utf8 => 1, dead => 1,
           desc => 'The font weight' },
         { name => 'slant', type => 'string', allow_non_utf8 => 1,
           desc => 'The font slant' },
