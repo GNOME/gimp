@@ -819,7 +819,6 @@ interpolate (control_point  cps[],
             }
 
           /* apply wiggle factor */
-          r = 0.0;
           for (j = 0; j < 2; j++)
             {
               double tt = result->wiggle[j][1] * rh_time;
