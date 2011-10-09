@@ -294,31 +294,45 @@ gimp_transform_resize_crop (gdouble  dx1,
 
   for (i = 1; i < 4; i++)
     {
-      gdouble theta, theta_m = 2.0 * G_PI;
-      gdouble theta_v        = 0;
+      gdouble min_theta;
+      gdouble min_mag;
+      int next;
 
-      min = 3;
+      next = 3;
+      min_theta = 2.0 * G_PI;
+      min_mag = DBL_MAX;
 
       for (j = i; j < 4; j++)
         {
-          gdouble sy = points[j].y - points[i - 1].y;
-          gdouble sx = points[j].x - points[i - 1].x;
+          gdouble theta;
+          gdouble sy;
+          gdouble sx;
+          gdouble mag;
+
+          sy = points[j].y - points[i - 1].y;
+          sx = points[j].x - points[i - 1].x;
+
+          if ((sx == 0.0) && (sy == 0.0))
+            {
+              next = j;
+              break;
+            }
 
           theta = atan2 (sy, sx);
+          mag = (sx * sx) + (sy * sy);
 
-          if ((theta < theta_m) &&
-              ((theta > theta_v) || ((theta == theta_v) && (sx > 0))))
+          if ((theta < min_theta) ||
+              ((theta == min_theta) && (mag < min_mag)))
             {
-              theta_m = theta;
-              min = j;
+              min_theta = theta;
+              min_mag = mag;
+              next = j;
             }
         }
 
-      theta_v = theta_m;
-
       t = points[i];
-      points[i] = points[min];
-      points[min] = t;
+      points[i] = points[next];
+      points[next] = t;
     }
 
   /* reverse the order of points */
