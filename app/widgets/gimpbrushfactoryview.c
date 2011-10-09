@@ -143,16 +143,10 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
                                "menu-factory",      menu_factory,
                                "menu-identifier",   "<Brushes>",
                                "ui-path",           "/brushes-popup",
+                               "action-group",      "brushes",
                                NULL);
 
   factory_view->change_brush_spacing = change_brush_spacing;
-
-  if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          "brushes"))
-    {
-      g_object_unref (factory_view);
-      return NULL;
-    }
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 

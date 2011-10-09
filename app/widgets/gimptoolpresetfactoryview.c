@@ -79,14 +79,8 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
                                "menu-factory",      menu_factory,
                                "menu-identifier",   "<ToolPresets>",
                                "ui-path",           "/tool-presets-popup",
+                               "action-group",      "tool-presets",
                                NULL);
-
-  if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          "tool-presets"))
-    {
-      g_object_unref (factory_view);
-      return NULL;
-    }
 
   gtk_widget_hide (gimp_data_factory_view_get_duplicate_button (GIMP_DATA_FACTORY_VIEW (factory_view)));
 

@@ -80,14 +80,8 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
                                "menu-factory",      menu_factory,
                                "menu-identifier",   "<Patterns>",
                                "ui-path",           "/patterns-popup",
+                               "action-group",      "patterns",
                                NULL);
-
-  if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          "patterns"))
-    {
-      g_object_unref (factory_view);
-      return NULL;
-    }
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 

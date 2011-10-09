@@ -56,8 +56,6 @@ gimp_dynamics_factory_view_new (GimpViewType      view_type,
                                 gint              view_border_width,
                                 GimpMenuFactory  *menu_factory)
 {
-  GimpDynamicsFactoryView *factory_view;
-
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (view_size > 0 &&
@@ -68,23 +66,15 @@ gimp_dynamics_factory_view_new (GimpViewType      view_type,
   g_return_val_if_fail (menu_factory == NULL ||
                         GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
-  factory_view = g_object_new (GIMP_TYPE_DYNAMICS_FACTORY_VIEW,
-                               "view-type",         view_type,
-                               "data-factory",      factory,
-                               "context",           context,
-                               "view-size",         view_size,
-                               "view-border-width", view_border_width,
-                               "menu-factory",      menu_factory,
-                               "menu-identifier",   "<Dynamics>",
-                               "ui-path",           "/dynamics-popup",
-                               NULL);
-
-  if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          "dynamics"))
-    {
-      g_object_unref (factory_view);
-      return NULL;
-    }
-
-  return GTK_WIDGET (factory_view);
+  return g_object_new (GIMP_TYPE_DYNAMICS_FACTORY_VIEW,
+                       "view-type",         view_type,
+                       "data-factory",      factory,
+                       "context",           context,
+                       "view-size",         view_size,
+                       "view-border-width", view_border_width,
+                       "menu-factory",      menu_factory,
+                       "menu-identifier",   "<Dynamics>",
+                       "ui-path",           "/dynamics-popup",
+                       "action-group",      "dynamics",
+                       NULL);
 }

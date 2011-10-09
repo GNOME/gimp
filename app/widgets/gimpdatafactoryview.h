@@ -70,10 +70,4 @@ gboolean          gimp_data_factory_view_have                 (GimpDataFactoryVi
                                                                GimpObject          *object);
 
 
-/*  protected  */
-
-gboolean          gimp_data_factory_view_construct            (GimpDataFactoryView *factory_view,
-                                                               const gchar         *action_group);
-
-
 #endif  /*  __GIMP_DATA_FACTORY_VIEW_H__  */
