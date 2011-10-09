@@ -368,7 +368,7 @@ gimp_transform_resize_crop (gdouble  dx1,
       /* saveguard if something went wrong, adjust and give warning */
       gimp_transform_resize_adjust (dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4,
                                     x1, y1, x2, y2);
-      g_warning ("no rectangle found by algorith, no cropping done");
+      g_warning ("no rectangle found by algorithm, no cropping done");
       return;
     }
   else
