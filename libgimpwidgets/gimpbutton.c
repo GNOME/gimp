@@ -26,6 +26,7 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpbutton.h"
+#include "gimp3migration.h"
 
 
 /**
@@ -144,7 +145,13 @@ static void
 gimp_button_clicked (GtkButton *button)
 {
   if (GIMP_BUTTON (button)->press_state &
-      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK | GDK_MOD2_MASK))
+      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK |
+       gtk_widget_get_modifier_mask (GTK_WIDGET (button),
+                                     GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR) |
+       gtk_widget_get_modifier_mask (GTK_WIDGET (button),
+                                     GDK_MODIFIER_INTENT_EXTEND_SELECTION) |
+       gtk_widget_get_modifier_mask (GTK_WIDGET (button),
+                                     GDK_MODIFIER_INTENT_MODIFY_SELECTION)))
     {
       g_signal_stop_emission_by_name (button, "clicked");
 
