@@ -127,14 +127,23 @@ gimp_buffer_view_new (GimpViewType     view_type,
   GtkWidget           *frame;
   GtkWidget           *hbox;
 
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        FALSE);
+
   buffer_view = g_object_new (GIMP_TYPE_BUFFER_VIEW,
-                              "view-type", view_type,
-                              "container", container,
-                              "context",   context,
+                              "view-type",         view_type,
+                              "container",         container,
+                              "context",           context,
+                              "view-size",         view_size,
+                              "view-border-width", view_border_width,
                               NULL);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (buffer_view),
-                                         view_size, view_border_width,
                                          menu_factory, "<Buffers>",
                                          "/buffers-popup"))
     {

@@ -253,16 +253,21 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        NULL);
 
   factory_view = g_object_new (GIMP_TYPE_DATA_FACTORY_VIEW,
-                               "view-type",    view_type,
-                               "data-factory", factory,
-                               "context",      context,
+                               "view-type",         view_type,
+                               "data-factory",      factory,
+                               "context",           context,
+                               "view-size",         view_size,
+                               "view-border-width", view_border_width,
                                NULL);
 
   if (! gimp_data_factory_view_construct (factory_view,
-                                          view_size,
-                                          view_border_width,
                                           menu_factory,
                                           menu_identifier,
                                           ui_identifier,
@@ -327,8 +332,6 @@ gimp_data_factory_view_have (GimpDataFactoryView *factory_view,
 
 gboolean
 gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
-                                  gint                 view_size,
-                                  gint                 view_border_width,
                                   GimpMenuFactory     *menu_factory,
                                   const gchar         *menu_identifier,
                                   const gchar         *ui_identifier,
@@ -338,14 +341,8 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   gchar               *str;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
-  g_return_val_if_fail (view_size >  0 &&
-                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
-  g_return_val_if_fail (view_border_width >= 0 &&
-                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
-                        FALSE);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
-                                         view_size, view_border_width,
                                          menu_factory, menu_identifier,
                                          ui_identifier))
     {

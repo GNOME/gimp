@@ -34,6 +34,7 @@
 #include "gimpfontview.h"
 #include "gimphelp-ids.h"
 #include "gimpuimanager.h"
+#include "gimpviewrenderer.h"
 
 #include "gimp-intl.h"
 
@@ -74,15 +75,21 @@ gimp_font_view_new (GimpViewType     view_type,
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (view_size > 0 &&
+                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (view_border_width >= 0 &&
+                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        NULL);
 
   font_view = g_object_new (GIMP_TYPE_FONT_VIEW,
-                            "view-type", view_type,
-                            "container", container,
-                            "context",   context,
+                            "view-type",         view_type,
+                            "container",         container,
+                            "context",           context,
+                            "view-size",         view_size,
+                            "view-border-width", view_border_width,
                             NULL);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (font_view),
-                                         view_size, view_border_width,
                                          menu_factory, "<Fonts>",
                                          "/fonts-popup"))
     {

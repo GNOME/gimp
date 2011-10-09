@@ -550,14 +550,14 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
   GtkWidget  *button;
 
   popup->editor = g_object_new (GIMP_TYPE_CONTAINER_EDITOR,
-                                "view-type", popup->view_type,
-                                "container", popup->container,
-                                "context",   popup->context,
+                                "view-type",         popup->view_type,
+                                "container",         popup->container,
+                                "context",           popup->context,
+                                "view-size",         popup->view_size,
+                                "view-border-width", popup->view_border_width,
                                 NULL);
 
   gimp_container_editor_construct (popup->editor,
-                                   popup->view_size,
-                                   popup->view_border_width,
                                    NULL, NULL, NULL);
 
   gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (popup->editor->view),

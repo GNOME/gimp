@@ -132,15 +132,16 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
                         NULL);
 
   factory_view = g_object_new (GIMP_TYPE_BRUSH_FACTORY_VIEW,
-                               "view-type",    view_type,
-                               "data-factory", factory,
-                               "context",      context,
+                               "view-type",         view_type,
+                               "data-factory",      factory,
+                               "context",           context,
+                               "view-size",         view_size,
+                               "view-border-width", view_border_width,
                                NULL);
 
   factory_view->change_brush_spacing = change_brush_spacing;
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          view_size, view_border_width,
                                           menu_factory, "<Brushes>",
                                           "/brushes-popup",
                                           "brushes"))

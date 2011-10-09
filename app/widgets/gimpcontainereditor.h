@@ -65,8 +65,6 @@ void             gimp_container_editor_set_selection_mode (GimpContainerEditor *
 /*  protected  */
 
 gboolean  gimp_container_editor_construct (GimpContainerEditor *editor,
-                                           gint                 view_size,
-                                           gint                 view_border_width,
                                            GimpMenuFactory     *menu_factory,
                                            const gchar         *menu_identifier,
                                            const gchar         *ui_path);

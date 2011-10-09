@@ -46,7 +46,9 @@ enum
   PROP_0,
   PROP_VIEW_TYPE,
   PROP_CONTAINER,
-  PROP_CONTEXT
+  PROP_CONTEXT,
+  PROP_VIEW_SIZE,
+  PROP_VIEW_BORDER_WIDTH
 };
 
 
@@ -55,6 +57,8 @@ struct _GimpContainerEditorPrivate
   GimpViewType   view_type;
   GimpContainer *container;
   GimpContext   *context;
+  gint           view_size;
+  gint           view_border_width;
 };
 
 
@@ -145,6 +149,23 @@ gimp_container_editor_class_init (GimpContainerEditorClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_VIEW_SIZE,
+                                   g_param_spec_int ("view-size",
+                                                     NULL, NULL,
+                                                     1, GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
+                                                     GIMP_VIEW_SIZE_MEDIUM,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_VIEW_BORDER_WIDTH,
+                                   g_param_spec_int ("view-border-width",
+                                                     NULL, NULL,
+                                                     0,
+                                                     GIMP_VIEW_MAX_BORDER_WIDTH,
+                                                     1,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
+
   g_type_class_add_private (klass, sizeof (GimpContainerEditorPrivate));
 }
 
@@ -224,6 +245,14 @@ gimp_container_editor_set_property (GObject      *object,
       editor->priv->context = g_value_dup_object (value);
       break;
 
+    case PROP_VIEW_SIZE:
+      editor->priv->view_size = g_value_get_int (value);
+      break;
+
+    case PROP_VIEW_BORDER_WIDTH:
+      editor->priv->view_border_width = g_value_get_int (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -252,6 +281,14 @@ gimp_container_editor_get_property (GObject    *object,
       g_value_set_object (value, editor->priv->context);
       break;
 
+    case PROP_VIEW_SIZE:
+      g_value_set_int (value, editor->priv->view_size);
+      break;
+
+    case PROP_VIEW_BORDER_WIDTH:
+      g_value_set_int (value, editor->priv->view_border_width);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -260,18 +297,11 @@ gimp_container_editor_get_property (GObject    *object,
 
 gboolean
 gimp_container_editor_construct (GimpContainerEditor *editor,
-                                 gint                 view_size,
-                                 gint                 view_border_width,
                                  GimpMenuFactory     *menu_factory,
                                  const gchar         *menu_identifier,
                                  const gchar         *ui_identifier)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
-  g_return_val_if_fail (view_size > 0 &&
-                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
-  g_return_val_if_fail (view_border_width >= 0 &&
-                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
-                        FALSE);
   g_return_val_if_fail (menu_factory == NULL ||
                         GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
 
@@ -282,14 +312,14 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
       editor->view =
         GIMP_CONTAINER_VIEW (gimp_container_icon_view_new (editor->priv->container,
                                                            editor->priv->context,
-                                                           view_size,
-                                                           view_border_width));
+                                                           editor->priv->view_size,
+                                                           editor->priv->view_border_width));
 #else
       editor->view =
         GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (editor->priv->container,
                                                            editor->priv->context,
-                                                           view_size,
-                                                           view_border_width));
+                                                           editor->priv->view_size,
+                                                           editor->priv->view_border_width));
 #endif
       break;
 
@@ -297,8 +327,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
       editor->view =
         GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (editor->priv->container,
                                                            editor->priv->context,
-                                                           view_size,
-                                                           view_border_width));
+                                                           editor->priv->view_size,
+                                                           editor->priv->view_border_width));
       break;
 
     default:
