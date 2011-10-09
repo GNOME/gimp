@@ -433,9 +433,9 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
 
 GtkWidget *
 dialogs_tool_preset_list_view_new (GimpDialogFactory *factory,
-                                GimpContext       *context,
-                                GimpUIManager     *ui_manager,
-                                gint               view_size)
+                                   GimpContext       *context,
+                                   GimpUIManager     *ui_manager,
+                                   gint               view_size)
 {
   return gimp_tool_preset_factory_view_new (GIMP_VIEW_TYPE_LIST,
                                             context->gimp->tool_preset_factory,
