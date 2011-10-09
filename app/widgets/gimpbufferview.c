@@ -141,15 +141,10 @@ gimp_buffer_view_new (GimpViewType     view_type,
                               "context",           context,
                               "view-size",         view_size,
                               "view-border-width", view_border_width,
+                              "menu-factory",      menu_factory,
+                              "menu-identifier",   "<Buffers>",
+                              "ui-path",           "/buffers-popup",
                               NULL);
-
-  if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (buffer_view),
-                                         menu_factory, "<Buffers>",
-                                         "/buffers-popup"))
-    {
-      g_object_unref (buffer_view);
-      return NULL;
-    }
 
   editor = GIMP_CONTAINER_EDITOR (buffer_view);
 

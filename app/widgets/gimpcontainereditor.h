@@ -62,12 +62,4 @@ void             gimp_container_editor_set_selection_mode (GimpContainerEditor *
                                                            GtkSelectionMode     mode);
 
 
-/*  protected  */
-
-gboolean  gimp_container_editor_construct (GimpContainerEditor *editor,
-                                           GimpMenuFactory     *menu_factory,
-                                           const gchar         *menu_identifier,
-                                           const gchar         *ui_path);
-
-
 #endif  /*  __GIMP_CONTAINER_EDITOR_H__  */

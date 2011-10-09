@@ -48,17 +48,23 @@ enum
   PROP_CONTAINER,
   PROP_CONTEXT,
   PROP_VIEW_SIZE,
-  PROP_VIEW_BORDER_WIDTH
+  PROP_VIEW_BORDER_WIDTH,
+  PROP_MENU_FACTORY,
+  PROP_MENU_IDENTIFIER,
+  PROP_UI_PATH
 };
 
 
 struct _GimpContainerEditorPrivate
 {
-  GimpViewType   view_type;
-  GimpContainer *container;
-  GimpContext   *context;
-  gint           view_size;
-  gint           view_border_width;
+  GimpViewType     view_type;
+  GimpContainer   *container;
+  GimpContext     *context;
+  gint             view_size;
+  gint             view_border_width;
+  GimpMenuFactory *menu_factory;
+  gchar           *menu_identifier;
+  gchar           *ui_path;
 };
 
 
@@ -166,6 +172,27 @@ gimp_container_editor_class_init (GimpContainerEditorClass *klass)
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_MENU_FACTORY,
+                                   g_param_spec_object ("menu-factory",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_MENU_FACTORY,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_MENU_IDENTIFIER,
+                                   g_param_spec_string ("menu-identifier",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_UI_PATH,
+                                   g_param_spec_string ("ui-path",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_type_class_add_private (klass, sizeof (GimpContainerEditorPrivate));
 }
 
@@ -236,6 +263,17 @@ gimp_container_editor_constructed (GObject *object)
     gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (editor->view),
                                          ! GIMP_LIST (editor->priv->container)->sort_func);
 
+  if (editor->priv->menu_factory    &&
+      editor->priv->menu_identifier &&
+      editor->priv->ui_path)
+    {
+      gimp_editor_create_menu (GIMP_EDITOR (editor->view),
+                               editor->priv->menu_factory,
+                               editor->priv->menu_identifier,
+                               editor->priv->ui_path,
+                               editor);
+    }
+
   gtk_box_pack_start (GTK_BOX (editor), GTK_WIDGET (editor->view),
                       TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (editor->view));
@@ -277,6 +315,24 @@ gimp_container_editor_dispose (GObject *object)
       editor->priv->context = NULL;
     }
 
+  if (editor->priv->menu_factory)
+    {
+      g_object_unref (editor->priv->menu_factory);
+      editor->priv->menu_factory = NULL;
+    }
+
+  if (editor->priv->menu_identifier)
+    {
+      g_free (editor->priv->menu_identifier);
+      editor->priv->menu_identifier = NULL;
+    }
+
+  if (editor->priv->ui_path)
+    {
+      g_free (editor->priv->ui_path);
+      editor->priv->ui_path = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -308,6 +364,18 @@ gimp_container_editor_set_property (GObject      *object,
 
     case PROP_VIEW_BORDER_WIDTH:
       editor->priv->view_border_width = g_value_get_int (value);
+      break;
+
+    case PROP_MENU_FACTORY:
+      editor->priv->menu_factory = g_value_dup_object (value);
+      break;
+
+    case PROP_MENU_IDENTIFIER:
+      editor->priv->menu_identifier = g_value_dup_string (value);
+      break;
+
+    case PROP_UI_PATH:
+      editor->priv->ui_path = g_value_dup_string (value);
       break;
 
     default:
@@ -346,28 +414,22 @@ gimp_container_editor_get_property (GObject    *object,
       g_value_set_int (value, editor->priv->view_border_width);
       break;
 
+    case PROP_MENU_FACTORY:
+      g_value_set_object (value, editor->priv->menu_factory);
+      break;
+
+    case PROP_MENU_IDENTIFIER:
+      g_value_set_string (value, editor->priv->menu_identifier);
+      break;
+
+    case PROP_UI_PATH:
+      g_value_set_string (value, editor->priv->ui_path);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-gboolean
-gimp_container_editor_construct (GimpContainerEditor *editor,
-                                 GimpMenuFactory     *menu_factory,
-                                 const gchar         *menu_identifier,
-                                 const gchar         *ui_identifier)
-{
-  g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
-  g_return_val_if_fail (menu_factory == NULL ||
-                        GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
-
-  if (menu_factory && menu_identifier && ui_identifier)
-    gimp_editor_create_menu (GIMP_EDITOR (editor->view),
-                             menu_factory, menu_identifier, ui_identifier,
-                             editor);
-
-  return TRUE;
 }
 
 GtkSelectionMode

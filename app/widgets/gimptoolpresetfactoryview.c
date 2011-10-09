@@ -31,6 +31,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpeditor.h"
+#include "gimpmenufactory.h"
 #include "gimptoolpresetfactoryview.h"
 #include "gimpviewrenderer.h"
 
@@ -66,6 +67,8 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
   g_return_val_if_fail (view_border_width >= 0 &&
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
+  g_return_val_if_fail (menu_factory == NULL ||
+                        GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   factory_view = g_object_new (GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW,
                                "view-type",         view_type,
@@ -73,11 +76,12 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
                                "context",           context,
                                "view-size",         view_size,
                                "view-border-width", view_border_width,
+                               "menu-factory",      menu_factory,
+                               "menu-identifier",   "<ToolPreset>",
+                               "ui-path",           "/tool-preset-popup",
                                NULL);
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          menu_factory, "<ToolPreset>",
-                                          "/tool-preset-popup",
                                           "tool-preset"))
     {
       g_object_unref (factory_view);

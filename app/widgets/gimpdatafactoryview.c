@@ -45,6 +45,7 @@
 #include "gimpcontainerview.h"
 #include "gimpdatafactoryview.h"
 #include "gimpdnd.h"
+#include "gimpmenufactory.h"
 #include "gimptagentry.h"
 #include "gimpuimanager.h"
 #include "gimpviewrenderer.h"
@@ -246,7 +247,7 @@ gimp_data_factory_view_new (GimpViewType      view_type,
                             gint              view_border_width,
                             GimpMenuFactory  *menu_factory,
                             const gchar      *menu_identifier,
-                            const gchar      *ui_identifier,
+                            const gchar      *ui_path,
                             const gchar      *action_group)
 {
   GimpDataFactoryView *factory_view;
@@ -258,6 +259,8 @@ gimp_data_factory_view_new (GimpViewType      view_type,
   g_return_val_if_fail (view_border_width >= 0 &&
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
+  g_return_val_if_fail (menu_factory == NULL ||
+                        GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   factory_view = g_object_new (GIMP_TYPE_DATA_FACTORY_VIEW,
                                "view-type",         view_type,
@@ -265,12 +268,12 @@ gimp_data_factory_view_new (GimpViewType      view_type,
                                "context",           context,
                                "view-size",         view_size,
                                "view-border-width", view_border_width,
+                               "menu-factory",      menu_factory,
+                               "menu-identifier",   menu_identifier,
+                               "ui-path",           ui_path,
                                NULL);
 
   if (! gimp_data_factory_view_construct (factory_view,
-                                          menu_factory,
-                                          menu_identifier,
-                                          ui_identifier,
                                           action_group))
     {
       g_object_unref (factory_view);
@@ -332,22 +335,12 @@ gimp_data_factory_view_have (GimpDataFactoryView *factory_view,
 
 gboolean
 gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
-                                  GimpMenuFactory     *menu_factory,
-                                  const gchar         *menu_identifier,
-                                  const gchar         *ui_identifier,
                                   const gchar         *action_group)
 {
   GimpContainerEditor *editor;
   gchar               *str;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
-
-  if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
-                                         menu_factory, menu_identifier,
-                                         ui_identifier))
-    {
-      return FALSE;
-    }
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 

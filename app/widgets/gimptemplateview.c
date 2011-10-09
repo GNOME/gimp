@@ -39,6 +39,7 @@
 #include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
+#include "gimpmenufactory.h"
 #include "gimptemplateview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
@@ -98,6 +99,8 @@ gimp_template_view_new (GimpViewType     view_type,
   g_return_val_if_fail (view_border_width >= 0 &&
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
+  g_return_val_if_fail (menu_factory == NULL ||
+                        GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   template_view = g_object_new (GIMP_TYPE_TEMPLATE_VIEW,
                                 "view-type",         view_type,
@@ -105,15 +108,10 @@ gimp_template_view_new (GimpViewType     view_type,
                                 "context",           context,
                                 "view-size",         view_size,
                                 "view-border-width", view_border_width,
+                                "menu-factory",      menu_factory,
+                                "menu-identifier",   "<Templates>",
+                                "ui-path",           "/templates-popup",
                                 NULL);
-
-  if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (template_view),
-                                         menu_factory, "<Templates>",
-                                         "/templates-popup"))
-    {
-      g_object_unref (template_view);
-      return NULL;
-    }
 
   editor = GIMP_CONTAINER_EDITOR (template_view);
 

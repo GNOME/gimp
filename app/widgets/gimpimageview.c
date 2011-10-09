@@ -35,6 +35,7 @@
 #include "gimpeditor.h"
 #include "gimpimageview.h"
 #include "gimpdnd.h"
+#include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 #include "gimpviewrenderer.h"
 
@@ -84,6 +85,8 @@ gimp_image_view_new (GimpViewType     view_type,
   g_return_val_if_fail (view_border_width >= 0 &&
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
+  g_return_val_if_fail (menu_factory == NULL ||
+                        GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   image_view = g_object_new (GIMP_TYPE_IMAGE_VIEW,
                              "view-type",         view_type,
@@ -91,15 +94,10 @@ gimp_image_view_new (GimpViewType     view_type,
                              "context",           context,
                              "view-size",         view_size,
                              "view-border-width", view_border_width,
+                             "menu-factory",      menu_factory,
+                             "menu-identifier",   "<Images>",
+                             "ui-path",           "/images-popup",
                              NULL);
-
-  if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (image_view),
-                                         menu_factory, "<Images>",
-                                         "/images-popup"))
-    {
-      g_object_unref (image_view);
-      return NULL;
-    }
 
   editor = GIMP_CONTAINER_EDITOR (image_view);
 

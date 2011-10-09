@@ -58,7 +58,7 @@ GtkWidget *       gimp_data_factory_view_new                  (GimpViewType     
                                                                gint              view_border_width,
                                                                GimpMenuFactory  *menu_factory,
                                                                const gchar      *menu_identifier,
-                                                               const gchar      *ui_identifier,
+                                                               const gchar      *ui_path,
                                                                const gchar      *action_group);
 
 GtkWidget       * gimp_data_factory_view_get_edit_button      (GimpDataFactoryView *factory_view);
@@ -73,9 +73,6 @@ gboolean          gimp_data_factory_view_have                 (GimpDataFactoryVi
 /*  protected  */
 
 gboolean          gimp_data_factory_view_construct            (GimpDataFactoryView *factory_view,
-                                                               GimpMenuFactory     *menu_factory,
-                                                               const gchar         *menu_identifier,
-                                                               const gchar         *ui_identifier,
                                                                const gchar         *action_group);
 
 

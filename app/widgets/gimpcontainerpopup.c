@@ -557,9 +557,6 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                                 "view-border-width", popup->view_border_width,
                                 NULL);
 
-  gimp_container_editor_construct (popup->editor,
-                                   NULL, NULL, NULL);
-
   gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (popup->editor->view),
                                        FALSE);
 

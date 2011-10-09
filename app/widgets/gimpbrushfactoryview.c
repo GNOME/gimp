@@ -34,6 +34,7 @@
 
 #include "gimpbrushfactoryview.h"
 #include "gimpcontainerview.h"
+#include "gimpmenufactory.h"
 #include "gimpspinscale.h"
 #include "gimpviewrenderer.h"
 
@@ -130,6 +131,8 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
   g_return_val_if_fail (view_border_width >= 0 &&
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
+  g_return_val_if_fail (menu_factory == NULL ||
+                        GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   factory_view = g_object_new (GIMP_TYPE_BRUSH_FACTORY_VIEW,
                                "view-type",         view_type,
@@ -137,13 +140,14 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
                                "context",           context,
                                "view-size",         view_size,
                                "view-border-width", view_border_width,
+                               "menu-factory",      menu_factory,
+                               "menu-identifier",   "<Brushes>",
+                               "ui-path",           "/brushes-popup",
                                NULL);
 
   factory_view->change_brush_spacing = change_brush_spacing;
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          menu_factory, "<Brushes>",
-                                          "/brushes-popup",
                                           "brushes"))
     {
       g_object_unref (factory_view);
