@@ -201,6 +201,63 @@ gimp_container_editor_constructed (GObject *object)
 
   g_assert (GIMP_IS_CONTAINER (editor->priv->container));
   g_assert (GIMP_IS_CONTEXT (editor->priv->context));
+
+  switch (editor->priv->view_type)
+    {
+    case GIMP_VIEW_TYPE_GRID:
+#if 0
+      editor->view =
+        GIMP_CONTAINER_VIEW (gimp_container_icon_view_new (editor->priv->container,
+                                                           editor->priv->context,
+                                                           editor->priv->view_size,
+                                                           editor->priv->view_border_width));
+#else
+      editor->view =
+        GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (editor->priv->container,
+                                                           editor->priv->context,
+                                                           editor->priv->view_size,
+                                                           editor->priv->view_border_width));
+#endif
+      break;
+
+    case GIMP_VIEW_TYPE_LIST:
+      editor->view =
+        GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (editor->priv->container,
+                                                           editor->priv->context,
+                                                           editor->priv->view_size,
+                                                           editor->priv->view_border_width));
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
+
+  if (GIMP_IS_LIST (editor->priv->container))
+    gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (editor->view),
+                                         ! GIMP_LIST (editor->priv->container)->sort_func);
+
+  gtk_box_pack_start (GTK_BOX (editor), GTK_WIDGET (editor->view),
+                      TRUE, TRUE, 0);
+  gtk_widget_show (GTK_WIDGET (editor->view));
+
+  g_signal_connect_object (editor->view, "select-item",
+                           G_CALLBACK (gimp_container_editor_select_item),
+                           editor, 0);
+  g_signal_connect_object (editor->view, "activate-item",
+                           G_CALLBACK (gimp_container_editor_activate_item),
+                           editor, 0);
+  g_signal_connect_object (editor->view, "context-item",
+                           G_CALLBACK (gimp_container_editor_context_item),
+                           editor, 0);
+
+  {
+    GimpObject *object = gimp_context_get_by_type (editor->priv->context,
+                                                   gimp_container_get_children_type (editor->priv->container));
+
+    gimp_container_editor_select_item (GTK_WIDGET (editor->view),
+                                       (GimpViewable *) object, NULL,
+                                       editor);
+  }
 }
 
 static void
@@ -305,68 +362,10 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   g_return_val_if_fail (menu_factory == NULL ||
                         GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
 
-  switch (editor->priv->view_type)
-    {
-    case GIMP_VIEW_TYPE_GRID:
-#if 0
-      editor->view =
-        GIMP_CONTAINER_VIEW (gimp_container_icon_view_new (editor->priv->container,
-                                                           editor->priv->context,
-                                                           editor->priv->view_size,
-                                                           editor->priv->view_border_width));
-#else
-      editor->view =
-        GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (editor->priv->container,
-                                                           editor->priv->context,
-                                                           editor->priv->view_size,
-                                                           editor->priv->view_border_width));
-#endif
-      break;
-
-    case GIMP_VIEW_TYPE_LIST:
-      editor->view =
-        GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (editor->priv->container,
-                                                           editor->priv->context,
-                                                           editor->priv->view_size,
-                                                           editor->priv->view_border_width));
-      break;
-
-    default:
-      g_warning ("%s: unknown GimpViewType passed", G_STRFUNC);
-      return FALSE;
-    }
-
-  if (GIMP_IS_LIST (editor->priv->container))
-    gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (editor->view),
-                                         ! GIMP_LIST (editor->priv->container)->sort_func);
-
   if (menu_factory && menu_identifier && ui_identifier)
     gimp_editor_create_menu (GIMP_EDITOR (editor->view),
                              menu_factory, menu_identifier, ui_identifier,
                              editor);
-
-  gtk_box_pack_start (GTK_BOX (editor), GTK_WIDGET (editor->view),
-                      TRUE, TRUE, 0);
-  gtk_widget_show (GTK_WIDGET (editor->view));
-
-  g_signal_connect_object (editor->view, "select-item",
-                           G_CALLBACK (gimp_container_editor_select_item),
-                           editor, 0);
-  g_signal_connect_object (editor->view, "activate-item",
-                           G_CALLBACK (gimp_container_editor_activate_item),
-                           editor, 0);
-  g_signal_connect_object (editor->view, "context-item",
-                           G_CALLBACK (gimp_container_editor_context_item),
-                           editor, 0);
-
-  {
-    GimpObject *object = gimp_context_get_by_type (editor->priv->context,
-                                                   gimp_container_get_children_type (editor->priv->container));
-
-    gimp_container_editor_select_item (GTK_WIDGET (editor->view),
-                                       (GimpViewable *) object, NULL,
-                                       editor);
-  }
 
   return TRUE;
 }
