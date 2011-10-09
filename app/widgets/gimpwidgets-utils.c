@@ -699,6 +699,20 @@ gimp_get_constrain_behavior_mask (void)
                                        GDK_MODIFIER_INTENT_MODIFY_SELECTION);
 }
 
+GdkModifierType
+gimp_get_all_modifiers_mask (void)
+{
+  GdkDisplay *display = gdk_display_get_default ();
+
+  return (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK |
+          gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                        GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR) |
+          gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                        GDK_MODIFIER_INTENT_EXTEND_SELECTION) |
+          gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                        GDK_MODIFIER_INTENT_MODIFY_SELECTION));
+}
+
 /**
  * gimp_get_screen_resolution:
  * @screen: a #GdkScreen or %NULL
