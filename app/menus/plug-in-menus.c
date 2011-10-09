@@ -342,9 +342,9 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
           plug_in_menus_add_proc (manager, "/patterns-popup",
                                   plug_in_proc, menu_path);
         }
-      else if (! strcmp (manager->name, "<ToolPreset>"))
+      else if (! strcmp (manager->name, "<ToolPresets>"))
         {
-          plug_in_menus_add_proc (manager, "/tool-preset-popup",
+          plug_in_menus_add_proc (manager, "/tool-presets-popup",
                                   plug_in_proc, menu_path);
         }
       else if (! strcmp (manager->name, "<Fonts>"))

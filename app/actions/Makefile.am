@@ -161,8 +161,8 @@ libappactions_a_SOURCES = \
 	tool-options-actions.h		\
 	tool-options-commands.c		\
 	tool-options-commands.h		\
-	tool-preset-actions.c		\
-	tool-preset-actions.h		\
+	tool-presets-actions.c		\
+	tool-presets-actions.h		\
 	tool-preset-editor-actions.c	\
 	tool-preset-editor-actions.h	\
 	tools-actions.c			\

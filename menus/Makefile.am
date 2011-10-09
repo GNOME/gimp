@@ -29,7 +29,7 @@ menudata_DATA = \
 	palettes-menu.xml		\
 	patterns-menu.xml		\
 	tool-preset-editor-menu.xml	\
-	tool-preset-menu.xml		\
+	tool-presets-menu.xml		\
 	quick-mask-menu.xml		\
 	sample-points-menu.xml		\
 	selection-menu.xml		\

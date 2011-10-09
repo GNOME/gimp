@@ -240,12 +240,12 @@ menus_init (Gimp              *gimp,
                                       NULL);
 
 
-  gimp_menu_factory_manager_register (global_menu_factory, "<ToolPreset>",
-                                      "tool-preset",
+  gimp_menu_factory_manager_register (global_menu_factory, "<ToolPresets>",
+                                      "tool-presets",
                                       "plug-in",
                                       NULL,
-                                      "/tool-preset-popup",
-                                      "tool-preset-menu.xml", plug_in_menus_setup,
+                                      "/tool-presets-popup",
+                                      "tool-presets-menu.xml", plug_in_menus_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Fonts>",

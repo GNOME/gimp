@@ -77,12 +77,12 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
                                "view-size",         view_size,
                                "view-border-width", view_border_width,
                                "menu-factory",      menu_factory,
-                               "menu-identifier",   "<ToolPreset>",
-                               "ui-path",           "/tool-preset-popup",
+                               "menu-identifier",   "<ToolPresets>",
+                               "ui-path",           "/tool-presets-popup",
                                NULL);
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          "tool-preset"))
+                                          "tool-presets"))
     {
       g_object_unref (factory_view);
       return NULL;
