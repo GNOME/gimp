@@ -72,11 +72,16 @@ gimp_font_view_new (GimpViewType     view_type,
   GimpFontView        *font_view;
   GimpContainerEditor *editor;
 
-  font_view = g_object_new (GIMP_TYPE_FONT_VIEW, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  font_view = g_object_new (GIMP_TYPE_FONT_VIEW,
+                            "view-type", view_type,
+                            "container", container,
+                            "context",   context,
+                            NULL);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (font_view),
-                                         view_type,
-                                         container,context,
                                          view_size, view_border_width,
                                          menu_factory, "<Fonts>",
                                          "/fonts-popup"))

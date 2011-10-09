@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainereditor.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2011 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,13 +30,16 @@
 #define GIMP_CONTAINER_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditorClass))
 
 
-typedef struct _GimpContainerEditorClass  GimpContainerEditorClass;
+typedef struct _GimpContainerEditorPrivate GimpContainerEditorPrivate;
+typedef struct _GimpContainerEditorClass   GimpContainerEditorClass;
 
 struct _GimpContainerEditor
 {
   GtkBox             parent_instance;
 
   GimpContainerView *view;
+
+  GimpContainerEditorPrivate *priv;
 };
 
 struct _GimpContainerEditorClass
@@ -62,9 +65,6 @@ void             gimp_container_editor_set_selection_mode (GimpContainerEditor *
 /*  protected  */
 
 gboolean  gimp_container_editor_construct (GimpContainerEditor *editor,
-                                           GimpViewType         view_type,
-                                           GimpContainer       *container,
-                                           GimpContext         *context,
                                            gint                 view_size,
                                            gint                 view_border_width,
                                            GimpMenuFactory     *menu_factory,

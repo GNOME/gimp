@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainereditor.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2011 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,35 @@
 #include "gimpuimanager.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_VIEW_TYPE,
+  PROP_CONTAINER,
+  PROP_CONTEXT
+};
+
+
+struct _GimpContainerEditorPrivate
+{
+  GimpViewType   view_type;
+  GimpContainer *container;
+  GimpContext   *context;
+};
+
+
 static void  gimp_container_editor_docked_iface_init (GimpDockedInterface *iface);
+
+static void   gimp_container_editor_constructed      (GObject             *object);
+static void   gimp_container_editor_dispose          (GObject             *object);
+static void   gimp_container_editor_set_property     (GObject             *object,
+                                                      guint                property_id,
+                                                      const GValue        *value,
+                                                      GParamSpec          *pspec);
+static void   gimp_container_editor_get_property     (GObject             *object,
+                                                      guint                property_id,
+                                                      GValue              *value,
+                                                      GParamSpec          *pspec);
 
 static gboolean gimp_container_editor_select_item    (GtkWidget           *widget,
                                                       GimpViewable        *viewable,
@@ -84,9 +112,40 @@ G_DEFINE_TYPE_WITH_CODE (GimpContainerEditor, gimp_container_editor,
 static void
 gimp_container_editor_class_init (GimpContainerEditorClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->constructed   = gimp_container_editor_constructed;
+  object_class->dispose       = gimp_container_editor_dispose;
+  object_class->set_property  = gimp_container_editor_set_property;
+  object_class->get_property  = gimp_container_editor_get_property;
+
   klass->select_item     = NULL;
   klass->activate_item   = NULL;
   klass->context_item    = gimp_container_editor_real_context_item;
+
+  g_object_class_install_property (object_class, PROP_VIEW_TYPE,
+                                   g_param_spec_enum ("view-type",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_VIEW_TYPE,
+                                                      GIMP_VIEW_TYPE_LIST,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_CONTAINER,
+                                   g_param_spec_object ("container",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_CONTAINER,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_type_class_add_private (klass, sizeof (GimpContainerEditorPrivate));
 }
 
 static void
@@ -106,14 +165,101 @@ gimp_container_editor_init (GimpContainerEditor *editor)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
 
-  editor->view = NULL;
+  editor->priv = G_TYPE_INSTANCE_GET_PRIVATE (editor,
+                                              GIMP_TYPE_CONTAINER_EDITOR,
+                                              GimpContainerEditorPrivate);
+}
+
+static void
+gimp_container_editor_constructed (GObject *object)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (object);
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (GIMP_IS_CONTAINER (editor->priv->container));
+  g_assert (GIMP_IS_CONTEXT (editor->priv->context));
+}
+
+static void
+gimp_container_editor_dispose (GObject *object)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (object);
+
+  if (editor->priv->container)
+    {
+      g_object_unref (editor->priv->container);
+      editor->priv->container = NULL;
+    }
+
+  if (editor->priv->context)
+    {
+      g_object_unref (editor->priv->context);
+      editor->priv->context = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_container_editor_set_property (GObject      *object,
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_VIEW_TYPE:
+      editor->priv->view_type = g_value_get_enum (value);
+      break;
+
+    case PROP_CONTAINER:
+      editor->priv->container = g_value_dup_object (value);
+      break;
+
+    case PROP_CONTEXT:
+      editor->priv->context = g_value_dup_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_container_editor_get_property (GObject    *object,
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_VIEW_TYPE:
+      g_value_set_enum (value, editor->priv->view_type);
+      break;
+
+    case PROP_CONTAINER:
+      g_value_set_object (value, editor->priv->container);
+      break;
+
+    case PROP_CONTEXT:
+      g_value_set_object (value, editor->priv->context);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 gboolean
 gimp_container_editor_construct (GimpContainerEditor *editor,
-                                 GimpViewType         view_type,
-                                 GimpContainer       *container,
-                                 GimpContext         *context,
                                  gint                 view_size,
                                  gint                 view_border_width,
                                  GimpMenuFactory     *menu_factory,
@@ -121,8 +267,6 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
                                  const gchar         *ui_identifier)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (view_size > 0 &&
                         view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
   g_return_val_if_fail (view_border_width >= 0 &&
@@ -131,19 +275,19 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   g_return_val_if_fail (menu_factory == NULL ||
                         GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
 
-  switch (view_type)
+  switch (editor->priv->view_type)
     {
     case GIMP_VIEW_TYPE_GRID:
 #if 0
       editor->view =
-        GIMP_CONTAINER_VIEW (gimp_container_icon_view_new (container,
-                                                           context,
+        GIMP_CONTAINER_VIEW (gimp_container_icon_view_new (editor->priv->container,
+                                                           editor->priv->context,
                                                            view_size,
                                                            view_border_width));
 #else
       editor->view =
-        GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
-                                                           context,
+        GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (editor->priv->container,
+                                                           editor->priv->context,
                                                            view_size,
                                                            view_border_width));
 #endif
@@ -151,8 +295,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 
     case GIMP_VIEW_TYPE_LIST:
       editor->view =
-        GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
-                                                           context,
+        GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (editor->priv->container,
+                                                           editor->priv->context,
                                                            view_size,
                                                            view_border_width));
       break;
@@ -162,9 +306,9 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
       return FALSE;
     }
 
-  if (GIMP_IS_LIST (container))
+  if (GIMP_IS_LIST (editor->priv->container))
     gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (editor->view),
-                                         ! GIMP_LIST (container)->sort_func);
+                                         ! GIMP_LIST (editor->priv->container)->sort_func);
 
   if (menu_factory && menu_identifier && ui_identifier)
     gimp_editor_create_menu (GIMP_EDITOR (editor->view),
@@ -186,8 +330,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
                            editor, 0);
 
   {
-    GimpObject *object = gimp_context_get_by_type (context,
-                                                   gimp_container_get_children_type (container));
+    GimpObject *object = gimp_context_get_by_type (editor->priv->context,
+                                                   gimp_container_get_children_type (editor->priv->container));
 
     gimp_container_editor_select_item (GTK_WIDGET (editor->view),
                                        (GimpViewable *) object, NULL,

@@ -124,6 +124,7 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
   GimpContainerEditor  *editor;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (view_size > 0 &&
                         view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (view_border_width >= 0 &&
@@ -131,14 +132,14 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
                         NULL);
 
   factory_view = g_object_new (GIMP_TYPE_BRUSH_FACTORY_VIEW,
+                               "view-type",    view_type,
                                "data-factory", factory,
+                               "context",      context,
                                NULL);
 
   factory_view->change_brush_spacing = change_brush_spacing;
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          view_type,
-                                          context,
                                           view_size, view_border_width,
                                           menu_factory, "<Brushes>",
                                           "/brushes-popup",

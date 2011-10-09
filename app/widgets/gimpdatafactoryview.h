@@ -73,8 +73,6 @@ gboolean          gimp_data_factory_view_have                 (GimpDataFactoryVi
 /*  protected  */
 
 gboolean          gimp_data_factory_view_construct            (GimpDataFactoryView *factory_view,
-                                                               GimpViewType         view_type,
-                                                               GimpContext         *context,
                                                                gint                 view_size,
                                                                gint                 view_border_width,
                                                                GimpMenuFactory     *menu_factory,

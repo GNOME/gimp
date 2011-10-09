@@ -549,11 +549,13 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
   GimpEditor *editor;
   GtkWidget  *button;
 
-  popup->editor = g_object_new (GIMP_TYPE_CONTAINER_EDITOR, NULL);
+  popup->editor = g_object_new (GIMP_TYPE_CONTAINER_EDITOR,
+                                "view-type", popup->view_type,
+                                "container", popup->container,
+                                "context",   popup->context,
+                                NULL);
+
   gimp_container_editor_construct (popup->editor,
-                                   popup->view_type,
-                                   popup->container,
-                                   popup->context,
                                    popup->view_size,
                                    popup->view_border_width,
                                    NULL, NULL, NULL);

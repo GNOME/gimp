@@ -76,11 +76,16 @@ gimp_image_view_new (GimpViewType     view_type,
   GimpImageView       *image_view;
   GimpContainerEditor *editor;
 
-  image_view = g_object_new (GIMP_TYPE_IMAGE_VIEW, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  image_view = g_object_new (GIMP_TYPE_IMAGE_VIEW,
+                             "view-type", view_type,
+                             "container", container,
+                             "context",   context,
+                             NULL);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (image_view),
-                                         view_type,
-                                         container, context,
                                          view_size, view_border_width,
                                          menu_factory, "<Images>",
                                          "/images-popup"))

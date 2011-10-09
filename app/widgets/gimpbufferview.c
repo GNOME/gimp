@@ -127,11 +127,13 @@ gimp_buffer_view_new (GimpViewType     view_type,
   GtkWidget           *frame;
   GtkWidget           *hbox;
 
-  buffer_view = g_object_new (GIMP_TYPE_BUFFER_VIEW, NULL);
+  buffer_view = g_object_new (GIMP_TYPE_BUFFER_VIEW,
+                              "view-type", view_type,
+                              "container", container,
+                              "context",   context,
+                              NULL);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (buffer_view),
-                                         view_type,
-                                         container, context,
                                          view_size, view_border_width,
                                          menu_factory, "<Buffers>",
                                          "/buffers-popup"))

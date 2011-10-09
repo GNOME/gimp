@@ -26,11 +26,10 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpviewable.h"
 
-#include "gimpcontainerview.h"
 #include "gimpeditor.h"
 #include "gimptoolpresetfactoryview.h"
 #include "gimpviewrenderer.h"
@@ -61,6 +60,7 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
   GimpToolPresetFactoryView *factory_view;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (view_size > 0 &&
                         view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (view_border_width >= 0 &&
@@ -68,12 +68,12 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
                         NULL);
 
   factory_view = g_object_new (GIMP_TYPE_TOOL_PRESET_FACTORY_VIEW,
+                               "view-type",    view_type,
                                "data-factory", factory,
+                               "context",      context,
                                NULL);
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
-                                          view_type,
-                                          context,
                                           view_size, view_border_width,
                                           menu_factory, "<ToolPreset>",
                                           "/tool-preset-popup",

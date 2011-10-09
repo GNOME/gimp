@@ -80,11 +80,16 @@ gimp_document_view_new (GimpViewType     view_type,
   GimpDocumentView    *document_view;
   GimpContainerEditor *editor;
 
-  document_view = g_object_new (GIMP_TYPE_DOCUMENT_VIEW, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  document_view = g_object_new (GIMP_TYPE_DOCUMENT_VIEW,
+                                "view-type", view_type,
+                                "container", container,
+                                "context",   context,
+                                NULL);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (document_view),
-                                         view_type,
-                                         container, context,
                                          view_size, view_border_width,
                                          menu_factory, "<Documents>",
                                          "/documents-popup"))

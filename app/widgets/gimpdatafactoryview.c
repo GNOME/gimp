@@ -77,7 +77,10 @@ struct _GimpDataFactoryViewPriv
 };
 
 
-static void   gimp_data_factory_view_constructed    (GObject             *object);
+static GObject *
+              gimp_data_factory_view_constructor    (GType                type,
+                                                     guint                n_construct_params,
+                                                     GObjectConstructParam *construct_params);
 static void   gimp_data_factory_view_dispose        (GObject             *object);
 static void   gimp_data_factory_view_set_property   (GObject             *object,
                                                      guint                property_id,
@@ -110,7 +113,7 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
   GObjectClass             *object_class = G_OBJECT_CLASS (klass);
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
-  object_class->constructed   = gimp_data_factory_view_constructed;
+  object_class->constructor   = gimp_data_factory_view_constructor;
   object_class->dispose       = gimp_data_factory_view_dispose;
   object_class->set_property  = gimp_data_factory_view_set_property;
   object_class->get_property  = gimp_data_factory_view_get_property;
@@ -146,18 +149,33 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   view->priv->refresh_button   = NULL;
 }
 
-static void
-gimp_data_factory_view_constructed (GObject *object)
+static GObject *
+gimp_data_factory_view_constructor (GType                  type,
+                                    guint                  n_construct_params,
+                                    GObjectConstructParam *construct_params)
 {
-  GimpDataFactoryView *factory_view = GIMP_DATA_FACTORY_VIEW (object);
+  GimpDataFactoryView *factory_view;
+  GObject             *object;
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+  object = G_OBJECT_CLASS (parent_class)->constructor (type,
+                                                       n_construct_params,
+                                                       construct_params);
+
+  factory_view = GIMP_DATA_FACTORY_VIEW (object);
 
   g_assert (GIMP_IS_DATA_FACTORY (factory_view->priv->factory));
 
   factory_view->priv->tagged_container =
     gimp_tagged_container_new (gimp_data_factory_get_container (factory_view->priv->factory));
+
+  /* this must happen in constructor(), because doing it in
+   * set_property() warns about wrong construct property usage
+   */
+  g_object_set (object,
+                "container", factory_view->priv->tagged_container,
+                NULL);
+
+  return object;
 }
 
 static void
@@ -234,14 +252,15 @@ gimp_data_factory_view_new (GimpViewType      view_type,
   GimpDataFactoryView *factory_view;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   factory_view = g_object_new (GIMP_TYPE_DATA_FACTORY_VIEW,
+                               "view-type",    view_type,
                                "data-factory", factory,
+                               "context",      context,
                                NULL);
 
   if (! gimp_data_factory_view_construct (factory_view,
-                                          view_type,
-                                          context,
                                           view_size,
                                           view_border_width,
                                           menu_factory,
@@ -308,8 +327,6 @@ gimp_data_factory_view_have (GimpDataFactoryView *factory_view,
 
 gboolean
 gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
-                                  GimpViewType         view_type,
-                                  GimpContext         *context,
                                   gint                 view_size,
                                   gint                 view_border_width,
                                   GimpMenuFactory     *menu_factory,
@@ -328,9 +345,6 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                         FALSE);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
-                                         view_type,
-                                         factory_view->priv->tagged_container,
-                                         context,
                                          view_size, view_border_width,
                                          menu_factory, menu_identifier,
                                          ui_identifier))
