@@ -53,6 +53,13 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_DATA_FACTORY
+};
+
+
 struct _GimpDataFactoryViewPriv
 {
   GimpDataFactory *factory;
@@ -70,7 +77,17 @@ struct _GimpDataFactoryViewPriv
 };
 
 
+static void   gimp_data_factory_view_constructed    (GObject             *object);
 static void   gimp_data_factory_view_dispose        (GObject             *object);
+static void   gimp_data_factory_view_set_property   (GObject             *object,
+                                                     guint                property_id,
+                                                     const GValue        *value,
+                                                     GParamSpec          *pspec);
+static void   gimp_data_factory_view_get_property   (GObject             *object,
+                                                     guint                property_id,
+                                                     GValue              *value,
+                                                     GParamSpec          *pspec);
+
 static void   gimp_data_factory_view_activate_item  (GimpContainerEditor *editor,
                                                      GimpViewable        *viewable);
 static void   gimp_data_factory_view_select_item    (GimpContainerEditor *editor,
@@ -93,10 +110,20 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
   GObjectClass             *object_class = G_OBJECT_CLASS (klass);
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
+  object_class->constructed   = gimp_data_factory_view_constructed;
   object_class->dispose       = gimp_data_factory_view_dispose;
+  object_class->set_property  = gimp_data_factory_view_set_property;
+  object_class->get_property  = gimp_data_factory_view_get_property;
 
   editor_class->select_item   = gimp_data_factory_view_select_item;
   editor_class->activate_item = gimp_data_factory_view_activate_item;
+
+  g_object_class_install_property (object_class, PROP_DATA_FACTORY,
+                                   g_param_spec_object ("data-factory",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DATA_FACTORY,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_type_class_add_private (klass, sizeof (GimpDataFactoryViewPriv));
 }
@@ -120,6 +147,20 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
 }
 
 static void
+gimp_data_factory_view_constructed (GObject *object)
+{
+  GimpDataFactoryView *factory_view = GIMP_DATA_FACTORY_VIEW (object);
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (GIMP_IS_DATA_FACTORY (factory_view->priv->factory));
+
+  factory_view->priv->tagged_container =
+    gimp_tagged_container_new (gimp_data_factory_get_container (factory_view->priv->factory));
+}
+
+static void
 gimp_data_factory_view_dispose (GObject *object)
 {
   GimpDataFactoryView *factory_view = GIMP_DATA_FACTORY_VIEW (object);
@@ -130,7 +171,53 @@ gimp_data_factory_view_dispose (GObject *object)
       factory_view->priv->tagged_container = NULL;
     }
 
+  if (factory_view->priv->factory)
+    {
+      g_object_unref (factory_view->priv->factory);
+      factory_view->priv->factory = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_data_factory_view_set_property (GObject      *object,
+                                     guint         property_id,
+                                     const GValue *value,
+                                     GParamSpec   *pspec)
+{
+  GimpDataFactoryView *factory_view = GIMP_DATA_FACTORY_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_DATA_FACTORY:
+      factory_view->priv->factory = g_value_dup_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_data_factory_view_get_property (GObject    *object,
+                                     guint       property_id,
+                                     GValue     *value,
+                                     GParamSpec *pspec)
+{
+  GimpDataFactoryView *factory_view = GIMP_DATA_FACTORY_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_DATA_FACTORY:
+      g_value_set_object (value, factory_view->priv->factory);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 GtkWidget *
@@ -146,11 +233,14 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 {
   GimpDataFactoryView *factory_view;
 
-  factory_view = g_object_new (GIMP_TYPE_DATA_FACTORY_VIEW, NULL);
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+
+  factory_view = g_object_new (GIMP_TYPE_DATA_FACTORY_VIEW,
+                               "data-factory", factory,
+                               NULL);
 
   if (! gimp_data_factory_view_construct (factory_view,
                                           view_type,
-                                          factory,
                                           context,
                                           view_size,
                                           view_border_width,
@@ -219,7 +309,6 @@ gimp_data_factory_view_have (GimpDataFactoryView *factory_view,
 gboolean
 gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                                   GimpViewType         view_type,
-                                  GimpDataFactory     *factory,
                                   GimpContext         *context,
                                   gint                 view_size,
                                   gint                 view_border_width,
@@ -232,17 +321,11 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
   gchar               *str;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
-  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
   g_return_val_if_fail (view_size >  0 &&
                         view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
   g_return_val_if_fail (view_border_width >= 0 &&
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         FALSE);
-
-  factory_view->priv->factory = factory;
-
-  factory_view->priv->tagged_container =
-    gimp_tagged_container_new (gimp_data_factory_get_container (factory));
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
                                          view_type,
@@ -329,13 +412,13 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->priv->edit_button),
-                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
+                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory_view->priv->factory)));
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->priv->duplicate_button),
-                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
+                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory_view->priv->factory)));
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->priv->delete_button),
-                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory)));
+                                  gimp_container_get_children_type (gimp_data_factory_get_container (factory_view->priv->factory)));
 
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
                           editor);

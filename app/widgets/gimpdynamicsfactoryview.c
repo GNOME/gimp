@@ -52,11 +52,11 @@ gimp_dynamics_factory_view_init (GimpDynamicsFactoryView *view)
 
 GtkWidget *
 gimp_dynamics_factory_view_new (GimpViewType      view_type,
-                               GimpDataFactory  *factory,
-                               GimpContext      *context,
-                               gint              view_size,
-                               gint              view_border_width,
-                               GimpMenuFactory  *menu_factory)
+                                GimpDataFactory  *factory,
+                                GimpContext      *context,
+                                gint              view_size,
+                                gint              view_border_width,
+                                GimpMenuFactory  *menu_factory)
 {
   GimpDynamicsFactoryView *factory_view;
 
@@ -67,11 +67,12 @@ gimp_dynamics_factory_view_new (GimpViewType      view_type,
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
-  factory_view = g_object_new (GIMP_TYPE_DYNAMICS_FACTORY_VIEW, NULL);
+  factory_view = g_object_new (GIMP_TYPE_DYNAMICS_FACTORY_VIEW,
+                               "data-factory", factory,
+                               NULL);
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
                                           view_type,
-                                          factory,
                                           context,
                                           view_size, view_border_width,
                                           menu_factory, "<Dynamics>",

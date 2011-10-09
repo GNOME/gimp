@@ -68,11 +68,12 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
                         view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
                         NULL);
 
-  factory_view = g_object_new (GIMP_TYPE_PATTERN_FACTORY_VIEW, NULL);
+  factory_view = g_object_new (GIMP_TYPE_PATTERN_FACTORY_VIEW,
+                               "data-factory", factory,
+                               NULL);
 
   if (! gimp_data_factory_view_construct (GIMP_DATA_FACTORY_VIEW (factory_view),
                                           view_type,
-                                          factory,
                                           context,
                                           view_size, view_border_width,
                                           menu_factory, "<Patterns>",
