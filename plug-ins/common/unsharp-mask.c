@@ -397,7 +397,6 @@ gaussian_blur_line (const gdouble *cmatrix,
                     const gint     len,
                     const gint     bpp)
 {
-  const gdouble *cmatrix_p;
   const guchar  *src_p;
   const guchar  *src_p1;
   const gint     cmatrix_middle = cmatrix_length / 2;
@@ -482,7 +481,6 @@ gaussian_blur_line (const gdouble *cmatrix,
             {
               gdouble sum = 0;
 
-              cmatrix_p = cmatrix;
               src_p1 = src_p;
 
               for (j = 0; j < cmatrix_length; j++)
