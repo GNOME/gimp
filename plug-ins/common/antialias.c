@@ -141,9 +141,7 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       GimpDrawable *drawable;
-      gint32        image_ID;
 
-      image_ID = param[1].data.d_int32;
       drawable = gimp_drawable_get (param[2].data.d_drawable);
 
       gimp_progress_init (_("Antialiasing..."));
