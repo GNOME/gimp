@@ -540,8 +540,6 @@ gimp_interpreter_db_resolve_programs (GimpInterpreterDB *db)
   GSList     *list;
   GHashTable *extensions;
 
-  list = db->magics;
-
   for (list = db->magics; list; list = list->next)
     {
       GimpInterpreterMagic *magic = list->data;
