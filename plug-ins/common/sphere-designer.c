@@ -1436,7 +1436,6 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
 {
   gint     i, b = -1;
   gdouble  t = -1.0, min = 0.0;
-  gint     type = -1;
   common  *obj, *bobj = NULL;
   gint     hits = 0;
   GimpVector4   p;
@@ -1484,7 +1483,6 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
 
           min = t;
           b = i;
-          type = obj->type;
           bobj = obj;
         }
     }
