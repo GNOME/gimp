@@ -782,9 +782,8 @@ create_image (cairo_surface_t *surface,
   gdouble    xres, yres;
   gchar     *comment;
   gint       width, height;
-  gboolean   status;
 
-  status = gimp_progress_init (_("Importing screenshot"));
+  gimp_progress_init (_("Importing screenshot"));
 
   width  = cairo_image_surface_get_width (surface);
   height = cairo_image_surface_get_height (surface);
