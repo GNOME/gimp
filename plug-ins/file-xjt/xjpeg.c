@@ -691,7 +691,6 @@ xjpg_save_drawable (const char     *filename,
   guchar volatile l_alpha_sum;
 
   alpha_offset = 0;
-  has_alpha = 0;
   src = NULL;
   temp = NULL;
   data = NULL;
