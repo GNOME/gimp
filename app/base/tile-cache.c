@@ -40,9 +40,9 @@ typedef struct _TileList
 } TileList;
 
 
-static gulong        cur_cache_size   = 0;
-static gulong        max_cache_size   = 0;
-static gulong        cur_cache_dirty  = 0;
+static guint64       cur_cache_size   = 0;
+static guint64       max_cache_size   = 0;
+static guint64       cur_cache_dirty  = 0;
 static TileList      tile_list        = { NULL, NULL };
 static guint         idle_swapper     = 0;
 static guint         idle_delay       = 0;
@@ -83,7 +83,7 @@ static void      tile_verify               (void);
 
 
 void
-tile_cache_init (gulong tile_cache_size)
+tile_cache_init (guint64 tile_cache_size)
 {
 #ifdef ENABLE_MP
   g_return_if_fail (tile_cache_mutex == NULL);
@@ -259,7 +259,7 @@ tile_cache_flush (Tile *tile)
 }
 
 void
-tile_cache_set_size (gulong cache_size)
+tile_cache_set_size (guint64 cache_size)
 {
   TILE_CACHE_LOCK;
 
@@ -444,9 +444,9 @@ tile_verify (void)
 {
   /* scan list linearly, count metrics, compare to running totals */
   const Tile *t;
-  gulong      local_size  = 0;
-  gulong      local_dirty = 0;
-  gulong      acc         = 0;
+  guint64     local_size  = 0;
+  guint64     local_dirty = 0;
+  guint64     acc         = 0;
 
   for (t = tile_list.first; t; t = t->next)
     {
@@ -457,11 +457,13 @@ tile_verify (void)
     }
 
   if (local_size != cur_cache_size)
-    g_printerr ("\nCache size mismatch: running=%lu, tested=%lu\n",
+    g_printerr ("\nCache size mismatch: running=%"G_GUINT64_FORMAT
+                ", tested=%"G_GUINT64_FORMAT"\n",
                 cur_cache_size,local_size);
 
   if (local_dirty != cur_cache_dirty)
-    g_printerr ("\nCache dirty mismatch: running=%lu, tested=%lu\n",
+    g_printerr ("\nCache dirty mismatch: running=%"G_GUINT64_FORMAT
+                ", tested=%"G_GUINT64_FORMAT"\n",
                 cur_cache_dirty,local_dirty);
 
   /* scan forward from scan list */
@@ -472,7 +474,8 @@ tile_verify (void)
     }
 
   if (acc != local_dirty)
-    g_printerr ("\nDirty scan follower mismatch: running=%lu, tested=%lu\n",
+    g_printerr ("\nDirty scan follower mismatch: running=%"G_GUINT64_FORMAT
+                ", tested=%"G_GUINT64_FORMAT"\n",
                 acc,local_dirty);
 }
 #endif
