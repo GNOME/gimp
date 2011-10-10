@@ -574,7 +574,6 @@ find_constants (gdouble n_p[],
 {
   gdouble a0, a1, b0, b1, c0, c1, w0, w1;
   gdouble w0n, w1n, cos0, cos1, sin0, sin1, b0n, b1n;
-  gdouble div;
 
   /* coefficients for Gaussian 1st derivative filter */
   a0 =  0.6472;
@@ -608,8 +607,9 @@ find_constants (gdouble n_p[],
   b0n  = b0 / std_dev;
   b1n  = b1 / std_dev;
 
-  div = sqrt (2 * G_PI) * std_dev;
   /*
+  gdouble div;
+  div = sqrt (2 * G_PI) * std_dev;
   a0 = a0 / div;
   a1 = a1 / div;
   c0 = c0 / div;
