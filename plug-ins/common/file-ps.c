@@ -1221,12 +1221,21 @@ save_image (const gchar  *filename,
 
   save_ps_header (ofp, filename);
 
-  if (drawable_type == GIMP_GRAY_IMAGE)
-    retval = save_gray (ofp, image_ID, drawable_ID);
-  else if (drawable_type == GIMP_INDEXED_IMAGE)
-    retval = save_index (ofp, image_ID, drawable_ID);
-  else if (drawable_type == GIMP_RGB_IMAGE)
-    retval = save_rgb (ofp, image_ID, drawable_ID);
+  switch (drawable_type)
+    {
+    case GIMP_INDEXED_IMAGE:
+      retval = save_index (ofp, image_ID, drawable_ID);
+      break;
+    case GIMP_GRAY_IMAGE:
+      retval = save_gray (ofp, image_ID, drawable_ID);
+      break;
+    case GIMP_RGB_IMAGE:
+      retval = save_rgb (ofp, image_ID, drawable_ID);
+      break;
+    default:
+      g_message (_("Cannot operate on unknown image types."));
+      retval = FALSE;
+    }
 
   save_ps_trailer (ofp);
 
