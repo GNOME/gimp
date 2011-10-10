@@ -559,7 +559,7 @@ apply_blinds (GimpDrawable *drawable)
   gint          x, y;
   GimpRGB       background;
   guchar        bg[4];
-  gint          sel_x1, sel_y1, sel_x2, sel_y2;
+  gint          sel_x1, sel_y1;
   gint          sel_width, sel_height;
 
   gimp_context_get_background (&background);
@@ -573,9 +573,6 @@ apply_blinds (GimpDrawable *drawable)
                                       &sel_x1, &sel_y1,
                                       &sel_width, &sel_height))
     return;
-
-  sel_x2 = sel_x1 + sel_width;
-  sel_y2 = sel_y1 + sel_height;
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
                        sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
