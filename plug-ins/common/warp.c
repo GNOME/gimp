@@ -896,7 +896,6 @@ diff (GimpDrawable *drawable,
   gdouble gscalefac;                /* scaling factor for x,y differential of 'gradient' map */
   gdouble r, theta, dtheta;         /* rectangular<-> spherical coordinate transform for vector rotation */
   gdouble scale_vec_x, scale_vec_y; /* fixed vector X,Y component scaling factors */
-  gint ind;
 
   /* ----------------------------------------------------------------------- */
 
@@ -1054,7 +1053,6 @@ diff (GimpDrawable *drawable,
 
       dx = destx;
       dy = desty;
-      ind = 0;
 
       for (col = 0; col < (x2 - x1); col++) /* over columns of pixels */
         {
