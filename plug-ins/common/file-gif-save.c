@@ -1399,7 +1399,6 @@ gif_encode_header (FILE     *fp,
 {
   int B;
   int RWidth, RHeight;
-  int LeftOfs, TopOfs;
   int Resolution;
   int ColorMapSize;
   int i;
@@ -1408,7 +1407,6 @@ gif_encode_header (FILE     *fp,
 
   RWidth = Width = GWidth;
   RHeight = Height = GHeight;
-  LeftOfs = TopOfs = 0;
 
   Resolution = BitsPerPixel;
 
@@ -1491,11 +1489,8 @@ gif_encode_graphic_control_ext (FILE    *fp,
                                 int      BitsPerPixel,
                                 ifunptr  get_pixel)
 {
-  int LeftOfs, TopOfs;
-
   Width = GWidth;
   Height = GHeight;
-  LeftOfs = TopOfs = 0;
 
   /*
    * Calculate number of bits we are expecting
