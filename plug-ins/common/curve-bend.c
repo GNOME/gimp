@@ -2158,7 +2158,6 @@ bender_graph_events (GtkWidget    *widget,
 {
   static GdkCursorType cursor_type = GDK_TOP_LEFT_ARROW;
   GdkCursorType new_type;
-  GdkEventButton *bevent;
   GdkEventMotion *mevent;
   int i;
   int tx, ty;
@@ -2200,7 +2199,6 @@ bender_graph_events (GtkWidget    *widget,
       break;
 
     case GDK_BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
       new_type = GDK_TCROSS;
 
       switch (cd->curve_type)
