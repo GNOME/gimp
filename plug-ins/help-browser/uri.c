@@ -135,7 +135,6 @@ uri_to_abs (const gchar *uri,
   gint base_cnt    =  0;  /* no of chars to be copied from base URI  */
   gint uri_cnt     =  0;  /* no of chars to be copied from URI       */
   gint sep_cnt     =  0;  /* no of chars to be inserted between them */
-  gint path_offset = -1;
 
   const gchar *sep_str = ""; /* string to insert between base and uri */
   const gchar *part;
@@ -205,8 +204,6 @@ uri_to_abs (const gchar *uri,
           cptr--;
           base_cnt += cptr - part;
         }
-
-      path_offset = base_cnt;
 
       if (uri_type == URI_ABSPATH)
         break;
