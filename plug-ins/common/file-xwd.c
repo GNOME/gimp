@@ -1831,7 +1831,7 @@ load_xwd_f1_d24_b1 (const gchar     *filename,
                     L_XWDCOLOR      *xwdcolmap)
 {
   register guchar *dest, outmask, inmask, do_reverse;
-  gint             width, height, linepad, i, j, plane, fromright;
+  gint             width, height, i, j, plane, fromright;
   gint             tile_height, tile_start, tile_end;
   gint             indexed, bytes_per_pixel;
   gint             maxred, maxgreen, maxblue;
@@ -1869,11 +1869,6 @@ load_xwd_f1_d24_b1 (const gchar     *filename,
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * bytes_per_pixel);
-
-  linepad =   xwdhdr->l_bytes_per_line
-    - (xwdhdr->l_pixmap_width+7)/8;
-  if (linepad < 0)
-    linepad = 0;
 
   for (j = 0; j < 256; j++)   /* Create an array for reversing bits */
     {
