@@ -1302,7 +1302,7 @@ calclight (GimpVector4 * col, GimpVector4 * point, common * obj)
 {
   gint i, j;
   ray r;
-  gdouble d, b, a;
+  gdouble b, a;
   GimpVector4 lcol;
   GimpVector4 norm;
   GimpVector4 pcol;
@@ -1346,7 +1346,6 @@ calclight (GimpVector4 * col, GimpVector4 * point, common * obj)
       vcopy (&r.v1, point);
       vcopy (&r.v2, &world.light[i].a);
       vmix (&r.v1, &r.v1, &r.v2, 0.9999);
-      d = vdist (&r.v1, &r.v2);
 
       vsub (&r.v1, &r.v2);
       vnorm (&r.v1, 1.0);
