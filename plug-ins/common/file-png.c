@@ -740,10 +740,6 @@ load_image (const gchar  *filename,
       return image;
     }
 
-  /* initialise image here, thus avoiding compiler warnings */
-
-  image = -1;
-
   /*
    * Open the file and initialize the PNG read "engine"...
    */
