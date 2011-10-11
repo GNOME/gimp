@@ -579,7 +579,6 @@ load_image (const gchar        *filename,
   gboolean      is_bw;
 
   gint          i, j;
-  gint          ilayer;
   gboolean      worst_case = FALSE;
 
   TiffSaveVals  save_vals;
@@ -606,10 +605,10 @@ load_image (const gchar        *filename,
   /* We will loop through the all pages in case of multipage TIFF
      and load every page as a separate layer. */
 
-  ilayer = 0;
-
   for (li = 0; li < pages->n_pages; li++)
     {
+      gint ilayer;
+
       TIFFSetDirectory (tif, pages->pages[li]);
       ilayer = pages->pages[li];
 
