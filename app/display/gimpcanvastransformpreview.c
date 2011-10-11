@@ -726,10 +726,6 @@ gimp_canvas_transform_preview_draw_tri (GimpDrawable    *texture,
 
   g_return_if_fail (x != NULL && y != NULL && u != NULL && v != NULL);
 
-  left = right = NULL;
-  dul = dvl = dur = dvr = 0;
-  u_l = v_l = u_r = v_r = 0;
-
   cairo_clip_extents (cr, &clip_x1, &clip_y1, &clip_x2, &clip_y2);
 
   /* sort vertices in order of y-coordinate */
