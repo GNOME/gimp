@@ -524,6 +524,18 @@ vdist (GimpVector4 *a, GimpVector4 *b)
 }
 
 static inline gdouble
+vdist2 (GimpVector4 *a, GimpVector4 *b)
+{
+  gdouble x, y, z;
+
+  x = a->x - b->x;
+  y = a->y - b->y;
+  z = a->z - b->z;
+
+  return x * x + y * y + z * z;
+}
+
+static inline gdouble
 vlen (GimpVector4 *a)
 {
   return sqrt (a->x * a->x + a->y * a->y + a->z * a->z);
@@ -716,7 +728,7 @@ static gdouble
 checkdisc (ray * r, disc * disc)
 {
   GimpVector4 p, *v = &disc->a;
-  gdouble t, d;
+  gdouble t, d2;
   gdouble i, j, k;
 
   i = r->v2.x - r->v1.x;
@@ -730,9 +742,9 @@ checkdisc (ray * r, disc * disc)
   p.y = r->v1.y + j * t;
   p.z = r->v1.z + k * t;
 
-  d = vdist (&p, v);
+  d2 = vdist2 (&p, v);
 
-  if (d > disc->r)
+  if (d2 > disc->r * disc->r)
     t = 0.0;
 
   return t;
