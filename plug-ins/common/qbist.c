@@ -431,7 +431,7 @@ run (const gchar      *name,
 {
   static GimpParam values[1];
   gint sel_x1, sel_y1, sel_x2, sel_y2;
-  gint img_height, img_width, img_bpp;
+  gint img_height, img_width;
 
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
@@ -455,7 +455,6 @@ run (const gchar      *name,
 
   img_width = gimp_drawable_width (drawable->drawable_id);
   img_height = gimp_drawable_height (drawable->drawable_id);
-  img_bpp = gimp_drawable_bpp (drawable->drawable_id);
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
