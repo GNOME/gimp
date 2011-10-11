@@ -353,7 +353,7 @@ repaint (ppm_t *p, ppm_t *a)
   int         tx = 0, ty = 0;
   ppm_t       tmp = {0, 0, NULL};
   ppm_t       atmp = {0, 0, NULL};
-  int         r, g, b, n, h, i, j, on, sn;
+  int         r, g, b, h, i, j, on, sn;
   int         num_brushes, maxbrushwidth, maxbrushheight;
   guchar      back[3] = {0, 0, 0};
   ppm_t      *brushes, *shadows;
@@ -828,6 +828,8 @@ repaint (ppm_t *p, ppm_t *a)
 
   for (; i; i--)
     {
+      int n;
+
       if (i % progstep == 0)
         {
           if(runningvals.run)
@@ -883,7 +885,7 @@ repaint (ppm_t *p, ppm_t *a)
             continue;
         }
 
-      n = sn = on = 0;
+      sn = on = 0;
 
       switch (runningvals.orient_type)
         {
