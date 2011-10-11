@@ -71,6 +71,12 @@ static gpointer gimp_tile_backend_tile_manager_command      (GeglTileSource  *ti
                                                              gint             z,
                                                              gpointer         data);
 
+static void       tile_unlock_notify
+                                    (GeglTile                   *tile,
+                                     gpointer                    unlock_notify_data);
+static void       tile_destroy_notify
+                                    (gpointer                    pixel_data,
+                                     gpointer                    user_data);
 static void       dbg_alloc         (int                         size);
 static void       dbg_dealloc       (int                         size);
 static RamEntry * lookup_entry      (GimpTileBackendTileManager *self,
@@ -183,16 +189,50 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
 
         g_return_val_if_fail (gimp_tile != NULL, NULL);
 
-        if (tile_ewidth (gimp_tile)  != TILE_WIDTH ||
-            tile_eheight (gimp_tile) != TILE_HEIGHT)
-          {
-            g_warning ("GimpTileBackendTileManager does not support != %dx%d tiles yet",
-                       TILE_WIDTH, TILE_HEIGHT);
-          }
         tile = gegl_tile_new_bare ();
-        gegl_tile_set_data (tile,
-                            tile_data_pointer (gimp_tile, 0, 0),
-                            tile_size (gimp_tile));
+        if (tile_ewidth (gimp_tile)  == TILE_WIDTH &&
+            tile_eheight (gimp_tile) == TILE_HEIGHT)
+          {
+            /* We can use the GIMP tile data directly */
+            gegl_tile_set_data (tile,
+                                tile_data_pointer (gimp_tile, 0, 0),
+                                tile_size (gimp_tile));
+          }
+        else
+          {
+            guchar *tile_data;
+            gint    size;
+            int     y;
+
+            /* GEGL expects full tile data, so allocate tile data of
+             * the size GEGL expects.
+             */
+            size = TILE_WIDTH * TILE_HEIGHT * tile_bpp (gimp_tile);
+            tile_data = g_new(guchar, size);
+
+            /* Copy over the GIMP Tile data to the GeglTile data */
+            for (y = 0; y < tile_eheight (gimp_tile); y++)
+              {
+                memcpy (tile_data + y * TILE_WIDTH * tile_bpp (gimp_tile),
+                        tile_data_pointer (gimp_tile, 0, y),
+                        tile_ewidth (gimp_tile) * tile_bpp (gimp_tile));
+              }
+
+            /* Whenever the GeglTile data changes, copy it over to the
+             * GIMP Tile
+             *
+             * TODO: Whenever the GIMP Tile data changes, copy it over
+             * to the GeglTile again
+             */
+            gegl_tile_set_unlock_notify (tile,
+                                         tile_unlock_notify,
+                                         gimp_tile);
+            gegl_tile_set_data_full (tile,
+                                     tile_data,
+                                     size,
+                                     tile_destroy_notify,
+                                     NULL);
+          }
 
         return tile;
       }
@@ -250,6 +290,40 @@ static gint allocs                 = 0;
 static gint ram_size               = 0;
 static gint peak_allocs            = 0;
 static gint peak_tile_manager_size = 0;
+
+static void
+tile_unlock_notify (GeglTile *tile,
+                    gpointer  unlock_notify_data)
+{
+  Tile     *gimp_tile      = (Tile *) unlock_notify_data;
+  guchar   *gegl_tile_data = gegl_tile_get_data (tile);
+  int       y;
+
+  if (tile_ewidth (gimp_tile) == TILE_WIDTH)
+    {
+      memcpy (tile_data_pointer (gimp_tile, 0, 0),
+              gegl_tile_data,
+              (TILE_WIDTH *
+               tile_eheight (gimp_tile) *
+               tile_bpp (gimp_tile)));
+    }
+  else
+    {
+      for (y = 0; y < tile_eheight (gimp_tile); y++)
+        {
+          memcpy (tile_data_pointer (gimp_tile, 0, y),
+                  gegl_tile_data + y * TILE_WIDTH * tile_bpp (gimp_tile),
+                  tile_ewidth (gimp_tile) * tile_bpp (gimp_tile));
+        }
+    }
+}
+
+static void
+tile_destroy_notify (gpointer pixel_data,
+                     gpointer user_data)
+{
+  g_free (pixel_data);
+}
 
 static void
 dbg_alloc (gint size)

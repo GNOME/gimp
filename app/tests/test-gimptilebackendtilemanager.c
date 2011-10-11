@@ -24,9 +24,10 @@
 
 #include "widgets/widgets-types.h"
 
-#include "base/tile-manager.h"
 #include "base/pixel-region.h"
 #include "base/tile-cache.h"
+#include "base/tile-manager.h"
+#include "base/tile.h"
 
 #include "gegl/gimptilebackendtilemanager.h"
 
@@ -40,33 +41,34 @@
   g_test_add_func ("/gimptilebackendtilemanager/" #function, function);
 
 
+static void basic_read  (GeglRectangle rect);
+static void basic_write (GeglRectangle rect);
+
+
 static const guchar  opaque_magenta8[4]    = { 0xff,   0x00,   0xff,   0xff   };
 static const guchar  transparent_black8[4] = { 0x00,   0x00,   0x00,   0x00   };
 
 static const guint16 opaque_magenta16[4]   = { 0xffff, 0x0000, 0xffff, 0xffff };
 
-/* FIXME: Add tests for non-tile sized rects, they currently won't
- * pass
- */
-static const GeglRectangle rect            = { 0, 0, 64, 64 };
-static const GeglRectangle center_pixel    = { 5, 5, 1,  1  };
-
 
 /**
  * basic_read:
- * @data:
+ * @rect: The rect to use. Vary this to vary number of tiles and their
+ *        effective sizes used for the test.
  *
  * Test that the backend can be used for basic reading of TileManager
  * data.
  **/
 static void
-basic_read (void)
+basic_read (GeglRectangle rect)
 {
   PixelRegion      pr;
   TileManager     *tm;
   GeglTileBackend *backend;
   GeglBuffer      *buffer;
   guint16          actual_data[4];
+  GeglRectangle    center_pixel = { rect.width / 2, rect.height / 2, 1,  1  };
+
 
   /* Write some pixels to the tile manager */
   tm = tile_manager_new (rect.width, rect.height, 4);
@@ -89,13 +91,14 @@ basic_read (void)
 
 /**
  * basic_write:
- * @data:
+ * @rect: The rect to use. Vary this to vary number of tiles and their
+ *        effective sizes used for the test.
  *
  * Test that the backend can be used for basic writing of TileManager
  * data.
  **/
 static void
-basic_write (void)
+basic_write (GeglRectangle rect)
 {
   PixelRegion      pr;
   TileManager     *tm;
@@ -103,6 +106,7 @@ basic_write (void)
   GeglBuffer      *buffer;
   guchar           actual_data[4];
   gint             x, y;
+  GeglRectangle    center_pixel = { rect.width / 2, rect.height / 2, 1,  1  };
 
   /* Clear the TileManager */
   tm = tile_manager_new (rect.width, rect.height, 4);
@@ -132,6 +136,105 @@ basic_write (void)
                                   sizeof (actual_data)));
 }
 
+static void
+basic_read_1x1 (void)
+{
+  GeglRectangle rect = { 0, 0, 1, 1 };
+  basic_read (rect);
+}
+
+static void
+basic_write_1x1 (void)
+{
+  GeglRectangle rect = { 0, 0, 1, 1 };
+  basic_write (rect);
+}
+
+static void
+basic_read_10x10 (void)
+{
+  GeglRectangle rect = { 0, 0, 10, 10 };
+  basic_read (rect);
+}
+
+static void
+basic_write_10x10 (void)
+{
+  GeglRectangle rect = { 0, 0, 10, 10 };
+  basic_write (rect);
+
+}
+
+static void
+basic_read_TILE_WIDTHxTILE_HEIGHT (void)
+{
+  GeglRectangle rect = { 0, 0, TILE_WIDTH, TILE_HEIGHT };
+  basic_read (rect);
+}
+
+static void
+basic_write_TILE_WIDTHxTILE_HEIGHT (void)
+{
+  GeglRectangle rect = { 0, 0, TILE_WIDTH, TILE_HEIGHT };
+  basic_write (rect);
+}
+
+static void
+basic_read_3TILE_WIDTHx3TILE_HEIGHT (void)
+{
+  GeglRectangle rect = { 0, 0, 3 * TILE_WIDTH, 3 * TILE_HEIGHT };
+  basic_read (rect);
+}
+
+static void
+basic_write_3TILE_WIDTHx3TILE_HEIGHT (void)
+{
+  GeglRectangle rect = { 0, 0, 3 * TILE_WIDTH, 3 * TILE_HEIGHT };
+  basic_write (rect);
+}
+
+static void
+basic_read_2TILE_WIDTHx10 (void)
+{
+  GeglRectangle rect = { 0, 0, 2 * TILE_WIDTH, 10 };
+  basic_read (rect);
+}
+
+static void
+basic_write_2TILE_WIDTHx10 (void)
+{
+  GeglRectangle rect = { 0, 0, 2 * TILE_WIDTH, 10 };
+  basic_write (rect);
+}
+
+static void
+basic_read_10x2TILE_WIDTH (void)
+{
+  GeglRectangle rect = { 0, 0, 10, 2 * TILE_HEIGHT };
+  basic_read (rect);
+}
+
+static void
+basic_write_10x2TILE_WIDTH (void)
+{
+  GeglRectangle rect = { 0, 0, 10, 2 * TILE_HEIGHT };
+  basic_write (rect);
+}
+
+static void
+basic_read_100x100 (void)
+{
+  GeglRectangle rect = { 0, 0, 100, 100 };
+  basic_read (rect);
+}
+
+static void
+basic_write_100x100 (void)
+{
+  GeglRectangle rect = { 0, 0, 100, 100 };
+  basic_write (rect);
+}
+
 int
 main (int    argc,
       char **argv)
@@ -141,8 +244,20 @@ main (int    argc,
   gegl_init (&argc, &argv);
   g_test_init (&argc, &argv, NULL);
 
-  ADD_TEST (basic_read);
-  ADD_TEST (basic_write);
+  ADD_TEST (basic_read_1x1);
+  ADD_TEST (basic_write_1x1);
+  ADD_TEST (basic_read_10x10);
+  ADD_TEST (basic_write_10x10);
+  ADD_TEST (basic_read_TILE_WIDTHxTILE_HEIGHT);
+  ADD_TEST (basic_write_TILE_WIDTHxTILE_HEIGHT);
+  ADD_TEST (basic_read_3TILE_WIDTHx3TILE_HEIGHT);
+  ADD_TEST (basic_write_3TILE_WIDTHx3TILE_HEIGHT);
+  ADD_TEST (basic_read_2TILE_WIDTHx10);
+  ADD_TEST (basic_write_2TILE_WIDTHx10);
+  ADD_TEST (basic_read_10x2TILE_WIDTH);
+  ADD_TEST (basic_write_10x2TILE_WIDTH);
+  ADD_TEST (basic_read_100x100);
+  ADD_TEST (basic_write_100x100);
 
   return g_test_run ();
 }
