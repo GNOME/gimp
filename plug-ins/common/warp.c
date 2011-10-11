@@ -1212,8 +1212,6 @@ warp (GimpDrawable *orig_draw)
   gboolean      first_time = TRUE;
   gint          width;
   gint          height;
-  gint          orig_image_id;
-  gint          image_type;
   gint          x1, y1, x2, y2;
   gint32        xdlayer = -1;
   gint32        ydlayer = -1;
@@ -1239,15 +1237,12 @@ warp (GimpDrawable *orig_draw)
 
   width  = orig_draw->width;
   height = orig_draw->height;
-  image_type = gimp_drawable_type (orig_draw->drawable_id);
 
   /* generate x,y differential images (arrays) */
   diff (disp_map, &xdlayer, &ydlayer);
 
   map_x = gimp_drawable_get (xdlayer);
   map_y = gimp_drawable_get (ydlayer);
-
-  orig_image_id = gimp_item_get_image (orig_draw->drawable_id);
 
   for (warp_iter = 0; warp_iter < dvals.iter; warp_iter++)
     {
