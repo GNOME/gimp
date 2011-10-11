@@ -668,10 +668,6 @@ on_read_error (png_structp png_ptr, png_const_charp error_msg)
   longjmp (png_jmpbuf (png_ptr), 1);
 }
 
-/*
- * 'load_image()' - Load a PNG image into a new image window.
- */
-
 static int
 get_bit_depth_for_palette (int num_palette)
 {
@@ -685,6 +681,9 @@ get_bit_depth_for_palette (int num_palette)
     return 8;
 }
 
+/*
+ * 'load_image()' - Load a PNG image into a new image window.
+ */
 static gint32
 load_image (const gchar  *filename,
             gboolean      interactive,
