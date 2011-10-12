@@ -379,7 +379,6 @@ load_image (const gchar  *filename,
       guint16  element_word;
       gchar    value_rep[3];
       guint32  element_length;
-      guint32  ctx_ul;
       guint16  ctx_us;
       guint8  *value;
       guint32  tag;
@@ -490,7 +489,6 @@ load_image (const gchar  *filename,
           continue;
         }
       /* Some special casts that are used below */
-      ctx_ul = *(guint32 *) value;
       ctx_us = *(guint16 *) value;
 
       /* Recognize some critical tags */
