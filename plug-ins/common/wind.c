@@ -602,7 +602,6 @@ render_wind_row (guchar *sb,
   gint blend_amt_R, blend_amt_G, blend_amt_B, blend_amt_A = 0 ;
   gint blend_colour_R, blend_colour_G, blend_colour_B, blend_colour_A = 0 ;
   gint target_colour_R, target_colour_G, target_colour_B, target_colour_A = 0;
-  gdouble bleed_length_max;
   gint bleed_variation;
   gint n;
   gint sbi;  /* starting bleed index */
@@ -626,6 +625,8 @@ render_wind_row (guchar *sb,
                               threshold,
                               (bytes > 3)))
         {
+          gdouble bleed_length_max;
+
           /* we have found an edge, do bleeding */
           sbi = Ri + comp_stride;
           blend_colour_R = sb[Ri];
@@ -634,7 +635,6 @@ render_wind_row (guchar *sb,
           target_colour_R = sb[sbi];
           target_colour_G = sb[sbi+1];
           target_colour_B = sb[sbi+2];
-          bleed_length_max = strength;
 
           if (bytes > 3)
             {
