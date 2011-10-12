@@ -623,7 +623,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
             {
               s = src;
               m = msrc;
-              w = region->w;
 
               while (w--)
                 {
@@ -645,7 +644,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
             {
               s = src;
               m = msrc;
-              w = region->w;
 
               while (w--)
                 {
@@ -669,7 +667,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
             {
               s = src;
               m = msrc;
-              w = region->w;
 
               while (w--)
                 {
@@ -700,7 +697,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
             {
               s = src;
               m = msrc;
-              w = region->w;
 
               while (w--)
                 {
@@ -739,7 +735,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
           while (h--)
             {
               s = src;
-              w = region->w;
 
               while (w--)
                 {
@@ -756,7 +751,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
           while (h--)
             {
               s = src;
-              w = region->w;
 
               while (w--)
                 {
@@ -776,7 +770,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
           while (h--)
             {
               s = src;
-              w = region->w;
 
               while (w--)
                 {
@@ -802,7 +795,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
           while (h--)
             {
               s = src;
-              w = region->w;
 
               while (w--)
                 {
