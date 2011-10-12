@@ -651,10 +651,6 @@ load_image (const gchar *filename, GError **error)
   gchar *framename;             /* name of layer */
   guint32 *tmppixel;            /* pixel data (guchar * bpp = guint32) */
 
-  /* initialize image here, thus avoiding compiler warnings */
-
-  image_ID = -1;
-
   /*
    * Open the file and check it is a valid X cursor
    */
