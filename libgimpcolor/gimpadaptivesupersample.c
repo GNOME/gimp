@@ -94,8 +94,7 @@ gimp_render_sub_pixel (gint             max_depth,
     {
       num_samples++;
 
-      if (render_func)
-        (* render_func) (x + dx1, y + dy1, &c[0], render_data);
+      render_func (x + dx1, y + dy1, &c[0], render_data);
 
       block[y1][x1].ready = TRUE;
       block[y1][x1].color = c[0];
@@ -111,8 +110,7 @@ gimp_render_sub_pixel (gint             max_depth,
     {
       num_samples++;
 
-      if (render_func)
-        (* render_func) (x + dx3, y + dy1, &c[1], render_data);
+      render_func (x + dx3, y + dy1, &c[1], render_data);
 
       block[y1][x3].ready = TRUE;
       block[y1][x3].color = c[1];
@@ -128,8 +126,7 @@ gimp_render_sub_pixel (gint             max_depth,
     {
       num_samples++;
 
-      if (render_func)
-        (* render_func) (x + dx1, y + dy3, &c[2], render_data);
+      render_func (x + dx1, y + dy3, &c[2], render_data);
 
       block[y3][x1].ready = TRUE;
       block[y3][x1].color = c[2];
@@ -145,8 +142,7 @@ gimp_render_sub_pixel (gint             max_depth,
     {
       num_samples++;
 
-      if (render_func)
-        (* render_func) (x + dx3, y + dy3, &c[3], render_data);
+      render_func (x + dx3, y + dy3, &c[3], render_data);
 
       block[y3][x3].ready = TRUE;
       block[y3][x3].color = c[3];
