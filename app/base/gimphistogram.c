@@ -609,7 +609,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 #define VALUE(c,i) (values[(c) * 256 + (i)])
 
   h = region->h;
-  w = region->w;
 
   if (mask)
     {
