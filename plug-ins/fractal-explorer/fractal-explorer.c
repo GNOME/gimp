@@ -261,7 +261,6 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  gint32             image_ID;
   GimpRunMode        run_mode;
   gint               pwidth;
   gint               pheight;
@@ -281,7 +280,6 @@ run (const gchar      *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  image_ID = param[1].data.d_image;
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &sel_x1, &sel_y1, &sel_x2, &sel_y2);
