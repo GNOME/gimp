@@ -108,8 +108,6 @@ xjpg_load_layer (const char    *filename,
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
 
-  l_layer_type = GIMP_GRAY_IMAGE;
-
   if ((infile = g_fopen (filename, "rb")) == NULL)
   {
       g_warning ("can't open \"%s\"\n", filename);
