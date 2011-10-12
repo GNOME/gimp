@@ -1188,7 +1188,6 @@ read_channel_data (FILE       *f,
       buf = g_malloc (127);
       while (q < endq)
         {
-          p = buf;
           fread (&runcount, 1, 1, f);
           if (runcount > 128)
             {
