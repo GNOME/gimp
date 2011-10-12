@@ -270,6 +270,8 @@ libappcore_a_sources = \
 	gimpimagemapconfig.h			\
 	gimpitem.c				\
 	gimpitem.h				\
+	gimpitem-exclusive.c			\
+	gimpitem-exclusive.h			\
 	gimpitem-linked.c			\
 	gimpitem-linked.h			\
 	gimpitem-preview.c			\
