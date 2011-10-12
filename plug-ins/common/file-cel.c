@@ -530,7 +530,7 @@ load_palette (FILE   *fp,
     }
   else
     {
-      colours = 16; bpp = 12;
+      colours = 16;
       fseek (fp, 0, SEEK_SET);
       for (i= 0; i < colours; ++i)
         {
