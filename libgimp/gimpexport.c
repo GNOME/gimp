@@ -812,7 +812,6 @@ gimp_export_image (gint32                 *image_ID,
                 {
                   actions = g_slist_prepend (actions,
                                              &export_action_flatten);
-                  added_flatten = TRUE;
                 }
             }
         }
