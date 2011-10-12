@@ -101,7 +101,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
       key == modify_mask ||
       key == GDK_MOD1_MASK)
     {
-      GimpChannelOps button_op = options->operation;
+      GimpChannelOps button_op;
 
       if (press)
         {
@@ -112,17 +112,6 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
               /*  first modifier pressed  */
 
               selection_tool->saved_operation = options->operation;
-            }
-        }
-      else
-        {
-          if (! (state & (extend_mask |
-                          modify_mask |
-                          GDK_MOD1_MASK)))
-            {
-              /*  last modifier released  */
-
-              button_op = selection_tool->saved_operation;
             }
         }
 
