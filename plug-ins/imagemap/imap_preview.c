@@ -80,7 +80,7 @@ preview_get_height(GtkWidget *preview)
 static void
 render_gray_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
 {
-   guchar        *src_row, *dest_buffer, *src, *dest;
+   guchar        *src_row, *dest_buffer, *dest;
    gint          row, col;
    gint          bpp, dwidth, dheight, pwidth, pheight;
    gint          *src_col;
@@ -105,9 +105,8 @@ render_gray_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
       gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight,
                              dwidth);
 
-      src = src_row;
-
       for (col = 0; col < pwidth; col++) {
+         guchar *src;
          src = &src_row[src_col[col]];
          *dest++ = *src;
       }
