@@ -1551,7 +1551,6 @@ grid_render (GimpDrawable *drawable,
            pr != NULL;
            pr = gimp_pixel_rgns_process (pr))
         {
-          size = src_rgn.w * src_rgn.h;
           dest = src_rgn.data;
 
           for (i = 0; i < src_rgn.h ; i++)
