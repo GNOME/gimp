@@ -1382,7 +1382,6 @@ gimp_canvas_transform_preview_trace_tri_edge (gint *dest,
 
   g_return_if_fail (dest != NULL);
 
-  b         = 0;
   errorterm = 0;
   dptr      = dest;
 
