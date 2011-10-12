@@ -92,9 +92,6 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
-
-  run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
