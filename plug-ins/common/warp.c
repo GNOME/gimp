@@ -1300,7 +1300,6 @@ warp_one (GimpDrawable *draw,
   gint    width = -1;
   gint    height = -1;
   gint    dest_bytes=-1;
-  gint    dmap_bytes=-1;
 
   guchar *destrow, *dest;
   guchar *srcrow;
@@ -1352,8 +1351,6 @@ warp_one (GimpDrawable *draw,
   width  = draw->width;
   height = draw->height;
   dest_bytes = draw->bpp;
-
-  dmap_bytes = map_x->bpp;
 
    max_progress = (x2 - x1) * (y2 - y1);
 
