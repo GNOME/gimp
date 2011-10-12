@@ -818,14 +818,11 @@ print_size_info_set_resolution (PrintSizeInfo *info,
 static void
 print_size_info_set_page_setup (PrintSizeInfo *info)
 {
-  GtkPageSetup *setup;
   PrintData    *data = info->data;
   gdouble       page_width;
   gdouble       page_height;
   gdouble       x;
   gdouble       y;
-
-  setup = gtk_print_operation_get_default_page_setup (data->operation);
 
   print_size_info_get_page_dimensions (info,
                                        &page_width, &page_height,
