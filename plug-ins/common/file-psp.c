@@ -1141,7 +1141,7 @@ read_channel_data (FILE       *f,
 {
   gint i, y, width = drawable->width, height = drawable->height;
   gint npixels = width * height;
-  guchar *buf, *p, *q, *endq;
+  guchar *buf;
   guchar *buf2 = NULL;  /* please the compiler */
   guchar runcount, byte;
   z_stream zstream;
@@ -1167,6 +1167,8 @@ read_channel_data (FILE       *f,
           buf = g_malloc (width);
           for (y = 0; y < height; y++)
             {
+              guchar *p, *q;
+
               fread (buf, width, 1, f);
               if (width % 4)
                 fseek (f, 4 - (width % 4), SEEK_CUR);
@@ -1183,40 +1185,45 @@ read_channel_data (FILE       *f,
       break;
 
     case PSP_COMP_RLE:
-      q = pixels[0] + offset;
-      endq = q + npixels * bytespp;
-      buf = g_malloc (127);
-      while (q < endq)
-        {
-          fread (&runcount, 1, 1, f);
-          if (runcount > 128)
-            {
-              runcount -= 128;
-              fread (&byte, 1, 1, f);
-              memset (buf, byte, runcount);
-            }
-          else
-            fread (buf, runcount, 1, f);
+      {
+        guchar *q, *endq;
 
-          /* prevent buffer overflow for bogus data */
-          runcount = MIN (runcount, (endq - q) / bytespp);
+        q = pixels[0] + offset;
+        endq = q + npixels * bytespp;
+        buf = g_malloc (127);
+        while (q < endq)
+          {
+            fread (&runcount, 1, 1, f);
+            if (runcount > 128)
+              {
+                runcount -= 128;
+                fread (&byte, 1, 1, f);
+                memset (buf, byte, runcount);
+              }
+            else
+              fread (buf, runcount, 1, f);
 
-          if (bytespp == 1)
-            {
-              memmove (q, buf, runcount);
-              q += runcount;
-            }
-          else
-            {
-              p = buf;
-              for (i = 0; i < runcount; i++)
-                {
-                  *q = *p++;
-                  q += bytespp;
-                }
-            }
-        }
-      g_free (buf);
+            /* prevent buffer overflow for bogus data */
+            runcount = MIN (runcount, (endq - q) / bytespp);
+
+            if (bytespp == 1)
+              {
+                memmove (q, buf, runcount);
+                q += runcount;
+              }
+            else
+              {
+                guchar *p = buf;
+
+                for (i = 0; i < runcount; i++)
+                  {
+                    *q = *p++;
+                    q += bytespp;
+                  }
+              }
+          }
+        g_free (buf);
+      }
       break;
 
     case PSP_COMP_LZ77:
@@ -1251,6 +1258,8 @@ read_channel_data (FILE       *f,
 
       if (bytespp > 1)
         {
+          guchar *p, *q;
+
           p = buf2;
           q = pixels[0] + offset;
           for (i = 0; i < npixels; i++)
