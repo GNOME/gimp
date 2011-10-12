@@ -667,11 +667,10 @@ save_image (const gchar  *filename,
           /* do each pixel in the row */
           for (k = 0; k < width; k++)
             {
-              rgbkey *key;
+              rgbkey *key = g_new (rgbkey, 1);
               guchar  a;
 
               /* get pixel data */
-              key = g_new (rgbkey, 1);
               key->r = *(data++);
               key->g = color && !indexed ? *(data++) : key->r;
               key->b = color && !indexed ? *(data++) : key->r;
@@ -695,6 +694,7 @@ save_image (const gchar  *filename,
                           indexno = g_new (gint, 1);
                           *indexno = ncolors++;
                           g_hash_table_insert (hash, key, indexno);
+                          key = g_new (rgbkey, 1);
                         }
                       *(idata++) = *indexno;
                     }
