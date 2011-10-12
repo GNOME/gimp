@@ -1303,7 +1303,7 @@ warp_one (GimpDrawable *draw,
   gint    dmap_bytes=-1;
 
   guchar *destrow, *dest;
-  guchar *srcrow, *src;
+  guchar *srcrow;
   guchar *mxrow=NULL, *mx;  /* NULL ptr. to make gcc's -Wall fn. happy */
   guchar *myrow=NULL, *my;
 
@@ -1419,7 +1419,6 @@ warp_one (GimpDrawable *draw,
        /* loop over destination pixels */
        for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
          {
-           src = srcrow;
            dest = destrow;
            mx = mxrow;
            my = myrow;
