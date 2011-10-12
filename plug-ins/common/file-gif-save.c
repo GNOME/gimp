@@ -1551,7 +1551,6 @@ gif_encode_image_data (FILE    *fp,
                        gint     offset_y)
 {
   int LeftOfs, TopOfs;
-  int Resolution;
   int InitCodeSize;
 
   Interlace = GInterlace;
@@ -1560,8 +1559,6 @@ gif_encode_image_data (FILE    *fp,
   Height = GHeight;
   LeftOfs = (int) offset_x;
   TopOfs = (int) offset_y;
-
-  Resolution = BitsPerPixel;
 
   /*
    * Calculate number of bits we are expecting
@@ -1629,7 +1626,6 @@ gif_encode_image_data (FILE    *fp,
   Width = GWidth;
   Height = GHeight;
   LeftOfs = TopOfs = 0;
-  Resolution = BitsPerPixel;
 
   CountDown = (long) Width *(long) Height;
   Pass = 0;
