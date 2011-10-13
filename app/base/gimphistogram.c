@@ -456,7 +456,7 @@ gimp_histogram_get_threshold (GimpHistogram        *histogram,
   chist[0] = hist[0];
   cmom[0] = 0;
 
-  for (i = 1; i < maxval; i++)
+  for (i = 1; i <= maxval; i++)
     {
       if (hist[i] > hist_max)
 	hist_max = hist[i];
