@@ -179,9 +179,9 @@ gimp_overlay_dialog_size_allocate (GtkWidget     *widget,
 {
   GtkContainer      *container = GTK_CONTAINER (widget);
   GimpOverlayDialog *dialog    = GIMP_OVERLAY_DIALOG (widget);
-  GtkWidget         *child     = gtk_bin_get_child (GTK_BIN (widget));
+  GtkWidget         *child;
   GtkRequisition     action_requisition;
-  GtkAllocation      child_allocation;
+  GtkAllocation      child_allocation = {0, 0, 0, 0};
   GtkAllocation      action_allocation;
   gint               border_width;
 
@@ -191,6 +191,7 @@ gimp_overlay_dialog_size_allocate (GtkWidget     *widget,
 
   gtk_widget_size_request (dialog->action_area, &action_requisition);
 
+  child = gtk_bin_get_child (GTK_BIN (widget));
   if (child && gtk_widget_get_visible (child))
     {
       child_allocation.x      = allocation->x + border_width;
