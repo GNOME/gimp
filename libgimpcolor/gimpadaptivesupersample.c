@@ -80,6 +80,8 @@ gimp_render_sub_pixel (gint             max_depth,
   gulong   num_samples = 0;
   gint     cnt;
 
+  g_return_val_if_fail (render_func != NULL, 0);
+
   /* Get offsets for corners */
 
   dx1 = (gdouble) (x1 - sub_pixel_size / 2) / sub_pixel_size;
