@@ -522,6 +522,8 @@ engrave_sub (gint height,
   gint count;
   gint i;
 
+  g_return_if_fail ((num_channels == 1) || (num_channels == 3));
+
   /*
     Since there's so many nested FOR's,
     put a few of them here...
@@ -555,7 +557,7 @@ engrave_sub (gint height,
         for (i = 0; i < num_channels; i++)
           average[i] /= count;
 
-      if (bpp < 3)
+      if (num_channels == 1)
         inten = average[0] / 254.0 * height;
       else
         inten = GIMP_RGB_LUMINANCE (average[0],
