@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-11 16:27+0300\n"
-"PO-Revision-Date: 2011-09-08 19:03+0300\n"
+"POT-Creation-Date: 2011-10-15 21:15+0300\n"
+"PO-Revision-Date: 2011-10-15 21:15+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -348,7 +348,7 @@ msgid "Gradients"
 msgstr "Ґрадыенты"
 
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:983
-#: ../app/dialogs/dialogs.c:337
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2749
 msgid "Tool Presets"
 msgstr "Наборы настроек"
 
@@ -392,7 +392,7 @@ msgstr "Палітры"
 msgid "Patterns"
 msgstr "Узоры"
 
-#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2749
+#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2753
 msgid "Plug-Ins"
 msgstr "Дадаткі"
 
@@ -432,7 +432,7 @@ msgid "Tools"
 msgstr "Інструмэнты"
 
 #: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:350
-#: ../app/tools/gimpvectortool.c:159
+#: ../app/tools/gimpvectortool.c:160
 msgid "Paths"
 msgstr "Шляхі"
 
@@ -740,13 +740,13 @@ msgid "_Fill opacity:"
 msgstr "_Непразрыстасьць запаўненьня:"
 
 #: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:272
-#: ../app/widgets/gimpchanneltreeview.c:324
+#: ../app/widgets/gimpchanneltreeview.c:331
 msgid "Channel"
 msgstr "Канал"
 
 #: ../app/actions/channels-commands.c:117
 #: ../app/actions/channels-commands.c:159
-#: ../app/widgets/gimpchanneltreeview.c:319
+#: ../app/widgets/gimpchanneltreeview.c:326
 msgid "New Channel"
 msgstr "Новы канал"
 
@@ -760,8 +760,8 @@ msgstr "Колер новага канала"
 
 #: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:257
 #: ../app/display/gimpdisplayshell-dnd.c:632
-#: ../app/widgets/gimpchanneltreeview.c:251
-#: ../app/widgets/gimplayertreeview.c:775
+#: ../app/widgets/gimpchanneltreeview.c:258
+#: ../app/widgets/gimplayertreeview.c:776
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Копія каналу %s"
@@ -961,7 +961,7 @@ msgstr "Выкарыстоўваць складзены колер ўсіх ба
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:578
-#: ../app/widgets/gimplayertreeview.c:735 ../app/widgets/gimptoolbox-dnd.c:170
+#: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:170
 #: ../app/widgets/gimptoolbox.c:809
 #, c-format
 msgid ""
@@ -3198,15 +3198,15 @@ msgid "Set Image Print Resolution"
 msgstr "Вызначэньне разрозьненьня друкаваньня"
 
 #: ../app/actions/image-commands.c:379
-#: ../app/pdb/drawable-transform-cmds.c:161
-#: ../app/pdb/drawable-transform-cmds.c:249
+#: ../app/pdb/drawable-transform-cmds.c:159
+#: ../app/pdb/drawable-transform-cmds.c:247
 #: ../app/pdb/item-transform-cmds.c:162
 msgid "Flipping"
 msgstr "Перакульваньне"
 
 #: ../app/actions/image-commands.c:403
-#: ../app/pdb/drawable-transform-cmds.c:608
-#: ../app/pdb/drawable-transform-cmds.c:700 ../app/pdb/image-cmds.c:538
+#: ../app/pdb/drawable-transform-cmds.c:602
+#: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:533
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
@@ -3227,9 +3227,9 @@ msgstr "Зьмяненьне памеру відарыса"
 #. Scaling
 #: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
-#: ../app/pdb/drawable-transform-cmds.c:791
-#: ../app/pdb/drawable-transform-cmds.c:880 ../app/pdb/image-cmds.c:410
-#: ../app/pdb/image-cmds.c:446 ../app/pdb/item-transform-cmds.c:524
+#: ../app/pdb/drawable-transform-cmds.c:783
+#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:405
+#: ../app/pdb/image-cmds.c:441 ../app/pdb/item-transform-cmds.c:524
 #: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
 #: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
@@ -3335,7 +3335,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Правіць назву пласта"
 
-#: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:598
+#: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:610
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Стварыць пласт…"
@@ -3345,7 +3345,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Стварыць новы пласт і дадаць яго да відарыса"
 
-#: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:599
+#: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:611
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Стварыць пласт"
@@ -3764,7 +3764,7 @@ msgstr "Скарот:"
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Пстрыкні па мініятуры ў доку «Пласты»"
 
-#: ../app/actions/layers-actions.c:593 ../app/actions/layers-actions.c:594
+#: ../app/actions/layers-actions.c:605 ../app/actions/layers-actions.c:606
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "У _новы пласт"
@@ -3783,7 +3783,7 @@ msgstr "Пласт"
 
 #: ../app/actions/layers-commands.c:252 ../app/actions/layers-commands.c:320
 #: ../app/widgets/gimpdrawabletreeview.c:326
-#: ../app/widgets/gimplayertreeview.c:836
+#: ../app/widgets/gimplayertreeview.c:837
 msgid "New Layer"
 msgstr "Стварыць пласт"
 
@@ -4578,14 +4578,14 @@ msgstr "Адкрыць тэкставы файл (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:140 ../app/core/gimpbrush-load.c:422
+#: ../app/core/gimpbrush-load.c:140 ../app/core/gimpbrush-load.c:424
 #: ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
 #: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
 #: ../app/core/gimppalette-load.c:274 ../app/core/gimppalette-load.c:320
 #: ../app/core/gimppalette-load.c:377 ../app/core/gimppalette-load.c:467
 #: ../app/core/gimppalette-load.c:634 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:647 ../app/tools/gimplevelstool.c:747
+#: ../app/tools/gimpcurvestool.c:649 ../app/tools/gimplevelstool.c:747
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -4726,68 +4726,81 @@ msgstr ""
 "Ці сапраўды жадаеш вернуць усе выборы інструмэнта да прадвызначаных "
 "значэньняў?"
 
-#: ../app/actions/tool-preset-actions.c:44
-msgctxt "tool-preset-action"
-msgid "Tool Preset Menu"
+#: ../app/actions/tool-presets-actions.c:44
+#, fuzzy
+msgctxt "tool-presets-action"
+msgid "Tool Presets Menu"
 msgstr "Мэню набораў настроек"
 
-#: ../app/actions/tool-preset-actions.c:48
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:48
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
 msgstr "_Стварыць набор"
 
-#: ../app/actions/tool-preset-actions.c:49
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:49
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
 msgstr "Стварыць новы набор настроек"
 
-#: ../app/actions/tool-preset-actions.c:54
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:54
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
 msgstr "_Падвоіць набор"
 
-#: ../app/actions/tool-preset-actions.c:55
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:55
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
 msgstr "Падвоіць гэты набор настроек інструмэнтаў"
 
-#: ../app/actions/tool-preset-actions.c:60
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:60
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
 msgstr "_Капіяваць месца набору"
 
-#: ../app/actions/tool-preset-actions.c:61
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:61
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
 msgstr "Скапіяваць шлях да файла з наборам настроек у буфэр абмену"
 
-#: ../app/actions/tool-preset-actions.c:66
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:66
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
 msgstr "_Выдаліць набор"
 
-#: ../app/actions/tool-preset-actions.c:67
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:67
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
 msgstr "Выдаліць гэты набор настроек інструмэнтаў"
 
-#: ../app/actions/tool-preset-actions.c:72
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:72
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
 msgstr "_Асьвяжыць наборы"
 
-#: ../app/actions/tool-preset-actions.c:73
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:73
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
 msgstr "Асьвяжыць наборы настроек інструмэнтаў"
 
-#: ../app/actions/tool-preset-actions.c:81
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:81
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
 msgstr "Правіць _набор…"
 
-#: ../app/actions/tool-preset-actions.c:82
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:82
+#, fuzzy
+msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
 msgstr "Правіць гэты набор настроек інструмэнтаў"
 
@@ -5091,7 +5104,7 @@ msgid "Edit Path Attributes"
 msgstr "Правіць атрыбуты шляха"
 
 #: ../app/actions/vectors-commands.c:164 ../app/vectors/gimpvectors.c:207
-#: ../app/widgets/gimpvectorstreeview.c:243
+#: ../app/widgets/gimpvectorstreeview.c:250
 msgid "Path"
 msgstr "Шлях"
 
@@ -5103,8 +5116,8 @@ msgstr "Стварыць шлях"
 msgid "New Path Options"
 msgstr "Выборы новага шляха"
 
-#: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:198
-#: ../app/tools/gimpvectortool.c:1980
+#: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:199
+#: ../app/tools/gimpvectortool.c:1970
 msgid "Stroke Path"
 msgstr "Абвесьці шлях"
 
@@ -5575,12 +5588,12 @@ msgstr "Вызначэньне колера вобласьці вакол пал
 msgid "Set Custom Canvas Padding Color"
 msgstr "Вызначэньне свайго колера вобласьці вакол палатна"
 
-#: ../app/actions/window-actions.c:168
+#: ../app/actions/window-actions.c:170
 #, c-format
 msgid "Screen %s"
 msgstr "Экран %s"
 
-#: ../app/actions/window-actions.c:170
+#: ../app/actions/window-actions.c:172
 #, c-format
 msgid "Move this window to screen %s"
 msgstr "Перасунуць гэтае вакно на экран %s"
@@ -5942,7 +5955,7 @@ msgstr "Для правай рукі"
 #: ../app/config/gimpconfig-file.c:67 ../app/core/gimpbrushgenerated-save.c:62
 #: ../app/core/gimpcurve-save.c:52 ../app/core/gimpgradient-save.c:50
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:243 ../app/tools/gimpcurvestool.c:700
+#: ../app/gui/themes.c:243 ../app/tools/gimpcurvestool.c:702
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
 #: ../app/xcf/xcf.c:422
 #, c-format
@@ -7412,7 +7425,7 @@ msgid "Fonts (this may take a while)"
 msgstr "Шрыфты (можа заняць пэўны час)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2757
+#: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2761
 msgid "Modules"
 msgstr "Модулі"
 
@@ -7423,56 +7436,60 @@ msgstr "Абнаўленьне кэшу метак"
 
 #: ../app/core/gimpbrush-load.c:178
 #, c-format
-msgid "Could not read %d bytes from '%s': %s"
-msgstr "Немагчыма прачытаць %d байтаў з «%s»: %s"
+msgid "Could not read %d byte from '%s': %s"
+msgid_plural "Could not read %d bytes from '%s': %s"
+msgstr[0] "Немагчыма прачытаць %d байт з '%s': %s"
+msgstr[1] "Немагчыма прачытаць %d байты з «%s»: %s"
+msgstr[2] "Немагчыма прачытаць %d байтаў з «%s»: %s"
+msgstr[3] "Немагчыма прачытаць %d байт з «%s»: %s"
 
-#: ../app/core/gimpbrush-load.c:198
+#: ../app/core/gimpbrush-load.c:200
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr "Фатальная памылка аналізу файла з пэндзлем «%s»: шырыня = 0."
 
-#: ../app/core/gimpbrush-load.c:207
+#: ../app/core/gimpbrush-load.c:209
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr "Фатальная памылка аналізу файла з пэндзлем «%s»: вышыня = 0."
 
-#: ../app/core/gimpbrush-load.c:216
+#: ../app/core/gimpbrush-load.c:218
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr "Фатальная памылка аналізу файла з пэндзлем «%s»: байтаў = 0."
 
-#: ../app/core/gimpbrush-load.c:240
+#: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Фатальная памылка аналізу файла з пэндзлем «%s»: невядомая глыбіня %d."
 
-#: ../app/core/gimpbrush-load.c:253
+#: ../app/core/gimpbrush-load.c:255
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr ""
 "Фатальная памылка падчас аналізу файла з пэндзлем «%s»: невядомая вэрсія %d."
 
-#: ../app/core/gimpbrush-load.c:269 ../app/core/gimpbrush-load.c:389
-#: ../app/core/gimpbrush-load.c:723
+#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrush-load.c:391
+#: ../app/core/gimpbrush-load.c:725
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "Фатальная памылка падчас аналізу файла з пэндзлем «%s»: файл, здаецца, "
 "абрэзаны."
 
-#: ../app/core/gimpbrush-load.c:277 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:279 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Недапушчальны радок UTF-8 у файле з пэндзлем «%s»."
 
-#: ../app/core/gimpbrush-load.c:284 ../app/core/gimppattern-load.c:146
+#: ../app/core/gimpbrush-load.c:286 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
-#: ../app/tools/gimpvectortool.c:317
+#: ../app/tools/gimpvectortool.c:318
 msgid "Unnamed"
 msgstr "Безназоўны"
 
-#: ../app/core/gimpbrush-load.c:378
+#: ../app/core/gimpbrush-load.c:380
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7482,7 +7499,7 @@ msgstr ""
 "не падтрымліваецца.\n"
 "Пэндзлі GIMP мусяць быць ШЭРЫМІ або RGBA."
 
-#: ../app/core/gimpbrush-load.c:450
+#: ../app/core/gimpbrush-load.c:452
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7490,7 +7507,7 @@ msgstr ""
 "Фатальная памылка падчас аналізу файла з пэндзлем «%s»: немагчыма дэкадаваць "
 "abr-фармат вэрсіі %d."
 
-#: ../app/core/gimpbrush-load.c:617
+#: ../app/core/gimpbrush-load.c:619
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -7742,7 +7759,7 @@ msgid "Selection Mask"
 msgstr "Маска вылучанай вобласьці"
 
 #: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:113
-#: ../app/widgets/gimplayertreeview.c:283
+#: ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity"
 msgstr "Непразрыстасьць"
 
@@ -7914,7 +7931,7 @@ msgstr "Нарысаваць контур"
 
 #: ../app/core/gimpdrawable-threshold.c:70
 #: ../app/core/gimpdrawable-threshold.c:81 ../app/tools/gimpblendoptions.c:275
-#: ../app/tools/gimpbucketfilloptions.c:282
+#: ../app/tools/gimpbucketfilloptions.c:285
 #: ../app/tools/gimpregionselectoptions.c:215
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
@@ -7939,7 +7956,7 @@ msgstr "Ператварыць пласт"
 msgid "Transformation"
 msgstr "Ператварэньне"
 
-#: ../app/core/gimpdrawable.c:484
+#: ../app/core/gimpdrawable.c:494
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Зьмяніць памер"
@@ -8027,41 +8044,41 @@ msgstr "Зрух першай лініі сеткі па гарызанталі,
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Зрух першай лініі сеткі па вэртыкалі, можа буць меншым за нуль."
 
-#: ../app/core/gimpgrouplayer.c:213
+#: ../app/core/gimpgrouplayer.c:219
 msgid "Layer Group"
 msgstr "Ґрупа пластоў"
 
-#: ../app/core/gimpgrouplayer.c:214
+#: ../app/core/gimpgrouplayer.c:220
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Перайменаваць ґрупу пластоў"
 
-#: ../app/core/gimpgrouplayer.c:215
+#: ../app/core/gimpgrouplayer.c:221
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Пасунуць ґрупу пластоў"
 
-#: ../app/core/gimpgrouplayer.c:216
+#: ../app/core/gimpgrouplayer.c:222
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Зьмяніць памер ґрупы пластоў"
 
-#: ../app/core/gimpgrouplayer.c:217
+#: ../app/core/gimpgrouplayer.c:223
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Зьмяніць вымеры ґрупы пластоў"
 
-#: ../app/core/gimpgrouplayer.c:218
+#: ../app/core/gimpgrouplayer.c:224
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Перакуліць ґрупу пластоў"
 
-#: ../app/core/gimpgrouplayer.c:219
+#: ../app/core/gimpgrouplayer.c:225
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Павернуць ґрупу пластоў"
 
-#: ../app/core/gimpgrouplayer.c:220
+#: ../app/core/gimpgrouplayer.c:226
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Ператварыць ґрупу пластоў"
@@ -8278,7 +8295,7 @@ msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Прыбраць пласт"
 
-#: ../app/core/gimpimage.c:3663
+#: ../app/core/gimpimage.c:3664
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Прыбраць плаваючае вылучэньне"
@@ -8288,17 +8305,17 @@ msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Дадаць канал"
 
-#: ../app/core/gimpimage.c:3870 ../app/core/gimpimage.c:3882
+#: ../app/core/gimpimage.c:3870 ../app/core/gimpimage.c:3883
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Прыбраць канал"
 
-#: ../app/core/gimpimage.c:3936
+#: ../app/core/gimpimage.c:3937
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Дадаць шлях"
 
-#: ../app/core/gimpimage.c:3967
+#: ../app/core/gimpimage.c:3968
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Прыбраць шлях"
@@ -8375,12 +8392,16 @@ msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Прыбраць паразыты з элемэнта"
 
+#: ../app/core/gimpitem-exclusive.c:79
+msgid "Set Item Exclusive Visible"
+msgstr "Зрабіць элемэнт адзіна бачным"
+
 #: ../app/core/gimplayer-floating-sel.c:95
 msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Прымацаваць плаваючае вылучэньне"
 
-#: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:609
+#: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:620
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -8456,13 +8477,13 @@ msgstr "Немагчыма ўзьняць пласт вышэй."
 msgid "Layer cannot be lowered more."
 msgstr "Немагчыма апусьціць пласт ніжэй."
 
-#: ../app/core/gimplayer.c:439 ../app/core/gimplayer.c:1505
+#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1528
 #: ../app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
 
-#: ../app/core/gimplayer.c:478
+#: ../app/core/gimplayer.c:489
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -8471,47 +8492,47 @@ msgstr ""
 "Плаваючае вылучэньне\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1425
+#: ../app/core/gimplayer.c:1448
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Немагчыма дадаць маску, бо пласт ужо мае адну."
 
-#: ../app/core/gimplayer.c:1436
+#: ../app/core/gimplayer.c:1459
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Немагчыма дадаць маску, памер якой адрозьніваецца ад памеру вызначанага "
 "пласта."
 
-#: ../app/core/gimplayer.c:1442
+#: ../app/core/gimplayer.c:1465
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Дадаць маску пласта"
 
-#: ../app/core/gimplayer.c:1560
+#: ../app/core/gimplayer.c:1583
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Ператварыць альфу ў маску"
 
-#: ../app/core/gimplayer.c:1730
+#: ../app/core/gimplayer.c:1753
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Ужыць маску пласта"
 
-#: ../app/core/gimplayer.c:1731
+#: ../app/core/gimplayer.c:1754
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Выдаліць маску пласта"
 
-#: ../app/core/gimplayer.c:1850
+#: ../app/core/gimplayer.c:1873
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Дадаць альфаканал"
 
-#: ../app/core/gimplayer.c:1904
+#: ../app/core/gimplayer.c:1927
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Прыбраць альфаканал"
 
-#: ../app/core/gimplayer.c:1924
+#: ../app/core/gimplayer.c:1947
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Пласт да памераў відарыса"
@@ -9003,7 +9024,7 @@ msgstr "Экспартаваць відарыс"
 msgid "_Export"
 msgstr "_Экспартаваць"
 
-#: ../app/dialogs/file-save-dialog.c:436
+#: ../app/dialogs/file-save-dialog.c:430
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9013,7 +9034,7 @@ msgstr ""
 "пашырэньня. Калі ласка, увядзі пашырэньне, якое адпавядае выбранаму фармату, "
 "або ня ўводзь пашырэньня ўвогуле."
 
-#: ../app/dialogs/file-save-dialog.c:563
+#: ../app/dialogs/file-save-dialog.c:557
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9022,7 +9043,7 @@ msgstr ""
 "фарматы файла. Калі хочаш захаваць у фармаце GIMP XCF, то карыстайся "
 "«Файл»→«Захаваць»."
 
-#: ../app/dialogs/file-save-dialog.c:570
+#: ../app/dialogs/file-save-dialog.c:564
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9030,7 +9051,7 @@ msgstr ""
 "Гэты дыялёґ можна выкарыстоўваць каб захаваць у фармаце GIMP XCF. Карыстайся "
 "«Файл»→«Экспартаваць», каб экспартаваць у іншыя фарматы файла."
 
-#: ../app/dialogs/file-save-dialog.c:576
+#: ../app/dialogs/file-save-dialog.c:570
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9038,23 +9059,23 @@ msgstr ""
 "Пададзеная назва файла ня мае ніводнага вядомага пашырэньня. Калі ласка, "
 "увядзі вядомае пашырэньне, або выберы фармат файла са сьпісу."
 
-#: ../app/dialogs/file-save-dialog.c:590
+#: ../app/dialogs/file-save-dialog.c:584
 msgid "Extension Mismatch"
 msgstr "Неадпаведнасьць пашырэньня"
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:600
 msgid "The given file extension does not match the chosen file type."
 msgstr "Пададзеная пашырэньне назвы файла не адпавядае выбранаму тыпу файла."
 
-#: ../app/dialogs/file-save-dialog.c:610
+#: ../app/dialogs/file-save-dialog.c:604
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Ці ўсё адно жадаеш захаваць відарыс з гэтай назвай?"
 
-#: ../app/dialogs/file-save-dialog.c:665
+#: ../app/dialogs/file-save-dialog.c:659
 msgid "Saving canceled"
 msgstr "Захоўваньне адмененае"
 
-#: ../app/dialogs/file-save-dialog.c:673 ../app/widgets/gimpdnd-xds.c:185
+#: ../app/dialogs/file-save-dialog.c:667 ../app/widgets/gimpdnd-xds.c:185
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -9226,12 +9247,12 @@ msgstr "_Назва пласта:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1122
+#: ../app/tools/gimpmeasuretool.c:1129
 msgid "Width:"
 msgstr "Шырыня:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1150
+#: ../app/tools/gimpmeasuretool.c:1157
 msgid "Height:"
 msgstr "Вышыня:"
 
@@ -9510,7 +9531,7 @@ msgid "Preferences"
 msgstr "Настаўленьні"
 
 #: ../app/dialogs/preferences-dialog.c:1507
-#: ../app/dialogs/preferences-dialog.c:2765
+#: ../app/dialogs/preferences-dialog.c:2769
 msgid "Environment"
 msgstr "Асяродзьдзе"
 
@@ -9912,7 +9933,7 @@ msgstr "Разрозьненьне экрана"
 
 #. Pixels
 #: ../app/dialogs/preferences-dialog.c:2314
-#: ../app/display/gimpcursorview.c:200 ../app/widgets/gimpgrideditor.c:199
+#: ../app/display/gimpcursorview.c:206 ../app/widgets/gimpgrideditor.c:199
 #: ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Піксэлі"
@@ -10146,62 +10167,72 @@ msgid "Select Font Folders"
 msgstr "Выберы каталёґі шрыфтоў"
 
 #: ../app/dialogs/preferences-dialog.c:2749
+#, fuzzy
+msgid "Tool Preset Folders"
+msgstr "Наборы настроек"
+
+#: ../app/dialogs/preferences-dialog.c:2751
+#, fuzzy
+msgid "Select Tool Preset Folders"
+msgstr "Выберы каталёґі тэмаў"
+
+#: ../app/dialogs/preferences-dialog.c:2753
 msgid "Plug-In Folders"
 msgstr "Каталёґі дадаткаў"
 
-#: ../app/dialogs/preferences-dialog.c:2751
+#: ../app/dialogs/preferences-dialog.c:2755
 msgid "Select Plug-In Folders"
 msgstr "Выберы каталёґі дадаткаў"
 
-#: ../app/dialogs/preferences-dialog.c:2753
+#: ../app/dialogs/preferences-dialog.c:2757
 msgid "Scripts"
 msgstr "Сцэнары"
 
-#: ../app/dialogs/preferences-dialog.c:2753
+#: ../app/dialogs/preferences-dialog.c:2757
 msgid "Script-Fu Folders"
 msgstr "Каталёґі Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2755
+#: ../app/dialogs/preferences-dialog.c:2759
 msgid "Select Script-Fu Folders"
 msgstr "Выберы каталёґі Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2757
+#: ../app/dialogs/preferences-dialog.c:2761
 msgid "Module Folders"
 msgstr "Каталёґі модуляў"
 
-#: ../app/dialogs/preferences-dialog.c:2759
+#: ../app/dialogs/preferences-dialog.c:2763
 msgid "Select Module Folders"
 msgstr "Выберы каталёґі модуляў"
 
-#: ../app/dialogs/preferences-dialog.c:2761
+#: ../app/dialogs/preferences-dialog.c:2765
 msgid "Interpreters"
 msgstr "Інтэрпрэтатары"
 
-#: ../app/dialogs/preferences-dialog.c:2761
+#: ../app/dialogs/preferences-dialog.c:2765
 msgid "Interpreter Folders"
 msgstr "Каталёґі інтэрпрэтатара"
 
-#: ../app/dialogs/preferences-dialog.c:2763
+#: ../app/dialogs/preferences-dialog.c:2767
 msgid "Select Interpreter Folders"
 msgstr "Выберы каталёґі інтэрпрэтатара"
 
-#: ../app/dialogs/preferences-dialog.c:2765
+#: ../app/dialogs/preferences-dialog.c:2769
 msgid "Environment Folders"
 msgstr "Каталёґі асяродзьдзя"
 
-#: ../app/dialogs/preferences-dialog.c:2767
+#: ../app/dialogs/preferences-dialog.c:2771
 msgid "Select Environment Folders"
 msgstr "Выберы каталёґі асяродзьдзя"
 
-#: ../app/dialogs/preferences-dialog.c:2769
+#: ../app/dialogs/preferences-dialog.c:2773
 msgid "Themes"
 msgstr "Тэмы"
 
-#: ../app/dialogs/preferences-dialog.c:2769
+#: ../app/dialogs/preferences-dialog.c:2773
 msgid "Theme Folders"
 msgstr "Каталёґі тэмаў"
 
-#: ../app/dialogs/preferences-dialog.c:2771
+#: ../app/dialogs/preferences-dialog.c:2775
 msgid "Select Theme Folders"
 msgstr "Выберы каталёґі тэмаў"
 
@@ -10463,51 +10494,51 @@ msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Прагалы між лініямі"
 
-#: ../app/display/gimpcursorview.c:210 ../app/display/gimpcursorview.c:216
-#: ../app/display/gimpcursorview.c:235 ../app/display/gimpcursorview.c:241
-#: ../app/display/gimpcursorview.c:260 ../app/display/gimpcursorview.c:266
-#: ../app/display/gimpcursorview.c:282 ../app/display/gimpcursorview.c:289
-#: ../app/display/gimpcursorview.c:664 ../app/display/gimpcursorview.c:665
-#: ../app/display/gimpcursorview.c:666 ../app/display/gimpcursorview.c:667
-#: ../app/display/gimpcursorview.c:780 ../app/display/gimpcursorview.c:781
-#: ../app/display/gimpcursorview.c:782 ../app/display/gimpcursorview.c:783
-#: ../app/widgets/gimpcolorframe.c:633
+#: ../app/display/gimpcursorview.c:216 ../app/display/gimpcursorview.c:222
+#: ../app/display/gimpcursorview.c:241 ../app/display/gimpcursorview.c:247
+#: ../app/display/gimpcursorview.c:266 ../app/display/gimpcursorview.c:272
+#: ../app/display/gimpcursorview.c:288 ../app/display/gimpcursorview.c:295
+#: ../app/display/gimpcursorview.c:672 ../app/display/gimpcursorview.c:673
+#: ../app/display/gimpcursorview.c:674 ../app/display/gimpcursorview.c:675
+#: ../app/display/gimpcursorview.c:788 ../app/display/gimpcursorview.c:789
+#: ../app/display/gimpcursorview.c:790 ../app/display/gimpcursorview.c:791
+#: ../app/widgets/gimpcolorframe.c:634
 msgid "n/a"
 msgstr "н/н"
 
-#: ../app/display/gimpcursorview.c:213 ../app/display/gimpcursorview.c:238
-#: ../app/display/gimpcursorview.c:263
+#: ../app/display/gimpcursorview.c:219 ../app/display/gimpcursorview.c:244
+#: ../app/display/gimpcursorview.c:269
 #: ../app/widgets/gimpdeviceinfoeditor.c:138
 msgid "X"
 msgstr "X"
 
-#: ../app/display/gimpcursorview.c:219 ../app/display/gimpcursorview.c:244
-#: ../app/display/gimpcursorview.c:269
+#: ../app/display/gimpcursorview.c:225 ../app/display/gimpcursorview.c:250
+#: ../app/display/gimpcursorview.c:275
 #: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "Y"
 msgstr "Y"
 
 #. Units
-#: ../app/display/gimpcursorview.c:225
+#: ../app/display/gimpcursorview.c:231
 msgid "Units"
 msgstr "Адзінкі"
 
 #. Selection Bounding Box
-#: ../app/display/gimpcursorview.c:250
+#: ../app/display/gimpcursorview.c:256
 msgid "Selection Bounding Box"
 msgstr "Абмежавальная рамка вылучэньня"
 
 #. Width
-#: ../app/display/gimpcursorview.c:286
+#: ../app/display/gimpcursorview.c:292
 msgid "W"
 msgstr "Ш"
 
 #. Height
-#: ../app/display/gimpcursorview.c:293
+#: ../app/display/gimpcursorview.c:299
 msgid "H"
 msgstr "В"
 
-#: ../app/display/gimpcursorview.c:320
+#: ../app/display/gimpcursorview.c:328
 msgid "_Sample Merged"
 msgstr "_Аб'яднаная проба"
 
@@ -10611,26 +10642,26 @@ msgstr "Адкінуць новы шляха"
 
 #: ../app/display/gimpdisplayshell-dnd.c:347
 #: ../app/display/gimpdisplayshell-dnd.c:449 ../app/tools/gimpblendtool.c:173
-#: ../app/tools/gimpbucketfilltool.c:135 ../app/tools/gimpimagemaptool.c:280
+#: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:279
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Немагчыма зьмяняць піксэлі ґрупы пластоў."
 
 #: ../app/display/gimpdisplayshell-dnd.c:355
 #: ../app/display/gimpdisplayshell-dnd.c:457 ../app/tools/gimpblendtool.c:180
-#: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimptransformtool.c:245 ../app/tools/gimptransformtool.c:1061
+#: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
+#: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
+#: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1062
 msgid "The active layer's pixels are locked."
 msgstr "Піксэлі актыўнага пласта замкнутыя."
 
 #: ../app/display/gimpdisplayshell-dnd.c:535
-#: ../app/widgets/gimplayertreeview.c:724
+#: ../app/widgets/gimplayertreeview.c:725
 msgid "Drop layers"
 msgstr "Адкінуць пласты"
 
 #: ../app/display/gimpdisplayshell-dnd.c:668
 #: ../app/display/gimpdisplayshell-dnd.c:685
-#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:266
+#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:266
 msgid "Dropped Buffer"
 msgstr "Адкінуты буфэр."
 
@@ -10652,7 +10683,7 @@ msgstr "Відарыс захаваны ў «%s»"
 msgid "Image exported to '%s'"
 msgstr "Відарыс экспартаваны ў «%s»"
 
-#: ../app/display/gimpdisplayshell-layer-select.c:120
+#: ../app/display/gimpdisplayshell-layer-select.c:122
 msgid "Layer Select"
 msgstr "Выбар пласту"
 
@@ -10682,7 +10713,7 @@ msgstr "(ня зьменены)"
 
 #: ../app/display/gimpdisplayshell-title.c:360
 #: ../app/display/gimpdisplayshell-title.c:373
-#: ../app/widgets/gimpactiongroup.c:860
+#: ../app/widgets/gimpactiongroup.c:891
 msgid "(none)"
 msgstr "(няма)"
 
@@ -10734,7 +10765,7 @@ msgstr ""
 "Кіраваньне колерам было адключана. Яго можна задзейнічаць ізноў у дыялёґу "
 "«Настаўленьні»."
 
-#: ../app/file/file-procedure.c:198
+#: ../app/file/file-procedure.c:195
 msgid "Unknown file type"
 msgstr "Тып файла невядомы"
 
@@ -10800,7 +10831,7 @@ msgstr "Запоўніць спачатнае становішча клеткі 
 msgid "Documents"
 msgstr "Дакумэнты"
 
-#: ../app/gui/splash.c:114
+#: ../app/gui/splash.c:115
 msgid "GIMP Startup"
 msgstr "Пачатак працы GIMP"
 
@@ -10864,7 +10895,7 @@ msgstr "Вугал кляксы"
 msgid "Paintbrush"
 msgstr "Пэндзаль"
 
-#: ../app/paint/gimppaintcore.c:145
+#: ../app/paint/gimppaintcore.c:141
 msgid "Paint"
 msgstr "Рысаваць"
 
@@ -10981,28 +11012,28 @@ msgstr "Спалучыць маскі"
 msgid "Plug-In"
 msgstr "Дадатак"
 
-#: ../app/pdb/drawable-transform-cmds.c:349
-#: ../app/pdb/drawable-transform-cmds.c:447
+#: ../app/pdb/drawable-transform-cmds.c:345
+#: ../app/pdb/drawable-transform-cmds.c:443
 #: ../app/pdb/item-transform-cmds.c:262 ../app/pdb/transform-tools-cmds.c:163
 #: ../app/tools/gimpperspectivetool.c:82
 msgid "Perspective"
 msgstr "Пэрспэктыва"
 
-#: ../app/pdb/drawable-transform-cmds.c:967
-#: ../app/pdb/drawable-transform-cmds.c:1052
+#: ../app/pdb/drawable-transform-cmds.c:957
+#: ../app/pdb/drawable-transform-cmds.c:1042
 #: ../app/pdb/item-transform-cmds.c:611 ../app/pdb/transform-tools-cmds.c:418
 #: ../app/tools/gimpsheartool.c:112
 msgid "Shearing"
 msgstr "Скрыўленьне"
 
-#: ../app/pdb/drawable-transform-cmds.c:1150
+#: ../app/pdb/drawable-transform-cmds.c:1138
 #: ../app/pdb/item-transform-cmds.c:709 ../app/pdb/transform-tools-cmds.c:507
 msgid "2D Transform"
 msgstr "2D пераўтварэньне"
 
-#: ../app/pdb/drawable-transform-cmds.c:1246
-#: ../app/pdb/drawable-transform-cmds.c:1352
-#: ../app/pdb/drawable-transform-cmds.c:1456
+#: ../app/pdb/drawable-transform-cmds.c:1234
+#: ../app/pdb/drawable-transform-cmds.c:1338
+#: ../app/pdb/drawable-transform-cmds.c:1442
 #: ../app/pdb/item-transform-cmds.c:815
 msgid "2D Transforming"
 msgstr "2D пераўтварэньне"
@@ -11288,13 +11319,13 @@ msgstr ""
 "Працэдура «%s» была выкліканая з значэньнем «%s» парамэтра «%s» (#%d, тып "
 "%s). Гэтае значэньне выходзіць за межы дыяпазона."
 
-#: ../app/pdb/image-cmds.c:2364
+#: ../app/pdb/image-cmds.c:2359
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Разрозьненьне відарыса выходзіць за межы, выкарыстана прадвызначанае."
 
 #: ../app/pdb/image-select-cmds.c:297 ../app/pdb/selection-tools-cmds.c:219
-#: ../app/tools/gimpfreeselecttool.c:195
+#: ../app/tools/gimpfreeselecttool.c:196
 msgid "Free Select"
 msgstr "Свабодны вылучальнік"
 
@@ -11314,7 +11345,7 @@ msgstr "Не ўдалося стварыць тэкставы пласт"
 #: ../app/pdb/text-layer-cmds.c:786 ../app/pdb/text-layer-cmds.c:856
 #: ../app/pdb/text-layer-cmds.c:928 ../app/pdb/text-layer-cmds.c:1000
 #: ../app/pdb/text-layer-cmds.c:1072 ../app/pdb/text-layer-cmds.c:1114
-#: ../app/pdb/text-layer-cmds.c:1198
+#: ../app/pdb/text-layer-cmds.c:1196
 msgid "Set text layer attribute"
 msgstr "Прызначыць атрыбуты тэкставага пласта"
 
@@ -11499,7 +11530,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr "Абвгдеёжзійклмнопрстуўфхцчшыьэюя"
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1367
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1367
 msgid "Add Text Layer"
 msgstr "Дадаць тэкставы пласт"
 
@@ -11592,7 +11623,7 @@ msgstr "_Распыляльнік"
 msgid "Motion only"
 msgstr "Толькі рух"
 
-#: ../app/tools/gimpairbrushtool.c:91 ../app/tools/gimpconvolvetool.c:222
+#: ../app/tools/gimpairbrushtool.c:91 ../app/tools/gimpconvolvetool.c:228
 #: ../app/tools/gimpsmudgetool.c:91
 msgid "Rate"
 msgstr "Часьціня"
@@ -11613,10 +11644,6 @@ msgstr "Гарызантальны зрух разьмеркаваньня"
 msgid "Vertical offset for distribution"
 msgstr "Вэртыкальны зрух разьмеркаваньня"
 
-#: ../app/tools/gimpalignoptions.c:247 ../app/tools/gimpalignoptions.c:298
-msgid "Align left edge of target"
-msgstr "Выраўняць левы край мэты"
-
 #: ../app/tools/gimpalignoptions.c:272 ../app/tools/gimpaligntool.c:124
 msgid "Align"
 msgstr "Раўнаваньне"
@@ -11624,6 +11651,10 @@ msgstr "Раўнаваньне"
 #: ../app/tools/gimpalignoptions.c:284
 msgid "Relative to:"
 msgstr "Адносна:"
+
+#: ../app/tools/gimpalignoptions.c:298
+msgid "Align left edge of target"
+msgstr "Выраўняць левы край мэты"
 
 #: ../app/tools/gimpalignoptions.c:302
 msgid "Align center of target"
@@ -11685,33 +11716,33 @@ msgstr "Раўнавальнік: выраўноўвае або ўпарадко
 msgid "_Align"
 msgstr "_Раўнаваць"
 
-#: ../app/tools/gimpaligntool.c:542
+#: ../app/tools/gimpaligntool.c:549
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
 "Пстрыкні па пласьце, шляху ці накіроўнай, або пстрыкні й пацягні каб выбраць "
 "некалькі пластоў"
 
-#: ../app/tools/gimpaligntool.c:550
+#: ../app/tools/gimpaligntool.c:557
 msgid "Click to pick this layer as first item"
 msgstr "Пстрыкні каб выбраць гэты пласт першым элемэнтам"
 
-#: ../app/tools/gimpaligntool.c:557
+#: ../app/tools/gimpaligntool.c:564
 msgid "Click to add this layer to the list"
 msgstr "Пстрыкні каб дадаць гэты пласт да сьпісу"
 
-#: ../app/tools/gimpaligntool.c:561
+#: ../app/tools/gimpaligntool.c:568
 msgid "Click to pick this guide as first item"
 msgstr "Пстрыкні каб выбраць гэтую накіроўную першым элемэнтам"
 
-#: ../app/tools/gimpaligntool.c:568
+#: ../app/tools/gimpaligntool.c:575
 msgid "Click to add this guide to the list"
 msgstr "Пстрыкні каб дадаць гэтую накіроўную да сьпісу"
 
-#: ../app/tools/gimpaligntool.c:572
+#: ../app/tools/gimpaligntool.c:579
 msgid "Click to pick this path as first item"
 msgstr "Пстрыкні каб выбраць гэты шлях першым элемэнтам"
 
-#: ../app/tools/gimpaligntool.c:579
+#: ../app/tools/gimpaligntool.c:586
 msgid "Click to add this path to the list"
 msgstr "Пстрыкні каб дадаць гэты шлях да сьпісу"
 
@@ -11755,17 +11786,17 @@ msgstr "Ґрадыент не працуе на індэксаваных пла�
 msgid "No gradient available for use with this tool."
 msgstr "Няма ґрадыентаў для выкарыстаньня з гэтым інструмэнтам."
 
-#: ../app/tools/gimpblendtool.c:441 ../app/tools/gimppainttool.c:618
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для абмежаваных вуглоў"
 
-#: ../app/tools/gimpblendtool.c:442
+#: ../app/tools/gimpblendtool.c:453
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s каб перасунуць цэлую лінію"
 
-#: ../app/tools/gimpblendtool.c:446
+#: ../app/tools/gimpblendtool.c:457
 msgid "Blend: "
 msgstr "Ґрадыент:"
 
@@ -11831,53 +11862,53 @@ msgid "Criterion used for determining color similarity"
 msgstr "Крытэр вызначэньня падабенства колераў"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:226
+#: ../app/tools/gimpbucketfilloptions.c:229
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Тып запаўненьня (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:241
+#: ../app/tools/gimpbucketfilloptions.c:244
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Закранутая вобласьць (%s)"
 
-#: ../app/tools/gimpbucketfilloptions.c:245
+#: ../app/tools/gimpbucketfilloptions.c:248
 msgid "Fill whole selection"
 msgstr "Заліць усю выбраную вобласьць"
 
-#: ../app/tools/gimpbucketfilloptions.c:246
+#: ../app/tools/gimpbucketfilloptions.c:249
 msgid "Fill similar colors"
 msgstr "Заліць падобныя колеры"
 
-#: ../app/tools/gimpbucketfilloptions.c:255
+#: ../app/tools/gimpbucketfilloptions.c:258
 msgid "Finding Similar Colors"
 msgstr "Пошук падобных колераў"
 
-#: ../app/tools/gimpbucketfilloptions.c:270
+#: ../app/tools/gimpbucketfilloptions.c:273
 msgid "Fill transparent areas"
 msgstr "Заліць празрыстыя вобласьці"
 
-#: ../app/tools/gimpbucketfilloptions.c:276 ../app/tools/gimpclonetool.c:113
-#: ../app/tools/gimpcolorpickeroptions.c:155 ../app/tools/gimphealtool.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:901
+#: ../app/tools/gimpbucketfilloptions.c:279 ../app/tools/gimpclonetool.c:114
+#: ../app/tools/gimpcolorpickeroptions.c:158 ../app/tools/gimphealtool.c:99
+#: ../app/tools/gimpperspectiveclonetool.c:904
 #: ../app/tools/gimpregionselectoptions.c:209
 msgid "Sample merged"
 msgstr "Аб'яднаная проба"
 
-#: ../app/tools/gimpbucketfilloptions.c:295
+#: ../app/tools/gimpbucketfilloptions.c:298
 msgid "Fill by:"
 msgstr "Запоўніць:"
 
-#: ../app/tools/gimpbucketfilltool.c:85
+#: ../app/tools/gimpbucketfilltool.c:86
 msgid "Bucket Fill"
 msgstr "Вядро"
 
-#: ../app/tools/gimpbucketfilltool.c:86
+#: ../app/tools/gimpbucketfilltool.c:87
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr "Вядро: запаўняе вылучаную вобласьць колерам або узорам"
 
-#: ../app/tools/gimpbucketfilltool.c:87
+#: ../app/tools/gimpbucketfilltool.c:88
 msgid "_Bucket Fill"
 msgstr "_Вядро"
 
@@ -11935,22 +11966,23 @@ msgstr "_Клон"
 msgid "Click to clone"
 msgstr "Пстрыкні каб скланаваць"
 
-#: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:90
+#: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:91
 #, c-format
 msgid "%s to set a new clone source"
 msgstr "%s каб вызначыць новую крыніцу кланаваньня"
 
-#: ../app/tools/gimpclonetool.c:89
+#. Translators: the translation of "Click" must be the first word
+#: ../app/tools/gimpclonetool.c:90
 msgid "Click to set a new clone source"
 msgstr "Пстрыкні каб вызначыць новую крыніцу кланаваньня"
 
-#: ../app/tools/gimpclonetool.c:108
-#: ../app/tools/gimpperspectiveclonetool.c:896
+#: ../app/tools/gimpclonetool.c:109
+#: ../app/tools/gimpperspectiveclonetool.c:899
 msgid "Source"
 msgstr "Крыніца"
 
-#: ../app/tools/gimpclonetool.c:130 ../app/tools/gimphealtool.c:110
-#: ../app/tools/gimpperspectiveclonetool.c:918
+#: ../app/tools/gimpclonetool.c:131 ../app/tools/gimphealtool.c:111
+#: ../app/tools/gimpperspectiveclonetool.c:921
 msgid "Alignment:"
 msgstr "Раўнаваньне:"
 
@@ -12081,7 +12113,7 @@ msgstr "Сярэдні радыюс піпеткі"
 
 #: ../app/tools/gimpcoloroptions.c:157
 #: ../app/tools/gimprectangleselectoptions.c:163
-#: ../app/tools/gimpselectionoptions.c:272
+#: ../app/tools/gimpselectionoptions.c:277
 #: ../app/widgets/gimpbrusheditor.c:155
 msgid "Radius"
 msgstr "Радыюс"
@@ -12107,13 +12139,13 @@ msgstr ""
 "мадэлях колеру"
 
 #. the pick FG/BG frame
-#: ../app/tools/gimpcolorpickeroptions.c:160
+#: ../app/tools/gimpcolorpickeroptions.c:163
 #, c-format
 msgid "Pick Mode  (%s)"
 msgstr "Рэжым выбару (%s)"
 
 #. the use_info_window toggle button
-#: ../app/tools/gimpcolorpickeroptions.c:169
+#: ../app/tools/gimpcolorpickeroptions.c:172
 #, c-format
 msgid "Use info window  (%s)"
 msgstr "Ужываць вакно зьвестак (%s)"
@@ -12130,23 +12162,23 @@ msgstr "Піпетка: атрымоўвае колеры зь відарыса"
 msgid "C_olor Picker"
 msgstr "_Піпетка"
 
-#: ../app/tools/gimpcolorpickertool.c:225
+#: ../app/tools/gimpcolorpickertool.c:228
 msgid "Click in any image to view its color"
 msgstr "Пстрыкні па любым відарысе каб прагледзець яго колер"
 
-#: ../app/tools/gimpcolorpickertool.c:232 ../app/tools/gimppainttool.c:474
+#: ../app/tools/gimpcolorpickertool.c:235 ../app/tools/gimppainttool.c:477
 msgid "Click in any image to pick the foreground color"
 msgstr "Пстрыкні па любым відарысе каб атрымаць колер рысаваньня"
 
-#: ../app/tools/gimpcolorpickertool.c:240 ../app/tools/gimppainttool.c:480
+#: ../app/tools/gimpcolorpickertool.c:243 ../app/tools/gimppainttool.c:483
 msgid "Click in any image to pick the background color"
 msgstr "Пстрыкні па любым відарысе каб атрымаць колер асноведзі"
 
-#: ../app/tools/gimpcolorpickertool.c:248
+#: ../app/tools/gimpcolorpickertool.c:251
 msgid "Click in any image to add the color to the palette"
 msgstr "Пстрыкні па любым відарысе каб дадаць колер да палітры"
 
-#: ../app/tools/gimpcolorpickertool.c:303
+#: ../app/tools/gimpcolorpickertool.c:306
 msgid "Color Picker Information"
 msgstr "Зьвесткі зь піпеткі"
 
@@ -12180,34 +12212,34 @@ msgstr ""
 msgid "Bl_ur / Sharpen"
 msgstr "_Размыцьцё / рэзкасьць"
 
-#: ../app/tools/gimpconvolvetool.c:181
+#: ../app/tools/gimpconvolvetool.c:184
 msgid "Click to blur"
 msgstr "Пстрыкні каб размыць"
 
-#: ../app/tools/gimpconvolvetool.c:182
+#: ../app/tools/gimpconvolvetool.c:185
 msgid "Click to blur the line"
 msgstr "Пстрыкні каб размыць лінію"
 
-#: ../app/tools/gimpconvolvetool.c:183
+#: ../app/tools/gimpconvolvetool.c:186
 #, c-format
 msgid "%s to sharpen"
 msgstr "%s каб павялічыць рэзкасьць"
 
-#: ../app/tools/gimpconvolvetool.c:187
+#: ../app/tools/gimpconvolvetool.c:190
 msgid "Click to sharpen"
 msgstr "Пстрыкні каб павялічыць рэзкасьць"
 
-#: ../app/tools/gimpconvolvetool.c:188
+#: ../app/tools/gimpconvolvetool.c:191
 msgid "Click to sharpen the line"
 msgstr "Пстрыкні каб павялічыць рэзкасьць лініі"
 
-#: ../app/tools/gimpconvolvetool.c:189
+#: ../app/tools/gimpconvolvetool.c:192
 #, c-format
 msgid "%s to blur"
 msgstr "%s каб размыць"
 
 #. the type radio box
-#: ../app/tools/gimpconvolvetool.c:210
+#: ../app/tools/gimpconvolvetool.c:216
 #, c-format
 msgid "Convolve Type  (%s)"
 msgstr "Тып размыцьця (%s)"
@@ -12255,64 +12287,64 @@ msgstr "Пстрыкні або націсьні Enter каб абрэзаць"
 msgid "There is no active layer to crop."
 msgstr "Няма актыўнага пласта, які можна абрэзаць."
 
-#: ../app/tools/gimpcurvestool.c:149
+#: ../app/tools/gimpcurvestool.c:150
 msgid "Curves"
 msgstr "Крывыя"
 
-#: ../app/tools/gimpcurvestool.c:150
+#: ../app/tools/gimpcurvestool.c:151
 msgid "Curves Tool: Adjust color curves"
 msgstr "Крывыя: рэґулюе крывыя колераў"
 
-#: ../app/tools/gimpcurvestool.c:151
+#: ../app/tools/gimpcurvestool.c:152
 msgid "_Curves..."
 msgstr "_Крывыя…"
 
-#: ../app/tools/gimpcurvestool.c:177
+#: ../app/tools/gimpcurvestool.c:178
 msgid "Adjust Color Curves"
 msgstr "Паправіць крывыя колераў"
 
-#: ../app/tools/gimpcurvestool.c:179
+#: ../app/tools/gimpcurvestool.c:180
 msgid "Import Curves"
 msgstr "Імпартаваць крывыя"
 
-#: ../app/tools/gimpcurvestool.c:180
+#: ../app/tools/gimpcurvestool.c:181
 msgid "Export Curves"
 msgstr "Экспартаваць крывыя"
 
-#: ../app/tools/gimpcurvestool.c:231
+#: ../app/tools/gimpcurvestool.c:232
 msgid "Curves does not operate on indexed layers."
 msgstr "Крывыя не працуюць з індэксаванымі пластамі."
 
-#: ../app/tools/gimpcurvestool.c:339
+#: ../app/tools/gimpcurvestool.c:340
 msgid "Click to add a control point"
 msgstr "Пстрыкні каб дадаць кіроўны пункт"
 
-#: ../app/tools/gimpcurvestool.c:344
+#: ../app/tools/gimpcurvestool.c:345
 msgid "Click to add control points to all channels"
 msgstr "Пстрыкні каб дадаць кіроўныя пункты да ўсіх каналаў"
 
-#: ../app/tools/gimpcurvestool.c:349
+#: ../app/tools/gimpcurvestool.c:350
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr "Пстрыкні каб адшукаць на крывой (паспрабуй Shift, Ctrl)"
 
-#: ../app/tools/gimpcurvestool.c:462 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:463 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
 msgstr "_Канал:"
 
-#: ../app/tools/gimpcurvestool.c:488 ../app/tools/gimplevelstool.c:408
+#: ../app/tools/gimpcurvestool.c:489 ../app/tools/gimplevelstool.c:408
 msgid "R_eset Channel"
 msgstr "_Вернуць канал"
 
-#: ../app/tools/gimpcurvestool.c:581 ../app/widgets/gimpdeviceinfoeditor.c:458
+#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:458
 msgid "Curve _type:"
 msgstr "_Тып крывой:"
 
-#: ../app/tools/gimpcurvestool.c:656 ../app/tools/gimplevelstool.c:756
+#: ../app/tools/gimpcurvestool.c:658 ../app/tools/gimplevelstool.c:756
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Немагчыма прачытаць загаловак з «%s»: %s"
 
-#: ../app/tools/gimpcurvestool.c:729
+#: ../app/tools/gimpcurvestool.c:731
 msgid "Use _old curves file format"
 msgstr "Карыстацца _старым фарматам файла крывых"
 
@@ -12350,58 +12382,58 @@ msgstr ""
 msgid "Dod_ge / Burn"
 msgstr "_Асьветліць / Зацямніць"
 
-#: ../app/tools/gimpdodgeburntool.c:184
+#: ../app/tools/gimpdodgeburntool.c:187
 msgid "Click to dodge"
 msgstr "Пстрыкні каб асьветліць"
 
-#: ../app/tools/gimpdodgeburntool.c:185
+#: ../app/tools/gimpdodgeburntool.c:188
 msgid "Click to dodge the line"
 msgstr "Пстрыкні каб асьветліць лінію"
 
-#: ../app/tools/gimpdodgeburntool.c:186
+#: ../app/tools/gimpdodgeburntool.c:189
 #, c-format
 msgid "%s to burn"
 msgstr "%s каб зацямніць"
 
-#: ../app/tools/gimpdodgeburntool.c:190
+#: ../app/tools/gimpdodgeburntool.c:193
 msgid "Click to burn"
 msgstr "Пстрыкні каб зацямніць"
 
-#: ../app/tools/gimpdodgeburntool.c:191
+#: ../app/tools/gimpdodgeburntool.c:194
 msgid "Click to burn the line"
 msgstr "Пстрыкні каб зацямніць лінію"
 
-#: ../app/tools/gimpdodgeburntool.c:192
+#: ../app/tools/gimpdodgeburntool.c:195
 #, c-format
 msgid "%s to dodge"
 msgstr "%s каб асьветліць"
 
 #. the type (dodge or burn)
-#: ../app/tools/gimpdodgeburntool.c:213
+#: ../app/tools/gimpdodgeburntool.c:219
 #, c-format
 msgid "Type  (%s)"
 msgstr "Тып (%s)"
 
 #. mode (highlights, midtones, or shadows)
-#: ../app/tools/gimpdodgeburntool.c:224
+#: ../app/tools/gimpdodgeburntool.c:230
 msgid "Range"
 msgstr "Дыяпазон"
 
-#: ../app/tools/gimpdodgeburntool.c:230
+#: ../app/tools/gimpdodgeburntool.c:236
 msgid "Exposure"
 msgstr "Насьвятленьне"
 
-#: ../app/tools/gimpeditselectiontool.c:242
+#: ../app/tools/gimpeditselectiontool.c:244
 msgid "Move Selection"
 msgstr "Перасунуць вылучэньне"
 
-#: ../app/tools/gimpeditselectiontool.c:246
-#: ../app/tools/gimpeditselectiontool.c:1240
+#: ../app/tools/gimpeditselectiontool.c:248
+#: ../app/tools/gimpeditselectiontool.c:1243
 msgid "Move Floating Selection"
 msgstr "Перасунуць плаваючае вылучэньне"
 
-#: ../app/tools/gimpeditselectiontool.c:455
-#: ../app/tools/gimpeditselectiontool.c:732
+#: ../app/tools/gimpeditselectiontool.c:457
+#: ../app/tools/gimpeditselectiontool.c:734
 msgid "Move: "
 msgstr "Перасоўваньне: "
 
@@ -12448,37 +12480,37 @@ msgstr "Анты-зьнішчэньне (%s)"
 msgid "Direction of flipping"
 msgstr "Напрамак перакульваньня"
 
-#: ../app/tools/gimpflipoptions.c:130
+#: ../app/tools/gimpflipoptions.c:133
 msgid "Affect:"
 msgstr "Узьдзеяньне на: "
 
 #. tool toggle
-#: ../app/tools/gimpflipoptions.c:139
+#: ../app/tools/gimpflipoptions.c:142
 #, c-format
 msgid "Flip Type  (%s)"
 msgstr "Тып перакульваньня (%s)"
 
-#: ../app/tools/gimpfliptool.c:83
+#: ../app/tools/gimpfliptool.c:84
 msgid "Flip"
 msgstr "Перакульнік"
 
-#: ../app/tools/gimpfliptool.c:84
+#: ../app/tools/gimpfliptool.c:85
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
 "Перакульнік: перакульвае пласт, вылучэньне або шлях па гарызанталі або "
 "вэртыкалі"
 
-#: ../app/tools/gimpfliptool.c:86
+#: ../app/tools/gimpfliptool.c:87
 msgid "_Flip"
 msgstr "Пера_куліць"
 
-#: ../app/tools/gimpfliptool.c:186
+#: ../app/tools/gimpfliptool.c:187
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Перакуліць гарызантальна"
 
-#: ../app/tools/gimpfliptool.c:189
+#: ../app/tools/gimpfliptool.c:190
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Перакуліць вэртыкальна"
@@ -12486,7 +12518,7 @@ msgstr "Перакуліць вэртыкальна"
 #. probably this is not actually reached today, but
 #. * could be if someone defined FLIP_DIAGONAL, say...
 #.
-#: ../app/tools/gimpfliptool.c:195
+#: ../app/tools/gimpfliptool.c:196
 msgctxt "undo-desc"
 msgid "Flip"
 msgstr "Перакуліць"
@@ -12532,107 +12564,107 @@ msgid "Sensitivity for yellow/blue component"
 msgstr "Адчувальнасьць жоўтага/сіняга складніка"
 
 #. single / multiple objects
-#: ../app/tools/gimpforegroundselectoptions.c:278
+#: ../app/tools/gimpforegroundselectoptions.c:281
 msgid "Contiguous"
 msgstr "Сумежная вобласьць"
 
 #. foreground / background
-#: ../app/tools/gimpforegroundselectoptions.c:283
+#: ../app/tools/gimpforegroundselectoptions.c:286
 #, c-format
 msgid "Interactive refinement  (%s)"
 msgstr "Інтэрактыўнае ачышчэньне (%s)"
 
-#: ../app/tools/gimpforegroundselectoptions.c:287
+#: ../app/tools/gimpforegroundselectoptions.c:290
 msgid "Mark background"
 msgstr "Пазначыць асноведзь"
 
-#: ../app/tools/gimpforegroundselectoptions.c:288
+#: ../app/tools/gimpforegroundselectoptions.c:291
 msgid "Mark foreground"
 msgstr "Пазначыць пярэдні плян"
 
-#: ../app/tools/gimpforegroundselectoptions.c:304
+#: ../app/tools/gimpforegroundselectoptions.c:307
 msgid "Small brush"
 msgstr "Пэндзлік"
 
-#: ../app/tools/gimpforegroundselectoptions.c:312
+#: ../app/tools/gimpforegroundselectoptions.c:315
 msgid "Large brush"
 msgstr "Пэндзаль"
 
-#: ../app/tools/gimpforegroundselectoptions.c:335
+#: ../app/tools/gimpforegroundselectoptions.c:338
 msgid "Smoothing:"
 msgstr "Згладжваньне:"
 
-#: ../app/tools/gimpforegroundselectoptions.c:341
+#: ../app/tools/gimpforegroundselectoptions.c:344
 msgid "Preview color:"
 msgstr "Колер агляду:"
 
 #. granularity
-#: ../app/tools/gimpforegroundselectoptions.c:344
+#: ../app/tools/gimpforegroundselectoptions.c:347
 msgid "Color Sensitivity"
 msgstr "Успрымальнасьць колера"
 
-#: ../app/tools/gimpforegroundselecttool.c:143
+#: ../app/tools/gimpforegroundselecttool.c:144
 msgid "Foreground Select"
 msgstr "Вылучальнік пярэдняга пляну"
 
-#: ../app/tools/gimpforegroundselecttool.c:144
+#: ../app/tools/gimpforegroundselecttool.c:145
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
 "Вылучальнік пярэдняга пляну: вылучае вобласьць, якая ўтрымлівае аб'ект "
 "пярэдняга пляну"
 
-#: ../app/tools/gimpforegroundselecttool.c:145
+#: ../app/tools/gimpforegroundselecttool.c:146
 msgid "F_oreground Select"
 msgstr "Вылучальнік _пярэдняга пляну"
 
-#: ../app/tools/gimpforegroundselecttool.c:301
+#: ../app/tools/gimpforegroundselecttool.c:302
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr "Дадай болей штрыхоў, або націсьні Enter каб прыняць выбар"
 
-#: ../app/tools/gimpforegroundselecttool.c:303
+#: ../app/tools/gimpforegroundselecttool.c:304
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Пазнач пярэдні плян, рысуючы на аб'екце, які трэба здабыць"
 
-#: ../app/tools/gimpforegroundselecttool.c:308
+#: ../app/tools/gimpforegroundselecttool.c:309
 msgid "Roughly outline the object to extract"
 msgstr "Неахайна абвядзі аб'ект для выманьня"
 
-#: ../app/tools/gimpforegroundselecttool.c:750
+#: ../app/tools/gimpforegroundselecttool.c:751
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Вылучальнік пярэдняга пляну"
 
-#: ../app/tools/gimpfreeselecttool.c:196
+#: ../app/tools/gimpfreeselecttool.c:197
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr ""
 "Свабодны вылучальнік: вылучае нарысаваную рукой вобласьць адвольнымі й "
 "прастакутнымі сэґмэнтамі"
 
-#: ../app/tools/gimpfreeselecttool.c:197
+#: ../app/tools/gimpfreeselecttool.c:198
 msgid "_Free Select"
 msgstr "_Свабодны вылучальнік"
 
-#: ../app/tools/gimpfreeselecttool.c:1030
+#: ../app/tools/gimpfreeselecttool.c:1031
 msgid "Click to complete selection"
 msgstr "Пстрыкні каб закончыць вылучэньне"
 
-#: ../app/tools/gimpfreeselecttool.c:1034
+#: ../app/tools/gimpfreeselecttool.c:1035
 msgid "Click-Drag to move segment vertex"
 msgstr "Пстрыкні й пацягні каб перасунуць вяршыню сэґмэнта"
 
-#: ../app/tools/gimpfreeselecttool.c:1039
+#: ../app/tools/gimpfreeselecttool.c:1040
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "ENTER — задзейнічаць, ESC — адмяніць, BACKSPACE — выдаліць апошні сэґмэнт"
 
-#: ../app/tools/gimpfreeselecttool.c:1043
+#: ../app/tools/gimpfreeselecttool.c:1044
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Пстрыкні й пацягні каб дадаць адвольны сэґмэнт, пстрыкні, каб дадаць "
 "прастакутны"
 
-#: ../app/tools/gimpfreeselecttool.c:1560
+#: ../app/tools/gimpfreeselecttool.c:1563
 msgctxt "command"
 msgid "Free Select"
 msgstr "Свабодны вылучальнік"
@@ -12695,12 +12727,13 @@ msgstr "_Лячыць"
 msgid "Click to heal"
 msgstr "Пстрыкні каб лячыць"
 
-#: ../app/tools/gimphealtool.c:77 ../app/tools/gimphealtool.c:81
+#: ../app/tools/gimphealtool.c:77 ../app/tools/gimphealtool.c:82
 #, c-format
 msgid "%s to set a new heal source"
 msgstr "%s каб вызначыць новую крыніцу лячэньня"
 
-#: ../app/tools/gimphealtool.c:80
+#. Translators: the translation of "Click" must be the first word
+#: ../app/tools/gimphealtool.c:81
 msgid "Click to set a new heal source"
 msgstr "Пстрыкні каб вызначыць новую крыніцу лячэньня"
 
@@ -12790,7 +12823,7 @@ msgstr "_Наборы:"
 msgid "Settings saved to '%s'"
 msgstr "Настаўленьні захаваныя ў «%s»"
 
-#: ../app/tools/gimpimagemaptool.c:366
+#: ../app/tools/gimpimagemaptool.c:362
 msgid "_Preview"
 msgstr "_Агляд"
 
@@ -12859,7 +12892,7 @@ msgstr "Нажніцы: вызначае фіґуры з дапамогай ра
 msgid "Intelligent _Scissors"
 msgstr "_Разумныя нажніцы"
 
-#: ../app/tools/gimpiscissorstool.c:900 ../app/tools/gimpmeasuretool.c:600
+#: ../app/tools/gimpiscissorstool.c:900 ../app/tools/gimpmeasuretool.c:605
 msgid "Click-Drag to move this point"
 msgstr "Пстрыкні й пацягні каб перасунуць гэты пункт"
 
@@ -12963,25 +12996,25 @@ msgstr "Зьмяняць вымеры вакна каб яно адпавяда�
 msgid "Direction of magnification"
 msgstr "Напрамак павелічэньня"
 
-#: ../app/tools/gimpmagnifyoptions.c:169
+#: ../app/tools/gimpmagnifyoptions.c:172
 msgid "Auto-resize window"
 msgstr "Аўтамычна мяняць вымеры вакна"
 
 #. tool toggle
-#: ../app/tools/gimpmagnifyoptions.c:174
+#: ../app/tools/gimpmagnifyoptions.c:177
 #, c-format
 msgid "Direction  (%s)"
 msgstr "Напрамак  (%s)"
 
-#: ../app/tools/gimpmagnifytool.c:90
+#: ../app/tools/gimpmagnifytool.c:91
 msgid "Zoom"
 msgstr "Маштаб"
 
-#: ../app/tools/gimpmagnifytool.c:91
+#: ../app/tools/gimpmagnifytool.c:92
 msgid "Zoom Tool: Adjust the zoom level"
 msgstr "Маштаб: рэґулюе маштаб адлюстраваньня"
 
-#: ../app/tools/gimpmagnifytool.c:92
+#: ../app/tools/gimpmagnifytool.c:93
 msgctxt "tool"
 msgid "_Zoom"
 msgstr "_Маштаб"
@@ -13006,49 +13039,49 @@ msgstr "Мернік: вымярае адлегласьці й вуглы"
 msgid "_Measure"
 msgstr "_Мернік"
 
-#: ../app/tools/gimpmeasuretool.c:245
+#: ../app/tools/gimpmeasuretool.c:247
 msgid "Add Guides"
 msgstr "Дадаць накіроўныя"
 
-#: ../app/tools/gimpmeasuretool.c:311
+#: ../app/tools/gimpmeasuretool.c:313
 msgid "Drag to create a line"
 msgstr "Пацягні каб стварыць лінію"
 
-#: ../app/tools/gimpmeasuretool.c:555
+#: ../app/tools/gimpmeasuretool.c:560
 msgid "Click to place vertical and horizontal guides"
 msgstr "Пстрыкні каб разьмесьціць вэртыкальныя й гарызантальныя накіроўныя"
 
-#: ../app/tools/gimpmeasuretool.c:563
+#: ../app/tools/gimpmeasuretool.c:568
 msgid "Click to place a horizontal guide"
 msgstr "Пстрыкні каб разьмесьціць гарызантальную накіроўную"
 
-#: ../app/tools/gimpmeasuretool.c:577
+#: ../app/tools/gimpmeasuretool.c:582
 msgid "Click to place a vertical guide"
 msgstr "Пстрыкні каб разьмесьціць вэртыкальную накіроўную"
 
-#: ../app/tools/gimpmeasuretool.c:590
+#: ../app/tools/gimpmeasuretool.c:595
 msgid "Click-Drag to add a new point"
 msgstr "Пстрыкні й пацягні каб дадаць новы пункт"
 
-#: ../app/tools/gimpmeasuretool.c:619
+#: ../app/tools/gimpmeasuretool.c:624
 msgid "Click-Drag to move all points"
 msgstr "Пстрыкні й пацягні каб перасунуць усе пункты"
 
-#: ../app/tools/gimpmeasuretool.c:932 ../app/tools/gimpmeasuretool.c:1077
-#: ../app/tools/gimpmeasuretool.c:1133 ../app/tools/gimpmeasuretool.c:1161
-#: ../app/tools/gimppainttool.c:627
+#: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
+#: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
+#: ../app/tools/gimppainttool.c:632
 msgid "pixels"
 msgstr "піксэлі"
 
-#: ../app/tools/gimpmeasuretool.c:1045
+#: ../app/tools/gimpmeasuretool.c:1052
 msgid "Measure Distances and Angles"
 msgstr "Вымярае адлегласьці й вуглы"
 
-#: ../app/tools/gimpmeasuretool.c:1066
+#: ../app/tools/gimpmeasuretool.c:1073
 msgid "Distance:"
 msgstr "Адлегласьць: "
 
-#: ../app/tools/gimpmeasuretool.c:1094
+#: ../app/tools/gimpmeasuretool.c:1101
 msgid "Angle:"
 msgstr "Вугал:"
 
@@ -13082,32 +13115,32 @@ msgstr "Перасунуць: "
 msgid "Tool Toggle  (%s)"
 msgstr "Пераключыць інструмэнт (%s)"
 
-#: ../app/tools/gimpmovetool.c:126
+#: ../app/tools/gimpmovetool.c:127
 msgctxt "tool"
 msgid "Move"
 msgstr "Перасоўваньне"
 
-#: ../app/tools/gimpmovetool.c:127
+#: ../app/tools/gimpmovetool.c:128
 msgid "Move Tool: Move layers, selections, and other objects"
 msgstr "Перасоўнік: перасоўвае пласты, вылучэньні ды іншыя аб'екты"
 
-#: ../app/tools/gimpmovetool.c:128
+#: ../app/tools/gimpmovetool.c:129
 msgid "_Move"
 msgstr "_Перасунуць"
 
-#: ../app/tools/gimpmovetool.c:246 ../app/tools/gimpmovetool.c:551
+#: ../app/tools/gimpmovetool.c:247 ../app/tools/gimpmovetool.c:552
 msgid "Move Guide: "
 msgstr "Перасунуць накіроўную:"
 
-#: ../app/tools/gimpmovetool.c:545
+#: ../app/tools/gimpmovetool.c:546
 msgid "Remove Guide"
 msgstr "Прыбраць накіроўную"
 
-#: ../app/tools/gimpmovetool.c:545
+#: ../app/tools/gimpmovetool.c:546
 msgid "Cancel Guide"
 msgstr "Прыбраць накіроўную"
 
-#: ../app/tools/gimpmovetool.c:551
+#: ../app/tools/gimpmovetool.c:552
 msgid "Add Guide: "
 msgstr "Дадаць накіроўную:"
 
@@ -13120,8 +13153,8 @@ msgid "_Paintbrush"
 msgstr "_Пэндзаль"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
-#: ../app/tools/gimpselectionoptions.c:212
-#: ../app/widgets/gimpbrushselect.c:185 ../app/widgets/gimplayertreeview.c:267
+#: ../app/tools/gimpselectionoptions.c:217
+#: ../app/widgets/gimpbrushselect.c:185 ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
 msgstr "Рэжым: "
 
@@ -13207,7 +13240,7 @@ msgstr "%s каб выбраць колер"
 msgid "Cannot paint on layer groups."
 msgstr "Немагчыма рысаваць па ґрупе пластоў."
 
-#: ../app/tools/gimppainttool.c:673
+#: ../app/tools/gimppainttool.c:678
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s для прамой лініі"
@@ -13232,7 +13265,7 @@ msgstr ""
 msgid "_Perspective Clone"
 msgstr "_Кланаваньне з пэрспэктывай"
 
-#: ../app/tools/gimpperspectiveclonetool.c:672
+#: ../app/tools/gimpperspectiveclonetool.c:675
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl+Пстрыкні каб вызначыць крыніцу кланаваньня"
 
@@ -13397,7 +13430,7 @@ msgstr "Вылучальнік прастакутнікаў: вылучае пр
 msgid "_Rectangle Select"
 msgstr "Вылучыць _прастакутнік"
 
-#: ../app/tools/gimprectangletool.c:1144 ../app/tools/gimprectangletool.c:2013
+#: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2015
 msgid "Rectangle: "
 msgstr "Прастакутнік:"
 
@@ -13481,47 +13514,47 @@ msgstr "Задзейнічаць зьмякчэньне краёў вылучэ�
 msgid "Radius of feathering"
 msgstr "Радыюс зьмякчэньня"
 
-#: ../app/tools/gimpselectionoptions.c:259 ../app/tools/gimptextoptions.c:538
+#: ../app/tools/gimpselectionoptions.c:264 ../app/tools/gimptextoptions.c:538
 msgid "Antialiasing"
 msgstr "Згладжваньне"
 
-#: ../app/tools/gimpselectionoptions.c:276
+#: ../app/tools/gimpselectionoptions.c:281
 msgid "Feather edges"
 msgstr "Зьмякчаць краі"
 
-#: ../app/tools/gimpselectiontool.c:252
+#: ../app/tools/gimpselectiontool.c:250
 msgid "Click-Drag to replace the current selection"
 msgstr "Пстрыкні й пацягні каб замяніць бягучае вылучэньне"
 
-#: ../app/tools/gimpselectiontool.c:260
+#: ../app/tools/gimpselectiontool.c:258
 msgid "Click-Drag to create a new selection"
 msgstr "Пстрыкні й пацягні каб стварыць новае вылучэньне"
 
-#: ../app/tools/gimpselectiontool.c:265
+#: ../app/tools/gimpselectiontool.c:263
 msgid "Click-Drag to add to the current selection"
 msgstr "Пстрыкні й цягні каб дадаць да бягучага вылучэньня"
 
-#: ../app/tools/gimpselectiontool.c:274
+#: ../app/tools/gimpselectiontool.c:272
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Пстрыкні й пацягні каб адняць ад бягучага вылучэньня"
 
-#: ../app/tools/gimpselectiontool.c:283
+#: ../app/tools/gimpselectiontool.c:281
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Пстрыкні й пацягні каб перасячы зь бягучым вылучэньнем"
 
-#: ../app/tools/gimpselectiontool.c:293
+#: ../app/tools/gimpselectiontool.c:291
 msgid "Click-Drag to move the selection mask"
 msgstr "Пстрыкні й пацягні каб перасунуць маску вылучэньня"
 
-#: ../app/tools/gimpselectiontool.c:301
+#: ../app/tools/gimpselectiontool.c:299
 msgid "Click-Drag to move the selected pixels"
 msgstr "Пстрыкні й цягні каб перасоўваць вылучаныя піксэлі"
 
-#: ../app/tools/gimpselectiontool.c:305
+#: ../app/tools/gimpselectiontool.c:303
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Пстрыкні й пацягні каб перасунуць копію вылучаных піксэляў"
 
-#: ../app/tools/gimpselectiontool.c:309
+#: ../app/tools/gimpselectiontool.c:307
 msgid "Click to anchor the floating selection"
 msgstr "Пстрыкні каб замацаваць плаваючае вылучэньне"
 
@@ -13728,7 +13761,7 @@ msgstr "Парог не працуе на індэксаваных пласта�
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Аўтаматычна адрэґуляваць для аптымальнага парогу бінарызацыі"
 
-#: ../app/tools/gimptool.c:949
+#: ../app/tools/gimptool.c:978
 msgid "Can't work on an empty image, add a layer first"
 msgstr "Немагчыма працаваць з пустым відарысам, спачатку дадай пласт"
 
@@ -13803,19 +13836,19 @@ msgstr "15 ґрадусаў  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "Захоўваць прапорцыі (%s)"
 
-#: ../app/tools/gimptransformtool.c:211
+#: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
 msgstr "Ператварэньне"
 
-#: ../app/tools/gimptransformtool.c:1060
+#: ../app/tools/gimptransformtool.c:1061
 msgid "There is no layer to transform."
 msgstr "Няма пласта для ператварэньня"
 
-#: ../app/tools/gimptransformtool.c:1073
+#: ../app/tools/gimptransformtool.c:1074
 msgid "There is no path to transform."
 msgstr "Няма шляха для ператварэньня"
 
-#: ../app/tools/gimptransformtool.c:1074
+#: ../app/tools/gimptransformtool.c:1075
 msgid "The active path's strokes are locked."
 msgstr "Контуры актыўнага шляху замкнутыя."
 
@@ -13827,11 +13860,11 @@ msgstr "Абмежаваць праўленьне шматкутнікамі"
 msgid "Edit Mode"
 msgstr "Рэжым праўленьня"
 
-#: ../app/tools/gimpvectoroptions.c:173
+#: ../app/tools/gimpvectoroptions.c:174
 msgid "Polygonal"
 msgstr "Шматкутны"
 
-#: ../app/tools/gimpvectoroptions.c:177
+#: ../app/tools/gimpvectoroptions.c:178
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -13845,148 +13878,148 @@ msgstr ""
 "%s  Перасячы"
 
 #. Create a selection from the current path
-#: ../app/tools/gimpvectoroptions.c:188
+#: ../app/tools/gimpvectoroptions.c:189
 msgid "Selection from Path"
 msgstr "Вылучэньне са шляха"
 
-#: ../app/tools/gimpvectortool.c:160
+#: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
 msgstr "Шляхі: стварае ці рэдагуе шляхі"
 
-#: ../app/tools/gimpvectortool.c:161
+#: ../app/tools/gimpvectortool.c:162
 msgid "Pat_hs"
 msgstr "_Шляхі"
 
-#: ../app/tools/gimpvectortool.c:250
+#: ../app/tools/gimpvectortool.c:251
 msgid "The active path is locked."
 msgstr "Актыўны шлях замкнуты."
 
-#: ../app/tools/gimpvectortool.c:340
+#: ../app/tools/gimpvectortool.c:341
 msgid "Add Stroke"
 msgstr "Дадаць штрых"
 
-#: ../app/tools/gimpvectortool.c:364
+#: ../app/tools/gimpvectortool.c:365
 msgid "Add Anchor"
 msgstr "Дадаць вузел"
 
-#: ../app/tools/gimpvectortool.c:390
+#: ../app/tools/gimpvectortool.c:391
 msgid "Insert Anchor"
 msgstr "Уставіць вузел"
 
-#: ../app/tools/gimpvectortool.c:421
+#: ../app/tools/gimpvectortool.c:422
 msgid "Drag Handle"
 msgstr "Цягні ручку"
 
-#: ../app/tools/gimpvectortool.c:452
+#: ../app/tools/gimpvectortool.c:453
 msgid "Drag Anchor"
 msgstr "Цягнуць вузел"
 
-#: ../app/tools/gimpvectortool.c:470
+#: ../app/tools/gimpvectortool.c:471
 msgid "Drag Anchors"
 msgstr "Цягнуць вузлы"
 
-#: ../app/tools/gimpvectortool.c:493
+#: ../app/tools/gimpvectortool.c:494
 msgid "Drag Curve"
 msgstr "Цягні крывую"
 
-#: ../app/tools/gimpvectortool.c:522
+#: ../app/tools/gimpvectortool.c:523
 msgid "Connect Strokes"
 msgstr "Злучыць аблямовак"
 
-#: ../app/tools/gimpvectortool.c:554
+#: ../app/tools/gimpvectortool.c:555
 msgid "Drag Path"
 msgstr "Цягнуць шлях"
 
-#: ../app/tools/gimpvectortool.c:565
+#: ../app/tools/gimpvectortool.c:566
 msgid "Convert Edge"
 msgstr "Ператварыць край"
 
-#: ../app/tools/gimpvectortool.c:596
+#: ../app/tools/gimpvectortool.c:597
 msgid "Delete Anchor"
 msgstr "Выдаліць вузел"
 
-#: ../app/tools/gimpvectortool.c:619
+#: ../app/tools/gimpvectortool.c:620
 msgid "Delete Segment"
 msgstr "Выдаліць адрэзак"
 
-#: ../app/tools/gimpvectortool.c:838
+#: ../app/tools/gimpvectortool.c:839
 msgid "Move Anchors"
 msgstr "Перасунуць вузлы"
 
-#: ../app/tools/gimpvectortool.c:1201
+#: ../app/tools/gimpvectortool.c:1202
 msgid "Click to pick path to edit"
 msgstr "Пстрыкні каб выбраць шлях для рэдагаваньня"
 
-#: ../app/tools/gimpvectortool.c:1205
+#: ../app/tools/gimpvectortool.c:1206
 msgid "Click to create a new path"
 msgstr "Пстрыкні каб стварыць новы шлях"
 
-#: ../app/tools/gimpvectortool.c:1209
+#: ../app/tools/gimpvectortool.c:1210
 msgid "Click to create a new component of the path"
 msgstr "Пстрыкні каб стварыць новую частку шляха"
 
-#: ../app/tools/gimpvectortool.c:1213
+#: ../app/tools/gimpvectortool.c:1214
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Пстрыкні або пстрыкні й пацягні каб стварыць новы вузел"
 
-#: ../app/tools/gimpvectortool.c:1223 ../app/tools/gimpvectortool.c:1230
+#: ../app/tools/gimpvectortool.c:1226 ../app/tools/gimpvectortool.c:1233
 msgid "Click-Drag to move the anchor around"
 msgstr "Пстрыкні й цягні каб перасоўваць вузел"
 
-#: ../app/tools/gimpvectortool.c:1234 ../app/tools/gimpvectortool.c:1257
+#: ../app/tools/gimpvectortool.c:1237 ../app/tools/gimpvectortool.c:1260
 msgid "Click-Drag to move the anchors around"
 msgstr "Пстрыкні й цягні каб перасоўваць вузлы"
 
-#: ../app/tools/gimpvectortool.c:1240
+#: ../app/tools/gimpvectortool.c:1243
 msgid "Click-Drag to move the handle around"
 msgstr "Пстрыкні й цягні каб перасоўваць ручку"
 
-#: ../app/tools/gimpvectortool.c:1247
+#: ../app/tools/gimpvectortool.c:1250
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Пстрыкні й цягні каб перасоўваць ручкі сымэтрычна"
 
-#: ../app/tools/gimpvectortool.c:1262
+#: ../app/tools/gimpvectortool.c:1265
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Пстрыкні й пацягні каб зьмяніць абрыс крывой"
 
-#: ../app/tools/gimpvectortool.c:1265
+#: ../app/tools/gimpvectortool.c:1268
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: сымэтрычны"
 
-#: ../app/tools/gimpvectortool.c:1270
+#: ../app/tools/gimpvectortool.c:1273
 msgid "Click-Drag to move the component around"
 msgstr "Пстрыкні й цягні каб перасоўваць складнік"
 
-#: ../app/tools/gimpvectortool.c:1278
+#: ../app/tools/gimpvectortool.c:1281
 msgid "Click-Drag to move the path around"
 msgstr "Пстрыкні й цягні каб перасоўваць шлях"
 
-#: ../app/tools/gimpvectortool.c:1282
+#: ../app/tools/gimpvectortool.c:1285
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Пстрыкні й пацягні каб уставіць вузел на шляху"
 
-#: ../app/tools/gimpvectortool.c:1290
+#: ../app/tools/gimpvectortool.c:1293
 msgid "Click to delete this anchor"
 msgstr "Пстрыкні каб выдаліць гэты вузел"
 
-#: ../app/tools/gimpvectortool.c:1294
+#: ../app/tools/gimpvectortool.c:1297
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Пстрыкні каб злучыць гэты вузел з выбраным канцавым пунктам"
 
-#: ../app/tools/gimpvectortool.c:1299
+#: ../app/tools/gimpvectortool.c:1302
 msgid "Click to open up the path"
 msgstr "Пстрыкні каб разамкнуць шлях"
 
-#: ../app/tools/gimpvectortool.c:1303
+#: ../app/tools/gimpvectortool.c:1306
 msgid "Click to make this node angular"
 msgstr "Пстрыкні каб зрабіць гэты вузел вуглавым"
 
-#: ../app/tools/gimpvectortool.c:1803
+#: ../app/tools/gimpvectortool.c:1806
 msgid "Delete Anchors"
 msgstr "Выдаліць вузлы"
 
-#: ../app/tools/gimpvectortool.c:1974
+#: ../app/tools/gimpvectortool.c:1964
 msgid "There is no active layer or channel to stroke to"
 msgstr "Няма актыўнага пласта або канала, у якім можна абводзіць"
 
@@ -14180,7 +14213,7 @@ msgstr "Не ўдалося імпартаваць шляхі з «%s»: %s"
 msgid "_Search:"
 msgstr "_Пошук: "
 
-#: ../app/widgets/gimpactiongroup.c:857
+#: ../app/widgets/gimpactiongroup.c:888
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -14241,13 +14274,13 @@ msgid "Aspect ratio"
 msgstr "Прапорцыі"
 
 #: ../app/widgets/gimpbrusheditor.c:210
-#: ../app/widgets/gimpbrushfactoryview.c:79
+#: ../app/widgets/gimpbrushfactoryview.c:80
 #: ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Інтэрвал"
 
 #: ../app/widgets/gimpbrusheditor.c:215
-#: ../app/widgets/gimpbrushfactoryview.c:83
+#: ../app/widgets/gimpbrushfactoryview.c:84
 msgid "Percentage of width of brush"
 msgstr "Працэнт шырыні пэндзля"
 
@@ -14255,7 +14288,7 @@ msgstr "Працэнт шырыні пэндзля"
 msgid "Opacity:"
 msgstr "Непразрысты:"
 
-#: ../app/widgets/gimpbufferview.c:173 ../app/widgets/gimpbufferview.c:258
+#: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
 #: ../app/widgets/gimpeditor.c:748
 msgid "(None)"
 msgstr "(Няма)"
@@ -14268,37 +14301,37 @@ msgstr "Дадаць бягучы колер да гісторыі колера�
 msgid "Available Filters"
 msgstr "Наяўныя фільтры"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:215
+#: ../app/widgets/gimpcolordisplayeditor.c:216
 msgid "Move the selected filter up"
 msgstr "Узьняць выбраны фільтр вышэй"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:224
+#: ../app/widgets/gimpcolordisplayeditor.c:225
 msgid "Move the selected filter down"
 msgstr "Апусьціць выбраны фільтр ніжэй"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:270
+#: ../app/widgets/gimpcolordisplayeditor.c:271
 msgid "Active Filters"
 msgstr "Актыўныя фільтры"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:321
+#: ../app/widgets/gimpcolordisplayeditor.c:322
 msgid "Reset the selected filter to default values"
 msgstr "Вернуць значэньні выбранага фільтра да прадвызначаных"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:495
+#: ../app/widgets/gimpcolordisplayeditor.c:496
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Дадаць «%s» да сьпісу актыўных фільтраў"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:532
+#: ../app/widgets/gimpcolordisplayeditor.c:533
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Прыбраць «%s» са сьпісу актыўных фільтраў"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:563
+#: ../app/widgets/gimpcolordisplayeditor.c:564
 msgid "No filter selected"
 msgstr "Ня выбрана ніякага фільтру"
 
-#: ../app/widgets/gimpcoloreditor.c:258
+#: ../app/widgets/gimpcoloreditor.c:260
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -14306,67 +14339,67 @@ msgstr ""
 "Шаснаццаткавая натацыя колера, такая сама, як у HTML ды CSS. Можна ўжываць "
 "назвы колераў CSS."
 
-#: ../app/widgets/gimpcolorframe.c:511
+#: ../app/widgets/gimpcolorframe.c:512
 msgid "Index:"
 msgstr "Пералік:"
 
-#: ../app/widgets/gimpcolorframe.c:524 ../app/widgets/gimpcolorframe.c:550
+#: ../app/widgets/gimpcolorframe.c:525 ../app/widgets/gimpcolorframe.c:551
 msgid "Red:"
 msgstr "Чырвоны:"
 
-#: ../app/widgets/gimpcolorframe.c:525 ../app/widgets/gimpcolorframe.c:551
+#: ../app/widgets/gimpcolorframe.c:526 ../app/widgets/gimpcolorframe.c:552
 msgid "Green:"
 msgstr "Зялёны:"
 
-#: ../app/widgets/gimpcolorframe.c:526 ../app/widgets/gimpcolorframe.c:552
+#: ../app/widgets/gimpcolorframe.c:527 ../app/widgets/gimpcolorframe.c:553
 msgid "Blue:"
 msgstr "Сіні:"
 
-#: ../app/widgets/gimpcolorframe.c:539 ../app/widgets/gimpcolorframe.c:572
+#: ../app/widgets/gimpcolorframe.c:540 ../app/widgets/gimpcolorframe.c:573
 msgid "Value:"
 msgstr "Яркасьць:"
 
-#: ../app/widgets/gimpcolorframe.c:563
+#: ../app/widgets/gimpcolorframe.c:564
 msgid "Hex:"
 msgstr "Шаснаццаткавы:"
 
-#: ../app/widgets/gimpcolorframe.c:570
+#: ../app/widgets/gimpcolorframe.c:571
 msgid "Hue:"
 msgstr "Адценьне:"
 
-#: ../app/widgets/gimpcolorframe.c:571
+#: ../app/widgets/gimpcolorframe.c:572
 msgid "Sat.:"
 msgstr "Насычанасьць:"
 
-#: ../app/widgets/gimpcolorframe.c:589
+#: ../app/widgets/gimpcolorframe.c:590
 msgid "Cyan:"
 msgstr "Блакітны:"
 
-#: ../app/widgets/gimpcolorframe.c:590
+#: ../app/widgets/gimpcolorframe.c:591
 msgid "Magenta:"
 msgstr "Пурпуровы:"
 
-#: ../app/widgets/gimpcolorframe.c:591
+#: ../app/widgets/gimpcolorframe.c:592
 msgid "Yellow:"
 msgstr "Жоўты:"
 
-#: ../app/widgets/gimpcolorframe.c:592
+#: ../app/widgets/gimpcolorframe.c:593
 msgid "Black:"
 msgstr "Чорны:"
 
-#: ../app/widgets/gimpcolorframe.c:612
+#: ../app/widgets/gimpcolorframe.c:613
 msgid "Alpha:"
 msgstr "Альфа:"
 
-#: ../app/widgets/gimpcolormapeditor.c:199
+#: ../app/widgets/gimpcolormapeditor.c:200
 msgid "Color index:"
 msgstr "Індэкс колера:"
 
-#: ../app/widgets/gimpcolormapeditor.c:209
+#: ../app/widgets/gimpcolormapeditor.c:210
 msgid "HTML notation:"
 msgstr "Натацыя HTML:"
 
-#: ../app/widgets/gimpcolormapeditor.c:465
+#: ../app/widgets/gimpcolormapeditor.c:466
 msgid "Only indexed images have a colormap."
 msgstr "Толькі індэксаваныя відарысы маюць мапы колераў."
 
@@ -14374,11 +14407,11 @@ msgstr "Толькі індэксаваныя відарысы маюць мап
 msgid "Palette"
 msgstr "Палітра"
 
-#: ../app/widgets/gimpcontainerpopup.c:578
+#: ../app/widgets/gimpcontainerpopup.c:590
 msgid "Smaller Previews"
 msgstr "Зьменшыць прагляды"
 
-#: ../app/widgets/gimpcontainerpopup.c:583
+#: ../app/widgets/gimpcontainerpopup.c:595
 msgid "Larger Previews"
 msgstr "Павялічыць прагляды"
 
@@ -14491,33 +14524,33 @@ msgstr "Гатова"
 msgid "Available Controllers"
 msgstr "Наяўныя прылады"
 
-#: ../app/widgets/gimpcontrollerlist.c:274
+#: ../app/widgets/gimpcontrollerlist.c:275
 msgid "Active Controllers"
 msgstr "Актыўныя прылады"
 
-#: ../app/widgets/gimpcontrollerlist.c:290
+#: ../app/widgets/gimpcontrollerlist.c:291
 msgid "Configure the selected controller"
 msgstr "Наставіць выбраную прыладу"
 
-#: ../app/widgets/gimpcontrollerlist.c:298
+#: ../app/widgets/gimpcontrollerlist.c:299
 msgid "Move the selected controller up"
 msgstr "Узьняць выбраную прыладу вышэй"
 
-#: ../app/widgets/gimpcontrollerlist.c:306
+#: ../app/widgets/gimpcontrollerlist.c:307
 msgid "Move the selected controller down"
 msgstr "Апусьціць выбраную прыладу ніжэй"
 
-#: ../app/widgets/gimpcontrollerlist.c:424
+#: ../app/widgets/gimpcontrollerlist.c:425
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "Дадаць «%s» да сьпісу актыўных прыладаў"
 
-#: ../app/widgets/gimpcontrollerlist.c:475
+#: ../app/widgets/gimpcontrollerlist.c:476
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "Прыбраць «%s» са сьпісу актыўных прыладаў"
 
-#: ../app/widgets/gimpcontrollerlist.c:509
+#: ../app/widgets/gimpcontrollerlist.c:510
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -14527,7 +14560,7 @@ msgstr ""
 "\n"
 "Сьпіс актыўных прыладаў ужо мае адну клявіятуру."
 
-#: ../app/widgets/gimpcontrollerlist.c:520
+#: ../app/widgets/gimpcontrollerlist.c:521
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -14537,7 +14570,7 @@ msgstr ""
 "\n"
 "Сьпіс актыўных прыладаў ужо мае адно кола."
 
-#: ../app/widgets/gimpcontrollerlist.c:531
+#: ../app/widgets/gimpcontrollerlist.c:532
 msgid ""
 "There can only be one active mouse controller.\n"
 "\n"
@@ -14547,24 +14580,24 @@ msgstr ""
 "\n"
 "Сьпіс актыўных кантролераў ужо мае кантролер мышы."
 
-#: ../app/widgets/gimpcontrollerlist.c:557
+#: ../app/widgets/gimpcontrollerlist.c:558
 msgid "Remove Controller?"
 msgstr "Ці прыбраць прыладу?"
 
-#: ../app/widgets/gimpcontrollerlist.c:562
+#: ../app/widgets/gimpcontrollerlist.c:563
 msgid "Disable Controller"
 msgstr "Абязьдзейніць прыладу"
 
-#: ../app/widgets/gimpcontrollerlist.c:564
+#: ../app/widgets/gimpcontrollerlist.c:565
 msgid "Remove Controller"
 msgstr "Прыбраць прыладу"
 
-#: ../app/widgets/gimpcontrollerlist.c:576
+#: ../app/widgets/gimpcontrollerlist.c:577
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "Ці прыбраць прыладу «%s»?"
 
-#: ../app/widgets/gimpcontrollerlist.c:580
+#: ../app/widgets/gimpcontrollerlist.c:581
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -14577,7 +14610,7 @@ msgstr ""
 "\n"
 "Пры выбары «Абязьдзеніць прыладу» прылада будзе абязьдзейнена без выдаленьня."
 
-#: ../app/widgets/gimpcontrollerlist.c:632
+#: ../app/widgets/gimpcontrollerlist.c:633
 msgid "Configure Input Controller"
 msgstr "Настаўленьні кантролера ўводжаньня"
 
@@ -14927,84 +14960,84 @@ msgstr "Колер запаўненьня"
 msgid "_Antialiasing"
 msgstr "_Згладжваньне"
 
-#: ../app/widgets/gimpgradienteditor.c:752
+#: ../app/widgets/gimpgradienteditor.c:753
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Маштаб: %d:1"
 
-#: ../app/widgets/gimpgradienteditor.c:755
+#: ../app/widgets/gimpgradienteditor.c:756
 #, c-format
 msgid "Displaying [%0.4f, %0.4f]"
 msgstr "Адлюстраваньне [%0.4f, %0.4f]"
 
-#: ../app/widgets/gimpgradienteditor.c:957
+#: ../app/widgets/gimpgradienteditor.c:953
 #, c-format
 msgid "Position: %0.4f"
 msgstr "Становішча: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:958
+#: ../app/widgets/gimpgradienteditor.c:954
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:960
+#: ../app/widgets/gimpgradienteditor.c:956
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
 msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
-#: ../app/widgets/gimpgradienteditor.c:962
+#: ../app/widgets/gimpgradienteditor.c:958
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
 msgstr "Яркасьць: %0.1f    Непразрыстасьць: %0.1f"
 
-#: ../app/widgets/gimpgradienteditor.c:993
+#: ../app/widgets/gimpgradienteditor.c:989
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:1004
+#: ../app/widgets/gimpgradienteditor.c:1000
 msgid "Foreground color set to:"
 msgstr "Колер рысаваньня:"
 
-#: ../app/widgets/gimpgradienteditor.c:1011
+#: ../app/widgets/gimpgradienteditor.c:1007
 msgid "Background color set to:"
 msgstr "Колер асноведзі:"
 
-#: ../app/widgets/gimpgradienteditor.c:1239
-#: ../app/widgets/gimpgradienteditor.c:1305
-#, c-format
-msgid "%s%sDrag: move & compress"
+#: ../app/widgets/gimpgradienteditor.c:1235
+#: ../app/widgets/gimpgradienteditor.c:1296
+#, fuzzy, c-format
+msgid "%s-Drag: move & compress"
 msgstr "%s%sЦягнуць: перасоўваньне й сьцісканьне"
 
-#: ../app/widgets/gimpgradienteditor.c:1245
+#: ../app/widgets/gimpgradienteditor.c:1240
 msgid "Drag: move"
 msgstr "Цягнуць: перасоўваньне"
 
-#: ../app/widgets/gimpgradienteditor.c:1252
-#: ../app/widgets/gimpgradienteditor.c:1266
-#: ../app/widgets/gimpgradienteditor.c:1280
-#: ../app/widgets/gimpgradienteditor.c:1302
-#, c-format
-msgid "%s%sClick: extend selection"
+#: ../app/widgets/gimpgradienteditor.c:1247
+#: ../app/widgets/gimpgradienteditor.c:1260
+#: ../app/widgets/gimpgradienteditor.c:1273
+#: ../app/widgets/gimpgradienteditor.c:1294
+#, fuzzy, c-format
+msgid "%s-Click: extend selection"
 msgstr "%s%sПстрычка: пашырыць вылучэньне"
 
-#: ../app/widgets/gimpgradienteditor.c:1258
-#: ../app/widgets/gimpgradienteditor.c:1272
+#: ../app/widgets/gimpgradienteditor.c:1252
+#: ../app/widgets/gimpgradienteditor.c:1265
 msgid "Click: select"
 msgstr "Пстрычка: выбар"
 
-#: ../app/widgets/gimpgradienteditor.c:1286
-#: ../app/widgets/gimpgradienteditor.c:1310
+#: ../app/widgets/gimpgradienteditor.c:1278
+#: ../app/widgets/gimpgradienteditor.c:1300
 msgid "Click: select    Drag: move"
 msgstr "Пстрычка: выбраць  Валачэньне: пасунуць"
 
-#: ../app/widgets/gimpgradienteditor.c:1525
-#: ../app/widgets/gimpgradienteditor.c:1533
+#: ../app/widgets/gimpgradienteditor.c:1515
+#: ../app/widgets/gimpgradienteditor.c:1523
 #, c-format
 msgid "Handle position: %0.4f"
 msgstr "Cтановішча ручкі: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:1550
+#: ../app/widgets/gimpgradienteditor.c:1540
 #, c-format
 msgid "Distance: %0.4f"
 msgstr "Адлегласьць: %0.4f"
@@ -15206,30 +15239,22 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "колеры"
 
-#: ../app/widgets/gimpitemtreeview.c:707
+#: ../app/widgets/gimpitemtreeview.c:716
 msgid "Lock:"
 msgstr "Замкнуць:"
 
-#: ../app/widgets/gimpitemtreeview.c:1484
-msgid "Set Item Exclusive Visible"
-msgstr "Зрабіць элемэнт адзіна бачным"
-
-#: ../app/widgets/gimpitemtreeview.c:1492
-msgid "Set Item Exclusive Linked"
-msgstr "Зрабіць элемэнт адзіна злучаным"
-
-#: ../app/widgets/gimplayertreeview.c:306
+#: ../app/widgets/gimplayertreeview.c:307
 msgid "Lock alpha channel"
 msgstr "Замкнуць альфаканал"
 
-#: ../app/widgets/gimpmessagebox.c:434
+#: ../app/widgets/gimpmessagebox.c:433
 #, c-format
-msgid "Message repeated %d times."
-msgstr "Паведамленьне паўтарылася %d разоў."
-
-#: ../app/widgets/gimpmessagebox.c:436
 msgid "Message repeated once."
-msgstr "Паўторнае паведамленьне."
+msgid_plural "Message repeated %d times."
+msgstr[0] "Паведамленьне паўторанае %d раз."
+msgstr[1] "Паведамленьне паўторанае %d разы."
+msgstr[2] "Паведамленьне паўторанае %d разоў."
+msgstr[3] "Паведамленьне паўторанае адзін раз."
 
 #: ../app/widgets/gimppaletteeditor.c:226
 #: ../app/widgets/gimppaletteeditor.c:682
@@ -15267,35 +15292,35 @@ msgstr "Недапушчальны UTF-8"
 msgid "Pick a setting from the list"
 msgstr "Выберы настройкі са сьпісу"
 
-#: ../app/widgets/gimpsettingsbox.c:290
+#: ../app/widgets/gimpsettingsbox.c:291
 msgid "Add settings to favorites"
 msgstr "Дадаць настройкі да абраных"
 
-#: ../app/widgets/gimpsettingsbox.c:318
+#: ../app/widgets/gimpsettingsbox.c:319
 msgid "_Import Settings from File..."
 msgstr "_Імпартаваць настройкі з файла…"
 
-#: ../app/widgets/gimpsettingsbox.c:324
+#: ../app/widgets/gimpsettingsbox.c:325
 msgid "_Export Settings to File..."
 msgstr "_Экспартаваць настройкі ў файл…"
 
-#: ../app/widgets/gimpsettingsbox.c:331
+#: ../app/widgets/gimpsettingsbox.c:332
 msgid "_Manage Settings..."
 msgstr "_Кіраваць настройкамі…"
 
-#: ../app/widgets/gimpsettingsbox.c:624
+#: ../app/widgets/gimpsettingsbox.c:625
 msgid "Add Settings to Favorites"
 msgstr "Дадаць настройкі да абраных"
 
-#: ../app/widgets/gimpsettingsbox.c:627
+#: ../app/widgets/gimpsettingsbox.c:628
 msgid "Enter a name for the settings"
 msgstr "Увядзі назву для наладак"
 
-#: ../app/widgets/gimpsettingsbox.c:628
+#: ../app/widgets/gimpsettingsbox.c:629
 msgid "Saved Settings"
 msgstr "Захаваныя настройкі"
 
-#: ../app/widgets/gimpsettingsbox.c:669
+#: ../app/widgets/gimpsettingsbox.c:670
 msgid "Manage Saved Settings"
 msgstr "Кіраваць захаванымі настройкамі"
 
@@ -15349,11 +15374,11 @@ msgstr "Узор рысак: "
 msgid "Dash _preset:"
 msgstr "_Набор рысак:"
 
-#: ../app/widgets/gimptagentry.c:43
+#: ../app/widgets/gimptagentry.c:45
 msgid "filter"
 msgstr "фільтар"
 
-#: ../app/widgets/gimptagentry.c:44
+#: ../app/widgets/gimptagentry.c:46
 msgid "enter tags"
 msgstr "увядзі меткі"
 
@@ -15361,7 +15386,7 @@ msgstr "увядзі меткі"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1707
+#: ../app/widgets/gimptagentry.c:1714
 msgid ","
 msgstr ","
 
@@ -15465,15 +15490,15 @@ msgid "Strikethrough"
 msgstr "Перакрэсьлены"
 
 #: ../app/widgets/gimpthumbbox.c:330
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Click to update preview\n"
-"%s%sClick to force update even if preview is up-to-date"
+"%s-Click to force update even if preview is up-to-date"
 msgstr ""
 "Пстрычка — абнавіць прагляд\n"
 "%s%sПстрычка — абнавіць прагляд, нават калі ён сучасны."
 
-#: ../app/widgets/gimpthumbbox.c:348
+#: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
 msgstr "_Агляд"
 
@@ -15481,12 +15506,12 @@ msgstr "_Агляд"
 msgid "No selection"
 msgstr "Няма вылучэньня"
 
-#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
+#: ../app/widgets/gimpthumbbox.c:596 ../app/widgets/gimpthumbbox.c:617
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Мініятура %d з %d"
 
-#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
+#: ../app/widgets/gimpthumbbox.c:730 ../app/widgets/gimpthumbbox.c:740
 msgid "Creating preview..."
 msgstr "Стварэньне агляду…"
 
@@ -15669,22 +15694,22 @@ msgstr "Адкрыць дыялёґ выбару палітры"
 msgid "Open the font selection dialog"
 msgstr "Адкрыць дыялёґ выбару шрыфта"
 
-#: ../app/widgets/gimpwidgets-utils.c:672
+#: ../app/widgets/gimpwidgets-utils.c:595
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (паспрабуй: %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:672
+#: ../app/widgets/gimpwidgets-utils.c:595
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:676
+#: ../app/widgets/gimpwidgets-utils.c:599
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (паспрабуй: %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:680
+#: ../app/widgets/gimpwidgets-utils.c:603
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (паспрабуй: %s, %s, %s)"
@@ -15794,7 +15819,7 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Нявызначана"
 
-#: ../app/xcf/xcf-load.c:333
+#: ../app/xcf/xcf-load.c:334
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -15802,7 +15827,7 @@ msgstr ""
 "Гэты файл XCF пашкоджаны. Загружана столькі, колькі магчыма, але інфармацыя "
 "няпоўная."
 
-#: ../app/xcf/xcf-load.c:344
+#: ../app/xcf/xcf-load.c:345
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -15810,7 +15835,7 @@ msgstr ""
 "Гэты файл XCF пашкоджаны! Немагчыма ўратаваць нават хоць нейкую частку "
 "даньняў зь яго."
 
-#: ../app/xcf/xcf-load.c:417
+#: ../app/xcf/xcf-load.c:418
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -15873,784 +15898,3 @@ msgstr "Стварэньне відарысаў і праўленьне фата
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
 msgstr "Рэдактар відарысаў"
-
-#~ msgctxt "command"
-#~ msgid "Flip"
-#~ msgstr "Перакульнік"
-
-#~ msgctxt "command"
-#~ msgid "Perspective"
-#~ msgstr "Пэрспэктыва"
-
-#~ msgctxt "command"
-#~ msgid "Rotate"
-#~ msgstr "Павернуць"
-
-#~ msgctxt "command"
-#~ msgid "Scale"
-#~ msgstr "Памер"
-
-#~ msgctxt "command"
-#~ msgid "Shear"
-#~ msgstr "Нахіл"
-
-#~ msgid "Fill from first point"
-#~ msgstr "Запаўняць ад першага пункту"
-
-#~ msgid "Factor"
-#~ msgstr "Множнік"
-
-#~ msgid "Text box resize mode"
-#~ msgstr "Рэжым зьмяненьня вымераў рамкі тэксту"
-
-#~ msgid "Preview:"
-#~ msgstr "Агляд:"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Outline"
-#~ msgstr "Абрыс"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Grid"
-#~ msgstr "Сетка"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Image"
-#~ msgstr "Відарыс"
-
-#~ msgctxt "transform-preview-type"
-#~ msgid "Image + Grid"
-#~ msgstr "Відарыс + сетка"
-
-#~ msgid "Radius:"
-#~ msgstr "_Радыюс:"
-
-#~ msgid "Hardness:"
-#~ msgstr "Цьвёрдасьць:"
-
-#~ msgid "Aspect ratio:"
-#~ msgstr "Прапорцыі:"
-
-#~ msgid "Spacing:"
-#~ msgstr "Інтэрвал:"
-
-#~ msgid "Use a running GIMP only, never start a new one"
-#~ msgstr "Заўжды выкарыстоўваць працоўны GIMP, ніколі не запускаць новы"
-
-#~ msgid "Only check if GIMP is running, then quit"
-#~ msgstr "Спраўдзіць, ці ўжо працуе GIMP, і выйсьці"
-
-#~ msgid "Print X window ID of GIMP toolbox window, then quit"
-#~ msgstr "Вывесьці вызначнік вакна панэлі інструмэнтаў і выйсьці"
-
-#~ msgid "Start GIMP without showing the startup window"
-#~ msgstr "Запускаць GIMP не паказваючы пачатковае вакно"
-
-#~ msgid "Could not connect to GIMP."
-#~ msgstr "Немагчыма далучыцца да GIMP."
-
-#~ msgid "Make sure that the Toolbox is visible!"
-#~ msgstr "Пераканайся, што панэль інструмэнтаў бачная!"
-
-#~ msgid "Couldn't start '%s': %s"
-#~ msgstr "Немагчыма выканаць «%s»: %s"
-
-#~ msgctxt "tool-options-action"
-#~ msgid "_Save Options To"
-#~ msgstr "_Захаваць выборы ў"
-
-#~ msgctxt "tool-options-action"
-#~ msgid "_Restore Options From"
-#~ msgstr "_Аднавіць выборы з"
-
-#~ msgctxt "tool-options-action"
-#~ msgid "Re_name Saved Options"
-#~ msgstr "_Пераназваць захаваныя выборы"
-
-#~ msgctxt "tool-options-action"
-#~ msgid "_Delete Saved Options"
-#~ msgstr "_Выдаліць захаваныя выборы"
-
-#~ msgctxt "tool-options-action"
-#~ msgid "_New Entry..."
-#~ msgstr "_Стварыць запіс…"
-
-#~ msgid "Save Tool Options"
-#~ msgstr "Захаваньне выбораў інструмэнта"
-
-#~ msgid "Enter a name for the saved options"
-#~ msgstr "Увядзі назву для выбораў, якія захоўваеш"
-
-#~ msgid "Saved Options"
-#~ msgstr "Захаваныя выборы"
-
-#~ msgid "Rename Saved Tool Options"
-#~ msgstr "Пераназваць захаваныя выборы інструмэнта"
-
-#~ msgid "Enter a new name for the saved options"
-#~ msgstr "Увядзі новую назву для выбораў, якія захоўваеш"
-
-#~ msgid "Coefficient computation"
-#~ msgstr "Разльік каэфіцыенту"
-
-#~ msgid "Save options to..."
-#~ msgstr "Захаваць выборы ў…"
-
-#~ msgid "Restore options from..."
-#~ msgstr "Аднавіць выборы з…"
-
-#~ msgid "Delete saved options..."
-#~ msgstr "Выдаліць захаваныя выборы…"
-
-#~ msgid "Error saving tool options presets: %s"
-#~ msgstr "Памылка падчас запісу парамэтраў інструмэнта: %s"
-
-#~ msgid "Instant update"
-#~ msgstr "Пастаяннае абнаўленьне"
-
-#~ msgid ""
-#~ "Install a private colormap; might be useful on 8-bit (256 colors) "
-#~ "displays."
-#~ msgstr ""
-#~ "Усталяваць прыватную мапу колераў; можа быць карысным для 8-бітавых (256-"
-#~ "колерных) экранаў."
-
-#~ msgid ""
-#~ "Generally only a concern for 8-bit displays, this sets the minimum number "
-#~ "of system colors allocated for GIMP."
-#~ msgstr ""
-#~ "Звычайна мае дачыненьне толькі да 8-бітавых экранаў, і вызначае найменшую "
-#~ "колькасьць сыстэмных колераў, вылучаных для GIMP."
-
-#~ msgid "Brush Scale"
-#~ msgstr "Маштаб пэндзля"
-
-#~ msgid "Rate:"
-#~ msgstr "Часьціня:"
-
-#~ msgid "Gradient:"
-#~ msgstr "Ґрадыент:"
-
-#~ msgid "Threshold:"
-#~ msgstr "Парог:"
-
-#~ msgid "Tilt:"
-#~ msgstr "Нахіл:"
-
-#~ msgid "Type"
-#~ msgstr "Тып"
-
-#~ msgid "Brush:"
-#~ msgstr "Пэндзаль:"
-
-#~ msgid "Scale:"
-#~ msgstr "Памер:"
-
-#~ msgid "Aspect:"
-#~ msgstr "Стасунак:"
-
-#~ msgid "Length:"
-#~ msgstr "Даўжыня:"
-
-#~ msgid "Use color from gradient"
-#~ msgstr "Ужыць колер з ґрадыенту"
-
-#~ msgid "Font:"
-#~ msgstr "Шрыфт:"
-
-#~ msgctxt "file-action"
-#~ msgid "Save this image with a different name, but keep its current name"
-#~ msgstr ""
-#~ "Захаваць відарыс зь іншай назвай, але пакінуць ягоную цяперашняю назву"
-
-#~ msgctxt "layers-action"
-#~ msgid "Te_xt to Selection"
-#~ msgstr "_Тэкст у вылучэньне"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Text to Selection"
-#~ msgstr "_Тэкст у вылучэньне"
-
-#~ msgctxt "layers-action"
-#~ msgid "Replace the selection with the text layer's outline"
-#~ msgstr "Замяніць вылучэньне абрысам тэкставага пласта"
-
-#~ msgctxt "layers-action"
-#~ msgid "Add the text layer's outline to the current selection"
-#~ msgstr "Дадаць контур тэкставага пласта да бягучага вылучэньня"
-
-#~ msgctxt "layers-action"
-#~ msgid "Subtract the text layer's outline from the current selection"
-#~ msgstr "Адняць контур тэкставага пласта зь бягучага вылучэньня"
-
-#~ msgctxt "layers-action"
-#~ msgid "Intersect the text layer's outline with the current selection"
-#~ msgstr "Перасячы контур тэкставага пласта зь бягучым вылучэньнем"
-
-#~ msgid "Reset Tool Options"
-#~ msgstr "Вернуць выборы інструмэнта"
-
-#~ msgctxt "undo-type"
-#~ msgid "Reorder layer"
-#~ msgstr "Перапарадкаваць пласты"
-
-#~ msgctxt "undo-type"
-#~ msgid "Reorder channel"
-#~ msgstr "Перапарадкаваць канал"
-
-#~ msgid "Paste"
-#~ msgstr "Уставіць"
-
-#~ msgid "Cut"
-#~ msgstr "Выразаць"
-
-#~ msgctxt "command"
-#~ msgid "Rectangle Select"
-#~ msgstr "Вылучальнік прастакутнікаў"
-
-#~ msgctxt "command"
-#~ msgid "Ellipse Select"
-#~ msgstr "Вылучальнік эліпсаў"
-
-#~ msgctxt "command"
-#~ msgid "Bucket Fill"
-#~ msgstr "Вядро"
-
-#~ msgid "Pressure:"
-#~ msgstr "Націсканьне:"
-
-#~ msgid "Empty Channel"
-#~ msgstr "Пусты канал"
-
-#~ msgid "Pixel dimensions:"
-#~ msgstr "Вымеры піксэля:"
-
-#~ msgid "Empty Layer"
-#~ msgstr "Пусты пласт"
-
-#~ msgid "Reorder path"
-#~ msgstr "Перапарадкаваць шлях"
-
-#~ msgid "Empty Path"
-#~ msgstr "Пусты шлях"
-
-#~ msgctxt "layers-action"
-#~ msgid "_New Group Layer..."
-#~ msgstr "_Стварыць ґрупавы пласт…"
-
-#~ msgctxt "layers-action"
-#~ msgid "Create a new group layer and add it to the image"
-#~ msgstr "Стварыць новы ґрупавы пласт і дадаць яго да відарыса"
-
-#~ msgid ""
-#~ "The window type hint that is set on the toolbox. This may affect how your "
-#~ "window manager decorates and handles the toolbox window."
-#~ msgstr ""
-#~ "Намінка тыпу вакна для панэлі інструмэнтаў. Можа паўплываць на тое, як "
-#~ "кіраўнік вакон аздабляе панэль інструмэнтаў і абыходзіцца зь ёй."
-
-#~ msgid "Group Layer"
-#~ msgstr "Гркпавы пласт"
-
-#~ msgid "Scale Group Layer"
-#~ msgstr "Зьмяніць памер ґрупавога пласта"
-
-#~ msgid "Resize Group Layer"
-#~ msgstr "Зьмяніць вымеры ґрупавога пласта"
-
-#~ msgid "Flip Group Layer"
-#~ msgstr "Перакуліць ґрупавы пласт"
-
-#~ msgid "Rotate Group Layer"
-#~ msgstr "Павернуць ґрупавы пласт"
-
-#~ msgid "Transform Group Layer"
-#~ msgstr "Ператварыць ґрупавы пласт"
-
-#~ msgid "Hint for other _docks:"
-#~ msgstr "Намінка для _іншых докаў:"
-
-#~ msgid "tool|_Zoom"
-#~ msgstr "_Маштаб"
-
-#~ msgid "Direction:"
-#~ msgstr "Напрамак:"
-
-#~ msgid "You can drop dockable dialogs here"
-#~ msgstr "Док-панэлі можна перанесьці сюды"
-
-#~ msgid "Raise this tool Raise this tool to the top"
-#~ msgstr "Узьняць гэты інструмэнт на вяршыню"
-
-#~ msgid "Lower this tool Lower this tool to the bottom"
-#~ msgstr "Апусьціць гэты інструмэнт на спод"
-
-#~ msgid "New brush"
-#~ msgstr "Новы пэндзаль"
-
-#~ msgid "Sample Merged"
-#~ msgstr "Аб'яднаная проба"
-
-#~ msgid "T_ools"
-#~ msgstr "_Інструмэнты"
-
-#~ msgid "Open the tools dialog"
-#~ msgstr "Адкрыць дыялёґ інструмэнтаў"
-
-#~ msgid "Remove dangling entries"
-#~ msgstr "Выдаліць састарэлыя запісы"
-
-#~ msgid "Copy the selected region to a named buffer"
-#~ msgstr "Капіяваць вылучаную вобласьць у названы буфэр"
-
-#~ msgid "Fill with P_attern"
-#~ msgstr "Запоўніць _узорам"
-
-#~ msgid "Save error log"
-#~ msgstr "Захаваць запісы аб памылках"
-
-#~ msgid "Save selection"
-#~ msgstr "Захаваць вылучаную вобласьць"
-
-#~ msgid "Save as _Template..."
-#~ msgstr "Захаваць як _шаблён…"
-
-#~ msgid "Rescan font list"
-#~ msgstr "Перасканаваць сьпіс шрыфтоў"
-
-#~ msgid "Set Opacity"
-#~ msgstr "Задаць непразрыстасьць"
-
-#~ msgid "Delete color"
-#~ msgstr "Выдаліць колер"
-
-#~ msgid "New palette"
-#~ msgstr "Новая палітра"
-
-#~ msgid "New pattern"
-#~ msgstr "Новы ўзор"
-
-#~ msgid "select|_All"
-#~ msgstr "Вылучыць _усё"
-
-#~ msgid "select|_None"
-#~ msgstr "_Зьняць вылучэньне"
-
-#~ msgid "Edit the selected template"
-#~ msgstr "Правіць выбраны шаблён"
-
-#~ msgid "Delete the selected template"
-#~ msgstr "Выдаліць выбраны буфэр"
-
-#~ msgid "R_aise Tool"
-#~ msgstr "_Узьняць інструмэнт"
-
-#~ msgid "Raise tool"
-#~ msgstr "Узьняць інструмэнт"
-
-#~ msgid "Ra_ise to Top"
-#~ msgstr "_Узьняць угору"
-
-#~ msgid "Raise tool to top"
-#~ msgstr "Узьняць інструмэнт угору"
-
-#~ msgid "L_ower Tool"
-#~ msgstr "_Апусьціць інструмэнт"
-
-#~ msgid "Lo_wer to Bottom"
-#~ msgstr "_Апусьціць долу"
-
-#~ msgid "_Reset Order & Visibility"
-#~ msgstr "_Вернуць парадак і бачнасьць"
-
-#~ msgid "_Show in Toolbox"
-#~ msgstr "_Паказваць у панэлі інструмэнтаў"
-
-#~ msgid "New path..."
-#~ msgstr "Стварыць шлях…"
-
-#~ msgid "_New Path"
-#~ msgstr "_Стварыць шлях"
-
-#~ msgid "Add"
-#~ msgstr "Дадаць"
-
-#~ msgid "Intersect"
-#~ msgstr "Перасячы"
-
-#~ msgid "When enabled, GIMP will show mnemonics in menus."
-#~ msgstr "Калі задзейнічана, GIMP будзе паказваць мнэмонікі ў мэню."
-
-#~ msgid ""
-#~ "When enabled, dock windows (the toolbox and palettes) are set to be "
-#~ "transient to the active image window. Most window managers will keep the "
-#~ "dock windows above the image window then, but it may also have other "
-#~ "effects."
-#~ msgstr ""
-#~ "Калі задзейнічана, докі (панэль інструмэнтаў і палітры) становяцца "
-#~ "часовымі адносна вакна актыўнага відарыса. Бальшыня кіраўнікоў вакон "
-#~ "будуць трымаць такія вокны па-над вакном відарыса, але могуць быць і "
-#~ "іншыя эфэкты."
-
-#~ msgid ""
-#~ "Sets the external web browser to be used.  This can be an absolute path "
-#~ "or the name of an executable to search for in the user's PATH. If the "
-#~ "command contains '%s' it will be replaced with the URL, else the URL will "
-#~ "be appended to the command with a space separating the two."
-#~ msgstr ""
-#~ "Вызначае які вонкавы гартач выкарыстоўваць. Гэта можа быць абсалютны "
-#~ "шлях, або назва праґрамы ў карыстальнікавым PATH. Калі каманда ўтрымлівае "
-#~ "«%s», то яно будзе заменена на URL, іначай URL будзе дададзены да загаду "
-#~ "праз прабел."
-
-#~ msgid "Remove floating selection"
-#~ msgstr "Выдаліць плаваючае вылучэньне"
-
-#~ msgid "Reposition layer"
-#~ msgstr "Пераставіць пласт"
-
-#~ msgid "Reposition channel"
-#~ msgstr "Пераставіць канал"
-
-#~ msgid "Reposition path"
-#~ msgstr "Пераставіць шлях"
-
-#~ msgid "Rigor floating selection"
-#~ msgstr "Замацаваць плаваючае вылучэньне"
-
-#~ msgid "Relax floating selection"
-#~ msgstr "Вызваліць плаваючае вылучэньне"
-
-#~ msgid "plural|percent"
-#~ msgstr "адсоткі"
-
-#~ msgid "Show menu _mnemonics (access keys)"
-#~ msgstr "Паказваць _мнэмонікі мэню (клявішы доступу)"
-
-#~ msgid "Web Browser"
-#~ msgstr "Гартач Сеціва"
-
-#~ msgid "_Web browser to use:"
-#~ msgstr "_Ужываць гартач Сеціва:"
-
-#~ msgid "Toolbox and other docks are transient to the active image window"
-#~ msgstr "Докі часовыя адносна актыўнага вакна відарыса"
-
-#~ msgid "quality|Low"
-#~ msgstr "Нізкая"
-
-#~ msgid "quality|High"
-#~ msgstr "Высокая"
-
-#~ msgid "Do_n't Save"
-#~ msgstr "_Не захоўваць"
-
-#~ msgid "RGB-empty"
-#~ msgstr "RGB-пусты"
-
-#~ msgid "grayscale-empty"
-#~ msgstr "шэры-пусты"
-
-#~ msgid "grayscale"
-#~ msgstr "шэры"
-
-#~ msgid "indexed-empty"
-#~ msgstr "індэксаваны-пусты"
-
-#~ msgid "indexed"
-#~ msgstr "індэксаваны"
-
-#~ msgid "Cannot rigor this layer because it is not a floating selection."
-#~ msgstr ""
-#~ "Немагчыма замацаваць гэты пласт, бо ён не зьяўляецца плаваючым "
-#~ "вылучэньнем."
-
-#~ msgid "Cannot relax this layer because it is not a floating selection."
-#~ msgstr ""
-#~ "Немагчыма вызваліць гэты пласт, бо ён не зьяўляецца плаваючым вылучэньнем."
-
-#~ msgid ""
-#~ "If available, hints from the font are used but you may prefer to always "
-#~ "use the automatic hinter"
-#~ msgstr ""
-#~ "Калі дасяжныя, выкарыстоўваюцца намінкі з шрыфта, але ты можаш аддаць "
-#~ "перавагу аўтаматычным намінкам"
-
-#~ msgid "Force auto-hinter"
-#~ msgstr "Прымусовыя аўтанамінкі"
-
-#~ msgid "Ne_w"
-#~ msgstr "_Стварыць"
-
-#~ msgid "Channel is already on top."
-#~ msgstr "Канал ужо на самым версе."
-
-#~ msgid "Channel is already on the bottom."
-#~ msgstr "Канал ужо на сподзе."
-
-#~ msgid "Path is already on top."
-#~ msgstr "Шлях ужо на самым версе."
-
-#~ msgid "Path is already on the bottom."
-#~ msgstr "Шлях ужо на сподзе."
-
-#~ msgid "Cannot add layer mask to layer which is not part of an image."
-#~ msgstr ""
-#~ "Немагчыма дадаць маску да пласта, які не зьяўляецца часткай відарыса."
-
-#~ msgid "Reading palette '%s': Missing GREEN component in line %d."
-#~ msgstr ""
-#~ "Чытаньне файла з палітрай «%s»: адсутнічае ЗЯЛЁНЫ складнік у радку %d."
-
-#~ msgid ""
-#~ "PDB calling error:\n"
-#~ "Procedure '%s' not found"
-#~ msgstr ""
-#~ "Няўдалы выклік PDB:\n"
-#~ "Працэдура '%s' ня знойдзеная"
-
-#~ msgid ""
-#~ "PDB calling error for procedure '%s':\n"
-#~ "Argument #%d type mismatch (expected %s, got %s)"
-#~ msgstr ""
-#~ "Памылка выкліку працэдуры PDB '%s':\n"
-#~ "Неадпаведны тып парамэтру #%d (замест %s атрыманы %s)"
-
-#~ msgid "Copy the selected region to the clipboard"
-#~ msgstr "Капіяваць вылучаную вобласьць у буфэр абмену"
-
-#~ msgid "Show the tip of the day"
-#~ msgstr "Паказаць сёньняшнюю параду"
-
-#~ msgid ""
-#~ "When enabled, the online user manual will be used by the help system. "
-#~ "Otherwise the locally installed copy is used."
-#~ msgstr ""
-#~ "Калі задзейнічана, сеціўнае кіраўніцтва карыстальніка  будзе выкарыстана "
-#~ "сыстэмай дапамогі. У іншым выпадку — лякальна ўсталяваная копія."
-
-#~ msgid "Dynamics sensitivity"
-#~ msgstr "Дынамічная ўспрымальнасьць"
-
-#~ msgid "Help browser not found"
-#~ msgstr "Гартач дапамогі не адшуканы."
-
-#~ msgid "Could not find GIMP help browser."
-#~ msgstr "Немагчыма знайсьці гартач дапамогі GIMP."
-
-#~ msgid "Use _web browser instead"
-#~ msgstr "Ужываць гартач Web замест."
-
-#~ msgid "Add Settings to _Favorites"
-#~ msgstr "Дадаць наладкі ў _Абранае"
-
-#~ msgid "Manage Loadable Modules"
-#~ msgstr "Кіраваньне модулямі, якія могуць загружацца"
-
-#~ msgid "Autoload"
-#~ msgstr "Аўтазагрузка"
-
-#~ msgid "Module Path"
-#~ msgstr "Шлях модуля"
-
-#~ msgid "<No modules>"
-#~ msgstr "<Няма модуляў>"
-
-#~ msgid "On disk"
-#~ msgstr "На дыску"
-
-#~ msgid "Load"
-#~ msgstr "Загрузіць"
-
-#~ msgid "Query"
-#~ msgstr "Запытаць"
-
-#~ msgid "Unload"
-#~ msgstr "Выгрузіць"
-
-#~ msgid "Purpose:"
-#~ msgstr "Мэта:"
-
-#~ msgid "Last error:"
-#~ msgstr "Апошняя памылка:"
-
-#~ msgid "Available types:"
-#~ msgstr "Наяўныя тыпы:"
-
-#~ msgid "Linear"
-#~ msgstr "Лінейна"
-
-#~ msgid "_Dialogs"
-#~ msgstr "_Дыялёґі"
-
-#~ msgid "Create New Doc_k"
-#~ msgstr "_Стварыць новую панэль"
-
-#~ msgid "_Layers, Channels & Paths"
-#~ msgstr "_Пласты, каналы й шляхі"
-
-#~ msgid "Open a Layers, Channels & Paths dock"
-#~ msgstr "Адкрыць панэль пластоў, каналаў і шляхоў"
-
-#~ msgid "_Brushes, Patterns & Gradients"
-#~ msgstr "_Пэндзлі, узоры й ґрадыенты"
-
-#~ msgid "Open a Brushes, Patterns & Gradients dock"
-#~ msgstr "Адкрыць панэль пэндзляў, ґрадыентаў і ўзораў"
-
-#~ msgid "_Misc. Stuff"
-#~ msgstr "_Рознае"
-
-#~ msgid "Open a dock containing miscellaneous dialogs"
-#~ msgstr "Адкрыць панэль з рознымі дыялёґамі"
-
-#~ msgid "Remove all entries from the document history?"
-#~ msgstr "Ці прыбраць усе запісы з гісторыі дакумэнта?"
-
-#~ msgid "Paste as New"
-#~ msgstr "Уставіць як _новы"
-
-#~ msgid "Acq_uire"
-#~ msgstr "_Здабыць"
-
-#~ msgid "Toolbox Menu"
-#~ msgstr "Мэню інструмэнтаў"
-
-#~ msgid "_Xtns"
-#~ msgstr "_Пашырэньні"
-
-#~ msgid "Fit Image _to Window"
-#~ msgstr "_Відарыс да шырыні вакна"
-
-#~ msgid "Enable displaying a handy GIMP tip on startup."
-#~ msgstr "Задзейнічаць адлюстроўваньне карысных парад на пачатку працы."
-
-#~ msgid "FS rigor"
-#~ msgstr "Замацаваньне ПВ"
-
-#~ msgid "FS relax"
-#~ msgstr "Вызваленьне ПВ"
-
-#~ msgid "EEK: can't undo"
-#~ msgstr "Немагчыма адмяніць"
-
-#~ msgid "command|Rectangle Select"
-#~ msgstr "Вылучыць прастакутнік"
-
-#~ msgid "command|Ellipse Select"
-#~ msgstr "Вылучыць эліпс"
-
-#~ msgid "command|Fuzzy Select"
-#~ msgstr "Недакладны вылучальнік"
-
-#~ msgid "command|Select by Color"
-#~ msgstr "Вылучыць колер"
-
-#~ msgid "command|Bucket Fill"
-#~ msgstr "Вядро"
-
-#~ msgid "command|Flip"
-#~ msgstr "Перакуленьне"
-
-#~ msgid "command|Rotate"
-#~ msgstr "Паварот"
-
-#~ msgid "command|Crop Image"
-#~ msgstr "Абрэзаць відарыс"
-
-#~ msgid "_Desaturate"
-#~ msgstr "_Абясколерыць"
-
-#~ msgid "dialog-title|Scale Image"
-#~ msgstr "Зьмяненьне памеру відарыса"
-
-#~ msgid "Save document _history on exit"
-#~ msgstr "Захоўваць _гісторыю дакумэнтаў пры выйсьці"
-
-#~ msgid "Show tips on _startup"
-#~ msgstr "_Паказваць парады на пачатку працы"
-
-#~ msgid "Show tip next time GIMP starts"
-#~ msgstr "Паказаць парады падчас наступнага запуску GIMP"
-
-#~ msgid "Other..."
-#~ msgstr "Іншыя..."
-
-#~ msgid "Left justified"
-#~ msgstr "Па левы бок"
-
-#~ msgid "Right justified"
-#~ msgstr "Па правы бок"
-
-#~ msgid "Centered"
-#~ msgstr "Цэнтраваны"
-
-#~ msgid "Filled"
-#~ msgstr "Запоўнены"
-
-#~ msgid "Save Curves"
-#~ msgstr "Захаваць крывыя"
-
-#~ msgid "Mode"
-#~ msgstr "Рэжым"
-
-#~ msgid "command|Foreground Select"
-#~ msgstr "Вылучальнік пярэдняга пляну"
-
-#~ msgid "command|Free Select"
-#~ msgstr "Свабодны вылучальнік"
-
-#~ msgid "Quick Load"
-#~ msgstr "Хутка загрузіць"
-
-#~ msgid "Quick Save"
-#~ msgstr "Хутка захаваць"
-
-#~ msgid "Load Levels"
-#~ msgstr "Загрузіць узроўні"
-
-#~ msgid "Load levels settings from file"
-#~ msgstr "Прачытаць настаўленьні узроўняў з файла"
-
-#~ msgid "Save Levels"
-#~ msgstr "Захаваць узроўні"
-
-#~ msgid "tool|Move"
-#~ msgstr "Перасоўнік"
-
-#~ msgid "command|Perspective"
-#~ msgstr "Пэрспэктыва"
-
-#~ msgid "command|Scale"
-#~ msgstr "Зьмяненьне памеру"
-
-#~ msgid "command|Shear"
-#~ msgstr "Нахіл"
-
-#~ msgid "Close all Tabs?"
-#~ msgstr "Ці закрыць усе ўкладкі?"
-
-#~ msgid "Close all Tabs"
-#~ msgstr "Закрыць усе ўкладкі"
-
-#~ msgid "Close all tabs?"
-#~ msgstr "Ці закрыць усе ўкладкі?"
-
-#~ msgid ""
-#~ "This window has %d tab open. Closing the window will also close all its "
-#~ "tabs."
-#~ msgid_plural ""
-#~ "This window has %d tabs open. Closing the window will also close all its "
-#~ "tabs."
-#~ msgstr[0] ""
-#~ "Вакно мае %d адкрытую ўкладку. Пры закрыцьці вакна ўсе ягоныя ўкладкі "
-#~ "будуць закрытыя таксама."
-#~ msgstr[1] ""
-#~ "Вакно мае %d адкрытыя ўкладкі. Пры закрыцьці вакна ўсе ягоныя ўкладкі "
-#~ "будуць закрытыя таксама."
-#~ msgstr[2] ""
-#~ "Вакно мае %d адкрытых укладак. Пры закрыцьці вакна ўсе ягоныя ўкладкі "
-#~ "будуць закрытыя таксама."
-
-#~ msgid "Add Sample_Point"
-#~ msgstr "_Дадаць пункт-прыклад"
