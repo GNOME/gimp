@@ -65,12 +65,8 @@
 
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimp-single-window-mode/" #function, \
-              GimpTestFixture, \
-              gimp, \
-              NULL, \
-              function, \
-              NULL);
+  g_test_add_data_func ("/gimp-single-window-mode/" #function, gimp, function);
+
 
 /* Put this in the code below when you want the test to pause so you
  * can do measurements of widgets on the screen for example
@@ -78,23 +74,15 @@
 #define GIMP_PAUSE (g_usleep (20 * 1000 * 1000))
 
 
-typedef struct
-{
-  int avoid_sizeof_zero;
-} GimpTestFixture;
-
-
 /**
  * new_dockable_not_in_new_window:
- * @fixture:
  * @data:
  *
  * Test that in single-window mode, new dockables are not put in new
  * windows (they should end up in the single image window).
  **/
 static void
-new_dockable_not_in_new_window (GimpTestFixture *fixture,
-                                gconstpointer    data)
+new_dockable_not_in_new_window (gconstpointer data)
 {
   Gimp              *gimp             = GIMP (data);
   GimpDialogFactory *factory          = gimp_dialog_factory_get_singleton ();

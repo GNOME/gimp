@@ -66,12 +66,8 @@
 #define GIMP_UI_ZOOM_EPSILON            0.01
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimp-ui/" #function, \
-              GimpTestFixture, \
-              gimp, \
-              NULL, \
-              function, \
-              NULL);
+  g_test_add_data_func ("/gimp-ui/" #function, gimp, function);
+
 
 /* Put this in the code below when you want the test to pause so you
  * can do measurements of widgets on the screen for example
@@ -80,12 +76,6 @@
 
 
 typedef gboolean (*GimpUiTestFunc) (GObject *object);
-
-
-typedef struct
-{
-  int avoid_sizeof_zero;
-} GimpTestFixture;
 
 
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
@@ -104,15 +94,13 @@ static void            gimp_ui_switch_window_mode               (Gimp           
 
 /**
  * tool_options_editor_updates:
- * @fixture:
  * @data:
  *
  * Makes sure that the tool options editor is updated when the tool
  * changes.
  **/
 static void
-tool_options_editor_updates (GimpTestFixture *fixture,
-                             gconstpointer    data)
+tool_options_editor_updates (gconstpointer data)
 {
   Gimp                  *gimp         = GIMP (data);
   GimpDisplay           *display      = GIMP_DISPLAY (gimp_get_empty_display (gimp));
@@ -177,8 +165,7 @@ gimp_ui_get_dialog (const gchar *identifier)
 }
 
 static void
-automatic_tab_style (GimpTestFixture *fixture,
-                     gconstpointer    data)
+automatic_tab_style (gconstpointer data)
 {
   GtkWidget    *channel_dockable = gimp_ui_get_dialog ("gimp-channel-list");
   GimpDockable *dockable;
@@ -230,8 +217,7 @@ automatic_tab_style (GimpTestFixture *fixture,
 }
 
 static void
-create_new_image_via_dialog (GimpTestFixture *fixture,
-                             gconstpointer    data)
+create_new_image_via_dialog (gconstpointer data)
 {
   Gimp      *gimp = GIMP (data);
   GimpImage *image;
@@ -253,8 +239,7 @@ create_new_image_via_dialog (GimpTestFixture *fixture,
 }
 
 static void
-keyboard_zoom_focus (GimpTestFixture *fixture,
-                     gconstpointer    data)
+keyboard_zoom_focus (gconstpointer data)
 {
   Gimp              *gimp    = GIMP (data);
   GimpDisplay       *display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
@@ -322,7 +307,6 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
 
 /**
  * alt_click_is_layer_to_selection:
- * @fixture:
  * @data:
  *
  * Makes sure that we can alt-click on a layer to do
@@ -330,8 +314,7 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
  * not set as the active layer.
  **/
 static void
-alt_click_is_layer_to_selection (GimpTestFixture *fixture,
-                                 gconstpointer    data)
+alt_click_is_layer_to_selection (gconstpointer data)
 {
   Gimp        *gimp      = GIMP (data);
   GimpImage   *image     = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
@@ -407,8 +390,7 @@ alt_click_is_layer_to_selection (GimpTestFixture *fixture,
 }
 
 static void
-restore_recently_closed_multi_column_dock (GimpTestFixture *fixture,
-                                           gconstpointer    data)
+restore_recently_closed_multi_column_dock (gconstpointer data)
 {
   Gimp      *gimp                          = GIMP (data);
   GtkWidget *dock_window                   = NULL;
@@ -454,7 +436,6 @@ restore_recently_closed_multi_column_dock (GimpTestFixture *fixture,
 
 /**
  * tab_toggle_dont_change_dock_window_position:
- * @fixture:
  * @data:
  *
  * Makes sure that when dock windows are hidden with Tab and shown
@@ -462,8 +443,7 @@ restore_recently_closed_multi_column_dock (GimpTestFixture *fixture,
  * use Tab though, we only simulate its effect.
  **/
 static void
-tab_toggle_dont_change_dock_window_position (GimpTestFixture *fixture,
-                                             gconstpointer    data)
+tab_toggle_dont_change_dock_window_position (gconstpointer data)
 {
   Gimp      *gimp          = GIMP (data);
   GtkWidget *dock_window   = NULL;
@@ -521,8 +501,7 @@ tab_toggle_dont_change_dock_window_position (GimpTestFixture *fixture,
 }
 
 static void
-switch_to_single_window_mode (GimpTestFixture *fixture,
-                              gconstpointer    data)
+switch_to_single_window_mode (gconstpointer data)
 {
   Gimp *gimp = GIMP (data);
 
@@ -578,24 +557,21 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
 }
 
 static void
-hide_docks_in_single_window_mode (GimpTestFixture *fixture,
-                                  gconstpointer   data)
+hide_docks_in_single_window_mode (gconstpointer data)
 {
   Gimp *gimp = GIMP (data);
   gimp_ui_toggle_docks_in_single_window_mode (gimp);
 }
 
 static void
-show_docks_in_single_window_mode (GimpTestFixture *fixture,
-                                  gconstpointer    data)
+show_docks_in_single_window_mode (gconstpointer data)
 {
   Gimp *gimp = GIMP (data);
   gimp_ui_toggle_docks_in_single_window_mode (gimp);
 }
 
 static void
-switch_back_to_multi_window_mode (GimpTestFixture *fixture,
-                                  gconstpointer    data)
+switch_back_to_multi_window_mode (gconstpointer data)
 {
   Gimp *gimp = GIMP (data);
 
@@ -606,8 +582,7 @@ switch_back_to_multi_window_mode (GimpTestFixture *fixture,
 }
 
 static void
-close_image (GimpTestFixture *fixture,
-             gconstpointer    data)
+close_image (gconstpointer data)
 {
   Gimp *gimp       = GIMP (data);
   int   undo_count = 4;
@@ -635,15 +610,13 @@ close_image (GimpTestFixture *fixture,
 
 /**
  * repeatedly_switch_window_mode:
- * @fixture:
  * @data:
  *
  * Makes sure that the size of the image window is properly handled
  * when repeatedly switching between window modes.
  **/
 static void
-repeatedly_switch_window_mode (GimpTestFixture *fixture,
-                               gconstpointer    data)
+repeatedly_switch_window_mode (gconstpointer data)
 {
   Gimp             *gimp     = GIMP (data);
   GimpDisplay      *display  = GIMP_DISPLAY (gimp_get_empty_display (gimp));
@@ -703,14 +676,12 @@ repeatedly_switch_window_mode (GimpTestFixture *fixture,
 
 /**
  * window_roles:
- * @fixture:
  * @data:
  *
  * Makes sure that different windows have the right roles specified.
  **/
 static void
-window_roles (GimpTestFixture *fixture,
-              gconstpointer    data)
+window_roles (gconstpointer data)
 {
   GtkWidget      *dock           = NULL;
   GtkWidget      *toolbox        = NULL;
@@ -740,8 +711,7 @@ window_roles (GimpTestFixture *fixture,
 }
 
 static void
-paintbrush_is_standard_tool (GimpTestFixture *fixture,
-                             gconstpointer    data)
+paintbrush_is_standard_tool (gconstpointer data)
 {
   Gimp         *gimp         = GIMP (data);
   GimpContext  *user_context = gimp_get_user_context (gimp);

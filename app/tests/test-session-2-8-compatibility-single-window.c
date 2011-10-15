@@ -28,18 +28,8 @@
 
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimp-session-2-8-compatibility-single-window/" #function, \
-              GimpTestFixture, \
-              NULL, \
-              NULL, \
-              function, \
-              NULL);
-
-
-typedef struct
-{
-  int dummy;
-} GimpTestFixture;
+  g_test_add_func ("/gimp-session-2-8-compatibility-single-window/" #function, \
+                   function);
 
 
 /**
@@ -47,8 +37,7 @@ typedef struct
  * and written (thus also interpreted) like we expect.
  **/
 static void
-read_and_write_session_files (GimpTestFixture *fixture,
-                              gconstpointer    data)
+read_and_write_session_files (void)
 {
   gimp_test_session_load_and_write_session_files ("sessionrc-2-8-single-window",
                                                   "dockrc-2-8",

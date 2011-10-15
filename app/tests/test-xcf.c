@@ -136,18 +136,7 @@
                                           { 931.0, 932.0, /* pad zeroes */ }, }
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimp-xcf/" #function, \
-              GimpTestFixture, \
-              gimp, \
-              NULL, \
-              function, \
-              NULL);
-
-
-typedef struct
-{
-  gint avoid_sizeof_zero;
-} GimpTestFixture;
+  g_test_add_data_func ("/gimp-xcf/" #function, gimp, function);
 
 
 GimpImage        * gimp_test_load_image                        (Gimp            *gimp,
@@ -168,15 +157,13 @@ static void        gimp_assert_mainimage                       (GimpImage       
 
 /**
  * write_and_read_gimp_2_6_format:
- * @fixture:
  * @data:
  *
  * Do a write and read test on a file that could as well be
  * constructed with GIMP 2.6.
  **/
 static void
-write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
-                                gconstpointer    data)
+write_and_read_gimp_2_6_format (gconstpointer data)
 {
   Gimp *gimp = GIMP (data);
 
@@ -188,7 +175,6 @@ write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
 
 /**
  * write_and_read_gimp_2_6_format_unusual:
- * @fixture:
  * @data:
  *
  * Do a write and read test on a file that could as well be
@@ -196,8 +182,7 @@ write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
  * vectors and with a floating selection.
  **/
 static void
-write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
-                                        gconstpointer    data)
+write_and_read_gimp_2_6_format_unusual (gconstpointer data)
 {
   Gimp *gimp = GIMP (data);
 
@@ -209,15 +194,13 @@ write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
 
 /**
  * load_gimp_2_6_file:
- * @fixture:
  * @data:
  *
  * Loads a file created with GIMP 2.6 and makes sure it loaded as
  * expected.
  **/
 static void
-load_gimp_2_6_file (GimpTestFixture *fixture,
-                    gconstpointer    data)
+load_gimp_2_6_file (gconstpointer data)
 {
   Gimp      *gimp  = GIMP (data);
   GimpImage *image = NULL;
@@ -243,7 +226,6 @@ load_gimp_2_6_file (GimpTestFixture *fixture,
 
 /**
  * write_and_read_gimp_2_8_format:
- * @fixture:
  * @data:
  *
  * Writes an XCF file that uses GIMP 2.8 features such as layer
@@ -251,8 +233,7 @@ load_gimp_2_6_file (GimpTestFixture *fixture,
  * was lost.
  **/
 static void
-write_and_read_gimp_2_8_format (GimpTestFixture *fixture,
-                                gconstpointer    data)
+write_and_read_gimp_2_8_format (gconstpointer data)
 {
   Gimp *gimp = GIMP (data);
 

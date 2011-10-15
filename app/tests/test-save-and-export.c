@@ -68,35 +68,20 @@
 
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimp-save-and-export/" #function, \
-              GimpTestFixture, \
-              gimp, \
-              NULL, \
-              function, \
-              NULL);
-
-
+  g_test_add_data_func ("/gimp-save-and-export/" #function, gimp, function);
 
 
 typedef gboolean (*GimpUiTestFunc) (GObject *object);
 
 
-typedef struct
-{
-  int avoid_sizeof_zero;
-} GimpTestFixture;
-
-
 /**
  * new_file_has_no_uris:
- * @fixture:
  * @data:
  *
  * Tests that the URIs are correct for a newly created image.
  **/
 static void
-new_file_has_no_uris (GimpTestFixture *fixture,
-                      gconstpointer    data)
+new_file_has_no_uris (gconstpointer    data)
 {
   Gimp      *gimp  = GIMP (data);
   GimpImage *image = gimp_test_utils_create_image_from_dalog (gimp);
@@ -108,15 +93,13 @@ new_file_has_no_uris (GimpTestFixture *fixture,
 
 /**
  * opened_xcf_file_uris:
- * @fixture:
  * @data:
  *
  * Tests that GimpImage URIs are correct for an XCF file that has just
  * been opened.
  **/
 static void
-opened_xcf_file_uris (GimpTestFixture *fixture,
-                      gconstpointer    data)
+opened_xcf_file_uris (gconstpointer data)
 {
   Gimp              *gimp = GIMP (data);
   GimpImage         *image;
@@ -150,14 +133,12 @@ opened_xcf_file_uris (GimpTestFixture *fixture,
 
 /**
  * imported_file_uris:
- * @fixture:
  * @data:
  *
  * Tests that URIs are correct for an imported image.
  **/
 static void
-imported_file_uris (GimpTestFixture *fixture,
-                    gconstpointer    data)
+imported_file_uris (gconstpointer data)
 {
   Gimp              *gimp = GIMP (data);
   GimpImage         *image;
@@ -190,15 +171,13 @@ imported_file_uris (GimpTestFixture *fixture,
 
 /**
  * saved_imported_file_uris:
- * @fixture:
  * @data:
  *
  * Tests that the URIs are correct for an image that has been imported
  * and then saved.
  **/
 static void
-saved_imported_file_uris (GimpTestFixture *fixture,
-                         gconstpointer    data)
+saved_imported_file_uris (gconstpointer data)
 {
   Gimp                *gimp = GIMP (data);
   GimpImage           *image;
@@ -253,15 +232,13 @@ saved_imported_file_uris (GimpTestFixture *fixture,
 
 /**
  * new_file_has_no_uris:
- * @fixture:
  * @data:
  *
  * Tests that the URIs for an exported, newly created file are
  * correct.
  **/
 static void
-exported_file_uris (GimpTestFixture *fixture,
-                    gconstpointer    data)
+exported_file_uris (gconstpointer data)
 {
   gchar               *save_uri;
   gchar               *save_filename;
@@ -294,7 +271,6 @@ exported_file_uris (GimpTestFixture *fixture,
 
 /**
  * clear_import_uri_after_export:
- * @fixture:
  * @data:
  *
  * Tests that after a XCF file that was imported has been exported,
@@ -302,8 +278,7 @@ exported_file_uris (GimpTestFixture *fixture,
  * imported and exported at the same time.
  **/
 static void
-clear_import_uri_after_export (GimpTestFixture *fixture,
-                               gconstpointer    data)
+clear_import_uri_after_export (gconstpointer data)
 {
   Gimp                *gimp = GIMP (data);
   GimpImage           *image;

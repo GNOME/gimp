@@ -37,18 +37,7 @@
 
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimptilebackendtilemanager/" #function, \
-              GimpTestFixture, \
-              NULL, \
-              NULL, \
-              function, \
-              NULL);
-
-
-typedef struct
-{
-  gint avoid_sizeof_zero;
-} GimpTestFixture;
+  g_test_add_func ("/gimptilebackendtilemanager/" #function, function);
 
 
 /**
@@ -59,8 +48,7 @@ typedef struct
  * Test basic usage.
  **/
 static void
-basic_usage (GimpTestFixture *fixture,
-             gconstpointer    data)
+basic_usage (void)
 {
   GeglRectangle rect                = { 0, 0, 10, 10 };
   GeglRectangle pixel_rect          = { 5, 5, 1, 1 };
