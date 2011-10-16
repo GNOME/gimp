@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-15 21:15+0300\n"
-"PO-Revision-Date: 2011-10-15 21:15+0300\n"
+"POT-Creation-Date: 2011-10-16 13:44+0300\n"
+"PO-Revision-Date: 2011-10-16 13:44+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -425,11 +425,11 @@ msgstr "Рэдактар тэксту"
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
 #: ../app/dialogs/preferences-dialog.c:1854 ../app/gui/gui.c:424
 msgid "Tool Options"
-msgstr "Выборы інструмэнта"
+msgstr "Выборы прылады"
 
 #: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:385
 msgid "Tools"
-msgstr "Інструмэнты"
+msgstr "Прылады"
 
 #: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:350
 #: ../app/tools/gimpvectortool.c:160
@@ -843,7 +843,7 @@ msgstr "_Рэжым рысаваньня"
 #: ../app/actions/context-actions.c:54
 msgctxt "context-action"
 msgid "_Tool"
-msgstr "_Інструмэнт"
+msgstr "Пр_ылада"
 
 #: ../app/actions/context-actions.c:56
 msgctxt "context-action"
@@ -985,17 +985,17 @@ msgstr "Безназоўны"
 #: ../app/actions/dialogs-actions.c:49
 msgctxt "windows-action"
 msgid "Tool_box"
-msgstr "_Панэль інструмэнтаў"
+msgstr "_Панэль прылад"
 
 #: ../app/actions/dialogs-actions.c:55
 msgctxt "dialogs-action"
 msgid "Tool _Options"
-msgstr "_Выборы інструмэнта"
+msgstr "_Выборы прылады"
 
 #: ../app/actions/dialogs-actions.c:56
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
-msgstr "Адкрыць дыялёґ выбораў інструмэнта"
+msgstr "Адкрыць дыялёґ выбораў прылады"
 
 #: ../app/actions/dialogs-actions.c:61
 msgctxt "dialogs-action"
@@ -1215,7 +1215,7 @@ msgstr "Наборы настроек"
 #: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Адкрыць дыялёґ з наборамі настроек інструмэнтаў"
+msgstr "Адкрыць дыялёґ з наборамі настроек прылады"
 
 #: ../app/actions/dialogs-actions.c:193
 msgctxt "dialogs-action"
@@ -1340,19 +1340,19 @@ msgstr "Пра GIMP"
 #: ../app/actions/dialogs-actions.c:326
 #: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:549
 msgid "Toolbox"
-msgstr "Панэль інструмэнтаў"
+msgstr "Панэль прылад"
 
 #: ../app/actions/dialogs-actions.c:327
 msgid "Raise the toolbox"
-msgstr "Узьняць панэль інструмэнтаў"
+msgstr "Узьняць панэль прылад"
 
 #: ../app/actions/dialogs-actions.c:331
 msgid "New Toolbox"
-msgstr "Стварыць панэль інструмэнтаў"
+msgstr "Стварыць панэль прылад"
 
 #: ../app/actions/dialogs-actions.c:332
 msgid "Create a new toolbox"
-msgstr "Стварыць новую панэль інструмэнтаў"
+msgstr "Стварыць новую панэль прылад"
 
 #: ../app/actions/dock-actions.c:45
 msgctxt "dock-action"
@@ -3323,7 +3323,7 @@ msgstr "_Тэкст"
 #: ../app/actions/layers-actions.c:71
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
-msgstr "Задзейнічаць інструмэнт працы з тэкстам на гэтым пласьце"
+msgstr "Задзейнічаць прыладу працы з тэкстам на гэтым пласьце"
 
 #: ../app/actions/layers-actions.c:76
 msgctxt "layers-action"
@@ -4594,7 +4594,7 @@ msgstr "Немагчыма адкрыць «%s» для чытаньня: %s"
 #: ../app/actions/text-tool-actions.c:50
 msgctxt "text-tool-action"
 msgid "Text Tool Menu"
-msgstr "Мэню інструмэнту «Тэкст»"
+msgstr "Мэню прылады «Тэкст»"
 
 #: ../app/actions/text-tool-actions.c:54
 msgctxt "text-tool-action"
@@ -4669,7 +4669,7 @@ msgstr "Справа налева"
 #: ../app/actions/tool-options-actions.c:54
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
-msgstr "Мэню выбораў інструмэнта"
+msgstr "Мэню выбораў прылады"
 
 #: ../app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
@@ -4699,7 +4699,7 @@ msgstr "_Стварыць набор…"
 #: ../app/actions/tool-options-actions.c:79
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
-msgstr "_Вернуць выборы інструмэнта"
+msgstr "_Вернуць выборы прылады"
 
 #: ../app/actions/tool-options-actions.c:80
 msgctxt "tool-options-action"
@@ -4709,100 +4709,86 @@ msgstr "Вернуць значэньні да прадвызначаных"
 #: ../app/actions/tool-options-actions.c:85
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
-msgstr "_Вернуць усе выборы інструмэнта"
+msgstr "_Вернуць усе выборы прылады"
 
 #: ../app/actions/tool-options-actions.c:86
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
-msgstr "Вернуць усе выборы інструмэнта"
+msgstr "Вернуць усе выборы прылады"
 
 #: ../app/actions/tool-options-commands.c:180
 msgid "Reset All Tool Options"
-msgstr "Вернуць усе выборы інструмэнта"
+msgstr "Вернуць усе выборы прылады"
 
 #: ../app/actions/tool-options-commands.c:203
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
-"Ці сапраўды жадаеш вернуць усе выборы інструмэнта да прадвызначаных "
-"значэньняў?"
+"Ці сапраўды жадаеш вернуць усе выборы прылады да прадвызначаных значэньняў?"
 
 #: ../app/actions/tool-presets-actions.c:44
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
 msgstr "Мэню набораў настроек"
 
 #: ../app/actions/tool-presets-actions.c:48
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
 msgstr "_Стварыць набор"
 
 #: ../app/actions/tool-presets-actions.c:49
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
-msgstr "Стварыць новы набор настроек"
+msgstr "Стварыць новы набор настроек прылады"
 
 #: ../app/actions/tool-presets-actions.c:54
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
 msgstr "_Падвоіць набор"
 
 #: ../app/actions/tool-presets-actions.c:55
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
-msgstr "Падвоіць гэты набор настроек інструмэнтаў"
+msgstr "Падвоіць гэты набор настроек прылады"
 
 #: ../app/actions/tool-presets-actions.c:60
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
 msgstr "_Капіяваць месца набору"
 
 #: ../app/actions/tool-presets-actions.c:61
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
 msgstr "Скапіяваць шлях да файла з наборам настроек у буфэр абмену"
 
 #: ../app/actions/tool-presets-actions.c:66
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
 msgstr "_Выдаліць набор"
 
 #: ../app/actions/tool-presets-actions.c:67
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
-msgstr "Выдаліць гэты набор настроек інструмэнтаў"
+msgstr "Выдаліць гэты набор настроек прылады"
 
 #: ../app/actions/tool-presets-actions.c:72
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
 msgstr "_Асьвяжыць наборы"
 
 #: ../app/actions/tool-presets-actions.c:73
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr "Асьвяжыць наборы настроек інструмэнтаў"
+msgstr "Асьвяжыць наборы настроек прылады"
 
 #: ../app/actions/tool-presets-actions.c:81
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
 msgstr "Правіць _набор…"
 
 #: ../app/actions/tool-presets-actions.c:82
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
-msgstr "Правіць гэты набор настроек інструмэнтаў"
+msgstr "Правіць гэты набор настроек прылады"
 
 #: ../app/actions/tool-preset-editor-actions.c:42
 msgctxt "tool-preset-editor-action"
@@ -4817,7 +4803,7 @@ msgstr "Правіць актыўны набор"
 #: ../app/actions/tools-actions.c:45
 msgctxt "tools-action"
 msgid "_Tools"
-msgstr "_Інструмэнты"
+msgstr "_Прылады"
 
 #: ../app/actions/tools-actions.c:46
 msgctxt "tools-action"
@@ -5299,7 +5285,7 @@ msgstr "_Прыцягваць да накіроўных"
 #: ../app/actions/view-actions.c:176
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
-msgstr "Дзеяньні інструмэнтаў прыцягваюцца да накіроўных"
+msgstr "Дзеяньні прылад прыцягваюцца да накіроўных"
 
 #: ../app/actions/view-actions.c:182
 msgctxt "view-action"
@@ -5309,7 +5295,7 @@ msgstr "_Прыцягваць да сеткі"
 #: ../app/actions/view-actions.c:183
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
-msgstr "Дзеяньні інструмэнтаў прыцягваюцца да сеткі"
+msgstr "Дзеяньні прылад прыцягваюцца да сеткі"
 
 #: ../app/actions/view-actions.c:189
 msgctxt "view-action"
@@ -5319,7 +5305,7 @@ msgstr "_Прыцягваць да краёў пласта"
 #: ../app/actions/view-actions.c:190
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
-msgstr "Дзеяньні інструмэнтаў прыцягваюцца да краёў палатна"
+msgstr "Дзеяньні прылад прыцягваюцца да краёў палатна"
 
 #: ../app/actions/view-actions.c:196
 msgctxt "view-action"
@@ -5329,7 +5315,7 @@ msgstr "_Прыцягваць да актыўнага шляха "
 #: ../app/actions/view-actions.c:197
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
-msgstr "Дзеяньні інструмэнтаў прыцягваюцца да актыўнага шляха"
+msgstr "Дзеяньні прылад прыцягваюцца да актыўнага шляха"
 
 #: ../app/actions/view-actions.c:203
 msgctxt "view-action"
@@ -5850,12 +5836,12 @@ msgstr "Немагчыма зьмяніць памер файла абмену: 
 #: ../app/config/config-enums.c:24
 msgctxt "cursor-mode"
 msgid "Tool icon"
-msgstr "Значка інструмэнта"
+msgstr "Значка прылады"
 
 #: ../app/config/config-enums.c:25
 msgctxt "cursor-mode"
 msgid "Tool icon with crosshair"
-msgstr "Значка інструмэнта зь перакрыжаваньнем"
+msgstr "Значка прылады зь перакрыжаваньнем"
 
 #: ../app/config/config-enums.c:26
 msgctxt "cursor-mode"
@@ -6060,7 +6046,7 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Інструмэнты, такія як змазаны вылучальнік і вядро, адшукваюць вобласьці з "
+"Прылады, такія як змазаны вылучальнік і вядро, адшукваюць вобласьці з "
 "дапамогай альгарытму крынічнага запаўненьня. Паводле яго запаўненьне "
 "пачынаецца з выбранага піксэля й распаўсюджваецца ва ўсе напрамкі, покуль "
 "розьніца яркасьці піксэля з пачатковым ня стане большай за вызначаны парог. "
@@ -6072,25 +6058,24 @@ msgid ""
 "This may affect the way your window manager decorates and handles these "
 "windows."
 msgstr ""
-"Намінка тыпу вакна для вакон докаў і панэляў інструмэнтаў. Можа паўплываць "
-"на тое, як кіраўнік вакон аздабляе гэтыя вокны й абыходзіцца зь імі."
+"Намінка тыпу вакна для вакон докаў і панэляў прылад. Можа паўплываць на тое, "
+"як кіраўнік вакон аздабляе гэтыя вокны й абыходзіцца зь імі."
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr "Калі задзейнічана, выбраны пэндзаль будзе ўжыты з усімі інструмэнтамі."
+msgstr "Калі задзейнічана, выбраны пэндзаль будзе ўжыты з усімі прыладамі."
 
 #: ../app/config/gimprc-blurbs.h:160
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr ""
-"Калі задзейнічана, выбраная дынаміка будзе ўжытая з усімі інструмэнтамі."
+msgstr "Калі задзейнічана, выбраная дынаміка будзе ўжытая з усімі прыладамі."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "Калі задзейнічана, выбраны ґрадыент будзе ўжыты з усімі інструмэнтамі."
+msgstr "Калі задзейнічана, выбраны ґрадыент будзе ўжыты з усімі прыладамі."
 
 #: ../app/config/gimprc-blurbs.h:169
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr "Калі задзейнічана, выбраны ўзор будзе ўжыты з усімі інструмэнтамі."
+msgstr "Калі задзейнічана, выбраны ўзор будзе ўжыты з усімі прыладамі."
 
 #: ../app/config/gimprc-blurbs.h:183
 msgid "Sets the browser used by the help system."
@@ -6167,8 +6152,8 @@ msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
 msgstr ""
-"Калі задзейнічана, інструмэнт перасоўваньня робіць пласт або шлях, зь якім "
-"працуе, актыўным. Гэтак інструмэнт паводзіў сябе ў ранейшых вэрсіях."
+"Калі задзейнічана, прылада перасоўваньня робіць пласт або шлях, зь якім "
+"працуе, актыўным. Гэтак прылада паводзіла сябе ў ранейшых вэрсіях."
 
 #: ../app/config/gimprc-blurbs.h:245
 msgid ""
@@ -6236,7 +6221,7 @@ msgstr "Дазволіць GIMP аднаўляць апошнюю захаван
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
-"Памятаць бягучы інструмэнт, узор, колер і пэндзаль для ўжываньня ў наступных "
+"Памятаць бягучую прыладу, узор, колер і пэндзаль для ўжываньня ў наступных "
 "сэсіях."
 
 #: ../app/config/gimprc-blurbs.h:302
@@ -6252,15 +6237,15 @@ msgstr "Захоўваць месцы й памеры галоўных дыял�
 
 #: ../app/config/gimprc-blurbs.h:309
 msgid "Save the tool options when GIMP exits."
-msgstr "Захоўваць выборы інструмэнтаў падчас выхаду з GIMP."
+msgstr "Захоўваць выборы прылад падчас выхаду з GIMP."
 
 #: ../app/config/gimprc-blurbs.h:315
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Калі задзейнічана, усе інструмэнты рысаваньня будуць паказваць контур "
-"бягучага пэндзлю."
+"Калі задзейнічана, усе прылады рысаваньня будуць паказваць контур бягучага "
+"пэндзлю."
 
 #: ../app/config/gimprc-blurbs.h:319
 msgid ""
@@ -6441,17 +6426,15 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:423
 msgid "Show the current foreground and background colors in the toolbox."
-msgstr ""
-"Паказваць бягучыя колеры рысаваньня й асноведзі на панэлі інструмэнтаў."
+msgstr "Паказваць бягучыя колеры рысаваньня й асноведзі на панэлі прылад."
 
 #: ../app/config/gimprc-blurbs.h:426
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr ""
-"Паказваць бягучы выбраны пэндзаль, узор і ґрадыент на панэлі інструмэнтаў."
+msgstr "Паказваць бягучы выбраны пэндзаль, узор і ґрадыент на панэлі прылад."
 
 #: ../app/config/gimprc-blurbs.h:429
 msgid "Show the currently active image in the toolbox."
-msgstr "Паказваць бягучы актыўны відарыс на панэлі інструмэнтаў."
+msgstr "Паказваць бягучы актыўны відарыс на панэлі прылад."
 
 #: ../app/config/gimprc-blurbs.h:435
 msgid "Sets the manner in which transparency is displayed in images."
@@ -6628,7 +6611,7 @@ msgstr "Абвесьці лініяй"
 #: ../app/core/core-enums.c:316
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
-msgstr "Абвесьці інструмэнтам рысаваньня "
+msgstr "Абвесьці прыладай рысаваньня "
 
 #: ../app/core/core-enums.c:345
 msgctxt "join-style"
@@ -9479,8 +9462,8 @@ msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"Настаўленьні інструмэнтаў вернуцца да прадвызначаных значэньняў пры "
-"наступным выкананьні GIMP."
+"Настаўленьні прылад вернуцца да прадвызначаных значэньняў пры наступным "
+"выкананьні GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:1266
 msgid "Show _menubar"
@@ -9707,15 +9690,15 @@ msgstr "_Ужываць гартач даведкі:"
 
 #: ../app/dialogs/preferences-dialog.c:1869
 msgid "_Save tool options on exit"
-msgstr "_Захоўваць выборы інструмэнта падчас выхаду"
+msgstr "_Захоўваць выборы прылады падчас выхаду"
 
 #: ../app/dialogs/preferences-dialog.c:1873
 msgid "Save Tool Options _Now"
-msgstr "Захаваць выборы інструмэнта з_араз"
+msgstr "Захаваць выборы прылады з_араз"
 
 #: ../app/dialogs/preferences-dialog.c:1880
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "_Вернуць захаваныя выборы інструмэнта да пачатковых значэньняў"
+msgstr "_Вернуць захаваныя выборы прылады да пачатковых значэньняў"
 
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1890
@@ -9733,7 +9716,7 @@ msgstr "Прадвызначаная _інтэрпаляцыя:"
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1910
 msgid "Paint Options Shared Between Tools"
-msgstr "Выборы рысаваньня, агульныя для інструмэнтаў"
+msgstr "Выборы рысаваньня, агульныя для прылад"
 
 #: ../app/dialogs/preferences-dialog.c:1914
 msgid "_Brush"
@@ -9749,7 +9732,7 @@ msgstr "_Узор"
 
 #: ../app/dialogs/preferences-dialog.c:1926
 msgid "Move Tool"
-msgstr "Інструмэнт перасоўваньня"
+msgstr "Прылада перасоўваньня"
 
 #: ../app/dialogs/preferences-dialog.c:1930
 msgid "Set layer or path as active"
@@ -9777,7 +9760,7 @@ msgstr "Паказваць актыўны _відарыс"
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:1975
 msgid "Tools configuration"
-msgstr "Настаўленьні інструмэнтаў"
+msgstr "Настаўленьні прылад"
 
 #: ../app/dialogs/preferences-dialog.c:1990
 msgid "Default New Image"
@@ -9848,7 +9831,7 @@ msgstr "_Паказваць контур пэндзля"
 
 #: ../app/dialogs/preferences-dialog.c:2114
 msgid "Show pointer for paint _tools"
-msgstr "_Паказваць курсор для інструмэнтаў рысаваньня"
+msgstr "_Паказваць курсор для прылад рысаваньня"
 
 #: ../app/dialogs/preferences-dialog.c:2120
 msgid "Pointer _mode:"
@@ -10071,7 +10054,7 @@ msgstr "Намінкі кіраўніку вакон"
 
 #: ../app/dialogs/preferences-dialog.c:2624
 msgid "Hint for _docks and toolbox:"
-msgstr "Намінка для _докаў і панэлі інструмэнтаў:"
+msgstr "Намінка для _докаў і панэлі прылад:"
 
 #: ../app/dialogs/preferences-dialog.c:2627
 msgid "Focus"
@@ -10167,14 +10150,12 @@ msgid "Select Font Folders"
 msgstr "Выберы каталёґі шрыфтоў"
 
 #: ../app/dialogs/preferences-dialog.c:2749
-#, fuzzy
 msgid "Tool Preset Folders"
-msgstr "Наборы настроек"
+msgstr "Каталёґі для набору настроек"
 
 #: ../app/dialogs/preferences-dialog.c:2751
-#, fuzzy
 msgid "Select Tool Preset Folders"
-msgstr "Выберы каталёґі тэмаў"
+msgstr "Выберы каталёґі дла набору настроек"
 
 #: ../app/dialogs/preferences-dialog.c:2753
 msgid "Plug-In Folders"
@@ -10351,7 +10332,7 @@ msgstr "Выберы стыль контуру"
 
 #: ../app/dialogs/stroke-dialog.c:214
 msgid "Paint tool:"
-msgstr "Інструмэнт рысаваньня:"
+msgstr "Прылада рысаваньня:"
 
 #: ../app/dialogs/stroke-dialog.c:228
 msgid "_Emulate brush dynamics"
@@ -10807,15 +10788,14 @@ msgstr "не зьяўляецца файлам GIMP з роўнямі"
 
 #: ../app/gegl/gimpoperationcagecoefcalc.c:65
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
-msgstr "Разьлічыць буфэр набору каэфіцыетаў для інструмэнту «Клетка»"
+msgstr "Разьлічыць буфэр набору каэфіцыетаў для прылады «Клетка»"
 
 #: ../app/gegl/gimpoperationcagetransform.c:104
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
 msgstr ""
-"Ператварыць буфэр набору каэфіцыентаў у буфэр каардынат для інструмэнту "
-"«Клетка»"
+"Ператварыць буфэр набору каэфіцыентаў у буфэр каардынат для прылады «Клетка»"
 
 #: ../app/gegl/gimpoperationcagetransform.c:125
 msgid "Fill with plain color"
@@ -10841,11 +10821,11 @@ msgstr "Распыляльнік"
 
 #: ../app/paint/gimpbrushcore.c:387
 msgid "No brushes available for use with this tool."
-msgstr "Няма пэндзляў для выкарыстаньня з гэтым інструмэнтам."
+msgstr "Няма пэндзляў для выкарыстаньня з гэтай прыладай."
 
 #: ../app/paint/gimpbrushcore.c:394
 msgid "No paint dynamics available for use with this tool."
-msgstr "Няма дынамікі рысаваньня для выкарыстаньня з гэтым інструмэнтам."
+msgstr "Няма дынамікі рысаваньня для выкарыстаньня з гэтай прыладай."
 
 #: ../app/paint/gimpclone.c:102 ../app/tools/gimpclonetool.c:60
 msgid "Clone"
@@ -10853,7 +10833,7 @@ msgstr "Клон"
 
 #: ../app/paint/gimpclone.c:143
 msgid "No patterns available for use with this tool."
-msgstr "Няма узораў для выкарыстаньня з гэтым інструмэнтам."
+msgstr "Няма узораў для выкарыстаньня з гэтай прыладай."
 
 #: ../app/paint/gimpconvolve.c:80
 msgid "Convolve"
@@ -11608,7 +11588,7 @@ msgid ""
 "This tool has\n"
 "no options."
 msgstr ""
-"Інструмэнт\n"
+"Прылада\n"
 "ня мае выбораў."
 
 #: ../app/tools/gimpairbrushtool.c:55
@@ -11784,7 +11764,7 @@ msgstr "Ґрадыент не працуе на індэксаваных пла�
 
 #: ../app/tools/gimpblendtool.c:187
 msgid "No gradient available for use with this tool."
-msgstr "Няма ґрадыентаў для выкарыстаньня з гэтым інструмэнтам."
+msgstr "Няма ґрадыентаў для выкарыстаньня з гэтай прыладай."
 
 #: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
 #, c-format
@@ -13113,7 +13093,7 @@ msgstr "Перасунуць: "
 #: ../app/tools/gimpmoveoptions.c:187
 #, c-format
 msgid "Tool Toggle  (%s)"
-msgstr "Пераключыць інструмэнт (%s)"
+msgstr "Пераключыць прыладу (%s)"
 
 #: ../app/tools/gimpmovetool.c:127
 msgctxt "tool"
@@ -13723,11 +13703,11 @@ msgid ""
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
 "Выбраны табой пласт зьяўляецца тэкставым, але ён быў зьменены іншымі "
-"інструмэнтамі. Праўленьне пласта тэкставым інструмэнтам прывядзе да "
-"адкіданьня гэных зьменаў.\n"
+"прыладамі. Праўленьне пласта тэкставай прыладай прывядзе да адкіданьня гэных "
+"зьменаў.\n"
 "\n"
 "Можна правіць пласт, або стварыць новы тэкставы пласт у адпаведнасьці зь "
-"ягонымі атрыбутамі тэкста."
+"ягонымі атрыбутамі тэксту."
 
 #: ../app/tools/gimptexttool-editor.c:1159
 msgid "GIMP Text Editor"
@@ -15005,9 +14985,9 @@ msgstr "Колер асноведзі:"
 
 #: ../app/widgets/gimpgradienteditor.c:1235
 #: ../app/widgets/gimpgradienteditor.c:1296
-#, fuzzy, c-format
+#, c-format
 msgid "%s-Drag: move & compress"
-msgstr "%s%sЦягнуць: перасоўваньне й сьцісканьне"
+msgstr "%s-Перацягваньне: перасунуць і сьціснуць"
 
 #: ../app/widgets/gimpgradienteditor.c:1240
 msgid "Drag: move"
@@ -15017,9 +14997,9 @@ msgstr "Цягнуць: перасоўваньне"
 #: ../app/widgets/gimpgradienteditor.c:1260
 #: ../app/widgets/gimpgradienteditor.c:1273
 #: ../app/widgets/gimpgradienteditor.c:1294
-#, fuzzy, c-format
+#, c-format
 msgid "%s-Click: extend selection"
-msgstr "%s%sПстрычка: пашырыць вылучэньне"
+msgstr "%s-Пстрычка: пашырыць вылучэньне"
 
 #: ../app/widgets/gimpgradienteditor.c:1252
 #: ../app/widgets/gimpgradienteditor.c:1265
@@ -15490,13 +15470,13 @@ msgid "Strikethrough"
 msgstr "Перакрэсьлены"
 
 #: ../app/widgets/gimpthumbbox.c:330
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Click to update preview\n"
 "%s-Click to force update even if preview is up-to-date"
 msgstr ""
-"Пстрычка — абнавіць прагляд\n"
-"%s%sПстрычка — абнавіць прагляд, нават калі ён сучасны."
+"Пстрычка - абнавіць прагляд\n"
+"%s-Пстрычка - абнавіць прагляд, нават калі ён сучасны"
 
 #: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
@@ -15574,23 +15554,23 @@ msgstr ""
 
 #: ../app/widgets/gimptooleditor.c:294
 msgid "Raise this tool"
-msgstr "Узьняць гэты інструмэнт"
+msgstr "Узьняць гэтую прыладу"
 
 #: ../app/widgets/gimptooleditor.c:295
 msgid "Raise this tool to the top"
-msgstr "Узьняць гэты інструмэнт на вяршыню"
+msgstr "Узьняць гэтую прыладу на вяршыню"
 
 #: ../app/widgets/gimptooleditor.c:302
 msgid "Lower this tool"
-msgstr "Апусьціць гэты інструмэнт"
+msgstr "Апусьціць гэтую прыладу"
 
 #: ../app/widgets/gimptooleditor.c:303
 msgid "Lower this tool to the bottom"
-msgstr "Апусьціць гэты інструмэнт на спод"
+msgstr "Апусьціць гэтую прыладу на спод"
 
 #: ../app/widgets/gimptooleditor.c:310
 msgid "Reset tool order and visibility"
-msgstr "Вернуць парадак і бачнасьць інструмэнтаў"
+msgstr "Вернуць парадак і бачнасьць прылад"
 
 #: ../app/widgets/gimptooloptionseditor.c:202
 msgid "Save Tool Preset..."

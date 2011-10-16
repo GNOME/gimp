@@ -1,18 +1,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-11 13:29+0000\n"
-"PO-Revision-Date: 2011-09-11 19:24+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-16 13:48+0300\n"
+"PO-Revision-Date: 2011-10-16 13:48+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
+"Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: be\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-Language: Belarusian\n"
 "X-Poedit-Country: BELARUS\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -2524,7 +2523,7 @@ msgstr "Пачатковы кут"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
-msgstr "Інструмэнт"
+msgstr "Прылада"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
@@ -2798,11 +2797,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
-msgstr "Зрух падаючаца ценю па X"
+msgstr "Зрух падаючага ценю па X"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop shadow Y offset"
-msgstr "Зрух падаючаца ценю па Y"
+msgstr "Зрух падаючага ценю па Y"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop shadow blur radius"
@@ -2835,191 +2834,3 @@ msgstr "Непразрыстасьць асьветленьня"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
 msgstr "Эфэкт _Xach…"
-
-#~ msgid "Autocrop"
-#~ msgstr "Аўтаабразаньне"
-
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Стварыць відарыс вялікага загалоўку, выкарыстоўваючы тэму пляцоўкі gimp."
-#~ "org"
-
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Стварыць відарыс малога загалоўку, выкарыстоўваючы тэму пляцоўкі gimp.org"
-
-#~ msgid "Dark color"
-#~ msgstr "Цёмны колер"
-
-#~ msgid "Index image"
-#~ msgstr "Індэксаваць відарыс"
-
-#~ msgid "Number of colors"
-#~ msgstr "Колькасьць колераў"
-
-#~ msgid "Remove background"
-#~ msgstr "Прыбраць асноведзь"
-
-#~ msgid "Select-by-color threshold"
-#~ msgstr "Парог вылучальніка колера"
-
-#~ msgid "Shadow color"
-#~ msgstr "Колер ценю"
-
-#~ msgid "_Big Header..."
-#~ msgstr "_Вялікі загаловак…"
-
-#~ msgid "_Small Header..."
-#~ msgstr "_Малы загаловак…"
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
-#~ "theme"
-#~ msgstr ""
-#~ "Стварыць відарыс з загалоўкам для цыліндрычных кнопак, ужываючы тэму "
-#~ "пляцоўкі gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі, ужываючы тэму "
-#~ "пляцоўкі gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі другога ўзроўню, "
-#~ "ужываючы тэму пляцоўкі gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі трэцяга ўзроўню, "
-#~ "ужываючы тэму пляцоўкі gimp.org"
-
-#~ msgid "T_ube Sub-Button Label..."
-#~ msgstr "Ц_ыліндрычная падкнопка…"
-
-#~ msgid "Tub_e Sub-Sub-Button Label..."
-#~ msgstr "Цы_ліндрычная падпадкнопка…"
-
-#~ msgid "_General Tube Labels..."
-#~ msgstr "_Агульныя цыліндрычныя…"
-
-#~ msgid "_Tube Button Label..."
-#~ msgstr "_Цыліндрычная кнопка…"
-
-#~ msgid "Matte"
-#~ msgstr "Матавае"
-
-#~ msgid "Effect size (pixels * 3)"
-#~ msgstr "Памер эфэкта (піксэлі * 3)"
-
-#~ msgid "Effect size (pixels * 5)"
-#~ msgstr "Памер эфэкта (піксэлі * 5)"
-
-#~ msgid "Burst color"
-#~ msgstr "Колер выбуху"
-
-#~ msgid "Create a logo using a starburst gradient"
-#~ msgstr "Стварыць ляґатып выкарыстоўваючы ґрадыент «выбухнуўшая зорка»"
-
-#~ msgid "Effect size (pixels * 30)"
-#~ msgstr "Памер эфэкта (піксэлі × 30)"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
-#~ "shadow"
-#~ msgstr ""
-#~ "Запоўніць вылучаную вобласьць (ці тэкст) ґрадыентам «выбухнуўшая зорка» й "
-#~ "дадаць цень"
-
-#~ msgid "Starb_urst..."
-#~ msgstr "_Выбухнуўшая зорка..."
-
-#~ msgid "Effect size (pixels * 4)"
-#~ msgstr "Памер эфэкта (піксэлі * 4)"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
-#~ "glow, and shadow"
-#~ msgstr ""
-#~ "Запоўніць вылучаную вобласьць (ці тэкст) каменепадобнай тэктурай, заравам "
-#~ "новай і ценем"
-
-#~ msgid "_Misc"
-#~ msgstr "_Рознае"
-
-#~ msgid "_Utilities"
-#~ msgstr "_Службовыя"
-
-#~ msgid "An_imation"
-#~ msgstr "_Анімацыя"
-
-#~ msgid "_Artistic"
-#~ msgstr "_Мастацкія"
-
-#~ msgid "_Blur"
-#~ msgstr "_Размыцьцё"
-
-#~ msgid "_Decor"
-#~ msgstr "_Аздабленьне"
-
-#~ msgid "_Effects"
-#~ msgstr "_Эфэкты"
-
-#~ msgid "En_hance"
-#~ msgstr "_Палепшэньні"
-
-#~ msgid "_Light and Shadow"
-#~ msgstr "_Сьвятло і цень"
-
-#~ msgid "S_hadow"
-#~ msgstr "_Цень"
-
-#~ msgid "_Render"
-#~ msgstr "_Стварыць"
-
-#~ msgid "_Alchemy"
-#~ msgstr "_Альхімія"
-
-#~ msgid "Create a simple sphere with a drop shadow"
-#~ msgstr "Стварае простую сфэру з падаючым ценем"
-
-#~ msgid "Lighting (degrees)"
-#~ msgstr "Асьявятленьне (ступень)"
-
-#~ msgid "Radius (pixels)"
-#~ msgstr "Радыюс (у піксэлях)"
-
-#~ msgid "Sphere color"
-#~ msgstr "Колер сфэры"
-
-#~ msgid "_Sphere..."
-#~ msgstr "_Сфэра..."
-
-#, fuzzy
-#~ msgid "BG opacity"
-#~ msgstr "_Непразрыстасьць запаўненьня:"
-
-#, fuzzy
-#~ msgid "Draw _HSV Graph..."
-#~ msgstr "HSV (_Адценьне за стрэлкай)"
-
-#~ msgid "End X"
-#~ msgstr "Канец па X"
-
-#~ msgid "End Y"
-#~ msgstr "Канец па Y"
-
-#, fuzzy
-#~ msgid "Graph scale"
-#~ msgstr "Маштабаваць відарыс"
-
-#~ msgid "Start X"
-#~ msgstr "Пачатак па X"
-
-#~ msgid "Start Y"
-#~ msgstr "Пачатак па Y"
