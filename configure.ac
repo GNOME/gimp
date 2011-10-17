@@ -268,7 +268,6 @@ AC_SUBST(WINDRES)
 ###############
 
 # Checks for programs.
-AC_ISC_POSIX
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 
