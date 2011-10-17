@@ -1693,7 +1693,7 @@ AM_CONDITIONAL(WITH_PDBGEN, test "x$with_pdbgen" = xyes)
 
 # Pygimp configure stuff ...
 AC_ARG_ENABLE(python,
-  AC_HELP_STRING([--disable-python],
+  AS_HELP_STRING([--disable-python],
                  [do not build the python extension]))
 
 m4_define([pycheck_error], [
@@ -1753,7 +1753,7 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 
 have_script_fu=yes
 AC_ARG_WITH(script-fu,
-  AC_HELP_STRING([--without-script-fu],
+  AS_HELP_STRING([--without-script-fu],
                  [do not build the script-fu extension]))
 
 if test "x$with_script_fu" = "xno"; then
