@@ -1064,15 +1064,16 @@ if test "x$with_libjpeg" != xno && test -z "$JPEG_LIBS"; then
     AC_MSG_WARN(*** XJT plug-in will not be built (JPEG library not found) ***)])
   if test "$jpeg_ok" = yes; then
     AC_MSG_CHECKING([for jpeglib.h])
-    AC_TRY_CPP([
+    AC_PREPROC_IFELSE(
+      [AC_LANG_SOURCE([[
 #include <stdio.h>
 #undef HAVE_STDDEF_H
 #undef HAVE_STDLIB_H
 #undef PACKAGE
 #undef VERSION
-#include <jpeglib.h>],
-      jpeg_ok=yes,
-      jpeg_ok="no (Can't include jpeglib.h)")
+#include <jpeglib.h>]])],
+      [jpeg_ok=yes],
+      [jpeg_ok="no (Can't include jpeglib.h)"])
     AC_MSG_RESULT($jpeg_ok)
     if test "$jpeg_ok" = yes; then
       AC_CHECK_LIB(jpeg, jpeg_save_markers,
@@ -1785,13 +1786,14 @@ AC_ARG_WITH(mac-twain,  [  --without-mac-twain     don't build the Mac TWAIN plu
 mac_twain_ok=no
 if test "x$with_mac_twain" != xno; then
   AC_MSG_CHECKING([for Mac OS X TWAIN support])
-  AC_TRY_CPP([
+  AC_PREPROC_IFELSE(
+    [AC_LANG_SOURCE([[
 #include <Carbon/Carbon.h>
 #include <TWAIN/TWAIN.h>
 #ifdef __x86_64__
 #error Please somebody port this to non-deprecated and non-removed APIs
-#endif
-  ], mac_twain_ok=yes)
+#endif]])],
+    [mac_twain_ok=yes])
   AC_MSG_RESULT($mac_twain_ok)
 fi
 
