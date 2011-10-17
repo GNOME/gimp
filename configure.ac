@@ -164,10 +164,6 @@ AM_PROG_AS
 # Initialize maintainer mode
 AM_MAINTAINER_MODE([enable])
 
-# Honor aclocal flags
-ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
-
-
 # Check for pkg-config
 PKG_PROG_PKG_CONFIG(0.16)
 
