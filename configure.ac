@@ -1943,6 +1943,26 @@ AC_SUBST(MIME_TYPES)
 
 CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEAL_ENABLE"
 
+# Make sure not to disable deprecated APIs for unreleased versions.
+# We must build without problems with future releases of libraries
+# and disabling deprecated API risks breaking the build
+
+if test "x$have_glib_2_30" != "xyes"; then
+  CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
+fi
+
+if test "x$have_gtk_2_26" != "xyes"; then
+  CPPFLAGS="${CPPFLAGS} -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
+fi
+
+if test "x$have_gdk_pixbuf_2_26" != "xyes"; then
+  CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED"
+fi
+
+if test "x$have_pango_1_32" != "xyes"; then
+  CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
+fi
+
 
 ############################
 # Require multihead safe API
