@@ -25,6 +25,8 @@ Core:
    warnings that occured for some image sizes
  - Fix attachment of the floating selection when the gegl projection
    is enabled
+ - Replace heal algorithm with a new one by Jean-Yves Couleaud that
+   works much better
 
 
 Libgimp:
@@ -50,6 +52,7 @@ Source and build system:
 General:
 
  - Make gimptool install scripts in the correct system-wide directory
+ - Fix lots and lots of stuff found by static code analysis
 
 
 Changes in GIMP 2.7.3
