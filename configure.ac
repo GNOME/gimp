@@ -558,9 +558,12 @@ AC_MSG_RESULT($have_pango_1_32)
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
 AC_MSG_CHECKING([if Pango is built with a recent fontconfig])
-AC_TRY_COMPILE([#include <fontconfig/fontconfig.h>],
-  [FcObjectSet *os; os = FcObjectSetBuild (FC_FAMILY, FC_WIDTH);],
-  fontconfig_ok=yes, fontconfig_ok=no)
+AC_COMPILE_IFELSE(
+  [AC_LANG_PROGRAM(
+    [[#include <fontconfig/fontconfig.h>]],
+    [[FcObjectSet *os; os = FcObjectSetBuild (FC_FAMILY, FC_WIDTH);]])],
+  [fontconfig_ok=yes],
+  [fontconfig_ok=no])
 AC_MSG_RESULT($fontconfig_ok)
 
 CFLAGS=$gimp_save_CFLAGS
@@ -905,8 +908,12 @@ AC_SUBST(SYMPREFIX)
 
 if test "x$os_win32" != xyes; then
   AC_MSG_CHECKING([fd_set and sys/select])
-  AC_TRY_COMPILE([#include <sys/types.h>],
-	  [fd_set readMask, writeMask;], gimp_ok=yes, gimp_ok=no)
+  AC_COMPILE_IFELSE(
+    [AC_LANG_PROGRAM(
+      [[#include <sys/types.h>]],
+      [[fd_set readMask, writeMask;]])],
+    [gimp_ok=yes],
+    [gimp_ok=no])
   if test "x$gimp_ok" = xno; then
       AC_EGREP_HEADER(fd_mask, sys/select.h, gimp_ok=yes)
       if test "x$gimp_ok" = xyes; then
