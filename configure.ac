@@ -156,9 +156,8 @@ AC_PROG_CC
 AM_PROG_CC_C_O
 
 # Initialize libtool
-AM_DISABLE_STATIC
-AC_LIBTOOL_WIN32_DLL
-AM_PROG_LIBTOOL
+LT_PREREQ([2.2])
+LT_INIT([disable-static win32-dll])
 
 AM_PROG_AS
 
