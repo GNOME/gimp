@@ -632,18 +632,6 @@ AC_SUBST(HAVE_ISFINITE)
 LIBS=$gimp_save_LIBS
 
 
-# NeXTStep cc seems to need this
-AC_MSG_CHECKING([for extra flags for POSIX compliance])
-AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
-  AC_MSG_RESULT(none needed),
-  gimp_save_CFLAGS=$CFLAGS
-  CFLAGS="$CFLAGS -posix"
-  AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;],
-    AC_MSG_RESULT(-posix),
-    AC_MSG_RESULT()
-    CFLAGS=$gimp_save_CFLAGS
-    AC_MSG_WARN([Could not determine POSIX flag. (-posix didn't work.)])))
-
 # check for rint
 AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,
                               [Define to 1 if you have the rint function.]), [
