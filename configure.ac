@@ -432,9 +432,12 @@ AM_BINRELOC
 
 # _NL_MEASUREMENT_MEASUREMENT is an enum and not a define
 AC_MSG_CHECKING([for _NL_MEASUREMENT_MEASUREMENT])
-AC_TRY_LINK([#include <langinfo.h>], [
-char c = *((unsigned char *)  nl_langinfo(_NL_MEASUREMENT_MEASUREMENT));
-], nl_ok=yes, nl_ok=no)
+AC_PREPROC_IFELSE(
+  [AC_LANG_SOURCE(
+    [[#include <langinfo.h>]],
+    [[char c = *((unsigned char *)  nl_langinfo(_NL_MEASUREMENT_MEASUREMENT));]])],
+  [nl_ok=yes],
+  [nl_ok=no])
 AC_MSG_RESULT($nl_ok)
 if test "$nl_ok" = "yes"; then
   AC_DEFINE(HAVE__NL_MEASUREMENT_MEASUREMENT, 1,
@@ -619,15 +622,21 @@ AC_TRY_RUN([#include <math.h>
 # Check for finite or isfinite
 AC_CHECK_FUNCS(finite, , [
   AC_MSG_CHECKING(for finite in <math.h>)
-  AC_TRY_LINK([#include <math.h>], [double f = 0.0; finite (f)], [
-    AC_DEFINE(HAVE_FINITE, 1)
-    AC_MSG_RESULT(yes)], [
-    AC_MSG_RESULT(no)
-    AC_MSG_CHECKING(for isfinite in <math.h>)
-    AC_TRY_LINK([#include <math.h>], [float f = 0.0; isfinite(f)], [
-      AC_DEFINE(HAVE_ISFINITE, 1,
-                [Define to 1 if you have the isfinite function.])
-      AC_MSG_RESULT(yes)], AC_MSG_RESULT(no))])])
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM(
+      [[#include <math.h>]],
+      [[double f = 0.0; finite (f)]])],
+    [AC_DEFINE(HAVE_FINITE, 1)
+     AC_MSG_RESULT(yes)],
+    [AC_MSG_RESULT(no)
+     AC_MSG_CHECKING(for isfinite in <math.h>)
+     AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+         [[#include <math.h>]],
+         [[float f = 0.0; isfinite(f)]])],
+       [AC_DEFINE([HAVE_ISFINITE],[1],[Define to 1 if you have the isfinite function.])
+        AC_MSG_RESULT(yes)],
+       [AC_MSG_RESULT(no)])])])
 AC_SUBST(HAVE_FINITE)
 AC_SUBST(HAVE_ISFINITE)
 
