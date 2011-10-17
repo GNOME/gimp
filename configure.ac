@@ -605,19 +605,23 @@ AC_CHECK_HEADERS(math.h ieeefp.h)
 AC_MSG_CHECKING([for extra flags to get ANSI library prototypes])
 gimp_save_LIBS=$LIBS
 LIBS="$LIBS -lm"
-AC_TRY_RUN([#include <math.h>
-             int main (void) { return (log(1) != log(1.)); }],
-  AC_MSG_RESULT(none needed),
-  gimp_save_CFLAGS=$CFLAGS
-  CFLAGS="$CFLAGS -std1"
-  AC_TRY_RUN([#include <math.h>
-               int main (void) { return (log(1) != log(1.)); }],
-    AC_MSG_RESULT(-std1),
-    AC_MSG_RESULT()
-    CFLAGS=$gimp_save_CFLAGS
-    AC_MSG_WARN([No ANSI prototypes found in library. (-std1 didn't work.)]),
-    AC_MSG_RESULT),
-  AC_MSG_RESULT())
+AC_RUN_IFELSE(
+  [AC_LANG_SOURCE([[
+    #include <math.h>
+    int main (void) { return (log(1) != log(1.)); }]])],
+  [AC_MSG_RESULT(none needed)],
+  [gimp_save_CFLAGS=$CFLAGS
+   CFLAGS="$CFLAGS -std1"
+   AC_RUN_IFELSE(
+     [AC_LANG_SOURCE([[
+       #include <math.h>
+       int main (void) { return (log(1) != log(1.)); }]])],
+     [AC_MSG_RESULT(-std1)],
+     [AC_MSG_RESULT()
+      CFLAGS=$gimp_save_CFLAGS
+      AC_MSG_WARN([No ANSI prototypes found in library. (-std1 didn't work.)])],
+     [AC_MSG_RESULT])],
+  [AC_MSG_RESULT()])
 
 # Check for finite or isfinite
 AC_CHECK_FUNCS(finite, , [
@@ -820,7 +824,8 @@ elif test "x$shmtype" = "xsysv"; then
 
   if test "$ac_cv_header_sys_shm_h" = "yes"; then
     AC_MSG_CHECKING(whether shmctl IPC_RMID allowes subsequent attaches)
-    AC_TRY_RUN([
+    AC_RUN_IFELSE(
+      [AC_LANG_SOURCE([[
 	#include <sys/types.h>
 	#include <sys/ipc.h>
 	#include <sys/shm.h>
@@ -842,12 +847,12 @@ elif test "x$shmtype" = "xsysv"; then
 	  shmdt (shmaddr);
 	  exit (0);
 	}
-      ],
-      AC_DEFINE(IPC_RMID_DEFERRED_RELEASE, 1,
-	        [Define to 1 if shared memory segments are released deferred.])
-        AC_MSG_RESULT(yes),
-      AC_MSG_RESULT(no),
-      AC_MSG_RESULT(assuming no))
+      ]])],
+      [AC_DEFINE([IPC_RMID_DEFERRED_RELEASE],[1],
+                 [Define to 1 if shared memory segments are released deferred.])
+       AC_MSG_RESULT(yes)],
+      [AC_MSG_RESULT(no)],
+      [AC_MSG_RESULT(assuming no)])
 
     AC_DEFINE(USE_SYSV_SHM, 1, [Define to 1 to use SYSV shared memory])
   else
