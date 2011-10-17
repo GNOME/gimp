@@ -418,7 +418,6 @@ AC_HEADER_TIME
 AC_CHECK_HEADERS(sys/param.h sys/time.h sys/times.h sys/wait.h unistd.h)
 
 AC_TYPE_PID_T
-AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
 
 AC_FUNC_ALLOCA
