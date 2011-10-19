@@ -426,8 +426,8 @@ AM_BINRELOC
 
 # _NL_MEASUREMENT_MEASUREMENT is an enum and not a define
 AC_MSG_CHECKING([for _NL_MEASUREMENT_MEASUREMENT])
-AC_PREPROC_IFELSE(
-  [AC_LANG_SOURCE(
+AC_LINK_IFELSE(
+  [AC_LANG_PROGRAM(
     [[#include <langinfo.h>]],
     [[char c = *((unsigned char *)  nl_langinfo(_NL_MEASUREMENT_MEASUREMENT));]])],
   [nl_ok=yes],
