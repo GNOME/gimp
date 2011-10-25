@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-10-06 22:01+0000\n"
-"PO-Revision-Date: 2011-10-26 01:36+0700\n"
+"PO-Revision-Date: 2011-10-26 08:47+1100\n"
 "Last-Translator: Nguyễn Vũ Hưng <vuhung16plus@gmail.com>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -230,8 +230,8 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"Không thể chuyển đổi bảng mã tên tập tin đã cấu hình sang dạng thức UTF-8: %"
-"s\n"
+"Không thể chuyển đổi bảng mã tên tập tin đã cấu hình sang dạng thức UTF-8: "
+"%s\n"
 "\n"
 "Hãy kiểm tra giá trị của biến môi trường « G_FILENAME_ENCODING » [G bảng mã "
 "tên tập tin]."
@@ -433,7 +433,7 @@ msgstr "Biểu mẫu"
 
 #: ../app/actions/actions.c:217
 msgid "Text Tool"
-msgstr "Công cụ _Chữ"
+msgstr "Công cụ chữ"
 
 #: ../app/actions/actions.c:220
 msgid "Text Editor"
@@ -586,7 +586,7 @@ msgstr "Dán bộ đệm được chọn vào vùng chọn"
 #: ../app/actions/buffers-actions.c:57
 msgctxt "buffers-action"
 msgid "Paste Buffer as _New"
-msgstr "Dá_n bộ đệm dạng mới"
+msgstr "Dá_n bộ đệm ra ảnh mới"
 
 #: ../app/actions/buffers-actions.c:58
 msgctxt "buffers-action"
@@ -676,7 +676,7 @@ msgstr "Nâng kênh lên đỉn_h"
 #: ../app/actions/channels-actions.c:87
 msgctxt "channels-action"
 msgid "Raise this channel to the top of the channel stack"
-msgstr "Nâng kênh này lên trên đống kênh"
+msgstr "Nâng kênh này lên trên chồng kênh"
 
 #: ../app/actions/channels-actions.c:92
 msgctxt "channels-action"
@@ -686,7 +686,7 @@ msgstr "_Hạ kênh"
 #: ../app/actions/channels-actions.c:93
 msgctxt "channels-action"
 msgid "Lower this channel one step in the channel stack"
-msgstr "Hạ thấp kênh này một bước trong đống kênh"
+msgstr "Hạ thấp kênh này một bước trong chồng kênh"
 
 #: ../app/actions/channels-actions.c:98
 msgctxt "channels-action"
@@ -696,7 +696,7 @@ msgstr "Hạ kênh xuống đá_y"
 #: ../app/actions/channels-actions.c:100
 msgctxt "channels-action"
 msgid "Lower this channel to the bottom of the channel stack"
-msgstr "Hạ thấp kênh này xuống dưới đống kênh"
+msgstr "Hạ thấp kênh này xuống dưới chồng kênh"
 
 #: ../app/actions/channels-actions.c:108
 msgctxt "channels-action"
@@ -1232,7 +1232,7 @@ msgstr "Tùy chọn công cụ"
 #: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Mở thoại chọn mẫu"
+msgstr "Mở thoại công cụ preset"
 
 #: ../app/actions/dialogs-actions.c:193
 msgctxt "dialogs-action"
@@ -7748,8 +7748,7 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin chổi '%s': hình như tập tin bị "
-"cụt."
+"Lỗi phân tách nghiêm trọng trong tập tin chổi '%s': hình như tập tin bị cụt."
 
 #: ../app/core/gimpbrush-load.c:279 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
@@ -9477,8 +9476,8 @@ msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
-"Bạn có thể dùng hộp thoại này để xuất tập tin GIMP XCF. Dùng Tập tin→Xuất nếu muốn "
-"xuất ở định dạng khác."
+"Bạn có thể dùng hộp thoại này để xuất tập tin GIMP XCF. Dùng Tập tin→Xuất "
+"nếu muốn xuất ở định dạng khác."
 
 #: ../app/dialogs/file-save-dialog.c:570
 msgid ""
@@ -12204,8 +12203,7 @@ msgstr "C_anh lề"
 #: ../app/tools/gimpaligntool.c:549
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
-"Nhấn vào một lớp, đường dẫn hay hướng dẫn, hoặc nhấn-và-thả để chọn nhiều "
-"lớp"
+"Nhấn vào một lớp, đường dẫn hay hướng dẫn, hoặc nhấn-và-thả để chọn nhiều lớp"
 
 #: ../app/tools/gimpaligntool.c:557
 #, fuzzy
@@ -13153,7 +13151,7 @@ msgstr "Chọn cảnh gần"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "Foreground Select Tool: Select a region containing foreground objects"
-msgstr ""
+msgstr "Công cụ chọn màu phía trước: Chọn vùng chứa các đối tượng phía trước"
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "F_oreground Select"
@@ -13181,7 +13179,7 @@ msgstr "Chọn cảnh gần"
 #: ../app/tools/gimpfreeselecttool.c:197
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
-msgstr ""
+msgstr "Công cụ chọn tự do: Chọ bằng nay thay kiểu hình đa giác"
 
 #: ../app/tools/gimpfreeselecttool.c:198
 msgid "_Free Select"
@@ -13199,11 +13197,11 @@ msgstr "Nhấn-kéo để di chuyển thành phần chung quanh."
 
 #: ../app/tools/gimpfreeselecttool.c:1040
 msgid "Return commits, Escape cancels, Backspace removes last segment"
-msgstr ""
+msgstr "Trả về commit, hủy Escape, Backspace đã bỏ qua đoạn cuối"
 
 #: ../app/tools/gimpfreeselecttool.c:1044
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
-msgstr ""
+msgstr "Nhấn-và-thả để thêm một đoạn tự do, Nhấn để thêm một đoạn đa giác"
 
 #: ../app/tools/gimpfreeselecttool.c:1563
 #, fuzzy
@@ -13217,7 +13215,7 @@ msgstr "Chọn mờ"
 
 #: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr ""
+msgstr "Công cụ chọn fuzzy: Chọn một vùng mờ dựa trên màu"
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fu_zzy Select"
@@ -13231,11 +13229,11 @@ msgstr "Chọn mờ"
 
 #: ../app/tools/gimpgegltool.c:93 ../app/tools/gimpgegltool.c:112
 msgid "GEGL Operation"
-msgstr ""
+msgstr "Thao tác GEGL"
 
 #: ../app/tools/gimpgegltool.c:94
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
-msgstr ""
+msgstr "Công cụ GEGL: Dùng thao tác GEGL bất kỳ"
 
 #: ../app/tools/gimpgegltool.c:95
 #, fuzzy
@@ -13255,7 +13253,7 @@ msgstr "Độ _bão hòa:"
 #. The options vbox
 #: ../app/tools/gimpgegltool.c:436
 msgid "Operation Settings"
-msgstr ""
+msgstr "Thiết lập thao tác"
 
 #: ../app/tools/gimpgegltool.c:441
 #, fuzzy
@@ -13264,11 +13262,11 @@ msgstr "Gỡ bỏ mọi thao tác ra lược sử hủy bước"
 
 #: ../app/tools/gimphealtool.c:53
 msgid "Healing Tool: Heal image irregularities"
-msgstr ""
+msgstr "Công cụ sửa: Sửa cho anh đều đặn"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "_Heal"
-msgstr ""
+msgstr "_Sửa"
 
 #: ../app/tools/gimphealtool.c:76 ../app/tools/gimphealtool.c:79
 #, fuzzy
@@ -13292,7 +13290,7 @@ msgstr "Tỷ lệ tiểu đồ tần xuất"
 
 #: ../app/tools/gimphuesaturationtool.c:103
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr ""
+msgstr "Công cụ Màu-Bão Hòa: Chỉnh màu, độ bão hòa và độ sáng"
 
 #: ../app/tools/gimphuesaturationtool.c:104
 msgid "Hue-_Saturation..."
@@ -13366,7 +13364,7 @@ msgstr "Đặt _lại màu"
 
 #: ../app/tools/gimpimagemaptool-settings.c:81
 msgid "Pre_sets:"
-msgstr ""
+msgstr "_Thiết lập sẵn:"
 
 #: ../app/tools/gimpimagemaptool-settings.c:223
 #, fuzzy, c-format
@@ -13420,7 +13418,7 @@ msgstr "Hình"
 
 #: ../app/tools/gimpinktool.c:55
 msgid "Ink Tool: Calligraphy-style painting"
-msgstr ""
+msgstr "Công cụ mực: Vẽ kiểu thư pháp"
 
 #: ../app/tools/gimpinktool.c:56
 msgid "In_k"
@@ -13442,7 +13440,7 @@ msgstr "Kéo cắt"
 
 #: ../app/tools/gimpiscissorstool.c:276
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
-msgstr ""
+msgstr "Công cụ chọn kéo: Chọn hình tự khít vào hình"
 
 #: ../app/tools/gimpiscissorstool.c:277
 msgid "Intelligent _Scissors"
@@ -13456,7 +13454,7 @@ msgstr "Nhắp-kéo để di chuyển đường dẫn quanh."
 #: ../app/tools/gimpiscissorstool.c:902 ../app/tools/gimpiscissorstool.c:967
 #, c-format
 msgid "%s: disable auto-snap"
-msgstr ""
+msgstr "%s: Tắt tự động chụp nhanh"
 
 #: ../app/tools/gimpiscissorstool.c:919
 #, fuzzy
@@ -13548,19 +13546,19 @@ msgstr "Tự động chỉnh mức"
 
 #: ../app/tools/gimplevelstool.c:686
 msgid "Edit these Settings as Curves"
-msgstr ""
+msgstr "Sửa thiết lập này như là đường cong"
 
 #: ../app/tools/gimplevelstool.c:829
 msgid "Use _old levels file format"
-msgstr ""
+msgstr "Dùng định dạng tệp mức độ _cũ"
 
 #: ../app/tools/gimpmagnifyoptions.c:79
 msgid "Resize image window to accommodate new zoom level"
-msgstr ""
+msgstr "Chỉnh cỡ cửa sổ ảnh khớp với mức thu phóng"
 
 #: ../app/tools/gimpmagnifyoptions.c:86
 msgid "Direction of magnification"
-msgstr ""
+msgstr "Hướng phóng đại"
 
 #: ../app/tools/gimpmagnifyoptions.c:172
 msgid "Auto-resize window"
@@ -13578,7 +13576,7 @@ msgstr "Thu phóng"
 
 #: ../app/tools/gimpmagnifytool.c:92
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr ""
+msgstr "Công cụ thu phóng: Điều chỉnh mức thu phóng"
 
 #: ../app/tools/gimpmagnifytool.c:93
 #, fuzzy
@@ -13588,7 +13586,7 @@ msgstr "Thu _phóng"
 
 #: ../app/tools/gimpmeasureoptions.c:67
 msgid "Open a floating dialog to view details about measurements"
-msgstr ""
+msgstr "Mở hộp thoại nổi để xem chi tiết kích thước"
 
 #: ../app/tools/gimpmeasureoptions.c:125
 msgid "Use info window"
@@ -13618,7 +13616,7 @@ msgstr "Nhấn-kéo để tạo một vùng chọn mới."
 
 #: ../app/tools/gimpmeasuretool.c:560
 msgid "Click to place vertical and horizontal guides"
-msgstr ""
+msgstr "Nhấn để đặt vị trí thước ngang và dọc"
 
 #: ../app/tools/gimpmeasuretool.c:568
 #, fuzzy
@@ -13697,7 +13695,7 @@ msgstr "Chuyển"
 
 #: ../app/tools/gimpmovetool.c:128
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr ""
+msgstr "Công cụ di chuyển: Di chuyển lớp, lựa chọn và đối tượng khác"
 
 #: ../app/tools/gimpmovetool.c:129
 msgid "_Move"
@@ -13721,7 +13719,7 @@ msgstr "Thêm nét dẫn: "
 
 #: ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
-msgstr ""
+msgstr "Công cụ vẽ: Dùng chổi để vẽ đường mịn"
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "_Paintbrush"
@@ -13737,11 +13735,11 @@ msgstr "Chế độ:"
 #, fuzzy
 #| msgid "_Brush"
 msgid "Brush"
-msgstr "_Bút vẽ"
+msgstr "_Chổi"
 
 #: ../app/tools/gimppaintoptions-gui.c:152
 msgid "Reset size to brush's native size"
-msgstr ""
+msgstr "Đặt lại cỡ của chổi ban đầu"
 
 #: ../app/tools/gimppaintoptions-gui.c:159
 #, fuzzy
@@ -13750,7 +13748,7 @@ msgstr "Tỷ lệ hình thể:"
 
 #: ../app/tools/gimppaintoptions-gui.c:176
 msgid "Reset aspect ratio to brush's native"
-msgstr ""
+msgstr "Đặt lại tỉ số hướng của native của chổi"
 
 #: ../app/tools/gimppaintoptions-gui.c:200
 #, fuzzy
@@ -13832,7 +13830,7 @@ msgstr "%s để kén màu"
 
 #: ../app/tools/gimppainttool.c:259
 msgid "Cannot paint on layer groups."
-msgstr ""
+msgstr "Không thể vẽ trên nhóm lớp."
 
 #: ../app/tools/gimppainttool.c:678
 #, c-format
@@ -13841,7 +13839,7 @@ msgstr "%s cho một đường thẳng"
 
 #: ../app/tools/gimppenciltool.c:51
 msgid "Pencil Tool: Hard edge painting using a brush"
-msgstr ""
+msgstr "Công cụ Bút chì: Dùng chổi vẽ cạnh sắc"
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pe_ncil"
@@ -13911,7 +13909,7 @@ msgstr "Bích chương hóa _lớp:"
 
 #: ../app/tools/gimprectangleoptions.c:104
 msgid "Automatically shrink to the nearest rectangular shape in a layer"
-msgstr ""
+msgstr "Tự động co thành hình chữ nhật gần nhất trong lớp"
 
 #: ../app/tools/gimprectangleoptions.c:113
 msgid "Use all visible layers when shrinking the selection"
@@ -13920,15 +13918,15 @@ msgstr "Dùng mọi lớp hiển thị khi thu nhỏ vùng chọn"
 #: ../app/tools/gimprectangleoptions.c:122
 #: ../app/tools/gimptransformoptions.c:127
 msgid "Composition guides such as rule of thirds"
-msgstr ""
+msgstr "Hướng dẫn thành phần dạng luật 1/3"
 
 #: ../app/tools/gimprectangleoptions.c:131
 msgid "X coordinate of top left corner"
-msgstr ""
+msgstr "Tọa độ X của góc trái trên"
 
 #: ../app/tools/gimprectangleoptions.c:141
 msgid "Y coordinate of top left corner"
-msgstr ""
+msgstr "Tọa độ Y của góc trái trên"
 
 #: ../app/tools/gimprectangleoptions.c:151
 #, fuzzy
@@ -13942,7 +13940,7 @@ msgstr "Đường dẫn đến vùng chọn"
 
 #: ../app/tools/gimprectangleoptions.c:169
 msgid "Unit of top left corner coordinate"
-msgstr ""
+msgstr "Đơn vị của toạ độ góc trái trên"
 
 #: ../app/tools/gimprectangleoptions.c:178
 #, fuzzy
@@ -13951,23 +13949,23 @@ msgstr "Đường dẫn đến vùng chọn"
 
 #: ../app/tools/gimprectangleoptions.c:187
 msgid "Enable lock of aspect ratio, width, height or size"
-msgstr ""
+msgstr "Cho phép khóa tỉ lệ hướng, chiều dài, chiều rộng và cỡ"
 
 #: ../app/tools/gimprectangleoptions.c:196
 msgid "Choose what has to be locked"
-msgstr ""
+msgstr "Sẽ khóa những gì"
 
 #: ../app/tools/gimprectangleoptions.c:205
 msgid "Custom fixed width"
-msgstr ""
+msgstr "Chiều ngang cố định tùy biến"
 
 #: ../app/tools/gimprectangleoptions.c:214
 msgid "Custom fixed height"
-msgstr ""
+msgstr "Chiều dài cố định tùy biến"
 
 #: ../app/tools/gimprectangleoptions.c:308
 msgid "Unit of fixed width, height or size"
-msgstr ""
+msgstr "Đơn vị của chiều dài, chiều rộng hoặc cỡ cố định"
 
 #: ../app/tools/gimprectangleoptions.c:317
 #, fuzzy
@@ -14022,11 +14020,11 @@ msgstr "Chuyển lớp và vùng chọn"
 
 #: ../app/tools/gimprectangleselectoptions.c:89
 msgid "Radius of rounding in pixels"
-msgstr ""
+msgstr "Bán kính vòng với đơn vị pixel"
 
 #: ../app/tools/gimprectangleselectoptions.c:167
 msgid "Rounded corners"
-msgstr ""
+msgstr "Góc bo"
 
 # Rect is abbreviation for Rectangle / Rect là viết tắt cho Chữ nhật
 #: ../app/tools/gimprectangleselecttool.c:168
@@ -14036,7 +14034,7 @@ msgstr "Chọn chữ nhật"
 
 #: ../app/tools/gimprectangleselecttool.c:169
 msgid "Rectangle Select Tool: Select a rectangular region"
-msgstr ""
+msgstr "Công cụ chọn hình chữ nhật: Chọn vùng hình chữ nhật"
 
 #: ../app/tools/gimprectangleselecttool.c:170
 #, fuzzy
@@ -14106,7 +14104,7 @@ msgstr "Giữa lại Y:"
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g° around (%g, %g)"
-msgstr ""
+msgstr "Quay %-3.3g° quanh (%g, %g)"
 
 #: ../app/tools/gimpscaletool.c:89
 msgid "Scale"
@@ -14125,7 +14123,7 @@ msgstr "C_o dãn"
 #, c-format
 msgctxt "undo-type"
 msgid "Scale to %d x %d"
-msgstr ""
+msgstr "Mở rộng tới %d x %d"
 
 #: ../app/tools/gimpselectionoptions.c:84
 #, fuzzy
@@ -14134,7 +14132,7 @@ msgstr "Mở rộng vùng chọn"
 
 #: ../app/tools/gimpselectionoptions.c:90
 msgid "Radius of feathering"
-msgstr ""
+msgstr "Bán kính feathering"
 
 #: ../app/tools/gimpselectionoptions.c:264 ../app/tools/gimptextoptions.c:538
 msgid "Antialiasing"
@@ -14167,7 +14165,7 @@ msgstr "Nhấn-kéo để trừ khỏi vùng chọn hiện có."
 #: ../app/tools/gimpselectiontool.c:281
 #, fuzzy
 msgid "Click-Drag to intersect with the current selection"
-msgstr "Nhấn-kéo để cắt chéo với vùng chọn hiện có."
+msgstr "Nhấn-kéo để giao với vùng chọn hiện có."
 
 #: ../app/tools/gimpselectiontool.c:291
 #, fuzzy
@@ -14216,24 +14214,24 @@ msgstr "Độ kéo cắt Y:"
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g"
-msgstr ""
+msgstr "Trượt ngang %-3.3g"
 
 #: ../app/tools/gimpsheartool.c:259
 #, c-format
 msgctxt "undo-type"
 msgid "Shear vertically by %-3.3g"
-msgstr ""
+msgstr "Trượt dọc %-3.3g"
 
 #. e.g. user entered numbers but no notification callback
 #: ../app/tools/gimpsheartool.c:264
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
-msgstr ""
+msgstr "Trượt ngang %-3.3g, trượt dọc %-3.3g"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr ""
+msgstr "Công cụ Hun: Dùng chổi để hun"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "_Smudge"
@@ -14251,7 +14249,7 @@ msgstr "Nhấn để nhoè đường."
 
 #: ../app/tools/gimptextoptions.c:131
 msgid "Font size unit"
-msgstr ""
+msgstr "Đơn vị cỡ phông"
 
 #: ../app/tools/gimptextoptions.c:136
 #, fuzzy
@@ -14268,13 +14266,13 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:153
 msgid "The text language may have an effect on the way the text is rendered."
-msgstr ""
+msgstr "Ngôn ngữ sẽ chịu hiệu ứng khi render"
 
 #: ../app/tools/gimptextoptions.c:164
 #, fuzzy
 #| msgid "Alignment:"
 msgid "Text alignment"
-msgstr "Canh lề :"
+msgstr "Canh lề"
 
 #: ../app/tools/gimptextoptions.c:170
 msgid "Indentation of the first line"
@@ -14328,11 +14326,11 @@ msgstr "Canh đều:"
 
 #: ../app/tools/gimptextoptions.c:592
 msgid "Box:"
-msgstr ""
+msgstr "Hộp:"
 
 #: ../app/tools/gimptextoptions.c:609
 msgid "Language:"
-msgstr ""
+msgstr "Ngôn ngữ:"
 
 #: ../app/tools/gimptexttool.c:189
 msgid "Text"
@@ -14340,7 +14338,7 @@ msgstr "Chữ"
 
 #: ../app/tools/gimptexttool.c:190
 msgid "Text Tool: Create or edit text layers"
-msgstr ""
+msgstr "Công cụ văn bản: Tạo hay sửa lớp văn bản"
 
 #: ../app/tools/gimptexttool.c:191
 msgid "Te_xt"
@@ -14393,11 +14391,11 @@ msgstr "Áp dụng ngưỡng"
 
 #: ../app/tools/gimpthresholdtool.c:111
 msgid "Import Threshold Settings"
-msgstr ""
+msgstr "Thiết lập ngưỡng nhập"
 
 #: ../app/tools/gimpthresholdtool.c:112
 msgid "Export Threshold Settings"
-msgstr ""
+msgstr "Thiết lập ngưỡng xuất"
 
 #: ../app/tools/gimpthresholdtool.c:162
 msgid "Threshold does not operate on indexed layers."
@@ -14409,7 +14407,7 @@ msgstr "Điều chỉnh tự động thành ngưỡng làm nhị phân tối ưu
 
 #: ../app/tools/gimptool.c:978
 msgid "Can't work on an empty image, add a layer first"
-msgstr ""
+msgstr "Không thể làm viẹc trên ảnh rỗng, phải thêm lớp trước"
 
 #: ../app/tools/gimptransformoptions.c:99
 #, fuzzy
@@ -14435,15 +14433,15 @@ msgstr "Hiển thị cửa sổ toàn cảnh cho ảnh này"
 
 #: ../app/tools/gimptransformoptions.c:122
 msgid "Opacity of the preview image"
-msgstr ""
+msgstr "Độ trong suốt của ảnh xem trước"
 
 #: ../app/tools/gimptransformoptions.c:133
 msgid "Size of a grid cell for variable number of composition guides"
-msgstr ""
+msgstr "Cỡ của ô lưới cho số các biến của hướng dẫn cấu thành"
 
 #: ../app/tools/gimptransformoptions.c:138
 msgid "Limit rotation steps to 15 degrees"
-msgstr ""
+msgstr "Giới hạn bước quay tới 15 độ"
 
 #: ../app/tools/gimptransformoptions.c:276
 #, fuzzy
@@ -14509,7 +14507,7 @@ msgstr "Không có đường dẫn cần chuyển dạng."
 
 #: ../app/tools/gimptransformtool.c:1075
 msgid "The active path's strokes are locked."
-msgstr ""
+msgstr "Nét của đường dẫn bị khóa."
 
 #: ../app/tools/gimpvectoroptions.c:76
 msgid "Restrict editing to polygons"
@@ -14549,7 +14547,7 @@ msgstr "Tạo và sửa đổi đường dẫn"
 
 #: ../app/tools/gimpvectortool.c:162
 msgid "Pat_hs"
-msgstr ""
+msgstr "Đường _dẫn"
 
 #: ../app/tools/gimpvectortool.c:251
 #, fuzzy
@@ -14916,7 +14914,7 @@ msgstr "Lỗi nhập đường dẫn từ « %s »: %s"
 
 #: ../app/widgets/gimpactioneditor.c:69
 msgid "_Search:"
-msgstr ""
+msgstr "_Tìm kiếm:"
 
 #: ../app/widgets/gimpactiongroup.c:888
 #, c-format
@@ -14991,7 +14989,7 @@ msgstr "Khoảng cách"
 #: ../app/widgets/gimpbrusheditor.c:215
 #: ../app/widgets/gimpbrushfactoryview.c:84
 msgid "Percentage of width of brush"
-msgstr "Phần trăm của độ rộng bút vẽ"
+msgstr "Phần trăm của độ rộng chổi"
 
 #: ../app/widgets/gimpbrushselect.c:172
 msgid "Opacity:"
@@ -15110,7 +15108,7 @@ msgstr "Cách ghi HTML:"
 
 #: ../app/widgets/gimpcolormapeditor.c:466
 msgid "Only indexed images have a colormap."
-msgstr ""
+msgstr "Chỉ những ảnh có chỉ mục mới có bảng màu"
 
 #: ../app/widgets/gimpcolorselectorpalette.c:58
 #, fuzzy
@@ -15328,8 +15326,8 @@ msgstr ""
 "Gỡ bỏ bộ điều khiển này ra danh sách các bộ điều khiển hoạt động thì sẽ xóa "
 "bỏ vĩnh viễn mọi sự ánh xạ sự kiện bạn đã cấu hình.\n"
 "\n"
-"Còn chọn « Tắt bộ điều khiển» sẽ vô hiệu hóa bộ điều khiển đó, không có gỡ bỏ "
-"nó."
+"Còn chọn « Tắt bộ điều khiển» sẽ vô hiệu hóa bộ điều khiển đó, không có gỡ "
+"bỏ nó."
 
 # Type: text
 # Description
@@ -15488,13 +15486,15 @@ msgstr "Lưu thiết lập thiết bị nhập _ngay"
 #: ../app/widgets/gimpdeviceeditor.c:523
 #, fuzzy, c-format
 msgid "Delete \"%s\"?"
-msgstr "Xóa bỏ bút vẽ này."
+msgstr "Xóa bỏ chổi này."
 
 #: ../app/widgets/gimpdeviceeditor.c:526
 msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
 msgstr ""
+"Bạn sắp xóa thiết lập được lưu trong thiết bị này.\n"
+"Lần sau, khi cắm thiết bị sẽ dùng thiếp lập mặc định."
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:141
@@ -15505,11 +15505,11 @@ msgstr "Áp suất:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:141
 msgid "X tilt"
-msgstr ""
+msgstr "Nghiêng chiều X"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:142
 msgid "Y tilt"
-msgstr ""
+msgstr "Nghiêng chiều Y"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:143
 #: ../app/widgets/gimpdynamicseditor.c:145
@@ -15521,12 +15521,12 @@ msgstr "Bánh xe chuột"
 #. the axes
 #: ../app/widgets/gimpdeviceinfoeditor.c:193
 msgid "Axes"
-msgstr ""
+msgstr "Trục"
 
 #. the keys
 #: ../app/widgets/gimpdeviceinfoeditor.c:267
 msgid "Keys"
-msgstr ""
+msgstr "Khóa"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:364
 #: ../app/widgets/gimpdeviceinfoeditor.c:580
@@ -15548,7 +15548,7 @@ msgstr "Đặt _lại màu"
 #: ../app/widgets/gimpdeviceinfoeditor.c:484
 #, c-format
 msgid "The axis '%s' has no curve"
-msgstr ""
+msgstr "Trục '%s' không có đường cong"
 
 #: ../app/widgets/gimpdevicestatus.c:136
 msgid "Save device status"
@@ -15589,7 +15589,7 @@ msgstr "Bạn có muốn thay thế nó bằng ảnh đang lưu không?"
 #: ../app/widgets/gimpdock.h:34
 msgctxt "dock"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #. String used to separate books (GtkNotebooks) within a dock,
 #. e.g. "Tool Options, Layers - Brushes"
@@ -15597,7 +15597,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:39
 msgctxt "dock"
 msgid " - "
-msgstr ""
+msgstr " - "
 
 #. String used to separate dock columns,
 #. e.g. "Tool Options, Layers - Brushes | Gradients"
@@ -15605,7 +15605,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:44
 msgctxt "dock"
 msgid " | "
-msgstr ""
+msgstr " | "
 
 #: ../app/widgets/gimpdockbook.c:292
 msgid "Configure this tab"
@@ -15628,17 +15628,17 @@ msgstr "điểm ảnh"
 
 #: ../app/widgets/gimpdynamicseditor.c:135
 msgid "Mapping matrix"
-msgstr ""
+msgstr "Ma trận ánh xạ"
 
 #: ../app/widgets/gimpdynamicseditor.c:142
 #: ../app/widgets/gimpdynamicsoutputeditor.c:69
 msgid "Velocity"
-msgstr ""
+msgstr "Tốc độ"
 
 #: ../app/widgets/gimpdynamicseditor.c:146
 #: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Random"
-msgstr ""
+msgstr "Ngẫn nhiên"
 
 #: ../app/widgets/gimpdynamicseditor.c:147
 #: ../app/widgets/gimpdynamicsoutputeditor.c:74
@@ -15841,21 +15841,21 @@ msgstr "Bộ duyệt Mạng"
 
 #: ../app/widgets/gimphelp.c:610
 msgid "GIMP user manual is missing"
-msgstr ""
+msgstr "Không tìm thấy hướng dẫn sử dụng GIMP"
 
 #: ../app/widgets/gimphelp.c:617
 msgid "_Read Online"
-msgstr ""
+msgstr "Đọc trực _tuyến"
 
 #: ../app/widgets/gimphelp.c:641
 msgid "The GIMP user manual is not installed on your computer."
-msgstr ""
+msgstr "Máy tính này chưa cài đặt hướng dẫn sử dụng GIMP."
 
 #: ../app/widgets/gimphelp.c:644
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
-msgstr ""
+msgstr "Bạn có thể cài gói hướng dẫn sử dụng hoặc đọc trực tuyến."
 
 #: ../app/widgets/gimphistogrameditor.c:99
 msgid "Mean:"
@@ -15896,6 +15896,8 @@ msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
+"Thay thế bình luận ảnh hiện tại bằng bình luận mặc định trong "
+"Soạn→ThamChiếu→Ảnh mặc định"
 
 #: ../app/widgets/gimpimageprofileview.c:200
 #, fuzzy
@@ -15982,11 +15984,19 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "màu"
 
-#: ../app/widgets/gimpitemtreeview.c:716
+#: ../app/widgets/gimpitemtreeview.c:715
 msgid "Lock:"
 msgstr "Khóa:"
 
-#: ../app/widgets/gimplayertreeview.c:307
+#: ../app/widgets/gimpitemtreeview.c:1494
+msgid "Set Item Exclusive Visible"
+msgstr "Đặt mục hiển thị dành riêng"
+
+#: ../app/widgets/gimpitemtreeview.c:1502
+msgid "Set Item Exclusive Linked"
+msgstr "Đặt mục đã liên kết dành riêng"
+
+#: ../app/widgets/gimplayertreeview.c:306
 msgid "Lock alpha channel"
 msgstr "Khóa kênh anfa"
 
@@ -16008,7 +16018,7 @@ msgstr "Cột:"
 
 #: ../app/widgets/gimpprofilechooserdialog.c:127
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr ""
+msgstr "Hồ sơ màu ICC (*.icc, *.icm)"
 
 #: ../app/widgets/gimpprogressdialog.c:221
 msgid "Progress"
@@ -16056,7 +16066,7 @@ msgstr "T_rộn các bảng chọn..."
 
 #: ../app/widgets/gimpsettingsbox.c:625
 msgid "Add Settings to Favorites"
-msgstr ""
+msgstr "Thêm thiết lập vào Yêu-Thích"
 
 #: ../app/widgets/gimpsettingsbox.c:628
 #, fuzzy
@@ -16142,7 +16152,7 @@ msgstr "Đặt các đường ở giữa"
 #.
 #: ../app/widgets/gimptagentry.c:1714
 msgid ","
-msgstr ""
+msgstr ","
 
 #: ../app/widgets/gimptemplateeditor.c:201
 #, c-format
@@ -16186,12 +16196,12 @@ msgstr "%d ppi, %s"
 #: ../app/widgets/gimptextbuffer-serialize.c:338
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
-msgstr ""
+msgstr "Thuộc tính \"%s\" là không hợp lệ trên phần từ <%s>"
 
 #: ../app/widgets/gimptextbuffer-serialize.c:410
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
-msgstr ""
+msgstr "Phần tử ngoài cùng phải là <markup> chứ không phải <%s>"
 
 #: ../app/widgets/gimptextbuffer.c:1454
 #, c-format
@@ -16220,11 +16230,11 @@ msgstr "Xoá các điểm ảnh đã chọn"
 #: ../app/widgets/gimptextstyleeditor.c:247
 #: ../app/widgets/gimptextstyleeditor.c:256
 msgid "Change color of selected text"
-msgstr ""
+msgstr "Đổi màu của văn bản đã chọn"
 
 #: ../app/widgets/gimptextstyleeditor.c:272
 msgid "Change kerning of selected text"
-msgstr ""
+msgstr "Đổi kerning của văn bản đã chọn"
 
 #: ../app/widgets/gimptextstyleeditor.c:288
 #, fuzzy
@@ -16239,7 +16249,7 @@ msgstr "Hợp nhau"
 
 #: ../app/widgets/gimptextstyleeditor.c:328
 msgid "Italic"
-msgstr ""
+msgstr "Nghiêng"
 
 #: ../app/widgets/gimptextstyleeditor.c:331
 #, fuzzy
@@ -16249,7 +16259,7 @@ msgstr "Chưa định nghĩa"
 
 #: ../app/widgets/gimptextstyleeditor.c:334
 msgid "Strikethrough"
-msgstr ""
+msgstr "Gạch ngang"
 
 #: ../app/widgets/gimpthumbbox.c:330
 #, fuzzy, c-format
@@ -16319,8 +16329,8 @@ msgid ""
 "The active brush.\n"
 "Click to open the Brush Dialog."
 msgstr ""
-"Bút vẽ hoạt động.\n"
-"Nhắp chuột để mở Hộp thoại Bút vẽ."
+"Chổi hoạt động.\n"
+"Nhắp chuột để mở Hộp thoại Chổi."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:181
 msgid ""
@@ -16385,16 +16395,16 @@ msgstr "B_iểu tượng:"
 
 #: ../app/widgets/gimptoolpreseteditor.c:136
 msgid "Apply stored FG/BG"
-msgstr ""
+msgstr "Áp dụng FG/BG có sẵn"
 
 #: ../app/widgets/gimptoolpreseteditor.c:141
 #, fuzzy
 msgid "Apply stored brush"
-msgstr "Nhân đôi bút vẽ này"
+msgstr "Nhân đôi chổi này"
 
 #: ../app/widgets/gimptoolpreseteditor.c:146
 msgid "Apply stored dynamics"
-msgstr ""
+msgstr "Áp dụng dynamic có sẵn"
 
 #: ../app/widgets/gimptoolpreseteditor.c:151
 #, fuzzy
@@ -16413,7 +16423,7 @@ msgstr "Thêm vào bảng chọn"
 
 #: ../app/widgets/gimptoolpreseteditor.c:166
 msgid "Apply stored font"
-msgstr ""
+msgstr "Áp dụng phông đã lưu"
 
 #: ../app/widgets/gimptoolpreseteditor.c:258
 #, fuzzy, c-format
@@ -16423,11 +16433,11 @@ msgstr "Gạch định _sẵn:"
 
 #: ../app/widgets/gimptranslationstore.c:100
 msgid "System Language"
-msgstr ""
+msgstr "Ngôn ngữ hệ thống"
 
 #: ../app/widgets/gimptranslationstore.c:102
 msgid "English"
-msgstr ""
+msgstr "Tiếng Anh"
 
 #: ../app/widgets/gimpuimanager.c:742
 msgid "Your GIMP installation is incomplete:"
@@ -16454,7 +16464,7 @@ msgstr "Kết nối các nét vẽ"
 
 #: ../app/widgets/gimpviewablebox.c:86
 msgid "Open the brush selection dialog"
-msgstr "Mở thoại chọn bút vẽ"
+msgstr "Mở thoại chọn chổi"
 
 #: ../app/widgets/gimpviewablebox.c:150
 #, fuzzy
@@ -16628,13 +16638,13 @@ msgstr "Chưa định nghĩa"
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
-msgstr ""
+msgstr "Tệp XCF bị hỏng! Gimp đã cố tải, nhưng không thành công."
 
 #: ../app/xcf/xcf-load.c:345
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
-msgstr ""
+msgstr "Tệp XCF bị hỏng! Gimp thậm chí không thể tải một phần dữ liệu ảnh."
 
 #: ../app/xcf/xcf-load.c:418
 msgid ""
@@ -16686,7 +16696,7 @@ msgstr "Gặp lỗi khi lưu tập tin XCF: %s"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "fuzzy"
-msgstr ""
+msgstr "mờ"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:2
 #, fuzzy
@@ -16847,9 +16857,6 @@ msgstr "Bộ biên soạn ảnh"
 
 #~ msgid "Instant update"
 #~ msgstr "Cập nhật ngay"
-
-#~ msgid "Set Item Exclusive Linked"
-#~ msgstr "Đặt mục đã liên kết dành riêng"
 
 #~ msgid "Message repeated %d times."
 #~ msgstr "Lặp lại thông điệp %d lần."
@@ -17288,8 +17295,8 @@ msgstr "Bộ biên soạn ảnh"
 
 #~ msgid ""
 #~ "PDB calling error for procedure '%s':\n"
-#~ "Argument '%s' (#%d, type %s) out of bounds (validation changed '%s' to '%"
-#~ "s')"
+#~ "Argument '%s' (#%d, type %s) out of bounds (validation changed '%s' to "
+#~ "'%s')"
 #~ msgstr ""
 #~ "Gặp lỗi gọi PDB cho thủ tục « %s »:\n"
 #~ "đối số « %s » (#%d, kiểu %s) ở ngoại phạm vi\n"
