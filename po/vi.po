@@ -2,15 +2,16 @@
 # Copyright © 2006 Gnome i18n Project for Vietnamese.
 # T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
+# Nguyễn Vũ Hưng <vuhung16plus@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-10-12 14:11+0000\n"
-"PO-Revision-Date: 2006-09-02 18:03+0930\n"
-"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"POT-Creation-Date: 2011-10-06 22:01+0000\n"
+"PO-Revision-Date: 2011-10-26 01:36+0700\n"
+"Last-Translator: Nguyễn Vũ Hưng <vuhung16plus@gmail.com>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,6 +19,9 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: LocFactoryEditor 1.6fc1\n"
+"X-Poedit-Language: Vietnamese\n"
+"X-Poedit-Country: VIET NAM\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -38,7 +42,6 @@ msgstr ""
 "Spencer Kimball, Peter Mattis và Nhóm Phát Triển GIMP."
 
 #: ../app/about.h:34
-#, fuzzy
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -55,7 +58,7 @@ msgid ""
 msgstr ""
 "Chương trình này là phần mềm tự do; bạn có thể phát hành lại nó và/hoặc sửa "
 "đổi nó với điều kiện của Giấy Phép Công Cộng GNU như được xuất bản bởi Tổ "
-"Chức Phần Mềm Tự Do; hoặc phiên bản 2 của Giấy Phép này, hoặc (tùy chọn) bất "
+"Chức Phần Mềm Tự Do; hoặc phiên bản 3 của Giấy Phép này, hoặc (tùy chọn) bất "
 "kỳ phiên bản sau nào.\n"
 "\n"
 "Chương trình này được phát hành vì mong muốn nó có ích, nhưng KHÔNG CÓ BẢO "
@@ -64,9 +67,7 @@ msgstr ""
 "\n"
 "Bạn đã nhận một bản sao của Giấy Phép Công Cộng GNU cùng với chương trình "
 "này; nếu không, hãy viết thư cho Tổ Chức Phần Mềm Tự Do,\n"
-"Free Software Foundation, Inc.,\n"
-"51 Franklin Street, Fifth Floor,\n"
-"Boston, MA  02110-1301, USA."
+"Có thể xem tại <http://www.gnu.org/licenses/>."
 
 #: ../app/app.c:224
 #, c-format
@@ -105,12 +106,11 @@ msgstr "Xuất chi tiết"
 
 #: ../app/main.c:163
 msgid "Start a new GIMP instance"
-msgstr ""
+msgstr "Mở cửa sổ GIMP mới"
 
 #: ../app/main.c:168
-#, fuzzy
 msgid "Open images as new"
-msgstr "Mở ảnh dạng lớp"
+msgstr "Mở ảnh mới "
 
 #: ../app/main.c:173
 msgid "Run without a user interface"
@@ -118,14 +118,13 @@ msgstr "Chạy không có giao diện người dùng"
 
 #: ../app/main.c:178
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "Không tải các bút vẽ, dốc, mẫu ..."
+msgstr "Không tải chổi, dốc, mẫu ..."
 
 #: ../app/main.c:183
 msgid "Do not load any fonts"
 msgstr "Không tải phông chữ nào"
 
 #: ../app/main.c:188
-#, fuzzy
 msgid "Do not show a splash screen"
 msgstr "Không hiển thị cửa sổ khởi chạy"
 
@@ -193,7 +192,7 @@ msgstr "Xuất một tập tin « gimprc » (tài nguyên GIMP) có thiết lậ
 
 #: ../app/main.c:271
 msgid "Output a sorted list of deprecated procedures in the PDB"
-msgstr ""
+msgstr "Đầu ra là danh sách đã sắp xếp các thủ tục phản đối trong PDB"
 
 #: ../app/main.c:389
 msgid "[FILE|URI...]"
@@ -209,20 +208,20 @@ msgstr ""
 
 #: ../app/main.c:426
 msgid "Another GIMP instance is already running."
-msgstr ""
+msgstr "Một cửa sổ GIMP khác đang chạy "
 
 #: ../app/main.c:496
 msgid "GIMP output. Type any character to close this window."
-msgstr ""
+msgstr "Đầu ra GIMP. Nhấn phím bất kỳ để đóng cửa sổ này. "
 
 #: ../app/main.c:497
 #, c-format
 msgid "(Type any character to close this window)\n"
-msgstr ""
+msgstr "(Gõ phím bất kỳ để đóng cửa sổ này)\n"
 
 #: ../app/main.c:514
 msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr ""
+msgstr "Đầu ra GIMP. Bạn có thể thu nhỏ nó, nhưng đừng đóng hẳn. "
 
 #: ../app/sanity.c:433
 #, c-format
@@ -258,7 +257,7 @@ msgstr ""
 #: ../app/version.c:63 ../app/version.c:130
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
-msgstr ""
+msgstr "dùng phiên bản %s %s (trình biên dịch %s)"
 
 #: ../app/version.c:138
 #, c-format
@@ -268,13 +267,13 @@ msgstr "%s phiên bản %s"
 #: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:388
 #: ../app/widgets/gimpbrusheditor.c:88
 msgid "Brush Editor"
-msgstr "Bộ sửa bút vẽ"
+msgstr "Bộ sửa chổi"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:112 ../app/core/gimp.c:951
 #: ../app/dialogs/dialogs.c:317 ../app/dialogs/preferences-dialog.c:2725
 msgid "Brushes"
-msgstr "Bút vẽ"
+msgstr "Chổi"
 
 #: ../app/actions/actions.c:115 ../app/dialogs/dialogs.c:327
 msgid "Buffers"
@@ -290,9 +289,8 @@ msgid "Colormap"
 msgstr "Bố trí màu"
 
 #: ../app/actions/actions.c:124
-#, fuzzy
 msgid "Configuration"
-msgstr "Cấu hình tài nguyên"
+msgstr "Cấu hình "
 
 #: ../app/actions/actions.c:127
 msgid "Context"
@@ -331,13 +329,12 @@ msgstr "Vẽ được"
 #. Some things do not have grids, so just list
 #: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:335
 msgid "Paint Dynamics"
-msgstr ""
+msgstr "Vẽ động "
 
 #: ../app/actions/actions.c:154 ../app/dialogs/dialogs.c:392
 #: ../app/widgets/gimpdynamicseditor.c:92
-#, fuzzy
 msgid "Paint Dynamics Editor"
-msgstr "Bộ sửa độ dốc"
+msgstr "Trình sửa Paint Dynamics "
 
 #: ../app/actions/actions.c:157
 msgid "Edit"
@@ -370,13 +367,12 @@ msgstr "Độ dốc"
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:983
 #: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2749
 msgid "Tool Presets"
-msgstr ""
+msgstr "Cộng cụ định nghĩa trước "
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:404
 #: ../app/widgets/gimptoolpreseteditor.c:75
-#, fuzzy
 msgid "Tool Preset Editor"
-msgstr "Bộ sửa chữ"
+msgstr "Trình sửa Preset công cụ "
 
 #: ../app/actions/actions.c:181
 msgid "Help"
@@ -436,7 +432,6 @@ msgid "Templates"
 msgstr "Biểu mẫu"
 
 #: ../app/actions/actions.c:217
-#, fuzzy
 msgid "Text Tool"
 msgstr "Công cụ _Chữ"
 
@@ -463,339 +458,285 @@ msgid "View"
 msgstr "Xem"
 
 #: ../app/actions/actions.c:235
-#, fuzzy
 msgid "Windows"
-msgstr "Cửa sổ ảnh"
+msgstr "Cửa sổ"
 
 #. value description and new value shown in the status bar
 #: ../app/actions/actions.c:584
 #, c-format
 msgid "%s: %.2f"
-msgstr ""
+msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
 #: ../app/actions/actions.c:610
 #, c-format
 msgid "%s: %d"
-msgstr ""
+msgstr "%s: %d"
 
 #: ../app/actions/brush-editor-actions.c:42
-#, fuzzy
 msgctxt "brush-editor-action"
 msgid "Brush Editor Menu"
-msgstr "Trình đơn sửa đổi bút vẽ"
+msgstr "Trình đơn sửa chổi"
 
 #: ../app/actions/brush-editor-actions.c:49
-#, fuzzy
 msgctxt "brush-editor-action"
 msgid "Edit Active Brush"
-msgstr "Sửa đổi bút vẽ hoạt động"
+msgstr "Sửa chổi vẽ hiện tại"
 
 #: ../app/actions/brushes-actions.c:42
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Brushes Menu"
-msgstr "Trình đơn Bút vẽ"
+msgstr "Trình đơn chổi"
 
 #: ../app/actions/brushes-actions.c:46
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_Open Brush as Image"
-msgstr "Mở _bút vẽ dạng ảnh"
+msgstr "Mở _chổi dạng ảnh"
 
 #: ../app/actions/brushes-actions.c:47
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Open brush as image"
-msgstr "Mở bút vẽ này dạng ảnh."
+msgstr "Mở chổi dạng ảnh"
 
 #: ../app/actions/brushes-actions.c:52
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_New Brush"
-msgstr "Bút vẽ _mới"
+msgstr "Chổi _mới"
 
 #: ../app/actions/brushes-actions.c:53
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Create a new brush"
-msgstr "Tạo kênh mới"
+msgstr "Tạo chổi mới"
 
 #: ../app/actions/brushes-actions.c:58
-#, fuzzy
 msgctxt "brushes-action"
 msgid "D_uplicate Brush"
-msgstr "_Nhân đôi bút vẽ"
+msgstr "_Nhân đôi chổi"
 
 #: ../app/actions/brushes-actions.c:59
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Duplicate this brush"
-msgstr "Nhân đôi bút vẽ này"
+msgstr "Nhân đôi chổi này"
 
 #: ../app/actions/brushes-actions.c:64
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Copy Brush _Location"
-msgstr "Chép _vị trí bút vẽ"
+msgstr "Chép _vị trí chổi"
 
 #: ../app/actions/brushes-actions.c:65
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Copy brush file location to clipboard"
-msgstr "Sao chép vị trí của tập tin bút vẽ vào bảng tạm"
+msgstr "Sao chép vị trí của tập tin chổi vào bảng nháp"
 
 #: ../app/actions/brushes-actions.c:70
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_Delete Brush"
-msgstr "_Xóa bỏ bút vẽ"
+msgstr "_Xóa chổi"
 
 #: ../app/actions/brushes-actions.c:71
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Delete this brush"
-msgstr "Xóa bỏ bút vẽ này."
+msgstr "Xóa chổi này"
 
 #: ../app/actions/brushes-actions.c:76
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_Refresh Brushes"
-msgstr "_Cập nhật các bút vẽ"
+msgstr "_Cập nhật chổi"
 
 #: ../app/actions/brushes-actions.c:77
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Refresh brushes"
-msgstr "Cập nhật các bút vẽ"
+msgstr "Cập nhật chổi"
 
 #: ../app/actions/brushes-actions.c:85
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_Edit Brush..."
-msgstr "_Sửa bút vẽ..."
+msgstr "_Sửa chổi..."
 
 #: ../app/actions/brushes-actions.c:86
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Edit this brush"
-msgstr "Sửa đổi bút vẽ này."
+msgstr "Sửa chổi này"
 
 #: ../app/actions/buffers-actions.c:41
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Buffers Menu"
 msgstr "Trình đơn Bộ đệm"
 
 #: ../app/actions/buffers-actions.c:45
-#, fuzzy
 msgctxt "buffers-action"
 msgid "_Paste Buffer"
 msgstr "_Dán bộ đệm"
 
 #: ../app/actions/buffers-actions.c:46
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "Dán bộ đệm được chọn."
+msgstr "Dán bộ đệm đã chọn"
 
 #: ../app/actions/buffers-actions.c:51
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into"
 msgstr "Dán bộ đệm _vào"
 
 #: ../app/actions/buffers-actions.c:52
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Dán bộ đệm được chọn vào vùng chọn."
+msgstr "Dán bộ đệm được chọn vào vùng chọn"
 
 #: ../app/actions/buffers-actions.c:57
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer as _New"
 msgstr "Dá_n bộ đệm dạng mới"
 
 #: ../app/actions/buffers-actions.c:58
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
-msgstr "Dán bộ đệm được chọn có dạng ảnh mới."
+msgstr "Dán bộ đệm được chọn dưới dạng ảnh mới"
 
 #: ../app/actions/buffers-actions.c:63
-#, fuzzy
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
-msgstr "_Xóa bỏ bộ đệm"
+msgstr "_Xóa bộ đệm"
 
 #: ../app/actions/buffers-actions.c:64
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
-msgstr "Xóa bỏ bộ đệm được chọn."
+msgstr "Xóa bộ đệm được chọn"
 
 #: ../app/actions/channels-actions.c:44
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channels Menu"
 msgstr "Trình đơn Kênh"
 
 #: ../app/actions/channels-actions.c:48
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Edit Channel Attributes..."
 msgstr "_Sửa thuộc tính kênh..."
 
 #: ../app/actions/channels-actions.c:49
-#, fuzzy
 msgctxt "channels-action"
 msgid "Edit the channel's name, color and opacity"
-msgstr "Sửa đổi tên, màu và độ mờ đục của kênh"
+msgstr "Sửa đổi tên, màu và độ trong suốt của kênh"
 
 #: ../app/actions/channels-actions.c:54
-#, fuzzy
 msgctxt "channels-action"
 msgid "_New Channel..."
 msgstr "Kê_nh mới..."
 
 #: ../app/actions/channels-actions.c:55
-#, fuzzy
 msgctxt "channels-action"
 msgid "Create a new channel"
 msgstr "Tạo kênh mới"
 
 #: ../app/actions/channels-actions.c:60
-#, fuzzy
 msgctxt "channels-action"
 msgid "_New Channel"
 msgstr "Kê_nh mới"
 
 #: ../app/actions/channels-actions.c:61
-#, fuzzy
 msgctxt "channels-action"
 msgid "Create a new channel with last used values"
 msgstr "Tạo kênh mới với các giá trị dùng cuối cùng"
 
 #: ../app/actions/channels-actions.c:66
-#, fuzzy
 msgctxt "channels-action"
 msgid "D_uplicate Channel"
 msgstr "N_hân đôi kênh"
 
 #: ../app/actions/channels-actions.c:68
-#, fuzzy
 msgctxt "channels-action"
 msgid "Create a duplicate of this channel and add it to the image"
 msgstr "Tạo một bản sao của kênh này, và thêm nó vào ảnh"
 
 #: ../app/actions/channels-actions.c:73
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Delete Channel"
-msgstr "_Xóa bỏ kênh"
+msgstr "_Xóa kênh"
 
 #: ../app/actions/channels-actions.c:74
-#, fuzzy
 msgctxt "channels-action"
 msgid "Delete this channel"
-msgstr "Xoá bỏ kênh này"
+msgstr "Xoá kênh này"
 
 #: ../app/actions/channels-actions.c:79
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Raise Channel"
 msgstr "Nân_g kênh"
 
 #: ../app/actions/channels-actions.c:80
-#, fuzzy
 msgctxt "channels-action"
 msgid "Raise this channel one step in the channel stack"
-msgstr "Nâng kênh này lên một bước trong đống kênh"
+msgstr "Nâng kênh này lên một bước trong chồng kênh"
 
 #: ../app/actions/channels-actions.c:85
-#, fuzzy
 msgctxt "channels-action"
 msgid "Raise Channel to _Top"
-msgstr "Nâng kênh lên _trên"
+msgstr "Nâng kênh lên đỉn_h"
 
 #: ../app/actions/channels-actions.c:87
-#, fuzzy
 msgctxt "channels-action"
 msgid "Raise this channel to the top of the channel stack"
 msgstr "Nâng kênh này lên trên đống kênh"
 
 #: ../app/actions/channels-actions.c:92
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Lower Channel"
 msgstr "_Hạ kênh"
 
 #: ../app/actions/channels-actions.c:93
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower this channel one step in the channel stack"
 msgstr "Hạ thấp kênh này một bước trong đống kênh"
 
 #: ../app/actions/channels-actions.c:98
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower Channel to _Bottom"
-msgstr "Hạ kênh xuống _dưới"
+msgstr "Hạ kênh xuống đá_y"
 
 #: ../app/actions/channels-actions.c:100
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower this channel to the bottom of the channel stack"
 msgstr "Hạ thấp kênh này xuống dưới đống kênh"
 
 #: ../app/actions/channels-actions.c:108
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel to Sele_ction"
-msgstr "Kênh tới vùng _chọn"
+msgstr "Kênh tới vùng chọn"
 
 #: ../app/actions/channels-actions.c:109
-#, fuzzy
 msgctxt "channels-action"
 msgid "Replace the selection with this channel"
 msgstr "Thay thế vùng chọn bằng kênh này"
 
 #: ../app/actions/channels-actions.c:114
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Add to Selection"
 msgstr "Thê_m vào vùng chọn"
 
 #: ../app/actions/channels-actions.c:115
-#, fuzzy
 msgctxt "channels-action"
 msgid "Add this channel to the current selection"
 msgstr "Thêm kênh này vào vùng chọn hiện có"
 
 #: ../app/actions/channels-actions.c:120
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Subtract from Selection"
 msgstr "_Trừ khỏi vùng chọn"
 
 #: ../app/actions/channels-actions.c:121
-#, fuzzy
 msgctxt "channels-action"
 msgid "Subtract this channel from the current selection"
-msgstr "Trừ kênh này ra vùng chọn hiện có"
+msgstr "Trừ kênh này ra vùng chọn hiện tại"
 
 #: ../app/actions/channels-actions.c:126
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Intersect with Selection"
-msgstr "Cắt chéo vớ_i vùng chọn"
+msgstr "Giao vớ_i vùng chọn"
 
 #: ../app/actions/channels-actions.c:127
-#, fuzzy
 msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
-msgstr "Cắt chéo kênh này với vùng chọn hiện có"
+msgstr "Giao kênh này với vùng chọn hiện có"
 
 #: ../app/actions/channels-commands.c:85
 #: ../app/actions/channels-commands.c:402
@@ -843,46 +784,39 @@ msgid "%s Channel Copy"
 msgstr "%s Kênh Chép"
 
 #: ../app/actions/colormap-actions.c:44
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Colormap Menu"
-msgstr "Trình đơn Bố trí màu"
+msgstr "Trình đơn bảng màu"
 
 #: ../app/actions/colormap-actions.c:48
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Edit Color..."
 msgstr "_Sửa màu..."
 
 #: ../app/actions/colormap-actions.c:49
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Edit this color"
-msgstr "Sửa đổi màu này."
+msgstr "Sửa đổi màu này"
 
 #: ../app/actions/colormap-actions.c:57
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
 msgstr "Thê_m màu từ cảnh gần"
 
 #: ../app/actions/colormap-actions.c:58
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Add current foreground color"
-msgstr "Thêm màu cảnh gần hiện có"
+msgstr "Thêm màu cận cảnh hiện tại"
 
 #: ../app/actions/colormap-actions.c:63
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Add Color from BG"
 msgstr "Thê_m màu từ nền"
 
 #: ../app/actions/colormap-actions.c:64
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Add current background color"
-msgstr "Thêm màu nền hiện có"
+msgstr "Thêm màu nền hiện tại"
 
 #: ../app/actions/colormap-commands.c:73
 #, c-format
@@ -896,170 +830,147 @@ msgstr "Sửa mục nhập bố trí màu"
 #: ../app/actions/config-actions.c:38
 msgctxt "config-action"
 msgid "Use _GEGL"
-msgstr ""
+msgstr "Dùng _GEGL"
 
 #: ../app/actions/config-actions.c:39
 msgctxt "config-action"
 msgid "If possible, use GEGL for image processing"
-msgstr ""
+msgstr "Nếu có thể, xử lý ảnh dùng GEGL"
 
 #: ../app/actions/context-actions.c:46
-#, fuzzy
 msgctxt "context-action"
 msgid "_Context"
 msgstr "Ngữ _cảnh"
 
 #: ../app/actions/context-actions.c:48
-#, fuzzy
 msgctxt "context-action"
 msgid "_Colors"
-msgstr "Màu sắ_c"
+msgstr "_Màu"
 
 #: ../app/actions/context-actions.c:50
-#, fuzzy
 msgctxt "context-action"
 msgid "_Opacity"
-msgstr "Độ _mờ đục:"
+msgstr "Độ _mờ đục"
 
 #: ../app/actions/context-actions.c:52
-#, fuzzy
 msgctxt "context-action"
 msgid "Paint _Mode"
 msgstr "Chế độ _sơn"
 
 #: ../app/actions/context-actions.c:54
-#, fuzzy
 msgctxt "context-action"
 msgid "_Tool"
 msgstr "_Công cụ"
 
 #: ../app/actions/context-actions.c:56
-#, fuzzy
 msgctxt "context-action"
 msgid "_Brush"
-msgstr "_Bút vẽ"
+msgstr "_Chổi"
 
 #: ../app/actions/context-actions.c:58
-#, fuzzy
 msgctxt "context-action"
 msgid "_Pattern"
 msgstr "_Mẫu"
 
 #: ../app/actions/context-actions.c:60
-#, fuzzy
 msgctxt "context-action"
 msgid "_Palette"
 msgstr "_Bảng chọn"
 
 #: ../app/actions/context-actions.c:62
-#, fuzzy
 msgctxt "context-action"
 msgid "_Gradient"
 msgstr "Độ _dốc"
 
 #: ../app/actions/context-actions.c:64
-#, fuzzy
 msgctxt "context-action"
 msgid "_Font"
 msgstr "_Phông"
 
 #: ../app/actions/context-actions.c:67
-#, fuzzy
 msgctxt "context-action"
 msgid "_Shape"
 msgstr "_Hình"
 
 #: ../app/actions/context-actions.c:69
-#, fuzzy
 msgctxt "context-action"
 msgid "_Radius"
 msgstr "_Bán kính"
 
 #: ../app/actions/context-actions.c:71
-#, fuzzy
 msgctxt "context-action"
 msgid "S_pikes"
 msgstr "Chôn_g"
 
 #: ../app/actions/context-actions.c:73
-#, fuzzy
 msgctxt "context-action"
 msgid "_Hardness"
 msgstr "Độ _cứng"
 
 #: ../app/actions/context-actions.c:75
-#, fuzzy
 msgctxt "context-action"
 msgid "_Aspect Ratio"
-msgstr "Tỷ lệ hình thể:"
+msgstr "Tỷ lệ _hình thể"
 
 #: ../app/actions/context-actions.c:77
-#, fuzzy
 msgctxt "context-action"
 msgid "A_ngle"
 msgstr "_Góc"
 
 #: ../app/actions/context-actions.c:80
-#, fuzzy
 msgctxt "context-action"
 msgid "_Default Colors"
-msgstr "Màu sắc _mặc định"
+msgstr "Màu _mặc định"
 
 #: ../app/actions/context-actions.c:82
-#, fuzzy
 msgctxt "context-action"
 msgid "Set foreground color to black, background color to white"
-msgstr "Đặt màu cảnh gần thành đen, màu nền thành trắng"
+msgstr "Đặt màu tiền cảnh đen, nền trắng"
 
 #: ../app/actions/context-actions.c:87
-#, fuzzy
 msgctxt "context-action"
 msgid "S_wap Colors"
-msgstr "Tr_ao đổi màu sắc"
+msgstr "_Hoán đổi màu"
 
 #: ../app/actions/context-actions.c:88
-#, fuzzy
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
-msgstr "Trao đổi màu cảnh gần và nền"
+msgstr "Hoán đổi màu tiền cảnh và hậu cảnh"
 
 #: ../app/actions/context-commands.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Paint Mode: %s"
-msgstr "Chế độ _sơn"
+msgstr "Chế độ sơn: %s"
 
 #: ../app/actions/context-commands.c:552
-#, fuzzy, c-format
+#, c-format
 msgid "Brush Shape: %s"
-msgstr "Bút vẽ"
+msgstr "Nét chổi: %s"
 
 #: ../app/actions/context-commands.c:612
 #, c-format
 msgid "Brush Radius: %2.2f"
-msgstr ""
+msgstr "Bán kính vẽ: %2.2f"
 
 #: ../app/actions/context-commands.c:720
 #, c-format
 msgid "Brush Angle: %2.2f"
-msgstr ""
+msgstr "Góc vẽ: %2.2f"
 
 #: ../app/actions/cursor-info-actions.c:40
-#, fuzzy
 msgctxt "cursor-info-action"
 msgid "Pointer Information Menu"
 msgstr "Trình đơn thông tin con trỏ"
 
 #: ../app/actions/cursor-info-actions.c:47
-#, fuzzy
 msgctxt "cursor-info-action"
 msgid "_Sample Merged"
 msgstr "_Mẫu đã trộn"
 
 #: ../app/actions/cursor-info-actions.c:48
-#, fuzzy
 msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
-msgstr "Vùng chọn dựa vào mọi lớp hiển thị"
+msgstr "Vùng chọn dựa vào màu tổng hợp mọi lớp hiển thị"
 
 #: ../app/actions/data-commands.c:88 ../app/actions/documents-commands.c:344
 #: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:232
@@ -1075,7 +986,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Việc mở « %s » thất bại:\n"
+"Mở '%s' thất bại:\n"
 "\n"
 "%s"
 
@@ -1089,427 +1000,359 @@ msgid "Untitled"
 msgstr "Không tên"
 
 #: ../app/actions/dialogs-actions.c:49
-#, fuzzy
 msgctxt "windows-action"
 msgid "Tool_box"
 msgstr "_Hộp công cụ"
 
 #: ../app/actions/dialogs-actions.c:55
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "Tù_y chọn công cụ"
 
 #: ../app/actions/dialogs-actions.c:56
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở hộp thoại tùy biến"
 
 #: ../app/actions/dialogs-actions.c:61
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Device Status"
-msgstr "Trạng thái _thiết bị:"
+msgstr "Trạng thái _thiết bị"
 
 #: ../app/actions/dialogs-actions.c:62
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
-msgstr "Mở thoại chọn độ dốc"
+msgstr "Mở hộp thoại trạng thái thiết bị"
 
 #: ../app/actions/dialogs-actions.c:67
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "_Lớp"
 
 #: ../app/actions/dialogs-actions.c:68
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
-msgstr "Mở thoại chọn mẫu"
+msgstr "Mở hộp thoại chọn lớp"
 
 #: ../app/actions/dialogs-actions.c:73
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "_Kênh"
 
 #: ../app/actions/dialogs-actions.c:74
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở hộp thoại chọn kênh"
 
 #: ../app/actions/dialogs-actions.c:79
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Paths"
-msgstr "Đường _dẫn:"
+msgstr "Đường _dẫn"
 
 #: ../app/actions/dialogs-actions.c:80
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
-msgstr "Mở thoại chọn mẫu"
+msgstr "Mở hộp thoại chọn đường dẫn"
 
 #: ../app/actions/dialogs-actions.c:85
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Color_map"
-msgstr "Bố trí_màu"
+msgstr "_Bảng màu"
 
 #: ../app/actions/dialogs-actions.c:86
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở hộp thoại bảng màu"
 
 #: ../app/actions/dialogs-actions.c:91
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Histogra_m"
-msgstr "Biểu đồ tần _xuất"
+msgstr "Biểu đồ tần _suất"
 
 #: ../app/actions/dialogs-actions.c:92
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
-msgstr "Mở thoại chọn bút vẽ"
+msgstr "Mở cửa sổ tần suất"
 
 #: ../app/actions/dialogs-actions.c:97
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "Bộ _sửa vùng chọn"
 
 #: ../app/actions/dialogs-actions.c:98
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở trình chọn vùng"
 
 #: ../app/actions/dialogs-actions.c:103
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Na_vigation"
-msgstr "Cách chu_yển"
+msgstr "Định _hướng"
 
 #: ../app/actions/dialogs-actions.c:104
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
-msgstr "Mở thoại chọn độ dốc"
+msgstr "Mở hộp thoại hiển thị định hướng"
 
 #: ../app/actions/dialogs-actions.c:109
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "Lược sử _Hủy bước"
 
 #: ../app/actions/dialogs-actions.c:110
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở hộp thoại lịch sử hủy bước"
 
 #: ../app/actions/dialogs-actions.c:115
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Pointer"
 msgstr "Con trỏ"
 
 #: ../app/actions/dialogs-actions.c:116
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở hộp thoại thông tin con trỏ"
 
 #: ../app/actions/dialogs-actions.c:121
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "Điểm _mẫu"
 
 #: ../app/actions/dialogs-actions.c:122
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở hộp thoại chọn điểm mẫu"
 
 #: ../app/actions/dialogs-actions.c:127
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Colo_rs"
-msgstr "Màu _sắc"
+msgstr "_Màu"
 
 #: ../app/actions/dialogs-actions.c:128
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở hộp thoại màu tiền cảnh/hậu cảnh"
 
 #: ../app/actions/dialogs-actions.c:133
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Brushes"
-msgstr "_Bút vẽ"
+msgstr "_Chổi"
 
 #: ../app/actions/dialogs-actions.c:134
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
-msgstr "Mở thoại chọn bút vẽ"
+msgstr "Mở hộp thoại chọn chổi"
 
 #: ../app/actions/dialogs-actions.c:139
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Brush Editor"
-msgstr "Bộ sửa bút vẽ"
+msgstr "Trình sửa chổi"
 
 #: ../app/actions/dialogs-actions.c:140
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
-msgstr "Mở thoại chọn bút vẽ"
+msgstr "Mở trình soạn thảo chổi"
 
 #: ../app/actions/dialogs-actions.c:145
 msgctxt "dialogs-action"
 msgid "Paint Dynamics"
-msgstr ""
+msgstr "Paint Dynamics"
 
 #: ../app/actions/dialogs-actions.c:146
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
-msgstr "Hộp thoại mở ảnh"
+msgstr "Mở hộp thoại paint dynamics"
 
 #: ../app/actions/dialogs-actions.c:151
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
-msgstr "Bộ sửa độ dốc"
+msgstr "Trình soạn thảo Paint Dynamics"
 
 #: ../app/actions/dialogs-actions.c:152
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
-msgstr ""
+msgstr "Mở trình soạn thảo paint dynamics"
 
 #: ../app/actions/dialogs-actions.c:157
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "Mẫ_u"
 
 #: ../app/actions/dialogs-actions.c:158
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
-msgstr "Mở thoại chọn mẫu"
+msgstr "Mở hộp thoại mẫu"
 
 #: ../app/actions/dialogs-actions.c:163
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "_Dốc"
 
 #: ../app/actions/dialogs-actions.c:164
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Mở thoại chọn độ dốc"
 
 #: ../app/actions/dialogs-actions.c:169
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "Bộ sửa độ dốc"
 
 #: ../app/actions/dialogs-actions.c:170
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "Mở thoại chọn độ dốc"
 
 #: ../app/actions/dialogs-actions.c:175
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "Bản_g chọn"
 
 #: ../app/actions/dialogs-actions.c:176
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Mở thoại chọn bảng chọn"
 
 #: ../app/actions/dialogs-actions.c:181
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Palette Editor"
 msgstr "Bộ sửa bảng chọn"
 
 #: ../app/actions/dialogs-actions.c:182
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "Mở thoại chọn bảng chọn"
 
 #: ../app/actions/dialogs-actions.c:187
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Tool presets"
 msgstr "Tùy chọn công cụ"
 
 #: ../app/actions/dialogs-actions.c:188
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "Mở thoại chọn mẫu"
 
 #: ../app/actions/dialogs-actions.c:193
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "_Phông"
 
 #: ../app/actions/dialogs-actions.c:194
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở thoại chọn phông"
 
 #: ../app/actions/dialogs-actions.c:199
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "Bộ đệ_m"
 
 #: ../app/actions/dialogs-actions.c:200
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
-msgstr "Mở thoại chọn mẫu"
+msgstr "Mở thoại bộ đệm có tên"
 
 #: ../app/actions/dialogs-actions.c:205
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "Ả_nh"
 
 #: ../app/actions/dialogs-actions.c:206
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
-msgstr "Hộp thoại mở ảnh"
+msgstr "Mở hộp thoại ảnh"
 
 #: ../app/actions/dialogs-actions.c:211
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "Lược sử Tà_i liệu"
 
 #: ../app/actions/dialogs-actions.c:212
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở thoại lược sử tài liệu"
 
 #: ../app/actions/dialogs-actions.c:217
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Templates"
-msgstr "_Biểu mẫu"
+msgstr "_Mẫu"
 
 #: ../app/actions/dialogs-actions.c:218
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
-msgstr "Hộp thoại mở ảnh"
+msgstr "Mở hộp thoại ảnh mẫu"
 
 #: ../app/actions/dialogs-actions.c:223
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "Bà_n giao tiếp lỗi"
 
 #: ../app/actions/dialogs-actions.c:224
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the error console"
-msgstr "Xóa bàn giao tiếp lỗi"
+msgstr "Mở bàn giao tiếp lỗi"
 
 #: ../app/actions/dialogs-actions.c:234
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "Tù_y thích"
 
 #: ../app/actions/dialogs-actions.c:235
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
-msgstr "Mở thoại chọn phông chữ"
+msgstr "Mở thoại tùy thích"
 
 #: ../app/actions/dialogs-actions.c:240
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Input Devices"
-msgstr "Thiết bị nhập"
+msgstr "Thiết bị _nhập"
 
 #: ../app/actions/dialogs-actions.c:241
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
-msgstr "Mở mục nhập được chọn."
+msgstr "Mở trình soạn thảo thiết bị nhập"
 
 #: ../app/actions/dialogs-actions.c:246
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Phím tắt"
 
 #: ../app/actions/dialogs-actions.c:247
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
-msgstr "_Lưu các phím tắt khi thoát"
+msgstr "Mở trình soạn thảo phím tắt"
 
 #: ../app/actions/dialogs-actions.c:252
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Modules"
-msgstr "Mô-đun"
+msgstr "_Mô-đun"
 
 #: ../app/actions/dialogs-actions.c:253
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
-msgstr "Hộp thoại mở ảnh"
+msgstr "Mở hộp thoại trình quản lý mô-đun"
 
 #: ../app/actions/dialogs-actions.c:258
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
-msgstr "_Mẹo của hôm nay"
+msgstr "_Mẹo vặt hôm nay"
 
 #: ../app/actions/dialogs-actions.c:259
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
-msgstr ""
+msgstr "Hiển thị mẹo GIMP"
 
 #: ../app/actions/dialogs-actions.c:264
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_Giới thiệu"
 
 #: ../app/actions/dialogs-actions.c:265
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "About GIMP"
-msgstr "Thoát khỏi GIMP"
+msgstr "Giới thiệu GIMP"
 
 #: ../app/actions/dialogs-actions.c:326
 #: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:549
@@ -1517,178 +1360,148 @@ msgid "Toolbox"
 msgstr "Hộp công cụ"
 
 #: ../app/actions/dialogs-actions.c:327
-#, fuzzy
 msgid "Raise the toolbox"
-msgstr "Nâng công cụ"
+msgstr "Nâng hộp công cụ"
 
 #: ../app/actions/dialogs-actions.c:331
-#, fuzzy
 msgid "New Toolbox"
-msgstr "Hộp công cụ"
+msgstr "Hộp công cụ mới"
 
 #: ../app/actions/dialogs-actions.c:332
-#, fuzzy
 msgid "Create a new toolbox"
-msgstr "Tạo một biểu mẫu mới."
+msgstr "Tạo hộp công cụ mới"
 
 #: ../app/actions/dock-actions.c:45
-#, fuzzy
 msgctxt "dock-action"
 msgid "M_ove to Screen"
 msgstr "Chu_yển sang màn hình"
 
 #: ../app/actions/dock-actions.c:49
-#, fuzzy
 msgctxt "dock-action"
 msgid "Close Dock"
 msgstr "Đóng Neo"
 
 #: ../app/actions/dock-actions.c:54
-#, fuzzy
 msgctxt "dock-action"
 msgid "_Open Display..."
-msgstr "_Mở bộ trình bày..."
+msgstr "_Mở màn hình..."
 
 #: ../app/actions/dock-actions.c:55
-#, fuzzy
 msgctxt "dock-action"
 msgid "Connect to another display"
-msgstr "Kết nối đến một bộ trình bày khác"
+msgstr "Kết nối tới màn hình khác"
 
 #: ../app/actions/dock-actions.c:63
-#, fuzzy
 msgctxt "dock-action"
 msgid "_Show Image Selection"
-msgstr "_HIện vùng chọn ảnh"
+msgstr "_Hiện vùng chọn ảnh"
 
 #: ../app/actions/dock-actions.c:69
-#, fuzzy
 msgctxt "dock-action"
 msgid "Auto _Follow Active Image"
-msgstr "Tự động th_eo ảnh hoạt động"
+msgstr "Tự động th_eo ảnh kích hoạt"
 
 #: ../app/actions/dockable-actions.c:48
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Dialogs Menu"
 msgstr "Trình đơn Hộp thoại"
 
 #: ../app/actions/dockable-actions.c:53
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Add Tab"
-msgstr "Thêm th_anh"
+msgstr "Thêm _thẻ"
 
 #: ../app/actions/dockable-actions.c:55
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Preview Size"
 msgstr "Cỡ _xem thử"
 
 #: ../app/actions/dockable-actions.c:57
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Tab Style"
-msgstr "Kiểu _thanh"
+msgstr "Kiểu _thẻ"
 
 #: ../app/actions/dockable-actions.c:60
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Close Tab"
-msgstr "Đón_g thanh"
+msgstr "Đón_g thẻ"
 
 #: ../app/actions/dockable-actions.c:65
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Detach Tab"
-msgstr "Gỡ _ra thanh"
+msgstr "_Tách thẻ"
 
 #: ../app/actions/dockable-actions.c:84
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Tiny"
-msgstr "_Tí tị"
-
-#: ../app/actions/dockable-actions.c:86
-#, fuzzy
-msgctxt "preview-size"
-msgid "E_xtra Small"
 msgstr "_Rất nhỏ"
 
+#: ../app/actions/dockable-actions.c:86
+msgctxt "preview-size"
+msgid "E_xtra Small"
+msgstr "_Cực nhỏ"
+
 #: ../app/actions/dockable-actions.c:88
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Small"
 msgstr "_Nhỏ"
 
 #: ../app/actions/dockable-actions.c:90
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Medium"
 msgstr "_Vừa"
 
 #: ../app/actions/dockable-actions.c:92
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Large"
 msgstr "_Lớn"
 
 #: ../app/actions/dockable-actions.c:94
-#, fuzzy
 msgctxt "preview-size"
 msgid "Ex_tra Large"
 msgstr "Rấ_t lớn"
 
 #: ../app/actions/dockable-actions.c:96
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Huge"
-msgstr "Lớn _quá"
+msgstr "_Siêu lớn"
 
 #: ../app/actions/dockable-actions.c:98
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Enormous"
-msgstr "Kếch _xù"
+msgstr "Lớn hơn _nữa"
 
 #: ../app/actions/dockable-actions.c:100
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Gigantic"
 msgstr "_Khổng lồ"
 
 #: ../app/actions/dockable-actions.c:106
-#, fuzzy
 msgctxt "tab-style"
 msgid "_Icon"
 msgstr "B_iểu tượng"
 
 #: ../app/actions/dockable-actions.c:108
-#, fuzzy
 msgctxt "tab-style"
 msgid "Current _Status"
-msgstr "T_rạng thái hiện có"
+msgstr "T_rạng thái hiện tại"
 
 #: ../app/actions/dockable-actions.c:110
-#, fuzzy
 msgctxt "tab-style"
 msgid "_Text"
 msgstr "_Chữ"
 
 #: ../app/actions/dockable-actions.c:112
-#, fuzzy
 msgctxt "tab-style"
 msgid "I_con & Text"
-msgstr "Hình và _Chữ"
+msgstr "Biểu tượng và _Chữ"
 
 #: ../app/actions/dockable-actions.c:114
-#, fuzzy
 msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "Trạn_g thái và Chữ"
 
 #: ../app/actions/dockable-actions.c:116 ../app/widgets/widgets-enums.c:224
-#, fuzzy
 msgctxt "tab-style"
 msgid "Automatic"
 msgstr "Tự động"
@@ -1696,27 +1509,24 @@ msgstr "Tự động"
 #: ../app/actions/dockable-actions.c:126
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
-msgstr ""
+msgstr "_Khóa thẻ vào Dock "
 
 #: ../app/actions/dockable-actions.c:128
 msgctxt "dockable-action"
 msgid "Protect this tab from being dragged with the mouse pointer"
-msgstr ""
+msgstr "Không cho phép kéo thả thẻ này bằng chuột "
 
 #: ../app/actions/dockable-actions.c:134
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
 msgstr "Hiện thanh _nút"
 
 #: ../app/actions/dockable-actions.c:143
-#, fuzzy
 msgctxt "dockable-action"
 msgid "View as _List"
 msgstr "Xem kiểu _danh sách"
 
 #: ../app/actions/dockable-actions.c:148
-#, fuzzy
 msgctxt "dockable-action"
 msgid "View as _Grid"
 msgstr "Xem kiểu _lưới"
@@ -1724,280 +1534,236 @@ msgstr "Xem kiểu _lưới"
 # 48x48/emblems/emblem-documents.icon.in.h:1
 # 48x48/emblems/emblem-documents.icon.in.h:1
 #: ../app/actions/documents-actions.c:41
-#, fuzzy
 msgctxt "documents-action"
 msgid "Documents Menu"
 msgstr "Trình đơn Tài liệu"
 
 #: ../app/actions/documents-actions.c:45
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Open Image"
 msgstr "_Mở ảnh"
 
 #: ../app/actions/documents-actions.c:46
-#, fuzzy
 msgctxt "documents-action"
 msgid "Open the selected entry"
-msgstr "Mở mục nhập được chọn."
+msgstr "Mở hạng mục đã chọn"
 
 #: ../app/actions/documents-actions.c:51
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Raise or Open Image"
 msgstr "Nâng h_ay Mở ảnh"
 
 #: ../app/actions/documents-actions.c:52
-#, fuzzy
 msgctxt "documents-action"
 msgid "Raise window if already open"
-msgstr "Nâng cửa sổ lên nếu đang mở."
+msgstr "Nâng cửa sổ lên nếu đang mở"
 
 #: ../app/actions/documents-actions.c:57
-#, fuzzy
 msgctxt "documents-action"
 msgid "File Open _Dialog"
 msgstr "_Hộp thoại Mở tập tin"
 
 #: ../app/actions/documents-actions.c:58
-#, fuzzy
 msgctxt "documents-action"
 msgid "Open image dialog"
 msgstr "Hộp thoại mở ảnh"
 
 #: ../app/actions/documents-actions.c:63
-#, fuzzy
 msgctxt "documents-action"
 msgid "Copy Image _Location"
 msgstr "Chép _vị trí ảnh"
 
 #: ../app/actions/documents-actions.c:64
-#, fuzzy
 msgctxt "documents-action"
 msgid "Copy image location to clipboard"
 msgstr "Sao chép vị trí ảnh vào bảng tạm"
 
 #: ../app/actions/documents-actions.c:69
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove _Entry"
 msgstr "Gỡ _bỏ mục nhập"
 
 #: ../app/actions/documents-actions.c:70
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove the selected entry"
 msgstr "Gỡ bỏ mục nhập đã chọn"
 
 #: ../app/actions/documents-actions.c:75
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Clear History"
 msgstr "_Xoá lược sử"
 
 #: ../app/actions/documents-actions.c:76
-#, fuzzy
 msgctxt "documents-action"
 msgid "Clear the entire document history"
 msgstr "Xóa toàn lược sử của tài liệu"
 
 #: ../app/actions/documents-actions.c:81
-#, fuzzy
 msgctxt "documents-action"
 msgid "Recreate _Preview"
 msgstr "Tạo lại _xem thử"
 
 #: ../app/actions/documents-actions.c:82
-#, fuzzy
 msgctxt "documents-action"
 msgid "Recreate preview"
-msgstr "Tạo lại ô xem thử"
+msgstr "Tạo lại xem thử"
 
 #: ../app/actions/documents-actions.c:87
-#, fuzzy
 msgctxt "documents-action"
 msgid "Reload _all Previews"
 msgstr "Tải lại _mọi xem thử"
 
 #: ../app/actions/documents-actions.c:88
-#, fuzzy
 msgctxt "documents-action"
 msgid "Reload all previews"
-msgstr "Tải lại mọi ô xem thử"
+msgstr "Tải lại mọi xem thử"
 
 #: ../app/actions/documents-actions.c:93
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove Dangling E_ntries"
-msgstr "Gỡ bỏ mục nhập lủ_ng lẳng"
+msgstr "Gỡ bỏ mục nhập rơi rớt"
 
 #: ../app/actions/documents-actions.c:95
 msgctxt "documents-action"
 msgid "Remove entries for which the corresponding file is not available"
-msgstr ""
+msgstr "Gỡ bỏ hạng mục mà tập tin không tồn tại"
 
 #: ../app/actions/documents-commands.c:192
 msgid "Clear Document History"
 msgstr "Xóa lược sử tài liệu"
 
 #: ../app/actions/documents-commands.c:215
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "Xóa toàn lược sử của tài liệu"
+msgstr "Xóa lược sử của tài liệu gần đây chứ?"
 
 #: ../app/actions/documents-commands.c:218
-#, fuzzy
 msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
 msgstr ""
-"Việc xóa lược sử tài liệu thì sẽ gỡ bỏ vĩnh viễn mọi mục nhập được liệt kê "
-"hiện có."
+"Việc xóa lược sử tài liệu thì sẽ gỡ bỏ vĩnh viễn mọi ảnh trong danh sách tài "
+"liệu gần đây."
 
 #: ../app/actions/drawable-actions.c:45
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_Equalize"
 msgstr "Làm _bằng"
 
 #: ../app/actions/drawable-actions.c:46
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Automatic contrast enhancement"
-msgstr "Tăng cường độ tương phản tự động"
+msgstr "Tăng độ tương phản tự động"
 
 #: ../app/actions/drawable-actions.c:51
-#, fuzzy
 msgctxt "drawable-action"
 msgid "In_vert"
 msgstr "Đả_o"
 
 #: ../app/actions/drawable-actions.c:52
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Invert the colors"
 msgstr "Đảo màu"
 
 #: ../app/actions/drawable-actions.c:57
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_White Balance"
 msgstr "Cân bằng t_rắng"
 
 #: ../app/actions/drawable-actions.c:58
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
 msgstr "Sửa tự động cân bằng trắng"
 
 #: ../app/actions/drawable-actions.c:63
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_Offset..."
-msgstr "_Hiệu..."
+msgstr "_Offset..."
 
 #: ../app/actions/drawable-actions.c:65
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Shift the pixels, optionally wrapping them at the borders"
-msgstr "Dịch các điểm ảnh, tùy chọn cũng cuộn tại viền"
+msgstr "Dịch các điểm ảnh, và có thể cuộn tại viền"
 
 #: ../app/actions/drawable-actions.c:73
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_Visible"
-msgstr "H_iển thị"
+msgstr "_Nhìn thấy"
 
 #: ../app/actions/drawable-actions.c:74
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Toggle visibility"
-msgstr "Bật/tắt khả năng hiển thị"
+msgstr "Bật/tắt hiển thị"
 
 #: ../app/actions/drawable-actions.c:80
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_Linked"
-msgstr "Đã _kết nối"
+msgstr "Đã _nối"
 
 #: ../app/actions/drawable-actions.c:81
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Toggle the linked state"
-msgstr "Bật/tắt tình trạng đã liên kết"
+msgstr "Bật/tắt tình trạng liên kết"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/drawable-actions.c:87
-#, fuzzy
 msgctxt "drawable-action"
 msgid "L_ock pixels"
-msgstr "điểm ảnh"
+msgstr "_Khóa điểm ảnh"
 
 #: ../app/actions/drawable-actions.c:89
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Keep the pixels on this drawable from being modified"
-msgstr "Bảo vệ thông tin độ trong suốt trên lớp này chống sự sửa đổi"
+msgstr "Bảo vệ điểm ảnh không cho thay đổi"
 
 #: ../app/actions/drawable-actions.c:98
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
 msgstr "Lật _ngang"
 
 #: ../app/actions/drawable-actions.c:99
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip horizontally"
 msgstr "Lật ngang"
 
 #: ../app/actions/drawable-actions.c:104
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
 msgstr "Lật _dọc"
 
 #: ../app/actions/drawable-actions.c:105
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip vertically"
 msgstr "Lật dọc"
 
 #: ../app/actions/drawable-actions.c:113
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate 90° _clockwise"
-msgstr "Xoay 90° xuôi _chiều"
+msgstr "Xoay xuôi _chiều 90°"
 
 #: ../app/actions/drawable-actions.c:114
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the right"
-msgstr "Xoay 90° sang phải"
+msgstr "Xoay phải 90°"
 
 #: ../app/actions/drawable-actions.c:119
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate _180°"
-msgstr "Xoay _180°"
+msgstr "Quay _180°"
 
 #: ../app/actions/drawable-actions.c:120
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Turn upside-down"
-msgstr "Quay từ trên xuống"
+msgstr "Lật trên xuống"
 
 #: ../app/actions/drawable-actions.c:125
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Xoay 90° n_gược chiều"
+msgstr "Xoay n_gược chiều 90°"
 
 #: ../app/actions/drawable-actions.c:126
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the left"
-msgstr "Xoay 90° sang trái"
+msgstr "Xoay sang trái 90°"
 
 #: ../app/actions/drawable-commands.c:63
 msgid "Equalize does not operate on indexed layers."
@@ -2012,375 +1778,317 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "Việc cân bằng trắng hoạt động chỉ trên lớp màu RGB."
 
 #: ../app/actions/dynamics-actions.c:42
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Paint Dynamics Menu"
-msgstr "Trình đơn Mẫu"
+msgstr "Trình đơn Paint Dynamics"
 
 #: ../app/actions/dynamics-actions.c:46
 msgctxt "dynamics-action"
 msgid "_New Dynamics"
-msgstr ""
+msgstr "Dynamic _mới"
 
 #: ../app/actions/dynamics-actions.c:47
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Create a new dynamics"
-msgstr "Tạo ảnh mới"
+msgstr "Tạo dyanmic mới"
 
 #: ../app/actions/dynamics-actions.c:52
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
-msgstr "Nhân đô_i đường dẫn"
+msgstr "Nhân đô_i dynamic"
 
 #: ../app/actions/dynamics-actions.c:53
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Duplicate this dynamics"
-msgstr "Nhân đôi đường dẫn"
+msgstr "Nhân đôi dynamic"
 
 #: ../app/actions/dynamics-actions.c:58
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Copy Dynamics _Location"
-msgstr "Chép _vị trí bút vẽ"
+msgstr "Chép _vị trí dynamic"
 
 #: ../app/actions/dynamics-actions.c:59
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Copy dynamics file location to clipboard"
-msgstr "Sao chép vị trí của tập tin bút vẽ vào bảng tạm"
+msgstr "Sao chép vị trí tập tin dynamic vào bảng tạm"
 
 #: ../app/actions/dynamics-actions.c:64
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_Delete Dynamics"
-msgstr "Xóa bỏ các neo"
+msgstr "Xóa dynamic"
 
 #: ../app/actions/dynamics-actions.c:65
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Delete this dynamics"
-msgstr "Xóa bỏ ảnh này."
+msgstr "Xóa dynamic này"
 
 #: ../app/actions/dynamics-actions.c:70
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_Refresh Dynamics"
-msgstr "_Cập nhật các độ dốc"
+msgstr "_Cập nhật dynamic"
 
 #: ../app/actions/dynamics-actions.c:71
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Refresh dynamics"
-msgstr "Cập nhật các độ dốc"
+msgstr "Cập nhật dynamic"
 
 #: ../app/actions/dynamics-actions.c:79
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "_Sửa độ dốc..."
+msgstr "_Sửa dynamic..."
 
 #: ../app/actions/dynamics-actions.c:80
 msgctxt "dynamics-action"
 msgid "Edit dynamics"
-msgstr ""
+msgstr "Sửa dynamics"
 
 #: ../app/actions/dynamics-editor-actions.c:42
-#, fuzzy
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
-msgstr "Trình đơn Bộ sửa độ dốc"
+msgstr "Trình đơn Bộ sửa Paint Dynamics"
 
 #: ../app/actions/dynamics-editor-actions.c:50
-#, fuzzy
 msgctxt "dynamics-editor-action"
 msgid "Edit Active Dynamics"
-msgstr "Sửa đổi bút vẽ hoạt động"
+msgstr "Sửa dynamic hoạt động"
 
 #: ../app/actions/edit-actions.c:63
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Edit"
 msgstr "_Sửa"
 
 #: ../app/actions/edit-actions.c:64
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "_Dán dạng"
 
 #: ../app/actions/edit-actions.c:65
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Bộ đệm"
 
 #: ../app/actions/edit-actions.c:68
-#, fuzzy
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Trình đơn Lược sử Hủy bước"
 
 #: ../app/actions/edit-actions.c:72
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Undo"
 msgstr "_Hủy bước"
 
 #: ../app/actions/edit-actions.c:73
-#, fuzzy
 msgctxt "edit-action"
 msgid "Undo the last operation"
-msgstr "Hủy bước thao tác cuối cùng"
+msgstr "Hủy thao tác cuối"
 
 #: ../app/actions/edit-actions.c:78
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Redo"
-msgstr "Bước _lại"
+msgstr "_Làm lại"
 
 #: ../app/actions/edit-actions.c:79
-#, fuzzy
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone"
-msgstr "Làm lại thao tác cuối cùng bị hủy bước"
+msgstr "Làm lại thao tác cuối bị hủy"
 
 #: ../app/actions/edit-actions.c:84
-#, fuzzy
 msgctxt "edit-action"
 msgid "Strong Undo"
-msgstr "Hủy toàn bước "
+msgstr "Hủy mạnh"
 
 #: ../app/actions/edit-actions.c:85
-#, fuzzy
 msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
-msgstr "Hủy bước thao tác cuối cùng, bỏ qua các thay đổi cách hiển thị"
+msgstr "Hủy thao tác cuối, bỏ qua các thay đổi nhìn thấy được"
 
 #: ../app/actions/edit-actions.c:90
-#, fuzzy
 msgctxt "edit-action"
 msgid "Strong Redo"
-msgstr "Toàn bước lại"
+msgstr "Làm lại mạnh"
 
 #: ../app/actions/edit-actions.c:92
-#, fuzzy
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone, skipping visibility changes"
 msgstr ""
-"Làm lại thao tác cuối cùng bị hủy bước, bỏ qua các thay đổi cách hiển thị"
+"Làm lại thao tác cuối cùng bị hủy bước, bỏ qua các thay đổi nhìn thấy được"
 
 #: ../app/actions/edit-actions.c:97
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Clear Undo History"
 msgstr "Xóa lượ_c sử Hủy bước"
 
 #: ../app/actions/edit-actions.c:98
-#, fuzzy
 msgctxt "edit-action"
 msgid "Remove all operations from the undo history"
-msgstr "Gỡ bỏ mọi thao tác ra lược sử hủy bước"
+msgstr "Gỡ bỏ mọi thao tác khỏi lược sử hủy bước"
 
 #: ../app/actions/edit-actions.c:103
 msgctxt "edit-action"
 msgid "_Fade..."
-msgstr ""
+msgstr "Làm _mờ..."
 
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr ""
+msgstr "Sửa chế độ vẽ và độ mờ của điểm ảnh dùng lần trước "
 
 #: ../app/actions/edit-actions.c:110
-#, fuzzy
 msgctxt "edit-action"
 msgid "Cu_t"
 msgstr "Cắ_t"
 
 #: ../app/actions/edit-actions.c:111
-#, fuzzy
 msgctxt "edit-action"
 msgid "Move the selected pixels to the clipboard"
-msgstr "Chuyển các điểm ảnh đã chọn vào bảng tạm"
+msgstr "Chuyển các điểm ảnh đã chọn vào bảng nháp"
 
 #: ../app/actions/edit-actions.c:116
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Copy"
 msgstr "_Chép"
 
 #: ../app/actions/edit-actions.c:117
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy the selected pixels to the clipboard"
-msgstr "Sao chép các địa điểm đã chọn vào bảng tạm"
+msgstr "Sao chép các địa điểm đã chọn vào bảng nháp"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:122
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy _Visible"
-msgstr "Chép _hiển thị"
+msgstr "Chép _phần nhìn thấy"
 
 #: ../app/actions/edit-actions.c:123
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region"
-msgstr "Không thể nổi vùng chọn vì vùng được chọn rỗng."
+msgstr "Chép phần nhìn thấy trong vùng đã chọn"
 
 #: ../app/actions/edit-actions.c:128
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "_Dán"
 
 #: ../app/actions/edit-actions.c:129
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
-msgstr "Dán nội dung của bảng tạm"
+msgstr "Dán nội dung của bảng nháp"
 
 #: ../app/actions/edit-actions.c:134
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste _Into"
 msgstr "Dán _vào"
 
 #: ../app/actions/edit-actions.c:136
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "Dán nội dung của bảng tạm vào vùng chọn hiện có"
+msgstr "Dán nội dung của bảng nháp vào vùng đang chọn"
 
 #: ../app/actions/edit-actions.c:141
-#, fuzzy
 msgctxt "edit-action"
 msgid "From _Clipboard"
-msgstr "Bảng tạm"
+msgstr "Từ bảng _tạm"
 
 #: ../app/actions/edit-actions.c:142 ../app/actions/edit-actions.c:148
-#, fuzzy
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
-msgstr "Tạo một ảnh mới từ nội dung của bảng tạm"
+msgstr "Tạo ảnh mới từ bảng tạm"
 
 #: ../app/actions/edit-actions.c:147
-#, fuzzy
 msgctxt "edit-action"
 msgid "_New Image"
 msgstr "Ả_nh mới"
 
 #: ../app/actions/edit-actions.c:153
-#, fuzzy
 msgctxt "edit-action"
 msgid "New _Layer"
-msgstr "Lớp mới"
+msgstr "_Lớp mới"
 
 #: ../app/actions/edit-actions.c:154
-#, fuzzy
 msgctxt "edit-action"
 msgid "Create a new layer from the content of the clipboard"
-msgstr "Tạo một ảnh mới từ nội dung của bảng tạm"
+msgstr "Tạo lớp mới từ bảng nháp"
 
 #: ../app/actions/edit-actions.c:159
-#, fuzzy
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "Cắ_t có tên..."
 
 #: ../app/actions/edit-actions.c:160
-#, fuzzy
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
-msgstr "Chuyển các điểm ảnh đã chọn vào bảng tạm"
+msgstr "Chuyển các điểm ảnh đã chọn vào vùng nhớ tạm"
 
 #: ../app/actions/edit-actions.c:165
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "_Chép có tên..."
 
 #: ../app/actions/edit-actions.c:166
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Sao chép các địa điểm đã chọn vào bảng tạm"
+msgstr "Sao chép các địa điểm đã chọn vào bộ nhớ tạm"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:171
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "Chép _hiển thị có tên..."
 
 #: ../app/actions/edit-actions.c:173
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
-msgstr "Sao chép vùng chọn vào bảng tạm"
+msgstr "Chép vùng chọn vào vùng nhớ tạm"
 
 #: ../app/actions/edit-actions.c:178
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "_Dán có tên..."
 
 #: ../app/actions/edit-actions.c:179
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
-msgstr "Dán nội dung của bảng tạm"
+msgstr "Dán nội dung của bộ nhớ tạm"
 
 #: ../app/actions/edit-actions.c:184
-#, fuzzy
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "X_oá"
 
 #: ../app/actions/edit-actions.c:185
-#, fuzzy
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
-msgstr "Xoá các điểm ảnh đã chọn"
+msgstr "Xoá điểm ảnh đã chọn"
 
 #: ../app/actions/edit-actions.c:193
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
-msgstr "Tô _bằng màu cảnh gần"
+msgstr "Tô _bằng màu cận cảnh"
 
 #: ../app/actions/edit-actions.c:194
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
-msgstr "Tô đầy vùng chọn bằng màu cảnh gần"
+msgstr "Tô đầy vùng chọn bằng màu cận cảnh"
 
 #: ../app/actions/edit-actions.c:199
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Tô bằn_g màu nền"
 
 #: ../app/actions/edit-actions.c:200
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Tô đầy vùng chọn bằng màu nền"
 
 #: ../app/actions/edit-actions.c:205
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Tô bằng mẫu"
 
 #: ../app/actions/edit-actions.c:206
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
-msgstr "Tô đầy vùng chọn bằng mẫu hoạt động"
+msgstr "Tô đầy vùng chọn bằng mẫu đang dùng"
 
 #: ../app/actions/edit-actions.c:304
 #, c-format
@@ -2393,9 +2101,9 @@ msgid "_Redo %s"
 msgstr "Bước _lại %s"
 
 #: ../app/actions/edit-actions.c:326
-#, fuzzy, c-format
+#, c-format
 msgid "_Fade %s..."
-msgstr "Lư_u dạng..."
+msgstr "_Làm mờ %s..."
 
 #: ../app/actions/edit-actions.c:338
 msgid "_Undo"
@@ -2407,7 +2115,7 @@ msgstr "Bước _lại"
 
 #: ../app/actions/edit-actions.c:340
 msgid "_Fade..."
-msgstr ""
+msgstr "Làm _mờ..."
 
 #: ../app/actions/edit-commands.c:136
 msgid "Clear Undo History"
@@ -2423,19 +2131,17 @@ msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Việc xóa lược sử hủy bước của ảnh này sẽ giải phóng thêm bộ nhớ %s."
 
 #: ../app/actions/edit-commands.c:205
-#, fuzzy
 msgid "Cut pixels to the clipboard"
-msgstr "Sao chép các địa điểm đã chọn vào bảng tạm"
+msgstr "Chép điểm ảnh vào bảng tạm"
 
 #: ../app/actions/edit-commands.c:235 ../app/actions/edit-commands.c:264
-#, fuzzy
 msgid "Copied pixels to the clipboard"
-msgstr "Sao chép các địa điểm đã chọn vào bảng tạm"
+msgstr "Chép điểm ảnh vào vùng tạm"
 
 #: ../app/actions/edit-commands.c:324 ../app/actions/edit-commands.c:359
 #: ../app/actions/edit-commands.c:538
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
+msgstr "Không có ảnh trong bảng nháp để dán."
 
 #: ../app/actions/edit-commands.c:347 ../app/core/gimpbrushclipboard.c:172
 #: ../app/core/gimppatternclipboard.c:172 ../app/widgets/gimpclipboard.c:345
@@ -2473,57 +2179,49 @@ msgid "There is no active layer or channel to copy from."
 msgstr "Không có lớp hoạt động hoặc kênh nào từ đó cần sao chép."
 
 #: ../app/actions/error-console-actions.c:39
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Error Console Menu"
 msgstr "Trình đơn Bàn giao tiếp Lỗi"
 
 #: ../app/actions/error-console-actions.c:43
-#, fuzzy
 msgctxt "error-console-action"
 msgid "_Clear"
 msgstr "_Xoá"
 
 #: ../app/actions/error-console-actions.c:44
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Clear error console"
 msgstr "Xóa bàn giao tiếp lỗi"
 
 #: ../app/actions/error-console-actions.c:49
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Select _All"
-msgstr "Chọn Tất _cả"
+msgstr "Chọn _hết"
 
 #: ../app/actions/error-console-actions.c:50
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Select all error messages"
 msgstr "Chọn mọi lỗi"
 
 #: ../app/actions/error-console-actions.c:58
-#, fuzzy
 msgctxt "error-console-action"
 msgid "_Save Error Log to File..."
-msgstr "_Lưu bản ghi lỗi vào tập tin..."
+msgstr "_Lưu lỗi vào tập tin..."
 
 #: ../app/actions/error-console-actions.c:59
 msgctxt "error-console-action"
 msgid "Write all error messages to a file"
-msgstr ""
+msgstr "Xuất mọi lỗi ra tập tin"
 
 #: ../app/actions/error-console-actions.c:64
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
 msgstr "Lưu _vùng chọn vào tập tin..."
 
 #: ../app/actions/error-console-actions.c:65
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Write the selected error messages to a file"
-msgstr "Dán bộ đệm được chọn có dạng ảnh mới."
+msgstr "Ghi lỗi đã chọn vào tập tin"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
@@ -2543,7 +2241,6 @@ msgstr ""
 "%s"
 
 #: ../app/actions/file-actions.c:71
-#, fuzzy
 msgctxt "file-action"
 msgid "_File"
 msgstr "_Tập tin"
@@ -2551,40 +2248,34 @@ msgstr "_Tập tin"
 #: ../app/actions/file-actions.c:72
 msgctxt "file-action"
 msgid "Crea_te"
-msgstr ""
+msgstr "_Tạo"
 
 #: ../app/actions/file-actions.c:73
-#, fuzzy
 msgctxt "file-action"
 msgid "Open _Recent"
 msgstr "Mở _gần đây"
 
 #: ../app/actions/file-actions.c:76
-#, fuzzy
 msgctxt "file-action"
 msgid "_Open..."
 msgstr "_Mở..."
 
 #: ../app/actions/file-actions.c:77
-#, fuzzy
 msgctxt "file-action"
 msgid "Open an image file"
-msgstr "Hộp thoại mở ảnh"
+msgstr "Mở tập tin ảnh"
 
 #: ../app/actions/file-actions.c:82
-#, fuzzy
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "Mở dạng _lớp.."
+msgstr "_Mở dạng lớp..."
 
 #: ../app/actions/file-actions.c:83
-#, fuzzy
 msgctxt "file-action"
 msgid "Open an image file as layers"
 msgstr "Mở ảnh dạng lớp"
 
 #: ../app/actions/file-actions.c:88
-#, fuzzy
 msgctxt "file-action"
 msgid "Open _Location..."
 msgstr "Mở đị_a chỉ..."
@@ -2592,70 +2283,59 @@ msgstr "Mở đị_a chỉ..."
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
 msgid "Open an image file from a specified location"
-msgstr ""
+msgstr "Mở ảnh từ một vị trí"
 
 #: ../app/actions/file-actions.c:94
-#, fuzzy
 msgctxt "file-action"
 msgid "Create Template..."
-msgstr "Tạo biểu mẫu mới"
+msgstr "Tạo biểu mẫu..."
 
 #: ../app/actions/file-actions.c:95
-#, fuzzy
 msgctxt "file-action"
 msgid "Create a new template from this image"
-msgstr "Tạo một biểu mẫu mới bằng ảnh này"
+msgstr "Tạo biểu mẫu mới bằng ảnh này"
 
 #: ../app/actions/file-actions.c:100
-#, fuzzy
 msgctxt "file-action"
 msgid "Re_vert"
 msgstr "H_oàn nguyên"
 
 #: ../app/actions/file-actions.c:101
-#, fuzzy
 msgctxt "file-action"
 msgid "Reload the image file from disk"
 msgstr "Tải lại ảnh từ đĩa"
 
 #: ../app/actions/file-actions.c:106
-#, fuzzy
 msgctxt "file-action"
 msgid "Close all"
 msgstr "Đóng hết"
 
 #: ../app/actions/file-actions.c:107
-#, fuzzy
 msgctxt "file-action"
 msgid "Close all opened images"
-msgstr "Đóng mọi ảnh đã mở"
+msgstr "Đóng mọi ảnh đang mở"
 
 #: ../app/actions/file-actions.c:112
-#, fuzzy
 msgctxt "file-action"
 msgid "_Quit"
 msgstr "T_hoát"
 
 #: ../app/actions/file-actions.c:113
-#, fuzzy
 msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "Thoát khỏi Chương Trình Thao Tác Ảnh GNU"
+msgstr "Thoát GIMP"
 
 #: ../app/actions/file-actions.c:121
-#, fuzzy
 msgctxt "file-action"
 msgid "_Save"
 msgstr "_Lưu"
 
 #: ../app/actions/file-actions.c:122
-#, fuzzy
 msgctxt "file-action"
 msgid "Save this image"
-msgstr "Xóa bỏ ảnh này."
+msgstr "Cất ảnh này"
 
 #: ../app/actions/file-actions.c:127
-#, fuzzy
 msgctxt "file-action"
 msgid "Save _As..."
 msgstr "Lư_u dạng..."
@@ -2663,10 +2343,9 @@ msgstr "Lư_u dạng..."
 #: ../app/actions/file-actions.c:128
 msgctxt "file-action"
 msgid "Save this image with a different name"
-msgstr ""
+msgstr "Lưu ảnh với tên khác"
 
 #: ../app/actions/file-actions.c:133
-#, fuzzy
 msgctxt "file-action"
 msgid "Save a Cop_y..."
 msgstr "Lưu bản _sao..."
@@ -2676,67 +2355,61 @@ msgctxt "file-action"
 msgid ""
 "Save a copy of this image, without affecting the source file (if any) or the "
 "current state of the image"
-msgstr ""
+msgstr "Lưu ảnh gốc, không dùng hiệu ứng ở trạng thái hiện tại"
 
 #: ../app/actions/file-actions.c:140
-#, fuzzy
 msgctxt "file-action"
 msgid "Save and Close..."
-msgstr "Lưu bản _sao..."
+msgstr "Lưu và đóng..."
 
 #: ../app/actions/file-actions.c:141
-#, fuzzy
 msgctxt "file-action"
 msgid "Save this image and close its window"
-msgstr "Đóng cửa sổ ảnh này"
+msgstr "Cất ảnh và đóng cửa sổ của nó"
 
 #: ../app/actions/file-actions.c:146
-#, fuzzy
 msgctxt "file-action"
 msgid "Export to"
-msgstr "Xuất đường dẫn vào SVG"
+msgstr "Xuất thành"
 
 #: ../app/actions/file-actions.c:147
-#, fuzzy
 msgctxt "file-action"
 msgid "Export the image again"
-msgstr "Xuất đường dẫn hoạt động"
+msgstr "Xuất lại ảnh"
 
 #: ../app/actions/file-actions.c:152
 msgctxt "file-action"
 msgid "Over_write"
-msgstr ""
+msgstr "_Ghi đè"
 
 #: ../app/actions/file-actions.c:153
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
-msgstr ""
+msgstr "Xuất lại tập tin với định dạng nhập"
 
 #: ../app/actions/file-actions.c:158
-#, fuzzy
 msgctxt "file-action"
 msgid "Export..."
-msgstr "_Xuất đường dẫn..."
+msgstr "Xuất..."
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
-msgstr ""
+msgstr "Xuất ảnh với định dạng khác như PNG hay JPEG"
 
 #: ../app/actions/file-actions.c:292
-#, fuzzy, c-format
+#, c-format
 msgid "Export to %s"
-msgstr "Xuất đường dẫn vào SVG"
+msgstr "Xuất thành %s"
 
 #: ../app/actions/file-actions.c:298
 #, c-format
 msgid "Over_write %s"
-msgstr ""
+msgstr "_Ghi đè %s"
 
 #: ../app/actions/file-actions.c:306
-#, fuzzy
 msgid "Export to"
-msgstr "Xuất đường dẫn vào SVG"
+msgstr "Xuất thành"
 
 #: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:492
 #: ../app/dialogs/file-open-dialog.c:77
@@ -2744,13 +2417,12 @@ msgid "Open Image"
 msgstr "Mở ảnh"
 
 #: ../app/actions/file-commands.c:133
-#, fuzzy
 msgid "Open Image as Layers"
-msgstr "Mở ảnh dạng lớp"
+msgstr "Mở dạng dạng lớp"
 
 #: ../app/actions/file-commands.c:265
 msgid "No changes need to be saved"
-msgstr ""
+msgstr "Không có sự thay đổi nào mới"
 
 #: ../app/actions/file-commands.c:272 ../app/dialogs/file-save-dialog.c:95
 msgid "Save Image"
@@ -2806,226 +2478,191 @@ msgstr ""
 "%s"
 
 #: ../app/actions/fonts-actions.c:43
-#, fuzzy
 msgctxt "fonts-action"
 msgid "Fonts Menu"
-msgstr "Trình đơn Phông chữ"
+msgstr "Trình đơn phông"
 
 #: ../app/actions/fonts-actions.c:47
-#, fuzzy
 msgctxt "fonts-action"
 msgid "_Rescan Font List"
-msgstr "_Quết lại danh sách phông"
+msgstr "_Quét lại danh sách phông"
 
 #: ../app/actions/fonts-actions.c:48
 msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
-msgstr ""
+msgstr "Quét lại phông đã cài"
 
 #: ../app/actions/gradient-editor-actions.c:45
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
 msgstr "Trình đơn Bộ sửa độ dốc"
 
 #: ../app/actions/gradient-editor-actions.c:49
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Left Color Type"
-msgstr "Kiểu màu trái"
+msgstr "Kiểu màu bên trái"
 
 #: ../app/actions/gradient-editor-actions.c:51
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Load Left Color From"
 msgstr "Tải màu bên t_rái từ"
 
 #: ../app/actions/gradient-editor-actions.c:53
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Save Left Color To"
-msgstr "_Lưu màu bên trái vào"
+msgstr "_Lưu màu bên trái thành"
 
 #: ../app/actions/gradient-editor-actions.c:56
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Right Color Type"
 msgstr "Kiểu màu phải"
 
 #: ../app/actions/gradient-editor-actions.c:58
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Load Right Color Fr_om"
 msgstr "Tải màu bên _phải từ"
 
 #: ../app/actions/gradient-editor-actions.c:60
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Sa_ve Right Color To"
 msgstr "Lưu màu bên phải _vào"
 
 #: ../app/actions/gradient-editor-actions.c:66
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "L_eft Endpoint's Color..."
 msgstr "Màu điểm cuối trá_i..."
 
 #: ../app/actions/gradient-editor-actions.c:71
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
 msgstr "Màu đ_iểm cuối phải..."
 
 #: ../app/actions/gradient-editor-actions.c:111
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Ble_nd Endpoints' Colors"
-msgstr "Hợp _nhau cả màu điểm cuối"
+msgstr "Hợp màu điểm cuối"
 
 #: ../app/actions/gradient-editor-actions.c:116
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Blend Endpoints' Opacit_y"
-msgstr "Hợp nh_au cả độ đục điểm cuối"
+msgstr "Hợp cả độ đụ_c điểm cuối"
 
 #: ../app/actions/gradient-editor-actions.c:124
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Edit Active Gradient"
 msgstr "Sửa độ dốc hoạt động"
 
 #: ../app/actions/gradient-editor-actions.c:155
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Left Neighbor's Right Endpoint"
 msgstr "Điểm phải của hàng xóm t_rái"
 
 #: ../app/actions/gradient-editor-actions.c:160
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Right Endpoint"
 msgstr "Điểm cuối _phải"
 
 #: ../app/actions/gradient-editor-actions.c:165
 #: ../app/actions/gradient-editor-actions.c:213
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Foreground Color"
-msgstr "Màu cảnh _gần"
+msgstr "Màu _tiền cảnh"
 
 #: ../app/actions/gradient-editor-actions.c:170
 #: ../app/actions/gradient-editor-actions.c:218
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Background Color"
 msgstr "Màu _nền"
 
 #: ../app/actions/gradient-editor-actions.c:203
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Right Neighbor's Left Endpoint"
 msgstr "Điểm t_rái của hàng xóm phải"
 
 #: ../app/actions/gradient-editor-actions.c:208
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Left Endpoint"
 msgstr "Điểm cuối t_rái"
 
 #: ../app/actions/gradient-editor-actions.c:257
 #: ../app/actions/gradient-editor-actions.c:287
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
 msgstr "_Cố định"
 
 #: ../app/actions/gradient-editor-actions.c:262
 #: ../app/actions/gradient-editor-actions.c:292
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
-msgstr "Màu cảnh _gần"
+msgstr "Màu _tiền cảnh"
 
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:298
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
-msgstr "Màu cảnh gần (T_rong suốt)"
+msgstr "Màu tiền cảnh (T_rong suốt)"
 
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:303
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
-msgstr "Màu _nền"
+msgstr "Màu _hậu cảnh"
 
 #: ../app/actions/gradient-editor-actions.c:279
 #: ../app/actions/gradient-editor-actions.c:309
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
-msgstr "Màu _nền (Trong suốt)"
+msgstr "Màu _hậu cảnh (Trong suốt)"
 
 #: ../app/actions/gradient-editor-actions.c:317
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Linear"
-msgstr "T_uyến"
+msgstr "T_uyến tính"
 
 #: ../app/actions/gradient-editor-actions.c:322
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Curved"
-msgstr "Hình _cong"
+msgstr "Đường _cong"
 
 #: ../app/actions/gradient-editor-actions.c:327
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
-msgstr "Dạng _sin"
+msgstr "Hình _sin"
 
 #: ../app/actions/gradient-editor-actions.c:332
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
-msgstr "Hình cầu (_tăng)"
+msgstr "Cầu (_tăng)"
 
 #: ../app/actions/gradient-editor-actions.c:337
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
-msgstr "Hình cầu (_giảm)"
+msgstr "Cầu (_giảm)"
 
 #: ../app/actions/gradient-editor-actions.c:342
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "(Varies)"
-msgstr "(Biến đổi)"
+msgstr "(Thay đổi)"
 
 #: ../app/actions/gradient-editor-actions.c:350
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr "_RGB"
 
 #: ../app/actions/gradient-editor-actions.c:355
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV (sắc độ ngượ_c chiều)"
 
 #: ../app/actions/gradient-editor-actions.c:360
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (sắc độ xuôi c_hiều)"
 
 #: ../app/actions/gradient-editor-actions.c:365
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "(Varies)"
-msgstr "(Biến đổi)"
+msgstr "(Thay đổi)"
 
 #: ../app/actions/gradient-editor-actions.c:373
 msgid "Zoom In"
@@ -3215,94 +2852,79 @@ msgstr ""
 "cần chia các đoạn ra trong vùng chọn."
 
 #: ../app/actions/gradients-actions.c:43
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Gradients Menu"
 msgstr "Trình đơn Độ dốc"
 
 #: ../app/actions/gradients-actions.c:47
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_New Gradient"
 msgstr "Độ dốc _mới"
 
 #: ../app/actions/gradients-actions.c:48
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Create a new gradient"
-msgstr "Tạo ảnh mới"
+msgstr "Tạo dốc mới"
 
 #: ../app/actions/gradients-actions.c:53
-#, fuzzy
 msgctxt "gradients-action"
 msgid "D_uplicate Gradient"
 msgstr "N_hân đôi độ dốc"
 
 #: ../app/actions/gradients-actions.c:54
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Duplicate this gradient"
 msgstr "Nhân đôi độ dốc"
 
 #: ../app/actions/gradients-actions.c:59
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Copy Gradient _Location"
 msgstr "Chép _vị trí độ dốc"
 
 #: ../app/actions/gradients-actions.c:60
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Copy gradient file location to clipboard"
-msgstr "Sao chép địa điểm của tập tin độ dốc vào bảng tạm."
+msgstr "Sao chép địa điểm tập tin độ dốc vào bảng tạm"
 
 #: ../app/actions/gradients-actions.c:65
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
 msgstr "Lưu dạng _POV-Ray..."
 
 #: ../app/actions/gradients-actions.c:66
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Save gradient as POV-Ray"
-msgstr "Lưu độ dốc dạng POV-Ray."
+msgstr "Lưu dốc dạng POV-Ray"
 
 #: ../app/actions/gradients-actions.c:71
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_Delete Gradient"
-msgstr "Xóa bỏ độ _dốc"
+msgstr "Xóa độ _dốc"
 
 #: ../app/actions/gradients-actions.c:72
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Delete this gradient"
-msgstr "Xóa bỏ độ dốc"
+msgstr "Xóa độ dốc"
 
 #: ../app/actions/gradients-actions.c:77
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_Refresh Gradients"
-msgstr "_Cập nhật các độ dốc"
+msgstr "_Cập nhật độ dốc"
 
 #: ../app/actions/gradients-actions.c:78
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Refresh gradients"
-msgstr "Cập nhật các độ dốc"
+msgstr "Cập nhật độ dốc"
 
 #: ../app/actions/gradients-actions.c:86
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
-msgstr "_Sửa độ dốc..."
+msgstr " _Sửa độ dốc..."
 
 #: ../app/actions/gradients-actions.c:87
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Edit gradient"
-msgstr "Sửa đổi độ dốc này."
+msgstr "Sửa đổi độ dốc này"
 
 #: ../app/actions/gradients-commands.c:65
 #, c-format
@@ -3310,7 +2932,6 @@ msgid "Save '%s' as POV-Ray"
 msgstr "Lưu « %s » dạng POV-Ray"
 
 #: ../app/actions/help-actions.c:37 ../app/actions/help-actions.c:40
-#, fuzzy
 msgctxt "help-action"
 msgid "_Help"
 msgstr "Trợ _giúp"
@@ -3318,315 +2939,264 @@ msgstr "Trợ _giúp"
 #: ../app/actions/help-actions.c:41
 msgctxt "help-action"
 msgid "Open the GIMP user manual"
-msgstr ""
+msgstr "Mở hướng dẫn sử dụng GIMP"
 
 #: ../app/actions/help-actions.c:46
-#, fuzzy
 msgctxt "help-action"
 msgid "_Context Help"
-msgstr "Trợ giúp ngữ _cảnh"
+msgstr "Trợ giúp theo ngữ _cảnh"
 
 #: ../app/actions/help-actions.c:47
 msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
-msgstr ""
+msgstr "Hiện trợ giúp cho hạng mục đang ở trên màn hình"
 
 #: ../app/actions/image-actions.c:48 ../app/actions/image-actions.c:52
-#, fuzzy
 msgctxt "image-action"
 msgid "Image Menu"
 msgstr "Trình đơn Ảnh"
 
 #: ../app/actions/image-actions.c:55
-#, fuzzy
 msgctxt "image-action"
 msgid "_Image"
 msgstr "Ả_nh"
 
 #: ../app/actions/image-actions.c:56
-#, fuzzy
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Chế độ"
 
 #: ../app/actions/image-actions.c:57
-#, fuzzy
 msgctxt "image-action"
 msgid "_Transform"
-msgstr "Chu_yển dạng"
+msgstr "_Biến đổi"
 
 #: ../app/actions/image-actions.c:58
-#, fuzzy
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "Nét _dẫn"
 
 #: ../app/actions/image-actions.c:60
-#, fuzzy
 msgctxt "image-action"
 msgid "_Colors"
-msgstr "Màu sắ_c"
+msgstr "_Màu"
 
 #: ../app/actions/image-actions.c:61
-#, fuzzy
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "Thô_ng tin"
 
 #: ../app/actions/image-actions.c:62
-#, fuzzy
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Tự động"
 
 #: ../app/actions/image-actions.c:63
-#, fuzzy
 msgctxt "image-action"
 msgid "_Map"
 msgstr "Ánh _xạ"
 
 #: ../app/actions/image-actions.c:64
-#, fuzzy
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "Thành _phần"
 
 #: ../app/actions/image-actions.c:67
-#, fuzzy
 msgctxt "image-action"
 msgid "_New..."
 msgstr "_Mới..."
 
 #: ../app/actions/image-actions.c:68
-#, fuzzy
 msgctxt "image-action"
 msgid "Create a new image"
 msgstr "Tạo ảnh mới"
 
 #: ../app/actions/image-actions.c:73
-#, fuzzy
 msgctxt "image-action"
 msgid "Can_vas Size..."
 msgstr "Cỡ _vùng vẽ..."
 
 #: ../app/actions/image-actions.c:74
-#, fuzzy
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
 msgstr "Chỉnh các chiều ảnh"
 
 #: ../app/actions/image-actions.c:79
-#, fuzzy
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
 msgstr "Vừa vùng vẽ _khít các lớp"
 
 #: ../app/actions/image-actions.c:80
-#, fuzzy
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr "Thay đổi kích cỡ ảnh để vây quanh mọi lớp"
 
 #: ../app/actions/image-actions.c:85
-#, fuzzy
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
-msgstr "_Mặt nạ khớp vùng chọn"
+msgstr "_Khớp vùng chọn bảng vẽ"
 
 #: ../app/actions/image-actions.c:86
-#, fuzzy
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
-msgstr "Xén ảnh thành vùng chọn"
+msgstr "Đổi cỡ ảnh khít vào vùng chọn"
 
 #: ../app/actions/image-actions.c:91
-#, fuzzy
 msgctxt "image-action"
 msgid "_Print Size..."
 msgstr "Cỡ _in..."
 
 #: ../app/actions/image-actions.c:92
-#, fuzzy
 msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "Chỉnh độ phân giải in"
 
 #: ../app/actions/image-actions.c:97
-#, fuzzy
 msgctxt "image-action"
 msgid "_Scale Image..."
 msgstr "_Co dãn ảnh..."
 
 #: ../app/actions/image-actions.c:98
-#, fuzzy
 msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "Thay đổi kích cỡ của nội dung ảnh"
 
 #: ../app/actions/image-actions.c:103
-#, fuzzy
 msgctxt "image-action"
 msgid "_Crop to Selection"
-msgstr "Anfa khớ_p vùng chọn"
+msgstr "_Cắt tới vùng chọn"
 
 #: ../app/actions/image-actions.c:104
-#, fuzzy
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
-msgstr "Xén ảnh thành vùng chọn"
+msgstr "Cắt ảnh rộng tới vùng chọn"
 
 #: ../app/actions/image-actions.c:109
-#, fuzzy
 msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "N_hân đôi"
 
 #: ../app/actions/image-actions.c:110
-#, fuzzy
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
-msgstr "Tạo bản sao của ảnh này"
+msgstr "Tạo bản sao ảnh"
 
 #: ../app/actions/image-actions.c:115
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
-msgstr "Trộn các _lớp hiển thị..."
+msgstr "Trộn _lớp nhìn thấy..."
 
 #: ../app/actions/image-actions.c:116
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
-msgstr "Hoà trộn mọi lớp hiển thị thành cùng một lớp"
+msgstr "Trộn các lớp nhìn thấy thành một lớp"
 
 #: ../app/actions/image-actions.c:121
-#, fuzzy
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "Làm _phẳng ảnh"
 
 #: ../app/actions/image-actions.c:122
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Hoà trộn mọi lớp thành một lớp, và gỡ bỏ khả năng trong suốt"
+msgstr "Trộn mọi lớp và bỏ độ trong suốt"
 
 #: ../app/actions/image-actions.c:127
-#, fuzzy
 msgctxt "image-action"
 msgid "Configure G_rid..."
 msgstr "Cấu hình _lưới..."
 
 #: ../app/actions/image-actions.c:128
-#, fuzzy
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Cấu hình lưới cho ảnh này"
 
 #: ../app/actions/image-actions.c:133
-#, fuzzy
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "Thuộc tính ảnh"
 
 #: ../app/actions/image-actions.c:134
-#, fuzzy
 msgctxt "image-action"
 msgid "Display information about this image"
-msgstr "Hiển thị thông tin về ảnh này"
+msgstr "Hiển thị thông tin ảnh"
 
 #: ../app/actions/image-actions.c:142
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
 #: ../app/actions/image-actions.c:143
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
-msgstr "Chuyển đổi ảnh thành miền màu RGB"
+msgstr "Chuyển ảnh thành không gian màu RGB"
 
 #: ../app/actions/image-actions.c:147
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "Cân bằn_g xám"
 
 #: ../app/actions/image-actions.c:148
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Chuyển đổi ảnh sang mức xám"
 
 #: ../app/actions/image-actions.c:152
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_Indexed..."
-msgstr "Đã _phụ lục..."
+msgstr "Được đánh _số..."
 
 #: ../app/actions/image-actions.c:153
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
-msgstr "Chuyển đổi ảnh thành màu phụ lục"
+msgstr "Chuyển ảnh thành loại có đánh số màu"
 
 #: ../app/actions/image-actions.c:160
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "Lật _ngang"
 
 #: ../app/actions/image-actions.c:161
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Lật ngang ảnh"
 
 #: ../app/actions/image-actions.c:166
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "Lật _dọc"
 
 #: ../app/actions/image-actions.c:167
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Lật dọc ảnh"
 
 #: ../app/actions/image-actions.c:175
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
-msgstr "Xoay 90° xuôi _chiều"
+msgstr "Xoay 90° theo _chiều kim đồng hồ"
 
 #: ../app/actions/image-actions.c:176
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Xoay ảnh này 90 độ sang phải"
 
 #: ../app/actions/image-actions.c:181
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "Xoay _180°"
 
 #: ../app/actions/image-actions.c:182
-#, fuzzy
 msgctxt "image-action"
 msgid "Turn the image upside-down"
-msgstr "Quay ảnh từ trên xuống"
+msgstr "Quay ngược ảnh từ trên xuống"
 
 #: ../app/actions/image-actions.c:187
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Xoay 90° n_gược chiều"
+msgstr "Xoay 90° n_gược chiều kim đồng hồ"
 
 #: ../app/actions/image-actions.c:188
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Xoay ảnh 90 độ sang trái"
@@ -3674,652 +3244,547 @@ msgstr "Co dãn ảnh"
 #. Scaling
 #: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
-#: ../app/pdb/drawable-transform-cmds.c:783
-#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/item-transform-cmds.c:524
+#: ../app/pdb/drawable-transform-cmds.c:791
+#: ../app/pdb/drawable-transform-cmds.c:880 ../app/pdb/image-cmds.c:410
+#: ../app/pdb/image-cmds.c:446 ../app/pdb/item-transform-cmds.c:524
 #: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
 #: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
 msgstr "Đang tỷ lệ"
 
 #: ../app/actions/images-actions.c:43
-#, fuzzy
 msgctxt "images-action"
 msgid "Images Menu"
 msgstr "Trình đơn Ảnh"
 
 #: ../app/actions/images-actions.c:47
-#, fuzzy
 msgctxt "images-action"
 msgid "_Raise Views"
 msgstr "Nâng ô _xem"
 
 #: ../app/actions/images-actions.c:48
-#, fuzzy
 msgctxt "images-action"
 msgid "Raise this image's displays"
-msgstr "Nâng các khung hiển thị ảnh này lên."
+msgstr "Nâng khung hiển thị ảnh này"
 
 #: ../app/actions/images-actions.c:53
-#, fuzzy
 msgctxt "images-action"
 msgid "_New View"
 msgstr "Ô xem _mới"
 
 #: ../app/actions/images-actions.c:54
-#, fuzzy
 msgctxt "images-action"
 msgid "Create a new display for this image"
-msgstr "Tạo ô hiển thị mới cho ảnh này."
+msgstr "Tạo ô hiển thị mới cho ảnh này"
 
 #: ../app/actions/images-actions.c:59
-#, fuzzy
 msgctxt "images-action"
 msgid "_Delete Image"
-msgstr "_Xóa bỏ ảnh"
+msgstr "_Xóa ảnh"
 
 #: ../app/actions/images-actions.c:60
-#, fuzzy
 msgctxt "images-action"
 msgid "Delete this image"
-msgstr "Xóa bỏ ảnh này."
+msgstr "Xóa ảnh này"
 
 #: ../app/actions/layers-actions.c:49
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Trình đơn Lớp"
 
 #: ../app/actions/layers-actions.c:53
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Lớp"
 
 #: ../app/actions/layers-actions.c:55
-#, fuzzy
 msgctxt "layers-action"
 msgid "Stac_k"
-msgstr "Đốn_g"
+msgstr "_Ngăn xếp"
 
 #: ../app/actions/layers-actions.c:57
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Mặt nạ"
 
 #: ../app/actions/layers-actions.c:59
-#, fuzzy
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Độ tr_ong suốt"
 
 #: ../app/actions/layers-actions.c:61
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Transform"
-msgstr "Chu_yển dạng"
+msgstr "_Biến đổi"
 
 #: ../app/actions/layers-actions.c:63
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Properties"
-msgstr "Tài _sản"
+msgstr "_Tính chất"
 
 #: ../app/actions/layers-actions.c:65
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Opacity"
-msgstr "Độ _mờ đục:"
+msgstr "Độ _mờ đục"
 
 #: ../app/actions/layers-actions.c:67
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "Chế độ lớ_p"
 
 #: ../app/actions/layers-actions.c:70
-#, fuzzy
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr "Công cụ _Chữ"
 
 #: ../app/actions/layers-actions.c:71
-#, fuzzy
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "Kích hoạt công cụ chữ trên lớp văn bản này"
 
 #: ../app/actions/layers-actions.c:76
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "_Sửa thuộc tính lớp..."
 
 #: ../app/actions/layers-actions.c:77
-#, fuzzy
 msgctxt "layers-action"
 msgid "Edit the layer's name"
-msgstr "Sửa đổi tên của lớp đó"
+msgstr "Sửa tên lớp"
 
 #: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:610
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "Lớp _mới..."
 
 #: ../app/actions/layers-actions.c:83
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Tạo lớp mới và thêm nó vào ảnh"
 
 #: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:611
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "Lớp _mới"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "Tạo lớp mới với các giá trị dùng cuối cùng"
 
 #: ../app/actions/layers-actions.c:94
-#, fuzzy
 msgctxt "layers-action"
 msgid "New from _Visible"
-msgstr "Chép _hiển thị"
+msgstr "Tạo mới từ phần _hiển thị"
 
 #: ../app/actions/layers-actions.c:96
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
-msgstr "Tạo một biểu mẫu mới bằng ảnh này"
+msgstr "Tạo lớp mới từ phần nhìn thấy của ảnh"
 
 #: ../app/actions/layers-actions.c:101
-#, fuzzy
 msgctxt "layers-action"
 msgid "New Layer _Group..."
-msgstr "Lớp _mới..."
+msgstr "_Nhóm lớp _mới..."
 
 #: ../app/actions/layers-actions.c:102
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
-msgstr "Tạo lớp mới và thêm nó vào ảnh"
+msgstr "Tạo nhóm lớp mới và thêm nó vào ảnh"
 
 #: ../app/actions/layers-actions.c:107
-#, fuzzy
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "N_hân đôi lớp"
 
 #: ../app/actions/layers-actions.c:109
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
-msgstr "Tạo bản sao của lớp đó và thêm nó vào ảnh"
+msgstr "Tạo bản sao của lớp và thêm nó vào ảnh"
 
 #: ../app/actions/layers-actions.c:114
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Delete Layer"
-msgstr "_Xóa bỏ lớp"
+msgstr "_Xóa lớp"
 
 #: ../app/actions/layers-actions.c:115
-#, fuzzy
 msgctxt "layers-action"
 msgid "Delete this layer"
-msgstr "Xóa bỏ lớp này"
+msgstr "Xóa lớp này"
 
 #: ../app/actions/layers-actions.c:120
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "Nâng lớ_p"
 
 #: ../app/actions/layers-actions.c:121
-#, fuzzy
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
-msgstr "Nâng lớp này một bước trong đống lớp"
+msgstr "Nâng lớp này một bước trong ngăn xếp lớp"
 
 #: ../app/actions/layers-actions.c:126
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Top"
-msgstr "Lớp đến _trên"
+msgstr "Lớp ở _trên"
 
 #: ../app/actions/layers-actions.c:127
-#, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
-msgstr "Đem lớp này lên trên đống lớp"
+msgstr "Đưa lớp này trên đỉnh ngăn xếp lớp"
 
 #: ../app/actions/layers-actions.c:132
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "_Hạ lớp"
 
 #: ../app/actions/layers-actions.c:133
-#, fuzzy
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
-msgstr "Hạ thấp lớp này một bước trong đống lớp"
+msgstr "Hạ thấp lớp này một bước trong ngăn xếp lớp"
 
 #: ../app/actions/layers-actions.c:138
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
-msgstr "Hạ xuống _dưới"
+msgstr "Hạ xuống đá_y"
 
 #: ../app/actions/layers-actions.c:139
-#, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
-msgstr "Đem lớp này xuống dưới đống lớp"
+msgstr "Đưa lớp này xuống dưới đáy ngăn xếp lớp"
 
 #: ../app/actions/layers-actions.c:144
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "N_eo lớp"
 
 #: ../app/actions/layers-actions.c:145
-#, fuzzy
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
-msgstr "Neo lớp trôi nổi"
+msgstr "Neo lớp trôi"
 
 #: ../app/actions/layers-actions.c:150
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "Trộn _xuống"
 
 #: ../app/actions/layers-actions.c:151
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge this layer with the first visible layer below it"
-msgstr "Hoà trộn lớp này với điều dưới nó"
+msgstr "Trộn lớp này với trên nó nhìn thấy được"
 
 #: ../app/actions/layers-actions.c:156
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Layer Group"
-msgstr "Trộn các lớp"
+msgstr "Trộn nhóm lớp"
 
 #: ../app/actions/layers-actions.c:157
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
-msgstr "Hoà trộn mọi lớp hiển thị thành cùng một lớp"
+msgstr "Trộn mọi lớp nhìn thấy thành cùng một lớp"
 
 #: ../app/actions/layers-actions.c:162
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
-msgstr "Trộn các lớp h_iển thị..."
+msgstr "Trộn các lớp _nhìn thấy..."
 
 #: ../app/actions/layers-actions.c:163
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
-msgstr "Hoà trộn mọi lớp hiển thị thành cùng một lớp"
+msgstr "Trộn mọi lớp nhìn thấy thành cùng một lớp"
 
 #: ../app/actions/layers-actions.c:168
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "Làm _phẳng ảnh"
 
 #: ../app/actions/layers-actions.c:169
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Hoà trộn mọi lớp thành một lớp, và gỡ bỏ khả năng trong suốt"
+msgstr "Trộn mọi lớp thành một lớp, và hủy phần trong suốt"
 
 #: ../app/actions/layers-actions.c:174
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "_Hủy thông tin chữ"
 
 #: ../app/actions/layers-actions.c:175
-#, fuzzy
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
-msgstr "Chuyển đổi lớp văn bản này thành lớp chuẩn"
+msgstr "Chuyển đổi lớp văn bản này thành lớp thường"
 
 #: ../app/actions/layers-actions.c:180
-#, fuzzy
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "Chữ tới đường _dẫn"
 
 #: ../app/actions/layers-actions.c:181
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "Tạo một đường dẫn từ lớp chữ này"
 
 #: ../app/actions/layers-actions.c:186
-#, fuzzy
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "Chữ theo đườn_g dẫn"
 
 #: ../app/actions/layers-actions.c:187
-#, fuzzy
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "Làm oằn các chữ của lớp này theo đường dẫn hiện có"
 
 #: ../app/actions/layers-actions.c:192
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "Cỡ _ranh giới lớp..."
 
 #: ../app/actions/layers-actions.c:193
-#, fuzzy
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "Chỉnh các chiều của lớp"
 
 #: ../app/actions/layers-actions.c:198
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "Lớp _khớp cỡ ảnh"
 
 #: ../app/actions/layers-actions.c:199
-#, fuzzy
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "Thay đổi kích cỡ của lớp thành kích cỡ của ảnh"
 
 #: ../app/actions/layers-actions.c:204
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "Co _dãn lớp..."
 
 #: ../app/actions/layers-actions.c:205
-#, fuzzy
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "Thay đổi kích cỡ của nội dung lớp"
 
 #: ../app/actions/layers-actions.c:210
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Crop to Selection"
-msgstr "Anfa khớ_p vùng chọn"
+msgstr "_Cắt tới vùng chọn"
 
 #: ../app/actions/layers-actions.c:211
-#, fuzzy
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
-msgstr "Xén lớp thành vùng chọn"
+msgstr "Cắt lớp thành phần mở rộng của vùng chọn"
 
 #: ../app/actions/layers-actions.c:216
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "Thê_m mặt nạ lớp..."
 
 #: ../app/actions/layers-actions.c:218
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
-msgstr "Thêm một mặt nạ cho phép sửa đổi độ trong suốt một cách không phá"
+msgstr "Thêm một mặt nạ cho phép sửa đổi độ trong suốt được bảo vệ"
 
 #: ../app/actions/layers-actions.c:223
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
-msgstr "T_hêm kênh anfa"
+msgstr "T_hêm kênh alpha"
 
 #: ../app/actions/layers-actions.c:224
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "Thêm thông tin độ trong suốt vào lớp"
 
 #: ../app/actions/layers-actions.c:229
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
-msgstr "Gỡ _bỏ kênh anfa"
+msgstr "Gỡ _bỏ kênh alpha"
 
 #: ../app/actions/layers-actions.c:230
-#, fuzzy
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
-msgstr "Gỡ bỏ thông tin độ trong suốt ra lớp"
+msgstr "Gỡ bỏ thông tin độ trong suốt khỏi lớp"
 
 #: ../app/actions/layers-actions.c:238
-#, fuzzy
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
-msgstr "Khóa kênh _anfa."
+msgstr "Khóa kênh _alpha"
 
 #: ../app/actions/layers-actions.c:240
-#, fuzzy
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
-msgstr "Bảo vệ thông tin độ trong suốt trên lớp này chống sự sửa đổi"
+msgstr "Bảo vệ thông tin độ trong suốt trên lớp này không bị sửa đổi"
 
 #: ../app/actions/layers-actions.c:246
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "_Sửa mặt nạ lớp"
 
 #: ../app/actions/layers-actions.c:247
-#, fuzzy
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "Thao tác mặt nạ lớp"
 
 #: ../app/actions/layers-actions.c:253
-#, fuzzy
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "_Hiện mặt nạ lớp"
 
 #: ../app/actions/layers-actions.c:259
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "_Tắt mặt nạ lớp"
 
 #: ../app/actions/layers-actions.c:260
-#, fuzzy
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
-msgstr "Tắt hiệu ứng của mặt nạ lớp"
+msgstr "Bỏ qua hiệu ứng của mặt nạ lớp"
 
 #: ../app/actions/layers-actions.c:269
-#, fuzzy
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Áp dụng _mặt nạ lớp"
 
 #: ../app/actions/layers-actions.c:270
-#, fuzzy
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Áp dụng hiệu ứng của mặt nạ lớp và gỡ bỏ nó"
 
 #: ../app/actions/layers-actions.c:275
-#, fuzzy
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
-msgstr "_Xóa bỏ mặt nạ lớp"
+msgstr "_Xóa mặt nạ lớp"
 
 #: ../app/actions/layers-actions.c:276
-#, fuzzy
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Gỡ bỏ mặt nạ lớp và hiệu ứng của nó"
 
 #: ../app/actions/layers-actions.c:284
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "_Mặt nạ khớp vùng chọn"
 
 #: ../app/actions/layers-actions.c:285
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Thay thế vùng chọn bằng mặt nạ lớp"
 
 #: ../app/actions/layers-actions.c:290
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "Thê_m vào vùng chọn"
 
 #: ../app/actions/layers-actions.c:291
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
-msgstr "Thêm mặt nạ lớp vào vùng chọn hiện có"
+msgstr "Thêm mặt nạ lớp vào vùng chọn hiện tại"
 
 #: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
-msgstr "_Trừ khỏi vùng chọn"
+msgstr "Loại _trừ khỏi vùng chọn"
 
 #: ../app/actions/layers-actions.c:297
-#, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
-msgstr "Trừ mặt nạ lớp ra vùng chọn hiện có"
+msgstr "Loại trừ mặt nạ lớp ra vùng chọn hiện tại"
 
 #: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
-msgstr "Cắt chéo vớ_i vùng chọn"
+msgstr "Giao vớ_i vùng chọn"
 
 #: ../app/actions/layers-actions.c:303
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
-msgstr "Cắt chéo mặt nạ lớp với vùng chọn hiện có"
+msgstr "Giao mặt nạ lớp với vùng chọn hiện tại"
 
 #: ../app/actions/layers-actions.c:311
-#, fuzzy
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
-msgstr "Anfa khớ_p vùng chọn"
+msgstr "Al_pha thành vùng chọn"
 
 #: ../app/actions/layers-actions.c:313
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
-msgstr "Thay thế vùng chọn bằng kênh anfa của lớp"
+msgstr "Thay thế vùng chọn bằng kênh alpha của lớp"
 
 #: ../app/actions/layers-actions.c:318
-#, fuzzy
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "Thê_m vào vùng chọn"
 
 #: ../app/actions/layers-actions.c:320
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
-msgstr "Thêm kênh anfa của lớp vào vùng chọn hiện có"
+msgstr "Thêm kênh anfa của lớp vào vùng chọn hiện tại"
 
 #: ../app/actions/layers-actions.c:327
-#, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr "Trừ kênh anfa của lớp ra vùng chọn hiện có"
+msgstr "Loại trừ kênh anfa của lớp ra vùng chọn hiện tại"
 
 #: ../app/actions/layers-actions.c:334
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr "Cắt chéo kênh anfa của lớp với vùng chọn hiện có"
+msgstr "Giao kênh anfa của lớp với vùng chọn hiện tại"
 
 #: ../app/actions/layers-actions.c:342
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Top Layer"
-msgstr "Chọn lớp _trên"
+msgstr "Chọn lớp _trên đỉnh"
 
 #: ../app/actions/layers-actions.c:343
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the topmost layer"
-msgstr "Chọn lớp _dưới"
+msgstr "Chọn lớp trêb đỉnh _nhất"
 
 #: ../app/actions/layers-actions.c:348
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "Chọn lớp _dưới"
 
 #: ../app/actions/layers-actions.c:349
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
-msgstr "Chọn lớp _dưới"
+msgstr "Chọn lớp _dưới nhất"
 
 #: ../app/actions/layers-actions.c:354
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "Chọn lớ_p trước"
 
 #: ../app/actions/layers-actions.c:355
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
-msgstr "Trừ mặt nạ lớp ra vùng chọn hiện có"
+msgstr "Chọn lớp trên từ lớp hiện tại"
 
 #: ../app/actions/layers-actions.c:360
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "Chọ_n lớp kế"
 
 #: ../app/actions/layers-actions.c:361
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
-msgstr "Cắt chéo mặt nạ lớp với vùng chọn hiện có"
+msgstr "Chọn lớp dưới của lớp hiện tại"
 
 #. Will be followed with e.g. "Shift-Click
 #. on thumbnail"
 #.
 #: ../app/actions/layers-actions.c:442
-#, fuzzy
 msgid "Shortcut: "
-msgstr "Phím tắt"
+msgstr "Phím tắt: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
 #.
 #: ../app/actions/layers-actions.c:447
 msgid "-Click on thumbnail in Layers dockable"
-msgstr ""
+msgstr "-Nhấn vào hình nhỏ trong lớp neo được"
 
 #: ../app/actions/layers-actions.c:605 ../app/actions/layers-actions.c:606
-#, fuzzy
 msgctxt "layers-action"
 msgid "To _New Layer"
-msgstr "Lớp _mới"
+msgstr "Thành Lớp _mới"
 
 #: ../app/actions/layers-commands.c:203
 msgid "Layer Attributes"
@@ -4344,9 +3809,8 @@ msgid "Create a New Layer"
 msgstr "Tạo lớp mới"
 
 #: ../app/actions/layers-commands.c:356
-#, fuzzy
 msgid "Visible"
-msgstr "H_iển thị"
+msgstr "Nhìn thấy"
 
 #: ../app/actions/layers-commands.c:618
 msgid "Set Layer Boundary Size"
@@ -4370,64 +3834,54 @@ msgid "Add Layer Mask"
 msgstr "Thêm mặt nạ lớp"
 
 #: ../app/actions/palette-editor-actions.c:43
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
 msgstr "Trình đơn Bộ sửa bảng chọn"
 
 #: ../app/actions/palette-editor-actions.c:47
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "_Edit Color..."
 msgstr "_Sửa màu..."
 
 #: ../app/actions/palette-editor-actions.c:48
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Edit this entry"
-msgstr "Sửa đổi độ dốc này."
+msgstr "Sửa hạng mục này"
 
 #: ../app/actions/palette-editor-actions.c:53
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "_Delete Color"
-msgstr "_Xóa bỏ màu"
+msgstr "_Xóa màu"
 
 #: ../app/actions/palette-editor-actions.c:54
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Delete this entry"
-msgstr "Xóa bỏ lớp này"
+msgstr "Xóa hạng mục này"
 
 #: ../app/actions/palette-editor-actions.c:62
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Edit Active Palette"
-msgstr "Sửa bảng chọn hoạt động"
+msgstr "Sửa bảng chọn hiện tại"
 
 #: ../app/actions/palette-editor-actions.c:71
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
-msgstr "Màu mới từ cảnh _gần"
+msgstr "Màu mới từ _cận cảnh"
 
 #: ../app/actions/palette-editor-actions.c:73
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the foreground color"
-msgstr "Màu mới dựa vào màu cảnh gần"
+msgstr "Tạo mới từ màu cận cảnh"
 
 #: ../app/actions/palette-editor-actions.c:78
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
 msgstr "Màu mới từ _nền"
 
 #: ../app/actions/palette-editor-actions.c:80
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the background color"
-msgstr "Màu mới dựa vào màu nền"
+msgstr "Hạng mục mới dựa vào màu nền"
 
 #: ../app/actions/palette-editor-actions.c:88
 msgid "Zoom _In"
@@ -4450,371 +3904,315 @@ msgid "Edit Color Palette Entry"
 msgstr "Sửa mục nhập bảng chọn màu"
 
 #: ../app/actions/palettes-actions.c:43
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "Trình đơn Bảng chọn"
 
 #: ../app/actions/palettes-actions.c:47
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_New Palette"
 msgstr "Bả_ng chọn mới"
 
 #: ../app/actions/palettes-actions.c:48
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Create a new palette"
-msgstr "Tạo một biểu mẫu mới."
+msgstr "Tạo bảng màu"
 
 #: ../app/actions/palettes-actions.c:53
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Import Palette..."
-msgstr "Nhậ_p bảng chọn..."
+msgstr "Nhậ_p bảng màu..."
 
 #: ../app/actions/palettes-actions.c:54
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Import palette"
-msgstr "Nhập bảng chọn"
+msgstr "Nhập bảng màu"
 
 #: ../app/actions/palettes-actions.c:59
-#, fuzzy
 msgctxt "palettes-action"
 msgid "D_uplicate Palette"
-msgstr "N_hân đôi bảng chọn"
+msgstr "N_hân đôi bảng màu"
 
 #: ../app/actions/palettes-actions.c:60
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Duplicate this palette"
-msgstr "Nhân đôi bảng chọn đó"
+msgstr "Nhân đôi bảng màu này"
 
 #: ../app/actions/palettes-actions.c:65
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
-msgstr "T_rộn các bảng chọn..."
+msgstr "T_rộn các bảng màu..."
 
 #: ../app/actions/palettes-actions.c:66
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Merge palettes"
-msgstr "Trộn các bảng chọn đó"
+msgstr "Trộn bảng màu"
 
 #: ../app/actions/palettes-actions.c:71
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Copy Palette _Location"
-msgstr "Chép _vị trí bảng chọn"
+msgstr "Chép _vị trí bảng màu"
 
 #: ../app/actions/palettes-actions.c:72
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Copy palette file location to clipboard"
-msgstr "Sao chép địa điểm của tập tin bảng chọn vào bảng tạm"
+msgstr "Sao chép địa điểm của tập tin bảng màu vào bảng nháp"
 
 #: ../app/actions/palettes-actions.c:77
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Delete Palette"
-msgstr "_Xóa bỏ bảng chọn"
+msgstr "_Xóa bảng màu"
 
 #: ../app/actions/palettes-actions.c:78
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Delete this palette"
-msgstr "Xóa bỏ bảng chọn đó"
+msgstr "Xóa bảng màu"
 
 #: ../app/actions/palettes-actions.c:83
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Refresh Palettes"
-msgstr "_Cập nhật các bảng chọn"
+msgstr "_Cập nhật bảng màu"
 
 #: ../app/actions/palettes-actions.c:84
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Refresh palettes"
-msgstr "Cập nhật các bảng chọn đó."
+msgstr "Cập nhật bảng màu"
 
 #: ../app/actions/palettes-actions.c:92
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Edit Palette..."
-msgstr "_Sửa bảng chọn..."
+msgstr "_Sửa bảng màu..."
 
 #: ../app/actions/palettes-actions.c:93
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Edit palette"
-msgstr "Sửa đổi bảng chọn đó."
+msgstr "Sửa bảng màu"
 
 #: ../app/actions/palettes-commands.c:72
 msgid "Merge Palette"
-msgstr "Trộn bảng chọn"
+msgstr "Trộn bảng màu"
 
 #: ../app/actions/palettes-commands.c:76
 msgid "Enter a name for the merged palette"
-msgstr "Hãy nhập tên cho bảng chọn đã trộn này."
+msgstr "Hãy nhập tên cho bảng màu đã trộn này"
 
 #: ../app/actions/patterns-actions.c:42
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Patterns Menu"
 msgstr "Trình đơn Mẫu"
 
 #: ../app/actions/patterns-actions.c:46
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Open Pattern as Image"
 msgstr "_Mở mẫu dạng ảnh"
 
 #: ../app/actions/patterns-actions.c:47
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Open this pattern as an image"
-msgstr "Mở mẫu này dạng ảnh."
+msgstr "Mở mẫu này dạng ảnh"
 
 #: ../app/actions/patterns-actions.c:52
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_New Pattern"
 msgstr "Mẫu _mới"
 
 #: ../app/actions/patterns-actions.c:53
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Create a new pattern"
-msgstr "Tạo một biểu mẫu mới."
+msgstr "Tạo một biểu mẫu mới"
 
 #: ../app/actions/patterns-actions.c:58
-#, fuzzy
 msgctxt "patterns-action"
 msgid "D_uplicate Pattern"
 msgstr "Nhân đôi mẫ_u"
 
 #: ../app/actions/patterns-actions.c:59
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Duplicate this pattern"
 msgstr "Nhân đôi mẫu này"
 
 #: ../app/actions/patterns-actions.c:64
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Copy Pattern _Location"
-msgstr "Chép _vị trí câu mẫu"
+msgstr "Chép _vị trí mẫu"
 
 #: ../app/actions/patterns-actions.c:65
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Copy pattern file location to clipboard"
-msgstr "Sao chép địa điểm của tập tin câu mẫu vào bảng tạm"
+msgstr "Sao chép vị trí tập tin mẫu vào bảng nháp"
 
 #: ../app/actions/patterns-actions.c:70
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Delete Pattern"
-msgstr "_Xóa bỏ mẫu"
+msgstr "_Xóa mẫu"
 
 #: ../app/actions/patterns-actions.c:71
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Delete this pattern"
-msgstr "Xóa bỏ mẫu này"
+msgstr "Xóa mẫu này"
 
 #: ../app/actions/patterns-actions.c:76
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Refresh Patterns"
-msgstr "_Cập nhật các mẫu"
+msgstr "_Cập nhật mẫu"
 
 #: ../app/actions/patterns-actions.c:77
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Refresh patterns"
-msgstr "Cập nhật các mẫu này"
+msgstr "Cập nhật mẫu"
 
 #: ../app/actions/patterns-actions.c:85
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
 msgstr "_Sửa mẫu..."
 
 #: ../app/actions/patterns-actions.c:86
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Edit pattern"
-msgstr "Sửa đổi mẫu này"
+msgstr "Sửa mẫu"
 
 #: ../app/actions/plug-in-actions.c:84
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Filte_rs"
 msgstr "Bộ _lọc"
 
 #: ../app/actions/plug-in-actions.c:86
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Recently Used"
 msgstr "Vừa dùng"
 
 #: ../app/actions/plug-in-actions.c:88
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Blur"
 msgstr "_Mờ"
 
 #: ../app/actions/plug-in-actions.c:90
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Noise"
-msgstr "Ồn á_o"
+msgstr "Nhiễu"
 
 #: ../app/actions/plug-in-actions.c:92
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Edge-De_tect"
 msgstr "Phá_t hiện cạnh"
 
 #: ../app/actions/plug-in-actions.c:94
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "En_hance"
 msgstr "_Tăng cường"
 
 #: ../app/actions/plug-in-actions.c:96
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "C_ombine"
 msgstr "_Kết hợp"
 
 #: ../app/actions/plug-in-actions.c:98
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Generic"
 msgstr "Chun_g"
 
 #: ../app/actions/plug-in-actions.c:100
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Light and Shadow"
 msgstr "_Sáng và bóng"
 
 #: ../app/actions/plug-in-actions.c:102
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Distorts"
-msgstr "_Méo mó"
+msgstr "Làm _Méo"
 
 #: ../app/actions/plug-in-actions.c:104
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Artistic"
-msgstr "Kiểu nghệ _sĩ"
+msgstr "_Nghệ sĩ"
 
 #: ../app/actions/plug-in-actions.c:106
 msgctxt "plug-in-action"
 msgid "_Decor"
-msgstr ""
+msgstr "_Decor"
 
 #: ../app/actions/plug-in-actions.c:108
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Map"
 msgstr "Ánh _xạ"
 
 #: ../app/actions/plug-in-actions.c:110
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Render"
 msgstr "_Vẽ"
 
 #: ../app/actions/plug-in-actions.c:112
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Clouds"
 msgstr "Mâ_y"
 
 #: ../app/actions/plug-in-actions.c:114
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Nature"
 msgstr "Tự _nhiên"
 
 #: ../app/actions/plug-in-actions.c:116
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Pattern"
 msgstr "_Mẫu"
 
 #: ../app/actions/plug-in-actions.c:118
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Web"
 msgstr "_Mạng"
 
 #: ../app/actions/plug-in-actions.c:120
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "An_imation"
 msgstr "H_oạt ảnh"
 
 #: ../app/actions/plug-in-actions.c:123
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
 msgstr "Đặt lại mọi bộ _lọc"
 
 #: ../app/actions/plug-in-actions.c:124
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
-msgstr "Đặt thiết lập mặc định cho mọi bổ sung"
+msgstr "Đặt thiết lập mặc định cho mọi phần mở rộng"
 
 #: ../app/actions/plug-in-actions.c:132
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
-msgstr "Lập lại điều t_rước"
+msgstr "Lặp lại hành động cuối"
 
 #: ../app/actions/plug-in-actions.c:134
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Rerun the last used plug-in using the same settings"
-msgstr "Chạy lại bổ sung vừa dùng, với cùng thiết lập"
+msgstr "Chạy lại phần mở rộng vừa dùng, với cùng thiết lập"
 
 #: ../app/actions/plug-in-actions.c:139
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "R_e-Show Last"
-msgstr "H_iện lại điều trước"
+msgstr "H_iện lại"
 
 #: ../app/actions/plug-in-actions.c:140
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
-msgstr "Hiện lại hộp thoại bổ sung vừa dùng"
+msgstr "Hiện lại hộp thoại phần mở rộng vừa dùng"
 
 #: ../app/actions/plug-in-actions.c:531
 #, c-format
 msgid "Re_peat \"%s\""
-msgstr "Lậ_p lại « %s »"
+msgstr "Lặ_p lại \"%s\""
 
 #: ../app/actions/plug-in-actions.c:532
 #, c-format
 msgid "R_e-Show \"%s\""
-msgstr "H_iện lại « %s »"
+msgstr "H_iện lại \"%s\""
 
 #: ../app/actions/plug-in-actions.c:548
 msgid "Repeat Last"
-msgstr "Lập lại điều trước"
+msgstr "Lặp lại"
 
 #: ../app/actions/plug-in-actions.c:550
 msgid "Re-Show Last"
-msgstr "HIện lại điều trước"
+msgstr "Hiện lại"
 
 #: ../app/actions/plug-in-commands.c:262
 msgid "Reset all Filters"
@@ -4822,40 +4220,34 @@ msgstr "Đặt lại mọi bộ lọc"
 
 #: ../app/actions/plug-in-commands.c:281
 msgid "Do you really want to reset all filters to default values?"
-msgstr "Bạn thật sự muốn đặt lại mọi bộ lọc là giá trị mặc định không?"
+msgstr "Bạn thật sự muốn đặt lại mọi bộ lọc là giá trị mặc định?"
 
 #: ../app/actions/quick-mask-actions.c:43
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Quick Mask Menu"
 msgstr "Trình đơn Mặt nạ Nhanh"
 
 #: ../app/actions/quick-mask-actions.c:47
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
 msgstr "_Cấu hình Màu và Độ mờ đục..."
 
 #: ../app/actions/quick-mask-actions.c:55
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Toggle _Quick Mask"
 msgstr "Bật/tắt _Mặt nạ Nhanh"
 
 #: ../app/actions/quick-mask-actions.c:56
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Toggle Quick Mask on/off"
 msgstr "Bật/tắt mặt nạ nhanh"
 
 #: ../app/actions/quick-mask-actions.c:65
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Mask _Selected Areas"
 msgstr "Mặt nạ các _vùng chọn"
 
 #: ../app/actions/quick-mask-actions.c:70
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
 msgstr "Mặt nạ các vùng _không chọn"
@@ -4874,189 +4266,160 @@ msgstr "Sửa màu Mặt nạ Nhanh"
 
 #: ../app/actions/quick-mask-commands.c:111
 msgid "_Mask opacity:"
-msgstr "Độ mờ đục _mặt nạ"
+msgstr "Độ mờ đục _mặt nạ:"
 
 #: ../app/actions/sample-points-actions.c:39
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
 msgstr "Trình đơn Điểm mẫu"
 
 #: ../app/actions/sample-points-actions.c:46
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
 msgstr "_Mẫu đã trộn"
 
 #: ../app/actions/sample-points-actions.c:48
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Use the composite color of all visible layers"
-msgstr "Vùng chọn dựa vào mọi lớp hiển thị"
+msgstr "Dùng màu tổng hợp của mọi lớp hình thấy"
 
 #: ../app/actions/select-actions.c:44
-#, fuzzy
 msgctxt "select-action"
 msgid "Selection Editor Menu"
 msgstr "Trình đơn Bộ sửa vùng chọn"
 
 #: ../app/actions/select-actions.c:47
-#, fuzzy
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Chọn"
 
 #: ../app/actions/select-actions.c:50
-#, fuzzy
 msgctxt "select-action"
 msgid "_All"
-msgstr "Phóng _hết"
+msgstr "_Tất cả"
 
 #: ../app/actions/select-actions.c:51
-#, fuzzy
 msgctxt "select-action"
 msgid "Select everything"
-msgstr "Chọn mọi gì"
+msgstr "Chọn tất cả"
 
 #: ../app/actions/select-actions.c:56
-#, fuzzy
 msgctxt "select-action"
 msgid "_None"
-msgstr "Không có"
+msgstr "_Không"
 
 #: ../app/actions/select-actions.c:57
-#, fuzzy
 msgctxt "select-action"
 msgid "Dismiss the selection"
-msgstr "Tắt vùng chọn"
+msgstr "Bỏ qua vùng chọn"
 
 #: ../app/actions/select-actions.c:62
-#, fuzzy
 msgctxt "select-action"
 msgid "_Invert"
 msgstr "Đả_o"
 
 #: ../app/actions/select-actions.c:63
-#, fuzzy
 msgctxt "select-action"
 msgid "Invert the selection"
 msgstr "Đảo vùng chọn"
 
 #: ../app/actions/select-actions.c:68
-#, fuzzy
 msgctxt "select-action"
 msgid "_Float"
 msgstr "Nổ_i"
 
 #: ../app/actions/select-actions.c:69
-#, fuzzy
 msgctxt "select-action"
 msgid "Create a floating selection"
 msgstr "Tạo một vùng chọn nổi"
 
 #: ../app/actions/select-actions.c:74
-#, fuzzy
 msgctxt "select-action"
 msgid "Fea_ther..."
 msgstr "Hình _lông..."
 
 #: ../app/actions/select-actions.c:76
-#, fuzzy
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr "Che mờ viền vùng chọn để tắt dần một cách đều đều"
+msgstr "Che mờ viền vùng chọn để tắt dần"
 
 #: ../app/actions/select-actions.c:81
-#, fuzzy
 msgctxt "select-action"
 msgid "_Sharpen"
 msgstr "Mài _sắc..."
 
 #: ../app/actions/select-actions.c:82
-#, fuzzy
 msgctxt "select-action"
 msgid "Remove fuzziness from the selection"
-msgstr "Gỡ bỏ tình mờ ra vùng chọn"
+msgstr "Gỡ bỏ độ mờ ra vùng chọn"
 
 #: ../app/actions/select-actions.c:87
-#, fuzzy
 msgctxt "select-action"
 msgid "S_hrink..."
 msgstr "T_hu nhỏ..."
 
 #: ../app/actions/select-actions.c:88
-#, fuzzy
 msgctxt "select-action"
 msgid "Contract the selection"
 msgstr "Co rút vùng chọn"
 
 #: ../app/actions/select-actions.c:93
-#, fuzzy
 msgctxt "select-action"
 msgid "_Grow..."
 msgstr "_Nới..."
 
 #: ../app/actions/select-actions.c:94
-#, fuzzy
 msgctxt "select-action"
 msgid "Enlarge the selection"
 msgstr "Mở rộng vùng chọn"
 
 #: ../app/actions/select-actions.c:99
-#, fuzzy
 msgctxt "select-action"
 msgid "Bo_rder..."
 msgstr "_Viền..."
 
 #: ../app/actions/select-actions.c:100
-#, fuzzy
 msgctxt "select-action"
 msgid "Replace the selection by its border"
 msgstr "Thay thế vùng chọn bằng viền nó"
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
 msgctxt "select-action"
 msgid "Save to _Channel"
 msgstr "Lưu vào _kênh"
 
 #: ../app/actions/select-actions.c:106
-#, fuzzy
 msgctxt "select-action"
 msgid "Save the selection to a channel"
 msgstr "Lưu vùng chọn vào kênh"
 
 #: ../app/actions/select-actions.c:111
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "Chọn _nét..."
 
 #: ../app/actions/select-actions.c:112
-#, fuzzy
 msgctxt "select-action"
 msgid "Paint along the selection outline"
 msgstr "Sơn theo nét ngoài vùng chọn"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection"
 msgstr "Chọn _nét"
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr "Chọn nét vùng chọn với các giá trị cuối cùng"
+msgstr "Chọn nét vùng chọn với các giá trị lần cuối"
 
 #: ../app/actions/select-commands.c:155
 msgid "Feather Selection"
-msgstr "Làm vùng chọn hình lông"
+msgstr "Vùng chọn hình lông"
 
 #: ../app/actions/select-commands.c:159
 msgid "Feather selection by"
-msgstr "Làm vùng chọn hình lông bằng"
+msgstr "Vùng chọn hình lông bằng"
 
 #: ../app/actions/select-commands.c:196
 msgid "Shrink Selection"
@@ -5093,85 +4456,73 @@ msgstr "Làm hình _lông viền"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:292
-#, fuzzy
 msgid "_Lock selection to image edges"
-msgstr "Không có vùng chọn trong đó cần vẽ nét."
+msgstr "_Khóa vùng chọn vào viền ảnh"
 
 #: ../app/actions/select-commands.c:342 ../app/actions/select-commands.c:375
 #: ../app/actions/vectors-commands.c:386 ../app/actions/vectors-commands.c:420
 #: ../app/dialogs/stroke-dialog.c:281
 msgid "There is no active layer or channel to stroke to."
-msgstr "Không có lớp hoặc kênh hoạt động nào cần nét đến nó."
+msgstr "Không có lớp hoặc kênh kích hoạt nào cần nét đến nó."
 
 #: ../app/actions/select-commands.c:348
 msgid "Stroke Selection"
 msgstr "Chọn nét"
 
 #: ../app/actions/templates-actions.c:41
-#, fuzzy
 msgctxt "templates-action"
 msgid "Templates Menu"
 msgstr "Trình đơn Biểu mẫu"
 
 #: ../app/actions/templates-actions.c:45
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Create Image from Template"
 msgstr "_Tạo ảnh từ biểu mẫu..."
 
 #: ../app/actions/templates-actions.c:46
-#, fuzzy
 msgctxt "templates-action"
 msgid "Create a new image from the selected template"
-msgstr "Tạo một ảnh mới từ biểu mẫu được chọn."
+msgstr "Tạo một ảnh mới từ biểu mẫu được chọn"
 
 #: ../app/actions/templates-actions.c:51
-#, fuzzy
 msgctxt "templates-action"
 msgid "_New Template..."
 msgstr "Biểu mẫu _mới..."
 
 #: ../app/actions/templates-actions.c:52
-#, fuzzy
 msgctxt "templates-action"
 msgid "Create a new template"
-msgstr "Tạo một biểu mẫu mới."
+msgstr "Tạo biểu mẫu mới"
 
 #: ../app/actions/templates-actions.c:57
-#, fuzzy
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
 msgstr "Nhân đôi biể_u mẫu..."
 
 #: ../app/actions/templates-actions.c:58
-#, fuzzy
 msgctxt "templates-action"
 msgid "Duplicate this template"
-msgstr "Nhân đôi biểu mẫu được chọn."
+msgstr "Nhân đôi biểu mẫu được chọn"
 
 #: ../app/actions/templates-actions.c:63
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Edit Template..."
 msgstr "_Sửa biểu mẫu..."
 
 #: ../app/actions/templates-actions.c:64
-#, fuzzy
 msgctxt "templates-action"
 msgid "Edit this template"
 msgstr "Sửa biểu mẫu"
 
 #: ../app/actions/templates-actions.c:69
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Delete Template"
-msgstr "_Xóa bỏ biểu mẫu"
+msgstr "_Xóa biểu mẫu"
 
 #: ../app/actions/templates-actions.c:70
-#, fuzzy
 msgctxt "templates-action"
 msgid "Delete this template"
-msgstr "Xóa bỏ ảnh này."
+msgstr "Xóa ảnh này"
 
 #: ../app/actions/templates-commands.c:110
 msgid "New Template"
@@ -5188,61 +4539,53 @@ msgstr "Sửa biểu mẫu"
 
 #: ../app/actions/templates-commands.c:211
 msgid "Delete Template"
-msgstr "Xóa bỏ biểu mẫu"
+msgstr "Xóa biểu mẫu"
 
 #: ../app/actions/templates-commands.c:237
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "Bạn có chắc muốn xóa bỏ biểu mẫu « %s » ra danh sách và ra đĩa không?"
+msgstr "Bạn có chắc muốn xóa bỏ biểu mẫu '%s' ra danh sách và ra đĩa không?"
 
 #: ../app/actions/text-editor-actions.c:43
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Open"
 msgstr "Mở"
 
 #: ../app/actions/text-editor-actions.c:44
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "Tải văn bản từ tập tin"
 
 #: ../app/actions/text-editor-actions.c:49
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "Xóa"
 
 #: ../app/actions/text-editor-actions.c:50
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "Xóa hết chữ"
 
 #: ../app/actions/text-editor-actions.c:58
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "LTR"
-msgstr "TSP"
+msgstr "LTR"
 
 #: ../app/actions/text-editor-actions.c:59
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From left to right"
-msgstr "Từ trái sang phải"
+msgstr "Trái sang phải"
 
 #: ../app/actions/text-editor-actions.c:64
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "RTL"
-msgstr "PST"
+msgstr "RTL"
 
 #: ../app/actions/text-editor-actions.c:65
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From right to left"
-msgstr "Từ phải sang trái"
+msgstr "Phải sang trái"
 
 #: ../app/actions/text-editor-commands.c:62
 #: ../app/actions/text-tool-commands.c:117
@@ -5262,160 +4605,134 @@ msgstr "Mở tập tin văn bản (UTF-8)"
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Không thể mở « %s » để đọc: %s"
+msgstr "Không thể mở '%s' để đọc: %s"
 
 #: ../app/actions/text-tool-actions.c:50
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text Tool Menu"
 msgstr "Công cụ _Chữ"
 
 #: ../app/actions/text-tool-actions.c:54
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Input _Methods"
-msgstr "Mức gõ"
+msgstr "_Kiểu nhập"
 
 #: ../app/actions/text-tool-actions.c:58
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cu_t"
 msgstr "Cắ_t"
 
 #: ../app/actions/text-tool-actions.c:63
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Copy"
 msgstr "_Chép"
 
 #: ../app/actions/text-tool-actions.c:68
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Paste"
 msgstr "_Dán"
 
 #: ../app/actions/text-tool-actions.c:73
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Delete"
-msgstr "Xóa bỏ đường _dẫn"
+msgstr "_Xóa"
 
 #: ../app/actions/text-tool-actions.c:78
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "_Mở bộ trình bày..."
+msgstr "_Mở tệp văn bản..."
 
 #: ../app/actions/text-tool-actions.c:83
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "X_oá"
 
 #: ../app/actions/text-tool-actions.c:84
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr "Xóa hết chữ"
 
 #: ../app/actions/text-tool-actions.c:89
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Path from Text"
 msgstr "Tạo đường dẫn từ chữ"
 
 #: ../app/actions/text-tool-actions.c:91
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
 msgstr "Tạo một đường dẫn từ lớp chữ này"
 
 #: ../app/actions/text-tool-actions.c:96
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text _along Path"
 msgstr "Chữ theo đường dẫn"
 
 #: ../app/actions/text-tool-actions.c:98
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Bend the text along the currently active path"
 msgstr "Làm oằn các chữ của lớp này theo đường dẫn hiện có"
 
 #: ../app/actions/text-tool-actions.c:106
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From left to right"
-msgstr "Từ trái sang phải"
+msgstr "Trái sang phải"
 
 #: ../app/actions/text-tool-actions.c:111
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From right to left"
-msgstr "Từ phải sang trái"
+msgstr "Phải sang trái"
 
 #: ../app/actions/tool-options-actions.c:54
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
 msgstr "Trình đơn Tùy chọn Công cụ"
 
 #: ../app/actions/tool-options-actions.c:58
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
-msgstr "_Xóa bỏ màu"
+msgstr "_Cất định nghĩa công cụ"
 
 #: ../app/actions/tool-options-actions.c:62
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr "_Cập nhật các bút vẽ"
+msgstr "_Khôi phục định nghĩa công cụ"
 
 #: ../app/actions/tool-options-actions.c:66
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
-msgstr "_Sửa màu..."
+msgstr "_Sửa định nghĩa công cụ"
 
 #: ../app/actions/tool-options-actions.c:70
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr "_Xóa bỏ màu"
+msgstr "_Xóa công cụ định nghĩa trước"
 
 #: ../app/actions/tool-options-actions.c:74
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "_Sửa màu..."
+msgstr "Công cụ định nghĩa trước _mới"
 
 #: ../app/actions/tool-options-actions.c:79
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
 msgstr "Đặt _lại tùy chọn công cụ"
 
 #: ../app/actions/tool-options-actions.c:80
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset to default values"
-msgstr "Đặt lại là giá trị mặc định"
+msgstr "Đặt về giá trị mặc định"
 
 #: ../app/actions/tool-options-actions.c:85
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
 msgstr "Đặt lại _mọi tùy chọn công cụ"
 
 #: ../app/actions/tool-options-actions.c:86
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
-msgstr "Đặt lại mọi tùy chọn công cụ."
+msgstr "Đặt lại mọi tùy chọn công cụ"
 
 #: ../app/actions/tool-options-commands.c:180
-#, fuzzy
 msgid "Reset All Tool Options"
 msgstr "Đặt lại _mọi tùy chọn công cụ"
 
@@ -5424,428 +4741,358 @@ msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
 "Bạn thật sự muốn xóa bỏ mọi tùy chọn công cụ là giá trị mặc định không?"
 
-#: ../app/actions/tool-presets-actions.c:44
-#, fuzzy
-msgctxt "tool-presets-action"
-msgid "Tool Presets Menu"
-msgstr "Trình đơn Công cụ"
+#: ../app/actions/tool-preset-actions.c:44
+msgctxt "tool-preset-action"
+msgid "Tool Preset Menu"
+msgstr "Trình đơn Công cụ định nghĩa trước"
 
-#: ../app/actions/tool-presets-actions.c:48
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:48
+msgctxt "tool-preset-action"
 msgid "_New Tool Preset"
-msgstr "_Xóa bỏ màu"
+msgstr "Công cụ định nghĩa trước _mới"
 
-#: ../app/actions/tool-presets-actions.c:49
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:49
+msgctxt "tool-preset-action"
 msgid "Create a new tool preset"
-msgstr "Tạo một biểu mẫu mới."
+msgstr "Tạo công cụ định nghĩa trước mới"
 
-#: ../app/actions/tool-presets-actions.c:54
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:54
+msgctxt "tool-preset-action"
 msgid "D_uplicate Tool Preset"
-msgstr "Nhân đô_i đường dẫn"
+msgstr "Nhân đô_i công cụ định nghĩa trước"
 
-#: ../app/actions/tool-presets-actions.c:55
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:55
+msgctxt "tool-preset-action"
 msgid "Duplicate this tool preset"
-msgstr "Nhân đôi bảng chọn đó"
+msgstr "Nhân đôi công cụ định nghĩa trước"
 
-#: ../app/actions/tool-presets-actions.c:60
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:60
+msgctxt "tool-preset-action"
 msgid "Copy Tool Preset _Location"
-msgstr "Chép _vị trí bảng chọn"
+msgstr "Chép _vị trí công cụ định nghĩa trước"
 
-#: ../app/actions/tool-presets-actions.c:61
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:61
+msgctxt "tool-preset-action"
 msgid "Copy tool preset file location to clipboard"
-msgstr "Sao chép địa điểm của tập tin bảng chọn vào bảng tạm"
+msgstr "Sao chép địa điểm của tập tin bảng chọn vào bảng nháp"
 
-#: ../app/actions/tool-presets-actions.c:66
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:66
+msgctxt "tool-preset-action"
 msgid "_Delete Tool Preset"
-msgstr "_Xóa bỏ màu"
+msgstr "_Xóa công cụ định nghĩa trước"
 
-#: ../app/actions/tool-presets-actions.c:67
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:67
+msgctxt "tool-preset-action"
 msgid "Delete this tool preset"
-msgstr "Xóa bỏ lớp này"
+msgstr "Xóa công cụ định nghĩa trước này"
 
-#: ../app/actions/tool-presets-actions.c:72
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:72
+msgctxt "tool-preset-action"
 msgid "_Refresh Tool Presets"
-msgstr "_Cập nhật các bút vẽ"
+msgstr "_Cập nhật công cụ định nghĩa trước"
 
-#: ../app/actions/tool-presets-actions.c:73
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:73
+msgctxt "tool-preset-action"
 msgid "Refresh tool presets"
-msgstr "Cập nhật các bút vẽ"
+msgstr "Cập nhật công cụ định nghĩa trước"
 
-#: ../app/actions/tool-presets-actions.c:81
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:81
+msgctxt "tool-preset-action"
 msgid "_Edit Tool Preset..."
-msgstr "_Sửa màu..."
+msgstr "_Sửa công cụ định nghĩa trước"
 
-#: ../app/actions/tool-presets-actions.c:82
-#, fuzzy
-msgctxt "tool-presets-action"
+#: ../app/actions/tool-preset-actions.c:82
+msgctxt "tool-preset-action"
 msgid "Edit this tool preset"
-msgstr "Xóa bỏ lớp này"
+msgstr "Sửa công cụ định nghĩa trước"
 
 #: ../app/actions/tool-preset-editor-actions.c:42
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr "Trình đơn Bộ sửa bảng chọn"
+msgstr "Trình đơn Bộ sửa công cụ định nghĩa trước"
 
 #: ../app/actions/tool-preset-editor-actions.c:50
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
-msgstr "Sửa bảng chọn hoạt động"
+msgstr "Sửa công cụ định nghĩa trước kích hoạt"
 
 #: ../app/actions/tools-actions.c:45
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Công cụ"
 
 #: ../app/actions/tools-actions.c:46
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Selection Tools"
-msgstr "Công cụ lự_a chọn"
+msgstr "Công cụ _chọn"
 
 #: ../app/actions/tools-actions.c:47
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "Công cụ _sơn"
 
 #: ../app/actions/tools-actions.c:48
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "Công cụ chu_yển dạng"
 
 #: ../app/actions/tools-actions.c:49
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Color Tools"
 msgstr "_Công cụ màu"
 
 #: ../app/actions/tools-actions.c:55
-#, fuzzy
 msgctxt "tools-action"
 msgid "_By Color"
 msgstr "Th_eo màu"
 
 #: ../app/actions/tools-actions.c:56
-#, fuzzy
 msgctxt "tools-action"
 msgid "Select regions with similar colors"
-msgstr "Chọn vùng theo màu"
+msgstr "Chọn vùng theo màu tương tự"
 
 #: ../app/actions/tools-actions.c:61
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
-msgstr "_Xoay nhiệm ý..."
+msgstr "_Xoay tự do..."
 
 #: ../app/actions/tools-actions.c:62
 msgctxt "tools-action"
 msgid "Rotate by an arbitrary angle"
-msgstr ""
+msgstr "Quay góc bất kỳ"
 
 #: ../app/actions/vectors-actions.c:44
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Trình đơn đường dẫn"
 
 #: ../app/actions/vectors-actions.c:48
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path _Tool"
 msgstr "Công cụ đường _dẫn"
 
 #: ../app/actions/vectors-actions.c:53
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Sửa thuộc tính đường dẫn..."
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Edit path attributes"
-msgstr "Sửa đổi các thuộc tính của đường dẫn."
+msgstr "Sửa thuộc tính đường dẫn"
 
 #: ../app/actions/vectors-actions.c:59
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path..."
 msgstr "Đườ_ng dẫn mới..."
 
 #: ../app/actions/vectors-actions.c:60
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Create a new path..."
-msgstr "Tạo một biểu mẫu mới."
+msgstr "Tạo đường dẫn mới..."
 
 #: ../app/actions/vectors-actions.c:65
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path with last values"
-msgstr "Đường dẫn mới với các giá trị cuối cùng"
+msgstr "_Tạo đường dẫn mới bằng các giá trị cuối"
 
 #: ../app/actions/vectors-actions.c:66
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Create a new path with last used values"
-msgstr "Tạo lớp mới với các giá trị dùng cuối cùng"
+msgstr "Tạo đường dẫn mới bằng các giá trị dùng cuối cùng"
 
 #: ../app/actions/vectors-actions.c:71
-#, fuzzy
 msgctxt "vectors-action"
 msgid "D_uplicate Path"
 msgstr "Nhân đô_i đường dẫn"
 
 #: ../app/actions/vectors-actions.c:72
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Duplicate this path"
-msgstr "Nhân đôi đường dẫn"
+msgstr "Nhân đôi đường dẫn hiện tại"
 
 #: ../app/actions/vectors-actions.c:77
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Delete Path"
-msgstr "Xóa bỏ đường _dẫn"
+msgstr "Xóa đường _dẫn"
 
 #: ../app/actions/vectors-actions.c:78
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Delete this path"
-msgstr "Xóa bỏ đường dẫn"
+msgstr "Xóa đường dẫn"
 
 #: ../app/actions/vectors-actions.c:83
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Merge _Visible Paths"
-msgstr "T_rộn các đường dẫn hiển thị"
+msgstr "T_rộn các đường dẫn nhìn thấy"
 
 #: ../app/actions/vectors-actions.c:88
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Raise Path"
 msgstr "Nân_g đường dẫn"
 
 #: ../app/actions/vectors-actions.c:89
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Raise this path"
 msgstr "Nâng đường dẫn"
 
 #: ../app/actions/vectors-actions.c:94
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Raise Path to _Top"
-msgstr "Nâng đường dẫn lên_ trên"
+msgstr "Nâng đường dẫn lên_ đỉnh"
 
 #: ../app/actions/vectors-actions.c:95
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Raise this path to the top"
-msgstr "Nâng đường dẫn lên trên"
+msgstr "Nâng đường dẫn lên đỉnh"
 
 #: ../app/actions/vectors-actions.c:100
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Lower Path"
 msgstr "_Hạ đường dẫn"
 
 #: ../app/actions/vectors-actions.c:101
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Lower this path"
 msgstr "Hạ đường dẫn"
 
 #: ../app/actions/vectors-actions.c:106
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Lower Path to _Bottom"
-msgstr "Hạ đường dẫn _dưới"
+msgstr "Hạ đường dẫn xuống _dưới"
 
 #: ../app/actions/vectors-actions.c:107
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Lower this path to the bottom"
 msgstr "Hạ đường dẫn xuống dưới"
 
 #: ../app/actions/vectors-actions.c:112
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
 msgstr "Đường dẫn _nét..."
 
 #: ../app/actions/vectors-actions.c:113
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paint along the path"
-msgstr "Sơn theo nét ngoài vùng chọn"
+msgstr "Vẽ theo đường dẫn"
 
 #: ../app/actions/vectors-actions.c:118
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Stro_ke Path"
 msgstr "Đường dẫn _nét"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paint along the path with last values"
-msgstr "Đường dẫn nết với các giá trị cuối cùng"
+msgstr "Đường dẫn nét với các giá trị cuối cùng"
 
 #: ../app/actions/vectors-actions.c:124
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr "Ché_p đường dẫn"
 
 #: ../app/actions/vectors-actions.c:129
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr "_Dán đường dẫn"
 
 #: ../app/actions/vectors-actions.c:134
-#, fuzzy
 msgctxt "vectors-action"
 msgid "E_xport Path..."
 msgstr "_Xuất đường dẫn..."
 
 #: ../app/actions/vectors-actions.c:139
-#, fuzzy
 msgctxt "vectors-action"
 msgid "I_mport Path..."
 msgstr "Nhậ_p đường dẫn..."
 
 #: ../app/actions/vectors-actions.c:147
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Visible"
-msgstr "H_iển thị"
+msgstr "_Nhìn thấy"
 
 #: ../app/actions/vectors-actions.c:153
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Linked"
 msgstr "Đã _kết nối"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/vectors-actions.c:159
-#, fuzzy
 msgctxt "vectors-action"
 msgid "L_ock strokes"
 msgstr "Kết nối các nét vẽ"
 
 #: ../app/actions/vectors-actions.c:168
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path to Sele_ction"
 msgstr "Đường dẫn đến lựa _chọn"
 
 #: ../app/actions/vectors-actions.c:169
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path to selection"
 msgstr "Đường dẫn đến vùng chọn"
 
 #: ../app/actions/vectors-actions.c:174
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Fr_om Path"
 msgstr "_Từ đường dẫn"
 
 #: ../app/actions/vectors-actions.c:175
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Replace selection with path"
-msgstr "Thay thế vùng chọn bằng kênh này"
+msgstr "Thay thế vùng chọn bằng đường dẫn này"
 
 #: ../app/actions/vectors-actions.c:180
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Add to Selection"
 msgstr "Thê_m vào vùng chọn"
 
 #: ../app/actions/vectors-actions.c:181
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Add path to selection"
 msgstr "Đường dẫn đến vùng chọn"
 
 #: ../app/actions/vectors-actions.c:186
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
-msgstr "_Trừ khỏi vùng chọn"
+msgstr "Loại _trừ khỏi vùng chọn"
 
 #: ../app/actions/vectors-actions.c:187
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
-msgstr "_Trừ khỏi vùng chọn"
+msgstr "Loại trừ khỏi vùng chọn"
 
 #: ../app/actions/vectors-actions.c:192
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
-msgstr "Cắt chéo vớ_i vùng chọn"
+msgstr "Giao vớ_i vùng chọn"
 
 #: ../app/actions/vectors-actions.c:193
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
-msgstr "Cắt chéo vớ_i vùng chọn"
+msgstr "Giao vớ_i vùng chọn"
 
 #: ../app/actions/vectors-actions.c:201
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr "_Vùng chọn tới đường dẫn"
 
 #: ../app/actions/vectors-actions.c:202 ../app/actions/vectors-actions.c:208
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Selection to path"
 msgstr "Vùng chọn tới đường dẫn"
 
 #: ../app/actions/vectors-actions.c:207
-#, fuzzy
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "Tới đường _dẫn"
 
 #: ../app/actions/vectors-actions.c:213
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Vùng chọn tới đường dẫn (nâng c_ao)"
 
 #: ../app/actions/vectors-actions.c:214
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Tùy chọn nâng cao"
@@ -5874,58 +5121,49 @@ msgstr "Tùy chọn đường dẫn mới"
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1970
 msgid "Stroke Path"
-msgstr "Đường dấn nét"
+msgstr "Đường dẫn nét"
 
 #: ../app/actions/view-actions.c:68
-#, fuzzy
 msgctxt "view-action"
 msgid "_View"
 msgstr "_Xem"
 
 #: ../app/actions/view-actions.c:69
-#, fuzzy
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "Thu _phóng"
 
 #: ../app/actions/view-actions.c:70
-#, fuzzy
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "_Màu đệm"
 
 #: ../app/actions/view-actions.c:72
-#, fuzzy
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Chuyển sang màn hình"
 
 #: ../app/actions/view-actions.c:76
-#, fuzzy
 msgctxt "view-action"
 msgid "_New View"
 msgstr "Ô xem _mới"
 
 #: ../app/actions/view-actions.c:77
-#, fuzzy
 msgctxt "view-action"
 msgid "Create another view on this image"
 msgstr "Tạo ô hiển thị mới cho ảnh này."
 
 #: ../app/actions/view-actions.c:82
-#, fuzzy
 msgctxt "view-action"
 msgid "_Close"
 msgstr "Đón_g"
 
 #: ../app/actions/view-actions.c:83
-#, fuzzy
 msgctxt "view-action"
 msgid "Close this image window"
 msgstr "Đóng cửa sổ ảnh này"
 
 #: ../app/actions/view-actions.c:88
-#, fuzzy
 msgctxt "view-action"
 msgid "_Fit Image in Window"
 msgstr "_Vừa ảnh khít cửa sổ"
@@ -5937,90 +5175,76 @@ msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Điều chỉnh tỷ lệ phong để hiện rõ toàn bộ ảnh"
 
 #: ../app/actions/view-actions.c:94
-#, fuzzy
 msgctxt "view-action"
 msgid "Fi_ll Window"
 msgstr "Vừa khít cửa sổ"
 
 #: ../app/actions/view-actions.c:95
-#, fuzzy
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Điều chỉnh tỷ lệ phong để vừa khít cửa sổ"
 
 #: ../app/actions/view-actions.c:100
-#, fuzzy
 msgctxt "view-action"
 msgid "Re_vert Zoom"
-msgstr "H_oàn nguyên"
+msgstr "H_oàn nguyên thu phóng"
 
 #: ../app/actions/view-actions.c:101
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
-msgstr ""
+msgstr "Khôi phục mức thu phóng trước"
 
 #: ../app/actions/view-actions.c:106
-#, fuzzy
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "Cửa sổ du_yệt"
 
 #: ../app/actions/view-actions.c:107
-#, fuzzy
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Hiển thị cửa sổ toàn cảnh cho ảnh này"
 
 #: ../app/actions/view-actions.c:112
-#, fuzzy
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "Hiện bộ _lọc..."
 
 #: ../app/actions/view-actions.c:113
-#, fuzzy
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Cấu hình các bộ lọc được áp dụng vào khung xem này"
 
 #: ../app/actions/view-actions.c:118
-#, fuzzy
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "_Bọc khít"
 
 #: ../app/actions/view-actions.c:119
-#, fuzzy
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
-msgstr "Giảm cửa sổ ảnh thành kích cỡ hiển thị ảnh"
+msgstr "Làm nhỏ cửa sổ ảnh thành kích cỡ hiển thị ảnh"
 
 #: ../app/actions/view-actions.c:124
-#, fuzzy
 msgctxt "view-action"
 msgid "_Open Display..."
-msgstr "_Mở bộ trình bày..."
+msgstr "_Mở hiển thị..."
 
 #: ../app/actions/view-actions.c:125
-#, fuzzy
 msgctxt "view-action"
 msgid "Connect to another display"
-msgstr "Kết nối đến một bộ trình bày khác"
+msgstr "Không thể kết nối tới màn hình khác"
 
 #: ../app/actions/view-actions.c:133
-#, fuzzy
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "Chấm _với chấm"
 
 #: ../app/actions/view-actions.c:134
-#, fuzzy
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Một điểm ảnh trên màn hình đại diện một điểm ảnh của ảnh"
 
 #: ../app/actions/view-actions.c:140
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "Hiện _vùng chọn"
@@ -6064,7 +5288,7 @@ msgstr "_Hiện lưới"
 #: ../app/actions/view-actions.c:162
 msgctxt "view-action"
 msgid "Display the image's grid"
-msgstr ""
+msgstr "Hiển thị lưới ảnh"
 
 #: ../app/actions/view-actions.c:168
 #, fuzzy
@@ -6075,7 +5299,7 @@ msgstr "Hiện điểm mẫu"
 #: ../app/actions/view-actions.c:169
 msgctxt "view-action"
 msgid "Display the image's color sample points"
-msgstr ""
+msgstr "Hiện điểm mẫu màu của ảnh"
 
 #: ../app/actions/view-actions.c:175
 #, fuzzy
@@ -6086,7 +5310,7 @@ msgstr "_Dính nét dẫn"
 #: ../app/actions/view-actions.c:176
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
-msgstr ""
+msgstr "Thao tác công cụ snap tới hướng dẫn"
 
 #: ../app/actions/view-actions.c:182
 #, fuzzy
@@ -6097,7 +5321,7 @@ msgstr "Dính lướ_i"
 #: ../app/actions/view-actions.c:183
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
-msgstr ""
+msgstr "Thao tác công cụ snap tới lưới"
 
 #: ../app/actions/view-actions.c:189
 #, fuzzy
@@ -6108,7 +5332,7 @@ msgstr "Dính _cạnh vùng vẽ"
 #: ../app/actions/view-actions.c:190
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
-msgstr ""
+msgstr "Thao tác công cụ snap tới viền bảng vẽ"
 
 #: ../app/actions/view-actions.c:196
 #, fuzzy
@@ -6123,7 +5347,6 @@ msgid "Tool operations snap to the active path"
 msgstr "Xuất đường dẫn hoạt động"
 
 #: ../app/actions/view-actions.c:203
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Hiện thanh t_rình đơn"
@@ -6143,7 +5366,7 @@ msgstr "Hiện thước đ_o"
 #: ../app/actions/view-actions.c:211
 msgctxt "view-action"
 msgid "Show this window's rulers"
-msgstr ""
+msgstr "Hiện thước của cửa sổ"
 
 #: ../app/actions/view-actions.c:217
 #, fuzzy
@@ -6158,7 +5381,6 @@ msgid "Show this window's scrollbars"
 msgstr "H_iện thanh cuộn"
 
 #: ../app/actions/view-actions.c:224
-#, fuzzy
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Hiện _thanh trạng thái"
@@ -6334,7 +5556,7 @@ msgstr "_Khác..."
 #: ../app/actions/view-actions.c:355
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
-msgstr ""
+msgstr "Đặt hệ số thu phòng bất kỳ"
 
 #: ../app/actions/view-actions.c:363
 #, fuzzy
@@ -6381,7 +5603,7 @@ msgstr "_Chọn màu riêng..."
 #: ../app/actions/view-actions.c:382
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
-msgstr ""
+msgstr "Dùng màu bất kỳ"
 
 #: ../app/actions/view-actions.c:387
 #, fuzzy
@@ -6392,7 +5614,7 @@ msgstr "Theo tù_y thích"
 #: ../app/actions/view-actions.c:389
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
-msgstr ""
+msgstr "Đặt màu chèn đã thiết lập trong tham chiếu"
 
 #: ../app/actions/view-actions.c:588
 #, fuzzy, c-format
@@ -6473,7 +5695,7 @@ msgstr "Mẹo t_rước"
 #: ../app/actions/windows-actions.c:110
 msgctxt "windows-action"
 msgid "Switch to the previous image"
-msgstr ""
+msgstr "Chuyển tới ảnh trước"
 
 #: ../app/actions/windows-actions.c:118
 #, fuzzy
@@ -6485,19 +5707,19 @@ msgstr "Đóng Neo"
 msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
-msgstr ""
+msgstr "Khi dùng neo mà các hộp thoại khác ẩn, chỉ giữ lại cửa sổ của ảnh."
 
 #: ../app/actions/windows-actions.c:125
 msgctxt "windows-action"
 msgid "Single-Window Mode"
-msgstr ""
+msgstr "Chế độ cửa sổ đơn "
 
 #: ../app/actions/windows-actions.c:126
 msgctxt "windows-action"
 msgid ""
 "When enabled GIMP is in a single-window mode. Far from completely "
 "implemented!"
-msgstr ""
+msgstr "Khi bật GIMP trong chế độ cửa sổ đơn. Chưa hoàn thiện!"
 
 #: ../app/base/base-enums.c:23
 #, fuzzy
@@ -6781,12 +6003,12 @@ msgstr "Xem thử"
 #: ../app/config/config-enums.c:90
 msgctxt "space-bar-action"
 msgid "Switch to Move tool"
-msgstr ""
+msgstr "Chuyển tới công cụ di chuyển"
 
 #: ../app/config/config-enums.c:118
 msgctxt "zoom-quality"
 msgid "Low"
-msgstr ""
+msgstr "Thấp"
 
 #: ../app/config/config-enums.c:119
 #, fuzzy
@@ -6839,12 +6061,12 @@ msgstr "Đẹp"
 #: ../app/config/config-enums.c:236
 msgctxt "handedness"
 msgid "Left-handed"
-msgstr ""
+msgstr "Thuận tay trái"
 
 #: ../app/config/config-enums.c:237
 msgctxt "handedness"
 msgid "Right-handed"
-msgstr ""
+msgstr "Thuận tay phải"
 
 #: ../app/config/gimpconfig-file.c:67 ../app/core/gimpbrushgenerated-save.c:62
 #: ../app/core/gimpcurve-save.c:52 ../app/core/gimpgradient-save.c:50
@@ -6890,7 +6112,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:23 ../app/config/gimprc-blurbs.h:28
 msgid "Sets the dynamics search path."
-msgstr ""
+msgstr "Đặt đường dẫn tìm kiếm động."
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid ""
@@ -6904,7 +6126,7 @@ msgstr "Xác định vẽ vùng quanh ảnh như thế nào."
 
 #: ../app/config/gimprc-blurbs.h:43
 msgid "How to handle embedded color profiles when opening a file."
-msgstr ""
+msgstr "Xử lý hồ sơ màu nhúng khi mở tập tin."
 
 #: ../app/config/gimprc-blurbs.h:46
 msgid "Ask for confirmation before closing an image without saving."
@@ -6920,7 +6142,7 @@ msgstr "Đặt kiểu con trỏ chuột cần dùng."
 
 #: ../app/config/gimprc-blurbs.h:55
 msgid "Sets the handedness for cursor positioning."
-msgstr ""
+msgstr "Đặt vị trí cho trỏ khi dùng một tay."
 
 #: ../app/config/gimprc-blurbs.h:58
 msgid ""
@@ -6970,12 +6192,12 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr "Khi bật thì sẽ sử dụng bút vẽ được chọn cho mọi công cụ."
+msgstr "Khi bật thì sẽ sử dụng chổi được chọn cho mọi công cụ."
 
 #: ../app/config/gimprc-blurbs.h:160
 #, fuzzy
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "Khi bật thì sẽ sử dụng bút vẽ được chọn cho mọi công cụ."
+msgstr "Khi bật thì sẽ sử dụng chổi được chọn cho mọi công cụ."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -7087,8 +6309,8 @@ msgid ""
 msgstr ""
 "Khi bật thì tùy chọn này truy vấn trình phục vụ X về vị trí con chuột hiện "
 "thời đối với mỗi sự kiện chuyển, hơn là nhờ lời gợi vị trí. Có nghĩa là việc "
-"sơn bằng bút vẽ lớn nên là chính xác hơn, mà chậm hơn. Tuy nhiên, trên một "
-"số máy chạy trình phục vụ X, bật tùy chọn này gây ra việc sơn nhanh hơn."
+"sơn bằng chổi lớn nên là chính xác hơn, mà chậm hơn. Tuy nhiên, trên một số "
+"máy chạy trình phục vụ X, bật tùy chọn này gây ra việc sơn nhanh hơn."
 
 #: ../app/config/gimprc-blurbs.h:278
 msgid ""
@@ -7133,7 +6355,7 @@ msgstr ""
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
-"Nhớ công cụ, mẫu, màu và bút vẽ hiện thời qua nhiều phiên chạy GIMP khác."
+"Nhớ công cụ, mẫu, màu và chổi hiện thời qua nhiều phiên chạy GIMP khác."
 
 #: ../app/config/gimprc-blurbs.h:302
 #, fuzzy
@@ -7157,7 +6379,7 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Khi bật thì mọi công cụ sơn sẽ hiển thị khung xem thử phác thảo của bút vẽ "
+"Khi bật thì mọi công cụ sơn sẽ hiển thị khung xem thử phác thảo của chổi "
 "hiện thời."
 
 #: ../app/config/gimprc-blurbs.h:319
@@ -7254,15 +6476,15 @@ msgstr "Hiện mẹo công cụ khi con trỏ di chuyển ở trên mục."
 
 #: ../app/config/gimprc-blurbs.h:367
 msgid "Use GIMP in a single-window mode."
-msgstr ""
+msgstr "Dùng GIMP trong chế độ cửa sổ đơn."
 
 #: ../app/config/gimprc-blurbs.h:370
 msgid "Hide docks and other windows, leaving only image windows."
-msgstr ""
+msgstr "Ẩn neo vào các cửa sổ khác, chỉ hiển thị các cửa sổ ảnh."
 
 #: ../app/config/gimprc-blurbs.h:373
 msgid "What to do when the space bar is pressed in the image window."
-msgstr ""
+msgstr "Làm gì khi nhấn phím cách."
 
 #: ../app/config/gimprc-blurbs.h:376
 msgid ""
@@ -7335,8 +6557,8 @@ msgid ""
 "you may want to set this to a higher value."
 msgstr ""
 "Khi số lượng dữ liệu điểm ảnh vượt quá hạn chế này, GIMP sẽ bắt đầu trao đổi "
-"các « ô » (256×256 điểm ảnh) với đĩa. Tiến trình này là rất chậm hơn, còn cho "
-"bạn vẫn có khả năng thao tác ảnh mà bằng bất cứ cách khác nào chiếm quá "
+"các « ô » (256×256 điểm ảnh) với đĩa. Tiến trình này là rất chậm hơn, còn "
+"cho bạn vẫn có khả năng thao tác ảnh mà bằng bất cứ cách khác nào chiếm quá "
 "nhiều bộ nhớ. Nếu bạn có rất nhiều bộ nhớ RAM, bạn có thể đặt giá trị này là "
 "cao hơn."
 
@@ -7348,11 +6570,11 @@ msgstr "Trao đổi màu cảnh gần và nền"
 #: ../app/config/gimprc-blurbs.h:426
 #, fuzzy
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr "Hiện _bút vẽ, mẫu và độ dốc hoạt động"
+msgstr "Hiện _chổi, mẫu và độ dốc hoạt động"
 
 #: ../app/config/gimprc-blurbs.h:429
 msgid "Show the currently active image in the toolbox."
-msgstr ""
+msgstr "Hiển thị ảnh hiện tại trong hộp công cụ."
 
 #: ../app/config/gimprc-blurbs.h:435
 msgid "Sets the manner in which transparency is displayed in images."
@@ -8103,12 +7325,12 @@ msgstr "(Mở) Khóa kênh anfa"
 #: ../app/core/core-enums.c:891
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
-msgstr ""
+msgstr "Ngừng đổi cỡ lớp nhóm"
 
 #: ../app/core/core-enums.c:892
 msgctxt "undo-type"
 msgid "Resume group layer resize"
-msgstr ""
+msgstr "Dùng đổi cỡ lớp nhóm"
 
 #: ../app/core/core-enums.c:893
 #, fuzzy
@@ -8191,7 +7413,7 @@ msgstr "Chọn cảnh gần"
 #: ../app/core/core-enums.c:913
 msgctxt "undo-type"
 msgid "Not undoable"
-msgstr ""
+msgstr "Không thể hoàn lại"
 
 #: ../app/core/core-enums.c:1185
 #, fuzzy
@@ -8244,7 +7466,7 @@ msgstr "Thông điệp %s"
 #: ../app/core/core-enums.c:1221
 msgctxt "message-severity"
 msgid "Warning"
-msgstr ""
+msgstr "Cảnh báo"
 
 #: ../app/core/core-enums.c:1222
 #, fuzzy
@@ -8255,12 +7477,12 @@ msgstr "Lỗi"
 #: ../app/core/core-enums.c:1251
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
-msgstr ""
+msgstr "Hỏi khi thực hiện"
 
 #: ../app/core/core-enums.c:1252
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
-msgstr ""
+msgstr "Giữ hồ sơ nhúng"
 
 #: ../app/core/core-enums.c:1253
 #, fuzzy
@@ -8301,7 +7523,7 @@ msgstr "Độ cứng"
 #: ../app/core/core-enums.c:1295
 msgctxt "dynamics-output-type"
 msgid "Force"
-msgstr ""
+msgstr "Cưỡng chế"
 
 #: ../app/core/core-enums.c:1296
 #, fuzzy
@@ -8324,7 +7546,7 @@ msgstr "Tỷ lệ"
 #: ../app/core/core-enums.c:1299
 msgctxt "dynamics-output-type"
 msgid "Flow"
-msgstr ""
+msgstr "Luồng"
 
 #: ../app/core/core-enums.c:1300
 #, fuzzy
@@ -8470,12 +7692,12 @@ msgstr "Bộ bám"
 #: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2729
 #: ../app/tools/gimppaintoptions-gui.c:203
 msgid "Dynamics"
-msgstr ""
+msgstr "Dynamics"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:976
 msgid "Fonts (this may take a while)"
-msgstr ""
+msgstr "Phông (hơi mất thời gian)"
 
 #. initialize the module list
 #: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2761
@@ -8485,7 +7707,7 @@ msgstr "Mô-đun"
 #. update tag cache
 #: ../app/core/gimp.c:997
 msgid "Updating tag cache"
-msgstr ""
+msgstr "Cập nhật vùng nhớ đệm của thẻ"
 
 #: ../app/core/gimpbrush-load.c:178
 #, fuzzy, c-format
@@ -8497,43 +7719,43 @@ msgstr[0] "Không thể đọc %d byte từ « %s »: %s"
 #: ../app/core/gimpbrush-load.c:200
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: độ rộng = 0."
+msgstr "Lỗi phân tách nghiêm trọng trong tập tin chổi '%s': độ rộng = 0."
 
 #: ../app/core/gimpbrush-load.c:209
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: độ cao = 0."
+msgstr "Lỗi phân tách nghiêm trọng trong tập tin chổi '%s': độ cao = 0."
 
 #: ../app/core/gimpbrush-load.c:218
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: số byte = 0."
+msgstr "Lỗi phân tách nghiêm trọng trong tập tin chổi '%s': số byte = 0."
 
 #: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: độ sâu không rõ %d."
+"Lỗi phân tách nghiêm trọng trong tập tin chổi '%s': độ sâu không rõ %d."
 
 #: ../app/core/gimpbrush-load.c:255
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: phiên bản không rõ %d."
+"Lỗi phân tách nghiêm trọng trong tập tin chổi '%s': phiên bản không rõ %d."
 
 #: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrush-load.c:391
 #: ../app/core/gimpbrush-load.c:725
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: hình như tập tin bị "
+"Lỗi phân tách nghiêm trọng trong tập tin chổi '%s': hình như tập tin bị "
 "cụt."
 
 #: ../app/core/gimpbrush-load.c:279 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Chuỗi UTF-8 không hợp lệ trong tập tin bút vẽ « %s »."
+msgstr "Chuỗi UTF-8 không hợp lệ trong tập tin chổi '%s'."
 
 #: ../app/core/gimpbrush-load.c:286 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
@@ -8547,23 +7769,23 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: không hỗ trợ độ sâu "
-"bút vẽ %d.\n"
-"Mọi bút vẽ GIMP phải là GRAY hay RGBA."
+"Lỗi phân tách nghiêm trọng trong tập tin chổi « %s »: không hỗ trợ độ sâu "
+"chổi %d.\n"
+"Mọi chổi GIMP phải là GRAY hay RGBA."
 
 #: ../app/core/gimpbrush-load.c:452
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: không thể giải mã "
+"Lỗi phân tách nghiêm trọng trong tập tin chổi « %s »: không thể giải mã "
 "phiên bản dạng thức ABR %d."
 
 #: ../app/core/gimpbrush-load.c:619
 #, fuzzy, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: hình như tập tin bị "
+"Lỗi phân tách nghiêm trọng trong tập tin chổi « %s »: hình như tập tin bị "
 "cụt."
 
 #: ../app/core/gimpbrush.c:148
@@ -8575,15 +7797,15 @@ msgstr "Khoảng cách"
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: không phải là tập tin "
-"bút vẽ GIMP."
+"Lỗi phân tách nghiêm trọng trong tập tin chổi « %s »: không phải là tập tin "
+"chổi GIMP."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, fuzzy, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: phiên bản bút vẽ GIMP "
+"Lỗi phân tách nghiêm trọng trong tập tin chổi « %s »: phiên bản chổi GIMP "
 "không rõ."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
@@ -8591,8 +7813,8 @@ msgstr ""
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: hình bút vẽ GIMP "
-"không rõ."
+"Lỗi phân tách nghiêm trọng trong tập tin chổi « %s »: hình chổi GIMP không "
+"rõ."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, fuzzy, c-format
@@ -8607,22 +7829,22 @@ msgstr "Tập tin bị cụt"
 #: ../app/core/gimpbrushgenerated-load.c:231
 #, c-format
 msgid "Error while reading brush file '%s': %s"
-msgstr "Gặp lỗi khi đọc tập tin bút vẽ « %s »: %s"
+msgstr "Gặp lỗi khi đọc tập tin chổi « %s »: %s"
 
 #: ../app/core/gimpbrushgenerated.c:129
 #, fuzzy
 msgid "Brush Shape"
-msgstr "Bút vẽ"
+msgstr "Nét chổi"
 
 #: ../app/core/gimpbrushgenerated.c:137
 #, fuzzy
 msgid "Brush Radius"
-msgstr "Bộ sửa bút vẽ"
+msgstr "Bộ sửa chổi"
 
 #: ../app/core/gimpbrushgenerated.c:144
 #, fuzzy
 msgid "Brush Spikes"
-msgstr "Bút vẽ"
+msgstr "Chổi"
 
 #: ../app/core/gimpbrushgenerated.c:151
 #, fuzzy
@@ -8637,14 +7859,13 @@ msgstr "Tỷ lệ hình thể:"
 #: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:154
 #, fuzzy
 msgid "Brush Angle"
-msgstr "Thư mục bút vẽ"
+msgstr "Thư mục chổi"
 
 #: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
 #: ../app/core/gimpbrushpipe-load.c:224
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »: tập tin bị hỏng."
+msgstr "Lỗi phân tách nghiêm trọng trong tập tin chổi « %s »: tập tin bị hỏng."
 
 # Rect is abbreviation for Rectangle / Rect là viết tắt cho Chữ nhật
 #: ../app/core/gimpchannel-select.c:60
@@ -8893,6 +8114,8 @@ msgid ""
 "exist. Please create the folder or fix your configuation in the Preferences "
 "dialog's 'Folders' section."
 msgstr ""
+"Có thư mục dữ liệu có thể viết được (%s), nhưng thư mục này không tồn tại. "
+"Hãy tạo thư mục đó và đặt lại cấu hình trong mục 'Thư mục' của tham chiếu. "
 
 #: ../app/core/gimpdatafactory.c:762
 #, c-format
@@ -8901,11 +8124,14 @@ msgid ""
 "your data search path. You probably edited the gimprc file manually, please "
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
+"Có thư mục dữ liệu viết được đã được cấu hình, nhưng thư mục này không tồn "
+"tại trong đường dẫn tìm kiếm dữ liệu. Bạn có thể sửa tệp gimprc, hãy sửa giá "
+"trị này trong phần 'Thư mục' của phần tham chiếu. "
 
 #: ../app/core/gimpdatafactory.c:772
 #, c-format
 msgid "You don't have any writable data folder configured."
-msgstr ""
+msgstr "Bạn không có thư mục dữ liệu nào viết được đã cấu hình."
 
 #: ../app/core/gimpdatafactory.c:889
 #, c-format
@@ -9082,8 +8308,8 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin độ dốc « %s »: không phải là tập tin "
-"độ dốc GIMP."
+"Lỗi phân tách nghiêm trọng trong tập tin độ dốc « %s »: không phải là tập "
+"tin độ dốc GIMP."
 
 #: ../app/core/gimpgradient-load.c:110
 #, c-format
@@ -9100,8 +8326,8 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
 msgstr ""
-"Lỗi phân tách nghiêm trọng trong tập tin độ dốc « %s »: không phải là tập tin "
-"độ dốc GIMP."
+"Lỗi phân tách nghiêm trọng trong tập tin độ dốc « %s »: không phải là tập "
+"tin độ dốc GIMP."
 
 #: ../app/core/gimpgradient-load.c:242 ../app/core/gimpgradient-load.c:256
 #, c-format
@@ -9204,7 +8430,7 @@ msgstr "Sắp xếp đối tượng"
 #: ../app/core/gimpimage-colormap.c:64
 #, c-format
 msgid "Colormap of Image #%d (%s)"
-msgstr ""
+msgstr "Bảng màu của ảnh #%d (%s)"
 
 #: ../app/core/gimpimage-colormap.c:162
 #, fuzzy
@@ -9330,11 +8556,11 @@ msgstr "Làm phẳng ảnh"
 
 #: ../app/core/gimpimage-merge.c:248
 msgid "Cannot merge down to a layer group."
-msgstr ""
+msgstr "Không trộn được với nhóm lớp ở dưới."
 
 #: ../app/core/gimpimage-merge.c:255
 msgid "The layer to merge down to is locked."
-msgstr ""
+msgstr "Lớp muốn trộn ở dưới bị khóa."
 
 #: ../app/core/gimpimage-merge.c:267
 #, fuzzy
@@ -9542,10 +8768,6 @@ msgstr "Đính bộ bám vào mục"
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Gỡ bỏ bộ bám ra mục"
-
-#: ../app/core/gimpitem-exclusive.c:79
-msgid "Set Item Exclusive Visible"
-msgstr "Đặt mục hiển thị dành riêng"
 
 #: ../app/core/gimplayer-floating-sel.c:95
 #, fuzzy
@@ -9776,22 +8998,22 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Đang đọc tập tin bảng chọn « %s »: gặp số lượng cột không hợp lệ trong dòng %"
-"d, nên dùng giá trị mặc định."
+"Đang đọc tập tin bảng chọn « %s »: gặp số lượng cột không hợp lệ trong dòng "
+"%d, nên dùng giá trị mặc định."
 
 #: ../app/core/gimppalette-load.c:185
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
-"Đang đọc tập tin bảng chọn « %s »: thiếu thành phần màu Đỏ (RED) trong dòng %"
-"d."
+"Đang đọc tập tin bảng chọn « %s »: thiếu thành phần màu Đỏ (RED) trong dòng "
+"%d."
 
 #: ../app/core/gimppalette-load.c:193
 #, fuzzy, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
-"Đang đọc tập tin bảng chọn « %s »: thiếu thành phần màu Đỏ (RED) trong dòng %"
-"d."
+"Đang đọc tập tin bảng chọn « %s »: thiếu thành phần màu Đỏ (RED) trong dòng "
+"%d."
 
 #: ../app/core/gimppalette-load.c:201
 #, c-format
@@ -9804,8 +9026,8 @@ msgstr ""
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
-"Đang đọc tập tin bảng chọn « %s »: giá trị RGB nằm ngoài phạm vi trong dòng %"
-"d."
+"Đang đọc tập tin bảng chọn « %s »: giá trị RGB nằm ngoài phạm vi trong dòng "
+"%d."
 
 #: ../app/core/gimppalette-load.c:478
 #, fuzzy, c-format
@@ -9815,7 +9037,7 @@ msgstr "Không thể đọc %d byte từ « %s »: %s"
 #: ../app/core/gimppalette-load.c:501 ../app/core/gimppalette-load.c:589
 #, fuzzy, c-format
 msgid "Fatal parse error in palette file '%s'"
-msgstr "Lỗi phân tách nghiêm trọng trong tập tin bút vẽ « %s »."
+msgstr "Lỗi phân tách nghiêm trọng trong tập tin chổi « %s »."
 
 #: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
 #: ../app/core/gimppattern-load.c:162
@@ -10116,7 +9338,7 @@ msgstr "Xoá bỏ đối tượng"
 #: ../app/dialogs/data-delete-dialog.c:104
 #, fuzzy, c-format
 msgid "Delete '%s'?"
-msgstr "Xóa bỏ bút vẽ này."
+msgstr "Xóa bỏ chổi này."
 
 #: ../app/dialogs/data-delete-dialog.c:107
 #, fuzzy, c-format
@@ -10247,12 +9469,16 @@ msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
+"Bạn có thể dùng hộp thoại này để xuất ra ảnh ở nhiều định dạng khác nhau. "
+"Nếu bạn muốn cất ảnh dạng GIMP XCF, hãy dùng Tập tin→Lưu."
 
 #: ../app/dialogs/file-save-dialog.c:564
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
+"Bạn có thể dùng hộp thoại này để xuất tập tin GIMP XCF. Dùng Tập tin→Xuất nếu muốn "
+"xuất ở định dạng khác."
 
 #: ../app/dialogs/file-save-dialog.c:570
 msgid ""
@@ -10333,7 +9559,7 @@ msgstr "Xén để vừa lớp dưới"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:114
 msgid "Merge within active _group only"
-msgstr ""
+msgstr "Chỉ trộn với _nhóm hoạt động"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:127
 msgid "_Discard invisible layers"
@@ -10364,8 +9590,8 @@ msgid ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr ""
-"Một ảnh có kích thước đã chọn thì sẽ chiếm nhiều bộ nhớ hơn « Cỡ ảnh tối đa » "
-"đã cấu hình trong thoại Tùy thích (hiện có %s)."
+"Một ảnh có kích thước đã chọn thì sẽ chiếm nhiều bộ nhớ hơn « Cỡ ảnh tối đa "
+"» đã cấu hình trong thoại Tùy thích (hiện có %s)."
 
 #: ../app/dialogs/image-properties-dialog.c:60
 #: ../app/dialogs/image-properties-dialog.c:63
@@ -10799,7 +10025,7 @@ msgstr "Khẳng định _việc đóng các ảnh chưa lưu"
 
 #: ../app/dialogs/preferences-dialog.c:1576
 msgid "Keep record of used files in the Recent Documents list"
-msgstr ""
+msgstr "Nhớ danh sách tệp sử dụng gần đây"
 
 #: ../app/dialogs/preferences-dialog.c:1585
 msgid "User Interface"
@@ -10811,7 +10037,7 @@ msgstr "Giao diện"
 
 #: ../app/dialogs/preferences-dialog.c:1598
 msgid "Language"
-msgstr ""
+msgstr "Ngôn ngữ"
 
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1604
@@ -10897,23 +10123,23 @@ msgstr "Hiện các _nút trợ giúp"
 
 #: ../app/dialogs/preferences-dialog.c:1801
 msgid "Use the online version"
-msgstr ""
+msgstr "Dùng phiên bản trực tuyến"
 
 #: ../app/dialogs/preferences-dialog.c:1802
 msgid "Use a locally installed copy"
-msgstr ""
+msgstr "Dùng phiên bản cài đặt cục bộ"
 
 #: ../app/dialogs/preferences-dialog.c:1803
 msgid "User manual:"
-msgstr ""
+msgstr "Hướng dẫn sử dụng:"
 
 #: ../app/dialogs/preferences-dialog.c:1810
 msgid "There's a local installation of the user manual."
-msgstr ""
+msgstr "Có bản hướng dẫn sử dụng cục bộ"
 
 #: ../app/dialogs/preferences-dialog.c:1815
 msgid "The user manual is not installed locally."
-msgstr ""
+msgstr "Chưa cài đặt hướng dẫn sử dụng cục bộ."
 
 #. Help Browser
 #: ../app/dialogs/preferences-dialog.c:1838
@@ -10956,11 +10182,11 @@ msgstr "Tùy chọn sơn chia ra các công cụ"
 
 #: ../app/dialogs/preferences-dialog.c:1914
 msgid "_Brush"
-msgstr "_Bút vẽ"
+msgstr "_Chổi"
 
 #: ../app/dialogs/preferences-dialog.c:1917
 msgid "_Dynamics"
-msgstr ""
+msgstr "_Dynamics"
 
 #: ../app/dialogs/preferences-dialog.c:1920
 msgid "_Pattern"
@@ -10987,7 +10213,7 @@ msgstr "Hiện mà_u cảnh gần và nền"
 
 #: ../app/dialogs/preferences-dialog.c:1963
 msgid "Show active _brush, pattern & gradient"
-msgstr "Hiện _bút vẽ, mẫu và độ dốc hoạt động"
+msgstr "Hiện _chổi, mẫu và độ dốc hoạt động"
 
 #: ../app/dialogs/preferences-dialog.c:1967
 msgid "Show active _image"
@@ -11051,11 +10277,11 @@ msgstr "Tỷ lệ th_u phóng ban đầu :"
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2097
 msgid "Space Bar"
-msgstr ""
+msgstr "Phím cách"
 
 #: ../app/dialogs/preferences-dialog.c:2103
 msgid "_While space bar is pressed:"
-msgstr ""
+msgstr "_Trong khi nhấn phím cách:"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:2107
@@ -11064,7 +10290,7 @@ msgstr "Con trỏ chuột"
 
 #: ../app/dialogs/preferences-dialog.c:2111
 msgid "Show _brush outline"
-msgstr "Hiện phác thảo _bút vẽ"
+msgstr "Hiện phác thảo _chổi"
 
 #: ../app/dialogs/preferences-dialog.c:2114
 msgid "Show pointer for paint _tools"
@@ -11243,7 +10469,7 @@ msgstr "_Mục đích vẽ bản in thử mềm:"
 
 #: ../app/dialogs/preferences-dialog.c:2513
 msgid "Mark out of gamut colors"
-msgstr ""
+msgstr "Đánh dấu màu trong gamut"
 
 #: ../app/dialogs/preferences-dialog.c:2518
 #, fuzzy
@@ -11348,11 +10574,11 @@ msgstr "Chọn thư mục trao đổi"
 
 #: ../app/dialogs/preferences-dialog.c:2725
 msgid "Brush Folders"
-msgstr "Thư mục bút vẽ"
+msgstr "Thư mục chổi"
 
 #: ../app/dialogs/preferences-dialog.c:2727
 msgid "Select Brush Folders"
-msgstr "Chọn thư mục bút vẽ"
+msgstr "Chọn thư mục chổi"
 
 #: ../app/dialogs/preferences-dialog.c:2729
 #, fuzzy
@@ -11584,7 +10810,7 @@ msgstr "Công cụ sơn"
 
 #: ../app/dialogs/stroke-dialog.c:228
 msgid "_Emulate brush dynamics"
-msgstr ""
+msgstr "_Mô phỏng brush dynamics"
 
 #: ../app/dialogs/tips-dialog.c:88
 #, fuzzy
@@ -11621,7 +10847,7 @@ msgstr "Mẹo _kế"
 #. a link to the related section in the user manual
 #: ../app/dialogs/tips-dialog.c:193
 msgid "Learn more"
-msgstr ""
+msgstr "Chi tiết"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -11718,7 +10944,7 @@ msgstr "Các phần vàng"
 #: ../app/display/display-enums.c:65
 msgctxt "guides-type"
 msgid "Diagonal lines"
-msgstr ""
+msgstr "Đường chéo"
 
 #: ../app/display/display-enums.c:66
 #, fuzzy
@@ -11770,12 +10996,12 @@ msgstr "Bộ sửa vùng chọn"
 #. Width
 #: ../app/display/gimpcursorview.c:292
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #. Height
 #: ../app/display/gimpcursorview.c:299
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: ../app/display/gimpcursorview.c:328
 msgid "_Sample Merged"
@@ -11802,7 +11028,7 @@ msgstr "Nâng các khung hiển thị ảnh này lên."
 #: ../app/display/gimpdisplayshell.c:743
 #: ../app/display/gimpdisplayshell.c:1321 ../app/widgets/gimptoolbox.c:250
 msgid "Drop image files here to open them"
-msgstr ""
+msgstr "Thả tập tin để mở"
 
 #: ../app/display/gimpdisplayshell-close.c:153
 #: ../app/display/gimpdisplayshell-close.c:223
@@ -11812,7 +11038,7 @@ msgstr "Đóng %s"
 
 #: ../app/display/gimpdisplayshell-close.c:164
 msgid "Close _without Saving"
-msgstr ""
+msgstr "Đóng nhưng _không lưu"
 
 #: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
@@ -11863,7 +11089,7 @@ msgstr "Thả đường dẫn mới"
 #: ../app/display/gimpdisplayshell-dnd.c:449 ../app/tools/gimpblendtool.c:173
 #: ../app/tools/gimpbucketfilltool.c:136 ../app/tools/gimpimagemaptool.c:279
 msgid "Cannot modify the pixels of layer groups."
-msgstr ""
+msgstr "Không thay đổi được điểm ảnh của nhóm lớp."
 
 #: ../app/display/gimpdisplayshell-dnd.c:355
 #: ../app/display/gimpdisplayshell-dnd.c:457 ../app/tools/gimpblendtool.c:180
@@ -11871,17 +11097,17 @@ msgstr ""
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:266
 #: ../app/tools/gimptransformtool.c:246 ../app/tools/gimptransformtool.c:1062
 msgid "The active layer's pixels are locked."
-msgstr ""
+msgstr "Điểm ảnh của lớp hiện tại bị khóa."
 
 #: ../app/display/gimpdisplayshell-dnd.c:535
-#: ../app/widgets/gimplayertreeview.c:725
+#: ../app/widgets/gimplayertreeview.c:724
 #, fuzzy
 msgid "Drop layers"
 msgstr "Xén lớp"
 
 #: ../app/display/gimpdisplayshell-dnd.c:668
 #: ../app/display/gimpdisplayshell-dnd.c:685
-#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:266
+#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:266
 msgid "Dropped Buffer"
 msgstr "Bộ đệm đã thả"
 
@@ -11896,12 +11122,12 @@ msgstr "Cấu hình Bộ lọc hiển thị màu"
 #: ../app/display/gimpdisplayshell-handlers.c:796
 #, c-format
 msgid "Image saved to '%s'"
-msgstr ""
+msgstr "Ảnh được lưu thành '%s'"
 
 #: ../app/display/gimpdisplayshell-handlers.c:810
 #, c-format
 msgid "Image exported to '%s'"
-msgstr ""
+msgstr "Ảnh được xuất tới '%s'"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:122
 msgid "Layer Select"
@@ -11939,11 +11165,11 @@ msgstr "(không có)"
 
 #: ../app/display/gimpdisplayshell-title.c:502
 msgid " (exported)"
-msgstr ""
+msgstr "(xuất)"
 
 #: ../app/display/gimpdisplayshell-title.c:504
 msgid " (overwritten)"
-msgstr ""
+msgstr "(ghi đè)"
 
 #: ../app/display/gimpdisplayshell-title.c:510
 #, fuzzy
@@ -11953,7 +11179,7 @@ msgstr "Nhập mới"
 #: ../app/display/gimpstatusbar.c:356
 #, c-format
 msgid "Cancel <i>%s</i>"
-msgstr ""
+msgstr "Hủy <i>%s</i>"
 
 #: ../app/file/file-open.c:136 ../app/file/file-save.c:112
 msgid "Not a regular file"
@@ -11983,7 +11209,7 @@ msgstr "Việc mở « %s » thất bại: %s"
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
-msgstr ""
+msgstr "Phần quản lý màu bị tắt. Có thể bật lại từ hộp thoại 'Tham Chiếu"
 
 #: ../app/file/file-procedure.c:195
 msgid "Unknown file type"
@@ -11997,7 +11223,7 @@ msgstr "bổ sung không thể lưu ảnh"
 #: ../app/file/file-utils.c:74
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
-msgstr ""
+msgstr "'%s': không phải là URI đúng"
 
 #: ../app/file/file-utils.c:90 ../app/file/file-utils.c:126
 msgid "Invalid character sequence in URI"
@@ -12031,13 +11257,13 @@ msgstr "không phải là một tập tin Cấp GIMP"
 
 #: ../app/gegl/gimpoperationcagecoefcalc.c:65
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
-msgstr ""
+msgstr "Tính tập hệ số vùng đệm của công cụ GIMP cage tool"
 
 #: ../app/gegl/gimpoperationcagetransform.c:104
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
-msgstr ""
+msgstr "Chuyển tập các hệ số vùng đệm thành tọa độ vùng đệm của GIMP cage tool"
 
 #: ../app/gegl/gimpoperationcagetransform.c:125
 #, fuzzy
@@ -12048,7 +11274,7 @@ msgstr "Tô _bằng màu nền"
 #: ../app/gegl/gimpoperationcagetransform.c:126
 #: ../app/tools/gimpcageoptions.c:144
 msgid "Fill the original position of the cage with a plain color"
-msgstr ""
+msgstr "Lấp phần gốc bằng một màu thuần"
 
 # 48x48/emblems/emblem-documents.icon.in.h:1
 # 48x48/emblems/emblem-documents.icon.in.h:1
@@ -12067,12 +11293,12 @@ msgstr "Chổi khí"
 
 #: ../app/paint/gimpbrushcore.c:387
 msgid "No brushes available for use with this tool."
-msgstr "Không có bút vẽ sẵn sàng dùng với công cụ này."
+msgstr "Không có chổi sẵn sàng dùng với công cụ này."
 
 #: ../app/paint/gimpbrushcore.c:394
 #, fuzzy
 msgid "No paint dynamics available for use with this tool."
-msgstr "Không có bút vẽ sẵn sàng dùng với công cụ này."
+msgstr "Không có chổi sẵn sàng dùng với công cụ này."
 
 #: ../app/paint/gimpclone.c:102 ../app/tools/gimpclonetool.c:60
 msgid "Clone"
@@ -12081,7 +11307,7 @@ msgstr "Nhân đôi"
 #: ../app/paint/gimpclone.c:143
 #, fuzzy
 msgid "No patterns available for use with this tool."
-msgstr "Không có bút vẽ sẵn sàng dùng với công cụ này."
+msgstr "Không có chổi sẵn sàng dùng với công cụ này."
 
 #: ../app/paint/gimpconvolve.c:80
 msgid "Convolve"
@@ -12097,7 +11323,7 @@ msgstr "Xóa"
 
 #: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:52
 msgid "Heal"
-msgstr ""
+msgstr "Sửa"
 
 #: ../app/paint/gimpheal.c:157
 #, fuzzy
@@ -12110,7 +11336,7 @@ msgstr "Mực"
 
 #: ../app/paint/gimpinkoptions.c:72
 msgid "Ink Blob Size"
-msgstr ""
+msgstr "Cỡ blob mực"
 
 #: ../app/paint/gimpinkoptions.c:99
 #, fuzzy
@@ -12119,7 +11345,7 @@ msgstr "Tỷ lệ hình thể:"
 
 #: ../app/paint/gimpinkoptions.c:103
 msgid "Ink Blob Angle"
-msgstr ""
+msgstr "Góc blob mực"
 
 #: ../app/paint/gimppaintbrush.c:66 ../app/tools/gimppaintbrushtool.c:50
 msgid "Paintbrush"
@@ -12132,49 +11358,49 @@ msgstr "Sơn"
 #: ../app/paint/gimppaintoptions.c:145
 #, fuzzy
 msgid "Brush Size"
-msgstr "Bút vẽ"
+msgstr "Chổi"
 
 #: ../app/paint/gimppaintoptions.c:159
 msgid "Every stamp has its own opacity"
-msgstr ""
+msgstr "Mỗi tem có độ mờ riêng"
 
 #: ../app/paint/gimppaintoptions.c:165
 msgid "Ignore fuzziness of the current brush"
-msgstr ""
+msgstr "Bỏ qua độ mờ của chổi hiện tại"
 
 #: ../app/paint/gimppaintoptions.c:170
 msgid "Scatter brush as you paint"
-msgstr ""
+msgstr "Làm sước chổi khi vẽ"
 
 #: ../app/paint/gimppaintoptions.c:174
 msgid "Distance of scattering"
-msgstr ""
+msgstr "Độ dài xước"
 
 #: ../app/paint/gimppaintoptions.c:184
 msgid "Distance over which strokes fade out"
-msgstr ""
+msgstr "Chiều dài đường vẽ mờ dần"
 
 #: ../app/paint/gimppaintoptions.c:192
 msgid "Reverse direction of fading"
-msgstr ""
+msgstr "Đảo ngược chiều mờ dần"
 
 #: ../app/paint/gimppaintoptions.c:196
 msgid "How fade is repeated as you paint"
-msgstr ""
+msgstr "Đường mờ dần lặp lại ra sao khi vẽ"
 
 #: ../app/paint/gimppaintoptions.c:255
 #, fuzzy
 #| msgid "Paint fuzzy brush strokes"
 msgid "Paint smoother strokes"
-msgstr "Sơn nét bút vẽ mờ"
+msgstr "Sơn nét chổi mờ"
 
 #: ../app/paint/gimppaintoptions.c:259
 msgid "Depth of smoothing"
-msgstr ""
+msgstr "Độ sâu đường trơn"
 
 #: ../app/paint/gimppaintoptions.c:263
 msgid "Gravity of the pen"
-msgstr ""
+msgstr "Trọng lượng của bút"
 
 #: ../app/paint/gimppencil.c:41 ../app/tools/gimppenciltool.c:50
 msgid "Pencil"
@@ -12197,7 +11423,7 @@ msgstr "Nhoè"
 
 #: ../app/paint/gimpsourcecore.c:232
 msgid "Set a source image first."
-msgstr ""
+msgstr "Đặt ảnh gốc trước."
 
 #: ../app/paint/paint-enums.c:52
 #, fuzzy
@@ -12311,26 +11537,26 @@ msgstr ""
 
 #: ../app/pdb/gimppdb-utils.c:73
 msgid "Invalid empty brush name"
-msgstr ""
+msgstr "Tên chỗi vẽ trống và sai"
 
 #: ../app/pdb/gimppdb-utils.c:82
 #, c-format
 msgid "Brush '%s' not found"
-msgstr ""
+msgstr "Không tìm thấy chổi '%s'"
 
 #: ../app/pdb/gimppdb-utils.c:87
 #, c-format
 msgid "Brush '%s' is not editable"
-msgstr ""
+msgstr "Không sửa được chổi '%s'"
 
 #: ../app/pdb/gimppdb-utils.c:113
 #, c-format
 msgid "Brush '%s' is not a generated brush"
-msgstr ""
+msgstr "Chổi '%s' không phải loại được sinh ra"
 
 #: ../app/pdb/gimppdb-utils.c:133
 msgid "Invalid empty pattern name"
-msgstr ""
+msgstr "Tên mẫu trống và không hợp lệ"
 
 #: ../app/pdb/gimppdb-utils.c:142
 #, fuzzy, c-format
@@ -12339,7 +11565,7 @@ msgstr "Trình đơn Mẫu"
 
 #: ../app/pdb/gimppdb-utils.c:162
 msgid "Invalid empty gradient name"
-msgstr ""
+msgstr "Tên dốc trống và không hợp lệ"
 
 #: ../app/pdb/gimppdb-utils.c:171
 #, fuzzy, c-format
@@ -12349,7 +11575,7 @@ msgstr "Trình đơn Độ dốc"
 #: ../app/pdb/gimppdb-utils.c:176
 #, c-format
 msgid "Gradient '%s' is not editable"
-msgstr ""
+msgstr "Không sửa được gradient '%s'"
 
 #: ../app/pdb/gimppdb-utils.c:197
 #, fuzzy
@@ -12364,20 +11590,20 @@ msgstr "Trình đơn Bảng chọn"
 #: ../app/pdb/gimppdb-utils.c:211
 #, c-format
 msgid "Palette '%s' is not editable"
-msgstr ""
+msgstr "Không sửa được palette '%s'"
 
 #: ../app/pdb/gimppdb-utils.c:231
 msgid "Invalid empty font name"
-msgstr ""
+msgstr "Tên phông trống và không hợp lệ"
 
 #: ../app/pdb/gimppdb-utils.c:241
 #, c-format
 msgid "Font '%s' not found"
-msgstr ""
+msgstr "Không tìm thấy phông '%s'"
 
 #: ../app/pdb/gimppdb-utils.c:260
 msgid "Invalid empty buffer name"
-msgstr ""
+msgstr "Tên vùng đệm trống và không hợp lệ"
 
 #: ../app/pdb/gimppdb-utils.c:270
 #, fuzzy, c-format
@@ -12386,22 +11612,22 @@ msgstr "Không tìm thấy bộ duyệt trợ giúp"
 
 #: ../app/pdb/gimppdb-utils.c:289
 msgid "Invalid empty paint method name"
-msgstr ""
+msgstr "Tên phương pháp vẽ trống và không hợp lệ"
 
 #: ../app/pdb/gimppdb-utils.c:299
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr ""
+msgstr "Phương pháp vẽ '%s' không tồn tại"
 
 #: ../app/pdb/gimppdb-utils.c:318
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
-msgstr ""
+msgstr "Không thể dùng '%s' (%d) vì nó chưa được thêm vào ảnh"
 
 #: ../app/pdb/gimppdb-utils.c:328
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
-msgstr ""
+msgstr "Không thể dùng '%s' (%d) vì nó chưa gắn với ảnh nào"
 
 #: ../app/pdb/gimppdb-utils.c:357
 #, c-format
@@ -12409,70 +11635,72 @@ msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
 msgstr ""
+"Không thể dùng '%s' (%d) vì nó không phải là con trực tiếp trong một cây"
 
 #: ../app/pdb/gimppdb-utils.c:385
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
-msgstr ""
+msgstr "Không thể dùng '%s' (%d) và '%s' (%d) vì nó không cùng một cây"
 
 #: ../app/pdb/gimppdb-utils.c:410
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
-msgstr ""
+msgstr "'%s' (%d) phải là con hay cháu của '%s' (%d)"
 
 #: ../app/pdb/gimppdb-utils.c:434
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
-msgstr ""
+msgstr "'%s' (%d) đã được thêm vào một ảnh nào đó"
 
 #: ../app/pdb/gimppdb-utils.c:442
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
-msgstr ""
+msgstr "Thêm '%s' (%d) vào sai ảnh"
 
 #: ../app/pdb/gimppdb-utils.c:461
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
-msgstr ""
+msgstr "Không thể sửa '%s' (%d) vì nội dung của nó bị khóa"
 
 #: ../app/pdb/gimppdb-utils.c:481
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
-msgstr ""
+msgstr "Không thể dùng '%s' (%d) vì nó không phải là nhóm"
 
 #: ../app/pdb/gimppdb-utils.c:501
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
-msgstr ""
+msgstr "Không thể sửa '%s' (%d) vì nó không phải là một nhóm"
 
 #: ../app/pdb/gimppdb-utils.c:522
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
-msgstr ""
+msgstr "Không thể dùng lớp '%s' (%d) vì nó không phải là lớp văn bản"
 
 #: ../app/pdb/gimppdb-utils.c:563
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
-msgstr ""
+msgstr "Ảnh '%s' (%d) có loại '%s' nhưng loại '%s' mới là đúng"
 
 #: ../app/pdb/gimppdb-utils.c:586
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
-msgstr ""
+msgstr "Ảnh '%s' (%d) đã có loại '%s'"
 
 #: ../app/pdb/gimppdb-utils.c:614
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
-msgstr ""
+msgstr "Đối tượng véc tơ %d không chưa đường vẽ với ID %d"
 
 #: ../app/pdb/gimppdb.c:409
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
+"Gọi thủ tục '%s' sai tham số #%d. Lẽ ra phải là %s nhưng được gọi là %s."
 
 #: ../app/pdb/gimppdbcontext.c:82
 #: ../app/tools/gimpforegroundselectoptions.c:79
@@ -12483,7 +11711,7 @@ msgstr "Làm mịn cạnh"
 #: ../app/pdb/gimpprocedure.c:370 ../app/plug-in/gimppluginprocframe.c:208
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr ""
+msgstr "Thủ tục '%s' không trả về giá trị"
 
 #: ../app/pdb/gimpprocedure.c:641
 #, c-format
@@ -12491,13 +11719,17 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
+"Thủ tục '%s' trả về sai kiểu giá trị cho '%s' (#%d). Lẽ ra phải là %s nhưng "
+"nhận được %s. "
 
 #: ../app/pdb/gimpprocedure.c:653
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
+"Thủ tục '%s' được gọi sai kiểu giá trị cho '%s' (#%d). Lẽ ra phải là %s "
+"nhưng nhận được %s. "
 
 #: ../app/pdb/gimpprocedure.c:685
 #, c-format
@@ -12505,6 +11737,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
+"Thủ tục '%s' trả về ID không hợp lệ cho tham số '%s'. Thông thường đây là "
+"lỗi plug-in dùng lớp không còn tồn tại. "
 
 #: ../app/pdb/gimpprocedure.c:697
 #, c-format
@@ -12512,6 +11746,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
+"Thủ tục '%s' được gọi với ID không hợp lệ cho '%s'. Thông thường đây là lỗi "
+"plugin dùng lớp không tồn tại. "
 
 #: ../app/pdb/gimpprocedure.c:713
 #, c-format
@@ -12519,6 +11755,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
+"Thủ tục '%s' trả về ID không hợp lệ cho tham số '%s'. Thông thường đây là "
+"lỗi plug-in làm việc với ảnh không còn tồn tại. "
 
 #: ../app/pdb/gimpprocedure.c:725
 #, c-format
@@ -12526,6 +11764,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
+"Thủ tục '%s' được gọi với ID không hợp lệ cho tham số '%s'. Thông thường đây "
+"là lỗi plug-in muốn dùng ảnh không còn tồn tại. "
 
 #: ../app/pdb/gimpprocedure.c:745
 #, c-format
@@ -12533,15 +11773,19 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
+"Thủ tục '%s' trả về  '%s' cho '%s' (#%d, kiểu %s). Giá trị này nằm ngoài "
+"khoảng cho phép. "
 
 #: ../app/pdb/gimpprocedure.c:758
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
+"Thủ tục '%s'được gọi với giá trị '%s' cho tham số '%s' (#%d, kiểu %s). Giá "
+"trị này nằm ngoài khoảng cho phép. "
 
-#: ../app/pdb/image-cmds.c:2359
+#: ../app/pdb/image-cmds.c:2364
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -12569,7 +11813,7 @@ msgstr "Xén để vừa lớp dưới"
 #: ../app/pdb/text-layer-cmds.c:786 ../app/pdb/text-layer-cmds.c:856
 #: ../app/pdb/text-layer-cmds.c:928 ../app/pdb/text-layer-cmds.c:1000
 #: ../app/pdb/text-layer-cmds.c:1072 ../app/pdb/text-layer-cmds.c:1114
-#: ../app/pdb/text-layer-cmds.c:1196
+#: ../app/pdb/text-layer-cmds.c:1198
 #, fuzzy
 msgid "Set text layer attribute"
 msgstr "Sửa thuộc tính lớp"
@@ -12613,7 +11857,7 @@ msgstr "Thêm nét vẽ"
 #: ../app/pdb/vectors-cmds.c:868 ../app/pdb/vectors-cmds.c:921
 #: ../app/pdb/vectors-cmds.c:982
 msgid "Extend path stroke"
-msgstr ""
+msgstr "Mở rộng đường vẽ"
 
 #: ../app/plug-in/gimpenvirontable.c:281
 #, c-format
@@ -12650,6 +11894,8 @@ msgid ""
 "Execution error for procedure '%s':\n"
 "%s"
 msgstr ""
+"Thủ tục '%s' gặp lỗi thực thi:\n"
+"%s"
 
 #: ../app/plug-in/gimpplugin-progress.c:331
 #, fuzzy
@@ -12677,6 +11923,8 @@ msgstr ""
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr ""
+"Chạy plugin lỗi \"%s\n"
+"\""
 
 #: ../app/plug-in/gimppluginmanager-restore.c:229
 msgid "Searching Plug-Ins"
@@ -12732,7 +11980,7 @@ msgstr "Gặp lỗi khi đọc « %s »: %s"
 #: ../app/plug-in/plug-in-icc-profile.c:256
 #, c-format
 msgid "Plug-In missing (%s)"
-msgstr ""
+msgstr "Thiếu phần mở rộng (%s)"
 
 #: ../app/plug-in/plug-in-rc.c:205
 #, c-format
@@ -12868,15 +12116,15 @@ msgstr "Vàng:"
 
 #: ../app/tools/gimpalignoptions.c:91
 msgid "Reference image object a layer will be aligned on"
-msgstr ""
+msgstr "Tham chiếu tới lớp đối tượng ảnh sẽ được chỉnh tới"
 
 #: ../app/tools/gimpalignoptions.c:98
 msgid "Horizontal offset for distribution"
-msgstr ""
+msgstr "Offset ngang của phân phối"
 
 #: ../app/tools/gimpalignoptions.c:104
 msgid "Vertical offset for distribution"
-msgstr ""
+msgstr "Offset thẳng của phân phối"
 
 #: ../app/tools/gimpalignoptions.c:272 ../app/tools/gimpaligntool.c:124
 msgid "Align"
@@ -12956,6 +12204,8 @@ msgstr "C_anh lề"
 #: ../app/tools/gimpaligntool.c:549
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
+"Nhấn vào một lớp, đường dẫn hay hướng dẫn, hoặc nhấn-và-thả để chọn nhiều "
+"lớp"
 
 #: ../app/tools/gimpaligntool.c:557
 #, fuzzy
@@ -13032,19 +12282,19 @@ msgstr "Việc làm bằng không hoạt động trên lớp đã phụ lục."
 #: ../app/tools/gimpblendtool.c:187
 #, fuzzy
 msgid "No gradient available for use with this tool."
-msgstr "Không có bút vẽ sẵn sàng dùng với công cụ này."
+msgstr "Không có chổi sẵn sàng dùng với công cụ này."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
+#: ../app/tools/gimpblendtool.c:447 ../app/tools/gimppainttool.c:623
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s cho góc bị ép buộc"
 
-#: ../app/tools/gimpblendtool.c:453
+#: ../app/tools/gimpblendtool.c:448
 #, fuzzy, c-format
 msgid "%s to move the whole line"
 msgstr "Nhấn để né tránh đường."
 
-#: ../app/tools/gimpblendtool.c:457
+#: ../app/tools/gimpblendtool.c:452
 msgid "Blend: "
 msgstr "Hợp nhau : "
 
@@ -13089,11 +12339,11 @@ msgstr "Độ _tương phản:"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:339
 msgid "Edit these Settings as Levels"
-msgstr ""
+msgstr "Sửa các thiết lập này thành mức"
 
 #: ../app/tools/gimpbucketfilloptions.c:93
 msgid "Which area will be filled"
-msgstr ""
+msgstr "Vùng nào sẽ được đổ đầy"
 
 #: ../app/tools/gimpbucketfilloptions.c:98
 msgid "Allow completely transparent regions to be filled"
@@ -13110,7 +12360,7 @@ msgstr "Hiệu số màu tối đa"
 
 #: ../app/tools/gimpbucketfilloptions.c:115
 msgid "Criterion used for determining color similarity"
-msgstr ""
+msgstr "Chuẩn xác định sự tương tự màu"
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:229
@@ -13170,7 +12420,7 @@ msgstr "Chọn theo màu"
 
 #: ../app/tools/gimpbycolorselecttool.c:68
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr ""
+msgstr "Chọn bằng công cụ màu: Chọn vùng với màu tương tự"
 
 #: ../app/tools/gimpbycolorselecttool.c:69
 msgid "_By Color Select"
@@ -13189,7 +12439,7 @@ msgstr "Chuyển dạng"
 
 #: ../app/tools/gimpcagetool.c:153
 msgid "Cage Transform: Deform a selection with a cage"
-msgstr ""
+msgstr "Biến đổi Cage: Biến hình vùng bằng một cage"
 
 #: ../app/tools/gimpcagetool.c:154
 #, fuzzy
@@ -13198,11 +12448,11 @@ msgstr "Chu_yển dạng"
 
 #: ../app/tools/gimpcagetool.c:351
 msgid "Press ENTER to commit the transform"
-msgstr ""
+msgstr "Nhấn ENTER để chấp nhận thay đổi"
 
 #: ../app/tools/gimpcagetool.c:1095
 msgid "Computing Cage Coefficients"
-msgstr ""
+msgstr "Tính hệ số cage"
 
 #: ../app/tools/gimpcagetool.c:1272
 #, fuzzy
@@ -13211,7 +12461,7 @@ msgstr "Chuyển dạng"
 
 #: ../app/tools/gimpclonetool.c:61
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
-msgstr ""
+msgstr "Công cụ nhân bản: Chọn từ ảnh hay patter, dùng chổi"
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "_Clone"
@@ -13249,7 +12499,7 @@ msgstr "Cân bằng màu"
 
 #: ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance Tool: Adjust color distribution"
-msgstr ""
+msgstr "Công cụ cân bằng màu: Chỉnh phân bố màu"
 
 #: ../app/tools/gimpcolorbalancetool.c:96
 msgid "Color _Balance..."
@@ -13339,11 +12589,11 @@ msgstr "Màu hóa ảnh"
 
 #: ../app/tools/gimpcolorizetool.c:111
 msgid "Import Colorize Settings"
-msgstr ""
+msgstr "Thiết lập màu hóa khi nhập"
 
 #: ../app/tools/gimpcolorizetool.c:112
 msgid "Export Colorize Settings"
-msgstr ""
+msgstr "Thiết lập màu hóa khi xuất"
 
 #: ../app/tools/gimpcolorizetool.c:157
 msgid "Colorize operates only on RGB color layers."
@@ -13393,12 +12643,12 @@ msgstr "Vùng chọn dựa vào mọi lớp hiển thị"
 
 #: ../app/tools/gimpcolorpickeroptions.c:74
 msgid "Choose what color picker will do"
-msgstr ""
+msgstr "Xác định trình chọn màu sẽ làm gì"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
 msgid ""
 "Open a floating dialog to view picked color values in various color models"
-msgstr ""
+msgstr "Mở hộp thoại nổi để xem màu đã chọn với nhiều phương thức khác nhau"
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:163
@@ -13472,7 +12722,7 @@ msgstr "Làm mờ hay Mài sắc"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr ""
+msgstr "Công cụ làm mờ/ làm sắc Dùng chổi"
 
 #: ../app/tools/gimpconvolvetool.c:75
 #, fuzzy
@@ -13523,11 +12773,11 @@ msgstr "Đảo vùng chọn"
 
 #: ../app/tools/gimpcropoptions.c:82
 msgid "Crop only currently selected layer"
-msgstr ""
+msgstr "Chỉ cắt lớp đã chọn"
 
 #: ../app/tools/gimpcropoptions.c:88
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
-msgstr ""
+msgstr "Cho phép sửa cỡ của canvas bằng cách cắt khung ở ngoài khoảng của ảnh"
 
 #: ../app/tools/gimpcropoptions.c:164
 msgid "Current layer only"
@@ -13535,7 +12785,7 @@ msgstr "Chỉ lớp hiện có"
 
 #: ../app/tools/gimpcropoptions.c:170
 msgid "Allow growing"
-msgstr ""
+msgstr "Cho phép mở rộng"
 
 #: ../app/tools/gimpcroptool.c:117
 msgid "Crop"
@@ -13543,7 +12793,7 @@ msgstr "Xén"
 
 #: ../app/tools/gimpcroptool.c:118
 msgid "Crop Tool: Remove edge areas from image or layer"
-msgstr ""
+msgstr "Công cụ crop: Gỡ bỏ vùng viền từ ảnh hay lớp"
 
 #: ../app/tools/gimpcroptool.c:119
 #, fuzzy
@@ -13604,7 +12854,7 @@ msgstr "Nhắp để thêm điểm điều khiển vào mọi kênh"
 
 #: ../app/tools/gimpcurvestool.c:350
 msgid "Click to locate on curve (try Shift, Ctrl)"
-msgstr ""
+msgstr "Nhấn để định vị đường con (dùng Shift và Ctrl)"
 
 #: ../app/tools/gimpcurvestool.c:463 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
@@ -13626,7 +12876,7 @@ msgstr "Không thể đọc %d byte từ « %s »: %s"
 
 #: ../app/tools/gimpcurvestool.c:731
 msgid "Use _old curves file format"
-msgstr ""
+msgstr "Dùng định dạng đường cong _cũ"
 
 #: ../app/tools/gimpdesaturatetool.c:78
 #, fuzzy
@@ -13658,7 +12908,7 @@ msgstr "Tránh/Cháy"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr ""
+msgstr "Công cụ làm tối/làm sáng: Bằng chổi vẽ"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 #, fuzzy
@@ -13704,7 +12954,7 @@ msgstr "Kiểu (%s)"
 #. mode (highlights, midtones, or shadows)
 #: ../app/tools/gimpdodgeburntool.c:230
 msgid "Range"
-msgstr ""
+msgstr "Khoảng"
 
 #: ../app/tools/gimpdodgeburntool.c:236
 #, fuzzy
@@ -13791,7 +13041,7 @@ msgstr "Lật"
 #: ../app/tools/gimpfliptool.c:85
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
-msgstr ""
+msgstr "Công cụ đảo ảnh: Đảo lớp, vùng chọn hay đường dẫn ngang hay dọc"
 
 #: ../app/tools/gimpfliptool.c:87
 msgid "_Flip"
@@ -13827,11 +13077,11 @@ msgstr "Chọn một vùng kề nhau riêng lẻ"
 msgid ""
 "Paint over areas to mark color values for inclusion or exclusion from "
 "selection"
-msgstr ""
+msgstr "Vẽ vào vùng để đánh dấu giá trị màu chọn hay không chọn"
 
 #: ../app/tools/gimpforegroundselectoptions.c:98
 msgid "Size of the brush used for refinements"
-msgstr "Kích thước của bút vẽ được dùng cho tinh chế."
+msgstr "Kích thước của chổi được dùng cho tinh chế."
 
 #: ../app/tools/gimpforegroundselectoptions.c:104
 msgid ""
@@ -13843,7 +13093,7 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Color of selection preview mask"
-msgstr ""
+msgstr "Màu của mặt nặ xem trước của vùng chọn"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
 msgid "Sensitivity for brightness component"
@@ -13878,11 +13128,11 @@ msgstr "Đánh dấu cảnh gần"
 
 #: ../app/tools/gimpforegroundselectoptions.c:307
 msgid "Small brush"
-msgstr "Bút vẽ nhỏ"
+msgstr "Chổi nhỏ"
 
 #: ../app/tools/gimpforegroundselectoptions.c:315
 msgid "Large brush"
-msgstr "Bút vẽ lớn"
+msgstr "Chổi lớn"
 
 #: ../app/tools/gimpforegroundselectoptions.c:338
 msgid "Smoothing:"
