@@ -3,6 +3,7 @@
 # T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
 # Nguyễn Vũ Hưng <vuhung16plus@gmail.com>, 2011.
+# Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
@@ -10,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-10-06 22:01+0000\n"
-"PO-Revision-Date: 2011-10-26 08:47+1100\n"
+"PO-Revision-Date: 2011-10-26 10:53+1100\n"
 "Last-Translator: Nguyễn Vũ Hưng <vuhung16plus@gmail.com>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -286,7 +287,7 @@ msgstr "Kênh"
 #: ../app/actions/actions.c:121 ../app/dialogs/convert-dialog.c:174
 #: ../app/dialogs/dialogs.c:354
 msgid "Colormap"
-msgstr "Bố trí màu"
+msgstr "Bảng màu"
 
 #: ../app/actions/actions.c:124
 msgid "Configuration"
@@ -701,7 +702,7 @@ msgstr "Hạ thấp kênh này xuống dưới chồng kênh"
 #: ../app/actions/channels-actions.c:108
 msgctxt "channels-action"
 msgid "Channel to Sele_ction"
-msgstr "Kênh tới vùng chọn"
+msgstr "Kênh tới _vùng chọn"
 
 #: ../app/actions/channels-actions.c:109
 msgctxt "channels-action"
@@ -781,7 +782,7 @@ msgstr "Màu kênh mới"
 #: ../app/widgets/gimplayertreeview.c:776
 #, c-format
 msgid "%s Channel Copy"
-msgstr "%s Kênh Chép"
+msgstr "Bản sao kênh %s"
 
 #: ../app/actions/colormap-actions.c:44
 msgctxt "colormap-action"
@@ -1621,7 +1622,7 @@ msgstr "Tải lại mọi xem thử"
 #: ../app/actions/documents-actions.c:93
 msgctxt "documents-action"
 msgid "Remove Dangling E_ntries"
-msgstr "Gỡ bỏ mục nhập rơi rớt"
+msgstr "Gỡ bỏ mục nhập _rơi rớt"
 
 #: ../app/actions/documents-actions.c:95
 msgctxt "documents-action"
@@ -1815,7 +1816,7 @@ msgstr "Sao chép vị trí tập tin dynamic vào bảng tạm"
 #: ../app/actions/dynamics-actions.c:64
 msgctxt "dynamics-action"
 msgid "_Delete Dynamics"
-msgstr "Xóa dynamic"
+msgstr "_Xóa dynamic"
 
 #: ../app/actions/dynamics-actions.c:65
 msgctxt "dynamics-action"
@@ -2083,7 +2084,7 @@ msgstr "Tô đầy vùng chọn bằng màu nền"
 #: ../app/actions/edit-actions.c:205
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
-msgstr "Tô bằng mẫu"
+msgstr "_Tô bằng mẫu"
 
 #: ../app/actions/edit-actions.c:206
 msgctxt "edit-action"
@@ -3114,7 +3115,7 @@ msgstr "Cấu hình lưới cho ảnh này"
 #: ../app/actions/image-actions.c:133
 msgctxt "image-action"
 msgid "Image Pr_operties"
-msgstr "Thuộc tính ảnh"
+msgstr "_Thuộc tính ảnh"
 
 #: ../app/actions/image-actions.c:134
 msgctxt "image-action"
@@ -3735,7 +3736,7 @@ msgstr "Chọn lớp _trên đỉnh"
 #: ../app/actions/layers-actions.c:343
 msgctxt "layers-action"
 msgid "Select the topmost layer"
-msgstr "Chọn lớp trêb đỉnh _nhất"
+msgstr "Chọn lớp trêb đỉnh nhất"
 
 #: ../app/actions/layers-actions.c:348
 msgctxt "layers-action"
@@ -3745,7 +3746,7 @@ msgstr "Chọn lớp _dưới"
 #: ../app/actions/layers-actions.c:349
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
-msgstr "Chọn lớp _dưới nhất"
+msgstr "Chọn lớp dưới nhất"
 
 #: ../app/actions/layers-actions.c:354
 msgctxt "layers-action"
@@ -4089,7 +4090,7 @@ msgstr "_Mờ"
 #: ../app/actions/plug-in-actions.c:90
 msgctxt "plug-in-action"
 msgid "_Noise"
-msgstr "Nhiễu"
+msgstr "_Nhiễu"
 
 #: ../app/actions/plug-in-actions.c:92
 msgctxt "plug-in-action"
@@ -4179,7 +4180,7 @@ msgstr "Đặt thiết lập mặc định cho mọi phần mở rộng"
 #: ../app/actions/plug-in-actions.c:132
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
-msgstr "Lặp lại hành động cuối"
+msgstr "_Lặp lại hành động cuối"
 
 #: ../app/actions/plug-in-actions.c:134
 msgctxt "plug-in-action"
@@ -4665,7 +4666,7 @@ msgstr "Tạo một đường dẫn từ lớp chữ này"
 #: ../app/actions/text-tool-actions.c:96
 msgctxt "text-tool-action"
 msgid "Text _along Path"
-msgstr "Chữ theo đường dẫn"
+msgstr "_Chữ theo đường dẫn"
 
 #: ../app/actions/text-tool-actions.c:98
 msgctxt "text-tool-action"
@@ -4734,7 +4735,7 @@ msgstr "Đặt lại mọi tùy chọn công cụ"
 
 #: ../app/actions/tool-options-commands.c:180
 msgid "Reset All Tool Options"
-msgstr "Đặt lại _mọi tùy chọn công cụ"
+msgstr "Đặt lại mọi tùy chọn công cụ"
 
 #: ../app/actions/tool-options-commands.c:203
 msgid "Do you really want to reset all tool options to default values?"
@@ -5020,7 +5021,7 @@ msgstr "Đã _kết nối"
 #: ../app/actions/vectors-actions.c:159
 msgctxt "vectors-action"
 msgid "L_ock strokes"
-msgstr "Kết nối các nét vẽ"
+msgstr "_Khoá nét vẽ"
 
 #: ../app/actions/vectors-actions.c:168
 msgctxt "vectors-action"
@@ -5070,7 +5071,7 @@ msgstr "Giao vớ_i vùng chọn"
 #: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
-msgstr "Giao vớ_i vùng chọn"
+msgstr "Giao với vùng chọn"
 
 #: ../app/actions/vectors-actions.c:201
 msgctxt "vectors-action"
@@ -5177,7 +5178,7 @@ msgstr "Điều chỉnh tỷ lệ phong để hiện rõ toàn bộ ảnh"
 #: ../app/actions/view-actions.c:94
 msgctxt "view-action"
 msgid "Fi_ll Window"
-msgstr "Vừa khít cửa sổ"
+msgstr "_Vừa khít cửa sổ"
 
 #: ../app/actions/view-actions.c:95
 msgctxt "view-action"
@@ -5355,7 +5356,7 @@ msgstr "Hiện thanh t_rình đơn"
 #, fuzzy
 msgctxt "view-action"
 msgid "Show this window's menubar"
-msgstr "Hiện th_anh trình đơn"
+msgstr "Hiện thanh trình đơn"
 
 #: ../app/actions/view-actions.c:210
 #, fuzzy
@@ -5378,7 +5379,7 @@ msgstr "Hiện th_anh cuộn"
 #, fuzzy
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
-msgstr "H_iện thanh cuộn"
+msgstr "Hiện thanh cuộn"
 
 #: ../app/actions/view-actions.c:224
 msgctxt "view-action"
@@ -5389,7 +5390,7 @@ msgstr "Hiện _thanh trạng thái"
 #, fuzzy
 msgctxt "view-action"
 msgid "Show this window's statusbar"
-msgstr "Hiện mẹo khi _khởi động"
+msgstr "Hiện mẹo khi khởi động"
 
 #: ../app/actions/view-actions.c:231
 #, fuzzy
@@ -5655,28 +5656,24 @@ msgid "Move this window to screen %s"
 msgstr "Chuyển sang màn hình"
 
 #: ../app/actions/windows-actions.c:96
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Windows"
-msgstr "Cửa sổ ảnh"
+msgstr "_Cửa sổ"
 
 #: ../app/actions/windows-actions.c:98
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
-msgstr "Vừa dùng"
+msgstr "_Neo vừa dùng"
 
 #: ../app/actions/windows-actions.c:100
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
-msgstr "Cụ neo được"
+msgstr "_Hộp thoại neo được"
 
 #: ../app/actions/windows-actions.c:103
-#, fuzzy
 msgctxt "windows-action"
 msgid "Next Image"
-msgstr "Ả_nh mới"
+msgstr "Ảnh mới"
 
 #: ../app/actions/windows-actions.c:104
 #, fuzzy
@@ -5686,11 +5683,10 @@ msgid "Switch to the next image"
 msgstr "Thêm chữ vào ảnh"
 
 #: ../app/actions/windows-actions.c:109
-#, fuzzy
 #| msgid "_Previous Tip"
 msgctxt "windows-action"
 msgid "Previous Image"
-msgstr "Mẹo t_rước"
+msgstr "Ảnh trước"
 
 #: ../app/actions/windows-actions.c:110
 msgctxt "windows-action"
@@ -5914,10 +5910,9 @@ msgid "Erase"
 msgstr "Xóa"
 
 #: ../app/base/base-enums.c:137
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Replace"
-msgstr "Th_ay thế"
+msgstr "Thay thế"
 
 #: ../app/base/base-enums.c:138
 #, fuzzy
@@ -6570,7 +6565,7 @@ msgstr "Trao đổi màu cảnh gần và nền"
 #: ../app/config/gimprc-blurbs.h:426
 #, fuzzy
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr "Hiện _chổi, mẫu và độ dốc hoạt động"
+msgstr "Hiện chổi, mẫu và độ dốc hoạt động"
 
 #: ../app/config/gimprc-blurbs.h:429
 msgid "Show the currently active image in the toolbox."
@@ -8075,9 +8070,8 @@ msgid "Opacity"
 msgstr "Độ mờ đục"
 
 #: ../app/core/gimpcontext.c:647
-#, fuzzy
 msgid "Paint Mode"
-msgstr "Chế độ _sơn"
+msgstr "Chế độ vẽ"
 
 #: ../app/core/gimpdata.c:670
 #, c-format
@@ -8374,9 +8368,8 @@ msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Hiệu số dọc của dòng lưới thứ nhất; nó có thể là một số âm."
 
 #: ../app/core/gimpgrouplayer.c:219
-#, fuzzy
 msgid "Layer Group"
-msgstr "Lớp đến _trên"
+msgstr "Nhóm lớp"
 
 #: ../app/core/gimpgrouplayer.c:220
 #, fuzzy
@@ -8482,10 +8475,9 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Đang chuyển đổi sang Đã phụ lục (giải đoạn 3)"
 
 #: ../app/core/gimpimage-crop.c:129
-#, fuzzy
 msgctxt "undo-type"
 msgid "Crop Image"
-msgstr "_Xén ảnh"
+msgstr "Xén ảnh"
 
 #: ../app/core/gimpimage-crop.c:132 ../app/core/gimpimage-resize.c:86
 #, fuzzy
@@ -8943,16 +8935,14 @@ msgid "Cannot rename layer masks."
 msgstr "Không thể tạo thư mục « %s »: %s"
 
 #: ../app/core/gimplayermask.c:264
-#, fuzzy
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
-msgstr "_Tắt mặt nạ lớp"
+msgstr "Bật mặt nạ lớp"
 
 #: ../app/core/gimplayermask.c:265
-#, fuzzy
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
-msgstr "_Tắt mặt nạ lớp"
+msgstr "Tắt mặt nạ lớp"
 
 #: ../app/core/gimplayermask.c:327
 #, fuzzy
@@ -9416,9 +9406,8 @@ msgid "Fade %s"
 msgstr "Làm mờ dần"
 
 #: ../app/dialogs/fade-dialog.c:121
-#, fuzzy
 msgid "_Fade"
-msgstr "Làm mờ dần"
+msgstr "_Làm mờ dần"
 
 #: ../app/dialogs/fade-dialog.c:156 ../app/widgets/gimpdeviceinfoeditor.c:344
 #, fuzzy
@@ -9449,9 +9438,8 @@ msgid "Export Image"
 msgstr "Hoàn nguyên ảnh"
 
 #: ../app/dialogs/file-save-dialog.c:106
-#, fuzzy
 msgid "_Export"
-msgstr "Nhậ_p"
+msgstr "_Xuất"
 
 #: ../app/dialogs/file-save-dialog.c:430
 msgid ""
@@ -9571,7 +9559,7 @@ msgstr "Tạo ảnh mới"
 #: ../app/dialogs/image-new-dialog.c:144
 #: ../app/dialogs/preferences-dialog.c:2008
 msgid "_Template:"
-msgstr "_Biểu mẫu :"
+msgstr "_Biểu mẫu:"
 
 #: ../app/dialogs/image-new-dialog.c:303
 msgid "Confirm Image Size"
@@ -9598,9 +9586,8 @@ msgid "Image Properties"
 msgstr "Thuộc tính ảnh"
 
 #: ../app/dialogs/image-properties-dialog.c:84
-#, fuzzy
 msgid "Properties"
-msgstr "Tài _sản"
+msgstr "Thuộc tính"
 
 #: ../app/dialogs/image-properties-dialog.c:89
 #, fuzzy
@@ -9608,9 +9595,8 @@ msgid "Color Profile"
 msgstr "Bộ chọn lọc màu"
 
 #: ../app/dialogs/image-properties-dialog.c:94
-#, fuzzy
 msgid "Comment"
-msgstr "_Ghi chú :"
+msgstr "Ghi chú"
 
 #: ../app/dialogs/image-scale-dialog.c:111
 #, fuzzy
@@ -9703,9 +9689,8 @@ msgid "Set name from _text"
 msgstr "Đặt _tên từ chữ"
 
 #: ../app/dialogs/module-dialog.c:126
-#, fuzzy
 msgid "Module Manager"
-msgstr "Bộ quản lý _Mô-đun"
+msgstr "Bộ quản lý mô-đun"
 
 #: ../app/dialogs/module-dialog.c:150
 #, fuzzy
@@ -9852,7 +9837,7 @@ msgstr "Tê_n bảng chọn"
 
 #: ../app/dialogs/palette-import-dialog.c:325
 msgid "N_umber of colors:"
-msgstr "Số mà_u :"
+msgstr "Số mà_u:"
 
 #: ../app/dialogs/palette-import-dialog.c:338
 msgid "C_olumns:"
@@ -9982,7 +9967,7 @@ msgstr "Tiêu dùng tài nguyên"
 
 #: ../app/dialogs/preferences-dialog.c:1531
 msgid "Minimal number of _undo levels:"
-msgstr "Số mức hủy bước tối thiể_u :"
+msgstr "Số mức hủy bước tối thiể_u:"
 
 #: ../app/dialogs/preferences-dialog.c:1534
 msgid "Maximum undo _memory:"
@@ -9990,7 +9975,7 @@ msgstr "Bộ nhớ hủ_y bước tối đa:"
 
 #: ../app/dialogs/preferences-dialog.c:1537
 msgid "Tile cache _size:"
-msgstr "Cỡ _bộ nhớ tạm ô :"
+msgstr "Cỡ _bộ nhớ tạm ô:"
 
 #: ../app/dialogs/preferences-dialog.c:1540
 msgid "Maximum _new image size:"
@@ -10007,7 +9992,7 @@ msgstr "Hình thu nhỏ của ảnh"
 
 #: ../app/dialogs/preferences-dialog.c:1555
 msgid "Size of _thumbnails:"
-msgstr "Cỡ hình _thu nhỏ :"
+msgstr "Cỡ hình _thu nhỏ:"
 
 #: ../app/dialogs/preferences-dialog.c:1559
 msgid "Maximum _filesize for thumbnailing:"
@@ -10478,7 +10463,7 @@ msgstr "Chọn màu"
 #: ../app/dialogs/preferences-dialog.c:2531
 #, fuzzy
 msgid "File Open behaviour:"
-msgstr "_Hộp thoại Mở tập tin"
+msgstr "Hộp thoại Mở tập tin"
 
 #: ../app/dialogs/preferences-dialog.c:2543
 msgid "Input Devices"
@@ -11268,7 +11253,7 @@ msgstr "Chuyển tập các hệ số vùng đệm thành tọa độ vùng đ�
 #, fuzzy
 #| msgid "Fill with _background color"
 msgid "Fill with plain color"
-msgstr "Tô _bằng màu nền"
+msgstr "Tô bằng màu nền"
 
 #: ../app/gegl/gimpoperationcagetransform.c:126
 #: ../app/tools/gimpcageoptions.c:144
@@ -12725,7 +12710,7 @@ msgstr "Công cụ làm mờ/ làm sắc Dùng chổi"
 #: ../app/tools/gimpconvolvetool.c:75
 #, fuzzy
 msgid "Bl_ur / Sharpen"
-msgstr "Làm mờ hay Mài sắc"
+msgstr "_Làm mờ hay Mài sắc"
 
 #: ../app/tools/gimpconvolvetool.c:184
 #, fuzzy
@@ -12796,7 +12781,7 @@ msgstr "Công cụ crop: Gỡ bỏ vùng viền từ ảnh hay lớp"
 #: ../app/tools/gimpcroptool.c:119
 #, fuzzy
 msgid "_Crop"
-msgstr "Xén"
+msgstr "_Xén"
 
 #: ../app/tools/gimpcroptool.c:253
 #, fuzzy
@@ -12865,7 +12850,7 @@ msgstr "Đặt _lại kênh"
 #: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:458
 #, fuzzy
 msgid "Curve _type:"
-msgstr "Kiểu cong"
+msgstr "_Kiểu cong:"
 
 #: ../app/tools/gimpcurvestool.c:658 ../app/tools/gimplevelstool.c:756
 #, fuzzy, c-format
@@ -13735,7 +13720,7 @@ msgstr "Chế độ:"
 #, fuzzy
 #| msgid "_Brush"
 msgid "Brush"
-msgstr "_Chổi"
+msgstr "Chổi"
 
 #: ../app/tools/gimppaintoptions-gui.c:152
 msgid "Reset size to brush's native size"
@@ -14088,17 +14073,17 @@ msgstr "_Xoay"
 #: ../app/tools/gimprotatetool.c:191
 #, fuzzy
 msgid "_Angle:"
-msgstr "Góc:"
+msgstr "_Góc:"
 
 #: ../app/tools/gimprotatetool.c:207
 #, fuzzy
 msgid "Center _X:"
-msgstr "Giữa lại X:"
+msgstr "_X trung tâm:"
 
 #: ../app/tools/gimprotatetool.c:216
 #, fuzzy
 msgid "Center _Y:"
-msgstr "Giữa lại Y:"
+msgstr "_Y trung tâm:"
 
 #: ../app/tools/gimprotatetool.c:373
 #, c-format
@@ -14203,12 +14188,12 @@ msgstr "_Kéo cắt"
 #: ../app/tools/gimpsheartool.c:135
 #, fuzzy
 msgid "Shear magnitude _X:"
-msgstr "Độ kéo cắt X:"
+msgstr "Độ kéo cắt _X:"
 
 #: ../app/tools/gimpsheartool.c:145
 #, fuzzy
 msgid "Shear magnitude _Y:"
-msgstr "Độ kéo cắt Y:"
+msgstr "Độ kéo cắt _Y:"
 
 #: ../app/tools/gimpsheartool.c:255
 #, c-format
@@ -14356,7 +14341,7 @@ msgstr "Khẳng định sửa đổi văn bản"
 #: ../app/tools/gimptexttool.c:1485
 #, fuzzy
 msgid "Create _New Layer"
-msgstr "Tạo lớp mới"
+msgstr "Tạo lớp _mới"
 
 #: ../app/tools/gimptexttool.c:1509
 msgid ""
@@ -14481,7 +14466,7 @@ msgstr "Hiện cỡ ảnh"
 #: ../app/tools/gimptransformoptions.c:317
 #, fuzzy
 msgid "Guides"
-msgstr "Nét _dẫn"
+msgstr "Nét dẫn"
 
 #: ../app/tools/gimptransformoptions.c:345
 #, c-format
@@ -14538,7 +14523,7 @@ msgstr ""
 #: ../app/tools/gimpvectoroptions.c:189
 #, fuzzy
 msgid "Selection from Path"
-msgstr "_Vùng chọn tới đường dẫn"
+msgstr "Vùng chọn tới đường dẫn"
 
 #: ../app/tools/gimpvectortool.c:161
 #, fuzzy
@@ -15126,12 +15111,12 @@ msgstr "Xem thử lớn"
 #: ../app/widgets/gimpcontrollereditor.c:198
 #, fuzzy
 msgid "_Dump events from this controller"
-msgstr "Đổ các sự kiện từ bộ điều khiển này"
+msgstr "Đổ các _sự kiện từ bộ điều khiển này"
 
 #: ../app/widgets/gimpcontrollereditor.c:203
 #, fuzzy
 msgid "_Enable this controller"
-msgstr "Bật chạy bộ điều khiển này"
+msgstr "_Bật chạy bộ điều khiển này"
 
 #: ../app/widgets/gimpcontrollereditor.c:224
 msgid "Name:"
@@ -15481,7 +15466,7 @@ msgstr "Xóa bỏ biểu mẫu được chọn."
 #: ../app/widgets/gimpdeviceeditor.c:502
 #, fuzzy
 msgid "Delete Device Settings"
-msgstr "Lưu thiết lập thiết bị nhập _ngay"
+msgstr "Lưu thiết lập thiết bị nhập ngay"
 
 #: ../app/widgets/gimpdeviceeditor.c:523
 #, fuzzy, c-format
@@ -15691,7 +15676,7 @@ msgstr "Phần mở rộng"
 #: ../app/widgets/gimpfilleditor.c:124
 #, fuzzy
 msgid "Fill Color"
-msgstr "Tô _bằng màu cảnh gần"
+msgstr "Tô bằng màu cảnh gần"
 
 #: ../app/widgets/gimpfilleditor.c:143
 msgid "_Antialiasing"
@@ -15812,7 +15797,7 @@ msgstr "Cao"
 #: ../app/widgets/gimphelp.c:293
 #, fuzzy
 msgid "Help browser is missing"
-msgstr "Bộ d_uyệt trợ giúp cần dùng:"
+msgstr "Bộ duyệt trợ giúp cần dùng:"
 
 #: ../app/widgets/gimphelp.c:294
 #, fuzzy
@@ -15837,7 +15822,7 @@ msgstr "Không thể khởi chạy bổ sung Duyệt trợ giúp GIMP."
 #: ../app/widgets/gimphelp.c:364
 #, fuzzy
 msgid "Use _Web Browser"
-msgstr "Bộ duyệt Mạng"
+msgstr "Bộ _duyệt Mạng"
 
 #: ../app/widgets/gimphelp.c:610
 msgid "GIMP user manual is missing"
@@ -16052,7 +16037,7 @@ msgstr "Lưu thiết lập đường cong vào tập tin."
 #: ../app/widgets/gimpsettingsbox.c:319
 #, fuzzy
 msgid "_Import Settings from File..."
-msgstr "Tải thiết lập đường cong từ tập tin."
+msgstr "_Tải thiết lập đường cong từ tập tin."
 
 #: ../app/widgets/gimpsettingsbox.c:325
 #, fuzzy
@@ -16081,7 +16066,7 @@ msgstr "Tùy chọn đã lưu"
 #: ../app/widgets/gimpsettingsbox.c:670
 #, fuzzy
 msgid "Manage Saved Settings"
-msgstr "Thay tê_n của tùy chọn đã lưu"
+msgstr "Thay tên của tùy chọn đã lưu"
 
 #: ../app/widgets/gimpsettingseditor.c:194
 #, fuzzy
@@ -16139,7 +16124,7 @@ msgstr "Gạch định _sẵn:"
 #: ../app/widgets/gimptagentry.c:45
 #, fuzzy
 msgid "filter"
-msgstr "Bộ _lọc"
+msgstr "Bộ lọc"
 
 #: ../app/widgets/gimptagentry.c:46
 #, fuzzy
@@ -16375,23 +16360,23 @@ msgstr "Đặt lại thứ tự các công cụ và cách hiển thị chúng."
 #: ../app/widgets/gimptooloptionseditor.c:202
 #, fuzzy
 msgid "Save Tool Preset..."
-msgstr "_Sửa màu..."
+msgstr "Sửa màu..."
 
 #: ../app/widgets/gimptooloptionseditor.c:210
 #, fuzzy
 msgid "Restore Tool Preset..."
-msgstr "_Sửa màu..."
+msgstr "Sửa màu..."
 
 #: ../app/widgets/gimptooloptionseditor.c:218
 #, fuzzy
 msgid "Delete Tool Preset..."
-msgstr "_Xóa bỏ màu"
+msgstr "Xóa bỏ màu"
 
 #: ../app/widgets/gimptoolpreseteditor.c:126
 #, fuzzy
 #| msgid "_Icon:"
 msgid "Icon:"
-msgstr "B_iểu tượng:"
+msgstr "Biểu tượng:"
 
 #: ../app/widgets/gimptoolpreseteditor.c:136
 msgid "Apply stored FG/BG"
@@ -16429,7 +16414,7 @@ msgstr "Áp dụng phông đã lưu"
 #, fuzzy, c-format
 #| msgid "Dash _preset:"
 msgid "%s Preset"
-msgstr "Gạch định _sẵn:"
+msgstr "Gạch định sẵn:"
 
 #: ../app/widgets/gimptranslationstore.c:100
 msgid "System Language"
