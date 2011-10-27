@@ -1064,11 +1064,11 @@ text_handler           (GMarkupParseContext  *markup_context,
 
     case STATE_INSIDE_ALT_LI_RSC_IMG:
       {
-        size_t len, max_size;
-        gchar *decoded;
-        gint   decoded_size;
-        gint   state;
-        guint  save;
+        size_t  len, max_size;
+        guchar *decoded;
+        gint    decoded_size;
+        gint    state;
+        guint   save;
 
 #ifdef DEBUG_XMP_PARSER
         /* g_print ("XMP: Pushing text:\n%s\n", text); */
@@ -1103,7 +1103,7 @@ text_handler           (GMarkupParseContext  *markup_context,
             size_p = g_new (gint, 1);
             *size_p = decoded_size;
             add_property_value (context, XMP_PTYPE_ALT_THUMBS,
-                                (char *) size_p, decoded);
+                                (gchar *) size_p, (gchar *) decoded);
           }
         else
           add_property_value (context, XMP_PTYPE_ALT_THUMBS, NULL, NULL);
