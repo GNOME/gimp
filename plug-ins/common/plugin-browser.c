@@ -310,7 +310,6 @@ insert_into_tree_view (PluginBrowser *browser,
                        const gchar   *types_str,
                        PInfo         *pinfo)
 {
-  gchar        *labels[3];
   gchar        *str_ptr;
   gchar        *tmp_ptr;
   GtkTreeIter   parent, iter;
@@ -334,12 +333,6 @@ insert_into_tree_view (PluginBrowser *browser,
   /*   printf("inserting %s...\n",menu_str); */
 
   get_parent (browser, tmp_ptr, &parent);
-
-  /* Last was a leaf */
-  /*   printf("found leaf %s parent = %p\n",leaf_ptr,parent); */
-  labels[0] = g_strdup (name);
-  labels[1] = g_strdup (xtimestr);
-  labels[2] = g_strdup (types_str);
 
   tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (browser->tree_view));
   gtk_tree_store_append (tree_store, &iter, &parent);
