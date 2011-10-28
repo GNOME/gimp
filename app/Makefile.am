@@ -114,7 +114,6 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
 	$(PANGOCAIRO_CFLAGS)	\
-	$(DBUS_GLIB_CFLAGS)	\
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 

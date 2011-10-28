@@ -17,11 +17,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
-
-#if HAVE_DBUS_GLIB
-#include <dbus/dbus-glib.h>
-#endif
+#include <gio/gio.h>
 
 #ifdef G_OS_WIN32
 #include <windows.h>
@@ -34,11 +30,8 @@
 #include "unique.h"
 
 
-#if HAVE_DBUS_GLIB
 static gboolean  gimp_unique_dbus_open  (const gchar **filenames,
 					 gboolean      as_new);
-#endif
-
 #ifdef G_OS_WIN32
 static gboolean  gimp_unique_win32_open (const gchar **filenames,
 					 gboolean      as_new);
@@ -50,10 +43,8 @@ gimp_unique_open (const gchar **filenames,
 {
 #ifdef G_OS_WIN32
   return gimp_unique_win32_open (filenames, as_new);
-#elif HAVE_DBUS_GLIB
-  return gimp_unique_dbus_open (filenames, as_new);
 #else
-  return FALSE;
+  return gimp_unique_dbus_open (filenames, as_new);
 #endif
 }
 
@@ -90,8 +81,6 @@ gimp_unique_filename_to_uri (const gchar  *filename,
 #endif
 
 
-#if HAVE_DBUS_GLIB
-
 static gboolean
 gimp_unique_dbus_open (const gchar **filenames,
 		       gboolean      as_new)
@@ -101,18 +90,14 @@ gimp_unique_dbus_open (const gchar **filenames,
 /*  for the DBus service names  */
 #include "gui/gimpdbusservice.h"
 
-  DBusGConnection *connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+  GDBusConnection *connection;
+  GError          *error = NULL;
+
+  connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
 
   if (connection)
     {
-      DBusGProxy *proxy;
-      gboolean    success;
-      GError     *error = NULL;
-
-      proxy = dbus_g_proxy_new_for_name (connection,
-                                         GIMP_DBUS_SERVICE_NAME,
-                                         GIMP_DBUS_SERVICE_PATH,
-                                         GIMP_DBUS_SERVICE_INTERFACE);
+      gboolean success = TRUE;
 
       if (filenames)
         {
@@ -120,20 +105,32 @@ gimp_unique_dbus_open (const gchar **filenames,
           gchar       *cwd    = g_get_current_dir ();
           gint         i;
 
-          for (i = 0, success = TRUE; filenames[i] && success; i++)
+          for (i = 0; filenames[i] && success; i++)
             {
-	      gchar *uri = gimp_unique_filename_to_uri (filenames[i],
-							cwd, &error);
+              GError *error = NULL;
+	      gchar  *uri   = gimp_unique_filename_to_uri (filenames[i],
+                                                           cwd, &error);
 
               if (uri)
                 {
-                  gboolean retval; /* ignored */
+                  GVariant *result;
 
-                  success = dbus_g_proxy_call (proxy, method, &error,
-                                               G_TYPE_STRING, uri,
-                                               G_TYPE_INVALID,
-                                               G_TYPE_BOOLEAN, &retval,
-                                               G_TYPE_INVALID);
+                  result = g_dbus_connection_call_sync (connection,
+                                                        GIMP_DBUS_SERVICE_NAME,
+                                                        GIMP_DBUS_SERVICE_PATH,
+                                                        GIMP_DBUS_SERVICE_INTERFACE,
+                                                        method,
+                                                        g_variant_new ("(s)",
+                                                                       uri),
+                                                        NULL,
+                                                        G_DBUS_CALL_FLAGS_NO_AUTO_START,
+                                                        -1,
+                                                        NULL, NULL);
+                  if (result)
+                    g_variant_unref (result);
+                  else
+                    success = FALSE;
+
                   g_free (uri);
                 }
               else
@@ -147,32 +144,37 @@ gimp_unique_dbus_open (const gchar **filenames,
         }
       else
         {
-          success = dbus_g_proxy_call (proxy, "Activate", &error,
-                                       G_TYPE_INVALID, G_TYPE_INVALID);
+          GVariant *result;
+
+          result = g_dbus_connection_call_sync (connection,
+                                                GIMP_DBUS_SERVICE_NAME,
+                                                GIMP_DBUS_SERVICE_PATH,
+                                                GIMP_DBUS_SERVICE_INTERFACE,
+                                                "Activate",
+                                                NULL,
+                                                NULL,
+                                                G_DBUS_CALL_FLAGS_NO_AUTO_START,
+                                                -1,
+                                                NULL, NULL);
+          if (result)
+            g_variant_unref (result);
+          else
+            success = FALSE;
         }
 
-      g_object_unref (proxy);
-      dbus_g_connection_unref (connection);
+      g_object_unref (connection);
 
-      if (success)
-        {
-          return TRUE;
-        }
-      else if (! (error->domain == DBUS_GERROR &&
-                  error->code == DBUS_GERROR_SERVICE_UNKNOWN))
-        {
-          g_print ("%s\n", error->message);
-        }
-
+      return success;
+    }
+  else
+    {
+      g_printerr ("%s\n", error->message);
       g_clear_error (&error);
     }
 #endif
 
   return FALSE;
 }
-
-#endif  /* HAVE_DBUS_GLIB */
-
 
 #ifdef G_OS_WIN32
 
