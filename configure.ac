@@ -1676,7 +1676,7 @@ AC_PATH_PROGS(PERL,perl5 perl perl5.005 perl5.004,perl)
 
 AC_ARG_WITH(pdbgen,
             [  --with-pdbgen           use 'pdbgen' code generation tool],,
-  with_pdbgen=$enable_maintainer_mode)
+  with_pdbgen=$USE_MAINTAINER_MODE)
 
 AM_CONDITIONAL(WITH_PDBGEN, test "x$with_pdbgen" = xyes)
 
