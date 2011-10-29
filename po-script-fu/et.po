@@ -796,7 +796,7 @@ msgid ""
 msgstr ""
 
 msgid "Cool _Metal..."
-msgstr "Kõlm _metall..."
+msgstr "Külm _metall..."
 
 msgid "Create a metallic logo with reflections and perspective shadows"
 msgstr ""
