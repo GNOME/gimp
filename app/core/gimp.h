@@ -171,6 +171,7 @@ void           gimp_exit                 (Gimp                *gimp,
 GList        * gimp_get_image_iter       (Gimp                *gimp);
 GList        * gimp_get_display_iter     (Gimp                *gimp);
 GList        * gimp_get_image_windows    (Gimp                *gimp);
+GList        * gimp_get_paint_info_iter  (Gimp                *gimp);
 GList        * gimp_get_tool_info_iter   (Gimp                *gimp);
 
 void           gimp_set_global_buffer    (Gimp                *gimp,

@@ -1076,6 +1076,14 @@ gimp_get_image_windows (Gimp *gimp)
 }
 
 GList *
+gimp_get_paint_info_iter (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return GIMP_LIST (gimp->paint_info_list)->list;
+}
+
+GList *
 gimp_get_tool_info_iter (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
