@@ -28,6 +28,10 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimplist.h"
+#include "core/gimppaintinfo.h"
+
+#include "paint/gimppaintoptions.h"
 
 #include "gimppdbcontext.h"
 
@@ -53,6 +57,7 @@ enum
 
 
 static void   gimp_pdb_context_constructed  (GObject      *object);
+static void   gimp_pdb_context_finalize     (GObject      *object);
 static void   gimp_pdb_context_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
@@ -74,6 +79,7 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed  = gimp_pdb_context_constructed;
+  object_class->finalize     = gimp_pdb_context_finalize;
   object_class->set_property = gimp_pdb_context_set_property;
   object_class->get_property = gimp_pdb_context_get_property;
 
@@ -144,8 +150,10 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
 }
 
 static void
-gimp_pdb_context_init (GimpPDBContext *options)
+gimp_pdb_context_init (GimpPDBContext *context)
 {
+  context->paint_options_list = gimp_list_new (GIMP_TYPE_PAINT_OPTIONS,
+                                               FALSE);
 }
 
 static void
@@ -154,6 +162,9 @@ gimp_pdb_context_constructed (GObject *object)
   GimpInterpolationType  interpolation;
   gint                   threshold;
   GParamSpec            *pspec;
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /* get default interpolation from gimprc */
 
@@ -178,9 +189,20 @@ gimp_pdb_context_constructed (GObject *object)
     G_PARAM_SPEC_DOUBLE (pspec)->default_value = threshold / 255.0;
 
   g_object_set (object, "sample-threshold", threshold / 255.0, NULL);
+}
 
-  if (G_OBJECT_CLASS (parent_class)->constructed)
-    G_OBJECT_CLASS (parent_class)->constructed (object);
+static void
+gimp_pdb_context_finalize (GObject *object)
+{
+  GimpPDBContext *context = GIMP_PDB_CONTEXT (object);
+
+  if (context->paint_options_list)
+    {
+      g_object_unref (context->paint_options_list);
+      context->paint_options_list = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -316,7 +338,8 @@ gimp_pdb_context_new (Gimp        *gimp,
                       GimpContext *parent,
                       gboolean     set_parent)
 {
-  GimpContext *context;
+  GimpPDBContext *context;
+  GList          *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (parent), NULL);
@@ -330,10 +353,33 @@ gimp_pdb_context_new (Gimp        *gimp,
 
   if (set_parent)
     {
-      gimp_context_define_properties (context,
+      gimp_context_define_properties (GIMP_CONTEXT (context),
                                       GIMP_CONTEXT_ALL_PROPS_MASK, FALSE);
-      gimp_context_set_parent (context, parent);
+      gimp_context_set_parent (GIMP_CONTEXT (context), parent);
+
+      for (list = gimp_get_paint_info_iter (gimp);
+           list;
+           list = g_list_next (list))
+        {
+          GimpPaintInfo *info = list->data;
+
+          gimp_container_add (context->paint_options_list,
+                              GIMP_OBJECT (info->paint_options));
+        }
+    }
+  else
+    {
+      for (list = GIMP_LIST (GIMP_PDB_CONTEXT (parent)->paint_options_list)->list;
+           list;
+           list = g_list_next (list))
+        {
+          GimpPaintOptions *options = gimp_config_duplicate (list->data);
+
+          gimp_container_add (context->paint_options_list,
+                              GIMP_OBJECT (options));
+          g_object_unref (options);
+        }
     }
 
-  return context;
+  return GIMP_CONTEXT (context);
 }
