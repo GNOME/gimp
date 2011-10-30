@@ -4,7 +4,7 @@
 ; Change the colourmap of an image to the colours in a specified palette.
 ; Included is script-fu-make-cmap-array (available for use in scripts) which
 ; returns an INT8ARRAY containing the colours from a specified palette.
-; This array can be used as the cmap argument for gimp-image-set-cmap.
+; This array can be used as the cmap argument for gimp-image-set-colormap.
 
 ; GIMP - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis

@@ -44,9 +44,9 @@
     (gimp-selection-none img)
     (set! layer1 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     ; if the original image contained more than one visible layer:
-    (while (> (car (gimp-image-get-layer-position img layer1)) 
-              (car (gimp-image-get-layer-position img shadow)))
-      (gimp-image-raise-layer img layer1)
+    (while (> (car (gimp-image-get-item-position img layer1)) 
+              (car (gimp-image-get-item-position img shadow)))
+      (gimp-image-raise-item img layer1)
     )
     (gimp-invert layer1)
     (gimp-layer-add-mask layer1 layer-mask)

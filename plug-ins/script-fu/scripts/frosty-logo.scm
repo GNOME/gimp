@@ -30,7 +30,7 @@
         (bg-layer (car (gimp-layer-new img width height RGB-IMAGE
                                        "Background" 100 NORMAL-MODE)))
         (selection 0)
-        (stack (car(gimp-image-get-layer-position img logo-layer)))
+        (stack (car(gimp-image-get-item-position img logo-layer)))
         )
 
     (gimp-context-push)

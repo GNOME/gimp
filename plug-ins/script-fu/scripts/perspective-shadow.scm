@@ -181,7 +181,7 @@
   (if (and
        (= (car (gimp-layer-is-floating-sel drawable)) 0)
        (= from-selection FALSE))
-      (gimp-image-raise-layer image drawable))
+      (gimp-image-raise-item image drawable))
 
   (gimp-image-set-active-layer image drawable)
   (gimp-image-undo-group-end image)

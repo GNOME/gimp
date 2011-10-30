@@ -214,8 +214,8 @@
   )
 
 ; reorder the layers
-  (gimp-image-raise-layer image pic-layer)
-  (gimp-image-raise-layer image pic-layer)
+  (gimp-image-raise-item image pic-layer)
+  (gimp-image-raise-item image pic-layer)
 
 ; eventually rotate the whole thing back
   (if (< ratio 1)

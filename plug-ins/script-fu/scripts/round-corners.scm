@@ -106,9 +106,9 @@
                                             NORMAL-MODE))))
         (gimp-drawable-fill bg-layer BACKGROUND-FILL)
         (gimp-image-insert-layer image bg-layer 0 -1)
-        (gimp-image-raise-layer image pic-layer)
+        (gimp-image-raise-item image pic-layer)
         (if (= shadow-toggle TRUE)
-            (gimp-image-lower-layer image bg-layer))))
+            (gimp-image-lower-item image bg-layer))))
 
 ; clean up after the script
   (if (= work-on-copy TRUE)

@@ -27,7 +27,7 @@
     (while (>= i 0)
            (let ((layer (aref layer-array i)))
              (if (= (car (gimp-layer-is-floating-sel layer)) FALSE)
-                 (gimp-image-lower-layer-to-bottom img layer))
+                 (gimp-image-lower-item-to-bottom img layer))
            )
 
            (set! i (- i 1))

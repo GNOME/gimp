@@ -45,7 +45,7 @@
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (script-fu-util-image-add-layers img text-shadow-layer drop-shadow-layer blend-layer shadow-layer)
-    (gimp-image-raise-layer img text-shadow-layer)
+    (gimp-image-raise-item img text-shadow-layer)
     (gimp-selection-none img)
     (gimp-edit-clear text-shadow-layer)
     (gimp-edit-clear drop-shadow-layer)

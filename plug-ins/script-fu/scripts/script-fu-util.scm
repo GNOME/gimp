@@ -39,7 +39,7 @@
     (let ((layer (car layers)))
       (set! layers (cdr layers))
       (gimp-image-insert-layer image layer 0 -1)
-      (gimp-image-lower-layer image layer)
+      (gimp-image-lower-item image layer)
     )
   )
 )

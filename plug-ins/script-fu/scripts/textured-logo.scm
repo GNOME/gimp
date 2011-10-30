@@ -40,7 +40,7 @@
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (script-fu-util-image-add-layers img text-shadow-layer drop-shadow-layer blend-layer shadow-layer)
-    (gimp-image-raise-layer img text-shadow-layer)
+    (gimp-image-raise-item img text-shadow-layer)
     (gimp-selection-all img)
     (gimp-context-set-pattern text-pattern)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
