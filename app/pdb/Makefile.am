@@ -47,6 +47,7 @@ libappinternal_procs_a_SOURCES = \
 	display-cmds.c			\
 	drawable-cmds.c			\
 	drawable-transform-cmds.c	\
+	dynamics-cmds.c			\
 	edit-cmds.c			\
 	fileops-cmds.c			\
 	floating-sel-cmds.c		\

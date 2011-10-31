@@ -13,6 +13,7 @@ pdb_sources = \
 	pdb/display.pdb			\
 	pdb/drawable.pdb		\
 	pdb/drawable_transform.pdb	\
+	pdb/dynamics.pdb		\
 	pdb/edit.pdb			\
 	pdb/fileops.pdb			\
 	pdb/floating_sel.pdb		\

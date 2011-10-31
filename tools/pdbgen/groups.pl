@@ -11,6 +11,7 @@
     display
     drawable
     drawable_transform
+    dynamics
     edit
     fileops
     floating_sel

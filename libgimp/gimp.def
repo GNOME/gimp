@@ -211,6 +211,8 @@ EXPORTS
 	gimp_drawable_type_with_alpha
 	gimp_drawable_update
 	gimp_drawable_width
+	gimp_dynamics_get_list
+	gimp_dynamics_refresh
 	gimp_edit_blend
 	gimp_edit_bucket_fill
 	gimp_edit_bucket_fill_full
