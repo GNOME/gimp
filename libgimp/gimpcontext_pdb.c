@@ -635,6 +635,74 @@ gimp_context_set_brush (const gchar *name)
 }
 
 /**
+ * gimp_context_get_dynamics:
+ *
+ * Retrieve the currently active paint dynamics.
+ *
+ * This procedure returns the name of the currently active paint
+ * dynamics. All paint operations and stroke operations use this paint
+ * dynamics to control the application of paint to the image.
+ *
+ * Returns: The name of the active paint dynamics.
+ *
+ * Since: GIMP 2.8
+ **/
+gchar *
+gimp_context_get_dynamics (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-dynamics",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
+ * gimp_context_set_dynamics:
+ * @name: The name of the paint dynamics.
+ *
+ * Set the specified paint dynamics as the active paint dynamics.
+ *
+ * This procedure allows the active paint dynamics to be set by
+ * specifying its name. The name is simply a string which corresponds
+ * to one of the names of the installed paint dynamics. If there is no
+ * matching paint dynamics found, this procedure will return an error.
+ * Otherwise, the specified paint dynamics becomes active and will be
+ * used in all subsequent paint operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_dynamics (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-dynamics",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_pattern:
  *
  * Retrieve the currently active pattern.

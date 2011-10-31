@@ -51,6 +51,8 @@ GimpLayerModeEffects   gimp_context_get_paint_mode           (void);
 gboolean               gimp_context_set_paint_mode           (GimpLayerModeEffects      paint_mode);
 gchar*                 gimp_context_get_brush                (void);
 gboolean               gimp_context_set_brush                (const gchar              *name);
+gchar*                 gimp_context_get_dynamics             (void);
+gboolean               gimp_context_set_dynamics             (const gchar              *name);
 gchar*                 gimp_context_get_pattern              (void);
 gboolean               gimp_context_set_pattern              (const gchar              *name);
 gchar*                 gimp_context_get_gradient             (void);

@@ -117,6 +117,41 @@ gimp_pdb_get_generated_brush (Gimp         *gimp,
   return brush;
 }
 
+GimpDynamics *
+gimp_pdb_get_dynamics (Gimp         *gimp,
+                       const gchar  *name,
+                       gboolean      writable,
+                       GError      **error)
+{
+  GimpDynamics *dynamics;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (! name || ! strlen (name))
+    {
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+			   _("Invalid empty paint dynamics name"));
+      return NULL;
+    }
+
+  dynamics = (GimpDynamics *) gimp_pdb_get_data_factory_item (gimp->dynamics_factory, name);
+
+  if (! dynamics)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Paint dynamics '%s' not found"), name);
+    }
+  else if (writable && ! gimp_data_is_writable (GIMP_DATA (dynamics)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Paint dynamics '%s' is not editable"), name);
+      return NULL;
+    }
+
+  return dynamics;
+}
+
 GimpPattern *
 gimp_pdb_get_pattern (Gimp         *gimp,
                       const gchar  *name,
