@@ -59,6 +59,7 @@ EXTRA_DIST = \
 	app.pl			\
 	enumcode.pl		\
 	enumgen.pl		\
+	enums.pl		\
 	groups.pl		\
 	lib.pl			\
 	pdb.pl			\
