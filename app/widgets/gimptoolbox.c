@@ -126,6 +126,9 @@ static void        gimp_toolbox_book_added              (GimpDock       *dock,
                                                          GimpDockbook   *dockbook);
 static void        gimp_toolbox_book_removed            (GimpDock       *dock,
                                                          GimpDockbook   *dockbook);
+static void        gimp_toolbox_size_request_wilber     (GtkWidget      *widget,
+                                                         GtkRequisition *requisition,
+                                                         GimpToolbox    *toolbox);
 static gboolean    gimp_toolbox_expose_wilber           (GtkWidget      *widget,
                                                          GdkEventExpose *event);
 static GtkWidget * toolbox_create_color_area            (GimpToolbox    *toolbox,
@@ -242,6 +245,9 @@ gimp_toolbox_constructed (GObject *object)
   if (config->toolbox_wilber)
     gtk_widget_show (toolbox->p->header);
 
+  g_signal_connect (toolbox->p->header, "size-request",
+                    G_CALLBACK (gimp_toolbox_size_request_wilber),
+                    toolbox);
   g_signal_connect (toolbox->p->header, "expose-event",
                     G_CALLBACK (gimp_toolbox_expose_wilber),
                     toolbox);
@@ -603,9 +609,6 @@ gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
     {
       GdkGeometry geometry;
 
-      gtk_widget_set_size_request (toolbox->p->header,
-                                   -1, button_height * PANGO_SCALE_SMALL);
-
       geometry.min_width   = 2 * button_width;
       geometry.min_height  = -1;
       geometry.base_width  = button_width;
@@ -658,6 +661,27 @@ gimp_toolbox_set_drag_handler (GimpToolbox  *toolbox,
 
 
 /*  private functions  */
+
+static void
+gimp_toolbox_size_request_wilber (GtkWidget      *widget,
+                                  GtkRequisition *requisition,
+                                  GimpToolbox    *toolbox)
+{
+  gint button_width;
+  gint button_height;
+
+  if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (toolbox->p->tool_palette),
+                                         &button_width, &button_height))
+    {
+      requisition->width  = button_width  * PANGO_SCALE_SMALL;
+      requisition->height = button_height * PANGO_SCALE_SMALL;
+    }
+  else
+    {
+      requisition->width  = 16;
+      requisition->height = 16;
+    }
+}
 
 static gboolean
 gimp_toolbox_expose_wilber (GtkWidget      *widget,
