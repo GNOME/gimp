@@ -42,6 +42,7 @@
 
 #include "gimpcurvesconfig.h"
 #include "gimplevelsconfig.h"
+#include "gimpoperationlevels.h"
 
 #include "gimp-intl.h"
 
@@ -598,6 +599,8 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
     {
       GimpCurve  *curve    = curves->curve[channel];
       const gint  n_points = gimp_curve_get_n_points (curve);
+      static const gint n  = 4;
+      gint        point    = -1;
       gdouble     gamma    = config->gamma[channel];
       gdouble     delta_in;
       gdouble     delta_out;
@@ -613,25 +616,97 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
       x = config->low_input[channel];
       y = config->low_output[channel];
 
-      gimp_curve_set_point (curve,
-                            CLAMP (n_points * x, 0, n_points - 1), x, y);
+      point = CLAMP (n_points * x, point + 1, n_points - 1 - n);
+      gimp_curve_set_point (curve, point, x, y);
 
       if (delta_out != 0 && gamma != 1.0)
         {
-          x = (config->low_input[channel] +
-               pow (gamma, gamma / (1 - gamma)) * delta_in);
-          y = (config->low_output[channel] +
-               pow (gamma, 1.0 / (1 - gamma)) * delta_out);
+          /* The Levels tool performs gamma correction, which is a
+           * power law, while the Curves tool uses cubic Bézier
+           * curves. Here we try to approximate this gamma correction
+           * with a Bézier curve with 5 control points. Two of them
+           * must be (low_input, low_output) and (high_input,
+           * high_output), so we need to add 3 more control points in
+           * the middle.
+           */
+          gint i;
 
-          gimp_curve_set_point (curve,
-                                CLAMP (n_points * x, 0, n_points - 1), x, y);
+          if (gamma > 1)
+            {
+              /* Case no. 1: γ > 1
+               *
+               * The curve should look like a horizontal
+               * parabola. Since its curvature is greatest when x is
+               * small, we add more control points there, so the
+               * approximation is more accurate. I decided to set the
+               * length of the consecutive segments to x₀, γ⋅x₀, γ²⋅x₀
+               * and γ³⋅x₀ and I saw that the curves looked
+               * good. Still, this is completely arbitrary.
+               */
+              gdouble dx = 0;
+              gdouble x0;
+
+              for (i = 0; i < n; ++i)
+                dx = dx * gamma + 1;
+              x0 = delta_in / dx;
+
+              dx = 0;
+              for (i = 1; i < n; ++i)
+                {
+                  dx = dx * gamma + x0;
+                  x = config->low_input[channel] + dx;
+                  y = config->low_output[channel] + delta_out *
+                      gimp_operation_levels_map_input (config, channel, x);
+                  point = CLAMP (n_points * x, point + 1, n_points - 1 - n + i);
+                  gimp_curve_set_point (curve, point, x, y);
+                }
+            }
+          else
+            {
+              /* Case no. 2: γ < 1
+               *
+               * The curve is the same as the one in case no. 1,
+               * observed through a reflexion along the y = x axis. So
+               * if we invert γ and swap the x and y axes we can use
+               * the same method as in case no. 1.
+               */
+              GimpLevelsConfig *config_inv;
+              gdouble           dy = 0;
+              gdouble           y0;
+              const gdouble     gamma_inv = 1 / gamma;
+
+              config_inv = gimp_config_duplicate (GIMP_CONFIG (config));
+
+              config_inv->gamma[channel]       = gamma_inv;
+              config_inv->low_input[channel]   = config->low_output[channel];
+              config_inv->low_output[channel]  = config->low_input[channel];
+              config_inv->high_input[channel]  = config->high_output[channel];
+              config_inv->high_output[channel] = config->high_input[channel];
+
+              for (i = 0; i < n; ++i)
+                dy = dy * gamma_inv + 1;
+              y0 = delta_out / dy;
+
+              dy = 0;
+              for (i = 1; i < n; ++i)
+                {
+                  dy = dy * gamma_inv + y0;
+                  y = config->low_output[channel] + dy;
+                  x = config->low_input[channel] + delta_in *
+                      gimp_operation_levels_map_input (config_inv, channel, y);
+                  point = CLAMP (n_points * x, point + 1, n_points - 1 - n + i);
+                  gimp_curve_set_point (curve, point, x, y);
+                }
+
+              g_object_unref (config_inv);
+            }
         }
 
       x = config->high_input[channel];
       y = config->high_output[channel];
 
-      gimp_curve_set_point (curve,
-                            CLAMP (n_points * x, 0, n_points - 1), x, y);
+      point = CLAMP (n_points * x, point + 1, n_points - 1);
+      gimp_curve_set_point (curve, point, x, y);
     }
 
   return curves;
