@@ -292,7 +292,7 @@ gimp_transform_resize_crop (gdouble  dx1,
   points[0] = points[min];
   points[min] = t;
 
-  for (i = 1; i < 4; i++)
+  for (i = 1; i < 3; i++)
     {
       gdouble min_theta;
       gdouble min_mag;
@@ -318,7 +318,7 @@ gimp_transform_resize_crop (gdouble  dx1,
               break;
             }
 
-          theta = atan2 (sy, sx);
+          theta = atan2 (-sy, -sx);
           mag = (sx * sx) + (sy * sy);
 
           if ((theta < min_theta) ||
