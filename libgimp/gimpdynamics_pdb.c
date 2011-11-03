@@ -28,9 +28,9 @@
 /**
  * SECTION: gimpdynamics
  * @title: gimpdynamics
- * @short_description: Operations related to dynamics.
+ * @short_description: Operations related to paint dynamics.
  *
- * Operations related to dynamics.
+ * Operations related to paint dynamics.
  **/
 
 
