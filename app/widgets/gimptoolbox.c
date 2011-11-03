@@ -121,8 +121,7 @@ static void        gimp_toolbox_book_added              (GimpDock       *dock,
                                                          GimpDockbook   *dockbook);
 static void        gimp_toolbox_book_removed            (GimpDock       *dock,
                                                          GimpDockbook   *dockbook);
-static void        gimp_toolbox_size_request_wilber     (GtkWidget      *widget,
-                                                         GtkRequisition *requisition,
+static void        gimp_toolbox_wilber_style_updated    (GtkWidget      *widget,
                                                          GimpToolbox    *toolbox);
 static gboolean    gimp_toolbox_draw_wilber             (GtkWidget             *widget,
                                                          cairo_t               *cr);
@@ -235,8 +234,8 @@ gimp_toolbox_constructed (GObject *object)
                           toolbox->p->header, "visible",
                           G_BINDING_SYNC_CREATE);
 
-  g_signal_connect (toolbox->p->header, "size-request",
-                    G_CALLBACK (gimp_toolbox_size_request_wilber),
+  g_signal_connect (toolbox->p->header, "style-updated",
+                    G_CALLBACK (gimp_toolbox_wilber_style_updated),
                     toolbox);
   g_signal_connect (toolbox->p->header, "draw",
                     G_CALLBACK (gimp_toolbox_draw_wilber),
@@ -622,9 +621,8 @@ gimp_toolbox_set_drag_handler (GimpToolbox  *toolbox,
 /*  private functions  */
 
 static void
-gimp_toolbox_size_request_wilber (GtkWidget      *widget,
-                                  GtkRequisition *requisition,
-                                  GimpToolbox    *toolbox)
+gimp_toolbox_wilber_style_updated (GtkWidget   *widget,
+                                   GimpToolbox *toolbox)
 {
   gint button_width;
   gint button_height;
@@ -632,13 +630,9 @@ gimp_toolbox_size_request_wilber (GtkWidget      *widget,
   if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (toolbox->p->tool_palette),
                                          &button_width, &button_height))
     {
-      requisition->width  = button_width  * PANGO_SCALE_SMALL;
-      requisition->height = button_height * PANGO_SCALE_SMALL;
-    }
-  else
-    {
-      requisition->width  = 16;
-      requisition->height = 16;
+      gtk_widget_set_size_request (widget,
+                                   button_width  * PANGO_SCALE_SMALL,
+                                   button_height * PANGO_SCALE_SMALL);
     }
 }
 
