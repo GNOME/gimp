@@ -175,7 +175,11 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
           info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, 0);
 
           if (info)
-            pixbuf = gtk_icon_info_load_icon (info, NULL);
+            {
+              pixbuf = gtk_icon_info_load_icon (info, NULL);
+
+              gtk_icon_info_free (info);
+            }
         }
     }
 
