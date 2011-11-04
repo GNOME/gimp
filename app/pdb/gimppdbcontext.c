@@ -110,7 +110,7 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SAMPLE_CRITERION,
-                                 "sample-crterion", NULL,
+                                 "sample-criterion", NULL,
                                  GIMP_TYPE_SELECT_CRITERION,
                                  GIMP_SELECT_CRITERION_COMPOSITE,
                                  GIMP_PARAM_STATIC_STRINGS);
