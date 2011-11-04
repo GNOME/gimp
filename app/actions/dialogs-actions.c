@@ -273,7 +273,6 @@ dialogs_actions_toolbox_exists (Gimp *gimp)
 {
   GimpDialogFactory *factory       = gimp_dialog_factory_get_singleton ();
   GimpSessionInfo   *info          = NULL;
-  GList             *windows       = gimp ? gimp_get_image_windows (gimp) : NULL;
   gboolean           toolbox_found = FALSE;
   GList             *iter;
 
@@ -284,16 +283,20 @@ dialogs_actions_toolbox_exists (Gimp *gimp)
   /* Then in image windows */
   if (! toolbox_found)
     {
+      GList *windows = gimp ? gimp_get_image_windows (gimp) : NULL;
+
       for (iter = windows; iter; iter = g_list_next (iter))
         {
           GimpImageWindow *window = GIMP_IMAGE_WINDOW (windows->data);
-      
+
           if (gimp_image_window_has_toolbox (window))
             {
               toolbox_found = TRUE;
               break;
             }
         }
+
+      g_list_free (windows);
     }
 
   return toolbox_found;
