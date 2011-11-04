@@ -127,6 +127,8 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
 
   for (i = 0; i < DISSOLVE_REPEAT_WIDTH * DISSOLVE_REPEAT_HEIGHT; i++)
     dissolve_lut[i] = g_rand_int (rand);
+
+  g_rand_free (rand);
 }
 
 static void
