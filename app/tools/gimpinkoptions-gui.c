@@ -123,6 +123,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (blob_box);
 
   gtk_size_group_add_widget (size_group, blob_box);
+  g_object_unref (size_group);
 
   /* Blob editor */
   frame = gtk_aspect_frame_new (NULL, 0.0, 0.5, 1.0, FALSE);
