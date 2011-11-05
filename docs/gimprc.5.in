@@ -744,17 +744,6 @@ Show a tooltip when the pointer hovers over an item.  Possible values are yes
 and no.
 
 .TP
-(hide-docks no)
-
-Hide docks and other windows, leaving only image windows.  Possible values are
-yes and no.
-
-.TP
-(single-window-mode no)
-
-Use GIMP in a single-window mode.  Possible values are yes and no.
-
-.TP
 (tearoff-menus yes)
 
 When enabled, menus can be torn off.  Possible values are yes and no.

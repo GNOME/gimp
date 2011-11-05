@@ -581,15 +581,6 @@
 # 
 # (show-tooltips yes)
 
-# Hide docks and other windows, leaving only image windows.  Possible values
-# are yes and no.
-# 
-# (hide-docks no)
-
-# Use GIMP in a single-window mode.  Possible values are yes and no.
-# 
-# (single-window-mode no)
-
 # When enabled, menus can be torn off.  Possible values are yes and no.
 # 
 # (tearoff-menus yes)
