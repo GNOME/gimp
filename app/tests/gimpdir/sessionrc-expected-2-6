@@ -88,6 +88,8 @@
     (size 610 190)
     (open-on-exit))
 
+(hide-docks no)
+(single-window-mode no)
 (last-tip-shown 0)
 
 # end of sessionrc

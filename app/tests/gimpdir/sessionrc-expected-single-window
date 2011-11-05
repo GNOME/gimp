@@ -55,6 +55,8 @@
             (dockable "gimp-gradient-list"
                 (tab-style preview)))))
 
+(hide-docks no)
+(single-window-mode yes)
 (last-tip-shown 0)
 
 # end of sessionrc

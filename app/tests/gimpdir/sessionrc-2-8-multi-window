@@ -98,6 +98,8 @@
     (position 10 40)
     (size 900 600))
 
+(hide-docks no)
+(single-window-mode no)
 (last-tip-shown 0)
 
 # end of sessionrc
