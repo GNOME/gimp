@@ -172,7 +172,8 @@ gimp_scanner_new (const gchar  *name,
 
 /**
  * gimp_scanner_destroy:
- * @scanner:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
  *
  * Since: GIMP 2.4
  **/
@@ -196,10 +197,11 @@ gimp_scanner_destroy (GScanner *scanner)
 
 /**
  * gimp_scanner_parse_token:
- * @scanner:
- * @token:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @token: Return location for the parsed token
  *
- * Return value:
+ * Return value: %TRUE on success
  *
  * Since: GIMP 2.4
  **/
@@ -217,10 +219,11 @@ gimp_scanner_parse_token (GScanner   *scanner,
 
 /**
  * gimp_scanner_parse_identifier:
- * @scanner:
- * @identifier:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @identifier: Return location for the parsed identifier
  *
- * Return value:
+ * Return value: %TRUE on success
  *
  * Since: GIMP 2.4
  **/
@@ -241,10 +244,11 @@ gimp_scanner_parse_identifier (GScanner    *scanner,
 
 /**
  * gimp_scanner_parse_string:
- * @scanner:
- * @dest:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @dest: Return location for the parsed string
  *
- * Return value:
+ * Return value: %TRUE on success
  *
  * Since: GIMP 2.4
  **/
@@ -277,10 +281,11 @@ gimp_scanner_parse_string (GScanner  *scanner,
 
 /**
  * gimp_scanner_parse_string_no_validate:
- * @scanner:
- * @dest:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @dest: Return location for the parsed string
  *
- * Return value:
+ * Return value: %TRUE on success
  *
  * Since: GIMP 2.4
  **/
@@ -303,11 +308,12 @@ gimp_scanner_parse_string_no_validate (GScanner  *scanner,
 
 /**
  * gimp_scanner_parse_data:
- * @scanner:
- * @length:
- * @dest:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @length: Length of tha data to parse
+ * @dest: Return location for the parsed data
  *
- * Return value:
+ * Return value: %TRUE on success
  *
  * Since: GIMP 2.4
  **/
@@ -331,10 +337,11 @@ gimp_scanner_parse_data (GScanner  *scanner,
 
 /**
  * gimp_scanner_parse_int:
- * @scanner:
- * @dest:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @dest: Return location for the parsed integer
  *
- * Return value:
+ * Return value: %TRUE on success
  *
  * Since: GIMP 2.4
  **/
@@ -365,10 +372,11 @@ gimp_scanner_parse_int (GScanner *scanner,
 
 /**
  * gimp_scanner_parse_float:
- * @scanner:
- * @dest:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @dest: Return location for the parsed float
  *
- * Return value:
+ * Return value: %TRUE on success
  *
  * Since: GIMP 2.4
  **/
@@ -386,6 +394,49 @@ gimp_scanner_parse_float (GScanner *scanner,
   return TRUE;
 }
 
+/**
+ * gimp_scanner_parse_boolean:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @dest: Return location for the parsed boolean
+ *
+ * Return value: %TRUE on success
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_scanner_parse_boolean (GScanner *scanner,
+                            gboolean *dest)
+{
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_IDENTIFIER)
+    return FALSE;
+
+  g_scanner_get_next_token (scanner);
+
+  if (! g_ascii_strcasecmp (scanner->value.v_identifier, "yes") ||
+      ! g_ascii_strcasecmp (scanner->value.v_identifier, "true"))
+    {
+      *dest = TRUE;
+    }
+  else if (! g_ascii_strcasecmp (scanner->value.v_identifier, "no") ||
+           ! g_ascii_strcasecmp (scanner->value.v_identifier, "false"))
+    {
+      *dest = FALSE;
+    }
+  else
+    {
+      g_scanner_error
+        (scanner,
+         /* please don't translate 'yes' and 'no' */
+         _("expected 'yes' or 'no' for boolean token, got '%s'"),
+         scanner->value.v_identifier);
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
 enum
 {
   COLOR_RGB  = 1,
@@ -396,10 +447,11 @@ enum
 
 /**
  * gimp_scanner_parse_color:
- * @scanner:
- * @dest:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @dest: Pointer to a color to store the result
  *
- * Return value:
+ * Return value: %TRUE on success
  *
  * Since: GIMP 2.4
  **/
@@ -518,10 +570,11 @@ gimp_scanner_parse_color (GScanner *scanner,
 
 /**
  * gimp_scanner_parse_matrix2:
- * @scanner:
- * @dest:
+ * @scanner: A #GScanner created by gimp_scanner_new_file() or
+ *           gimp_scanner_new_string()
+ * @dest: Pointer to a matrix to store the result
  *
- * Return value:
+ * Return value: %TRUE on success
  *
  * Since: GIMP 2.4
  **/

@@ -54,6 +54,7 @@ EXPORTS
 	gimp_scanner_destroy
 	gimp_scanner_new_file
 	gimp_scanner_new_string
+	gimp_scanner_parse_boolean
 	gimp_scanner_parse_color
 	gimp_scanner_parse_data
 	gimp_scanner_parse_float
