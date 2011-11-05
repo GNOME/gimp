@@ -124,7 +124,7 @@
     (gimp-edit-fill layer3 BACKGROUND-FILL)
     (gimp-item-set-visible text-layer FALSE)
 
-    (gimp-selection-layer-alpha text-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE text-layer)
     (gimp-context-set-background '(0 0 0))
     (gimp-selection-translate img offx1 offy1)
     (gimp-selection-feather img feather)
@@ -146,7 +146,7 @@
 
     (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
     (gimp-layer-add-mask layer1 layer-mask)
-    (gimp-selection-layer-alpha text-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE text-layer)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill layer-mask BACKGROUND-FILL)
 
@@ -173,7 +173,7 @@
     (plug-in-displace RUN-NONINTERACTIVE img layer2 displace displace TRUE TRUE disp-map disp-map 0)
     (set! layer-mask2 (car (gimp-layer-create-mask layer2 ADD-BLACK-MASK)))
     (gimp-layer-add-mask layer2 layer-mask2)
-    (gimp-selection-layer-alpha text-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE text-layer)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill layer-mask2 BACKGROUND-FILL)
 
