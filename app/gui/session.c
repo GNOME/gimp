@@ -58,6 +58,8 @@
 enum
 {
   SESSION_INFO = 1,
+  HIDE_DOCKS,
+  SINGLE_WINDOW_MODE,
   LAST_TIP_SHOWN
 };
 
@@ -108,6 +110,10 @@ session_init (Gimp *gimp)
 
   g_scanner_scope_add_symbol (scanner, 0, "session-info",
                               GINT_TO_POINTER (SESSION_INFO));
+  g_scanner_scope_add_symbol (scanner, 0,  "hide-docks",
+                              GINT_TO_POINTER (HIDE_DOCKS));
+  g_scanner_scope_add_symbol (scanner, 0,  "single-window-mode",
+                              GINT_TO_POINTER (SINGLE_WINDOW_MODE));
   g_scanner_scope_add_symbol (scanner, 0,  "last-tip-shown",
                               GINT_TO_POINTER (LAST_TIP_SHOWN));
 
@@ -215,14 +221,44 @@ session_init (Gimp *gimp)
                   break;
                 }
             }
+          else if (scanner->value.v_symbol == GINT_TO_POINTER (HIDE_DOCKS))
+            {
+              gboolean hide_docks;
+
+              token = G_TOKEN_IDENTIFIER;
+
+              if (! gimp_scanner_parse_boolean (scanner, &hide_docks))
+                break;
+
+              g_object_set (gimp->config,
+                            "hide-docks", hide_docks,
+                            NULL);
+            }
+          else if (scanner->value.v_symbol == GINT_TO_POINTER (SINGLE_WINDOW_MODE))
+            {
+              gboolean single_window_mode;
+
+              token = G_TOKEN_IDENTIFIER;
+
+              if (! gimp_scanner_parse_boolean (scanner, &single_window_mode))
+                break;
+
+              g_object_set (gimp->config,
+                            "single-window-mode", single_window_mode,
+                            NULL);
+            }
           else if (scanner->value.v_symbol == GINT_TO_POINTER (LAST_TIP_SHOWN))
             {
-              GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
+              gint last_tip_shown;
 
               token = G_TOKEN_INT;
 
-              if (! gimp_scanner_parse_int (scanner, &config->last_tip))
+              if (! gimp_scanner_parse_int (scanner, &last_tip_shown))
                 break;
+
+              g_object_set (gimp->config,
+                            "last-tip-shown", last_tip_shown,
+                            NULL);
             }
           token = G_TOKEN_RIGHT_PAREN;
           break;
@@ -310,14 +346,21 @@ session_save (Gimp     *gimp,
   gimp_dialog_factory_save (gimp_dialog_factory_get_singleton (), writer);
   gimp_config_writer_linefeed (writer);
 
-  /* save last tip shown
-   *
-   * FIXME: Make last-tip-shown increment only when used within the
-   * session
-   */
+  gimp_config_writer_open (writer, "hide-docks");
+  gimp_config_writer_identifier (writer,
+                                 GIMP_GUI_CONFIG (gimp->config)->hide_docks ?
+                                 "yes" : "no");
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_open (writer, "single-window-mode");
+  gimp_config_writer_identifier (writer,
+                                 GIMP_GUI_CONFIG (gimp->config)->single_window_mode ?
+                                 "yes" : "no");
+  gimp_config_writer_close (writer);
+
   gimp_config_writer_open (writer, "last-tip-shown");
   gimp_config_writer_printf (writer, "%d",
-                             GIMP_GUI_CONFIG (gimp->config)->last_tip);
+                             GIMP_GUI_CONFIG (gimp->config)->last_tip_shown);
   gimp_config_writer_close (writer);
 
   if (! gimp_config_writer_finish (writer, "end of sessionrc", &error))

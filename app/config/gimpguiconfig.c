@@ -51,8 +51,6 @@ enum
   PROP_RESTORE_SESSION,
   PROP_SAVE_TOOL_OPTIONS,
   PROP_SHOW_TOOLTIPS,
-  PROP_HIDE_DOCKS,
-  PROP_SINGLE_WINDOW_MODE,
   PROP_TEAROFF_MENUS,
   PROP_CAN_CHANGE_ACCELS,
   PROP_SAVE_ACCELS,
@@ -74,6 +72,10 @@ enum
   PROP_DOCK_WINDOW_HINT,
   PROP_CURSOR_FORMAT,
   PROP_CURSOR_HANDEDNESS,
+
+  PROP_HIDE_DOCKS,
+  PROP_SINGLE_WINDOW_MODE,
+  PROP_LAST_TIP_SHOWN,
 
   /* ignored, only for backward compatibility: */
   PROP_INFO_WINDOW_PER_DISPLAY,
@@ -151,15 +153,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_HIDE_DOCKS,
-                                    "hide-docks", HIDE_DOCKS_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SINGLE_WINDOW_MODE,
-                                    "single-window-mode", SINGLE_WINDOW_MODE_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TEAROFF_MENUS,
                                     "tearoff-menus", TEAROFF_MENUS_BLURB,
                                     TRUE,
@@ -262,6 +255,30 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_HANDEDNESS_RIGHT,
                                  GIMP_PARAM_STATIC_STRINGS);
 
+  g_object_class_install_property (object_class, PROP_HIDE_DOCKS,
+                                   g_param_spec_boolean ("hide-docks",
+                                                         NULL,
+                                                         HIDE_DOCKS_BLURB,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_PARAM_STATIC_STRINGS));
+  g_object_class_install_property (object_class, PROP_SINGLE_WINDOW_MODE,
+                                   g_param_spec_boolean ("single-window-mode",
+                                                         NULL,
+                                                         SINGLE_WINDOW_MODE_BLURB,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_PARAM_STATIC_STRINGS));
+  g_object_class_install_property (object_class, PROP_LAST_TIP_SHOWN,
+                                   g_param_spec_int ("last-tip-shown",
+                                                     NULL, NULL,
+                                                     0, G_MAXINT, 0,
+                                                     G_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT |
+                                                     GIMP_PARAM_STATIC_STRINGS));
+
   /*  only for backward compatibility:  */
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
                                     "info-window-per-display",
@@ -356,12 +373,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SHOW_TOOLTIPS:
       gui_config->show_tooltips = g_value_get_boolean (value);
       break;
-    case PROP_HIDE_DOCKS:
-      gui_config->hide_docks = g_value_get_boolean (value);
-      break;
-    case PROP_SINGLE_WINDOW_MODE:
-      gui_config->single_window_mode = g_value_get_boolean (value);
-      break;
     case PROP_TEAROFF_MENUS:
       gui_config->tearoff_menus = g_value_get_boolean (value);
       break;
@@ -430,6 +441,16 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->cursor_handedness = g_value_get_enum (value);
       break;
 
+    case PROP_HIDE_DOCKS:
+      gui_config->hide_docks = g_value_get_boolean (value);
+      break;
+    case PROP_SINGLE_WINDOW_MODE:
+      gui_config->single_window_mode = g_value_get_boolean (value);
+      break;
+    case PROP_LAST_TIP_SHOWN:
+      gui_config->last_tip_shown = g_value_get_int (value);
+      break;
+
     case PROP_INFO_WINDOW_PER_DISPLAY:
     case PROP_MENU_MNEMONICS:
     case PROP_SHOW_TOOL_TIPS:
@@ -479,12 +500,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SHOW_TOOLTIPS:
       g_value_set_boolean (value, gui_config->show_tooltips);
-      break;
-    case PROP_HIDE_DOCKS:
-      g_value_set_boolean (value, gui_config->hide_docks);
-      break;
-    case PROP_SINGLE_WINDOW_MODE:
-      g_value_set_boolean (value, gui_config->single_window_mode);
       break;
     case PROP_TEAROFF_MENUS:
       g_value_set_boolean (value, gui_config->tearoff_menus);
@@ -548,6 +563,16 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_CURSOR_HANDEDNESS:
       g_value_set_enum (value, gui_config->cursor_handedness);
+      break;
+
+    case PROP_HIDE_DOCKS:
+      g_value_set_boolean (value, gui_config->hide_docks);
+      break;
+    case PROP_SINGLE_WINDOW_MODE:
+      g_value_set_boolean (value, gui_config->single_window_mode);
+      break;
+    case PROP_LAST_TIP_SHOWN:
+      g_value_set_int (value, gui_config->last_tip_shown);
       break;
 
     case PROP_INFO_WINDOW_PER_DISPLAY:

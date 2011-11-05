@@ -117,10 +117,10 @@ tips_dialog_create (Gimp *gimp)
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
-  if (config->last_tip >= tips_count || config->last_tip < 0)
-    config->last_tip = 0;
+  if (config->last_tip_shown >= tips_count || config->last_tip_shown < 0)
+    config->last_tip_shown = 0;
 
-  current_tip = g_list_nth (tips, config->last_tip);
+  current_tip = g_list_nth (tips, config->last_tip_shown);
 
   if (tips_dialog)
     return tips_dialog;
@@ -208,7 +208,7 @@ tips_dialog_destroy (GtkWidget     *widget,
                      GimpGuiConfig *config)
 {
   /* the last-shown-tip is saved in sessionrc */
-  config->last_tip = g_list_position (tips, current_tip);
+  config->last_tip_shown = g_list_position (tips, current_tip);
 
   tips_dialog = NULL;
   current_tip = NULL;
