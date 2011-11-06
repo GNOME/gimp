@@ -16,6 +16,7 @@
 
 package Gimp::CodeGen::util;
 
+use File::Basename 'basename';
 use File::Copy 'cp';
 use File::Compare 'cmp';
 
@@ -24,8 +25,13 @@ $DEBUG_OUTPUT = exists $ENV{PDBGEN_BACKUP} ? $ENV{PDBGEN_BACKUP} : 1;
 $FILE_EXT = ".tmp.$$";
 
 sub write_file {
-    my $file = shift; my $realfile = $file;
+    my $file = shift;
+    my $destdir = shift;
+
+    my $realfile = basename($file);
     $realfile =~ s/$FILE_EXT$//;
+    $realfile = "$destdir/$realfile";
+
     if (-e $realfile) {
 	if (cmp($realfile, $file)) {
 	    cp($realfile, "$realfile~") if $DEBUG_OUTPUT;

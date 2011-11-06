@@ -19,8 +19,9 @@
 require 5.004;
 
 BEGIN {
-    $srcdir  = $ENV{srcdir}  || '.';
-    $destdir = $ENV{destdir} || '.';
+    $srcdir   = $ENV{srcdir}   || '.';
+    $destdir  = $ENV{destdir}  || '.';
+    $builddir = $ENV{builddir} || '.';
 }
 
 use lib $srcdir;
@@ -41,6 +42,7 @@ BEGIN {
 
 # Stifle "used only once" warnings
 $destdir = $destdir;
+$builddir = $builddir;
 %pdb = ();
 
 # The actual parser (in a string so we can eval it in another namespace)

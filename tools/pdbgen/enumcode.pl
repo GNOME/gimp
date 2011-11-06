@@ -17,8 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 BEGIN {
-    $srcdir  = $ENV{srcdir}  || '.';
-    $destdir = $ENV{destdir} || '.';
+    $srcdir   = $ENV{srcdir}  || '.';
+    $destdir  = $ENV{destdir} || '.';
+    $builddir = $ENV{builddir} || '.';
 }
 
 use lib $srcdir;
@@ -31,7 +32,7 @@ require 'util.pl';
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
-my $enumfile = "$destdir/libgimp/gimpenums.h$FILE_EXT";
+my $enumfile = "$builddir/libgimp/gimpenums.h$FILE_EXT";
 open ENUMFILE, "> $enumfile" or die "Can't open $enumfile: $!\n";
 
 print ENUMFILE <<'LGPL';
@@ -106,9 +107,9 @@ G_END_DECLS
 HEADER
 
 close ENUMFILE;
-&write_file($enumfile);
+&write_file($enumfile, "$destdir/libgimp");
 
-$enumfile = "$destdir/libgimp/gimpenums.c.tail$FILE_EXT";
+$enumfile = "$builddir/libgimp/gimpenums.c.tail$FILE_EXT";
 open ENUMFILE, "> $enumfile" or die "Can't open $enumfile: $!\n";
 
 print ENUMFILE <<CODE;
@@ -214,4 +215,4 @@ gimp_enums_get_type_names (gint *n_type_names)
 CODE
 
 close ENUMFILE;
-&write_file($enumfile);
+&write_file($enumfile, "$destdir/libgimp");

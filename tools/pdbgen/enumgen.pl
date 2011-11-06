@@ -17,8 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 BEGIN {
-    $srcdir  = $ENV{srcdir} || '.';
-    $destdir = $ENV{srcdir} || '.';
+    $srcdir   = $ENV{srcdir}   || '.';
+    $destdir  = $ENV{destdir}   || '.';
+    $builddir = $ENV{builddir} || '.';
 }
 
 use lib $srcdir;
@@ -252,8 +253,8 @@ $code =~ s/,\n$/\n/s;
 
 foreach ($header, $code, $footer) { s/^://mg }
 
-$outfile = "$destdir/enums.pl$FILE_EXT";
+$outfile = "$builddir/tools/pdbgen/enums.pl$FILE_EXT";
 open OUTFILE, "> $outfile";
 print OUTFILE $header, $code, $footer;
 close OUTFILE;
-&write_file($outfile);
+&write_file($outfile, "$destdir/tools/pdbgen");

@@ -17,7 +17,8 @@
 package Gimp::CodeGen::lib;
 
 # Generates all the libgimp C wrappers (used by plugins)
-$destdir = "$main::destdir/libgimp";
+$destdir  = "$main::destdir/libgimp";
+$builddir = "$main::builddir/libgimp";
 
 *arg_types = \%Gimp::CodeGen::pdb::arg_types;
 *arg_parse = \&Gimp::CodeGen::pdb::arg_parse;
@@ -516,8 +517,8 @@ LGPL
         }
         $hname =~ s/_//g; $hname =~ s/pdb\./_pdb./;
         $cname =~ s/_//g; $cname =~ s/pdb\./_pdb./;
-	my $hfile = "$destdir/$hname$FILE_EXT";
-	my $cfile = "$destdir/$cname$FILE_EXT";
+	my $hfile = "$builddir/$hname$FILE_EXT";
+	my $cfile = "$builddir/$cname$FILE_EXT";
 
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{lib}) {
@@ -650,7 +651,7 @@ G_END_DECLS
 #endif /* $guard */
 HEADER
 	close HFILE;
-	&write_file($hfile);
+	&write_file($hfile, $destdir);
 
 	open CFILE, "> $cfile" or die "Can't open $cfile: $!\n";
         print CFILE $lgpl_top;
@@ -680,11 +681,11 @@ SECTION_DOCS
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;
-	&write_file($cfile);
+	&write_file($cfile, $destdir);
     }
 
     if (! $ENV{PDBGEN_GROUPS}) {
-        my $gimp_pdb_headers = "$destdir/gimp_pdb_headers.h$FILE_EXT";
+        my $gimp_pdb_headers = "$builddir/gimp_pdb_headers.h$FILE_EXT";
 	open PFILE, "> $gimp_pdb_headers" or die "Can't open $gimp_pdb_headers: $!\n";
         print PFILE $lgpl_top;
         print PFILE " * gimp_pdb_headers.h\n";
@@ -716,6 +717,6 @@ HEADER
 #endif /* $guard */
 HEADER
 	close PFILE;
-	&write_file($gimp_pdb_headers);
+	&write_file($gimp_pdb_headers, $destdir);
     }
 }
