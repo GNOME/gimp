@@ -85,6 +85,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-disable img)
 
@@ -101,7 +102,7 @@
     (gimp-image-insert-layer img button-layer 0 -1)
     (gimp-layer-set-offsets button-layer (/ glow-radius 2) (/ glow-radius 2))
     (gimp-selection-none img)
-    (gimp-rect-select img 0 0 img-width img-height CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 0 0 img-width img-height)
     (gimp-context-set-foreground '(100 100 100))
     (gimp-context-set-background '(0 0 0))
 
@@ -112,12 +113,12 @@
 
     (gimp-edit-clear glow-layer)
 
-    (gimp-rect-select img
+    (gimp-image-select-rectangle img
+                      CHANNEL-OP-REPLACE
                       (/ glow-radius 4)
                       (/ glow-radius 4)
                       (- img-width (/ glow-radius 2))
-                      (- img-height (/ glow-radius 2))
-                      CHANNEL-OP-REPLACE FALSE 0 )
+                      (- img-height (/ glow-radius 2)))
 
     (gimp-context-set-foreground glow-color)
     (gimp-edit-fill glow-layer FOREGROUND-FILL)

@@ -52,7 +52,7 @@
 
     (if (= (car (gimp-selection-is-empty image)) TRUE)
         (begin
-          (gimp-selection-layer-alpha drawable)
+          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
           (set! from-selection FALSE)
         )
         (begin
@@ -111,7 +111,7 @@
 
     (if (= from-selection TRUE)
         (begin
-          (gimp-selection-load active-selection)
+          (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
           (gimp-image-remove-channel image active-selection)
         )
     )

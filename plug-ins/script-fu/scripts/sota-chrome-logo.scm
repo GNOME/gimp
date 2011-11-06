@@ -106,6 +106,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
@@ -120,11 +121,11 @@
     (gimp-item-set-visible text-layer FALSE)
     (gimp-item-set-visible shadow FALSE)
 
-    (gimp-rect-select img (/ b-size 2) (/ b-size 2) (- width b-size) (- height b-size) CHANNEL-OP-REPLACE 0 0)
-    (gimp-rect-select img b-size b-size (- width (* b-size 2)) (- height (* b-size 2)) CHANNEL-OP-SUBTRACT 0 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE (/ b-size 2) (/ b-size 2) (- width b-size) (- height b-size))
+    (gimp-image-select-rectangle img CHANNEL-OP-SUBTRACT b-size b-size (- width (* b-size 2)) (- height (* b-size 2)))
     (gimp-edit-fill text-layer BACKGROUND-FILL)
 
-    (gimp-selection-layer-alpha text-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE text-layer)
     (gimp-context-set-background '(0 0 0))
     (gimp-selection-translate img offx1 offy1)
     (gimp-selection-feather img feather)
@@ -150,7 +151,7 @@
 
     (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
     (gimp-layer-add-mask layer1 layer-mask)
-    (gimp-selection-layer-alpha text-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE text-layer)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill layer-mask BACKGROUND-FILL)
 

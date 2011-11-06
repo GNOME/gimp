@@ -52,7 +52,7 @@
     (gimp-context-set-background '(191 191 191))
     (gimp-selection-none img)
     (gimp-layer-set-lock-alpha blur-layer FALSE)
-    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
     (gimp-edit-fill blur-layer BACKGROUND-FILL)
     (plug-in-gauss-rle RUN-NONINTERACTIVE img blur-layer 5.0 1 1)
     (gimp-selection-none img)

@@ -20,6 +20,8 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-antialias TRUE)
+    (gimp-context-set-feather FALSE)
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -28,7 +30,7 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear glow-layer)
-    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
     (gimp-selection-grow img grow)
     (gimp-selection-feather img feather)
     (gimp-context-set-foreground glow-color)

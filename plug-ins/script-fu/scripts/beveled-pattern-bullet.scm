@@ -27,6 +27,8 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-antialias TRUE)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img background 0 -1)
@@ -44,11 +46,11 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(127 127 127))
-    (gimp-ellipse-select img 1 1 (- diameter 2) (- diameter 2) CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 1 1 (- diameter 2) (- diameter 2))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-ellipse-select img 2 2 (- diameter 4) (- diameter 4) CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 2 2 (- diameter 4) (- diameter 4))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
@@ -60,7 +62,7 @@
     ; Background
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-ellipse-select img 0 0 diameter diameter CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 0 0 diameter diameter)
     (gimp-selection-invert img)
     (gimp-edit-clear background)
     (gimp-selection-none img)

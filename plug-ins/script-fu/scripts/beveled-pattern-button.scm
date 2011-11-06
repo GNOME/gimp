@@ -61,6 +61,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img background 0 1)
@@ -78,11 +79,11 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(127 127 127))
-    (gimp-rect-select img 1 1 (- width 2) (- height 2) CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 1 1 (- width 2) (- height 2))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-rect-select img 2 2 (- width 4) (- height 4) CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 2 2 (- width 4) (- height 4))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)

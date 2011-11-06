@@ -24,8 +24,12 @@
                                      flatten)
 
   (define (center-ellipse img cx cy rx ry op aa feather frad)
-    (gimp-ellipse-select img (- cx rx) (- cy ry) (+ rx rx) (+ ry ry)
-                         op aa feather frad)
+    (gimp-context-push)
+    (gimp-context-set-antialias aa)
+    (gimp-context-set-feather feather)
+    (gimp-context-set-feather-radius frad frad)
+    (gimp-image-select-ellipse img op (- cx rx) (- cy ry) (+ rx rx) (+ ry ry))
+    (gimp-context-pop)
   )
 
 

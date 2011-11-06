@@ -128,6 +128,8 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-antialias TRUE)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-disable img)
     ;(gimp-image-resize img (+ length height) (+ height height) 0 0)
@@ -138,7 +140,7 @@
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)
 
-    (gimp-free-select img 6 big-arrow CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-image-select-polygon img CHANNEL-OP-REPLACE 6 big-arrow)
 
     (gimp-context-set-foreground '(103 103 103))
     (gimp-context-set-background '(0 0 0))

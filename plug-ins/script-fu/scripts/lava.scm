@@ -53,7 +53,7 @@
     )
 
     (if (= (car (gimp-selection-is-empty image)) TRUE)
-        (gimp-selection-layer-alpha drawable)
+        (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
     )
 
     (set! active-selection (car (gimp-selection-save image)))
@@ -80,7 +80,7 @@
           (gimp-selection-none image)
           (gimp-edit-clear lava-layer)
 
-          (gimp-selection-load active-selection)
+          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
           (gimp-image-set-active-layer image lava-layer)
         )
     )

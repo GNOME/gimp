@@ -55,6 +55,7 @@
         ;--- main program structure starts here, begin of "if-1"
         (begin
           (gimp-context-push)
+          (gimp-context-set-feather FALSE)
 
           (set! img (car (gimp-image-duplicate org-img)))
           (gimp-image-undo-disable img)
@@ -93,18 +94,18 @@
               (set! bl-y-off             (cadr (gimp-drawable-offsets bl-layer)))
 
               ;--- select a rectangular area to blend
-              (gimp-rect-select img bl-x-off bl-y-off bl-width bl-height CHANNEL-OP-REPLACE 0 0)
+              (gimp-image-select-rectangle img CHANNEL-OP-REPLACE bl-x-off bl-y-off bl-width bl-height)
               ;--- select at least 1 pixel!
-              (gimp-rect-select img bl-x-off bl-y-off (+ bl-width 1) bl-height CHANNEL-OP-ADD 0 0)
+              (gimp-image-select-rectangle img CHANNEL-OP-ADD bl-x-off bl-y-off (+ bl-width 1) bl-height)
 
               (if (= fadeout FALSE)
                   (begin
                     (set! nofadeout-bl-x-off (car (gimp-drawable-offsets bl-layer)))
                     (set! nofadeout-bl-width (+ nofadeout-bl-x-off bl-x))
                     (set! nofadeout-bl-width (max nofadeout-bl-width 1))
-                    (gimp-rect-select img nofadeout-bl-x-off bl-y-off
-                                      nofadeout-bl-width bl-height
-                                      CHANNEL-OP-REPLACE 0 0)
+                    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE
+                                                 nofadeout-bl-x-off bl-y-off
+                                                 nofadeout-bl-width bl-height)
                   )
               )
 

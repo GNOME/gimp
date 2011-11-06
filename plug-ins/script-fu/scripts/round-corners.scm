@@ -58,6 +58,10 @@
                        img)))
          (pic-layer (car (gimp-image-get-active-drawable image))))
 
+  (gimp-context-push)
+  (gimp-context-set-antialias TRUE)
+  (gimp-context-set-feather FALSE)
+
   (if (= work-on-copy TRUE)
       (gimp-image-undo-disable image)
       (gimp-image-undo-group-start image)
@@ -68,16 +72,16 @@
 
   ; round the edges
   (gimp-selection-none image)
-  (gimp-rect-select image 0 0 radius radius CHANNEL-OP-ADD 0 0)
-  (gimp-ellipse-select image 0 0 diam diam CHANNEL-OP-SUBTRACT TRUE 0 0)
-  (gimp-rect-select image (- width radius) 0 radius radius CHANNEL-OP-ADD 0 0)
-  (gimp-ellipse-select image (- width diam) 0 diam diam CHANNEL-OP-SUBTRACT TRUE 0 0)
-  (gimp-rect-select image 0 (- height radius) radius radius CHANNEL-OP-ADD 0 0)
-  (gimp-ellipse-select image 0 (- height diam) diam diam CHANNEL-OP-SUBTRACT TRUE 0 0)
-  (gimp-rect-select image (- width radius) (- height radius)
-                    radius radius CHANNEL-OP-ADD 0 0)
-  (gimp-ellipse-select image (- width diam) (- height diam)
-                       diam diam CHANNEL-OP-SUBTRACT TRUE 0 0)
+  (gimp-image-select-rectangle image CHANNEL-OP-ADD 0 0 radius radius)
+  (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT  0 0 diam diam)
+  (gimp-image-select-rectangle image CHANNEL-OP-ADD (- width radius) 0 radius radius)
+  (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT (- width diam) 0 diam diam)
+  (gimp-image-select-rectangle image CHANNEL-OP-ADD 0 (- height radius) radius radius)
+  (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT 0 (- height diam) diam diam)
+  (gimp-image-select-rectangle image CHANNEL-OP-ADD (- width radius) (- height radius)
+                    radius radius)
+  (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT (- width diam) (- height diam)
+                       diam diam)
   (gimp-edit-clear pic-layer)
   (gimp-selection-none image)
 
@@ -118,6 +122,7 @@
 
   (if (= work-on-copy TRUE)
       (gimp-display-new image))
+  (gimp-context-pop)
   (gimp-displays-flush))
 )
 

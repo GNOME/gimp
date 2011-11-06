@@ -83,6 +83,8 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-antialias TRUE)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img background 0 -1)
@@ -100,19 +102,19 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(127 127 127))
-    (gimp-rect-select img 1 1 (- size 2) (- size 2) CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 1 1 (- size 2) (- size 2))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-rect-select img 2 2 (- size 4) (- size 4) CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 2 2 (- size 4) (- size 4))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(127 127 127))
-    (gimp-free-select img 6 big-arrow CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-image-select-polygon img CHANNEL-OP-REPLACE 6 big-arrow)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-free-select img 6 med-arrow CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-image-select-polygon img CHANNEL-OP-REPLACE 6 med-arrow)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
@@ -127,7 +129,7 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(192 192 192))
-    (gimp-free-select img 6 small-arrow CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-image-select-polygon img CHANNEL-OP-REPLACE 6 small-arrow)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)

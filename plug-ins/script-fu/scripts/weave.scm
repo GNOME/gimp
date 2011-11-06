@@ -29,7 +29,7 @@
                         height
                         dest-x
                         dest-y)
-  (gimp-rect-select img x1 y1 width height CHANNEL-OP-REPLACE FALSE 0)
+  (gimp-image-select-rectangle img CHANNEL-OP-REPLACE x1 y1 width height)
   (gimp-edit-copy drawable)
   (let ((floating-sel (car (gimp-edit-paste drawable FALSE))))
     (gimp-layer-set-offsets floating-sel dest-x dest-y)
@@ -47,6 +47,7 @@
          (img (car (gimp-image-new tile-size tile-size RGB)))
          (drawable (car (gimp-layer-new img tile-size tile-size RGB-IMAGE
                                         "Weave tile" 100 NORMAL-MODE))))
+
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img drawable 0 0)
 
@@ -58,14 +59,12 @@
     (gimp-context-set-foreground '(255 255 255))
     (gimp-context-set-background (list darkness darkness darkness))
 
-    (gimp-rect-select img
-                      0
-                      ribbon-spacing
-                      (+ (* 2 ribbon-spacing) ribbon-width)
-                      ribbon-width
-                      CHANNEL-OP-REPLACE
-                      FALSE
-                      0)
+    (gimp-image-select-rectangle img
+                                 CHANNEL-OP-REPLACE
+                                 0
+                                 ribbon-spacing
+                                 (+ (* 2 ribbon-spacing) ribbon-width)
+                                 ribbon-width)
 
     (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
                      GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
@@ -74,14 +73,12 @@
 
     ; Create main vertical ribbon
 
-    (gimp-rect-select img
-                      (+ (* 2 ribbon-spacing) ribbon-width)
-                      0
-                      ribbon-width
-                      (+ (* 2 ribbon-spacing) ribbon-width)
-                      CHANNEL-OP-REPLACE
-                      FALSE
-                      0)
+    (gimp-image-select-rectangle img
+                                 CHANNEL-OP-REPLACE
+                                 (+ (* 2 ribbon-spacing) ribbon-width)
+                                 0
+                                 ribbon-width
+                                 (+ (* 2 ribbon-spacing) ribbon-width))
 
     (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
                      GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
@@ -131,7 +128,6 @@
     ; Done
 
     (gimp-image-undo-enable img)
-
     (list img drawable)))
 
 ; Creates a complete weaving mask
@@ -176,9 +172,9 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill drawable BACKGROUND-FILL)
 
-    (gimp-rect-select img r1-x1 r1-y1 r1-width r1-height CHANNEL-OP-REPLACE FALSE 0)
-    (gimp-rect-select img r2-x1 r2-y1 r2-width r2-height CHANNEL-OP-ADD FALSE 0)
-    (gimp-rect-select img r3-x1 r3-y1 r3-width r3-height CHANNEL-OP-ADD FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE r1-x1 r1-y1 r1-width r1-height)
+    (gimp-image-select-rectangle img CHANNEL-OP-ADD r2-x1 r2-y1 r2-width r2-height)
+    (gimp-image-select-rectangle img CHANNEL-OP-ADD r3-x1 r3-y1 r3-width r3-height)
 
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill drawable BACKGROUND-FILL)
@@ -370,6 +366,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-feather FALSE)
 
     (gimp-selection-all w-img)
     (gimp-edit-copy w-layer)

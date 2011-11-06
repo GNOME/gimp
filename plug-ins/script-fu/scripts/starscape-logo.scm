@@ -76,7 +76,7 @@
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (script-fu-util-image-add-layers img shadow-layer glow-layer bg-layer)
-    (gimp-image-add-channel img bump-channel 0)
+    (gimp-image-insert-channel img bump-channel 0 0)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
 
     (gimp-context-set-background '(0 0 0))
@@ -84,14 +84,14 @@
     (gimp-edit-clear shadow-layer)
     (gimp-edit-clear glow-layer)
 
-    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
     (gimp-selection-grow img grow)
     (gimp-selection-feather img feather)
     (gimp-context-set-background glow-color)
     (gimp-selection-feather img feather)
     (gimp-edit-fill glow-layer BACKGROUND-FILL)
 
-    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
     (gimp-selection-feather img shadow-feather)
     (gimp-context-set-background '(0 0 0))
     (gimp-selection-translate img offx offy)

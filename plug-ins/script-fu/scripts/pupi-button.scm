@@ -82,11 +82,11 @@
                         height
                         ratio)
     (let* ((diameter (* ratio height)))
-      (gimp-ellipse-select img x y diameter height CHANNEL-OP-ADD FALSE 0 0)
-      (gimp-ellipse-select img (+ x (- width diameter)) y
-                           diameter height CHANNEL-OP-ADD FALSE 0 0)
-      (gimp-rect-select img (+ x (/ diameter 2)) y
-                        (- width diameter) height CHANNEL-OP-ADD FALSE 0)))
+      (gimp-image-select-ellipse img CHANNEL-OP-ADD x y diameter height)
+      (gimp-image-select-ellipse img CHANNEL-OP-ADD (+ x (- width diameter)) y
+                           diameter height)
+      (gimp-image-select-rectangle img CHANNEL-OP-ADD (+ x (/ diameter 2)) y
+                        (- width diameter) height)))
 
   (let* (
         (text-extents (gimp-text-get-extents-fontname text
@@ -115,6 +115,7 @@
 
     (gimp-context-push)
 
+    (gimp-context-set-antialias FALSE)
     (gimp-image-undo-disable img)
 
     ; Create bumpmap layer

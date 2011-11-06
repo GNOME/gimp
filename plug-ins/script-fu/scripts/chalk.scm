@@ -32,6 +32,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-feather FALSE)
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -54,7 +55,7 @@
 
       ; work-around for sobel edge detect screw-up (why does this happen?)
       ; the top line of the image has some garbage instead of the bgcolor
-      (gimp-rect-select img 0 0 width 1 CHANNEL-OP-ADD FALSE 0)
+      (gimp-image-select-rectangle img CHANNEL-OP-ADD 0 0 width 1)
       (gimp-edit-clear logo-layer)
       )
 

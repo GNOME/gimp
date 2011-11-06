@@ -47,7 +47,7 @@
     (gimp-floating-sel-anchor (car (gimp-text-fontname img text-layer 10 10 string 0 TRUE font-size PIXELS font)))
 
     ; save the selection for later
-    (gimp-selection-layer-alpha text-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE text-layer)
     (set! saved-sel (car (gimp-selection-save img)))
 
     ; add layer mask
@@ -62,7 +62,7 @@
 
     ; feather the mask
     (gimp-layer-set-edit-mask text-layer TRUE)
-    (gimp-selection-load saved-sel)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE saved-sel)
     (gimp-selection-feather img 10)
     (gimp-context-set-background (list grey grey grey))
     (gimp-edit-fill text-mask BACKGROUND-FILL)

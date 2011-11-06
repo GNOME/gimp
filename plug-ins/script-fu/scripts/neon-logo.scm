@@ -25,68 +25,68 @@
                                 shadow)
 
   (define (set-pt a index x y)
-	(begin
-	 (aset a (* index 2) x)
-	 (aset a (+ (* index 2) 1) y)))
+    (begin
+      (aset a (* index 2) x)
+      (aset a (+ (* index 2) 1) y)))
 
   (define (neon-spline1)
-	(let* ((a (cons-array 6 'byte)))
-	  (set-pt a 0 0 0)
-	  (set-pt a 1 127 145)
-	  (set-pt a 2 255 255)
-	  a))
+    (let* ((a (cons-array 6 'byte)))
+      (set-pt a 0 0 0)
+      (set-pt a 1 127 145)
+      (set-pt a 2 255 255)
+      a))
 
   (define (neon-spline2)
-	(let* ((a (cons-array 6 'byte)))
-	  (set-pt a 0 0 0)
-	  (set-pt a 1 110 150)
-	  (set-pt a 2 255 255)
-	  a))
+    (let* ((a (cons-array 6 'byte)))
+      (set-pt a 0 0 0)
+      (set-pt a 1 110 150)
+      (set-pt a 2 255 255)
+      a))
 
   (define (neon-spline3)
-	(let* ((a (cons-array 6 'byte)))
-	  (set-pt a 0 0 0)
-	  (set-pt a 1 100 185)
-	  (set-pt a 2 255 255)
-	  a))
+    (let* ((a (cons-array 6 'byte)))
+      (set-pt a 0 0 0)
+      (set-pt a 1 100 185)
+      (set-pt a 2 255 255)
+      a))
 
   (define (neon-spline4)
-	(let* ((a (cons-array 8 'byte)))
-	  (set-pt a 0 0 0)
-	  (set-pt a 1 64 64)
-	  (set-pt a 2 127 192)
-	  (set-pt a 3 255 255)
-	  a))
+    (let* ((a (cons-array 8 'byte)))
+      (set-pt a 0 0 0)
+      (set-pt a 1 64 64)
+      (set-pt a 2 127 192)
+      (set-pt a 3 255 255)
+      a))
 
   (define (find-hue-offset color)
-	(let* (
-		  (R (car color))
-		  (G (cadr color))
-		  (B (caddr color))
-		  (max-val (max R G B))
-		  (min-val (min R G B))
-		  (delta (- max-val min-val))
-		  (hue 0)
-		  )
-	  (if (= delta 0)
-		  0
-		  (begin
-			(cond
-			  ((= max-val R)
-			   (set! hue (/ (- G B) (* 1.0 delta))))
-			  ((= max-val G)
-			   (set! hue (+ 2 (/ (- B R) (* 1.0 delta)))))
-			  ((= max-val B)
-			   (set! hue (+ 4 (/ (- R G) (* 1.0 delta)))))
-			)
-			(set! hue (* hue 60))
-			(if (< hue 0) (set! hue (+ hue 360)))
-			(if (> hue 360) (set! hue (- hue 360)))
-			(if (> hue 180) (set! hue (- hue 360)))
-			hue
-		  )
-	  )
-	)
+    (let* (
+          (R (car color))
+          (G (cadr color))
+          (B (caddr color))
+          (max-val (max R G B))
+          (min-val (min R G B))
+          (delta (- max-val min-val))
+          (hue 0)
+          )
+      (if (= delta 0)
+        0
+        (begin
+          (cond
+            ((= max-val R)
+             (set! hue (/ (- G B) (* 1.0 delta))))
+            ((= max-val G)
+             (set! hue (+ 2 (/ (- B R) (* 1.0 delta)))))
+            ((= max-val B)
+             (set! hue (+ 4 (/ (- R G) (* 1.0 delta)))))
+          )
+          (set! hue (* hue 60))
+          (if (< hue 0) (set! hue (+ hue 360)))
+          (if (> hue 360) (set! hue (- hue 360)))
+          (if (> hue 180) (set! hue (- hue 360)))
+          hue
+        )
+      )
+    )
   )
 
   (let* (
@@ -104,42 +104,42 @@
         (width (car (gimp-drawable-width tube-layer)))
         (height (car (gimp-drawable-height tube-layer)))
         (glow-layer (car (gimp-layer-new img width height RGBA-IMAGE
-					 "Neon Glow" 100 NORMAL-MODE)))
+                                         "Neon Glow" 100 NORMAL-MODE)))
         (bg-layer (car (gimp-layer-new img width height RGB-IMAGE
-				       "Background" 100 NORMAL-MODE)))
+                                       "Background" 100 NORMAL-MODE)))
         (shadow-layer (if (= shadow TRUE)
                           (car (gimp-layer-new img width height RGBA-IMAGE
-					       "Shadow" 100 NORMAL-MODE))
+                                               "Shadow" 100 NORMAL-MODE))
                           0))
         (selection 0)
-	(max_shrink 0)
+        (max_shrink 0)
         )
 
     (gimp-context-push)
 
     ; ensure that we don't shrink selection so much
     ; that we create an empty selection.
-    (gimp-selection-layer-alpha tube-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE tube-layer)
     (while (= (car (gimp-selection-is-empty img)) FALSE)
-	(begin
-	  (gimp-selection-shrink img 1)
-          (set! max_shrink (+ max_shrink 1))
-          ; escape early if we know that we can perform
-	  ; as much shrink steps as we want
-	  (if (> max_shrink shrink)
-	      (gimp-selection-none img))
-	)
+      (begin
+        (gimp-selection-shrink img 1)
+              (set! max_shrink (+ max_shrink 1))
+              ; escape early if we know that we can perform
+        ; as much shrink steps as we want
+        (if (> max_shrink shrink)
+            (gimp-selection-none img))
+      )
     )
     (if (= (car (gimp-selection-is-empty img)) TRUE)
-	(if (> max_shrink 0)
-	    (set! max_shrink (- max_shrink 1))))
+      (if (> max_shrink 0)
+          (set! max_shrink (- max_shrink 1))))
     ; clamp upper bounds to valid shrink step range
     (if (> shrink max_shrink)
-	(set! shrink max_shrink))
+      (set! shrink max_shrink))
     (if (> inc-shrink (/ max_shrink 3))
-	(set! inc-shrink (/ max_shrink 3)))
+      (set! inc-shrink (/ max_shrink 3)))
     (if (> shadow-shrink max_shrink)
-	(set! shadow-shrink max_shrink))
+      (set! shadow-shrink max_shrink))
 
     (script-fu-util-image-resize-from-layer img tube-layer)
     (script-fu-util-image-add-layers img glow-layer bg-layer)
@@ -149,7 +149,7 @@
           (gimp-edit-clear shadow-layer)))
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-selection-layer-alpha tube-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE tube-layer)
     (set! selection (car (gimp-selection-save img)))
     (gimp-selection-none img)
 
@@ -159,7 +159,7 @@
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
-    (gimp-selection-load selection)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE selection)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill tube-layer BACKGROUND-FILL)
     (gimp-selection-shrink img shrink)
@@ -169,27 +169,27 @@
 
     (gimp-selection-none img)
     (if (not (= feather1 0))
-	(plug-in-gauss-rle RUN-NONINTERACTIVE img tube-layer feather1 TRUE TRUE))
-    (gimp-selection-load selection)
+      (plug-in-gauss-rle RUN-NONINTERACTIVE img tube-layer feather1 TRUE TRUE))
+    (gimp-image-select-item img CHANNEL-OP-REPLACE selection)
     (if (not (= feather2 0))
-	(plug-in-gauss-rle RUN-NONINTERACTIVE img tube-layer feather2 TRUE TRUE))
+      (plug-in-gauss-rle RUN-NONINTERACTIVE img tube-layer feather2 TRUE TRUE))
 
     (gimp-selection-feather img inc-shrink)
     (gimp-selection-shrink img inc-shrink)
     (gimp-curves-spline tube-layer 4 6 (neon-spline1))
 
-    (gimp-selection-load selection)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE selection)
     (gimp-selection-feather img inc-shrink)
     (gimp-selection-shrink img (* inc-shrink 2))
     (gimp-curves-spline tube-layer 4 6 (neon-spline2))
 
-    (gimp-selection-load selection)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE selection)
     (gimp-selection-feather img inc-shrink)
     (gimp-selection-shrink img (* inc-shrink 3))
     (gimp-curves-spline tube-layer 4 6 (neon-spline3))
 
     (gimp-layer-set-lock-alpha tube-layer 1)
-    (gimp-selection-layer-alpha tube-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE tube-layer)
     (gimp-selection-invert img)
     (gimp-context-set-background glow-color)
     (gimp-edit-fill tube-layer BACKGROUND-FILL)
@@ -198,7 +198,7 @@
     (gimp-layer-set-lock-alpha tube-layer 0)
     (gimp-curves-spline tube-layer 4 8 (neon-spline4))
 
-    (gimp-selection-load selection)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE selection)
     (gimp-selection-grow img grow)
     (gimp-selection-invert img)
     (gimp-edit-clear tube-layer)
@@ -209,7 +209,7 @@
 
     (if (not (= shadow 0))
         (begin
-          (gimp-selection-load selection)
+          (gimp-image-select-item img CHANNEL-OP-REPLACE selection)
           (gimp-selection-grow img grow)
           (gimp-selection-shrink img shadow-shrink)
           (gimp-selection-feather img shadow-feather)

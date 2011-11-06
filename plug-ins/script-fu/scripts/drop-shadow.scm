@@ -15,14 +15,15 @@
 ; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;
 ;
-; drop-shadow.scm   version 1.04   1999/12/21
+; drop-shadow.scm   version 1.05   2011/4/21
 ;
 ; CHANGE-LOG:
 ; 1.00 - initial release
 ; 1.01 - fixed the problem with a remaining copy of the selection
 ; 1.02 - some code cleanup, no real changes
 ; 1.03 - can't call gimp-edit-fill until layer is added to image!
-;
+; 1.04
+; 1.05 - replaced deprecated function calls with new ones for 2.8
 ;
 ; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org>
 ;
@@ -63,7 +64,7 @@
   (gimp-layer-add-alpha drawable)
   (if (= (car (gimp-selection-is-empty image)) TRUE)
       (begin
-        (gimp-selection-layer-alpha drawable)
+        (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
         (set! from-selection FALSE))
       (begin
         (set! from-selection TRUE)

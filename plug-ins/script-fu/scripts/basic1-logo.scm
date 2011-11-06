@@ -23,7 +23,7 @@
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear shadow-layer)
-    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
     (gimp-context-set-background '(0 0 0))
     (gimp-selection-feather img 7.5)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)

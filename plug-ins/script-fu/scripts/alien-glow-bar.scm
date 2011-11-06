@@ -39,6 +39,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img (+ length height) (+ height height) 0 0)
@@ -52,9 +53,9 @@
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)
 
-    (gimp-rect-select img
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE
                       (/ height 2) (/ height 2)
-                      length height CHANNEL-OP-REPLACE FALSE 0)
+                      length height)
     (gimp-context-set-foreground '(79 79 79))
     (gimp-context-set-background '(0 0 0))
 

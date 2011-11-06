@@ -34,6 +34,7 @@
                                         100 NORMAL-MODE))))
 
     (gimp-context-push)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img drawable 0 0)
@@ -47,23 +48,23 @@
 
     ; Whirl upper left
 
-    (gimp-rect-select img 0 0 hsize hsize CHANNEL-OP-REPLACE 0 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 0 0 hsize hsize)
     (whirl-it img drawable angle times)
     (gimp-invert drawable)
 
     ; Whirl upper right
 
-    (gimp-rect-select img hsize 0 hsize hsize CHANNEL-OP-REPLACE 0 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE hsize 0 hsize hsize)
     (whirl-it img drawable (- angle) times)
 
     ; Whirl lower left
 
-    (gimp-rect-select img 0 hsize hsize hsize CHANNEL-OP-REPLACE 0 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 0 hsize hsize hsize)
     (whirl-it img drawable (- angle) times)
 
     ; Whirl lower right
 
-    (gimp-rect-select img hsize hsize hsize hsize CHANNEL-OP-REPLACE 0 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE hsize hsize hsize hsize)
     (whirl-it img drawable angle times)
     (gimp-invert drawable)
 
@@ -74,7 +75,7 @@
     (gimp-display-new img)
 
     (gimp-context-pop)
-  )
+ )
 )
 
 (script-fu-register "script-fu-swirly-pattern"

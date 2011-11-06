@@ -61,7 +61,7 @@
     (gimp-edit-bucket-fill bg-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
 
-    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
 
 ; if we are going to use transparent gradients for text, we will (maybe) need to uncomment this
 ; this clears black letters first so you don't end up with black where the transparent should be
@@ -89,7 +89,7 @@
 
     (gimp-selection-none img)
 
-    (gimp-selection-layer-alpha grow-me)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE grow-me)
     (gimp-selection-grow img grow-size)
 
 ; if we are going to use transparent gradients for outline, we will (maybe) need to uncomment this
@@ -129,7 +129,7 @@
 
     (if (= use-pattern-overlay TRUE)
       (begin
-        (gimp-selection-layer-alpha grow-me)
+        (gimp-image-select-item img CHANNEL-OP-REPLACE grow-me)
         (gimp-context-set-pattern pattern-overlay)
         (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL
                                OVERLAY-MODE 100 0 FALSE 0 0)
@@ -139,7 +139,7 @@
 
     (if (= shadow-toggle TRUE)
       (begin
-        (gimp-selection-layer-alpha logo-layer)
+        (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
         (set! dont-drop-me (car (script-fu-drop-shadow img logo-layer
                                                        s-offset-x s-offset-y
                                                        15 '(0 0 0) 80 TRUE)))

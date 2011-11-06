@@ -79,6 +79,8 @@
        )
 
     (gimp-context-push)
+    (gimp-context-set-antialias TRUE)
+    (gimp-context-set-feather FALSE)
 
     ; Create image
 
@@ -101,7 +103,7 @@
 
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bumpmap-layer BACKGROUND-FILL)
-    (gimp-selection-layer-alpha text-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE text-layer)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bumpmap-layer BACKGROUND-FILL)
     (gimp-selection-none img)
@@ -129,7 +131,7 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
-    (gimp-ellipse-select img 0 0 text-height text-height CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 0 0 text-height text-height)
     (gimp-context-set-background (car (gimp-image-pick-color img text-layer
                                                              text-layers-offset 0
                                                              TRUE FALSE 0)))
@@ -137,8 +139,9 @@
 
     ; Fade-out gradient at the right
 
-    (gimp-rect-select img (- img-width fade-width) 0 fade-width text-height
-                      CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE
+                                 (- img-width fade-width) 0
+                                 fade-width text-height)
     (gimp-context-set-foreground (car (gimp-context-get-background)))
     (gimp-context-set-background '(0 0 0))
 

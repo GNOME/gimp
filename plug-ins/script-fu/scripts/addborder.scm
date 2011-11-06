@@ -108,6 +108,8 @@
                                      _"Border Layer" 100 NORMAL-MODE))))
 
     (gimp-context-push)
+    (gimp-context-set-antialias FALSE)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-group-start img)
 
@@ -121,41 +123,29 @@
     (gimp-drawable-fill layer TRANSPARENT-FILL)
 
     (gimp-context-set-background (adjcolour colour dvalue))
-    (gimp-free-select img
-                      10
-                      (gen_top_array xsize ysize owidth oheight width height)
-                      CHANNEL-OP-REPLACE
-                      0
-                      0
-                      0.0)
+    (gimp-image-select-polygon img
+                               CHANNEL-OP-REPLACE
+                               10
+                               (gen_top_array xsize ysize owidth oheight width height))
     (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-context-set-background (adjcolour colour (/ dvalue 2)))
-    (gimp-free-select img
-                      10
-                      (gen_left_array xsize ysize owidth oheight width height)
-                      CHANNEL-OP-REPLACE
-                      0
-                      0
-                      0.0)
+    (gimp-image-select-polygon img
+                               CHANNEL-OP-REPLACE
+                               10
+                               (gen_left_array xsize ysize owidth oheight width height))
     (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-context-set-background (adjcolour colour (- 0 (/ dvalue 2))))
-    (gimp-free-select img
-                      10
-                      (gen_right_array xsize ysize owidth oheight width height)
-                      CHANNEL-OP-REPLACE
-                      0
-                      0
-                      0.0)
+    (gimp-image-select-polygon img
+                               CHANNEL-OP-REPLACE
+                               10
+                               (gen_right_array xsize ysize owidth oheight width height))
 
     (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-context-set-background (adjcolour colour (- 0 dvalue)))
-    (gimp-free-select img
-                      10
-                      (gen_bottom_array xsize ysize owidth oheight width height)
-                      CHANNEL-OP-REPLACE
-                      0
-                      0
-                      0.0)
+    (gimp-image-select-polygon img
+                               CHANNEL-OP-REPLACE
+                               10
+                               (gen_bottom_array xsize ysize owidth oheight width height))
 
     (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-selection-none img)

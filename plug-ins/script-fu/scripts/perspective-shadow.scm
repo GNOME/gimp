@@ -58,7 +58,7 @@
   (gimp-layer-add-alpha drawable)
   (if (= (car (gimp-selection-is-empty image)) TRUE)
       (begin
-        (gimp-selection-layer-alpha drawable)
+        (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
         (set! from-selection FALSE))
       (begin
         (set! from-selection TRUE)
@@ -148,14 +148,16 @@
                              image-offset-x
                              image-offset-y)))
 
-    (gimp-drawable-transform-perspective shadow-layer
+    (gimp-context-set-transform-direction TRANSFORM-FORWARD)
+    (gimp-context-set-interpolation interpolation)
+    (gimp-context-set-transform-recursion 3)
+    (gimp-context-set-transform-resize TRANSFORM-RESIZE-ADJUST)
+
+    (gimp-item-transform-perspective shadow-layer
                       x0 y0
                       x1 y1
                       x2 y2
-                      x3 y3
-                      TRANSFORM-FORWARD
-                      interpolation
-                      TRUE 3 TRANSFORM-RESIZE-ADJUST)
+                      x3 y3)
 
     (if (>= shadow-blur 1.0)
         (begin
@@ -179,9 +181,9 @@
         (gimp-image-remove-channel image active-selection)))
 
   (if (and
-       (= (car (gimp-layer-is-floating-sel drawable)) 0)
-       (= from-selection FALSE))
-      (gimp-image-raise-item image drawable))
+        (= (car (gimp-layer-is-floating-sel drawable)) 0)
+        (= from-selection FALSE))
+    (gimp-image-raise-item image drawable))
 
   (gimp-image-set-active-layer image drawable)
   (gimp-image-undo-group-end image)

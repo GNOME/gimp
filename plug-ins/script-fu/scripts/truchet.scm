@@ -27,8 +27,12 @@
 ;  NOTE: This script works best with even values for 'thickness'.
 
 (define (center-ellipse img cx cy rx ry op aa feather frad)
-  (gimp-ellipse-select img (- cx rx) (- cy ry) (+ rx rx ) (+ ry ry )
-                       op aa feather frad)
+  (gimp-context-push)
+  (gimp-context-set-antialias aa)
+  (gimp-context-set-feather feather)
+  (gimp-context-set-feather-radius frad frad)
+  (gimp-image-select-ellipse img op (- cx rx) (- cy ry) (+ rx rx ) (+ ry ry ))
+  (gimp-context-pop)
 )
 
 (define (use-tiles img drawable height width img2 drawable2 xoffset yoffset)
@@ -47,6 +51,8 @@
         (inner-radius (- (/ size 2) half-thickness))
         )
 
+    (gimp-context-push)
+
     (gimp-selection-all img)
     (gimp-context-set-background backcolor)
     (gimp-edit-fill drawable1 BACKGROUND-FILL)
@@ -55,7 +61,7 @@
           (tempSize (* size 3))
           (temp-img (car (gimp-image-new tempSize tempSize RGB)))
           (temp-draw (car (gimp-layer-new temp-img tempSize tempSize RGB-IMAGE "Jabar" 100 NORMAL-MODE)))
-         )
+          )
       (gimp-image-undo-disable temp-img)
       (gimp-image-insert-layer temp-img temp-draw 0 0)
       (gimp-context-set-background backcolor)
@@ -65,8 +71,8 @@
       (center-ellipse temp-img size size outer-radius outer-radius CHANNEL-OP-REPLACE TRUE FALSE 0)
       (center-ellipse temp-img size size inner-radius inner-radius CHANNEL-OP-SUBTRACT TRUE FALSE 0)
 
-      (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius CHANNEL-OP-ADD TRUE FALSE 0)
-      (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius CHANNEL-OP-SUBTRACT TRUE FALSE 0)
+      (center-ellipse temp-img (* size 2) (* size 2) outer-radius outer-radius CHANNEL-OP-ADD TRUE FALSE 0)
+      (center-ellipse temp-img (* size 2) (* size 2) inner-radius inner-radius CHANNEL-OP-SUBTRACT TRUE FALSE 0)
       (gimp-context-set-background forecolor)
       (gimp-edit-fill temp-draw BACKGROUND-FILL)
 
@@ -85,12 +91,14 @@
       (let ((floating-sel (car (gimp-edit-paste drawable1 FALSE))))
         (gimp-floating-sel-anchor floating-sel))
 
-      (let ((drawble (car (gimp-drawable-transform-flip-simple drawable1
-                             ORIENTATION-VERTICAL TRUE 0 TRUE)))))
+      (gimp-context-set-transform-resize TRANSFORM-RESIZE-CLIP)
+      (let ((drawble (car (gimp-item-transform-flip-simple drawable1
+                               ORIENTATION-VERTICAL TRUE 0)))))
 
 
       ;(gimp-display-new temp-img)
       (gimp-image-delete temp-img)
+      (gimp-context-pop)
     )
   )
 )

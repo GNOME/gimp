@@ -32,6 +32,9 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-feather FALSE)
+    (gimp-context-set-interpolation INTERPOLATION-NONE)
+    (gimp-context-set-transform-resize TRANSFORM-RESIZE-ADJUST)
 
     (gimp-selection-none img)
     (gimp-image-resize img img-width img-height posx posy)
@@ -51,19 +54,19 @@
                      FALSE 0 0 TRUE
                      0 0 0 (+ height 5))
 
-    (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) CHANNEL-OP-REPLACE 0 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 0 (- (/ height 2) feather) img-width (* 2 feather))
     (plug-in-gauss-iir RUN-NONINTERACTIVE img logo-layer smear TRUE TRUE)
     (gimp-selection-none img)
     (plug-in-ripple RUN-NONINTERACTIVE img logo-layer period amplitude 1 0 1 TRUE FALSE)
     (gimp-layer-translate logo-layer 5 5)
     (gimp-layer-resize logo-layer img-width img-height 5 5)
 
-    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
     (set! channel (car (gimp-selection-save img)))
     (gimp-selection-shrink img shrink)
     (gimp-selection-invert img)
     (plug-in-gauss-rle RUN-NONINTERACTIVE img channel feather TRUE TRUE)
-    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
     (gimp-selection-invert img)
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill channel BACKGROUND-FILL)
@@ -71,27 +74,26 @@
 
     (plug-in-bump-map RUN-NONINTERACTIVE img logo-layer channel 135 45 depth 0 0 0 0 FALSE FALSE 0)
 
-    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE logo-layer)
     (set! fs (car (gimp-selection-float shadow-layer 0 0)))
     (gimp-edit-clear shadow-layer)
-    (gimp-drawable-transform-perspective-default fs
+    (gimp-item-transform-perspective fs
                       (+ 5 (* 0.15 height)) (- height (* 0.15 height))
                       (+ 5 width (* 0.15 height)) (- height (* 0.15 height))
                       5 height
-                      (+ 5 width) height
-                      FALSE FALSE)
+                      (+ 5 width) height)
     (gimp-floating-sel-anchor fs)
     (plug-in-gauss-rle RUN-NONINTERACTIVE img shadow-layer smear TRUE TRUE)
 
-    (gimp-rect-select img 5 5 width height CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 5 5 width height)
     (gimp-edit-copy logo-layer)
     (set! fs (car (gimp-edit-paste reflect-layer FALSE)))
     (gimp-floating-sel-anchor fs)
-    (gimp-drawable-transform-scale-default reflect-layer
-                                           0 0 width (* 0.85 height)
-                                           FALSE FALSE)
-    (gimp-drawable-transform-flip-simple reflect-layer ORIENTATION-VERTICAL
-                                         TRUE 0 TRUE)
+    (gimp-item-transform-scale reflect-layer
+                               0 0 width (* 0.85 height))
+    (gimp-context-set-transform-resize TRANSFORM-RESIZE-CLIP)
+    (gimp-item-transform-flip-simple reflect-layer ORIENTATION-VERTICAL
+                                         TRUE 0)
     (gimp-layer-set-offsets reflect-layer 5 (+ 3 height))
 
     (set! layer-mask (car (gimp-layer-create-mask reflect-layer ADD-WHITE-MASK)))

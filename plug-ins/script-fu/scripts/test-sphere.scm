@@ -199,6 +199,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-antialias TRUE)
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img drawable 0 0)
@@ -219,14 +220,16 @@
               (begin (set! shadow-x (+ cx shadow-w))
                      (set! shadow-w (- shadow-w))))
 
-          (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h
-                               CHANNEL-OP-REPLACE TRUE TRUE 7.5)
+          (gimp-context-set-feather TRUE)
+          (gimp-context-set-feather-radius 7.5 7.5)
+          (gimp-image-select-ellipse img CHANNEL-OP-REPLACE shadow-x shadow-y shadow-w shadow-h)
           (gimp-context-set-pattern pattern)
           (gimp-edit-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY-MODE
-                            100 0 FALSE 0 0)))
+                                 100 0 FALSE 0 0)))
 
-    (gimp-ellipse-select img (- cx radius) (- cy radius)
-                         (* 2 radius) (* 2 radius) CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-context-set-feather FALSE)
+    (gimp-image-select-ellipse img CHANNEL-OP-REPLACE (- cx radius) (- cy radius)
+                               (* 2 radius) (* 2 radius))
 
     (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
                      GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
@@ -236,7 +239,7 @@
     (gimp-selection-none img)
 
     (gimp-context-set-gradient gradient)
-    (gimp-ellipse-select img 10 10 50 50 CHANNEL-OP-REPLACE TRUE FALSE 0)
+    (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 10 10 50 50)
 
     (gimp-edit-blend drawable CUSTOM-MODE NORMAL-MODE
                      GRADIENT-LINEAR 100 offset REPEAT-NONE gradient-reverse

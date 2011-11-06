@@ -26,6 +26,8 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-antialias TRUE)
+    (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-group-start theImage)
 
@@ -41,10 +43,11 @@
       (gimp-edit-clear theStain)
 
       (let ((blobSize (/ (rand (- theSize 40)) (+ (rand 3) 1))))
-        (gimp-ellipse-select theImage
+        (gimp-image-select-ellipse theImage
+                             CHANNEL-OP-REPLACE
                              (/ (- theSize blobSize) 2)
                              (/ (- theSize blobSize) 2)
-                             blobSize blobSize CHANNEL-OP-REPLACE TRUE 0 FALSE)
+                             blobSize blobSize)
       )
 
       (script-fu-distress-selection theImage theStain

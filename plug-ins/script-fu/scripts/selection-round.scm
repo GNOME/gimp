@@ -52,11 +52,14 @@
         (ellipse-radius 0)
         )
 
+    (gimp-context-push)
+    (gimp-context-set-antialias FALSE)
+    (gimp-context-set-feather FALSE)
+
     ;; select to the full bounds of the selection,
     ;; fills in irregular shapes or holes.
-    (gimp-rect-select image
-              select-x1 select-y1 select-width select-height
-              CHANNEL-OP-ADD FALSE 0)
+    (gimp-image-select-rectangle image CHANNEL-OP-ADD
+              select-x1 select-y1 select-width select-height)
 
     (if (> select-width select-height)
       (set! cut-radius (trunc (+ 1 (* radius (/ select-height 2)))))
@@ -64,84 +67,66 @@
     )
     (set! ellipse-radius (* cut-radius 2))
 
+    (gimp-context-set-antialias TRUE)
     ;; cut away rounded (concave) corners
     ; top right
-    (gimp-ellipse-select image
-             (- select-x1 cut-radius)
-             (- select-y1 cut-radius)
-             (* cut-radius 2)
-             (* cut-radius 2)
-             CHANNEL-OP-SUBTRACT
-             TRUE
-             FALSE 0)
+    (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT
+                               (- select-x1 cut-radius)
+                               (- select-y1 cut-radius)
+                               (* cut-radius 2)
+                               (* cut-radius 2))
     ; lower left
-    (gimp-ellipse-select image
-             (- select-x1 cut-radius)
-             (- select-y2 cut-radius)
-             (* cut-radius 2)
-             (* cut-radius 2)
-             CHANNEL-OP-SUBTRACT
-             TRUE
-             FALSE 0)
+    (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT
+                               (- select-x1 cut-radius)
+                               (- select-y2 cut-radius)
+                               (* cut-radius 2)
+                               (* cut-radius 2))
     ; top right
-    (gimp-ellipse-select image
-             (- select-x2 cut-radius)
-             (- select-y1 cut-radius)
-             (* cut-radius 2)
-             (* cut-radius 2)
-             CHANNEL-OP-SUBTRACT
-             TRUE
-             FALSE 0)
+    (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT
+                               (- select-x2 cut-radius)
+                               (- select-y1 cut-radius)
+                               (* cut-radius 2)
+                               (* cut-radius 2))
     ; bottom left
-    (gimp-ellipse-select image
-             (- select-x2 cut-radius)
-             (- select-y2 cut-radius)
-             (* cut-radius 2)
-             (* cut-radius 2)
-             CHANNEL-OP-SUBTRACT
-             TRUE
-             FALSE 0)
+    (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT
+                               (- select-x2 cut-radius)
+                               (- select-y2 cut-radius)
+                               (* cut-radius 2)
+                               (* cut-radius 2))
 
     ;; add in rounded (convex) corners
     (if (= concave FALSE)
       (begin
-        (gimp-ellipse-select image
-                     select-x1
-                     select-y1
-                     ellipse-radius
-                     ellipse-radius
-                     CHANNEL-OP-ADD
-                     TRUE
-                     FALSE 0)
-        (gimp-ellipse-select image
-                     select-x1
-                     (- select-y2 ellipse-radius)
-                     ellipse-radius
-                     ellipse-radius
-                     CHANNEL-OP-ADD
-                     TRUE
-                     FALSE 0)
-        (gimp-ellipse-select image
-                     (- select-x2 ellipse-radius)
-                     select-y1
-                     ellipse-radius
-                     ellipse-radius
-                     CHANNEL-OP-ADD
-                     TRUE
-                     FALSE 0)
-        (gimp-ellipse-select image
-                     (- select-x2 ellipse-radius)
-                     (- select-y2 ellipse-radius)
-                     ellipse-radius
-                     ellipse-radius
-                     CHANNEL-OP-ADD
-                     TRUE
-                     FALSE 0)
+        (gimp-image-select-ellipse image
+                                   CHANNEL-OP-ADD
+                                   select-x1
+                                   select-y1
+                                   ellipse-radius
+                                   ellipse-radius)
+        (gimp-image-select-ellipse image
+                                   CHANNEL-OP-ADD
+                                   select-x1
+                                   (- select-y2 ellipse-radius)
+                                   ellipse-radius
+                                   ellipse-radius)
+        (gimp-image-select-ellipse image
+                                   CHANNEL-OP-ADD
+                                   (- select-x2 ellipse-radius)
+                                   select-y1
+                                   ellipse-radius
+                                   ellipse-radius)
+        (gimp-image-select-ellipse image
+                                   CHANNEL-OP-ADD
+                                   (- select-x2 ellipse-radius)
+                                   (- select-y2 ellipse-radius)
+                                   ellipse-radius
+                                   ellipse-radius)
       )
     )
 
     (gimp-image-undo-group-end image)
     (gimp-displays-flush)
+    (gimp-context-pop)
   )
 )
 

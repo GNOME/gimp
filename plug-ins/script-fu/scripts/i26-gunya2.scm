@@ -43,7 +43,7 @@
     (gimp-edit-clear dist-text-layer)
     (gimp-edit-clear dist-frame-layer)
     ;; get the text shape
-    (gimp-selection-layer-alpha text-layer)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE text-layer)
     ;; fill it with the specified color
     (gimp-context-set-foreground text-color)
     (gimp-edit-fill dist-text-layer FOREGROUND-FILL)

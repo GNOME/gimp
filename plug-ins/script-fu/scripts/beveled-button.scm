@@ -81,7 +81,7 @@
         )
 
     (gimp-context-push)
-
+    (gimp-context-set-feather FALSE)
     (gimp-image-undo-disable img)
 
     ; Create bumpmap layer
@@ -91,16 +91,16 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
-    (gimp-rect-select img 0 0 bevel-width img-height CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 0 0 bevel-width img-height)
     (blend-bumpmap img bumpmap 0 0 (- bevel-width 1) 0)
 
-    (gimp-rect-select img 0 0 img-width bevel-width CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 0 0 img-width bevel-width)
     (blend-bumpmap img bumpmap 0 0 0 (- bevel-width 1))
 
-    (gimp-rect-select img (- img-width bevel-width) 0 bevel-width img-height CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE (- img-width bevel-width) 0 bevel-width img-height)
     (blend-bumpmap img bumpmap (- img-width 1) 0 (- img-width bevel-width) 0)
 
-    (gimp-rect-select img 0 (- img-height bevel-width) img-width bevel-width CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 0 (- img-height bevel-width) img-width bevel-width)
     (blend-bumpmap img bumpmap 0 (- img-height 1) 0 (- img-height bevel-width))
 
     (gimp-selection-none img)

@@ -24,6 +24,9 @@
         (index 0)
         (dir-deg/line (/ 360 num-of-lines))
         )
+    (gimp-context-push)
+    (gimp-context-set-antialias TRUE)
+    (gimp-context-set-feather FALSE)
 
     (define (draw-vector beg-x beg-y direction)
 
@@ -61,21 +64,17 @@
                     (+ beg-y (* off (sin dir0)))
         )
         (set-marginal-point beg-x beg-y direction)
-        (gimp-free-select img 6 *points* CHANNEL-OP-ADD
-                          TRUE                ; antialias
-                          FALSE                ; feather
-                          0                    ; feather radius
-        )
+        (gimp-image-select-polygon img CHANNEL-OP-ADD 6 *points*)
       )
     )
 
     (gimp-image-undo-group-start img)
 
     (set! old-selection
-	 (if (eq? (car (gimp-selection-is-empty img)) TRUE)
-	     #f
-	     (car (gimp-selection-save img))
-	 )
+      (if (eq? (car (gimp-selection-is-empty img)) TRUE)
+         #f
+         (car (gimp-selection-save img))
+      )
     )
 
     (gimp-selection-none img)
@@ -91,7 +90,7 @@
 
     (if old-selection
       (begin
-        (gimp-selection-load old-selection)
+        (gimp-image-select-item img CHANNEL-OP-REPLACE old-selection)
         ;; (gimp-image-set-active-layer img drw)
         ;; delete extra channel by Sven Neumann <neumanns@uni-duesseldorf.de>
         (gimp-image-remove-channel img old-selection)
@@ -100,6 +99,7 @@
 
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)
+    (gimp-context-pop)
   )
 )
 
