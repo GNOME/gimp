@@ -23,6 +23,30 @@
 #include "gimp-log.h"
 
 
+static const GDebugKey log_keys[] =
+{
+  { "tool-events",        GIMP_LOG_TOOL_EVENTS        },
+  { "tool-focus",         GIMP_LOG_TOOL_FOCUS         },
+  { "dnd",                GIMP_LOG_DND                },
+  { "help",               GIMP_LOG_HELP               },
+  { "dialog-factory",     GIMP_LOG_DIALOG_FACTORY     },
+  { "menus",              GIMP_LOG_MENUS              },
+  { "save-dialog",        GIMP_LOG_SAVE_DIALOG        },
+  { "image-scale",        GIMP_LOG_IMAGE_SCALE        },
+  { "shadow-tiles",       GIMP_LOG_SHADOW_TILES       },
+  { "scale",              GIMP_LOG_SCALE              },
+  { "wm",                 GIMP_LOG_WM                 },
+  { "floating-selection", GIMP_LOG_FLOATING_SELECTION },
+  { "shm",                GIMP_LOG_SHM                },
+  { "text-editing",       GIMP_LOG_TEXT_EDITING       },
+  { "key-events",         GIMP_LOG_KEY_EVENTS         },
+  { "auto-tab-style",     GIMP_LOG_AUTO_TAB_STYLE     },
+  { "instances",          GIMP_LOG_INSTANCES          },
+  { "rectangle-tool",     GIMP_LOG_RECTANGLE_TOOL     },
+  { "brush-cache",        GIMP_LOG_BRUSH_CACHE        }
+};
+
+
 GimpLogFlags gimp_log_flags = 0;
 
 
@@ -35,30 +59,10 @@ gimp_log_init (void)
     env_log_val = g_getenv ("GIMP_DEBUG");
 
   if (env_log_val)
-    {
-      const GDebugKey log_keys[] =
-      {
-        { "tool-events",        GIMP_LOG_TOOL_EVENTS        },
-        { "tool-focus",         GIMP_LOG_TOOL_FOCUS         },
-        { "dnd",                GIMP_LOG_DND                },
-        { "help",               GIMP_LOG_HELP               },
-        { "dialog-factory",     GIMP_LOG_DIALOG_FACTORY     },
-        { "menus",              GIMP_LOG_MENUS              },
-        { "save-dialog",        GIMP_LOG_SAVE_DIALOG        },
-        { "image-scale",        GIMP_LOG_IMAGE_SCALE        },
-        { "shadow-tiles",       GIMP_LOG_SHADOW_TILES       },
-        { "scale",              GIMP_LOG_SCALE              },
-        { "wm",                 GIMP_LOG_WM                 },
-        { "floating-selection", GIMP_LOG_FLOATING_SELECTION },
-        { "shm",                GIMP_LOG_SHM                },
-        { "text-editing",       GIMP_LOG_TEXT_EDITING       },
-        { "key-events",         GIMP_LOG_KEY_EVENTS         },
-        { "auto-tab-style",     GIMP_LOG_AUTO_TAB_STYLE     },
-        { "instances",          GIMP_LOG_INSTANCES          },
-        { "rectangle-tool",     GIMP_LOG_RECTANGLE_TOOL     },
-        { "brush-cache",        GIMP_LOG_BRUSH_CACHE        }
-      };
+    g_setenv ("G_MESSAGES_DEBUG", env_log_val, TRUE);
 
+  if (env_log_val)
+    {
       /*  g_parse_debug_string() has special treatment of the string 'help',
        *  but we want to use it for the GIMP_LOG_HELP domain
        */
@@ -75,27 +79,36 @@ gimp_log_init (void)
 }
 
 void
-gimp_log (const gchar *function,
-          gint         line,
-          const gchar *domain,
-          const gchar *format,
+gimp_log (GimpLogFlags  flags,
+          const gchar  *function,
+          gint          line,
+          const gchar  *format,
           ...)
 {
   va_list args;
 
   va_start (args, format);
-  gimp_logv (function, line, domain, format, args);
+  gimp_logv (flags, function, line, format, args);
   va_end (args);
 }
 
 void
-gimp_logv (const gchar *function,
-           gint         line,
-           const gchar *domain,
-           const gchar *format,
-           va_list      args)
+gimp_logv (GimpLogFlags  flags,
+           const gchar  *function,
+           gint          line,
+           const gchar  *format,
+           va_list       args)
 {
-  gchar *message;
+  const gchar *domain = "unknown";
+  gchar       *message;
+  gint         i;
+
+  for (i = 0; i < G_N_ELEMENTS (log_keys); i++)
+    if (log_keys[i].value == flags)
+      {
+        domain = log_keys[i].key;
+        break;
+      }
 
   if (format)
     message = g_strdup_vprintf (format, args);
