@@ -36,7 +36,7 @@
         )
 
     (gimp-context-push)
-    (gimp-context-set-feather FALSE)
+    (gimp-context-set-defaults)
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img drawable 0 0)

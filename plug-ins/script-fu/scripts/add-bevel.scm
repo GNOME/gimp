@@ -82,6 +82,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     ; disable undo on copy, start group otherwise
     (if (= work-on-copy TRUE)

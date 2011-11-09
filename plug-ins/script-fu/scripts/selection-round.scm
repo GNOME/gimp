@@ -53,8 +53,7 @@
         )
 
     (gimp-context-push)
-    (gimp-context-set-antialias FALSE)
-    (gimp-context-set-feather FALSE)
+    (gimp-context-set-defaults)
 
     ;; select to the full bounds of the selection,
     ;; fills in irregular shapes or holes.

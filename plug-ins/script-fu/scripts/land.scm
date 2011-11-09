@@ -36,34 +36,36 @@
                                         RGB-IMAGE "Bottom" 100 NORMAL-MODE)))
         (layer-two 0)
         )
-  (gimp-context-set-gradient gradient)
-  (gimp-image-undo-disable img)
-  (gimp-image-insert-layer img layer-one 0 0)
 
-  (plug-in-solid-noise RUN-NONINTERACTIVE img layer-one TRUE FALSE seed detail xscale yscale)
-  (plug-in-c-astretch RUN-NONINTERACTIVE img layer-one)
-  (set! layer-two (car (gimp-layer-copy layer-one TRUE)))
-  (gimp-image-insert-layer img layer-two 0 -1)
-  (gimp-image-set-active-layer img layer-two)
+    (gimp-context-push)
+    (gimp-context-set-defaults)
+    (gimp-context-set-gradient gradient)
+    (gimp-image-undo-disable img)
+    (gimp-image-insert-layer img layer-one 0 0)
 
-  (plug-in-gradmap RUN-NONINTERACTIVE img layer-two)
+    (plug-in-solid-noise RUN-NONINTERACTIVE img layer-one TRUE FALSE seed detail xscale yscale)
+    (plug-in-c-astretch RUN-NONINTERACTIVE img layer-one)
+    (set! layer-two (car (gimp-layer-copy layer-one TRUE)))
+    (gimp-image-insert-layer img layer-two 0 -1)
+    (gimp-image-set-active-layer img layer-two)
 
+    (plug-in-gradmap RUN-NONINTERACTIVE img layer-two)
 
+    (gimp-image-select-color img CHANNEL-OP-REPLACE layer-one '(190 190 190))
+    (plug-in-bump-map RUN-NONINTERACTIVE img layer-two layer-one 135.0 35 landheight 0 0 0 0 TRUE FALSE 0)
 
-  (gimp-image-select-color img CHANNEL-OP-REPLACE layer-one '(190 190 190))
-  (plug-in-bump-map RUN-NONINTERACTIVE img layer-two layer-one 135.0 35 landheight 0 0 0 0 TRUE FALSE 0)
+    ;(plug-in-c-astretch RUN-NONINTERACTIVE img layer-two)
+    (gimp-selection-invert img)
+    (plug-in-bump-map RUN-NONINTERACTIVE img layer-two layer-one 135.0 35 seadepth 0 0 0 0 TRUE FALSE 0)
 
-  ;(plug-in-c-astretch RUN-NONINTERACTIVE img layer-two)
-  (gimp-selection-invert img)
-  (plug-in-bump-map RUN-NONINTERACTIVE img layer-two layer-one 135.0 35 seadepth 0 0 0 0 TRUE FALSE 0)
+    ;(plug-in-c-astretch RUN-NONINTERACTIVE img layer-two)
 
-  ;(plug-in-c-astretch RUN-NONINTERACTIVE img layer-two)
+    ; uncomment the next line if you want to keep a selection of the "land"
+    (gimp-selection-none img)
 
-  ; uncomment the next line if you want to keep a selection of the "land"
-  (gimp-selection-none img)
-
-  (gimp-display-new img)
-  (gimp-image-undo-enable img)
+    (gimp-display-new img)
+    (gimp-image-undo-enable img)
+    (gimp-context-pop)
   )
 )
 

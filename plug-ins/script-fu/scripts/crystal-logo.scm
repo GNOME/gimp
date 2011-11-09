@@ -112,6 +112,7 @@
         (disp-map 0)
         )
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (gimp-image-delete back-img)
     (gimp-image-undo-disable img)

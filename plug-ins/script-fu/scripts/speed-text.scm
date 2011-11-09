@@ -35,6 +35,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img bg-layer 0 1)

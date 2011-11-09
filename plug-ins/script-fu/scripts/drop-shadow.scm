@@ -56,6 +56,7 @@
         )
 
   (gimp-context-push)
+  (gimp-context-set-defaults)
 
   (gimp-image-set-active-layer image drawable)
 

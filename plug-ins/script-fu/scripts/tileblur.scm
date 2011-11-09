@@ -31,11 +31,12 @@
        )
     )
 
+    (gimp-context-push)
+    (gimp-context-set-feather FALSE)
     (gimp-image-undo-group-start theImage)
+
     (gimp-layer-resize theLayer (* 3 theWidth) (* 3 theHeight) 0 0)
 
-    (gimp-context-set-feather 0)
-    (gimp-context-set-feather-radius 0 0)
     (gimp-image-select-rectangle theImage CHANNEL-OP-REPLACE 0 0 theWidth theHeight)
     (gimp-edit-cut theLayer)
 
@@ -59,6 +60,7 @@
     (gimp-layer-set-offsets theLayer 0 0)
     (gimp-image-undo-group-end theImage)
     (gimp-displays-flush)
+    (gimp-context-pop)
   )
 )
 

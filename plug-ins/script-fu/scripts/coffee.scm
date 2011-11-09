@@ -26,8 +26,7 @@
         )
 
     (gimp-context-push)
-    (gimp-context-set-antialias TRUE)
-    (gimp-context-set-feather FALSE)
+    (gimp-context-set-defaults)
 
     (gimp-image-undo-group-start theImage)
 

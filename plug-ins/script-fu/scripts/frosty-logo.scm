@@ -34,6 +34,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (if ( = isnew 1) (script-fu-util-image-resize-from-layer img shadow-layer))
 

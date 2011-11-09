@@ -55,6 +55,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
     (gimp-context-set-antialias antialias)
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img BG-layer 0 0)

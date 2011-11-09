@@ -46,6 +46,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
     (gimp-image-undo-group-start image)
 
     (if (= (car (gimp-drawable-has-alpha drawable)) FALSE)

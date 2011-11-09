@@ -32,6 +32,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
     (gimp-context-set-feather FALSE)
     (gimp-context-set-interpolation INTERPOLATION-NONE)
     (gimp-context-set-transform-resize TRANSFORM-RESIZE-ADJUST)

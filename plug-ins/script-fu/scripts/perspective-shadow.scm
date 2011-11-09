@@ -48,148 +48,149 @@
         (shadow-layer 0)
         )
 
-  (gimp-context-push)
+    (gimp-context-push)
+    (gimp-context-set-defaults)
 
-  (if (> rel-distance 24) (set! rel-distance 999999))
-  (if (= rel-distance rel-length) (set! rel-distance (+ rel-distance 0.01)))
+    (if (> rel-distance 24) (set! rel-distance 999999))
+    (if (= rel-distance rel-length) (set! rel-distance (+ rel-distance 0.01)))
 
-  (gimp-image-undo-group-start image)
+    (gimp-image-undo-group-start image)
 
-  (gimp-layer-add-alpha drawable)
-  (if (= (car (gimp-selection-is-empty image)) TRUE)
-      (begin
-        (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
-        (set! from-selection FALSE))
-      (begin
-        (set! from-selection TRUE)
-        (set! active-selection (car (gimp-selection-save image)))))
-
-  (let* ((selection-bounds (gimp-selection-bounds image))
-         (select-offset-x (cadr selection-bounds))
-         (select-offset-y (caddr selection-bounds))
-         (select-width (- (cadr (cddr selection-bounds)) select-offset-x))
-         (select-height (- (caddr (cddr selection-bounds)) select-offset-y))
-
-         (abs-length (* rel-length select-height))
-         (abs-distance (* rel-distance select-height))
-         (half-bottom-width (/ select-width 2))
-         (half-top-width (* half-bottom-width
-                          (/ (- rel-distance rel-length) rel-distance)))
-
-         (x0 (+ select-offset-x (+ (- half-bottom-width half-top-width)
-                                 (* (cos alpha) abs-length))))
-         (y0 (+ select-offset-y (- select-height
-                                 (* (sin alpha) abs-length))))
-         (x1 (+ x0 (* 2 half-top-width)))
-         (y1 y0)
-         (x2 select-offset-x)
-         (y2 (+ select-offset-y select-height))
-         (x3 (+ x2 select-width))
-         (y3 y2)
-
-         (shadow-width (+ (- (max x1 x3) (min x0 x2)) (* 2 shadow-blur)))
-         (shadow-height (+ (- (max y1 y3) (min y0 y2)) (* 2 shadow-blur)))
-         (shadow-offset-x (- (min x0 x2) shadow-blur))
-         (shadow-offset-y (- (min y0 y2) shadow-blur)))
-
-
-    (set! shadow-layer (car (gimp-layer-new image
-                                            select-width
-                                            select-height
-                                            type
-                                            "Perspective Shadow"
-                                            shadow-opacity
-                                            NORMAL-MODE)))
-
-
-    (gimp-image-insert-layer image shadow-layer 0 -1)
-    (gimp-layer-set-offsets shadow-layer select-offset-x select-offset-y)
-    (gimp-drawable-fill shadow-layer TRANSPARENT-FILL)
-    (gimp-context-set-background shadow-color)
-    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
-    (gimp-selection-none image)
-
-    (if (= allow-resize TRUE)
-        (let* ((new-image-width image-width)
-               (new-image-height image-height)
-               (image-offset-x 0)
-               (image-offset-y 0))
-
-          (if (< shadow-offset-x 0)
-              (begin
-                (set! image-offset-x (abs shadow-offset-x))
-                (set! new-image-width (+ new-image-width image-offset-x))
-                ; adjust to new coordinate system
-                (set! x0 (+ x0 image-offset-x))
-                (set! x1 (+ x1 image-offset-x))
-                (set! x2 (+ x2 image-offset-x))
-                (set! x3 (+ x3 image-offset-x))
-              ))
-
-          (if (< shadow-offset-y 0)
-              (begin
-                (set! image-offset-y (abs shadow-offset-y))
-                (set! new-image-height (+ new-image-height image-offset-y))
-                ; adjust to new coordinate system
-                (set! y0 (+ y0 image-offset-y))
-                (set! y1 (+ y1 image-offset-y))
-                (set! y2 (+ y2 image-offset-y))
-                (set! y3 (+ y3 image-offset-y))
-              ))
-
-          (if (> (+ shadow-width shadow-offset-x) new-image-width)
-              (set! new-image-width (+ shadow-width shadow-offset-x)))
-
-          (if (> (+ shadow-height shadow-offset-y) new-image-height)
-              (set! new-image-height (+ shadow-height shadow-offset-y)))
-          (gimp-image-resize image
-                             new-image-width
-                             new-image-height
-                             image-offset-x
-                             image-offset-y)))
-
-    (gimp-context-set-transform-direction TRANSFORM-FORWARD)
-    (gimp-context-set-interpolation interpolation)
-    (gimp-context-set-transform-recursion 3)
-    (gimp-context-set-transform-resize TRANSFORM-RESIZE-ADJUST)
-
-    (gimp-item-transform-perspective shadow-layer
-                      x0 y0
-                      x1 y1
-                      x2 y2
-                      x3 y3)
-
-    (if (>= shadow-blur 1.0)
+    (gimp-layer-add-alpha drawable)
+    (if (= (car (gimp-selection-is-empty image)) TRUE)
         (begin
-          (gimp-layer-set-lock-alpha shadow-layer FALSE)
-          (gimp-layer-resize shadow-layer
-                             shadow-width
-                             shadow-height
-                             shadow-blur
-                             shadow-blur)
-          (plug-in-gauss-rle RUN-NONINTERACTIVE
-                             image
-                             shadow-layer
-                             shadow-blur
-                             TRUE
-                             TRUE))))
+          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
+          (set! from-selection FALSE))
+        (begin
+          (set! from-selection TRUE)
+          (set! active-selection (car (gimp-selection-save image)))))
 
-  (if (= from-selection TRUE)
-      (begin
-        (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-        (gimp-edit-clear shadow-layer)
-        (gimp-image-remove-channel image active-selection)))
+    (let* ((selection-bounds (gimp-selection-bounds image))
+           (select-offset-x (cadr selection-bounds))
+           (select-offset-y (caddr selection-bounds))
+           (select-width (- (cadr (cddr selection-bounds)) select-offset-x))
+           (select-height (- (caddr (cddr selection-bounds)) select-offset-y))
 
-  (if (and
-        (= (car (gimp-layer-is-floating-sel drawable)) 0)
-        (= from-selection FALSE))
-    (gimp-image-raise-item image drawable))
+           (abs-length (* rel-length select-height))
+           (abs-distance (* rel-distance select-height))
+           (half-bottom-width (/ select-width 2))
+           (half-top-width (* half-bottom-width
+                            (/ (- rel-distance rel-length) rel-distance)))
 
-  (gimp-image-set-active-layer image drawable)
-  (gimp-image-undo-group-end image)
-  (gimp-displays-flush)
+           (x0 (+ select-offset-x (+ (- half-bottom-width half-top-width)
+                                   (* (cos alpha) abs-length))))
+           (y0 (+ select-offset-y (- select-height
+                                   (* (sin alpha) abs-length))))
+           (x1 (+ x0 (* 2 half-top-width)))
+           (y1 y0)
+           (x2 select-offset-x)
+           (y2 (+ select-offset-y select-height))
+           (x3 (+ x2 select-width))
+           (y3 y2)
 
-  (gimp-context-pop)
+           (shadow-width (+ (- (max x1 x3) (min x0 x2)) (* 2 shadow-blur)))
+           (shadow-height (+ (- (max y1 y3) (min y0 y2)) (* 2 shadow-blur)))
+           (shadow-offset-x (- (min x0 x2) shadow-blur))
+           (shadow-offset-y (- (min y0 y2) shadow-blur)))
+
+
+      (set! shadow-layer (car (gimp-layer-new image
+                                              select-width
+                                              select-height
+                                              type
+                                              "Perspective Shadow"
+                                              shadow-opacity
+                                              NORMAL-MODE)))
+
+
+      (gimp-image-insert-layer image shadow-layer 0 -1)
+      (gimp-layer-set-offsets shadow-layer select-offset-x select-offset-y)
+      (gimp-drawable-fill shadow-layer TRANSPARENT-FILL)
+      (gimp-context-set-background shadow-color)
+      (gimp-edit-fill shadow-layer BACKGROUND-FILL)
+      (gimp-selection-none image)
+
+      (if (= allow-resize TRUE)
+          (let* ((new-image-width image-width)
+                 (new-image-height image-height)
+                 (image-offset-x 0)
+                 (image-offset-y 0))
+
+            (if (< shadow-offset-x 0)
+                (begin
+                  (set! image-offset-x (abs shadow-offset-x))
+                  (set! new-image-width (+ new-image-width image-offset-x))
+                  ; adjust to new coordinate system
+                  (set! x0 (+ x0 image-offset-x))
+                  (set! x1 (+ x1 image-offset-x))
+                  (set! x2 (+ x2 image-offset-x))
+                  (set! x3 (+ x3 image-offset-x))
+                ))
+
+            (if (< shadow-offset-y 0)
+                (begin
+                  (set! image-offset-y (abs shadow-offset-y))
+                  (set! new-image-height (+ new-image-height image-offset-y))
+                  ; adjust to new coordinate system
+                  (set! y0 (+ y0 image-offset-y))
+                  (set! y1 (+ y1 image-offset-y))
+                  (set! y2 (+ y2 image-offset-y))
+                  (set! y3 (+ y3 image-offset-y))
+                ))
+
+            (if (> (+ shadow-width shadow-offset-x) new-image-width)
+                (set! new-image-width (+ shadow-width shadow-offset-x)))
+
+            (if (> (+ shadow-height shadow-offset-y) new-image-height)
+                (set! new-image-height (+ shadow-height shadow-offset-y)))
+            (gimp-image-resize image
+                               new-image-width
+                               new-image-height
+                               image-offset-x
+                               image-offset-y)))
+
+      (gimp-context-set-transform-direction TRANSFORM-FORWARD)
+      (gimp-context-set-interpolation interpolation)
+      (gimp-context-set-transform-recursion 3)
+      (gimp-context-set-transform-resize TRANSFORM-RESIZE-ADJUST)
+
+      (gimp-item-transform-perspective shadow-layer
+                        x0 y0
+                        x1 y1
+                        x2 y2
+                        x3 y3)
+
+      (if (>= shadow-blur 1.0)
+          (begin
+            (gimp-layer-set-lock-alpha shadow-layer FALSE)
+            (gimp-layer-resize shadow-layer
+                               shadow-width
+                               shadow-height
+                               shadow-blur
+                               shadow-blur)
+            (plug-in-gauss-rle RUN-NONINTERACTIVE
+                               image
+                               shadow-layer
+                               shadow-blur
+                               TRUE
+                               TRUE))))
+
+    (if (= from-selection TRUE)
+        (begin
+          (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
+          (gimp-edit-clear shadow-layer)
+          (gimp-image-remove-channel image active-selection)))
+
+    (if (and
+          (= (car (gimp-layer-is-floating-sel drawable)) 0)
+          (= from-selection FALSE))
+      (gimp-image-raise-item image drawable))
+
+    (gimp-image-set-active-layer image drawable)
+    (gimp-image-undo-group-end image)
+    (gimp-displays-flush)
+
+    (gimp-context-pop)
   )
 )
 

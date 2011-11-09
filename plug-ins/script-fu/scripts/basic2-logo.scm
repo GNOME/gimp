@@ -31,6 +31,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)

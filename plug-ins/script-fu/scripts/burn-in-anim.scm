@@ -55,7 +55,7 @@
         ;--- main program structure starts here, begin of "if-1"
         (begin
           (gimp-context-push)
-          (gimp-context-set-feather FALSE)
+          (gimp-context-set-defaults)
 
           (set! img (car (gimp-image-duplicate org-img)))
           (gimp-image-undo-disable img)

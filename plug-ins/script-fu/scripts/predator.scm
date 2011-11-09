@@ -45,6 +45,8 @@
         (active-layer 0)
         )
 
+    (gimp-context-push)
+    (gimp-context-set-defaults)
     (gimp-image-undo-group-start image)
     (gimp-layer-add-alpha drawable)
 
@@ -111,6 +113,7 @@
     (gimp-image-remove-channel image active-selection)
     (gimp-image-undo-group-end image)
     (gimp-displays-flush)
+    (gimp-context-pop)
   )
 )
 

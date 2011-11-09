@@ -50,6 +50,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (script-fu-util-image-add-layers img grow-me bg-layer)
@@ -121,9 +122,9 @@
     (gimp-selection-none img)
 
     (plug-in-bump-map (if (= noninteractive TRUE)
-			  RUN-NONINTERACTIVE
-			  RUN-INTERACTIVE)
-		      img grow-me logo-layer
+        RUN-NONINTERACTIVE
+        RUN-INTERACTIVE)
+          img grow-me logo-layer
                       110.0 45.0 3 0 0 0 0 TRUE FALSE 0)
     (gimp-layer-set-mode logo-layer SCREEN-MODE)
 

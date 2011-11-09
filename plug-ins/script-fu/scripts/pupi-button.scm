@@ -114,8 +114,8 @@
         )
 
     (gimp-context-push)
-
     (gimp-context-set-antialias FALSE)
+    (gimp-context-set-feather FALSE)
     (gimp-image-undo-disable img)
 
     ; Create bumpmap layer

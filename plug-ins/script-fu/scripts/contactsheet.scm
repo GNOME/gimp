@@ -176,6 +176,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
     (gimp-context-set-foreground text-color)
     (gimp-context-set-background bg-color)
 

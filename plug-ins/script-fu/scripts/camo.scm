@@ -31,6 +31,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (gimp-image-insert-layer theImage baseLayer 0 0)
 

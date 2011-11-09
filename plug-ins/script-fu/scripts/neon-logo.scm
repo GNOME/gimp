@@ -116,6 +116,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     ; ensure that we don't shrink selection so much
     ; that we create an empty selection.

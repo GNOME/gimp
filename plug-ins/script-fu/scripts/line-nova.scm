@@ -25,8 +25,7 @@
         (dir-deg/line (/ 360 num-of-lines))
         )
     (gimp-context-push)
-    (gimp-context-set-antialias TRUE)
-    (gimp-context-set-feather FALSE)
+    (gimp-context-set-defaults)
 
     (define (draw-vector beg-x beg-y direction)
 

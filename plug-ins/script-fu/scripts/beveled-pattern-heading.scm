@@ -45,6 +45,7 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)

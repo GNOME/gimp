@@ -59,8 +59,7 @@
          (pic-layer (car (gimp-image-get-active-drawable image))))
 
   (gimp-context-push)
-  (gimp-context-set-antialias TRUE)
-  (gimp-context-set-feather FALSE)
+  (gimp-context-set-defaults)
 
   (if (= work-on-copy TRUE)
       (gimp-image-undo-disable image)

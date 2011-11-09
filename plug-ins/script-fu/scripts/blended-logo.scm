@@ -108,6 +108,7 @@
                                       blend-gradient-reverse)
   (begin
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (gimp-image-undo-group-start img)
     (apply-blended-logo-effect img logo-layer b-size bg-color

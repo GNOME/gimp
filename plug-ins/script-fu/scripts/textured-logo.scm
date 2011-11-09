@@ -37,7 +37,7 @@
         )
 
     (gimp-context-push)
-    (gimp-context-set-feather TRUE)
+    (gimp-context-set-defaults)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (script-fu-util-image-add-layers img text-shadow-layer drop-shadow-layer blend-layer shadow-layer)

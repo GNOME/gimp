@@ -83,8 +83,7 @@
         )
 
     (gimp-context-push)
-    (gimp-context-set-antialias TRUE)
-    (gimp-context-set-feather FALSE)
+    (gimp-context-set-defaults)
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img background 0 -1)
