@@ -107,7 +107,7 @@
   "RGB*,GRAY*"
   SF-IMAGE       "The image"              0
   SF-DRAWABLE    "The layer"              0
-  SF-ADJUSTMENT _"Threshold (bigger 1<-->255 smaller)" '(127 1 255 1 10 0 0)
+  SF-ADJUSTMENT _"Threshold (bigger 1<-->254 smaller)" '(127 1 254 1 10 0 0)
   SF-ADJUSTMENT _"Spread"                 '(8 0 1000 1 10 0 1)
   SF-ADJUSTMENT _"Granularity (1 is low)" '(4 1 25 1 10 0 1)
   SF-ADJUSTMENT _"Smooth"                 '(2 1 150 1 10 0 1)
