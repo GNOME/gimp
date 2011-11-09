@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/sh
 
 # This script does all the magic calls to automake/autoconf and
 # friends that are needed to configure a git clone. As described in
