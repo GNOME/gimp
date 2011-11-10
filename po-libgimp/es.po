@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-11-07 05:52+0000\n"
+"POT-Creation-Date: 2011-11-09 20:56+0000\n"
 "PO-Revision-Date: 2011-11-07 09:10+0100\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -1205,11 +1205,11 @@ msgstr "_Notación HTML:"
 
 #: ../libgimpwidgets/gimpfileentry.c:200
 msgid "Open a file selector to browse your folders"
-msgstr "Abrir un selector de archivos para explorar las carpetas"
+msgstr "Abrir un selector de archivos para examinar las carpetas"
 
 #: ../libgimpwidgets/gimpfileentry.c:201
 msgid "Open a file selector to browse your files"
-msgstr "Abrir un selector de archivos para explorar los archivos"
+msgstr "Abrir un selector de archivos para examinar los archivos"
 
 #: ../libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
