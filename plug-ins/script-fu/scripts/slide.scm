@@ -96,6 +96,7 @@
         )
 
   (gimp-context-push)
+  (gimp-context-set-feather FALSE)
 
   (gimp-image-undo-disable image)
 
@@ -185,22 +186,18 @@
 
     (gimp-selection-none image)
     (while (< hole 8)
-           (gimp-rect-select image
-                             (* hole-space hole)
-                             top-y
-                             hole-width
-                             hole-height
-                             CHANNEL-OP-ADD
-                             FALSE
-                             0)
-           (gimp-rect-select image
-                             (* hole-space hole)
-                             bottom-y
-                             hole-width
-                             hole-height
-                             CHANNEL-OP-ADD
-                             FALSE
-                             0)
+           (gimp-image-select-rectangle image
+                                        CHANNEL-OP-ADD
+                                        (* hole-space hole)
+                                        top-y
+                                        hole-width
+                                        hole-height)
+           (gimp-image-select-rectangle image
+                                        CHANNEL-OP-ADD
+                                        (* hole-space hole)
+                                        bottom-y
+                                        hole-width
+                                        hole-height)
            (set! hole (+ hole 1))
     )
 
