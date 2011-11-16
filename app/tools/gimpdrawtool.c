@@ -212,7 +212,7 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
         {
           GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
 
-          gimp_display_shell_add_item (shell, draw_tool->item);
+          gimp_display_shell_add_tool_item (shell, draw_tool->item);
         }
     }
 }
@@ -224,7 +224,7 @@ gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
     {
       GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
 
-      gimp_display_shell_remove_item (shell, draw_tool->item);
+      gimp_display_shell_remove_tool_item (shell, draw_tool->item);
       g_object_unref (draw_tool->item);
       draw_tool->item = NULL;
     }

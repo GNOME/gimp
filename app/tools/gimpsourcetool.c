@@ -383,8 +383,8 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
 
       if (source_tool->src_outline)
         {
-          gimp_display_shell_remove_item (src_shell,
-                                          source_tool->src_outline);
+          gimp_display_shell_remove_tool_item (src_shell,
+                                               source_tool->src_outline);
           source_tool->src_outline = NULL;
         }
 
@@ -399,8 +399,8 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
 
           if (source_tool->src_outline)
             {
-              gimp_display_shell_add_item (src_shell,
-                                           source_tool->src_outline);
+              gimp_display_shell_add_tool_item (src_shell,
+                                                source_tool->src_outline);
               g_object_unref (source_tool->src_outline);
             }
         }
@@ -415,8 +415,8 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
                                     source_tool->src_y + off_y,
                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
                                     GIMP_TOOL_HANDLE_SIZE_CROSS);
-          gimp_display_shell_add_item (src_shell,
-                                       source_tool->src_handle);
+          gimp_display_shell_add_tool_item (src_shell,
+                                            source_tool->src_handle);
           g_object_unref (source_tool->src_handle);
         }
       else
@@ -442,15 +442,15 @@ gimp_source_tool_set_src_display (GimpSourceTool *source_tool,
 
           if (source_tool->src_handle)
             {
-              gimp_display_shell_remove_item (src_shell,
-                                              source_tool->src_handle);
+              gimp_display_shell_remove_tool_item (src_shell,
+                                                   source_tool->src_handle);
               source_tool->src_handle = NULL;
             }
 
           if (source_tool->src_outline)
             {
-              gimp_display_shell_remove_item (src_shell,
-                                              source_tool->src_outline);
+              gimp_display_shell_remove_tool_item (src_shell,
+                                                   source_tool->src_outline);
               source_tool->src_outline = NULL;
             }
         }

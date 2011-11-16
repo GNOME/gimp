@@ -78,6 +78,10 @@ gimp_display_shell_items_init (GimpDisplayShell *shell)
   gimp_display_shell_add_item (shell, shell->layer_boundary);
   g_object_unref (shell->layer_boundary);
 
+  shell->tool_items = gimp_canvas_group_new (shell);
+  gimp_display_shell_add_item (shell, shell->tool_items);
+  g_object_unref (shell->tool_items);
+
   shell->cursor = gimp_canvas_cursor_new (shell);
   gimp_canvas_item_set_visible (shell->cursor, FALSE);
   gimp_display_shell_add_item (shell, shell->cursor);
@@ -130,6 +134,26 @@ gimp_display_shell_remove_item (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
   gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (shell->canvas_item), item);
+}
+
+void
+gimp_display_shell_add_tool_item (GimpDisplayShell *shell,
+                                  GimpCanvasItem   *item)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->tool_items), item);
+}
+
+void
+gimp_display_shell_remove_tool_item (GimpDisplayShell *shell,
+                                     GimpCanvasItem   *item)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (shell->tool_items), item);
 }
 
 

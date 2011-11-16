@@ -97,7 +97,7 @@ gimp_tool_progress_start (GimpProgress *progress,
   tool->progress = gimp_canvas_progress_new (shell,
                                              GIMP_HANDLE_ANCHOR_CENTER,
                                              x + w / 2, y + h / 2);
-  gimp_display_shell_add_item (shell, tool->progress);
+  gimp_display_shell_add_tool_item (shell, tool->progress);
   g_object_unref (tool->progress);
 
   gimp_progress_start (GIMP_PROGRESS (tool->progress),
@@ -119,7 +119,7 @@ gimp_tool_progress_end (GimpProgress *progress)
       GimpDisplayShell *shell = gimp_display_get_shell (tool->progress_display);
 
       gimp_progress_end (GIMP_PROGRESS (tool->progress));
-      gimp_display_shell_remove_item (shell, tool->progress);
+      gimp_display_shell_remove_tool_item (shell, tool->progress);
 
       tool->progress         = NULL;
       tool->progress_display = NULL;

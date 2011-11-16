@@ -22,13 +22,18 @@
 #define __GIMP_DISPLAY_SHELL_ITEMS_H__
 
 
-void   gimp_display_shell_items_init  (GimpDisplayShell *shell);
-void   gimp_display_shell_items_free  (GimpDisplayShell *shell);
+void   gimp_display_shell_items_init       (GimpDisplayShell *shell);
+void   gimp_display_shell_items_free       (GimpDisplayShell *shell);
 
-void   gimp_display_shell_add_item    (GimpDisplayShell *shell,
-                                       GimpCanvasItem   *item);
-void   gimp_display_shell_remove_item (GimpDisplayShell *shell,
-                                       GimpCanvasItem   *item);
+void   gimp_display_shell_add_item         (GimpDisplayShell *shell,
+                                            GimpCanvasItem   *item);
+void   gimp_display_shell_remove_item      (GimpDisplayShell *shell,
+                                            GimpCanvasItem   *item);
+
+void   gimp_display_shell_add_tool_item    (GimpDisplayShell *shell,
+                                            GimpCanvasItem   *item);
+void   gimp_display_shell_remove_tool_item (GimpDisplayShell *shell,
+                                            GimpCanvasItem   *item);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_ITEMS_H__ */
