@@ -283,6 +283,9 @@ gimp_dockbook_init (GimpDockbook *dockbook)
   gtk_widget_set_can_focus (dockbook->p->menu_button, FALSE);
   gtk_button_set_relief (GTK_BUTTON (dockbook->p->menu_button),
                          GTK_RELIEF_NONE);
+  gtk_notebook_set_action_widget (notebook,
+                                  dockbook->p->menu_button,
+                                  GTK_PACK_END);
   gtk_widget_show (dockbook->p->menu_button);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
@@ -295,11 +298,6 @@ gimp_dockbook_init (GimpDockbook *dockbook)
   g_signal_connect_swapped (dockbook->p->menu_button, "button-press-event",
                             G_CALLBACK (gimp_dockbook_menu_button_press),
                             dockbook);
-
-  gtk_notebook_set_action_widget (notebook,
-                                  dockbook->p->menu_button,
-                                  GTK_PACK_END);
-  gtk_widget_show (dockbook->p->menu_button);
 }
 
 static void
@@ -311,12 +309,6 @@ gimp_dockbook_dispose (GObject *object)
 
   while (dockbook->p->dockables)
     gimp_dockbook_remove (dockbook, dockbook->p->dockables->data);
-
-  if (dockbook->p->menu_button)
-    {
-      gtk_widget_unparent (dockbook->p->menu_button);
-      dockbook->p->menu_button = NULL;
-    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
