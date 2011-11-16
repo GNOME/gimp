@@ -49,6 +49,7 @@ struct _GimpDrawTool
   gint            paused_count; /*  count to keep track of multiple pauses  */
   guint           draw_timeout; /*  draw delay timeout ID                   */
 
+  GimpCanvasItem *preview;
   GimpCanvasItem *item;
   GList          *group_stack;
 };
@@ -86,6 +87,11 @@ gdouble          gimp_draw_tool_calc_distance_square (GimpDrawTool     *draw_too
                                                       gdouble           y1,
                                                       gdouble           x2,
                                                       gdouble           y2);
+
+void             gimp_draw_tool_add_preview          (GimpDrawTool     *draw_tool,
+                                                      GimpCanvasItem   *item);
+void             gimp_draw_tool_remove_preview       (GimpDrawTool     *draw_tool,
+                                                      GimpCanvasItem   *item);
 
 void             gimp_draw_tool_add_item             (GimpDrawTool     *draw_tool,
                                                       GimpCanvasItem   *item);

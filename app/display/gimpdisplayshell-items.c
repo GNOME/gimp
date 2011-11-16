@@ -55,6 +55,10 @@ gimp_display_shell_items_init (GimpDisplayShell *shell)
   gimp_display_shell_add_item (shell, shell->passe_partout);
   g_object_unref (shell->passe_partout);
 
+  shell->preview_items = gimp_canvas_group_new (shell);
+  gimp_display_shell_add_item (shell, shell->preview_items);
+  g_object_unref (shell->preview_items);
+
   shell->vectors = gimp_canvas_proxy_group_new (shell);
   gimp_display_shell_add_item (shell, shell->vectors);
   g_object_unref (shell->vectors);
@@ -107,11 +111,13 @@ gimp_display_shell_items_free (GimpDisplayShell *shell)
       shell->canvas_item = NULL;
 
       shell->passe_partout  = NULL;
+      shell->preview_items  = NULL;
       shell->vectors        = NULL;
       shell->grid           = NULL;
       shell->guides         = NULL;
       shell->sample_points  = NULL;
       shell->layer_boundary = NULL;
+      shell->tool_items     = NULL;
       shell->cursor         = NULL;
     }
 }
@@ -134,6 +140,26 @@ gimp_display_shell_remove_item (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
   gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (shell->canvas_item), item);
+}
+
+void
+gimp_display_shell_add_preview_item (GimpDisplayShell *shell,
+                                     GimpCanvasItem   *item)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->preview_items), item);
+}
+
+void
+gimp_display_shell_remove_preview_item (GimpDisplayShell *shell,
+                                        GimpCanvasItem   *item)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (shell->preview_items), item);
 }
 
 void

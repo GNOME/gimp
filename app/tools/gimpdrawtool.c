@@ -103,6 +103,7 @@ gimp_draw_tool_init (GimpDrawTool *draw_tool)
 {
   draw_tool->display      = NULL;
   draw_tool->paused_count = 0;
+  draw_tool->preview      = NULL;
   draw_tool->item         = NULL;
 }
 
@@ -193,6 +194,8 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
       draw_tool->paused_count == 0 &&
       ! draw_tool->draw_timeout)
     {
+      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
+
       gimp_draw_tool_undraw (draw_tool);
 
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
@@ -208,25 +211,34 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
             gimp_draw_tool_pop_group (draw_tool);
         }
 
-      if (draw_tool->item)
-        {
-          GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
+      if (draw_tool->preview)
+        gimp_display_shell_add_preview_item (shell, draw_tool->preview);
 
-          gimp_display_shell_add_tool_item (shell, draw_tool->item);
-        }
+      if (draw_tool->item)
+        gimp_display_shell_add_tool_item (shell, draw_tool->item);
     }
 }
 
 static void
 gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->display && draw_tool->item)
+  if (draw_tool->display)
     {
       GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
 
-      gimp_display_shell_remove_tool_item (shell, draw_tool->item);
-      g_object_unref (draw_tool->item);
-      draw_tool->item = NULL;
+      if (draw_tool->preview)
+        {
+          gimp_display_shell_remove_preview_item (shell, draw_tool->preview);
+          g_object_unref (draw_tool->preview);
+          draw_tool->preview = NULL;
+        }
+
+      if (draw_tool->item)
+        {
+          gimp_display_shell_remove_tool_item (shell, draw_tool->item);
+          g_object_unref (draw_tool->item);
+          draw_tool->item = NULL;
+        }
     }
 }
 
@@ -374,6 +386,31 @@ gimp_draw_tool_calc_distance_square (GimpDrawTool *draw_tool,
 }
 
 void
+gimp_draw_tool_add_preview (GimpDrawTool   *draw_tool,
+                            GimpCanvasItem *item)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  if (! draw_tool->preview)
+    draw_tool->preview =
+      gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
+
+  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (draw_tool->preview), item);
+}
+
+void
+gimp_draw_tool_remove_preview (GimpDrawTool   *draw_tool,
+                               GimpCanvasItem *item)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+  g_return_if_fail (draw_tool->preview != NULL);
+
+  gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (draw_tool->preview), item);
+}
+
+void
 gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
                          GimpCanvasItem *item)
 {
@@ -383,7 +420,8 @@ gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
   if (! draw_tool->item)
-    draw_tool->item = gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
+    draw_tool->item =
+      gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
 
   group = GIMP_CANVAS_GROUP (draw_tool->item);
 
@@ -911,7 +949,7 @@ gimp_draw_tool_add_transform_preview (GimpDrawTool      *draw_tool,
                                             x1, y1, x2, y2,
                                             perspective, opacity);
 
-  gimp_draw_tool_add_item (draw_tool, item);
+  gimp_draw_tool_add_preview (draw_tool, item);
   g_object_unref (item);
 
   return item;
