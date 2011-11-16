@@ -3248,9 +3248,9 @@ load_dialog (const gchar *filename,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &plvals.textalpha, plvals.textalpha,
 
-                                    _("None"),   1, NULL,
-                                    _("Weak"),   2, NULL,
-                                    _("Strong"), 4, NULL,
+                                    C_("antialiasing", "None"), 1, NULL,
+                                    _("Weak"),                  2, NULL,
+                                    _("Strong"),                4, NULL,
 
                                     NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
@@ -3260,9 +3260,9 @@ load_dialog (const gchar *filename,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &plvals.graphicsalpha, plvals.graphicsalpha,
 
-                                    _("None"),   1, NULL,
-                                    _("Weak"),   2, NULL,
-                                    _("Strong"), 4, NULL,
+                                    C_("antialiasing", "None"), 1, NULL,
+                                    _("Weak"),                  2, NULL,
+                                    _("Strong"),                4, NULL,
 
                                     NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);

@@ -644,9 +644,9 @@ save_dialog (void)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &psvals.compression, psvals.compression,
 
-                                    _("None"), PSP_COMP_NONE, NULL,
-                                    _("RLE"),  PSP_COMP_RLE,  NULL,
-                                    _("LZ77"), PSP_COMP_LZ77, NULL,
+                                    C_("compression", "None"), PSP_COMP_NONE, NULL,
+                                    _("RLE"),                  PSP_COMP_RLE,  NULL,
+                                    _("LZ77"),                 PSP_COMP_LZ77, NULL,
 
                                     NULL);
 

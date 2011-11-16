@@ -421,7 +421,7 @@ align_layers_dialog (void)
                       table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  combo = gimp_int_combo_box_new (_("None"),                 H_NONE,
+  combo = gimp_int_combo_box_new (C_("align-style", "None"), H_NONE,
                                   _("Collect"),              H_COLLECT,
                                   _("Fill (left to right)"), LEFT2RIGHT,
                                   _("Fill (right to left)"), RIGHT2LEFT,
@@ -452,7 +452,7 @@ align_layers_dialog (void)
                              _("Ho_rizontal base:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
-  combo = gimp_int_combo_box_new (_("None"),                 V_NONE,
+  combo = gimp_int_combo_box_new (C_("align-style", "None"), V_NONE,
                                   _("Collect"),              V_COLLECT,
                                   _("Fill (top to bottom)"), TOP2BOTTOM,
                                   _("Fill (bottom to top)"), BOTTOM2TOP,

@@ -1041,7 +1041,7 @@ load_dialog (void)
 			      G_CALLBACK (gimp_radio_button_update),
 			      &plvals.compose, plvals.compose,
 
-			      _("None"),                 FALSE, NULL,
+			      C_("composing", "None"),   FALSE, NULL,
 			      "NAXIS=3, NAXIS3=2,...,4", TRUE,  NULL,
 
 			      NULL);

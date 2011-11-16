@@ -994,11 +994,11 @@ explorer_dialog (void)
                                     G_CALLBACK (explorer_radio_update),
                                     &wvals.redmode, wvals.redmode,
 
-                                    _("Sine"),         SINUS,
+                                    _("Sine"),                    SINUS,
                                     &elements->redmode[SINUS],
-                                    _("Cosine"),       COSINUS,
+                                    _("Cosine"),                  COSINUS,
                                     &elements->redmode[COSINUS],
-                                    _("None"),         NONE,
+                                    C_("color-function", "None"), NONE,
                                     &elements->redmode[NONE],
 
                                     NULL);
@@ -1035,11 +1035,11 @@ explorer_dialog (void)
                                     G_CALLBACK (explorer_radio_update),
                                     &wvals.greenmode, wvals.greenmode,
 
-                                    _("Sine"),           SINUS,
+                                    _("Sine"),                    SINUS,
                                     &elements->greenmode[SINUS],
-                                    _("Cosine"),         COSINUS,
+                                    _("Cosine"),                  COSINUS,
                                     &elements->greenmode[COSINUS],
-                                    _("None"),           NONE,
+                                    C_("color-function", "None"), NONE,
                                     &elements->greenmode[NONE],
 
                                     NULL);
@@ -1076,11 +1076,11 @@ explorer_dialog (void)
                                     G_CALLBACK (explorer_radio_update),
                                     &wvals.bluemode, wvals.bluemode,
 
-                                    _("Sine"),          SINUS,
+                                    _("Sine"),                    SINUS,
                                     &elements->bluemode[SINUS],
-                                    _("Cosine"),        COSINUS,
+                                    _("Cosine"),                  COSINUS,
                                     &elements->bluemode[COSINUS],
-                                    _("None"),          NONE,
+                                    C_("color-function", "None"), NONE,
                                     &elements->bluemode[NONE],
 
                                     NULL);

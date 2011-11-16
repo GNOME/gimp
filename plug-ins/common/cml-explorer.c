@@ -163,7 +163,7 @@ enum
 
 static const gchar *composition_names[COMP_NUM_VALUES] =
 {
-  N_("None"),
+  NC_("cml-composition", "None"),
   N_("Max (x, -)"),
   N_("Max (x+d, -)"),
   N_("Max (x-d, -)"),

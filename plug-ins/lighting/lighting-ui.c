@@ -415,10 +415,10 @@ create_light_page (void)
   gtk_widget_show (label);
 
   light_type_combo =
-    gimp_int_combo_box_new (_("None"),        NO_LIGHT,
-                            _("Directional"), DIRECTIONAL_LIGHT,
-                            _("Point"),       POINT_LIGHT,
-                            /* _("Spot"),     SPOT_LIGHT, */
+    gimp_int_combo_box_new (C_("light-source", "None"), NO_LIGHT,
+                            _("Directional"),           DIRECTIONAL_LIGHT,
+                            _("Point"),                 POINT_LIGHT,
+                            /* _("Spot"),               SPOT_LIGHT, */
                             NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo),
                                  mapvals.lightsource[k].type);

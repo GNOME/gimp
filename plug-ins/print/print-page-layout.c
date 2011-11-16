@@ -458,10 +458,10 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (label);
 
   /*  if and how to center the image on the page  */
-  combo = gimp_int_combo_box_new (_("None"),         CENTER_NONE,
-                                  _("Horizontally"), CENTER_HORIZONTALLY,
-                                  _("Vertically"),   CENTER_VERTICALLY,
-                                  _("Both"),         CENTER_BOTH,
+  combo = gimp_int_combo_box_new (C_("center-mode", "None"), CENTER_NONE,
+                                  _("Horizontally"),         CENTER_HORIZONTALLY,
+                                  _("Vertically"),           CENTER_VERTICALLY,
+                                  _("Both"),                 CENTER_BOTH,
                                   NULL);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
