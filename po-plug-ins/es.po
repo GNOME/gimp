@@ -11,16 +11,17 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2009, 2011.
+# Benjamín Valero Espinosa <benjavalero@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-11-09 20:56+0000\n"
-"PO-Revision-Date: 2011-10-01 13:55+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2011-11-16 23:24+0000\n"
+"PO-Revision-Date: 2011-11-17 16:39+0100\n"
+"Last-Translator: Benjamín Valero Espinosa <benjavalero@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -304,16 +305,10 @@ msgstr "No hay suficientes capas para alinear."
 msgid "Align Visible Layers"
 msgstr "Alinear capas visibles"
 
-#. if and how to center the image on the page
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
-#: ../plug-ins/common/cml-explorer.c:166 ../plug-ins/common/file-ps.c:3251
-#: ../plug-ins/common/file-ps.c:3263 ../plug-ins/common/file-psp.c:647
-#: ../plug-ins/file-fits/fits.c:1044
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
-#: ../plug-ins/lighting/lighting-ui.c:418
-#: ../plug-ins/print/print-page-layout.c:461
+#, fuzzy
+#| msgid "None"
+msgctxt "align-style"
 msgid "None"
 msgstr "Ninguno"
 
@@ -1189,6 +1184,13 @@ msgstr "función basada en sin^p"
 msgid "sin^p, stepped"
 msgstr "sin^p, paso a paso"
 
+#: ../plug-ins/common/cml-explorer.c:166
+#, fuzzy
+#| msgid "None"
+msgctxt "cml-composition"
+msgid "None"
+msgstr "Ninguno"
+
 #: ../plug-ins/common/cml-explorer.c:167
 msgid "Max (x, -)"
 msgstr "Máx (x, -)"
@@ -1356,16 +1358,16 @@ msgstr "Crea patrones abstractos Coupled-Map-Lattice"
 
 #: ../plug-ins/common/cml-explorer.c:471
 msgid "CML _Explorer..."
-msgstr "_Explorador CML…"
+msgstr "_Examinador CML…"
 
 #: ../plug-ins/common/cml-explorer.c:761
 msgid "CML Explorer: evoluting"
-msgstr "Explorador CML: evolucionando"
+msgstr "Examinador CML: evolucionando"
 
 # //R No tengo ni idea de qué es esto...
 #: ../plug-ins/common/cml-explorer.c:1182
 msgid "Coupled-Map-Lattice Explorer"
-msgstr "Explorador Coupled-Map-Lattice"
+msgstr "Examinador Coupled-Map-Lattice"
 
 #: ../plug-ins/common/cml-explorer.c:1229
 msgid "New Seed"
@@ -1546,11 +1548,11 @@ msgstr "Aviso: el origen y del destino son el mismo canal."
 
 #: ../plug-ins/common/cml-explorer.c:1979
 msgid "Save CML Explorer Parameters"
-msgstr "Guardar los parámetros del Explorador CML"
+msgstr "Guardar los parámetros del Examinador CML"
 
 #: ../plug-ins/common/cml-explorer.c:2112
 msgid "Load CML Explorer Parameters"
-msgstr "Cargar los parámetros del Explorador CML"
+msgstr "Cargar los parámetros del Examinador CML"
 
 #: ../plug-ins/common/cml-explorer.c:2230
 msgid "Error: it's not CML parameter file."
@@ -1566,7 +1568,7 @@ msgstr "Advertencia: «%s» es un archivo de formato antiguo."
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 "Advertencia: «%s» es un archivo de parámetros para una versión más reciente "
-"del Explorador CML."
+"del Examinador CML."
 
 #: ../plug-ins/common/cml-explorer.c:2304
 msgid "Error: failed to load parameters"
@@ -4137,6 +4139,13 @@ msgstr "Automático"
 msgid "Text antialiasing"
 msgstr "Suavizado de texto"
 
+#: ../plug-ins/common/file-ps.c:3251 ../plug-ins/common/file-ps.c:3263
+#, fuzzy
+#| msgid "None"
+msgctxt "antialiasing"
+msgid "None"
+msgstr "Ninguno"
+
 #: ../plug-ins/common/file-ps.c:3252 ../plug-ins/common/file-ps.c:3264
 msgid "Weak"
 msgstr "Débil"
@@ -4222,6 +4231,13 @@ msgstr "PSP"
 #: ../plug-ins/common/file-psp.c:643
 msgid "Data Compression"
 msgstr "Compresión de datos"
+
+#: ../plug-ins/common/file-psp.c:647
+#, fuzzy
+#| msgid "None"
+msgctxt "compression"
+msgid "None"
+msgstr "Ninguno"
 
 #: ../plug-ins/common/file-psp.c:648
 msgid "RLE"
@@ -8680,6 +8696,13 @@ msgstr "Según el dato máximo/mínimo"
 msgid "Image Composing"
 msgstr "Composición de imagen"
 
+#: ../plug-ins/file-fits/fits.c:1044
+#, fuzzy
+#| msgid "None"
+msgctxt "composing"
+msgid "None"
+msgstr "Ninguno"
+
 #: ../plug-ins/file-fli/fli-gimp.c:166 ../plug-ins/file-fli/fli-gimp.c:186
 msgid "AutoDesk FLIC animation"
 msgstr "Animación FLIC de Autodesk"
@@ -9478,7 +9501,7 @@ msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 msgid "Fractal Explorer"
-msgstr "Explorador de fractales"
+msgstr "Examinador de fractales"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:637
 msgid "Realtime preview"
@@ -9645,6 +9668,15 @@ msgstr "Función del color"
 msgid "Sine"
 msgstr "Seno"
 
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
+#, fuzzy
+#| msgid "None"
+msgctxt "color-function"
+msgid "None"
+msgstr "Ninguno"
+
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1006
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1047
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1088
@@ -9710,7 +9742,7 @@ msgstr "Crear un mapa de colores usando un degradado del editor de degradados"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1170
 msgid "FractalExplorer Gradient"
-msgstr "Degradado del explorador de fractales"
+msgstr "Degradado del examinador de fractales"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1200
 msgid "_Fractals"
@@ -9732,7 +9764,7 @@ msgstr "Guardar parámetros del fractal"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1873
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
-msgstr "«%s» no es un archivo del explorador de fractales"
+msgstr "«%s» no es un archivo del examinador de fractales"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1880
 #, c-format
@@ -9745,7 +9777,7 @@ msgstr "Renderizando fractal"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:243
 msgid "_Fractal Explorer..."
-msgstr "Explorador de _fractales…"
+msgstr "Examinador de _fractales…"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:371
 msgid "Rendering fractal"
@@ -9764,7 +9796,7 @@ msgstr "Borrar fractal"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:947
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr "El archivo «%s» no es un archivo del explorador de fractales"
+msgstr "El archivo «%s» no es un archivo del examinador de fractales"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:957
 #, c-format
@@ -9797,7 +9829,7 @@ msgstr "Volver a buscar fractales"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1132
 msgid "Add FractalExplorer Path"
-msgstr "Añadir ruta al explorador de fractales"
+msgstr "Añadir ruta al examinador de fractales"
 
 #: ../plug-ins/gfig/gfig-bezier.c:442
 msgid "Closed"
@@ -12204,6 +12236,13 @@ msgstr "Luz 6"
 msgid "Color:"
 msgstr "Color:"
 
+#: ../plug-ins/lighting/lighting-ui.c:418
+#, fuzzy
+#| msgid "None"
+msgctxt "light-source"
+msgid "None"
+msgstr "Ninguno"
+
 #: ../plug-ins/lighting/lighting-ui.c:419
 msgid "Directional"
 msgstr "Direccional"
@@ -12905,6 +12944,14 @@ msgstr "De_recha:"
 #: ../plug-ins/print/print-page-layout.c:454
 msgid "C_enter:"
 msgstr "C_entro:"
+
+#. if and how to center the image on the page
+#: ../plug-ins/print/print-page-layout.c:461
+#, fuzzy
+#| msgid "None"
+msgctxt "center-mode"
+msgid "None"
+msgstr "Ninguno"
 
 #: ../plug-ins/print/print-page-layout.c:462
 msgid "Horizontally"
