@@ -520,8 +520,9 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
       else if (gimp_container_have (container, GIMP_OBJECT (src_viewable)))
         src_container = container;
 
-      src_index = gimp_container_get_child_index (src_container,
-                                                  GIMP_OBJECT (src_viewable));
+      if (src_container)
+        src_index = gimp_container_get_child_index (src_container,
+                                                    GIMP_OBJECT (src_viewable));
     }
 
   if (dest_viewable)
