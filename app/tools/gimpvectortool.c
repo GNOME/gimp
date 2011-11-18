@@ -1411,7 +1411,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
   vectors = vector_tool->vectors;
 
-  if (!vectors)
+  if (! vectors || ! gimp_vectors_get_bezier (vectors))
     return;
 
   /* the stroke itself */
