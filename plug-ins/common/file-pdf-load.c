@@ -1422,6 +1422,10 @@ gimp_resolution_entry_new (const gchar *width_label,
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (gre->unitmenu));
   gimp_unit_store_set_has_pixels (GIMP_UNIT_STORE (model), FALSE);
   gimp_unit_store_set_has_percent (GIMP_UNIT_STORE (model), FALSE);
+  g_object_set (model,
+                "short-format", _("pixels/%a"),
+                "long-format",  _("pixels/%a"),
+                NULL);
   gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (gre->unitmenu),
                                   initial_unit);
 
