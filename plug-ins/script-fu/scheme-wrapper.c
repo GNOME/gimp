@@ -429,6 +429,12 @@ ts_init_constants (scheme *sc)
                            sc->vptr->mk_string (sc, G_DIR_SEPARATOR_S));
   sc->vptr->setimmutable (symbol);
 
+  /* Define string constant for use in building search paths */
+  symbol = sc->vptr->mk_symbol (sc, "SEARCHPATH-SEPARATOR");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_string (sc, G_SEARCHPATH_SEPARATOR_S));
+  sc->vptr->setimmutable (symbol);
+
   /* These constants are deprecated and will be removed at a later date. */
   symbol = sc->vptr->mk_symbol (sc, "gimp-dir");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
