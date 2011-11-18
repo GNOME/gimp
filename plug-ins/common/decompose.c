@@ -471,6 +471,8 @@ run (const gchar      *name,
           if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_set_data (PLUG_IN_PROC, &decovals, sizeof (DecoVals));
         }
+
+      gimp_progress_end ();
     }
 
   values[0].data.d_status = status;
