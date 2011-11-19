@@ -131,7 +131,7 @@ sanity_check_glib (void)
 {
 #define GLIB_REQUIRED_MAJOR 2
 #define GLIB_REQUIRED_MINOR 28
-#define GLIB_REQUIRED_MICRO 1
+#define GLIB_REQUIRED_MICRO 8
 
   const gchar *mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
                                               GLIB_REQUIRED_MINOR,
@@ -193,8 +193,8 @@ static gchar *
 sanity_check_pango (void)
 {
 #define PANGO_REQUIRED_MAJOR 1
-#define PANGO_REQUIRED_MINOR 22
-#define PANGO_REQUIRED_MICRO 0
+#define PANGO_REQUIRED_MINOR 29
+#define PANGO_REQUIRED_MICRO 4
 
   const gchar *mismatch = pango_version_check (PANGO_REQUIRED_MAJOR,
                                                PANGO_REQUIRED_MINOR,
@@ -316,8 +316,8 @@ static gchar *
 sanity_check_gdk_pixbuf (void)
 {
 #define GDK_PIXBUF_REQUIRED_MAJOR 2
-#define GDK_PIXBUF_REQUIRED_MINOR 22
-#define GDK_PIXBUF_REQUIRED_MICRO 1
+#define GDK_PIXBUF_REQUIRED_MINOR 24
+#define GDK_PIXBUF_REQUIRED_MICRO 0
 
   if (! sanity_check_version (gdk_pixbuf_major_version, GDK_PIXBUF_REQUIRED_MAJOR,
                               gdk_pixbuf_minor_version, GDK_PIXBUF_REQUIRED_MINOR,
@@ -351,7 +351,7 @@ sanity_check_babl (void)
 
 #define BABL_REQUIRED_MAJOR 0
 #define BABL_REQUIRED_MINOR 1
-#define BABL_REQUIRED_MICRO 4
+#define BABL_REQUIRED_MICRO 6
 
   babl_get_version (&babl_major_version,
                     &babl_minor_version,
@@ -389,7 +389,7 @@ sanity_check_gegl (void)
 
 #define GEGL_REQUIRED_MAJOR 0
 #define GEGL_REQUIRED_MINOR 1
-#define GEGL_REQUIRED_MICRO 6
+#define GEGL_REQUIRED_MICRO 8
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
