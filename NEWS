@@ -17,6 +17,9 @@ UI:
  - Improve the transform tools' undo strings to be more descriptive
  - Render the layer's "eye" icon in inconsistent state if the layer is
    visible, but one of its parents isn't.
+ - Add proper stacking for canvas items, so things don't hide each other
+ - Make sure single-window-mode and multi-window-mode are always saved
+   consistently in sessionrc
 
 
 Core:
@@ -31,12 +34,17 @@ Core:
 
 Libgimp:
 
- - <item>
+ - Add a basic paint dynamics PDB interface
 
 
 Plug-ins:
 
  - Make writing color space information to BMP files optional
+
+
+Script-Fu:
+
+ - Lots and lots of undepeprecations
 
 
 Developer documentation:
@@ -47,6 +55,8 @@ Developer documentation:
 Source and build system:
 
  - Make git-version.h generation work in shallow git clones
+ - Modernize use of autotools a bit, maintainer-mode and pdbgen
+   are now enabled by default
 
 
 General:
