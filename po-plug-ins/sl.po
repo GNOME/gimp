@@ -1,4 +1,4 @@
-#'gimp/po-plug-ins
+# 'gimp/po-plug-ins
 # Slovenian translation of gimp-plugins.
 # Copyright (C) 2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
@@ -5887,7 +5887,7 @@ msgstr "_Pretvori"
 #: ../plug-ins/common/lcms.c:1264
 #: ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
-msgstr "_Ne vprašuj več"
+msgstr "_Ne vprašaj več"
 
 #: ../plug-ins/common/lcms.c:1328
 msgid "Select destination profile"
