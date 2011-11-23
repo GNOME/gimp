@@ -50,23 +50,29 @@ enum
 };
 
 
-static void   gimp_tool_options_dispose      (GObject         *object);
-static void   gimp_tool_options_set_property (GObject         *object,
-                                              guint            property_id,
-                                              const GValue    *value,
-                                              GParamSpec      *pspec);
-static void   gimp_tool_options_get_property (GObject         *object,
-                                              guint            property_id,
-                                              GValue          *value,
-                                              GParamSpec      *pspec);
+static void   gimp_tool_options_config_iface_init (GimpConfigInterface *iface);
 
-static void   gimp_tool_options_real_reset   (GimpToolOptions *tool_options);
+static void   gimp_tool_options_dispose           (GObject         *object);
+static void   gimp_tool_options_set_property      (GObject         *object,
+                                                   guint            property_id,
+                                                   const GValue    *value,
+                                                   GParamSpec      *pspec);
+static void   gimp_tool_options_get_property      (GObject         *object,
+                                                   guint            property_id,
+                                                   GValue          *value,
+                                                   GParamSpec      *pspec);
 
-static void   gimp_tool_options_tool_notify  (GimpToolOptions *options,
-                                              GParamSpec      *pspec);
+static void   gimp_tool_options_real_reset        (GimpToolOptions *tool_options);
+
+static void   gimp_tool_options_config_reset      (GimpConfig      *config);
+
+static void   gimp_tool_options_tool_notify       (GimpToolOptions *options,
+                                                   GParamSpec      *pspec);
 
 
-G_DEFINE_TYPE (GimpToolOptions, gimp_tool_options, GIMP_TYPE_CONTEXT)
+G_DEFINE_TYPE_WITH_CODE (GimpToolOptions, gimp_tool_options, GIMP_TYPE_CONTEXT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_tool_options_config_iface_init))
 
 #define parent_class gimp_tool_options_parent_class
 
@@ -100,6 +106,12 @@ gimp_tool_options_init (GimpToolOptions *options)
   g_signal_connect (options, "notify::tool",
                     G_CALLBACK (gimp_tool_options_tool_notify),
                     NULL);
+}
+
+static void
+gimp_tool_options_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->reset = gimp_tool_options_config_reset;
 }
 
 static void
@@ -231,6 +243,16 @@ static void
 gimp_tool_options_real_reset (GimpToolOptions *tool_options)
 {
   gimp_config_reset (GIMP_CONFIG (tool_options));
+}
+
+static void
+gimp_tool_options_config_reset (GimpConfig *config)
+{
+  gchar *name = g_strdup (gimp_object_get_name (config));
+
+  gimp_config_reset_properties (G_OBJECT (config));
+
+  gimp_object_take_name (GIMP_OBJECT (config), name);
 }
 
 static void
