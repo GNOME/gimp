@@ -46,8 +46,6 @@
 #include <ctype.h>
 #include <string.h>
 
-#include <libintl.h>
-
 #include "../script-fu-intl.h"
 
 #include "scheme-private.h"
