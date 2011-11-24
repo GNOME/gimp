@@ -234,7 +234,7 @@
       ; Set new color, brush, opacity, paint mode.
       (gimp-context-set-foreground color)
       (gimp-context-set-brush (car brush))
-      (gimp-context-set-opacity (* 100 (car (cdr brush))))
+      (gimp-context-set-opacity (car (cdr brush)))
       (gimp-context-set-paint-mode (car (cdr (cdr (cdr brush)))))
 
       (gimp-progress-set-text _"Rendering Spyro")
@@ -342,7 +342,7 @@
   SF-OPTION     _"Tool"          '(_"Pencil"
                                    _"Brush"
                                    _"Airbrush")
-  SF-BRUSH      _"Brush"         '("Circle (01)" 1.0 -1 0)
+  SF-BRUSH      _"Brush"         '("Circle (01)" 100 -1 0)
 
   SF-OPTION     _"Color method"  '(_"Solid Color"
                                    _"Gradient: Loop Sawtooth"

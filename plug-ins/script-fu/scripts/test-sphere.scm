@@ -275,7 +275,7 @@
   SF-TOGGLE     "Shadow"             TRUE
   SF-COLOR      "Background color"   "white"
   SF-COLOR      "Sphere color"       "red"
-  SF-BRUSH      "Brush"              '("Circle (03)" 1.0 44 0)
+  SF-BRUSH      "Brush"              '("Circle (03)" 100 44 0)
   SF-STRING     "Text"               "Tiny-Fu rocks!"
   SF-TEXT       "Multi-line text"    "Hello,\nWorld!"
   SF-PATTERN    "Pattern"            "Maple Leaves"
