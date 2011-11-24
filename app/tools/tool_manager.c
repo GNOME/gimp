@@ -630,6 +630,7 @@ tool_manager_preset_changed (GimpContext     *user_context,
                              GimpToolManager *tool_manager)
 {
   GimpToolInfo *preset_tool;
+  gchar        *options_name;
   gboolean      tool_change = FALSE;
 
   if (! preset || user_context->gimp->busy)
@@ -643,8 +644,14 @@ tool_manager_preset_changed (GimpContext     *user_context,
   if (! tool_change)
     tool_manager_disconnect_options (tool_manager, user_context, preset_tool);
 
+  /*  save the name, we don't want to overwrite it  */
+  options_name = g_strdup (gimp_object_get_name (preset_tool->tool_options));
+
   gimp_config_copy (GIMP_CONFIG (preset->tool_options),
                     GIMP_CONFIG (preset_tool->tool_options), 0);
+
+  /*  restore the saved name  */
+  gimp_object_take_name (GIMP_OBJECT (preset_tool->tool_options), options_name);
 
   if (tool_change)
     gimp_context_set_tool (user_context, preset_tool);
