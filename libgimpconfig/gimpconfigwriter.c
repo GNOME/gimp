@@ -330,7 +330,7 @@ gimp_config_writer_print (GimpConfigWriter  *writer,
  * gimp_config_writer_printf:
  * @writer: a #GimpConfigWriter
  * @format: a format string as described for g_strdup_printf().
- * @Varargs: list of arguments according to @format
+ * @...: list of arguments according to @format
  *
  * A printf-like function for #GimpConfigWriter.
  *

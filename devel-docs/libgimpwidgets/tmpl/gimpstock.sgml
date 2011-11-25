@@ -872,6 +872,14 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_INPUT_DEVICE ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-input-device-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-input-device-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-display-filter-24.png" format="png"></inlinegraphic>
@@ -1144,6 +1152,14 @@ RTL variant
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-tool-by-color-select-22.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-tool-by-color-select-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_CAGE ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-tool-cage-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-cage-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -1460,8 +1476,9 @@ RTL variant
 
 
 <!-- ##### MACRO GIMP_STOCK_CONTROLLER_MOUSE ##### -->
-<para>
-
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-controller-mouse-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-controller-mouse-16.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -1535,6 +1552,13 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_DYNAMICS ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_BUFFER ##### -->
 <para>
 
@@ -1571,6 +1595,13 @@ RTL variant
 
 
 <!-- ##### MACRO GIMP_STOCK_PATTERN ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_PRESET ##### -->
 <para>
 
 </para>

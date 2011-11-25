@@ -571,6 +571,7 @@ gimp_ruler_get_position
 gimp_ruler_set_range
 gimp_ruler_get_range
 gimp_ruler_add_track_widget
+gimp_ruler_remove_track_widget
 <SUBSECTION Standard>
 GimpRulerClass
 GIMP_RULER
@@ -837,6 +838,7 @@ GIMP_STOCK_PRINT_RESOLUTION
 GIMP_STOCK_TOOLS
 GIMP_STOCK_TOOL_OPTIONS
 GIMP_STOCK_DEVICE_STATUS
+GIMP_STOCK_INPUT_DEVICE
 GIMP_STOCK_DISPLAY_FILTER
 GIMP_STOCK_CURVE_FREE
 GIMP_STOCK_CURVE_SMOOTH
@@ -874,6 +876,7 @@ GIMP_STOCK_TOOL_BLUR
 GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST
 GIMP_STOCK_TOOL_BUCKET_FILL
 GIMP_STOCK_TOOL_BY_COLOR_SELECT
+GIMP_STOCK_TOOL_CAGE
 GIMP_STOCK_TOOL_CLONE
 GIMP_STOCK_TOOL_COLOR_BALANCE
 GIMP_STOCK_TOOL_COLOR_PICKER
@@ -923,12 +926,14 @@ GIMP_STOCK_DISPLAY_FILTER_PROOF
 GIMP_STOCK_QMASK_ON
 GIMP_STOCK_QMASK_OFF
 GIMP_STOCK_BRUSH
+GIMP_STOCK_DYNAMICS
 GIMP_STOCK_BUFFER
 GIMP_STOCK_DETACH
 GIMP_STOCK_FONT
 GIMP_STOCK_GRADIENT
 GIMP_STOCK_PALETTE
 GIMP_STOCK_PATTERN
+GIMP_STOCK_TOOL_PRESET
 </SECTION>
 
 <SECTION>
@@ -946,6 +951,7 @@ gimp_enum_stock_box_set_child_padding
 <SECTION>
 <FILE>gimpwidgets</FILE>
 <TITLE>GimpWidgets</TITLE>
+GimpWidgetsError
 gimp_radio_group_new
 gimp_radio_group_new2
 gimp_radio_group_set_active
@@ -1287,4 +1293,18 @@ gimp_controller_get_type
 GIMP_CONTROLLER_CLASS
 GIMP_IS_CONTROLLER_CLASS
 GIMP_CONTROLLER_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimp3migration</FILE>
+GdkModifierIntent
+gdk_event_triggers_context_menu
+gdk_keymap_get_modifier_mask
+gtk_box_new
+gtk_button_box_new
+gtk_paned_new
+gtk_scale_new
+gtk_scrollbar_new
+gtk_separator_new
+gtk_widget_get_modifier_mask
 </SECTION>

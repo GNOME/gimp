@@ -117,7 +117,7 @@ gimp_utf8_strtrim (const gchar *str,
  * @warning_format: The message format for the warning message if conversion
  *                  to UTF-8 fails. See the <function>printf()</function>
  *                  documentation.
- * @Varargs:        The parameters to insert into the format string.
+ * @...:            The parameters to insert into the format string.
  *
  * This function takes any string (UTF-8 or not) and always returns a valid
  * UTF-8 string.

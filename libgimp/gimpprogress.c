@@ -242,7 +242,7 @@ gimp_progress_init (const gchar  *message)
 /**
  * gimp_progress_init_printf:
  * @format: a standard printf() format string
- * @Varargs: arguments for @format
+ * @...: arguments for @format
  *
  * Initializes the progress bar for the current plug-in.
  *
@@ -277,7 +277,7 @@ gimp_progress_init_printf (const gchar *format,
 /**
  * gimp_progress_set_text_printf:
  * @format: a standard printf() format string
- * @Varargs: arguments for @format
+ * @...: arguments for @format
  *
  * Changes the text in the progress bar for the current plug-in.
  *

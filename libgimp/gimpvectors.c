@@ -256,7 +256,7 @@ gimp_vectors_parasite_detach (gint32       vectors_ID,
  * @num_parasites: The number of attached parasites.
  * @parasites: The names of currently attached parasites.
  *
- * Deprecated: Use gimp_item_list_parasites() instead.
+ * Deprecated: Use gimp_item_get_parasite_list() instead.
  *
  * Returns: TRUE on success.
  *

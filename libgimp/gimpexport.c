@@ -675,7 +675,7 @@ export_dialog (GSList      *actions,
  * and drawable_ID is not altered, GIMP_EXPORT_IGNORE is returned and
  * the save_plugin should try to save the original image. If the
  * user chooses Cancel, GIMP_EXPORT_CANCEL is returned and the
- * save_plugin should quit itself with status #GIMP_PDB_CANCEL.
+ * save_plugin should quit itself with status %GIMP_PDB_CANCEL.
  *
  * If @format_name is NULL, no dialogs will be shown and this function
  * will behave as if the user clicked on the 'Export' button, if a

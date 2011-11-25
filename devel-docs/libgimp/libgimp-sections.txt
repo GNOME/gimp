@@ -248,6 +248,8 @@ gimp_context_get_paint_mode
 gimp_context_set_paint_mode
 gimp_context_get_brush
 gimp_context_set_brush
+gimp_context_get_dynamics
+gimp_context_set_dynamics
 gimp_context_get_pattern
 gimp_context_set_pattern
 gimp_context_get_gradient
@@ -375,6 +377,12 @@ gimp_drawable_transform_2d
 gimp_drawable_transform_2d_default
 gimp_drawable_transform_matrix
 gimp_drawable_transform_matrix_default
+</SECTION>
+
+<SECTION>
+<FILE>gimpdynamics</FILE>
+gimp_dynamics_get_list
+gimp_dynamics_refresh
 </SECTION>
 
 <SECTION>
@@ -540,6 +548,9 @@ gimp_help
 gimp_image_list
 gimp_image_new
 gimp_image_get_uri
+gimp_image_get_xcf_uri
+gimp_image_get_exported_uri
+gimp_image_get_imported_uri
 gimp_image_duplicate
 gimp_image_delete
 gimp_image_is_valid
@@ -607,12 +618,15 @@ gimp_image_set_tattoo_state
 gimp_image_get_tattoo_state
 gimp_image_get_layer_by_tattoo
 gimp_image_get_channel_by_tattoo
+gimp_image_get_vectors_by_tattoo
+gimp_image_get_layer_by_name
+gimp_image_get_channel_by_name
+gimp_image_get_vectors_by_name
 gimp_image_get_cmap
 gimp_image_set_cmap
 gimp_image_get_colormap
 gimp_image_set_colormap
 gimp_image_get_vectors
-gimp_image_get_vectors_by_tattoo
 gimp_image_get_thumbnail_data
 gimp_image_attach_parasite
 gimp_image_detach_parasite
@@ -1011,7 +1025,6 @@ gimp_heal_default
 gimp_paintbrush
 gimp_paintbrush_default
 gimp_pencil
-gimp_perspective
 gimp_smudge
 gimp_smudge_default
 </SECTION>

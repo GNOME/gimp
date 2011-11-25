@@ -74,6 +74,7 @@
       <title>Data Objects</title>
       <xi:include href="xml/gimpbrush.xml" />
       <xi:include href="xml/gimpbrushes.xml" />
+      <xi:include href="xml/gimpdynamics.xml" />
       <xi:include href="xml/gimpfonts.xml" />
       <xi:include href="xml/gimpgradient.xml" />
       <xi:include href="xml/gimpgradients.xml" />

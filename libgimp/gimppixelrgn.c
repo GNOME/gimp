@@ -712,8 +712,8 @@ gimp_pixel_rgns_register2 (gint           nrgns,
 
 /**
  * gimp_pixel_rgns_register:
- * @nrgns:   the number of regions to register.
- * @Varargs: @nrgns pointers to #GimpPixelRgn.
+ * @nrgns: the number of regions to register.
+ * @...:   @nrgns pointers to #GimpPixelRgn.
  *
  * This is the varargs version of #gimp_pixel_rgns_register2.
  *

@@ -563,22 +563,22 @@ gimp_quit (void)
  * "*" for all image types. If the procedure doesn't need an image to
  * run, use the empty string.
  *
- * @type must be one of #GIMP_PLUGIN or #GIMP_EXTENSION. Note that
+ * @type must be one of %GIMP_PLUGIN or %GIMP_EXTENSION. Note that
  * temporary procedures must be installed using
  * gimp_install_temp_proc().
  *
- * NOTE: Unlike the GIMP 1.2 API, #GIMP_EXTENSION no longer means
+ * NOTE: Unlike the GIMP 1.2 API, %GIMP_EXTENSION no longer means
  * that the procedure's menu prefix is &lt;Toolbox&gt;, but that
  * it will install temporary procedures. Therefore, the GIMP core
- * will wait until the #GIMP_EXTENSION procedure has called
+ * will wait until the %GIMP_EXTENSION procedure has called
  * gimp_extension_ack(), which means that the procedure has done
  * its initialization, installed its temporary procedures and is
  * ready to run.
  *
- * <emphasis>Not calling gimp_extension_ack() from a #GIMP_EXTENSION
+ * <emphasis>Not calling gimp_extension_ack() from a %GIMP_EXTENSION
  * procedure will cause the GIMP core to lock up.</emphasis>
  *
- * Additionally, a #GIMP_EXTENSION procedure with no parameters
+ * Additionally, a %GIMP_EXTENSION procedure with no parameters
  * (@n_params == 0 and @params == #NULL) is an "automatic" extension
  * that will be automatically started on each GIMP startup.
  **/
@@ -650,7 +650,7 @@ gimp_install_procedure (const gchar        *name,
  *
  * See gimp_install_procedure() for most details.
  *
- * @type <emphasis>must</emphasis> be #GIMP_TEMPORARY or the function
+ * @type <emphasis>must</emphasis> be %GIMP_TEMPORARY or the function
  * will fail.
  *
  * @run_proc is the function which will be called to execute the
@@ -733,12 +733,12 @@ gimp_uninstall_temp_proc (const gchar *name)
  * gimp_run_procedure:
  * @name:          the name of the procedure to run
  * @n_return_vals: return location for the number of return values
- * @Varargs:       list of procedure parameters
+ * @...:           list of procedure parameters
  *
  * This function calls a GIMP procedure and returns its return values.
  *
  * The procedure's parameters are given by a va_list in the format
- * (type, value, type, value) and must be terminated by #GIMP_PDB_END.
+ * (type, value, type, value) and must be terminated by %GIMP_PDB_END.
  *
  * This function converts the va_list of parameters into an array and
  * passes them to gimp_run_procedure2(). Please look there for further

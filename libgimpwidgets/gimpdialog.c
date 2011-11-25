@@ -511,7 +511,7 @@ gimp_dialog_add_button (GimpDialog  *dialog,
 /**
  * gimp_dialog_add_buttons:
  * @dialog: The @dialog to add buttons to.
- * @Varargs: button_text-response_id pairs.
+ * @...: button_text-response_id pairs.
  *
  * This function is essentially the same as gtk_dialog_add_buttons()
  * except it calls gimp_dialog_add_button() instead of gtk_dialog_add_button()
