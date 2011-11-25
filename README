@@ -50,13 +50,11 @@ discussion.  There is more info at
 
 Links to several archives of the mailing lists are included in that page.
 
-Gimp-announce is a low-traffic list with announcements about new
-releases of GIMP and plug-ins. Gimp-user is a mailing list dedicated
-to user problems, hints and tips, discussion of cool effects, etc.
-Gimp-developer is oriented to GIMP core and plug-in developers.  Most
-people will only want to be subscribed to gimp-user. If you want to
-help develop GIMP, the gimp-developer mailing list is a good starting
-point.
+Gimp-user-list is a mailing list dedicated to user problems, hints and
+tips, discussion of cool effects, etc.  Gimp-developer-list is oriented
+to GIMP core and plug-in developers.  Most people will only want to be
+subscribed to gimp-user-list. If you want to help develop GIMP, the
+gimp-developer mailing list is a good starting point.
 
 
 3. IRC
