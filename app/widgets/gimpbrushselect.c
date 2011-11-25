@@ -38,6 +38,7 @@
 #include "gimpbrushfactoryview.h"
 #include "gimpbrushselect.h"
 #include "gimpcontainerbox.h"
+#include "gimpspinscale.h"
 #include "gimpwidgets-constructors.h"
 
 #include "gimp-intl.h"
@@ -127,7 +128,10 @@ gimp_brush_select_constructed (GObject *object)
   GimpPdbDialog   *dialog = GIMP_PDB_DIALOG (object);
   GimpBrushSelect *select = GIMP_BRUSH_SELECT (object);
   GtkWidget       *content_area;
-  GtkWidget       *table;
+  GtkWidget       *vbox;
+  GtkWidget       *scale;
+  GtkWidget       *hbox;
+  GtkWidget       *label;
   GtkAdjustment   *spacing_adj;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
@@ -161,29 +165,35 @@ gimp_brush_select_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (content_area), dialog->view, TRUE, TRUE, 0);
   gtk_widget_show (dialog->view);
 
-  /*  Create the frame and the table for the options  */
-  table = gtk_widget_get_parent (GIMP_BRUSH_FACTORY_VIEW (dialog->view)->spacing_scale);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  vbox = GTK_WIDGET (GIMP_CONTAINER_EDITOR (dialog->view)->view);
 
   /*  Create the opacity scale widget  */
   select->opacity_data =
-    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                          _("Opacity:"), -1, 5,
-                                          gimp_context_get_opacity (dialog->context) * 100.0,
-                                          0.0, 100.0, 1.0, 10.0, 1,
-                                          TRUE, 0.0, 0.0,
-                                          NULL, NULL));
+    GTK_ADJUSTMENT (gtk_adjustment_new (gimp_context_get_opacity (dialog->context) * 100.0,
+                                        0.0, 100.0,
+                                        1.0, 10.0, 0.0));
+
+  scale = gimp_spin_scale_new (select->opacity_data,
+                               _("Opacity"), 1);
+  gtk_box_pack_end (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   g_signal_connect (select->opacity_data, "value-changed",
                     G_CALLBACK (gimp_brush_select_opacity_update),
                     select);
 
   /*  Create the paint mode option menu  */
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Mode:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
   select->paint_mode_menu = gimp_paint_mode_menu_new (TRUE, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Mode:"), 0.0, 0.5,
-                             select->paint_mode_menu, 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), select->paint_mode_menu, TRUE, TRUE, 0);
+  gtk_widget_show (select->paint_mode_menu);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (select->paint_mode_menu),
                               gimp_context_get_paint_mode (dialog->context),
@@ -199,8 +209,6 @@ gimp_brush_select_constructed (GObject *object)
   g_signal_connect (spacing_adj, "value-changed",
                     G_CALLBACK (gimp_brush_select_spacing_update),
                     select);
-
-  gtk_widget_show (table);
 }
 
 static void
