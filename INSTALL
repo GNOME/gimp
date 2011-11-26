@@ -48,7 +48,7 @@ header files installed.
      (>= 2.24.0), and Pango (>= 1.29.4). Sources for these can be grabbed
      from ftp://ftp.gtk.org/.
 
-  5. We use cairo >= 1.20.2, which is hosted at
+  5. We use cairo >= 1.10.2, which is hosted at
      http://www.cairographics.org/.
 
   6. We require PangoCairo, a Pango backend using Cairo. Make sure you
