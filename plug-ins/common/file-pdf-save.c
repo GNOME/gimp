@@ -247,7 +247,7 @@ query (void)
       {GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"},
       {GIMP_PDB_INT32,    "convert",      "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
       {GIMP_PDB_INT32,    "ignore",       "Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
-      {GIMP_PDB_INT32,    "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping the masks will not change the final result)"},
+      {GIMP_PDB_INT32,    "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)"},
       {GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"},
       {GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in"}
     };
@@ -259,7 +259,7 @@ query (void)
       {GIMP_PDB_INT32,      "count",        "The amount of images entered (This will be the amount of pages). 1 <= count <= MAX_PAGE_COUNT"},
       {GIMP_PDB_INT32,      "convert",      "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
       {GIMP_PDB_INT32,      "ignore",       "Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
-      {GIMP_PDB_INT32,      "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping the masks will not change the final result)"},
+      {GIMP_PDB_INT32,      "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)"},
       {GIMP_PDB_STRING,     "filename",     "The name of the file to save the image in"},
       {GIMP_PDB_STRING,     "raw-filename", "The name of the file to save the image in"}
     };
@@ -715,7 +715,7 @@ gui_single (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
   gtk_box_pack_end (GTK_BOX (vbox), convert_c, TRUE, TRUE, 0);
 
-  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving (keeping the masks will not change the final result)");
+  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving (keeping the masks will not change the output)");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
 
@@ -770,7 +770,7 @@ gui_multi (void)
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
   file_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
-  file_label = gtk_label_new ("Choose the place to save the file in:");
+  file_label = gtk_label_new ("Save to:");
   file_entry = gtk_entry_new ();
   if (file_name != NULL)
     gtk_entry_set_text (GTK_ENTRY (file_entry), file_name);
@@ -831,7 +831,7 @@ gui_multi (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
   gtk_box_pack_end (GTK_BOX (vbox), convert_c, FALSE, FALSE, 0);
 
-  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving (keeping the masks will not change the final result)");
+  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving (keeping them will not change the output)");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, FALSE, FALSE, 0);
 
