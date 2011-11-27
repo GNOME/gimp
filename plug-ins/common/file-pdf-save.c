@@ -245,9 +245,9 @@ query (void)
       {GIMP_PDB_INT32,    "run-mode",     "Run mode"},
       {GIMP_PDB_IMAGE,    "image",        "Input image"},
       {GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"},
-      {GIMP_PDB_INT32,    "convert",      "Convert bitmaps to vector where possible? TRUE or FALSE"},
-      {GIMP_PDB_INT32,    "ignore",       "Don't Save layers which are hidden or have their opacity set to zero? TRUE or FALSE"},
-      {GIMP_PDB_INT32,    "apply-masks",  "Apply layer masks before saving? TRUE or FALSE (Keeping the masks will not change the final result)"},
+      {GIMP_PDB_INT32,    "convert",      "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
+      {GIMP_PDB_INT32,    "ignore",       "Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
+      {GIMP_PDB_INT32,    "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping the masks will not change the final result)"},
       {GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"},
       {GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in"}
     };
@@ -257,9 +257,9 @@ query (void)
       {GIMP_PDB_INT32,      "run-mode",     "Run mode"},
       {GIMP_PDB_INT32ARRAY, "images",       "Input image for each page (An image can appear more than once)"},
       {GIMP_PDB_INT32,      "count",        "The amount of images entered (This will be the amount of pages). 1 <= count <= MAX_PAGE_COUNT"},
-      {GIMP_PDB_INT32,      "convert",      "Convert bitmaps to vector where possible? TRUE or FALSE"},
-      {GIMP_PDB_INT32,      "ignore",       "Don't Save layers which are hidden or have their opacity set to zero? TRUE or FALSE"},
-      {GIMP_PDB_INT32,      "apply-masks",  "Apply layer masks before saving? TRUE or FALSE (Keeping the masks will not change the final result)"},
+      {GIMP_PDB_INT32,      "convert",      "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
+      {GIMP_PDB_INT32,      "ignore",       "Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
+      {GIMP_PDB_INT32,      "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping the masks will not change the final result)"},
       {GIMP_PDB_STRING,     "filename",     "The name of the file to save the image in"},
       {GIMP_PDB_STRING,     "raw-filename", "The name of the file to save the image in"}
     };
@@ -294,7 +294,7 @@ query (void)
                           "Barak Itkin",
                           "Copyright Barak Itkin",
                           "August 2009",
-                          "_Create multiple paged PDF...",
+                          "_Create multipage PDF...",
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_multi_args), 0,
@@ -707,15 +707,15 @@ gui_single (void)
 
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
-  ignore_c = gtk_check_button_new_with_label ("Don't Save layers which are hidden or have their opacity set to zero?");
+  ignore_c = gtk_check_button_new_with_label ("Omit hidden layers and layers with zero opacity");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_c), optimize.ignore);
   gtk_box_pack_end (GTK_BOX (vbox), ignore_c, TRUE, TRUE, 0);
 
-  convert_c = gtk_check_button_new_with_label ("Convert bitmaps to vector where possible?");
+  convert_c = gtk_check_button_new_with_label ("Convert bitmaps to vector graphics where possible");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
   gtk_box_pack_end (GTK_BOX (vbox), convert_c, TRUE, TRUE, 0);
 
-  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving? (Keeping the masks will not change the final result)");
+  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving (keeping the masks will not change the final result)");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
 
@@ -823,15 +823,15 @@ gui_multi (void)
 
   gtk_box_pack_start (GTK_BOX (vbox), h_box, FALSE, FALSE, 0);
 
-  ignore_c = gtk_check_button_new_with_label ("Don't Save layers which are hidden or have their opacity set to zero?");
+  ignore_c = gtk_check_button_new_with_label ("Omit hidden layers and layers with zero opacity");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_c), optimize.ignore);
   gtk_box_pack_end (GTK_BOX (vbox), ignore_c, FALSE, FALSE, 0);
 
-  convert_c = gtk_check_button_new_with_label ("Convert bitmaps to vector where possible?");
+  convert_c = gtk_check_button_new_with_label ("Convert bitmaps to vector graphics where possible");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
   gtk_box_pack_end (GTK_BOX (vbox), convert_c, FALSE, FALSE, 0);
 
-  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving? (Keeping the masks will not change the final result)");
+  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving (keeping the masks will not change the final result)");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, FALSE, FALSE, 0);
 
