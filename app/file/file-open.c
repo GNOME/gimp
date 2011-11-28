@@ -410,6 +410,9 @@ file_open_with_proc_and_display (Gimp                *gimp,
        * files. To solve this properly, we would need new file plug-in
        * API.
        */
+      if (! file_proc)
+        file_proc = gimp_image_get_load_proc (image);
+
       if (file_open_file_proc_is_import (file_proc) &&
           gimp_image_get_n_layers (image) == 1)
         {
