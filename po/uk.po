@@ -2235,7 +2235,7 @@ msgstr "_Файл"
 #: ../app/actions/file-actions.c:72
 msgctxt "file-action"
 msgid "Crea_te"
-msgstr "_Створити"
+msgstr "_Одержати"
 
 #: ../app/actions/file-actions.c:73
 msgctxt "file-action"
@@ -2245,7 +2245,7 @@ msgstr "Відкрити н_едавні"
 #: ../app/actions/file-actions.c:76
 msgctxt "file-action"
 msgid "_Open..."
-msgstr "_Відкрити..."
+msgstr "_Відкрити…"
 
 #: ../app/actions/file-actions.c:77
 msgctxt "file-action"
@@ -2255,7 +2255,7 @@ msgstr "Відкрити зображення"
 #: ../app/actions/file-actions.c:82
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "Відкрити як ша_ри..."
+msgstr "Відкрити як ша_ри…"
 
 #: ../app/actions/file-actions.c:83
 msgctxt "file-action"
@@ -2265,7 +2265,7 @@ msgstr "Відкрити зображення як шари"
 #: ../app/actions/file-actions.c:88
 msgctxt "file-action"
 msgid "Open _Location..."
-msgstr "Відкрити _адресу..."
+msgstr "Відкрити _адресу…"
 
 #: ../app/actions/file-actions.c:89
 msgctxt "file-action"
@@ -2275,7 +2275,7 @@ msgstr "Відкрити файл зображення, що зберігаєт�
 #: ../app/actions/file-actions.c:94
 msgctxt "file-action"
 msgid "Create Template..."
-msgstr "Створити шаблон..."
+msgstr "Створити шаблон…"
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
@@ -2325,7 +2325,7 @@ msgstr "Зберегти це зображення"
 #: ../app/actions/file-actions.c:127
 msgctxt "file-action"
 msgid "Save _As..."
-msgstr "Зберегти _як..."
+msgstr "Зберегти _як…"
 
 #: ../app/actions/file-actions.c:128
 msgctxt "file-action"
@@ -2335,7 +2335,7 @@ msgstr "Зберегти це зображення з іншою назвою"
 #: ../app/actions/file-actions.c:133
 msgctxt "file-action"
 msgid "Save a Cop_y..."
-msgstr "Зберегти _копію..."
+msgstr "Зберегти _копію…"
 
 #: ../app/actions/file-actions.c:135
 msgctxt "file-action"
@@ -2349,7 +2349,7 @@ msgstr ""
 #: ../app/actions/file-actions.c:140
 msgctxt "file-action"
 msgid "Save and Close..."
-msgstr "Зберегти та закрити..."
+msgstr "Зберегти та закрити…"
 
 #: ../app/actions/file-actions.c:141
 msgctxt "file-action"
@@ -2379,7 +2379,7 @@ msgstr "Експортувати зображення назад у початк
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
 msgid "Export..."
-msgstr "Експорт..."
+msgstr "Експортувати…"
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
@@ -2389,7 +2389,7 @@ msgstr "Експортувати зображення у такі формати
 #: ../app/actions/file-actions.c:292
 #, c-format
 msgid "Export to %s"
-msgstr "Експорт до %s"
+msgstr "Експортувати в %s"
 
 #: ../app/actions/file-actions.c:298
 #, c-format
@@ -2398,7 +2398,7 @@ msgstr "_Перезаписати %s"
 
 #: ../app/actions/file-actions.c:306
 msgid "Export to"
-msgstr "Експорт у"
+msgstr "Експортувати в"
 
 #: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:492
 #: ../app/dialogs/file-open-dialog.c:77
@@ -2411,7 +2411,7 @@ msgstr "Відкрити зображення як шари"
 
 #: ../app/actions/file-commands.c:265
 msgid "No changes need to be saved"
-msgstr "Немає змін які слід зберегти"
+msgstr "Немає змін, які слід зберегти"
 
 #: ../app/actions/file-commands.c:272 ../app/dialogs/file-save-dialog.c:95
 msgid "Save Image"
@@ -2440,7 +2440,7 @@ msgstr "Відновити зображення"
 #: ../app/actions/file-commands.c:438
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr "Відновити '%s' до '%s'?"
+msgstr "Відновити «%s» до «%s»?"
 
 #: ../app/actions/file-commands.c:444
 msgid ""
