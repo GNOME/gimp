@@ -390,7 +390,7 @@ run (const gchar      *name,
       if (file_name == NULL)
         {
           values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-          gimp_message ("You must select a file to save!");
+          gimp_message (_("You must select a file to save!"));
           return;
         }
     }
@@ -775,7 +775,7 @@ gui_multi (void)
   file_entry = gtk_entry_new ();
   if (file_name != NULL)
     gtk_entry_set_text (GTK_ENTRY (file_entry), file_name);
-  file_browse = gtk_button_new_with_label (_("_Browse..."));
+  file_browse = gtk_button_new_with_label (_("Browse..."));
   file_choose = gtk_file_chooser_dialog_new (_("Multipage PDF export"),
                                              GTK_WINDOW (window), GTK_FILE_CHOOSER_ACTION_SAVE,
                                              "gtk-save", GTK_RESPONSE_OK,
