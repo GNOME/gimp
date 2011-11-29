@@ -109,6 +109,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "libgimp/stdplugins-intl.h"
 
 #define SAVE_PROC               "file-pdf-save"
 #define SAVE_DEFAULTS_PROC      "file-pdf-save-defaults"
@@ -707,15 +708,15 @@ gui_single (void)
 
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
-  ignore_c = gtk_check_button_new_with_label ("Omit hidden layers and layers with zero opacity");
+  ignore_c = gtk_check_button_new_with_label (_("Omit hidden layers and layers with zero opacity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_c), optimize.ignore);
   gtk_box_pack_end (GTK_BOX (vbox), ignore_c, TRUE, TRUE, 0);
 
-  convert_c = gtk_check_button_new_with_label ("Convert bitmaps to vector graphics where possible");
+  convert_c = gtk_check_button_new_with_label (_("Convert bitmaps to vector graphics where possible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
   gtk_box_pack_end (GTK_BOX (vbox), convert_c, TRUE, TRUE, 0);
 
-  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving (keeping the masks will not change the output)");
+  apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving (keeping the masks will not change the output)"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
 
@@ -770,12 +771,12 @@ gui_multi (void)
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
   file_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
-  file_label = gtk_label_new ("Save to:");
+  file_label = gtk_label_new (_("Save to:"));
   file_entry = gtk_entry_new ();
   if (file_name != NULL)
     gtk_entry_set_text (GTK_ENTRY (file_entry), file_name);
-  file_browse = gtk_button_new_with_label ("Browse...");
-  file_choose = gtk_file_chooser_dialog_new ("Multipage PDF export",
+  file_browse = gtk_button_new_with_label (_("_Browse..."));
+  file_choose = gtk_file_chooser_dialog_new (_("Multipage PDF export"),
                                              GTK_WINDOW (window), GTK_FILE_CHOOSER_ACTION_SAVE,
                                              "gtk-save", GTK_RESPONSE_OK,
                                              "gtk-cancel", GTK_RESPONSE_CANCEL,
@@ -808,7 +809,7 @@ gui_multi (void)
   h_but_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (h_but_box), GTK_BUTTONBOX_START);
 
-  del = gtk_button_new_with_label ("Remove the selected pages");
+  del = gtk_button_new_with_label (_("Remove the selected pages"));
   gtk_box_pack_start (GTK_BOX (h_but_box), del, TRUE, TRUE, 0);
 
   gtk_box_pack_start (GTK_BOX (vbox), h_but_box, FALSE, FALSE, 0);
@@ -818,20 +819,20 @@ gui_multi (void)
   img_combo = gimp_image_combo_box_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (h_box), img_combo, FALSE, FALSE, 0);
 
-  add_image = gtk_button_new_with_label ("Add this image");
+  add_image = gtk_button_new_with_label (_("Add this image"));
   gtk_box_pack_start (GTK_BOX (h_box), add_image, FALSE, FALSE, 0);
 
   gtk_box_pack_start (GTK_BOX (vbox), h_box, FALSE, FALSE, 0);
 
-  ignore_c = gtk_check_button_new_with_label ("Omit hidden layers and layers with zero opacity");
+  ignore_c = gtk_check_button_new_with_label (_("Omit hidden layers and layers with zero opacity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_c), optimize.ignore);
   gtk_box_pack_end (GTK_BOX (vbox), ignore_c, FALSE, FALSE, 0);
 
-  convert_c = gtk_check_button_new_with_label ("Convert bitmaps to vector graphics where possible");
+  convert_c = gtk_check_button_new_with_label (_("Convert bitmaps to vector graphics where possible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
   gtk_box_pack_end (GTK_BOX (vbox), convert_c, FALSE, FALSE, 0);
 
-  apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving (keeping them will not change the output)");
+  apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving (keeping them will not change the output)"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, FALSE, FALSE, 0);
 
@@ -930,7 +931,7 @@ get_image_list (void)
 
   if (!valid)
     {
-      gimp_message ("Error! In order to save the file, at least one image should be added!");
+      gimp_message (_("Error! In order to save the file, at least one image should be added!"));
       return FALSE;
     }
 
