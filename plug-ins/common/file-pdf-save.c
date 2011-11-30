@@ -350,6 +350,8 @@ run (const gchar      *name,
   GimpDrawable           *mask = NULL;
   cairo_surface_t        *mask_image = NULL;
 
+  INIT_I18N ();
+
   /* Setting mandatory output values */
   *nreturn_vals = 1;
   *return_vals  = values;
