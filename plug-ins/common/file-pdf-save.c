@@ -392,9 +392,9 @@ run (const gchar      *name,
   if (cairo_surface_status (pdf_file) != CAIRO_STATUS_SUCCESS)
     {
       char *str = g_strdup_printf
-        ("An error occured while creating the PDF file!\n"
-         "%s\n"
-         "Make sure you entered a valid filename and that the selected location isn't read only!",
+        (_("An error occured while creating the PDF file!\n"
+           "%s\n"
+           "Make sure you entered a valid filename and that the selected location isn't read only!"),
          cairo_status_to_string (cairo_surface_status (pdf_file)));
 
       gimp_message (str);
