@@ -340,10 +340,6 @@ run (const gchar      *name,
 
   gint32                  temp;
 
-#if PDF_DEBUG
-  const gchar            *cairo_status;
-#endif
-
   gint                   *layers;
   gint32                  num_of_layers;
   GimpDrawable           *layer;
@@ -399,13 +395,18 @@ run (const gchar      *name,
   if (cairo_surface_status (pdf_file) != CAIRO_STATUS_SUCCESS)
     {
 #if PDF_DEBUG
-      cairo_status =  cairo_status_to_string (cairo_surface_status (pdf_file));
-#endif
+      char *str = g_strdup_printf
+        ("An error occured while creating the PDF file!\n"
+         "%s\n"
+         "Make sure you entered a valid filename and that the selected location isn't read only!",
+         cairo_status_to_string (cairo_surface_status (pdf_file)));
+
+      gimp_message (str);
+      g_free (str);
+#else
       gimp_message ("An error occured while creating the PDF file!\n"
-#if PDF_DEBUG
-                    cairo_status "\n"
-#endif
                     "Make sure you entered a valid filename and that the selected location isn't read only!");
+#endif
       values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
       return;
     }
