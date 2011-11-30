@@ -320,6 +320,10 @@ load_image_resource (PSDimageres   *res_a,
             load_resource_1024 (res_a, image_id, img_a, f, error);
             break;
 
+          case PSD_WORKING_PATH:
+            load_resource_2000 (res_a, image_id, f, error);
+            break;
+
           case PSD_IPTC_NAA_DATA:
             load_resource_1028 (res_a, image_id, f, error);
             break;
@@ -1410,7 +1414,17 @@ load_resource_2000 (const PSDimageres  *res_a,
   image_height = gimp_image_height (image_id);
 
   /* Create path */
-  vector_id = gimp_vectors_new (image_id, res_a->name);
+  if (res_a->id == PSD_WORKING_PATH)
+    {
+      /* use "Working Path" for the path name to match the Photoshop display */
+      vector_id = gimp_vectors_new (image_id, "Working Path");
+    }
+  else
+    {
+      /* Use the name stored in the PSD to name the path */
+      vector_id = gimp_vectors_new (image_id, res_a->name);
+    }
+
   gimp_image_insert_vectors (image_id, vector_id, -1, -1);
 
   while (path_rec > 0)
