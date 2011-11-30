@@ -1331,7 +1331,7 @@ drawText (GimpDrawable *text_layer,
   gdouble               letter_spacing;
   PangoAttribute       *letter_spacing_at;
   PangoAttrList        *attr_list = pango_attr_list_new ();
-  
+
   cairo_save (cr);
 
   options = cairo_font_options_create ();
