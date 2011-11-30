@@ -14876,7 +14876,7 @@ msgstr "Повідомлення %s"
 
 #: ../app/widgets/gimpfiledialog.c:327
 msgid "Automatically Detected"
-msgstr "Автоматично вилучається"
+msgstr "Автоматично виявляється"
 
 #: ../app/widgets/gimpfiledialog.c:344
 msgid "By Extension"
