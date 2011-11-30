@@ -127,9 +127,6 @@
 #define THUMB_WIDTH              90
 #define THUMB_HEIGHT             120
 
-#define PDF_DEBUG                FALSE
-
-
 typedef struct {
   gboolean convert;
   gboolean ignore;
@@ -394,7 +391,6 @@ run (const gchar      *name,
   pdf_file = cairo_pdf_surface_create (file_name, 1, 1);
   if (cairo_surface_status (pdf_file) != CAIRO_STATUS_SUCCESS)
     {
-#if PDF_DEBUG
       char *str = g_strdup_printf
         ("An error occured while creating the PDF file!\n"
          "%s\n"
@@ -403,10 +399,7 @@ run (const gchar      *name,
 
       gimp_message (str);
       g_free (str);
-#else
-      gimp_message ("An error occured while creating the PDF file!\n"
-                    "Make sure you entered a valid filename and that the selected location isn't read only!");
-#endif
+
       values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
       return;
     }
