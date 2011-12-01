@@ -148,10 +148,11 @@ static void
 gimp_tag_cache_finalize (GObject *object)
 {
   GimpTagCache *cache = GIMP_TAG_CACHE (object);
-  gint          i;
 
   if (cache->priv->records)
     {
+      gint i;
+
       for (i = 0; i < cache->priv->records->len; i++)
         {
           GimpTagCacheRecord *rec = &g_array_index (cache->priv->records,
