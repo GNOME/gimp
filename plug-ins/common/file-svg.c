@@ -407,26 +407,6 @@ load_set_size_callback (gint     *width,
     }
 }
 
-static RsvgHandle *
-load_rsvg_handle_new (gdouble xres,
-                      gdouble yres)
-{
-  RsvgHandle *handle = rsvg_handle_new ();
-
-#if (((LIBRSVG_MAJOR_VERSION == 2) && (LIBRSVG_MINOR_VERSION == 13) && \
-     ((LIBRSVG_MICRO_VERSION == 0) || \
-      (LIBRSVG_MICRO_VERSION == 1) || \
-      (LIBRSVG_MICRO_VERSION == 2))) || \
-     ((LIBRSVG_MAJOR_VERSION == 2) && (LIBRSVG_MINOR_VERSION == 11) && \
-      (LIBRSVG_MICRO_VERSION == 0)))
-  rsvg_handle_set_dpi (handle, xres, yres);
-#else
-  rsvg_handle_set_dpi_x_y (handle, xres, yres);
-#endif
-
-  return handle;
-}
-
 /*  This function renders a pixbuf from an SVG file according to vals.  */
 static GdkPixbuf *
 load_rsvg_pixbuf (const gchar  *filename,
@@ -446,7 +426,8 @@ load_rsvg_pixbuf (const gchar  *filename,
 
   g_io_channel_set_encoding (io, NULL, NULL);
 
-  handle = load_rsvg_handle_new (vals->resolution, vals->resolution);
+  handle = rsvg_handle_new ();
+  rsvg_handle_set_dpi (handle, vals->resolution);
 
   /*  set the base URI so that librsvg can resolve relative paths  */
   uri = g_filename_to_uri (filename, NULL, NULL);
@@ -521,7 +502,8 @@ load_rsvg_size (const gchar  *filename,
 
   g_io_channel_set_encoding (io, NULL, NULL);
 
-  handle = load_rsvg_handle_new (vals->resolution, vals->resolution);
+  handle = rsvg_handle_new ();
+  rsvg_handle_set_dpi (handle, vals->resolution);
 
   vals->width  = SVG_DEFAULT_SIZE;
   vals->height = SVG_DEFAULT_SIZE;
