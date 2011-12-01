@@ -23,7 +23,6 @@
 
 #include "config.h"
 
-#undef G_DISABLE_DEPRECATED /* for G_CONST_RETURN used by webkit */
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
