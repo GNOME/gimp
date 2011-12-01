@@ -39,6 +39,7 @@ enum
 
 static void     gimp_filtered_container_constructed     (GObject               *object);
 static void     gimp_filtered_container_dispose         (GObject               *object);
+static void     gimp_filtered_container_finalize        (GObject               *object);
 static void     gimp_filtered_container_set_property    (GObject               *object,
                                                          guint                  property_id,
                                                          const GValue          *value,
@@ -82,6 +83,7 @@ gimp_filtered_container_class_init (GimpFilteredContainerClass *klass)
 
   g_object_class->constructed  = gimp_filtered_container_constructed;
   g_object_class->dispose      = gimp_filtered_container_dispose;
+  g_object_class->finalize     = gimp_filtered_container_finalize;
   g_object_class->set_property = gimp_filtered_container_set_property;
   g_object_class->get_property = gimp_filtered_container_get_property;
 
@@ -157,12 +159,23 @@ gimp_filtered_container_dispose (GObject *object)
       g_signal_handlers_disconnect_by_func (filtered_container->src_container,
                                             gimp_filtered_container_src_thaw,
                                             filtered_container);
+    }
 
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_filtered_container_finalize (GObject *object)
+{
+  GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
+
+  if (filtered_container->src_container)
+    {
       g_object_unref (filtered_container->src_container);
       filtered_container->src_container = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
