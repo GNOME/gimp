@@ -139,7 +139,7 @@ static gboolean gimp_tag_entry_strip_extra_whitespace    (GimpTagEntry     *entr
 
 
 
-G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
+G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY)
 
 #define parent_class gimp_tag_entry_parent_class
 
@@ -419,8 +419,8 @@ gimp_tag_entry_changed (GtkEntry *entry)
   text = g_strdup (gtk_entry_get_text (entry));
   text = g_strstrip (text);
 
-  if (! gtk_widget_has_focus (GTK_WIDGET (entry))
-      && strlen (text) == 0)
+  if (! gtk_widget_has_focus (GTK_WIDGET (entry)) &&
+      strlen (text) == 0)
     {
       gimp_tag_entry_toggle_desc (tag_entry, TRUE);
     }
@@ -478,10 +478,10 @@ gimp_tag_entry_insert_text (GtkEditable *editable,
     {
       gunichar  c = g_utf8_get_char (new_text);
 
-      if (! entry->internal_operation
-          && *position > 0
-          && entry->mask->str[*position - 1] == 's'
-          && ! g_unichar_isspace (c))
+      if (! entry->internal_operation            &&
+          *position > 0                          &&
+          entry->mask->str[*position - 1] == 's' &&
+          ! g_unichar_isspace (c))
         {
           if (! entry->suppress_mask_update)
             {
@@ -489,23 +489,23 @@ gimp_tag_entry_insert_text (GtkEditable *editable,
             }
 
           g_signal_handlers_block_by_func (editable,
-                                           G_CALLBACK (gimp_tag_entry_insert_text),
+                                           gimp_tag_entry_insert_text,
                                            NULL);
 
           gtk_editable_insert_text (editable, " ", 1, position);
           gtk_editable_insert_text (editable, new_text, text_length, position);
 
           g_signal_handlers_unblock_by_func (editable,
-                                             G_CALLBACK (gimp_tag_entry_insert_text),
+                                             gimp_tag_entry_insert_text,
                                              NULL);
 
           g_signal_stop_emission_by_name (editable, "insert-text");
         }
-      else if (! entry->internal_operation
-               && num_chars == 1
-               && *position < entry->mask->len
-               && entry->mask->str[*position] == 't'
-               && ! g_unichar_isspace (c))
+      else if (! entry->internal_operation        &&
+               num_chars == 1                     &&
+               *position < entry->mask->len       &&
+               entry->mask->str[*position] == 't' &&
+               ! g_unichar_isspace (c))
         {
           if (! entry->suppress_mask_update)
             {
@@ -513,7 +513,7 @@ gimp_tag_entry_insert_text (GtkEditable *editable,
             }
 
           g_signal_handlers_block_by_func (editable,
-                                           G_CALLBACK (gimp_tag_entry_insert_text),
+                                           gimp_tag_entry_insert_text,
                                            NULL);
 
           gtk_editable_insert_text (editable, new_text, text_length, position);
@@ -521,7 +521,7 @@ gimp_tag_entry_insert_text (GtkEditable *editable,
           (*position)--;
 
           g_signal_handlers_unblock_by_func (editable,
-                                             G_CALLBACK (gimp_tag_entry_insert_text),
+                                             gimp_tag_entry_insert_text,
                                              NULL);
 
           g_signal_stop_emission_by_name (editable, "insert-text");
@@ -556,12 +556,12 @@ gimp_tag_entry_delete_text (GtkEditable *editable,
                                        gimp_tag_entry_delete_text,
                                        NULL);
 
-      if (end_pos > start_pos
-          && (entry->mask->str[end_pos - 1] == 't' ||
-              entry->mask->str[end_pos - 1] == 's'))
+      if (end_pos > start_pos &&
+          (entry->mask->str[end_pos - 1] == 't' ||
+           entry->mask->str[end_pos - 1] == 's'))
         {
-          while (end_pos <= entry->mask->len
-                 && (entry->mask->str[end_pos] == 's'))
+          while (end_pos <= entry->mask->len &&
+                 (entry->mask->str[end_pos] == 's'))
             {
               end_pos++;
             }
@@ -712,8 +712,8 @@ gimp_tag_entry_auto_complete (GimpTagEntry *tag_entry)
                                 completion, strlen (completion),
                                 &end_position);
       tag_entry->internal_operation--;
-      if (tag_entry->tab_completion_index >= 0
-          && candidate_count == 1)
+      if (tag_entry->tab_completion_index >= 0 &&
+          candidate_count == 1)
         {
           gtk_editable_set_position (GTK_EDITABLE (entry), end_position);
         }
@@ -735,26 +735,27 @@ gimp_tag_entry_auto_complete (GimpTagEntry *tag_entry)
 static void
 gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
 {
-  gchar   **parsed_tags;
-  gint      count;
-  gint      i;
-  GimpTag  *tag;
-  GList    *resource_iter;
-  GList    *tag_iter;
-  GList    *dont_remove_list = NULL;
-  GList    *remove_list      = NULL;
-  GList    *add_list         = NULL;
-  GList    *common_tags      = NULL;
+  gchar **parsed_tags;
+  gint    count;
+  gint    i;
+  GList  *resource_iter;
+  GList  *tag_iter;
+  GList  *dont_remove_list = NULL;
+  GList  *remove_list      = NULL;
+  GList  *add_list         = NULL;
+  GList  *common_tags      = NULL;
 
   parsed_tags = gimp_tag_entry_parse_tags (tag_entry);
 
   count = g_strv_length (parsed_tags);
   for (i = 0; i < count; i++)
     {
-      tag = gimp_tag_new (parsed_tags[i]);
+      GimpTag *tag = gimp_tag_new (parsed_tags[i]);
+
       if (tag)
         {
-          if (g_list_find_custom (tag_entry->common_tags, tag, gimp_tag_compare_func))
+          if (g_list_find_custom (tag_entry->common_tags, tag,
+                                  gimp_tag_compare_func))
             {
               dont_remove_list = g_list_prepend (dont_remove_list, tag);
             }
@@ -766,27 +767,34 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
           common_tags = g_list_prepend (common_tags, tag);
         }
     }
+
   g_strfreev (parsed_tags);
 
   /* find common tags which were removed. */
-  for (tag_iter = tag_entry->common_tags; tag_iter; tag_iter = g_list_next (tag_iter))
+  for (tag_iter = tag_entry->common_tags;
+       tag_iter;
+       tag_iter = g_list_next (tag_iter))
     {
-      if (! g_list_find_custom (dont_remove_list, tag_iter->data, gimp_tag_compare_func))
+      if (! g_list_find_custom (dont_remove_list, tag_iter->data,
+                                gimp_tag_compare_func))
         {
           remove_list = g_list_prepend (remove_list, tag_iter->data);
         }
     }
+
   g_list_free (dont_remove_list);
 
-  for (resource_iter = tag_entry->selected_items; resource_iter;
+  for (resource_iter = tag_entry->selected_items;
+       resource_iter;
        resource_iter = g_list_next (resource_iter))
     {
-      GimpTagged       *tagged = GIMP_TAGGED (resource_iter->data);
+      GimpTagged *tagged = GIMP_TAGGED (resource_iter->data);
 
       for (tag_iter = remove_list; tag_iter; tag_iter = g_list_next (tag_iter))
         {
           gimp_tagged_remove_tag (tagged, GIMP_TAG (tag_iter->data));
         }
+
       for (tag_iter = add_list; tag_iter; tag_iter = g_list_next (tag_iter))
         {
           gimp_tagged_add_tag (tagged, GIMP_TAG (tag_iter->data));
@@ -803,13 +811,14 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
 
 /**
  * gimp_tag_entry_parse_tags:
- * @entry:      a #GimpTagEntry widget.
+ * @entry: a #GimpTagEntry widget.
  *
- * Parses currently entered tags from @entry. Tags do not need to be valid as
- * they are fixed when necessary. Only valid tags are returned.
+ * Parses currently entered tags from @entry. Tags do not need to be
+ * valid as they are fixed when necessary. Only valid tags are
+ * returned.
  *
- * Return value: a newly allocated NULL terminated list of strings. It should
- * be freed using g_strfreev().
+ * Return value: a newly allocated NULL terminated list of strings. It
+ *               should be freed using g_strfreev().
  **/
 gchar **
 gimp_tag_entry_parse_tags (GimpTagEntry *entry)
@@ -836,7 +845,8 @@ gimp_tag_entry_parse_tags (GimpTagEntry *entry)
         {
           if (parsed_tag->len > 0)
             {
-              gchar    *validated_tag = gimp_tag_string_make_valid (parsed_tag->str);
+              gchar *validated_tag = gimp_tag_string_make_valid (parsed_tag->str);
+
               if (validated_tag)
                 {
                   tag_list = g_list_append (tag_list, validated_tag);
@@ -927,14 +937,20 @@ gimp_tag_entry_load_selection (GimpTagEntry *tag_entry,
                                 (GEqualFunc) gimp_tag_equals);
 
   /* find set of tags common to all resources. */
-  for (resource = tag_entry->selected_items; resource; resource = g_list_next (resource))
+  for (resource = tag_entry->selected_items;
+       resource;
+       resource = g_list_next (resource))
     {
-      for (tag = gimp_tagged_get_tags (GIMP_TAGGED (resource->data)); tag;
+      for (tag = gimp_tagged_get_tags (GIMP_TAGGED (resource->data));
+           tag;
            tag = g_list_next (tag))
         {
           /* count refcount for each tag */
-          guint refcount = GPOINTER_TO_UINT (g_hash_table_lookup (refcounts, tag->data));
-          g_hash_table_insert (refcounts, tag->data, GUINT_TO_POINTER (refcount + 1));
+          guint refcount = GPOINTER_TO_UINT (g_hash_table_lookup (refcounts,
+                                                                  tag->data));
+
+          g_hash_table_insert (refcounts, tag->data,
+                               GUINT_TO_POINTER (refcount + 1));
         }
     }
 
@@ -942,9 +958,11 @@ gimp_tag_entry_load_selection (GimpTagEntry *tag_entry,
 
   g_hash_table_destroy (refcounts);
 
-  tag_entry->common_tags = g_list_sort (tag_entry->common_tags, gimp_tag_compare_func);
+  tag_entry->common_tags = g_list_sort (tag_entry->common_tags,
+                                        gimp_tag_compare_func);
 
   insert_pos = gtk_editable_get_position (GTK_EDITABLE (tag_entry));
+
   for (list = tag_entry->common_tags; list; list = g_list_next (list))
     {
       GimpTag *tag = list->data;
@@ -983,16 +1001,16 @@ gimp_tag_entry_find_common_tags (gpointer key,
 static gchar *
 gimp_tag_entry_get_completion_prefix (GimpTagEntry *entry)
 {
-  gchar    *original_string;
-  gchar    *prefix_start;
-  gchar    *prefix;
-  gchar    *cursor;
-  gint      position;
-  gint      i;
+  gchar *original_string;
+  gchar *prefix_start;
+  gchar *prefix;
+  gchar *cursor;
+  gint   position;
+  gint   i;
 
   position = gtk_editable_get_position (GTK_EDITABLE (entry));
-  if (position < 1
-      || entry->mask->str[position - 1] != 'u')
+  if (position < 1 ||
+      entry->mask->str[position - 1] != 'u')
     {
       return g_strdup ("");
     }
@@ -1080,7 +1098,6 @@ gimp_tag_entry_get_completion_string (GimpTagEntry *tag_entry,
   const gchar  *candidate_string;
   gint          prefix_length;
   gunichar      c;
-  gunichar      d;
   gint          num_chars_match;
   gchar        *completion;
   gchar        *completion_end;
@@ -1122,7 +1139,8 @@ gimp_tag_entry_get_completion_string (GimpTagEntry *tag_entry,
 
       for (i = 1; i < length; i++)
         {
-          d = g_utf8_get_char (completions[i]);
+          gunichar d = g_utf8_get_char (completions[i]);
+
           if (c != d)
             {
               candidate_string = gimp_tag_get_name (GIMP_TAG (candidates->data));
@@ -1195,9 +1213,9 @@ gimp_tag_entry_container_changed (GimpContainer *container,
 
       for (list = tag_entry->selected_items; list; list = g_list_next (list))
         {
-          if (gimp_tagged_get_tags (GIMP_TAGGED (list->data))
-              && gimp_container_have (GIMP_CONTAINER (tag_entry->container),
-                                      GIMP_OBJECT(list->data)))
+          if (gimp_tagged_get_tags (GIMP_TAGGED (list->data)) &&
+              gimp_container_have (GIMP_CONTAINER (tag_entry->container),
+                                   GIMP_OBJECT(list->data)))
             {
               break;
             }
@@ -1512,15 +1530,15 @@ gimp_tag_entry_select_jellybean (GimpTagEntry     *entry,
   switch (search_dir)
     {
     case TAG_SEARCH_NONE:
-      if (selection_start > 0
-          && entry->mask->str[selection_start] == 's')
+      if (selection_start > 0 &&
+          entry->mask->str[selection_start] == 's')
         {
           selection_start--;
         }
 
-      if (selection_start > 0
-          && (entry->mask->str[selection_start - 1] == 'w')
-          && (entry->mask->str[selection_start] == 't'))
+      if (selection_start > 0                            &&
+          (entry->mask->str[selection_start - 1] == 'w') &&
+          (entry->mask->str[selection_start] == 't'))
         {
           /* between whitespace and tag,
            * should allow to select tag.
@@ -1532,20 +1550,20 @@ gimp_tag_entry_select_jellybean (GimpTagEntry     *entry,
     case TAG_SEARCH_LEFT:
       if (selection_start == selection_end)
         {
-          if (selection_start > 0
-              && entry->mask->str[selection_start] == 't'
-              && entry->mask->str[selection_start - 1] == 'w')
+          if (selection_start > 0                      &&
+              entry->mask->str[selection_start] == 't' &&
+              entry->mask->str[selection_start - 1] == 'w')
             {
               selection_start--;
             }
 
-          if ((entry->mask->str[selection_start] == 'w'
-               || entry->mask->str[selection_start] == 's')
-              && selection_start > 0)
+          if ((entry->mask->str[selection_start] == 'w' ||
+               entry->mask->str[selection_start] == 's') &&
+              selection_start > 0)
             {
-              while ((entry->mask->str[selection_start] == 'w'
-                      || entry->mask->str[selection_start] == 's')
-                     && selection_start > 0)
+              while ((entry->mask->str[selection_start] == 'w' ||
+                      entry->mask->str[selection_start] == 's') &&
+                     selection_start > 0)
                 {
                   selection_start--;
                 }
@@ -1558,13 +1576,13 @@ gimp_tag_entry_select_jellybean (GimpTagEntry     *entry,
     case TAG_SEARCH_RIGHT:
       if (selection_start == selection_end)
         {
-          if ((entry->mask->str[selection_start] == 'w'
-               || entry->mask->str[selection_start] == 's')
-              && selection_start < entry->mask->len - 1)
+          if ((entry->mask->str[selection_start] == 'w' ||
+               entry->mask->str[selection_start] == 's') &&
+              selection_start < entry->mask->len - 1)
             {
-              while ((entry->mask->str[selection_start] == 'w'
-                      || entry->mask->str[selection_start] == 's')
-                     && selection_start < entry->mask->len - 1)
+              while ((entry->mask->str[selection_start] == 'w' ||
+                      entry->mask->str[selection_start] == 's') &&
+                     selection_start < entry->mask->len - 1)
                 {
                   selection_start++;
                 }
@@ -1575,8 +1593,8 @@ gimp_tag_entry_select_jellybean (GimpTagEntry     *entry,
       break;
     }
 
-  if (selection_start < entry->mask->len
-      && selection_start == selection_end)
+  if (selection_start < entry->mask->len &&
+      selection_start == selection_end)
     {
       selection_end = selection_start + 1;
     }
@@ -1587,35 +1605,35 @@ gimp_tag_entry_select_jellybean (GimpTagEntry     *entry,
 
   if (entry->mask->str[selection_start] == 't')
     {
-      while (selection_start > 0
-             && (entry->mask->str[selection_start - 1] == 't'))
+      while (selection_start > 0 &&
+             (entry->mask->str[selection_start - 1] == 't'))
         {
           selection_start--;
         }
     }
 
-  if (selection_end > selection_start
-      && (entry->mask->str[selection_end - 1] == 't'))
+  if (selection_end > selection_start &&
+      (entry->mask->str[selection_end - 1] == 't'))
     {
-      while (selection_end <= entry->mask->len
-             && (entry->mask->str[selection_end] == 't'))
+      while (selection_end <= entry->mask->len &&
+             (entry->mask->str[selection_end] == 't'))
         {
           selection_end++;
         }
     }
 
-  if (search_dir == TAG_SEARCH_NONE
-      && selection_end - selection_start == 1
-      && entry->mask->str[selection_start] == 'w')
+  if (search_dir == TAG_SEARCH_NONE        &&
+      selection_end - selection_start == 1 &&
+      entry->mask->str[selection_start] == 'w')
     {
       gtk_editable_set_position (GTK_EDITABLE (entry), selection_end);
       return TRUE;
     }
 
-  if ((selection_start != prev_selection_start
-      || selection_end != prev_selection_end)
-      && (entry->mask->str[selection_start] == 't')
-      && selection_start < selection_end)
+  if ((selection_start != prev_selection_start ||
+       selection_end != prev_selection_end)      &&
+      (entry->mask->str[selection_start] == 't') &&
+      selection_start < selection_end)
     {
       if (search_dir == TAG_SEARCH_LEFT)
         {
@@ -1664,7 +1682,7 @@ gimp_tag_entry_add_to_recent (GimpTagEntry *entry,
 
   if (g_list_length (entry->recent_list) >= GIMP_TAG_ENTRY_MAX_RECENT_ITEMS)
     {
-      gchar *last_item = (gchar *) g_list_last (entry->recent_list)->data;
+      gchar *last_item = g_list_last (entry->recent_list)->data;
       entry->recent_list = g_list_remove (entry->recent_list, last_item);
       g_free (last_item);
     }
@@ -1705,7 +1723,7 @@ gimp_tag_entry_add_to_recent (GimpTagEntry *entry,
  * Return value: returns locale dependent tag separator.
  **/
 const gchar *
-gimp_tag_entry_get_separator  (void)
+gimp_tag_entry_get_separator (void)
 {
   /* Seperator for tags
    * IMPORTANT: use only one of Unicode terminal punctuation chars.
@@ -1822,18 +1840,19 @@ gimp_tag_entry_commit_region (GString *tags,
 static void
 gimp_tag_entry_commit_tags (GimpTagEntry *entry)
 {
-  gint     region_start;
-  gint     region_end;
-  gint     position;
   gboolean found_region;
   gint     cursor_position;
-  glong    length_before;
-  gint     i;
 
   cursor_position = gtk_editable_get_position (GTK_EDITABLE (entry));
 
   do
     {
+      gint  region_start;
+      gint  region_end;
+      gint  position;
+      glong length_before;
+      gint  i;
+
       found_region = FALSE;
 
       for (i = 0; i < entry->mask->len; i++)
@@ -1928,6 +1947,7 @@ static gboolean
 gimp_tag_entry_commit_source_func (GimpTagEntry *entry)
 {
   gimp_tag_entry_commit_tags (entry);
+
   return FALSE;
 }
 
@@ -1935,12 +1955,12 @@ static void
 gimp_tag_entry_next_tag (GimpTagEntry *entry,
                          gboolean      select)
 {
-  gint  position = gtk_editable_get_position (GTK_EDITABLE (entry));
+  gint position = gtk_editable_get_position (GTK_EDITABLE (entry));
 
   if (entry->mask->str[position] != 'u')
     {
-      while (position < entry->mask->len
-             && (entry->mask->str[position] != 'w'))
+      while (position < entry->mask->len &&
+             (entry->mask->str[position] != 'w'))
         {
           position++;
         }
@@ -1988,8 +2008,8 @@ gimp_tag_entry_previous_tag (GimpTagEntry *entry,
 {
   gint  position = gtk_editable_get_position (GTK_EDITABLE (entry));
 
-  if (position >= 1
-         && entry->mask->str[position - 1] == 'w')
+  if (position >= 1 &&
+      entry->mask->str[position - 1] == 'w')
     {
       position--;
     }
@@ -1999,8 +2019,8 @@ gimp_tag_entry_previous_tag (GimpTagEntry *entry,
     }
   if (entry->mask->str[position - 1] != 'u')
     {
-      while (position > 0
-             && (entry->mask->str[position - 1] != 'w'))
+      while (position > 0 &&
+             (entry->mask->str[position - 1] != 'w'))
         {
           if (entry->mask->str[position - 1] == 'u')
             {
@@ -2054,32 +2074,32 @@ gimp_tag_entry_select_for_deletion (GimpTagEntry     *entry,
    */
   gtk_editable_get_selection_bounds (GTK_EDITABLE (entry),
                                      &start_pos, &end_pos);
-  while (start_pos > 0
-         && (entry->mask->str[start_pos - 1] == 't'))
+  while (start_pos > 0 &&
+         (entry->mask->str[start_pos - 1] == 't'))
     {
       start_pos--;
     }
 
-  if (end_pos > start_pos
-      && (entry->mask->str[end_pos - 1] == 't'
-          || entry->mask->str[end_pos - 1] == 's'))
+  if (end_pos > start_pos &&
+      (entry->mask->str[end_pos - 1] == 't' ||
+       entry->mask->str[end_pos - 1] == 's'))
     {
-      while (end_pos <= entry->mask->len
-             && (entry->mask->str[end_pos] == 's'))
+      while (end_pos <= entry->mask->len &&
+             (entry->mask->str[end_pos] == 's'))
         {
           end_pos++;
         }
     }
 
   /* ensure there is no unnecessary whitespace selected */
-  while (start_pos < end_pos
-         && entry->mask->str[start_pos] == 'w')
+  while (start_pos < end_pos &&
+         entry->mask->str[start_pos] == 'w')
     {
       start_pos++;
     }
 
-  while (start_pos < end_pos
-         && entry->mask->str[end_pos - 1] == 'w')
+  while (start_pos < end_pos &&
+         entry->mask->str[end_pos - 1] == 'w')
     {
       end_pos--;
     }
@@ -2089,10 +2109,10 @@ gimp_tag_entry_select_for_deletion (GimpTagEntry     *entry,
     {
       gtk_editable_select_region (GTK_EDITABLE (entry), end_pos, start_pos);
     }
-  else if (end_pos > start_pos
-      && search_dir == TAG_SEARCH_RIGHT
-      && (entry->mask->str[end_pos - 1] == 't'
-          || entry->mask->str[end_pos - 1] == 's'))
+  else if (end_pos > start_pos            &&
+           search_dir == TAG_SEARCH_RIGHT &&
+           (entry->mask->str[end_pos - 1] == 't' ||
+            entry->mask->str[end_pos - 1] == 's'))
     {
       gtk_editable_select_region (GTK_EDITABLE (entry), start_pos, end_pos);
     }
@@ -2110,16 +2130,16 @@ gimp_tag_entry_strip_extra_whitespace (GimpTagEntry *entry)
   entry->suppress_tag_query++;
 
   /* strip whitespace in front */
-  while (entry->mask->len > 0
-         && entry->mask->str[0] == 'w')
+  while (entry->mask->len > 0 &&
+         entry->mask->str[0] == 'w')
     {
       gtk_editable_delete_text (GTK_EDITABLE (entry), 0, 1);
     }
 
   /* strip whitespace in back */
-  while (entry->mask->len > 1
-         && entry->mask->str[entry->mask->len - 1] == 'w'
-         && entry->mask->str[entry->mask->len - 2] == 'w')
+  while (entry->mask->len > 1                          &&
+         entry->mask->str[entry->mask->len - 1] == 'w' &&
+         entry->mask->str[entry->mask->len - 2] == 'w')
     {
       gtk_editable_delete_text (GTK_EDITABLE (entry),
                                 entry->mask->len - 1, entry->mask->len);
@@ -2133,8 +2153,8 @@ gimp_tag_entry_strip_extra_whitespace (GimpTagEntry *entry)
   /* strip extra whitespace in the middle */
   for (i = entry->mask->len - 1; i > 0; i--)
     {
-      if (entry->mask->str[i] == 'w'
-          && entry->mask->str[i - 1] == 'w')
+      if (entry->mask->str[i] == 'w' &&
+          entry->mask->str[i - 1] == 'w')
         {
           gtk_editable_delete_text (GTK_EDITABLE (entry), i, i + 1);
 
@@ -2148,8 +2168,8 @@ gimp_tag_entry_strip_extra_whitespace (GimpTagEntry *entry)
   /* special case when cursor is in the last position:
    * it must be positioned after the last whitespace.
    */
-  if (position == entry->mask->len - 1
-      && entry->mask->str[position] == 'w')
+  if (position == entry->mask->len - 1 &&
+      entry->mask->str[position] == 'w')
     {
       position++;
     }
