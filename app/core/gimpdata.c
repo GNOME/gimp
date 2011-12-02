@@ -746,6 +746,41 @@ gimp_data_set_filename (GimpData    *data,
       if (! GIMP_DATA_GET_CLASS (data)->save)
         private->writable = FALSE;
     }
+
+  if (private->filename)
+    {
+      const gchar *tag_blacklist[] = { "brushes",
+                                       "dynamics",
+                                       "patterns",
+                                       "palettes",
+                                       "gradients",
+                                       "tool-presets" };
+
+      gchar   *file_path   = g_path_get_dirname (private->filename);
+      gchar   *tag_text    = g_path_get_basename (file_path);
+      gint     i           = 0;
+      gboolean blacklisted = FALSE;
+
+      for (i = 0; i <  G_N_ELEMENTS (tag_blacklist); i++)
+        {
+          if (! g_strcmp0 (tag_text, tag_blacklist[i]))
+            {
+              blacklisted = TRUE;
+            }
+        }
+
+      if (! blacklisted)
+        {
+          GimpTag *tag = gimp_tag_new (tag_text);
+
+          gimp_tag_set_internal (tag, TRUE);
+          gimp_tagged_add_tag (GIMP_TAGGED (data), tag);
+          g_object_unref (tag);
+        }
+
+      g_free (file_path);
+      g_free (tag_text);
+    }
 }
 
 /**

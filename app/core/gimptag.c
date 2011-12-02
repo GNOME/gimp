@@ -46,6 +46,7 @@ gimp_tag_init (GimpTag *tag)
 {
   tag->tag         = 0;
   tag->collate_key = 0;
+  tag->internal    = FALSE;
 }
 
 /**
@@ -134,6 +135,40 @@ gimp_tag_try_new (const char *tag_string)
 
   return tag;
 }
+
+/**
+ * gimp_tag_get_internal:
+ * @tag: a gimp tag.
+ *
+ * Retrieve internal status of the tag.
+ *
+ * Return value: internal status of tag. Internal tags are not saved.
+ **/
+gboolean
+gimp_tag_get_internal (GimpTag *tag)
+{
+  g_return_val_if_fail (GIMP_IS_TAG (tag), FALSE);
+
+  return tag->internal;
+}
+
+/**
+ * gimp_tag_set_internal:
+ * @tag: a gimp tag.
+ * @inernal: desired tag internal status
+ *
+ * Set internal status of the tag. Internal tags are usually automaticaly
+ * generated and will not be saved into users tag cache.
+ *
+ **/
+void
+gimp_tag_set_internal (GimpTag *tag, gboolean internal)
+{
+  g_return_if_fail (GIMP_IS_TAG (tag));
+
+  tag->internal = internal;
+}
+
 
 /**
  * gimp_tag_get_name:
