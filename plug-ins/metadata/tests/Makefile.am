@@ -18,6 +18,7 @@ LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
+	$(GTK_LIBS)		\
 	$(GLIB_LIBS)		\
 	../base64.o		\
 	../xmp-parse.o		\

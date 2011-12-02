@@ -251,8 +251,9 @@ gen_property (GString            *buffer,
     case XMP_TYPE_DEVICE_SETTINGS:
     case XMP_TYPE_CONTACT_INFO:
     case XMP_TYPE_GENERIC_STRUCTURE:
-      if (value_array[0] && value_array[1]
-          && !! strcmp (value_array[1], schema->uri))
+      if ((value_array != NULL)
+        && (value_array[0] && value_array[1]
+            && !! strcmp (value_array[1], schema->uri)))
         {
           g_string_append_printf (buffer,
                                   "  <%s:%s rdf:parseType='Resource'\n"
@@ -268,13 +269,21 @@ gen_property (GString            *buffer,
                                   schema->prefix, property->name);
           ns_prefix = schema->prefix;
         }
-      if (value_array[0] && value_array[1])
+      if (value_array != NULL && value_array[0] && value_array[1])
+       {
         for (i = 2; value_array[i] != NULL; i += 2)
           {
             gen_element (buffer, 3,
                          ns_prefix, value_array[i], value_array[i + 1],
                          NULL);
           }
+       }
+      else
+       {
+        gen_element (buffer, 3,
+                     ns_prefix, property->name, value,
+                     NULL);
+       }
       g_string_append_printf (buffer, "  </%s:%s>\n",
                               schema->prefix, property->name);
       break;
