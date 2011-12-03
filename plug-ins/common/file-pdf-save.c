@@ -41,7 +41,6 @@
  */
 
 /* Known Issues (except for the coding style issues):
- * 0. Need to add support for i18n.
  * 1. Grayscale layers are inverted (although layer masks which are not grayscale,
  * are not inverted)
  * 2. Exporting some fonts doesn't work since gimp_text_layer_get_font Returns a
