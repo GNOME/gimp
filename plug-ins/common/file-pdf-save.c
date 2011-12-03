@@ -712,9 +712,10 @@ gui_single (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
   gtk_box_pack_end (GTK_BOX (vbox), convert_c, TRUE, TRUE, 0);
 
-  apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving (keeping the masks will not change the output)"));
+  apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
+  gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
 
   gtk_widget_show_all (window);
 
@@ -828,9 +829,10 @@ gui_multi (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
   gtk_box_pack_end (GTK_BOX (vbox), convert_c, FALSE, FALSE, 0);
 
-  apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving (keeping them will not change the output)"));
+  apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, FALSE, FALSE, 0);
+  gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
 
   gtk_widget_show_all (window);
 
