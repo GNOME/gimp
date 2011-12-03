@@ -314,7 +314,7 @@ webpage_dialog (void)
 
   combo = gimp_int_combo_box_new (_("Huge"), 16,
                                   _("Large"), 14,
-                                  _("Default"), 12,
+                                  C_("web-page", "Default"), 12,
                                   _("Small"), 10,
                                   _("Tiny"), 8,
                                   NULL);
