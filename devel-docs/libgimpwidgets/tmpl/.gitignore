@@ -1,5 +1,6 @@
 /libgimpwidgets-unused.sgml
 /*.bak
+/gimp3migration.sgml
 /gimpbrowser.sgml
 /gimpbutton.sgml
 /gimpcairo-utils.sgml
