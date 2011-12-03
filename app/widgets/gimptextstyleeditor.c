@@ -311,6 +311,9 @@ gimp_text_style_editor_constructed (GObject *object)
                     G_CALLBACK (gimp_text_style_editor_font_changed),
                     editor);
 
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_entry), 0,
+                                  editor->resolution_y, TRUE);
+
   /* use the global user context so we get the global FG/BG colors */
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (editor->color_button),
                                 gimp_get_user_context (editor->gimp));
@@ -451,6 +454,9 @@ gimp_text_style_editor_set_property (GObject      *object,
       break;
     case PROP_RESOLUTION_Y:
       editor->resolution_y = g_value_get_double (value);
+      if (editor->size_entry)
+        gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_entry), 0,
+                                        editor->resolution_y, TRUE);
       break;
 
     default:
