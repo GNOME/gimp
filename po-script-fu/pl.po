@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-25 21:27+0200\n"
+"POT-Creation-Date: 2011-12-04 21:57+0100\n"
 "PO-Revision-Date: 2010-08-07 18:37+0200\n"
 "Last-Translator: Łukasz Jernaś <deejay1@srem.org>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
@@ -1232,15 +1232,15 @@ msgid "Highlight balance"
 msgstr "Balans podświetlenia"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
-msgid "Layer 2"
+msgid "Layer 1"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
-msgid "Layer 3"
+msgid "Layer 2"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
-msgid "Layer1"
+msgid "Layer 3"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
@@ -1449,7 +1449,8 @@ msgid "Spread"
 msgstr "Rozszerzenie"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "Threshold (bigger 1<-->255 smaller)"
+#, fuzzy
+msgid "Threshold (bigger 1<-->254 smaller)"
 msgstr "Próg (większy 1<-->255 mniejszy)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
@@ -1959,8 +1960,10 @@ msgid "_Lava..."
 msgstr "_Lawa..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
+#, fuzzy
 msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
 msgstr ""
 "Wypełnia warstwę promieniami emanującymi ze środka obrazu, używając koloru "
 "pierwszoplanowego"
