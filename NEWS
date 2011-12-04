@@ -30,6 +30,8 @@ Core:
    is enabled
  - Replace heal algorithm with a new one by Jean-Yves Couleaud that
    works much better
+ - Make resource sub-folders show up in UI as tags allowing users
+   easily locate resource collections they may have installed.
 
 
 Libgimp:
