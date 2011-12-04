@@ -5,15 +5,14 @@
 # Grigory Bakunov <blackasp@yandex.ru>, 2003.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003-2005.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2007, 2009.
-# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2010, 2011.
+# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2005-2011, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins trunk\n"
+"Project-Id-Version: GIMP Plug-Ins 2.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-04 00:05+0400\n"
-"PO-Revision-Date: 2011-12-04 00:21+0400\n"
+"POT-Creation-Date: 2011-12-04 03:04+0400\n"
+"PO-Revision-Date: 2011-12-04 23:00+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -301,10 +300,9 @@ msgid "Align Visible Layers"
 msgstr "Выровнять видимые слои"
 
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
-#, fuzzy
 msgctxt "align-style"
 msgid "None"
-msgstr "Нет"
+msgstr "Ничего не делать"
 
 #: ../plug-ins/common/align-layers.c:425 ../plug-ins/common/align-layers.c:456
 msgid "Collect"
@@ -312,11 +310,11 @@ msgstr "Собрать"
 
 #: ../plug-ins/common/align-layers.c:426
 msgid "Fill (left to right)"
-msgstr "Заполнить (слева на право)"
+msgstr "Заполнить (слева направо)"
 
 #: ../plug-ins/common/align-layers.c:427
 msgid "Fill (right to left)"
-msgstr "Заполнить (справа на лево)"
+msgstr "Заполнить (справа налево)"
 
 #: ../plug-ins/common/align-layers.c:428 ../plug-ins/common/align-layers.c:459
 msgid "Snap to grid"
@@ -324,7 +322,7 @@ msgstr "Прилипать к сетке"
 
 #: ../plug-ins/common/align-layers.c:437
 msgid "_Horizontal style:"
-msgstr "_Горизонтальный стиль:"
+msgstr "Действие по _горизонтали:"
 
 #: ../plug-ins/common/align-layers.c:441
 msgid "Left edge"
@@ -341,7 +339,7 @@ msgstr "Правый край"
 
 #: ../plug-ins/common/align-layers.c:452
 msgid "Ho_rizontal base:"
-msgstr "Горизонт. _основание:"
+msgstr "Горизонтальное о_снование:"
 
 #: ../plug-ins/common/align-layers.c:457
 msgid "Fill (top to bottom)"
@@ -353,7 +351,7 @@ msgstr "Заполнить (снизу вверх)"
 
 #: ../plug-ins/common/align-layers.c:468
 msgid "_Vertical style:"
-msgstr "_Вертикальный стиль:"
+msgstr "Действие по _вертикали:"
 
 #: ../plug-ins/common/align-layers.c:471
 msgid "Top edge"
@@ -365,7 +363,7 @@ msgstr "Нижний край"
 
 #: ../plug-ins/common/align-layers.c:482
 msgid "Ver_tical base:"
-msgstr "В_ерт. основание:"
+msgstr "В_ертикальное основание:"
 
 #: ../plug-ins/common/align-layers.c:486
 msgid "_Grid size:"
@@ -3162,7 +3160,7 @@ msgstr "Изображение DICOM"
 
 #: ../plug-ins/common/file-dicom.c:164
 msgid "Digital Imaging and Communications in Medicine image"
-msgstr "Изображение формата Digital Imaging and Communications in Medicine"
+msgstr "Изображение Digital Imaging and Communications in Medicine"
 
 #: ../plug-ins/common/file-dicom.c:369
 #, c-format
@@ -3355,6 +3353,8 @@ msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
 msgstr ""
+"Экспорт анимации возможен лишь при наличии более чем одного слоя. В этом "
+"изображении слой всего один."
 
 #: ../plug-ins/common/file-gif-save.c:2312
 msgid "Error writing output file."
@@ -3838,6 +3838,8 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Ошибка при записи файла '%s': %s"
 
 #: ../plug-ins/common/file-pdf-load.c:297
+#: ../plug-ins/common/file-pdf-save.c:271
+#: ../plug-ins/common/file-pdf-save.c:283
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -3884,12 +3886,6 @@ msgstr "_Разрешение:"
 msgid "pixels/%a"
 msgstr "точек растра/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:271
-#: ../plug-ins/common/file-pdf-save.c:283
-#, fuzzy
-msgid "_Save as PDF..."
-msgstr "_Сохранить..."
-
 #: ../plug-ins/common/file-pdf-save.c:295
 msgid "_Create multipage PDF..."
 msgstr "Создать _многостраничный PDF…"
@@ -3908,47 +3904,47 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:707
-#: ../plug-ins/common/file-pdf-save.c:823
+#: ../plug-ins/common/file-pdf-save.c:824
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Пропустить скрытые и полностью прозрачные слои"
 
 #: ../plug-ins/common/file-pdf-save.c:711
-#: ../plug-ins/common/file-pdf-save.c:827
+#: ../plug-ins/common/file-pdf-save.c:828
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "При возможности конвертировать растр в векторные объекты"
 
 #: ../plug-ins/common/file-pdf-save.c:715
-msgid ""
-"Apply layer masks before saving (keeping the masks will not change the "
-"output)"
+#: ../plug-ins/common/file-pdf-save.c:832
+msgid "Apply layer masks before saving"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:718
+#: ../plug-ins/common/file-pdf-save.c:835
+#, fuzzy
+msgid "Keeping the masks will not change the output"
 msgstr "Применить маски слоёв перед сохранением"
 
-#: ../plug-ins/common/file-pdf-save.c:770
+#: ../plug-ins/common/file-pdf-save.c:771
 msgid "Save to:"
 msgstr "Сохранить в:"
 
-#: ../plug-ins/common/file-pdf-save.c:774
+#: ../plug-ins/common/file-pdf-save.c:775
 msgid "Browse..."
 msgstr "Просмотр…"
 
-#: ../plug-ins/common/file-pdf-save.c:775
+#: ../plug-ins/common/file-pdf-save.c:776
 msgid "Multipage PDF export"
 msgstr "Экспорт многостраничных документов PDF"
 
-#: ../plug-ins/common/file-pdf-save.c:808
+#: ../plug-ins/common/file-pdf-save.c:809
 msgid "Remove the selected pages"
 msgstr "Удалить выбранные страницы"
 
-#: ../plug-ins/common/file-pdf-save.c:818
+#: ../plug-ins/common/file-pdf-save.c:819
 msgid "Add this image"
 msgstr "Добавить это изображение"
 
-#: ../plug-ins/common/file-pdf-save.c:831
-msgid ""
-"Apply layer masks before saving (keeping them will not change the output)"
-msgstr "Применить маски слоёв перед сохранением"
-
-#: ../plug-ins/common/file-pdf-save.c:930
+#: ../plug-ins/common/file-pdf-save.c:932
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Для сохранения файла нужно добавить хотя бы одно изображение."
 
@@ -4270,7 +4266,7 @@ msgstr "Размер просмотра:"
 
 #: ../plug-ins/common/file-psp.c:599 ../plug-ins/common/file-psp.c:623
 msgid "Paint Shop Pro image"
-msgstr "Paint Shop Pro image"
+msgstr "Изображение Paint Shop Pro"
 
 #: ../plug-ins/common/file-psp.c:640
 msgid "PSP"
@@ -4301,7 +4297,7 @@ msgstr "Raw Image Data"
 
 #: ../plug-ins/common/file-raw.c:1056
 msgid "Load Image from Raw Data"
-msgstr "Загрузка изображения из Raw-данных"
+msgstr "Загрузка изображения из данных Raw"
 
 #: ../plug-ins/common/file-raw.c:1090
 msgid "Image"
@@ -4549,7 +4545,7 @@ msgstr "Объединить импортированные контуры"
 
 #: ../plug-ins/common/file-tga.c:245 ../plug-ins/common/file-tga.c:264
 msgid "TarGA image"
-msgstr "TarGA image"
+msgstr "Изображение TarGA"
 
 #: ../plug-ins/common/file-tga.c:455
 #, c-format
@@ -4706,7 +4702,7 @@ msgstr "Созданный WMF"
 
 #: ../plug-ins/common/file-xbm.c:177 ../plug-ins/common/file-xbm.c:195
 msgid "X BitMap image"
-msgstr "X BitMap image"
+msgstr "Изображение X BitMap"
 
 #: ../plug-ins/common/file-xbm.c:820
 #, c-format
@@ -5025,7 +5021,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xpm.c:174 ../plug-ins/common/file-xpm.c:199
 msgid "X PixMap image"
-msgstr "X PixMap image"
+msgstr "Изображение X PixMap"
 
 #: ../plug-ins/common/file-xpm.c:363 ../plug-ins/common/file-xpm.c:775
 #, c-format
@@ -5046,7 +5042,7 @@ msgstr "Порог альфа-канала:"
 
 #: ../plug-ins/common/file-xwd.c:278 ../plug-ins/common/file-xwd.c:298
 msgid "X window dump"
-msgstr "X window dump"
+msgstr "Дамп X window"
 
 #: ../plug-ins/common/file-xwd.c:442
 #, c-format
@@ -6929,7 +6925,7 @@ msgstr "Сохранить глубину цвета"
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1665
 msgid "Original intensity"
-msgstr "Исходная глубина цвета"
+msgstr "Исходная интенсивность"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1683
@@ -8436,9 +8432,9 @@ msgid "Large"
 msgstr "Большой"
 
 #: ../plug-ins/common/web-page.c:317
-#: ../plug-ins/gradient-flare/gradient-flare.c:2465
+msgctxt "web-page"
 msgid "Default"
-msgstr "Исходная"
+msgstr "По умолчанию"
 
 #: ../plug-ins/common/web-page.c:318
 msgid "Small"
@@ -8951,7 +8947,7 @@ msgstr "_Запомнить эти параметры"
 
 #: ../plug-ins/file-jpeg/jpeg.c:139 ../plug-ins/file-jpeg/jpeg.c:177
 msgid "JPEG image"
-msgstr "JPEG image"
+msgstr "Изображение JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg.c:303
 msgid "Export Preview"
@@ -9229,7 +9225,7 @@ msgstr "URI"
 
 #: ../plug-ins/file-xjt/xjt.c:485 ../plug-ins/file-xjt/xjt.c:503
 msgid "GIMP compressed XJT image"
-msgstr "GIMP compressed XJT image"
+msgstr "Сжатое GIMP изображение XJT"
 
 #: ../plug-ins/file-xjt/xjt.c:733
 #, c-format
@@ -10900,6 +10896,10 @@ msgstr "_Автообновление просмотра"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
 msgid "`Default' is created."
 msgstr "«Исходная» создана."
+
+#: ../plug-ins/gradient-flare/gradient-flare.c:2465
+msgid "Default"
+msgstr "Исходная"
 
 #.
 #. *  Scales
@@ -13046,6 +13046,14 @@ msgstr "_Снимок экрана..."
 #: ../plug-ins/win-snap/winsnap.c:1143
 msgid "No data captured"
 msgstr "Данные не захвачены"
+
+#~ msgid ""
+#~ "Apply layer masks before saving (keeping them will not change the output)"
+#~ msgstr "Применить маски слоёв перед сохранением"
+
+#, fuzzy
+#~ msgid "_Save as PDF..."
+#~ msgstr "_Сохранить..."
 
 #~ msgid "Frequency (rows):"
 #~ msgstr "Частота (строки):"

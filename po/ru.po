@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp trunk\n"
+"Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-09-18 11:35+0400\n"
-"PO-Revision-Date: 2011-09-21 08:45+0400\n"
+"PO-Revision-Date: 2011-12-04 23:01+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -1816,7 +1816,6 @@ msgid "Delete this dynamics"
 msgstr "Удалить эту динамику"
 
 #: ../app/actions/dynamics-actions.c:70
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_Refresh Dynamics"
 msgstr "О_бновить динамику"
@@ -4353,10 +4352,9 @@ msgid "_Sharpen"
 msgstr "У_брать растушёвку"
 
 #: ../app/actions/select-actions.c:82
-#, fuzzy
 msgctxt "select-action"
 msgid "Remove fuzziness from the selection"
-msgstr "Удалить размытость границы выделения"
+msgstr "Удалить растушёвку границы выделения"
 
 #: ../app/actions/select-actions.c:87
 msgctxt "select-action"
@@ -9106,7 +9104,7 @@ msgstr "Отсечен по нижнему слою"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:114
 msgid "Merge within active _group only"
-msgstr ""
+msgstr "Объединить только внутри _активной группы"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:127
 msgid "_Discard invisible layers"
@@ -10874,7 +10872,7 @@ msgstr "Размер кисти"
 
 #: ../app/paint/gimppaintoptions.c:159
 msgid "Every stamp has its own opacity"
-msgstr ""
+msgstr "У каждого «штампа» кистью может быть своя или общая непрозрачность"
 
 #: ../app/paint/gimppaintoptions.c:165
 msgid "Ignore fuzziness of the current brush"
@@ -10886,7 +10884,7 @@ msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:174
 msgid "Distance of scattering"
-msgstr ""
+msgstr "Дистанция разброса"
 
 #: ../app/paint/gimppaintoptions.c:184
 msgid "Distance over which strokes fade out"
@@ -10907,11 +10905,11 @@ msgstr "Тип окна для _других панелей:"
 
 #: ../app/paint/gimppaintoptions.c:259
 msgid "Depth of smoothing"
-msgstr ""
+msgstr "Глубина сглаживания"
 
 #: ../app/paint/gimppaintoptions.c:263
 msgid "Gravity of the pen"
-msgstr ""
+msgstr "Гравитация пера"
 
 #: ../app/paint/gimppencil.c:41 ../app/tools/gimppenciltool.c:50
 msgid "Pencil"
@@ -13166,7 +13164,7 @@ msgstr "Сбросить параметров фильтров"
 
 #: ../app/tools/gimppaintoptions-gui.c:235
 msgid "Incremental"
-msgstr "Дополняющий"
+msgstr "Накапливать непрозрачность"
 
 #: ../app/tools/gimppaintoptions-gui.c:251
 msgid "Hard edge"
@@ -13202,9 +13200,8 @@ msgid "Apply Jitter"
 msgstr "Разброс"
 
 #: ../app/tools/gimppaintoptions-gui.c:382
-#, fuzzy
 msgid "Smooth stroke"
-msgstr "Удаление обводки контура"
+msgstr "Сглаженные штрихи"
 
 #: ../app/tools/gimppaintoptions-gui.c:392
 #, fuzzy
@@ -13394,9 +13391,8 @@ msgid "Shrink merged"
 msgstr "Во всех слоях"
 
 #: ../app/tools/gimprectangleselectoptions.c:83
-#, fuzzy
 msgid "Round corners of selection"
-msgstr "Закруглённые углы"
+msgstr "Закругление углов выделения"
 
 #: ../app/tools/gimprectangleselectoptions.c:89
 msgid "Radius of rounding in pixels"
@@ -13431,9 +13427,8 @@ msgid "Base selection on all visible layers"
 msgstr "Использовать все видимые слои при создании выделения"
 
 #: ../app/tools/gimpregionselectoptions.c:101
-#, fuzzy
 msgid "Selection criterion"
-msgstr "Правка выделения"
+msgstr "Критерий выделения"
 
 #: ../app/tools/gimpregionselectoptions.c:203
 msgid "Select transparent areas"
@@ -14618,9 +14613,8 @@ msgstr "Настроить контроллер ввода"
 #: ../app/widgets/gimpcontrollermouse.c:85
 #: ../app/widgets/gimpcontrollermouse.c:88
 #: ../app/widgets/gimpcontrollermouse.c:91
-#, fuzzy
 msgid "Button 8"
-msgstr "Плоские"
+msgstr "Кнопка 8"
 
 #: ../app/widgets/gimpcontrollermouse.c:95
 #: ../app/widgets/gimpcontrollermouse.c:98
@@ -14630,9 +14624,8 @@ msgstr "Плоские"
 #: ../app/widgets/gimpcontrollermouse.c:110
 #: ../app/widgets/gimpcontrollermouse.c:113
 #: ../app/widgets/gimpcontrollermouse.c:116
-#, fuzzy
 msgid "Button 9"
-msgstr "Плоские"
+msgstr "Кнопка 9"
 
 #: ../app/widgets/gimpcontrollermouse.c:120
 #: ../app/widgets/gimpcontrollermouse.c:123
@@ -14642,9 +14635,8 @@ msgstr "Плоские"
 #: ../app/widgets/gimpcontrollermouse.c:135
 #: ../app/widgets/gimpcontrollermouse.c:138
 #: ../app/widgets/gimpcontrollermouse.c:141
-#, fuzzy
 msgid "Button 10"
-msgstr "Плоские"
+msgstr "Кнопка 10"
 
 #: ../app/widgets/gimpcontrollermouse.c:145
 #: ../app/widgets/gimpcontrollermouse.c:148
@@ -14654,9 +14646,8 @@ msgstr "Плоские"
 #: ../app/widgets/gimpcontrollermouse.c:160
 #: ../app/widgets/gimpcontrollermouse.c:163
 #: ../app/widgets/gimpcontrollermouse.c:166
-#, fuzzy
 msgid "Button 11"
-msgstr "Плоские"
+msgstr "Кнопка 11"
 
 #: ../app/widgets/gimpcontrollermouse.c:170
 #: ../app/widgets/gimpcontrollermouse.c:173
@@ -14666,9 +14657,8 @@ msgstr "Плоские"
 #: ../app/widgets/gimpcontrollermouse.c:185
 #: ../app/widgets/gimpcontrollermouse.c:188
 #: ../app/widgets/gimpcontrollermouse.c:191
-#, fuzzy
 msgid "Button 12"
-msgstr "Плоские"
+msgstr "Кнопка 12"
 
 #: ../app/widgets/gimpcontrollermouse.c:203
 msgid "Mouse Buttons"
@@ -15486,11 +15476,11 @@ msgstr "Изменить линию шрифта выделенного текс
 
 #: ../app/widgets/gimptextstyleeditor.c:325
 msgid "Bold"
-msgstr "Полужирное"
+msgstr "Полужирное начертание"
 
 #: ../app/widgets/gimptextstyleeditor.c:328
 msgid "Italic"
-msgstr "Наклонный"
+msgstr "Наклонное начертание"
 
 #: ../app/widgets/gimptextstyleeditor.c:331
 msgid "Underline"
@@ -15498,7 +15488,7 @@ msgstr "Подчёркивание"
 
 #: ../app/widgets/gimptextstyleeditor.c:334
 msgid "Strikethrough"
-msgstr "Вычеркнутый"
+msgstr "Вычёркивание"
 
 #: ../app/widgets/gimpthumbbox.c:330
 #, c-format
