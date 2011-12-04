@@ -25,13 +25,13 @@ UI:
 Core:
 
  - Fix "render_image_tile_fault: assertion `tile[4] != NULL' failed"
-   warnings that occured for some image sizes
+   warnings that occurred for some image sizes
  - Fix attachment of the floating selection when the gegl projection
    is enabled
  - Replace heal algorithm with a new one by Jean-Yves Couleaud that
    works much better
- - Make resource sub-folders show up in UI as tags allowing users
-   easily locate resource collections they may have installed.
+ - Make resource sub-folders show up in UI as tags, allowing users
+   to easily locate resource collections they may have installed.
 
 
 Libgimp:
