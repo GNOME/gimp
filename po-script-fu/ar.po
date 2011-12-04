@@ -2334,7 +2334,7 @@ msgstr "تدوير زوايا التحديد الحالي"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
 msgid "Rounded R_ectangle..."
-msgstr "تدوير الم_ستطيلات..."
+msgstr "م_ستطيل مُدوّر..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
