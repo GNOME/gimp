@@ -14974,10 +14974,10 @@ msgstr "Zakleni kanal alfa"
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
-msgstr[0] "Sporočilo ponovljeno enkrat."
-msgstr[1] "Sporočilo ponovljeno %d-krat."
-msgstr[2] "Sporočilo ponovljeno %d-krat."
-msgstr[3] "Sporočilo ponovljeno %d-krat."
+msgstr[0] "Sporočilo je ponovljeno %d-krat."
+msgstr[1] "Sporočilo je ponovljeno %d-krat."
+msgstr[2] "Sporočilo je ponovljeno %d-krat."
+msgstr[3] "Sporočilo je ponovljeno %d-krat."
 
 #: ../app/widgets/gimppaletteeditor.c:226
 #: ../app/widgets/gimppaletteeditor.c:682
