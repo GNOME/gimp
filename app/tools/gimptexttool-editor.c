@@ -692,7 +692,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
               index = gimp_text_buffer_get_iter_index (text_tool->buffer,
                                                        &cursor, TRUE);
 
-             if (count > 0)
+              if (count > 0)
                 {
                   pango_layout_move_cursor_visually (layout, TRUE, index, 0, 1,
                                                      &new_index, &trailing);
@@ -705,14 +705,14 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
                   count++;
                 }
 
-             if (new_index != G_MAXINT && new_index != -1)
-               index = new_index;
-             else
-               break;
+              if (new_index != G_MAXINT && new_index != -1)
+                index = new_index;
+              else
+                break;
 
-             gimp_text_buffer_get_iter_at_index (text_tool->buffer,
-                                                 &cursor, index, TRUE);
-             gtk_text_iter_forward_chars (&cursor, trailing);
+              gimp_text_buffer_get_iter_at_index (text_tool->buffer,
+                                                  &cursor, index, TRUE);
+              gtk_text_iter_forward_chars (&cursor, trailing);
             }
         }
       break;
