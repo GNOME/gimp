@@ -31,11 +31,10 @@
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
-#define __GIMP_BASE_C__
-
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpbasetypes.h"
 
+#define __GIMP_ENV_C__
 #include "gimpenv.h"
 #include "gimpversion.h"
 #include "gimpreloc.h"
