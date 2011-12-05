@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-30 17:41+0100\n"
-"PO-Revision-Date: 2011-11-30 18:40+0100\n"
+"POT-Creation-Date: 2011-12-05 15:07+0100\n"
+"PO-Revision-Date: 2011-12-05 15:09+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -5404,6 +5404,16 @@ msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Commuta la visualizzazione a schermo pieno"
 
+#: ../app/actions/view-actions.c:238
+msgctxt "view-action"
+msgid "Use GEGL"
+msgstr "Usa GEGL"
+
+#: ../app/actions/view-actions.c:239
+msgctxt "view-action"
+msgid "Use GEGL to create this window's projection"
+msgstr "Usa GEGL per creare la proiezione di questa finestra"
+
 #: ../app/actions/view-actions.c:263
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
@@ -6109,7 +6119,8 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:160
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "Se abilitata, la dinamica selezionata verrà usata per tutti gli strumenti."
+msgstr ""
+"Se abilitata, la dinamica selezionata verrà usata per tutti gli strumenti."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -8412,7 +8423,7 @@ msgid "(Preview may be out of date)"
 msgstr "(l'anteprima potrebbe non essere aggiornata)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:438
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:437
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
@@ -8420,7 +8431,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d pixel"
 msgstr[1] "%d × %d pixel"
 
-#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:339
+#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:336
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -10010,7 +10021,7 @@ msgid "Vertical"
 msgstr "Verticale"
 
 #: ../app/dialogs/preferences-dialog.c:2336
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "ppi"
 
@@ -10758,21 +10769,21 @@ msgstr "(modificato)"
 msgid "(clean)"
 msgstr "(pulito)"
 
-#: ../app/display/gimpdisplayshell-title.c:360
-#: ../app/display/gimpdisplayshell-title.c:373
-#: ../app/widgets/gimpactiongroup.c:891
+#: ../app/display/gimpdisplayshell-title.c:357
+#: ../app/display/gimpdisplayshell-title.c:370
+#: ../app/widgets/gimpactiongroup.c:860
 msgid "(none)"
 msgstr "(nessuno)"
 
-#: ../app/display/gimpdisplayshell-title.c:502
+#: ../app/display/gimpdisplayshell-title.c:499
 msgid " (exported)"
 msgstr " (esportato)"
 
-#: ../app/display/gimpdisplayshell-title.c:504
+#: ../app/display/gimpdisplayshell-title.c:501
 msgid " (overwritten)"
 msgstr " (sovrascritta)"
 
-#: ../app/display/gimpdisplayshell-title.c:510
+#: ../app/display/gimpdisplayshell-title.c:507
 msgid " (imported)"
 msgstr " (importata)"
 
@@ -14319,7 +14330,7 @@ msgstr "Impossibile importare tracciati da '%s': %s"
 msgid "_Search:"
 msgstr "_Cerca:"
 
-#: ../app/widgets/gimpactiongroup.c:888
+#: ../app/widgets/gimpactiongroup.c:857
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -15111,9 +15122,9 @@ msgstr "Colore di sfondo impostato a:"
 
 #: ../app/widgets/gimpgradienteditor.c:1235
 #: ../app/widgets/gimpgradienteditor.c:1296
-#, fuzzy, c-format
+#, c-format
 msgid "%s-Drag: move & compress"
-msgstr "%s%sTrascina: sposta e comprime"
+msgstr "%s-Trascina: sposta e comprime"
 
 #: ../app/widgets/gimpgradienteditor.c:1240
 msgid "Drag: move"
@@ -15123,9 +15134,9 @@ msgstr "Trascina: sposta"
 #: ../app/widgets/gimpgradienteditor.c:1260
 #: ../app/widgets/gimpgradienteditor.c:1273
 #: ../app/widgets/gimpgradienteditor.c:1294
-#, fuzzy, c-format
+#, c-format
 msgid "%s-Click: extend selection"
-msgstr "%s%sClic: estende la selezione"
+msgstr "%s-Clic: estende la selezione"
 
 #: ../app/widgets/gimpgradienteditor.c:1252
 #: ../app/widgets/gimpgradienteditor.c:1265
@@ -15327,22 +15338,22 @@ msgid "Number of paths:"
 msgstr "Numero di tracciati:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:408
+#: ../app/widgets/gimpimagepropview.c:407
 msgid "None"
 msgstr "Nessuna"
 
-#: ../app/widgets/gimpimagepropview.c:462
+#: ../app/widgets/gimpimagepropview.c:461
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "punti/%s"
 
-#: ../app/widgets/gimpimagepropview.c:464
+#: ../app/widgets/gimpimagepropview.c:463
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:485
+#: ../app/widgets/gimpimagepropview.c:484
 msgid "colors"
 msgstr "colori"
 
@@ -15491,7 +15502,7 @@ msgstr "inserimento marcatori"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1714
+#: ../app/widgets/gimptagentry.c:1732
 msgid ","
 msgstr ","
 
@@ -15578,30 +15589,30 @@ msgstr "Cambia la crenatura del testo selezionato"
 msgid "Change baseline of selected text"
 msgstr "Cambia la linea di base del testo selezionato"
 
-#: ../app/widgets/gimptextstyleeditor.c:325
+#: ../app/widgets/gimptextstyleeditor.c:328
 msgid "Bold"
 msgstr "Grassetto"
 
-#: ../app/widgets/gimptextstyleeditor.c:328
+#: ../app/widgets/gimptextstyleeditor.c:331
 msgid "Italic"
 msgstr "Corsivo"
 
-#: ../app/widgets/gimptextstyleeditor.c:331
+#: ../app/widgets/gimptextstyleeditor.c:334
 msgid "Underline"
 msgstr "Sottolineato"
 
-#: ../app/widgets/gimptextstyleeditor.c:334
+#: ../app/widgets/gimptextstyleeditor.c:337
 msgid "Strikethrough"
 msgstr "Barrato"
 
 #: ../app/widgets/gimpthumbbox.c:330
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Click to update preview\n"
 "%s-Click to force update even if preview is up-to-date"
 msgstr ""
 "Fare clic per aggiornare l'anteprima\n"
-"%s%sfare clic per forzare l'aggiornamento anche se l'anteprima è aggiornata"
+"%s-clic per forzare l'aggiornamento anche se l'anteprima è aggiornata"
 
 #: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"

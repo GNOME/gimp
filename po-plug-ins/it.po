@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-30 22:03+0100\n"
-"PO-Revision-Date: 2011-11-30 22:05+0100\n"
+"POT-Creation-Date: 2011-12-05 15:10+0100\n"
+"PO-Revision-Date: 2011-12-05 15:11+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: \n"
@@ -615,7 +615,7 @@ msgstr "_Verticale"
 #: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
 #: ../plug-ins/file-faxg3/faxg3.c:474 ../plug-ins/file-fits/fits.c:530
 #: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
-#: ../plug-ins/file-psd/psd-image-res-load.c:997
+#: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
 #: ../plug-ins/gfig/gfig-dialog.c:1306
 #: ../plug-ins/gimpressionist/general.c:139
@@ -1026,8 +1026,8 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1037
 #: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
-#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:334
-#: ../plug-ins/common/file-svg.c:732 ../plug-ins/common/file-tga.c:442
+#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
+#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
 #: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:737
 #: ../plug-ins/common/file-xmc.c:663 ../plug-ins/common/file-xmc.c:848
 #: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2010
@@ -3823,6 +3823,8 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
 
 #: ../plug-ins/common/file-pdf-load.c:297
+#: ../plug-ins/common/file-pdf-save.c:270
+#: ../plug-ins/common/file-pdf-save.c:282
 msgid "Portable Document Format"
 msgstr "Portable Document Format (PDF)"
 
@@ -3863,17 +3865,21 @@ msgid "_Resolution:"
 msgstr "_Risoluzione:"
 
 #: ../plug-ins/common/file-pdf-load.c:1426
-#: ../plug-ins/common/file-pdf-load.c:1427 ../plug-ins/common/file-svg.c:936
+#: ../plug-ins/common/file-pdf-load.c:1427 ../plug-ins/common/file-svg.c:917
 #: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
 #, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:388
+#: ../plug-ins/common/file-pdf-save.c:294
+msgid "_Create multipage PDF..."
+msgstr "_Crea PDF multipagina..."
+
+#: ../plug-ins/common/file-pdf-save.c:387
 msgid "You must select a file to save!"
 msgstr "È necessario selezionare un file da salvare!"
 
-#: ../plug-ins/common/file-pdf-save.c:397
+#: ../plug-ins/common/file-pdf-save.c:396
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3883,25 +3889,28 @@ msgid ""
 msgstr ""
 "Si è verificato un errore durante la creazione del file PDF:\n"
 "%s\n"
-"Assicurarsi di aver inserito un nome file valido e che la posizione scelta consenta la scrittura!"
+"Assicurarsi di aver inserito un nome file valido e che la posizione scelta "
+"consenta la scrittura!"
 
-#: ../plug-ins/common/file-pdf-save.c:707
+#: ../plug-ins/common/file-pdf-save.c:706
 #: ../plug-ins/common/file-pdf-save.c:823
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omettere livelli invisibili e con opacità a zero"
 
-#: ../plug-ins/common/file-pdf-save.c:711
+#: ../plug-ins/common/file-pdf-save.c:710
 #: ../plug-ins/common/file-pdf-save.c:827
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Convertire le bitmap in grafica vettoriale ove possibile"
 
-#: ../plug-ins/common/file-pdf-save.c:715
-msgid ""
-"Apply layer masks before saving (keeping the masks will not change the "
-"output)"
-msgstr ""
-"Applica maschera di livello prima di salvare (mantenendo le maschere non "
-"verrà modificato il risultato)"
+#: ../plug-ins/common/file-pdf-save.c:714
+#: ../plug-ins/common/file-pdf-save.c:831
+msgid "Apply layer masks before saving"
+msgstr "Applica le maschere di livello prima di salvare"
+
+#: ../plug-ins/common/file-pdf-save.c:717
+#: ../plug-ins/common/file-pdf-save.c:834
+msgid "Keeping the masks will not change the output"
+msgstr "Mantenendo le maschere non verrà modificato il risultato"
 
 #: ../plug-ins/common/file-pdf-save.c:770
 msgid "Save to:"
@@ -3923,14 +3932,7 @@ msgstr "Rimuovi le pagine selezionate"
 msgid "Add this image"
 msgstr "Aggiungi questa immagine"
 
-#: ../plug-ins/common/file-pdf-save.c:831
-msgid ""
-"Apply layer masks before saving (keeping them will not change the output)"
-msgstr ""
-"Applica le maschere di livello prima di salvare (mantenendole non cambierà "
-"il risultato)"
-
-#: ../plug-ins/common/file-pdf-save.c:930
+#: ../plug-ins/common/file-pdf-save.c:931
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Errore! Per salvare il file, deve essere aggiunta almeno un'immagine!"
 
@@ -4122,7 +4124,7 @@ msgid "Rendering"
 msgstr "Rendering"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3155 ../plug-ins/common/file-svg.c:930
+#: ../plug-ins/common/file-ps.c:3155 ../plug-ins/common/file-svg.c:911
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "Risoluzione:"
@@ -4459,28 +4461,28 @@ msgstr "Formattazione Dati"
 msgid "RunLength Encoded"
 msgstr "RLE"
 
-#: ../plug-ins/common/file-svg.c:141
+#: ../plug-ins/common/file-svg.c:140
 msgid "SVG image"
 msgstr "Immagine SVG"
 
-#: ../plug-ins/common/file-svg.c:336 ../plug-ins/common/file-svg.c:734
+#: ../plug-ins/common/file-svg.c:335 ../plug-ins/common/file-svg.c:715
 msgid "Unknown reason"
 msgstr "Motivo sconosciuto"
 
-#: ../plug-ins/common/file-svg.c:342
+#: ../plug-ins/common/file-svg.c:341
 msgid "Rendering SVG"
 msgstr "Rendering SVG"
 
-#: ../plug-ins/common/file-svg.c:354
+#: ../plug-ins/common/file-svg.c:353
 msgid "Rendered SVG"
 msgstr "SVG renderizzato"
 
-#: ../plug-ins/common/file-svg.c:568 ../plug-ins/common/file-wmf.c:358
+#: ../plug-ins/common/file-svg.c:549 ../plug-ins/common/file-wmf.c:358
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: ../plug-ins/common/file-svg.c:576
+#: ../plug-ins/common/file-svg.c:557
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -4489,45 +4491,45 @@ msgstr ""
 "specifica l'ampiezza!"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/file-svg.c:743
+#: ../plug-ins/common/file-svg.c:724
 msgid "Render Scalable Vector Graphics"
 msgstr "Renderizza Grafica Vettoriale Scalabile (SVG)"
 
 #. Width and Height
-#: ../plug-ins/common/file-svg.c:809 ../plug-ins/common/file-wmf.c:571
+#: ../plug-ins/common/file-svg.c:790 ../plug-ins/common/file-wmf.c:571
 #: ../plug-ins/common/grid.c:726
 msgid "Width:"
 msgstr "Larghezza:"
 
-#: ../plug-ins/common/file-svg.c:815 ../plug-ins/common/file-wmf.c:577
+#: ../plug-ins/common/file-svg.c:796 ../plug-ins/common/file-wmf.c:577
 msgid "Height:"
 msgstr "Altezza:"
 
-#: ../plug-ins/common/file-svg.c:889 ../plug-ins/common/file-wmf.c:651
+#: ../plug-ins/common/file-svg.c:870 ../plug-ins/common/file-wmf.c:651
 msgid "_X ratio:"
 msgstr "Rapporto _X:"
 
-#: ../plug-ins/common/file-svg.c:911 ../plug-ins/common/file-wmf.c:673
+#: ../plug-ins/common/file-svg.c:892 ../plug-ins/common/file-wmf.c:673
 msgid "_Y ratio:"
 msgstr "Rapporto _Y:"
 
-#: ../plug-ins/common/file-svg.c:925 ../plug-ins/common/file-wmf.c:687
+#: ../plug-ins/common/file-svg.c:906 ../plug-ins/common/file-wmf.c:687
 msgid "Constrain aspect ratio"
 msgstr "Mantieni rapporto dimensioni"
 
 #. Path Import
-#: ../plug-ins/common/file-svg.c:956
+#: ../plug-ins/common/file-svg.c:937
 msgid "Import _paths"
 msgstr "Importa _tracciati"
 
-#: ../plug-ins/common/file-svg.c:963
+#: ../plug-ins/common/file-svg.c:944
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importa i tracciati dal file SVG in modo da poterli usare con lo strumento "
 "tracciati di GIMP"
 
-#: ../plug-ins/common/file-svg.c:971
+#: ../plug-ins/common/file-svg.c:952
 msgid "Merge imported paths"
 msgstr "Fondi tracciati importati"
 
@@ -5102,7 +5104,7 @@ msgid "Composing images"
 msgstr "Composizione immagini"
 
 #: ../plug-ins/common/film.c:423 ../plug-ins/common/guillotine.c:215
-#: ../plug-ins/help-browser/dialog.c:1110
+#: ../plug-ins/help-browser/dialog.c:1109
 msgid "Untitled"
 msgstr "Senza nome"
 
@@ -8409,72 +8411,73 @@ msgstr "Errore Microsoft Windows sconosciuto."
 msgid "Failed to open '%s': %s"
 msgstr "Fallito il caricamento di \"%s\": %s"
 
-#: ../plug-ins/common/web-page.c:99
+#: ../plug-ins/common/web-page.c:98
 msgid "Create an image of a webpage"
 msgstr "Crea un'immagine di una pagina Web"
 
-#: ../plug-ins/common/web-page.c:105
+#: ../plug-ins/common/web-page.c:104
 msgid "From _Webpage..."
 msgstr "Dalla pagina _Web..."
 
-#: ../plug-ins/common/web-page.c:234
+#: ../plug-ins/common/web-page.c:233
 msgid "Create from webpage"
 msgstr "Crea da una pagina Web"
 
-#: ../plug-ins/common/web-page.c:239
+#: ../plug-ins/common/web-page.c:238
 msgid "_Create"
 msgstr "_Crea"
 
-#: ../plug-ins/common/web-page.c:267
+#: ../plug-ins/common/web-page.c:266
 msgid "Enter location (URI):"
 msgstr "Inserire posizione (URI):"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/common/web-page.c:290 ../plug-ins/maze/maze-dialog.c:198
+#: ../plug-ins/common/web-page.c:289 ../plug-ins/maze/maze-dialog.c:198
 msgid "Width (pixels):"
 msgstr "Altezza (punti):"
 
-#: ../plug-ins/common/web-page.c:309
+#: ../plug-ins/common/web-page.c:308
 msgid "Font size:"
 msgstr "Dimensione carattere:"
 
-#: ../plug-ins/common/web-page.c:316
+#: ../plug-ins/common/web-page.c:315
 msgid "Huge"
 msgstr "Enorme"
 
-#: ../plug-ins/common/web-page.c:317
+#: ../plug-ins/common/web-page.c:316
 msgid "Large"
 msgstr "Grande"
 
-#: ../plug-ins/common/web-page.c:318
-#: ../plug-ins/gradient-flare/gradient-flare.c:2465
+#: ../plug-ins/common/web-page.c:317
+#, fuzzy
+msgctxt "web-page"
 msgid "Default"
 msgstr "Predefinito"
 
-#: ../plug-ins/common/web-page.c:319
+#: ../plug-ins/common/web-page.c:318
 msgid "Small"
 msgstr "Piccolo"
 
-#: ../plug-ins/common/web-page.c:320
+#: ../plug-ins/common/web-page.c:319
 msgid "Tiny"
 msgstr "Micro"
 
-#: ../plug-ins/common/web-page.c:444
+#: ../plug-ins/common/web-page.c:443
 #, c-format
 msgid "No URL was specified"
 msgstr "Nessun URL specificato"
 
-#: ../plug-ins/common/web-page.c:511
+#: ../plug-ins/common/web-page.c:510
 #, c-format
 msgid "Downloading webpage '%s'"
 msgstr "Scaricamento pagina Web \"%s\""
 
-#: ../plug-ins/common/web-page.c:528
+#: ../plug-ins/common/web-page.c:527
 #, c-format
 msgid "Transferring webpage image for '%s'"
 msgstr "Trasferimento pagina Web per \"%s\""
 
-#: ../plug-ins/common/web-page.c:537
+#: ../plug-ins/common/web-page.c:536
 msgid "Webpage"
 msgstr "Pagina Web"
 
@@ -10912,6 +10915,10 @@ msgstr "A_utoaggiorna l'anteprima"
 msgid "`Default' is created."
 msgstr "È stato creato 'predefinito'"
 
+#: ../plug-ins/gradient-flare/gradient-flare.c:2465
+msgid "Default"
+msgstr "Predefinito"
+
 #.
 #. *  Scales
 #.
@@ -11123,77 +11130,77 @@ msgstr "Seme casuale:"
 msgid "_Second Flares"
 msgstr "Riverberi _secondari"
 
-#: ../plug-ins/help-browser/dialog.c:185
-#: ../plug-ins/help-browser/dialog.c:1111
+#: ../plug-ins/help-browser/dialog.c:184
+#: ../plug-ins/help-browser/dialog.c:1110
 msgid "GIMP Help Browser"
 msgstr "Navigatore della guida di Gimp"
 
-#: ../plug-ins/help-browser/dialog.c:560
+#: ../plug-ins/help-browser/dialog.c:559
 msgid "Go back one page"
 msgstr "Indietro di una pagina"
 
-#: ../plug-ins/help-browser/dialog.c:565
+#: ../plug-ins/help-browser/dialog.c:564
 msgid "Go forward one page"
 msgstr "Avanti di una pagina"
 
-#: ../plug-ins/help-browser/dialog.c:570
+#: ../plug-ins/help-browser/dialog.c:569
 msgid "_Reload"
 msgstr "_Ricarica"
 
-#: ../plug-ins/help-browser/dialog.c:570
+#: ../plug-ins/help-browser/dialog.c:569
 msgid "Reload current page"
 msgstr "Ricarica la pagina corrente"
 
-#: ../plug-ins/help-browser/dialog.c:575
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "_Stop"
 msgstr "_Stop"
 
-#: ../plug-ins/help-browser/dialog.c:575
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "Stop loading this page"
 msgstr "Blocca il caricamento di questa pagina"
 
-#: ../plug-ins/help-browser/dialog.c:580
+#: ../plug-ins/help-browser/dialog.c:579
 msgid "Go to the index page"
 msgstr "Vai all'indice"
 
-#: ../plug-ins/help-browser/dialog.c:585
+#: ../plug-ins/help-browser/dialog.c:584
 msgid "C_opy location"
 msgstr "C_opia posizione"
 
-#: ../plug-ins/help-browser/dialog.c:586
+#: ../plug-ins/help-browser/dialog.c:585
 msgid "Copy the location of this page to the clipboard"
 msgstr "Copia la posizione di questa pagina negli appunti"
 
-#: ../plug-ins/help-browser/dialog.c:606
+#: ../plug-ins/help-browser/dialog.c:605
 msgid "Find text in current page"
 msgstr "Trova il testo nella pagina corrente"
 
-#: ../plug-ins/help-browser/dialog.c:611
+#: ../plug-ins/help-browser/dialog.c:610
 msgid "Find _Again"
 msgstr "Trova _ancora"
 
-#: ../plug-ins/help-browser/dialog.c:630
+#: ../plug-ins/help-browser/dialog.c:629
 msgid "S_how Index"
 msgstr "_Mostra l'indice"
 
-#: ../plug-ins/help-browser/dialog.c:631
+#: ../plug-ins/help-browser/dialog.c:630
 msgid "Toggle the visibility of the sidebar"
 msgstr "Commuta la visibilità della barra laterale"
 
-#: ../plug-ins/help-browser/dialog.c:652
+#: ../plug-ins/help-browser/dialog.c:651
 msgid "Visit the GIMP documentation website"
 msgstr "Visita il sito di documentazione di GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:1152
+#: ../plug-ins/help-browser/dialog.c:1151
 msgid "Find:"
 msgstr "Trova:"
 
-#: ../plug-ins/help-browser/dialog.c:1169
+#: ../plug-ins/help-browser/dialog.c:1168
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Precedente"
 
-#: ../plug-ins/help-browser/dialog.c:1181
+#: ../plug-ins/help-browser/dialog.c:1180
 msgctxt "search"
 msgid "_Next"
 msgstr "_Successivo"
