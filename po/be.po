@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-16 13:44+0300\n"
-"PO-Revision-Date: 2011-10-16 13:44+0300\n"
+"POT-Creation-Date: 2011-12-06 00:59+0300\n"
+"PO-Revision-Date: 2011-12-02 21:38+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -962,7 +962,7 @@ msgstr "Выкарыстоўваць складзены колер ўсіх ба
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:578
 #: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:170
-#: ../app/widgets/gimptoolbox.c:809
+#: ../app/widgets/gimptoolbox.c:833
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1337,20 +1337,20 @@ msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Пра GIMP"
 
-#: ../app/actions/dialogs-actions.c:326
-#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:549
+#: ../app/actions/dialogs-actions.c:329
+#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:555
 msgid "Toolbox"
 msgstr "Панэль прылад"
 
-#: ../app/actions/dialogs-actions.c:327
+#: ../app/actions/dialogs-actions.c:330
 msgid "Raise the toolbox"
 msgstr "Узьняць панэль прылад"
 
-#: ../app/actions/dialogs-actions.c:331
+#: ../app/actions/dialogs-actions.c:334
 msgid "New Toolbox"
 msgstr "Стварыць панэль прылад"
 
-#: ../app/actions/dialogs-actions.c:332
+#: ../app/actions/dialogs-actions.c:335
 msgid "Create a new toolbox"
 msgstr "Стварыць новую панэль прылад"
 
@@ -5367,6 +5367,17 @@ msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Пераключыць паказ на поўны экран"
 
+#: ../app/actions/view-actions.c:238
+#, fuzzy
+msgctxt "view-action"
+msgid "Use GEGL"
+msgstr "Карыстацца _GEGL"
+
+#: ../app/actions/view-actions.c:239
+msgctxt "view-action"
+msgid "Use GEGL to create this window's projection"
+msgstr ""
+
 #: ../app/actions/view-actions.c:263
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
@@ -6483,7 +6494,7 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Калі задзейнічана, па націсканьні F1 адкрыецца гартач дапамогі."
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:133
-#: ../app/core/gimp-units.c:167 ../app/gui/session.c:243
+#: ../app/core/gimp-units.c:167 ../app/gui/session.c:279
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
 msgstr "фатальная памылка падчас аналізаваньня"
@@ -7270,8 +7281,8 @@ msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Дрыжэньне"
 
-#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:344
-#: ../app/gui/session.c:349 ../app/menus/menus.c:464
+#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:366
+#: ../app/gui/session.c:392 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:206
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7742,7 +7753,7 @@ msgid "Selection Mask"
 msgstr "Маска вылучанай вобласьці"
 
 #: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:113
-#: ../app/widgets/gimplayertreeview.c:284
+#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity"
 msgstr "Непразрыстасьць"
 
@@ -8336,7 +8347,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Магчыма, агляд ужо састарэў)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:438
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:437
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
@@ -8346,7 +8357,7 @@ msgstr[1] "%d × %d піксэлі"
 msgstr[2] "%d × %d піксэляў"
 msgstr[3] "%d × %d піксэль"
 
-#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:339
+#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:336
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -8375,7 +8386,7 @@ msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Прыбраць паразыты з элемэнта"
 
-#: ../app/core/gimpitem-exclusive.c:79
+#: ../app/core/gimpitem-exclusive.c:81
 msgid "Set Item Exclusive Visible"
 msgstr "Зрабіць элемэнт адзіна бачным"
 
@@ -9930,7 +9941,7 @@ msgid "Vertical"
 msgstr "Па вэртыкалі"
 
 #: ../app/dialogs/preferences-dialog.c:2336
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "п/ц"
 
@@ -10540,7 +10551,7 @@ msgid "Navigate the image display"
 msgstr "Навігацыя па відарысе"
 
 #: ../app/display/gimpdisplayshell.c:743
-#: ../app/display/gimpdisplayshell.c:1321 ../app/widgets/gimptoolbox.c:250
+#: ../app/display/gimpdisplayshell.c:1321 ../app/widgets/gimptoolbox.c:256
 msgid "Drop image files here to open them"
 msgstr "Кінь сюды файлы зь відарысамі каб адкрыць іх"
 
@@ -10692,21 +10703,21 @@ msgstr "(зьменены)"
 msgid "(clean)"
 msgstr "(ня зьменены)"
 
-#: ../app/display/gimpdisplayshell-title.c:360
-#: ../app/display/gimpdisplayshell-title.c:373
-#: ../app/widgets/gimpactiongroup.c:891
+#: ../app/display/gimpdisplayshell-title.c:357
+#: ../app/display/gimpdisplayshell-title.c:370
+#: ../app/widgets/gimpactiongroup.c:860
 msgid "(none)"
 msgstr "(няма)"
 
-#: ../app/display/gimpdisplayshell-title.c:502
+#: ../app/display/gimpdisplayshell-title.c:499
 msgid " (exported)"
 msgstr "(экспартаваны)"
 
-#: ../app/display/gimpdisplayshell-title.c:504
+#: ../app/display/gimpdisplayshell-title.c:501
 msgid " (overwritten)"
 msgstr "(перапісаны)"
 
-#: ../app/display/gimpdisplayshell-title.c:510
+#: ../app/display/gimpdisplayshell-title.c:507
 msgid " (imported)"
 msgstr "(імпартаваны)"
 
@@ -10729,16 +10740,16 @@ msgstr "Дадатак %s вернуў ПОСЬПЕХ, але ня вернуў 
 msgid "%s plug-In could not open image"
 msgstr "Дадатак %s ня можа адкрыць відарыс"
 
-#: ../app/file/file-open.c:523
+#: ../app/file/file-open.c:526
 msgid "Image doesn't contain any layers"
 msgstr "Відарыс ня ўтрымлівае пластоў"
 
-#: ../app/file/file-open.c:576
+#: ../app/file/file-open.c:579
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Не ўдалося адкрыць файла «%s»: %s"
 
-#: ../app/file/file-open.c:683
+#: ../app/file/file-open.c:686
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10778,11 +10789,11 @@ msgstr "Дэфармаваць клетку каб дэфармаваць від
 msgid "not a GIMP Curves file"
 msgstr "не зьяўляецца файлам GIMP з крывымі"
 
-#: ../app/gegl/gimpcurvesconfig.c:400 ../app/gegl/gimplevelsconfig.c:711
+#: ../app/gegl/gimpcurvesconfig.c:400 ../app/gegl/gimplevelsconfig.c:786
 msgid "parse error"
 msgstr "памылка аналізу"
 
-#: ../app/gegl/gimplevelsconfig.c:664
+#: ../app/gegl/gimplevelsconfig.c:739
 msgid "not a GIMP Levels file"
 msgstr "не зьяўляецца файлам GIMP з роўнямі"
 
@@ -10847,11 +10858,11 @@ msgstr "Асьвятленьне/зацямненьне"
 msgid "Eraser"
 msgstr "Сьцірка"
 
-#: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:52
+#: ../app/paint/gimpheal.c:128 ../app/tools/gimphealtool.c:52
 msgid "Heal"
 msgstr "Гаючы пэндзяль"
 
-#: ../app/paint/gimpheal.c:157
+#: ../app/paint/gimpheal.c:167
 msgid "Healing does not operate on indexed layers."
 msgstr "Гаючы пэндзаль не працуе на індэксаваных пластах."
 
@@ -11065,81 +11076,95 @@ msgstr "Пэндзаль «%s» нельга зьмяняць"
 msgid "Brush '%s' is not a generated brush"
 msgstr "Пэндзаль «%s» не зьяўляецца зґенэраваным пэндзлем"
 
-#: ../app/pdb/gimppdb-utils.c:133
+#: ../app/pdb/gimppdb-utils.c:134
+msgid "Invalid empty paint dynamics name"
+msgstr "Недапушчальная пустая назва дынамікі рысаваньня"
+
+#: ../app/pdb/gimppdb-utils.c:143
+#, c-format
+msgid "Paint dynamics '%s' not found"
+msgstr "Дынаміка рысаваньня «%s» не адшуканая"
+
+#: ../app/pdb/gimppdb-utils.c:148
+#, c-format
+msgid "Paint dynamics '%s' is not editable"
+msgstr "Дынаміку рысаваньня «%s» нельга зьмяняць"
+
+#: ../app/pdb/gimppdb-utils.c:168
 msgid "Invalid empty pattern name"
 msgstr "Недапушчальная пустая назва ўзора"
 
-#: ../app/pdb/gimppdb-utils.c:142
+#: ../app/pdb/gimppdb-utils.c:177
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "Узор «%s» ня знойдзеная"
 
-#: ../app/pdb/gimppdb-utils.c:162
+#: ../app/pdb/gimppdb-utils.c:197
 msgid "Invalid empty gradient name"
 msgstr "Недапушчальная пустая назва ґрадыента"
 
-#: ../app/pdb/gimppdb-utils.c:171
+#: ../app/pdb/gimppdb-utils.c:206
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "Ґрадыент «%s» ня знойдзены"
 
-#: ../app/pdb/gimppdb-utils.c:176
+#: ../app/pdb/gimppdb-utils.c:211
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "Ґрадыент «%s» нельга зьмяняць"
 
-#: ../app/pdb/gimppdb-utils.c:197
+#: ../app/pdb/gimppdb-utils.c:232
 msgid "Invalid empty palette name"
 msgstr "Недапушчальная пустая назва палітры"
 
-#: ../app/pdb/gimppdb-utils.c:206
+#: ../app/pdb/gimppdb-utils.c:241
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "Палітра «%s» ня знойдзеная"
 
-#: ../app/pdb/gimppdb-utils.c:211
+#: ../app/pdb/gimppdb-utils.c:246
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "Палітру «%s» нельга зьмяняць"
 
-#: ../app/pdb/gimppdb-utils.c:231
+#: ../app/pdb/gimppdb-utils.c:266
 msgid "Invalid empty font name"
 msgstr "Недапушчальная пустая назва шрыфта"
 
-#: ../app/pdb/gimppdb-utils.c:241
+#: ../app/pdb/gimppdb-utils.c:276
 #, c-format
 msgid "Font '%s' not found"
 msgstr "Шрыфт «%s» не адшуканы"
 
-#: ../app/pdb/gimppdb-utils.c:260
+#: ../app/pdb/gimppdb-utils.c:295
 msgid "Invalid empty buffer name"
 msgstr "Недапушчальная пустая назва буфэра"
 
-#: ../app/pdb/gimppdb-utils.c:270
+#: ../app/pdb/gimppdb-utils.c:305
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Названы буфэр «%s» ня знойдзены"
 
-#: ../app/pdb/gimppdb-utils.c:289
+#: ../app/pdb/gimppdb-utils.c:324
 msgid "Invalid empty paint method name"
 msgstr "Недапушчальная пустая назва мэтаду рысаваньня"
 
-#: ../app/pdb/gimppdb-utils.c:299
+#: ../app/pdb/gimppdb-utils.c:334
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Мэтад рысаваньня «%s» не існуе"
 
-#: ../app/pdb/gimppdb-utils.c:318
+#: ../app/pdb/gimppdb-utils.c:353
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr "Элемэнт «%s» (%d) нельга ужываць, бо ён ня быў дададзены да відарыса"
 
-#: ../app/pdb/gimppdb-utils.c:328
+#: ../app/pdb/gimppdb-utils.c:363
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr "Элемэнт «%s» (%d) нельга ужываць, бо ён далучаны да іншага відарыса"
 
-#: ../app/pdb/gimppdb-utils.c:357
+#: ../app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -11148,7 +11173,7 @@ msgstr ""
 "Элемэнт «%s» (%d) нельга ужываць, бо ён не зьяўляецца прамым дзіцём дрэва "
 "элемэнтаў"
 
-#: ../app/pdb/gimppdb-utils.c:385
+#: ../app/pdb/gimppdb-utils.c:420
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -11157,52 +11182,52 @@ msgstr ""
 "Элемэнты «%s» (%d) і «%s» (%d) нельга ужываць, бо яны не зьяўляюцца "
 "элемэнтамі аднаго дрэва элемэнтаў"
 
-#: ../app/pdb/gimppdb-utils.c:410
+#: ../app/pdb/gimppdb-utils.c:445
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "Элемэнт «%s» (%d) мусіць ня быць папярэднікам «%s» (%d)"
 
-#: ../app/pdb/gimppdb-utils.c:434
+#: ../app/pdb/gimppdb-utils.c:469
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "Элемэнт «%s» (%d) ужо дададзены да відарыса"
 
-#: ../app/pdb/gimppdb-utils.c:442
+#: ../app/pdb/gimppdb-utils.c:477
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Спроба дадаць элемэнт «%s» (%d) да няправільнага відарыса"
 
-#: ../app/pdb/gimppdb-utils.c:461
+#: ../app/pdb/gimppdb-utils.c:496
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr "Элемэнт «%s» (%d) нельга зьмяняць, бо ягонае зьмесьціва замкнута"
 
-#: ../app/pdb/gimppdb-utils.c:481
+#: ../app/pdb/gimppdb-utils.c:516
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr "Элемэнт «%s» (%d) нельга зьмяняць, бо ён зьяўляецца ґрупавым"
 
-#: ../app/pdb/gimppdb-utils.c:501
+#: ../app/pdb/gimppdb-utils.c:536
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "Элемэнт «%s» (%d) нельга зьмяняць, бо ён зьяўляецца ґрупавым"
 
-#: ../app/pdb/gimppdb-utils.c:522
+#: ../app/pdb/gimppdb-utils.c:557
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr "Пласт «%s» (%d) нельга ужываць, бо ён ня тэкставы"
 
-#: ../app/pdb/gimppdb-utils.c:563
+#: ../app/pdb/gimppdb-utils.c:598
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr "Відарыс «%s» (%d) мае тып «%s», але чакаўся відарыс тыпу «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:586
+#: ../app/pdb/gimppdb-utils.c:621
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
 msgstr "Відарыс «%s» (%d) ужо мае тып «%s»"
 
-#: ../app/pdb/gimppdb-utils.c:614
+#: ../app/pdb/gimppdb-utils.c:649
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Вэктарны аб'ект %d ня ўтрымлівае штрых з ID %d"
@@ -11216,7 +11241,7 @@ msgstr ""
 "Працэдура «%s» была выкліканая з няправільным тыпам парамэтра #%d. Чакаўся "
 "%s, атрыманы %s."
 
-#: ../app/pdb/gimppdbcontext.c:82
+#: ../app/pdb/gimppdbcontext.c:88
 #: ../app/tools/gimpforegroundselectoptions.c:79
 #: ../app/tools/gimpselectionoptions.c:78
 msgid "Smooth edges"
@@ -11227,7 +11252,7 @@ msgstr "Згладзіць краі"
 msgid "Procedure '%s' returned no return values"
 msgstr "Працэдура «%s» ня вернула значэньня"
 
-#: ../app/pdb/gimpprocedure.c:641
+#: ../app/pdb/gimpprocedure.c:639
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -11236,7 +11261,7 @@ msgstr ""
 "Працэдура «%s» вернула няправільны тып зваротнага значэньня «%s» (#%d). "
 "Чакаўся %s, атрыманы %s."
 
-#: ../app/pdb/gimpprocedure.c:653
+#: ../app/pdb/gimpprocedure.c:651
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -11245,7 +11270,7 @@ msgstr ""
 "Працэдура «%s» была выкліканая з няправільным тыпам парамэтра «%s» (#%d). "
 "Чакаўся %s, атрыманы %s."
 
-#: ../app/pdb/gimpprocedure.c:685
+#: ../app/pdb/gimpprocedure.c:683
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -11254,7 +11279,7 @@ msgstr ""
 "Працэдура «%s» вернула няправільны вызначнік парамэтра «%s». Найхутчэй, "
 "дадатак спрабуе працаваць з пластом, якога больш няма."
 
-#: ../app/pdb/gimpprocedure.c:697
+#: ../app/pdb/gimpprocedure.c:695
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11263,7 +11288,7 @@ msgstr ""
 "Працэдура «%s» была выкліканая з няправільным вызначнікам парамэтра «%s». "
 "Найхутчэй, дадатак спрабуе працаваць з пластом, якога больш няма."
 
-#: ../app/pdb/gimpprocedure.c:713
+#: ../app/pdb/gimpprocedure.c:711
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -11272,7 +11297,7 @@ msgstr ""
 "Працэдура «%s» вернула няправільны вызначнік парамэтра «%s». Найхутчэй, "
 "дадатак спрабуе працаваць з відарысам, якога больш няма."
 
-#: ../app/pdb/gimpprocedure.c:725
+#: ../app/pdb/gimpprocedure.c:723
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11281,7 +11306,7 @@ msgstr ""
 "Працэдура «%s» была выкліканая з няправільным вызначнікам парамэтра «%s». "
 "Найхутчэй, дадатак спрабуе працаваць з відарысам, якога больш няма."
 
-#: ../app/pdb/gimpprocedure.c:745
+#: ../app/pdb/gimpprocedure.c:743
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -11290,7 +11315,7 @@ msgstr ""
 "Працэдура «%s» вернула «%s» як зваротнае значэньне «%s» (#%d, тып %s). Гэтае "
 "значэньне выходзіць за межы дыяпазона."
 
-#: ../app/pdb/gimpprocedure.c:758
+#: ../app/pdb/gimpprocedure.c:756
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -13134,7 +13159,7 @@ msgstr "_Пэндзаль"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
 #: ../app/tools/gimpselectionoptions.c:217
-#: ../app/widgets/gimpbrushselect.c:185 ../app/widgets/gimplayertreeview.c:268
+#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
 msgstr "Рэжым: "
 
@@ -14193,7 +14218,7 @@ msgstr "Не ўдалося імпартаваць шляхі з «%s»: %s"
 msgid "_Search:"
 msgstr "_Пошук: "
 
-#: ../app/widgets/gimpactiongroup.c:888
+#: ../app/widgets/gimpactiongroup.c:857
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -14263,10 +14288,6 @@ msgstr "Інтэрвал"
 #: ../app/widgets/gimpbrushfactoryview.c:84
 msgid "Percentage of width of brush"
 msgstr "Працэнт шырыні пэндзля"
-
-#: ../app/widgets/gimpbrushselect.c:172
-msgid "Opacity:"
-msgstr "Непразрысты:"
 
 #: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
 #: ../app/widgets/gimpeditor.c:748
@@ -14852,7 +14873,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: ../app/widgets/gimpdockbook.c:292
+#: ../app/widgets/gimpdockbook.c:295
 msgid "Configure this tab"
 msgstr "Наставіць гэтую ўкладку"
 
@@ -15200,22 +15221,22 @@ msgid "Number of paths:"
 msgstr "Колькасьць шляхоў:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:408
+#: ../app/widgets/gimpimagepropview.c:407
 msgid "None"
 msgstr "Няма"
 
-#: ../app/widgets/gimpimagepropview.c:462
+#: ../app/widgets/gimpimagepropview.c:461
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "піксэлі/%s"
 
-#: ../app/widgets/gimpimagepropview.c:464
+#: ../app/widgets/gimpimagepropview.c:463
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:485
+#: ../app/widgets/gimpimagepropview.c:484
 msgid "colors"
 msgstr "колеры"
 
@@ -15366,7 +15387,7 @@ msgstr "увядзі меткі"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1714
+#: ../app/widgets/gimptagentry.c:1732
 msgid ","
 msgstr ","
 
@@ -15453,19 +15474,19 @@ msgstr "Зьмяніць кернінґ вылучанага тэксту"
 msgid "Change baseline of selected text"
 msgstr "Зьмяніць базавую лінію вылучанага тэксту"
 
-#: ../app/widgets/gimptextstyleeditor.c:325
+#: ../app/widgets/gimptextstyleeditor.c:328
 msgid "Bold"
 msgstr "Тоўсты"
 
-#: ../app/widgets/gimptextstyleeditor.c:328
+#: ../app/widgets/gimptextstyleeditor.c:331
 msgid "Italic"
 msgstr "Курсіўны"
 
-#: ../app/widgets/gimptextstyleeditor.c:331
+#: ../app/widgets/gimptextstyleeditor.c:334
 msgid "Underline"
 msgstr "Падкрэсьлены"
 
-#: ../app/widgets/gimptextstyleeditor.c:334
+#: ../app/widgets/gimptextstyleeditor.c:337
 msgid "Strikethrough"
 msgstr "Перакрэсьлены"
 
@@ -15878,3 +15899,797 @@ msgstr "Стварэньне відарысаў і праўленьне фата
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
 msgstr "Рэдактар відарысаў"
+
+#~ msgid "Opacity:"
+#~ msgstr "Непразрысты:"
+
+#~ msgctxt "tool-preset-action"
+#~ msgid "_Delete Tool Preset"
+#~ msgstr "_Выдаліць набор"
+
+#~ msgid "Set Item Exclusive Linked"
+#~ msgstr "Зрабіць элемэнт адзіна злучаным"
+
+#~ msgid "Message repeated %d times."
+#~ msgstr "Паведамленьне паўтарылася %d разоў."
+
+#~ msgctxt "command"
+#~ msgid "Flip"
+#~ msgstr "Перакульнік"
+
+#~ msgctxt "command"
+#~ msgid "Perspective"
+#~ msgstr "Пэрспэктыва"
+
+#~ msgctxt "command"
+#~ msgid "Rotate"
+#~ msgstr "Павернуць"
+
+#~ msgctxt "command"
+#~ msgid "Scale"
+#~ msgstr "Памер"
+
+#~ msgctxt "command"
+#~ msgid "Shear"
+#~ msgstr "Нахіл"
+
+#~ msgid "Fill from first point"
+#~ msgstr "Запаўняць ад першага пункту"
+
+#~ msgid "Factor"
+#~ msgstr "Множнік"
+
+#~ msgid "Text box resize mode"
+#~ msgstr "Рэжым зьмяненьня вымераў рамкі тэксту"
+
+#~ msgid "Preview:"
+#~ msgstr "Агляд:"
+
+#~ msgctxt "transform-preview-type"
+#~ msgid "Outline"
+#~ msgstr "Абрыс"
+
+#~ msgctxt "transform-preview-type"
+#~ msgid "Grid"
+#~ msgstr "Сетка"
+
+#~ msgctxt "transform-preview-type"
+#~ msgid "Image"
+#~ msgstr "Відарыс"
+
+#~ msgctxt "transform-preview-type"
+#~ msgid "Image + Grid"
+#~ msgstr "Відарыс + сетка"
+
+#~ msgid "Radius:"
+#~ msgstr "_Радыюс:"
+
+#~ msgid "Hardness:"
+#~ msgstr "Цьвёрдасьць:"
+
+#~ msgid "Aspect ratio:"
+#~ msgstr "Прапорцыі:"
+
+#~ msgid "Spacing:"
+#~ msgstr "Інтэрвал:"
+
+#~ msgid "Use a running GIMP only, never start a new one"
+#~ msgstr "Заўжды выкарыстоўваць працоўны GIMP, ніколі не запускаць новы"
+
+#~ msgid "Only check if GIMP is running, then quit"
+#~ msgstr "Спраўдзіць, ці ўжо працуе GIMP, і выйсьці"
+
+#~ msgid "Print X window ID of GIMP toolbox window, then quit"
+#~ msgstr "Вывесьці вызначнік вакна панэлі інструмэнтаў і выйсьці"
+
+#~ msgid "Start GIMP without showing the startup window"
+#~ msgstr "Запускаць GIMP не паказваючы пачатковае вакно"
+
+#~ msgid "Could not connect to GIMP."
+#~ msgstr "Немагчыма далучыцца да GIMP."
+
+#~ msgid "Make sure that the Toolbox is visible!"
+#~ msgstr "Пераканайся, што панэль інструмэнтаў бачная!"
+
+#~ msgid "Couldn't start '%s': %s"
+#~ msgstr "Немагчыма выканаць «%s»: %s"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "_Save Options To"
+#~ msgstr "_Захаваць выборы ў"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "_Restore Options From"
+#~ msgstr "_Аднавіць выборы з"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "Re_name Saved Options"
+#~ msgstr "_Пераназваць захаваныя выборы"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "_Delete Saved Options"
+#~ msgstr "_Выдаліць захаваныя выборы"
+
+#~ msgctxt "tool-options-action"
+#~ msgid "_New Entry..."
+#~ msgstr "_Стварыць запіс…"
+
+#~ msgid "Save Tool Options"
+#~ msgstr "Захаваньне выбораў інструмэнта"
+
+#~ msgid "Enter a name for the saved options"
+#~ msgstr "Увядзі назву для выбораў, якія захоўваеш"
+
+#~ msgid "Saved Options"
+#~ msgstr "Захаваныя выборы"
+
+#~ msgid "Rename Saved Tool Options"
+#~ msgstr "Пераназваць захаваныя выборы інструмэнта"
+
+#~ msgid "Enter a new name for the saved options"
+#~ msgstr "Увядзі новую назву для выбораў, якія захоўваеш"
+
+#~ msgid "Coefficient computation"
+#~ msgstr "Разльік каэфіцыенту"
+
+#~ msgid "Save options to..."
+#~ msgstr "Захаваць выборы ў…"
+
+#~ msgid "Restore options from..."
+#~ msgstr "Аднавіць выборы з…"
+
+#~ msgid "Delete saved options..."
+#~ msgstr "Выдаліць захаваныя выборы…"
+
+#~ msgid "Error saving tool options presets: %s"
+#~ msgstr "Памылка падчас запісу парамэтраў інструмэнта: %s"
+
+#~ msgid "Instant update"
+#~ msgstr "Пастаяннае абнаўленьне"
+
+#~ msgid ""
+#~ "Install a private colormap; might be useful on 8-bit (256 colors) "
+#~ "displays."
+#~ msgstr ""
+#~ "Усталяваць прыватную мапу колераў; можа быць карысным для 8-бітавых (256-"
+#~ "колерных) экранаў."
+
+#~ msgid ""
+#~ "Generally only a concern for 8-bit displays, this sets the minimum number "
+#~ "of system colors allocated for GIMP."
+#~ msgstr ""
+#~ "Звычайна мае дачыненьне толькі да 8-бітавых экранаў, і вызначае найменшую "
+#~ "колькасьць сыстэмных колераў, вылучаных для GIMP."
+
+#~ msgid "Brush Scale"
+#~ msgstr "Маштаб пэндзля"
+
+#~ msgid "Rate:"
+#~ msgstr "Часьціня:"
+
+#~ msgid "Gradient:"
+#~ msgstr "Ґрадыент:"
+
+#~ msgid "Threshold:"
+#~ msgstr "Парог:"
+
+#~ msgid "Tilt:"
+#~ msgstr "Нахіл:"
+
+#~ msgid "Type"
+#~ msgstr "Тып"
+
+#~ msgid "Brush:"
+#~ msgstr "Пэндзаль:"
+
+#~ msgid "Scale:"
+#~ msgstr "Памер:"
+
+#~ msgid "Aspect:"
+#~ msgstr "Стасунак:"
+
+#~ msgid "Length:"
+#~ msgstr "Даўжыня:"
+
+#~ msgid "Use color from gradient"
+#~ msgstr "Ужыць колер з ґрадыенту"
+
+#~ msgid "Font:"
+#~ msgstr "Шрыфт:"
+
+#~ msgctxt "file-action"
+#~ msgid "Save this image with a different name, but keep its current name"
+#~ msgstr ""
+#~ "Захаваць відарыс зь іншай назвай, але пакінуць ягоную цяперашняю назву"
+
+#~ msgctxt "layers-action"
+#~ msgid "Te_xt to Selection"
+#~ msgstr "_Тэкст у вылучэньне"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Text to Selection"
+#~ msgstr "_Тэкст у вылучэньне"
+
+#~ msgctxt "layers-action"
+#~ msgid "Replace the selection with the text layer's outline"
+#~ msgstr "Замяніць вылучэньне абрысам тэкставага пласта"
+
+#~ msgctxt "layers-action"
+#~ msgid "Add the text layer's outline to the current selection"
+#~ msgstr "Дадаць контур тэкставага пласта да бягучага вылучэньня"
+
+#~ msgctxt "layers-action"
+#~ msgid "Subtract the text layer's outline from the current selection"
+#~ msgstr "Адняць контур тэкставага пласта зь бягучага вылучэньня"
+
+#~ msgctxt "layers-action"
+#~ msgid "Intersect the text layer's outline with the current selection"
+#~ msgstr "Перасячы контур тэкставага пласта зь бягучым вылучэньнем"
+
+#~ msgid "Reset Tool Options"
+#~ msgstr "Вернуць выборы інструмэнта"
+
+#~ msgctxt "undo-type"
+#~ msgid "Reorder layer"
+#~ msgstr "Перапарадкаваць пласты"
+
+#~ msgctxt "undo-type"
+#~ msgid "Reorder channel"
+#~ msgstr "Перапарадкаваць канал"
+
+#~ msgid "Paste"
+#~ msgstr "Уставіць"
+
+#~ msgid "Cut"
+#~ msgstr "Выразаць"
+
+#~ msgctxt "command"
+#~ msgid "Rectangle Select"
+#~ msgstr "Вылучальнік прастакутнікаў"
+
+#~ msgctxt "command"
+#~ msgid "Ellipse Select"
+#~ msgstr "Вылучальнік эліпсаў"
+
+#~ msgctxt "command"
+#~ msgid "Bucket Fill"
+#~ msgstr "Вядро"
+
+#~ msgid "Pressure:"
+#~ msgstr "Націсканьне:"
+
+#~ msgid "Empty Channel"
+#~ msgstr "Пусты канал"
+
+#~ msgid "Pixel dimensions:"
+#~ msgstr "Вымеры піксэля:"
+
+#~ msgid "Empty Layer"
+#~ msgstr "Пусты пласт"
+
+#~ msgid "Reorder path"
+#~ msgstr "Перапарадкаваць шлях"
+
+#~ msgid "Empty Path"
+#~ msgstr "Пусты шлях"
+
+#~ msgctxt "layers-action"
+#~ msgid "_New Group Layer..."
+#~ msgstr "_Стварыць ґрупавы пласт…"
+
+#~ msgctxt "layers-action"
+#~ msgid "Create a new group layer and add it to the image"
+#~ msgstr "Стварыць новы ґрупавы пласт і дадаць яго да відарыса"
+
+#~ msgid ""
+#~ "The window type hint that is set on the toolbox. This may affect how your "
+#~ "window manager decorates and handles the toolbox window."
+#~ msgstr ""
+#~ "Намінка тыпу вакна для панэлі інструмэнтаў. Можа паўплываць на тое, як "
+#~ "кіраўнік вакон аздабляе панэль інструмэнтаў і абыходзіцца зь ёй."
+
+#~ msgid "Group Layer"
+#~ msgstr "Гркпавы пласт"
+
+#~ msgid "Scale Group Layer"
+#~ msgstr "Зьмяніць памер ґрупавога пласта"
+
+#~ msgid "Resize Group Layer"
+#~ msgstr "Зьмяніць вымеры ґрупавога пласта"
+
+#~ msgid "Flip Group Layer"
+#~ msgstr "Перакуліць ґрупавы пласт"
+
+#~ msgid "Rotate Group Layer"
+#~ msgstr "Павернуць ґрупавы пласт"
+
+#~ msgid "Transform Group Layer"
+#~ msgstr "Ператварыць ґрупавы пласт"
+
+#~ msgid "Hint for other _docks:"
+#~ msgstr "Намінка для _іншых докаў:"
+
+#~ msgid "tool|_Zoom"
+#~ msgstr "_Маштаб"
+
+#~ msgid "Direction:"
+#~ msgstr "Напрамак:"
+
+#~ msgid "You can drop dockable dialogs here"
+#~ msgstr "Док-панэлі можна перанесьці сюды"
+
+#~ msgid "Raise this tool Raise this tool to the top"
+#~ msgstr "Узьняць гэты інструмэнт на вяршыню"
+
+#~ msgid "Lower this tool Lower this tool to the bottom"
+#~ msgstr "Апусьціць гэты інструмэнт на спод"
+
+#~ msgid "New brush"
+#~ msgstr "Новы пэндзаль"
+
+#~ msgid "Sample Merged"
+#~ msgstr "Аб'яднаная проба"
+
+#~ msgid "T_ools"
+#~ msgstr "_Інструмэнты"
+
+#~ msgid "Open the tools dialog"
+#~ msgstr "Адкрыць дыялёґ інструмэнтаў"
+
+#~ msgid "Remove dangling entries"
+#~ msgstr "Выдаліць састарэлыя запісы"
+
+#~ msgid "Copy the selected region to a named buffer"
+#~ msgstr "Капіяваць вылучаную вобласьць у названы буфэр"
+
+#~ msgid "Fill with P_attern"
+#~ msgstr "Запоўніць _узорам"
+
+#~ msgid "Save error log"
+#~ msgstr "Захаваць запісы аб памылках"
+
+#~ msgid "Save selection"
+#~ msgstr "Захаваць вылучаную вобласьць"
+
+#~ msgid "Save as _Template..."
+#~ msgstr "Захаваць як _шаблён…"
+
+#~ msgid "Rescan font list"
+#~ msgstr "Перасканаваць сьпіс шрыфтоў"
+
+#~ msgid "Set Opacity"
+#~ msgstr "Задаць непразрыстасьць"
+
+#~ msgid "Delete color"
+#~ msgstr "Выдаліць колер"
+
+#~ msgid "New palette"
+#~ msgstr "Новая палітра"
+
+#~ msgid "New pattern"
+#~ msgstr "Новы ўзор"
+
+#~ msgid "select|_All"
+#~ msgstr "Вылучыць _усё"
+
+#~ msgid "select|_None"
+#~ msgstr "_Зьняць вылучэньне"
+
+#~ msgid "Edit the selected template"
+#~ msgstr "Правіць выбраны шаблён"
+
+#~ msgid "Delete the selected template"
+#~ msgstr "Выдаліць выбраны буфэр"
+
+#~ msgid "R_aise Tool"
+#~ msgstr "_Узьняць інструмэнт"
+
+#~ msgid "Raise tool"
+#~ msgstr "Узьняць інструмэнт"
+
+#~ msgid "Ra_ise to Top"
+#~ msgstr "_Узьняць угору"
+
+#~ msgid "Raise tool to top"
+#~ msgstr "Узьняць інструмэнт угору"
+
+#~ msgid "L_ower Tool"
+#~ msgstr "_Апусьціць інструмэнт"
+
+#~ msgid "Lo_wer to Bottom"
+#~ msgstr "_Апусьціць долу"
+
+#~ msgid "_Reset Order & Visibility"
+#~ msgstr "_Вернуць парадак і бачнасьць"
+
+#~ msgid "_Show in Toolbox"
+#~ msgstr "_Паказваць у панэлі інструмэнтаў"
+
+#~ msgid "New path..."
+#~ msgstr "Стварыць шлях…"
+
+#~ msgid "_New Path"
+#~ msgstr "_Стварыць шлях"
+
+#~ msgid "Add"
+#~ msgstr "Дадаць"
+
+#~ msgid "Intersect"
+#~ msgstr "Перасячы"
+
+#~ msgid "When enabled, GIMP will show mnemonics in menus."
+#~ msgstr "Калі задзейнічана, GIMP будзе паказваць мнэмонікі ў мэню."
+
+#~ msgid ""
+#~ "When enabled, dock windows (the toolbox and palettes) are set to be "
+#~ "transient to the active image window. Most window managers will keep the "
+#~ "dock windows above the image window then, but it may also have other "
+#~ "effects."
+#~ msgstr ""
+#~ "Калі задзейнічана, докі (панэль інструмэнтаў і палітры) становяцца "
+#~ "часовымі адносна вакна актыўнага відарыса. Бальшыня кіраўнікоў вакон "
+#~ "будуць трымаць такія вокны па-над вакном відарыса, але могуць быць і "
+#~ "іншыя эфэкты."
+
+#~ msgid ""
+#~ "Sets the external web browser to be used.  This can be an absolute path "
+#~ "or the name of an executable to search for in the user's PATH. If the "
+#~ "command contains '%s' it will be replaced with the URL, else the URL will "
+#~ "be appended to the command with a space separating the two."
+#~ msgstr ""
+#~ "Вызначае які вонкавы гартач выкарыстоўваць. Гэта можа быць абсалютны "
+#~ "шлях, або назва праґрамы ў карыстальнікавым PATH. Калі каманда ўтрымлівае "
+#~ "«%s», то яно будзе заменена на URL, іначай URL будзе дададзены да загаду "
+#~ "праз прабел."
+
+#~ msgid "Remove floating selection"
+#~ msgstr "Выдаліць плаваючае вылучэньне"
+
+#~ msgid "Reposition layer"
+#~ msgstr "Пераставіць пласт"
+
+#~ msgid "Reposition channel"
+#~ msgstr "Пераставіць канал"
+
+#~ msgid "Reposition path"
+#~ msgstr "Пераставіць шлях"
+
+#~ msgid "Rigor floating selection"
+#~ msgstr "Замацаваць плаваючае вылучэньне"
+
+#~ msgid "Relax floating selection"
+#~ msgstr "Вызваліць плаваючае вылучэньне"
+
+#~ msgid "plural|percent"
+#~ msgstr "адсоткі"
+
+#~ msgid "Show menu _mnemonics (access keys)"
+#~ msgstr "Паказваць _мнэмонікі мэню (клявішы доступу)"
+
+#~ msgid "Web Browser"
+#~ msgstr "Гартач Сеціва"
+
+#~ msgid "_Web browser to use:"
+#~ msgstr "_Ужываць гартач Сеціва:"
+
+#~ msgid "Toolbox and other docks are transient to the active image window"
+#~ msgstr "Докі часовыя адносна актыўнага вакна відарыса"
+
+#~ msgid "quality|Low"
+#~ msgstr "Нізкая"
+
+#~ msgid "quality|High"
+#~ msgstr "Высокая"
+
+#~ msgid "Do_n't Save"
+#~ msgstr "_Не захоўваць"
+
+#~ msgid "RGB-empty"
+#~ msgstr "RGB-пусты"
+
+#~ msgid "grayscale-empty"
+#~ msgstr "шэры-пусты"
+
+#~ msgid "grayscale"
+#~ msgstr "шэры"
+
+#~ msgid "indexed-empty"
+#~ msgstr "індэксаваны-пусты"
+
+#~ msgid "indexed"
+#~ msgstr "індэксаваны"
+
+#~ msgid "Cannot rigor this layer because it is not a floating selection."
+#~ msgstr ""
+#~ "Немагчыма замацаваць гэты пласт, бо ён не зьяўляецца плаваючым "
+#~ "вылучэньнем."
+
+#~ msgid "Cannot relax this layer because it is not a floating selection."
+#~ msgstr ""
+#~ "Немагчыма вызваліць гэты пласт, бо ён не зьяўляецца плаваючым вылучэньнем."
+
+#~ msgid ""
+#~ "If available, hints from the font are used but you may prefer to always "
+#~ "use the automatic hinter"
+#~ msgstr ""
+#~ "Калі дасяжныя, выкарыстоўваюцца намінкі з шрыфта, але ты можаш аддаць "
+#~ "перавагу аўтаматычным намінкам"
+
+#~ msgid "Force auto-hinter"
+#~ msgstr "Прымусовыя аўтанамінкі"
+
+#~ msgid "Ne_w"
+#~ msgstr "_Стварыць"
+
+#~ msgid "Channel is already on top."
+#~ msgstr "Канал ужо на самым версе."
+
+#~ msgid "Channel is already on the bottom."
+#~ msgstr "Канал ужо на сподзе."
+
+#~ msgid "Path is already on top."
+#~ msgstr "Шлях ужо на самым версе."
+
+#~ msgid "Path is already on the bottom."
+#~ msgstr "Шлях ужо на сподзе."
+
+#~ msgid "Cannot add layer mask to layer which is not part of an image."
+#~ msgstr ""
+#~ "Немагчыма дадаць маску да пласта, які не зьяўляецца часткай відарыса."
+
+#~ msgid "Reading palette '%s': Missing GREEN component in line %d."
+#~ msgstr ""
+#~ "Чытаньне файла з палітрай «%s»: адсутнічае ЗЯЛЁНЫ складнік у радку %d."
+
+#~ msgid ""
+#~ "PDB calling error:\n"
+#~ "Procedure '%s' not found"
+#~ msgstr ""
+#~ "Няўдалы выклік PDB:\n"
+#~ "Працэдура '%s' ня знойдзеная"
+
+#~ msgid ""
+#~ "PDB calling error for procedure '%s':\n"
+#~ "Argument #%d type mismatch (expected %s, got %s)"
+#~ msgstr ""
+#~ "Памылка выкліку працэдуры PDB '%s':\n"
+#~ "Неадпаведны тып парамэтру #%d (замест %s атрыманы %s)"
+
+#~ msgid "Copy the selected region to the clipboard"
+#~ msgstr "Капіяваць вылучаную вобласьць у буфэр абмену"
+
+#~ msgid "Show the tip of the day"
+#~ msgstr "Паказаць сёньняшнюю параду"
+
+#~ msgid ""
+#~ "When enabled, the online user manual will be used by the help system. "
+#~ "Otherwise the locally installed copy is used."
+#~ msgstr ""
+#~ "Калі задзейнічана, сеціўнае кіраўніцтва карыстальніка  будзе выкарыстана "
+#~ "сыстэмай дапамогі. У іншым выпадку — лякальна ўсталяваная копія."
+
+#~ msgid "Dynamics sensitivity"
+#~ msgstr "Дынамічная ўспрымальнасьць"
+
+#~ msgid "Help browser not found"
+#~ msgstr "Гартач дапамогі не адшуканы."
+
+#~ msgid "Could not find GIMP help browser."
+#~ msgstr "Немагчыма знайсьці гартач дапамогі GIMP."
+
+#~ msgid "Use _web browser instead"
+#~ msgstr "Ужываць гартач Web замест."
+
+#~ msgid "Add Settings to _Favorites"
+#~ msgstr "Дадаць наладкі ў _Абранае"
+
+#~ msgid "Manage Loadable Modules"
+#~ msgstr "Кіраваньне модулямі, якія могуць загружацца"
+
+#~ msgid "Autoload"
+#~ msgstr "Аўтазагрузка"
+
+#~ msgid "Module Path"
+#~ msgstr "Шлях модуля"
+
+#~ msgid "<No modules>"
+#~ msgstr "<Няма модуляў>"
+
+#~ msgid "On disk"
+#~ msgstr "На дыску"
+
+#~ msgid "Load"
+#~ msgstr "Загрузіць"
+
+#~ msgid "Query"
+#~ msgstr "Запытаць"
+
+#~ msgid "Unload"
+#~ msgstr "Выгрузіць"
+
+#~ msgid "Purpose:"
+#~ msgstr "Мэта:"
+
+#~ msgid "Last error:"
+#~ msgstr "Апошняя памылка:"
+
+#~ msgid "Available types:"
+#~ msgstr "Наяўныя тыпы:"
+
+#~ msgid "Linear"
+#~ msgstr "Лінейна"
+
+#~ msgid "_Dialogs"
+#~ msgstr "_Дыялёґі"
+
+#~ msgid "Create New Doc_k"
+#~ msgstr "_Стварыць новую панэль"
+
+#~ msgid "_Layers, Channels & Paths"
+#~ msgstr "_Пласты, каналы й шляхі"
+
+#~ msgid "Open a Layers, Channels & Paths dock"
+#~ msgstr "Адкрыць панэль пластоў, каналаў і шляхоў"
+
+#~ msgid "_Brushes, Patterns & Gradients"
+#~ msgstr "_Пэндзлі, узоры й ґрадыенты"
+
+#~ msgid "Open a Brushes, Patterns & Gradients dock"
+#~ msgstr "Адкрыць панэль пэндзляў, ґрадыентаў і ўзораў"
+
+#~ msgid "_Misc. Stuff"
+#~ msgstr "_Рознае"
+
+#~ msgid "Open a dock containing miscellaneous dialogs"
+#~ msgstr "Адкрыць панэль з рознымі дыялёґамі"
+
+#~ msgid "Remove all entries from the document history?"
+#~ msgstr "Ці прыбраць усе запісы з гісторыі дакумэнта?"
+
+#~ msgid "Paste as New"
+#~ msgstr "Уставіць як _новы"
+
+#~ msgid "Acq_uire"
+#~ msgstr "_Здабыць"
+
+#~ msgid "Toolbox Menu"
+#~ msgstr "Мэню інструмэнтаў"
+
+#~ msgid "_Xtns"
+#~ msgstr "_Пашырэньні"
+
+#~ msgid "Fit Image _to Window"
+#~ msgstr "_Відарыс да шырыні вакна"
+
+#~ msgid "Enable displaying a handy GIMP tip on startup."
+#~ msgstr "Задзейнічаць адлюстроўваньне карысных парад на пачатку працы."
+
+#~ msgid "FS rigor"
+#~ msgstr "Замацаваньне ПВ"
+
+#~ msgid "FS relax"
+#~ msgstr "Вызваленьне ПВ"
+
+#~ msgid "EEK: can't undo"
+#~ msgstr "Немагчыма адмяніць"
+
+#~ msgid "command|Rectangle Select"
+#~ msgstr "Вылучыць прастакутнік"
+
+#~ msgid "command|Ellipse Select"
+#~ msgstr "Вылучыць эліпс"
+
+#~ msgid "command|Fuzzy Select"
+#~ msgstr "Недакладны вылучальнік"
+
+#~ msgid "command|Select by Color"
+#~ msgstr "Вылучыць колер"
+
+#~ msgid "command|Bucket Fill"
+#~ msgstr "Вядро"
+
+#~ msgid "command|Flip"
+#~ msgstr "Перакуленьне"
+
+#~ msgid "command|Rotate"
+#~ msgstr "Паварот"
+
+#~ msgid "command|Crop Image"
+#~ msgstr "Абрэзаць відарыс"
+
+#~ msgid "_Desaturate"
+#~ msgstr "_Абясколерыць"
+
+#~ msgid "dialog-title|Scale Image"
+#~ msgstr "Зьмяненьне памеру відарыса"
+
+#~ msgid "Save document _history on exit"
+#~ msgstr "Захоўваць _гісторыю дакумэнтаў пры выйсьці"
+
+#~ msgid "Show tips on _startup"
+#~ msgstr "_Паказваць парады на пачатку працы"
+
+#~ msgid "Show tip next time GIMP starts"
+#~ msgstr "Паказаць парады падчас наступнага запуску GIMP"
+
+#~ msgid "Other..."
+#~ msgstr "Іншыя..."
+
+#~ msgid "Left justified"
+#~ msgstr "Па левы бок"
+
+#~ msgid "Right justified"
+#~ msgstr "Па правы бок"
+
+#~ msgid "Centered"
+#~ msgstr "Цэнтраваны"
+
+#~ msgid "Filled"
+#~ msgstr "Запоўнены"
+
+#~ msgid "Save Curves"
+#~ msgstr "Захаваць крывыя"
+
+#~ msgid "Mode"
+#~ msgstr "Рэжым"
+
+#~ msgid "command|Foreground Select"
+#~ msgstr "Вылучальнік пярэдняга пляну"
+
+#~ msgid "command|Free Select"
+#~ msgstr "Свабодны вылучальнік"
+
+#~ msgid "Quick Load"
+#~ msgstr "Хутка загрузіць"
+
+#~ msgid "Quick Save"
+#~ msgstr "Хутка захаваць"
+
+#~ msgid "Load Levels"
+#~ msgstr "Загрузіць узроўні"
+
+#~ msgid "Load levels settings from file"
+#~ msgstr "Прачытаць настаўленьні узроўняў з файла"
+
+#~ msgid "Save Levels"
+#~ msgstr "Захаваць узроўні"
+
+#~ msgid "tool|Move"
+#~ msgstr "Перасоўнік"
+
+#~ msgid "command|Perspective"
+#~ msgstr "Пэрспэктыва"
+
+#~ msgid "command|Scale"
+#~ msgstr "Зьмяненьне памеру"
+
+#~ msgid "command|Shear"
+#~ msgstr "Нахіл"
+
+#~ msgid "Close all Tabs?"
+#~ msgstr "Ці закрыць усе ўкладкі?"
+
+#~ msgid "Close all Tabs"
+#~ msgstr "Закрыць усе ўкладкі"
+
+#~ msgid "Close all tabs?"
+#~ msgstr "Ці закрыць усе ўкладкі?"
+
+#~ msgid ""
+#~ "This window has %d tab open. Closing the window will also close all its "
+#~ "tabs."
+#~ msgid_plural ""
+#~ "This window has %d tabs open. Closing the window will also close all its "
+#~ "tabs."
+#~ msgstr[0] ""
+#~ "Вакно мае %d адкрытую ўкладку. Пры закрыцьці вакна ўсе ягоныя ўкладкі "
+#~ "будуць закрытыя таксама."
+#~ msgstr[1] ""
+#~ "Вакно мае %d адкрытыя ўкладкі. Пры закрыцьці вакна ўсе ягоныя ўкладкі "
+#~ "будуць закрытыя таксама."
+#~ msgstr[2] ""
+#~ "Вакно мае %d адкрытых укладак. Пры закрыцьці вакна ўсе ягоныя ўкладкі "
+#~ "будуць закрытыя таксама."
+
+#~ msgid "Add Sample_Point"
+#~ msgstr "_Дадаць пункт-прыклад"

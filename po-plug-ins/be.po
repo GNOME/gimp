@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-16 13:46+0300\n"
-"PO-Revision-Date: 2011-10-16 13:46+0300\n"
+"POT-Creation-Date: 2011-12-06 01:00+0300\n"
+"PO-Revision-Date: 2011-12-02 22:16+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -279,32 +279,24 @@ msgstr "Мадэль колераў _HSL"
 
 #: ../plug-ins/common/align-layers.c:128
 msgid "Align all visible layers of the image"
-msgstr "Ураўнаваць усе бачныя пласты відарысы"
+msgstr "Раўнаваць усе бачныя пласты відарысы"
 
 #: ../plug-ins/common/align-layers.c:133
 msgid "Align Visi_ble Layers..."
-msgstr "_Выраўнаваць бачныя пласты…"
+msgstr "_Раўнаваць бачныя пласты…"
 
 #: ../plug-ins/common/align-layers.c:173
 msgid "There are not enough layers to align."
-msgstr "Не стае пластоў для выраўноўваньня."
+msgstr "Не стае пластоў для раўнаваньня."
 
 #: ../plug-ins/common/align-layers.c:400
 msgid "Align Visible Layers"
-msgstr "Ураўнаваць бачныя пласты"
+msgstr "Раўнаваць бачныя пласты"
 
-#. if and how to center the image on the page
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
-#: ../plug-ins/common/cml-explorer.c:166 ../plug-ins/common/file-ps.c:3251
-#: ../plug-ins/common/file-ps.c:3263 ../plug-ins/common/file-psp.c:647
-#: ../plug-ins/file-fits/fits.c:1044
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
-#: ../plug-ins/lighting/lighting-ui.c:418
-#: ../plug-ins/print/print-page-layout.c:461
+msgctxt "align-style"
 msgid "None"
-msgstr "Няма"
+msgstr "Нічога"
 
 #: ../plug-ins/common/align-layers.c:425 ../plug-ins/common/align-layers.c:456
 msgid "Collect"
@@ -312,15 +304,15 @@ msgstr "Сабраць"
 
 #: ../plug-ins/common/align-layers.c:426
 msgid "Fill (left to right)"
-msgstr "Пераварот (зьлева направа)"
+msgstr "Запоўніць (зьлева направа)"
 
 #: ../plug-ins/common/align-layers.c:427
 msgid "Fill (right to left)"
-msgstr "Пераварот (справа налева)"
+msgstr "Запоўніць (справа налева)"
 
 #: ../plug-ins/common/align-layers.c:428 ../plug-ins/common/align-layers.c:459
 msgid "Snap to grid"
-msgstr "Прыцягвацца да сеткі"
+msgstr "Прыцягваць да сеткі"
 
 #: ../plug-ins/common/align-layers.c:437
 msgid "_Horizontal style:"
@@ -608,7 +600,7 @@ msgstr "Па _вэртыкалі"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:727 ../plug-ins/common/file-cel.c:363
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:363
 #: ../plug-ins/common/file-cel.c:366 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
@@ -621,7 +613,7 @@ msgstr "Па _вэртыкалі"
 #: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
 #: ../plug-ins/file-faxg3/faxg3.c:474 ../plug-ins/file-fits/fits.c:530
 #: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
-#: ../plug-ins/file-psd/psd-image-res-load.c:997
+#: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
 #: ../plug-ins/gfig/gfig-dialog.c:1306
 #: ../plug-ins/gimpressionist/general.c:139
@@ -1029,8 +1021,8 @@ msgstr "Загрузіць настройкі мікшэра каналаў"
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1037
 #: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
-#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:334
-#: ../plug-ins/common/file-svg.c:732 ../plug-ins/common/file-tga.c:442
+#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
+#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
 #: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:737
 #: ../plug-ins/common/file-xmc.c:663 ../plug-ins/common/file-xmc.c:848
 #: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2010
@@ -1116,7 +1108,7 @@ msgstr "_Памер:"
 
 #: ../plug-ins/common/checkerboard.c:422
 msgid "_Psychobilly"
-msgstr ""
+msgstr "_Сайкабілі"
 
 #: ../plug-ins/common/cml-explorer.c:129
 msgid "Keep image's values"
@@ -1169,6 +1161,11 @@ msgstr "Вытворная ад sin^p"
 #: ../plug-ins/common/cml-explorer.c:141
 msgid "sin^p, stepped"
 msgstr "sin^p, прыступкавая"
+
+#: ../plug-ins/common/cml-explorer.c:166
+msgctxt "cml-composition"
+msgid "None"
+msgstr "Нічога"
 
 #: ../plug-ins/common/cml-explorer.c:167
 msgid "Max (x, -)"
@@ -1948,7 +1945,7 @@ msgstr "Складаньне"
 msgid "Compose Channels"
 msgstr "Скласьці каналы"
 
-#: ../plug-ins/common/compose.c:1521 ../plug-ins/common/decompose.c:1526
+#: ../plug-ins/common/compose.c:1521 ../plug-ins/common/decompose.c:1528
 msgid "Color _model:"
 msgstr "_Мадэль колераў:"
 
@@ -2532,23 +2529,23 @@ msgstr "_Раскласьці…"
 msgid "Decomposing"
 msgstr "Раскладаньне"
 
-#: ../plug-ins/common/decompose.c:1491
+#: ../plug-ins/common/decompose.c:1493
 msgid "Decompose"
 msgstr "Раскладаньне"
 
-#: ../plug-ins/common/decompose.c:1514
+#: ../plug-ins/common/decompose.c:1516
 msgid "Extract Channels"
 msgstr "Выняць каналы"
 
-#: ../plug-ins/common/decompose.c:1561
+#: ../plug-ins/common/decompose.c:1563
 msgid "_Decompose to layers"
 msgstr "_Раскласьці на пласты"
 
-#: ../plug-ins/common/decompose.c:1572
+#: ../plug-ins/common/decompose.c:1574
 msgid "_Foreground as registration color"
 msgstr "_Колер рысаваньня — колер прывядзеньня"
 
-#: ../plug-ins/common/decompose.c:1573
+#: ../plug-ins/common/decompose.c:1575
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -3374,7 +3371,7 @@ msgstr "Пасьлядоўнасьць пэндзляў"
 
 #: ../plug-ins/common/file-gih.c:874
 msgid "Spacing (percent):"
-msgstr "Прагал (у працэнтах):"
+msgstr "Прагал (у адсотках):"
 
 #: ../plug-ins/common/file-gih.c:941
 msgid "Pixels"
@@ -3414,7 +3411,7 @@ msgstr "Вымер:"
 
 #: ../plug-ins/common/file-gih.c:1092
 msgid "Ranks:"
-msgstr ""
+msgstr "Рады:"
 
 #: ../plug-ins/common/file-header.c:77
 msgid "C source code header"
@@ -3817,6 +3814,8 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Няўдалы запіс у файл «%s»: %s"
 
 #: ../plug-ins/common/file-pdf-load.c:297
+#: ../plug-ins/common/file-pdf-save.c:270
+#: ../plug-ins/common/file-pdf-save.c:282
 msgid "Portable Document Format"
 msgstr "Фармат пераносных дакумэнтаў"
 
@@ -3855,6 +3854,82 @@ msgstr "_Вышыня (у піксэлях):"
 #: ../plug-ins/common/file-pdf-load.c:1146
 msgid "_Resolution:"
 msgstr "_Разрозьненьне:"
+
+#: ../plug-ins/common/file-pdf-load.c:1426
+#: ../plug-ins/common/file-pdf-load.c:1427 ../plug-ins/common/file-svg.c:917
+#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
+#, c-format
+msgid "pixels/%a"
+msgstr "піксэлі/%a"
+
+#: ../plug-ins/common/file-pdf-save.c:294
+#, fuzzy
+msgid "_Create multipage PDF..."
+msgstr "Стварыць накіроўныя…"
+
+#: ../plug-ins/common/file-pdf-save.c:387
+msgid "You must select a file to save!"
+msgstr "Патрэбна выбраць файл для захоўваньня!"
+
+#: ../plug-ins/common/file-pdf-save.c:396
+#, c-format
+msgid ""
+"An error occured while creating the PDF file:\n"
+"%s\n"
+"Make sure you entered a valid filename and that the selected location isn't "
+"read only!"
+msgstr ""
+"Падчас стварэньня файла PDF здарылася памылка:\n"
+"%s\n"
+"Пераканайся, што ўведзеная дапушчальная назва файла і ў выбранае для "
+"захоўваньня месца можна запісваць файлы!"
+
+#: ../plug-ins/common/file-pdf-save.c:706
+#: ../plug-ins/common/file-pdf-save.c:823
+msgid "Omit hidden layers and layers with zero opacity"
+msgstr "Прапушчаць схаваныя пласты й пласты з нулявой непразрыстасьцю"
+
+#: ../plug-ins/common/file-pdf-save.c:710
+#: ../plug-ins/common/file-pdf-save.c:827
+msgid "Convert bitmaps to vector graphics where possible"
+msgstr "Дзе магчыма ператвараць растры ў вэктарныя відарысы"
+
+#: ../plug-ins/common/file-pdf-save.c:714
+#: ../plug-ins/common/file-pdf-save.c:831
+msgid "Apply layer masks before saving"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:717
+#: ../plug-ins/common/file-pdf-save.c:834
+#, fuzzy
+msgid "Keeping the masks will not change the output"
+msgstr ""
+"Ужыць маскі пластоў перах захоўваньнем (пакіданьне масак ня зьменіць "
+"выводжаньня)"
+
+#: ../plug-ins/common/file-pdf-save.c:770
+msgid "Save to:"
+msgstr "Захаваць у:"
+
+#: ../plug-ins/common/file-pdf-save.c:774
+msgid "Browse..."
+msgstr "Прагледзець…"
+
+#: ../plug-ins/common/file-pdf-save.c:775
+msgid "Multipage PDF export"
+msgstr "Экспартаваньне шматстаронкавага PDF"
+
+#: ../plug-ins/common/file-pdf-save.c:808
+msgid "Remove the selected pages"
+msgstr "Выдаліць вылучаныя старонкі"
+
+#: ../plug-ins/common/file-pdf-save.c:818
+msgid "Add this image"
+msgstr "Дадаць гэты відарыс"
+
+#: ../plug-ins/common/file-pdf-save.c:931
+msgid "Error! In order to save the file, at least one image should be added!"
+msgstr "Памылка! Каб захаваць файл патрэбна дадаць хаця б адзін відарыс!"
 
 #: ../plug-ins/common/file-pix.c:142 ../plug-ins/common/file-pix.c:159
 msgid "Alias Pix image"
@@ -4039,7 +4114,7 @@ msgid "Rendering"
 msgstr "Апрацоўваньне"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3155 ../plug-ins/common/file-svg.c:930
+#: ../plug-ins/common/file-ps.c:3155 ../plug-ins/common/file-svg.c:911
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "Разрозьненьне:"
@@ -4091,6 +4166,11 @@ msgstr "Аўтаматычна"
 #: ../plug-ins/common/file-ps.c:3247
 msgid "Text antialiasing"
 msgstr "Згладжваньне тэксту"
+
+#: ../plug-ins/common/file-ps.c:3251 ../plug-ins/common/file-ps.c:3263
+msgctxt "antialiasing"
+msgid "None"
+msgstr "Няма"
 
 #: ../plug-ins/common/file-ps.c:3252 ../plug-ins/common/file-ps.c:3264
 msgid "Weak"
@@ -4177,6 +4257,11 @@ msgstr "PSP"
 #: ../plug-ins/common/file-psp.c:643
 msgid "Data Compression"
 msgstr "Сьцісканьне даньняў"
+
+#: ../plug-ins/common/file-psp.c:647
+msgctxt "compression"
+msgid "None"
+msgstr "Няма"
 
 #: ../plug-ins/common/file-psp.c:648
 msgid "RLE"
@@ -4366,28 +4451,28 @@ msgstr "Фарматаваньне даньняў"
 msgid "RunLength Encoded"
 msgstr "Закадаваны ў RLE"
 
-#: ../plug-ins/common/file-svg.c:141
+#: ../plug-ins/common/file-svg.c:140
 msgid "SVG image"
 msgstr "Відарыс SVG"
 
-#: ../plug-ins/common/file-svg.c:336 ../plug-ins/common/file-svg.c:734
+#: ../plug-ins/common/file-svg.c:335 ../plug-ins/common/file-svg.c:715
 msgid "Unknown reason"
 msgstr "Невядомая прычына"
 
-#: ../plug-ins/common/file-svg.c:342
+#: ../plug-ins/common/file-svg.c:341
 msgid "Rendering SVG"
 msgstr "Пабудова SVG"
 
-#: ../plug-ins/common/file-svg.c:354
+#: ../plug-ins/common/file-svg.c:353
 msgid "Rendered SVG"
 msgstr "Пабудаваны SVG"
 
-#: ../plug-ins/common/file-svg.c:568 ../plug-ins/common/file-wmf.c:358
+#: ../plug-ins/common/file-svg.c:549 ../plug-ins/common/file-wmf.c:358
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: ../plug-ins/common/file-svg.c:576
+#: ../plug-ins/common/file-svg.c:557
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -4396,50 +4481,44 @@ msgstr ""
 "вызначаны памер!"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/file-svg.c:743
+#: ../plug-ins/common/file-svg.c:724
 msgid "Render Scalable Vector Graphics"
 msgstr "Апрацаваць Scalable Vector Graphics"
 
 #. Width and Height
-#: ../plug-ins/common/file-svg.c:809 ../plug-ins/common/file-wmf.c:571
+#: ../plug-ins/common/file-svg.c:790 ../plug-ins/common/file-wmf.c:571
 #: ../plug-ins/common/grid.c:726
 msgid "Width:"
 msgstr "Шырыня:"
 
-#: ../plug-ins/common/file-svg.c:815 ../plug-ins/common/file-wmf.c:577
+#: ../plug-ins/common/file-svg.c:796 ../plug-ins/common/file-wmf.c:577
 msgid "Height:"
 msgstr "Вышыня:"
 
-#: ../plug-ins/common/file-svg.c:889 ../plug-ins/common/file-wmf.c:651
+#: ../plug-ins/common/file-svg.c:870 ../plug-ins/common/file-wmf.c:651
 msgid "_X ratio:"
 msgstr "Суадносіны па _X:"
 
-#: ../plug-ins/common/file-svg.c:911 ../plug-ins/common/file-wmf.c:673
+#: ../plug-ins/common/file-svg.c:892 ../plug-ins/common/file-wmf.c:673
 msgid "_Y ratio:"
 msgstr "Суадносіны па _Y:"
 
-#: ../plug-ins/common/file-svg.c:925 ../plug-ins/common/file-wmf.c:687
+#: ../plug-ins/common/file-svg.c:906 ../plug-ins/common/file-wmf.c:687
 msgid "Constrain aspect ratio"
 msgstr "Замацаваць прапорцыі"
 
-#: ../plug-ins/common/file-svg.c:936 ../plug-ins/common/file-wmf.c:698
-#: ../plug-ins/print/print-page-layout.c:285
-#, c-format
-msgid "pixels/%a"
-msgstr "піксэлі/%a"
-
 #. Path Import
-#: ../plug-ins/common/file-svg.c:956
+#: ../plug-ins/common/file-svg.c:937
 msgid "Import _paths"
 msgstr "Імпартаваць _шляхі"
 
-#: ../plug-ins/common/file-svg.c:963
+#: ../plug-ins/common/file-svg.c:944
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Імпартаваць элемэнты шляхоў SVG, каб зь імі могла працаваць прылада «Шлях»"
 
-#: ../plug-ins/common/file-svg.c:971
+#: ../plug-ins/common/file-svg.c:952
 msgid "Merge imported paths"
 msgstr "Аб'яднаць імпартаваныя шляхі"
 
@@ -4998,7 +5077,7 @@ msgid "Composing images"
 msgstr "Складаньне відарысаў"
 
 #: ../plug-ins/common/film.c:423 ../plug-ins/common/guillotine.c:215
-#: ../plug-ins/help-browser/dialog.c:1110
+#: ../plug-ins/help-browser/dialog.c:1109
 msgid "Untitled"
 msgstr "Безназоўны"
 
@@ -6508,11 +6587,11 @@ msgstr "Паказаць зьвесткі пра дадаткі"
 msgid "_Plug-In Browser"
 msgstr "_Аглядальнік дадаткаў"
 
-#: ../plug-ins/common/plugin-browser.c:370
+#: ../plug-ins/common/plugin-browser.c:363
 msgid "Searching by name"
 msgstr "Пошук паводле назвы"
 
-#: ../plug-ins/common/plugin-browser.c:384
+#: ../plug-ins/common/plugin-browser.c:377
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
@@ -6520,11 +6599,11 @@ msgstr[0] "%d дадатак"
 msgstr[1] "%d дадаткі"
 msgstr[2] "%d дадаткаў"
 
-#: ../plug-ins/common/plugin-browser.c:393
+#: ../plug-ins/common/plugin-browser.c:386
 msgid "No matches for your query"
 msgstr "Няма адпаведнікаў запытанаму"
 
-#: ../plug-ins/common/plugin-browser.c:396
+#: ../plug-ins/common/plugin-browser.c:389
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
@@ -6532,38 +6611,38 @@ msgstr[0] "%d дадатак адпавядае запыту"
 msgstr[1] "%d дадаткі адпавядаюць запыту"
 msgstr[2] "%d дадаткаў адпавядаюць запыту"
 
-#: ../plug-ins/common/plugin-browser.c:527
+#: ../plug-ins/common/plugin-browser.c:520
 msgid "No matches"
 msgstr "Няма адпаведнікаў"
 
-#: ../plug-ins/common/plugin-browser.c:553
+#: ../plug-ins/common/plugin-browser.c:546
 msgid "Plug-In Browser"
 msgstr "Аглядальнік дадаткаў"
 
-#: ../plug-ins/common/plugin-browser.c:596
+#: ../plug-ins/common/plugin-browser.c:589
 msgid "Name"
 msgstr "Назва"
 
-#: ../plug-ins/common/plugin-browser.c:604
-#: ../plug-ins/common/plugin-browser.c:667
+#: ../plug-ins/common/plugin-browser.c:597
+#: ../plug-ins/common/plugin-browser.c:660
 msgid "Menu Path"
 msgstr "Шлях мэню"
 
-#: ../plug-ins/common/plugin-browser.c:612
-#: ../plug-ins/common/plugin-browser.c:676
+#: ../plug-ins/common/plugin-browser.c:605
+#: ../plug-ins/common/plugin-browser.c:669
 msgid "Image Types"
 msgstr "Тыпы відарысаў"
 
-#: ../plug-ins/common/plugin-browser.c:622
-#: ../plug-ins/common/plugin-browser.c:685
+#: ../plug-ins/common/plugin-browser.c:615
+#: ../plug-ins/common/plugin-browser.c:678
 msgid "Installation Date"
 msgstr "Даты ўсталяваньня"
 
-#: ../plug-ins/common/plugin-browser.c:646
+#: ../plug-ins/common/plugin-browser.c:639
 msgid "List View"
 msgstr "Сьпіс"
 
-#: ../plug-ins/common/plugin-browser.c:708
+#: ../plug-ins/common/plugin-browser.c:701
 msgid "Tree View"
 msgstr "Дрэва"
 
@@ -6844,7 +6923,7 @@ msgstr "Аналізаваць прыклады"
 
 #: ../plug-ins/common/sample-colorize.c:3046
 msgid "Remap colorized"
-msgstr ""
+msgstr "Расфарбоўваньне"
 
 #: ../plug-ins/common/screenshot.c:240
 msgid "Create an image from an area of the screen"
@@ -8297,72 +8376,73 @@ msgstr "Невядомая памылка Microsoft Windows."
 msgid "Failed to open '%s': %s"
 msgstr "Немагчыма адкрыць «%s»: %s"
 
-#: ../plug-ins/common/web-page.c:99
+#: ../plug-ins/common/web-page.c:98
 msgid "Create an image of a webpage"
 msgstr "Стварыць відарыс сеціўнай старонкі"
 
-#: ../plug-ins/common/web-page.c:105
+#: ../plug-ins/common/web-page.c:104
 msgid "From _Webpage..."
 msgstr "Зь _сеціўнай старонкі…"
 
-#: ../plug-ins/common/web-page.c:234
+#: ../plug-ins/common/web-page.c:233
 msgid "Create from webpage"
 msgstr "Стварыць зь сеціўнай старонкі"
 
-#: ../plug-ins/common/web-page.c:239
+#: ../plug-ins/common/web-page.c:238
 msgid "_Create"
 msgstr "_Стварыць"
 
-#: ../plug-ins/common/web-page.c:267
+#: ../plug-ins/common/web-page.c:266
 msgid "Enter location (URI):"
 msgstr "Увядзі адрас (URI):"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/common/web-page.c:290 ../plug-ins/maze/maze-dialog.c:198
+#: ../plug-ins/common/web-page.c:289 ../plug-ins/maze/maze-dialog.c:198
 msgid "Width (pixels):"
 msgstr "Шырыня (у піксэлях):"
 
-#: ../plug-ins/common/web-page.c:309
+#: ../plug-ins/common/web-page.c:308
 msgid "Font size:"
 msgstr "Кеґль:"
 
-#: ../plug-ins/common/web-page.c:316
+#: ../plug-ins/common/web-page.c:315
 msgid "Huge"
 msgstr "Вялізны"
 
-#: ../plug-ins/common/web-page.c:317
+#: ../plug-ins/common/web-page.c:316
 msgid "Large"
 msgstr "Вялікі"
 
-#: ../plug-ins/common/web-page.c:318
-#: ../plug-ins/gradient-flare/gradient-flare.c:2465
+#: ../plug-ins/common/web-page.c:317
+#, fuzzy
+msgctxt "web-page"
 msgid "Default"
 msgstr "Прадвызначаны"
 
-#: ../plug-ins/common/web-page.c:319
+#: ../plug-ins/common/web-page.c:318
 msgid "Small"
 msgstr "Малы"
 
-#: ../plug-ins/common/web-page.c:320
+#: ../plug-ins/common/web-page.c:319
 msgid "Tiny"
 msgstr "Маленечкі"
 
-#: ../plug-ins/common/web-page.c:444
+#: ../plug-ins/common/web-page.c:443
 #, c-format
 msgid "No URL was specified"
 msgstr "URL ня быў пазначаны"
 
-#: ../plug-ins/common/web-page.c:511
+#: ../plug-ins/common/web-page.c:510
 #, c-format
 msgid "Downloading webpage '%s'"
 msgstr "Загрузка старонкі «%s»"
 
-#: ../plug-ins/common/web-page.c:528
+#: ../plug-ins/common/web-page.c:527
 #, c-format
 msgid "Transferring webpage image for '%s'"
 msgstr "Ператварэньне відарыса старонкі для «%s»"
 
-#: ../plug-ins/common/web-page.c:537
+#: ../plug-ins/common/web-page.c:536
 msgid "Webpage"
 msgstr "Сеціўная старонка"
 
@@ -8601,6 +8681,11 @@ msgstr "На DATAMIN/DATAMAX"
 #: ../plug-ins/file-fits/fits.c:1040
 msgid "Image Composing"
 msgstr "Складаньне відарыса"
+
+#: ../plug-ins/file-fits/fits.c:1044
+msgctxt "composing"
+msgid "None"
+msgstr "Няма"
 
 #: ../plug-ins/file-fli/fli-gimp.c:166 ../plug-ins/file-fli/fli-gimp.c:186
 msgid "AutoDesk FLIC animation"
@@ -9268,9 +9353,8 @@ msgid "Hyperbolic"
 msgstr "Гіпэрбалічны"
 
 #: ../plug-ins/flame/flame.c:760
-#, fuzzy
 msgid "Ex"
-msgstr "ex"
+msgstr "Экс"
 
 #: ../plug-ins/flame/flame.c:761
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:846
@@ -9563,6 +9647,13 @@ msgstr "Функцыя колера"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1079
 msgid "Sine"
 msgstr "Сінус"
+
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
+msgctxt "color-function"
+msgid "None"
+msgstr "Нічога"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1006
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1047
@@ -10240,7 +10331,7 @@ msgstr "Парог адхіленьня:"
 
 #: ../plug-ins/gimpressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
-msgstr ""
+msgstr "Дапаможнае значэньне для адаптыўных вылучэньняў"
 
 #: ../plug-ins/gimpressionist/gimp.c:89
 msgid "Performs various artistic operations"
@@ -10764,6 +10855,10 @@ msgstr "А_ўтаматычна абнаўляць агляд"
 msgid "`Default' is created."
 msgstr "«Прадвызначаны» створаны."
 
+#: ../plug-ins/gradient-flare/gradient-flare.c:2465
+msgid "Default"
+msgstr "Прадвызначаны"
+
 #.
 #. *  Scales
 #.
@@ -10975,77 +11070,77 @@ msgstr "Адвольны лік:"
 msgid "_Second Flares"
 msgstr "_Другасныя ўспышкі"
 
-#: ../plug-ins/help-browser/dialog.c:185
-#: ../plug-ins/help-browser/dialog.c:1111
+#: ../plug-ins/help-browser/dialog.c:184
+#: ../plug-ins/help-browser/dialog.c:1110
 msgid "GIMP Help Browser"
 msgstr "Гартач дапамогі GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:560
+#: ../plug-ins/help-browser/dialog.c:559
 msgid "Go back one page"
 msgstr "На старонку назад"
 
-#: ../plug-ins/help-browser/dialog.c:565
+#: ../plug-ins/help-browser/dialog.c:564
 msgid "Go forward one page"
 msgstr "На старонку наперад"
 
-#: ../plug-ins/help-browser/dialog.c:570
+#: ../plug-ins/help-browser/dialog.c:569
 msgid "_Reload"
 msgstr "Загрузіць _ізноў"
 
-#: ../plug-ins/help-browser/dialog.c:570
+#: ../plug-ins/help-browser/dialog.c:569
 msgid "Reload current page"
 msgstr "Ізноў загрузіць старонку"
 
-#: ../plug-ins/help-browser/dialog.c:575
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "_Stop"
 msgstr "_Спыніць"
 
-#: ../plug-ins/help-browser/dialog.c:575
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "Stop loading this page"
 msgstr "Спыніць загрузку гэтай старонкі"
 
-#: ../plug-ins/help-browser/dialog.c:580
+#: ../plug-ins/help-browser/dialog.c:579
 msgid "Go to the index page"
 msgstr "Да старонкі зь пералікам"
 
-#: ../plug-ins/help-browser/dialog.c:585
+#: ../plug-ins/help-browser/dialog.c:584
 msgid "C_opy location"
 msgstr "Капіяваць месца"
 
-#: ../plug-ins/help-browser/dialog.c:586
+#: ../plug-ins/help-browser/dialog.c:585
 msgid "Copy the location of this page to the clipboard"
 msgstr "Скапіяваць шлях да файла гэтай старонкі у буфэр абмену"
 
-#: ../plug-ins/help-browser/dialog.c:606
+#: ../plug-ins/help-browser/dialog.c:605
 msgid "Find text in current page"
 msgstr "Шукаць тэкст на бягучай старонцы"
 
-#: ../plug-ins/help-browser/dialog.c:611
+#: ../plug-ins/help-browser/dialog.c:610
 msgid "Find _Again"
 msgstr "Шукаць _ізноў"
 
-#: ../plug-ins/help-browser/dialog.c:630
+#: ../plug-ins/help-browser/dialog.c:629
 msgid "S_how Index"
 msgstr "_Паказваць пералік"
 
-#: ../plug-ins/help-browser/dialog.c:631
+#: ../plug-ins/help-browser/dialog.c:630
 msgid "Toggle the visibility of the sidebar"
 msgstr "Пераключыць бачнасьць бакавой панэлі"
 
-#: ../plug-ins/help-browser/dialog.c:652
+#: ../plug-ins/help-browser/dialog.c:651
 msgid "Visit the GIMP documentation website"
 msgstr "Наведаць старонку дакумэнтацыі GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:1152
+#: ../plug-ins/help-browser/dialog.c:1151
 msgid "Find:"
 msgstr "Шукаць:"
 
-#: ../plug-ins/help-browser/dialog.c:1169
+#: ../plug-ins/help-browser/dialog.c:1168
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Папярэдняя"
 
-#: ../plug-ins/help-browser/dialog.c:1181
+#: ../plug-ins/help-browser/dialog.c:1180
 msgctxt "search"
 msgid "_Next"
 msgstr "_Наступная"
@@ -11631,7 +11726,7 @@ msgstr "піксэлі зь_лева"
 
 #: ../plug-ins/imagemap/imap_grid.c:277
 msgid "pixels from _top"
-msgstr "піксэлі зь_верхі"
+msgstr "піксэлі зь_верху"
 
 #: ../plug-ins/imagemap/imap_grid.c:288
 msgid "_Preview"
@@ -11892,7 +11987,7 @@ msgstr "Паказаць _ручкі вобласьці"
 
 #: ../plug-ins/imagemap/imap_preferences.c:389
 msgid "_Keep NCSA circles true"
-msgstr ""
+msgstr "Трымаць акружыны NCSA круглымі"
 
 #: ../plug-ins/imagemap/imap_preferences.c:391
 msgid "Show area URL _tip"
@@ -12090,6 +12185,11 @@ msgstr "Сьвятло 6"
 #: ../plug-ins/lighting/lighting-ui.c:412
 msgid "Color:"
 msgstr "Колер:"
+
+#: ../plug-ins/lighting/lighting-ui.c:418
+msgctxt "light-source"
+msgid "None"
+msgstr "Няма"
 
 #: ../plug-ins/lighting/lighting-ui.c:419
 msgid "Directional"
@@ -12519,12 +12619,12 @@ msgstr "Памер па Z"
 #: ../plug-ins/map-object/map-object-ui.c:1147
 #: ../plug-ins/print/print-page-layout.c:414
 msgid "_Top:"
-msgstr "_Верх:"
+msgstr "У_версе:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
 #: ../plug-ins/print/print-page-layout.c:433
 msgid "_Bottom:"
-msgstr "_Ніз:"
+msgstr "У_нізе:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1152
 msgid "Images for the Cap Faces"
@@ -12779,15 +12879,21 @@ msgstr "Разрозьненьне па _Y:"
 
 #: ../plug-ins/print/print-page-layout.c:381
 msgid "_Left:"
-msgstr "_Левы:"
+msgstr "Зь_лева:"
 
 #: ../plug-ins/print/print-page-layout.c:400
 msgid "_Right:"
-msgstr "_Правы:"
+msgstr "С_права:"
 
 #: ../plug-ins/print/print-page-layout.c:454
 msgid "C_enter:"
-msgstr "_Цэнтар:"
+msgstr "_Цэнтраваць:"
+
+#. if and how to center the image on the page
+#: ../plug-ins/print/print-page-layout.c:461
+msgctxt "center-mode"
+msgid "None"
+msgstr "Ніяк"
 
 #: ../plug-ins/print/print-page-layout.c:462
 msgid "Horizontally"
@@ -12799,7 +12905,7 @@ msgstr "Вэртыкальна"
 
 #: ../plug-ins/print/print-page-layout.c:464
 msgid "Both"
-msgstr "Абодва"
+msgstr "Па сярэдзіне"
 
 #: ../plug-ins/print/print.c:102
 msgid "Print the image"
@@ -12890,3 +12996,386 @@ msgstr "_Здымак экрана…"
 #: ../plug-ins/win-snap/winsnap.c:1143
 msgid "No data captured"
 msgstr "Даньні не захопленыя"
+
+#~ msgid ""
+#~ "Apply layer masks before saving (keeping them will not change the output)"
+#~ msgstr ""
+#~ "\"Ужыць маскі пластоў перах захоўваньнем (пакіданьне іхк ня зьменіць "
+#~ "выводжаньня)\""
+
+#~ msgid "There was an error taking the screenshot."
+#~ msgstr "Здарылася памылка атрыманьня здымка экрана."
+
+#~ msgid "Frequency (rows):"
+#~ msgstr "Часьціня (радкоў):"
+
+#~ msgid "2x1,1x1,1x1 (4:2:2)"
+#~ msgstr "2×1,1×1,1×1 (4:2:2)"
+
+#~ msgid "1x2,1x1,1x1"
+#~ msgstr "1×2,1×1,1×1"
+
+#~ msgid "2x2,1x1,1x1 (smallest file)"
+#~ msgstr "2×2,1×1,1×1 (найменшы файл)"
+
+#~ msgid "Send to Back"
+#~ msgstr "Даслаць назад"
+
+#~ msgid "pixels/%s"
+#~ msgstr "піксэлі/%s"
+
+#~ msgid "GIF Options"
+#~ msgstr "Выборы GIF"
+
+#~ msgid "I_nterlace"
+#~ msgstr "_Празрадковы"
+
+#~ msgid "_GIF comment:"
+#~ msgstr "Камэнтар _GIF:"
+
+#~ msgid "Animated GIF Options"
+#~ msgstr "Выборы анімаванага GIF"
+
+#~ msgid "_Loop forever"
+#~ msgstr "_Вечны цыкль"
+
+#~ msgid "_Delay between frames where unspecified:"
+#~ msgstr "_Затрымка між кадрамі, дзе ня вызначана:"
+
+#~ msgid "_Frame disposal where unspecified:"
+#~ msgstr "_Разьмяшчэньне кадра, дзе ня вызначана:"
+
+#~ msgid "_Use delay entered above for all frames"
+#~ msgstr "_Ужыць уведзеную вышэй затрымку для ўсіх кадраў"
+
+#~ msgid "U_se disposal entered above for all frames"
+#~ msgstr "У_жыць уведзенае вышэй разьмяшчэньне для ўсіх кадраў"
+
+#~ msgid "_Interlacing (Adam7)"
+#~ msgstr "_Празрадковы (Adam7)"
+
+#~ msgid "Save _background color"
+#~ msgstr "Захаваць _колер асноведзі"
+
+#~ msgid "Save _gamma"
+#~ msgstr "Захаваць _гаму"
+
+#~ msgid "Save layer o_ffset"
+#~ msgstr "Захаваць зрух _пласта"
+
+#~ msgid "Save _resolution"
+#~ msgstr "Захаваць _разрозьненьне"
+
+#~ msgid "Save creation _time"
+#~ msgstr "Захаваць _час стварэньня"
+
+#~ msgid "Save comme_nt"
+#~ msgstr "Захаваць к_амэнтар"
+
+#~ msgid "Save color _values from transparent pixels"
+#~ msgstr "Захоўваць значэньні _колераў празрыстых піксэляў"
+
+#~ msgid "Co_mpression level:"
+#~ msgstr "_Узровень сьцісканьня:"
+
+#~ msgid "S_ave Defaults"
+#~ msgstr "За_хаваць прадвызначаныя"
+
+#~ msgid "Hotspot _X:"
+#~ msgstr "«Гарачая пляма» па _X:"
+
+#~ msgid "A big hello from the GIMP team!"
+#~ msgstr "Вялікае вітаньне ад каманды GIMP!"
+
+#~ msgid "Gee Zoom"
+#~ msgstr "Забаўнае маштабаваньне"
+
+#~ msgid "Thank You for Choosing GIMP"
+#~ msgstr "Дзякуй за выбар GIMP!"
+
+#~ msgid "An obsolete creation by %s"
+#~ msgstr "Састарэлае, створана %s"
+
+#~ msgid "Gee Slime"
+#~ msgstr "Забаўная сьлізь"
+
+#~ msgid "A less obsolete creation by %s"
+#~ msgstr "Не зусім састарэлае стварэньне %s"
+
+#~ msgid "Sizes:"
+#~ msgstr "Памеры:"
+
+#~ msgid "Size:"
+#~ msgstr "Памер:"
+
+#~ msgid "Image type currently not supported."
+#~ msgstr "Тып відарыса пакуль не падтрымліваецца."
+
+#~ msgid "Save as Text"
+#~ msgstr "Захаваць як тэкст"
+
+#~ msgid "Save as C-Source"
+#~ msgstr "Захаваць як выточны код C"
+
+#~ msgid "Save as Brush"
+#~ msgstr "Захаваць як пэндзаль"
+
+#~ msgid "Save as GIF"
+#~ msgstr "Захаваць як GIF"
+
+#~ msgid "Layer %s doesn't have an alpha channel, skipped"
+#~ msgstr "Пласт %s ня мае альфаканала, абмінуты"
+
+#~ msgid "Save as HTML table"
+#~ msgstr "Захаваць як табліцу HTML"
+
+#~ msgid "Save as MNG"
+#~ msgstr "Захаваць як MNG"
+
+#~ msgid "Save as Pattern"
+#~ msgstr "Захаваць як узор"
+
+#~ msgid "Save as PNG"
+#~ msgstr "Захаваць як PNG"
+
+#~ msgid "Save as PNM"
+#~ msgstr "Захаваць як PNM"
+
+#~ msgid "Save as PSP"
+#~ msgstr "Захаваць як PSP"
+
+#~ msgid "Save as TGA"
+#~ msgstr "Захаваць як TGA"
+
+#~ msgid "Save as TIFF"
+#~ msgstr "Захаваць як TIFF"
+
+#~ msgid "Save as XBM"
+#~ msgstr "Захаваць як XBM"
+
+#~ msgid "Save as XPM"
+#~ msgstr "Захаваць як XPM"
+
+#~ msgid ""
+#~ "Web browser not specified.\n"
+#~ "Please specify a web browser using the Preferences dialog."
+#~ msgstr ""
+#~ "Гартач Web ня вызначаны.\n"
+#~ "Вызнач, калі ласка, гартач Сеціва ў дыялёгу «Настаўленьні»."
+
+#~ msgid ""
+#~ "Could not parse the web browser command specified in the Preferences "
+#~ "dialog:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Немагчыма разабраць загад гартача Сеціва, вызначанага ў дыялёгу "
+#~ "«Настаўленьні»:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Could not execute the web browser specified in the Preferences dialog:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Немагчыма выканаць гартач Сеціва, вызначаны ў дыялёгу «Настаўленьні»:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Save as BMP"
+#~ msgstr "Захаваць як BMP"
+
+#~ msgid "GFLI 1.3 - Save framestack"
+#~ msgstr "GFLI 1.3 - Запіс стосу кадраў"
+
+#~ msgid "File size: %02.01f kB"
+#~ msgstr "Памер файла: %02.01f kB"
+
+#~ msgid "Save as JPEG"
+#~ msgstr "Захаваць як JPEG"
+
+#~ msgid "Save as SGI"
+#~ msgstr "Захаваць як SGI"
+
+#~ msgid "Co_nnect"
+#~ msgstr "_Злучыцца"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "Злучыцца _ананімна"
+
+#~ msgid "Connect as u_ser:"
+#~ msgstr "Злучыцца _як карыстальнік:"
+
+#~ msgid "_Username:"
+#~ msgstr "_Імя:"
+
+#~ msgid "_Domain:"
+#~ msgstr "_Дамэн:"
+
+#~ msgid "_Password:"
+#~ msgstr "_Пароль:"
+
+#~ msgid "_Forget password immediately"
+#~ msgstr "_Адразу забыць пароль"
+
+#~ msgid "_Remember password until you logout"
+#~ msgstr "_Памятаць пароль да выхаду з сыстэмы"
+
+#~ msgid "_Remember forever"
+#~ msgstr "_Запомніць назаўжды"
+
+#~ msgid "Uploading %s of image data"
+#~ msgstr "Дасыланьне %s даньняў відарыса"
+
+#~ msgid "Failed to read %s from '%s': %s"
+#~ msgstr "Памылка чытаньня %s з '%s': %s"
+
+#~ msgid "Failed to write %s to '%s': %s"
+#~ msgstr "Памылка запісу %s у '%s': %s"
+
+#~ msgid "Save as XJT"
+#~ msgstr "Захаваць як XJT"
+
+#~ msgid "Unable to add additional point.\n"
+#~ msgstr "Немагчыма дадаць дадатковы пункт.\n"
+
+#~ msgid "Could not open output file for writing"
+#~ msgstr "Немагчыма адкрыць файл вываду на запіс"
+
+#~ msgid "There is a problem with the GIMP user manual."
+#~ msgstr "Праблема з кіраўніцтвам карыстальніка GIMP."
+
+#~ msgid "Please check your installation."
+#~ msgstr "Калі ласка, правер усталёўку GIMP."
+
+#~ msgid "Drag and drop this icon to a web browser"
+#~ msgstr "Пацягні й кінь гэтую значку у гартач Web"
+
+#~ msgid "Or_igin at bottom left"
+#~ msgstr "_Пачатак уверсе зьлева"
+
+#~ msgid "Document not found"
+#~ msgstr "Дакумэнт не адшуканы"
+
+#~ msgid "The requested URL could not be loaded:"
+#~ msgstr "Запатрабаваны URL ня можа быць загружаны:"
+
+#~ msgid "Email the image"
+#~ msgstr "Дасылае відарыс па пошце"
+
+#~ msgid "_Mail Image..."
+#~ msgstr "_Даслаць відарыс..."
+
+#~ msgid "_MIME"
+#~ msgstr "_MIME"
+
+#~ msgid "_Uuencode"
+#~ msgstr "_Uuencode"
+
+#~ msgid "_Recipient:"
+#~ msgstr "_Атрымальнік:"
+
+#~ msgid "_Sender:"
+#~ msgstr "_Адпраўнік:"
+
+#~ msgid "Comm_ent:"
+#~ msgstr "_Камэнтар:"
+
+#~ msgid "First Source Color"
+#~ msgstr "Першы крынічны колер"
+
+#~ msgid "Second Source Color"
+#~ msgstr "Другі крынічны колер"
+
+#~ msgid "First Destination Color"
+#~ msgstr "Першы канчатковы колер"
+
+#~ msgid "Second Destination Color"
+#~ msgstr "Другі канчатковы колер"
+
+#, fuzzy
+#~ msgid "Adjust _Foreground & Background"
+#~ msgstr "_Адрэгуляваць колеры рысаваньня й асноведзі"
+
+#, fuzzy
+#~ msgid "Color Range _Mapping..."
+#~ msgstr "Няправільны інтэрвал становішчаў"
+
+#~ msgid "Cannot operate on gray or indexed color images."
+#~ msgstr "Немагчыма працаваць зь індэксаванымі або шэрымі відарысамі."
+
+#, fuzzy
+#~ msgid "Adjusting foreground and background colors"
+#~ msgstr "Абмяняць колеры рысаваньня й асноведзі"
+
+#, fuzzy
+#~ msgid "Mapping colors"
+#~ msgstr "_Дапомныя колеры"
+
+#, fuzzy
+#~ msgid "Map Color Range"
+#~ msgstr "Няправільны інтэрвал становішчаў"
+
+#~ msgid "Source Color Range"
+#~ msgstr "Пачатковы дыяпазон колераў"
+
+#~ msgid "Destination Color Range"
+#~ msgstr "Выніковы дыяпазон колераў"
+
+#~ msgid "Invalid UTF-8 string in PSD file"
+#~ msgstr "Недапушчальны радок UTF-8 у файле PSD"
+
+#~ msgid "Cannot handle bitmap PSD files"
+#~ msgstr "Немагчыма апрацоўваць бітавыя мапы PSD"
+
+#~ msgid "Cannot handle PSD files in CMYK color"
+#~ msgstr "Немагчыма апрацоўваць файлы PSD у колерах CMYK"
+
+#~ msgid "Cannot handle PSD files in Multichannel color"
+#~ msgstr "Немагчыма апрацоўваць файлы PSD у колерах Multichannel"
+
+#~ msgid "Cannot handle PSD files in Duotone color"
+#~ msgstr "Немагчыма апрацоўваць файлы PSD у колерах Duotone"
+
+#~ msgid "Cannot handle PSD files in Lab color"
+#~ msgstr "Немагчыма апрацоўваць файлы PSD у колерах Lab"
+
+#~ msgid "Cannot handle the color mode %d of the PSD file"
+#~ msgstr "Немагчыма апрацоўваць рэжым колераў %d файла PSD"
+
+#~ msgid "Cannot handle PSD file with more than %d channels"
+#~ msgstr "Немагчыма апрацоўваць файлы PSD, якія маюць больш за %d каналаў"
+
+#~ msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
+#~ msgstr ""
+#~ "Немагчыма апрацоўваць файлы PSD у колерах CMYK з больш, чым 5 каналаў"
+
+#, fuzzy
+#~ msgid "Cannot handle image mode %d (%s)"
+#~ msgstr "Немагчыма апрацоўваць рэжым колераў %d файла PSD"
+
+#~ msgid "Cannot handle %d bits per channel PSD files"
+#~ msgstr "Немагчыма апрацоўваць %d бітаў на канал у файлах PSD"
+
+#~ msgid "This is not an Adobe Photoshop PSD file"
+#~ msgstr "Гэты файл не зьяўляецца файлам Adobe Photoshop PSD "
+
+#~ msgid "The PSD file has bad version number '%d', not 1"
+#~ msgstr "Файл PSD мае кепскую вэрсію '%d', а не 1"
+
+#~ msgid "checkbutton|Snap to grid"
+#~ msgstr "Прыцягненьне да сеткі"
+
+#~ msgid "The GIMP help files are not found."
+#~ msgstr "Файлы з дапамогай па GIMP не адшуканыя."
+
+#~ msgid "_Smoothing:"
+#~ msgstr "_Змазваньне:"
+
+#~ msgid "Printable area:"
+#~ msgstr "Вобласьць для друку:"
+
+#, fuzzy
+#~ msgid "Downloading %s of image data..."
+#~ msgstr "Даныя аўтарызацыі адрынутыя"
