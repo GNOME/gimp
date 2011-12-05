@@ -42,6 +42,7 @@ Libgimp:
 Plug-ins:
 
  - Make writing color space information to BMP files optional
+ - PSD loader now reads and imports working paths
 
 
 Script-Fu:
