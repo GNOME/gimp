@@ -287,7 +287,7 @@ void
 ts_print_welcome (void)
 {
   ts_output_string (TS_OUTPUT_NORMAL,
-                    "Welcome to TinyScheme, Version 1.38\n", -1);
+                    "Welcome to TinyScheme, Version 1.40\n", -1);
   ts_output_string (TS_OUTPUT_NORMAL,
                     "Copyright (c) Dimitrios Souflis\n", -1);
 }
