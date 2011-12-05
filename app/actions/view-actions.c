@@ -235,8 +235,8 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_FULLSCREEN },
 
   { "view-use-gegl", GIMP_STOCK_GEGL,
-    "Use GEGL", NULL,
-    "Use GEGL to create this window's projection",
+    NC_("view-action", "Use GEGL"), NULL,
+    NC_("view-action", "Use GEGL to create this window's projection"),
     G_CALLBACK (view_use_gegl_cmd_callback),
     FALSE,
     NULL }
