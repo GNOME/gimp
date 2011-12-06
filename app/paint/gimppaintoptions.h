@@ -131,12 +131,12 @@ gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 GimpBrushApplicationMode
              gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);
 
-void       gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
+void    gimp_paint_options_copy_brush_props    (GimpPaintOptions *src,
                                                 GimpPaintOptions *dest);
-
 void    gimp_paint_options_copy_dynamics_props (GimpPaintOptions *src,
                                                 GimpPaintOptions *dest);
-
+void    gimp_paint_options_copy_gradient_props (GimpPaintOptions *src,
+                                                GimpPaintOptions *dest);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

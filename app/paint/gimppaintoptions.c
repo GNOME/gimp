@@ -745,19 +745,16 @@ gimp_paint_options_copy_dynamics_props (GimpPaintOptions *src,
   GimpUnit        fade_unit;
   GimpRepeatMode  fade_repeat;
 
-  gboolean        gradient_reverse;
-
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
 
-    g_object_get (src,
-                  "dynamics-expanded", &dynamics_expanded,
-                  "fade-reverse", &fade_reverse,
-                  "fade-length", &fade_length,
-                  "fade-unit", &fade_unit,
-                  "fade-repeat", &fade_repeat,
-                  "gradient-reverse", &gradient_reverse,
-                  NULL);
+  g_object_get (src,
+                "dynamics-expanded", &dynamics_expanded,
+                "fade-reverse", &fade_reverse,
+                "fade-length", &fade_length,
+                "fade-unit", &fade_unit,
+                "fade-repeat", &fade_repeat,
+                NULL);
 
   g_object_set (dest,
                 "dynamics-expanded", dynamics_expanded,
@@ -765,7 +762,23 @@ gimp_paint_options_copy_dynamics_props (GimpPaintOptions *src,
                 "fade-length", fade_length,
                 "fade-unit", fade_unit,
                 "fade-repeat", fade_repeat,
-                "gradient-reverse", gradient_reverse,
+                NULL);
+}
+
+void
+gimp_paint_options_copy_gradient_props (GimpPaintOptions *src,
+                                        GimpPaintOptions *dest)
+{
+  gboolean  gradient_reverse;
+
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
+
+  g_object_get (src,
+                "gradient-reverse", &gradient_reverse,
                 NULL);
 
+  g_object_set (dest,
+                "gradient-reverse", gradient_reverse,
+                NULL);
 }
