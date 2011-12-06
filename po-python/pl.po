@@ -1,5 +1,3 @@
-# translation of gimp-python.master.pl.po to Polish
-# Copyright (C) 2001-2011 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aviary.pl
 # Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
@@ -10,13 +8,14 @@
 # Artur Polaczyński <artie@kmfms.com>, 1999,2000.
 # Hubert Stachurski <hubi@forest.sggw.waw.pl>, 2008.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
+# Aviary.pl <gnomepl@aviary.pl>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-04 21:57+0100\n"
-"PO-Revision-Date: 2011-01-17 14:46+0100\n"
-"Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
+"POT-Creation-Date: 2011-12-06 19:49+0100\n"
+"PO-Revision-Date: 2011-12-06 19:50+0100\n"
+"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +28,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
-msgstr "Brakujące informacje o wyjątku"
+msgstr "Brak informacji o wyjątku"
 
 #: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
@@ -60,7 +59,7 @@ msgstr "Wybór katalogu Python-Fu"
 #: ../plug-ins/pygimp/gimpfu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr "Błąd wejścia dla \"%s\""
+msgstr "Błąd wprowadzania dla \"%s\""
 
 #: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
@@ -100,11 +99,11 @@ msgstr "_Plik do odczytu lub znak do użycia"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
-msgstr "Rozmiar czcionki w pikselach"
+msgstr "Rozmiar _czcionki w pikselach"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
-msgstr "_Zapisz jako oddzielny plik CSS"
+msgstr "_Zapisanie jako oddzielny plik CSS"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
@@ -116,7 +115,7 @@ msgstr "Nazwa pliku"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
-msgstr "Dodaje warstwę rozmycia"
+msgstr "Dodaje warstwę mgły"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Fog..."
@@ -167,11 +166,11 @@ msgstr "Porządkuje kolory w palecie"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
-msgstr "_Sortuj paletę..."
+msgstr "_Uporządkuj paletę..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
 msgid "Color _model"
-msgstr "_Model koloru "
+msgstr "_Model koloru"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "RGB"
@@ -183,7 +182,7 @@ msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "Channel to _sort"
-msgstr "Kanał do _sortowania"
+msgstr "Kanał do _uporządkowania"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Red or Hue"
@@ -203,7 +202,7 @@ msgstr "_Rosnąco"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Tworzy powtarzający się gradient z użyciem kolorów z palety"
+msgstr "Tworzy powtarzający się gradient używając kolorów z palety"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
@@ -211,7 +210,7 @@ msgstr "Paleta na po_wtarzający się gradient"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
-msgstr "Tworzy gradient z użyciem kolorów z palety"
+msgstr "Tworzy gradient używając kolorów z palety"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
@@ -236,11 +235,11 @@ msgstr "Ścieżka do eksportu HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Filename for export"
-msgstr "Nazwa pliku do eksportu"
+msgstr "Nazwa pliku do wyeksportowania"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Image name prefix"
-msgstr "Prefiks nazwy obrazu"
+msgstr "Przedrostek nazwy obrazu"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image format"
@@ -252,11 +251,11 @@ msgstr "Rozdziela katalog obrazu"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:442
 msgid "Folder for image export"
-msgstr "Katalog do eksportu obrazów"
+msgstr "Katalog do wyeksportowania obrazów"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Space between table elements"
-msgstr "Odstęp pomiędzy elementami tablicy"
+msgstr "Odstęp między elementami tablicy"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
@@ -269,7 +268,7 @@ msgstr "Pomija animację dla tabel"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:56
 msgid "Python Console"
-msgstr "Konsola Python"
+msgstr "Konsola języka Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:60
 msgid "_Browse..."
@@ -277,17 +276,17 @@ msgstr "_Przeglądaj..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
-msgstr "Przeglądarka procedur Pythona"
+msgstr "Przeglądarka procedur języka Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Nie można otworzyć \"%s\" do zapisu: %s"
+msgstr "Nie można otworzyć \"%s\" do zapisania: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "Nie można pisać do \"%s\": %s"
+msgstr "Nie można zapisać do \"%s\": %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
@@ -295,7 +294,7 @@ msgstr "Zapis wyjścia konsoli Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
 msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktywny interpreter GIMP Python"
+msgstr "Interaktywny interpreter języka Python dla programu GIMP"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:221
 msgid "_Console"
@@ -303,7 +302,7 @@ msgstr "_Konsola"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Rzuca cień na warstwę i opcjonalnie krawędź "
+msgstr "Rzuca cień na warstwę i opcjonalnie krawędź"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
