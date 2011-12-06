@@ -286,11 +286,10 @@ query (void)
 
   gimp_install_procedure (LOAD_PROC,
                           "Load file in PDF format.",
-                          "Load file in PDF format. "
-                          "PDF is a portable document format created by Adobe. "
-                          "It is designed to be easily processed by a variety "
+                          "Loads files in Adobe's Portable Document Format. "
+                          "PDF is designed to be easily processed by a variety "
                           "of different platforms, and is a distant cousin of "
-                          "postscript. ",
+                          "PostScript.",
                           "Nathan Summers",
                           "Nathan Summers",
                           "2005",
