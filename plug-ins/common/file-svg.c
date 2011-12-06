@@ -150,8 +150,8 @@ query (void)
                                     "0,string,<?xml,0,string,<svg");
 
   gimp_install_procedure (LOAD_THUMB_PROC,
-                          "Loads a small preview from an SVG image",
-                          "",
+                          "Generates a thumbnail of an SVG image",
+                          "Renders a thumbnail of an SVG file using librsvg.",
                           "Dom Lachowicz, Sven Neumann",
                           "Dom Lachowicz <cinamod@hotmail.com>",
                           SVG_VERSION,
