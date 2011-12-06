@@ -541,7 +541,7 @@ open_document (const gchar  *filename,
   if (! mapped_file)
     {
       g_set_error (load_error, 0, 0,
-                   "Could not load '%s' %s",
+                   _("Could not load '%s': %s"),
                    gimp_filename_to_utf8 (filename), error->message);
       g_error_free (error);
       return NULL;
