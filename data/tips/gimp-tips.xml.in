@@ -37,8 +37,8 @@
     <_thetip>
       When you save an image to work on it again later, try using XCF,
       GIMP's native file format (use the file extension <tt>.xcf</tt>).
-      This preserves the layers and every aspect of your work-in-progress.
-      Once a project is completed, you can save it as JPEG, PNG, GIF, ...
+      This preserves the layers and many aspects of your work-in-progress.
+      Once a project is completed, you can export it as JPEG, PNG, GIF, etc.
     </_thetip>
   </tip>
   <tip level="beginner" help="gimp-image-flatten">
