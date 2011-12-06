@@ -262,8 +262,11 @@ query (void)
     };
 
   gimp_install_procedure (SAVE_DEFAULTS_PROC,
-                          "Save files as PDF",
-                          "Save files in the Portable Document Format (PDF)",
+                          "Save files in PDF format",
+                          "Saves files in Adobe's Portable Document Format. "
+                          "PDF is designed to be easily processed by a variety "
+                          "of different platforms, and is a distant cousin of "
+                          "PostScript.",
                           "Barak Itkin",
                           "Copyright Barak Itkin",
                           "August 2009",
@@ -274,8 +277,11 @@ query (void)
                           save_defaults_args, NULL);
 
   gimp_install_procedure (SAVE_PROC,
-                          "Save files as PDF",
-                          "Save files in the Portable Document Format (PDF)",
+                          "Save files in PDF format",
+                          "Saves files in Adobe's Portable Document Format. "
+                          "PDF is designed to be easily processed by a variety "
+                          "of different platforms, and is a distant cousin of "
+                          "PostScript.",
                           "Barak Itkin",
                           "Copyright Barak Itkin",
                           "August 2009",
@@ -286,8 +292,11 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (SAVE_MULTI_PROC,
-                          "Save files as PDF",
-                          "Save files in the Portable Document Format (PDF)",
+                          "Save files in PDF format",
+                          "Saves files in Adobe's Portable Document Format. "
+                          "PDF is designed to be easily processed by a variety "
+                          "of different platforms, and is a distant cousin of "
+                          "PostScript.",
                           "Barak Itkin",
                           "Copyright Barak Itkin",
                           "August 2009",
