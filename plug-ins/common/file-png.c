@@ -1893,7 +1893,7 @@ save_dialog (gint32    image_ID,
       gchar *display_name = g_filename_display_name (ui_file);
 
       g_printerr (_("Error loading UI file '%s': %s"),
-                  display_name, error ? error->message : "???");
+                  display_name, error ? error->message : _("Unknown error"));
 
       g_free (display_name);
     }
