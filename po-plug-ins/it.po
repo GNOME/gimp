@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-05 15:10+0100\n"
-"PO-Revision-Date: 2011-12-05 15:11+0100\n"
+"POT-Creation-Date: 2011-12-06 16:59+0100\n"
+"PO-Revision-Date: 2011-12-06 17:00+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: \n"
@@ -3029,7 +3029,7 @@ msgstr "Carica tavolozza KISS"
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
-#: ../plug-ins/common/file-pdf-load.c:844 ../plug-ins/common/file-pix.c:348
+#: ../plug-ins/common/file-pdf-load.c:843 ../plug-ins/common/file-pix.c:348
 #: ../plug-ins/common/file-png.c:759 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1043 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
@@ -3822,64 +3822,65 @@ msgstr "Bordo inferiore fuori dai limiti (deve essere < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
 
-#: ../plug-ins/common/file-pdf-load.c:297
-#: ../plug-ins/common/file-pdf-save.c:270
-#: ../plug-ins/common/file-pdf-save.c:282
+#: ../plug-ins/common/file-pdf-load.c:296
+#: ../plug-ins/common/file-pdf-save.c:273
+#: ../plug-ins/common/file-pdf-save.c:288
 msgid "Portable Document Format"
 msgstr "Portable Document Format (PDF)"
 
-#: ../plug-ins/common/file-pdf-load.c:564
+#: ../plug-ins/common/file-pdf-load.c:544
+#: ../plug-ins/common/file-pdf-load.c:563
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Impossibile caricare \"%s\": %s"
 
-#: ../plug-ins/common/file-pdf-load.c:878
+#: ../plug-ins/common/file-pdf-load.c:877
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:880 ../plug-ins/common/file-ps.c:1126
+#: ../plug-ins/common/file-pdf-load.c:879 ../plug-ins/common/file-ps.c:1126
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pagine"
 
-#: ../plug-ins/common/file-pdf-load.c:1070
+#: ../plug-ins/common/file-pdf-load.c:1069
 msgid "Import from PDF"
 msgstr "Importa da PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1075 ../plug-ins/common/file-ps.c:3100
+#: ../plug-ins/common/file-pdf-load.c:1074 ../plug-ins/common/file-ps.c:3100
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Importa"
 
-#: ../plug-ins/common/file-pdf-load.c:1143
+#: ../plug-ins/common/file-pdf-load.c:1142
 msgid "_Width (pixels):"
 msgstr "_Larghezza (pixel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1144
+#: ../plug-ins/common/file-pdf-load.c:1143
 msgid "_Height (pixels):"
 msgstr "_Altezza (pixel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1146
+#: ../plug-ins/common/file-pdf-load.c:1145
 msgid "_Resolution:"
 msgstr "_Risoluzione:"
 
-#: ../plug-ins/common/file-pdf-load.c:1426
-#: ../plug-ins/common/file-pdf-load.c:1427 ../plug-ins/common/file-svg.c:917
+#: ../plug-ins/common/file-pdf-load.c:1425
+#: ../plug-ins/common/file-pdf-load.c:1426 ../plug-ins/common/file-svg.c:917
 #: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
 #, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:294
+#: ../plug-ins/common/file-pdf-save.c:303
 msgid "_Create multipage PDF..."
 msgstr "_Crea PDF multipagina..."
 
-#: ../plug-ins/common/file-pdf-save.c:387
+#: ../plug-ins/common/file-pdf-save.c:396
 msgid "You must select a file to save!"
 msgstr "È necessario selezionare un file da salvare!"
 
-#: ../plug-ins/common/file-pdf-save.c:396
+#: ../plug-ins/common/file-pdf-save.c:405
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3892,47 +3893,47 @@ msgstr ""
 "Assicurarsi di aver inserito un nome file valido e che la posizione scelta "
 "consenta la scrittura!"
 
-#: ../plug-ins/common/file-pdf-save.c:706
-#: ../plug-ins/common/file-pdf-save.c:823
+#: ../plug-ins/common/file-pdf-save.c:715
+#: ../plug-ins/common/file-pdf-save.c:832
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omettere livelli invisibili e con opacità a zero"
 
-#: ../plug-ins/common/file-pdf-save.c:710
-#: ../plug-ins/common/file-pdf-save.c:827
+#: ../plug-ins/common/file-pdf-save.c:719
+#: ../plug-ins/common/file-pdf-save.c:836
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Convertire le bitmap in grafica vettoriale ove possibile"
 
-#: ../plug-ins/common/file-pdf-save.c:714
-#: ../plug-ins/common/file-pdf-save.c:831
+#: ../plug-ins/common/file-pdf-save.c:723
+#: ../plug-ins/common/file-pdf-save.c:840
 msgid "Apply layer masks before saving"
 msgstr "Applica le maschere di livello prima di salvare"
 
-#: ../plug-ins/common/file-pdf-save.c:717
-#: ../plug-ins/common/file-pdf-save.c:834
+#: ../plug-ins/common/file-pdf-save.c:726
+#: ../plug-ins/common/file-pdf-save.c:843
 msgid "Keeping the masks will not change the output"
 msgstr "Mantenendo le maschere non verrà modificato il risultato"
 
-#: ../plug-ins/common/file-pdf-save.c:770
+#: ../plug-ins/common/file-pdf-save.c:779
 msgid "Save to:"
 msgstr "Salva in:"
 
-#: ../plug-ins/common/file-pdf-save.c:774
+#: ../plug-ins/common/file-pdf-save.c:783
 msgid "Browse..."
 msgstr "Sfoglia..."
 
-#: ../plug-ins/common/file-pdf-save.c:775
+#: ../plug-ins/common/file-pdf-save.c:784
 msgid "Multipage PDF export"
 msgstr "Esportazione PDF multipagina"
 
-#: ../plug-ins/common/file-pdf-save.c:808
+#: ../plug-ins/common/file-pdf-save.c:817
 msgid "Remove the selected pages"
 msgstr "Rimuovi le pagine selezionate"
 
-#: ../plug-ins/common/file-pdf-save.c:818
+#: ../plug-ins/common/file-pdf-save.c:827
 msgid "Add this image"
 msgstr "Aggiungi questa immagine"
 
-#: ../plug-ins/common/file-pdf-save.c:931
+#: ../plug-ins/common/file-pdf-save.c:940
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Errore! Per salvare il file, deve essere aggiunta almeno un'immagine!"
 
@@ -3967,6 +3968,11 @@ msgstr "Errore durante la lettura di \"%s\". File danneggiato?"
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modello di colore sconosciuto nel file PNG \"%s\"."
 
+#: ../plug-ins/common/file-png.c:878
+#, c-format
+msgid "Could not create new image for '%s': %s"
+msgstr "Impossibile creare una nuova immagine per \"%s\": %s"
+
 #: ../plug-ins/common/file-png.c:927
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
@@ -3991,6 +3997,10 @@ msgstr "Errore durante il salvataggio di '%s'. Impossibile salvare l'immagine."
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Errore di caricamento file IU \"%s\": %s"
+
+#: ../plug-ins/common/file-png.c:1896
+msgid "Unknown error"
+msgstr "Errore sconosciuto"
 
 #: ../plug-ins/common/file-pnm.c:248
 msgid "PNM Image"
@@ -4064,8 +4074,8 @@ msgid "Raw"
 msgstr "Raw"
 
 #: ../plug-ins/common/file-pnm.c:1227
-msgid "Ascii"
-msgstr "Ascii"
+msgid "ASCII"
+msgstr "ASCII"
 
 #: ../plug-ins/common/file-ps.c:601 ../plug-ins/common/file-ps.c:693
 msgid "PostScript document"
@@ -8449,10 +8459,9 @@ msgid "Large"
 msgstr "Grande"
 
 #: ../plug-ins/common/web-page.c:317
-#, fuzzy
 msgctxt "web-page"
 msgid "Default"
-msgstr "Predefinito"
+msgstr "Predefinita"
 
 #: ../plug-ins/common/web-page.c:318
 msgid "Small"
@@ -8624,11 +8633,6 @@ msgstr ""
 #: ../plug-ins/file-bmp/bmp-write.c:193 ../plug-ins/file-bmp/bmp-write.c:219
 msgid "Alpha channel will be ignored."
 msgstr "Il canale alfa verrà ignorato."
-
-#. Dialog init
-#: ../plug-ins/file-bmp/bmp-write.c:849
-msgid "BMP"
-msgstr "BMP"
 
 #. Run-Length Encoded
 #: ../plug-ins/file-bmp/bmp-write.c:860
