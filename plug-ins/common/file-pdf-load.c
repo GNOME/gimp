@@ -285,7 +285,7 @@ query (void)
   };
 
   gimp_install_procedure (LOAD_PROC,
-                          "Load file in PDF format.",
+                          "Load file in PDF format",
                           "Loads files in Adobe's Portable Document Format. "
                           "PDF is designed to be easily processed by a variety "
                           "of different platforms, and is a distant cousin of "
