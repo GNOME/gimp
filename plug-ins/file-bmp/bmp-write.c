@@ -846,7 +846,7 @@ save_dialog (gint channels)
   gboolean   run;
 
   /* Dialog init */
-  dialog = gimp_export_dialog_new (_("BMP"), PLUG_IN_BINARY, SAVE_PROC);
+  dialog = gimp_export_dialog_new ("BMP", PLUG_IN_BINARY, SAVE_PROC);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
