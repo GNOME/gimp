@@ -240,7 +240,7 @@ query (void)
   };
 
   gimp_install_procedure (LOAD_PROC,
-                          "loads files of the pnm file format",
+                          "Loads files in the PNM file format",
                           "FIXME: write help for pnm_load",
                           "Erik Nygren",
                           "Erik Nygren",
@@ -260,7 +260,7 @@ query (void)
                                     "string,P4,0,string,P5,0,string,P6");
 
   gimp_install_procedure (PNM_SAVE_PROC,
-                          "saves files in the pnm file format",
+                          "Saves files in the PNM file format",
                           "PNM saving handles all image types without transparency.",
                           "Erik Nygren",
                           "Erik Nygren",
@@ -272,7 +272,7 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (PBM_SAVE_PROC,
-                          "saves files in the pnm file format",
+                          "Saves files in the PBM file format",
                           "PBM saving produces mono images without transparency.",
                           "Martin K Collins",
                           "Erik Nygren",
@@ -284,7 +284,7 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (PGM_SAVE_PROC,
-                          "saves files in the pnm file format",
+                          "Saves files in the PGM file format",
                           "PGM saving produces grayscale images without transparency.",
                           "Erik Nygren",
                           "Erik Nygren",
@@ -296,7 +296,7 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (PPM_SAVE_PROC,
-                          "saves files in the pnm file format",
+                          "Saves files in the PPM file format",
                           "PPM saving handles RGB images without transparency.",
                           "Erik Nygren",
                           "Erik Nygren",
@@ -1054,7 +1054,7 @@ save_image (const gchar  *filename,
               break;
 
             default:
-              g_warning ("pnm: unknown drawable_type\n");
+              g_warning ("PNM: Unknown drawable_type\n");
               return FALSE;
             }
         }
@@ -1094,7 +1094,7 @@ save_image (const gchar  *filename,
               break;
 
             default:
-              g_warning ("pnm: unknown drawable_type\n");
+              g_warning ("PNM: Unknown drawable_type\n");
               return FALSE;
             }
         }
@@ -1130,7 +1130,7 @@ save_image (const gchar  *filename,
               break;
 
             default:
-              g_warning ("images saved as PBM should be black/white");
+              g_warning ("Images saved as PBM should be black/white");
               break;
             }
         }
