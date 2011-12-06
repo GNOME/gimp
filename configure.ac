@@ -330,6 +330,12 @@ CFLAGS="$CFLAGS $extra_warnings"
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wmissing-prototypes')
 CFLAGS="$CFLAGS $extra_warnings"
 
+# We really don't want anyone using code with missing prototypes, which
+# can cause random behavior. If compile breaks due to the following,
+# come to us and we will point you to a newer version which works.
+GIMP_DETECT_CFLAGS(extra_warnings, '-Werror=missing-prototypes')
+CFLAGS="$CFLAGS $extra_warnings"
+
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wstrict-prototypes')
 CFLAGS="$CFLAGS $extra_warnings"
 
