@@ -1224,7 +1224,7 @@ save_dialog (void)
                                     &psvals.raw, psvals.raw,
 
                                     _("Raw"),   TRUE,  NULL,
-                                    _("Ascii"), FALSE, NULL,
+                                    _("ASCII"), FALSE, NULL,
 
                                     NULL);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
