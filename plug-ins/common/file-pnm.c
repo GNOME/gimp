@@ -241,7 +241,7 @@ query (void)
 
   gimp_install_procedure (LOAD_PROC,
                           "Loads files in the PNM file format",
-                          "FIXME: write help for pnm_load",
+                          "This plug-in loads files in the various Netpbm portable file formats.",
                           "Erik Nygren",
                           "Erik Nygren",
                           "1996",
