@@ -875,7 +875,7 @@ load_image (const gchar  *filename,
   if (image == -1)
     {
       g_set_error (error, 0, 0,
-                   "Could not create new image for '%s': %s",
+                   _("Could not create new image for '%s': %s"),
                    gimp_filename_to_utf8 (filename), gimp_get_pdb_error ());
       return -1;
     }
