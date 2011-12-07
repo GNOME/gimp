@@ -14984,7 +14984,7 @@ msgstr "Zakleni kanal alfa"
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
-msgstr[0] "Sporočilo ponovljeno enkrat."
+msgstr[0] "Sporočilo ponovljeno %d-krat."
 msgstr[1] "Sporočilo ponovljeno %d-krat."
 msgstr[2] "Sporočilo ponovljeno %d-krat."
 msgstr[3] "Sporočilo ponovljeno %d-krat."
