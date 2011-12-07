@@ -1102,10 +1102,10 @@ load_dialog (PopplerDocument  *doc,
   n_pages = poppler_document_get_n_pages (doc);
 
   if (n_pages <= 0)
-  {
-    gimp_message (_("Error getting number of pages from the given pdf file\n"));
-    return GIMP_PDB_EXECUTION_ERROR;
-  }
+    {
+      g_message (_("Error getting number of pages from the given PDF file."));
+      return GIMP_PDB_EXECUTION_ERROR;
+    }
 
   gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), n_pages);
   gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector),
