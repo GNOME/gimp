@@ -77,7 +77,7 @@ static gint32            load_image        (PopplerDocument        *doc,
                                             guint32                 resolution,
                                             PdfSelectedPages       *pages);
 
-static gboolean          load_dialog       (PopplerDocument        *doc,
+static GimpPDBStatusType load_dialog       (PopplerDocument        *doc,
                                             PdfSelectedPages       *pages);
 
 static PopplerDocument * open_document     (const gchar            *filename,
@@ -369,10 +369,9 @@ run (const gchar      *name,
               break;
             }
 
-          if (load_dialog (doc, &pages))
+          status = load_dialog (doc, &pages);
+          if (status == GIMP_PDB_SUCCESS)
             gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
-          else
-            status = GIMP_PDB_CANCEL;
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
@@ -1042,7 +1041,7 @@ thumbnail_thread (gpointer data)
   return NULL;
 }
 
-static gboolean
+static GimpPDBStatusType
 load_dialog (PopplerDocument  *doc,
              PdfSelectedPages *pages)
 {
@@ -1105,7 +1104,7 @@ load_dialog (PopplerDocument  *doc,
   if (n_pages <= 0)
   {
     gimp_message (_("Error getting number of pages from the given pdf file\n"));
-    return FALSE;
+    return GIMP_PDB_EXECUTION_ERROR;
   }
 
   gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), n_pages);
@@ -1186,7 +1185,7 @@ load_dialog (PopplerDocument  *doc,
   thread_data.stop_thumbnailing = TRUE;
   g_thread_join (thread);
 
-  return run;
+  return run ? GIMP_PDB_SUCCESS : GIMP_PDB_CANCEL;
 }
 
 
