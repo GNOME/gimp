@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-08 13:59+0300\n"
-"PO-Revision-Date: 2011-09-08 14:55+0300\n"
+"POT-Creation-Date: 2011-12-07 11:57+0200\n"
+"PO-Revision-Date: 2011-12-07 12:00+0300\n"
 "Last-Translator: Korostil Daniel <ted.korostiled@gmail.com>\n"
 "Language-Team: translation@linux.org.ua\n"
 "Language: uk\n"
@@ -1411,8 +1411,8 @@ msgid "Spread"
 msgstr "Розповсюдження"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "Threshold (bigger 1<-->255 smaller)"
-msgstr "Поріг (від 1 до 255)"
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "Поріг (більше 1<-->254 менше)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
@@ -2088,8 +2088,7 @@ msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"Назва файла для створення (якщо файл з цією назвою існує, його буде "
-"замінено)"
+"Назва файла для створення (якщо файл з цією назвою існує, його буде замінено)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
 msgid ""
