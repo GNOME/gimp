@@ -15238,8 +15238,8 @@ msgstr "Замкнути альфа-канал"
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
-msgstr[0] "Повідомлення повторено один раз."
-msgstr[1] "Повідомлення повторено %d рази. "
+msgstr[0] "Повідомлення повторено %d раз."
+msgstr[1] "Повідомлення повторено %d рази."
 msgstr[2] "Повідомлення повторено %d разів."
 
 #: ../app/widgets/gimppaletteeditor.c:226
