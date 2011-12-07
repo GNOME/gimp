@@ -1571,12 +1571,12 @@ gimp_parasite_list (gint    *num_parasites,
  * Convenience function that creates a parasite and attaches it
  * to GIMP.
  *
- * Deprecated: Use gimp_parasite_attach() instead.
+ * Deprecated: Use gimp_attach_parasite() instead.
  *
  * Return value: TRUE on successful creation and attachment of
  * the new parasite.
  *
- * See Also: gimp_parasite_attach()
+ * See Also: gimp_attach_parasite()
  */
 gboolean
 gimp_attach_new_parasite (const gchar   *name,
