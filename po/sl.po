@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-03 23:08+0000\n"
-"PO-Revision-Date: 2011-12-04 00:38+0100\n"
+"POT-Creation-Date: 2011-12-06 21:41+0000\n"
+"PO-Revision-Date: 2011-12-06 23:58+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -5420,6 +5420,16 @@ msgstr "Celo_zaslonsko"
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Vključi/izključi celozaslonski pogled"
+
+#: ../app/actions/view-actions.c:238
+msgctxt "view-action"
+msgid "Use GEGL"
+msgstr "Uporabi GEGL"
+
+#: ../app/actions/view-actions.c:239
+msgctxt "view-action"
+msgid "Use GEGL to create this window's projection"
+msgstr "Uporabi GEGL za tvorbo projekcije tega okna"
 
 #: ../app/actions/view-actions.c:263
 msgctxt "view-zoom-action"
@@ -14974,10 +14984,10 @@ msgstr "Zakleni kanal alfa"
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
-msgstr[0] "Sporočilo je ponovljeno %d-krat."
-msgstr[1] "Sporočilo je ponovljeno %d-krat."
-msgstr[2] "Sporočilo je ponovljeno %d-krat."
-msgstr[3] "Sporočilo je ponovljeno %d-krat."
+msgstr[0] "Sporočilo ponovljeno enkrat."
+msgstr[1] "Sporočilo ponovljeno %d-krat."
+msgstr[2] "Sporočilo ponovljeno %d-krat."
+msgstr[3] "Sporočilo ponovljeno %d-krat."
 
 #: ../app/widgets/gimppaletteeditor.c:226
 #: ../app/widgets/gimppaletteeditor.c:682
