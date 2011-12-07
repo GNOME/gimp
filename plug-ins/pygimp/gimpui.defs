@@ -2684,6 +2684,7 @@
 (define-function gimp_unit_menu_get_type
   (c-name "gimp_unit_menu_get_type")
   (return-type "GType")
+  (deprecated "use gimpui.UnitComboBox instead")
 )
 
 (define-function gimp_unit_menu_new
@@ -2697,6 +2698,7 @@
     '("gboolean" "show_percent")
     '("gboolean" "show_custom")
   )
+  (deprecated "use gimpui.UnitComboBox instead")
 )
 
 (define-method set_unit
@@ -2706,12 +2708,14 @@
   (parameters
     '("GimpUnit" "unit")
   )
+  (deprecated "use gimpui.UnitComboBox instead")
 )
 
 (define-method get_unit
   (of-object "GimpUnitMenu")
   (c-name "gimp_unit_menu_get_unit")
   (return-type "GimpUnit")
+  (deprecated "use gimpui.UnitComboBox instead")
 )
 
 (define-method set_pixel_digits
@@ -2721,12 +2725,14 @@
   (parameters
     '("gint" "digits")
   )
+  (deprecated "use gimpui.UnitComboBox instead")
 )
 
 (define-method get_pixel_digits
   (of-object "GimpUnitMenu")
   (c-name "gimp_unit_menu_get_pixel_digits")
   (return-type "gint")
+  (deprecated "use gimpui.UnitComboBox instead")
 )
 
 
