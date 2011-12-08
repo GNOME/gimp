@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-06 21:42+0000\n"
-"PO-Revision-Date: 2011-12-06 23:59+0100\n"
+"POT-Creation-Date: 2011-12-07 18:10+0000\n"
+"PO-Revision-Date: 2011-12-07 20:18+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -3197,7 +3197,7 @@ msgstr "Naloži paleto KISS"
 #: ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342
 #: ../plug-ins/common/file-pcx.c:366
-#: ../plug-ins/common/file-pdf-load.c:843
+#: ../plug-ins/common/file-pdf-load.c:842
 #: ../plug-ins/common/file-pix.c:348
 #: ../plug-ins/common/file-png.c:759
 #: ../plug-ins/common/file-pnm.c:499
@@ -3965,47 +3965,51 @@ msgstr "Pisanje v datoteko '%s' ni uspelo: %s"
 msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
 
-#: ../plug-ins/common/file-pdf-load.c:544
-#: ../plug-ins/common/file-pdf-load.c:563
+#: ../plug-ins/common/file-pdf-load.c:543
+#: ../plug-ins/common/file-pdf-load.c:562
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "'%s' ni mogoče naložiti: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:877
+#: ../plug-ins/common/file-pdf-load.c:876
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:879
+#: ../plug-ins/common/file-pdf-load.c:878
 #: ../plug-ins/common/file-ps.c:1126
 #, c-format
 msgid "%s-pages"
 msgstr "%s-strani"
 
-#: ../plug-ins/common/file-pdf-load.c:1069
+#: ../plug-ins/common/file-pdf-load.c:1068
 msgid "Import from PDF"
 msgstr "Uvozi iz PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1074
+#: ../plug-ins/common/file-pdf-load.c:1073
 #: ../plug-ins/common/file-ps.c:3100
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Uvozi"
 
-#: ../plug-ins/common/file-pdf-load.c:1142
+#: ../plug-ins/common/file-pdf-load.c:1106
+msgid "Error getting number of pages from the given PDF file."
+msgstr "Napaka pri pridobivanju števila strani iz dane datoteke PDF."
+
+#: ../plug-ins/common/file-pdf-load.c:1148
 msgid "_Width (pixels):"
 msgstr "_Širina (slik. točke):"
 
-#: ../plug-ins/common/file-pdf-load.c:1143
+#: ../plug-ins/common/file-pdf-load.c:1149
 msgid "_Height (pixels):"
 msgstr "_Višina (slik. točke):"
 
-#: ../plug-ins/common/file-pdf-load.c:1145
+#: ../plug-ins/common/file-pdf-load.c:1151
 msgid "_Resolution:"
 msgstr "_Ločljivost:"
 
-#: ../plug-ins/common/file-pdf-load.c:1425
-#: ../plug-ins/common/file-pdf-load.c:1426
+#: ../plug-ins/common/file-pdf-load.c:1431
+#: ../plug-ins/common/file-pdf-load.c:1432
 #: ../plug-ins/common/file-svg.c:917
 #: ../plug-ins/common/file-wmf.c:698
 #: ../plug-ins/print/print-page-layout.c:285
