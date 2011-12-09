@@ -444,7 +444,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_BUTTON_PRESS:
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
-        GdkEventMask    event_mask;
         GimpTool       *active_tool;
 
         /*  ignore new mouse events  */
@@ -505,7 +504,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else if (bevent->button == 1)
           {
-            event_mask = (GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK);
+            GdkEventMask event_mask = (GDK_BUTTON1_MOTION_MASK |
+                                       GDK_BUTTON_RELEASE_MASK);
 
             if (active_tool &&
                 (! shell->display->config->perfect_mouse ||
