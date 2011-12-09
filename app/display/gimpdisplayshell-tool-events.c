@@ -447,6 +447,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventMask    event_mask;
         GimpTool       *active_tool;
 
+        /*  ignore new mouse events  */
+        if (gimp->busy || shell->scrolling)
+          return TRUE;
+
+        /* ignore new buttons while another button is down */
+        if (state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK))
+          return TRUE;
+
         /*  focus the widget if it isn't; if the toplevel window
          *  already has focus, this will generate a FOCUS_IN on the
          *  canvas immediately, therefore we do this before logging
@@ -465,10 +473,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                          &image_coords, state);
         gimp_display_shell_update_cursor (shell, &display_coords,
                                           &image_coords, state, FALSE);
-
-        /*  ignore new mouse events  */
-        if (gimp->busy || shell->scrolling)
-          return TRUE;
 
         active_tool = tool_manager_get_active (gimp);
 
@@ -643,7 +647,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (bevent->button == 1)
           {
-            if (! shell->pointer_grabbed)
+            if (! shell->pointer_grabbed || shell->scrolling)
               return TRUE;
 
             if (! shell->space_pressed && ! shell->space_release_pending)
