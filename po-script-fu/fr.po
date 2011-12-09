@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-18 23:25+0000\n"
-"PO-Revision-Date: 2011-09-18 08:05+0200\n"
+"POT-Creation-Date: 2011-11-18 02:56+0000\n"
+"PO-Revision-Date: 2011-12-09 14:53+0100\n"
 "Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -1428,8 +1428,8 @@ msgid "Spread"
 msgstr "Dispersion"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "Threshold (bigger 1<-->255 smaller)"
-msgstr "Seuil (plus grand 1<-->255 plus petit)"
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "Seuil (plus grand 1<-->254 plus petit)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."

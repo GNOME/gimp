@@ -22,8 +22,8 @@ msgstr ""
 "Project-Id-Version: The GIMP HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-11-09 20:51+0000\n"
-"PO-Revision-Date: 2011-11-14 17:57+0200\n"
+"POT-Creation-Date: 2011-12-05 14:02+0000\n"
+"PO-Revision-Date: 2011-12-09 14:44+0100\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -5403,6 +5403,16 @@ msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Bascule la vue plein écran"
 
+#: ../app/actions/view-actions.c:238
+msgctxt "view-action"
+msgid "Use GEGL"
+msgstr "Utiliser GEGL"
+
+#: ../app/actions/view-actions.c:239
+msgctxt "view-action"
+msgid "Use GEGL to create this window's projection"
+msgstr "Utiliser GEGL pour créer la projection de cette fenêtre"
+
 #: ../app/actions/view-actions.c:263
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
@@ -7356,7 +7366,7 @@ msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Fluctuation"
 
-#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:344
+#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:366
 #: ../app/gui/session.c:392 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:206
 #, c-format
@@ -7831,7 +7841,7 @@ msgid "Selection Mask"
 msgstr "Masque de sélection"
 
 #: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:113
-#: ../app/widgets/gimplayertreeview.c:284
+#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity"
 msgstr "Opacité"
 
@@ -8438,7 +8448,7 @@ msgid "(Preview may be out of date)"
 msgstr "(L'aperçu est peut être périmé)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:438
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:437
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
@@ -8446,7 +8456,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d x %d pixel"
 msgstr[1] "%d x %d pixels"
 
-#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:339
+#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:336
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -8473,7 +8483,7 @@ msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Supprimer un parasite de l'élément"
 
-#: ../app/core/gimpitem-exclusive.c:79
+#: ../app/core/gimpitem-exclusive.c:81
 msgid "Set Item Exclusive Visible"
 msgstr "Rendre l'élément exclusivement visible"
 
@@ -10057,7 +10067,7 @@ msgid "Vertical"
 msgstr "Vertical"
 
 #: ../app/dialogs/preferences-dialog.c:2336
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "ppp"
 
@@ -10809,21 +10819,21 @@ msgstr "(modifié)"
 msgid "(clean)"
 msgstr "(correct)"
 
-#: ../app/display/gimpdisplayshell-title.c:360
-#: ../app/display/gimpdisplayshell-title.c:373
-#: ../app/widgets/gimpactiongroup.c:891
+#: ../app/display/gimpdisplayshell-title.c:357
+#: ../app/display/gimpdisplayshell-title.c:370
+#: ../app/widgets/gimpactiongroup.c:860
 msgid "(none)"
 msgstr "(aucune)"
 
-#: ../app/display/gimpdisplayshell-title.c:502
+#: ../app/display/gimpdisplayshell-title.c:499
 msgid " (exported)"
 msgstr " (exportée)"
 
-#: ../app/display/gimpdisplayshell-title.c:504
+#: ../app/display/gimpdisplayshell-title.c:501
 msgid " (overwritten)"
 msgstr " (écrasée)"
 
-#: ../app/display/gimpdisplayshell-title.c:510
+#: ../app/display/gimpdisplayshell-title.c:507
 msgid " (imported)"
 msgstr " (importée)"
 
@@ -10848,16 +10858,16 @@ msgstr ""
 msgid "%s plug-In could not open image"
 msgstr "Le greffon %s n'a pas pu ouvrir l'image"
 
-#: ../app/file/file-open.c:523
+#: ../app/file/file-open.c:526
 msgid "Image doesn't contain any layers"
 msgstr "L'image ne contient aucun calque"
 
-#: ../app/file/file-open.c:576
+#: ../app/file/file-open.c:579
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "L'ouverture de « %s » a échoué : %s"
 
-#: ../app/file/file-open.c:683
+#: ../app/file/file-open.c:686
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -13317,7 +13327,7 @@ msgstr "_Pinceau"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
 #: ../app/tools/gimpselectionoptions.c:217
-#: ../app/widgets/gimpbrushselect.c:185 ../app/widgets/gimplayertreeview.c:268
+#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
 msgstr "Mode :"
 
@@ -14390,7 +14400,7 @@ msgstr "Impossible d'importer des chemins depuis « %s » : %s"
 msgid "_Search:"
 msgstr "_Rechercher :"
 
-#: ../app/widgets/gimpactiongroup.c:888
+#: ../app/widgets/gimpactiongroup.c:857
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RVBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -14460,10 +14470,6 @@ msgstr "Espacement"
 #: ../app/widgets/gimpbrushfactoryview.c:84
 msgid "Percentage of width of brush"
 msgstr "Pourcentage de largeur de brosse"
-
-#: ../app/widgets/gimpbrushselect.c:172
-msgid "Opacity:"
-msgstr "Opacité :"
 
 #: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
 #: ../app/widgets/gimpeditor.c:748
@@ -15050,7 +15056,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: ../app/widgets/gimpdockbook.c:292
+#: ../app/widgets/gimpdockbook.c:295
 msgid "Configure this tab"
 msgstr "Configurer cet onglet"
 
@@ -15401,22 +15407,22 @@ msgid "Number of paths:"
 msgstr "Nombre de chemins :"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:408
+#: ../app/widgets/gimpimagepropview.c:407
 msgid "None"
 msgstr "Aucun"
 
-#: ../app/widgets/gimpimagepropview.c:462
+#: ../app/widgets/gimpimagepropview.c:461
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "pixels/%s"
 
-#: ../app/widgets/gimpimagepropview.c:464
+#: ../app/widgets/gimpimagepropview.c:463
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g x %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:485
+#: ../app/widgets/gimpimagepropview.c:484
 msgid "colors"
 msgstr "couleurs"
 
@@ -15566,7 +15572,7 @@ msgstr "saisir les mots-clés"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1714
+#: ../app/widgets/gimptagentry.c:1732
 msgid ","
 msgstr ","
 
@@ -15653,19 +15659,19 @@ msgstr "Modifie le crénage du texte sélectionné"
 msgid "Change baseline of selected text"
 msgstr "Modifie la ligne de base du texte sélectionné"
 
-#: ../app/widgets/gimptextstyleeditor.c:325
+#: ../app/widgets/gimptextstyleeditor.c:328
 msgid "Bold"
 msgstr "Gras"
 
-#: ../app/widgets/gimptextstyleeditor.c:328
+#: ../app/widgets/gimptextstyleeditor.c:331
 msgid "Italic"
 msgstr "Italique"
 
-#: ../app/widgets/gimptextstyleeditor.c:331
+#: ../app/widgets/gimptextstyleeditor.c:334
 msgid "Underline"
 msgstr "Souligné"
 
-#: ../app/widgets/gimptextstyleeditor.c:334
+#: ../app/widgets/gimptextstyleeditor.c:337
 msgid "Strikethrough"
 msgstr "Barré"
 
@@ -16084,3 +16090,6 @@ msgstr "Créer des images et modifier des photographies"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
 msgstr "Éditeur d'image"
+
+#~ msgid "Opacity:"
+#~ msgstr "Opacité :"

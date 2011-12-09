@@ -1,5 +1,5 @@
 # French translation of gimp-tips
-# Copyright (C) 2002-2007 Free Software Foundation, Inc.
+# Copyright (C) 2002-2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 # Raymond Ostertag <r.ostertag@caramail.com>, 2003-2007.
@@ -11,10 +11,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-07 15:37+0200\n"
-"PO-Revision-Date: 2007-09-07 15:25+0200\n"
-"Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-12-06 19:18+0000\n"
+"PO-Revision-Date: 2011-12-09 14:48+0100\n"
+"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,10 +23,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Bienvenue sur le « GNU Image Manipulation Program » !</big>"
-
-#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -37,7 +34,7 @@ msgstr ""
 "similaire, un <tt>Ctrl</tt> + clic avec l'outil pipette capturera la couleur "
 "d'arrière-plan au lieu de la couleur de premier-plan."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -48,7 +45,7 @@ msgstr ""
 "<tt>Alt</tt> + clic sur l'aperçu d'un masque de calque dans la boîte de "
 "dialogue des calques active/désactive l'affichage direct du masque."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -56,7 +53,7 @@ msgstr ""
 "Un <tt>Ctrl</tt> + glissé avec l'outil rotation contraindra la rotation à "
 "des angles multiples de 15 degrés."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -65,7 +62,7 @@ msgstr ""
 "calques pour masquer tous les calques sauf celui-là. <tt>Majuscule</tt>-clic "
 "à nouveau pour afficher tous les calques."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -78,7 +75,7 @@ msgstr ""
 "&laquo; Ancrer le calque &raquo; dans la boîte de dialogue des calques, ou "
 "utilisez le menu pour faire de même."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -97,7 +94,7 @@ msgstr ""
 "raccourcis claviers dynamiques &raquo; pour éviter de réassigner "
 "accidentellement un raccourci clavier."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -107,15 +104,7 @@ msgstr ""
 "les constructions de sélection vont accrocher aux guides. Vous pouvez "
 "enlever les guides en les glissant hors de l'image avec l'outil déplacer."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
-msgid ""
-"GIMP allows you to undo most changes to the image, so feel free to "
-"experiment."
-msgstr ""
-"GIMP peut annuler presque tous les changements faits dans l'image, n'hésitez "
-"donc pas à expérimenter."
-
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
@@ -126,7 +115,7 @@ msgstr ""
 "fichier et votre image sera compressée et sauvegardée. Bien sûr le "
 "chargement d'images compressées fonctionne également."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -136,7 +125,7 @@ msgstr ""
 "une pile de calques ou de transparents, de telle façon qu'en regardant à "
 "travers eux vous verriez une image composée de leurs contenus."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -146,7 +135,7 @@ msgstr ""
 "<b>gras</b>, ce calque n'a pas de canal alpha. Vous pouvez ajouter un canal "
 "alpha en utilisant Calques→Transparence→Ajouter un canal alpha."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -159,7 +148,7 @@ msgstr ""
 "une couleur dominante quelconque vous pouvez la corriger avec l'outil "
 "courbes (Couleurs→Courbes)."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -169,7 +158,7 @@ msgstr ""
 "peinture avec ses réglages courants peut être utilisé. Vous pouvez utilisez "
 "le pinceau en mode dégradé ou même la gomme ou l'outil éclaircir/assombrir."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -178,7 +167,7 @@ msgstr ""
 "<tt>Tabulation</tt> dans une fenêtre d'image pour afficher ou masquer la "
 "boîte à outils et les autres boîtes de dialogue."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -188,7 +177,7 @@ msgstr ""
 "actuelle. Parfois vous aurez à fusionner tous les calques (Image→Aplatir "
 "l'image) si vous souhaitez que le filtre agisse sur l'image entière."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -201,7 +190,7 @@ msgstr ""
 "canal alpha (Calque→Transparence→Ajouter un canal alpha) ou l'aplatir "
 "(Image→Aplatir l'image)."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -212,33 +201,19 @@ msgstr ""
 "remplacer. Utiliser <tt>Ctrl</tt> avant de faire une sélection la soustrait "
 "de la sélection actuelle."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
-msgid ""
-"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-"ellipse select. To place a circle precisely, drag horizontal and vertical "
-"guides tangent to the circle you want to select, place your cursor at the "
-"intersection of the guides, and the resulting selection will just touch the "
-"guides."
-msgstr ""
-"Pour créer un cercle parfait maintenez la touche <tt>Majuscule</tt> tandis "
-"que vous faites une sélection elliptique. Pour placer un cercle précisément, "
-"mettez en place des guides verticaux et horizontaux tangents au cercle que "
-"vous voulez faire, placez votre curseur à l'intersection des guides et la "
-"sélection résultante coïncidera avec les guides."
-
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and every aspect of your work-in-progress. Once a project is "
-"completed, you can save it as JPEG, PNG, GIF, ..."
+"the layers and many aspects of your work-in-progress. Once a project is "
+"completed, you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
 "Quand vous enregistrez une image pour la retravailler plus tard, essayez le "
 "format XCF qui est le format natif de GIMP (extension <tt>.xcf</tt>). Ceci "
-"conserve les calques et tous les aspects de votre travail en cours. Une fois "
-"qu'un projet est terminé, vous pouvez l'enregistrer en JPEG, PNG, GIF, ..."
+"conserve les calques et de nombreux aspects de votre travail en cours. Une fois "
+"qu'un projet est terminé, vous pouvez l'exporter en JPEG, PNG, GIF, etc."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -252,7 +227,7 @@ msgstr ""
 "la touche <tt>Alt</tt> ou utiliser la touche <tt>Logo</tt> (ou logo Windows) "
 "à la place."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -262,7 +237,7 @@ msgstr ""
 "chemin. La boîte de dialogue des chemins vous permet de travailler sur de "
 "multiples chemins et de les convertir en sélections."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -271,7 +246,7 @@ msgstr ""
 "mettre dans la boîte d'outils. Ceci créera une nouvelle image contenant "
 "uniquement ce calque."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -282,7 +257,7 @@ msgstr ""
 "couleurs et la mettre dans une image va remplir l'image ou la sélection "
 "actuelle avec cette couleur."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -293,7 +268,7 @@ msgstr ""
 "actuelle. Des figures géométriques plus complexes sont réalisables avec "
 "l'outil chemin ou avec Filtres→Rendu→Figures géométriques."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
@@ -302,7 +277,7 @@ msgstr ""
 "fonctionnalités de GIMP en pressant à tout moment la touche F1. Cette aide "
 "est aussi disponible dans les menus."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -310,7 +285,7 @@ msgstr ""
 "Vous pouvez réaliser de nombreuses opérations en faisant un clic-droit sur "
 "le titre d'un calque dans la boîte de dialogue des calques."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -323,7 +298,7 @@ msgstr ""
 "activer/désactiver la visibilité de ce nouveau canal ou le convertir vers "
 "une sélection."
 
-#: ../data/tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -332,7 +307,7 @@ msgstr ""
 "travers des calques d'une image (si votre environnement ne capture pas ces "
 "touches...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -341,7 +316,7 @@ msgstr ""
 "dans l'image (ou optionnellement maintenir <tt>la barre d'espace</tt> tandis "
 "que vous déplacez la souris)."
 
-#: ../data/tips/gimp-tips.xml.in.h:31
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
