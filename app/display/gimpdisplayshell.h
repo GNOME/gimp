@@ -170,9 +170,10 @@ struct _GimpDisplayShell
 
   /*  the state of gimp_display_shell_tool_events()  */
   gboolean           pointer_grabbed;
+  guint32            pointer_grab_time;
+
   gboolean           keyboard_grabbed;
-  gboolean           pointer_grab_time;
-  gboolean           keyboard_grab_time;
+  guint32            keyboard_grab_time;
 
   gboolean           space_pressed;
   gboolean           space_release_pending;
