@@ -23,11 +23,6 @@
 
 #include "display-types.h"
 
-#include "widgets/gimpdeviceinfo.h"
-#include "widgets/gimpdevices.h"
-#include "widgets/gimpdevicemanager.h"
-
-#include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-grab.h"
 
@@ -37,46 +32,33 @@ gimp_display_shell_pointer_grab (GimpDisplayShell *shell,
                                  const GdkEvent   *event,
                                  GdkEventMask      event_mask)
 {
-  GdkGrabStatus status;
-
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-  g_return_val_if_fail (event != NULL, FALSE);
   g_return_val_if_fail (shell->pointer_grabbed == FALSE, FALSE);
+  g_return_val_if_fail (shell->pointer_grab_time == 0, FALSE);
 
-  status = gdk_pointer_grab (gtk_widget_get_window (shell->canvas),
-                             FALSE, event_mask, NULL, NULL,
-                             gdk_event_get_time (event));
-
-  if (status == GDK_GRAB_SUCCESS)
+  if (event)
     {
-      shell->pointer_grabbed = TRUE;
+      GdkGrabStatus status;
 
-      return TRUE;
-    }
-  else if (status == GDK_GRAB_ALREADY_GRABBED)
-    {
-      GimpDeviceManager *manager;
-      GdkDisplay        *gdk_display;
+      status = gdk_pointer_grab (gtk_widget_get_window (shell->canvas),
+                                 FALSE, event_mask, NULL, NULL,
+                                 gdk_event_get_time (event));
 
-      manager = gimp_devices_get_manager (shell->display->gimp);
-      gdk_display = gtk_widget_get_display (GTK_WIDGET (shell));
-
-      /*  EEK: trying to grab an extended device always returns
-       *  ALREADY_GRABBED, so simply assume the grab succeeded anyway
-       */
-      if (gimp_device_manager_get_current_device (manager)->device !=
-          gdk_display_get_core_pointer (gdk_display))
+      if (status != GDK_GRAB_SUCCESS)
         {
-          shell->pointer_grabbed = TRUE;
-
-          return TRUE;
+          g_printerr ("%s: gdk_pointer_grab failed with status %d\n",
+                      G_STRFUNC, status);
+          return FALSE;
         }
+
+      shell->pointer_grab_time = gdk_event_get_time (event);
     }
 
-  g_printerr ("%s: gdk_pointer_grab failed with status %d\n",
-              G_STRFUNC, status);
+  gtk_grab_add (shell->canvas);
 
-  return FALSE;
+  shell->pointer_grabbed = TRUE;
+
+  return TRUE;
 }
 
 void
@@ -84,11 +66,18 @@ gimp_display_shell_pointer_ungrab (GimpDisplayShell *shell,
                                    const GdkEvent   *event)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (event != NULL);
   g_return_if_fail (shell->pointer_grabbed == TRUE);
+  g_return_if_fail (event == NULL || shell->pointer_grab_time != 0);
 
-  gdk_display_pointer_ungrab (gtk_widget_get_display (shell->canvas),
-                              gdk_event_get_time (event));
+  gtk_grab_remove (shell->canvas);
+
+  if (event)
+    {
+      gdk_display_pointer_ungrab (gtk_widget_get_display (shell->canvas),
+                                  shell->pointer_grab_time);
+
+      shell->pointer_grab_time = 0;
+    }
 
   shell->pointer_grabbed = FALSE;
 }
@@ -102,22 +91,23 @@ gimp_display_shell_keyboard_grab (GimpDisplayShell *shell,
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
   g_return_val_if_fail (shell->keyboard_grabbed == FALSE, FALSE);
+  g_return_val_if_fail (shell->keyboard_grab_time == 0, FALSE);
 
   status = gdk_keyboard_grab (gtk_widget_get_window (shell->canvas),
                               FALSE,
                               gdk_event_get_time (event));
 
-  if (status == GDK_GRAB_SUCCESS)
+  if (status != GDK_GRAB_SUCCESS)
     {
-      shell->keyboard_grabbed = TRUE;
-
-      return TRUE;
+      g_printerr ("%s: gdk_keyboard_grab failed with status %d\n",
+                  G_STRFUNC, status);
+      return FALSE;
     }
 
-  g_printerr ("%s: gdk_keyboard_grab failed with status %d\n",
-              G_STRFUNC, status);
+  shell->keyboard_grabbed   = TRUE;
+  shell->keyboard_grab_time = gdk_event_get_time (event);
 
-  return FALSE;
+  return TRUE;
 }
 
 void
@@ -127,9 +117,11 @@ gimp_display_shell_keyboard_ungrab (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (event != NULL);
   g_return_if_fail (shell->keyboard_grabbed == TRUE);
+  g_return_if_fail (shell->keyboard_grab_time != 0);
 
   gdk_display_keyboard_ungrab (gtk_widget_get_display (shell->canvas),
-                               gdk_event_get_time (event));
+                               shell->keyboard_grab_time);
 
-  shell->keyboard_grabbed = FALSE;
+  shell->keyboard_grabbed   = FALSE;
+  shell->keyboard_grab_time = 0;
 }

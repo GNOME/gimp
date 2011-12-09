@@ -45,6 +45,31 @@ gimp_device_info_get_event_coords (GimpDeviceInfo *info,
       coords->x = x;
       gdk_event_get_axis (event, GDK_AXIS_Y, &coords->y);
 
+      /* translate event coordinates to window coordinates, only
+       * happens if we drag a guide from a ruler
+       */
+      if (event->any.window &&
+          event->any.window != window)
+        {
+          GtkWidget *src_widget;
+          GtkWidget *dest_widget;
+
+          src_widget = gtk_get_event_widget ((GdkEvent *) event);
+          gdk_window_get_user_data (window, (gpointer) &dest_widget);
+
+          if (src_widget && dest_widget)
+            {
+              gint offset_x;
+              gint offset_y;
+
+              gtk_widget_translate_coordinates (src_widget, dest_widget,
+                                                0, 0, &offset_x, &offset_y);
+
+              coords->x += offset_x;
+              coords->y += offset_y;
+            }
+        }
+
       if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure))
         {
           coords->pressure = gimp_device_info_map_axis (info,
