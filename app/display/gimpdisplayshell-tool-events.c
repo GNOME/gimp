@@ -447,11 +447,19 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GimpTool       *active_tool;
 
         /*  ignore new mouse events  */
-        if (gimp->busy || shell->scrolling)
+        if (gimp->busy || shell->scrolling || shell->pointer_grabbed)
           return TRUE;
 
+        state |= gimp_display_shell_button_to_state (bevent->button);
+
         /* ignore new buttons while another button is down */
-        if (state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK))
+        if ((state & (GDK_BUTTON1_MASK)) && (state & (GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
+          return TRUE;
+
+        if ((state & (GDK_BUTTON2_MASK)) && (state & (GDK_BUTTON1_MASK | GDK_BUTTON3_MASK)))
+          return TRUE;
+
+        if ((state & (GDK_BUTTON3_MASK)) && (state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK)))
           return TRUE;
 
         /*  focus the widget if it isn't; if the toplevel window
@@ -474,8 +482,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                           &image_coords, state, FALSE);
 
         active_tool = tool_manager_get_active (gimp);
-
-        state |= gimp_display_shell_button_to_state (bevent->button);
 
         if (gdk_event_triggers_context_menu (event))
           {
