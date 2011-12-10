@@ -188,7 +188,6 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
 {
   GimpTool *tool = GIMP_TOOL (vector_tool);
 
-  gimp_tool_control_set_scroll_lock        (tool->control, FALSE);
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_motion_mode        (tool->control,
                                             GIMP_MOTION_MODE_COMPRESS);

@@ -62,8 +62,7 @@
 #include "gimp-intl.h"
 
 
-#define EDIT_SELECT_SCROLL_LOCK FALSE
-#define ARROW_VELOCITY          25
+#define ARROW_VELOCITY 25
 
 
 typedef struct _GimpEditSelectionTool      GimpEditSelectionTool;
@@ -150,7 +149,6 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
 {
   GimpTool *tool = GIMP_TOOL (edit_selection_tool);
 
-  gimp_tool_control_set_scroll_lock (tool->control, EDIT_SELECT_SCROLL_LOCK);
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
 
   edit_selection_tool->origx      = 0;
