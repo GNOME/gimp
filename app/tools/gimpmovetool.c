@@ -154,6 +154,8 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 {
   GimpTool *tool = GIMP_TOOL (move_tool);
 
+  gimp_tool_control_set_motion_mode        (tool->control,
+                                            GIMP_MOTION_MODE_COMPRESS);
   gimp_tool_control_set_snap_to            (tool->control, FALSE);
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor        (tool->control,
