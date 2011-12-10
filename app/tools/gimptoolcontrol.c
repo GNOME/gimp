@@ -51,7 +51,7 @@ gimp_tool_control_init (GimpToolControl *control)
   control->handle_empty_image     = FALSE;
 
   control->dirty_mask             = GIMP_DIRTY_NONE;
-  control->motion_mode            = GIMP_MOTION_MODE_HINT;
+  control->motion_mode            = GIMP_MOTION_MODE_EXACT;
 
   control->auto_snap_to           = TRUE;
   control->snap_offset_x          = 0;
@@ -234,7 +234,7 @@ gimp_tool_control_set_motion_mode (GimpToolControl *control,
 GimpMotionMode
 gimp_tool_control_get_motion_mode (GimpToolControl *control)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), GIMP_MOTION_MODE_HINT);
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), GIMP_MOTION_MODE_EXACT);
 
   return control->motion_mode;
 }

@@ -161,7 +161,6 @@ typedef enum /*< skip >*/
 typedef enum /*< skip >*/
 {
   GIMP_MOTION_MODE_EXACT,
-  GIMP_MOTION_MODE_HINT,
   GIMP_MOTION_MODE_COMPRESS
 } GimpMotionMode;
 

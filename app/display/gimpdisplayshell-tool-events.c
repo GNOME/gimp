@@ -444,7 +444,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_BUTTON_PRESS:
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
-        GimpTool       *active_tool;
 
         /*  ignore new mouse events  */
         if (gimp->busy || shell->scrolling || shell->pointer_grabbed)
@@ -480,8 +479,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         gimp_display_shell_update_cursor (shell, &display_coords,
                                           &image_coords, state, FALSE);
 
-        active_tool = tool_manager_get_active (gimp);
-
         if (gdk_event_triggers_context_menu (event))
           {
             GimpUIManager *ui_manager;
@@ -509,30 +506,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else if (bevent->button == 1)
           {
-            GdkEventMask event_mask = (GDK_BUTTON1_MOTION_MASK |
-                                       GDK_BUTTON_RELEASE_MASK);
-
-            if (active_tool &&
-                (! shell->display->config->perfect_mouse ||
-                 (gimp_tool_control_get_motion_mode (active_tool->control) !=
-                  GIMP_MOTION_MODE_EXACT)))
-              {
-                GdkDisplay        *gdk_display = gtk_widget_get_display (canvas);
-                GimpDeviceManager *manager;
-
-                manager = gimp_devices_get_manager (gimp);
-
-                /*  don't request motion hins for XInput devices because
-                 *  the wacom driver is known to report crappy hints
-                 *  (#6901) --mitch
-                 */
-                if (gimp_device_manager_get_current_device (manager)->device ==
-                    gdk_display_get_core_pointer (gdk_display))
-                  {
-                    event_mask |= GDK_POINTER_MOTION_HINT_MASK;
-                  }
-              }
-
             if (! gimp_display_shell_pointer_grab (shell, NULL, 0))
               return TRUE;
 
@@ -836,9 +809,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                              NULL);
               }
           }
-
-        /* Ask for more motion events in case the event was a hint */
-        gdk_event_request_motions (mevent);
 
         /*  call proximity_in() here because the pointer might already
          *  be in proximity when the canvas starts to receive events,
