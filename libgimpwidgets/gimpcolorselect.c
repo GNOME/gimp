@@ -671,11 +671,7 @@ gimp_color_select_xy_events (GtkWidget       *widget,
         x = bevent->x;
         y = bevent->y;
 
-        gdk_pointer_grab (gtk_widget_get_window (select->xy_color), FALSE,
-                          GDK_POINTER_MOTION_HINT_MASK |
-                          GDK_BUTTON_MOTION_MASK       |
-                          GDK_BUTTON_RELEASE_MASK,
-                          NULL, NULL, bevent->time);
+        gtk_grab_add (widget);
         select->drag_mode = DRAG_XY;
       }
       break;
@@ -690,8 +686,7 @@ gimp_color_select_xy_events (GtkWidget       *widget,
         x = bevent->x;
         y = bevent->y;
 
-        gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                    bevent->time);
+        gtk_grab_remove (widget);
         select->drag_mode = DRAG_NONE;
       }
       break;
@@ -793,11 +788,7 @@ gimp_color_select_z_events (GtkWidget       *widget,
 
         z = bevent->y;
 
-        gdk_pointer_grab (gtk_widget_get_window (select->z_color), FALSE,
-                          GDK_POINTER_MOTION_HINT_MASK |
-                          GDK_BUTTON_MOTION_MASK       |
-                          GDK_BUTTON_RELEASE_MASK,
-                          NULL, NULL, bevent->time);
+        gtk_grab_add (widget);
         select->drag_mode = DRAG_Z;
       }
       break;
@@ -811,8 +802,7 @@ gimp_color_select_z_events (GtkWidget       *widget,
 
         z = bevent->y;
 
-        gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                    bevent->time);
+        gtk_grab_remove (widget);
         select->drag_mode = DRAG_NONE;
       }
       break;

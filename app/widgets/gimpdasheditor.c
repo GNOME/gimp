@@ -351,9 +351,8 @@ gimp_dash_editor_button_press (GtkWidget      *widget,
 
   if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
     {
-      gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
-                        GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
-                        NULL, NULL, bevent->time);
+      gtk_grab_add (widget);
+
       index = dash_x_to_index (editor, bevent->x);
 
       editor->edit_mode = ! editor->segments [index];
@@ -375,8 +374,7 @@ gimp_dash_editor_button_release (GtkWidget      *widget,
 
   if (bevent->button == 1)
     {
-      gdk_display_pointer_ungrab (gtk_widget_get_display (GTK_WIDGET (editor)),
-                                  bevent->time);
+      gtk_grab_remove (widget);
 
       update_options_from_segments (editor);
     }

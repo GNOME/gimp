@@ -528,9 +528,7 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
       GtkAllocation allocation;
       gint          width;
 
-      gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
-                        GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
-                        NULL, NULL, bevent->time);
+      gtk_grab_add (widget);
 
       gtk_widget_get_allocation (widget, &allocation);
 
@@ -556,8 +554,7 @@ gimp_histogram_view_button_release (GtkWidget      *widget,
     {
       gint start, end;
 
-      gdk_display_pointer_ungrab (gtk_widget_get_display (GTK_WIDGET (view)),
-                                  bevent->time);
+      gtk_grab_remove (widget);
 
       start = view->start;
       end   = view->end;

@@ -100,7 +100,10 @@ gimp_offset_area_init (GimpOffsetArea *area)
   area->display_ratio_x = 1.0;
   area->display_ratio_y = 1.0;
 
-  gtk_widget_add_events (GTK_WIDGET (area), GDK_BUTTON_PRESS_MASK);
+  gtk_widget_add_events (GTK_WIDGET (area),
+                         GDK_BUTTON_PRESS_MASK   |
+                         GDK_BUTTON_RELEASE_MASK |
+                         GDK_BUTTON1_MOTION_MASK);
 }
 
 /**
@@ -353,15 +356,15 @@ gimp_offset_area_event (GtkWidget *widget,
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
-                        (GDK_BUTTON1_MOTION_MASK |
-                         GDK_BUTTON_RELEASE_MASK),
-                        NULL, NULL, event->button.time);
+      if (event->button.button == 1)
+        {
+          gtk_grab_add (widget);
 
-      orig_offset_x = area->offset_x;
-      orig_offset_y = area->offset_y;
-      start_x = event->button.x;
-      start_y = event->button.y;
+          orig_offset_x = area->offset_x;
+          orig_offset_y = area->offset_y;
+          start_x = event->button.x;
+          start_y = event->button.y;
+        }
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -381,16 +384,19 @@ gimp_offset_area_event (GtkWidget *widget,
       break;
 
     case GDK_BUTTON_RELEASE:
-      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                  event->button.time);
-      start_x = start_y = 0;
+      if (event->button.button == 1)
+        {
+          gtk_grab_remove (widget);
+
+          start_x = start_y = 0;
+        }
       break;
 
     default:
-      break;
+      return FALSE;
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
