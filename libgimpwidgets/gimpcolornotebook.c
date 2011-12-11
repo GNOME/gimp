@@ -53,10 +53,9 @@
 #define DEFAULT_TAB_ICON_SIZE  GTK_ICON_SIZE_BUTTON
 
 
-static void   gimp_color_notebook_finalize        (GObject           *object);
-
 static void   gimp_color_notebook_style_set       (GtkWidget         *widget,
                                                    GtkStyle          *prev_style);
+
 static void   gimp_color_notebook_togg_visible    (GimpColorSelector *selector,
                                                    gboolean           visible);
 static void   gimp_color_notebook_togg_sensitive  (GimpColorSelector *selector,
@@ -87,6 +86,9 @@ static void   gimp_color_notebook_channel_changed (GimpColorSelector *page,
 
 static GtkWidget * gimp_color_notebook_add_page   (GimpColorNotebook *notebook,
                                                    GType              page_type);
+static void   gimp_color_notebook_remove_selector (GtkContainer      *container,
+                                                   GtkWidget         *widget,
+                                                   GimpColorNotebook *notebook);
 
 
 G_DEFINE_TYPE (GimpColorNotebook, gimp_color_notebook,
@@ -98,11 +100,8 @@ G_DEFINE_TYPE (GimpColorNotebook, gimp_color_notebook,
 static void
 gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
 {
-  GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
   GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
-
-  object_class->finalize                = gimp_color_notebook_finalize;
 
   widget_class->style_set               = gimp_color_notebook_style_set;
 
@@ -139,13 +138,15 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
   guint  i;
 
   notebook->notebook = gtk_notebook_new ();
+  gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook->notebook));
   gtk_box_pack_start (GTK_BOX (notebook), notebook->notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook->notebook);
 
-  gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook->notebook));
-
   g_signal_connect (notebook->notebook, "switch-page",
                     G_CALLBACK (gimp_color_notebook_switch_page),
+                    notebook);
+  g_signal_connect (notebook->notebook, "remove",
+                    G_CALLBACK (gimp_color_notebook_remove_selector),
                     notebook);
 
   selector_types = g_type_children (GIMP_TYPE_COLOR_SELECTOR,
@@ -171,20 +172,6 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
     }
 
   g_free (selector_types);
-}
-
-static void
-gimp_color_notebook_finalize (GObject *object)
-{
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (object);
-
-  if (notebook->selectors)
-    {
-      g_list_free (notebook->selectors);
-      notebook->selectors = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -436,6 +423,17 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
   return page;
 }
 
+static void
+gimp_color_notebook_remove_selector (GtkContainer      *container,
+                                     GtkWidget         *widget,
+                                     GimpColorNotebook *notebook)
+{
+  notebook->selectors = g_list_remove (notebook->selectors, widget);
+
+  if (! notebook->selectors)
+    notebook->cur_page = NULL;
+}
+
 
 /**
  * gimp_color_notebook_set_has_page:
@@ -473,10 +471,6 @@ gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
 
           gtk_container_remove (GTK_CONTAINER (notebook->notebook),
                                 GTK_WIDGET (page));
-          notebook->selectors = g_list_remove (notebook->selectors, page);
-
-          if (! notebook->selectors)
-            notebook->cur_page = NULL;
 
           return NULL;
         }
