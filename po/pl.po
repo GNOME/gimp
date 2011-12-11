@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-11 20:27+0100\n"
-"PO-Revision-Date: 2011-12-11 20:28+0100\n"
+"POT-Creation-Date: 2011-12-11 20:42+0100\n"
+"PO-Revision-Date: 2011-12-11 20:43+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -3633,7 +3633,7 @@ msgstr "Nie pozwala na modyfikację przezroczystości"
 #: ../app/actions/layers-actions.c:246
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
-msgstr "_Modyfikuj maskę warstwy"
+msgstr "_Modyfikowanie maski warstwy"
 
 #: ../app/actions/layers-actions.c:247
 msgctxt "layers-action"
@@ -3643,12 +3643,12 @@ msgstr "Pozwala na pracę na masce warstwy"
 #: ../app/actions/layers-actions.c:253
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
-msgstr "_Wyświetl maskę warstwy"
+msgstr "_Wyświetlanie maski warstwy"
 
 #: ../app/actions/layers-actions.c:259
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
-msgstr "Wyłą_cz maskę warstwy"
+msgstr "Wyłą_czenie maski warstwy"
 
 #: ../app/actions/layers-actions.c:260
 msgctxt "layers-action"
@@ -5263,7 +5263,7 @@ msgstr "Piksel na ekranie, reprezentuje piksel na obrazie"
 #: ../app/actions/view-actions.c:140
 msgctxt "view-action"
 msgid "Show _Selection"
-msgstr "Wyświetl _zaznaczenia"
+msgstr "Wyświetlanie _zaznaczenia"
 
 #: ../app/actions/view-actions.c:141
 msgctxt "view-action"
@@ -5273,7 +5273,7 @@ msgstr "Wyświetla krawędź zaznaczenia"
 #: ../app/actions/view-actions.c:147
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
-msgstr "Wyświetl g_ranice warstwy"
+msgstr "Wyświetlanie g_ranic warstwy"
 
 #: ../app/actions/view-actions.c:148
 msgctxt "view-action"
@@ -5283,7 +5283,7 @@ msgstr "Wyświetla ramkę wokół aktywnej warstwy"
 #: ../app/actions/view-actions.c:154
 msgctxt "view-action"
 msgid "Show _Guides"
-msgstr "Wyświetl pr_owadnice"
+msgstr "Wyświetlanie pr_owadnic"
 
 #: ../app/actions/view-actions.c:155
 msgctxt "view-action"
@@ -5293,7 +5293,7 @@ msgstr "Wyświetla prowadnice obrazu"
 #: ../app/actions/view-actions.c:161
 msgctxt "view-action"
 msgid "S_how Grid"
-msgstr "Wyświetl _siatkę"
+msgstr "Wyświetlanie _siatki"
 
 #: ../app/actions/view-actions.c:162
 msgctxt "view-action"
@@ -5303,7 +5303,7 @@ msgstr "Wyświetla siatkę obrazu"
 #: ../app/actions/view-actions.c:168
 msgctxt "view-action"
 msgid "Show Sample Points"
-msgstr "Wyświetl punkty wzorcowe"
+msgstr "Wyświetlanie punktów wzorcowych"
 
 #: ../app/actions/view-actions.c:169
 msgctxt "view-action"
@@ -5313,7 +5313,7 @@ msgstr "Wyświetla kolorowe punkty wzorcowe obrazu"
 #: ../app/actions/view-actions.c:175
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
-msgstr "Przyciągaj do pro_wadnic"
+msgstr "Przyciąganie do pro_wadnic"
 
 #: ../app/actions/view-actions.c:176
 msgctxt "view-action"
@@ -5323,7 +5323,7 @@ msgstr "Przyciąga wybrane narzędzie do prowadnic"
 #: ../app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Sna_p to Grid"
-msgstr "Przyciągaj do si_atki"
+msgstr "Przyciąganie do si_atki"
 
 #: ../app/actions/view-actions.c:183
 msgctxt "view-action"
@@ -5333,7 +5333,7 @@ msgstr "Przyciąga wybrane narzędzie do siatki"
 #: ../app/actions/view-actions.c:189
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
-msgstr "Przy_ciągaj do krawędzi płótna"
+msgstr "Przy_ciąganie do krawędzi płótna"
 
 #: ../app/actions/view-actions.c:190
 msgctxt "view-action"
@@ -5343,7 +5343,7 @@ msgstr "Przyciąga wybrane narzędzie do krawędzi płótna"
 #: ../app/actions/view-actions.c:196
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
-msgstr "Przyciągaj d_o aktywnej ścieżki"
+msgstr "Przyciąganie d_o aktywnej ścieżki"
 
 #: ../app/actions/view-actions.c:197
 msgctxt "view-action"
@@ -11820,7 +11820,7 @@ msgstr "Wyrównanie: wyrównuje lub układa warstwy i inne obiekty"
 
 #: ../app/tools/gimpaligntool.c:126
 msgid "_Align"
-msgstr "_Wyrównaj"
+msgstr "_Wyrównanie"
 
 #: ../app/tools/gimpaligntool.c:549
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
@@ -12383,7 +12383,7 @@ msgstr "Kadrowanie: usuwa brzegi z obrazu lub warstwy"
 
 #: ../app/tools/gimpcroptool.c:119
 msgid "_Crop"
-msgstr "_Kadruj"
+msgstr "_Kadrowanie"
 
 #: ../app/tools/gimpcroptool.c:253
 msgid "Click or press Enter to crop"
@@ -12487,7 +12487,7 @@ msgstr ""
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
-msgstr "_Rozjaśnij/przyciemnij"
+msgstr "_Rozjaśnienie/przyciemnienie"
 
 #: ../app/tools/gimpdodgeburntool.c:187
 msgid "Click to dodge"
@@ -13606,7 +13606,7 @@ msgstr "Skalowanie: skaluje warstwę, zaznaczenie lub ścieżkę"
 
 #: ../app/tools/gimpscaletool.c:91
 msgid "_Scale"
-msgstr "_Skaluj"
+msgstr "_Skalowanie"
 
 #: ../app/tools/gimpscaletool.c:338
 #, c-format
@@ -13676,7 +13676,7 @@ msgstr "Nachylenie: nachyla warstwę, zaznaczenie lub ścieżkę"
 
 #: ../app/tools/gimpsheartool.c:85
 msgid "S_hear"
-msgstr "Nac_hyl"
+msgstr "Nac_hylenie"
 
 #: ../app/tools/gimpsheartool.c:135
 msgid "Shear magnitude _X:"
@@ -14990,7 +14990,7 @@ msgstr "Konfiguruje tę kartę"
 #. Auto button
 #: ../app/widgets/gimpdockwindow.c:382
 msgid "Auto"
-msgstr "Automatycznie"
+msgstr "Autom."
 
 #: ../app/widgets/gimpdockwindow.c:393
 msgid ""
