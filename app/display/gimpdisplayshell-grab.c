@@ -34,7 +34,6 @@ gimp_display_shell_pointer_grab (GimpDisplayShell *shell,
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
   g_return_val_if_fail (shell->pointer_grabbed == FALSE, FALSE);
-  g_return_val_if_fail (shell->pointer_grab_time == 0, FALSE);
 
   if (event)
     {
@@ -67,7 +66,6 @@ gimp_display_shell_pointer_ungrab (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (shell->pointer_grabbed == TRUE);
-  g_return_if_fail (event == NULL || shell->pointer_grab_time != 0);
 
   gtk_grab_remove (shell->canvas);
 
@@ -91,7 +89,6 @@ gimp_display_shell_keyboard_grab (GimpDisplayShell *shell,
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
   g_return_val_if_fail (shell->keyboard_grabbed == FALSE, FALSE);
-  g_return_val_if_fail (shell->keyboard_grab_time == 0, FALSE);
 
   status = gdk_keyboard_grab (gtk_widget_get_window (shell->canvas),
                               FALSE,
@@ -117,7 +114,6 @@ gimp_display_shell_keyboard_ungrab (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (event != NULL);
   g_return_if_fail (shell->keyboard_grabbed == TRUE);
-  g_return_if_fail (shell->keyboard_grab_time != 0);
 
   gdk_display_keyboard_ungrab (gtk_widget_get_display (shell->canvas),
                                shell->keyboard_grab_time);
