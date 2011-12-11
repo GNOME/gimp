@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-11 20:42+0100\n"
-"PO-Revision-Date: 2011-12-11 20:43+0100\n"
+"POT-Creation-Date: 2011-12-11 23:36+0100\n"
+"PO-Revision-Date: 2011-12-11 23:37+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -848,7 +848,7 @@ msgstr "Modyfikacja elementu palety kolorów"
 #: ../app/actions/config-actions.c:38
 msgctxt "config-action"
 msgid "Use _GEGL"
-msgstr "Użycie biblioteki _GEGL"
+msgstr "Używanie biblioteki _GEGL"
 
 #: ../app/actions/config-actions.c:39
 msgctxt "config-action"
@@ -12063,7 +12063,7 @@ msgstr "Przekształcenie klatki"
 
 #: ../app/tools/gimpclonetool.c:61
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
-msgstr "Klonowanie: selektywnie kopiuje obraz lub deseń, używając pędzla"
+msgstr "Klonowanie: wybiórczo kopiuje obraz lub deseń, używając pędzla"
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "_Clone"
@@ -12311,8 +12311,7 @@ msgstr "Rozmywanie/wyostrzanie"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr ""
-"Rozmywanie/wyostrzanie: selektywnie rozmywa lub wyostrza używając pędzla"
+msgstr "Rozmywanie/wyostrzanie: wybiórczo rozmywa lub wyostrza używając pędzla"
 
 #: ../app/tools/gimpconvolvetool.c:75
 msgid "Bl_ur / Sharpen"
@@ -12482,7 +12481,7 @@ msgstr "Rozjaśnianie/przyciemnianie"
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
 msgstr ""
-"Rozjaśnianie/przyciemnianie: selektywnie rozjaśnia lub przyciemnia używając "
+"Rozjaśnianie/przyciemnianie: wybiórczo rozjaśnia lub przyciemnia używając "
 "pędzla"
 
 #: ../app/tools/gimpdodgeburntool.c:75
@@ -13707,7 +13706,7 @@ msgstr "Nachylenie poziome o %-3.3g, pionowe o %-3.3g"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr "Rozsmarowywanie: selektywnie rozsmarowuje używając pędzla"
+msgstr "Rozsmarowywanie: wybiórczo rozsmarowuje używając pędzla"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "_Smudge"
@@ -15480,7 +15479,7 @@ msgstr "Ogra_niczenie zaostrzenia:"
 
 #: ../app/widgets/gimpstrokeeditor.c:178
 msgid "Dash pattern:"
-msgstr "Wzór kreski:"
+msgstr "Deseń kreski:"
 
 #: ../app/widgets/gimpstrokeeditor.c:241
 msgid "Dash _preset:"
