@@ -55,6 +55,9 @@ enum
 };
 
 
+static void   gimp_color_selector_dispose (GObject *object);
+
+
 G_DEFINE_TYPE (GimpColorSelector, gimp_color_selector, GTK_TYPE_BOX)
 
 #define parent_class gimp_color_selector_parent_class
@@ -65,6 +68,10 @@ static guint selector_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_color_selector_class_init (GimpColorSelectorClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->dispose = gimp_color_selector_dispose;
+
   selector_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -114,6 +121,14 @@ gimp_color_selector_init (GimpColorSelector *selector)
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
   selector->channel = GIMP_COLOR_SELECTOR_HUE;
+}
+
+static void
+gimp_color_selector_dispose (GObject *object)
+{
+  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (object), NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 GtkWidget *
