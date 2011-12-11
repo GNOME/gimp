@@ -123,6 +123,10 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
       g_signal_handlers_disconnect_by_func (select->context,
                                             gimp_color_selector_palette_palette_changed,
                                             select);
+      gimp_view_renderer_set_context (GIMP_VIEW (select->view)->renderer,
+                                      NULL);
+
+      g_object_unref (select->context);
       select->context = NULL;
     }
 
@@ -131,6 +135,8 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
 
   if (select->context)
     {
+      g_object_ref (select->context);
+
       if (! select->view)
         {
           GtkWidget *frame;
@@ -158,6 +164,11 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
           g_signal_connect (select->view, "entry-clicked",
                             G_CALLBACK (gimp_color_selector_palette_entry_clicked),
                             select);
+        }
+      else
+        {
+          gimp_view_renderer_set_context (GIMP_VIEW (select->view)->renderer,
+                                          select->context);
         }
 
       g_signal_connect_object (select->context, "palette-changed",
