@@ -32,6 +32,9 @@ Core:
    works much better
  - Make resource sub-folders show up in UI as tags, allowing users
    to easily locate resource collections they may have installed.
+ - Fix graphics tablet cancas interaction by moving from
+   gdk_pointer_grab() to gtk_grab_add() for most grabs
+ - Stop using motion hints, they are a concept from the dark ages
 
 
 Libgimp:
