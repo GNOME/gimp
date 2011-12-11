@@ -16,7 +16,7 @@ UI:
  - Add a close button to image tabs in single-window mode
  - Improve the transform tools' undo strings to be more descriptive
  - Render the layer's "eye" icon in inconsistent state if the layer is
-   visible, but one of its parents isn't.
+   visible, but one of its parents isn't
  - Add proper stacking for canvas items, so things don't hide each other
  - Make sure single-window-mode and multi-window-mode are always saved
    consistently in sessionrc
@@ -31,8 +31,8 @@ Core:
  - Replace heal algorithm with a new one by Jean-Yves Couleaud that
    works much better
  - Make resource sub-folders show up in UI as tags, allowing users
-   to easily locate resource collections they may have installed.
- - Fix graphics tablet cancas interaction by moving from
+   to easily locate resource collections they may have installed
+ - Fix graphics tablet canvas interaction by moving from
    gdk_pointer_grab() to gtk_grab_add() for most grabs
  - Stop using motion hints, they are a concept from the dark ages
 
