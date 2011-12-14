@@ -48,8 +48,8 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpmath)		\
 	$(libgimpbase)		\
+	$(GTK_LIBS)             \
 	$(PNG_LIBS)		\
-	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_ico_RC)
