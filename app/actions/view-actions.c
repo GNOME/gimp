@@ -671,7 +671,6 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-show-statusbar",  display && options->show_statusbar);
 
   SET_SENSITIVE ("view-shrink-wrap", image);
-  SET_SENSITIVE ("view-fullscreen",  image);
   SET_ACTIVE    ("view-fullscreen",  display && fullscreen);
   SET_ACTIVE    ("view-use-gegl",    use_gegl);
 
