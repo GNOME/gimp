@@ -5,18 +5,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
-"cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-07-08 21:22+0000\n"
-"PO-Revision-Date: 2011-08-01 11:23+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-11-18 02:55+0000\n"
+"PO-Revision-Date: 2011-12-17 00:22+0200\n"
 "Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.1\n"
+"X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
+"Language: lv\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
@@ -303,7 +304,7 @@ msgstr "Krītošā ēna un apmale..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
-msgstr "Ēnu iz_smērēšana"
+msgstr "Ēnu _aizmiglošana"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"

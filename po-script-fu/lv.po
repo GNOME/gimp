@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-28 18:21+0000\n"
-"PO-Revision-Date: 2011-08-31 23:07+0300\n"
-"Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
+"POT-Creation-Date: 2011-11-18 02:56+0000\n"
+"PO-Revision-Date: 2011-12-17 00:32+0200\n"
+"Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -223,7 +223,7 @@ msgstr "3D k_ontūra..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Reljefa kartes (alfa slānis) izsmērēšanas rādiuss"
+msgstr "Reljefa kartes (alfa slānis) aizmiglošanas rādiuss"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -309,7 +309,7 @@ msgstr "Fonta izmērs (pikseļos)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline blur radius"
-msgstr "Kontūras izsmērēšanas rādiuss"
+msgstr "Kontūras aizmiglošanas rādiuss"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid ""
@@ -342,7 +342,7 @@ msgstr "Ēnas Y nobīde"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
 msgid "Shadow blur radius"
-msgstr "Ēnas izsmērējuma rādiuss"
+msgstr "Ēnas aizmiglošanas rādiuss"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:13
@@ -867,7 +867,7 @@ msgstr "Ciklā"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "Max. blur radius"
-msgstr "Maks. izsmērēšanas rādiuss"
+msgstr "Maks. aizmiglošanas rādiuss"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:7
 msgid "_Blend..."
@@ -1113,7 +1113,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
-msgstr "Izsmērēšanas apjoms"
+msgstr "Aizmiglošanas apjoms"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Chip Awa_y..."
@@ -1201,7 +1201,6 @@ msgid "Highlight balance"
 msgstr "Izgaismojumu balanss"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
-#| msgid "Layer1"
 msgid "Layer 1"
 msgstr "Slānis 1"
 
@@ -1284,11 +1283,11 @@ msgstr "Azimuts"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:3
 msgid "Blur X"
-msgstr "Izsmērēšana X"
+msgstr "Aizmiglošana X"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:4
 msgid "Blur Y"
-msgstr "Izsmērēšana Y"
+msgstr "Aizmiglošana Y"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:5
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
@@ -1414,8 +1413,9 @@ msgid "Spread"
 msgstr "Izkaisīt"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "Threshold (bigger 1<-->255 smaller)"
-msgstr "Slieksnis (lielāks 1<-->255 mazāks)"
+#| msgid "Threshold (bigger 1<-->255 smaller)"
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "Slieksnis (lielāks 1<-->254 mazāks)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
@@ -1436,7 +1436,7 @@ msgstr "Ļaut mainīt izmēru"
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:3
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:3
 msgid "Blur radius"
-msgstr "Izsmērēšanas rādiuss"
+msgstr "Aizmiglošanas rādiuss"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
@@ -1456,7 +1456,7 @@ msgstr "Nobīde Y"
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
 msgid "Opacity"
-msgstr "Necaurspīdīgums"
+msgstr "Blīvums"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
 msgid "_Drop Shadow..."
@@ -1617,7 +1617,7 @@ msgstr "Pievienot ēnu"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
-msgstr "Izsmērējuma apmale"
+msgstr "Aizmiglošanas apmale"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
@@ -1925,9 +1925,6 @@ msgid "_Lava..."
 msgstr "_Lava..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-#| msgid ""
-#| "Fill a layer with rays emanating outward from its center using the FG "
-#| "color"
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -2679,19 +2676,19 @@ msgstr "Ar _tekstūru..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "Blur horizontally"
-msgstr "Izsmērēt horizontāli"
+msgstr "Aizmiglot horizontāli"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr "Izsmērēt attēla malas, lai rezultāts flīzētos vienlaidus"
+msgstr "Aizmiglot attēla malas, lai rezultāts flīzētos vienlaidus"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
-msgstr "Izsmērēšanas veids"
+msgstr "Aizmiglošanas veids"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "Blur vertically"
-msgstr "Izsmērēt vertikāli"
+msgstr "Aizmiglot vertikāli"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
 msgid "IIR"
@@ -2703,7 +2700,7 @@ msgstr "RLE"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
 msgid "_Tileable Blur..."
-msgstr "_Flīzējamā izsmērēšana..."
+msgstr "_Flīzējamā aizmiglošana..."
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "Create a decorative web title header"
@@ -2727,7 +2724,7 @@ msgstr "T_ruchet..."
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "Mask opacity"
-msgstr "Maskas necaurspīdīgums"
+msgstr "Maskas blīvums"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask size"
@@ -2812,7 +2809,7 @@ msgstr "Ēnas mešanas Y nobīde"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop shadow blur radius"
-msgstr "Krītošās ēnas izsmērējuma rādiuss"
+msgstr "Krītošās ēnas aizmiglošanas rādiuss"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop shadow color"
