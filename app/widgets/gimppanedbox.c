@@ -137,14 +137,16 @@ gimp_paned_box_init (GimpPanedBox *paned_box)
   /* Instructions label
    *
    * Size a small size request so it don't mess up dock window layouts
-   * during startup
+   * during startup; in particular, set its height request to 0 so it
+   * doesn't contribute to the minimum height of the toolbox.
    */
   paned_box->p->instructions = gtk_label_new (INSTRUCTIONS_TEXT);
   gtk_misc_set_padding (GTK_MISC (paned_box->p->instructions),
                         INSTRUCTIONS_TEXT_PADDING, INSTRUCTIONS_TEXT_PADDING);
   gtk_label_set_line_wrap (GTK_LABEL (paned_box->p->instructions), TRUE);
-  gtk_label_set_justify (GTK_LABEL (paned_box->p->instructions), GTK_JUSTIFY_CENTER);
-  gtk_widget_set_size_request (paned_box->p->instructions, 100, 100);
+  gtk_label_set_justify (GTK_LABEL (paned_box->p->instructions),
+                         GTK_JUSTIFY_CENTER);
+  gtk_widget_set_size_request (paned_box->p->instructions, 100, 0);
   gimp_label_set_attributes (GTK_LABEL (paned_box->p->instructions),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
