@@ -154,8 +154,6 @@ libappdisplay_a_SOURCES = \
 	$(libappdisplay_a_built_sources)	\
 	$(libappdisplay_a_sources)
 
-EXTRA_DIST = makefile.msc
-
 #
 # rules to generate built sources
 #

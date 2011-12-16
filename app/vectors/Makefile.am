@@ -44,5 +44,3 @@ libappvectors_a_SOURCES = \
 	gimpvectorspropundo.h	\
 	gimpvectorsundo.c	\
 	gimpvectorsundo.h
-
-EXTRA_DIST = makefile.msc

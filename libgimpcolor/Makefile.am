@@ -57,7 +57,6 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	makefile.msc		\
 	gimpcolor.def
 
 lib_LTLIBRARIES = libgimpcolor-2.0.la

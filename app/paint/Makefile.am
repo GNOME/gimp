@@ -84,8 +84,6 @@ libapppaint_a_built_sources = paint-enums.c
 
 libapppaint_a_SOURCES = $(libapppaint_a_built_sources) $(libapppaint_a_sources)
 
-EXTRA_DIST = makefile.msc
-
 #
 # rules to generate built sources
 #

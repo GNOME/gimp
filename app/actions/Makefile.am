@@ -185,5 +185,3 @@ libappactions_a_SOURCES = \
 	windows-actions.h		\
 	windows-commands.c		\
 	windows-commands.h
-
-EXTRA_DIST = makefile.msc

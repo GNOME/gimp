@@ -32,5 +32,3 @@ libappmenus_a_SOURCES = \
 	window-menu.h		\
 	windows-menu.c		\
 	windows-menu.h
-
-EXTRA_DIST = makefile.msc

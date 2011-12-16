@@ -54,7 +54,6 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	makefile.msc	\
 	gimpconfig.def
 
 lib_LTLIBRARIES = libgimpconfig-2.0.la

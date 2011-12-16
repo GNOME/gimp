@@ -51,8 +51,6 @@ libapptext_a_built_sources = text-enums.c
 
 libapptext_a_SOURCES = $(libapptext_a_built_sources) $(libapptext_a_sources)
 
-EXTRA_DIST = makefile.msc
-
 #
 # rules to generate built sources
 #

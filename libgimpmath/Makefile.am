@@ -56,7 +56,6 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	makefile.msc		\
 	gimpmath.def
 
 lib_LTLIBRARIES = libgimpmath-2.0.la

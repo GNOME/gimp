@@ -62,10 +62,7 @@ libappconfig_a_SOURCES = \
 	$(libappconfig_a_built_sources)	\
 	$(libappconfig_a_sources)
 
-
 EXTRA_PROGRAMS = test-config
-
-EXTRA_DIST = makefile.msc
 
 #
 # unit tests for the GimpConfig system

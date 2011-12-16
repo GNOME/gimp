@@ -156,8 +156,7 @@ uninstall-local:
 
 EXTRA_DIST = \
 	$(pygimp_DATA)		\
-	$(codegen_files)	\
-	makefile.msc
+	$(codegen_files)
 
 gimpui.c: gimpui.defs gimpui.override gimpcolor-types.defs gimpenums-types.defs
 

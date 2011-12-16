@@ -73,8 +73,6 @@ libappbase_a_SOURCES = \
 	tile-swap.c		\
 	tile-swap.h
 
-EXTRA_DIST = makefile.msc
-
 #
 # rules to generate built sources
 #

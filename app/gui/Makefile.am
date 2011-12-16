@@ -46,9 +46,7 @@ libappgui_a_built_sources = gimpdbusservice-glue.h
 libappgui_a_SOURCES = $(libappgui_a_built_sources) $(libappgui_a_sources)
 
 EXTRA_DIST = \
-	dbus-service.xml	\
-	makefile.msc
-
+	dbus-service.xml
 
 #
 # rules to generate built sources

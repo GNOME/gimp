@@ -283,7 +283,6 @@ WILBER_VARIABLES = \
 
 
 EXTRA_DIST = \
-	makefile.msc				\
 	gimpwidgets.def				\
 	$(libgimpwidgets_2_0_la_extra_sources)	\
 	$(WILBER_IMAGES)

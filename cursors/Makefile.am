@@ -127,8 +127,7 @@ COLOR_PICKER_IMAGES = \
 
 EXTRA_DIST = \
 	$(CURSOR_IMAGES)			\
-	gimp-tool-cursors.xcf			\
-	makefile.msc
+	gimp-tool-cursors.xcf
 
 noinst_DATA = \
 	gimp-tool-cursors.h			\

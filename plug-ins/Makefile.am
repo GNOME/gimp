@@ -1,9 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-EXTRA_DIST = \
-	makefile.msc
-
-
 if HAVE_WEBKIT
 help_browser = help-browser
 endif

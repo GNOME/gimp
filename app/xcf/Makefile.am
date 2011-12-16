@@ -29,5 +29,3 @@ libappxcf_a_SOURCES = \
 	xcf-seek.h	\
 	xcf-write.c	\
 	xcf-write.h
-
-EXTRA_DIST = makefile.msc

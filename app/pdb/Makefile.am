@@ -86,5 +86,3 @@ libappinternal_procs_a_SOURCES = \
 	undo-cmds.c			\
 	unit-cmds.c			\
 	vectors-cmds.c
-
-EXTRA_DIST = makefile.msc

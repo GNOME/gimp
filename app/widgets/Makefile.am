@@ -412,8 +412,6 @@ libappwidgets_a_built_sources = widgets-enums.c
 libappwidgets_a_SOURCES = \
 	$(libappwidgets_a_built_sources) $(libappwidgets_a_sources)
 
-EXTRA_DIST = makefile.msc
-
 
 #
 # rules to generate built sources

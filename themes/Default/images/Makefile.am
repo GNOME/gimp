@@ -370,9 +370,7 @@ EXTRA_DIST = \
 	$(CORE_IMAGES)		\
 	$(STOCK_IMAGES)		\
 	$(WILBER_IMAGES)	\
-	gimp-dialog-icons.xcf.gz\
-	makefile.msc
-
+	gimp-dialog-icons.xcf.gz
 
 noinst_DATA = \
 	gimp-core-pixbufs.h	\

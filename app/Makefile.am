@@ -89,9 +89,6 @@ libapp_a_SOURCES = $(libapp_sources) $(libapp_generated_sources)
 gimp_2_7_SOURCES = $(libapp_sources) main.c
 
 
-EXTRA_DIST = \
-	makefile.msc
-
 if OS_WIN32
 win32_ldflags = -mwindows $(WIN32_LARGE_ADDRESS_AWARE)
 endif

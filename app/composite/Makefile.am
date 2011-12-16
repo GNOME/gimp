@@ -105,7 +105,6 @@ regenerate: gimp-composite-generic.o $(libcomposite3dnow_a_OBJECTS) $(libcomposi
 
 EXTRA_DIST = \
 	make-installer.py	\
-	makefile.msc 		\
 	ns.py
 
 

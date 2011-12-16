@@ -52,7 +52,6 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	makefile.msc		\
 	gimpmodule.def
 
 lib_LTLIBRARIES = libgimpmodule-2.0.la

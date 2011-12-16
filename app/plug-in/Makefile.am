@@ -79,8 +79,6 @@ libappplug_in_a_SOURCES = \
 	plug-in-icc-profile.c			\
 	plug-in-icc-profile.h
 
-EXTRA_DIST = makefile.msc
-
 #
 # rules to generate built sources
 #

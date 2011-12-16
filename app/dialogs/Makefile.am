@@ -97,8 +97,7 @@ libappdialogs_a_SOURCES = \
 	$(libappdialogs_a_built_sources) $(libappdialogs_a_sources)
 
 EXTRA_DIST = \
-	authors.xsl	\
-	makefile.msc
+	authors.xsl
 
 
 $(srcdir)/about-dialog.c: authors.h

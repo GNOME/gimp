@@ -399,7 +399,6 @@ libgimpui_2_0_la_DEPENDENCIES = \
 
 EXTRA_DIST = \
 	COPYING				\
-	makefile.msc			\
 	gimp.def			\
 	gimpui.def			\
 	$(libgimp_2_0_la_extra_sources)	\
