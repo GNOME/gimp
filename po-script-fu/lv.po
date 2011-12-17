@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-11-18 02:56+0000\n"
-"PO-Revision-Date: 2011-12-17 00:32+0200\n"
+"PO-Revision-Date: 2011-12-17 21:47+0200\n"
 "Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -1655,7 +1655,7 @@ msgstr "Izveidot, atvērt un saglabāt _failus"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
 msgid "Drawing _Simple Objects"
-msgstr "Zīmē vienkāršu_s objektus"
+msgstr "Vienkāršu_s objektu zīmēšana"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
 msgid "How to Use _Dialogs"
@@ -1667,11 +1667,11 @@ msgstr "Spraudņu _reģistrs "
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
 msgid "Using _Paths"
-msgstr "Lieto _ceļus"
+msgstr "_Ceļu lietošana"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
 msgid "_Basic Concepts"
-msgstr "_Pamata jēdzieni"
+msgstr "_Pamatjēdzieni"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
 msgid "_Developer Web Site"
@@ -1683,7 +1683,7 @@ msgstr "Galvenā tī_mekļa vietne"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
 msgid "_Preparing your Images for the Web"
-msgstr "_Sagatavo attēlus tīmeklim"
+msgstr "_Attēlu sagatavošana tīmeklim"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
 msgid "_User Manual Web Site"
@@ -1691,7 +1691,7 @@ msgstr "_Lietotāja rokasgrāmatas tīmekļa vietne"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr "_Darbojas ar ciparu kameras fotogrāfijām"
+msgstr "_Darbs ar ciparu kameras fotogrāfijām"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
@@ -2420,7 +2420,7 @@ msgstr "Pagriezties no kreisās uz labo"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
 msgid "_Spinning Globe..."
-msgstr "Rotējoš_s globuss..."
+msgstr "Rotē_joša lode..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid ""
@@ -2838,4 +2838,5 @@ msgstr "Izgaismojuma blīvums"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
 msgstr "_Xach efekts..."
+
 

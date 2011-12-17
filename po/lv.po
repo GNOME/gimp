@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-12-05 14:02+0000\n"
-"PO-Revision-Date: 2011-12-17 00:53+0200\n"
+"PO-Revision-Date: 2011-12-17 23:34+0200\n"
 "Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -3290,7 +3290,7 @@ msgstr "S_lānis"
 #: ../app/actions/layers-actions.c:55
 msgctxt "layers-action"
 msgid "Stac_k"
-msgstr "_Kaudze"
+msgstr "Secī_ba"
 
 #: ../app/actions/layers-actions.c:57
 msgctxt "layers-action"
@@ -8841,7 +8841,9 @@ msgstr "Apmeklēt GIMP tīmekļa vietni"
 #. separated by newline
 #: ../app/dialogs/about-dialog.c:128
 msgid "translator-credits"
-msgstr "Gatis Kalnins Rūdolfs Mazurs"
+msgstr ""
+"Gatis Kalnins\n"
+"Rūdolfs Mazurs"
 
 #: ../app/dialogs/about-dialog.c:518
 msgid "GIMP is brought to you by"
@@ -10777,7 +10779,7 @@ msgstr "Izveidot vai pieregulēt aploku"
 #: ../app/gegl/gimp-gegl-enums.c:25
 msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
-msgstr "Mainiet aploka formu, lai mainītu attēla formu"
+msgstr "Mainīt aploka formu, lai mainītu attēla formu"
 
 #: ../app/gegl/gimpcurvesconfig.c:385
 msgid "not a GIMP Curves file"
@@ -10809,7 +10811,7 @@ msgstr "Aizpildīt ar vienkāršu krāsu"
 #: ../app/gegl/gimpoperationcagetransform.c:126
 #: ../app/tools/gimpcageoptions.c:144
 msgid "Fill the original position of the cage with a plain color"
-msgstr "Aizpildīt aploka sākotnējo pozīciju ar vienkāršu krāsu"
+msgstr "Aizpildīt aploka sākuma pozīciju ar vienkāršu krāsu"
 
 #. initialize the document history
 #: ../app/gui/gui.c:421
@@ -13793,7 +13795,7 @@ msgstr "Ierobežot pagriešanas soļus uz 15 grādiem"
 
 #: ../app/tools/gimptransformoptions.c:276
 msgid "Transform:"
-msgstr "Pārveidošana:"
+msgstr "Pārveidot:"
 
 #: ../app/tools/gimptransformoptions.c:285
 #: ../app/widgets/gimpdynamicseditor.c:143
@@ -14074,7 +14076,7 @@ msgstr "Ceļš"
 #: ../app/tools/tools-enums.c:244
 msgctxt "vector-mode"
 msgid "Design"
-msgstr "Dizains"
+msgstr "Veidot"
 
 #: ../app/tools/tools-enums.c:245
 msgctxt "vector-mode"

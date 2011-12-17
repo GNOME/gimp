@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-11-18 02:53+0000\n"
-"PO-Revision-Date: 2011-12-17 00:30+0200\n"
+"PO-Revision-Date: 2011-12-17 22:54+0200\n"
 "Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -425,17 +425,17 @@ msgstr "Pielāgota krāsu pāreja"
 #: ../libgimpbase/gimpbaseenums.c:98
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
-msgstr "Priekšplāna aizliešana"
+msgstr "Priekšplāna aizpildīšana"
 
 #: ../libgimpbase/gimpbaseenums.c:99
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
-msgstr "Fona aizliešana"
+msgstr "Fona aizpildīšana"
 
 #: ../libgimpbase/gimpbaseenums.c:100
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "Aizliešana ar rakstu"
+msgstr "Aizpildīšana ar rakstu"
 
 #: ../libgimpbase/gimpbaseenums.c:131
 msgctxt "channel-ops"
@@ -1172,11 +1172,11 @@ msgstr "Skala"
 
 #: ../libgimpwidgets/gimpcolorselection.c:220
 msgid "Current:"
-msgstr "Pašreizējais:"
+msgstr "Pašreizējā:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:229
 msgid "Old:"
-msgstr "Iepriekšējais:"
+msgstr "Iepriekšējā:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:314
 msgid ""

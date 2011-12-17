@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-12-07 18:10+0000\n"
-"PO-Revision-Date: 2011-12-17 01:01+0200\n"
+"PO-Revision-Date: 2011-12-17 22:17+0200\n"
 "Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -2829,11 +2829,11 @@ msgstr "Augstas izšķirtspējas malu noteikšana"
 
 #: ../plug-ins/common/edge-laplace.c:85
 msgid "_Laplace"
-msgstr "_Laplas"
+msgstr "_Laplasa metode"
 
 #: ../plug-ins/common/edge-laplace.c:243 ../plug-ins/common/edge.c:664
 msgid "Laplace"
-msgstr "Laplas"
+msgstr "Laplasa metode"
 
 #: ../plug-ins/common/edge-laplace.c:321
 msgid "Cleanup"
@@ -7918,11 +7918,11 @@ msgstr "Invertēt katra pikseļa gaišumu"
 
 #: ../plug-ins/common/value-invert.c:103
 msgid "_Value Invert"
-msgstr "_Vērtības invertēšana"
+msgstr "Invertēt pēc _vērtības"
 
 #: ../plug-ins/common/value-invert.c:190
 msgid "Value Invert"
-msgstr "Vērtības invertēšana"
+msgstr "Invertēt pēc vērtības"
 
 #: ../plug-ins/common/value-propagate.c:189
 msgid "More _white (larger value)"
@@ -8453,7 +8453,7 @@ msgstr "Deformēt attēlu ar sagriešanu un savilkšanu"
 
 #: ../plug-ins/common/whirl-pinch.c:149
 msgid "W_hirl and Pinch..."
-msgstr "Sa_griezt un savilt..."
+msgstr "Sa_griezt un savilkt..."
 
 #: ../plug-ins/common/whirl-pinch.c:341
 msgid "Whirling and pinching"
@@ -8461,7 +8461,7 @@ msgstr "Sagriež un savelk"
 
 #: ../plug-ins/common/whirl-pinch.c:529
 msgid "Whirl and Pinch"
-msgstr "Sagriezt un savilt"
+msgstr "Sagriezt un savilkt"
 
 #: ../plug-ins/common/whirl-pinch.c:567
 msgid "_Whirl angle:"
@@ -9845,11 +9845,11 @@ msgstr "Bez aizpildījuma"
 
 #: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Color fill"
-msgstr "Aizliešana ar krāsu"
+msgstr "Aizpildīšana ar krāsu"
 
 #: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Pattern fill"
-msgstr "Aizliešana ar rakstu"
+msgstr "Aizpildīšana ar rakstu"
 
 #: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Shape gradient"
