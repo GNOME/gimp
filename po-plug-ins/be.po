@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 01:00+0300\n"
-"PO-Revision-Date: 2011-12-02 22:16+0300\n"
+"POT-Creation-Date: 2011-12-17 17:29+0300\n"
+"PO-Revision-Date: 2011-12-17 17:29+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -89,7 +89,7 @@ msgstr "Насычанасьць:"
 #. * Gray: Operation-Mode *
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:511
 msgid "Gray Mode"
-msgstr "Рэжым шэрых"
+msgstr "Рэжым шэрых колераў"
 
 #. Gray: Operation-Mode: two radio buttons
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:520
@@ -3025,7 +3025,7 @@ msgstr "Загрузіць палітру KISS"
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
-#: ../plug-ins/common/file-pdf-load.c:844 ../plug-ins/common/file-pix.c:348
+#: ../plug-ins/common/file-pdf-load.c:842 ../plug-ins/common/file-pix.c:348
 #: ../plug-ins/common/file-png.c:759 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1043 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
@@ -3813,65 +3813,69 @@ msgstr "Ніжняя мяжа не трапляе ў шэраг (мусіць б
 msgid "Writing to file '%s' failed: %s"
 msgstr "Няўдалы запіс у файл «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:297
-#: ../plug-ins/common/file-pdf-save.c:270
-#: ../plug-ins/common/file-pdf-save.c:282
+#: ../plug-ins/common/file-pdf-load.c:296
+#: ../plug-ins/common/file-pdf-save.c:273
+#: ../plug-ins/common/file-pdf-save.c:288
 msgid "Portable Document Format"
 msgstr "Фармат пераносных дакумэнтаў"
 
-#: ../plug-ins/common/file-pdf-load.c:564
+#: ../plug-ins/common/file-pdf-load.c:543
+#: ../plug-ins/common/file-pdf-load.c:562
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Немагчыма загрузіць «%s»: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:878
+#: ../plug-ins/common/file-pdf-load.c:876
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:880 ../plug-ins/common/file-ps.c:1126
+#: ../plug-ins/common/file-pdf-load.c:878 ../plug-ins/common/file-ps.c:1126
 #, c-format
 msgid "%s-pages"
 msgstr "%s-старонак"
 
-#: ../plug-ins/common/file-pdf-load.c:1070
+#: ../plug-ins/common/file-pdf-load.c:1068
 msgid "Import from PDF"
 msgstr "Імпартаваць з PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1075 ../plug-ins/common/file-ps.c:3100
+#: ../plug-ins/common/file-pdf-load.c:1073 ../plug-ins/common/file-ps.c:3100
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Імпартаваць"
 
-#: ../plug-ins/common/file-pdf-load.c:1143
+#: ../plug-ins/common/file-pdf-load.c:1106
+msgid "Error getting number of pages from the given PDF file."
+msgstr "Памылка падчас атрыманьня колькасьці старонак з дадзенага файла PDF."
+
+#: ../plug-ins/common/file-pdf-load.c:1148
 msgid "_Width (pixels):"
 msgstr "_Шырыня (у піксэлях):"
 
-#: ../plug-ins/common/file-pdf-load.c:1144
+#: ../plug-ins/common/file-pdf-load.c:1149
 msgid "_Height (pixels):"
 msgstr "_Вышыня (у піксэлях):"
 
-#: ../plug-ins/common/file-pdf-load.c:1146
+#: ../plug-ins/common/file-pdf-load.c:1151
 msgid "_Resolution:"
 msgstr "_Разрозьненьне:"
 
-#: ../plug-ins/common/file-pdf-load.c:1426
-#: ../plug-ins/common/file-pdf-load.c:1427 ../plug-ins/common/file-svg.c:917
+#: ../plug-ins/common/file-pdf-load.c:1431
+#: ../plug-ins/common/file-pdf-load.c:1432 ../plug-ins/common/file-svg.c:917
 #: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
 #, c-format
 msgid "pixels/%a"
 msgstr "піксэлі/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:294
-#, fuzzy
+#: ../plug-ins/common/file-pdf-save.c:303
 msgid "_Create multipage PDF..."
-msgstr "Стварыць накіроўныя…"
+msgstr "_Стварыць шматстаронкавы PDF…"
 
-#: ../plug-ins/common/file-pdf-save.c:387
+#: ../plug-ins/common/file-pdf-save.c:396
 msgid "You must select a file to save!"
 msgstr "Патрэбна выбраць файл для захоўваньня!"
 
-#: ../plug-ins/common/file-pdf-save.c:396
+#: ../plug-ins/common/file-pdf-save.c:405
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3884,50 +3888,47 @@ msgstr ""
 "Пераканайся, што ўведзеная дапушчальная назва файла і ў выбранае для "
 "захоўваньня месца можна запісваць файлы!"
 
-#: ../plug-ins/common/file-pdf-save.c:706
-#: ../plug-ins/common/file-pdf-save.c:823
+#: ../plug-ins/common/file-pdf-save.c:715
+#: ../plug-ins/common/file-pdf-save.c:832
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Прапушчаць схаваныя пласты й пласты з нулявой непразрыстасьцю"
 
-#: ../plug-ins/common/file-pdf-save.c:710
-#: ../plug-ins/common/file-pdf-save.c:827
+#: ../plug-ins/common/file-pdf-save.c:719
+#: ../plug-ins/common/file-pdf-save.c:836
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Дзе магчыма ператвараць растры ў вэктарныя відарысы"
 
-#: ../plug-ins/common/file-pdf-save.c:714
-#: ../plug-ins/common/file-pdf-save.c:831
+#: ../plug-ins/common/file-pdf-save.c:723
+#: ../plug-ins/common/file-pdf-save.c:840
 msgid "Apply layer masks before saving"
-msgstr ""
+msgstr "Ужыць маскі пластоў перад захоўваньнем"
 
-#: ../plug-ins/common/file-pdf-save.c:717
-#: ../plug-ins/common/file-pdf-save.c:834
-#, fuzzy
+#: ../plug-ins/common/file-pdf-save.c:726
+#: ../plug-ins/common/file-pdf-save.c:843
 msgid "Keeping the masks will not change the output"
-msgstr ""
-"Ужыць маскі пластоў перах захоўваньнем (пакіданьне масак ня зьменіць "
-"выводжаньня)"
+msgstr "Пакіданьне масак ня зьменіць выводжаньня"
 
-#: ../plug-ins/common/file-pdf-save.c:770
+#: ../plug-ins/common/file-pdf-save.c:779
 msgid "Save to:"
 msgstr "Захаваць у:"
 
-#: ../plug-ins/common/file-pdf-save.c:774
+#: ../plug-ins/common/file-pdf-save.c:783
 msgid "Browse..."
 msgstr "Прагледзець…"
 
-#: ../plug-ins/common/file-pdf-save.c:775
+#: ../plug-ins/common/file-pdf-save.c:784
 msgid "Multipage PDF export"
 msgstr "Экспартаваньне шматстаронкавага PDF"
 
-#: ../plug-ins/common/file-pdf-save.c:808
+#: ../plug-ins/common/file-pdf-save.c:817
 msgid "Remove the selected pages"
 msgstr "Выдаліць вылучаныя старонкі"
 
-#: ../plug-ins/common/file-pdf-save.c:818
+#: ../plug-ins/common/file-pdf-save.c:827
 msgid "Add this image"
 msgstr "Дадаць гэты відарыс"
 
-#: ../plug-ins/common/file-pdf-save.c:931
+#: ../plug-ins/common/file-pdf-save.c:940
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Памылка! Каб захаваць файл патрэбна дадаць хаця б адзін відарыс!"
 
@@ -3960,6 +3961,11 @@ msgstr "Памылка падчас чытаньня «%s». Пашкоджан�
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Невядомая мадэль колераў у файле PNG «%s»."
 
+#: ../plug-ins/common/file-png.c:878
+#, c-format
+msgid "Could not create new image for '%s': %s"
+msgstr "Немагчыма стварыць новы відарыс для «%s»: %s"
+
 #: ../plug-ins/common/file-png.c:927
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
@@ -3981,6 +3987,10 @@ msgstr "Памылка падчас захоўваньня «%s». Немагч�
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Памылка загрузкі файла ІК «%s»: %s"
+
+#: ../plug-ins/common/file-png.c:1896
+msgid "Unknown error"
+msgstr "Невядомая памылка"
 
 #: ../plug-ins/common/file-pnm.c:248
 msgid "PNM Image"
@@ -4054,8 +4064,8 @@ msgid "Raw"
 msgstr "Сыры"
 
 #: ../plug-ins/common/file-pnm.c:1227
-msgid "Ascii"
-msgstr "Ascii"
+msgid "ASCII"
+msgstr "ASCII"
 
 #: ../plug-ins/common/file-ps.c:601 ../plug-ins/common/file-ps.c:693
 msgid "PostScript document"
@@ -8414,7 +8424,6 @@ msgid "Large"
 msgstr "Вялікі"
 
 #: ../plug-ins/common/web-page.c:317
-#, fuzzy
 msgctxt "web-page"
 msgid "Default"
 msgstr "Прадвызначаны"
@@ -8585,11 +8594,6 @@ msgstr "Немагчыма запісаць індэксаваны відары�
 #: ../plug-ins/file-bmp/bmp-write.c:193 ../plug-ins/file-bmp/bmp-write.c:219
 msgid "Alpha channel will be ignored."
 msgstr "Альфаканал будзе праігнараваны."
-
-#. Dialog init
-#: ../plug-ins/file-bmp/bmp-write.c:849
-msgid "BMP"
-msgstr "BMP"
 
 #. Run-Length Encoded
 #: ../plug-ins/file-bmp/bmp-write.c:860
@@ -12996,386 +13000,3 @@ msgstr "_Здымак экрана…"
 #: ../plug-ins/win-snap/winsnap.c:1143
 msgid "No data captured"
 msgstr "Даньні не захопленыя"
-
-#~ msgid ""
-#~ "Apply layer masks before saving (keeping them will not change the output)"
-#~ msgstr ""
-#~ "\"Ужыць маскі пластоў перах захоўваньнем (пакіданьне іхк ня зьменіць "
-#~ "выводжаньня)\""
-
-#~ msgid "There was an error taking the screenshot."
-#~ msgstr "Здарылася памылка атрыманьня здымка экрана."
-
-#~ msgid "Frequency (rows):"
-#~ msgstr "Часьціня (радкоў):"
-
-#~ msgid "2x1,1x1,1x1 (4:2:2)"
-#~ msgstr "2×1,1×1,1×1 (4:2:2)"
-
-#~ msgid "1x2,1x1,1x1"
-#~ msgstr "1×2,1×1,1×1"
-
-#~ msgid "2x2,1x1,1x1 (smallest file)"
-#~ msgstr "2×2,1×1,1×1 (найменшы файл)"
-
-#~ msgid "Send to Back"
-#~ msgstr "Даслаць назад"
-
-#~ msgid "pixels/%s"
-#~ msgstr "піксэлі/%s"
-
-#~ msgid "GIF Options"
-#~ msgstr "Выборы GIF"
-
-#~ msgid "I_nterlace"
-#~ msgstr "_Празрадковы"
-
-#~ msgid "_GIF comment:"
-#~ msgstr "Камэнтар _GIF:"
-
-#~ msgid "Animated GIF Options"
-#~ msgstr "Выборы анімаванага GIF"
-
-#~ msgid "_Loop forever"
-#~ msgstr "_Вечны цыкль"
-
-#~ msgid "_Delay between frames where unspecified:"
-#~ msgstr "_Затрымка між кадрамі, дзе ня вызначана:"
-
-#~ msgid "_Frame disposal where unspecified:"
-#~ msgstr "_Разьмяшчэньне кадра, дзе ня вызначана:"
-
-#~ msgid "_Use delay entered above for all frames"
-#~ msgstr "_Ужыць уведзеную вышэй затрымку для ўсіх кадраў"
-
-#~ msgid "U_se disposal entered above for all frames"
-#~ msgstr "У_жыць уведзенае вышэй разьмяшчэньне для ўсіх кадраў"
-
-#~ msgid "_Interlacing (Adam7)"
-#~ msgstr "_Празрадковы (Adam7)"
-
-#~ msgid "Save _background color"
-#~ msgstr "Захаваць _колер асноведзі"
-
-#~ msgid "Save _gamma"
-#~ msgstr "Захаваць _гаму"
-
-#~ msgid "Save layer o_ffset"
-#~ msgstr "Захаваць зрух _пласта"
-
-#~ msgid "Save _resolution"
-#~ msgstr "Захаваць _разрозьненьне"
-
-#~ msgid "Save creation _time"
-#~ msgstr "Захаваць _час стварэньня"
-
-#~ msgid "Save comme_nt"
-#~ msgstr "Захаваць к_амэнтар"
-
-#~ msgid "Save color _values from transparent pixels"
-#~ msgstr "Захоўваць значэньні _колераў празрыстых піксэляў"
-
-#~ msgid "Co_mpression level:"
-#~ msgstr "_Узровень сьцісканьня:"
-
-#~ msgid "S_ave Defaults"
-#~ msgstr "За_хаваць прадвызначаныя"
-
-#~ msgid "Hotspot _X:"
-#~ msgstr "«Гарачая пляма» па _X:"
-
-#~ msgid "A big hello from the GIMP team!"
-#~ msgstr "Вялікае вітаньне ад каманды GIMP!"
-
-#~ msgid "Gee Zoom"
-#~ msgstr "Забаўнае маштабаваньне"
-
-#~ msgid "Thank You for Choosing GIMP"
-#~ msgstr "Дзякуй за выбар GIMP!"
-
-#~ msgid "An obsolete creation by %s"
-#~ msgstr "Састарэлае, створана %s"
-
-#~ msgid "Gee Slime"
-#~ msgstr "Забаўная сьлізь"
-
-#~ msgid "A less obsolete creation by %s"
-#~ msgstr "Не зусім састарэлае стварэньне %s"
-
-#~ msgid "Sizes:"
-#~ msgstr "Памеры:"
-
-#~ msgid "Size:"
-#~ msgstr "Памер:"
-
-#~ msgid "Image type currently not supported."
-#~ msgstr "Тып відарыса пакуль не падтрымліваецца."
-
-#~ msgid "Save as Text"
-#~ msgstr "Захаваць як тэкст"
-
-#~ msgid "Save as C-Source"
-#~ msgstr "Захаваць як выточны код C"
-
-#~ msgid "Save as Brush"
-#~ msgstr "Захаваць як пэндзаль"
-
-#~ msgid "Save as GIF"
-#~ msgstr "Захаваць як GIF"
-
-#~ msgid "Layer %s doesn't have an alpha channel, skipped"
-#~ msgstr "Пласт %s ня мае альфаканала, абмінуты"
-
-#~ msgid "Save as HTML table"
-#~ msgstr "Захаваць як табліцу HTML"
-
-#~ msgid "Save as MNG"
-#~ msgstr "Захаваць як MNG"
-
-#~ msgid "Save as Pattern"
-#~ msgstr "Захаваць як узор"
-
-#~ msgid "Save as PNG"
-#~ msgstr "Захаваць як PNG"
-
-#~ msgid "Save as PNM"
-#~ msgstr "Захаваць як PNM"
-
-#~ msgid "Save as PSP"
-#~ msgstr "Захаваць як PSP"
-
-#~ msgid "Save as TGA"
-#~ msgstr "Захаваць як TGA"
-
-#~ msgid "Save as TIFF"
-#~ msgstr "Захаваць як TIFF"
-
-#~ msgid "Save as XBM"
-#~ msgstr "Захаваць як XBM"
-
-#~ msgid "Save as XPM"
-#~ msgstr "Захаваць як XPM"
-
-#~ msgid ""
-#~ "Web browser not specified.\n"
-#~ "Please specify a web browser using the Preferences dialog."
-#~ msgstr ""
-#~ "Гартач Web ня вызначаны.\n"
-#~ "Вызнач, калі ласка, гартач Сеціва ў дыялёгу «Настаўленьні»."
-
-#~ msgid ""
-#~ "Could not parse the web browser command specified in the Preferences "
-#~ "dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Немагчыма разабраць загад гартача Сеціва, вызначанага ў дыялёгу "
-#~ "«Настаўленьні»:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Could not execute the web browser specified in the Preferences dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Немагчыма выканаць гартач Сеціва, вызначаны ў дыялёгу «Настаўленьні»:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Save as BMP"
-#~ msgstr "Захаваць як BMP"
-
-#~ msgid "GFLI 1.3 - Save framestack"
-#~ msgstr "GFLI 1.3 - Запіс стосу кадраў"
-
-#~ msgid "File size: %02.01f kB"
-#~ msgstr "Памер файла: %02.01f kB"
-
-#~ msgid "Save as JPEG"
-#~ msgstr "Захаваць як JPEG"
-
-#~ msgid "Save as SGI"
-#~ msgstr "Захаваць як SGI"
-
-#~ msgid "Co_nnect"
-#~ msgstr "_Злучыцца"
-
-#~ msgid "Connect _anonymously"
-#~ msgstr "Злучыцца _ананімна"
-
-#~ msgid "Connect as u_ser:"
-#~ msgstr "Злучыцца _як карыстальнік:"
-
-#~ msgid "_Username:"
-#~ msgstr "_Імя:"
-
-#~ msgid "_Domain:"
-#~ msgstr "_Дамэн:"
-
-#~ msgid "_Password:"
-#~ msgstr "_Пароль:"
-
-#~ msgid "_Forget password immediately"
-#~ msgstr "_Адразу забыць пароль"
-
-#~ msgid "_Remember password until you logout"
-#~ msgstr "_Памятаць пароль да выхаду з сыстэмы"
-
-#~ msgid "_Remember forever"
-#~ msgstr "_Запомніць назаўжды"
-
-#~ msgid "Uploading %s of image data"
-#~ msgstr "Дасыланьне %s даньняў відарыса"
-
-#~ msgid "Failed to read %s from '%s': %s"
-#~ msgstr "Памылка чытаньня %s з '%s': %s"
-
-#~ msgid "Failed to write %s to '%s': %s"
-#~ msgstr "Памылка запісу %s у '%s': %s"
-
-#~ msgid "Save as XJT"
-#~ msgstr "Захаваць як XJT"
-
-#~ msgid "Unable to add additional point.\n"
-#~ msgstr "Немагчыма дадаць дадатковы пункт.\n"
-
-#~ msgid "Could not open output file for writing"
-#~ msgstr "Немагчыма адкрыць файл вываду на запіс"
-
-#~ msgid "There is a problem with the GIMP user manual."
-#~ msgstr "Праблема з кіраўніцтвам карыстальніка GIMP."
-
-#~ msgid "Please check your installation."
-#~ msgstr "Калі ласка, правер усталёўку GIMP."
-
-#~ msgid "Drag and drop this icon to a web browser"
-#~ msgstr "Пацягні й кінь гэтую значку у гартач Web"
-
-#~ msgid "Or_igin at bottom left"
-#~ msgstr "_Пачатак уверсе зьлева"
-
-#~ msgid "Document not found"
-#~ msgstr "Дакумэнт не адшуканы"
-
-#~ msgid "The requested URL could not be loaded:"
-#~ msgstr "Запатрабаваны URL ня можа быць загружаны:"
-
-#~ msgid "Email the image"
-#~ msgstr "Дасылае відарыс па пошце"
-
-#~ msgid "_Mail Image..."
-#~ msgstr "_Даслаць відарыс..."
-
-#~ msgid "_MIME"
-#~ msgstr "_MIME"
-
-#~ msgid "_Uuencode"
-#~ msgstr "_Uuencode"
-
-#~ msgid "_Recipient:"
-#~ msgstr "_Атрымальнік:"
-
-#~ msgid "_Sender:"
-#~ msgstr "_Адпраўнік:"
-
-#~ msgid "Comm_ent:"
-#~ msgstr "_Камэнтар:"
-
-#~ msgid "First Source Color"
-#~ msgstr "Першы крынічны колер"
-
-#~ msgid "Second Source Color"
-#~ msgstr "Другі крынічны колер"
-
-#~ msgid "First Destination Color"
-#~ msgstr "Першы канчатковы колер"
-
-#~ msgid "Second Destination Color"
-#~ msgstr "Другі канчатковы колер"
-
-#, fuzzy
-#~ msgid "Adjust _Foreground & Background"
-#~ msgstr "_Адрэгуляваць колеры рысаваньня й асноведзі"
-
-#, fuzzy
-#~ msgid "Color Range _Mapping..."
-#~ msgstr "Няправільны інтэрвал становішчаў"
-
-#~ msgid "Cannot operate on gray or indexed color images."
-#~ msgstr "Немагчыма працаваць зь індэксаванымі або шэрымі відарысамі."
-
-#, fuzzy
-#~ msgid "Adjusting foreground and background colors"
-#~ msgstr "Абмяняць колеры рысаваньня й асноведзі"
-
-#, fuzzy
-#~ msgid "Mapping colors"
-#~ msgstr "_Дапомныя колеры"
-
-#, fuzzy
-#~ msgid "Map Color Range"
-#~ msgstr "Няправільны інтэрвал становішчаў"
-
-#~ msgid "Source Color Range"
-#~ msgstr "Пачатковы дыяпазон колераў"
-
-#~ msgid "Destination Color Range"
-#~ msgstr "Выніковы дыяпазон колераў"
-
-#~ msgid "Invalid UTF-8 string in PSD file"
-#~ msgstr "Недапушчальны радок UTF-8 у файле PSD"
-
-#~ msgid "Cannot handle bitmap PSD files"
-#~ msgstr "Немагчыма апрацоўваць бітавыя мапы PSD"
-
-#~ msgid "Cannot handle PSD files in CMYK color"
-#~ msgstr "Немагчыма апрацоўваць файлы PSD у колерах CMYK"
-
-#~ msgid "Cannot handle PSD files in Multichannel color"
-#~ msgstr "Немагчыма апрацоўваць файлы PSD у колерах Multichannel"
-
-#~ msgid "Cannot handle PSD files in Duotone color"
-#~ msgstr "Немагчыма апрацоўваць файлы PSD у колерах Duotone"
-
-#~ msgid "Cannot handle PSD files in Lab color"
-#~ msgstr "Немагчыма апрацоўваць файлы PSD у колерах Lab"
-
-#~ msgid "Cannot handle the color mode %d of the PSD file"
-#~ msgstr "Немагчыма апрацоўваць рэжым колераў %d файла PSD"
-
-#~ msgid "Cannot handle PSD file with more than %d channels"
-#~ msgstr "Немагчыма апрацоўваць файлы PSD, якія маюць больш за %d каналаў"
-
-#~ msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
-#~ msgstr ""
-#~ "Немагчыма апрацоўваць файлы PSD у колерах CMYK з больш, чым 5 каналаў"
-
-#, fuzzy
-#~ msgid "Cannot handle image mode %d (%s)"
-#~ msgstr "Немагчыма апрацоўваць рэжым колераў %d файла PSD"
-
-#~ msgid "Cannot handle %d bits per channel PSD files"
-#~ msgstr "Немагчыма апрацоўваць %d бітаў на канал у файлах PSD"
-
-#~ msgid "This is not an Adobe Photoshop PSD file"
-#~ msgstr "Гэты файл не зьяўляецца файлам Adobe Photoshop PSD "
-
-#~ msgid "The PSD file has bad version number '%d', not 1"
-#~ msgstr "Файл PSD мае кепскую вэрсію '%d', а не 1"
-
-#~ msgid "checkbutton|Snap to grid"
-#~ msgstr "Прыцягненьне да сеткі"
-
-#~ msgid "The GIMP help files are not found."
-#~ msgstr "Файлы з дапамогай па GIMP не адшуканыя."
-
-#~ msgid "_Smoothing:"
-#~ msgstr "_Змазваньне:"
-
-#~ msgid "Printable area:"
-#~ msgstr "Вобласьць для друку:"
-
-#, fuzzy
-#~ msgid "Downloading %s of image data..."
-#~ msgstr "Даныя аўтарызацыі адрынутыя"
