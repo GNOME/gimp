@@ -11,6 +11,45 @@ Changes in GIMP 2.7.5
 =====================
 
 
+UI:
+
+ - Minor application menu fixes on the Mac
+ - Make the toolbox arbitrarily resizable again
+
+
+Core:
+
+ - foo
+
+
+Libgimp:
+
+ - foo
+
+
+Plug-ins:
+
+ - foo
+
+
+Script-Fu:
+
+ - foo
+
+
+Developer documentation:
+
+ - foo
+
+
+Source and build system:
+
+ - Remove the unmaintained makefile.msc build system
+ - Explicitly link plug-ins to -lm when needed
+
+
+General:
+
  - foo
 
 
