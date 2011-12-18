@@ -74,6 +74,12 @@
 #define APP_NAME		PLUG_IN_NAME
 #define WM_DOCAPTURE		(WM_USER + 100)
 
+/* Prototypes */
+void setCaptureType(int capType);
+BOOL InitApplication(HINSTANCE hInstance);
+BOOL InitInstance(HINSTANCE hInstance, int nCmdShow);
+int winsnapWinMain(void);
+
 /* File variables */
 static int			captureType;
 static char			buffer[512];
