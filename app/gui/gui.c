@@ -425,6 +425,22 @@ gui_restore_callback (Gimp               *gimp,
   gimp_tools_restore (gimp);
 }
 
+#ifdef GDK_WINDOWING_QUARTZ
+static void
+gui_add_to_app_menu (GimpUIManager   *ui_manager,
+                     IgeMacMenuGroup *group,
+                     const gchar     *action_path,
+                     const gchar     *label)
+{
+  GtkWidget *item;
+
+  item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (ui_manager), action_path);
+
+  if (GTK_IS_MENU_ITEM (item))
+    ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), label);
+}
+#endif
+
 static void
 gui_restore_after_callback (Gimp               *gimp,
                             GimpInitStatusFunc  status_callback)
@@ -472,28 +488,27 @@ gui_restore_after_callback (Gimp               *gimp,
     /*  the about group  */
     group = ige_mac_menu_add_app_menu_group ();
 
-    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-                                      "/dummy-menubar/image-popup/Help/dialogs-about");
-    if (GTK_IS_MENU_ITEM (item))
-      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), _("About GIMP"));
+    gui_add_to_app_menu (image_ui_manager, group,
+                         "/dummy-menubar/image-popup/Help/dialogs-about",
+                         _("About GIMP"));
 
     /*  the preferences group  */
     group = ige_mac_menu_add_app_menu_group ();
 
-    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-                                      "/dummy-menubar/image-popup/Edit/Preferences/dialogs-preferences");
-    if (GTK_IS_MENU_ITEM (item))
-      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), NULL);
+#define PREFERENCES "/dummy-menubar/image-popup/Edit/Preferences/"
 
-    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-                                      "/dummy-menubar/image-popup/Edit/Preferences/dialogs-keyboard-shortcuts");
-    if (GTK_IS_MENU_ITEM (item))
-      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), NULL);
+    gui_add_to_app_menu (image_ui_manager, group,
+                         PREFERENCES "dialogs-preferences", NULL);
+    gui_add_to_app_menu (image_ui_manager, group,
+                         PREFERENCES "dialogs-input-devices", NULL);
+    gui_add_to_app_menu (image_ui_manager, group,
+                         PREFERENCES "dialogs-keyboard-shortcuts", NULL);
+    gui_add_to_app_menu (image_ui_manager, group,
+                         PREFERENCES "dialogs-module-dialog", NULL);
+    gui_add_to_app_menu (image_ui_manager, group,
+                         PREFERENCES "plug-in-unit-editor", NULL);
 
-    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-                                      "/dummy-menubar/image-popup/Edit/Preferences/plug-in-unit-editor");
-    if (GTK_IS_MENU_ITEM (item))
-      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), NULL);
+#undef PREFERENCES
   }
 #endif /* GDK_WINDOWING_QUARTZ */
 
