@@ -6,55 +6,54 @@
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
-# NISHIBORI Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008-2009
-#
+# Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp trunk\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-20 21:59+0900\n"
-"PO-Revision-Date: 2009-06-20 22:01+0900\n"
-"Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
-"Language-Team: Japanese <translation@gnome.gr.jp>\n"
+"Project-Id-Version: gimp master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-12-05 14:15+0000\n"
+"PO-Revision-Date: 2011-10-21 23:48+0900\n"
+"Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
+"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:391
+#: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
 msgstr "例外情報はありません"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
-msgid "An error occured running %s"
+msgid "An error occurred running %s"
 msgstr "%s 実行中にエラーが発生しました"
 
-#: ../plug-ins/pygimp/gimpfu.py:411
+#: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
 msgstr "詳細な情報(_M)"
 
-#: ../plug-ins/pygimp/gimpfu.py:523
-#: ../plug-ins/pygimp/gimpfu.py:535
-#: ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
+#: ../plug-ins/pygimp/gimpfu.py:544
 msgid "No"
 msgstr "しない"
 
-#: ../plug-ins/pygimp/gimpfu.py:533
-#: ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
 msgid "Yes"
 msgstr "する"
 
-#: ../plug-ins/pygimp/gimpfu.py:592
-#: ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu ファイル選択"
 
-#: ../plug-ins/pygimp/gimpfu.py:603
+#: ../plug-ins/pygimp/gimpfu.py:607
 msgid "Python-Fu Folder Selection"
-msgstr "Python-Fu フォルダ選択"
+msgstr "Python-Fu フォルダー選択"
 
-#: ../plug-ins/pygimp/gimpfu.py:694
+#: ../plug-ins/pygimp/gimpfu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "'%s' に対して無効な入力がありました"
@@ -63,47 +62,55 @@ msgstr "'%s' に対して無効な入力がありました"
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu 色選択"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Colored XHTML で保存しています..."
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Colored XHTML で保存"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "Colored XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "文字ソース(_S)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "ソースコード"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "テキストファイル"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "直接入力"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr ""
 "読み込むファイルまたは\n"
 "使用する文字列(_F)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "フォントサイズ(ピクセル) (_N)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
-msgstr "独立した CSS(ファイル)を記述(_W)"
+msgstr "独立した CSS(ファイル)の記述(_W)"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+msgid "Gradient to use"
+msgstr "グラデーション名:"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+msgid "File Name"
+msgstr "ファイル名:"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
@@ -143,8 +150,8 @@ msgstr "色の順番をずらす(_O)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "パレット"
 
@@ -154,11 +161,11 @@ msgstr "オフセット(_S)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
 msgid "Sort the colors in a palette"
-msgstr "パレット中の色を並び替えます"
+msgstr "パレット中の色を並べ替えます"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
-msgstr "パレットの並び替え(_S)"
+msgstr "パレットの並べ替え(_S)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
 msgid "Color _model"
@@ -175,7 +182,7 @@ msgstr "HSV"
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "Channel to _sort"
 msgstr ""
-"並び替える\n"
+"並べ替える\n"
 "チャンネル(_S)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
@@ -194,73 +201,75 @@ msgstr "青 または 明度"
 msgid "_Ascending"
 msgstr "昇順に並べる？ (_A)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:49
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "パレットの色で色循環型グラデーションを生成します"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:54
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "パレットを循環型グラデーションに(_R)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:71
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "パレットの色でグラデーションを生成します"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:76
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "パレットをグラデーションに(_G)"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:56
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "画像分割"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:417
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "ガイドに沿って分割された画像のエクスポートと、それらを1つの画像として表示するためのHTML ドキュメントの生成をおこないます"
+msgstr ""
+"ガイドに沿って分割された画像のエクスポートと、それらを1つの画像として表示する"
+"ためのHTML ドキュメントの生成をおこないます"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:428
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "画像分割(_S)..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
 msgstr "HTML ドキュメントを生成する場所"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Filename for export"
 msgstr "HTML ドキュメント名"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "画像ファイル名のプレフィクス"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "エクスポート画像のファイル形式"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Separate image folder"
-msgstr "画像を別フォルダにエクスポート"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Folder for image export"
-msgstr "エクスポート先フォルダ名"
-
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+msgid "Separate image folder"
+msgstr "画像を別フォルダーにエクスポート"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+msgid "Folder for image export"
+msgstr "エクスポート先のフォルダー名"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Space between table elements"
 msgstr "テーブル要素間の間隔"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr ""
-"'onmouseover' と 'clicked' の\n"
-" Javasccript を記述"
+"マウスオーバー時とクリック時の\n"
+"Javascript を記述"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
-msgstr "'<A>, </A>' の記述を省略"
+msgstr "周辺部の画像切り替えを省略"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:56
 msgid "Python Console"
@@ -272,25 +281,25 @@ msgstr "参照(_B)..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
-msgstr "Python プロシージャブラウザ"
+msgstr "Python プロシージャーブラウザー"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "ファイル '%s' を書き込み用に開けません： %s"
+msgstr "ファイル '%s' を書き込み用に開けません: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "ファイル '%s' に書き込めません： %s"
+msgstr "ファイル '%s' に書き込めません: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
-msgstr "Python-Fu コンソール出力を保存"
+msgstr "Python-Fu コンソール出力の保存"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
 msgid "Interactive GIMP Python interpreter"
-msgstr "Python インタプリタを起動します "
+msgstr "Python インタープリターを起動します "
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:221
 msgid "_Console"
@@ -324,7 +333,22 @@ msgstr "シャドウの水平方向のオフセット(_X)"
 msgid "Drop shadow _Y displacement"
 msgstr "シャドウの垂直方向のオフセット(_Y)"
 
-#, fuzzy
-#~ msgid "Gimp-Python Console"
-#~ msgstr "Python コンソール"
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+msgid "Create a new brush with characters from a text sequence"
+msgstr "テキストに使われる文字でブラシを生成します"
 
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+msgid "New Brush from _Text..."
+msgstr "テキストからブラシ(_T)..."
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+msgid "Font"
+msgstr "フォント"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+msgid "Pixel Size"
+msgstr "ピクセルサイズ"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+msgid "Text"
+msgstr "テキスト"
