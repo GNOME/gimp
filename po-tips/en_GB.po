@@ -2,13 +2,13 @@
 # Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
 # This file is distributed under the same license as the gimp tips package.
 # Gareth Owen <gowen72@yahoo.com> 2004
-# Bruce Cowan <bruce@bcowan.me.uk>, 2009, 2010.
+# Bruce Cowan <bruce@bcowan.me.uk>, 2009, 2010, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-15 11:57+0100\n"
-"PO-Revision-Date: 2010-10-15 11:59+0100\n"
+"POT-Creation-Date: 2011-12-22 19:19+0000\n"
+"PO-Revision-Date: 2011-12-22 19:20+0100\n"
 "Last-Translator: Bruce Cowan <bruce@bcowan.me.uk>\n"
 "Language-Team: British English <en@li.org>\n"
 "Language: en_GB\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.6.1\n"
+"X-Generator: Virtaal 0.7.0\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid ""
@@ -80,9 +80,9 @@ msgid ""
 msgstr ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialogue, you can reassign shortcut keys. Do so by bringing up the menu, "
-"selecting a menu item and pressing the desired key combination. If "
-"&quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved "
-"when you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"selecting a menu item and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 
@@ -189,16 +189,17 @@ msgstr ""
 "tt> before making a selection subtracts from the current one."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
+#, fuzzy
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and every aspect of your work-in-progress. Once a project is "
-"completed, you can save it as JPEG, PNG, GIF, ..."
+"the layers and many aspects of your work-in-progress. Once a project is "
+"completed, you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and every aspect of your work-in-progress. Once a project is "
-"completed, you can save it as JPEG, PNG, GIF, ..."
+"the layers and many aspects of your work-in-progress. Once a project is "
+"completed, you can export it as JPEG, PNG, GIF, etc."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
