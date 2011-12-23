@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-18 21:57+0000\n"
-"PO-Revision-Date: 2011-12-08 21:02+0900\n"
+"POT-Creation-Date: 2011-12-22 12:48+0000\n"
+"PO-Revision-Date: 2011-12-23 00:53+0900\n"
 "Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -381,7 +381,7 @@ msgstr "(不可視でも)一番下のレイヤーを基準に使う(_U)"
 
 #: ../plug-ins/common/animation-optimize.c:132
 msgid "Modify image to reduce size when saved as GIF animation"
-msgstr "GIFアニメーションファイル用に画像を最適化します"
+msgstr "アニメーション GIF 用に画像を最適化します"
 
 #: ../plug-ins/common/animation-optimize.c:144
 msgid "Optimize (for _GIF)"
@@ -3668,7 +3668,7 @@ msgstr "インターレース"
 msgid "Save background color"
 msgstr "背景色を保存"
 
-#: ../plug-ins/common/file-mng.c:1371
+#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:9
 msgid "Save gamma"
 msgstr "ガンマ値を保存"
 
@@ -3725,7 +3725,7 @@ msgstr "デフォルトのフレーム配置:"
 msgid "PNG compression level:"
 msgstr "PNG 圧縮レベル:"
 
-#: ../plug-ins/common/file-mng.c:1465
+#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:1
 msgid "Choose a high compression level for small file size"
 msgstr "ファイルサイズを小さくするには高圧縮レベルを選択してください"
 
@@ -3749,7 +3749,7 @@ msgstr "ループ"
 msgid "Default frame delay:"
 msgstr "デフォルトのフレームディレイ:"
 
-#: ../plug-ins/common/file-mng.c:1542
+#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:11
 msgid "milliseconds"
 msgstr "ミリ秒"
 
@@ -8997,6 +8997,7 @@ msgid "Comment"
 msgstr "コメント"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1189
+#: ../plug-ins/ui/plug-in-file-png.ui.h:12
 msgid "_Load Defaults"
 msgstr "既定値の読み込み(_L)"
 
@@ -10882,6 +10883,82 @@ msgid ""
 msgstr ""
 "ボロノイモードでは、設定したサイズマップベクトルを母点とするボロノイ図として"
 "各サイズマップベクトルが影響を受けます"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:1
+msgid "Animated GIF Options"
+msgstr "アニメーション GIF のオプション"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
+msgid "As _animation"
+msgstr "アニメーションとしてエクスポート(_A)"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
+msgid "GIF Options"
+msgstr "GIF のオプション"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+msgid "I_nterlace"
+msgstr "インターレース(_N)"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:5
+msgid "U_se disposal entered above for all frames"
+msgstr "全フレームのフレーム処理にこの値を使用(_S)"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:6
+msgid "_Delay between frames where unspecified:"
+msgstr "指定しない場合のディレイ(_D): "
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+msgid "_Frame disposal where unspecified:"
+msgstr "指定しない場合のフレーム処理(_F): "
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
+msgid "_GIF comment:"
+msgstr "GIF コメント(_G): "
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:9
+msgid "_Loop forever"
+msgstr "無限ループ(_L)"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
+msgid "_Use delay entered above for all frames"
+msgstr "全フレームのディレイにこの値を使用(_U)"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:2
+msgid "Co_mpression level:"
+msgstr "圧縮レベル(_M): "
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:3
+msgid "S_ave Defaults"
+msgstr "既定値として保存(_A)"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:4
+msgid "Save _background color"
+msgstr "背景色を保存(_B)"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:5
+msgid "Save _resolution"
+msgstr "解像度を保存(_R)"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:6
+msgid "Save color _values from transparent pixels"
+msgstr "透明ピクセルの色の値を保存(_V)"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:7
+msgid "Save comme_nt"
+msgstr "コメントを保存(_N)"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:8
+msgid "Save creation _time"
+msgstr "作成日時を保存(_T)"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:10
+msgid "Save layer o_ffset"
+msgstr "レイヤーオフセットを保存(_F)"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:11
+msgid "_Interlacing (Adam7)"
+msgstr "インターレース (Adam7)(_I)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -13150,33 +13227,6 @@ msgstr "何も取り込まれませんでした"
 #~ msgid "Hotspot _X:"
 #~ msgstr "ホットスポット X(_X): "
 
-#~ msgid "GIF Options"
-#~ msgstr "GIF オプション"
-
-#~ msgid "I_nterlace"
-#~ msgstr "インターレース(_N)"
-
-#~ msgid "_GIF comment:"
-#~ msgstr "GIF コメント(_G): "
-
-#~ msgid "Animated GIF Options"
-#~ msgstr "動画 GIF オプション"
-
-#~ msgid "_Loop forever"
-#~ msgstr "無限ループ(_L)"
-
-#~ msgid "_Delay between frames where unspecified:"
-#~ msgstr "指定しない場合のディレイ(_D): "
-
-#~ msgid "_Frame disposal where unspecified:"
-#~ msgstr "指定しない場合のフレーム処理(_F): "
-
-#~ msgid "_Use delay entered above for all frames"
-#~ msgstr "全フレームのディレイにこの値を使用(_U)"
-
-#~ msgid "U_se disposal entered above for all frames"
-#~ msgstr "全フレームのフレーム処理にこの値を使用(_S)"
-
 #~ msgid "A big hello from the GIMP team!"
 #~ msgstr "A big hello from the GIMP team!"
 
@@ -13195,35 +13245,8 @@ msgstr "何も取り込まれませんでした"
 #~ msgid "A less obsolete creation by %s"
 #~ msgstr "ちょっと古い %s の作品"
 
-#~ msgid "_Interlacing (Adam7)"
-#~ msgstr "インターレース (Adam7)(_I)"
-
-#~ msgid "Save _background color"
-#~ msgstr "背景色を保存(_B)"
-
 #~ msgid "Save _gamma"
 #~ msgstr "ガンマ値を保存(_G)"
-
-#~ msgid "Save layer o_ffset"
-#~ msgstr "レイヤーオフセットを保存(_F)"
-
-#~ msgid "Save _resolution"
-#~ msgstr "解像度を保存(_R)"
-
-#~ msgid "Save creation _time"
-#~ msgstr "作成日時を保存(_T)"
-
-#~ msgid "Save comme_nt"
-#~ msgstr "コメントを保存(_N)"
-
-#~ msgid "Save color _values from transparent pixels"
-#~ msgstr "透明ピクセルの色の値を保存(_V)"
-
-#~ msgid "Co_mpression level:"
-#~ msgstr "圧縮レベル(_M): "
-
-#~ msgid "S_ave Defaults"
-#~ msgstr "既定値として保存(_A)"
 
 #~ msgid "Image type currently not supported."
 #~ msgstr "この画像タイプは、現在サポートされていません。"
