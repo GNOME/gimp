@@ -255,7 +255,7 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
                   L10 = L1 - L0;
 
                   /* edge coef */
-                  coef[j + n_cage_vertices] = (-absa / (4.0 * M_PI)) * ((4.0*S-(R*R)/Q) * A10 + (R / (2.0 * Q)) * L10 + L1 - 2.0);
+                  coef[j + n_cage_vertices] = (-absa / (4.0 * G_PI)) * ((4.0*S-(R*R)/Q) * A10 + (R / (2.0 * Q)) * L10 + L1 - 2.0);
 
                   if (isnan(coef[j + n_cage_vertices]))
                     {
@@ -265,8 +265,8 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
                   /* vertice coef */
                   if (!gimp_operation_cage_coef_calc_is_on_straight (&v1, &v2, &p))
                     {
-                      coef[j] += (BA / (2.0 * M_PI)) * (L10 /(2.0*Q) - A10 * (2.0 + R / Q));
-                      coef[(j+1)%n_cage_vertices] -= (BA / (2.0 * M_PI)) * (L10 / (2.0 * Q) - A10 * (R / Q));
+                      coef[j] += (BA / (2.0 * G_PI)) * (L10 /(2.0*Q) - A10 * (2.0 + R / Q));
+                      coef[(j+1)%n_cage_vertices] -= (BA / (2.0 * G_PI)) * (L10 / (2.0 * Q) - A10 * (R / Q));
                     }
 
                   last = current;

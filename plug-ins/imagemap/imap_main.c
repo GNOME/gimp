@@ -326,7 +326,7 @@ draw_rectangle(cairo_t *cr, gboolean filled, gint x, gint y,
 void
 draw_circle(cairo_t *cr, gint x, gint y, gint r)
 {
-   cairo_arc (cr, ZOOMED (x), ZOOMED (y), ZOOMED (r), 0., 2 * M_PI);
+   cairo_arc (cr, ZOOMED (x), ZOOMED (y), ZOOMED (r), 0., 2 * G_PI);
    cairo_stroke (cr);
 }
 

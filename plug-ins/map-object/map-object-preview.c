@@ -225,7 +225,7 @@ draw_light_marker (cairo_t *cr,
   lightx = xpos;
   lighty = ypos;
 
-  cairo_arc (cr, lightx, lighty, 7, 0, 2 * M_PI);
+  cairo_arc (cr, lightx, lighty, 7, 0, 2 * G_PI);
   cairo_fill (cr);
 }
 

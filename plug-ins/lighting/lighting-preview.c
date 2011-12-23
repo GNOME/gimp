@@ -315,12 +315,12 @@ draw_handles (void)
         case POINT_LIGHT:
         case SPOT_LIGHT:
           cairo_arc (cr, handle_xpos, handle_ypos,
-                     LIGHT_SYMBOL_SIZE/2, 0, 2 * M_PI);
+                     LIGHT_SYMBOL_SIZE/2, 0, 2 * G_PI);
           cairo_fill (cr);
           break;
         case DIRECTIONAL_LIGHT:
           cairo_arc (cr, handle_xpos, handle_ypos,
-                     LIGHT_SYMBOL_SIZE/2, 0, 2 * M_PI);
+                     LIGHT_SYMBOL_SIZE/2, 0, 2 * G_PI);
           cairo_fill (cr);
           cairo_move_to (cr, handle_xpos, handle_ypos);
           cairo_line_to (cr, startx + pw/2, starty + ph/2);
