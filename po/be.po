@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-17 17:28+0300\n"
-"PO-Revision-Date: 2011-12-17 17:28+0300\n"
+"POT-Creation-Date: 2011-12-23 21:13+0300\n"
+"PO-Revision-Date: 2011-12-23 21:13+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -8829,7 +8829,7 @@ msgctxt "plural"
 msgid "percent"
 msgstr "адсоткі"
 
-#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:478
+#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:493
 msgid "About GIMP"
 msgstr "Пра GIMP"
 
@@ -9024,7 +9024,7 @@ msgid ""
 "format or enter no file extension at all."
 msgstr ""
 "Пры захоўваньні сеціўных файлаў патрэбна вызначаць фармат файла паводле "
-"пашырэньня. Калі ласка, увядзі пашырэньне, якое адпавядае выбранаму фармату, "
+"пашырэньня. Калі ласка, увядзі пашырэньне якое адпавядае выбранаму фармату, "
 "або ня ўводзь пашырэньня ўвогуле."
 
 #: ../app/dialogs/file-save-dialog.c:557
@@ -9032,17 +9032,18 @@ msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
-"Гэты дыялёґ можна выкарыстоўваць каб экспартаваць відарыс у разнастайныя "
-"фарматы файла. Калі хочаш захаваць у фармаце GIMP XCF, то карыстайся "
-"«Файл»→«Захаваць»."
+"Гэтым дыялёґам варта карыстацца, калі трэба экспартаваць відарыс у "
+"разнастайныя фарматы. Калі патрэбна захаваць у фармаце GIMP XCF, то "
+"выкарыстоўвай «Файл»→«Захаваць»."
 
 #: ../app/dialogs/file-save-dialog.c:564
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
-"Гэты дыялёґ можна выкарыстоўваць каб захаваць у фармаце GIMP XCF. Карыстайся "
-"«Файл»→«Экспартаваць», каб экспартаваць у іншыя фарматы файла."
+"Гэтым дыялёґам варта карыстацца, калі трэба захаваць відарыс у фармаце GIMP "
+"XCF. Выкарыстоўвай «Файл»→«Экспартаваць», калі трэба экспартаваць у іншым "
+"фармаце."
 
 #: ../app/dialogs/file-save-dialog.c:570
 msgid ""

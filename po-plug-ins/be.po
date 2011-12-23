@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-17 17:29+0300\n"
-"PO-Revision-Date: 2011-12-17 17:29+0300\n"
+"POT-Creation-Date: 2011-12-23 21:11+0300\n"
+"PO-Revision-Date: 2011-12-23 21:00+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -501,7 +501,7 @@ msgstr "Спроба паказаць недапушчальны пласт."
 #: ../plug-ins/common/animation-play.c:1351
 #, c-format
 msgid "Frame %d of %d"
-msgstr "Кадар %d з %d"
+msgstr "Кадр %d з %d"
 
 #: ../plug-ins/common/animation-play.c:1474
 msgid "Stop playback"
@@ -618,7 +618,7 @@ msgstr "Па _вэртыкалі"
 #: ../plug-ins/gfig/gfig-dialog.c:1306
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
-#: ../plug-ins/win-snap/winsnap.c:1156
+#: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
 msgstr "Асноведзь"
 
@@ -3322,7 +3322,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1187
 msgid "I don't care"
-msgstr "_Усё адно"
+msgstr "Усё адно"
 
 #: ../plug-ins/common/file-gif-save.c:1189
 msgid "Cumulative layers (combine)"
@@ -3330,7 +3330,7 @@ msgstr "Сабраныя пласты (злучыць)"
 
 #: ../plug-ins/common/file-gif-save.c:1191
 msgid "One frame per layer (replace)"
-msgstr "Адзін кадар на пласт (замяніць)"
+msgstr "Адзін кадр на пласт (замяніць)"
 
 #: ../plug-ins/common/file-gif-save.c:1208
 msgid ""
@@ -3639,7 +3639,7 @@ msgstr "Празрадковы"
 msgid "Save background color"
 msgstr "Захаваць колер асноведзі"
 
-#: ../plug-ins/common/file-mng.c:1371
+#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:9
 msgid "Save gamma"
 msgstr "Захаваць гаму"
 
@@ -3696,7 +3696,7 @@ msgstr "Прадвызначанае разьмяшчэньне кадра:"
 msgid "PNG compression level:"
 msgstr "Узровень сьцісканьня PNG:"
 
-#: ../plug-ins/common/file-mng.c:1465
+#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:1
 msgid "Choose a high compression level for small file size"
 msgstr "Выберы высокі ўзровень сьцісканьня, каб атрымаць малы памер файла"
 
@@ -3720,7 +3720,7 @@ msgstr "Цыкль"
 msgid "Default frame delay:"
 msgstr "Прадвызначаная затрымка кадра:"
 
-#: ../plug-ins/common/file-mng.c:1542
+#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:11
 msgid "milliseconds"
 msgstr "мілісэкунды"
 
@@ -4867,7 +4867,7 @@ msgstr ""
 "Выберы ўмоўныны памер кадра.\n"
 "Калі не плянуеш рабіць шматпамерны курсор, ці ня ведаеш, пакінь «32px».\n"
 "Умоўны памер ня мае дачыненьня да сапраўднага (вышыні ці шырыні).\n"
-"Ён патрэбны каб вызначыць які кадар залежыць ад якой анімацыйнай "
+"Ён патрэбны каб вызначыць які кадр залежыць ад якой анімацыйнай "
 "пасьлядоўнасьці, і якая пасьлядоўнасьць выкарыстоўваецца, у адпаведнасьці са "
 "значэньнем «gtk-cursor-theme-size»."
 
@@ -4881,7 +4881,7 @@ msgstr "_Замяніць памер усіх кадраў, нават калі 
 
 #: ../plug-ins/common/file-xmc.c:1204
 msgid "Enter time span in milliseconds in which each frame is rendered."
-msgstr "Увядзі адрэзак часу ў мілісэкундах, празь які рысуецца кожны кадар."
+msgstr "Увядзі адрэзак часу ў мілісэкундах, празь які рысуецца кожны кадр."
 
 #: ../plug-ins/common/file-xmc.c:1207
 msgid "_Delay:"
@@ -8922,6 +8922,7 @@ msgid "Comment"
 msgstr "Камэнтар"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1189
+#: ../plug-ins/ui/plug-in-file-png.ui.h:12
 msgid "_Load Defaults"
 msgstr "За_грузіць прадвызначаныя"
 
@@ -10795,6 +10796,82 @@ msgid ""
 "influence"
 msgstr ""
 "У рэжыме «Вараной» мае ўплыў толькі найбліжэйшы да дадзенага пункту мп-вэктар"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:1
+msgid "Animated GIF Options"
+msgstr "Выборы анімаванага GIF"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
+msgid "As _animation"
+msgstr "Як _анімацыю"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
+msgid "GIF Options"
+msgstr "Выборы GIF"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+msgid "I_nterlace"
+msgstr "_Празрадковы"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:5
+msgid "U_se disposal entered above for all frames"
+msgstr "Выкарыстоўваць уведзенае вышэй разьмяшчэньне _для ўсіх кадраў"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:6
+msgid "_Delay between frames where unspecified:"
+msgstr "_Затрымка між кадрамі, калі ня вызначаная:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+msgid "_Frame disposal where unspecified:"
+msgstr "_Разьмяшчэньне кадраў, калі ня вызначанае:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
+msgid "_GIF comment:"
+msgstr "_Камэнтар GIF:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:9
+msgid "_Loop forever"
+msgstr "_Бясконцае паўтарэньне"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
+msgid "_Use delay entered above for all frames"
+msgstr "Выкарыстоўваць уведзеную вышэй затрымку для _ўсіх кадраў"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:2
+msgid "Co_mpression level:"
+msgstr "Узровень _сьцісканьня:"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:3
+msgid "S_ave Defaults"
+msgstr "За_хаваць прадвызначэньні"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:4
+msgid "Save _background color"
+msgstr "Захаваць к_олер асноведзі"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:5
+msgid "Save _resolution"
+msgstr "Захаваць _разрозьненьне"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:6
+msgid "Save color _values from transparent pixels"
+msgstr "Захаваць значэньні _колераў празрыстых піксэляў"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:7
+msgid "Save comme_nt"
+msgstr "Захаваць камэн_тар"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:8
+msgid "Save creation _time"
+msgstr "Захаваць _час стварэньня"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:10
+msgid "Save layer o_ffset"
+msgstr "Захаваць зрух _пласта"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:11
+msgid "_Interlacing (Adam7)"
+msgstr "_Празрадковы (Adam7)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -12965,38 +13042,38 @@ msgstr "_Сканэр/камэра…"
 msgid "Transferring data from scanner/camera"
 msgstr "Прыймо даньняў са сканэра/камэры"
 
-#: ../plug-ins/win-snap/winsnap.c:865
+#: ../plug-ins/win-snap/winsnap.c:871
 msgid "Grab"
 msgstr "Захапіць"
 
-#: ../plug-ins/win-snap/winsnap.c:882
+#: ../plug-ins/win-snap/winsnap.c:888
 msgid "Grab a single window"
 msgstr "Захапіць адно вакно"
 
-#: ../plug-ins/win-snap/winsnap.c:896
+#: ../plug-ins/win-snap/winsnap.c:902
 msgid "Grab the whole screen"
 msgstr "Захапіць увесь экран"
 
-#: ../plug-ins/win-snap/winsnap.c:912
+#: ../plug-ins/win-snap/winsnap.c:918
 msgid "after"
 msgstr "пасьля"
 
-#: ../plug-ins/win-snap/winsnap.c:924
+#: ../plug-ins/win-snap/winsnap.c:930
 msgid "Seconds delay"
 msgstr "Затрымка (сэкунды)"
 
-#: ../plug-ins/win-snap/winsnap.c:931
+#: ../plug-ins/win-snap/winsnap.c:937
 msgid "Include decorations"
 msgstr "Уключыць аздабленьне"
 
-#: ../plug-ins/win-snap/winsnap.c:990
+#: ../plug-ins/win-snap/winsnap.c:996
 msgid "Capture a window or desktop image"
 msgstr "Захоп вакна або відарыса стальца"
 
-#: ../plug-ins/win-snap/winsnap.c:995
+#: ../plug-ins/win-snap/winsnap.c:1001
 msgid "_Screen Shot..."
 msgstr "_Здымак экрана…"
 
-#: ../plug-ins/win-snap/winsnap.c:1143
+#: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "Даньні не захопленыя"
