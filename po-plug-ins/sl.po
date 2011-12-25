@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-22 19:23+0000\n"
-"PO-Revision-Date: 2011-12-22 22:32+0100\n"
+"POT-Creation-Date: 2011-12-23 19:02+0000\n"
+"PO-Revision-Date: 2011-12-24 11:43+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -10937,31 +10937,26 @@ msgid "Animated GIF Options"
 msgstr "Možnosti za animirani GIF ..."
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:2
-#, fuzzy
 msgid "As _animation"
-msgstr "Animacija MNG"
+msgstr "Kot _animacija"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:3
 msgid "GIF Options"
 msgstr "Možnosti GIF"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:4
-#, fuzzy
 msgid "I_nterlace"
 msgstr "Preple_ti"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
-#, fuzzy
 msgid "U_se disposal entered above for all frames"
 msgstr "Upo_rabi zgoraj vneseno opustitev za vse sličice"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
-#, fuzzy
 msgid "_Delay between frames where unspecified:"
 msgstr "_Zakasnitev med sličicami, kjer ni določena:"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:7
-#, fuzzy
 msgid "_Frame disposal where unspecified:"
 msgstr "Opu_stitev sličic, kjer ni določena:"
 
@@ -10970,12 +10965,10 @@ msgid "_GIF comment:"
 msgstr "Komentar _GIF:"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
-#, fuzzy
 msgid "_Loop forever"
 msgstr "Zan_kaj neskončno"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:10
-#, fuzzy
 msgid "_Use delay entered above for all frames"
 msgstr "_Uporabi zgoraj vneseno zakasnitev za vse sličice"
 
@@ -11012,7 +11005,6 @@ msgid "Save layer o_ffset"
 msgstr "Shrani _odmik plasti"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
-#, fuzzy
 msgid "_Interlacing (Adam7)"
 msgstr "P_repletanje (Adam7)"
 
