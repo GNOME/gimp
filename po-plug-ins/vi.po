@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-09-28 21:33+0000\n"
-"PO-Revision-Date: 2011-11-21 21:14+0700\n"
+"PO-Revision-Date: 2011-12-27 08:38+0700\n"
 "Last-Translator: Nguyễn Vũ Hưng <vuhung16plus@gmail.com>\n"
 "Language-Team: Vietnamese <du-an-most@lists.hanoilug.org>\n"
 "MIME-Version: 1.0\n"
@@ -7013,10 +7013,11 @@ msgstr "Con trỏ chuột"
 msgid "Specified window not found"
 msgstr "Không tìm thấy cửa sổ đã xác định"
 
+# Button in screenshot dialog
 #: ../plug-ins/common/screenshot.c:1095
 #| msgid "S_wap"
 msgid "S_nap"
-msgstr "_Bắt dính"
+msgstr "_Chụp"
 
 #: ../plug-ins/common/screenshot.c:1125
 msgid "After the delay, the screenshot is taken."
@@ -8488,7 +8489,7 @@ msgstr "Cỡ phông:"
 #: ../plug-ins/common/web-page.c:316
 #| msgid "Hue"
 msgid "Huge"
-msgstr ""
+msgstr "Khổng lồ"
 
 #: ../plug-ins/common/web-page.c:317
 #| msgid "Target"
@@ -8688,7 +8689,7 @@ msgstr "_RLE mã hóa"
 #: ../plug-ins/file-bmp/bmp-write.c:873
 #| msgid "Table Options"
 msgid "Co_mpatibility Options"
-msgstr ""
+msgstr "Tuỳ chọn _tương thích"
 
 #: ../plug-ins/file-bmp/bmp-write.c:883
 msgid "_Do not write color space information"
@@ -9049,19 +9050,19 @@ msgstr "Không phải một tập tin Photoshop hợp lệ"
 #, c-format
 #| msgid "Unsupported brush format"
 msgid "Unsupported file format version: %d"
-msgstr ""
+msgstr "Phiên bản định dạng tập tin không hỗ trợ: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:283
 #, c-format
 #| msgid "Source channel in file:"
 msgid "Too many channels in file: %d"
-msgstr ""
+msgstr "Quá nhiều kênh trong tập tin: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:310
 #, c-format
 #| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid image size: %dx%d"
-msgstr ""
+msgstr "Kích thước ảnh không hợp lệ hoặc không hỗ trợ: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:322
 #, c-format
@@ -9137,7 +9138,7 @@ msgstr "Thêm"
 #, c-format
 #| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid channel size"
-msgstr ""
+msgstr "Kích thước kênh không hợp lệ hoặc không hỗ trợ"
 
 #: ../plug-ins/file-psd/psd-save.c:228 ../plug-ins/file-psd/psd.c:113
 #: ../plug-ins/file-psd/psd.c:152
@@ -9184,7 +9185,7 @@ msgstr ""
 #: ../plug-ins/file-psd/psd-util.c:50
 #| msgid "Premature end of file."
 msgid "Unexpected end of file"
-msgstr ""
+msgstr "Kết thúc tập tin bất ngờ"
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -9465,12 +9466,12 @@ msgstr "Khăn tay"
 #: ../plug-ins/flame/flame.c:755
 #| msgid "Smear"
 msgid "Heart"
-msgstr ""
+msgstr "Trái tim"
 
 #: ../plug-ins/flame/flame.c:756
 #| msgid "Displace"
 msgid "Disc"
-msgstr ""
+msgstr "Đĩa"
 
 #: ../plug-ins/flame/flame.c:758
 msgid "Hyperbolic"
@@ -9502,7 +9503,7 @@ msgstr "Mũ"
 #: ../plug-ins/flame/flame.c:766
 #| msgid "_Lower"
 msgid "Power"
-msgstr ""
+msgstr "Năng lượng"
 
 #: ../plug-ins/flame/flame.c:767
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:996
@@ -9514,7 +9515,7 @@ msgstr "Cosin"
 #: ../plug-ins/flame/flame.c:768
 #| msgid "Radians"
 msgid "Rings"
-msgstr ""
+msgstr "Nhẫn"
 
 #: ../plug-ins/flame/flame.c:769
 msgid "Fan"
@@ -9527,7 +9528,7 @@ msgstr "Mắt cá"
 #: ../plug-ins/flame/flame.c:771
 #| msgid "Blue"
 msgid "Bubble"
-msgstr ""
+msgstr "Bong bóng"
 
 #: ../plug-ins/flame/flame.c:772 ../plug-ins/map-object/map-object-ui.c:431
 msgid "Cylinder"
@@ -11215,7 +11216,7 @@ msgstr "Đi tiếp một trang"
 #: ../plug-ins/help-browser/dialog.c:574
 #| msgid "_Red:"
 msgid "_Reload"
-msgstr ""
+msgstr "Tải _lại"
 
 #: ../plug-ins/help-browser/dialog.c:574
 msgid "Reload current page"
@@ -11224,7 +11225,7 @@ msgstr "Nạp lại trang hiện tại"
 #: ../plug-ins/help-browser/dialog.c:579
 #| msgid "_Step"
 msgid "_Stop"
-msgstr ""
+msgstr "_Dừng"
 
 #: ../plug-ins/help-browser/dialog.c:579
 msgid "Stop loading this page"
@@ -11275,13 +11276,13 @@ msgstr "Tìm:"
 #| msgid "_Preview"
 msgctxt "search"
 msgid "_Previous"
-msgstr ""
+msgstr "_Trước"
 
 #: ../plug-ins/help-browser/dialog.c:1185
 #| msgid "_Hex"
 msgctxt "search"
 msgid "_Next"
-msgstr ""
+msgstr "_Kế"
 
 #: ../plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -11313,7 +11314,7 @@ msgstr "không biết ID trợ giúp « %s »"
 #, c-format
 #| msgid "Error reading BMP file header from '%s'"
 msgid "Loading index from '%s'"
-msgstr ""
+msgstr "Đang nạp chỉ mục từ '%s'"
 
 #: ../plug-ins/help/gimphelplocale.c:266
 #, c-format
@@ -11935,7 +11936,7 @@ msgstr "Tập t_in"
 #: ../plug-ins/imagemap/imap_menu.c:146
 #| msgid "_Neon..."
 msgid "_Open..."
-msgstr ""
+msgstr "_Mở..."
 
 #: ../plug-ins/imagemap/imap_menu.c:146
 #| msgid "Open as"
@@ -11945,22 +11946,22 @@ msgstr "Mở"
 #: ../plug-ins/imagemap/imap_menu.c:148
 #| msgid "_Waves..."
 msgid "_Save..."
-msgstr ""
+msgstr "_Lưu..."
 
 #: ../plug-ins/imagemap/imap_menu.c:148
 #| msgid "Saved"
 msgid "Save"
-msgstr ""
+msgstr "Lưu"
 
 #: ../plug-ins/imagemap/imap_menu.c:150
 #| msgid "_Waves..."
 msgid "Save _As..."
-msgstr ""
+msgstr "Lưu _là..."
 
 #: ../plug-ins/imagemap/imap_menu.c:155
 #| msgid "W_ait"
 msgid "_Edit"
-msgstr ""
+msgstr "_Sửa"
 
 #: ../plug-ins/imagemap/imap_menu.c:156
 #| msgid "_Undo"
@@ -11970,7 +11971,7 @@ msgstr "Hủy bước"
 #: ../plug-ins/imagemap/imap_menu.c:157
 #| msgid "Red"
 msgid "Redo"
-msgstr ""
+msgstr "Làm lại"
 
 #: ../plug-ins/imagemap/imap_menu.c:163
 #| msgid "Unselect All"
@@ -11980,12 +11981,12 @@ msgstr "_Bỏ chọn hết"
 #: ../plug-ins/imagemap/imap_menu.c:165
 #| msgid "Edit Map Info..."
 msgid "Edit Area _Info..."
-msgstr ""
+msgstr "Sửa _thông tin vùng..."
 
 #: ../plug-ins/imagemap/imap_menu.c:166
 #| msgid "Reads the selected Preset into memory"
 msgid "Edit selected area info"
-msgstr ""
+msgstr "Sửa thông tin vùng được chọn"
 
 #: ../plug-ins/imagemap/imap_menu.c:167
 #| msgid "General Preferences"
@@ -11995,7 +11996,7 @@ msgstr "Tùy thích"
 #: ../plug-ins/imagemap/imap_menu.c:169
 #| msgid "Move To Front"
 msgid "Move Area to Front"
-msgstr ""
+msgstr "Chuyển vùng ra trước"
 
 #: ../plug-ins/imagemap/imap_menu.c:171
 msgid "Move Area to Bottom"
@@ -12004,7 +12005,7 @@ msgstr "Dịch chuyển vùng xuống dưới"
 #: ../plug-ins/imagemap/imap_menu.c:173
 #| msgid "Delete Fractal"
 msgid "Delete Area"
-msgstr ""
+msgstr "Xoá vùng"
 
 #: ../plug-ins/imagemap/imap_menu.c:180
 #| msgid "P_review"
@@ -12014,27 +12015,27 @@ msgstr "X_em"
 #: ../plug-ins/imagemap/imap_menu.c:181
 #| msgid "_Slur..."
 msgid "Source..."
-msgstr ""
+msgstr "Nguồn"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
 #| msgid "Zoom"
 msgid "Zoom in"
-msgstr ""
+msgstr "Phóng to"
 
 #: ../plug-ins/imagemap/imap_menu.c:183
 #| msgid "Zoom"
 msgid "Zoom out"
-msgstr ""
+msgstr "Thu nhỏ"
 
 #: ../plug-ins/imagemap/imap_menu.c:184
 #| msgid "_Zoom"
 msgid "_Zoom To"
-msgstr ""
+msgstr "_Phóng"
 
 #: ../plug-ins/imagemap/imap_menu.c:186
 #| msgid "Warping"
 msgid "_Mapping"
-msgstr ""
+msgstr "Ánh _xạ"
 
 #: ../plug-ins/imagemap/imap_menu.c:187
 msgid "Edit Map Info..."
@@ -12067,12 +12068,12 @@ msgstr "Tạo nét dẫn..."
 #: ../plug-ins/imagemap/imap_menu.c:198
 #| msgid "_Hue"
 msgid "_Help"
-msgstr ""
+msgstr "Trợ _giúp"
 
 #: ../plug-ins/imagemap/imap_menu.c:199
 #| msgid "Context"
 msgid "_Contents"
-msgstr ""
+msgstr "_Mục lục"
 
 #: ../plug-ins/imagemap/imap_menu.c:202
 msgid "_Zoom"
@@ -12081,22 +12082,22 @@ msgstr "Thu _phóng"
 #: ../plug-ins/imagemap/imap_menu.c:207
 #| msgid "Area Settings"
 msgid "Area List"
-msgstr ""
+msgstr "Danh sách vùng"
 
 #: ../plug-ins/imagemap/imap_menu.c:217
 #| msgid "_Grow"
 msgid "Arrow"
-msgstr ""
+msgstr "Mũi tên"
 
 #: ../plug-ins/imagemap/imap_menu.c:218
 #| msgid "Select Next"
 msgid "Select existing area"
-msgstr ""
+msgstr "Chọn vùng đã có"
 
 #: ../plug-ins/imagemap/imap_menu.c:220
 #| msgid "Rectangle"
 msgid "Define Rectangle area"
-msgstr ""
+msgstr "Định nghĩa vùng chữ nhật"
 
 #: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Define Circle/Oval area"
@@ -12193,7 +12194,7 @@ msgstr "Đã chọn:"
 #: ../plug-ins/imagemap/imap_preferences.c:442
 #| msgid "Iterations:"
 msgid "Interaction:"
-msgstr ""
+msgstr "Tương tác:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
@@ -12833,7 +12834,7 @@ msgstr "Ánh xạ tới đối tượng"
 #: ../plug-ins/map-object/map-object-ui.c:1375
 #| msgid "Show preview _wireframe"
 msgid "Show _wireframe"
-msgstr ""
+msgstr "Hiện _khung"
 
 #: ../plug-ins/map-object/map-object-ui.c:1384
 #| msgid "Recompute preview image"
@@ -12850,7 +12851,7 @@ msgstr "Đang cấu thành cung mê lát được bằng Thuật Toán Prim"
 
 #: ../plug-ins/maze/maze-dialog.c:162
 msgid "Maze"
-msgstr "Cung mê"
+msgstr "Mê cung"
 
 #. The maze size frame
 #: ../plug-ins/maze/maze-dialog.c:184
@@ -12904,7 +12905,7 @@ msgstr "Xem và hiệu chỉnh siêu dữ liệu (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata.c:194
 msgid "Propert_ies"
-msgstr ""
+msgstr "_Thuộc tính"
 
 #: ../plug-ins/metadata/xmp-parse.c:238
 #, c-format
@@ -13044,12 +13045,12 @@ msgstr "_Vẽ những điểm mốc để xén"
 #: ../plug-ins/print/print-page-layout.c:306
 #| msgid "_Resolution:"
 msgid "_X resolution:"
-msgstr ""
+msgstr "Độ phân giải _X:"
 
 #: ../plug-ins/print/print-page-layout.c:310
 #| msgid "_Resolution:"
 msgid "_Y resolution:"
-msgstr ""
+msgstr "Độ phân giải _Y:"
 
 #: ../plug-ins/print/print-page-layout.c:381
 #| msgid "Left:"
@@ -13084,12 +13085,12 @@ msgstr "Cả hai"
 #: ../plug-ins/print/print.c:102
 #| msgid "Email the image"
 msgid "Print the image"
-msgstr ""
+msgstr "In ảnh"
 
 #: ../plug-ins/print/print.c:107
 #| msgid "_Grid..."
 msgid "_Print..."
-msgstr ""
+msgstr "_In..."
 
 #: ../plug-ins/print/print.c:118
 msgid "Adjust page size and orientation for printing"
@@ -13098,22 +13099,22 @@ msgstr "Điều chỉnh kích thước trang và hướng in ấn"
 #: ../plug-ins/print/print.c:124
 #| msgid "Page Curl"
 msgid "Page Set_up"
-msgstr ""
+msgstr "_Thiết lập trang"
 
 #: ../plug-ins/print/print.c:263
 #| msgid "Image Selection"
 msgid "Image Settings"
-msgstr ""
+msgstr "Thié6t lập ảnh"
 
 #: ../plug-ins/print/print.c:347
 #| msgid "Some error occurred while saving"
 msgid "An error occurred while trying to print:"
-msgstr ""
+msgstr "Lỗi in:"
 
 #: ../plug-ins/print/print.c:374
 #| msgid "Painting"
 msgid "Printing"
-msgstr ""
+msgstr "In"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: ../plug-ins/selection-to-path/pxl-outline.c:81
@@ -13131,7 +13132,7 @@ msgstr "Tùy chọn Cấp cao Phần chọn tới Đường dẫn"
 #: ../plug-ins/twain/twain.c:86
 #| msgid "Create an image from an area of the screen"
 msgid "Capture an image from a TWAIN datasource"
-msgstr ""
+msgstr "Chụp ảnh từ nguồn TWAIN"
 
 #: ../plug-ins/twain/twain.c:351
 msgid "_Scanner/Camera..."
