@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-22 12:48+0000\n"
-"PO-Revision-Date: 2011-12-23 00:53+0900\n"
+"POT-Creation-Date: 2011-12-26 09:54+0000\n"
+"PO-Revision-Date: 2011-12-26 22:01+0900\n"
 "Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -3572,7 +3572,7 @@ msgstr "セル間隔を指定します。"
 
 #: ../plug-ins/common/file-jp2-load.c:96
 msgid "JPEG 2000 image"
-msgstr "JPEG　2000 画像"
+msgstr "JPEG 2000 画像"
 
 #: ../plug-ins/common/file-jp2-load.c:212
 #, c-format
@@ -5041,7 +5041,7 @@ msgstr ""
 "appearance-properties) でサポートされない名目サイズを持つフレームを含んでいま"
 "す。\n"
 "[外観の設定] でこのカーソルが現れないかもしれませんので、それを避けたいとき"
-"は [サイズ指定済のものを含めた全フレームにこの値を摘用する] を指定して保存し"
+"は [サイズ指定済のものを含めた全フレームにこの値を適用する] を指定して保存し"
 "直してください。"
 
 #: ../plug-ins/common/file-xmc.c:1961
@@ -5102,8 +5102,8 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"XWD-ファイル %s は形式 %d, 深度 %d, ピクセル当たり %d です。現在この形式は利"
-"用できません。"
+"XWD ファイル '%s' のヘッダーの指定 (形式: %d, 深度: %d, ピクセル当たりのビッ"
+"ト数: %d) は、現在は利用できません。"
 
 #: ../plug-ins/common/file-xwd.c:598
 msgid "Cannot save images with alpha channels."
@@ -8678,7 +8678,7 @@ msgstr "RLE エンコード(_R)"
 #. Compatibility Options
 #: ../plug-ins/file-bmp/bmp-write.c:873
 msgid "Co_mpatibility Options"
-msgstr "互換性のオプション(_m)"
+msgstr "互換性のオプション(_M)"
 
 #: ../plug-ins/file-bmp/bmp-write.c:883
 msgid "_Do not write color space information"
@@ -8691,7 +8691,7 @@ msgid ""
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
 "アプリケーションによっては色空間の情報を含む BMP 形式の画像ファイルを読み込め"
-"ない場合があります。既定では BMP 形式ファイルへのインポート時に色空間情報を"
+"ない場合があります。既定では BMP 形式ファイルへのエクスポート時に色空間情報を"
 "ファイルへ書き込みますが、この設定をオンにした場合は書き込みません。"
 
 #. Advanced Options
