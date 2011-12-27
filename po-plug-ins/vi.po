@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gimp-plugins HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-28 21:33+0000\n"
-"PO-Revision-Date: 2011-12-27 08:38+0700\n"
+"POT-Creation-Date: 2011-12-27 01:39+0000\n"
+"PO-Revision-Date: 2011-12-27 08:43+0700\n"
 "Last-Translator: Nguyễn Vũ Hưng <vuhung16plus@gmail.com>\n"
 "Language-Team: Vietnamese <du-an-most@lists.hanoilug.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "Toàn bộ lớp"
 
 #. Create selection
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:172
-#: ../plug-ins/common/film.c:967 ../plug-ins/imagemap/imap_selection.c:339
+#: ../plug-ins/common/film.c:965 ../plug-ins/imagemap/imap_selection.c:339
 #: ../plug-ins/selection-to-path/selection-to-path.c:434
 msgid "Selection"
 msgstr "Vùng chọn"
@@ -52,32 +52,28 @@ msgstr "Ngữ cảnh"
 
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:297
-#| msgid "From:"
 msgctxt "color-range"
 msgid "From:"
 msgstr "Từ:"
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:323
-#| msgid "To:"
 msgctxt "color-range"
 msgid "To:"
 msgstr "Đến:"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:375
-#| msgid "From:"
 msgctxt "color-rotate"
 msgid "From:"
 msgstr "Từ:"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:376
-#| msgid "To:"
 msgctxt "color-rotate"
 msgid "To:"
 msgstr "Đến:"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:416
-#: ../plug-ins/common/file-ps.c:3237 ../plug-ins/imagemap/imap_menu.c:213
+#: ../plug-ins/common/file-ps.c:3234 ../plug-ins/imagemap/imap_menu.c:213
 msgid "Gray"
 msgstr "Xám"
 
@@ -288,7 +284,6 @@ msgid "Align all visible layers of the image"
 msgstr "Canh lề các lớp hiển thị của ảnh"
 
 #: ../plug-ins/common/align-layers.c:133
-#| msgid "Align _Visible Layers..."
 msgid "Align Visi_ble Layers..."
 msgstr "Canh lề các lớp _hiển thị..."
 
@@ -300,16 +295,10 @@ msgstr "Không đủ số lớp để canh lề được."
 msgid "Align Visible Layers"
 msgstr "Canh lề các lớp hiển thị"
 
-#. if and how to center the image on the page
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
-#: ../plug-ins/common/cml-explorer.c:166 ../plug-ins/common/file-ps.c:3253
-#: ../plug-ins/common/file-ps.c:3265 ../plug-ins/common/file-psp.c:647
-#: ../plug-ins/file-fits/fits.c:1044
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1039
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1080
-#: ../plug-ins/lighting/lighting-ui.c:418
-#: ../plug-ins/print/print-page-layout.c:461
+#, fuzzy
+#| msgid "None"
+msgctxt "align-style"
 msgid "None"
 msgstr "Không có"
 
@@ -459,7 +448,6 @@ msgid "Rewind the animation"
 msgstr "Tua lại hoạt cảnh"
 
 #: ../plug-ins/common/animation-play.c:475
-#| msgid "Feather"
 msgid "Faster"
 msgstr "Nhanh hơn"
 
@@ -468,7 +456,6 @@ msgid "Increase the speed of the animation"
 msgstr "Tăng tốc độ hoạt cảnh"
 
 #: ../plug-ins/common/animation-play.c:480
-#| msgid "_Lower"
 msgid "Slower"
 msgstr "Chậm lại"
 
@@ -477,12 +464,10 @@ msgid "Decrease the speed of the animation"
 msgstr "Giảm tốc độ hoạt cảnh"
 
 #: ../plug-ins/common/animation-play.c:485
-#| msgid "Reset Order"
 msgid "Reset speed"
 msgstr "Đặt lại tốc độ chuẩn"
 
 #: ../plug-ins/common/animation-play.c:485
-#| msgid "Rewind the animation"
 msgid "Reset the speed of the animation"
 msgstr "Đặt lại tốc độ của hoạt cảnh"
 
@@ -510,12 +495,10 @@ msgid "%d fps"
 msgstr "%d fps"
 
 #: ../plug-ins/common/animation-play.c:674
-#| msgid "Default frame delay:"
 msgid "Default framerate"
 msgstr "Tốc độ khung hình mặc định"
 
 #: ../plug-ins/common/animation-play.c:695
-#| msgid "_Playback..."
 msgid "Playback speed"
 msgstr "Tốc độ phát"
 
@@ -537,12 +520,10 @@ msgid "Antialias using the Scale3X edge-extrapolation algorithm"
 msgstr "Khử răng cưa bằng cách dùng thuật toán Scale3X edge-extrapolation"
 
 #: ../plug-ins/common/antialias.c:90
-#| msgid "_Antialiasing"
 msgid "_Antialias"
 msgstr "_Khử răng cưa"
 
-#: ../plug-ins/common/antialias.c:149
-#| msgid "Antialiasing"
+#: ../plug-ins/common/antialias.c:147
 msgid "Antialiasing..."
 msgstr "Đang khử răng cưa...."
 
@@ -565,7 +546,7 @@ msgstr "Áp dụng vải bố"
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: ../plug-ins/common/apply-canvas.c:1293 ../plug-ins/common/wind.c:948
+#: ../plug-ins/common/apply-canvas.c:1293 ../plug-ins/common/wind.c:943
 #: ../plug-ins/lighting/lighting-ui.c:520
 msgid "Direction"
 msgstr "Hướng"
@@ -614,12 +595,12 @@ msgid "Orientation"
 msgstr "hướng"
 
 #: ../plug-ins/common/blinds.c:262 ../plug-ins/common/ripple.c:561
-#: ../plug-ins/common/tile-small.c:433 ../plug-ins/pagecurl/pagecurl.c:534
+#: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:535
 msgid "_Horizontal"
 msgstr "_Ngang"
 
 #: ../plug-ins/common/blinds.c:265 ../plug-ins/common/ripple.c:564
-#: ../plug-ins/common/tile-small.c:443 ../plug-ins/pagecurl/pagecurl.c:533
+#: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Vertical"
 msgstr "_Dọc"
 
@@ -627,25 +608,25 @@ msgstr "_Dọc"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:727 ../plug-ins/common/file-cel.c:363
-#: ../plug-ins/common/file-cel.c:366 ../plug-ins/common/file-dicom.c:614
-#: ../plug-ins/common/file-gif-load.c:930
-#: ../plug-ins/common/file-jp2-load.c:357 ../plug-ins/common/file-pcx.c:425
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:363
+#: ../plug-ins/common/file-cel.c:366 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/file-gif-load.c:943
+#: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:892 ../plug-ins/common/file-pnm.c:583
+#: ../plug-ins/common/file-png.c:887 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:999
-#: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:747
-#: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:267
+#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
+#: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
+#: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
-#: ../plug-ins/file-faxg3/faxg3.c:477 ../plug-ins/file-fits/fits.c:530
+#: ../plug-ins/file-faxg3/faxg3.c:474 ../plug-ins/file-fits/fits.c:530
 #: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
-#: ../plug-ins/file-psd/psd-image-res-load.c:997
+#: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
 #: ../plug-ins/gfig/gfig-dialog.c:1306
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
-#: ../plug-ins/win-snap/winsnap.c:1156
+#: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
 msgstr "Nền"
 
@@ -680,7 +661,7 @@ msgstr "Làm mờ Gauss chọn lọc"
 #: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
-#: ../plug-ins/file-sgi/sgi.c:559 ../plug-ins/file-xjt/xjt.c:1687
+#: ../plug-ins/file-sgi/sgi.c:558 ../plug-ins/file-xjt/xjt.c:1687
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
 msgstr "Không thể thao tác ảnh màu đã phụ lục."
@@ -715,12 +696,12 @@ msgstr "Làm mờ kiểu Gauss"
 msgid "Blur Radius"
 msgstr "Bán kính vùng mờ"
 
-#: ../plug-ins/common/blur-gauss.c:523 ../plug-ins/common/jigsaw.c:2459
+#: ../plug-ins/common/blur-gauss.c:523 ../plug-ins/common/jigsaw.c:2435
 #: ../plug-ins/common/noise-spread.c:385
 msgid "_Horizontal:"
 msgstr "_Ngang:"
 
-#: ../plug-ins/common/blur-gauss.c:527 ../plug-ins/common/jigsaw.c:2476
+#: ../plug-ins/common/blur-gauss.c:527 ../plug-ins/common/jigsaw.c:2452
 #: ../plug-ins/common/noise-spread.c:389
 msgid "_Vertical:"
 msgstr "_Dọc:"
@@ -745,41 +726,38 @@ msgstr "Mô phỏng di chuyển bằng cách làm mờ có định hướng"
 msgid "_Motion Blur..."
 msgstr "Làm _mờ chuyển động..."
 
-#: ../plug-ins/common/blur-motion.c:905
+#: ../plug-ins/common/blur-motion.c:909
 msgid "Motion blurring"
 msgstr "Đang làm mờ chuyển động"
 
-#: ../plug-ins/common/blur-motion.c:1008
+#: ../plug-ins/common/blur-motion.c:1012
 msgid "Motion Blur"
 msgstr "Làm mở chuyển động"
 
-#: ../plug-ins/common/blur-motion.c:1042
+#: ../plug-ins/common/blur-motion.c:1046
 msgid "Blur Type"
 msgstr "Kiểu mờ"
 
-#: ../plug-ins/common/blur-motion.c:1046
-#| msgid "_Linear"
+#: ../plug-ins/common/blur-motion.c:1050
 msgctxt "blur-type"
 msgid "_Linear"
 msgstr "T_uyến tính"
 
-#: ../plug-ins/common/blur-motion.c:1047
-#| msgid "_Radial"
+#: ../plug-ins/common/blur-motion.c:1051
 msgctxt "blur-type"
 msgid "_Radial"
 msgstr "Tỏ_a tròn"
 
-#: ../plug-ins/common/blur-motion.c:1048
-#| msgid "_Zoom"
+#: ../plug-ins/common/blur-motion.c:1052
 msgctxt "blur-type"
 msgid "_Zoom"
 msgstr "Thu _phóng"
 
-#: ../plug-ins/common/blur-motion.c:1055
+#: ../plug-ins/common/blur-motion.c:1059
 msgid "Blur Center"
 msgstr "Tâm mờ"
 
-#: ../plug-ins/common/blur-motion.c:1091 ../plug-ins/common/lens-flare.c:764
+#: ../plug-ins/common/blur-motion.c:1095 ../plug-ins/common/lens-flare.c:764
 #: ../plug-ins/common/nova.c:454 ../plug-ins/common/tile-paper.c:283
 #: ../plug-ins/flame/flame.c:1250
 #: ../plug-ins/gradient-flare/gradient-flare.c:2724
@@ -787,7 +765,7 @@ msgstr "Tâm mờ"
 msgid "_X:"
 msgstr "_X:"
 
-#: ../plug-ins/common/blur-motion.c:1096 ../plug-ins/common/lens-flare.c:769
+#: ../plug-ins/common/blur-motion.c:1100 ../plug-ins/common/lens-flare.c:769
 #: ../plug-ins/common/nova.c:459 ../plug-ins/common/tile-paper.c:292
 #: ../plug-ins/flame/flame.c:1264
 #: ../plug-ins/gradient-flare/gradient-flare.c:2728
@@ -795,20 +773,20 @@ msgstr "_X:"
 msgid "_Y:"
 msgstr "_Y:"
 
-#: ../plug-ins/common/blur-motion.c:1098
+#: ../plug-ins/common/blur-motion.c:1102
 msgid "Blur _outward"
 msgstr "Mờ phóng _ra"
 
-#: ../plug-ins/common/blur-motion.c:1111
+#: ../plug-ins/common/blur-motion.c:1115
 msgid "Blur Parameters"
 msgstr "Tham số mờ"
 
-#: ../plug-ins/common/blur-motion.c:1122
+#: ../plug-ins/common/blur-motion.c:1126
 #: ../plug-ins/map-object/map-object-ui.c:1206
 msgid "L_ength:"
 msgstr "Độ _dài:"
 
-#: ../plug-ins/common/blur-motion.c:1135 ../plug-ins/common/newsprint.c:992
+#: ../plug-ins/common/blur-motion.c:1139 ../plug-ins/common/newsprint.c:992
 msgid "_Angle:"
 msgstr "_Góc:"
 
@@ -820,7 +798,7 @@ msgstr "Làm mờ đơn giản, nhanh nhưng không quá mạnh"
 msgid "_Blur"
 msgstr "_Mờ"
 
-#: ../plug-ins/common/blur.c:177 ../plug-ins/common/unsharp-mask.c:584
+#: ../plug-ins/common/blur.c:177 ../plug-ins/common/unsharp-mask.c:582
 msgid "Blurring"
 msgstr "Đang làm mờ"
 
@@ -850,7 +828,7 @@ msgstr "Độ _dày:"
 
 #. Number of Colors frame
 #: ../plug-ins/common/border-average.c:412
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:907
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:910
 msgid "Number of Colors"
 msgstr "Số màu"
 
@@ -921,7 +899,7 @@ msgstr "Góc _phương vị:"
 msgid "_Elevation:"
 msgstr "Độ cao _lên:"
 
-#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3390
+#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3388
 msgid "_X offset:"
 msgstr "Độ lệch _X:"
 
@@ -933,7 +911,7 @@ msgstr ""
 "Có thể điều chỉnh độ lệch bằng cách kéo ô xem thử, dùng nút giữa trên con "
 "chuột."
 
-#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3399
+#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3397
 msgid "_Y offset:"
 msgstr "Độ lệch _Y:"
 
@@ -987,19 +965,19 @@ msgstr "Kênh x_uất:"
 
 #. Redmode radio frame
 #: ../plug-ins/common/channel-mixer.c:539 ../plug-ins/common/decompose.c:174
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:990
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:993
 msgid "Red"
 msgstr "Đỏ"
 
 #. Greenmode radio frame
 #: ../plug-ins/common/channel-mixer.c:544 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1031
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1034
 msgid "Green"
 msgstr "Xanh lá cây"
 
 #. Bluemode radio frame
 #: ../plug-ins/common/channel-mixer.c:549 ../plug-ins/common/decompose.c:176
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1072
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1075
 msgid "Blue"
 msgstr "Xanh dương"
 
@@ -1035,30 +1013,30 @@ msgstr "Đơ_n sắc"
 msgid "Preserve _luminosity"
 msgstr "Bảo tồn độ _sáng"
 
-#: ../plug-ins/common/channel-mixer.c:879
+#: ../plug-ins/common/channel-mixer.c:876
 msgid "Load Channel Mixer Settings"
 msgstr "Tải thiết lập bộ hoà kênh"
 
 #. stat error (file does not exist)
-#: ../plug-ins/common/channel-mixer.c:983
+#: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:892
 #: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-compressor.c:497
 #: ../plug-ins/common/file-compressor.c:666
 #: ../plug-ins/common/file-dicom.c:340 ../plug-ins/common/file-gbr.c:368
-#: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:645
-#: ../plug-ins/common/file-jp2-load.c:197
-#: ../plug-ins/common/file-jp2-load.c:206 ../plug-ins/common/file-mng.c:1156
+#: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:640
+#: ../plug-ins/common/file-jp2-load.c:194
+#: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
-#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:757
+#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:752
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1037
-#: ../plug-ins/common/file-ps.c:3052 ../plug-ins/common/file-psp.c:1709
+#: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
-#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:334
-#: ../plug-ins/common/file-svg.c:732 ../plug-ins/common/file-tga.c:442
-#: ../plug-ins/common/file-tiff-load.c:292 ../plug-ins/common/file-xbm.c:737
-#: ../plug-ins/common/file-xmc.c:667 ../plug-ins/common/file-xmc.c:852
-#: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2005
-#: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:232
+#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
+#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
+#: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:737
+#: ../plug-ins/common/file-xmc.c:663 ../plug-ins/common/file-xmc.c:848
+#: ../plug-ins/common/file-xwd.c:433 ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
 #: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:117
@@ -1067,8 +1045,8 @@ msgstr "Tải thiết lập bộ hoà kênh"
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:193
 #: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
 #: ../plug-ins/flame/flame.c:411
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:928
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:926
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
 #: ../plug-ins/help/gimphelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1367
@@ -1076,42 +1054,42 @@ msgstr "Tải thiết lập bộ hoà kênh"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Không thể mở « %s » để đọc: %s"
 
-#: ../plug-ins/common/channel-mixer.c:1006
+#: ../plug-ins/common/channel-mixer.c:1003
 msgid "Save Channel Mixer Settings"
 msgstr "Lưu thiết lập bộ hoà kênh"
 
-#: ../plug-ins/common/channel-mixer.c:1061
+#: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:840
 #: ../plug-ins/common/file-cel.c:585 ../plug-ins/common/file-compressor.c:425
 #: ../plug-ins/common/file-compressor.c:507
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:677
-#: ../plug-ins/common/file-csource.c:407 ../plug-ins/common/file-dicom.c:1353
+#: ../plug-ins/common/file-csource.c:407 ../plug-ins/common/file-dicom.c:1351
 #: ../plug-ins/common/file-gbr.c:663 ../plug-ins/common/file-gif-save.c:782
-#: ../plug-ins/common/file-gih.c:1263 ../plug-ins/common/file-html-table.c:236
+#: ../plug-ins/common/file-gih.c:1258 ../plug-ins/common/file-html-table.c:236
 #: ../plug-ins/common/file-mng.c:649 ../plug-ins/common/file-mng.c:984
 #: ../plug-ins/common/file-pat.c:486 ../plug-ins/common/file-pcx.c:712
-#: ../plug-ins/common/file-pix.c:526 ../plug-ins/common/file-png.c:1290
+#: ../plug-ins/common/file-pix.c:526 ../plug-ins/common/file-png.c:1285
 #: ../plug-ins/common/file-pnm.c:1010 ../plug-ins/common/file-ps.c:1214
 #: ../plug-ins/common/file-raw.c:591 ../plug-ins/common/file-raw.c:619
 #: ../plug-ins/common/file-sunras.c:565 ../plug-ins/common/file-tga.c:1171
 #: ../plug-ins/common/file-tiff-save.c:684 ../plug-ins/common/file-xbm.c:1036
-#: ../plug-ins/common/file-xmc.c:1459 ../plug-ins/common/file-xwd.c:619
-#: ../plug-ins/common/sphere-designer.c:2116
+#: ../plug-ins/common/file-xmc.c:1455 ../plug-ins/common/file-xwd.c:619
+#: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
-#: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1655
+#: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1652
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
 #: ../plug-ins/flame/flame.c:442
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
-#: ../plug-ins/gfig/gfig.c:798 ../plug-ins/ifs-compose/ifs-compose.c:2410
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
+#: ../plug-ins/gfig/gfig.c:798 ../plug-ins/ifs-compose/ifs-compose.c:2408
 #: ../plug-ins/lighting/lighting-ui.c:1223
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Không thể mở « %s » để ghi: %s"
 
-#: ../plug-ins/common/channel-mixer.c:1069
+#: ../plug-ins/common/channel-mixer.c:1066
 #: ../plug-ins/common/cml-explorer.c:2090
 #, c-format
 msgid "Parameters were saved to '%s'"
@@ -1133,8 +1111,8 @@ msgstr "Đang thêm bàn cờ..."
 msgid "Checkerboard"
 msgstr "Bàn cờ"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1166
-#: ../plug-ins/gimpressionist/sizemap.c:511
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1162
+#: ../plug-ins/gimpressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Cỡ:"
 
@@ -1194,6 +1172,13 @@ msgstr "Hàm dựa vào sin^p"
 msgid "sin^p, stepped"
 msgstr "sin^p, có bậc"
 
+#: ../plug-ins/common/cml-explorer.c:166
+#, fuzzy
+#| msgid "None"
+msgctxt "cml-composition"
+msgid "None"
+msgstr "Không có"
+
 #: ../plug-ins/common/cml-explorer.c:167
 msgid "Max (x, -)"
 msgstr "Tối đa (x, -)"
@@ -1250,7 +1235,7 @@ msgstr "Tối thiểu (x-d, -), (x < 0.5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Tối thiểu (x-d, -), (0.5 < x)"
 
-#: ../plug-ins/common/cml-explorer.c:200 ../plug-ins/common/file-sunras.c:1639
+#: ../plug-ins/common/cml-explorer.c:200 ../plug-ins/common/file-sunras.c:1635
 msgid "Standard"
 msgstr "Chuẩn"
 
@@ -1381,7 +1366,7 @@ msgstr "Cố định hạt"
 msgid "Random Seed"
 msgstr "Hạt ngẫu nhiên"
 
-#: ../plug-ins/common/cml-explorer.c:1293 ../plug-ins/common/filter-pack.c:700
+#: ../plug-ins/common/cml-explorer.c:1293 ../plug-ins/common/filter-pack.c:702
 #: ../plug-ins/common/van-gogh-lic.c:675
 msgid "_Hue"
 msgstr "_Sắc màu"
@@ -1390,7 +1375,7 @@ msgstr "_Sắc màu"
 msgid "Sat_uration"
 msgstr "Độ _bão hoà"
 
-#: ../plug-ins/common/cml-explorer.c:1301 ../plug-ins/common/filter-pack.c:708
+#: ../plug-ins/common/cml-explorer.c:1301 ../plug-ins/common/filter-pack.c:710
 msgid "_Value"
 msgstr "_Giá trị"
 
@@ -1544,12 +1529,10 @@ msgid "Warning: the source and the destination are the same channel."
 msgstr "Cảnh báo: nguồn và đích là cùng một kênh."
 
 #: ../plug-ins/common/cml-explorer.c:1979
-#| msgid "Save Fractal Parameters"
 msgid "Save CML Explorer Parameters"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:2112
-#| msgid "Load Fractal Parameters"
 msgid "Load CML Explorer Parameters"
 msgstr ""
 
@@ -1564,7 +1547,6 @@ msgstr "Cảnh báo: « %s » là một định dạng tập tin cũ."
 
 #: ../plug-ins/common/cml-explorer.c:2241
 #, c-format
-#| msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr ""
 "Cảnh báo: '%s' là một tập tin tham số cho phiên bản mới hơn của CML Explorer."
@@ -1684,7 +1666,6 @@ msgid "Color to Alpha"
 msgstr "Màu tới anpha"
 
 #: ../plug-ins/common/color-to-alpha.c:411
-#| msgid "From:"
 msgctxt "color-to-alpha"
 msgid "From:"
 msgstr "Từ:"
@@ -1702,7 +1683,6 @@ msgid "Replace all colors with shades of a specified color"
 msgstr "Thay thế mọi màu sắc bằng tông của một màu chỉ định"
 
 #: ../plug-ins/common/colorify.c:108
-#| msgid "_Colorify..."
 msgid "Colorif_y..."
 msgstr "_Màu hóa..."
 
@@ -1812,12 +1792,10 @@ msgid "_Value:"
 msgstr "_Giá trị:"
 
 #: ../plug-ins/common/compose.c:219 ../plug-ins/common/decompose.c:193
-#| msgid "HSV"
 msgid "HSL"
 msgstr "HSL"
 
 #: ../plug-ins/common/compose.c:222
-#| msgid "_Brightness:"
 msgid "_Lightness:"
 msgstr "Độ _sáng:"
 
@@ -1973,7 +1951,7 @@ msgstr "Cấu thành"
 msgid "Compose Channels"
 msgstr "Kênh cấu thành"
 
-#: ../plug-ins/common/compose.c:1521 ../plug-ins/common/decompose.c:1526
+#: ../plug-ins/common/compose.c:1521 ../plug-ins/common/decompose.c:1528
 msgid "Color _model:"
 msgstr "_Mô hình màu:"
 
@@ -2004,7 +1982,6 @@ msgid "Enhance contrast using the Retinex method"
 msgstr "Tăng cường độ tương phản bằng phương pháp Retinex"
 
 #: ../plug-ins/common/contrast-retinex.c:166
-#| msgid "_Retinex..."
 msgid "Retine_x..."
 msgstr "_Retinex..."
 
@@ -2017,22 +1994,18 @@ msgid "Retinex Image Enhancement"
 msgstr "Tăng cường ảnh Retinex"
 
 #: ../plug-ins/common/contrast-retinex.c:321
-#| msgid "_Uniform"
 msgid "Uniform"
 msgstr "Đồng dạng"
 
 #: ../plug-ins/common/contrast-retinex.c:322
-#| msgid "_Low"
 msgid "Low"
 msgstr "Thấp"
 
 #: ../plug-ins/common/contrast-retinex.c:323
-#| msgid "_High"
 msgid "High"
 msgstr "Cao"
 
 #: ../plug-ins/common/contrast-retinex.c:334
-#| msgid "Level"
 msgid "_Level:"
 msgstr "_Cấp:"
 
@@ -2041,16 +2014,14 @@ msgid "_Scale:"
 msgstr "Tỷ _lệ:"
 
 #: ../plug-ins/common/contrast-retinex.c:352
-#| msgid "_Scale division:"
 msgid "Scale _division:"
 msgstr "_Chia tỷ lệ:"
 
 #: ../plug-ins/common/contrast-retinex.c:365
-#| msgid "_Dynamic:"
 msgid "Dy_namic:"
 msgstr "Độn_g:"
 
-#: ../plug-ins/common/contrast-retinex.c:636
+#: ../plug-ins/common/contrast-retinex.c:633
 msgid "Retinex: filtering"
 msgstr "Retinex: đang lọc"
 
@@ -2113,7 +2084,7 @@ msgid "E_xtend"
 msgstr "_Mở rộng"
 
 #: ../plug-ins/common/convolution-matrix.c:74
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:706
+#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:700
 #: ../plug-ins/common/fractal-trace.c:737 ../plug-ins/common/ripple.c:585
 msgid "_Wrap"
 msgstr "_Cuộn"
@@ -2131,7 +2102,6 @@ msgid "_Convolution Matrix..."
 msgstr "Ma trận _xoắn lại..."
 
 #: ../plug-ins/common/convolution-matrix.c:241
-#| msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
 msgid "Convolution does not work on layers smaller than 3x3 pixels."
 msgstr "Ma trận xoắn lại không hoạt động với lớp nhỏ hơn 3x3 điểm ảnh."
 
@@ -2139,37 +2109,36 @@ msgstr "Ma trận xoắn lại không hoạt động với lớp nhỏ hơn 3x3 
 msgid "Applying convolution"
 msgstr "Đang áp dụng sự xoắn lại..."
 
-#: ../plug-ins/common/convolution-matrix.c:907
+#: ../plug-ins/common/convolution-matrix.c:898
 msgid "Convolution Matrix"
 msgstr "Ma trận xoắn lại"
 
-#: ../plug-ins/common/convolution-matrix.c:946
+#: ../plug-ins/common/convolution-matrix.c:937
 msgid "Matrix"
 msgstr "Ma trận"
 
-#: ../plug-ins/common/convolution-matrix.c:984
+#: ../plug-ins/common/convolution-matrix.c:975
 msgid "D_ivisor:"
 msgstr "Số ch_ia:"
 
-#: ../plug-ins/common/convolution-matrix.c:1010
+#: ../plug-ins/common/convolution-matrix.c:1001
 #: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw.c:1121
 msgid "O_ffset:"
 msgstr "Độ _lệch:"
 
-#: ../plug-ins/common/convolution-matrix.c:1039
-#| msgid "_Normalize"
+#: ../plug-ins/common/convolution-matrix.c:1030
 msgid "N_ormalise"
 msgstr "Chuẩ_n hóa"
 
-#: ../plug-ins/common/convolution-matrix.c:1051
+#: ../plug-ins/common/convolution-matrix.c:1042
 msgid "A_lpha-weighting"
 msgstr "An_pha cấp đặc biệt"
 
-#: ../plug-ins/common/convolution-matrix.c:1070
+#: ../plug-ins/common/convolution-matrix.c:1061
 msgid "Border"
 msgstr "Viền"
 
-#: ../plug-ins/common/convolution-matrix.c:1097
+#: ../plug-ins/common/convolution-matrix.c:1088
 msgid "Channels"
 msgstr "Kênh"
 
@@ -2178,7 +2147,6 @@ msgid "Remove empty borders from the image"
 msgstr "Gỡ bỏ viền rỗng ra khỏi ảnh"
 
 #: ../plug-ins/common/crop-auto.c:89
-#| msgid "_Autocrop Image"
 msgid "Autocrop Imag_e"
 msgstr "Tự động _xén ảnh"
 
@@ -2187,7 +2155,6 @@ msgid "Remove empty borders from the layer"
 msgstr "Gỡ bỏ viền rỗng ra khỏi lớp"
 
 #: ../plug-ins/common/crop-auto.c:103
-#| msgid "_Autocrop Layer"
 msgid "Autocrop Lay_er"
 msgstr "Tự động _xén lớp"
 
@@ -2262,21 +2229,20 @@ msgstr "Không thể hoạt động với vùng chọn rỗng."
 
 #: ../plug-ins/common/curve-bend.c:902
 #, c-format
-#| msgid "Error while reading '%s'. File corrupted?"
 msgid "Error while reading '%s': %s"
 msgstr "Gặp lỗi khi đọc « %s »: %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve-bend.c:1225 ../plug-ins/common/curve-bend.c:2965
+#: ../plug-ins/common/curve-bend.c:1225 ../plug-ins/common/curve-bend.c:2956
 msgid "Curve Bend"
 msgstr "Uốn đường cong"
 
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1262
-#: ../plug-ins/gimpressionist/orientmap.c:591
-#: ../plug-ins/gimpressionist/sizemap.c:461
+#: ../plug-ins/gimpressionist/orientmap.c:590
+#: ../plug-ins/gimpressionist/sizemap.c:459
 #: ../plug-ins/print/print-page-layout.c:171
 msgid "Preview"
 msgstr "Xem thử"
@@ -2309,8 +2275,8 @@ msgid "Smoo_thing"
 msgstr "Làm _mịn"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1353 ../plug-ins/common/mosaic.c:732
-#: ../plug-ins/common/qbist.c:860 ../plug-ins/common/ripple.c:532
+#: ../plug-ins/common/curve-bend.c:1353 ../plug-ins/common/mosaic.c:729
+#: ../plug-ins/common/qbist.c:858 ../plug-ins/common/ripple.c:532
 msgid "_Antialiasing"
 msgstr "_Khử răng cưa"
 
@@ -2427,17 +2393,14 @@ msgid "value"
 msgstr "giá trị"
 
 #: ../plug-ins/common/decompose.c:193 ../plug-ins/common/decompose.c:197
-#| msgid "hue"
 msgid "hue_l"
 msgstr "sắc màu_l"
 
 #: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:198
-#| msgid "saturation"
 msgid "saturation_l"
 msgstr "độ bão hòa_l"
 
 #: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:199
-#| msgid "_Brightness"
 msgid "lightness"
 msgstr "độ sáng"
 
@@ -2446,12 +2409,10 @@ msgid "Hue (HSL)"
 msgstr "Sắc màu (HSL)"
 
 #: ../plug-ins/common/decompose.c:198
-#| msgid "Saturation"
 msgid "Saturation (HSL)"
 msgstr "Độ bão hòa (HSL)"
 
 #: ../plug-ins/common/decompose.c:199
-#| msgid "_Brightness"
 msgid "Lightness"
 msgstr "Độ sáng"
 
@@ -2571,23 +2532,23 @@ msgstr "_Phân rã..."
 msgid "Decomposing"
 msgstr "Đang phân rã"
 
-#: ../plug-ins/common/decompose.c:1491
+#: ../plug-ins/common/decompose.c:1493
 msgid "Decompose"
 msgstr "Phân rã"
 
-#: ../plug-ins/common/decompose.c:1514
+#: ../plug-ins/common/decompose.c:1516
 msgid "Extract Channels"
 msgstr "Trích kênh"
 
-#: ../plug-ins/common/decompose.c:1561
+#: ../plug-ins/common/decompose.c:1563
 msgid "_Decompose to layers"
 msgstr "_Phân rã thành lớp"
 
-#: ../plug-ins/common/decompose.c:1572
+#: ../plug-ins/common/decompose.c:1574
 msgid "_Foreground as registration color"
 msgstr "Màu _chủ đạo là màu đăng ký"
 
-#: ../plug-ins/common/decompose.c:1573
+#: ../plug-ins/common/decompose.c:1575
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -2680,8 +2641,8 @@ msgid "R_ecursive"
 msgstr "Đệ qu_y"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
-#: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/nova.c:362
-#: ../plug-ins/common/unsharp-mask.c:867 ../plug-ins/common/whirl-pinch.c:591
+#: ../plug-ins/common/nl-filter.c:1091 ../plug-ins/common/nova.c:362
+#: ../plug-ins/common/unsharp-mask.c:865 ../plug-ins/common/whirl-pinch.c:591
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:277
 msgid "_Radius:"
@@ -2712,9 +2673,9 @@ msgid "Destripe"
 msgstr "Bỏ sọc"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
-#: ../plug-ins/common/file-ps.c:3175 ../plug-ins/common/file-ps.c:3372
+#: ../plug-ins/common/file-ps.c:3172 ../plug-ins/common/file-ps.c:3370
 #: ../plug-ins/common/file-raw.c:1134 ../plug-ins/common/smooth-palette.c:437
-#: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:433
+#: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
 #: ../plug-ins/print/print-page-layout.c:264
@@ -2792,7 +2753,6 @@ msgid "_Whirl"
 msgstr "Xoá_y"
 
 #: ../plug-ins/common/displace.c:169
-#| msgid "Displace pixels as indicated by displacment maps"
 msgid "Displace pixels as indicated by displacement maps"
 msgstr "Dời điểm ảnh theo sơ đồ dịch chuyển"
 
@@ -2834,12 +2794,12 @@ msgstr "_Cực"
 msgid "Edge Behavior"
 msgstr "Ứng xử cạnh"
 
-#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:719
+#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:713
 #: ../plug-ins/common/ripple.c:586 ../plug-ins/common/waves.c:283
 msgid "_Smear"
 msgstr "_Vấy"
 
-#: ../plug-ins/common/displace.c:481 ../plug-ins/common/edge.c:732
+#: ../plug-ins/common/displace.c:481 ../plug-ins/common/edge.c:726
 #: ../plug-ins/common/fractal-trace.c:741 ../plug-ins/common/newsprint.c:389
 msgid "_Black"
 msgstr "Đ_en"
@@ -2880,7 +2840,7 @@ msgstr "Phát hiện cạnh độ phân giải cao"
 msgid "_Laplace"
 msgstr "_Laplace"
 
-#: ../plug-ins/common/edge-laplace.c:243 ../plug-ins/common/edge.c:670
+#: ../plug-ins/common/edge-laplace.c:243 ../plug-ins/common/edge.c:664
 msgid "Laplace"
 msgstr "Laplace"
 
@@ -2904,7 +2864,7 @@ msgstr "Nê-ông"
 msgid "Neon Detection"
 msgstr "Phát hiện nê-ông"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:880
+#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:878
 msgid "_Amount:"
 msgstr "_Lượng:"
 
@@ -2948,35 +2908,35 @@ msgstr "_Cạnh..."
 msgid "Edge detection"
 msgstr "Phát hiện cạnh"
 
-#: ../plug-ins/common/edge.c:629
+#: ../plug-ins/common/edge.c:623
 msgid "Edge Detection"
 msgstr "Phát hiện cạnh"
 
-#: ../plug-ins/common/edge.c:665
+#: ../plug-ins/common/edge.c:659
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../plug-ins/common/edge.c:666
+#: ../plug-ins/common/edge.c:660
 msgid "Prewitt compass"
 msgstr "La bàn Prewitt"
 
-#: ../plug-ins/common/edge.c:667 ../plug-ins/common/sinus.c:905
+#: ../plug-ins/common/edge.c:661 ../plug-ins/common/sinus.c:905
 msgid "Gradient"
 msgstr "Độ dốc"
 
-#: ../plug-ins/common/edge.c:668
+#: ../plug-ins/common/edge.c:662
 msgid "Roberts"
 msgstr "Roberts"
 
-#: ../plug-ins/common/edge.c:669
+#: ../plug-ins/common/edge.c:663
 msgid "Differential"
 msgstr "Vi phân"
 
-#: ../plug-ins/common/edge.c:679
+#: ../plug-ins/common/edge.c:673
 msgid "_Algorithm:"
 msgstr "Th_uật toán:"
 
-#: ../plug-ins/common/edge.c:687
+#: ../plug-ins/common/edge.c:681
 msgid "A_mount:"
 msgstr "_Lượng:"
 
@@ -3025,10 +2985,10 @@ msgid "Engrave"
 msgstr "Khắc"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/file-html-table.c:600
-#: ../plug-ins/common/file-ps.c:3185 ../plug-ins/common/file-ps.c:3381
-#: ../plug-ins/common/file-raw.c:1147 ../plug-ins/common/film.c:1004
+#: ../plug-ins/common/file-ps.c:3182 ../plug-ins/common/file-ps.c:3379
+#: ../plug-ins/common/file-raw.c:1147 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
-#: ../plug-ins/common/tile.c:437 ../plug-ins/imagemap/imap_cmd_guides.c:174
+#: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
 #: ../plug-ins/print/print-page-layout.c:266
 msgid "_Height:"
@@ -3044,7 +3004,6 @@ msgstr "Ảnh ASCII"
 
 #. Create the actual window.
 #: ../plug-ins/common/file-aa.c:349
-#| msgid "Texture"
 msgid "Text"
 msgstr "Văn bản"
 
@@ -3066,16 +3025,16 @@ msgstr "Thêm bảng chọn KISS"
 #. -1  assume there is no floating selection
 #: ../plug-ins/common/file-cel.c:317 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
-#: ../plug-ins/common/file-gih.c:650 ../plug-ins/common/file-jp2-load.c:190
+#: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
-#: ../plug-ins/common/file-pdf-load.c:844 ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:764 ../plug-ins/common/file-pnm.c:499
+#: ../plug-ins/common/file-pdf-load.c:842 ../plug-ins/common/file-pix.c:348
+#: ../plug-ins/common/file-png.c:759 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1043 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
-#: ../plug-ins/common/file-tiff-load.c:605 ../plug-ins/common/file-wmf.c:994
-#: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:679
+#: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
+#: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
 #: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
-#: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:216
+#: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:213
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:644
 #: ../plug-ins/file-jpeg/jpeg-load.c:123 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3333
@@ -3095,18 +3054,18 @@ msgstr "Độ sâu bit không được hỗ trợ (%d)."
 #. init the progress meter
 #. And let's begin the progress
 #: ../plug-ins/common/file-cel.c:590 ../plug-ins/common/file-gbr.c:668
-#: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1268
+#: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1297 ../plug-ins/common/file-pnm.c:1015
+#: ../plug-ins/common/file-png.c:1292 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1219 ../plug-ins/common/file-sunras.c:570
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
-#: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1464
+#: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
 #: ../plug-ins/file-bmp/bmp-write.c:317 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1001
-#: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1660
-#: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-xjt/xjt.c:1696
+#: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1657
+#: ../plug-ins/file-sgi/sgi.c:576 ../plug-ins/file-xjt/xjt.c:1696
 #, c-format
 msgid "Saving '%s'"
 msgstr "Đang lưu « %s »"
@@ -3120,12 +3079,10 @@ msgid "bzip archive"
 msgstr "Kho kiểu bzip"
 
 #: ../plug-ins/common/file-compressor.c:389
-#| msgid "No sensible extension, saving as compressed XCF."
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Không có phần mở rộng phù hợp, đang lưu dưới dạng XCF nén."
 
 #: ../plug-ins/common/file-compressor.c:571
-#| msgid "No sensible extension, attempting to load with file magic."
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 "Phần mở rộng không hợp lý, đang thử tải với thuật toán xác định tự động"
@@ -3134,50 +3091,49 @@ msgstr ""
 msgid "C source code"
 msgstr "Mã nguồn C"
 
-#: ../plug-ins/common/file-csource.c:705
-#| msgid "Source 1:"
+#: ../plug-ins/common/file-csource.c:701
 msgid "C-Source"
 msgstr "Nguồn C"
 
-#: ../plug-ins/common/file-csource.c:723
+#: ../plug-ins/common/file-csource.c:719
 msgid "_Prefixed name:"
 msgstr "Tên nằm t_rước:"
 
-#: ../plug-ins/common/file-csource.c:732
+#: ../plug-ins/common/file-csource.c:728
 msgid "Co_mment:"
 msgstr "_Ghi chú:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:739
+#: ../plug-ins/common/file-csource.c:735
 msgid "_Save comment to file"
 msgstr "_Lưu ghi chú vào tập tin"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:751
+#: ../plug-ins/common/file-csource.c:747
 msgid "_Use GLib types (guint8*)"
 msgstr "Dùng kiể_u GLib (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:764
+#: ../plug-ins/common/file-csource.c:760
 msgid "Us_e macros instead of struct"
 msgstr "Dùng bộ lệnh th_ay cho cấu trúc"
 
-#: ../plug-ins/common/file-csource.c:777
+#: ../plug-ins/common/file-csource.c:773
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Dùng mã hóa độ dài khi chạy (RLE) kiểu _1 byte"
 
-#: ../plug-ins/common/file-csource.c:790
+#: ../plug-ins/common/file-csource.c:786
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Lư_u kênh anpha (RGBA/RGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:802
+#: ../plug-ins/common/file-csource.c:798
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Lưu dạng _RGB565 (16-bit)"
 
-#: ../plug-ins/common/file-csource.c:825
+#: ../plug-ins/common/file-csource.c:821
 msgid "Op_acity:"
 msgstr "Độ _mờ đục:"
 
@@ -3203,14 +3159,14 @@ msgstr "Ảnh DICOM (Digital Imaging and Communications in Medicine)"
 msgid "'%s' is not a DICOM file."
 msgstr "« %s » không phải là tập tin DICOM."
 
-#: ../plug-ins/common/file-dicom.c:1321 ../plug-ins/common/file-pcx.c:676
+#: ../plug-ins/common/file-dicom.c:1319 ../plug-ins/common/file-pcx.c:676
 #: ../plug-ins/common/file-pnm.c:1000
 msgid "Cannot save images with alpha channel."
 msgstr "Không thể lưu ảnh với kênh anpha."
 
-#: ../plug-ins/common/file-dicom.c:1336 ../plug-ins/common/file-ps.c:1204
-#: ../plug-ins/common/file-xwd.c:609 ../plug-ins/file-fits/fits.c:466
-#: ../plug-ins/file-xjt/xjt.c:1691
+#: ../plug-ins/common/file-dicom.c:1334 ../plug-ins/common/file-ps.c:1204
+#: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-xwd.c:609
+#: ../plug-ins/file-fits/fits.c:466 ../plug-ins/file-xjt/xjt.c:1691
 msgid "Cannot operate on unknown image types."
 msgstr "Không thể hoạt động với kiểu ảnh lạ."
 
@@ -3237,8 +3193,8 @@ msgstr "Gặp lỗi trong tập tin bút vẽ GIMP « %s »"
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Chuỗi UTF-8 không hợp lệ trong tập tin bút vẽ « %s »."
 
-#: ../plug-ins/common/file-gbr.c:461 ../plug-ins/common/file-gih.c:492
-#: ../plug-ins/common/file-gih.c:1142
+#: ../plug-ins/common/file-gbr.c:461 ../plug-ins/common/file-gih.c:487
+#: ../plug-ins/common/file-gih.c:1137
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Không tên"
@@ -3248,7 +3204,6 @@ msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "Mọi bút vẽ có kiểu hoặc GRAYSCALE (mức xám) hoặc RGBA"
 
 #: ../plug-ins/common/file-gbr.c:770
-#| msgid "_Brush"
 msgid "Brush"
 msgstr "Bút vẽ"
 
@@ -3257,7 +3212,7 @@ msgstr "Bút vẽ"
 msgid "Spacing:"
 msgstr "Khoảng cách:"
 
-#: ../plug-ins/common/file-gbr.c:795 ../plug-ins/common/file-gih.c:893
+#: ../plug-ins/common/file-gbr.c:795 ../plug-ins/common/file-gih.c:888
 #: ../plug-ins/common/file-pat.c:568 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Mô tả:"
@@ -3275,28 +3230,28 @@ msgstr "Đây không phải là tập tin GIF"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Điểm ảnh không vuông. Có lẽ ảnh hình như bị ép."
 
-#: ../plug-ins/common/file-gif-load.c:932
+#: ../plug-ins/common/file-gif-load.c:945
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Nền (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:955
+#: ../plug-ins/common/file-gif-load.c:968
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "Đang mở « %s » (khung %d)"
 
-#: ../plug-ins/common/file-gif-load.c:984 ../plug-ins/common/iwarp.c:794
-#: ../plug-ins/common/iwarp.c:829
+#: ../plug-ins/common/file-gif-load.c:997 ../plug-ins/common/iwarp.c:792
+#: ../plug-ins/common/iwarp.c:827
 #, c-format
 msgid "Frame %d"
 msgstr "Khung %d"
 
-#: ../plug-ins/common/file-gif-load.c:986
+#: ../plug-ins/common/file-gif-load.c:999
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Khung %d (%d%s)"
 
-#: ../plug-ins/common/file-gif-load.c:1017
+#: ../plug-ins/common/file-gif-load.c:1030
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -3311,9 +3266,6 @@ msgstr "Không thể đơn giản giảm màu thêm nên lưu dạng đục."
 
 #: ../plug-ins/common/file-gif-save.c:583
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The psd file format does not support images that "
-#| "are more than 30000 pixels wide or tall."
 msgid ""
 "Unable to save '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
@@ -3341,14 +3293,6 @@ msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Mới chèn thời gian trễ để tránh hoạt cảnh chiếm toàn CPU."
 
 #: ../plug-ins/common/file-gif-save.c:972
-#| msgid ""
-#| "The image which you are trying to save as a GIF\n"
-#| "contains layers which extend beyond the actual\n"
-#| "borders of the image.  This isn't allowed in GIFs,\n"
-#| "I'm afraid.\n"
-#| "\n"
-#| "You may choose whether to crop all of the layers to\n"
-#| "the image borders, or cancel this save."
 msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3356,14 +3300,6 @@ msgstr ""
 "Ảnh bạn đang cố lưu dạng GIF có chứa lớp nằm lấn qua viền giới hạn của ảnh."
 
 #: ../plug-ins/common/file-gif-save.c:989
-#| msgid ""
-#| "The image which you are trying to save as a GIF\n"
-#| "contains layers which extend beyond the actual\n"
-#| "borders of the image.  This isn't allowed in GIFs,\n"
-#| "I'm afraid.\n"
-#| "\n"
-#| "You may choose whether to crop all of the layers to\n"
-#| "the image borders, or cancel this save."
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
@@ -3377,7 +3313,6 @@ msgstr "GIF"
 
 #: ../plug-ins/common/file-gif-save.c:1133
 #, c-format
-#| msgid "Error loading desktop file '%s': %s"
 msgid ""
 "Error loading UI file '%s':\n"
 "%s"
@@ -3405,11 +3340,11 @@ msgstr ""
 "Bạn chỉ có thể xuất dạng hoạt cảnh khi bức ảnh có nhiều hơn một lớp. Bức ảnh "
 "bạn đang muốn xuất chỉ có một lớp."
 
-#: ../plug-ins/common/file-gif-save.c:2351
+#: ../plug-ins/common/file-gif-save.c:2312
 msgid "Error writing output file."
 msgstr "Gặp lỗi khi ghi vào tập tin xuất."
 
-#: ../plug-ins/common/file-gif-save.c:2421
+#: ../plug-ins/common/file-gif-save.c:2382
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Chú thích mặc định có giới hạn là %d ký tự."
@@ -3418,64 +3353,63 @@ msgstr "Chú thích mặc định có giới hạn là %d ký tự."
 msgid "GIMP brush (animated)"
 msgstr "Bút vẽ GIMP (hoạt cảnh)"
 
-#: ../plug-ins/common/file-gih.c:485
+#: ../plug-ins/common/file-gih.c:480
 msgid "Error in GIMP brush pipe file."
 msgstr "Gặp lỗi trong tập tin bút vẽ động GIMP."
 
-#: ../plug-ins/common/file-gih.c:551
+#: ../plug-ins/common/file-gih.c:546
 msgid "GIMP brush file appears to be corrupted."
 msgstr "Tập tin bút vẽ GIMP hình như bị hỏng."
 
-#: ../plug-ins/common/file-gih.c:701
+#: ../plug-ins/common/file-gih.c:696
 msgid "Couldn't load one brush in the pipe, giving up."
 msgstr "Không thể tải một bút vẽ vào hoạt cảnh nên hủy."
 
-#: ../plug-ins/common/file-gih.c:862
-#| msgid "Save as Brush Pipe"
+#: ../plug-ins/common/file-gih.c:857
 msgid "Brush Pipe"
 msgstr "Bút vẽ động"
 
-#: ../plug-ins/common/file-gih.c:879
+#: ../plug-ins/common/file-gih.c:874
 msgid "Spacing (percent):"
 msgstr "Khoảng cách (phần trăm):"
 
-#: ../plug-ins/common/file-gih.c:946
+#: ../plug-ins/common/file-gih.c:941
 msgid "Pixels"
 msgstr "Điểm ảnh"
 
-#: ../plug-ins/common/file-gih.c:951
+#: ../plug-ins/common/file-gih.c:946
 msgid "Cell size:"
 msgstr "Cỡ ô:"
 
-#: ../plug-ins/common/file-gih.c:963
+#: ../plug-ins/common/file-gih.c:958
 msgid "Number of cells:"
 msgstr "Số ô:"
 
-#: ../plug-ins/common/file-gih.c:988
+#: ../plug-ins/common/file-gih.c:983
 msgid " Rows of "
 msgstr " Hàng "
 
-#: ../plug-ins/common/file-gih.c:1000
+#: ../plug-ins/common/file-gih.c:995
 msgid " Columns on each layer"
 msgstr " Cột trên mỗi lớp"
 
-#: ../plug-ins/common/file-gih.c:1004
+#: ../plug-ins/common/file-gih.c:999
 msgid " (Width Mismatch!) "
 msgstr " (Chiều rộng không khớp.) "
 
-#: ../plug-ins/common/file-gih.c:1008
+#: ../plug-ins/common/file-gih.c:1003
 msgid " (Height Mismatch!) "
 msgstr " (Chiều cao không khớp.) "
 
-#: ../plug-ins/common/file-gih.c:1013
+#: ../plug-ins/common/file-gih.c:1008
 msgid "Display as:"
 msgstr "Hiển thị dạng:"
 
-#: ../plug-ins/common/file-gih.c:1022
+#: ../plug-ins/common/file-gih.c:1017
 msgid "Dimension:"
 msgstr "Chiều:"
 
-#: ../plug-ins/common/file-gih.c:1097
+#: ../plug-ins/common/file-gih.c:1092
 msgid "Ranks:"
 msgstr "Phân hàng:"
 
@@ -3596,7 +3530,6 @@ msgid "Cell-_padding:"
 msgstr "Đệ_m ô:"
 
 #: ../plug-ins/common/file-html-table.c:619
-#| msgid "The amount of cellpadding."
 msgid "The amount of cell padding."
 msgstr "Độ lớn phần đệm trong ô."
 
@@ -3605,33 +3538,30 @@ msgid "Cell-_spacing:"
 msgstr "_Khoảng cách ô:"
 
 #: ../plug-ins/common/file-html-table.c:632
-#| msgid "The amount of cellspacing."
 msgid "The amount of cell spacing."
 msgstr "Khoảng cách các ô."
 
 #: ../plug-ins/common/file-jp2-load.c:96
-#| msgid "JPEG image"
 msgid "JPEG 2000 image"
 msgstr "Ảnh JPEG 2000"
 
-#: ../plug-ins/common/file-jp2-load.c:215
+#: ../plug-ins/common/file-jp2-load.c:212
 #, c-format
-#| msgid "Could not interpret '%s'"
 msgid "Couldn't decode '%s'."
 msgstr "Không thể giải mã « %s »"
 
-#: ../plug-ins/common/file-jp2-load.c:238
+#: ../plug-ins/common/file-jp2-load.c:235
 #, c-format
 msgid "The image '%s' is in grayscale but does not contain any gray component."
 msgstr ""
 "Bức ảnh '%s' ở hệ màu sắc xám những không chứa bất kì thành tố xám nào."
 
-#: ../plug-ins/common/file-jp2-load.c:264
+#: ../plug-ins/common/file-jp2-load.c:261
 #, c-format
 msgid "The image '%s' is in RGB, but is missing some of the components."
 msgstr "Bức ảnh '%s' ở hệ màu RGB, nhưng bị thiếu một vài thành phần."
 
-#: ../plug-ins/common/file-jp2-load.c:290
+#: ../plug-ins/common/file-jp2-load.c:287
 #, c-format
 msgid ""
 "The image '%s' is in the CIEXYZ color space, but there is no code in place "
@@ -3640,7 +3570,7 @@ msgstr ""
 "Bức ảnh '%s' ở trong hệ không gian màu CIEXYZ, nhưng không có đoạn mã nào để "
 "chuyển nó sang hệ RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:297
+#: ../plug-ins/common/file-jp2-load.c:294
 #, c-format
 msgid ""
 "The image '%s' is in the CIELAB color space, but there is no code in place "
@@ -3649,7 +3579,7 @@ msgstr ""
 "Bức ảnh '%s' ở trong hệ màu CIELAB, nhưng không có đoạn mã nào để chuyển nó "
 "sang hệ RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:304
+#: ../plug-ins/common/file-jp2-load.c:301
 #, c-format
 msgid ""
 "The image '%s' is in the YCbCr color space, but there is no code in place to "
@@ -3658,12 +3588,12 @@ msgstr ""
 "Bức ảnh '%s' ở trong hệ màu YCbCr, nhưng không có đoạn mã nào để chuyển nó "
 "sang hệ RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:312
+#: ../plug-ins/common/file-jp2-load.c:309
 #, c-format
 msgid "The image '%s' is in an unknown color space."
 msgstr "Bức ảnh '%s' thuộc hệ không gian màu chưa biết."
 
-#: ../plug-ins/common/file-jp2-load.c:326
+#: ../plug-ins/common/file-jp2-load.c:323
 #, c-format
 msgid ""
 "Image component %d of image '%s' does not have the same size as the image. "
@@ -3672,12 +3602,12 @@ msgstr ""
 "Thành phần thứ %d của bức ảnh '%s' không có cùng kích thước với bức ảnh. "
 "Điều này hiện không được hỗ trợ."
 
-#: ../plug-ins/common/file-jp2-load.c:337
+#: ../plug-ins/common/file-jp2-load.c:334
 #, c-format
 msgid "Image component %d of image '%s' does not have both a hstep and vstep."
 msgstr "Thành phần thứ %d của bức ảnh '%s' không có hstep lẫn vstep."
 
-#: ../plug-ins/common/file-jp2-load.c:346
+#: ../plug-ins/common/file-jp2-load.c:343
 #, c-format
 msgid ""
 "Image component %d of image '%s' is signed. This is currently not supported."
@@ -3687,13 +3617,12 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1834
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1829
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Không thể lưu độ trong suốt mà không mất dữ liệu nên lưu độ đục thay vào đó."
 
 #: ../plug-ins/common/file-mng.c:1335
-#| msgid "PNG"
 msgid "MNG"
 msgstr "MNG"
 
@@ -3709,7 +3638,7 @@ msgstr "Kết hợp"
 msgid "Save background color"
 msgstr "Lưu màu nền"
 
-#: ../plug-ins/common/file-mng.c:1371
+#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:9
 msgid "Save gamma"
 msgstr "Lưu gamma (γ)"
 
@@ -3722,7 +3651,7 @@ msgid "Save creation time"
 msgstr "Lưu giờ tạo"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1883
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1878
 msgid "PNG"
 msgstr "PNG"
 
@@ -3762,39 +3691,39 @@ msgstr "Thay thế"
 msgid "Default frame disposal:"
 msgstr "Sắp đặt khung mặc định:"
 
-#: ../plug-ins/common/file-mng.c:1456
+#: ../plug-ins/common/file-mng.c:1457
 msgid "PNG compression level:"
 msgstr "Cấp nén PNG:"
 
-#: ../plug-ins/common/file-mng.c:1464
+#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:1
 msgid "Choose a high compression level for small file size"
 msgstr "Hãy chọn cấp nén cao để được kích cỡ tập tin nhỏ"
 
-#: ../plug-ins/common/file-mng.c:1477
+#: ../plug-ins/common/file-mng.c:1479
 msgid "JPEG compression quality:"
 msgstr "Chất lượng nén JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1493
+#: ../plug-ins/common/file-mng.c:1496
 msgid "JPEG smoothing factor:"
 msgstr "Hệ số làm mịn JPEG:"
 
-#: ../plug-ins/common/file-mng.c:1503
+#: ../plug-ins/common/file-mng.c:1506
 msgid "Animated MNG Options"
 msgstr "Tùy chọn MNG hoạt cảnh"
 
-#: ../plug-ins/common/file-mng.c:1509
+#: ../plug-ins/common/file-mng.c:1512
 msgid "Loop"
 msgstr "Vòng lặp"
 
-#: ../plug-ins/common/file-mng.c:1523
+#: ../plug-ins/common/file-mng.c:1526
 msgid "Default frame delay:"
 msgstr "Độ trễ khung mặc định:"
 
-#: ../plug-ins/common/file-mng.c:1539
+#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:11
 msgid "milliseconds"
 msgstr "mili giây"
 
-#: ../plug-ins/common/file-mng.c:1552
+#: ../plug-ins/common/file-mng.c:1555
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -3802,7 +3731,7 @@ msgstr ""
 "Những tùy chọn này chỉ hiện hữu khi bức ảnh xuất ra có nhiều hơn một lớp. "
 "Bức ảnh bạn đang xuất chỉ có một lớp."
 
-#: ../plug-ins/common/file-mng.c:1605
+#: ../plug-ins/common/file-mng.c:1608
 msgid "MNG animation"
 msgstr "Hoạt cảnh MNG"
 
@@ -3816,7 +3745,6 @@ msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Gặp chuỗi UTF-8 không hợp lệ trong tập tin mẫu « %s »."
 
 #: ../plug-ins/common/file-pat.c:553
-#| msgid "GIMP pattern"
 msgid "Pattern"
 msgstr "Mẫu họa tiết"
 
@@ -3837,14 +3765,12 @@ msgstr "%s không phải là tập tin kiểu PCX"
 #: ../plug-ins/common/file-pcx.c:397 ../plug-ins/file-bmp/bmp-read.c:636
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid image width: %d"
 msgstr "Chiều rộng của ảnh không hợp lệ hay không được hỗ trợ: %d"
 
 #: ../plug-ins/common/file-pcx.c:403 ../plug-ins/file-bmp/bmp-read.c:642
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid image height: %d"
 msgstr "Chiều cao của ảnh không hợp lệ hay không được hỗ trợ: %d"
 
@@ -3854,7 +3780,6 @@ msgstr "Số byte mỗi dòng không hợp lệ trong phần đầu PCX"
 
 #: ../plug-ins/common/file-pcx.c:417
 #, c-format
-#| msgid "Image dimensions: %d × %d"
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Kích thước ảnh quá lớn: rộng %d x cao %d"
 
@@ -3864,13 +3789,11 @@ msgstr "Gặp kiểu PCX không bình thường nên hủy bỏ"
 
 #: ../plug-ins/common/file-pcx.c:685
 #, c-format
-#| msgid "Invalid file."
 msgid "Invalid X offset: %d"
 msgstr "Độ lệch chiều X không hợp lệ: %d"
 
 #: ../plug-ins/common/file-pcx.c:691
 #, c-format
-#| msgid "Invalid file."
 msgid "Invalid Y offset: %d"
 msgstr "Độ lệch chiều Y không hợp lệ: %d"
 
@@ -3886,54 +3809,136 @@ msgstr "Cạnh dưới vượt giới hạn (phải nhỏ hơn %d): %d"
 
 #: ../plug-ins/common/file-pcx.c:769
 #, c-format
-#| msgid "Error loading desktop file '%s': %s"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Ghi xuống tập tin « %s » thất bại: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:297
+#: ../plug-ins/common/file-pdf-load.c:296
+#: ../plug-ins/common/file-pdf-save.c:273
+#: ../plug-ins/common/file-pdf-save.c:288
 msgid "Portable Document Format"
 msgstr "Định dạng PDF (Portable Document Format)"
 
-#: ../plug-ins/common/file-pdf-load.c:564
+#: ../plug-ins/common/file-pdf-load.c:543
+#: ../plug-ins/common/file-pdf-load.c:562
 #, c-format
-#| msgid "Could not write '%s': %s"
 msgid "Could not load '%s': %s"
 msgstr "Không thể tải « %s »: %s"
 
 # Variable: do not translate/ biến: đừng dịch
-#: ../plug-ins/common/file-pdf-load.c:878
+#: ../plug-ins/common/file-pdf-load.c:876
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:880 ../plug-ins/common/file-ps.c:1126
+#: ../plug-ins/common/file-pdf-load.c:878 ../plug-ins/common/file-ps.c:1126
 #, c-format
 msgid "%s-pages"
 msgstr "%s-trang"
 
-#: ../plug-ins/common/file-pdf-load.c:1070
+#: ../plug-ins/common/file-pdf-load.c:1068
 msgid "Import from PDF"
 msgstr "Nhập từ PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1075 ../plug-ins/common/file-ps.c:3104
-#: ../plug-ins/common/file-tiff-load.c:484
+#: ../plug-ins/common/file-pdf-load.c:1073 ../plug-ins/common/file-ps.c:3100
+#: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Nhập"
 
-#: ../plug-ins/common/file-pdf-load.c:1143
+#: ../plug-ins/common/file-pdf-load.c:1106
+msgid "Error getting number of pages from the given PDF file."
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-load.c:1148
 msgid "_Width (pixels):"
 msgstr "_Rộng (điểm ảnh):"
 
-#: ../plug-ins/common/file-pdf-load.c:1144
+#: ../plug-ins/common/file-pdf-load.c:1149
 msgid "_Height (pixels):"
 msgstr "_Cao (điểm ảnh):"
 
-#: ../plug-ins/common/file-pdf-load.c:1146
+#: ../plug-ins/common/file-pdf-load.c:1151
 msgid "_Resolution:"
 msgstr "Độ _phân giải:"
 
+#: ../plug-ins/common/file-pdf-load.c:1431
+#: ../plug-ins/common/file-pdf-load.c:1432 ../plug-ins/common/file-svg.c:917
+#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
+#, c-format
+msgid "pixels/%a"
+msgstr "điểm ảnh/%a"
+
+#: ../plug-ins/common/file-pdf-save.c:303
+#, fuzzy
+#| msgid "Create Guides..."
+msgid "_Create multipage PDF..."
+msgstr "Tạo nét dẫn..."
+
+#: ../plug-ins/common/file-pdf-save.c:396
+msgid "You must select a file to save!"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:405
+#, c-format
+msgid ""
+"An error occured while creating the PDF file:\n"
+"%s\n"
+"Make sure you entered a valid filename and that the selected location isn't "
+"read only!"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:715
+#: ../plug-ins/common/file-pdf-save.c:832
+msgid "Omit hidden layers and layers with zero opacity"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:719
+#: ../plug-ins/common/file-pdf-save.c:836
+msgid "Convert bitmaps to vector graphics where possible"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:723
+#: ../plug-ins/common/file-pdf-save.c:840
+msgid "Apply layer masks before saving"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:726
+#: ../plug-ins/common/file-pdf-save.c:843
+msgid "Keeping the masks will not change the output"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:779
+#, fuzzy
+#| msgid "Separate to:"
+msgid "Save to:"
+msgstr "Ngăn cách ra:"
+
+#: ../plug-ins/common/file-pdf-save.c:783
+#, fuzzy
+#| msgid "_RGB Noise..."
+msgid "Browse..."
+msgstr "Nhiễu _RGB..."
+
+#: ../plug-ins/common/file-pdf-save.c:784
+msgid "Multipage PDF export"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:817
+#, fuzzy
+#| msgid "Deletes the selected Preset"
+msgid "Remove the selected pages"
+msgstr "Xóa bỏ định sẵn đã chọn"
+
+#: ../plug-ins/common/file-pdf-save.c:827
+#, fuzzy
+#| msgid "Alias Pix image"
+msgid "Add this image"
+msgstr "Ảnh Alias Pix"
+
+#: ../plug-ins/common/file-pdf-save.c:940
+msgid "Error! In order to save the file, at least one image should be added!"
+msgstr ""
+
 #: ../plug-ins/common/file-pix.c:142 ../plug-ins/common/file-pix.c:159
-#| msgid "X PixMap image"
 msgid "Alias Pix image"
 msgstr "Ảnh Alias Pix"
 
@@ -3944,47 +3949,57 @@ msgstr "Ảnh PNG"
 
 #: ../plug-ins/common/file-png.c:640
 #, c-format
-#| msgid "Error loading desktop file '%s': %s"
 msgid "Error loading PNG file: %s"
 msgstr "Gặp lỗi khi tải tập tin PNG: %s"
 
-#: ../plug-ins/common/file-png.c:729
+#: ../plug-ins/common/file-png.c:728
 #, c-format
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr "Lỗi tạo cấu trúc đọc PNG khi lưu '%s'."
 
-#: ../plug-ins/common/file-png.c:739
+#: ../plug-ins/common/file-png.c:738
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Gặp lỗi khi đọc « %s ». Tập tin bị hỏng không?"
 
-#: ../plug-ins/common/file-png.c:872
+#: ../plug-ins/common/file-png.c:867
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Gặp mô hình màu lạ trong tập tin PNG « %s »."
 
-#: ../plug-ins/common/file-png.c:932
+#: ../plug-ins/common/file-png.c:878
+#, fuzzy, c-format
+#| msgid "Could not create working folder '%s': %s"
+msgid "Could not create new image for '%s': %s"
+msgstr "Không thể tạo thư mục làm việc « %s »: %s"
+
+#: ../plug-ins/common/file-png.c:927
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
 "Tập tin PNG chỉ rõ một sự chênh lệch đã làm cho lớp nằm ra bên ngoài ảnh."
 
-#: ../plug-ins/common/file-png.c:1267
+#: ../plug-ins/common/file-png.c:1262
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "Lỗi tạo cấu trúc ghi PNG khi lưu '%s'."
 
-#: ../plug-ins/common/file-png.c:1277
+#: ../plug-ins/common/file-png.c:1272
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Gặp lỗi khi lưu « %s »: không thể lưu ảnh."
 
-#: ../plug-ins/common/file-png.c:1900
+#: ../plug-ins/common/file-png.c:1895
 #, c-format
-#| msgid "Error loading desktop file '%s': %s"
 msgid "Error loading UI file '%s': %s"
 msgstr "Gặp lỗi khi tải tập tin giao diện người dùng « %s »: %s"
+
+#: ../plug-ins/common/file-png.c:1896
+#, fuzzy
+#| msgid "Unknown reason"
+msgid "Unknown error"
+msgstr "Không biết lý do"
 
 #: ../plug-ins/common/file-pnm.c:248
 msgid "PNM Image"
@@ -4037,7 +4052,6 @@ msgid "Image height is larger than GIMP can handle."
 msgstr "Chiều cao bức ảnh lớn hơn khả năng xử lý của GIMP."
 
 #: ../plug-ins/common/file-pnm.c:574
-#| msgid "Invalid maximum value."
 msgid "Unsupported maximum value."
 msgstr "Không hỗ trợ giá trị tối đa."
 
@@ -4046,7 +4060,6 @@ msgid "Error reading file."
 msgstr "Lỗi đọc tập tin."
 
 #: ../plug-ins/common/file-pnm.c:1219
-#| msgid "PNG"
 msgid "PNM"
 msgstr "PNM"
 
@@ -4060,8 +4073,10 @@ msgid "Raw"
 msgstr "Thô"
 
 #: ../plug-ins/common/file-pnm.c:1227
-msgid "Ascii"
-msgstr "Ascii"
+#, fuzzy
+#| msgid "ASCII art"
+msgid "ASCII"
+msgstr "Ảnh ASCII"
 
 #: ../plug-ins/common/file-ps.c:601 ../plug-ins/common/file-ps.c:693
 msgid "PostScript document"
@@ -4077,7 +4092,6 @@ msgstr "Tài liệu PDF"
 
 #: ../plug-ins/common/file-ps.c:1051
 #, c-format
-#| msgid "Could not interpret '%s'"
 msgid "Could not interpret Postscript file '%s'"
 msgstr "Không thể biên dịch tập tin Postscript « %s »"
 
@@ -4086,7 +4100,7 @@ msgstr "Không thể biên dịch tập tin Postscript « %s »"
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript không thể quản lý ảnh có kênh anpha"
 
-#: ../plug-ins/common/file-ps.c:1731 ../plug-ins/common/file-ps.c:1766
+#: ../plug-ins/common/file-ps.c:1740 ../plug-ins/common/file-ps.c:1775
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
@@ -4099,108 +4113,114 @@ msgstr ""
 "điểm của nó.\n"
 "(%s)"
 
-#: ../plug-ins/common/file-ps.c:1933 ../plug-ins/common/file-tiff-load.c:1001
+#: ../plug-ins/common/file-ps.c:1942 ../plug-ins/common/file-tiff-load.c:999
 #, c-format
 msgid "Page %d"
 msgstr "Trang %d"
 
-#: ../plug-ins/common/file-ps.c:2605 ../plug-ins/common/file-ps.c:2738
-#: ../plug-ins/common/file-ps.c:2889 ../plug-ins/common/file-ps.c:3015
-#: ../plug-ins/common/file-sunras.c:1506 ../plug-ins/common/file-sunras.c:1614
+#: ../plug-ins/common/file-ps.c:2607 ../plug-ins/common/file-ps.c:2738
+#: ../plug-ins/common/file-ps.c:2887 ../plug-ins/common/file-ps.c:3011
+#: ../plug-ins/common/file-sunras.c:1504 ../plug-ins/common/file-sunras.c:1610
 #: ../plug-ins/file-fits/fits.c:850 ../plug-ins/file-fits/fits.c:973
 msgid "Write error occurred"
 msgstr "Gặp lỗi ghi"
 
-#: ../plug-ins/common/file-ps.c:3099
+#: ../plug-ins/common/file-ps.c:3095
 msgid "Import from PostScript"
 msgstr "Nhập từ PostScript"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3142
+#: ../plug-ins/common/file-ps.c:3139
 msgid "Rendering"
 msgstr "Đang vẽ..."
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3158 ../plug-ins/common/file-svg.c:930
+#: ../plug-ins/common/file-ps.c:3155 ../plug-ins/common/file-svg.c:911
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "Độ phân giải:"
 
-#: ../plug-ins/common/file-ps.c:3197
+#: ../plug-ins/common/file-ps.c:3194
 msgid "Pages:"
 msgstr "Trang:"
 
-#: ../plug-ins/common/file-ps.c:3204
+#: ../plug-ins/common/file-ps.c:3201
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Trang cần tải (v.d. 1-4 hay 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3209 ../plug-ins/common/sphere-designer.c:2651
+#: ../plug-ins/common/file-ps.c:3206 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "Lớp"
 
-#: ../plug-ins/common/file-ps.c:3212
+#: ../plug-ins/common/file-ps.c:3209
 msgid "Images"
 msgstr "Ảnh"
 
-#: ../plug-ins/common/file-ps.c:3215
+#: ../plug-ins/common/file-ps.c:3212
 msgid "Open as"
 msgstr "Mở dạng"
 
-#: ../plug-ins/common/file-ps.c:3219
+#: ../plug-ins/common/file-ps.c:3216
 msgid "Try Bounding Box"
 msgstr "Thử hộp bao"
 
 #. Colouring
-#: ../plug-ins/common/file-ps.c:3232
+#: ../plug-ins/common/file-ps.c:3229
 msgid "Coloring"
 msgstr "Kiểu màu"
 
-#: ../plug-ins/common/file-ps.c:3236
+#: ../plug-ins/common/file-ps.c:3233
 msgid "B/W"
 msgstr "Đen/trắng"
 
-#: ../plug-ins/common/file-ps.c:3238 ../plug-ins/common/file-xpm.c:479
+#: ../plug-ins/common/file-ps.c:3235 ../plug-ins/common/file-xpm.c:479
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "Màu"
 
-#: ../plug-ins/common/file-ps.c:3239 ../plug-ins/file-fits/fits.c:1032
+#: ../plug-ins/common/file-ps.c:3236 ../plug-ins/file-fits/fits.c:1032
 msgid "Automatic"
 msgstr "Tự động"
 
-#: ../plug-ins/common/file-ps.c:3249
+#: ../plug-ins/common/file-ps.c:3247
 msgid "Text antialiasing"
 msgstr "Khử răng cưa chữ"
 
-#: ../plug-ins/common/file-ps.c:3254 ../plug-ins/common/file-ps.c:3266
+#: ../plug-ins/common/file-ps.c:3251 ../plug-ins/common/file-ps.c:3263
+#, fuzzy
+#| msgid "None"
+msgctxt "antialiasing"
+msgid "None"
+msgstr "Không có"
+
+#: ../plug-ins/common/file-ps.c:3252 ../plug-ins/common/file-ps.c:3264
 msgid "Weak"
 msgstr "Yếu"
 
-#: ../plug-ins/common/file-ps.c:3255 ../plug-ins/common/file-ps.c:3267
+#: ../plug-ins/common/file-ps.c:3253 ../plug-ins/common/file-ps.c:3265
 msgid "Strong"
 msgstr "Mạnh"
 
-#: ../plug-ins/common/file-ps.c:3261
+#: ../plug-ins/common/file-ps.c:3259
 msgid "Graphic antialiasing"
 msgstr "Khử răng cưa đồ họa"
 
-#: ../plug-ins/common/file-ps.c:3339
-#| msgid "Save as PostScript"
+#: ../plug-ins/common/file-ps.c:3337
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3356
+#: ../plug-ins/common/file-ps.c:3354
 msgid "Image Size"
 msgstr "Cỡ ảnh"
 
-#: ../plug-ins/common/file-ps.c:3405
+#: ../plug-ins/common/file-ps.c:3403
 msgid "_Keep aspect ratio"
 msgstr "_Giữ tỷ lệ hình thể"
 
-#: ../plug-ins/common/file-ps.c:3411
+#: ../plug-ins/common/file-ps.c:3409
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4209,42 +4229,42 @@ msgstr ""
 "tỷ lệ hình thể."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3421
+#: ../plug-ins/common/file-ps.c:3419
 msgid "Unit"
 msgstr "Đơn vị"
 
-#: ../plug-ins/common/file-ps.c:3425
+#: ../plug-ins/common/file-ps.c:3423
 msgid "_Inch"
 msgstr "_Insơ"
 
-#: ../plug-ins/common/file-ps.c:3426
+#: ../plug-ins/common/file-ps.c:3424
 msgid "_Millimeter"
 msgstr "_Mili-mét"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3437
+#: ../plug-ins/common/file-ps.c:3435
 #: ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Xoay"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3452
+#: ../plug-ins/common/file-ps.c:3450
 msgid "Output"
 msgstr "Xuất"
 
-#: ../plug-ins/common/file-ps.c:3458
+#: ../plug-ins/common/file-ps.c:3456
 msgid "_PostScript level 2"
 msgstr "_PostScript cấp 2"
 
-#: ../plug-ins/common/file-ps.c:3467
+#: ../plug-ins/common/file-ps.c:3465
 msgid "_Encapsulated PostScript"
 msgstr "_Encapsulated PostScript"
 
-#: ../plug-ins/common/file-ps.c:3476
+#: ../plug-ins/common/file-ps.c:3474
 msgid "P_review"
 msgstr "X_em thử"
 
-#: ../plug-ins/common/file-ps.c:3498
+#: ../plug-ins/common/file-ps.c:3496
 msgid "Preview _size:"
 msgstr "_Cỡ xem thử:"
 
@@ -4260,6 +4280,13 @@ msgstr "PSP"
 #: ../plug-ins/common/file-psp.c:643
 msgid "Data Compression"
 msgstr "Cách nén dữ liệu"
+
+#: ../plug-ins/common/file-psp.c:647
+#, fuzzy
+#| msgid "None"
+msgctxt "compression"
+msgid "None"
+msgstr "Không có"
 
 #: ../plug-ins/common/file-psp.c:648
 msgid "RLE"
@@ -4282,12 +4309,10 @@ msgid "Image"
 msgstr "Ảnh"
 
 #: ../plug-ins/common/file-raw.c:1101
-#| msgid "Alpha"
 msgid "RGB Alpha"
 msgstr "RGB Alpha"
 
 #: ../plug-ins/common/file-raw.c:1102
-#| msgid "RGB"
 msgid "RGB565"
 msgstr "RGB565"
 
@@ -4300,7 +4325,6 @@ msgid "Indexed"
 msgstr "Phụ lục"
 
 #: ../plug-ins/common/file-raw.c:1105
-#| msgid "Indexed"
 msgid "Indexed Alpha"
 msgstr "Anpha chỉ mục"
 
@@ -4337,7 +4361,6 @@ msgid "Pal_ette File:"
 msgstr "Tập t_in bảng chọn:"
 
 #: ../plug-ins/common/file-raw.c:1233
-#| msgid "Raw Image Save"
 msgid "Raw Image"
 msgstr "Ảnh thô (RAW)"
 
@@ -4434,50 +4457,49 @@ msgstr "Không thể hoạt động trên kiểu ảnh lạ"
 
 #: ../plug-ins/common/file-sunras.c:1084 ../plug-ins/common/file-sunras.c:1175
 #: ../plug-ins/common/file-sunras.c:1256 ../plug-ins/common/file-sunras.c:1351
-#: ../plug-ins/common/file-xwd.c:1355 ../plug-ins/common/file-xwd.c:1456
-#: ../plug-ins/common/file-xwd.c:1614 ../plug-ins/common/file-xwd.c:1814
-#: ../plug-ins/common/file-xwd.c:2071 ../plug-ins/file-fits/fits.c:698
+#: ../plug-ins/common/file-xwd.c:1357 ../plug-ins/common/file-xwd.c:1458
+#: ../plug-ins/common/file-xwd.c:1616 ../plug-ins/common/file-xwd.c:1817
+#: ../plug-ins/common/file-xwd.c:2069 ../plug-ins/file-fits/fits.c:698
 msgid "EOF encountered on reading"
 msgstr "Gặp kết thúc tập tin khi đọc"
 
-#: ../plug-ins/common/file-sunras.c:1631
-#| msgid "Save as SUNRAS"
+#: ../plug-ins/common/file-sunras.c:1627
 msgid "SUNRAS"
 msgstr "SUNRAS"
 
 #. file save type
-#: ../plug-ins/common/file-sunras.c:1634
+#: ../plug-ins/common/file-sunras.c:1630
 msgid "Data Formatting"
 msgstr "Cách định dạng dữ liệu"
 
-#: ../plug-ins/common/file-sunras.c:1638
+#: ../plug-ins/common/file-sunras.c:1634
 msgid "RunLength Encoded"
 msgstr "Mã hóa độ dài chạy (RLE)"
 
-#: ../plug-ins/common/file-svg.c:141
+#: ../plug-ins/common/file-svg.c:140
 msgid "SVG image"
 msgstr "Ảnh kiểu SVG"
 
-#: ../plug-ins/common/file-svg.c:336 ../plug-ins/common/file-svg.c:734
+#: ../plug-ins/common/file-svg.c:335 ../plug-ins/common/file-svg.c:715
 msgid "Unknown reason"
 msgstr "Không biết lý do"
 
-#: ../plug-ins/common/file-svg.c:342
+#: ../plug-ins/common/file-svg.c:341
 msgid "Rendering SVG"
 msgstr "Đang vẽ SVG..."
 
-#: ../plug-ins/common/file-svg.c:354
+#: ../plug-ins/common/file-svg.c:353
 msgid "Rendered SVG"
 msgstr "SVG đã vẽ"
 
 # eg: 75 %
 # Variable: don't translate / Biến: đừng dịch
-#: ../plug-ins/common/file-svg.c:568 ../plug-ins/common/file-wmf.c:358
+#: ../plug-ins/common/file-svg.c:549 ../plug-ins/common/file-wmf.c:358
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: ../plug-ins/common/file-svg.c:576
+#: ../plug-ins/common/file-svg.c:557
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -4486,49 +4508,43 @@ msgstr ""
 "ghi rõ kích cỡ."
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/file-svg.c:743
+#: ../plug-ins/common/file-svg.c:724
 msgid "Render Scalable Vector Graphics"
 msgstr "Vẽ đồ họa véctơ có thể co giãn"
 
 #. Width and Height
-#: ../plug-ins/common/file-svg.c:809 ../plug-ins/common/file-wmf.c:571
+#: ../plug-ins/common/file-svg.c:790 ../plug-ins/common/file-wmf.c:571
 #: ../plug-ins/common/grid.c:726
 msgid "Width:"
 msgstr "Rộng:"
 
-#: ../plug-ins/common/file-svg.c:815 ../plug-ins/common/file-wmf.c:577
+#: ../plug-ins/common/file-svg.c:796 ../plug-ins/common/file-wmf.c:577
 msgid "Height:"
 msgstr "Cao:"
 
-#: ../plug-ins/common/file-svg.c:889 ../plug-ins/common/file-wmf.c:651
+#: ../plug-ins/common/file-svg.c:870 ../plug-ins/common/file-wmf.c:651
 msgid "_X ratio:"
 msgstr "Tỷ lệ _X:"
 
-#: ../plug-ins/common/file-svg.c:911 ../plug-ins/common/file-wmf.c:673
+#: ../plug-ins/common/file-svg.c:892 ../plug-ins/common/file-wmf.c:673
 msgid "_Y ratio:"
 msgstr "Tỷ lệ _Y:"
 
-#: ../plug-ins/common/file-svg.c:925 ../plug-ins/common/file-wmf.c:687
+#: ../plug-ins/common/file-svg.c:906 ../plug-ins/common/file-wmf.c:687
 msgid "Constrain aspect ratio"
 msgstr "Ràng buộc tỷ lệ hình thể"
 
-#: ../plug-ins/common/file-svg.c:936 ../plug-ins/common/file-wmf.c:698
-#: ../plug-ins/print/print-page-layout.c:285
-#, c-format
-msgid "pixels/%a"
-msgstr "điểm ảnh/%a"
-
 #. Path Import
-#: ../plug-ins/common/file-svg.c:956
+#: ../plug-ins/common/file-svg.c:937
 msgid "Import _paths"
 msgstr "Nhậ_p đường dẫn"
 
-#: ../plug-ins/common/file-svg.c:963
+#: ../plug-ins/common/file-svg.c:944
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr "Nhập yếu tố đường dẫn của SVG để dùng chung với công cụ đường dẫn GIMP"
 
-#: ../plug-ins/common/file-svg.c:971
+#: ../plug-ins/common/file-svg.c:952
 msgid "Merge imported paths"
 msgstr "Trộn các đường dẫn được nhập"
 
@@ -4548,7 +4564,6 @@ msgstr "Không thể đọc phần mở rộng từ « %s »"
 
 #: ../plug-ins/common/file-tga.c:485
 #, c-format
-#| msgid "Could not read header from '%s'"
 msgid "Cannot read header from '%s'"
 msgstr "Không thể đọc phần-đầu từ « %s »"
 
@@ -4562,47 +4577,42 @@ msgid "_RLE compression"
 msgstr "Nén _RLE"
 
 #: ../plug-ins/common/file-tga.c:1395
-#| msgid "Origin"
 msgid "Or_igin:"
 msgstr "_Gốc:"
 
 #: ../plug-ins/common/file-tga.c:1399
-#| msgid "_Bottom-left"
 msgid "Bottom left"
 msgstr "Bên trái phía dưới"
 
 #: ../plug-ins/common/file-tga.c:1400
-#| msgid "To l_eft"
 msgid "Top left"
 msgstr "Bên trái phía trên"
 
-#: ../plug-ins/common/file-tiff-load.c:241
+#: ../plug-ins/common/file-tiff-load.c:240
 #: ../plug-ins/common/file-tiff-save.c:183
 #: ../plug-ins/common/file-tiff-save.c:200
 msgid "TIFF image"
 msgstr "Ảnh TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:311
+#: ../plug-ins/common/file-tiff-load.c:310
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF '%s' không chứa bất kỳ danh mục nào"
 
-#: ../plug-ins/common/file-tiff-load.c:479
-#| msgid "Import from PDF"
+#: ../plug-ins/common/file-tiff-load.c:478
 msgid "Import from TIFF"
 msgstr "Nhập từ TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:782
+#: ../plug-ins/common/file-tiff-load.c:780
 #, c-format
-#| msgid "%s-pages"
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-trang-%d-trên-%d"
 
-#: ../plug-ins/common/file-tiff-load.c:1017
+#: ../plug-ins/common/file-tiff-load.c:1015
 msgid "TIFF Channel"
 msgstr "Kênh TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1026
+#: ../plug-ins/common/file-tiff-load.c:1024
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
@@ -4687,7 +4697,6 @@ msgstr "Dựng siêu tập tin (Metafile) Windows"
 
 #: ../plug-ins/common/file-wmf.c:963
 #, c-format
-#| msgid "Could not open '%s' for reading."
 msgid "Could not open '%s' for reading"
 msgstr "Không thể mở « %s » để đọc"
 
@@ -4762,7 +4771,7 @@ msgstr "T_iền tố nhận biết:"
 msgid "_Write hot spot values"
 msgstr "_Ghi các giá trị điểm trỏ"
 
-#: ../plug-ins/common/file-xbm.c:1266 ../plug-ins/common/file-xmc.c:1093
+#: ../plug-ins/common/file-xbm.c:1266 ../plug-ins/common/file-xmc.c:1089
 msgid "Hot spot _X:"
 msgstr "Điểm trỏ _X:"
 
@@ -4784,7 +4793,7 @@ msgid "_Mask file extension:"
 msgstr "Phần mở rộng tập tin _mặt nạ:"
 
 #: ../plug-ins/common/file-xmc.c:333 ../plug-ins/common/file-xmc.c:373
-#: ../plug-ins/common/file-xmc.c:1056
+#: ../plug-ins/common/file-xmc.c:1052
 msgid "X11 Mouse Cursor"
 msgstr "Con trỏ chuột X11"
 
@@ -4797,64 +4806,61 @@ msgstr ""
 "Không thể thiết lập điểm trỏ!\n"
 "Bạn phải sắp xếp các lớp sao cho chúng có cùng một giao điểm."
 
-#: ../plug-ins/common/file-xmc.c:674
+#: ../plug-ins/common/file-xmc.c:670
 #, c-format
-#| msgid "'%s' is not a valid BMP file"
 msgid "'%s' is not a valid X cursor."
 msgstr "« %s » không phải là một con trỏ X hợp lệ."
 
-#: ../plug-ins/common/file-xmc.c:690
+#: ../plug-ins/common/file-xmc.c:686
 #, c-format
 msgid "The width of frame %d of '%s' is too big for X cursor."
 msgstr "Chiều rộng khung thứ %d của '%s' thì quá lớn so với con trỏ X."
 
-#: ../plug-ins/common/file-xmc.c:697
+#: ../plug-ins/common/file-xmc.c:693
 #, c-format
 msgid "The height of frame %d of '%s' is too big for X cursor."
 msgstr "Chiều cao khung thứ %d của '%s' quá lớn với con trỏ X."
 
-#: ../plug-ins/common/file-xmc.c:900
+#: ../plug-ins/common/file-xmc.c:896
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "không dữ liệu hình ảnh trong '%s'."
 
-#: ../plug-ins/common/file-xmc.c:942
+#: ../plug-ins/common/file-xmc.c:938
 #, c-format
 msgid "The width of '%s' is too big for X cursor."
 msgstr "Chiều rộng của '%s' quá lớn với con trỏ X."
 
-#: ../plug-ins/common/file-xmc.c:949
+#: ../plug-ins/common/file-xmc.c:945
 #, c-format
 msgid "The height of '%s' is too big for X cursor."
 msgstr "Chiều cao của '%s' quá lớn với con trỏ X."
 
-#: ../plug-ins/common/file-xmc.c:1019
+#: ../plug-ins/common/file-xmc.c:1015
 #, c-format
-#| msgid "Write error occurred"
 msgid "A read error occurred."
 msgstr "Gặp lỗi khi đọc."
 
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1061
-#| msgid "XBM Options"
+#: ../plug-ins/common/file-xmc.c:1057
 msgid "XMC Options"
 msgstr "Tùy chọn XMC"
 
-#: ../plug-ins/common/file-xmc.c:1089
+#: ../plug-ins/common/file-xmc.c:1085
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr "Nhập vào tọa độ X của điểm trỏ. Gốc tọa độ ở góc trái phía trên."
 
-#: ../plug-ins/common/file-xmc.c:1107
+#: ../plug-ins/common/file-xmc.c:1103
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "Nhập vào toạ độ Y của điểm trỏ. Gốc toạ độ ở góc trái phía trên."
 
-#: ../plug-ins/common/file-xmc.c:1118
+#: ../plug-ins/common/file-xmc.c:1114
 msgid "_Auto-Crop all frames."
 msgstr "_Tự động xén tất cả các khung."
 
-#: ../plug-ins/common/file-xmc.c:1131
+#: ../plug-ins/common/file-xmc.c:1127
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4866,7 +4872,7 @@ msgstr ""
 "vài con trỏ lớn.\n"
 "Bỏ chọn nếu bạn dự định chỉnh sửa con trỏ xuất ra ở các phần mềm khác."
 
-#: ../plug-ins/common/file-xmc.c:1154
+#: ../plug-ins/common/file-xmc.c:1150
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4884,58 +4890,55 @@ msgstr ""
 "Nó chỉ được dùng để xác định khung hình nào phụ thuộc vào chuỗi hoạt cảnh "
 "nào và chuỗi nào được dùng dựa trên giá trị của \"gtk-cursor-theme-size\"."
 
-#: ../plug-ins/common/file-xmc.c:1171
+#: ../plug-ins/common/file-xmc.c:1167
 msgid "_Use this value only for a frame which size is not specified."
 msgstr ""
 "_Chỉ dùng giá trị này cho một khung hình không xác định được kích thước."
 
-#: ../plug-ins/common/file-xmc.c:1174
+#: ../plug-ins/common/file-xmc.c:1170
 msgid "_Replace the size of all frames even if it is specified."
 msgstr ""
 "_Thay thế kích thước của toàn bộ khung hình kể cả khi nó đã được chỉ định."
 
-#: ../plug-ins/common/file-xmc.c:1208
+#: ../plug-ins/common/file-xmc.c:1204
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Nhập vào thời gian xuất hiện (đơn vị mili giây) của mỗi khung hình."
 
-#: ../plug-ins/common/file-xmc.c:1211
-#| msgid "Delay"
+#: ../plug-ins/common/file-xmc.c:1207
 msgid "_Delay:"
 msgstr "Độ _trễ:"
 
-#: ../plug-ins/common/file-xmc.c:1216
+#: ../plug-ins/common/file-xmc.c:1212
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr "_Chỉ dùng giá trị này cho một khung hình không xác định được độ trễ,"
 
-#: ../plug-ins/common/file-xmc.c:1219
+#: ../plug-ins/common/file-xmc.c:1215
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "_Thay thế độ trễ của toàn bộ khung hình kể cả khi nó đã được chỉ định."
 
-#: ../plug-ins/common/file-xmc.c:1244
+#: ../plug-ins/common/file-xmc.c:1240
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr "Phần thông tin về bản quyền vượt quá 65535 kí tự đã được gỡ bỏ."
 
-#: ../plug-ins/common/file-xmc.c:1254
+#: ../plug-ins/common/file-xmc.c:1250
 msgid "Enter copyright information."
 msgstr "Nhập vào thông tin bản quyền."
 
-#: ../plug-ins/common/file-xmc.c:1256
-#| msgid "Copyright"
+#: ../plug-ins/common/file-xmc.c:1252
 msgid "_Copyright:"
 msgstr "_Bản quyền:"
 
-#: ../plug-ins/common/file-xmc.c:1272
+#: ../plug-ins/common/file-xmc.c:1268
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr "Phần thông tin về giấy phép vượt quá 65535 ký tự đã bị loại bỏ."
 
-#: ../plug-ins/common/file-xmc.c:1282
+#: ../plug-ins/common/file-xmc.c:1278
 msgid "Enter license information."
 msgstr "Nhập thông tin giấy phép."
 
-#: ../plug-ins/common/file-xmc.c:1284
-#| msgid "_Lines"
+#: ../plug-ins/common/file-xmc.c:1280
 msgid "_License:"
 msgstr "_Giấy phép:"
 
@@ -4944,44 +4947,41 @@ msgstr "_Giấy phép:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1291
-#| msgid "Ot_her"
+#: ../plug-ins/common/file-xmc.c:1287
 msgid "_Other:"
 msgstr "K_hác:"
 
-#: ../plug-ins/common/file-xmc.c:1325
+#: ../plug-ins/common/file-xmc.c:1321
 msgid "Enter other comment if you want."
 msgstr "Nhập vào ghi chú khác nên bạn muốn."
 
-#: ../plug-ins/common/file-xmc.c:1375
+#: ../plug-ins/common/file-xmc.c:1371
 #, c-format
-#| msgid "The default comment is limited to %d characters."
 msgid "Comment is limited to %d characters."
 msgstr "Chú thích được giới hạn trong %d kí tự."
 
-#: ../plug-ins/common/file-xmc.c:1493
+#: ../plug-ins/common/file-xmc.c:1489
 #, c-format
 msgid "This plug-in can only handle RGBA image format with 8bit color depth."
 msgstr ""
 "Trình cắm này chỉ có thể xử lí định dạng hình RGBA với độ sâu màu 8 bit."
 
-#: ../plug-ins/common/file-xmc.c:1511
+#: ../plug-ins/common/file-xmc.c:1507
 #, c-format
 msgid "Width of '%s' is too large. Please reduce more than %dpx."
 msgstr "Chiều rộng của '%s' quá lớn. Vui lòng giảm xuống thấp hơn %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1518
+#: ../plug-ins/common/file-xmc.c:1514
 #, c-format
 msgid "Height of '%s' is too large. Please reduce more than %dpx."
 msgstr "Chiều cao của '%s' quá lớn. Vui lòng giảm xuống thấp hơn %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1525
+#: ../plug-ins/common/file-xmc.c:1521
 #, c-format
-#| msgid "The name '%s' is used already!"
 msgid "The size of '%s' is zero!"
 msgstr "Kích thước của « %s » là 0 (số không)!"
 
-#: ../plug-ins/common/file-xmc.c:1565
+#: ../plug-ins/common/file-xmc.c:1561
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on '%s'.\n"
@@ -4992,7 +4992,7 @@ msgstr ""
 "Hãy thử thay đổi vị trí đỉnh con trỏ, hình học của lớp hoặc bỏ chế độ xén tự "
 "động khi lưu."
 
-#: ../plug-ins/common/file-xmc.c:1721
+#: ../plug-ins/common/file-xmc.c:1717
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames which "
@@ -5003,7 +5003,7 @@ msgstr ""
 "với chiều rộng hoặc chiều cao vượt quá %ipx.\n"
 "Điều đó sẽ làm nhiễu màn hình trong một vài môi trường."
 
-#: ../plug-ins/common/file-xmc.c:1728
+#: ../plug-ins/common/file-xmc.c:1724
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by gnome-appearance-properties.\n"
@@ -5016,7 +5016,7 @@ msgstr ""
 "toàn bộ khung hình...\" trong hộp thoại lưu, hoặc con trỏ của bạn có thể "
 "không xuất hiện trong gnome-appearance-properties (tùy biến diện mạo)."
 
-#: ../plug-ins/common/file-xmc.c:1965
+#: ../plug-ins/common/file-xmc.c:1961
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for X cursor.\n"
@@ -5025,7 +5025,7 @@ msgstr ""
 "Thông tin parasite \"%s\" cho con trỏ X quá dài.\n"
 "Chuỗi dư thừa đã được cắt bỏ."
 
-#: ../plug-ins/common/file-xmc.c:2167
+#: ../plug-ins/common/file-xmc.c:2163
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -5081,11 +5081,11 @@ msgstr ""
 msgid "Cannot save images with alpha channels."
 msgstr "Không thể lưu ảnh có kênh anpha."
 
-#: ../plug-ins/common/file-xwd.c:2202
+#: ../plug-ins/common/file-xwd.c:2198
 msgid "Error during writing indexed/gray image"
 msgstr "Lỗi khi ghi ảnh phụ lục/xám"
 
-#: ../plug-ins/common/file-xwd.c:2300
+#: ../plug-ins/common/file-xwd.c:2294
 msgid "Error during writing rgb image"
 msgstr "Gặp lỗi khi tạo ảnh RGB"
 
@@ -5101,103 +5101,103 @@ msgstr "_Phim đèn chiếu..."
 msgid "Composing images"
 msgstr "Đang cấu thành ảnh..."
 
-#: ../plug-ins/common/film.c:425 ../plug-ins/common/guillotine.c:215
-#: ../plug-ins/help-browser/dialog.c:1114
+#: ../plug-ins/common/film.c:423 ../plug-ins/common/guillotine.c:215
+#: ../plug-ins/help-browser/dialog.c:1109
 msgid "Untitled"
 msgstr "Không tên"
 
-#: ../plug-ins/common/film.c:880
+#: ../plug-ins/common/film.c:878
 msgid "Available images:"
 msgstr "Ảnh sẵn sàng:"
 
-#: ../plug-ins/common/film.c:881
+#: ../plug-ins/common/film.c:879
 msgid "On film:"
 msgstr "Trên phim:"
 
 #. Film height/colour
-#: ../plug-ins/common/film.c:977 ../plug-ins/common/film.c:1252
+#: ../plug-ins/common/film.c:975 ../plug-ins/common/film.c:1251
 msgid "Filmstrip"
 msgstr "Phim đèn chiếu"
 
 #. Keep maximum image height
-#: ../plug-ins/common/film.c:986
+#: ../plug-ins/common/film.c:984
 msgid "_Fit height to images"
 msgstr "Đặt độ cao _vừa ảnh"
 
 #. Film color
-#: ../plug-ins/common/film.c:1025
+#: ../plug-ins/common/film.c:1023
 msgid "Select Film Color"
 msgstr "Chọn màu phim"
 
-#: ../plug-ins/common/film.c:1030 ../plug-ins/common/film.c:1080
+#: ../plug-ins/common/film.c:1028 ../plug-ins/common/film.c:1078
 #: ../plug-ins/common/nova.c:349
 msgid "Co_lor:"
 msgstr "_Màu:"
 
 #. Film numbering: Startindex/Font/colour
-#: ../plug-ins/common/film.c:1039
+#: ../plug-ins/common/film.c:1037
 msgid "Numbering"
 msgstr "Cách gán số"
 
-#: ../plug-ins/common/film.c:1057
+#: ../plug-ins/common/film.c:1055
 msgid "Start _index:"
 msgstr "Chỉ _mục bắt đầu:"
 
-#: ../plug-ins/common/film.c:1070
+#: ../plug-ins/common/film.c:1068
 msgid "_Font:"
 msgstr "_Phông chữ:"
 
 #. Numbering color
-#: ../plug-ins/common/film.c:1075
+#: ../plug-ins/common/film.c:1073
 msgid "Select Number Color"
 msgstr "Chọn màu số"
 
-#: ../plug-ins/common/film.c:1090
+#: ../plug-ins/common/film.c:1088
 msgid "At _bottom"
 msgstr "Ở _dưới"
 
-#: ../plug-ins/common/film.c:1091
+#: ../plug-ins/common/film.c:1089
 msgid "At _top"
 msgstr "Ở _trên"
 
 #. ** The right frame keeps the image selection **
-#: ../plug-ins/common/film.c:1104
+#: ../plug-ins/common/film.c:1102
 msgid "Image Selection"
 msgstr "Nơi chọn ảnh"
 
-#: ../plug-ins/common/film.c:1132
+#: ../plug-ins/common/film.c:1131
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Mọi giá trị là phân số của độ cao phim đèn chiếu"
 
-#: ../plug-ins/common/film.c:1135
+#: ../plug-ins/common/film.c:1134
 msgid "Ad_vanced"
 msgstr "Cấ_p cao"
 
-#: ../plug-ins/common/film.c:1154
+#: ../plug-ins/common/film.c:1153
 msgid "Image _height:"
 msgstr "Chiều cao ản_h:"
 
-#: ../plug-ins/common/film.c:1165
+#: ../plug-ins/common/film.c:1164
 msgid "Image spac_ing:"
 msgstr "_Khoảng cách ảnh:"
 
-#: ../plug-ins/common/film.c:1176
+#: ../plug-ins/common/film.c:1175
 msgid "_Hole offset:"
 msgstr "_Độ lệch lỗ:"
 
-#: ../plug-ins/common/film.c:1187
+#: ../plug-ins/common/film.c:1186
 msgid "Ho_le width:"
 msgstr "Chiều rộng _lỗ:"
 
-#: ../plug-ins/common/film.c:1198
+#: ../plug-ins/common/film.c:1197
 msgid "Hol_e height:"
 msgstr "Chiều c_ao lỗ:"
 
-#: ../plug-ins/common/film.c:1209
+#: ../plug-ins/common/film.c:1208
 msgid "Hole sp_acing:"
 msgstr "_Khoảng cách lỗ:"
 
-#: ../plug-ins/common/film.c:1220
+#: ../plug-ins/common/film.c:1219
 msgid "_Number height:"
 msgstr "Chiều cao _số:"
 
@@ -5205,17 +5205,17 @@ msgstr "Chiều cao _số:"
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
 #: ../plug-ins/common/filter-pack.c:220
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:952
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:955
 msgid "Red:"
 msgstr "Đỏ:"
 
 #: ../plug-ins/common/filter-pack.c:221
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:962
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:965
 msgid "Green:"
 msgstr "Xanh lá cây:"
 
 #: ../plug-ins/common/filter-pack.c:222
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:972
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:975
 msgid "Blue:"
 msgstr "Xanh dương:"
 
@@ -5283,96 +5283,96 @@ msgstr "Biến thể sắc màu"
 msgid "Roughness"
 msgstr "Độ gồ ghề"
 
-#: ../plug-ins/common/filter-pack.c:674 ../plug-ins/common/filter-pack.c:1318
+#: ../plug-ins/common/filter-pack.c:676 ../plug-ins/common/filter-pack.c:1320
 msgid "Affected Range"
 msgstr "Phạm vi tác động"
 
-#: ../plug-ins/common/filter-pack.c:678
+#: ../plug-ins/common/filter-pack.c:680
 msgid "Sha_dows"
 msgstr "_Bóng"
 
-#: ../plug-ins/common/filter-pack.c:679
+#: ../plug-ins/common/filter-pack.c:681
 msgid "_Midtones"
 msgstr "_Nửa sắc"
 
-#: ../plug-ins/common/filter-pack.c:680
+#: ../plug-ins/common/filter-pack.c:682
 msgid "H_ighlights"
 msgstr "Nổ_i bật"
 
-#: ../plug-ins/common/filter-pack.c:694
+#: ../plug-ins/common/filter-pack.c:696
 msgid "Windows"
 msgstr "Cửa sổ"
 
-#: ../plug-ins/common/filter-pack.c:704 ../plug-ins/common/van-gogh-lic.c:676
+#: ../plug-ins/common/filter-pack.c:706 ../plug-ins/common/van-gogh-lic.c:676
 msgid "_Saturation"
 msgstr "Độ _bão hòa"
 
-#: ../plug-ins/common/filter-pack.c:712
+#: ../plug-ins/common/filter-pack.c:714
 msgid "A_dvanced"
 msgstr "Cấ_p cao"
 
-#: ../plug-ins/common/filter-pack.c:732
+#: ../plug-ins/common/filter-pack.c:734
 msgid "Value Variations"
 msgstr "Biến thể giá trị"
 
-#: ../plug-ins/common/filter-pack.c:777
+#: ../plug-ins/common/filter-pack.c:779
 msgid "Saturation Variations"
 msgstr "Biến thể bão hoà"
 
-#: ../plug-ins/common/filter-pack.c:830
+#: ../plug-ins/common/filter-pack.c:832
 msgid "Select Pixels By"
 msgstr "Chọn điểm ảnh theo"
 
-#: ../plug-ins/common/filter-pack.c:835
+#: ../plug-ins/common/filter-pack.c:837
 msgid "H_ue"
 msgstr "Sắc mà_u"
 
-#: ../plug-ins/common/filter-pack.c:836
+#: ../plug-ins/common/filter-pack.c:838
 msgid "Satu_ration"
 msgstr "Độ _bão hòa"
 
-#: ../plug-ins/common/filter-pack.c:837
+#: ../plug-ins/common/filter-pack.c:839
 msgid "V_alue"
 msgstr "Giá t_rị"
 
-#: ../plug-ins/common/filter-pack.c:863
+#: ../plug-ins/common/filter-pack.c:865
 msgid "Show"
 msgstr "Hiện"
 
-#: ../plug-ins/common/filter-pack.c:868
+#: ../plug-ins/common/filter-pack.c:870
 msgid "_Entire image"
 msgstr "T_oàn bộ ảnh"
 
-#: ../plug-ins/common/filter-pack.c:869
+#: ../plug-ins/common/filter-pack.c:871
 msgid "Se_lection only"
 msgstr "Chỉ _vùng chọn"
 
-#: ../plug-ins/common/filter-pack.c:870
+#: ../plug-ins/common/filter-pack.c:872
 msgid "Selec_tion in context"
 msgstr "Vùng chọn _trong ngữ cảnh"
 
-#: ../plug-ins/common/filter-pack.c:1201
+#: ../plug-ins/common/filter-pack.c:1203
 msgid "Filter Pack Simulation"
 msgstr "Mô phỏng tập bộ lọc"
 
-#: ../plug-ins/common/filter-pack.c:1291
+#: ../plug-ins/common/filter-pack.c:1293
 msgid "Shadows:"
 msgstr "Bóng:"
 
-#: ../plug-ins/common/filter-pack.c:1292
+#: ../plug-ins/common/filter-pack.c:1294
 msgid "Midtones:"
 msgstr "Nửa sắc:"
 
-#: ../plug-ins/common/filter-pack.c:1293
+#: ../plug-ins/common/filter-pack.c:1295
 msgid "Highlights:"
 msgstr "Nổi bật:"
 
-#: ../plug-ins/common/filter-pack.c:1306
+#: ../plug-ins/common/filter-pack.c:1308
 msgid "Advanced Filter Pack Options"
 msgstr "Tùy chọn gói bộ lọc cấp cao"
 
 #. ****************** MISC OPTIONS **************************
-#: ../plug-ins/common/filter-pack.c:1417
+#: ../plug-ins/common/filter-pack.c:1420
 msgid "Preview Size"
 msgstr "Cỡ ô xem thử"
 
@@ -5461,7 +5461,6 @@ msgstr "Lưới"
 
 #. attach labels
 #: ../plug-ins/common/grid.c:719
-#| msgid "Horizontal"
 msgid ""
 "Horizontal\n"
 "Lines"
@@ -5470,7 +5469,6 @@ msgstr ""
 "Ngang"
 
 #: ../plug-ins/common/grid.c:721
-#| msgid "Vertical"
 msgid ""
 "Vertical\n"
 "Lines"
@@ -5576,105 +5574,105 @@ msgstr "Sử dụng  con chuột để biến dạng vùng ảnh"
 msgid "_IWarp..."
 msgstr "_Biến dạng tương tác..."
 
-#: ../plug-ins/common/iwarp.c:699
+#: ../plug-ins/common/iwarp.c:697
 msgid "Warping"
 msgstr "Đang làm biến dạng"
 
-#: ../plug-ins/common/iwarp.c:805
+#: ../plug-ins/common/iwarp.c:803
 #, c-format
 msgid "Warping Frame %d"
 msgstr "Đang làm biến dạng khung %d..."
 
-#: ../plug-ins/common/iwarp.c:817
+#: ../plug-ins/common/iwarp.c:815
 msgid "Ping pong"
 msgstr "Bóng bàn"
 
-#: ../plug-ins/common/iwarp.c:976 ../plug-ins/common/whirl-pinch.c:193
+#: ../plug-ins/common/iwarp.c:974 ../plug-ins/common/whirl-pinch.c:193
 msgid "Region affected by plug-in is empty"
 msgstr "Vùng chịu tác động của phần bổ trợ là vùng rỗng"
 
-#: ../plug-ins/common/iwarp.c:1032
+#: ../plug-ins/common/iwarp.c:1030
 msgid "A_nimate"
 msgstr "Hoạt cả_nh"
 
-#: ../plug-ins/common/iwarp.c:1052
+#: ../plug-ins/common/iwarp.c:1050
 msgid "Number of _frames:"
 msgstr "Số _khung:"
 
-#: ../plug-ins/common/iwarp.c:1061
+#: ../plug-ins/common/iwarp.c:1059
 msgid "R_everse"
 msgstr "N_gược lại"
 
-#: ../plug-ins/common/iwarp.c:1070
+#: ../plug-ins/common/iwarp.c:1068
 msgid "_Ping pong"
 msgstr "_Bóng bàn"
 
-#: ../plug-ins/common/iwarp.c:1083
+#: ../plug-ins/common/iwarp.c:1081
 msgid "_Animate"
 msgstr "H_oạt cảnh"
 
-#: ../plug-ins/common/iwarp.c:1104
+#: ../plug-ins/common/iwarp.c:1102
 msgid "Deform Mode"
 msgstr "Chế độ làm biến dạng"
 
-#: ../plug-ins/common/iwarp.c:1117
+#: ../plug-ins/common/iwarp.c:1116
 msgid "_Move"
 msgstr "Chu_yển"
 
-#: ../plug-ins/common/iwarp.c:1118
+#: ../plug-ins/common/iwarp.c:1117
 msgid "_Grow"
 msgstr "_Lớn hơn"
 
-#: ../plug-ins/common/iwarp.c:1119
+#: ../plug-ins/common/iwarp.c:1118
 msgid "S_wirl CCW"
 msgstr "_Xoay ngược chiều kim"
 
-#: ../plug-ins/common/iwarp.c:1120
+#: ../plug-ins/common/iwarp.c:1119
 msgid "Remo_ve"
 msgstr "_Gỡ bỏ"
 
-#: ../plug-ins/common/iwarp.c:1121
+#: ../plug-ins/common/iwarp.c:1120
 msgid "S_hrink"
 msgstr "N_hỏ hơn"
 
-#: ../plug-ins/common/iwarp.c:1122
+#: ../plug-ins/common/iwarp.c:1121
 msgid "Sw_irl CW"
 msgstr "Xoa_y cùng chiều kim"
 
-#: ../plug-ins/common/iwarp.c:1151
+#: ../plug-ins/common/iwarp.c:1150
 msgid "_Deform radius:"
 msgstr "Bán kính làm biến _dạng:"
 
-#: ../plug-ins/common/iwarp.c:1161
+#: ../plug-ins/common/iwarp.c:1160
 msgid "D_eform amount:"
 msgstr "_Số lượng làm biến dạng:"
 
-#: ../plug-ins/common/iwarp.c:1170
+#: ../plug-ins/common/iwarp.c:1169
 msgid "_Bilinear"
 msgstr "Tuyến _kép"
 
-#: ../plug-ins/common/iwarp.c:1184
+#: ../plug-ins/common/iwarp.c:1183
 msgid "Adaptive s_upersample"
 msgstr "Siê_u lấy mẫu thích nghi"
 
-#: ../plug-ins/common/iwarp.c:1205
+#: ../plug-ins/common/iwarp.c:1204
 msgid "Ma_x depth:"
 msgstr "Sâu tối đ_a:"
 
-#: ../plug-ins/common/iwarp.c:1215
+#: ../plug-ins/common/iwarp.c:1214
 msgid "Thresho_ld:"
 msgstr "N_gưỡng:"
 
-#: ../plug-ins/common/iwarp.c:1228 ../plug-ins/common/sinus.c:772
+#: ../plug-ins/common/iwarp.c:1227 ../plug-ins/common/sinus.c:772
 #: ../plug-ins/gradient-flare/gradient-flare.c:2868
 msgid "_Settings"
 msgstr "Thiết _lập"
 
-#: ../plug-ins/common/iwarp.c:1287
+#: ../plug-ins/common/iwarp.c:1286
 msgid "IWarp"
 msgstr "Biến dạng tương tác"
 
-#: ../plug-ins/common/iwarp.c:1325
+#: ../plug-ins/common/iwarp.c:1324
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -5694,65 +5692,64 @@ msgstr "Hình _ghép..."
 msgid "Assembling jigsaw"
 msgstr "Đang tập hợp hình ghép..."
 
-#: ../plug-ins/common/jigsaw.c:2417
+#: ../plug-ins/common/jigsaw.c:2393
 msgid "Jigsaw"
 msgstr "Hình ghép"
 
-#: ../plug-ins/common/jigsaw.c:2447
+#: ../plug-ins/common/jigsaw.c:2423
 msgid "Number of Tiles"
 msgstr "Số ô lát"
 
-#: ../plug-ins/common/jigsaw.c:2462
+#: ../plug-ins/common/jigsaw.c:2438
 msgid "Number of pieces going across"
 msgstr "Số phần theo chiều ngang"
 
-#: ../plug-ins/common/jigsaw.c:2479
+#: ../plug-ins/common/jigsaw.c:2455
 msgid "Number of pieces going down"
 msgstr "Số phần theo chiều dọc"
 
-#: ../plug-ins/common/jigsaw.c:2493
+#: ../plug-ins/common/jigsaw.c:2469
 msgid "Bevel Edges"
 msgstr "Vát góc các cạnh"
 
-#: ../plug-ins/common/jigsaw.c:2503
+#: ../plug-ins/common/jigsaw.c:2479
 msgid "_Bevel width:"
 msgstr "Độ lớn góc _vát:"
 
-#: ../plug-ins/common/jigsaw.c:2507
+#: ../plug-ins/common/jigsaw.c:2483
 msgid "Degree of slope of each piece's edge"
 msgstr "Độ dốc cạnh của mỗi phần"
 
-#: ../plug-ins/common/jigsaw.c:2520
+#: ../plug-ins/common/jigsaw.c:2496
 msgid "H_ighlight:"
 msgstr "Nổ_i bật:"
 
-#: ../plug-ins/common/jigsaw.c:2524
+#: ../plug-ins/common/jigsaw.c:2500
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "Độ nổi bật trên cạnh của mỗi phần"
 
 #. frame for primitive radio buttons
-#: ../plug-ins/common/jigsaw.c:2541
+#: ../plug-ins/common/jigsaw.c:2517
 msgid "Jigsaw Style"
 msgstr "Kiểu dáng hình ghép"
 
-#: ../plug-ins/common/jigsaw.c:2545
+#: ../plug-ins/common/jigsaw.c:2521
 msgid "_Square"
 msgstr "_Vuông"
 
-#: ../plug-ins/common/jigsaw.c:2546
+#: ../plug-ins/common/jigsaw.c:2522
 msgid "C_urved"
 msgstr "C_ong"
 
-#: ../plug-ins/common/jigsaw.c:2550
+#: ../plug-ins/common/jigsaw.c:2526
 msgid "Each piece has straight sides"
 msgstr "Mỗi phần có cạnh thẳng"
 
-#: ../plug-ins/common/jigsaw.c:2551
+#: ../plug-ins/common/jigsaw.c:2527
 msgid "Each piece has curved sides"
 msgstr "Mỗi phần có cạnh cong"
 
 #: ../plug-ins/common/lcms.c:218
-#| msgid "Use the color of the image"
 msgid "Set a color profile on the image"
 msgstr "Thiết lập một hồ sơ màu sắc lên ảnh"
 
@@ -5765,7 +5762,6 @@ msgid "Assign default RGB Profile"
 msgstr "Chỉ định hồ sơ màu RGB mặc định"
 
 #: ../plug-ins/common/lcms.c:248
-#| msgid "Use the color of the image"
 msgid "Apply a color profile on the image"
 msgstr "Áp đặt một hồ sơ màu sắc lên ảnh"
 
@@ -5778,12 +5774,10 @@ msgid "Convert to default RGB Profile"
 msgstr "Chuyển đổi sang hồ sơ màu RGB mặc định"
 
 #: ../plug-ins/common/lcms.c:290
-#| msgid "Color Transformation"
 msgid "Image Color Profile Information"
 msgstr "Thông tin hồ sơ màu sắc của ảnh."
 
 #: ../plug-ins/common/lcms.c:304
-#| msgid "Color Transformation"
 msgid "Color Profile Information"
 msgstr "Thông tin hồ sơ màu sắc"
 
@@ -5804,7 +5798,6 @@ msgstr ""
 
 #: ../plug-ins/common/lcms.c:825
 #, c-format
-#| msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "« %s » không giống một hồ sơ màu sắc ICC"
 
@@ -5816,7 +5809,6 @@ msgstr "Chuyển đổi từ '%s' sang '%s'"
 
 #: ../plug-ins/common/lcms.c:1129
 #, c-format
-#| msgid "Could not read color entries from '%s'"
 msgid "Could not load ICC profile from '%s'"
 msgstr "Không thể tải hồ sơ ICC từ « %s »"
 
@@ -5827,7 +5819,6 @@ msgstr "Bức ảnh '%s' có một hồ sơ màu nhúng:"
 
 #: ../plug-ins/common/lcms.c:1195
 #, c-format
-#| msgid "Convert the image into irregular tiles"
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Chuyển đổi ảnh sang không gian màu RGB (%s)?"
 
@@ -5836,12 +5827,10 @@ msgid "Convert to RGB working space?"
 msgstr "Chuyển sang hệ không gian màu RGB?"
 
 #: ../plug-ins/common/lcms.c:1231
-#| msgid "_Step"
 msgid "_Keep"
 msgstr "_Giữ lại"
 
 #: ../plug-ins/common/lcms.c:1236
-#| msgid "_Invert"
 msgid "_Convert"
 msgstr "_Chuyển đổi"
 
@@ -5850,12 +5839,10 @@ msgid "_Don't ask me again"
 msgstr "Đừng _hỏi tôi nữa"
 
 #: ../plug-ins/common/lcms.c:1328
-#| msgid "Second Destination Color"
 msgid "Select destination profile"
 msgstr "Chọn hồ sơ cho điểm đến"
 
 #: ../plug-ins/common/lcms.c:1355
-#| msgid "A_ll tiles"
 msgid "All files (*.*)"
 msgstr "Tất cả tập tin (*.*)"
 
@@ -5869,7 +5856,6 @@ msgid "RGB workspace (%s)"
 msgstr "Không gian màu RGB (%s)"
 
 #: ../plug-ins/common/lcms.c:1453
-#| msgid "Color to Alpha Color Picker"
 msgid "Convert to ICC Color Profile"
 msgstr "Chuyển thành hồ sơ màu ICC"
 
@@ -5882,7 +5868,6 @@ msgid "_Assign"
 msgstr "_Chỉ định"
 
 #: ../plug-ins/common/lcms.c:1480
-#| msgid "Supernova Color Picker"
 msgid "Current Color Profile"
 msgstr "Hồ sơ màu hiện tại"
 
@@ -5895,7 +5880,6 @@ msgid "Assign"
 msgstr "Chỉ định"
 
 #: ../plug-ins/common/lcms.c:1519
-#| msgid "Rendering tiles"
 msgid "_Rendering Intent:"
 msgstr "_Mục đích dựng hình:"
 
@@ -5951,41 +5935,35 @@ msgstr "Hiệu chỉnh biến dạng thấu kính"
 msgid "Lens Distortion..."
 msgstr "Biến dạng thấu kính..."
 
-#: ../plug-ins/common/lens-distortion.c:381
+#: ../plug-ins/common/lens-distortion.c:379
 msgid "Lens distortion"
 msgstr "Biến dạng thấu kính"
 
-#: ../plug-ins/common/lens-distortion.c:481
-#| msgid "Neon Detection"
+#: ../plug-ins/common/lens-distortion.c:479
 msgid "Lens Distortion"
 msgstr "Biến dạng thấu kính"
 
-#: ../plug-ins/common/lens-distortion.c:520
-#| msgid "_Cyan:"
+#: ../plug-ins/common/lens-distortion.c:518
 msgid "_Main:"
 msgstr "_Chủ đạo:"
 
-#: ../plug-ins/common/lens-distortion.c:534
-#| msgid "Edges"
+#: ../plug-ins/common/lens-distortion.c:532
 msgid "_Edge:"
 msgstr "_Cạnh:"
 
-#: ../plug-ins/common/lens-distortion.c:548 ../plug-ins/flame/flame.c:1236
+#: ../plug-ins/common/lens-distortion.c:546 ../plug-ins/flame/flame.c:1236
 msgid "_Zoom:"
 msgstr "Thu _phóng:"
 
-#: ../plug-ins/common/lens-distortion.c:562
-#| msgid "_Bright:"
+#: ../plug-ins/common/lens-distortion.c:560
 msgid "_Brighten:"
 msgstr "Làm _sáng:"
 
-#: ../plug-ins/common/lens-distortion.c:576
-#| msgid "_X size:"
+#: ../plug-ins/common/lens-distortion.c:574
 msgid "_X shift:"
 msgstr "Dịch _X:"
 
-#: ../plug-ins/common/lens-distortion.c:590
-#| msgid "_Y size:"
+#: ../plug-ins/common/lens-distortion.c:588
 msgid "_Y shift:"
 msgstr "Dịch _Y:"
 
@@ -6018,12 +5996,10 @@ msgid "Send the image by email"
 msgstr "Gửi hình qua email"
 
 #: ../plug-ins/common/mail.c:194
-#| msgid "Send as Mail"
 msgid "Send by E_mail..."
 msgstr "Gởi bằng _thư điện tử..."
 
 #: ../plug-ins/common/mail.c:407
-#| msgid "Send as Mail"
 msgid "Send by Email"
 msgstr "Gởi bằng thư điện tử"
 
@@ -6036,13 +6012,11 @@ msgid "_Filename:"
 msgstr "_Tên tập tin:"
 
 #: ../plug-ins/common/mail.c:456
-#| msgid "_Top:"
 msgctxt "email-address"
 msgid "_To:"
 msgstr "Đế_n:"
 
 #: ../plug-ins/common/mail.c:470
-#| msgid "From:"
 msgctxt "email-address"
 msgid "_From:"
 msgstr "_Từ:"
@@ -6065,7 +6039,6 @@ msgid "Reduce image to pure red, green, and blue"
 msgstr "Giảm ảnh thành chỉ màu đỏ, xanh lá cây và xanh dương thôi"
 
 #: ../plug-ins/common/max-rgb.c:95
-#| msgid "_Maximum RGB..."
 msgid "Maxim_um RGB..."
 msgstr "RGB tối đ_a..."
 
@@ -6098,76 +6071,76 @@ msgid "_Mosaic..."
 msgstr "Khả_m..."
 
 #. progress bar for gradient finding
-#: ../plug-ins/common/mosaic.c:506
+#: ../plug-ins/common/mosaic.c:505
 msgid "Finding edges"
 msgstr "Đang tìm cạnh"
 
 #. Progress bar for rendering tiles
-#: ../plug-ins/common/mosaic.c:560
+#: ../plug-ins/common/mosaic.c:557
 msgid "Rendering tiles"
 msgstr "Đang vẽ ô lát"
 
-#: ../plug-ins/common/mosaic.c:593
+#: ../plug-ins/common/mosaic.c:590
 msgid "Mosaic"
 msgstr "Khảm"
 
-#: ../plug-ins/common/mosaic.c:634
+#: ../plug-ins/common/mosaic.c:631
 msgid "Squares"
 msgstr "Vuông"
 
-#: ../plug-ins/common/mosaic.c:635
+#: ../plug-ins/common/mosaic.c:632
 msgid "Hexagons"
 msgstr "Lục giác"
 
-#: ../plug-ins/common/mosaic.c:636
+#: ../plug-ins/common/mosaic.c:633
 msgid "Octagons & squares"
 msgstr "Bát giác và vuông"
 
-#: ../plug-ins/common/mosaic.c:637
+#: ../plug-ins/common/mosaic.c:634
 msgid "Triangles"
 msgstr "Tam giác"
 
-#: ../plug-ins/common/mosaic.c:645
+#: ../plug-ins/common/mosaic.c:642
 msgid "_Tiling primitives:"
 msgstr "Hình dạng ô lá_t:"
 
-#: ../plug-ins/common/mosaic.c:653
+#: ../plug-ins/common/mosaic.c:650
 msgid "Tile _size:"
 msgstr "Cỡ ô _lát:"
 
-#: ../plug-ins/common/mosaic.c:665 ../plug-ins/common/tile-glass.c:304
+#: ../plug-ins/common/mosaic.c:662 ../plug-ins/common/tile-glass.c:304
 msgid "Tile _height:"
 msgstr "_Chiều cao ô lát:"
 
-#: ../plug-ins/common/mosaic.c:678
+#: ../plug-ins/common/mosaic.c:675
 msgid "Til_e spacing:"
 msgstr "Kh_oảng cách lát:"
 
-#: ../plug-ins/common/mosaic.c:690
+#: ../plug-ins/common/mosaic.c:687
 msgid "Tile _neatness:"
 msgstr "Tí_nh cân đối lát:"
 
-#: ../plug-ins/common/mosaic.c:703
+#: ../plug-ins/common/mosaic.c:700
 msgid "Light _direction:"
 msgstr "_Hướng ánh sáng:"
 
-#: ../plug-ins/common/mosaic.c:715
+#: ../plug-ins/common/mosaic.c:712
 msgid "Color _variation:"
 msgstr "_Biến thể màu:"
 
-#: ../plug-ins/common/mosaic.c:744
+#: ../plug-ins/common/mosaic.c:741
 msgid "Co_lor averaging"
 msgstr "Tính trung _bình màu"
 
-#: ../plug-ins/common/mosaic.c:757
+#: ../plug-ins/common/mosaic.c:754
 msgid "Allo_w tile splitting"
 msgstr "Cho _phép chia tách ô lát"
 
-#: ../plug-ins/common/mosaic.c:770
+#: ../plug-ins/common/mosaic.c:767
 msgid "_Pitted surfaces"
 msgstr "Mặt _rỗ"
 
-#: ../plug-ins/common/mosaic.c:783
+#: ../plug-ins/common/mosaic.c:780
 msgid "_FG/BG lighting"
 msgstr "Ánh sáng cảnh _gần/nền"
 
@@ -6299,27 +6272,27 @@ msgstr "Bộ lọc nhiễu phi tuyến tính"
 msgid "_NL Filter..."
 msgstr "Bộ lọc _NL..."
 
-#: ../plug-ins/common/nl-filter.c:953 ../plug-ins/common/nl-filter.c:1017
+#: ../plug-ins/common/nl-filter.c:952 ../plug-ins/common/nl-filter.c:1016
 msgid "NL Filter"
 msgstr "Bộ  lọc NL"
 
-#: ../plug-ins/common/nl-filter.c:1047
+#: ../plug-ins/common/nl-filter.c:1046
 msgid "Filter"
 msgstr "Lọc"
 
-#: ../plug-ins/common/nl-filter.c:1051
+#: ../plug-ins/common/nl-filter.c:1050
 msgid "_Alpha trimmed mean"
 msgstr "Trung bình rút gọn _anpha"
 
-#: ../plug-ins/common/nl-filter.c:1053
+#: ../plug-ins/common/nl-filter.c:1052
 msgid "Op_timal estimation"
 msgstr "Ước lượng _tối ưu"
 
-#: ../plug-ins/common/nl-filter.c:1055
+#: ../plug-ins/common/nl-filter.c:1054
 msgid "_Edge enhancement"
 msgstr "Tăn_g cạnh"
 
-#: ../plug-ins/common/nl-filter.c:1080
+#: ../plug-ins/common/nl-filter.c:1079
 msgid "A_lpha:"
 msgstr "An_pha:"
 
@@ -6379,24 +6352,24 @@ msgstr "_Châm..."
 msgid "_Slur..."
 msgstr "Mờ nét đ_i..."
 
-#: ../plug-ins/common/noise-randomize.c:772
+#: ../plug-ins/common/noise-randomize.c:769
 #: ../plug-ins/common/noise-solid.c:603
 msgid "_Random seed:"
 msgstr "_Hạt ngẫu nhiên:"
 
-#: ../plug-ins/common/noise-randomize.c:781
+#: ../plug-ins/common/noise-randomize.c:778
 msgid "R_andomization (%):"
 msgstr "Độ ngẫu nhiên hó_a (%):"
 
-#: ../plug-ins/common/noise-randomize.c:784
+#: ../plug-ins/common/noise-randomize.c:781
 msgid "Percentage of pixels to be filtered"
 msgstr "Phần trăm điểm ảnh cần lọc"
 
-#: ../plug-ins/common/noise-randomize.c:796
+#: ../plug-ins/common/noise-randomize.c:793
 msgid "R_epeat:"
 msgstr "_Lặp lại:"
 
-#: ../plug-ins/common/noise-randomize.c:799
+#: ../plug-ins/common/noise-randomize.c:796
 msgid "Number of times to apply filter"
 msgstr "Số lần cần áp dụng bộ lọc"
 
@@ -6493,7 +6466,6 @@ msgid "Add a starburst to the image"
 msgstr "Thêm một sao bung vào ảnh"
 
 #: ../plug-ins/common/nova.c:172
-#| msgid "Su_pernova..."
 msgid "Super_nova..."
 msgstr "_Siêu tân tinh..."
 
@@ -6547,7 +6519,6 @@ msgstr "Độ _nhoè:"
 #. * Mask-size map check button
 #.
 #: ../plug-ins/common/oilify.c:832
-#| msgid "Use magnitude map"
 msgid "Use m_ask-size map:"
 msgstr "Dùng ảnh ánh xạ độ n_hòe:"
 
@@ -6560,7 +6531,6 @@ msgstr "Độ _dầy:"
 #. * Exponent map check button
 #.
 #: ../plug-ins/common/oilify.c:885
-#| msgid "_Exponent:"
 msgid "Use e_xponent map:"
 msgstr "Dùng ảnh ánh xạ độ dầ_y: "
 
@@ -6568,7 +6538,6 @@ msgstr "Dùng ảnh ánh xạ độ dầ_y: "
 #. * Intensity algorithm check button
 #.
 #: ../plug-ins/common/oilify.c:922
-#| msgid "_Use intensity"
 msgid "_Use intensity algorithm"
 msgstr "_Sử dụng thuật toán cường độ"
 
@@ -6649,58 +6618,58 @@ msgstr "Hiển thị thông tin về phần bổ trợ"
 msgid "_Plug-In Browser"
 msgstr "Trình duyệt _phần bổ trợ"
 
-#: ../plug-ins/common/plugin-browser.c:377
+#: ../plug-ins/common/plugin-browser.c:363
 msgid "Searching by name"
 msgstr "Đang tìm kiếm theo tên"
 
-#: ../plug-ins/common/plugin-browser.c:391
+#: ../plug-ins/common/plugin-browser.c:377
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
 msgstr[0] "%d bổ trợ"
 
-#: ../plug-ins/common/plugin-browser.c:400
+#: ../plug-ins/common/plugin-browser.c:386
 msgid "No matches for your query"
 msgstr "Không có gì khớp truy vấn của bạn"
 
-#: ../plug-ins/common/plugin-browser.c:403
+#: ../plug-ins/common/plugin-browser.c:389
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
 msgstr[0] "%d bổ trợ khớp với truy vấn của bạn"
 
-#: ../plug-ins/common/plugin-browser.c:534
+#: ../plug-ins/common/plugin-browser.c:520
 msgid "No matches"
 msgstr "Không tìm thấy"
 
-#: ../plug-ins/common/plugin-browser.c:560
+#: ../plug-ins/common/plugin-browser.c:546
 msgid "Plug-In Browser"
 msgstr "Trình duyệt phần bổ trợ"
 
-#: ../plug-ins/common/plugin-browser.c:603
+#: ../plug-ins/common/plugin-browser.c:589
 msgid "Name"
 msgstr "Tên"
 
-#: ../plug-ins/common/plugin-browser.c:611
-#: ../plug-ins/common/plugin-browser.c:674
+#: ../plug-ins/common/plugin-browser.c:597
+#: ../plug-ins/common/plugin-browser.c:660
 msgid "Menu Path"
 msgstr "Đường dẫn Trình đơn"
 
-#: ../plug-ins/common/plugin-browser.c:619
-#: ../plug-ins/common/plugin-browser.c:683
+#: ../plug-ins/common/plugin-browser.c:605
+#: ../plug-ins/common/plugin-browser.c:669
 msgid "Image Types"
 msgstr "Kiểu ảnh"
 
-#: ../plug-ins/common/plugin-browser.c:629
-#: ../plug-ins/common/plugin-browser.c:692
+#: ../plug-ins/common/plugin-browser.c:615
+#: ../plug-ins/common/plugin-browser.c:678
 msgid "Installation Date"
 msgstr "Ngày cài đặt"
 
-#: ../plug-ins/common/plugin-browser.c:653
+#: ../plug-ins/common/plugin-browser.c:639
 msgid "List View"
 msgstr "Xem Danh sách"
 
-#: ../plug-ins/common/plugin-browser.c:715
+#: ../plug-ins/common/plugin-browser.c:701
 msgid "Tree View"
 msgstr "Xem Cây"
 
@@ -6716,33 +6685,33 @@ msgstr "T_oạ độ cực..."
 msgid "Polar coordinates"
 msgstr "Toạ độ cực"
 
-#: ../plug-ins/common/polar-coords.c:593
+#: ../plug-ins/common/polar-coords.c:591
 msgid "Polar Coordinates"
 msgstr "Toạ độ cực"
 
-#: ../plug-ins/common/polar-coords.c:633
+#: ../plug-ins/common/polar-coords.c:631
 msgid "Circle _depth in percent:"
 msgstr "Độ _sâu hình tròn theo phần trăm:"
 
-#: ../plug-ins/common/polar-coords.c:645
+#: ../plug-ins/common/polar-coords.c:643
 msgid "Offset _angle:"
 msgstr "_Góc lệch:"
 
-#: ../plug-ins/common/polar-coords.c:660
+#: ../plug-ins/common/polar-coords.c:659
 msgid "_Map backwards"
 msgstr "Ánh _xạ ngược lại"
 
-#: ../plug-ins/common/polar-coords.c:666
+#: ../plug-ins/common/polar-coords.c:665
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr "Nếu chọn, việc ánh xạ sẽ bắt đầu bên phải, ngược với bắt đầu bên trái."
 
-#: ../plug-ins/common/polar-coords.c:677
+#: ../plug-ins/common/polar-coords.c:676
 msgid "Map from _top"
 msgstr "Ánh xạ _từ đỉnh"
 
-#: ../plug-ins/common/polar-coords.c:683
+#: ../plug-ins/common/polar-coords.c:682
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -6750,11 +6719,11 @@ msgstr ""
 "Nếu không chọn, việc ánh xạ sẽ để hàng dưới ở giữa, và hàng trên ở ngoài. "
 "Nếu chọn thì ngược lại."
 
-#: ../plug-ins/common/polar-coords.c:695
+#: ../plug-ins/common/polar-coords.c:694
 msgid "To _polar"
 msgstr "Đến _cực"
 
-#: ../plug-ins/common/polar-coords.c:701
+#: ../plug-ins/common/polar-coords.c:700
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -6782,20 +6751,19 @@ msgstr "Tạo ra rất nhiều mẫu trừu tượng khác nhau"
 msgid "_Qbist..."
 msgstr "_Qbist..."
 
-#: ../plug-ins/common/qbist.c:517
+#: ../plug-ins/common/qbist.c:515
 msgid "Qbist"
 msgstr "Qbist"
 
-#: ../plug-ins/common/qbist.c:714
+#: ../plug-ins/common/qbist.c:712
 msgid "Load QBE File"
 msgstr "Tải tập tin QBE"
 
-#: ../plug-ins/common/qbist.c:756
-#| msgid "Save File"
+#: ../plug-ins/common/qbist.c:754
 msgid "Save as QBE File"
 msgstr "Lưu tập tin dưới dạng QBE"
 
-#: ../plug-ins/common/qbist.c:810
+#: ../plug-ins/common/qbist.c:808
 msgid "G-Qbist"
 msgstr "G-Qbist"
 
@@ -6812,7 +6780,7 @@ msgid "Red Eye Removal"
 msgstr "Bỏ mắt đỏ"
 
 #: ../plug-ins/common/red-eye-removal.c:171
-#: ../plug-ins/common/unsharp-mask.c:893 ../plug-ins/common/wind.c:1011
+#: ../plug-ins/common/unsharp-mask.c:891 ../plug-ins/common/wind.c:1006
 #: ../plug-ins/imagemap/imap_preferences.c:455
 #: ../plug-ins/map-object/map-object-ui.c:539
 msgid "_Threshold:"
@@ -6881,23 +6849,22 @@ msgid "A_mplitude:"
 msgstr "_Biên độ:"
 
 #: ../plug-ins/common/ripple.c:664
-#| msgid "Red _phaseshift:"
 msgid "Phase _shift:"
 msgstr "_Lệch pha:"
 
-#: ../plug-ins/common/rotate.c:412
+#: ../plug-ins/common/rotate.c:408
 msgid "You can not rotate the whole image if there's a selection."
 msgstr "Bạn không thể xoay toàn ảnh nếu có một vùng chọn."
 
-#: ../plug-ins/common/rotate.c:419
+#: ../plug-ins/common/rotate.c:415
 msgid "You can not rotate the whole image if there's a floating selection."
 msgstr "Bạn không thể xoay toàn ảnh nếu có một vùng chọn nổi."
 
-#: ../plug-ins/common/rotate.c:430
+#: ../plug-ins/common/rotate.c:426
 msgid "Sorry, channels and masks can not be rotated."
 msgstr "Tiếc là không thể xoay kênh và mặt nạ."
 
-#: ../plug-ins/common/rotate.c:436
+#: ../plug-ins/common/rotate.c:432
 msgid "Rotating"
 msgstr "Đang xoay..."
 
@@ -6947,39 +6914,39 @@ msgstr "Hiện vùng chọn"
 msgid "Show color"
 msgstr "Hiện màu"
 
-#: ../plug-ins/common/sample-colorize.c:1562
+#: ../plug-ins/common/sample-colorize.c:1563
 msgid "Input levels:"
 msgstr "Cấp nhập:"
 
-#: ../plug-ins/common/sample-colorize.c:1612
+#: ../plug-ins/common/sample-colorize.c:1614
 msgid "Output levels:"
 msgstr "Cấp xuất:"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1652
+#: ../plug-ins/common/sample-colorize.c:1654
 msgid "Hold intensity"
 msgstr "Giữ độ mạnh"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1663
+#: ../plug-ins/common/sample-colorize.c:1665
 msgid "Original intensity"
 msgstr "Độ mạnh gốc"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1681
+#: ../plug-ins/common/sample-colorize.c:1683
 msgid "Use subcolors"
 msgstr "Dùng màu phụ"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1692
+#: ../plug-ins/common/sample-colorize.c:1694
 msgid "Smooth samples"
 msgstr "Làm mịn các mẫu"
 
-#: ../plug-ins/common/sample-colorize.c:2664
+#: ../plug-ins/common/sample-colorize.c:2666
 msgid "Sample analyze"
 msgstr "Phân tích mẫu"
 
-#: ../plug-ins/common/sample-colorize.c:3044
+#: ../plug-ins/common/sample-colorize.c:3046
 msgid "Remap colorized"
 msgstr "Áp dụng lại sự màu hóa"
 
@@ -6992,82 +6959,75 @@ msgid "_Screenshot..."
 msgstr "Chụp _màn hình..."
 
 #: ../plug-ins/common/screenshot.c:418
-#| msgid "Error grabbing the pointer"
 msgid "Error selecting the window"
 msgstr "Lỗi lựa chọn cửa sổ"
 
-#: ../plug-ins/common/screenshot.c:787
+#: ../plug-ins/common/screenshot.c:786
 msgid "Importing screenshot"
 msgstr "Đang nhập ảnh chụp màn hình..."
 
-#: ../plug-ins/common/screenshot.c:813 ../plug-ins/common/screenshot.c:1086
+#: ../plug-ins/common/screenshot.c:812 ../plug-ins/common/screenshot.c:1085
 msgid "Screenshot"
 msgstr "Chụp màn hình"
 
-#: ../plug-ins/common/screenshot.c:854
-#| msgid "Insert Point"
+#: ../plug-ins/common/screenshot.c:853
 msgid "Mouse Pointer"
 msgstr "Con trỏ chuột"
 
-#: ../plug-ins/common/screenshot.c:973
+#: ../plug-ins/common/screenshot.c:972
 msgid "Specified window not found"
 msgstr "Không tìm thấy cửa sổ đã xác định"
 
 # Button in screenshot dialog
-#: ../plug-ins/common/screenshot.c:1095
-#| msgid "S_wap"
+#: ../plug-ins/common/screenshot.c:1094
 msgid "S_nap"
 msgstr "_Chụp"
 
-#: ../plug-ins/common/screenshot.c:1125
+#: ../plug-ins/common/screenshot.c:1124
 msgid "After the delay, the screenshot is taken."
 msgstr "Sau khi hết giờ hẹn sẽ chụp ảnh màn hình"
 
-#: ../plug-ins/common/screenshot.c:1127
-#| msgid ""
-#| "If enabled, you can use the mouse to select a rectangular region of the "
-#| "screen."
+#: ../plug-ins/common/screenshot.c:1126
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr "Sau khi hết giờ hẹn, nhấn và rê chuột để chọn vùng chụp."
 
-#: ../plug-ins/common/screenshot.c:1130
+#: ../plug-ins/common/screenshot.c:1129
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Khi hết hẹn giờ, nhấn chuột vào cửa sổ để chụp."
 
 #. Area
-#: ../plug-ins/common/screenshot.c:1136
+#: ../plug-ins/common/screenshot.c:1135
 msgid "Area"
 msgstr "Vùng"
 
-#: ../plug-ins/common/screenshot.c:1147
+#: ../plug-ins/common/screenshot.c:1146
 msgid "Take a screenshot of a single _window"
 msgstr "Chụp hình một _cửa sổ riêng lẻ"
 
-#: ../plug-ins/common/screenshot.c:1166
+#: ../plug-ins/common/screenshot.c:1165
 msgid "Include window _decoration"
 msgstr "Gồm t_rang trí cửa sổ"
 
-#: ../plug-ins/common/screenshot.c:1186
+#: ../plug-ins/common/screenshot.c:1185
 msgid "Take a screenshot of the entire _screen"
 msgstr "Chụp t_oàn màn hình"
 
-#: ../plug-ins/common/screenshot.c:1205
+#: ../plug-ins/common/screenshot.c:1204
 msgid "Include _mouse pointer"
 msgstr "Bao gồm _con trỏ chuột"
 
-#: ../plug-ins/common/screenshot.c:1226
+#: ../plug-ins/common/screenshot.c:1225
 msgid "Select a _region to grab"
 msgstr "Chọn _vùng cần bắt"
 
 #. Delay
-#: ../plug-ins/common/screenshot.c:1241
+#: ../plug-ins/common/screenshot.c:1240
 msgid "Delay"
 msgstr "Trễ"
 
 #. this is the unit label of a spinbutton
-#: ../plug-ins/common/screenshot.c:1263
-#| msgid "milliseconds"
+#: ../plug-ins/common/screenshot.c:1262
 msgid "seconds"
 msgstr "giây"
 
@@ -7079,7 +7039,7 @@ msgstr "Thay thế độ trong suốt một phần bằng màu nền hiện có"
 msgid "_Semi-Flatten"
 msgstr "Làm _phẳng một nửa"
 
-#: ../plug-ins/common/semi-flatten.c:117
+#: ../plug-ins/common/semi-flatten.c:112
 msgid "Semi-Flattening"
 msgstr "Đang làm phẳng một nửa"
 
@@ -7227,7 +7187,7 @@ msgid "S_econd color:"
 msgstr "Màu thứ _hai:"
 
 #: ../plug-ins/common/sinus.c:887
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:903
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
 msgid "Co_lors"
 msgstr "_Màu sắc"
 
@@ -7468,137 +7428,137 @@ msgstr "Xoắn ốc"
 msgid "Spots"
 msgstr "Chấm"
 
-#: ../plug-ins/common/sphere-designer.c:1744
-#: ../plug-ins/common/sphere-designer.c:2698
+#: ../plug-ins/common/sphere-designer.c:1749
+#: ../plug-ins/common/sphere-designer.c:2705
 msgid "Texture"
 msgstr "Họa tiết"
 
-#: ../plug-ins/common/sphere-designer.c:1746
+#: ../plug-ins/common/sphere-designer.c:1751
 msgid "Bumpmap"
 msgstr "Ánh xạ lồi lõm"
 
-#: ../plug-ins/common/sphere-designer.c:1748
-#: ../plug-ins/common/sphere-designer.c:2700
+#: ../plug-ins/common/sphere-designer.c:1753
+#: ../plug-ins/common/sphere-designer.c:2707
 msgid "Light"
 msgstr "Ánh sáng"
 
-#: ../plug-ins/common/sphere-designer.c:2012
+#: ../plug-ins/common/sphere-designer.c:2017
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "Tập tin « %s » không phải là tập tin lưu hợp lệ."
 
-#: ../plug-ins/common/sphere-designer.c:2192
+#: ../plug-ins/common/sphere-designer.c:2197
 msgid "Open File"
 msgstr "Mở tập tin"
 
-#: ../plug-ins/common/sphere-designer.c:2192
+#: ../plug-ins/common/sphere-designer.c:2197
 msgid "Save File"
 msgstr "Lưu tập tin"
 
-#: ../plug-ins/common/sphere-designer.c:2551
+#: ../plug-ins/common/sphere-designer.c:2556
 msgid "Sphere Designer"
 msgstr "Bộ thiết kế hình cầu"
 
-#: ../plug-ins/common/sphere-designer.c:2683
+#: ../plug-ins/common/sphere-designer.c:2690
 msgid "Properties"
 msgstr "Thuộc tính"
 
-#: ../plug-ins/common/sphere-designer.c:2699
+#: ../plug-ins/common/sphere-designer.c:2706
 msgid "Bump"
 msgstr "Lồi lõm"
 
 #. row labels
-#: ../plug-ins/common/sphere-designer.c:2707
+#: ../plug-ins/common/sphere-designer.c:2714
 #: ../plug-ins/lighting/lighting-ui.c:407
 msgid "Type:"
 msgstr "Kiểu:"
 
-#: ../plug-ins/common/sphere-designer.c:2726
+#: ../plug-ins/common/sphere-designer.c:2733
 msgid "Texture:"
 msgstr "Họa tiết:"
 
-#: ../plug-ins/common/sphere-designer.c:2731
+#: ../plug-ins/common/sphere-designer.c:2738
 msgid "Colors:"
 msgstr "Màu sắc:"
 
-#: ../plug-ins/common/sphere-designer.c:2734
-#: ../plug-ins/common/sphere-designer.c:2745
+#: ../plug-ins/common/sphere-designer.c:2741
+#: ../plug-ins/common/sphere-designer.c:2752
 msgid "Color Selection Dialog"
 msgstr "Hộp thoại chọn màu"
 
 #. Scale
-#: ../plug-ins/common/sphere-designer.c:2756
+#: ../plug-ins/common/sphere-designer.c:2763
 #: ../plug-ins/gimpressionist/paper.c:193
 #: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Tỷ lệ:"
 
-#: ../plug-ins/common/sphere-designer.c:2764
+#: ../plug-ins/common/sphere-designer.c:2771
 msgid "Turbulence:"
 msgstr "Độ hỗn loạn:"
 
-#: ../plug-ins/common/sphere-designer.c:2771
+#: ../plug-ins/common/sphere-designer.c:2778
 msgid "Amount:"
 msgstr "Lượng:"
 
-#: ../plug-ins/common/sphere-designer.c:2778
+#: ../plug-ins/common/sphere-designer.c:2785
 msgid "Exp.:"
 msgstr "Mũ:"
 
-#: ../plug-ins/common/sphere-designer.c:2785
+#: ../plug-ins/common/sphere-designer.c:2792
 msgid "Transformations"
 msgstr "Biến đổi"
 
-#: ../plug-ins/common/sphere-designer.c:2801
+#: ../plug-ins/common/sphere-designer.c:2808
 #: ../plug-ins/map-object/map-object-ui.c:1097
 msgid "Scale X:"
 msgstr "Tỷ lệ X:"
 
-#: ../plug-ins/common/sphere-designer.c:2808
+#: ../plug-ins/common/sphere-designer.c:2815
 msgid "Scale Y:"
 msgstr "Tỷ lệ Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2814
+#: ../plug-ins/common/sphere-designer.c:2821
 msgid "Scale Z:"
 msgstr "Tỷ lệ Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2821
+#: ../plug-ins/common/sphere-designer.c:2828
 msgid "Rotate X:"
 msgstr "Xoay X:"
 
-#: ../plug-ins/common/sphere-designer.c:2828
+#: ../plug-ins/common/sphere-designer.c:2835
 msgid "Rotate Y:"
 msgstr "Xoay Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2835
+#: ../plug-ins/common/sphere-designer.c:2842
 msgid "Rotate Z:"
 msgstr "Xoay Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2842
+#: ../plug-ins/common/sphere-designer.c:2849
 msgid "Position X:"
 msgstr "Vị trí X:"
 
-#: ../plug-ins/common/sphere-designer.c:2849
+#: ../plug-ins/common/sphere-designer.c:2856
 msgid "Position Y:"
 msgstr "Vị trí Y:"
 
-#: ../plug-ins/common/sphere-designer.c:2856
+#: ../plug-ins/common/sphere-designer.c:2863
 msgid "Position Z:"
 msgstr "Vị trí Z:"
 
-#: ../plug-ins/common/sphere-designer.c:2973
+#: ../plug-ins/common/sphere-designer.c:2979
 msgid "Rendering sphere"
 msgstr "Đang vẽ hình cầu..."
 
-#: ../plug-ins/common/sphere-designer.c:3024
+#: ../plug-ins/common/sphere-designer.c:3030
 msgid "Create an image of a textured sphere"
 msgstr "Tạo ảnh là hình cầu có hoạ tiết"
 
-#: ../plug-ins/common/sphere-designer.c:3031
+#: ../plug-ins/common/sphere-designer.c:3037
 msgid "Sphere _Designer..."
 msgstr "Bộ th_iết kế hình cầu..."
 
-#: ../plug-ins/common/sphere-designer.c:3101
+#: ../plug-ins/common/sphere-designer.c:3107
 msgid "Region selected for plug-in is empty"
 msgstr "Vùng chọn cho phần bổ trợ là rỗng"
 
@@ -7739,7 +7699,6 @@ msgid "Tiler"
 msgstr "Bộ lát"
 
 #: ../plug-ins/common/tile-small.c:222
-#| msgid "Tile image into smaller versions of the orginal"
 msgid "Tile image into smaller versions of the original"
 msgstr "Xếp kề ảnh thành nhiều phiên bản nhỏ của ảnh gốc"
 
@@ -7752,7 +7711,7 @@ msgid "Region selected for filter is empty."
 msgstr "Bạn đã chọn lọc một vùng rỗng."
 
 #. Set the tile cache size
-#: ../plug-ins/common/tile-small.c:328 ../plug-ins/common/tile.c:190
+#: ../plug-ins/common/tile-small.c:328 ../plug-ins/common/tile.c:185
 msgid "Tiling"
 msgstr "Đang lát"
 
@@ -7768,32 +7727,32 @@ msgstr "Ô lát nhỏ"
 msgid "Flip"
 msgstr "Lật"
 
-#: ../plug-ins/common/tile-small.c:469
+#: ../plug-ins/common/tile-small.c:470
 msgid "A_ll tiles"
 msgstr "Mọi ô _lát"
 
-#: ../plug-ins/common/tile-small.c:483
+#: ../plug-ins/common/tile-small.c:484
 msgid "Al_ternate tiles"
 msgstr "Ô lá_t xen kẽ"
 
-#: ../plug-ins/common/tile-small.c:497
+#: ../plug-ins/common/tile-small.c:498
 msgid "_Explicit tile"
 msgstr "Lát tường _minh"
 
-#: ../plug-ins/common/tile-small.c:503
+#: ../plug-ins/common/tile-small.c:504
 msgid "Ro_w:"
 msgstr "_Hàng:"
 
-#: ../plug-ins/common/tile-small.c:529
+#: ../plug-ins/common/tile-small.c:530
 msgid "Col_umn:"
 msgstr "_Cột:"
 
-#: ../plug-ins/common/tile-small.c:584
+#: ../plug-ins/common/tile-small.c:585
 msgid "O_pacity:"
 msgstr "Độ _mờ đục:"
 
 #. Lower frame saying howmany segments
-#: ../plug-ins/common/tile-small.c:593
+#: ../plug-ins/common/tile-small.c:594
 msgid "Number of Segments"
 msgstr "Số đoạn"
 
@@ -7805,15 +7764,15 @@ msgstr "Tạo mảng chứa nhiều bản sao của ảnh này"
 msgid "_Tile..."
 msgstr "_Lát..."
 
-#: ../plug-ins/common/tile.c:402
+#: ../plug-ins/common/tile.c:397
 msgid "Tile"
 msgstr "Lát"
 
-#: ../plug-ins/common/tile.c:424
+#: ../plug-ins/common/tile.c:419
 msgid "Tile to New Size"
 msgstr "Lát thành kích cỡ mới"
 
-#: ../plug-ins/common/tile.c:446
+#: ../plug-ins/common/tile.c:441
 msgid "C_reate new image"
 msgstr "Tạ_o ảnh mới"
 
@@ -7866,9 +7825,6 @@ msgid "Symbol"
 msgstr "Ký hiệu"
 
 #: ../plug-ins/common/unit-editor.c:104
-#| msgid ""
-#| "The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
-#| "abbreviation is used if doesn't have a symbol."
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
@@ -7913,51 +7869,50 @@ msgid "Create or alter units used in GIMP"
 msgstr "Tạo hay sửa đổi đơn vị dùng trong GIMP"
 
 #: ../plug-ins/common/unit-editor.c:150
-#| msgid "Units"
 msgid "U_nits"
 msgstr "Đơn _vị"
 
-#: ../plug-ins/common/unit-editor.c:208
+#: ../plug-ins/common/unit-editor.c:205
 msgid "Add a New Unit"
 msgstr "Thêm đơn vị mới"
 
-#: ../plug-ins/common/unit-editor.c:237
+#: ../plug-ins/common/unit-editor.c:234
 msgid "_ID:"
 msgstr "_ID:"
 
-#: ../plug-ins/common/unit-editor.c:248
+#: ../plug-ins/common/unit-editor.c:245
 msgid "_Factor:"
 msgstr "_Hệ số:"
 
-#: ../plug-ins/common/unit-editor.c:258
+#: ../plug-ins/common/unit-editor.c:255
 msgid "_Digits:"
 msgstr "Con _số:"
 
-#: ../plug-ins/common/unit-editor.c:270
+#: ../plug-ins/common/unit-editor.c:267
 msgid "_Symbol:"
 msgstr "_Ký hiệu:"
 
-#: ../plug-ins/common/unit-editor.c:282
+#: ../plug-ins/common/unit-editor.c:279
 msgid "_Abbreviation:"
 msgstr "Từ _viết tắt:"
 
-#: ../plug-ins/common/unit-editor.c:294
+#: ../plug-ins/common/unit-editor.c:291
 msgid "Si_ngular:"
 msgstr "Ở _số ít:"
 
-#: ../plug-ins/common/unit-editor.c:306
+#: ../plug-ins/common/unit-editor.c:303
 msgid "_Plural:"
 msgstr "Ở số _nhiều:"
 
-#: ../plug-ins/common/unit-editor.c:349
+#: ../plug-ins/common/unit-editor.c:346
 msgid "Incomplete input"
 msgstr "Chưa gõ xong"
 
-#: ../plug-ins/common/unit-editor.c:352
+#: ../plug-ins/common/unit-editor.c:349
 msgid "Please fill in all text fields."
 msgstr "Hãy điền vào mọi trường chữ."
 
-#: ../plug-ins/common/unit-editor.c:411
+#: ../plug-ins/common/unit-editor.c:408
 msgid "Unit Editor"
 msgstr "Bộ sửa đổi đơn vị"
 
@@ -7969,11 +7924,11 @@ msgstr "Phương pháp thường dùng để mài sắc ảnh"
 msgid "_Unsharp Mask..."
 msgstr "_Giảm độ sắc của mặt nạ..."
 
-#: ../plug-ins/common/unsharp-mask.c:686
+#: ../plug-ins/common/unsharp-mask.c:684
 msgid "Merging"
 msgstr "Đang hợp nhất"
 
-#: ../plug-ins/common/unsharp-mask.c:830
+#: ../plug-ins/common/unsharp-mask.c:828
 msgid "Unsharp Mask"
 msgstr "Giảm độ sắc của mặt nạ"
 
@@ -8030,7 +7985,6 @@ msgid "_Value Propagate..."
 msgstr "Lan truyền _giá trị..."
 
 #: ../plug-ins/common/value-propagate.c:245
-#| msgid "Shrink darker areas of the image"
 msgid "Shrink lighter areas of the image"
 msgstr "Thu hẹp các vùng ảnh tối hơn"
 
@@ -8039,7 +7993,6 @@ msgid "E_rode"
 msgstr "_Xói mòn"
 
 #: ../plug-ins/common/value-propagate.c:257
-#| msgid "Grow darker areas of the image"
 msgid "Grow lighter areas of the image"
 msgstr "Mở rộng các vùng ảnh sáng hơn"
 
@@ -8243,7 +8196,7 @@ msgid "Step size:"
 msgstr "Cỡ bước:"
 
 #: ../plug-ins/common/warp.c:434
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:769
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:771
 #: ../plug-ins/ifs-compose/ifs-compose.c:1209
 msgid "Iterations:"
 msgstr "Lặp lại:"
@@ -8331,20 +8284,20 @@ msgid "Fixed-direction-vector map selection menu"
 msgstr "Trình đơn chọn ánh xạ véc-tơ hướng cố định"
 
 #. make sure layer is visible
-#: ../plug-ins/common/warp.c:1181
+#: ../plug-ins/common/warp.c:1178
 msgid "Smoothing X gradient"
 msgstr "Đang làm mịn độ dốc X"
 
-#: ../plug-ins/common/warp.c:1184
+#: ../plug-ins/common/warp.c:1181
 msgid "Smoothing Y gradient"
 msgstr "Đang làm mịn độ dốc Y"
 
 #. calculate new X,Y Displacement image maps
-#: ../plug-ins/common/warp.c:1234
+#: ../plug-ins/common/warp.c:1228
 msgid "Finding XY gradient"
 msgstr "Đang tìm độ dốc XY"
 
-#: ../plug-ins/common/warp.c:1259
+#: ../plug-ins/common/warp.c:1249
 #, c-format
 msgid "Flow step %d"
 msgstr "Bước luồng %d"
@@ -8377,160 +8330,142 @@ msgstr "_Thời kỳ:"
 msgid "_Wavelength:"
 msgstr "_Bước sóng:"
 
-#: ../plug-ins/common/waves.c:450
+#: ../plug-ins/common/waves.c:449
 msgid "Waving"
 msgstr "Đang tạo sóng..."
 
-#: ../plug-ins/common/web-browser.c:137
+#: ../plug-ins/common/web-browser.c:135
 msgid "The operating system is out of memory or resources."
 msgstr "Hệ thống không đủ tài nguyên hay bộ nhớ."
 
-#: ../plug-ins/common/web-browser.c:140
-#| msgid "Specified layer %d not found"
+#: ../plug-ins/common/web-browser.c:138
 msgid "The specified file was not found."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:143
-#| msgid "Specified layer %d not found"
+#: ../plug-ins/common/web-browser.c:141
 msgid "The specified path was not found."
 msgstr "Không tìm thấy đường dẫn đã chỉ định."
 
-#: ../plug-ins/common/web-browser.c:146
+#: ../plug-ins/common/web-browser.c:144
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 "Định dạng tập tin .exe không hợp lệ (không phải dạng .exe Microsoft Win32 "
 "hoặc có lỗi trong ảnh .exe)."
 
-#: ../plug-ins/common/web-browser.c:149
-#| msgid "Save the current settings to the specified file"
+#: ../plug-ins/common/web-browser.c:147
 msgid "The operating system denied access to the specified file."
 msgstr "Lưu thiết lập hiện thời vào tập tin đã xác định"
 
-#: ../plug-ins/common/web-browser.c:152
+#: ../plug-ins/common/web-browser.c:150
 msgid "The file name association is incomplete or invalid."
 msgstr "Liên kết tên tập tin chưa hoàn tất hoặc không hợp lệ."
 
-#: ../plug-ins/common/web-browser.c:155
+#: ../plug-ins/common/web-browser.c:153
 msgid "DDE transaction busy"
 msgstr "Giao tác DDE đang bận."
 
-#: ../plug-ins/common/web-browser.c:158
+#: ../plug-ins/common/web-browser.c:156
 msgid "The DDE transaction failed."
 msgstr "Giao tác DDE thất bại."
 
-#: ../plug-ins/common/web-browser.c:161
+#: ../plug-ins/common/web-browser.c:159
 msgid "The DDE transaction timed out."
 msgstr "Giao tác DDE quá thời gian."
 
-#: ../plug-ins/common/web-browser.c:164
-#| msgid "Specified window not found"
+#: ../plug-ins/common/web-browser.c:162
 msgid "The specified DLL was not found."
 msgstr "Không tìm thấy DLL đã chỉ định."
 
-#: ../plug-ins/common/web-browser.c:167
+#: ../plug-ins/common/web-browser.c:165
 msgid "There is no application associated with the given file name extension."
 msgstr "Không có ứng dụng nào liên kết tới phần mở rộng của tập tin."
 
-#: ../plug-ins/common/web-browser.c:170
-#| msgid "There are not enough layers to align."
+#: ../plug-ins/common/web-browser.c:168
 msgid "There was not enough memory to complete the operation."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:173
+#: ../plug-ins/common/web-browser.c:171
 msgid "A sharing violation occurred."
 msgstr "Đã xảy ra vi phạm chia sẻ."
 
-#: ../plug-ins/common/web-browser.c:176
-#| msgid "Microsoft Windows icon"
+#: ../plug-ins/common/web-browser.c:174
 msgid "Unknown Microsoft Windows error."
 msgstr "Lỗi Microsoft Windows không nhận biết."
 
-#: ../plug-ins/common/web-browser.c:179
+#: ../plug-ins/common/web-browser.c:177
 #, c-format
-#| msgid "Failed to open GFlare file '%s': %s"
 msgid "Failed to open '%s': %s"
 msgstr ""
 
-#: ../plug-ins/common/web-page.c:99
-#| msgid "Create an image of a textured sphere"
+#: ../plug-ins/common/web-page.c:98
 msgid "Create an image of a webpage"
 msgstr "Tạo ảnh cho trang web"
 
-#: ../plug-ins/common/web-page.c:105
-#| msgid "From paper"
+#: ../plug-ins/common/web-page.c:104
 msgid "From _Webpage..."
 msgstr "Từ trang _web..."
 
-#: ../plug-ins/common/web-page.c:234
-#| msgid "Create rectangle"
+#: ../plug-ins/common/web-page.c:233
 msgid "Create from webpage"
 msgstr "Tạo từ trang web"
 
-#: ../plug-ins/common/web-page.c:239
-#| msgid "Create"
+#: ../plug-ins/common/web-page.c:238
 msgid "_Create"
 msgstr "_Tạo"
 
-#: ../plug-ins/common/web-page.c:267
+#: ../plug-ins/common/web-page.c:266
 msgid "Enter location (URI):"
 msgstr "Nhập địa điểm (URI):"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/common/web-page.c:290 ../plug-ins/maze/maze-dialog.c:198
+#: ../plug-ins/common/web-page.c:289 ../plug-ins/maze/maze-dialog.c:198
 msgid "Width (pixels):"
 msgstr "Rộng (điểm ảnh):"
 
-#: ../plug-ins/common/web-page.c:309
-#| msgid "Step size:"
+#: ../plug-ins/common/web-page.c:308
 msgid "Font size:"
 msgstr "Cỡ phông:"
 
-#: ../plug-ins/common/web-page.c:316
-#| msgid "Hue"
+#: ../plug-ins/common/web-page.c:315
 msgid "Huge"
 msgstr "Khổng lồ"
 
-#: ../plug-ins/common/web-page.c:317
-#| msgid "Target"
+#: ../plug-ins/common/web-page.c:316
 msgid "Large"
 msgstr "Lớn"
 
-#: ../plug-ins/common/web-page.c:318
-#: ../plug-ins/gradient-flare/gradient-flare.c:2465
+#: ../plug-ins/common/web-page.c:317
+#, fuzzy
+#| msgid "Default"
+msgctxt "web-page"
 msgid "Default"
 msgstr "Mặc định"
 
-#: ../plug-ins/common/web-page.c:319
-#| msgid "Small Tiles"
+#: ../plug-ins/common/web-page.c:318
 msgid "Small"
 msgstr "Nhỏ"
 
-#: ../plug-ins/common/web-page.c:320
-#| msgid "Tiling"
+#: ../plug-ins/common/web-page.c:319
 msgid "Tiny"
 msgstr "Rất nhỏ"
 
-#: ../plug-ins/common/web-page.c:444
+#: ../plug-ins/common/web-page.c:443
 #, c-format
-#| msgid ""
-#| "'%s':\n"
-#| "No image width specified"
 msgid "No URL was specified"
 msgstr "Không có địa chỉ URL chỉ định"
 
-#: ../plug-ins/common/web-page.c:511
+#: ../plug-ins/common/web-page.c:510
 #, c-format
-#| msgid "Downloading %s of image data"
 msgid "Downloading webpage '%s'"
 msgstr "Đang tải về trang web '%s'"
 
-#: ../plug-ins/common/web-page.c:528
+#: ../plug-ins/common/web-page.c:527
 #, c-format
 msgid "Transferring webpage image for '%s'"
 msgstr "Chuyển hình ảnh trang web trong '%s'"
 
-#: ../plug-ins/common/web-page.c:537
+#: ../plug-ins/common/web-page.c:536
 msgid "Webpage"
 msgstr "Trang Web"
 
@@ -8566,69 +8501,69 @@ msgstr "Vấy ảnh để tạo hiệu ứng lộng gió"
 msgid "Wi_nd..."
 msgstr "G_ió..."
 
-#: ../plug-ins/common/wind.c:315
+#: ../plug-ins/common/wind.c:314
 msgid "Rendering blast"
 msgstr "Đang vẽ luồng gió"
 
-#: ../plug-ins/common/wind.c:448
+#: ../plug-ins/common/wind.c:444
 msgid "Rendering wind"
 msgstr "Đang vẽ gió"
 
-#: ../plug-ins/common/wind.c:881
+#: ../plug-ins/common/wind.c:876
 msgid "Wind"
 msgstr "Gió"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: ../plug-ins/common/wind.c:924
+#: ../plug-ins/common/wind.c:919
 msgid "Style"
 msgstr "Kiểu dáng"
 
-#: ../plug-ins/common/wind.c:928
+#: ../plug-ins/common/wind.c:923
 msgid "_Wind"
 msgstr "_Gió"
 
-#: ../plug-ins/common/wind.c:929
+#: ../plug-ins/common/wind.c:924
 msgid "_Blast"
 msgstr "_Luồng gió"
 
-#: ../plug-ins/common/wind.c:952
+#: ../plug-ins/common/wind.c:947
 msgid "_Left"
 msgstr "T_rái"
 
-#: ../plug-ins/common/wind.c:953
+#: ../plug-ins/common/wind.c:948
 msgid "_Right"
 msgstr "_Phải"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: ../plug-ins/common/wind.c:972
+#: ../plug-ins/common/wind.c:967
 msgid "Edge Affected"
 msgstr "Cạnh có tác động"
 
-#: ../plug-ins/common/wind.c:976
+#: ../plug-ins/common/wind.c:971
 msgid "L_eading"
 msgstr "Nằm t_rước"
 
-#: ../plug-ins/common/wind.c:977
+#: ../plug-ins/common/wind.c:972
 msgid "Tr_ailing"
 msgstr "Nằm s_au"
 
-#: ../plug-ins/common/wind.c:978
+#: ../plug-ins/common/wind.c:973
 msgid "Bot_h"
 msgstr "Cả _hai"
 
-#: ../plug-ins/common/wind.c:1015
+#: ../plug-ins/common/wind.c:1010
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Giá trị cao hơn hạn chế hiệu ứng ở vùng ảnh nhỏ hơn"
 
-#: ../plug-ins/common/wind.c:1030 ../plug-ins/gimpressionist/orientmap.c:693
+#: ../plug-ins/common/wind.c:1025 ../plug-ins/gimpressionist/orientmap.c:693
 msgid "_Strength:"
 msgstr "Độ _mạnh:"
 
-#: ../plug-ins/common/wind.c:1034
+#: ../plug-ins/common/wind.c:1029
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Giá trị cao hơn tăng độ lớn của hiệu ứng"
 
@@ -8675,11 +8610,6 @@ msgstr ""
 msgid "Alpha channel will be ignored."
 msgstr "Kênh anpha sẽ bị bỏ qua."
 
-#. Dialog init
-#: ../plug-ins/file-bmp/bmp-write.c:849
-msgid "BMP"
-msgstr "BMP"
-
 #. Run-Length Encoded
 #: ../plug-ins/file-bmp/bmp-write.c:860
 msgid "_Run-Length Encoded"
@@ -8687,7 +8617,6 @@ msgstr "_RLE mã hóa"
 
 #. Compatibility Options
 #: ../plug-ins/file-bmp/bmp-write.c:873
-#| msgid "Table Options"
 msgid "Co_mpatibility Options"
 msgstr "Tuỳ chọn _tương thích"
 
@@ -8771,6 +8700,13 @@ msgstr "Bằng DATAMIN/DATAMAX"
 msgid "Image Composing"
 msgstr "Cấu thành ảnh"
 
+#: ../plug-ins/file-fits/fits.c:1044
+#, fuzzy
+#| msgid "None"
+msgctxt "composing"
+msgid "None"
+msgstr "Không có"
+
 #: ../plug-ins/file-fli/fli-gimp.c:166 ../plug-ins/file-fli/fli-gimp.c:186
 msgid "AutoDesk FLIC animation"
 msgstr "Hoạt cảnh FLIC AutoDesk"
@@ -8789,13 +8725,11 @@ msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Tải ngăn nhớ khung"
 
 #: ../plug-ins/file-fli/fli-gimp.c:876 ../plug-ins/file-fli/fli-gimp.c:932
-#| msgid "From:"
 msgctxt "frame-range"
 msgid "From:"
 msgstr "Từ:"
 
 #: ../plug-ins/file-fli/fli-gimp.c:885 ../plug-ins/file-fli/fli-gimp.c:941
-#| msgid "To:"
 msgctxt "frame-range"
 msgid "To:"
 msgstr "Đến:"
@@ -8805,7 +8739,6 @@ msgid "GFLI 1.3"
 msgstr "GFLI 1.3"
 
 #: ../plug-ins/file-ico/ico-dialog.c:53
-#| msgid "Save as Windows Icon"
 msgid "Windows Icon"
 msgstr "biểu tượng Windows"
 
@@ -8834,7 +8767,6 @@ msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit anpha, bảng chọn 256 chỗ"
 
 #: ../plug-ins/file-ico/ico-dialog.c:168
-#| msgid "32 bpp, 8-bit alpha, no palette"
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 bpp, 1-bit anpha, không có bảng chọn"
 
@@ -8843,7 +8775,6 @@ msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bit anpha, không có bảng chọn"
 
 #: ../plug-ins/file-ico/ico-dialog.c:183
-#| msgid "Compressed size: %s"
 msgid "Compressed (PNG)"
 msgstr "Nén (PNG)"
 
@@ -8864,7 +8795,6 @@ msgid "Microsoft Windows icon"
 msgstr "Biểu tượng Microsoft Windows"
 
 #: ../plug-ins/file-jpeg/jpeg-exif.c:352
-#| msgid "Rotate / Scale"
 msgid "Rotate Image?"
 msgstr "Xoay ảnh?"
 
@@ -8886,7 +8816,6 @@ msgstr "Xem thử JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:206
 #, c-format
-#| msgid "_Tile size:"
 msgid "File size: %s"
 msgstr "Cỡ tập tin: %s"
 
@@ -8899,7 +8828,6 @@ msgid "File size: unknown"
 msgstr "Cỡ tập tin: chưa biết"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:840
-#| msgid "_JPEG"
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -8916,12 +8844,10 @@ msgid "Enable preview to obtain the file size."
 msgstr "Bật khả năng xem thử để thấy biết kích cỡ tập tin."
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:889
-#| msgid "Show _preview in image window"
 msgid "Sho_w preview in image window"
 msgstr "Hiện ô _xem thử trong cửa sổ ảnh"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:930
-#| msgid "Smoothing:"
 msgid "S_moothing:"
 msgstr "Làm _mịn:"
 
@@ -8930,32 +8856,26 @@ msgid "Interval (MCU rows):"
 msgstr "Khoảng cách (giữa các dòng MCU):"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
-#| msgid "Use restart markers"
 msgid "Use _restart markers"
 msgstr "Dùng dấu _khởi chạy lại"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:976
-#| msgid "Optimize"
 msgid "_Optimize"
 msgstr "_Tối ưu hóa"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:990
-#| msgid "Progressive"
 msgid "_Progressive"
 msgstr "_Tiến lên"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1006
-#| msgid "Save EXIF data"
 msgid "Save _EXIF data"
 msgstr "Lưu dữ liệu _EXIF"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1023
-#| msgid "Save thumbnail"
 msgid "Save _thumbnail"
 msgstr "Lưu _hình thu nhỏ"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1040
-#| msgid "Save XMP data"
 msgid "Save _XMP data"
 msgstr "Lưu dữ liệu _XMP"
 
@@ -8975,7 +8895,6 @@ msgstr ""
 
 #. Subsampling
 #: ../plug-ins/file-jpeg/jpeg-save.c:1085
-#| msgid "Subsampling:"
 msgid "Su_bsampling:"
 msgstr "Lấy mẫu _phụ:"
 
@@ -8997,7 +8916,6 @@ msgstr "4:2:0 (phần tư sắc độ)"
 
 #. DCT method
 #: ../plug-ins/file-jpeg/jpeg-save.c:1128
-#| msgid "DCT method:"
 msgid "_DCT method:"
 msgstr "Phương pháp _DCT:"
 
@@ -9018,11 +8936,11 @@ msgid "Comment"
 msgstr "Ghi chú"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1189
+#: ../plug-ins/ui/plug-in-file-png.ui.h:12
 msgid "_Load Defaults"
 msgstr "_Tải mọi mặc định"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1198
-#| msgid "S_ave Defaults"
 msgid "Sa_ve Defaults"
 msgstr "_Lưu mặc định"
 
@@ -9037,7 +8955,6 @@ msgstr "Xuất ô xem thử"
 #: ../plug-ins/file-psd/psd-load.c:214
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
-#| msgid "Error loading desktop file '%s': %s"
 msgid "Error loading PSD file: %s"
 msgstr "Lỗi tải tập tin PSD: %s"
 
@@ -9048,31 +8965,26 @@ msgstr "Không phải một tập tin Photoshop hợp lệ"
 
 #: ../plug-ins/file-psd/psd-load.c:276
 #, c-format
-#| msgid "Unsupported brush format"
 msgid "Unsupported file format version: %d"
 msgstr "Phiên bản định dạng tập tin không hỗ trợ: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:283
 #, c-format
-#| msgid "Source channel in file:"
 msgid "Too many channels in file: %d"
 msgstr "Quá nhiều kênh trong tập tin: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:310
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Kích thước ảnh không hợp lệ hoặc không hỗ trợ: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:322
 #, c-format
-#| msgid "Unsupported bit depth (%d)!"
 msgid "Unsupported color mode: %s"
 msgstr "Chế độ màu không được hỗ trợ: %s"
 
 #: ../plug-ins/file-psd/psd-load.c:349
 #, c-format
-#| msgid "Unsupported bit depth (%d)!"
 msgid "Unsupported bit depth: %d"
 msgstr "Độ sâu bit không được hỗ trợ: %d"
 
@@ -9084,49 +8996,41 @@ msgstr "Tập tin bị hỏng!"
 
 #: ../plug-ins/file-psd/psd-load.c:554
 #, c-format
-#| msgid "Source channel in file:"
 msgid "Too many channels in layer: %d"
 msgstr "Quá nhiều kênh trong lớp: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:562
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Chiều cao lớp không được hỗ trợ hoặc không hợp lệ: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:570
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Chiều ngang lớp không được hỗ trợ hoặc không hợp lệ: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:579
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Cỡ lớp không được hỗ trợ hoặc không hợp lệ: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:763
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Chiều cao mặt nạ không được hỗ trợ hoặc không hợp lệ: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:771
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Độ rộng mặt nạ không được hỗ trợ hoặc không hợp lệ: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:780
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Cỡ mặt nạ không được hỗ trợ hoặc không hợp lệ: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:1231 ../plug-ins/file-psd/psd-load.c:1613
 #, c-format
-#| msgid "Unsupported bit depth (%d)!"
 msgid "Unsupported compression mode: %d"
 msgstr "Độ sâu bit không được hỗ trợ: %d"
 
@@ -9136,7 +9040,6 @@ msgstr "Thêm"
 
 #: ../plug-ins/file-psd/psd-load.c:1881
 #, c-format
-#| msgid "Unsupported or invalid bitdepth."
 msgid "Unsupported or invalid channel size"
 msgstr "Kích thước kênh không hợp lệ hoặc không hỗ trợ"
 
@@ -9158,11 +9061,8 @@ msgstr ""
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Lỗi : không thể chuyển đổi kiểu ảnh cơ bản GIMP sang chế độ PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1625
+#: ../plug-ins/file-psd/psd-save.c:1622
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The psd file format does not support images that "
-#| "are more than 30000 pixels wide or tall."
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
@@ -9170,11 +9070,8 @@ msgstr ""
 "Không thể lưu « %s ». Khuôn dạng tập tin PSD không hỗ trợ ảnh có chiều lớn "
 "hơn 30 000 điểm ảnh."
 
-#: ../plug-ins/file-psd/psd-save.c:1640
+#: ../plug-ins/file-psd/psd-save.c:1637
 #, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The psd file format does not support images with "
-#| "layers that are more than 30000 pixels wide or tall."
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
@@ -9183,7 +9080,6 @@ msgstr ""
 "chiều lớn hơn 30 000 điểm ảnh."
 
 #: ../plug-ins/file-psd/psd-util.c:50
-#| msgid "Premature end of file."
 msgid "Unexpected end of file"
 msgstr "Kết thúc tập tin bất ngờ"
 
@@ -9203,7 +9099,6 @@ msgstr "Chiều rộng không hợp lệ: %hu"
 
 #: ../plug-ins/file-sgi/sgi.c:350
 #, c-format
-#| msgid "Image _height:"
 msgid "Invalid height: %hu"
 msgstr "Chiều cao không hợp lệ: %hu"
 
@@ -9212,28 +9107,28 @@ msgstr "Chiều cao không hợp lệ: %hu"
 msgid "Invalid number of channels: %hu"
 msgstr "Số kênh không hợp lệ: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:572
+#: ../plug-ins/file-sgi/sgi.c:571
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Không thể mở « %s » để ghi."
 
-#: ../plug-ins/file-sgi/sgi.c:653
+#: ../plug-ins/file-sgi/sgi.c:652
 msgid "SGI"
 msgstr "SGI"
 
-#: ../plug-ins/file-sgi/sgi.c:655
+#: ../plug-ins/file-sgi/sgi.c:654
 msgid "Compression type"
 msgstr "Kiểu nén"
 
-#: ../plug-ins/file-sgi/sgi.c:659
+#: ../plug-ins/file-sgi/sgi.c:658
 msgid "No compression"
 msgstr "Không nén"
 
-#: ../plug-ins/file-sgi/sgi.c:661
+#: ../plug-ins/file-sgi/sgi.c:660
 msgid "RLE compression"
 msgstr "Nén RLE"
 
-#: ../plug-ins/file-sgi/sgi.c:663
+#: ../plug-ins/file-sgi/sgi.c:662
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
@@ -9243,7 +9138,6 @@ msgstr ""
 
 #: ../plug-ins/file-uri/uri-backend-gvfs.c:233
 #, c-format
-#| msgid "Downloading %s of image data"
 msgid "Downloading image (%s of %s)"
 msgstr "Đang tải ảnh về (%s trên %s)"
 
@@ -9464,12 +9358,10 @@ msgid "Handkerchief"
 msgstr "Khăn tay"
 
 #: ../plug-ins/flame/flame.c:755
-#| msgid "Smear"
 msgid "Heart"
 msgstr "Trái tim"
 
 #: ../plug-ins/flame/flame.c:756
-#| msgid "Displace"
 msgid "Disc"
 msgstr "Đĩa"
 
@@ -9483,7 +9375,7 @@ msgstr "Ex"
 
 # Name: don't translate / Tên: đừng dịch
 #: ../plug-ins/flame/flame.c:761
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:843
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:846
 msgid "Julia"
 msgstr "Julia"
 
@@ -9496,24 +9388,21 @@ msgid "Popcorn"
 msgstr "Bắp rang"
 
 #: ../plug-ins/flame/flame.c:765
-#| msgid "_Exponent:"
 msgid "Exponential"
 msgstr "Mũ"
 
 #: ../plug-ins/flame/flame.c:766
-#| msgid "_Lower"
 msgid "Power"
 msgstr "Năng lượng"
 
 #: ../plug-ins/flame/flame.c:767
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:996
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1037
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1078
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:999
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1040
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1081
 msgid "Cosine"
 msgstr "Cosin"
 
 #: ../plug-ins/flame/flame.c:768
-#| msgid "Radians"
 msgid "Rings"
 msgstr "Nhẫn"
 
@@ -9526,7 +9415,6 @@ msgid "Eyefish"
 msgstr "Mắt cá"
 
 #: ../plug-ins/flame/flame.c:771
-#| msgid "Blue"
 msgid "Bubble"
 msgstr "Bong bóng"
 
@@ -9535,12 +9423,10 @@ msgid "Cylinder"
 msgstr "Trụ"
 
 #: ../plug-ins/flame/flame.c:774
-#| msgid "_Blur"
 msgid "Blur"
 msgstr "Mờ"
 
 #: ../plug-ins/flame/flame.c:775
-#| msgid "Gaussian Blur"
 msgid "Gaussian"
 msgstr ""
 
@@ -9612,7 +9498,6 @@ msgstr ""
 "vào tập tin %s của bạn."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
-#| msgid "_Fractal Explorer..."
 msgid "Fractal Explorer"
 msgstr ""
 
@@ -9633,191 +9518,197 @@ msgstr "Vẽ lại ô x_em thử"
 msgid "Zoom"
 msgstr "Thu phóng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:692
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
 msgid "Undo last zoom change"
 msgstr "Hủy bước thu phóng cuối cùng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:704
 msgid "Redo last zoom change"
 msgstr "Làm lại bước thu phóng cuối cùng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:717
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:719
 msgid "_Parameters"
 msgstr "Th_am số"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:720
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:722
 msgid "Fractal Parameters"
 msgstr "Tham số phân dạng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:733
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:735
 #: ../plug-ins/map-object/map-object-ui.c:1053
 msgid "Left:"
 msgstr "Trái:"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:742
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:744
 #: ../plug-ins/map-object/map-object-ui.c:1053
 msgid "Right:"
 msgstr "Phải:"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:751
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:753
 #: ../plug-ins/map-object/map-object-ui.c:1052
 msgid "Top:"
 msgstr "Trên:"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:760
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
 #: ../plug-ins/map-object/map-object-ui.c:1052
 msgid "Bottom:"
 msgstr "Dưới:"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:772
-#| msgid ""
-#| "Change the iteration value. The higher it is, the more details will be "
-#| "calculated, which will take more time"
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:774
 msgid ""
 "The higher the number of iterations, the more details will be calculated"
 msgstr ""
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:780
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:782
 msgid "CX:"
 msgstr "CX:"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:783
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:793
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:785
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:795
 msgid "Changes aspect of fractal"
 msgstr "Thay đổi hình dạng fractal"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:790
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:792
 msgid "CY:"
 msgstr "CY:"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:808
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:811
 msgid "Load a fractal from file"
 msgstr "Tải phân dạng từ tập tin"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:816
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:819
 msgid "Reset parameters to default values"
 msgstr "Đặt lại các tham số thành giá trị mặc định"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:825
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:828
 msgid "Save active fractal to file"
 msgstr "Lưu phân dạng hoạt động vào tập tin"
 
 #. Fractal type toggle box
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:828
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:831
 msgid "Fractal Type"
 msgstr "Kiểu phân dạng"
 
 # Name: don't translate / Tên: đừng dịch
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:841
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
 msgid "Mandelbrot"
 msgstr "Mandelbröt"
 
 # Name: don't translate / Tên: đừng dịch
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:845
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:848
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
 
 # Name: don't translate / Tên: đừng dịch
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:847
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:850
 msgid "Barnsley 2"
 msgstr "Barnsley 2"
 
 # Name: don't translate / Tên: đừng dịch
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:849
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:852
 msgid "Barnsley 3"
 msgstr "Barnsley 3"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:851
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:854
 msgid "Spider"
 msgstr "Nhện"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:853
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:856
 msgid "Man'o'war"
 msgstr "Tàu chiến"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:855
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:858
 msgid "Lambda"
 msgstr "Lambda (λ)"
 
 # Name: don't translate / Tên: đừng dịch
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:857
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:860
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:919
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:922
 msgid "Number of colors:"
 msgstr "Số màu:"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:922
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:925
 msgid "Change the number of colors in the mapping"
 msgstr "Thay đổi tổng số màu trong ánh xạ"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:929
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "Use loglog smoothing"
 msgstr "Làm mịn dạng loglog"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:936
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:939
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 "Sử dụng khả năng làm mịn dạng log-log để loại trừ mẫu dải trong kết quả."
 
 #. Color Density frame
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:940
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:943
 msgid "Color Density"
 msgstr "Mật độ màu"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:955
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:958
 msgid "Change the intensity of the red channel"
 msgstr "Thay đổi độ mạnh của kênh màu đỏ."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:965
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:968
 msgid "Change the intensity of the green channel"
 msgstr "Thay đổi độ mạnh của kênh màu xanh lá cây."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:975
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:978
 msgid "Change the intensity of the blue channel"
 msgstr "Thay đổi độ mạnh của kênh màu xanh dương."
 
 #. Color Function frame
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:981
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:984
 msgid "Color Function"
 msgstr "Hàm màu"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:994
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1035
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1076
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:997
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1038
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1079
 msgid "Sine"
 msgstr "Sin"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1003
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1044
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1085
-msgid "Use sine-function for this color component"
-msgstr "Dùng hàm sin cho thành phần màu này"
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
+#, fuzzy
+#| msgid "None"
+msgctxt "color-function"
+msgid "None"
+msgstr "Không có"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1006
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1047
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1088
-msgid "Use cosine-function for this color component"
-msgstr "Dùng hàm cosin cho thành phần màu này"
+msgid "Use sine-function for this color component"
+msgstr "Dùng hàm sin cho thành phần màu này"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1009
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1050
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1091
+msgid "Use cosine-function for this color component"
+msgstr "Dùng hàm cosin cho thành phần màu này"
+
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1012
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1053
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1094
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr "Sử dụng ánh xạ tuyến thay vào hàm lượng giác nào, cho kênh màu này"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1018
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1059
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1100
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1021
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1062
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1103
 msgid "Inversion"
 msgstr "Đảo"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1026
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1067
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1108
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1029
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1070
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1111
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
@@ -9826,15 +9717,15 @@ msgstr ""
 "với giá trị thấp hơn, và ngược lại"
 
 #. Colormode toggle box
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1113
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1116
 msgid "Color Mode"
 msgstr "Chế độ màu"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1122
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1125
 msgid "As specified above"
 msgstr "Như xác định trên"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1134
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1137
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -9842,41 +9733,41 @@ msgstr ""
 "Tạo một bố trí màu với các tùy chọn bạn xác định trên (mật độ/hàm màu). Có "
 "thể xem kết quả trong ô xem thử."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1144
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1147
 msgid "Apply active gradient to final image"
 msgstr "Áp dụng độ dốc hoạt động vào ảnh cuối cùng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1156
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1159
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Tạo một bố trí màu bằng độ dốc từ bộ sửa đổi độ dốc"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1167
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1170
 msgid "FractalExplorer Gradient"
 msgstr "Độ dốc FractalExplorer"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1197
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1200
 msgid "_Fractals"
 msgstr "_Phân dạng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1559
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1562
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Không thể ghi « %s »: %s"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1634
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1637
 msgid "Load Fractal Parameters"
 msgstr "Tải các tham số phân dạng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1672
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1675
 msgid "Save Fractal Parameters"
 msgstr "Lưu các tham số phân dạng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1870
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1873
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "« %s » không phải là tập tin FractalExplorer"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1877
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1880
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "« %s » bị hỏng. Dòng %d phần Tùy chọn không đúng"
@@ -9889,26 +9780,26 @@ msgstr "Vẽ ảnh phân dạng"
 msgid "_Fractal Explorer..."
 msgstr "_Fractal Explorer..."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:373
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:371
 msgid "Rendering fractal"
 msgstr "Đang vẽ phân dạng..."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:756
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:754
 #: ../plug-ins/gradient-flare/gradient-flare.c:3201
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Bạn có chắc muốn xóa bỏ « %s » ra danh sách và ra đĩa không?"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:760
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:758
 msgid "Delete Fractal"
 msgstr "Xóa bỏ phân dạng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:949
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:947
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Tập tin « %s » không phải là một tập tin FractalExplorer"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:959
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:957
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -9917,27 +9808,27 @@ msgstr ""
 "Tập tin « %s » bị hỏng:\n"
 "Dòng %d phần Tùy chọn không đúng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1004
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1002
 msgid "My first fractal"
 msgstr "Phân dạng đầu tiên của tôi"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1068
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1066
 msgid "Select folder and rescan collection"
 msgstr "Chọn thư mục rồi quét lại tập hợp"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1080
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1078
 msgid "Apply currently selected fractal"
 msgstr "Áp dụng phân dạng hiện thời đang chọn"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1092
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1090
 msgid "Delete currently selected fractal"
 msgstr "Xóa bỏ phân dạng hiện thời đang chọn"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1115
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1113
 msgid "Rescan for Fractals"
 msgstr "Quết lại tìm phân dạng"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1134
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1132
 msgid "Add FractalExplorer Path"
 msgstr "Thêm đường dẫn FractalExplorer"
 
@@ -10007,7 +9898,6 @@ msgstr "Hiện ảnh"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
-#| msgid "Snap to grid"
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "Dính lưới"
@@ -10262,7 +10152,7 @@ msgid "Object Details"
 msgstr "Chi tiết đối tượng"
 
 #. Position labels
-#: ../plug-ins/gfig/gfig-preview.c:378
+#: ../plug-ins/gfig/gfig-preview.c:379
 msgid "XY position:"
 msgstr "Vị trí XY:"
 
@@ -10297,44 +10187,44 @@ msgstr ""
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Gặp lỗi khi cố mở tập tin tạm thời « %s » để tải bộ bám: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:246
+#: ../plug-ins/gimpressionist/brush.c:243
 msgid "Can only save drawables!"
 msgstr "Có thể lưu chỉ điều vẽ được."
 
-#: ../plug-ins/gimpressionist/brush.c:251
+#: ../plug-ins/gimpressionist/brush.c:248
 msgid "Save Brush"
 msgstr "Lưu bút vẽ"
 
-#: ../plug-ins/gimpressionist/brush.c:506
+#: ../plug-ins/gimpressionist/brush.c:503
 msgid "_Brush"
 msgstr "_Bút vẽ"
 
-#: ../plug-ins/gimpressionist/brush.c:543
+#: ../plug-ins/gimpressionist/brush.c:540
 msgid "Gamma:"
 msgstr "Gamma (γ):"
 
-#: ../plug-ins/gimpressionist/brush.c:561
+#: ../plug-ins/gimpressionist/brush.c:558
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Thay đổi gamma (độ sáng) của bút vẽ đã chọn"
 
-#: ../plug-ins/gimpressionist/brush.c:569
+#: ../plug-ins/gimpressionist/brush.c:566
 msgid "Select:"
 msgstr "Chọn:"
 
-#: ../plug-ins/gimpressionist/brush.c:598
+#: ../plug-ins/gimpressionist/brush.c:595
 msgid "Aspect ratio:"
 msgstr "Tỷ lệ hình thể:"
 
-#: ../plug-ins/gimpressionist/brush.c:602
+#: ../plug-ins/gimpressionist/brush.c:599
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Ghi rõ tỷ lệ hình thể của bút vẽ"
 
-#: ../plug-ins/gimpressionist/brush.c:611
+#: ../plug-ins/gimpressionist/brush.c:608
 #: ../plug-ins/gimpressionist/paper.c:205
 msgid "Relief:"
 msgstr "Đắp khắc nổi:"
 
-#: ../plug-ins/gimpressionist/brush.c:615
+#: ../plug-ins/gimpressionist/brush.c:612
 #: ../plug-ins/gimpressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Ghi rõ lượng làm nổi cần áp dụng vào ảnh (theo phần trăm)"
@@ -10576,15 +10466,15 @@ msgstr "Tự ghi rõ hướng nét"
 msgid "Opens up the Orientation Map Editor"
 msgstr "Mở bộ sửa đổi ánh xạ hướng"
 
-#: ../plug-ins/gimpressionist/orientmap.c:525
+#: ../plug-ins/gimpressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Bộ Sửa đổi Ánh xạ Hướng"
 
-#: ../plug-ins/gimpressionist/orientmap.c:554
+#: ../plug-ins/gimpressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Véc-tơ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:566
+#: ../plug-ins/gimpressionist/orientmap.c:564
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -10594,8 +10484,8 @@ msgstr ""
 "Nhắp-phải \ttrỏ nó đến con chuột\n"
 "Nhắp-giữa \tthêm véc-tơ mới."
 
-#: ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/gimpressionist/orientmap.c:588
+#: ../plug-ins/gimpressionist/sizemap.c:457
 msgid "Adjust the preview's brightness"
 msgstr "Điều chỉnh độ sáng của ô xem thử"
 
@@ -10608,7 +10498,7 @@ msgid "Select next vector"
 msgstr "Chọn véc-tơ kế"
 
 #: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:490
+#: ../plug-ins/gimpressionist/sizemap.c:489
 msgid "A_dd"
 msgstr "Thê_m"
 
@@ -10617,7 +10507,7 @@ msgid "Add new vector"
 msgstr "Thêm véc-tơ mới"
 
 #: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/gimpressionist/sizemap.c:496
 msgid "_Kill"
 msgstr "Buộc _kết thúc"
 
@@ -10646,7 +10536,7 @@ msgid "Vortex_3"
 msgstr "Gió cuộn_3"
 
 #: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:542
+#: ../plug-ins/gimpressionist/sizemap.c:541
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
@@ -10681,7 +10571,7 @@ msgid "S_trength exp.:"
 msgstr "_Mũ độ mạnh:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:537
+#: ../plug-ins/gimpressionist/sizemap.c:536
 msgid "Change the exponent of the strength"
 msgstr "Thay đổi số mũ của độ mạnh"
 
@@ -10749,7 +10639,7 @@ msgstr "Mật độ tương đối của các nét bút vẽ"
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:652
+#: ../plug-ins/gimpressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Lỗi lưu tập tin PPM « %s »: %s"
@@ -10786,18 +10676,18 @@ msgstr "Xóa bỏ định sẵn đã chọn"
 msgid "Reread the folder of Presets"
 msgstr "Đọc lại thư mục các định sẵn"
 
-#: ../plug-ins/gimpressionist/preview.c:173
-#: ../plug-ins/gimpressionist/repaint.c:1183
-#: ../plug-ins/imagemap/imap_polygon.c:513
+#: ../plug-ins/gimpressionist/preview.c:174
+#: ../plug-ins/gimpressionist/repaint.c:1182
+#: ../plug-ins/imagemap/imap_polygon.c:515
 #: ../plug-ins/lighting/lighting-ui.c:1082
 msgid "_Update"
 msgstr "_Cập nhật"
 
-#: ../plug-ins/gimpressionist/preview.c:179
+#: ../plug-ins/gimpressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Cập nhật cửa sổ Xem thử"
 
-#: ../plug-ins/gimpressionist/preview.c:187
+#: ../plug-ins/gimpressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Hoàn nguyên ảnh gốc"
 
@@ -10806,7 +10696,6 @@ msgid "_Size"
 msgstr "_Cỡ"
 
 #: ../plug-ins/gimpressionist/size.c:108
-#| msgid "Sp_ike points:"
 msgid "Size variants:"
 msgstr ""
 
@@ -10868,15 +10757,15 @@ msgstr "Tự ghi rõ kích cỡ nét"
 msgid "Opens up the Size Map Editor"
 msgstr "Mở Bộ Sửa đổi Ánh xạ Kích cỡ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/gimpressionist/sizemap.c:397
 msgid "Size Map Editor"
 msgstr "Bộ Sửa đổi Ánh xạ Kích cỡ"
 
-#: ../plug-ins/gimpressionist/sizemap.c:429
+#: ../plug-ins/gimpressionist/sizemap.c:426
 msgid "Smvectors"
 msgstr "Smvectors"
 
-#: ../plug-ins/gimpressionist/sizemap.c:439
+#: ../plug-ins/gimpressionist/sizemap.c:436
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -10886,44 +10775,124 @@ msgstr ""
 "Nhắp-phải\ttrỏ nó vào con chuột\n"
 "Nhắp giữa\tthêm một smvector mới."
 
-#: ../plug-ins/gimpressionist/sizemap.c:481
+#: ../plug-ins/gimpressionist/sizemap.c:480
 msgid "Select previous smvector"
 msgstr "Chọn smvector trước"
 
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/gimpressionist/sizemap.c:487
 msgid "Select next smvector"
 msgstr "Chọn smvector kế"
 
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/gimpressionist/sizemap.c:494
 msgid "Add new smvector"
 msgstr "Thêm smvector mới"
 
-#: ../plug-ins/gimpressionist/sizemap.c:502
+#: ../plug-ins/gimpressionist/sizemap.c:501
 msgid "Delete selected smvector"
 msgstr "Xóa bỏ smvector đã chọn"
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/gimpressionist/sizemap.c:514
 msgid "Change the angle of the selected smvector"
 msgstr "Thay đổi góc của smvector đã chọn"
 
-#: ../plug-ins/gimpressionist/sizemap.c:522
+#: ../plug-ins/gimpressionist/sizemap.c:521
 msgid "S_trength:"
 msgstr "Độ _mạnh:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:526
+#: ../plug-ins/gimpressionist/sizemap.c:525
 msgid "Change the strength of the selected smvector"
 msgstr "Thay đổi độ mạnh của smvector đã chọn"
 
-#: ../plug-ins/gimpressionist/sizemap.c:533
+#: ../plug-ins/gimpressionist/sizemap.c:532
 msgid "St_rength exp.:"
 msgstr "Mũ độ mạn_h:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:549
+#: ../plug-ins/gimpressionist/sizemap.c:548
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
 "Chế độ voronoi làm cho chỉ smvector gần nhất điểm đã cho có tác động nào"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:1
+msgid "Animated GIF Options"
+msgstr "Tùy chọn GIF hoạt cảnh"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
+#, fuzzy
+#| msgid "MNG animation"
+msgid "As _animation"
+msgstr "Hoạt cảnh MNG"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
+msgid "GIF Options"
+msgstr "Tùy chọn GIF"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+msgid "I_nterlace"
+msgstr "_Kết hợp"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:5
+msgid "U_se disposal entered above for all frames"
+msgstr "Dùng cách _sắp đặt đã nhập trên cho mọi khung"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:6
+msgid "_Delay between frames where unspecified:"
+msgstr "T_rễ giữa hai khung, khi chưa ghi rõ:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+msgid "_Frame disposal where unspecified:"
+msgstr "Cách sắp đặt _khung, khi chưa ghi rõ:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
+msgid "_GIF comment:"
+msgstr "Ghi chú _GIF:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:9
+msgid "_Loop forever"
+msgstr "_Lặp luôn"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
+msgid "_Use delay entered above for all frames"
+msgstr "Dùng trễ đã nhập trên cho mọi kh_ung"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:2
+msgid "Co_mpression level:"
+msgstr "Cấp _nén:"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:3
+#, fuzzy
+#| msgid "Sa_ve Defaults"
+msgid "S_ave Defaults"
+msgstr "_Lưu mặc định"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:4
+msgid "Save _background color"
+msgstr "Lưu màu _nền"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:5
+msgid "Save _resolution"
+msgstr "Lưu độ _phân giải"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:6
+msgid "Save color _values from transparent pixels"
+msgstr "Lưu _giá trị màu từ điểm ảnh trong suốt"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:7
+msgid "Save comme_nt"
+msgstr "Lư_u chú thích"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:8
+msgid "Save creation _time"
+msgstr "Lưu giờ _tạo"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:10
+msgid "Save layer o_ffset"
+msgstr "Lưu _hiệu lớp"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:11
+msgid "_Interlacing (Adam7)"
+msgstr "_Kết hợp (Adam7)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -10988,6 +10957,10 @@ msgstr "Tự động cập nhật kh_ung xem thử"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
 msgid "`Default' is created."
 msgstr "Mới táo « mặc định »."
+
+#: ../plug-ins/gradient-flare/gradient-flare.c:2465
+msgid "Default"
+msgstr "Mặc định"
 
 #.
 #. *  Scales
@@ -11200,86 +11173,77 @@ msgstr "Hạt ngẫu nhiên:"
 msgid "_Second Flares"
 msgstr "_Sáng rực thứ hai"
 
-#: ../plug-ins/help-browser/dialog.c:186
-#: ../plug-ins/help-browser/dialog.c:1115
+#: ../plug-ins/help-browser/dialog.c:184
+#: ../plug-ins/help-browser/dialog.c:1110
 msgid "GIMP Help Browser"
 msgstr "Bộ duyệt trợ giúp GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:564
+#: ../plug-ins/help-browser/dialog.c:559
 msgid "Go back one page"
 msgstr "Quay lui một trang"
 
-#: ../plug-ins/help-browser/dialog.c:569
+#: ../plug-ins/help-browser/dialog.c:564
 msgid "Go forward one page"
 msgstr "Đi tiếp một trang"
 
-#: ../plug-ins/help-browser/dialog.c:574
-#| msgid "_Red:"
+#: ../plug-ins/help-browser/dialog.c:569
 msgid "_Reload"
 msgstr "Tải _lại"
 
-#: ../plug-ins/help-browser/dialog.c:574
+#: ../plug-ins/help-browser/dialog.c:569
 msgid "Reload current page"
 msgstr "Nạp lại trang hiện tại"
 
-#: ../plug-ins/help-browser/dialog.c:579
-#| msgid "_Step"
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "_Stop"
 msgstr "_Dừng"
 
-#: ../plug-ins/help-browser/dialog.c:579
+#: ../plug-ins/help-browser/dialog.c:574
 msgid "Stop loading this page"
 msgstr "Dừng nạp trang này"
 
-#: ../plug-ins/help-browser/dialog.c:584
+#: ../plug-ins/help-browser/dialog.c:579
 msgid "Go to the index page"
 msgstr "Đi tới trang chỉ mục"
 
-#: ../plug-ins/help-browser/dialog.c:589
-#| msgid "Curl Location"
+#: ../plug-ins/help-browser/dialog.c:584
 msgid "C_opy location"
 msgstr "_Chép địa điểm"
 
-#: ../plug-ins/help-browser/dialog.c:590
-#| msgid "Copy the active curve to the other border"
+#: ../plug-ins/help-browser/dialog.c:585
 msgid "Copy the location of this page to the clipboard"
 msgstr ""
 
-#: ../plug-ins/help-browser/dialog.c:610
+#: ../plug-ins/help-browser/dialog.c:605
 msgid "Find text in current page"
 msgstr "Tìm văn bản trong trang hiện tại"
 
-#: ../plug-ins/help-browser/dialog.c:615
-#| msgid "Finding XY gradient"
+#: ../plug-ins/help-browser/dialog.c:610
 msgid "Find _Again"
 msgstr "Tìm _tiếp"
 
-#: ../plug-ins/help-browser/dialog.c:634
-#| msgid "Show grid"
+#: ../plug-ins/help-browser/dialog.c:629
 msgid "S_how Index"
 msgstr "_Hiện chỉ mục"
 
-#: ../plug-ins/help-browser/dialog.c:635
+#: ../plug-ins/help-browser/dialog.c:630
 msgid "Toggle the visibility of the sidebar"
 msgstr "Ẩn hiện thanh bên"
 
-#: ../plug-ins/help-browser/dialog.c:656
+#: ../plug-ins/help-browser/dialog.c:651
 msgid "Visit the GIMP documentation website"
 msgstr "Ghé thăm nơi Mạng tài liệu hướng dẫn GIMP nhé"
 
-#: ../plug-ins/help-browser/dialog.c:1156
-#| msgid "Wind"
+#: ../plug-ins/help-browser/dialog.c:1151
 msgid "Find:"
 msgstr "Tìm:"
 
-#: ../plug-ins/help-browser/dialog.c:1173
-#| msgid "_Preview"
+#: ../plug-ins/help-browser/dialog.c:1168
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Trước"
 
-#: ../plug-ins/help-browser/dialog.c:1185
-#| msgid "_Hex"
+#: ../plug-ins/help-browser/dialog.c:1180
 msgctxt "search"
 msgid "_Next"
 msgstr "_Kế"
@@ -11312,7 +11276,6 @@ msgstr "không biết ID trợ giúp « %s »"
 
 #: ../plug-ins/help/gimphelplocale.c:208
 #, c-format
-#| msgid "Error reading BMP file header from '%s'"
 msgid "Loading index from '%s'"
 msgstr "Đang nạp chỉ mục từ '%s'"
 
@@ -11479,30 +11442,29 @@ msgstr "Đang vẽ IFS (%d/%d)..."
 msgid "Transformation %s"
 msgstr "Sự chuyển dạng %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2415
+#: ../plug-ins/ifs-compose/ifs-compose.c:2413
 msgid "Save failed"
 msgstr "Lỗi lưu"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2498
-#: ../plug-ins/ifs-compose/ifs-compose.c:2511
+#: ../plug-ins/ifs-compose/ifs-compose.c:2496
+#: ../plug-ins/ifs-compose/ifs-compose.c:2509
 msgid "Open failed"
 msgstr "Lỗi mở"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2506
+#: ../plug-ins/ifs-compose/ifs-compose.c:2504
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Tập tin « %s » có vẻ không phải là tập tin Phân dạng IFS."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2546
+#: ../plug-ins/ifs-compose/ifs-compose.c:2544
 msgid "Save as IFS Fractal file"
 msgstr "Lưu dạng tập tin Phân dạng IFS"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2583
+#: ../plug-ins/ifs-compose/ifs-compose.c:2581
 msgid "Open IFS Fractal file"
 msgstr "Mở tập tin Phân dạng IFS"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-#| msgid "_Image Map..."
 msgid "Image Map Plug-In"
 msgstr ""
 
@@ -11526,8 +11488,8 @@ msgstr "Giữa lại _x:"
 #: ../plug-ins/imagemap/imap_circle.c:275
 #: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:249
 #: ../plug-ins/imagemap/imap_grid.c:255
-#: ../plug-ins/imagemap/imap_polygon.c:503
-#: ../plug-ins/imagemap/imap_polygon.c:511
+#: ../plug-ins/imagemap/imap_polygon.c:505
+#: ../plug-ins/imagemap/imap_polygon.c:513
 #: ../plug-ins/imagemap/imap_rectangle.c:392
 #: ../plug-ins/imagemap/imap_rectangle.c:399
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -11879,41 +11841,41 @@ msgstr "Tạo sơ đồ ảnh nơi nhắp được"
 msgid "_Image Map..."
 msgstr "_Sơ đồ ảnh..."
 
-#: ../plug-ins/imagemap/imap_main.c:488
+#: ../plug-ins/imagemap/imap_main.c:490
 #: ../plug-ins/imagemap/imap_settings.c:170
 msgid "<Untitled>"
 msgstr "<Chưa tên>"
 
-#: ../plug-ins/imagemap/imap_main.c:630
+#: ../plug-ins/imagemap/imap_main.c:632
 msgid "Some data has been changed!"
 msgstr "• Một phần dữ liệu đã được thay đổi. •"
 
-#: ../plug-ins/imagemap/imap_main.c:633
+#: ../plug-ins/imagemap/imap_main.c:635
 msgid "Do you really want to discard your changes?"
 msgstr "Bạn có chắc muốn hủy các thay đổi sao?"
 
-#: ../plug-ins/imagemap/imap_main.c:845
+#: ../plug-ins/imagemap/imap_main.c:847
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Tập tin « %s » đã được lưu."
 
-#: ../plug-ins/imagemap/imap_main.c:849
+#: ../plug-ins/imagemap/imap_main.c:851
 msgid "Couldn't save file:"
 msgstr "Không thể lưu tập tin:"
 
-#: ../plug-ins/imagemap/imap_main.c:862
+#: ../plug-ins/imagemap/imap_main.c:864
 msgid "Image size has changed."
 msgstr "Kích cỡ ảnh đã thay đổi."
 
-#: ../plug-ins/imagemap/imap_main.c:863
+#: ../plug-ins/imagemap/imap_main.c:865
 msgid "Resize area's?"
 msgstr "Thay đổi kích cỡ các vùng không?"
 
-#: ../plug-ins/imagemap/imap_main.c:896
+#: ../plug-ins/imagemap/imap_main.c:898
 msgid "Couldn't read file:"
 msgstr "Không thể đọc tập tin:"
 
-#: ../plug-ins/imagemap/imap_main.c:943
+#: ../plug-ins/imagemap/imap_main.c:945
 #, c-format
 msgid "URL: %s"
 msgstr "Địa chỉ Mạng: %s"
@@ -11929,72 +11891,58 @@ msgid "_Redo %s"
 msgstr "_Bước lại %s"
 
 #: ../plug-ins/imagemap/imap_menu.c:145
-#| msgid "F_ile"
 msgid "_File"
 msgstr "Tập t_in"
 
 #: ../plug-ins/imagemap/imap_menu.c:146
-#| msgid "_Neon..."
 msgid "_Open..."
 msgstr "_Mở..."
 
 #: ../plug-ins/imagemap/imap_menu.c:146
-#| msgid "Open as"
 msgid "Open"
 msgstr "Mở"
 
 #: ../plug-ins/imagemap/imap_menu.c:148
-#| msgid "_Waves..."
 msgid "_Save..."
 msgstr "_Lưu..."
 
 #: ../plug-ins/imagemap/imap_menu.c:148
-#| msgid "Saved"
 msgid "Save"
 msgstr "Lưu"
 
 #: ../plug-ins/imagemap/imap_menu.c:150
-#| msgid "_Waves..."
 msgid "Save _As..."
 msgstr "Lưu _là..."
 
 #: ../plug-ins/imagemap/imap_menu.c:155
-#| msgid "W_ait"
 msgid "_Edit"
 msgstr "_Sửa"
 
 #: ../plug-ins/imagemap/imap_menu.c:156
-#| msgid "_Undo"
 msgid "Undo"
 msgstr "Hủy bước"
 
 #: ../plug-ins/imagemap/imap_menu.c:157
-#| msgid "Red"
 msgid "Redo"
 msgstr "Làm lại"
 
 #: ../plug-ins/imagemap/imap_menu.c:163
-#| msgid "Unselect All"
 msgid "D_eselect All"
 msgstr "_Bỏ chọn hết"
 
 #: ../plug-ins/imagemap/imap_menu.c:165
-#| msgid "Edit Map Info..."
 msgid "Edit Area _Info..."
 msgstr "Sửa _thông tin vùng..."
 
 #: ../plug-ins/imagemap/imap_menu.c:166
-#| msgid "Reads the selected Preset into memory"
 msgid "Edit selected area info"
 msgstr "Sửa thông tin vùng được chọn"
 
 #: ../plug-ins/imagemap/imap_menu.c:167
-#| msgid "General Preferences"
 msgid "Preferences"
 msgstr "Tùy thích"
 
 #: ../plug-ins/imagemap/imap_menu.c:169
-#| msgid "Move To Front"
 msgid "Move Area to Front"
 msgstr "Chuyển vùng ra trước"
 
@@ -12003,37 +11951,30 @@ msgid "Move Area to Bottom"
 msgstr "Dịch chuyển vùng xuống dưới"
 
 #: ../plug-ins/imagemap/imap_menu.c:173
-#| msgid "Delete Fractal"
 msgid "Delete Area"
 msgstr "Xoá vùng"
 
 #: ../plug-ins/imagemap/imap_menu.c:180
-#| msgid "P_review"
 msgid "_View"
 msgstr "X_em"
 
 #: ../plug-ins/imagemap/imap_menu.c:181
-#| msgid "_Slur..."
 msgid "Source..."
 msgstr "Nguồn"
 
 #: ../plug-ins/imagemap/imap_menu.c:182
-#| msgid "Zoom"
 msgid "Zoom in"
 msgstr "Phóng to"
 
 #: ../plug-ins/imagemap/imap_menu.c:183
-#| msgid "Zoom"
 msgid "Zoom out"
 msgstr "Thu nhỏ"
 
 #: ../plug-ins/imagemap/imap_menu.c:184
-#| msgid "_Zoom"
 msgid "_Zoom To"
 msgstr "_Phóng"
 
 #: ../plug-ins/imagemap/imap_menu.c:186
-#| msgid "Warping"
 msgid "_Mapping"
 msgstr "Ánh _xạ"
 
@@ -12042,7 +11983,6 @@ msgid "Edit Map Info..."
 msgstr "Sửa thông tin ánh xạ..."
 
 #: ../plug-ins/imagemap/imap_menu.c:188
-#| msgid "Edit Map Info..."
 msgid "Edit Map Info"
 msgstr "Sửa thông tin ánh xạ"
 
@@ -12051,27 +11991,22 @@ msgid "_Tools"
 msgstr "_Công cụ"
 
 #: ../plug-ins/imagemap/imap_menu.c:191
-#| msgid "Grid Settings"
 msgid "Grid Settings..."
 msgstr "Thiết lập lưới..."
 
 #: ../plug-ins/imagemap/imap_menu.c:193
-#| msgid "Use Gimp Guides"
 msgid "Use GIMP Guides..."
 msgstr "Dùng nét dẫn GIMP..."
 
 #: ../plug-ins/imagemap/imap_menu.c:195
-#| msgid "Create Guides"
 msgid "Create Guides..."
 msgstr "Tạo nét dẫn..."
 
 #: ../plug-ins/imagemap/imap_menu.c:198
-#| msgid "_Hue"
 msgid "_Help"
 msgstr "Trợ _giúp"
 
 #: ../plug-ins/imagemap/imap_menu.c:199
-#| msgid "Context"
 msgid "_Contents"
 msgstr "_Mục lục"
 
@@ -12080,22 +12015,18 @@ msgid "_Zoom"
 msgstr "Thu _phóng"
 
 #: ../plug-ins/imagemap/imap_menu.c:207
-#| msgid "Area Settings"
 msgid "Area List"
 msgstr "Danh sách vùng"
 
 #: ../plug-ins/imagemap/imap_menu.c:217
-#| msgid "_Grow"
 msgid "Arrow"
 msgstr "Mũi tên"
 
 #: ../plug-ins/imagemap/imap_menu.c:218
-#| msgid "Select Next"
 msgid "Select existing area"
 msgstr "Chọn vùng đã có"
 
 #: ../plug-ins/imagemap/imap_menu.c:220
-#| msgid "Rectangle"
 msgid "Define Rectangle area"
 msgstr "Định nghĩa vùng chữ nhật"
 
@@ -12107,27 +12038,27 @@ msgstr "Xác định vùng hình tròn/bầu dục"
 msgid "Define Polygon area"
 msgstr "Xác định vùng đa giác"
 
-#: ../plug-ins/imagemap/imap_polygon.c:71
+#: ../plug-ins/imagemap/imap_polygon.c:73
 msgid "_Polygon"
 msgstr "Đa _giác"
 
-#: ../plug-ins/imagemap/imap_polygon.c:472
+#: ../plug-ins/imagemap/imap_polygon.c:474
 msgid "x (pixels)"
 msgstr "x (điểm ảnh)"
 
-#: ../plug-ins/imagemap/imap_polygon.c:481
+#: ../plug-ins/imagemap/imap_polygon.c:483
 msgid "y (pixels)"
 msgstr "y (điểm ảnh)"
 
-#: ../plug-ins/imagemap/imap_polygon.c:519
+#: ../plug-ins/imagemap/imap_polygon.c:521
 msgid "_Insert"
 msgstr "_Chèn"
 
-#: ../plug-ins/imagemap/imap_polygon.c:525
+#: ../plug-ins/imagemap/imap_polygon.c:527
 msgid "A_ppend"
 msgstr "_Phụ thêm"
 
-#: ../plug-ins/imagemap/imap_polygon.c:531
+#: ../plug-ins/imagemap/imap_polygon.c:533
 msgid "_Remove"
 msgstr "_Gỡ bỏ"
 
@@ -12192,7 +12123,6 @@ msgid "Selected:"
 msgstr "Đã chọn:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:442
-#| msgid "Iterations:"
 msgid "Interaction:"
 msgstr "Tương tác:"
 
@@ -12357,6 +12287,13 @@ msgstr "Ánh sáng 6"
 #: ../plug-ins/lighting/lighting-ui.c:412
 msgid "Color:"
 msgstr "Màu:"
+
+#: ../plug-ins/lighting/lighting-ui.c:418
+#, fuzzy
+#| msgid "None"
+msgctxt "light-source"
+msgid "None"
+msgstr "Không có"
 
 #: ../plug-ins/lighting/lighting-ui.c:419
 msgid "Directional"
@@ -12661,12 +12598,10 @@ msgid "Create new image"
 msgstr "Tạo ảnh mới"
 
 #: ../plug-ins/map-object/map-object-ui.c:483
-#| msgid "Create _new layer"
 msgid "Create new layer"
 msgstr "Tạo lớp mới"
 
 #: ../plug-ins/map-object/map-object-ui.c:494
-#| msgid "Create a new image when applying filter"
 msgid "Create a new layer when applying filter"
 msgstr "Tạo một lớp mới khi áp dụng bộ lọc"
 
@@ -12832,12 +12767,10 @@ msgid "Map to Object"
 msgstr "Ánh xạ tới đối tượng"
 
 #: ../plug-ins/map-object/map-object-ui.c:1375
-#| msgid "Show preview _wireframe"
 msgid "Show _wireframe"
 msgstr "Hiện _khung"
 
 #: ../plug-ins/map-object/map-object-ui.c:1384
-#| msgid "Recompute preview image"
 msgid "Update preview _live"
 msgstr ""
 
@@ -12907,65 +12840,65 @@ msgstr "Xem và hiệu chỉnh siêu dữ liệu (EXIF, IPTC, XMP)"
 msgid "Propert_ies"
 msgstr "_Thuộc tính"
 
-#: ../plug-ins/metadata/xmp-parse.c:238
+#: ../plug-ins/metadata/xmp-parse.c:237
 #, c-format
 msgid "Error: No XMP packet found"
 msgstr "Lỗi: không tìm thấy gói tin XMP"
 
-#: ../plug-ins/metadata/xmp-parse.c:254
+#: ../plug-ins/metadata/xmp-parse.c:253
 #, c-format
 msgid "Error on line %d char %d: %s"
 msgstr "Lỗi trên dòng %d ký tự %d: %s"
 
-#: ../plug-ins/metadata/xmp-parse.c:276
+#: ../plug-ins/metadata/xmp-parse.c:275
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
 msgstr "Ngờ chữ hay yếu tố tùy chọn <%s>, còn tìm <%s> thay thế"
 
-#: ../plug-ins/metadata/xmp-parse.c:280
+#: ../plug-ins/metadata/xmp-parse.c:279
 #, c-format
 msgid "Expected element <%s>, found <%s> instead"
 msgstr "Ngờ yếu tố <%s>, còn tìm <%s> thay thế"
 
-#: ../plug-ins/metadata/xmp-parse.c:295
+#: ../plug-ins/metadata/xmp-parse.c:294
 #, c-format
 msgid "Unknown element <%s>"
 msgstr "Yếu tố lạ <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:324
+#: ../plug-ins/metadata/xmp-parse.c:323
 #, c-format
 msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
 msgstr "Thuộc tính lạ « %s »=« %s » trong yếu tố <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:677
+#: ../plug-ins/metadata/xmp-parse.c:676
 #, c-format
 msgid "Required attribute rdf:about missing in <%s>"
 msgstr "Thiếu thuộc tính cần thiết « rdf:about » trong <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:903
+#: ../plug-ins/metadata/xmp-parse.c:902
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
 msgstr "Không cho phép yếu tố lồng nhau (<%s>) trong ngữ cảnh này"
 
-#: ../plug-ins/metadata/xmp-parse.c:1032
+#: ../plug-ins/metadata/xmp-parse.c:1031
 #, c-format
 msgid "End of element <%s> not expected in this context"
 msgstr "Kết thúc yếu tố <%s> bất ngờ trong ngữ cảnh này"
 
-#: ../plug-ins/metadata/xmp-parse.c:1134
+#: ../plug-ins/metadata/xmp-parse.c:1140
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
 msgstr "Yếu tố hiện có (<%s>) không thể chứa chữ"
 
-#: ../plug-ins/metadata/xmp-parse.c:1159
+#: ../plug-ins/metadata/xmp-parse.c:1165
 msgid "XMP packets must start with <?xpacket begin=...?>"
 msgstr "Gói tin XMP phải bắt đầu với <?xpacket begin=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1173
+#: ../plug-ins/metadata/xmp-parse.c:1179
 msgid "XMP packets must end with <?xpacket end=...?>"
 msgstr "Gói tin XMP phải kết thúc với <?xpacket end=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1186
+#: ../plug-ins/metadata/xmp-parse.c:1192
 msgid "XMP cannot contain XML comments or processing instructions"
 msgstr "XMP không thể chứa chú thích XML hay lệnh xử lý"
 
@@ -13005,31 +12938,31 @@ msgstr "Phải trên"
 msgid "Curl Orientation"
 msgstr "Hướng xoắn"
 
-#: ../plug-ins/pagecurl/pagecurl.c:568
+#: ../plug-ins/pagecurl/pagecurl.c:569
 msgid "_Shade under curl"
 msgstr "_Bóng dưới xoắn"
 
-#: ../plug-ins/pagecurl/pagecurl.c:581
+#: ../plug-ins/pagecurl/pagecurl.c:582
 msgid "Current gradient (reversed)"
 msgstr "Độ dốc hiện có (ngược lại)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:586
+#: ../plug-ins/pagecurl/pagecurl.c:587
 msgid "Current gradient"
 msgstr "Độ dốc hiện có"
 
-#: ../plug-ins/pagecurl/pagecurl.c:591
+#: ../plug-ins/pagecurl/pagecurl.c:592
 msgid "Foreground / background colors"
 msgstr "Màu cảnh gần và nền"
 
-#: ../plug-ins/pagecurl/pagecurl.c:611
+#: ../plug-ins/pagecurl/pagecurl.c:612
 msgid "_Opacity:"
 msgstr "Độ đụ_c:"
 
-#: ../plug-ins/pagecurl/pagecurl.c:734
+#: ../plug-ins/pagecurl/pagecurl.c:735
 msgid "Curl Layer"
 msgstr "Lớp xoắn"
 
-#: ../plug-ins/pagecurl/pagecurl.c:1025
+#: ../plug-ins/pagecurl/pagecurl.c:1026
 msgid "Page Curl"
 msgstr "Xoắn trang"
 
@@ -13043,52 +12976,50 @@ msgid "_Draw Crop Marks"
 msgstr "_Vẽ những điểm mốc để xén"
 
 #: ../plug-ins/print/print-page-layout.c:306
-#| msgid "_Resolution:"
 msgid "_X resolution:"
 msgstr "Độ phân giải _X:"
 
 #: ../plug-ins/print/print-page-layout.c:310
-#| msgid "_Resolution:"
 msgid "_Y resolution:"
 msgstr "Độ phân giải _Y:"
 
 #: ../plug-ins/print/print-page-layout.c:381
-#| msgid "Left:"
 msgid "_Left:"
 msgstr "_Trái:"
 
 #: ../plug-ins/print/print-page-layout.c:400
-#| msgid "Right:"
 msgid "_Right:"
 msgstr "_Phải:"
 
 #: ../plug-ins/print/print-page-layout.c:454
-#| msgid "Center"
 msgid "C_enter:"
 msgstr "Ở _giữa:"
 
+#. if and how to center the image on the page
+#: ../plug-ins/print/print-page-layout.c:461
+#, fuzzy
+#| msgid "None"
+msgctxt "center-mode"
+msgid "None"
+msgstr "Không có"
+
 #: ../plug-ins/print/print-page-layout.c:462
-#| msgid "Horizontal"
 msgid "Horizontally"
 msgstr "Ngang"
 
 #: ../plug-ins/print/print-page-layout.c:463
-#| msgid "Vertical"
 msgid "Vertically"
 msgstr "Dọc"
 
 #: ../plug-ins/print/print-page-layout.c:464
-#| msgid "Bot_h"
 msgid "Both"
 msgstr "Cả hai"
 
 #: ../plug-ins/print/print.c:102
-#| msgid "Email the image"
 msgid "Print the image"
 msgstr "In ảnh"
 
 #: ../plug-ins/print/print.c:107
-#| msgid "_Grid..."
 msgid "_Print..."
 msgstr "_In..."
 
@@ -13097,22 +13028,18 @@ msgid "Adjust page size and orientation for printing"
 msgstr "Điều chỉnh kích thước trang và hướng in ấn"
 
 #: ../plug-ins/print/print.c:124
-#| msgid "Page Curl"
 msgid "Page Set_up"
 msgstr "_Thiết lập trang"
 
 #: ../plug-ins/print/print.c:263
-#| msgid "Image Selection"
 msgid "Image Settings"
 msgstr "Thié6t lập ảnh"
 
 #: ../plug-ins/print/print.c:347
-#| msgid "Some error occurred while saving"
 msgid "An error occurred while trying to print:"
 msgstr "Lỗi in:"
 
 #: ../plug-ins/print/print.c:374
-#| msgid "Painting"
 msgid "Printing"
 msgstr "In"
 
@@ -13130,7 +13057,6 @@ msgid "Selection to Path Advanced Settings"
 msgstr "Tùy chọn Cấp cao Phần chọn tới Đường dẫn"
 
 #: ../plug-ins/twain/twain.c:86
-#| msgid "Create an image from an area of the screen"
 msgid "Capture an image from a TWAIN datasource"
 msgstr "Chụp ảnh từ nguồn TWAIN"
 
@@ -13143,41 +13069,47 @@ msgstr "Máy _quét/chụp ảnh..."
 msgid "Transferring data from scanner/camera"
 msgstr "Đang truyền dữ liệu từ máy quét/chụp ảnh..."
 
-#: ../plug-ins/win-snap/winsnap.c:865
+#: ../plug-ins/win-snap/winsnap.c:871
 msgid "Grab"
 msgstr "Bắt"
 
-#: ../plug-ins/win-snap/winsnap.c:882
+#: ../plug-ins/win-snap/winsnap.c:888
 msgid "Grab a single window"
 msgstr "Bắt một cửa sổ riêng lẻ"
 
-#: ../plug-ins/win-snap/winsnap.c:896
+#: ../plug-ins/win-snap/winsnap.c:902
 msgid "Grab the whole screen"
 msgstr "Bắt toàn bộ màn hình"
 
-#: ../plug-ins/win-snap/winsnap.c:912
+#: ../plug-ins/win-snap/winsnap.c:918
 msgid "after"
 msgstr "sau"
 
-#: ../plug-ins/win-snap/winsnap.c:924
+#: ../plug-ins/win-snap/winsnap.c:930
 msgid "Seconds delay"
 msgstr "giây trễ"
 
-#: ../plug-ins/win-snap/winsnap.c:931
+#: ../plug-ins/win-snap/winsnap.c:937
 msgid "Include decorations"
 msgstr "Gồm trang trí"
 
-#: ../plug-ins/win-snap/winsnap.c:990
+#: ../plug-ins/win-snap/winsnap.c:996
 msgid "Capture a window or desktop image"
 msgstr "Bắt ảnh cửa sổ hay màn hình"
 
-#: ../plug-ins/win-snap/winsnap.c:995
+#: ../plug-ins/win-snap/winsnap.c:1001
 msgid "_Screen Shot..."
 msgstr "Chụp _màn hình..."
 
-#: ../plug-ins/win-snap/winsnap.c:1143
+#: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "Chưa bắt dữ liệu"
+
+#~ msgid "Ascii"
+#~ msgstr "Ascii"
+
+#~ msgid "BMP"
+#~ msgstr "BMP"
 
 #~ msgid "XMIN:"
 #~ msgstr "ThiểuX:"
@@ -13302,33 +13234,6 @@ msgstr "Chưa bắt dữ liệu"
 #~ msgid "Save as GIF"
 #~ msgstr "Lưu dạng GIF"
 
-#~ msgid "GIF Options"
-#~ msgstr "Tùy chọn GIF"
-
-#~ msgid "I_nterlace"
-#~ msgstr "_Kết hợp"
-
-#~ msgid "_GIF comment:"
-#~ msgstr "Ghi chú _GIF:"
-
-#~ msgid "Animated GIF Options"
-#~ msgstr "Tùy chọn GIF hoạt cảnh"
-
-#~ msgid "_Loop forever"
-#~ msgstr "_Lặp luôn"
-
-#~ msgid "_Delay between frames where unspecified:"
-#~ msgstr "T_rễ giữa hai khung, khi chưa ghi rõ:"
-
-#~ msgid "_Frame disposal where unspecified:"
-#~ msgstr "Cách sắp đặt _khung, khi chưa ghi rõ:"
-
-#~ msgid "_Use delay entered above for all frames"
-#~ msgstr "Dùng trễ đã nhập trên cho mọi kh_ung"
-
-#~ msgid "U_se disposal entered above for all frames"
-#~ msgstr "Dùng cách _sắp đặt đã nhập trên cho mọi khung"
-
 #~ msgid "Layer %s doesn't have an alpha channel, skipped"
 #~ msgstr "Lớp %s không có kênh anfa nên bị bỏ qua"
 
@@ -13413,32 +13318,8 @@ msgstr "Chưa bắt dữ liệu"
 #~ msgid "Save as PNG"
 #~ msgstr "Lưu dạng PNG"
 
-#~ msgid "_Interlacing (Adam7)"
-#~ msgstr "_Kết hợp (Adam7)"
-
-#~ msgid "Save _background color"
-#~ msgstr "Lưu màu _nền"
-
 #~ msgid "Save _gamma"
 #~ msgstr "Lưu _gamma (γ)"
-
-#~ msgid "Save layer o_ffset"
-#~ msgstr "Lưu _hiệu lớp"
-
-#~ msgid "Save _resolution"
-#~ msgstr "Lưu độ _phân giải"
-
-#~ msgid "Save creation _time"
-#~ msgstr "Lưu giờ _tạo"
-
-#~ msgid "Save comme_nt"
-#~ msgstr "Lư_u chú thích"
-
-#~ msgid "Save color _values from transparent pixels"
-#~ msgstr "Lưu _giá trị màu từ điểm ảnh trong suốt"
-
-#~ msgid "Co_mpression level:"
-#~ msgstr "Cấp _nén:"
 
 #~ msgid "Could not load PNG defaults"
 #~ msgstr "Không thể tải các mặc định PNG"

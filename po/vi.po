@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp Gnome HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-10-06 22:01+0000\n"
-"PO-Revision-Date: 2011-11-07 12:49+0700\n"
+"POT-Creation-Date: 2011-12-05 14:02+0000\n"
+"PO-Revision-Date: 2011-12-27 08:47+0700\n"
 "Last-Translator: Nguyễn Vũ Hưng <vuhung16plus@gmail.com>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -980,7 +980,7 @@ msgstr "Vùng chọn dựa vào màu tổng hợp mọi lớp hiển thị"
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:578
 #: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:170
-#: ../app/widgets/gimptoolbox.c:809
+#: ../app/widgets/gimptoolbox.c:833
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1355,20 +1355,20 @@ msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Giới thiệu GIMP"
 
-#: ../app/actions/dialogs-actions.c:326
-#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:549
+#: ../app/actions/dialogs-actions.c:329
+#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:555
 msgid "Toolbox"
 msgstr "Hộp công cụ"
 
-#: ../app/actions/dialogs-actions.c:327
+#: ../app/actions/dialogs-actions.c:330
 msgid "Raise the toolbox"
 msgstr "Nâng hộp công cụ"
 
-#: ../app/actions/dialogs-actions.c:331
+#: ../app/actions/dialogs-actions.c:334
 msgid "New Toolbox"
 msgstr "Hộp công cụ mới"
 
-#: ../app/actions/dialogs-actions.c:332
+#: ../app/actions/dialogs-actions.c:335
 msgid "Create a new toolbox"
 msgstr "Tạo hộp công cụ mới"
 
@@ -3245,9 +3245,9 @@ msgstr "Co dãn ảnh"
 #. Scaling
 #: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
-#: ../app/pdb/drawable-transform-cmds.c:791
-#: ../app/pdb/drawable-transform-cmds.c:880 ../app/pdb/image-cmds.c:410
-#: ../app/pdb/image-cmds.c:446 ../app/pdb/item-transform-cmds.c:524
+#: ../app/pdb/drawable-transform-cmds.c:783
+#: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:405
+#: ../app/pdb/image-cmds.c:441 ../app/pdb/item-transform-cmds.c:524
 #: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
 #: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:118
 msgid "Scaling"
@@ -4742,68 +4742,94 @@ msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
 "Bạn thật sự muốn xóa bỏ mọi tùy chọn công cụ là giá trị mặc định không?"
 
-#: ../app/actions/tool-preset-actions.c:44
-msgctxt "tool-preset-action"
-msgid "Tool Preset Menu"
+#: ../app/actions/tool-presets-actions.c:44
+#| msgctxt "tool-preset-action"
+#| msgid "Tool Preset Menu"
+msgctxt "tool-presets-action"
+msgid "Tool Presets Menu"
 msgstr "Trình đơn Công cụ định nghĩa trước"
 
-#: ../app/actions/tool-preset-actions.c:48
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:48
+#| msgctxt "tool-preset-action"
+#| msgid "_New Tool Preset"
+msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
 msgstr "Công cụ định nghĩa trước _mới"
 
-#: ../app/actions/tool-preset-actions.c:49
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:49
+#| msgctxt "tool-preset-action"
+#| msgid "Create a new tool preset"
+msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
 msgstr "Tạo công cụ định nghĩa trước mới"
 
-#: ../app/actions/tool-preset-actions.c:54
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:54
+#| msgctxt "tool-preset-action"
+#| msgid "D_uplicate Tool Preset"
+msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
 msgstr "Nhân đô_i công cụ định nghĩa trước"
 
-#: ../app/actions/tool-preset-actions.c:55
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:55
+#| msgctxt "tool-preset-action"
+#| msgid "Duplicate this tool preset"
+msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
 msgstr "Nhân đôi công cụ định nghĩa trước"
 
-#: ../app/actions/tool-preset-actions.c:60
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:60
+#| msgctxt "tool-preset-action"
+#| msgid "Copy Tool Preset _Location"
+msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
 msgstr "Chép _vị trí công cụ định nghĩa trước"
 
-#: ../app/actions/tool-preset-actions.c:61
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:61
+#| msgctxt "tool-preset-action"
+#| msgid "Copy tool preset file location to clipboard"
+msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
 msgstr "Sao chép địa điểm của tập tin bảng chọn vào bảng nháp"
 
-#: ../app/actions/tool-preset-actions.c:66
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:66
+#| msgctxt "tool-options-action"
+#| msgid "_Delete Tool Preset"
+msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
 msgstr "_Xóa công cụ định nghĩa trước"
 
-#: ../app/actions/tool-preset-actions.c:67
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:67
+#| msgctxt "tool-preset-action"
+#| msgid "Delete this tool preset"
+msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
 msgstr "Xóa công cụ định nghĩa trước này"
 
-#: ../app/actions/tool-preset-actions.c:72
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:72
+#| msgctxt "tool-preset-action"
+#| msgid "_Refresh Tool Presets"
+msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
 msgstr "_Cập nhật công cụ định nghĩa trước"
 
-#: ../app/actions/tool-preset-actions.c:73
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:73
+#| msgctxt "tool-preset-action"
+#| msgid "Refresh tool presets"
+msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
 msgstr "Cập nhật công cụ định nghĩa trước"
 
-#: ../app/actions/tool-preset-actions.c:81
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:81
+#| msgctxt "tool-preset-action"
+#| msgid "_Edit Tool Preset..."
+msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr "_Sửa công cụ định nghĩa trước"
+msgstr "_Sửa công cụ định nghĩa trước..."
 
-#: ../app/actions/tool-preset-actions.c:82
-msgctxt "tool-preset-action"
+#: ../app/actions/tool-presets-actions.c:82
+#| msgctxt "tool-preset-action"
+#| msgid "Edit this tool preset"
+msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
 msgstr "Sửa công cụ định nghĩa trước"
 
@@ -5170,10 +5196,9 @@ msgid "_Fit Image in Window"
 msgstr "_Vừa ảnh khít cửa sổ"
 
 #: ../app/actions/view-actions.c:89
-#, fuzzy
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr "Điều chỉnh tỷ lệ phong để hiện rõ toàn bộ ảnh"
+msgstr "Điều chỉnh tỷ lệ phóng để hiện nguyên ảnh"
 
 #: ../app/actions/view-actions.c:94
 msgctxt "view-action"
@@ -5385,6 +5410,18 @@ msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Bật/tắt hiện toàn màn hình"
 
+#: ../app/actions/view-actions.c:238
+#| msgctxt "config-action"
+#| msgid "Use _GEGL"
+msgctxt "view-action"
+msgid "Use GEGL"
+msgstr "Dùng GEGL"
+
+#: ../app/actions/view-actions.c:239
+msgctxt "view-action"
+msgid "Use GEGL to create this window's projection"
+msgstr "Dùng GEGL để tạo ánh xạ cho cửa sổ này"
+
 #: ../app/actions/view-actions.c:263
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
@@ -5592,12 +5629,12 @@ msgstr "Đặt màu đệm vùng vẽ"
 msgid "Set Custom Canvas Padding Color"
 msgstr "Đặt màu đệm vùng vẽ tự chọn"
 
-#: ../app/actions/window-actions.c:168
+#: ../app/actions/window-actions.c:170
 #, c-format
 msgid "Screen %s"
 msgstr "Màn hình %s"
 
-#: ../app/actions/window-actions.c:170
+#: ../app/actions/window-actions.c:172
 #, c-format
 msgid "Move this window to screen %s"
 msgstr "Chuyển sang màn hình %s"
@@ -5623,13 +5660,11 @@ msgid "Next Image"
 msgstr "Ảnh tiếp theo"
 
 #: ../app/actions/windows-actions.c:104
-#| msgid "Add text to the image"
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "Chuyển sang ảnh tiếp theo"
 
 #: ../app/actions/windows-actions.c:109
-#| msgid "_Previous Tip"
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "Ảnh trước"
@@ -6492,7 +6527,7 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Khi bật thì bấm phím F1 sẽ mở bộ duyệt trợ giúp."
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:133
-#: ../app/core/gimp-units.c:167 ../app/gui/session.c:243
+#: ../app/core/gimp-units.c:167 ../app/gui/session.c:279
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
 msgstr "lỗi phân tích nghiêm trọng"
@@ -7279,8 +7314,8 @@ msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Jitter"
 
-#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:344
-#: ../app/gui/session.c:349 ../app/menus/menus.c:464
+#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:366
+#: ../app/gui/session.c:392 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:206
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7428,7 +7463,6 @@ msgstr "Cập nhật vùng nhớ đệm của thẻ"
 
 #: ../app/core/gimpbrush-load.c:178
 #, c-format
-#| msgid "Could not read %d bytes from '%s': %s"
 msgid "Could not read %d byte from '%s': %s"
 msgid_plural "Could not read %d bytes from '%s': %s"
 msgstr[0] "Không thể đọc %d byte từ '%s': %s"
@@ -7465,8 +7499,7 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
-"Lỗi phân tích nghiêm trọng trong tập tin chổi '%s': hình như tập tin bị "
-"cụt."
+"Lỗi phân tích nghiêm trọng trong tập tin chổi '%s': hình như tập tin bị cụt."
 
 #: ../app/core/gimpbrush-load.c:279 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
@@ -7750,7 +7783,7 @@ msgid "Selection Mask"
 msgstr "Mặt nạ vùng chọn"
 
 #: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:113
-#: ../app/widgets/gimplayertreeview.c:284
+#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity"
 msgstr "Độ mờ đục"
 
@@ -8344,14 +8377,14 @@ msgid "(Preview may be out of date)"
 msgstr "(Có lẽ khung xem thử quá thời)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:438
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:437
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d điểm ảnh"
 
-#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:339
+#: ../app/core/gimpimagefile.c:797 ../app/display/gimpdisplayshell-title.c:336
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -8376,6 +8409,10 @@ msgstr "Đính ký sinh vào hạng mục"
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Gỡ ký sinh khỏi hạng mục"
+
+#: ../app/core/gimpitem-exclusive.c:81
+msgid "Set Item Exclusive Visible"
+msgstr "Đặt mục hiển thị dành riêng"
 
 #: ../app/core/gimplayer-floating-sel.c:95
 msgctxt "undo-type"
@@ -9844,10 +9881,9 @@ msgid "Pointer re_ndering:"
 msgstr "Vẽ co_n trỏ :"
 
 #: ../app/dialogs/preferences-dialog.c:2126
-#, fuzzy
 #| msgid "Pointer re_ndering:"
 msgid "Pointer _handedness:"
-msgstr "Con trỏ _tự do:"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2138
 msgid "Image Window Appearance"
@@ -9934,7 +9970,7 @@ msgid "Vertical"
 msgstr "Dọc"
 
 #: ../app/dialogs/preferences-dialog.c:2336
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "ppi"
 
@@ -10158,7 +10194,6 @@ msgid "Tool Preset Folders"
 msgstr "Thư mục preset của công cụ"
 
 #: ../app/dialogs/preferences-dialog.c:2751
-#| msgid "Select Theme Folders"
 msgid "Select Tool Preset Folders"
 msgstr "Chọn thư mục preset"
 
@@ -10457,7 +10492,6 @@ msgid "Rule of fifths"
 msgstr "Quy tắc phần năm"
 
 #: ../app/display/display-enums.c:64
-#, fuzzy
 msgctxt "guides-type"
 msgid "Golden sections"
 msgstr "Lát cắt vàng"
@@ -10508,9 +10542,8 @@ msgstr "Đơn vị"
 
 #. Selection Bounding Box
 #: ../app/display/gimpcursorview.c:256
-#, fuzzy
 msgid "Selection Bounding Box"
-msgstr "Bộ sửa vùng chọn"
+msgstr "Ô viền chọn"
 
 #. Width
 #: ../app/display/gimpcursorview.c:292
@@ -10543,7 +10576,7 @@ msgid "Navigate the image display"
 msgstr "Định vị hiển thị ảnh"
 
 #: ../app/display/gimpdisplayshell.c:743
-#: ../app/display/gimpdisplayshell.c:1321 ../app/widgets/gimptoolbox.c:250
+#: ../app/display/gimpdisplayshell.c:1321 ../app/widgets/gimptoolbox.c:256
 msgid "Drop image files here to open them"
 msgstr "Thả tập tin để mở"
 
@@ -10612,13 +10645,13 @@ msgid "The active layer's pixels are locked."
 msgstr "Điểm ảnh của lớp hiện tại bị khóa."
 
 #: ../app/display/gimpdisplayshell-dnd.c:535
-#: ../app/widgets/gimplayertreeview.c:724
+#: ../app/widgets/gimplayertreeview.c:725
 msgid "Drop layers"
 msgstr "Thả lớp"
 
 #: ../app/display/gimpdisplayshell-dnd.c:668
 #: ../app/display/gimpdisplayshell-dnd.c:685
-#: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:266
+#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:266
 msgid "Dropped Buffer"
 msgstr "Bộ đệm đã thả"
 
@@ -10668,21 +10701,21 @@ msgstr "(đã sửa đổi)"
 msgid "(clean)"
 msgstr "(gột)"
 
-#: ../app/display/gimpdisplayshell-title.c:360
-#: ../app/display/gimpdisplayshell-title.c:373
-#: ../app/widgets/gimpactiongroup.c:891
+#: ../app/display/gimpdisplayshell-title.c:357
+#: ../app/display/gimpdisplayshell-title.c:370
+#: ../app/widgets/gimpactiongroup.c:860
 msgid "(none)"
 msgstr "(không có)"
 
-#: ../app/display/gimpdisplayshell-title.c:502
+#: ../app/display/gimpdisplayshell-title.c:499
 msgid " (exported)"
 msgstr "(xuất)"
 
-#: ../app/display/gimpdisplayshell-title.c:504
+#: ../app/display/gimpdisplayshell-title.c:501
 msgid " (overwritten)"
 msgstr "(ghi đè)"
 
-#: ../app/display/gimpdisplayshell-title.c:510
+#: ../app/display/gimpdisplayshell-title.c:507
 msgid " (imported)"
 msgstr "(đã nhập)"
 
@@ -10705,16 +10738,16 @@ msgstr "Phần bổ sung %s trả về SUCCESS (thành công) nhưng không tr�
 msgid "%s plug-In could not open image"
 msgstr "Phần bổ sung %s không thể mở ảnh"
 
-#: ../app/file/file-open.c:523
+#: ../app/file/file-open.c:526
 msgid "Image doesn't contain any layers"
 msgstr "Ảnh không chứa lớp nào"
 
-#: ../app/file/file-open.c:576
+#: ../app/file/file-open.c:579
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Việc mở « %s » thất bại: %s"
 
-#: ../app/file/file-open.c:683
+#: ../app/file/file-open.c:686
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10739,7 +10772,6 @@ msgid "Invalid character sequence in URI"
 msgstr "Gặp dây ký tự không hợp lệ trong URI"
 
 #: ../app/gegl/gimp-gegl-enums.c:24
-#| msgid "Create a New Image"
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
 msgstr "Tạo hoặc chỉnh khung"
@@ -10753,11 +10785,11 @@ msgstr "Thay đổi kích cỡ của khung thành kích cỡ của ảnh"
 msgid "not a GIMP Curves file"
 msgstr "không phải là một tập tin đường cong GIMP"
 
-#: ../app/gegl/gimpcurvesconfig.c:400 ../app/gegl/gimplevelsconfig.c:711
+#: ../app/gegl/gimpcurvesconfig.c:400 ../app/gegl/gimplevelsconfig.c:786
 msgid "parse error"
 msgstr "lỗi phân tích"
 
-#: ../app/gegl/gimplevelsconfig.c:664
+#: ../app/gegl/gimplevelsconfig.c:739
 msgid "not a GIMP Levels file"
 msgstr "không phải là tập tin mức GIMP"
 
@@ -10772,7 +10804,6 @@ msgid ""
 msgstr "Chuyển tập các hệ số vùng đệm thành tọa độ vùng đệm của GIMP cage"
 
 #: ../app/gegl/gimpoperationcagetransform.c:125
-#| msgid "Fill with _background color"
 msgid "Fill with plain color"
 msgstr "Tô bằng màu thuần"
 
@@ -10824,11 +10855,11 @@ msgstr "Tránh/Cháy"
 msgid "Eraser"
 msgstr "Xóa"
 
-#: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:52
+#: ../app/paint/gimpheal.c:128 ../app/tools/gimphealtool.c:52
 msgid "Heal"
 msgstr "Sửa"
 
-#: ../app/paint/gimpheal.c:157
+#: ../app/paint/gimpheal.c:167
 msgid "Healing does not operate on indexed layers."
 msgstr "Việc làm làm (healing) không hoạt động trên lớp có mục lục."
 
@@ -10889,7 +10920,6 @@ msgid "How fade is repeated as you paint"
 msgstr "Đường mờ dần lặp lại ra sao khi vẽ"
 
 #: ../app/paint/gimppaintoptions.c:255
-#| msgid "Paint fuzzy brush strokes"
 msgid "Paint smoother strokes"
 msgstr "Sơn nét chổi mờ"
 
@@ -11039,81 +11069,98 @@ msgstr "Không sửa được chổi '%s'"
 msgid "Brush '%s' is not a generated brush"
 msgstr "Chổi '%s' không phải loại được sinh ra"
 
-#: ../app/pdb/gimppdb-utils.c:133
+#: ../app/pdb/gimppdb-utils.c:134
+#| msgid "Invalid empty paint method name"
+msgid "Invalid empty paint dynamics name"
+msgstr ""
+
+#: ../app/pdb/gimppdb-utils.c:143
+#, c-format
+#| msgid "Pattern '%s' not found"
+msgid "Paint dynamics '%s' not found"
+msgstr "Không tìm thấy dynamics paint '%s'"
+
+#: ../app/pdb/gimppdb-utils.c:148
+#, c-format
+#| msgid "Gradient '%s' is not editable"
+msgid "Paint dynamics '%s' is not editable"
+msgstr "Dynamics paint '%s' không được phép sửa"
+
+#: ../app/pdb/gimppdb-utils.c:168
 msgid "Invalid empty pattern name"
 msgstr "Tên mẫu trống và không hợp lệ"
 
-#: ../app/pdb/gimppdb-utils.c:142
+#: ../app/pdb/gimppdb-utils.c:177
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "Không tìm thấy mẫu '%s'"
 
-#: ../app/pdb/gimppdb-utils.c:162
+#: ../app/pdb/gimppdb-utils.c:197
 msgid "Invalid empty gradient name"
 msgstr "Tên gradient trống và không hợp lệ"
 
-#: ../app/pdb/gimppdb-utils.c:171
+#: ../app/pdb/gimppdb-utils.c:206
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "Không tìm thấy độ dốc '%s'"
 
-#: ../app/pdb/gimppdb-utils.c:176
+#: ../app/pdb/gimppdb-utils.c:211
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "Không sửa được gradient '%s'"
 
-#: ../app/pdb/gimppdb-utils.c:197
+#: ../app/pdb/gimppdb-utils.c:232
 msgid "Invalid empty palette name"
 msgstr "Tên bảng màu rỗng, sai"
 
-#: ../app/pdb/gimppdb-utils.c:206
+#: ../app/pdb/gimppdb-utils.c:241
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "Không tìm thấy bảng màu '%s'"
 
-#: ../app/pdb/gimppdb-utils.c:211
+#: ../app/pdb/gimppdb-utils.c:246
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "Không sửa được palette '%s'"
 
-#: ../app/pdb/gimppdb-utils.c:231
+#: ../app/pdb/gimppdb-utils.c:266
 msgid "Invalid empty font name"
 msgstr "Tên font trống và không hợp lệ"
 
-#: ../app/pdb/gimppdb-utils.c:241
+#: ../app/pdb/gimppdb-utils.c:276
 #, c-format
 msgid "Font '%s' not found"
 msgstr "Không tìm thấy font '%s'"
 
-#: ../app/pdb/gimppdb-utils.c:260
+#: ../app/pdb/gimppdb-utils.c:295
 msgid "Invalid empty buffer name"
 msgstr "Tên vùng đệm trống và không hợp lệ"
 
-#: ../app/pdb/gimppdb-utils.c:270
+#: ../app/pdb/gimppdb-utils.c:305
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Không tìm thấy bộ đêm có tên '%s'"
 
-#: ../app/pdb/gimppdb-utils.c:289
+#: ../app/pdb/gimppdb-utils.c:324
 msgid "Invalid empty paint method name"
 msgstr "Tên phương pháp vẽ trống và không hợp lệ"
 
-#: ../app/pdb/gimppdb-utils.c:299
+#: ../app/pdb/gimppdb-utils.c:334
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Phương pháp vẽ '%s' không tồn tại"
 
-#: ../app/pdb/gimppdb-utils.c:318
+#: ../app/pdb/gimppdb-utils.c:353
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr "Không thể dùng '%s' (%d) vì nó chưa được thêm vào ảnh"
 
-#: ../app/pdb/gimppdb-utils.c:328
+#: ../app/pdb/gimppdb-utils.c:363
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr "Không thể dùng '%s' (%d) vì nó chưa gắn với ảnh nào"
 
-#: ../app/pdb/gimppdb-utils.c:357
+#: ../app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -11121,59 +11168,59 @@ msgid ""
 msgstr ""
 "Không thể dùng '%s' (%d) vì nó không phải là con trực tiếp trong một cây"
 
-#: ../app/pdb/gimppdb-utils.c:385
+#: ../app/pdb/gimppdb-utils.c:420
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr "Không thể dùng '%s' (%d) và '%s' (%d) vì nó không cùng một cây"
 
-#: ../app/pdb/gimppdb-utils.c:410
+#: ../app/pdb/gimppdb-utils.c:445
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "'%s' (%d) phải là con hay cháu của '%s' (%d)"
 
-#: ../app/pdb/gimppdb-utils.c:434
+#: ../app/pdb/gimppdb-utils.c:469
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "'%s' (%d) đã được thêm vào một ảnh nào đó"
 
-#: ../app/pdb/gimppdb-utils.c:442
+#: ../app/pdb/gimppdb-utils.c:477
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Thêm '%s' (%d) vào sai ảnh"
 
-#: ../app/pdb/gimppdb-utils.c:461
+#: ../app/pdb/gimppdb-utils.c:496
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr "Không thể sửa '%s' (%d) vì nội dung của nó bị khóa"
 
-#: ../app/pdb/gimppdb-utils.c:481
+#: ../app/pdb/gimppdb-utils.c:516
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr "Không thể dùng '%s' (%d) vì nó không phải là nhóm"
 
-#: ../app/pdb/gimppdb-utils.c:501
+#: ../app/pdb/gimppdb-utils.c:536
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "Không thể sửa '%s' (%d) vì nó không phải là một nhóm"
 
-#: ../app/pdb/gimppdb-utils.c:522
+#: ../app/pdb/gimppdb-utils.c:557
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr "Không thể dùng lớp '%s' (%d) vì nó không phải là lớp văn bản"
 
-#: ../app/pdb/gimppdb-utils.c:563
+#: ../app/pdb/gimppdb-utils.c:598
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr "Ảnh '%s' (%d) có loại '%s' nhưng loại '%s' mới là đúng"
 
-#: ../app/pdb/gimppdb-utils.c:586
+#: ../app/pdb/gimppdb-utils.c:621
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
 msgstr "Ảnh '%s' (%d) đã có loại '%s'"
 
-#: ../app/pdb/gimppdb-utils.c:614
+#: ../app/pdb/gimppdb-utils.c:649
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Đối tượng véc tơ %d không chưa đường vẽ với ID %d"
@@ -11186,7 +11233,7 @@ msgid ""
 msgstr ""
 "Gọi thủ tục '%s' sai tham số #%d. Lẽ ra phải là %s nhưng được gọi là %s."
 
-#: ../app/pdb/gimppdbcontext.c:82
+#: ../app/pdb/gimppdbcontext.c:88
 #: ../app/tools/gimpforegroundselectoptions.c:79
 #: ../app/tools/gimpselectionoptions.c:78
 msgid "Smooth edges"
@@ -11197,7 +11244,7 @@ msgstr "Làm mịn cạnh"
 msgid "Procedure '%s' returned no return values"
 msgstr "Thủ tục '%s' không trả về giá trị"
 
-#: ../app/pdb/gimpprocedure.c:641
+#: ../app/pdb/gimpprocedure.c:639
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -11206,7 +11253,7 @@ msgstr ""
 "Thủ tục '%s' trả về sai kiểu giá trị cho '%s' (#%d). Lẽ ra phải là %s nhưng "
 "nhận được %s."
 
-#: ../app/pdb/gimpprocedure.c:653
+#: ../app/pdb/gimpprocedure.c:651
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -11215,7 +11262,7 @@ msgstr ""
 "Thủ tục '%s' được gọi sai kiểu giá trị cho '%s' (#%d). Lẽ ra phải là %s "
 "nhưng nhận được %s."
 
-#: ../app/pdb/gimpprocedure.c:685
+#: ../app/pdb/gimpprocedure.c:683
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -11224,7 +11271,7 @@ msgstr ""
 "Thủ tục '%s' trả về ID không hợp lệ cho tham số '%s'. Thông thường đây là "
 "lỗi phần bổ sung dùng lớp không còn tồn tại."
 
-#: ../app/pdb/gimpprocedure.c:697
+#: ../app/pdb/gimpprocedure.c:695
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11233,7 +11280,7 @@ msgstr ""
 "Thủ tục '%s' được gọi với ID không hợp lệ cho '%s'. Thông thường đây là lỗi "
 "phần bổ sung dùng lớp không tồn tại."
 
-#: ../app/pdb/gimpprocedure.c:713
+#: ../app/pdb/gimpprocedure.c:711
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -11242,7 +11289,7 @@ msgstr ""
 "Thủ tục '%s' trả về ID không hợp lệ cho tham số '%s'. Thông thường đây là "
 "lỗi phần bổ sung làm việc với ảnh không còn tồn tại."
 
-#: ../app/pdb/gimpprocedure.c:725
+#: ../app/pdb/gimpprocedure.c:723
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11251,7 +11298,7 @@ msgstr ""
 "Thủ tục '%s' được gọi với ID không hợp lệ cho tham số '%s'. Thông thường đây "
 "là lỗi phần bổ sung muốn dùng ảnh không còn tồn tại."
 
-#: ../app/pdb/gimpprocedure.c:745
+#: ../app/pdb/gimpprocedure.c:743
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -11260,7 +11307,7 @@ msgstr ""
 "Thủ tục '%s' trả về  '%s' cho '%s' (#%d, kiểu %s). Giá trị này nằm ngoài "
 "khoảng cho phép."
 
-#: ../app/pdb/gimpprocedure.c:758
+#: ../app/pdb/gimpprocedure.c:756
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -11269,7 +11316,7 @@ msgstr ""
 "Thủ tục '%s'được gọi với giá trị '%s' cho tham số '%s' (#%d, kiểu %s). Giá "
 "trị này nằm ngoài khoảng cho phép."
 
-#: ../app/pdb/image-cmds.c:2364
+#: ../app/pdb/image-cmds.c:2359
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -11297,7 +11344,7 @@ msgstr "Tạo lớp văn bản thất bại"
 #: ../app/pdb/text-layer-cmds.c:786 ../app/pdb/text-layer-cmds.c:856
 #: ../app/pdb/text-layer-cmds.c:928 ../app/pdb/text-layer-cmds.c:1000
 #: ../app/pdb/text-layer-cmds.c:1072 ../app/pdb/text-layer-cmds.c:1114
-#: ../app/pdb/text-layer-cmds.c:1198
+#: ../app/pdb/text-layer-cmds.c:1196
 msgid "Set text layer attribute"
 msgstr "Đặt thuộc tính lớp văn bản"
 
@@ -11702,7 +11749,6 @@ msgid "Click to add this path to the list"
 msgstr "Nhắp để thêm đường dẫn vào danh sách"
 
 #: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:339
-#| msgid "Gradients"
 msgid "Gradient"
 msgstr "Độ dốc"
 
@@ -11719,7 +11765,6 @@ msgid "Adaptive supersampling"
 msgstr "Siêu lấy mẫu thích nghi"
 
 #: ../app/tools/gimpblendoptions.c:268
-#| msgid "Max depth:"
 msgid "Max depth"
 msgstr "Độ dài tối đa"
 
@@ -11743,17 +11788,17 @@ msgstr "Việc trộn không hoạt động trên lớp có mục lục."
 msgid "No gradient available for use with this tool."
 msgstr "Không có độ dốc sẵn sàng dùng với công cụ này."
 
-#: ../app/tools/gimpblendtool.c:447 ../app/tools/gimppainttool.c:623
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s cho góc bị ép buộc"
 
-#: ../app/tools/gimpblendtool.c:448
+#: ../app/tools/gimpblendtool.c:453
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s để di chuyển cả đường này"
 
-#: ../app/tools/gimpblendtool.c:452
+#: ../app/tools/gimpblendtool.c:457
 msgid "Blend: "
 msgstr "Trộn: "
 
@@ -11922,21 +11967,22 @@ msgstr "Nhân đô_i"
 msgid "Click to clone"
 msgstr "Nhấn để nhân đôi"
 
-#: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:90
+#: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:91
 #, c-format
 msgid "%s to set a new clone source"
 msgstr "%s để đặt nguồn nhân đôi mới"
 
-#: ../app/tools/gimpclonetool.c:89
+#. Translators: the translation of "Click" must be the first word
+#: ../app/tools/gimpclonetool.c:90
 msgid "Click to set a new clone source"
 msgstr "Nhấn để đặt nguồn nhân đôi"
 
-#: ../app/tools/gimpclonetool.c:108
+#: ../app/tools/gimpclonetool.c:109
 #: ../app/tools/gimpperspectiveclonetool.c:899
 msgid "Source"
 msgstr "Nguồn"
 
-#: ../app/tools/gimpclonetool.c:130 ../app/tools/gimphealtool.c:110
+#: ../app/tools/gimpclonetool.c:131 ../app/tools/gimphealtool.c:111
 #: ../app/tools/gimpperspectiveclonetool.c:921
 msgid "Alignment:"
 msgstr "Canh lề :"
@@ -12070,7 +12116,6 @@ msgstr "Bán kinh trung bình của Bộ chọn màu"
 #: ../app/tools/gimprectangleselectoptions.c:163
 #: ../app/tools/gimpselectionoptions.c:277
 #: ../app/widgets/gimpbrusheditor.c:155
-#| msgid "Radius:"
 msgid "Radius"
 msgstr "Bán kính"
 
@@ -12367,7 +12412,6 @@ msgid "Range"
 msgstr "Khoảng"
 
 #: ../app/tools/gimpdodgeburntool.c:236
-#| msgid "Exposure:"
 msgid "Exposure"
 msgstr "Phơi sáng"
 
@@ -12465,7 +12509,6 @@ msgstr "Lật dọc"
 #. * could be if someone defined FLIP_DIAGONAL, say...
 #.
 #: ../app/tools/gimpfliptool.c:196
-#| msgid "Flip"
 msgctxt "undo-desc"
 msgid "Flip"
 msgstr "Lật"
@@ -12665,12 +12708,13 @@ msgstr "_Sửa"
 msgid "Click to heal"
 msgstr "Nhấn để sửa"
 
-#: ../app/tools/gimphealtool.c:77 ../app/tools/gimphealtool.c:81
+#: ../app/tools/gimphealtool.c:77 ../app/tools/gimphealtool.c:82
 #, c-format
 msgid "%s to set a new heal source"
 msgstr "%s để đặt nguồn sửa mới"
 
-#: ../app/tools/gimphealtool.c:80
+#. Translators: the translation of "Click" must be the first word
+#: ../app/tools/gimphealtool.c:81
 msgid "Click to set a new heal source"
 msgstr "Nhấn để đặt nguồn sửa mới"
 
@@ -12791,7 +12835,6 @@ msgid "Tilt"
 msgstr "Nghiêng"
 
 #: ../app/tools/gimpinkoptions-gui.c:101
-#| msgid "Speed:"
 msgid "Speed"
 msgstr "Tốc độ"
 
@@ -13090,12 +13133,11 @@ msgstr "Chổi _sơn"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
 #: ../app/tools/gimpselectionoptions.c:217
-#: ../app/widgets/gimpbrushselect.c:185 ../app/widgets/gimplayertreeview.c:268
+#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
 msgstr "Chế độ:"
 
 #: ../app/tools/gimppaintoptions-gui.c:123
-#| msgid "_Brush"
 msgid "Brush"
 msgstr "Chổi"
 
@@ -13112,7 +13154,6 @@ msgid "Reset aspect ratio to brush's native"
 msgstr "Đặt lại tỉ số hướng của native của chổi"
 
 #: ../app/tools/gimppaintoptions-gui.c:200
-#| msgid "Reset all Filters"
 msgid "Reset angle to zero"
 msgstr "Đặt lại góc về không"
 
@@ -13129,12 +13170,10 @@ msgid "Dynamics Options"
 msgstr "Tùy chọn dynamic"
 
 #: ../app/tools/gimppaintoptions-gui.c:286
-#| msgid "Saved Options"
 msgid "Fade Options"
 msgstr "Tùy chọn làm mờ"
 
 #: ../app/tools/gimppaintoptions-gui.c:300
-#| msgid "Fade out"
 msgid "Fade length"
 msgstr "Độ dài làm mờ"
 
@@ -13144,12 +13183,10 @@ msgid "Reverse"
 msgstr "Ngược lại"
 
 #: ../app/tools/gimppaintoptions-gui.c:334
-#| msgid "Tool Options"
 msgid "Color Options"
 msgstr "Tùy chọn màu"
 
 #: ../app/tools/gimppaintoptions-gui.c:360
-#| msgid "Amount:"
 msgid "Amount"
 msgstr "Lượng"
 
@@ -13162,7 +13199,6 @@ msgid "Smooth stroke"
 msgstr "Đường trơn"
 
 #: ../app/tools/gimppaintoptions-gui.c:392
-#| msgid "Height"
 msgid "Weight"
 msgstr "Chiều Cao"
 
@@ -13229,7 +13265,6 @@ msgid "Transformation Matrix"
 msgstr "Ma trận chuyển dạng"
 
 #: ../app/tools/gimpperspectivetool.c:256
-#| msgid "Perspective"
 msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Phối cảnh"
@@ -13312,7 +13347,6 @@ msgid "Unit of fixed width, height or size"
 msgstr "Đơn vị của chiều dài, chiều rộng hoặc cỡ cố định"
 
 #: ../app/tools/gimprectangleoptions.c:317
-#| msgid "Expand from center"
 msgid "Expand selection from center outwards"
 msgstr "Mở rộng phần chọn từ trung tâm ra ngoài"
 
@@ -13351,7 +13385,6 @@ msgid "Shrink merged"
 msgstr "Làm co phần đã trộn"
 
 #: ../app/tools/gimprectangleselectoptions.c:83
-#| msgid "Move layers & selections"
 msgid "Round corners of selection"
 msgstr "Góc tròn của của vùng chọn"
 
@@ -13389,7 +13422,6 @@ msgid "Base selection on all visible layers"
 msgstr "Vùng chọn dựa vào mọi lớp hiển thị"
 
 #: ../app/tools/gimpregionselectoptions.c:101
-#| msgid "Selection Editor"
 msgid "Selection criterion"
 msgstr "Tiêu chí chọn"
 
@@ -13565,7 +13597,6 @@ msgid "Font size unit"
 msgstr "Đơn vị cỡ phông"
 
 #: ../app/tools/gimptextoptions.c:136
-#| msgid "Fonts"
 msgid "Font size"
 msgstr "Cỡ phông"
 
@@ -13581,7 +13612,6 @@ msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Ngôn ngữ sẽ chịu hiệu ứng khi render"
 
 #: ../app/tools/gimptextoptions.c:164
-#| msgid "Alignment:"
 msgid "Text alignment"
 msgstr "Canh lề văn bản"
 
@@ -13608,7 +13638,6 @@ msgid "Use an external editor window for text entry"
 msgstr "Dùng cửa sổ soạn thảo ngoài khi nhập văn bản"
 
 #: ../app/tools/gimptextoptions.c:510
-#| msgid "Fonts"
 msgid "Font"
 msgstr "Phông"
 
@@ -13719,12 +13748,10 @@ msgid "Direction of transformation"
 msgstr "Hướng chuyển dạng"
 
 #: ../app/tools/gimptransformoptions.c:105
-#| msgid "Interpolation:"
 msgid "Interpolation method"
 msgstr "Phương pháp Nội suy"
 
 #: ../app/tools/gimptransformoptions.c:111
-#| msgid "Show _tooltips"
 msgid "How to clip"
 msgstr "Cắt như thế nào"
 
@@ -13769,7 +13796,6 @@ msgid "Image opacity"
 msgstr "Độ đục ảnh"
 
 #: ../app/tools/gimptransformoptions.c:311
-#| msgid "Show image size"
 msgid "Show image preview"
 msgstr "Hiện ảnh xem trước"
 
@@ -14165,7 +14191,7 @@ msgstr "Lỗi nhập đường dẫn từ « %s »: %s"
 msgid "_Search:"
 msgstr "_Tìm kiếm:"
 
-#: ../app/widgets/gimpactiongroup.c:888
+#: ../app/widgets/gimpactiongroup.c:857
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -14214,7 +14240,6 @@ msgid "Removing shortcut failed."
 msgstr "Lỗi gỡ bỏ phím tắt."
 
 #: ../app/widgets/gimpbrusheditor.c:166
-#| msgid "Spikes:"
 msgid "Spikes"
 msgstr "Gai"
 
@@ -14236,10 +14261,6 @@ msgstr "Khoảng cách"
 #: ../app/widgets/gimpbrushfactoryview.c:84
 msgid "Percentage of width of brush"
 msgstr "Phần trăm của độ rộng chổi"
-
-#: ../app/widgets/gimpbrushselect.c:172
-msgid "Opacity:"
-msgstr "Độ mờ đục:"
 
 #: ../app/widgets/gimpbufferview.c:179 ../app/widgets/gimpbufferview.c:264
 #: ../app/widgets/gimpeditor.c:748
@@ -14344,15 +14365,15 @@ msgstr "Đen:"
 msgid "Alpha:"
 msgstr "Anfa"
 
-#: ../app/widgets/gimpcolormapeditor.c:199
+#: ../app/widgets/gimpcolormapeditor.c:200
 msgid "Color index:"
 msgstr "Phụ lục màu:"
 
-#: ../app/widgets/gimpcolormapeditor.c:209
+#: ../app/widgets/gimpcolormapeditor.c:210
 msgid "HTML notation:"
 msgstr "Cách ghi HTML:"
 
-#: ../app/widgets/gimpcolormapeditor.c:465
+#: ../app/widgets/gimpcolormapeditor.c:466
 msgid "Only indexed images have a colormap."
 msgstr "Chỉ những ảnh có chỉ mục mới có colormap - bản đồ màu"
 
@@ -14360,11 +14381,11 @@ msgstr "Chỉ những ảnh có chỉ mục mới có colormap - bản đồ mà
 msgid "Palette"
 msgstr "Bảng màu"
 
-#: ../app/widgets/gimpcontainerpopup.c:591
+#: ../app/widgets/gimpcontainerpopup.c:590
 msgid "Smaller Previews"
 msgstr "Xem thử nhỏ"
 
-#: ../app/widgets/gimpcontainerpopup.c:596
+#: ../app/widgets/gimpcontainerpopup.c:595
 msgid "Larger Previews"
 msgstr "Xem thử lớn"
 
@@ -14526,10 +14547,6 @@ msgstr ""
 "động."
 
 #: ../app/widgets/gimpcontrollerlist.c:532
-#| msgid ""
-#| "There can only be one active wheel controller.\n"
-#| "\n"
-#| "You already have a wheel controller in your list of active controllers."
 msgid ""
 "There can only be one active mouse controller.\n"
 "\n"
@@ -14634,12 +14651,10 @@ msgid "Button 12"
 msgstr "Nút 12"
 
 #: ../app/widgets/gimpcontrollermouse.c:203
-#| msgid "Mouse Pointers"
 msgid "Mouse Buttons"
 msgstr "Nút chuột"
 
 #: ../app/widgets/gimpcontrollermouse.c:244
-#| msgid "Mouse Wheel Events"
 msgid "Mouse Button Events"
 msgstr "Sự kiện nút chuột"
 
@@ -14837,7 +14852,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: ../app/widgets/gimpdockbook.c:292
+#: ../app/widgets/gimpdockbook.c:295
 msgid "Configure this tab"
 msgstr "Cấu hình thanh này"
 
@@ -14970,7 +14985,6 @@ msgstr "Màu nền đặt là:"
 #: ../app/widgets/gimpgradienteditor.c:1235
 #: ../app/widgets/gimpgradienteditor.c:1296
 #, c-format
-#| msgid "%s%sDrag: move & compress"
 msgid "%s-Drag: move & compress"
 msgstr "s%s-Kéo: di chuyển và nén"
 
@@ -14983,7 +14997,6 @@ msgstr "Kéo: chuyển"
 #: ../app/widgets/gimpgradienteditor.c:1273
 #: ../app/widgets/gimpgradienteditor.c:1294
 #, c-format
-#| msgid "%s%sClick: extend selection"
 msgid "%s-Click: extend selection"
 msgstr "%s-Nhắp: mở rộng vùng chọn"
 
@@ -15184,44 +15197,35 @@ msgid "Number of paths:"
 msgstr "Số đường dẫn:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:408
+#: ../app/widgets/gimpimagepropview.c:407
 msgid "None"
 msgstr "Không có"
 
-#: ../app/widgets/gimpimagepropview.c:462
+#: ../app/widgets/gimpimagepropview.c:461
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "điểm ảnh/%s"
 
-#: ../app/widgets/gimpimagepropview.c:464
+#: ../app/widgets/gimpimagepropview.c:463
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:485
+#: ../app/widgets/gimpimagepropview.c:484
 msgid "colors"
 msgstr "màu"
 
-#: ../app/widgets/gimpitemtreeview.c:715
+#: ../app/widgets/gimpitemtreeview.c:716
 msgid "Lock:"
 msgstr "Khóa:"
 
-#: ../app/widgets/gimpitemtreeview.c:1494
-msgid "Set Item Exclusive Visible"
-msgstr "Đặt mục hiển thị dành riêng"
-
-#: ../app/widgets/gimpitemtreeview.c:1502
-msgid "Set Item Exclusive Linked"
-msgstr "Đặt mục đã liên kết dành riêng"
-
-#: ../app/widgets/gimplayertreeview.c:306
+#: ../app/widgets/gimplayertreeview.c:307
 msgid "Lock alpha channel"
 msgstr "Khóa kênh anfa"
 
 #: ../app/widgets/gimpmessagebox.c:433
 #, c-format
-#| msgid "Message repeated once."
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
 msgstr[0] "Lặp lại thông điệp %d lần."
@@ -15356,7 +15360,7 @@ msgstr "nhập thẻ"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1714
+#: ../app/widgets/gimptagentry.c:1732
 msgid ","
 msgstr ","
 
@@ -15443,29 +15447,24 @@ msgstr "Đổi kerning của văn bản đã chọn"
 msgid "Change baseline of selected text"
 msgstr "Thay đổi baseline của text đã chọn"
 
-#: ../app/widgets/gimptextstyleeditor.c:325
-#| msgid "Blend"
+#: ../app/widgets/gimptextstyleeditor.c:328
 msgid "Bold"
 msgstr "Đậm"
 
-#: ../app/widgets/gimptextstyleeditor.c:328
+#: ../app/widgets/gimptextstyleeditor.c:331
 msgid "Italic"
 msgstr "Nghiêng"
 
-#: ../app/widgets/gimptextstyleeditor.c:331
-#| msgid "Undefined"
+#: ../app/widgets/gimptextstyleeditor.c:334
 msgid "Underline"
 msgstr "Gạch dưới"
 
-#: ../app/widgets/gimptextstyleeditor.c:334
+#: ../app/widgets/gimptextstyleeditor.c:337
 msgid "Strikethrough"
 msgstr "Gạch ngang"
 
 #: ../app/widgets/gimpthumbbox.c:330
 #, c-format
-#| msgid ""
-#| "Click to update preview\n"
-#| "%s%sClick to force update even if preview is up-to-date"
 msgid ""
 "Click to update preview\n"
 "%s-Click to force update even if preview is up-to-date"
@@ -15580,7 +15579,6 @@ msgid "Delete Tool Preset..."
 msgstr "Xóa công cụ định nghĩa trước..."
 
 #: ../app/widgets/gimptoolpreseteditor.c:126
-#| msgid "_Icon:"
 msgid "Icon:"
 msgstr "Biểu tượng:"
 
@@ -15614,7 +15612,6 @@ msgstr "Áp dụng phông đã lưu"
 
 #: ../app/widgets/gimptoolpreseteditor.c:258
 #, c-format
-#| msgid "Dash _preset:"
 msgid "%s Preset"
 msgstr "Preset %s"
 
@@ -15652,7 +15649,6 @@ msgid "Open the brush selection dialog"
 msgstr "Mở thoại chọn chổi"
 
 #: ../app/widgets/gimpviewablebox.c:150
-#| msgid "Open the font selection dialog"
 msgid "Open the dynamics selection dialog"
 msgstr "Mở thoại chọn dynamic"
 
@@ -15672,22 +15668,22 @@ msgstr "Mở thoại chọn bảng chọn"
 msgid "Open the font selection dialog"
 msgstr "Mở thoại chọn phông chữ"
 
-#: ../app/widgets/gimpwidgets-utils.c:612
+#: ../app/widgets/gimpwidgets-utils.c:595
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (thử %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:612
+#: ../app/widgets/gimpwidgets-utils.c:595
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:616
+#: ../app/widgets/gimpwidgets-utils.c:599
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (thử %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:620
+#: ../app/widgets/gimpwidgets-utils.c:603
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (thử %s, %s, %s)"
@@ -15872,6 +15868,16 @@ msgstr "Tạo và biên soạn ảnh hay ảnh chụp"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
 msgstr "Bộ biên soạn ảnh"
+
+#~ msgctxt "tool-preset-action"
+#~ msgid "_Delete Tool Preset"
+#~ msgstr "_Xóa công cụ định nghĩa trước"
+
+#~ msgid "Opacity:"
+#~ msgstr "Độ mờ đục:"
+
+#~ msgid "Set Item Exclusive Linked"
+#~ msgstr "Đặt mục đã liên kết dành riêng"
 
 #, fuzzy
 #~ msgctxt "tool-options-action"
