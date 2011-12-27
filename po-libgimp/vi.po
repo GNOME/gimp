@@ -2,6 +2,7 @@
 # Copyright © 2006 Gnome i18n Project for Vietnamese.
 # T.M.Thanh <tmthanh@yahoo.com>, 2002-2003.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
+# Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
@@ -9,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-11-05 16:04+0000\n"
-"PO-Revision-Date: 2011-12-27 08:42+0700\n"
-"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"PO-Revision-Date: 2011-12-27 10:01+0700\n"
+"Last-Translator: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -21,39 +22,38 @@ msgstr ""
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1077
 msgid "success"
-msgstr ""
+msgstr "thành công"
 
 #. procedure execution failed
 #: ../libgimp/gimp.c:1081
 msgid "execution error"
-msgstr ""
+msgstr "lỗi thực thi"
 
 #. procedure called incorrectly
 #: ../libgimp/gimp.c:1085
 msgid "calling error"
-msgstr ""
+msgstr "lỗi gọi"
 
 #. procedure execution cancelled
 #: ../libgimp/gimp.c:1089
 msgid "cancelled"
-msgstr ""
+msgstr "bị huỷ"
 
 #: ../libgimp/gimpbrushselectbutton.c:178
-#, fuzzy
 #| msgid "_Selection"
 msgid "Brush Selection"
-msgstr "_Vùng chọn"
+msgstr "Vùng chọn chỗi vẽ"
 
 #: ../libgimp/gimpbrushselectbutton.c:927
 #: ../libgimp/gimppatternselectbutton.c:725
 msgid "_Browse..."
-msgstr ""
+msgstr "_Duyệt"
 
 #: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can't handle layers"
 msgid "%s plug-in can't handle layers"
-msgstr "%s không thể xử lý lớp"
+msgstr "Phần bổ sung %s không thể xử lý lớp"
 
 #: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
 #: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
@@ -61,16 +61,17 @@ msgid "Merge Visible Layers"
 msgstr "Trộn các lớp hiển thị"
 
 #: ../libgimp/gimpexport.c:252
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can't handle layer offsets, size or opacity"
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "%s không thể xử lý các độ dịch, kích cỡ hay độ đục của lớp"
+msgstr ""
+"Phần bổ sung %s không thể xử lý các độ dịch, kích cỡ hay độ đục của lớp"
 
 #: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can only handle layers as animation frames"
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s có thể xử lý các lớp chỉ như là các khung hoạt cảnh"
+msgstr "Phần bổ sung %s có thể xử lý các lớp chỉ như là các khung hoạt cảnh"
 
 #: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
@@ -82,26 +83,26 @@ msgid "Flatten Image"
 msgstr "Làm phẳng ảnh"
 
 #: ../libgimp/gimpexport.c:288
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can't handle transparency"
 msgid "%s plug-in can't handle transparency"
-msgstr "%s không thể xử lý độ trong suốt"
+msgstr "Phần bổ sung %s không thể xử lý độ trong suốt"
 
 #: ../libgimp/gimpexport.c:297
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can't handle layer masks"
 msgid "%s plug-in can't handle layer masks"
-msgstr "%s không thể xử lý mặt nạ lớp"
+msgstr "Phần bổ sung %s không thể xử lý mặt nạ lớp"
 
 #: ../libgimp/gimpexport.c:298
 msgid "Apply Layer Masks"
 msgstr "Áp dụng mặt nạ lớp"
 
 #: ../libgimp/gimpexport.c:306
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can only handle RGB images"
 msgid "%s plug-in can only handle RGB images"
-msgstr "%s có thể xử lý chỉ các ảnh kiểu RGB"
+msgstr "Phần bổ sung %s có thể xử lý chỉ các ảnh kiểu RGB"
 
 #: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:354
@@ -109,10 +110,10 @@ msgid "Convert to RGB"
 msgstr "Chuyển đổi sang RGB"
 
 #: ../libgimp/gimpexport.c:315
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can only handle grayscale images"
 msgid "%s plug-in can only handle grayscale images"
-msgstr "%s có thể xử lý chỉ ảnh kiểu mức xám"
+msgstr "Phần bổ sung %s có thể xử lý chỉ ảnh kiểu mức xám"
 
 #: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:366
@@ -120,10 +121,10 @@ msgid "Convert to Grayscale"
 msgstr "Chuyển đổi sang mức xám"
 
 #: ../libgimp/gimpexport.c:324
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can only handle indexed images"
 msgid "%s plug-in can only handle indexed images"
-msgstr "%s có thể xử lý chỉ ảnh phụ lục"
+msgstr "Phần bổ sung %s có thể xử lý chỉ ảnh phụ lục"
 
 #: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
 #: ../libgimp/gimpexport.c:364
@@ -135,10 +136,10 @@ msgstr ""
 "lập mặc định (tự làm để chỉnh kết quả)"
 
 #: ../libgimp/gimpexport.c:334
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can only handle bitmap (two color) indexed images"
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "%s có thể xử lý chỉ ảnh phụ lục kiểu mảng ảnh (hai màu)"
+msgstr "Phần bổ sung %s có thể xử lý chỉ ảnh phụ lục kiểu mảng ảnh (hai màu)"
 
 #: ../libgimp/gimpexport.c:335
 msgid ""
@@ -149,28 +150,28 @@ msgstr ""
 "lập mảng ảnh mặc định (tự làm để chỉnh kết quả)"
 
 #: ../libgimp/gimpexport.c:344
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can only handle RGB or grayscale images"
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s chỉ có thể xử lý ảnh kiểu RGB hay mức xám"
+msgstr "Phần bổ sung %s chỉ có thể xử lý ảnh kiểu RGB hay mức xám"
 
 #: ../libgimp/gimpexport.c:353
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can only handle RGB or indexed images"
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "%s có thể xử lý chỉ ảnh kiểu RGB hay phụ lục"
+msgstr "Phần bổ sung %s có thể xử lý chỉ ảnh kiểu RGB hay phụ lục"
 
 #: ../libgimp/gimpexport.c:363
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s can only handle grayscale or indexed images"
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "%s có thể xử lý chỉ ảnh phụ lục hay mức xám"
+msgstr "Phần bổ sung %s có thể xử lý chỉ ảnh phụ lục hay mức xám"
 
 #: ../libgimp/gimpexport.c:374
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s needs an alpha channel"
 msgid "%s plug-in needs an alpha channel"
-msgstr "%s cần một kênh anfa"
+msgstr "Phần bổ sung %s cần một kênh anfa"
 
 #: ../libgimp/gimpexport.c:375
 msgid "Add Alpha Channel"
@@ -241,10 +242,9 @@ msgid "Sans"
 msgstr "Không chân"
 
 #: ../libgimp/gimpgradientselectbutton.c:156
-#, fuzzy
 #| msgid "Font Selection"
 msgid "Gradient Selection"
-msgstr "Chọn phông"
+msgstr "Chọn gradient"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
@@ -254,16 +254,14 @@ msgid "(Empty)"
 msgstr "(Rỗng)"
 
 #: ../libgimp/gimppaletteselectbutton.c:138
-#, fuzzy
 #| msgid "Font Selection"
 msgid "Palette Selection"
-msgstr "Chọn phông"
+msgstr ""
 
 #: ../libgimp/gimppatternselectbutton.c:164
-#, fuzzy
 #| msgid "Font Selection"
 msgid "Pattern Selection"
-msgstr "Chọn phông"
+msgstr "Chọn mẫu"
 
 #: ../libgimp/gimpprocbrowserdialog.c:149
 msgid "by name"
@@ -380,498 +378,427 @@ msgid "percent"
 msgstr "phần trăm"
 
 #: ../libgimpbase/gimpbaseenums.c:28
-#, fuzzy
 #| msgid "_White (full opacity)"
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
-msgstr "T_rắng (đục đầy)"
+msgstr "T_rắng (đục tuyệt đối)"
 
 #: ../libgimpbase/gimpbaseenums.c:29
-#, fuzzy
 #| msgid "_Black (full transparency)"
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
-msgstr "Đ_en (trong suốt đầy)"
+msgstr "Đ_en (trong suốt tuyệt đối)"
 
 #: ../libgimpbase/gimpbaseenums.c:30
-#, fuzzy
 #| msgid "Layer's _alpha channel"
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "Kênh _anfa của lớp"
 
 #: ../libgimpbase/gimpbaseenums.c:31
-#, fuzzy
 #| msgid "_Transfer layer's alpha channel"
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
-msgstr "Kênh anfa của lớp _truyền"
+msgstr "_Truyền kênh anfa của lớp"
 
 #: ../libgimpbase/gimpbaseenums.c:32
-#, fuzzy
 #| msgid "_Selection"
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "_Vùng chọn"
 
 #: ../libgimpbase/gimpbaseenums.c:33
-#, fuzzy
 #| msgid "_Grayscale copy of layer"
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "Bản sao mức _xám của lớp"
 
 #: ../libgimpbase/gimpbaseenums.c:34
-#, fuzzy
 #| msgid "C_hannel"
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "Kên_h"
 
 #: ../libgimpbase/gimpbaseenums.c:65
-#, fuzzy
 #| msgid "FG to BG (RGB)"
 msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
 msgstr "Cảnh gần thành nền (RGB)"
 
 #: ../libgimpbase/gimpbaseenums.c:66
-#, fuzzy
 #| msgid "FG to BG (HSV)"
 msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
 msgstr "Cảnh gần thành nền (HSV)"
 
 #: ../libgimpbase/gimpbaseenums.c:67
-#, fuzzy
 #| msgid "FG to transparent"
 msgctxt "blend-mode"
 msgid "FG to transparent"
 msgstr "Cảnh gần thành trong suốt"
 
 #: ../libgimpbase/gimpbaseenums.c:68
-#, fuzzy
 #| msgid "Custom gradient"
 msgctxt "blend-mode"
 msgid "Custom gradient"
 msgstr "Dốc tự chọn"
 
 #: ../libgimpbase/gimpbaseenums.c:98
-#, fuzzy
 #| msgid "FG color fill"
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
-msgstr "Tô màu cảnh gần"
+msgstr "Màu tô cảnh gần"
 
 #: ../libgimpbase/gimpbaseenums.c:99
-#, fuzzy
 #| msgid "BG color fill"
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
-msgstr "Tô màu nền"
+msgstr "Màu tô nền"
 
 #: ../libgimpbase/gimpbaseenums.c:100
-#, fuzzy
 #| msgid "Pattern fill"
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "Điền mẫu"
 
 #: ../libgimpbase/gimpbaseenums.c:131
-#, fuzzy
 #| msgid "Add to the current selection"
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Thêm vào vùng chọn hiện thời"
 
 #: ../libgimpbase/gimpbaseenums.c:132
-#, fuzzy
 #| msgid "Subtract from the current selection"
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
-msgstr "Trừ khỏi vùng chọn hiện thời"
+msgstr "Loại khỏi vùng chọn hiện thời"
 
 #: ../libgimpbase/gimpbaseenums.c:133
-#, fuzzy
 #| msgid "Replace the current selection"
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Thay thế vùng chọn hiện thời"
 
 #: ../libgimpbase/gimpbaseenums.c:134
-#, fuzzy
 #| msgid "Intersect with the current selection"
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Cắt chéo với vùng chọn hiện thời"
 
 #: ../libgimpbase/gimpbaseenums.c:167
-#, fuzzy
 #| msgid "Red"
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Đỏ"
 
 #: ../libgimpbase/gimpbaseenums.c:168
-#, fuzzy
 #| msgid "Green"
 msgctxt "channel-type"
 msgid "Green"
-msgstr "Xanh lá cây"
+msgstr "Lục"
 
 #: ../libgimpbase/gimpbaseenums.c:169
-#, fuzzy
 #| msgid "Blue"
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Xanh dương"
 
 #: ../libgimpbase/gimpbaseenums.c:170
-#, fuzzy
 #| msgid "Gray"
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Xám"
 
 #: ../libgimpbase/gimpbaseenums.c:171
-#, fuzzy
 #| msgid "Indexed"
 msgctxt "channel-type"
 msgid "Indexed"
-msgstr "Phụ lục"
+msgstr "Chỉ mục"
 
 #: ../libgimpbase/gimpbaseenums.c:172
-#, fuzzy
 #| msgid "Alpha"
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Anfa"
 
 #: ../libgimpbase/gimpbaseenums.c:202
-#, fuzzy
 #| msgid "Small"
 msgctxt "check-size"
 msgid "Small"
 msgstr "Nhỏ"
 
 #: ../libgimpbase/gimpbaseenums.c:203
-#, fuzzy
 #| msgid "Medium"
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Vừa"
 
 #: ../libgimpbase/gimpbaseenums.c:204
-#, fuzzy
 #| msgid "Large"
 msgctxt "check-size"
 msgid "Large"
 msgstr "Lớn"
 
 #: ../libgimpbase/gimpbaseenums.c:237
-#, fuzzy
 #| msgid "Light checks"
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Đối sánh nhạt"
 
 #: ../libgimpbase/gimpbaseenums.c:238
-#, fuzzy
 #| msgid "Mid-tone checks"
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Đối sánh nửa sắc"
 
 #: ../libgimpbase/gimpbaseenums.c:239
-#, fuzzy
 #| msgid "Dark checks"
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Đối sánh tối"
 
 #: ../libgimpbase/gimpbaseenums.c:240
-#, fuzzy
 #| msgid "White only"
 msgctxt "check-type"
 msgid "White only"
 msgstr "Chỉ màu trắng"
 
 #: ../libgimpbase/gimpbaseenums.c:241
-#, fuzzy
 #| msgid "Gray only"
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Chỉ màu xám"
 
 #: ../libgimpbase/gimpbaseenums.c:242
-#, fuzzy
 #| msgid "Black only"
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Chỉ màu đen"
 
 #: ../libgimpbase/gimpbaseenums.c:271
-#, fuzzy
 #| msgid "Images"
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Ảnh"
 
 #: ../libgimpbase/gimpbaseenums.c:272
-#, fuzzy
 #| msgid "Pattern fill"
 msgctxt "clone-type"
 msgid "Pattern"
-msgstr "Điền mẫu"
+msgstr "Mẫu"
 
 #: ../libgimpbase/gimpbaseenums.c:302
-#, fuzzy
 #| msgid "Lightness"
 msgctxt "desaturate-mode"
 msgid "Lightness"
 msgstr "Độ nhạt"
 
 #: ../libgimpbase/gimpbaseenums.c:303
-#, fuzzy
 #| msgid "Luminosity"
 msgctxt "desaturate-mode"
 msgid "Luminosity"
 msgstr "Độ sáng"
 
 #: ../libgimpbase/gimpbaseenums.c:304
-#, fuzzy
 #| msgid "Average"
 msgctxt "desaturate-mode"
 msgid "Average"
 msgstr "Trung bình"
 
 #: ../libgimpbase/gimpbaseenums.c:333
-#, fuzzy
 #| msgid "Dodge"
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Tránh"
 
 #: ../libgimpbase/gimpbaseenums.c:334
-#, fuzzy
 #| msgid "Burn"
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Đốt"
 
 #: ../libgimpbase/gimpbaseenums.c:400
-#, fuzzy
 #| msgid "Bi-linear"
 msgctxt "gradient-type"
 msgid "Linear"
-msgstr "Tuyến kép"
+msgstr "Tuyến tính"
 
 #: ../libgimpbase/gimpbaseenums.c:401
-#, fuzzy
 #| msgid "Bi-linear"
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Tuyến kép"
 
 #: ../libgimpbase/gimpbaseenums.c:402
-#, fuzzy
 #| msgid "Radial"
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Toả tròn"
 
 #: ../libgimpbase/gimpbaseenums.c:403
-#, fuzzy
 #| msgid "Square"
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Vuông"
 
 #: ../libgimpbase/gimpbaseenums.c:404
-#, fuzzy
 #| msgid "Conical (sym)"
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Chóp nón (đối xứng)"
 
 #: ../libgimpbase/gimpbaseenums.c:405
-#, fuzzy
 #| msgid "Conical (asym)"
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Chóp nón (không đối xứng)"
 
 #: ../libgimpbase/gimpbaseenums.c:406
-#, fuzzy
 #| msgid "Shaped (angular)"
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Vỡ hình (ở góc)"
 
 #: ../libgimpbase/gimpbaseenums.c:407
-#, fuzzy
 #| msgid "Shaped (spherical)"
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Vỡ hình (hình cầu)"
 
 #: ../libgimpbase/gimpbaseenums.c:408
-#, fuzzy
 #| msgid "Shaped (dimpled)"
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Vỡ hình (nhiều trũng)"
 
 #: ../libgimpbase/gimpbaseenums.c:409
-#, fuzzy
 #| msgid "Spiral (cw)"
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Xoắn ốc (xuôi chiều)"
 
 #: ../libgimpbase/gimpbaseenums.c:410
-#, fuzzy
 #| msgid "Spiral (ccw)"
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Xoắn ốc (ngược chiều)"
 
 #: ../libgimpbase/gimpbaseenums.c:442
-#, fuzzy
 #| msgid "Intersections (dots)"
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Giao (chấm)"
 
 #: ../libgimpbase/gimpbaseenums.c:443
-#, fuzzy
 #| msgid "Intersections (crosshairs)"
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Giao (chữ thập mảnh)"
 
 #: ../libgimpbase/gimpbaseenums.c:444
-#, fuzzy
 #| msgid "Dashed"
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Gạch gạch"
 
 #: ../libgimpbase/gimpbaseenums.c:445
-#, fuzzy
 #| msgid "Double dashed"
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Gạch đôi"
 
 #: ../libgimpbase/gimpbaseenums.c:446
-#, fuzzy
 #| msgid "Solid"
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Đặc"
 
 #: ../libgimpbase/gimpbaseenums.c:476
-#, fuzzy
 #| msgid "Stock ID"
 msgctxt "icon-type"
 msgid "Stock ID"
 msgstr "ID chuẩn"
 
 #: ../libgimpbase/gimpbaseenums.c:477
-#, fuzzy
 #| msgid "Inline pixbuf"
 msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr "Bộ đệm điểm ảnh trực tiếp"
 
 #: ../libgimpbase/gimpbaseenums.c:478
-#, fuzzy
 #| msgid "Image file"
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Tập tin ảnh"
 
 #: ../libgimpbase/gimpbaseenums.c:508
-#, fuzzy
 #| msgid "RGB color"
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "Màu RGB"
 
 #: ../libgimpbase/gimpbaseenums.c:509
-#, fuzzy
 #| msgid "Grayscale"
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Mức xám"
 
 #: ../libgimpbase/gimpbaseenums.c:510
-#, fuzzy
 #| msgid "Indexed color"
 msgctxt "image-base-type"
 msgid "Indexed color"
-msgstr "Màu phụ lục"
+msgstr "Màu chỉ mục"
 
 # Name: don't translate / Tên: đừng dịch
 #: ../libgimpbase/gimpbaseenums.c:543
-#, fuzzy
 #| msgid "RGB"
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
 #: ../libgimpbase/gimpbaseenums.c:544
-#, fuzzy
 #| msgid "RGB-alpha"
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-anfa"
 
 #: ../libgimpbase/gimpbaseenums.c:545
-#, fuzzy
 #| msgid "Grayscale"
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Mức xám"
 
 #: ../libgimpbase/gimpbaseenums.c:546
-#, fuzzy
 #| msgid "Grayscale-alpha"
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Mức xám-anfa"
 
 #: ../libgimpbase/gimpbaseenums.c:547
-#, fuzzy
 #| msgid "Indexed"
 msgctxt "image-type"
 msgid "Indexed"
-msgstr "Phụ lục"
+msgstr "Chỉ mục"
 
 #: ../libgimpbase/gimpbaseenums.c:548
-#, fuzzy
 #| msgid "Indexed-alpha"
 msgctxt "image-type"
 msgid "Indexed-alpha"
-msgstr "Phụ lục-anfa"
+msgstr "Chỉ mục-anfa"
 
 #: ../libgimpbase/gimpbaseenums.c:579
-#, fuzzy
 #| msgid "None"
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Không có"
 
 #: ../libgimpbase/gimpbaseenums.c:580
-#, fuzzy
 #| msgid "Bi-linear"
 msgctxt "interpolation-type"
 msgid "Linear"
-msgstr "Tuyến kép"
+msgstr "Tuyến tính"
 
 #: ../libgimpbase/gimpbaseenums.c:581
-#, fuzzy
 #| msgid "Cubic"
 msgctxt "interpolation-type"
 msgid "Cubic"
@@ -879,109 +806,94 @@ msgstr "Khối"
 
 # Name: don't translate/Tên: đừng dịch
 #: ../libgimpbase/gimpbaseenums.c:582
-#, fuzzy
 #| msgid "Lanczos"
 msgctxt "interpolation-type"
 msgid "Sinc (Lanczos3)"
-msgstr "Lanczos"
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:611
-#, fuzzy
 #| msgid "Constant"
 msgctxt "paint-application-mode"
 msgid "Constant"
-msgstr "Liên tục"
+msgstr "Hằng số"
 
 #: ../libgimpbase/gimpbaseenums.c:612
-#, fuzzy
 #| msgid "Incremental"
 msgctxt "paint-application-mode"
 msgid "Incremental"
-msgstr "Dần dần"
+msgstr "Tăng dần"
 
 #: ../libgimpbase/gimpbaseenums.c:642
-#, fuzzy
 #| msgid "None"
 msgctxt "repeat-mode"
 msgid "None"
 msgstr "Không có"
 
 #: ../libgimpbase/gimpbaseenums.c:643
-#, fuzzy
 #| msgid "Sawtooth wave"
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Sóng răng cưa"
 
 #: ../libgimpbase/gimpbaseenums.c:644
-#, fuzzy
 #| msgid "Triangular wave"
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Sóng tam giác"
 
 #: ../libgimpbase/gimpbaseenums.c:674
-#, fuzzy
 #| msgid "Run interactively"
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Chạy tương tác"
 
 #: ../libgimpbase/gimpbaseenums.c:675
-#, fuzzy
 #| msgid "Run non-interactively"
 msgctxt "run-mode"
 msgid "Run non-interactively"
-msgstr "Chạy khác tương tác"
+msgstr "Chạy không tương tác"
 
 #: ../libgimpbase/gimpbaseenums.c:676
-#, fuzzy
 #| msgid "Run with last used values"
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Chạy với các giá trị mới dùng"
 
 #: ../libgimpbase/gimpbaseenums.c:705
-#, fuzzy
 #| msgid "Pixels"
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Điểm ảnh"
 
 #: ../libgimpbase/gimpbaseenums.c:706
-#, fuzzy
 #| msgid "Points"
 msgctxt "size-type"
 msgid "Points"
 msgstr "Điểm"
 
 #: ../libgimpbase/gimpbaseenums.c:736
-#, fuzzy
 #| msgid "Shadows"
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Bóng"
 
 #: ../libgimpbase/gimpbaseenums.c:737
-#, fuzzy
 #| msgid "Midtones"
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Nửa sắc"
 
 #: ../libgimpbase/gimpbaseenums.c:738
-#, fuzzy
 #| msgid "Highlights"
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Nổi bật"
 
 #: ../libgimpbase/gimpbaseenums.c:767
-#, fuzzy
 #| msgid "Forward"
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
-msgstr "Tới"
+msgstr "Bình thường (Tới)"
 
 #: ../libgimpbase/gimpbaseenums.c:768
 msgctxt "transform-direction"
@@ -991,12 +903,12 @@ msgstr ""
 #: ../libgimpbase/gimpbaseenums.c:799
 msgctxt "transform-resize"
 msgid "Adjust"
-msgstr ""
+msgstr "Điều chỉnh"
 
 #: ../libgimpbase/gimpbaseenums.c:800
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr ""
+msgstr "Xén"
 
 #: ../libgimpbase/gimpbaseenums.c:801
 msgctxt "transform-resize"
@@ -1009,28 +921,24 @@ msgid "Crop with aspect"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:935
-#, fuzzy
 #| msgid "Internal GIMP procedure"
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Thủ tục GIMP nội bộ"
 
 #: ../libgimpbase/gimpbaseenums.c:936
-#, fuzzy
 #| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
-msgstr "Bổ sung GIMP"
+msgstr "Phần bổ sung GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:937
-#, fuzzy
 #| msgid "GIMP Extension"
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "Phần mở rộng GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:938
-#, fuzzy
 #| msgid "Temporary Procedure"
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
@@ -1047,21 +955,18 @@ msgid "From right to left"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:1137
-#, fuzzy
 #| msgid "None"
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Không có"
 
 #: ../libgimpbase/gimpbaseenums.c:1138
-#, fuzzy
 #| msgid "Highlights"
 msgctxt "text-hint-style"
 msgid "Slight"
-msgstr "Nổi bật"
+msgstr "Nhẹ"
 
 #: ../libgimpbase/gimpbaseenums.c:1139
-#, fuzzy
 #| msgid "Medium"
 msgctxt "text-hint-style"
 msgid "Medium"
@@ -1070,29 +975,28 @@ msgstr "Vừa"
 #: ../libgimpbase/gimpbaseenums.c:1140
 msgctxt "text-hint-style"
 msgid "Full"
-msgstr ""
+msgstr "Đầy"
 
 #: ../libgimpbase/gimpbaseenums.c:1171
 msgctxt "text-justification"
 msgid "Left justified"
-msgstr ""
+msgstr "Canh trái"
 
 #: ../libgimpbase/gimpbaseenums.c:1172
 msgctxt "text-justification"
 msgid "Right justified"
-msgstr ""
+msgstr "Canh phải"
 
 #: ../libgimpbase/gimpbaseenums.c:1173
-#, fuzzy
 #| msgid "C_enter"
 msgctxt "text-justification"
 msgid "Centered"
-msgstr "G_iữa"
+msgstr "Giữa"
 
 #: ../libgimpbase/gimpbaseenums.c:1174
 msgctxt "text-justification"
 msgid "Filled"
-msgstr ""
+msgstr "Điền đầy"
 
 #: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
 #: ../modules/color-selector-cmyk-lcms.c:424
@@ -1117,7 +1021,6 @@ msgid "The color profile of your (primary) monitor."
 msgstr "Hồ sơ màu của màn hình (chính) của bạn."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-#, fuzzy
 #| msgid ""
 #| "When enabled, the GIMP will try to use the display color profile from the "
 #| "windowing system. The configured monitor profile is then only used as a "
@@ -1128,13 +1031,12 @@ msgid ""
 "fallback."
 msgstr ""
 "Khi bật, GIMP sẽ thử dùng hồ sơ màu bộ trình bày từ hệ thống cửa sổ. Hồ sơ "
-"bộ trình bày đã cấu hình thì chỉ dùng là sự chọn dữ trữ."
+"bộ trình bày đã cấu hình thì chỉ dùng là sự chọn phòng bị."
 
 #: ../libgimpconfig/gimpcolorconfig.c:60
-#, fuzzy
 #| msgid "The default RGB workspace color profile."
 msgid "The default RGB working space color profile."
-msgstr "Xác lập màu vùng làm việc RGB mặc định."
+msgstr "Hồ sơ màu vùng làm việc RGB mặc định."
 
 #: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -1149,7 +1051,6 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Đặt cách ánh xạ màu cho bộ trình bày của bạn."
 
 #: ../libgimpconfig/gimpcolorconfig.c:68
-#, fuzzy
 #| msgid ""
 #| "Sets how colors are converted from workspace to the print simulation "
 #| "device."
@@ -1169,49 +1070,42 @@ msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
-#, fuzzy
 #| msgid "No color management"
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Không quản lý màu"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
-#, fuzzy
 #| msgid "Color managed display"
 msgctxt "color-management-mode"
 msgid "Color managed display"
 msgstr "Bộ trình bày có màu đã quản lý"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
-#, fuzzy
 #| msgid "Print simulation"
 msgctxt "color-management-mode"
 msgid "Print simulation"
 msgstr "Mô phỏng in"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
-#, fuzzy
 #| msgid "Perceptual"
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Dựa vào nhận thức"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#, fuzzy
 #| msgid "Relative colorimetric"
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Đo màu tượng ứng"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
-#, fuzzy
 #| msgid "Saturation"
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Độ bão hòa"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:60
-#, fuzzy
 #| msgid "Absolute colorimetric"
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
@@ -1303,11 +1197,10 @@ msgstr "chuỗi UTF-8 không hợp lệ"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpscanner.c:431
-#, fuzzy, c-format
+#, c-format
 #| msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
-msgstr ""
-"ngờ « có » (yes) hay « không » (no) cho hiệu bài luận lý %s, còn nhận « %s »"
+msgstr "chờ 'yes' (có) hay 'no' (không) cho hiệu bài luận lý, nhận được '%s'"
 
 #: ../libgimpconfig/gimpscanner.c:668
 #, c-format
@@ -1387,7 +1280,6 @@ msgid "Select color profile from disk..."
 msgstr ""
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-#, fuzzy
 #| msgid "None"
 msgctxt "profile"
 msgid "None"
@@ -1580,10 +1472,9 @@ msgid "_Scale"
 msgstr "_Co dãn"
 
 #: ../libgimpwidgets/gimpstock.c:315
-#, fuzzy
 #| msgid "Crop"
 msgid "Cr_op"
-msgstr "Xén"
+msgstr "_Xén"
 
 #: ../libgimpwidgets/gimpstock.c:335
 msgid "_Transform"
@@ -1634,111 +1525,100 @@ msgid "_Randomize"
 msgstr "Để ngẫ_u nhiên"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:49
-#, fuzzy
 #| msgid "Visible"
 msgctxt "input-mode"
 msgid "Disabled"
-msgstr "Hiển thị"
+msgstr "Tắt"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:50
-#, fuzzy
 #| msgid "Green"
 msgctxt "input-mode"
 msgid "Screen"
-msgstr "Xanh lá cây"
+msgstr "Màn hình"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Window"
-msgstr ""
+msgstr "Cửa sổ"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:24
-#, fuzzy
 #| msgid "Square"
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Vuông"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:25
-#, fuzzy
 #| msgid "Contrast"
 msgctxt "aspect-type"
 msgid "Portrait"
-msgstr "Độ tương phản"
+msgstr "Chân dung"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Landscape"
-msgstr ""
+msgstr "Phong cảnh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
-#, fuzzy
 #| msgid "_H"
 msgctxt "color-selector-channel"
 msgid "_H"
-msgstr "_S"
+msgstr "_H"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Hue"
 msgstr "Sắc màu"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
-#, fuzzy
 #| msgid "_S"
 msgctxt "color-selector-channel"
 msgid "_S"
-msgstr "_B"
+msgstr "_S"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Saturation"
 msgstr "Độ bão hòa"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:128
-#, fuzzy
 #| msgid "_V"
 msgctxt "color-selector-channel"
 msgid "_V"
-msgstr "_G"
+msgstr "_V"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Value"
 msgstr "Giá trị"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
-#, fuzzy
 #| msgid "_R"
 msgctxt "color-selector-channel"
 msgid "_R"
-msgstr "_MĐ"
+msgstr "_R"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Red"
 msgstr "Đỏ"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
-#, fuzzy
 #| msgid "_G"
 msgctxt "color-selector-channel"
 msgid "_G"
-msgstr "_XLC"
+msgstr "_G"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
 msgid "Green"
 msgstr "Xanh lá cây"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
-#, fuzzy
 #| msgid "_B"
 msgctxt "color-selector-channel"
 msgid "_B"
-msgstr "X_D"
+msgstr "_B"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgid "Blue"
 msgstr "Xanh dương"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:132
-#, fuzzy
 #| msgid "_A"
 msgctxt "color-selector-channel"
 msgid "_A"
@@ -1749,38 +1629,33 @@ msgid "Alpha"
 msgstr "Anfa"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:161
-#, fuzzy
 #| msgid "Layers"
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Lớp"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:162
-#, fuzzy
 #| msgid "Images"
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Ảnh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:223
-#, fuzzy
 #| msgid "Zoom in"
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Phóng to"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:224
-#, fuzzy
 #| msgid "Zoom out"
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Thu nhỏ"
 
 #: ../modules/color-selector-cmyk-lcms.c:86
-#, fuzzy
 #| msgid "Color proof filter using ICC color profile"
 msgid "CMYK color selector (using color profile)"
-msgstr "Bộ lọc xem thử màu dùng hồ sơ màu ICC"
+msgstr ""
 
 # Name: don't translate / Tên: đừng dịch
 #: ../modules/color-selector-cmyk-lcms.c:149
@@ -1833,16 +1708,15 @@ msgid "Black"
 msgstr "Đen"
 
 #: ../modules/color-selector-cmyk-lcms.c:412
-#, fuzzy
 #| msgid "_Profile:"
 msgid "Profile: (none)"
-msgstr "Hồ _sơ :"
+msgstr "Hồ sơ: (không có)"
 
 #: ../modules/color-selector-cmyk-lcms.c:433
-#, fuzzy, c-format
+#, c-format
 #| msgid "_Profile:"
 msgid "Profile: %s"
-msgstr "Hồ _sơ :"
+msgstr "Hồ sơ: %s"
 
 #: ../modules/color-selector-cmyk.c:70
 msgid "CMYK color selector"
@@ -1877,10 +1751,9 @@ msgid "Wheel"
 msgstr ""
 
 #: ../modules/controller-dx-dinput.c:155
-#, fuzzy
 #| msgid "Linux input event controller"
 msgid "DirectX DirectInput event controller"
-msgstr "Bộ điều khiển sự kiện nhập Linux"
+msgstr ""
 
 #: ../modules/controller-dx-dinput.c:195
 #: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
@@ -1888,32 +1761,31 @@ msgid "Device:"
 msgstr "Thiết bị:"
 
 #: ../modules/controller-dx-dinput.c:196
-#, fuzzy
 #| msgid "The name of the device to read Linux Input events from."
 msgid "The device to read DirectInput events from."
-msgstr "Tên thiết bị từ đó cần đọc các sự kiện Nhập Linux."
+msgstr "Tên thiết bị từ đó cần đọc các sự kiện nhập."
 
 #: ../modules/controller-dx-dinput.c:205
 msgid "DirectX DirectInput"
 msgstr ""
 
 #: ../modules/controller-dx-dinput.c:418
-#, fuzzy, c-format
+#, c-format
 #| msgid "Button 0"
 msgid "Button %d"
-msgstr "Nút 0"
+msgstr "Nút %d"
 
 #: ../modules/controller-dx-dinput.c:421
-#, fuzzy, c-format
+#, c-format
 #| msgid "Button Side"
 msgid "Button %d Press"
-msgstr "Nút bên"
+msgstr "Nhấn nút %d"
 
 #: ../modules/controller-dx-dinput.c:424
-#, fuzzy, c-format
+#, c-format
 #| msgid "Button Middle"
 msgid "Button %d Release"
-msgstr "Nút giữa"
+msgstr "Nhả nút %d"
 
 #: ../modules/controller-dx-dinput.c:441
 #: ../modules/controller-linux-input.c:89
@@ -1963,17 +1835,15 @@ msgstr ""
 
 #: ../modules/controller-dx-dinput.c:486
 #: ../modules/controller-linux-input.c:100
-#, fuzzy
 #| msgid "Dial Turn Left"
 msgid "Z Axis Turn Left"
-msgstr "La bàn quay trái"
+msgstr ""
 
 #: ../modules/controller-dx-dinput.c:489
 #: ../modules/controller-linux-input.c:101
-#, fuzzy
 #| msgid "Dial Turn Right"
 msgid "Z Axis Turn Right"
-msgstr "La bàn quay phải"
+msgstr ""
 
 #: ../modules/controller-dx-dinput.c:500
 #, c-format
@@ -2001,10 +1871,9 @@ msgid "POV %d Return"
 msgstr ""
 
 #: ../modules/controller-dx-dinput.c:1081
-#, fuzzy
 #| msgid "Linux Input Events"
 msgid "DirectInput Events"
-msgstr "Sự Kiện Nhập Linux"
+msgstr ""
 
 #: ../modules/controller-dx-dinput.c:1092
 #: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
@@ -2013,10 +1882,9 @@ msgstr "Chưa cấu hình thiết bị nào"
 
 #: ../modules/controller-dx-dinput.c:1117
 #: ../modules/controller-linux-input.c:587
-#, fuzzy
 #| msgid "Device not available: %s"
 msgid "Device not available"
-msgstr "Thiết bị không sẵn sàng: %s"
+msgstr "Thiết bị không sẵn sàng"
 
 #: ../modules/controller-linux-input.c:57
 msgid "Button 0"
@@ -2087,16 +1955,14 @@ msgid "Button Forward"
 msgstr "Nút tới"
 
 #: ../modules/controller-linux-input.c:74
-#, fuzzy
 #| msgid "Button 0"
 msgid "Button Back"
-msgstr "Nút 0"
+msgstr "Nút lùi"
 
 #: ../modules/controller-linux-input.c:75
-#, fuzzy
 #| msgid "Button 0"
 msgid "Button Task"
-msgstr "Nút 0"
+msgstr "Nút tác vụ"
 
 #: ../modules/controller-linux-input.c:77
 msgid "Button Wheel"
@@ -2111,10 +1977,9 @@ msgid "Button Gear Up"
 msgstr "Cơ chế nút Lên"
 
 #: ../modules/controller-linux-input.c:91
-#, fuzzy
 #| msgid "Forward"
 msgid "Y Move Forward"
-msgstr "Tới"
+msgstr ""
 
 #: ../modules/controller-linux-input.c:92
 msgid "Y Move Back"
@@ -2238,10 +2103,9 @@ msgid "GIMP"
 msgstr ""
 
 #: ../modules/controller-midi.c:427
-#, fuzzy
 #| msgid "MIDI event controller"
 msgid "GIMP MIDI Input Controller"
-msgstr "Bộ điều khiển sự kiện MIDI"
+msgstr "Bộ điều khiển nhận MIDI"
 
 #: ../modules/display-filter-color-blind.c:67
 msgid "Protanopia (insensitivity to red)"
@@ -2315,10 +2179,9 @@ msgid "Mode of operation:"
 msgstr "Chế độ thao tác:"
 
 #: ../modules/display-filter-lcms.c:228
-#, fuzzy
 #| msgid "Image file"
 msgid "Image profile:"
-msgstr "Tập tin ảnh"
+msgstr "Hồ sơ ảnh:"
 
 #: ../modules/display-filter-lcms.c:236
 msgid "Monitor profile:"
@@ -2342,7 +2205,7 @@ msgstr "Chọn hồ sơ màu ICC"
 
 #: ../modules/display-filter-proof.c:365
 msgid "All files (*.*)"
-msgstr ""
+msgstr "Mọi tập tin (*.*)"
 
 #: ../modules/display-filter-proof.c:370
 msgid "ICC color profile (*.icc, *.icm)"
@@ -2350,7 +2213,7 @@ msgstr ""
 
 #: ../modules/display-filter-proof.c:428
 msgid "_Profile:"
-msgstr "Hồ _sơ :"
+msgstr "Hồ _sơ:"
 
 #: ../modules/display-filter-proof.c:434
 msgid "_Intent:"

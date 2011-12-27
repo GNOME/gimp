@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-12-05 14:02+0000\n"
-"PO-Revision-Date: 2011-12-27 08:47+0700\n"
+"PO-Revision-Date: 2011-12-27 09:51+0700\n"
 "Last-Translator: Nguyễn Vũ Hưng <vuhung16plus@gmail.com>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -6183,7 +6183,7 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Đặt độ phân giải ngang cho màn hình, theo điểm/insơ². Nếu đặt là số 0 thì ép "
+"Đặt độ phân giải ngang cho màn hình, theo điểm/inch². Nếu đặt là số 0 thì ép "
 "buộc trình phục vụ X nhận truy vấn về thông tin cả ngang lẫn dọc đều."
 
 #: ../app/config/gimprc-blurbs.h:236
@@ -6192,7 +6192,7 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
-"Đặt độ phân giải dọc cho màn hình, theo điểm/insơ². Nếu đặt là số 0 thì ép "
+"Đặt độ phân giải dọc cho màn hình, theo điểm/inch². Nếu đặt là số 0 thì ép "
 "buộc trình phục vụ X nhận truy vấn về thông tin cả ngang lẫn dọc đều."
 
 #: ../app/config/gimprc-blurbs.h:241
@@ -7197,7 +7197,7 @@ msgstr "Không thể undoable"
 #: ../app/core/core-enums.c:1185
 msgctxt "select-criterion"
 msgid "Composite"
-msgstr "Ghép"
+msgstr "Tổng hợp"
 
 #: ../app/core/core-enums.c:1186
 msgctxt "select-criterion"
@@ -8808,12 +8808,12 @@ msgstr "điểm ảnh"
 #: ../app/core/gimpunit.c:64
 msgctxt "unit-singular"
 msgid "inch"
-msgstr "insơ"
+msgstr "inch"
 
 #: ../app/core/gimpunit.c:64
 msgctxt "unit-plural"
 msgid "inches"
-msgstr "insơ"
+msgstr "inch"
 
 #: ../app/core/gimpunit.c:67
 msgctxt "unit-singular"
@@ -10270,7 +10270,7 @@ msgstr "_Rộng:"
 #: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:197
 #: ../app/widgets/gimptemplateeditor.c:187
 msgid "H_eight:"
-msgstr "C_ao :"
+msgstr "C_ao:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:255
@@ -10316,11 +10316,11 @@ msgstr "Hủ_y thay đổi"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
-msgstr "Cỡ vùng vẽ"
+msgstr "Kích thước vùng vẽ"
 
 #: ../app/dialogs/resize-dialog.c:130 ../app/dialogs/scale-dialog.c:109
 msgid "Layer Size"
-msgstr "Cỡ lớp"
+msgstr "Kích thước lớp"
 
 #: ../app/dialogs/resize-dialog.c:295
 msgid "Resize _layers:"
@@ -10345,7 +10345,7 @@ msgstr "_Dọc:"
 #. Image size frame
 #: ../app/dialogs/scale-dialog.c:98 ../app/widgets/gimptemplateeditor.c:158
 msgid "Image Size"
-msgstr "Cỡ ảnh"
+msgstr "Kích thước ảnh"
 
 #: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:386
 msgid "Quality"
@@ -11458,11 +11458,11 @@ msgstr "Cấu hình tài nguyên"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:320
 msgid "Querying new Plug-ins"
-msgstr "Đang truy vấn bổ sung mới"
+msgstr "Đang truy vấn phần bổ sung mới"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:370
 msgid "Initializing Plug-ins"
-msgstr "Đang khởi tạo bổ sung"
+msgstr "Đang khởi tạo phần bổ sung"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:442
 msgid "Starting Extensions"
@@ -11470,11 +11470,11 @@ msgstr "Đang khởi chạy phần mở rộng"
 
 #: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
-msgstr "Bộ thông dịch bổ sung"
+msgstr "Bộ thông dịch phần bổ sung"
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
-msgstr "Môi trường bổ sung"
+msgstr "Môi trường phần bổ sung"
 
 #: ../app/plug-in/gimppluginprocedure.c:980
 #, c-format
@@ -11506,7 +11506,7 @@ msgstr "Lỗi chạy '%s'"
 #: ../app/plug-in/plug-in-icc-profile.c:256
 #, c-format
 msgid "Plug-In missing (%s)"
-msgstr "Thiếu phần mở rộng (%s)"
+msgstr "Thiếu phần bổ sung (%s)"
 
 #: ../app/plug-in/plug-in-rc.c:205
 #, c-format
@@ -11770,7 +11770,7 @@ msgstr "Độ dài tối đa"
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blend"
-msgstr "Hợp nhau"
+msgstr "Trộn màu"
 
 #: ../app/tools/gimpblendtool.c:110
 msgid "Blend Tool: Fill selected area with a color gradient"
@@ -11778,7 +11778,7 @@ msgstr "Công cụ trộn:Tô vùng đã chọn bằng màu có thay đổi đ�
 
 #: ../app/tools/gimpblendtool.c:111
 msgid "Blen_d"
-msgstr "Hợ_p nhau"
+msgstr "_Trộn màu"
 
 #: ../app/tools/gimpblendtool.c:166
 msgid "Blend does not operate on indexed layers."
@@ -11900,7 +11900,7 @@ msgstr "Mẫu đã hợp nhau"
 
 #: ../app/tools/gimpbucketfilloptions.c:298
 msgid "Fill by:"
-msgstr "Tô bằng:"
+msgstr "Tô theo:"
 
 #: ../app/tools/gimpbucketfilltool.c:86
 msgid "Bucket Fill"
@@ -12815,7 +12815,7 @@ msgstr "Điều chỉnh"
 #: ../app/tools/gimpinkoptions-gui.c:64 ../app/tools/gimpinkoptions-gui.c:87
 #: ../app/tools/gimppaintoptions-gui.c:134
 msgid "Size"
-msgstr "Cỡ"
+msgstr "Kích thước"
 
 #: ../app/tools/gimpinkoptions-gui.c:71
 #: ../app/tools/gimppaintoptions-gui.c:183
@@ -13151,7 +13151,7 @@ msgstr "Tỷ lệ hình thể"
 
 #: ../app/tools/gimppaintoptions-gui.c:176
 msgid "Reset aspect ratio to brush's native"
-msgstr "Đặt lại tỉ số hướng của native của chổi"
+msgstr "Đặt lại tỉ số hình thể ban đầu của chổi"
 
 #: ../app/tools/gimppaintoptions-gui.c:200
 msgid "Reset angle to zero"
@@ -13159,7 +13159,7 @@ msgstr "Đặt lại góc về không"
 
 #: ../app/tools/gimppaintoptions-gui.c:235
 msgid "Incremental"
-msgstr "Dần dần"
+msgstr "Tăng dần"
 
 #: ../app/tools/gimppaintoptions-gui.c:251
 msgid "Hard edge"
@@ -13369,7 +13369,7 @@ msgstr "Vị trí:"
 
 #: ../app/tools/gimprectangleoptions.c:1020 ../app/tools/gimptextoptions.c:525
 msgid "Size:"
-msgstr "Cỡ :"
+msgstr "Kích thước:"
 
 #: ../app/tools/gimprectangleoptions.c:1028
 msgid "Highlight"
@@ -13431,7 +13431,7 @@ msgstr "Chọn các vùng trong suốt"
 
 #: ../app/tools/gimpregionselectoptions.c:229
 msgid "Select by:"
-msgstr "Chọn bằng:"
+msgstr "Chọn theo:"
 
 #: ../app/tools/gimpregionselecttool.c:165
 msgid "Move the mouse to change threshold"
@@ -14019,7 +14019,7 @@ msgstr "Cao"
 #: ../app/tools/tools-enums.c:153
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Size"
-msgstr "Cỡ"
+msgstr "Kích thước"
 
 #: ../app/tools/tools-enums.c:182
 msgctxt "rect-select-mode"
@@ -15062,8 +15062,8 @@ msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
 msgstr ""
-"Thiếu bổ sung Duyệt trợ giúp GIMP trong bản cài đặt của bạn. Bạn có thể dùng "
-"trình duyệt để đọc hướng dẫn trực tuyến."
+"Thiếu phần bổ sung Duyệt trợ giúp GIMP trong bản cài đặt của bạn. Bạn có thể "
+"dùng trình duyệt để đọc hướng dẫn trực tuyến."
 
 #: ../app/widgets/gimphelp.c:336
 msgid "Help browser doesn't start"
@@ -15071,7 +15071,7 @@ msgstr "Bộ duyệt trợ giúp không khởi chạy được."
 
 #: ../app/widgets/gimphelp.c:337
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Không thể khởi chạy bổ sung Duyệt trợ giúp GIMP."
+msgstr "Không thể khởi chạy phần bổ sung Duyệt trợ giúp GIMP."
 
 #: ../app/widgets/gimphelp.c:364
 msgid "Use _Web Browser"

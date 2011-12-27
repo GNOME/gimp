@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-12-27 01:39+0000\n"
-"PO-Revision-Date: 2011-12-27 08:43+0700\n"
+"PO-Revision-Date: 2011-12-27 10:00+0700\n"
 "Last-Translator: Nguyễn Vũ Hưng <vuhung16plus@gmail.com>\n"
 "Language-Team: Vietnamese <du-an-most@lists.hanoilug.org>\n"
 "MIME-Version: 1.0\n"
@@ -296,7 +296,6 @@ msgid "Align Visible Layers"
 msgstr "Canh lề các lớp hiển thị"
 
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
-#, fuzzy
 #| msgid "None"
 msgctxt "align-style"
 msgid "None"
@@ -1173,7 +1172,6 @@ msgid "sin^p, stepped"
 msgstr "sin^p, có bậc"
 
 #: ../plug-ins/common/cml-explorer.c:166
-#, fuzzy
 #| msgid "None"
 msgctxt "cml-composition"
 msgid "None"
@@ -3868,10 +3866,9 @@ msgid "pixels/%a"
 msgstr "điểm ảnh/%a"
 
 #: ../plug-ins/common/file-pdf-save.c:303
-#, fuzzy
 #| msgid "Create Guides..."
 msgid "_Create multipage PDF..."
-msgstr "Tạo nét dẫn..."
+msgstr "_Tạo PDF nhiều trang..."
 
 #: ../plug-ins/common/file-pdf-save.c:396
 msgid "You must select a file to save!"
@@ -3907,32 +3904,28 @@ msgid "Keeping the masks will not change the output"
 msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:779
-#, fuzzy
 #| msgid "Separate to:"
 msgid "Save to:"
-msgstr "Ngăn cách ra:"
+msgstr "Lưu vào:"
 
 #: ../plug-ins/common/file-pdf-save.c:783
-#, fuzzy
 #| msgid "_RGB Noise..."
 msgid "Browse..."
-msgstr "Nhiễu _RGB..."
+msgstr "Duyệt..."
 
 #: ../plug-ins/common/file-pdf-save.c:784
 msgid "Multipage PDF export"
 msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:817
-#, fuzzy
 #| msgid "Deletes the selected Preset"
 msgid "Remove the selected pages"
-msgstr "Xóa bỏ định sẵn đã chọn"
+msgstr "Xóa bỏ trang đã chọn"
 
 #: ../plug-ins/common/file-pdf-save.c:827
-#, fuzzy
 #| msgid "Alias Pix image"
 msgid "Add this image"
-msgstr "Ảnh Alias Pix"
+msgstr "Thêm ảnh này"
 
 #: ../plug-ins/common/file-pdf-save.c:940
 msgid "Error! In order to save the file, at least one image should be added!"
@@ -3968,10 +3961,10 @@ msgid "Unknown color model in PNG file '%s'."
 msgstr "Gặp mô hình màu lạ trong tập tin PNG « %s »."
 
 #: ../plug-ins/common/file-png.c:878
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not create working folder '%s': %s"
 msgid "Could not create new image for '%s': %s"
-msgstr "Không thể tạo thư mục làm việc « %s »: %s"
+msgstr "Không thể tạo ảnh mới cho '%s': %s"
 
 #: ../plug-ins/common/file-png.c:927
 msgid ""
@@ -3996,10 +3989,9 @@ msgid "Error loading UI file '%s': %s"
 msgstr "Gặp lỗi khi tải tập tin giao diện người dùng « %s »: %s"
 
 #: ../plug-ins/common/file-png.c:1896
-#, fuzzy
 #| msgid "Unknown reason"
 msgid "Unknown error"
-msgstr "Không biết lý do"
+msgstr "Lỗi lạ"
 
 #: ../plug-ins/common/file-pnm.c:248
 msgid "PNM Image"
@@ -4073,10 +4065,9 @@ msgid "Raw"
 msgstr "Thô"
 
 #: ../plug-ins/common/file-pnm.c:1227
-#, fuzzy
 #| msgid "ASCII art"
 msgid "ASCII"
-msgstr "Ảnh ASCII"
+msgstr "ASCII"
 
 #: ../plug-ins/common/file-ps.c:601 ../plug-ins/common/file-ps.c:693
 msgid "PostScript document"
@@ -4189,7 +4180,6 @@ msgid "Text antialiasing"
 msgstr "Khử răng cưa chữ"
 
 #: ../plug-ins/common/file-ps.c:3251 ../plug-ins/common/file-ps.c:3263
-#, fuzzy
 #| msgid "None"
 msgctxt "antialiasing"
 msgid "None"
@@ -4235,7 +4225,7 @@ msgstr "Đơn vị"
 
 #: ../plug-ins/common/file-ps.c:3423
 msgid "_Inch"
-msgstr "_Insơ"
+msgstr "_Inch"
 
 #: ../plug-ins/common/file-ps.c:3424
 msgid "_Millimeter"
@@ -4282,7 +4272,6 @@ msgid "Data Compression"
 msgstr "Cách nén dữ liệu"
 
 #: ../plug-ins/common/file-psp.c:647
-#, fuzzy
 #| msgid "None"
 msgctxt "compression"
 msgid "None"
@@ -7804,7 +7793,7 @@ msgstr "Hệ số"
 
 #: ../plug-ins/common/unit-editor.c:98
 msgid "How many units make up an inch."
-msgstr "Số đơn vị trong mỗi insơ."
+msgstr "Số đơn vị trong mỗi inch."
 
 #: ../plug-ins/common/unit-editor.c:99
 msgid "Digits"
@@ -7829,8 +7818,8 @@ msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
 msgstr ""
-"Ký hiệu của đơn vị nếu có (v.d. « \" » cho insơ). Nếu không thì dùng từ viết "
-"tắt của đơn vị (cho insơ là « in. »)."
+"Ký hiệu của đơn vị nếu có (v.d. « \" » cho inch). Nếu không thì dùng từ viết "
+"tắt của đơn vị (cho inch là « in. »)."
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "Abbreviation"
@@ -7842,7 +7831,7 @@ msgstr "Từ viết tắt đơn vị (v.d. « cm » cho xentimet)."
 
 #: ../plug-ins/common/unit-editor.c:109
 msgid "Singular"
-msgstr "Ở số ít"
+msgstr "Số ít"
 
 #: ../plug-ins/common/unit-editor.c:109
 msgid "The unit's singular form."
@@ -7850,7 +7839,7 @@ msgstr "Kiểu số ít của đơn vị."
 
 #: ../plug-ins/common/unit-editor.c:110
 msgid "Plural"
-msgstr "Ở số nhiều"
+msgstr "Số nhiều"
 
 #: ../plug-ins/common/unit-editor.c:110
 msgid "The unit's plural form."
@@ -8436,7 +8425,6 @@ msgid "Large"
 msgstr "Lớn"
 
 #: ../plug-ins/common/web-page.c:317
-#, fuzzy
 #| msgid "Default"
 msgctxt "web-page"
 msgid "Default"
@@ -8701,7 +8689,6 @@ msgid "Image Composing"
 msgstr "Cấu thành ảnh"
 
 #: ../plug-ins/file-fits/fits.c:1044
-#, fuzzy
 #| msgid "None"
 msgctxt "composing"
 msgid "None"
@@ -9674,7 +9661,6 @@ msgstr "Sin"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
-#, fuzzy
 #| msgid "None"
 msgctxt "color-function"
 msgid "None"
@@ -10819,10 +10805,9 @@ msgid "Animated GIF Options"
 msgstr "Tùy chọn GIF hoạt cảnh"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:2
-#, fuzzy
 #| msgid "MNG animation"
 msgid "As _animation"
-msgstr "Hoạt cảnh MNG"
+msgstr "Làm _hoạt cảnh"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:3
 msgid "GIF Options"
@@ -10861,7 +10846,6 @@ msgid "Co_mpression level:"
 msgstr "Cấp _nén:"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:3
-#, fuzzy
 #| msgid "Sa_ve Defaults"
 msgid "S_ave Defaults"
 msgstr "_Lưu mặc định"
@@ -12289,7 +12273,6 @@ msgid "Color:"
 msgstr "Màu:"
 
 #: ../plug-ins/lighting/lighting-ui.c:418
-#, fuzzy
 #| msgid "None"
 msgctxt "light-source"
 msgid "None"
@@ -12997,7 +12980,6 @@ msgstr "Ở _giữa:"
 
 #. if and how to center the image on the page
 #: ../plug-ins/print/print-page-layout.c:461
-#, fuzzy
 #| msgid "None"
 msgctxt "center-mode"
 msgid "None"
