@@ -8,13 +8,14 @@
 # Artur Polaczyński <artie@kmfms.com>, 1999, 2000.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005, 2007.
 # Łukasz Jernaś <deejay1@srem.org>, 2010.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011.
 # Aviary.pl <gnomepl@aviary.pl>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 19:49+0100\n"
-"PO-Revision-Date: 2011-12-06 19:50+0100\n"
+"POT-Creation-Date: 2011-12-28 02:25+0100\n"
+"PO-Revision-Date: 2011-12-28 02:28+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"

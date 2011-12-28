@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-11 23:36+0100\n"
-"PO-Revision-Date: 2011-12-11 23:37+0100\n"
+"POT-Creation-Date: 2011-12-28 02:24+0100\n"
+"PO-Revision-Date: 2011-12-28 02:26+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -5600,12 +5600,12 @@ msgstr "_Ponów powiększenie (%d%%)"
 msgid "Re_vert Zoom"
 msgstr "Przyw_róć powiększenie"
 
-#: ../app/actions/view-actions.c:732
+#: ../app/actions/view-actions.c:731
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "I_nne (%s) ..."
 
-#: ../app/actions/view-actions.c:741
+#: ../app/actions/view-actions.c:740
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Powiększenie (%s)"
@@ -8905,7 +8905,7 @@ msgctxt "plural"
 msgid "percent"
 msgstr "procent"
 
-#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:478
+#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:493
 msgid "About GIMP"
 msgstr "Informacje o programie GIMP"
 
@@ -13593,7 +13593,7 @@ msgstr "Środek _Y:"
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g° around (%g, %g)"
-msgstr "Obrót o %-3.3g° dookoła (%g, %g)"
+msgstr "Obrót o %-3.3g° wokół (%g, %g)"
 
 #: ../app/tools/gimpscaletool.c:89
 msgid "Scale"

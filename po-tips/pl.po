@@ -7,13 +7,14 @@
 # GNOME PL Team <translators@gnomepl.org>, 2002-2005.
 # Artur Polaczyński <artii@o2.pl>, 2002-2003.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2007.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011.
 # Aviary.pl <gnomepl@aviary.pl>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 20:28+0100\n"
-"PO-Revision-Date: 2011-12-06 20:29+0100\n"
+"POT-Creation-Date: 2011-12-28 02:25+0100\n"
+"PO-Revision-Date: 2011-12-28 02:29+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
