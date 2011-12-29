@@ -11838,7 +11838,7 @@ msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 #: ../app/widgets/gimpgradienteditor.c:1002
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Luminans: %0.3f    Dekkevne: %0.3f"
+msgstr "Luminans: %0.1f    Dekkevne: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:1033
 #, c-format
@@ -11885,12 +11885,12 @@ msgstr "Klikk: vel    Dra: flytt"
 #: ../app/widgets/gimpgradienteditor.c:1579
 #, c-format
 msgid "Handle position: %0.4f"
-msgstr "Posisjon for handtak: %0.6f"
+msgstr "Posisjon for handtak: %0.4f"
 
 #: ../app/widgets/gimpgradienteditor.c:1596
 #, c-format
 msgid "Distance: %0.4f"
-msgstr "Avstand: %0.6f"
+msgstr "Avstand: %0.4f"
 
 #: ../app/widgets/gimpgrideditor.c:217
 msgid "Line _style:"
