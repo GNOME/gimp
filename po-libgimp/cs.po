@@ -82,7 +82,7 @@ msgstr "Uložit jako animaci"
 #: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
 #: ../libgimp/gimpexport.c:289
 msgid "Flatten Image"
-msgstr "Sloučit obraz"
+msgstr "Zploštit obrázek"
 
 #: ../libgimp/gimpexport.c:288
 #, c-format
