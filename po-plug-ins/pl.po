@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-28 02:25+0100\n"
-"PO-Revision-Date: 2011-12-28 19:07+0100\n"
+"POT-Creation-Date: 2011-12-29 18:42+0100\n"
+"PO-Revision-Date: 2011-12-29 18:43+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -4812,13 +4812,13 @@ msgstr "\"%s\" nie jest prawidłowym kursorem X."
 
 #: ../plug-ins/common/file-xmc.c:686
 #, c-format
-msgid "The width of frame %d of '%s' is too big for X cursor."
-msgstr "Szerokość klatki %d z \"%s\" jest za duża dla kursora X."
+msgid "Frame %d of '%s' is too wide for an X cursor."
+msgstr "Klatka %d z \"%s\" jest za szeroka dla kursora X."
 
 #: ../plug-ins/common/file-xmc.c:693
 #, c-format
-msgid "The height of frame %d of '%s' is too big for X cursor."
-msgstr "Wysokość klatki %d z \"%s\" jest za duża dla kursora X."
+msgid "Frame %d of '%s' is too high for an X cursor."
+msgstr "Klatka %d z \"%s\" jest za wysoka dla kursora X."
 
 #: ../plug-ins/common/file-xmc.c:896
 #, c-format
@@ -4827,13 +4827,13 @@ msgstr "brak fragmentu obrazu w \"%s\"."
 
 #: ../plug-ins/common/file-xmc.c:938
 #, c-format
-msgid "The width of '%s' is too big for X cursor."
-msgstr "Szerokość \"%s\" jest za duża dla kursora X."
+msgid "'%s' is too wide for an X cursor."
+msgstr "\"%s\" jest za szerokie dla kursora X."
 
 #: ../plug-ins/common/file-xmc.c:945
 #, c-format
-msgid "The height of '%s' is too big for X cursor."
-msgstr "Wysokość \"%s\" jest za duża dla kursora X."
+msgid "'%s' is too high for an X cursor."
+msgstr "\"%s\" jest za wysokie dla kursora X."
 
 #: ../plug-ins/common/file-xmc.c:1015
 #, c-format
@@ -4968,43 +4968,45 @@ msgstr "Komentarz jest ograniczony do %d znaków."
 
 #: ../plug-ins/common/file-xmc.c:1489
 #, c-format
-msgid "This plug-in can only handle RGBA image format with 8bit color depth."
+msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr ""
-"Ta wtyczka obsługuje tylko format obrazu RGBA o 8-bitowej głębi kolorów."
+"Ta wtyczka obsługuje tylko pliki obrazów RGBA o 8-bitowej głębi kolorów."
 
 #: ../plug-ins/common/file-xmc.c:1507
 #, c-format
-msgid "Width of '%s' is too large. Please reduce more than %dpx."
+msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
-"Szerokość \"%s\" jest za duża. Proszę ją zmniejszyć o więcej niż %d pikseli."
+"Klatka \"%s\" jest za szeroka. Proszę ją zmniejszyć nie więcej niż o %d "
+"pikseli."
 
 #: ../plug-ins/common/file-xmc.c:1514
 #, c-format
-msgid "Height of '%s' is too large. Please reduce more than %dpx."
+msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
-"Wysokość \"%s\" jest za duża. Proszę ją zmniejszyć o więcej niż %d pikseli."
+"Klatka \"%s\" jest za wysoka. Proszę ją zmniejszyć nie więcej niż o %d "
+"pikseli."
 
 #: ../plug-ins/common/file-xmc.c:1521
 #, c-format
-msgid "The size of '%s' is zero!"
-msgstr "Rozmiar \"%s\" wynosi zero."
+msgid "Width and/or height of frame '%s' is zero!"
+msgstr "Szerokość i/lub wysokość klatki \"%s\" wynosi zero."
 
 #: ../plug-ins/common/file-xmc.c:1561
 #, c-format
 msgid ""
-"Cannot save the cursor because the hot spot is not on '%s'.\n"
+"Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-"
 "crop."
 msgstr ""
-"Nie można zapisać kursora, ponieważ gorący punkt nie znajduje się na \"%s"
-"\".\n"
+"Nie można zapisać kursora, ponieważ gorący punkt nie znajduje się w klatce "
+"\"%s\".\n"
 "Proszę spróbować zmienić położenie gorącego punktu, geometrię warstw lub "
 "zapisać bez automatycznego przycinania."
 
-#: ../plug-ins/common/file-xmc.c:1717
+#: ../plug-ins/common/file-xmc.c:1718
 #, c-format
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames which "
+"Your cursor was successfully saved but it contains one or more frames whose "
 "width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
@@ -5012,30 +5014,29 @@ msgstr ""
 "szerokości lub wysokości większej niż %i pikseli.\n"
 "Spowoduje to zaśmiecenie ekranu w niektórych środowiskach."
 
-#: ../plug-ins/common/file-xmc.c:1724
+#: ../plug-ins/common/file-xmc.c:1725
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
-"nominal size is not supported by gnome-appearance-properties.\n"
-"You can satisfy it by checking \"Replace the size of all frame...\" in the "
-"save dialog, or your cursor may not appear in gnome-appearance-properties."
+"nominal size is not supported by GNOME settings.\n"
+"You can satisfy it by checking \"Replace the size of all frames...\" in the "
+"save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
 "Kursor został pomyślnie zapisany, ale zawiera jedną lub więcej klatek o "
-"rozmiarze nominalnym nieobsługiwanym przez program gnome-appearance-"
-"properties.\n"
+"rozmiarze nominalnym nieobsługiwanym przez ustawienia środowiska GNOME.\n"
 "Można to naprawić przez zaznaczenie opcji \"Zastąpienie rozmiaru wszystkich "
 "klatek...\" w oknie zapisywania. W innym przypadku kursor nie pojawi się w "
-"programie gnome-appearance-properties."
+"ustawieniach środowiska GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1961
+#: ../plug-ins/common/file-xmc.c:1962
 #, c-format
 msgid ""
-"The parasite \"%s\" is too long for X cursor.\n"
-"The overflowed string was dropped."
+"The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
+"fit."
 msgstr ""
-"Pasożyt \"%s\" jest za długi dla kursora systemu X.\n"
-"Nadmiarowy ciąg został usunięty."
+"Pasożyt \"%s\" jest za długi dla komentarza kursora systemu X. Został "
+"skrócony, aby pasował."
 
-#: ../plug-ins/common/file-xmc.c:2163
+#: ../plug-ins/common/file-xmc.c:2164
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
