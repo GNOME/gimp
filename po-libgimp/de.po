@@ -1097,7 +1097,7 @@ msgstr "ungültige UTF-8-Zeichenkette"
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr ""
-"»yes« oder »no« wurde für boolesches Symbol %s erwartet, aber »%s« erhalten"
+"»yes« oder »no« wurde für boolesches Symbol erwartet, aber »%s« erhalten"
 
 #: ../libgimpconfig/gimpscanner.c:668
 #, c-format
