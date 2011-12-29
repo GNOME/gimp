@@ -19,15 +19,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-11 19:01+0000\n"
-"PO-Revision-Date: 2011-12-13 09:26+0100\n"
-"Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-29 17:35+0100\n"
+"PO-Revision-Date: 2011-12-29 17:36+0100\n"
+"Last-Translator: Nils Philippsen <nils@redhat.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
@@ -666,7 +666,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/twain/twain.c:567
-#: ../plug-ins/win-snap/winsnap.c:1156
+#: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
 msgstr "Hintergrund"
 
@@ -2037,7 +2037,7 @@ msgstr "Sie können »Wieder zusammenfügen« nur ausführen, wenn das aktuelle 
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr "Fehler beim Abtasten des Zusatzes »decompose-data«: zu wenig Ebenen gefunden"
+msgstr "Fehler beim Abtasten des Parasits »decompose-data«: zu wenige Ebenen gefunden"
 
 #: ../plug-ins/common/compose.c:545
 #, c-format
@@ -3580,9 +3580,8 @@ msgid "Couldn't load one brush in the pipe, giving up."
 msgstr "Es konnte ein Pinsel aus der Animation nicht geladen werden, Versuch wurde abgebrochen."
 
 #: ../plug-ins/common/file-gih.c:857
-#, fuzzy
 msgid "Brush Pipe"
-msgstr "GIMP-Pinsel"
+msgstr "Pinselanimation"
 
 #: ../plug-ins/common/file-gih.c:874
 msgid "Spacing (percent):"
@@ -3822,6 +3821,7 @@ msgid "Save background color"
 msgstr "Hintergrundfarbe speichern"
 
 #: ../plug-ins/common/file-mng.c:1371
+#: ../plug-ins/ui/plug-in-file-png.ui.h:9
 msgid "Save gamma"
 msgstr "Gamma-Faktor speichern"
 
@@ -3880,6 +3880,7 @@ msgid "PNG compression level:"
 msgstr "PNG-Kompressionsniveau:"
 
 #: ../plug-ins/common/file-mng.c:1465
+#: ../plug-ins/ui/plug-in-file-png.ui.h:1
 msgid "Choose a high compression level for small file size"
 msgstr "Wählen Sie eine hohe Kompression für kleine Dateigrößen"
 
@@ -3904,6 +3905,7 @@ msgid "Default frame delay:"
 msgstr "Standard-Einzelbildanzeigedauer"
 
 #: ../plug-ins/common/file-mng.c:1542
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:11
 msgid "milliseconds"
 msgstr "Millisekunden"
 
@@ -5011,13 +5013,13 @@ msgstr "»%s« ist kein gültiger X-Mauszeiger."
 
 #: ../plug-ins/common/file-xmc.c:686
 #, c-format
-msgid "The width of frame %d of '%s' is too big for X cursor."
-msgstr "Die Breite des Einzelbilds %d von »%s« ist zu groß für einen X-Zeiger."
+msgid "Frame %d of '%s' is too wide for an X cursor."
+msgstr "Einzelbild %d von »%s« ist zu breit für einen X-Mauszeiger."
 
 #: ../plug-ins/common/file-xmc.c:693
 #, c-format
-msgid "The height of frame %d of '%s' is too big for X cursor."
-msgstr "Die Höhe des Einzelbilds %d von »%s« ist zu groß für einen X-Zeiger."
+msgid "Frame %d of '%s' is too high for an X cursor."
+msgstr "Einzelbild %d von »%s« ist zu hoch für einen X-Mauszeiger."
 
 #: ../plug-ins/common/file-xmc.c:896
 #, c-format
@@ -5026,13 +5028,13 @@ msgstr "es gibt keine Bildeinheit in »%s«,"
 
 #: ../plug-ins/common/file-xmc.c:938
 #, c-format
-msgid "The width of '%s' is too big for X cursor."
-msgstr "Die Breite von »%s« ist zu groß für einen X-Zeiger."
+msgid "'%s' is too wide for an X cursor."
+msgstr "»%s« ist zu breit für einen X-Mauszeiger."
 
 #: ../plug-ins/common/file-xmc.c:945
 #, c-format
-msgid "The height of '%s' is too big for X cursor."
-msgstr "Die Höhe von »%s« ist zu groß für einen X-Zeiger."
+msgid "'%s' is too high for an X cursor."
+msgstr "»%s« ist zu hoch für einen X-Mauszeiger."
 
 #: ../plug-ins/common/file-xmc.c:1015
 #, c-format
@@ -5147,58 +5149,56 @@ msgstr "Der Standardkommentar ist auf %d Zeichen beschränkt."
 
 #: ../plug-ins/common/file-xmc.c:1489
 #, c-format
-msgid "This plug-in can only handle RGBA image format with 8bit color depth."
-msgstr "Dieses Plugin kann nur das RGBA-Bildformat mit 8 Bit Farbtiefe verarbeiten."
+msgid "This plug-in can only handle RGBA image files with 8bit color depth."
+msgstr "Dieses Plugin kann nur das RGBA-Bilddateien mit 8 Bit Farbtiefe verarbeiten."
 
 #: ../plug-ins/common/file-xmc.c:1507
 #, c-format
-msgid "Width of '%s' is too large. Please reduce more than %dpx."
-msgstr "Eine Breite von »%s« ist zu groß. Bitte vermindern Sie um mindestens %d Bildpunkte."
+msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
+msgstr "Einzelbild »%s« ist zu breit. Bitte verringern Sie auf maximal %d Bildpunkte."
 
 #: ../plug-ins/common/file-xmc.c:1514
 #, c-format
-msgid "Height of '%s' is too large. Please reduce more than %dpx."
-msgstr "Eine Höhe von »%s« ist zu groß. Bitte vermindern Sie um mindestens %d Bildpunkte."
+msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
+msgstr "Einzelbild »%s« ist zu hoch. Bitte verringern Sie auf maximal %d Bildpunkte."
 
 #: ../plug-ins/common/file-xmc.c:1521
 #, c-format
-msgid "The size of '%s' is zero!"
-msgstr "Die Größe von »%s« ist null."
+msgid "Width and/or height of frame '%s' is zero!"
+msgstr "Breite und/oder Höhe von Einzelbild »%s« ist Null!"
 
 #: ../plug-ins/common/file-xmc.c:1561
 #, c-format
 msgid ""
-"Cannot save the cursor because the hot spot is not on '%s'.\n"
+"Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-crop."
 msgstr ""
-"Der Mauszeiger kann nicht gespeichert werden, weil der Hot-Spot nicht auf »%s« liegt.\n"
-"Versuchen Sie, die Position oder die Ebenen-Geometrie des Hot-Spot zu ändern oder ohne automatisches Zuschneiden zu speichern."
+"Der Mauszeiger kann nicht gespeichert werden, weil der Hot-Spot nicht auf Einzelbild »%s« liegt.\n"
+"Versuchen Sie, die Position des Hot-Spot oder die Ebenen-Geometrie zu ändern oder ohne automatisches Zuschneiden zu speichern."
 
-#: ../plug-ins/common/file-xmc.c:1717
+#: ../plug-ins/common/file-xmc.c:1718
 #, c-format
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames which width or height is more than %ipx.\n"
+"Your cursor was successfully saved but it contains one or more frames whose width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
 "Ihr Mauszeiger wurde erfolgreich gespeichert, aber er enthält ein oder mehrere Einzelbilder, deren Höhe oder Breite mehr als %i Pixel beträgt.\n"
 "Somit wird der Bildschirm in einigen Umgebungen unübersichtlich."
 
-#: ../plug-ins/common/file-xmc.c:1724
+#: ../plug-ins/common/file-xmc.c:1725
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames whose nominal size is not supported by gnome-appearance-properties.\n"
-"You can satisfy it by checking \"Replace the size of all frame...\" in the save dialog, or your cursor may not appear in gnome-appearance-properties."
+"Your cursor was successfully saved but it contains one or more frames whose nominal size is not supported by GNOME settings.\n"
+"You can satisfy it by checking \"Replace the size of all frames...\" in the save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Ihr Mauszeiger wurde erfolgreich gespeichert, aber er enthält ein oder mehrere Einzelbilder, deren nominelle Größe nicht von den Einstellungen des GNOME-Erscheinungsbildes unterstützt werden.\n"
-"Sie können die Bedingung erfüllen, indem Sie »Die Größe aller Einzelbilder ersetzen, auch wenn diese angegeben ist« im Speichern-Dialog auswählen. Andernfalls wird Ihr Mauszeiger nicht in den Einstellungen des GNOME-Erscheinungsbildes aufgeführt."
+"Ihr Mauszeiger wurde erfolgreich gespeichert, aber er enthält ein oder mehrere Einzelbilder, deren nominelle Größe nicht in den GNOME Einstellungen unterstützt werden.\n"
+"Sie können die Bedingung erfüllen, indem Sie 'Die Größe aller Einzelbilder ersetzen, auch wenn diese angegeben ist' im Speichern-Dialog auswählen. Andernfalls wird Ihr Mauszeiger nicht in den GNOME Einstellungen aufgeführt."
 
-#: ../plug-ins/common/file-xmc.c:1961
+#: ../plug-ins/common/file-xmc.c:1962
 #, c-format
-msgid ""
-"The parasite \"%s\" is too long for X cursor.\n"
-"The overflowed string was dropped."
-msgstr ""
+msgid "The parasite \"%s\" is too long for an X cursor comment. It was cut off to fit."
+msgstr "Der Parasit »%s« ist zu lang für einen X-Mauszeiger Kommentar. Er wurde entsprechend gekürzt."
 
-#: ../plug-ins/common/file-xmc.c:2163
+#: ../plug-ins/common/file-xmc.c:2164
 #, c-format
 msgid "Sorry, this plug-in cannot handle a cursor which contains over %i different nominal sizes."
 msgstr "Verzeihung, dieses Plugin kann nicht mit einem Mauszeiger umgehen, der mehr als %i nominelle Größen hat."
@@ -9122,6 +9122,7 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1189
+#: ../plug-ins/ui/plug-in-file-png.ui.h:12
 msgid "_Load Defaults"
 msgstr "Standardwerte _laden"
 
@@ -10988,6 +10989,82 @@ msgstr "Stä_rke Exp.:"
 #: ../plug-ins/gimpressionist/sizemap.c:548
 msgid "Voronoi-mode makes only the smvector closest to the given point have any influence"
 msgstr "Voronoi-Modus: Nur der SMVektor, der einem Punkt am nächsten ist, hat Einfluss"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:1
+msgid "Animated GIF Options"
+msgstr "Optionen für animierte GIFs"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
+msgid "As _animation"
+msgstr "Als _Animation"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
+msgid "GIF Options"
+msgstr "GIF-Einstellungen"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+msgid "I_nterlace"
+msgstr "I_nterlace"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:5
+msgid "U_se disposal entered above for all frames"
+msgstr "Obigen Ü_bergang für alle Einzelbilder verwenden"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:6
+msgid "_Delay between frames where unspecified:"
+msgstr "_Pause zwischen Einzelbildern (wenn nicht spezifiziert):"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+msgid "_Frame disposal where unspecified:"
+msgstr "Einzelbild_übergang (wenn nicht spezifiziert):"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
+msgid "_GIF comment:"
+msgstr "_GIF-Kommentar:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:9
+msgid "_Loop forever"
+msgstr "_Schleife endlos wiederholen"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
+msgid "_Use delay entered above for all frames"
+msgstr "Obige P_ause für alle Einzelbilder verwenden"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:2
+msgid "Co_mpression level:"
+msgstr "_Kompressionsniveau:"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:3
+msgid "S_ave Defaults"
+msgstr "Standardwerte _speichern"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:4
+msgid "Save _background color"
+msgstr "Hintergrundfarbe speichern"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:5
+msgid "Save _resolution"
+msgstr "Auflösung speichern"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:6
+msgid "Save color _values from transparent pixels"
+msgstr "_Farbwerte aus transparenten Pixeln speichern"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:7
+msgid "Save comme_nt"
+msgstr "Kommentar _speichern"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:8
+msgid "Save creation _time"
+msgstr "Erstellungs_zeit speichern"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:10
+msgid "Save layer o_ffset"
+msgstr "Layer_versatz speichern"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:11
+msgid "_Interlacing (Adam7)"
+msgstr "_Interlacing (Adam7)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -12958,7 +13035,7 @@ msgstr "Unbekanntes Element <%s>"
 #: ../plug-ins/metadata/xmp-parse.c:323
 #, c-format
 msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
-msgstr "Unbekanntes Attribut »%s«=»%s« in Element <%s>"
+msgstr "Unbekanntes Attribut \"%s\"=\"%s\" in Element <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:676
 #, c-format
@@ -13158,41 +13235,60 @@ msgstr "_Scanner/Kamera …"
 msgid "Transferring data from scanner/camera"
 msgstr "Daten werden vom Scanner/von Kamera übertragen"
 
-#: ../plug-ins/win-snap/winsnap.c:865
+#: ../plug-ins/win-snap/winsnap.c:871
 msgid "Grab"
 msgstr "Aufnehmen"
 
-#: ../plug-ins/win-snap/winsnap.c:882
+#: ../plug-ins/win-snap/winsnap.c:888
 msgid "Grab a single window"
 msgstr "Ein einzelnes Fenster aufnehmen"
 
-#: ../plug-ins/win-snap/winsnap.c:896
+#: ../plug-ins/win-snap/winsnap.c:902
 msgid "Grab the whole screen"
 msgstr "Den ganzen Bildschirm aufnehmen"
 
-#: ../plug-ins/win-snap/winsnap.c:912
+#: ../plug-ins/win-snap/winsnap.c:918
 msgid "after"
 msgstr "nach"
 
-#: ../plug-ins/win-snap/winsnap.c:924
+#: ../plug-ins/win-snap/winsnap.c:930
 msgid "Seconds delay"
 msgstr "Sekunden Pause"
 
-#: ../plug-ins/win-snap/winsnap.c:931
+#: ../plug-ins/win-snap/winsnap.c:937
 msgid "Include decorations"
 msgstr "Mit Fensterrahmen"
 
-#: ../plug-ins/win-snap/winsnap.c:990
+#: ../plug-ins/win-snap/winsnap.c:996
 msgid "Capture a window or desktop image"
 msgstr "Ein Fenster oder den Schreibtisch erfassen"
 
-#: ../plug-ins/win-snap/winsnap.c:995
+#: ../plug-ins/win-snap/winsnap.c:1001
 msgid "_Screen Shot..."
 msgstr "_Bildschirmfoto …"
 
-#: ../plug-ins/win-snap/winsnap.c:1143
+#: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "Keine Daten erfasst"
+
+#~ msgid "The width of frame %d of '%s' is too big for X cursor."
+#~ msgstr ""
+#~ "Die Breite des Einzelbilds %d von »%s« ist zu groß für einen X-Zeiger."
+
+#~ msgid "The height of frame %d of '%s' is too big for X cursor."
+#~ msgstr ""
+#~ "Die Höhe des Einzelbilds %d von »%s« ist zu groß für einen X-Zeiger."
+
+#~ msgid "The height of '%s' is too big for X cursor."
+#~ msgstr "Die Höhe von »%s« ist zu groß für einen X-Zeiger."
+
+#~ msgid "Width of '%s' is too large. Please reduce more than %dpx."
+#~ msgstr ""
+#~ "Eine Breite von »%s« ist zu groß. Bitte vermindern Sie um mindestens %d "
+#~ "Bildpunkte."
+
+#~ msgid "The size of '%s' is zero!"
+#~ msgstr "Die Größe von »%s« ist null."
 
 #~ msgid "Ascii"
 #~ msgstr "ASCII"
