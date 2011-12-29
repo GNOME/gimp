@@ -683,14 +683,14 @@ load_image (const gchar *filename, GError **error)
       if (imagesp->images[i]->width > MAX_LOAD_DIMENSION)
         {
           g_set_error (error, 0, 0,
-                       _("The width of frame %d of '%s' is too big for X cursor."),
+                       _("Frame %d of '%s' is too wide for an X cursor."),
                        i + 1, gimp_filename_to_utf8 (filename));
           return -1;
         }
       if (imagesp->images[i]->height > MAX_LOAD_DIMENSION)
         {
           g_set_error (error, 0, 0,
-                       _("The height of frame %d of '%s' is too big for X cursor."),
+                       _("Frame %d of '%s' is too high for an X cursor."),
                        i + 1, gimp_filename_to_utf8 (filename));
           return -1;
         }
@@ -935,14 +935,14 @@ load_thumbnail (const gchar *filename, gint32 thumb_size,
   if (*thumb_width > MAX_LOAD_DIMENSION)
     {
       g_set_error (error, 0, 0,
-                   _("The width of '%s' is too big for X cursor."),
+                   _("'%s' is too wide for an X cursor."),
                    gimp_filename_to_utf8 (filename));
       return -1;
     }
   if (*thumb_height > MAX_LOAD_DIMENSION)
     {
       g_set_error (error, 0, 0,
-                   _("The height of '%s' is too big for X cursor."),
+                   _("'%s' is too high for an X cursor."),
                    gimp_filename_to_utf8 (filename));
       return -1;
     }
@@ -1486,7 +1486,7 @@ save_image (const gchar *filename,
       if (drawable->bpp != 4)
         {
           g_set_error (error, 0, 0,
-          _("This plug-in can only handle RGBA image format with 8bit color depth."));
+          _("This plug-in can only handle RGBA image files with 8bit color depth."));
           return FALSE;
         }
       /* get framename of this layer */
@@ -1504,21 +1504,21 @@ save_image (const gchar *filename,
       if (drawable->width > MAX_SAVE_DIMENSION)
         {
           g_set_error (error, 0, 0,
-                       _("Width of '%s' is too large. Please reduce more than %dpx."),
+                       _("Frame '%s' is too wide. Please reduce to no more than %dpx."),
                        gimp_any_to_utf8 (framename, -1, NULL), MAX_SAVE_DIMENSION);
           return FALSE;
         }
       if (drawable->height > MAX_SAVE_DIMENSION)
         {
           g_set_error (error, 0, 0,
-                       _("Height of '%s' is too large. Please reduce more than %dpx."),
+                       _("Frame '%s' is too high. Please reduce to no more than %dpx."),
                        gimp_any_to_utf8 (framename, -1, NULL), MAX_SAVE_DIMENSION);
           return FALSE;
         }
       if (drawable->height == 0 ||drawable->width == 0)
         {
           g_set_error (error, 0, 0,
-                       _("The size of '%s' is zero!"),
+                       _("Width and/or height of frame '%s' is zero!"),
                        gimp_any_to_utf8 (framename, -1, NULL));
           return FALSE;
         }
@@ -1558,9 +1558,10 @@ save_image (const gchar *filename,
                                &save_rgn))
             { /* if hotspot is not on save_rgn */
               g_set_error (error, 0, 0,
-                           _("Cannot save the cursor because the hot spot is not on '%s'.\n"
-                             "Try to change the hot spot position, layer geometry or "
-                             "save without auto-crop."),
+                           _("Cannot save the cursor because the hot spot "
+                             "is not on frame '%s'.\n"
+                             "Try to change the hot spot position, "
+                             "layer geometry or save without auto-crop."),
                            gimp_any_to_utf8 (framename, -1, NULL));
               return FALSE;
             }
@@ -1714,19 +1715,19 @@ save_image (const gchar *filename,
   /* actual warning about dimensions */
   if (dimension_warn)
     {
-      g_message (_("Your cursor was successfully saved but it contains one "
-                   "or more frames which width or height is more than %ipx.\n"
+      g_message (_("Your cursor was successfully saved but it contains one or "
+                   "more frames whose width or height is more than %ipx.\n"
                    "It will clutter the screen in some environments."),
                    MAX_BITMAP_CURSOR_SIZE);
     }
   if (size_warn)
     {
       g_message (_("Your cursor was successfully saved but it contains one "
-                   "or more frames whose nominal size is not "
-                   "supported by gnome-appearance-properties.\n"
+                   "or more frames whose nominal size is not supported by "
+                   "GNOME settings.\n"
                    "You can satisfy it by checking \"Replace the size of all "
-                   "frame...\" in the save dialog, or your cursor may not appear "
-                   "in gnome-appearance-properties."));
+                   "frames...\" in the save dialog, or your cursor may not "
+                   "appear in GNOME settings."));
     }
   /*
    * Done with the file...
@@ -1958,8 +1959,8 @@ get_comment_from_pname (const gint32  image_ID,
       if (length > XCURSOR_COMMENT_MAX_LEN)
         {
           length = XCURSOR_COMMENT_MAX_LEN;
-          g_message (_("The parasite \"%s\" is too long for X cursor.\n"
-                       "The overflowed string was dropped."),
+          g_message (_("The parasite \"%s\" is too long for an X cursor "
+                       "comment. It was cut off to fit."),
                      gimp_any_to_utf8 (pname, -1,NULL));
         }
 
