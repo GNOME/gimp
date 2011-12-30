@@ -307,8 +307,8 @@ query (void)
                           G_N_ELEMENTS (save_multi_args), 0,
                           save_multi_args, NULL);
 
-  gimp_plugin_menu_register (SAVE_MULTI_PROC,
-                             "<Image>/File/Create/PDF");
+/*  gimp_plugin_menu_register (SAVE_MULTI_PROC,
+                             "<Image>/File/Create/PDF"); */
 
   gimp_register_file_handler_mime (SAVE_PROC, "application/pdf");
   gimp_register_save_handler (SAVE_PROC, "pdf", "");
