@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-23 19:02+0000\n"
-"PO-Revision-Date: 2011-12-24 11:43+0100\n"
+"POT-Creation-Date: 2011-12-29 18:50+0000\n"
+"PO-Revision-Date: 2011-12-29 22:38+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -4974,13 +4974,13 @@ msgstr "'%s' ni veljaven kazalec X."
 
 #: ../plug-ins/common/file-xmc.c:686
 #, c-format
-msgid "The width of frame %d of '%s' is too big for X cursor."
-msgstr "Širina sličice %d '%s' je prevelika za kazalec X."
+msgid "Frame %d of '%s' is too wide for an X cursor."
+msgstr "Sličica %d iz '%s' je preširoka za kazalec X."
 
 #: ../plug-ins/common/file-xmc.c:693
 #, c-format
-msgid "The height of frame %d of '%s' is too big for X cursor."
-msgstr "Višina sličice %d '%s' je prevelika za kazalec X."
+msgid "Frame %d of '%s' is too high for an X cursor."
+msgstr "Sličica %d iz '%s' je previsoka za kazalec X."
 
 #: ../plug-ins/common/file-xmc.c:896
 #, c-format
@@ -4989,13 +4989,13 @@ msgstr "V \"%s\" ni koščka slike."
 
 #: ../plug-ins/common/file-xmc.c:938
 #, c-format
-msgid "The width of '%s' is too big for X cursor."
-msgstr "Širina '%s' je prevelika za kazalec X."
+msgid "'%s' is too wide for an X cursor."
+msgstr "'%s' je preširoka za kazalec X."
 
 #: ../plug-ins/common/file-xmc.c:945
 #, c-format
-msgid "The height of '%s' is too big for X cursor."
-msgstr "Višina '%s' je prevelika za kazalec X."
+msgid "'%s' is too high for an X cursor."
+msgstr "'%s' je previsoka za kazalec X."
 
 #: ../plug-ins/common/file-xmc.c:1015
 #, c-format
@@ -5111,60 +5111,56 @@ msgstr "Komentar je omejen na %d znakov."
 
 #: ../plug-ins/common/file-xmc.c:1489
 #, c-format
-msgid "This plug-in can only handle RGBA image format with 8bit color depth."
-msgstr "Ta vtičnik lahko obdeluje le slike RGBA z 8-bitno barvno globino."
+msgid "This plug-in can only handle RGBA image files with 8bit color depth."
+msgstr "Ta vtičnik lahko obdeluje le datoteke slik RGBA z 8-bitno barvno globino."
 
 #: ../plug-ins/common/file-xmc.c:1507
 #, c-format
-msgid "Width of '%s' is too large. Please reduce more than %dpx."
-msgstr "Širina '%s' je prevelika. Zmanjšajte jo več kot %dpx."
+msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
+msgstr "Sličica '%s' je preširoka. Zmanjšajte jo na nič več kot %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1514
 #, c-format
-msgid "Height of '%s' is too large. Please reduce more than %dpx."
-msgstr "Višina '%s' je prevelika. Zmanjšajte jo več kot %dpx."
+msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
+msgstr "Sličica '%s' je previsoka. Zmanjšajte jo na nič več kot %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1521
 #, c-format
-msgid "The size of '%s' is zero!"
-msgstr "Velikost '%s' je nič!"
+msgid "Width and/or height of frame '%s' is zero!"
+msgstr "Širina in/ali višina sličice '%s' je nič!"
 
 #: ../plug-ins/common/file-xmc.c:1561
 #, c-format
 msgid ""
-"Cannot save the cursor because the hot spot is not on '%s'.\n"
+"Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-crop."
 msgstr ""
-"Kazalca ni mogoče shraniti, ker vroča točka ni na '%s'.\n"
+"Kazalca ni mogoče shraniti, ker vroča točka ni na sličici '%s'.\n"
 "Poskusite spremeniti položaj vroče točke, geometrijo plasti ali pa shranite s samo-obrezavo."
 
-#: ../plug-ins/common/file-xmc.c:1717
+#: ../plug-ins/common/file-xmc.c:1718
 #, c-format
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames which width or height is more than %ipx.\n"
+"Your cursor was successfully saved but it contains one or more frames whose width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
 "Vaš kazalec je bil uspešno shranjen, vendar vsebuje eno ali več sličic, katerih širina ali višina je več kot %ipx.\n"
 "V nekaterih okoljih bo naredil zmedo na namizju."
 
-#: ../plug-ins/common/file-xmc.c:1724
+#: ../plug-ins/common/file-xmc.c:1725
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames whose nominal size is not supported by gnome-appearance-properties.\n"
-"You can satisfy it by checking \"Replace the size of all frame...\" in the save dialog, or your cursor may not appear in gnome-appearance-properties."
+"Your cursor was successfully saved but it contains one or more frames whose nominal size is not supported by GNOME settings.\n"
+"You can satisfy it by checking \"Replace the size of all frames...\" in the save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Vaš kazalec je bil uspešno shranjen, vendar vsebuje eno ali več sličic, katerih nominalna velikost ni podprta na strani gnome-appearance-properties.\n"
-"Slednje lahko zadovoljite, če potrdite \"Zamenjaj velikost v vseh sličicah ...\" v oknu shranjevanja, sicer vaš kazalec morda ne bo prisoten v gnome-appearance-properties."
+"Vaš kazalec je bil uspešno shranjen, vendar vsebuje eno ali več sličic, katerih nominalna velikost ni podprta na strani nastavitev za GNOME.\n"
+"Slednje lahko zadovoljite, če potrdite \"Zamenjaj velikost v vseh sličicah ...\" v oknu shranjevanja, sicer vaš kazalec morda ne bo prisoten v nastavitvah za GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1961
+#: ../plug-ins/common/file-xmc.c:1962
 #, c-format
-msgid ""
-"The parasite \"%s\" is too long for X cursor.\n"
-"The overflowed string was dropped."
-msgstr ""
-"Zajedalec \"%s\" je predolg za kazalec X.\n"
-"Preplavljeni niz je bil opuščen."
+msgid "The parasite \"%s\" is too long for an X cursor comment. It was cut off to fit."
+msgstr "Zajedalec \"%s\" je predolg za komentar kazalca X. Bil je obrezan na ustrezno dolžino."
 
-#: ../plug-ins/common/file-xmc.c:2163
+#: ../plug-ins/common/file-xmc.c:2164
 #, c-format
 msgid "Sorry, this plug-in cannot handle a cursor which contains over %i different nominal sizes."
 msgstr "Žal ta vtičnik ne more ravnati s kazalcem, ki vsebuje več kot %i različnih nominalnih velikosti."
