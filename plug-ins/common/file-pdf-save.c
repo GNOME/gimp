@@ -111,7 +111,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 #define SAVE_PROC               "file-pdf-save"
-#define SAVE_DEFAULTS_PROC      "file-pdf-save-defaults"
 #define SAVE_MULTI_PROC         "file-pdf-save-multi"
 #define PLUG_IN_BINARY          "file-pdf-save"
 #define PLUG_IN_ROLE            "gimp-file-pdf-save"
@@ -127,8 +126,8 @@
 #define THUMB_HEIGHT             120
 
 typedef struct {
-  gboolean convert;
-  gboolean ignore;
+  gboolean vectorize;
+  gboolean ignore_hidden;
   gboolean apply_masks;
 } PdfOptimize;
 
@@ -157,7 +156,7 @@ typedef struct {
 } Page;
 
 
-static void               init_vals                  (const gchar *name,
+static gboolean           init_vals                  (const gchar *name,
                                                       gint nparams,
                                                       const GimpParam *param,
                                                       gboolean *single,
@@ -206,8 +205,8 @@ static gboolean dnd_remove = TRUE;
 static PdfMultiPage multi_page;
 
 static PdfOptimize optimize = {
-  TRUE, /* convert */
-  TRUE, /* ignore */
+  TRUE, /* vectorize */
+  TRUE, /* ignore_hidden */
   TRUE  /* apply_masks */
 };
 
@@ -225,28 +224,45 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 MAIN()
 
-  static void
+typedef enum {
+  SA_RUN_MODE,
+  SA_IMAGE,
+  SA_DRAWABLE,
+  SA_FILENAME,
+  SA_RAW_FILENAME,
+  SA_VECTORIZE,
+  SA_IGNORE_HIDDEN,
+  SA_APPLY_MASKS,
+  SA_ARG_COUNT
+} SaveArgs;
+
+#define SA_ARG_COUNT_DEFAULT 5
+
+typedef enum {
+  SMA_RUN_MODE,
+  SMA_IMAGES,
+  SMA_COUNT,
+  SMA_VECTORIZE,
+  SMA_IGNORE_HIDDEN,
+  SMA_APPLY_MASKS,
+  SMA_FILENAME,
+  SMA_RAWFILENAME,
+  SMA_ARG_COUNT
+} SaveMultiArgs;
+
+static void
 query (void)
 {
-  static GimpParamDef save_defaults_args[] =
-    {
-      {GIMP_PDB_INT32,    "run-mode",     "Run mode"},
-      {GIMP_PDB_IMAGE,    "image",        "Input image"},
-      {GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"},
-      {GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"},
-      {GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in"}
-    };
-
   static GimpParamDef save_args[] =
     {
       {GIMP_PDB_INT32,    "run-mode",     "Run mode"},
       {GIMP_PDB_IMAGE,    "image",        "Input image"},
       {GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"},
-      {GIMP_PDB_INT32,    "convert",      "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
-      {GIMP_PDB_INT32,    "ignore",       "Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
-      {GIMP_PDB_INT32,    "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)"},
       {GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"},
-      {GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in"}
+      {GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in"},
+      {GIMP_PDB_INT32,    "vectorize",    "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
+      {GIMP_PDB_INT32,    "ignore-hidden","Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
+      {GIMP_PDB_INT32,    "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)"}
     };
 
   static GimpParamDef save_multi_args[] =
@@ -254,27 +270,12 @@ query (void)
       {GIMP_PDB_INT32,      "run-mode",     "Run mode"},
       {GIMP_PDB_INT32ARRAY, "images",       "Input image for each page (An image can appear more than once)"},
       {GIMP_PDB_INT32,      "count",        "The amount of images entered (This will be the amount of pages). 1 <= count <= MAX_PAGE_COUNT"},
-      {GIMP_PDB_INT32,      "convert",      "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
-      {GIMP_PDB_INT32,      "ignore",       "Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
+      {GIMP_PDB_INT32,      "vectorize",    "Convert bitmaps to vector graphics where possible. TRUE or FALSE"},
+      {GIMP_PDB_INT32,      "ignore-hidden","Omit hidden layers and layers with zero opacity. TRUE or FALSE"},
       {GIMP_PDB_INT32,      "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)"},
       {GIMP_PDB_STRING,     "filename",     "The name of the file to save the image in"},
       {GIMP_PDB_STRING,     "raw-filename", "The name of the file to save the image in"}
     };
-
-  gimp_install_procedure (SAVE_DEFAULTS_PROC,
-                          "Save files in PDF format",
-                          "Saves files in Adobe's Portable Document Format. "
-                          "PDF is designed to be easily processed by a variety "
-                          "of different platforms, and is a distant cousin of "
-                          "PostScript.",
-                          "Barak Itkin",
-                          "Copyright Barak Itkin",
-                          "August 2009",
-                          N_("Portable Document Format"),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_defaults_args), 0,
-                          save_defaults_args, NULL);
 
   gimp_install_procedure (SAVE_PROC,
                           "Save files in PDF format",
@@ -309,8 +310,8 @@ query (void)
   gimp_plugin_menu_register (SAVE_MULTI_PROC,
                              "<Image>/File/Create/PDF");
 
-  gimp_register_file_handler_mime (SAVE_DEFAULTS_PROC, "application/pdf");
-  gimp_register_save_handler (SAVE_DEFAULTS_PROC, "pdf", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "application/pdf");
+  gimp_register_save_handler (SAVE_PROC, "pdf", "");
 }
 
 static void
@@ -370,8 +371,12 @@ run (const gchar      *name,
   /* Initializing all the settings */
   multi_page.image_count = 0;
 
-  init_vals (name, nparams, param, &single_image,
-             &defaults_proc, &run_mode);
+  if (! init_vals (name, nparams, param, &single_image,
+             &defaults_proc, &run_mode))
+    {
+      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+      return;
+    }
 
   /* Starting the executions */
   if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -472,7 +477,7 @@ run (const gchar      *name,
             }
 
           if (gimp_item_get_visible (layer->drawable_id)
-              && (! optimize.ignore || (optimize.ignore && opacity > 0.0)))
+              && (! optimize.ignore_hidden || (optimize.ignore_hidden && opacity > 0.0)))
             {
               mask_id = gimp_layer_get_mask (layer->drawable_id);
               if (mask_id != -1)
@@ -489,7 +494,7 @@ run (const gchar      *name,
                   layer_color = get_layer_color (layer, &single_color);
                   cairo_rectangle (cr, x, y, layer->width, layer->height);
 
-                  if (optimize.convert && single_color)
+                  if (optimize.vectorize && single_color)
                     {
                       cairo_set_source_rgba (cr, layer_color.r, layer_color.g, layer_color.b, layer_color.a * opacity);
                       if (mask_id != -1)
@@ -557,7 +562,7 @@ run (const gchar      *name,
 
 /* A function that takes care of loading the basic
  * parameters */
-static void
+static gboolean
 init_vals (const gchar      *name,
            gint              nparams,
            const GimpParam  *param,
@@ -566,27 +571,46 @@ init_vals (const gchar      *name,
            GimpRunMode      *run_mode)
 {
   gboolean had_saved_list = FALSE;
-  gboolean single = TRUE;
+  gboolean single;
   gboolean defaults = FALSE;
   gint32   i;
   gint32   image;
 
-  *run_mode = param[0].data.d_int32;
-
-  if (g_str_equal (name, SAVE_DEFAULTS_PROC))
-    defaults = TRUE;
-  else if (g_str_equal (name, SAVE_MULTI_PROC))
-    single = FALSE;
-
-  if (single)
+  if (g_str_equal (name, SAVE_PROC))
     {
-      image = param[1].data.d_int32;
-      file_name = param[3].data.d_string;
+      single = TRUE;
+      if (nparams != SA_ARG_COUNT && nparams != SA_ARG_COUNT_DEFAULT)
+        return FALSE;
+
+      *run_mode = param[SA_RUN_MODE].data.d_int32;
+      image = param[SA_IMAGE].data.d_int32;
+      file_name = param[SA_FILENAME].data.d_string;
+
+      if (nparams == SA_ARG_COUNT)
+        {
+          optimize.apply_masks = param[SA_APPLY_MASKS].data.d_int32;
+          optimize.vectorize = param[SA_VECTORIZE].data.d_int32;
+          optimize.ignore_hidden = param[SA_IGNORE_HIDDEN].data.d_int32;
+        }
+      else
+        defaults = TRUE;
     }
-  else {
-    image = -1;
-    file_name = param[6].data.d_string;
-  }
+  else if (g_str_equal (name, SAVE_MULTI_PROC))
+    {
+      single = FALSE;
+      if (nparams != SMA_ARG_COUNT)
+        return FALSE;
+
+      *run_mode = param[SMA_RUN_MODE].data.d_int32;
+      image = -1;
+      file_name = param[SA_FILENAME].data.d_string;
+
+      optimize.apply_masks = param[SMA_APPLY_MASKS].data.d_int32;
+      optimize.vectorize = param[SMA_VECTORIZE].data.d_int32;
+      optimize.ignore_hidden = param[SMA_IGNORE_HIDDEN].data.d_int32;
+    }
+  else
+    return FALSE;
 
   switch (*run_mode)
     {
@@ -594,38 +618,28 @@ init_vals (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       if (single)
         {
-          if (!defaults)
-            {
-              optimize.apply_masks = param[3].data.d_int32;
-              optimize.convert = param[4].data.d_int32;
-              optimize.ignore = param[5].data.d_int32;
-            }
           init_image_list_defaults (image);
         }
       else
         {
-          multi_page.image_count = param[2].data.d_int32;
-          if (param[1].data.d_int32array != NULL)
-            for (i = 0; i < param[2].data.d_int32; i++)
-              multi_page.images[i] = param[1].data.d_int32array[i];
-
-          optimize.apply_masks = param[3].data.d_int32;
-          optimize.convert = param[4].data.d_int32;
-          optimize.ignore = param[5].data.d_int32;
+          multi_page.image_count = param[SMA_COUNT].data.d_int32;
+          if (param[SMA_IMAGES].data.d_int32array != NULL)
+            for (i = 0; i < param[SMA_COUNT].data.d_int32; i++)
+              multi_page.images[i] = param[SMA_IMAGES].data.d_int32array[i];
         }
-
       break;
 
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
       gimp_get_data (DATA_OPTIMIZE, &optimize);
       had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
-      if (had_saved_list)
+
+      if (had_saved_list && (file_name == NULL || strlen (file_name) == 0))
         {
           file_name = multi_page.file_name;
         }
 
-      if (single || !had_saved_list )
+      if (single || ! had_saved_list )
         init_image_list_defaults (image);
 
       break;
@@ -641,7 +655,9 @@ init_vals (const gchar      *name,
             }
         }
       else
-        init_image_list_defaults (image);
+        {
+          init_image_list_defaults (image);
+        }
       gimp_get_data (DATA_OPTIMIZE, &optimize);
 
       break;
@@ -651,6 +667,8 @@ init_vals (const gchar      *name,
   *single_image = single;
 
   validate_image_list ();
+
+  return TRUE;
 }
 
 /* A function that initializes the image list to default values */
@@ -696,8 +714,8 @@ gui_single (void)
   GtkWidget *window;
   GtkWidget *vbox;
 
-  GtkWidget *convert_c;
-  GtkWidget *ignore_c;
+  GtkWidget *vectorize_c;
+  GtkWidget *ignore_hidden_c;
   GtkWidget *apply_c;
 
   gboolean   run;
@@ -712,13 +730,13 @@ gui_single (void)
 
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
-  ignore_c = gtk_check_button_new_with_label (_("Omit hidden layers and layers with zero opacity"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_c), optimize.ignore);
-  gtk_box_pack_end (GTK_BOX (vbox), ignore_c, TRUE, TRUE, 0);
+  ignore_hidden_c = gtk_check_button_new_with_label (_("Omit hidden layers and layers with zero opacity"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c), optimize.ignore_hidden);
+  gtk_box_pack_end (GTK_BOX (vbox), ignore_hidden_c, TRUE, TRUE, 0);
 
-  convert_c = gtk_check_button_new_with_label (_("Convert bitmaps to vector graphics where possible"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
-  gtk_box_pack_end (GTK_BOX (vbox), convert_c, TRUE, TRUE, 0);
+  vectorize_c = gtk_check_button_new_with_label (_("Convert bitmaps to vector graphics where possible"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vectorize_c), optimize.vectorize);
+  gtk_box_pack_end (GTK_BOX (vbox), vectorize_c, TRUE, TRUE, 0);
 
   apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
@@ -729,8 +747,8 @@ gui_single (void)
 
   run = gtk_dialog_run (GTK_DIALOG (window)) == GTK_RESPONSE_OK;
 
-  optimize.ignore = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_c));
-  optimize.convert = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (convert_c));
+  optimize.ignore_hidden = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_hidden_c));
+  optimize.vectorize = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vectorize_c));
   optimize.apply_masks = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (apply_c));
 
   gtk_widget_destroy (window);
@@ -748,8 +766,8 @@ gui_multi (void)
   GtkWidget   *file_browse;
   GtkWidget   *file_hbox;
 
-  GtkWidget   *convert_c;
-  GtkWidget   *ignore_c;
+  GtkWidget   *vectorize_c;
+  GtkWidget   *ignore_hidden_c;
   GtkWidget   *apply_c;
 
   GtkWidget   *scroll;
@@ -829,13 +847,13 @@ gui_multi (void)
 
   gtk_box_pack_start (GTK_BOX (vbox), h_box, FALSE, FALSE, 0);
 
-  ignore_c = gtk_check_button_new_with_label (_("Omit hidden layers and layers with zero opacity"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_c), optimize.ignore);
-  gtk_box_pack_end (GTK_BOX (vbox), ignore_c, FALSE, FALSE, 0);
+  ignore_hidden_c = gtk_check_button_new_with_label (_("Omit hidden layers and layers with zero opacity"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c), optimize.ignore_hidden);
+  gtk_box_pack_end (GTK_BOX (vbox), ignore_hidden_c, FALSE, FALSE, 0);
 
-  convert_c = gtk_check_button_new_with_label (_("Convert bitmaps to vector graphics where possible"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
-  gtk_box_pack_end (GTK_BOX (vbox), convert_c, FALSE, FALSE, 0);
+  vectorize_c = gtk_check_button_new_with_label (_("Convert bitmaps to vector graphics where possible"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vectorize_c), optimize.vectorize);
+  gtk_box_pack_end (GTK_BOX (vbox), vectorize_c, FALSE, FALSE, 0);
 
   apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
@@ -863,8 +881,8 @@ gui_multi (void)
   temp = gtk_entry_get_text (GTK_ENTRY (file_entry));
   g_stpcpy (file_name, temp);
 
-  optimize.ignore = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_c));
-  optimize.convert = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (convert_c));
+  optimize.ignore_hidden = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_hidden_c));
+  optimize.vectorize = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vectorize_c));
   optimize.apply_masks = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (apply_c));
 
   gtk_widget_destroy (window);
