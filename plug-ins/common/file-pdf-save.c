@@ -1109,52 +1109,161 @@ recount_pages (void)
 
 /* A function to get a cairo image surface from a drawable.
  * Some of the code was taken from the gimp-print plugin */
+
+/* Gimp RGB (24 bit) to Cairo RGB (24 bit) */
+static inline void
+convert_from_rgb_to_rgb (const guchar *src,
+                         guchar       *dest,
+                         gint          pixels)
+{
+  while (pixels--)
+    {
+      GIMP_CAIRO_RGB24_SET_PIXEL (dest,
+                                  src[0], src[1], src[2]);
+
+      src  += 3;
+      dest += 4;
+    }
+}
+
+/* Gimp RGBA (32 bit) to Cairo RGBA (32 bit) */
+static inline void
+convert_from_rgba_to_rgba (const guchar *src,
+                           guchar       *dest,
+                           gint          pixels)
+{
+  while (pixels--)
+    {
+      GIMP_CAIRO_ARGB32_SET_PIXEL (dest,
+                                   src[0], src[1], src[2], src[3]);
+
+      src  += 4;
+      dest += 4;
+    }
+}
+
+/* Gimp Gray (8 bit) to Cairo RGB (24 bit) */
+static inline void
+convert_from_gray_to_rgb (const guchar *src,
+                           guchar       *dest,
+                           gint          pixels)
+{
+  while (pixels--)
+    {
+      GIMP_CAIRO_RGB24_SET_PIXEL (dest,
+                                  src[0], src[0], src[0]);
+
+      src  += 1;
+      dest += 4;
+    }
+}
+
+/* Gimp GrayA (16 bit) to Cairo RGBA (32 bit) */
+static inline void
+convert_from_graya_to_rgba (const guchar *src,
+                            guchar       *dest,
+                            gint          pixels)
+{
+  while (pixels--)
+    {
+      GIMP_CAIRO_ARGB32_SET_PIXEL (dest,
+                                   src[0], src[0], src[0], src[1]);
+
+      src  += 2;
+      dest += 4;
+    }
+}
+
+/* Gimp Indexed (8 bit) to Cairo RGB (24 bit) */
+static inline void
+convert_from_indexed_to_rgb (const guchar *src,
+                             guchar       *dest,
+                             gint          pixels,
+                             const guchar *cmap)
+{
+  while (pixels--)
+    {
+      const gint i = 3 * src[0];
+
+      GIMP_CAIRO_RGB24_SET_PIXEL (dest,
+                                  cmap[i], cmap[i + 1], cmap[i + 2]);
+
+      src  += 1;
+      dest += 4;
+    }
+}
+
+/* Gimp IndexedA (16 bit) to Cairo RGBA (32 bit) */
+static inline void
+convert_from_indexeda_to_rgba (const guchar *src,
+                               guchar       *dest,
+                               gint          pixels,
+                               const guchar *cmap)
+{
+  while (pixels--)
+    {
+      const gint i = 3 * src[0];
+
+      GIMP_CAIRO_ARGB32_SET_PIXEL (dest,
+                                   cmap[i], cmap[i + 1], cmap[i + 2], src[1]);
+
+      src  += 2;
+      dest += 4;
+    }
+}
+
 static cairo_surface_t *
 get_drawable_image (GimpDrawable *drawable)
 {
+  gint32           drawable_ID   = drawable->drawable_id;
+  GimpPixelRgn     region;
+  GimpImageType    image_type    = gimp_drawable_type (drawable_ID);
   cairo_surface_t *surface;
   cairo_format_t   format;
-  guchar          *data;
-  guchar          *dest;
-  const guchar    *src;
-  gint             dest_stride;
-  gint             y;
-  gint             bpp;
+  const gint       width         = drawable->width;
+  const gint       height        = drawable->height;
+  guchar           cmap[3 * 256] = { 0, };
+  guchar          *pixels;
+  gint             stride;
+  gpointer         pr;
+  gboolean         indexed       = FALSE;
+  int              bpp           = drawable->bpp, cairo_bpp;
 
-  GimpPixelRgn     region;
-  gint             width;
-  gint             height;
+  if (gimp_drawable_is_indexed (drawable_ID))
+    {
+      guchar *colors;
+      gint    num_colors;
 
-  guchar*          colors = NULL;
-  gint             num_colors;
-  gboolean         indexed;
-
-  width  = drawable->width;
-  height = drawable->height;
-  gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
-  bpp = region.bpp;
-  data = g_new (guchar, width*height*bpp);
-  gimp_pixel_rgn_get_rect (&region, data, 0, 0, width, height);
-
-  indexed = gimp_drawable_is_indexed (drawable->drawable_id);
-  if (indexed)
-    colors = gimp_image_get_colormap (gimp_item_get_image (drawable->drawable_id), &num_colors);
+      indexed = TRUE;
+      colors = gimp_image_get_colormap (gimp_item_get_image (drawable_ID),
+                                        &num_colors);
+      memcpy (cmap, colors, 3 * num_colors);
+      g_free (colors);
+    }
 
   switch (bpp)
     {
     case 1: /* GRAY or INDEXED */
-      if (!indexed)
-        format = CAIRO_FORMAT_A8;
+      if (! indexed)
+        {
+          format = CAIRO_FORMAT_RGB24;
+          cairo_bpp = 3;
+        }
       else
-        format = CAIRO_FORMAT_RGB24;
+        {
+          format = CAIRO_FORMAT_RGB24;
+          cairo_bpp = 3;
+        }
       break;
     case 3: /* RGB */
       format = CAIRO_FORMAT_RGB24;
+      cairo_bpp = 3;
       break;
 
     case 2: /* GRAYA or INDEXEDA */
     case 4: /* RGBA */
       format = CAIRO_FORMAT_ARGB32;
+      cairo_bpp = 4;
       break;
 
     default:
@@ -1164,85 +1273,54 @@ get_drawable_image (GimpDrawable *drawable)
 
   surface = cairo_image_surface_create (format, width, height);
 
-  src = data;
+  pixels = cairo_image_surface_get_data (surface);
+  stride = cairo_image_surface_get_stride (surface);
 
-  dest        = cairo_image_surface_get_data (surface);
-  dest_stride = cairo_image_surface_get_stride (surface);
+  gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  for (y = 0; y < height; y++)
+  for (pr = gimp_pixel_rgns_register (1, &region);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-      const guchar *s = src;
-      guchar       *d = dest;
-      gint          w = width;
+      const guchar *src  = region.data;
+      guchar       *dest = pixels + region.y * stride + region.x * 4;
+      gint          y;
 
-      switch (bpp)
+      for (y = 0; y < region.h; y++)
         {
-        case 1:
-          if (!indexed)
+          switch (image_type)
             {
-              while (w--)
-                {
-                  d[0] = s[0];
-                  s += 1;
-                  d += 1;
+            case GIMP_RGB_IMAGE:
+              convert_from_rgb_to_rgb (src, dest, region.w);
+              break;
 
-                }
+            case GIMP_RGBA_IMAGE:
+              convert_from_rgba_to_rgba (src, dest, region.w);
+              break;
+
+            case GIMP_GRAY_IMAGE:
+              convert_from_gray_to_rgb (src, dest, region.w);
+              break;
+
+            case GIMP_GRAYA_IMAGE:
+              convert_from_graya_to_rgba (src, dest, region.w);
+              break;
+
+            case GIMP_INDEXED_IMAGE:
+              convert_from_indexed_to_rgb (src, dest, region.w, cmap);
+              break;
+
+            case GIMP_INDEXEDA_IMAGE:
+              convert_from_indexeda_to_rgba (src, dest, region.w, cmap);
+              break;
             }
-          else {
-            while (w--)
-              {
-                GIMP_CAIRO_RGB24_SET_PIXEL (d, colors[s[0]*3], colors[s[0]*3+1], colors[s[0]*3+2]);
-                s += 1;
-                d += 4;
 
-              }
-          }
-          break;
-
-        case 2:
-          if (!indexed)
-            {
-              while (w--)
-                {
-                  GIMP_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[0], s[0], s[1]);
-                  s += 2;
-                  d += 4;
-                }
-            }
-          else {
-            while (w--)
-              {
-                GIMP_CAIRO_ARGB32_SET_PIXEL (d, colors[s[0]*3], colors[s[0]*3+1], colors[s[0]*3+2], s[1]);
-                s += 2;
-                d += 4;
-              }
-          }
-          break;
-
-        case 3:
-          while (w--)
-            {
-              GIMP_CAIRO_RGB24_SET_PIXEL (d, s[0], s[1], s[2]);
-              s += 3;
-              d += 4;
-            }
-          break;
-
-        case 4:
-          while (w--)
-            {
-              GIMP_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[1], s[2], s[3]);
-              s += 4;
-              d += 4;
-            }
-          break;
+          src  += region.rowstride;
+          dest += stride;
         }
-      src  += width*bpp;
-      dest += dest_stride;
     }
-  if (indexed)
-    g_free (colors);
-  g_free (data);
+
+  cairo_surface_mark_dirty (surface);
 
   return surface;
 }
