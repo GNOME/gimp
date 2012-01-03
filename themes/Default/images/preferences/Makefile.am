@@ -40,6 +40,8 @@ PREFS_IMAGES = \
 	folders-themes.png		\
 	folders-tool-plug-ins-22.png	\
 	folders-tool-plug-ins.png	\
+	folders-tool-presets-22.png		\
+	folders-tool-presets.png		\
 	folders-tools-22.png		\
 	folders-22.png			\
 	folders.png			\
