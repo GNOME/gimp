@@ -1007,13 +1007,16 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
 
   private->shells = g_list_append (private->shells, shell);
 
+  if (g_list_length (private->shells) > 1)
+   {
+    gimp_image_window_keep_canvas_pos (window);
+    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), TRUE);
+   }
+
   tab_label = gimp_image_window_create_tab_label (window, shell);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook),
                             GTK_WIDGET (shell), tab_label);
-
-  if (g_list_length (private->shells) > 1)
-    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), TRUE);
 
   gtk_widget_show (GTK_WIDGET (shell));
 }
@@ -1050,7 +1053,10 @@ gimp_image_window_remove_shell (GimpImageWindow  *window,
                         GTK_WIDGET (shell));
 
   if (g_list_length (private->shells) == 1)
-    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
+    {
+      gimp_image_window_keep_canvas_pos (window);
+      gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
+    }
 }
 
 gint
