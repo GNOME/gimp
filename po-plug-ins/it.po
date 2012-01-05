@@ -1,14 +1,14 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2011
+# Marco Ciampa <ciampix@libero.it>, 2003-2012
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-23 08:32+0100\n"
-"PO-Revision-Date: 2011-12-23 09:03+0100\n"
+"POT-Creation-Date: 2012-01-05 16:48+0100\n"
+"PO-Revision-Date: 2012-01-05 17:02+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: \n"
@@ -3823,8 +3823,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
 
 #: ../plug-ins/common/file-pdf-load.c:296
-#: ../plug-ins/common/file-pdf-save.c:273
-#: ../plug-ins/common/file-pdf-save.c:288
+#: ../plug-ins/common/file-pdf-save.c:289
 msgid "Portable Document Format"
 msgstr "Portable Document Format (PDF)"
 
@@ -3876,15 +3875,15 @@ msgstr "_Risoluzione:"
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:303
+#: ../plug-ins/common/file-pdf-save.c:304
 msgid "_Create multipage PDF..."
 msgstr "_Crea PDF multipagina..."
 
-#: ../plug-ins/common/file-pdf-save.c:396
+#: ../plug-ins/common/file-pdf-save.c:401
 msgid "You must select a file to save!"
 msgstr "È necessario selezionare un file da salvare!"
 
-#: ../plug-ins/common/file-pdf-save.c:405
+#: ../plug-ins/common/file-pdf-save.c:410
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3897,47 +3896,47 @@ msgstr ""
 "Assicurarsi di aver inserito un nome file valido e che la posizione scelta "
 "consenta la scrittura!"
 
-#: ../plug-ins/common/file-pdf-save.c:715
-#: ../plug-ins/common/file-pdf-save.c:832
+#: ../plug-ins/common/file-pdf-save.c:733
+#: ../plug-ins/common/file-pdf-save.c:850
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omettere livelli invisibili e con opacità a zero"
 
-#: ../plug-ins/common/file-pdf-save.c:719
-#: ../plug-ins/common/file-pdf-save.c:836
+#: ../plug-ins/common/file-pdf-save.c:737
+#: ../plug-ins/common/file-pdf-save.c:854
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Convertire le bitmap in grafica vettoriale ove possibile"
 
-#: ../plug-ins/common/file-pdf-save.c:723
-#: ../plug-ins/common/file-pdf-save.c:840
+#: ../plug-ins/common/file-pdf-save.c:741
+#: ../plug-ins/common/file-pdf-save.c:858
 msgid "Apply layer masks before saving"
 msgstr "Applica le maschere di livello prima di salvare"
 
-#: ../plug-ins/common/file-pdf-save.c:726
-#: ../plug-ins/common/file-pdf-save.c:843
+#: ../plug-ins/common/file-pdf-save.c:744
+#: ../plug-ins/common/file-pdf-save.c:861
 msgid "Keeping the masks will not change the output"
 msgstr "Mantenendo le maschere non verrà modificato il risultato"
 
-#: ../plug-ins/common/file-pdf-save.c:779
+#: ../plug-ins/common/file-pdf-save.c:797
 msgid "Save to:"
 msgstr "Salva in:"
 
-#: ../plug-ins/common/file-pdf-save.c:783
+#: ../plug-ins/common/file-pdf-save.c:801
 msgid "Browse..."
 msgstr "Sfoglia..."
 
-#: ../plug-ins/common/file-pdf-save.c:784
+#: ../plug-ins/common/file-pdf-save.c:802
 msgid "Multipage PDF export"
 msgstr "Esportazione PDF multipagina"
 
-#: ../plug-ins/common/file-pdf-save.c:817
+#: ../plug-ins/common/file-pdf-save.c:835
 msgid "Remove the selected pages"
 msgstr "Rimuovi le pagine selezionate"
 
-#: ../plug-ins/common/file-pdf-save.c:827
+#: ../plug-ins/common/file-pdf-save.c:845
 msgid "Add this image"
 msgstr "Aggiungi questa immagine"
 
-#: ../plug-ins/common/file-pdf-save.c:940
+#: ../plug-ins/common/file-pdf-save.c:958
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Errore! Per salvare il file, deve essere aggiunta almeno un'immagine!"
 
@@ -4811,13 +4810,13 @@ msgstr "\"%s\" non è un cursore X valido."
 
 #: ../plug-ins/common/file-xmc.c:686
 #, c-format
-msgid "The width of frame %d of '%s' is too big for X cursor."
-msgstr "La larghezza del quadro %d di \"%s\" è troppo grande per il cursore X."
+msgid "Frame %d of '%s' is too wide for an X cursor."
+msgstr "Il quadro %d di \"%s\" è troppo largo per un cursore X."
 
 #: ../plug-ins/common/file-xmc.c:693
 #, c-format
-msgid "The height of frame %d of '%s' is too big for X cursor."
-msgstr "L'altezza del quadro %d di \"%s\" è troppo grande per il cursore X."
+msgid "Frame %d of '%s' is too high for an X cursor."
+msgstr "Il quadro %d di \"%s\" è troppo alto per un cursore X."
 
 #: ../plug-ins/common/file-xmc.c:896
 #, c-format
@@ -4826,13 +4825,13 @@ msgstr "non c'è blocco immagine in \"%s\"."
 
 #: ../plug-ins/common/file-xmc.c:938
 #, c-format
-msgid "The width of '%s' is too big for X cursor."
-msgstr "La larghezza di \"%s\" è troppo grande per il cursore X."
+msgid "'%s' is too wide for an X cursor."
+msgstr "\"%s\" è troppo largo per un cursore X."
 
 #: ../plug-ins/common/file-xmc.c:945
 #, c-format
-msgid "The height of '%s' is too big for X cursor."
-msgstr "L'altezza di \"%s\" è troppo grande per il cursore X."
+msgid "'%s' is too high for an X cursor."
+msgstr "\"%s\" è troppo alto per un cursore X."
 
 #: ../plug-ins/common/file-xmc.c:1015
 #, c-format
@@ -4975,41 +4974,38 @@ msgstr "Il commento è limitato a %d caratteri."
 
 #: ../plug-ins/common/file-xmc.c:1489
 #, c-format
-msgid "This plug-in can only handle RGBA image format with 8bit color depth."
-msgstr ""
-"Questo plugin può gestire solo immagini in formato RGBA con profondità di "
-"colore di 8bit."
+msgid "This plug-in can only handle RGBA image files with 8bit color depth."
+msgstr "Questo plugin può gestire solo file immagini RGBA con profondità di colore di 8bit."
 
 #: ../plug-ins/common/file-xmc.c:1507
 #, c-format
-msgid "Width of '%s' is too large. Please reduce more than %dpx."
-msgstr "La larghezza di \"%s\" è troppo grande. Ridurre di più di %dpx."
+msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
+msgstr "Il quadro \"%s\" è troppo largo. Ridurre a non più di %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1514
 #, c-format
-msgid "Height of '%s' is too large. Please reduce more than %dpx."
-msgstr "L'altezza di \"%s\" è troppo grande. Ridurre di più di %dpx."
+msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
+msgstr "Il quadro \"%s\" è troppo alto. Ridurre a non più di %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1521
 #, c-format
-msgid "The size of '%s' is zero!"
-msgstr "La dimensione di \"%s\" è zero!"
+msgid "Width and/or height of frame '%s' is zero!"
+msgstr "La larghezza e/o l'altezza del quadro \"%s\" è zero!"
 
 #: ../plug-ins/common/file-xmc.c:1561
 #, c-format
 msgid ""
-"Cannot save the cursor because the hot spot is not on '%s'.\n"
+"Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-"
 "crop."
 msgstr ""
-"Impossibile salvare il cursore dato che l'hotspot non è su \"%s\".\n"
-"Provare a cambiare la posizione dell'hotspot, la geometria del livello o "
-"salvare senza l'autoritaglio."
+"Impossibile salvare il cursore dato che l'hotspot non è sul quadro \"%s\".\n"
+"Provare a cambiare la posizione dell'hotspot, la geometria del livello o salvare senza l'autoritaglio."
 
-#: ../plug-ins/common/file-xmc.c:1717
+#: ../plug-ins/common/file-xmc.c:1718
 #, c-format
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames which "
+"Your cursor was successfully saved but it contains one or more frames whose "
 "width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
@@ -5017,30 +5013,24 @@ msgstr ""
 "o larghezza è più di %ipx.\n"
 "In alcuni ambienti potrebbe sporcare lo schermo."
 
-#: ../plug-ins/common/file-xmc.c:1724
+#: ../plug-ins/common/file-xmc.c:1725
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
-"nominal size is not supported by gnome-appearance-properties.\n"
-"You can satisfy it by checking \"Replace the size of all frame...\" in the "
-"save dialog, or your cursor may not appear in gnome-appearance-properties."
+"nominal size is not supported by GNOME settings.\n"
+"You can satisfy it by checking \"Replace the size of all frames...\" in the "
+"save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Il cursore è stato salvato ma contiene uno o più quadri la cui dimensione "
-"nominale non è supportata da gnome-appearance-properties.\n"
-"Si può soddisfare questo requisito selezionando sull'opzione \"Rimpiazza la "
-"dimensione di tutti i quadri...\" presente nella finestra di dialogo di "
-"salvataggio, altrimenti questo cursore potrebbe non apparire in gnome-"
-"appearance-properties."
+"Il cursore è stato salvato ma contiene uno o più quadri la cui dimensione nominale non è supportata dalle impostazioni di GNOME.\n"
+"Si può soddisfare questo requisito selezionando l'opzione \"Rimpiazza la dimensione di tutti i quadri...\" presente nella finestra di dialogo di salvataggio, altrimenti questo cursore potrebbe non apparire nelle impostazioni di GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1961
+#: ../plug-ins/common/file-xmc.c:1962
 #, c-format
 msgid ""
-"The parasite \"%s\" is too long for X cursor.\n"
-"The overflowed string was dropped."
-msgstr ""
-"Il parassita \"%s\" è troppo lungo per il cursore X.\n"
-"La stringa strabordante è stata abbandonata."
+"The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
+"fit."
+msgstr "Il parassita \"%s\" è troppo lungo per un commento per cursore X. La stringa è stata regolata tagliandola."
 
-#: ../plug-ins/common/file-xmc.c:2163
+#: ../plug-ins/common/file-xmc.c:2164
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
