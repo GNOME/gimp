@@ -749,7 +749,7 @@ msgstr "Přírůstkový"
 #: ../libgimpbase/gimpbaseenums.c:642
 msgctxt "repeat-mode"
 msgid "None"
-msgstr "Žádné"
+msgstr "Nijak"
 
 #: ../libgimpbase/gimpbaseenums.c:643
 msgctxt "repeat-mode"
