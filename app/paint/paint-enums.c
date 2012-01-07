@@ -141,9 +141,9 @@ gimp_ink_blob_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_INK_BLOB_TYPE_CIRCLE, "GIMP_INK_BLOB_TYPE_CIRCLE", NULL },
-    { GIMP_INK_BLOB_TYPE_SQUARE, "GIMP_INK_BLOB_TYPE_SQUARE", NULL },
-    { GIMP_INK_BLOB_TYPE_DIAMOND, "GIMP_INK_BLOB_TYPE_DIAMOND", NULL },
+    { GIMP_INK_BLOB_TYPE_CIRCLE, NC_("ink-blob-type", "Circle"), NULL },
+    { GIMP_INK_BLOB_TYPE_SQUARE, NC_("ink-blob-type", "Square"), NULL },
+    { GIMP_INK_BLOB_TYPE_DIAMOND, NC_("ink-blob-type", "Diamond"), NULL },
     { 0, NULL, NULL }
   };
 

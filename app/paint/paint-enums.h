@@ -88,9 +88,9 @@ GType gimp_ink_blob_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_INK_BLOB_TYPE_CIRCLE,
-  GIMP_INK_BLOB_TYPE_SQUARE,
-  GIMP_INK_BLOB_TYPE_DIAMOND
+  GIMP_INK_BLOB_TYPE_CIRCLE,  /*< desc="Circle"  >*/
+  GIMP_INK_BLOB_TYPE_SQUARE,  /*< desc="Square"  >*/
+  GIMP_INK_BLOB_TYPE_DIAMOND  /*< desc="Diamond" >*/
 } GimpInkBlobType;
 
 
