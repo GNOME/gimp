@@ -8,8 +8,8 @@
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
 # Piotr Zaryk <pzaryk@aviary.pl>, 2008.
 # Robert Gomulka <carramba@epf.pl>, 2008.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011.
-# Aviary.pl <gnomepl@aviary.pl>, 2011.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011, 2012.
+# Aviary.pl <gnomepl@aviary.pl>, 2011, 2012.
 #
 # Terminy:
 #  drawable    - obszar rysowania (warstwa, kanał itp.)
@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-28 02:24+0100\n"
-"PO-Revision-Date: 2011-12-28 02:26+0100\n"
+"POT-Creation-Date: 2012-01-07 23:05+0100\n"
+"PO-Revision-Date: 2012-01-07 23:06+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -8922,8 +8922,8 @@ msgstr ""
 "Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011\n"
 "Piotr Zaryk <pzaryk@aviary.pl>, 2008\n"
 "Robert Gomulka <carramba@epf.pl>, 2008\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2011\n"
-"Aviary.pl <gnomepl@aviary.pl>, 2011"
+"Piotr Drąg <piotrdrag@gmail.com>, 2011, 2012\n"
+"Aviary.pl <gnomepl@aviary.pl>, 2011, 2012"
 
 #: ../app/dialogs/about-dialog.c:518
 msgid "GIMP is brought to you by"
@@ -11076,6 +11076,21 @@ msgstr "Rozmywanie"
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Wyostrzanie"
+
+#: ../app/paint/paint-enums.c:144
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Kolisty"
+
+#: ../app/paint/paint-enums.c:145
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Prostokątny"
+
+#: ../app/paint/paint-enums.c:146
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Rombowy"
 
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
@@ -13900,52 +13915,56 @@ msgstr "Krycie obrazu podglądu"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Rozmiar komórki siatki dla zmiennej liczby prowadnic kompozycji"
 
-#: ../app/tools/gimptransformoptions.c:138
-msgid "Limit rotation steps to 15 degrees"
-msgstr "Ograniczenie kroków obrotu do 15 stopni"
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "Przekształcenie:"
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Direction"
 msgstr "Kierunek"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "Interpolacja:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Przycinanie:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "Krycie obrazu"
 
-#: ../app/tools/gimptransformoptions.c:311
+#: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
 msgstr "Wyświetlanie podglądu obrazu"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "Prowadnice"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 stopni  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+msgid "Limit rotation steps to 15 degrees"
+msgstr "Ograniczenie kroków obrotu do 15 stopni"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Stałe proporcje  (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+msgid "Keep the original aspect ratio"
+msgstr "Utrzymywanie pierwotnych proporcji"
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
