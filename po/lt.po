@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-03 17:54+0000\n"
-"PO-Revision-Date: 2012-01-07 01:38+0300\n"
+"POT-Creation-Date: 2012-01-07 21:21+0000\n"
+"PO-Revision-Date: 2012-01-08 00:23+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lithuanian\n"
 "MIME-Version: 1.0\n"
@@ -10580,7 +10580,6 @@ msgid "Invalid character sequence in URI"
 msgstr "URI yra netinkama simbolių seka"
 
 #: ../app/gegl/gimp-gegl-enums.c:24
-#| msgid "Create a New Image"
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
 msgstr "Sukurti arba pritaikyti narvą"
@@ -10612,7 +10611,6 @@ msgid "Convert a set of coefficient buffer to a coordinate buffer for the GIMP c
 msgstr "Konvertuoti koeficientų buferių aibę į koordinačių buferį GIMP narvo įrankiui"
 
 #: ../app/gegl/gimpoperationcagetransform.c:125
-#| msgid "Fill with _background color"
 msgid "Fill with plain color"
 msgstr "Užpildyti gryna spalva"
 
@@ -10807,6 +10805,27 @@ msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Paaštrinimas"
 
+#: ../app/paint/paint-enums.c:144
+#| msgctxt "brush-generated-shape"
+#| msgid "Circle"
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Apskritimas"
+
+#: ../app/paint/paint-enums.c:145
+#| msgctxt "cap-style"
+#| msgid "Square"
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Kvadratinis"
+
+#: ../app/paint/paint-enums.c:146
+#| msgctxt "brush-generated-shape"
+#| msgid "Diamond"
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Deimantas"
+
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
 msgstr "Kombinuoti kaukes"
@@ -10966,14 +10985,14 @@ msgid "Paint method '%s' does not exist"
 msgstr "Piešimo metodas „%s“ neegzistuoja"
 
 #: ../app/pdb/gimppdb-utils.c:353
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
-msgstr "Elemento „%s“ (%d) negalima naudoti, kadangi jis nebuvo pridėtas paveikslėlyje"
+msgstr "Elemento „%s“ (%d) negalima naudoti, kadangi jis nebuvo pridėtas į paveikslėlį"
 
 #: ../app/pdb/gimppdb-utils.c:363
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
-msgstr "Elemento „%s“ (%d) negalima naudoti, kadangi jis nebuvo pridėtas paveikslėlyje"
+msgstr "Elemento „%s“ (%d) negalima naudoti, kadangi jis nebuvo pridėtas į kitą paveikslėlį"
 
 #: ../app/pdb/gimppdb-utils.c:392
 #, c-format
@@ -13561,52 +13580,56 @@ msgstr "Peržiūros paveikslėlio nepermatomumas"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Tinklelio ląstelės dydis kintamam gairių skaičiui"
 
-#: ../app/tools/gimptransformoptions.c:138
-msgid "Limit rotation steps to 15 degrees"
-msgstr "Riboti posūkio žingsnius iki 15 laipsnių"
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "Transformuoti:"
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Direction"
 msgstr "Kryptis"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "Interpoliacija:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Apkirpimas:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "Paveikslėlio nepermatomumas"
 
-#: ../app/tools/gimptransformoptions.c:311
+#: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
 msgstr "Rodyti paveikslėlio peržiūrą"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "Gairės"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 laipsnių  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+msgid "Limit rotation steps to 15 degrees"
+msgstr "Riboti posūkio žingsnius iki 15 laipsnių"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Išlaikyti proporciją  (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+msgid "Keep the original aspect ratio"
+msgstr "Išlaikyti pradines proporcijas"
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"

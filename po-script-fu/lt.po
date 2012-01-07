@@ -6,132 +6,140 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-17 13:40+0300\n"
-"PO-Revision-Date: 2008-07-17 13:41+0300\n"
-"Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-11-09 20:58+0000\n"
+"PO-Revision-Date: 2012-01-08 00:21+0300\n"
+"Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:133
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsolė"
 
-#: ../plug-ins/script-fu/script-fu-console.c:196
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "Sveiki paleidę TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:202
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "Interaktyvus schemų kūrimas"
 
-#: ../plug-ins/script-fu/script-fu-console.c:238
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "_Naršyti..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:296
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "Išsaugoti Script-Fu konsolės išvestį"
 
-#: ../plug-ins/script-fu/script-fu-console.c:343
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nepavyko atverti „%s“ rašymui: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:372
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu procedūrų naršyklė"
 
-#: ../plug-ins/script-fu/script-fu-console.c:718
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Scrip-Fu įvertinimo veiksenoje galimas tik neinteraktyvus iškvietimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:191
+#: ../plug-ins/script-fu/script-fu-interface.c:194
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu negali apdoroti dviejų scenarijų tuo pačiu metu."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:193
+#: ../plug-ins/script-fu/script-fu-interface.c:196
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Jūs jau vykdote scenarijų „%s“."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-interface.c:222
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
-#. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:300
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:286
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:348
+#: ../plug-ins/script-fu/script-fu-interface.c:333
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu spalvos pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu failų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:463
+#: ../plug-ins/script-fu/script-fu-interface.c:445
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu aplankų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:458
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu šriftų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu paletės pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu raštų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:484
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu gradientų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:493
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu teptukų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:148
+#: ../plug-ins/script-fu/script-fu-interface.c:824
+#, c-format
+#| msgid ""
+#| "Error while executing\n"
+#| "%s\n"
+#| "\n"
+#| "%s"
+msgid "Error while executing %s:"
+msgstr "Klaida vykdant %s:"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:146
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Šaukiniui „scrip-fu-register“ nurodyti per mažai argumentų"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:667
+#: ../plug-ins/script-fu/script-fu-scripts.c:605
 #, c-format
-msgid ""
-"Error while executing\n"
-"%s\n"
-"\n"
-"%s"
-msgstr ""
-"Klaida vykdant\n"
-"%s\n"
-"\n"
-"%s"
+#| msgid ""
+#| "Error while executing\n"
+#| "%s\n"
+#| "\n"
+#| "%s"
+msgid "Error while loading %s:"
+msgstr "Klaida įkeliant %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:712
+#: ../plug-ins/script-fu/script-fu-server.c:807
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu serverio parinktys"
 
-#: ../plug-ins/script-fu/script-fu-server.c:717
+#: ../plug-ins/script-fu/script-fu-server.c:812
 msgid "_Start Server"
 msgstr "_Paleisti serverį"
 
-#: ../plug-ins/script-fu/script-fu-server.c:745
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "Server port:"
 msgstr "Serverio prievadas:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:751
+#: ../plug-ins/script-fu/script-fu-server.c:846
 msgid "Server logfile:"
 msgstr "Serverio žurnalo failas:"
 
@@ -208,12 +216,8 @@ msgid "_Refresh Scripts"
 msgstr "_Atnaujinti scenarijus"
 
 #: ../plug-ins/script-fu/script-fu.c:357
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"Negalite naudoti „Atnaujinti scenarijus“, kol atvertas Script-Fu langas. "
-"Užverkite visus Script-Fu langus ir bandykite dar kartą."
+msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
+msgstr "Negalite naudoti „Atnaujinti scenarijus“, kol atvertas Script-Fu langas. Užverkite visus Script-Fu langus ir bandykite dar kartą."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -233,17 +237,17 @@ msgid "Default bumpmap settings"
 msgstr "Numatytieji nelygumų parametrai"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:5
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
@@ -251,8 +255,6 @@ msgstr "Numatytieji nelygumų parametrai"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -263,8 +265,7 @@ msgstr "Numatytieji nelygumų parametrai"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
@@ -273,17 +274,17 @@ msgid "Font"
 msgstr "Šriftas"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:6
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
@@ -291,8 +292,6 @@ msgstr "Šriftas"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
@@ -302,8 +301,7 @@ msgstr "Šriftas"
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
@@ -316,16 +314,15 @@ msgid "Outline blur radius"
 msgstr "Kontūro išliejimo spindulys"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-msgid ""
-"Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr "Apvesti pasirinktą regioną (ar permatomumą) raštu ir pridėti šešėlį"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Pattern"
@@ -348,17 +345,17 @@ msgid "Shadow blur radius"
 msgstr "Šešėlio išliejimo spindulys"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:13
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:13
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:7
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:9
@@ -366,8 +363,6 @@ msgstr "Šešėlio išliejimo spindulys"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
@@ -378,8 +373,7 @@ msgstr "Šešėlio išliejimo spindulys"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
@@ -392,10 +386,10 @@ msgid "3_D Truchet..."
 msgstr "3_D Triušė..."
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
@@ -406,14 +400,12 @@ msgstr "3_D Triušė..."
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
@@ -455,7 +447,7 @@ msgid "Supersample"
 msgstr "Papildoma imtis"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:8
 msgid "Thickness"
 msgstr "Storis"
@@ -469,11 +461,21 @@ msgid "Add a beveled border to an image"
 msgstr "Pridėti paveikslėliui nuožulnų rėmelį"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+msgid "Bumpmap"
+msgstr "Įspaudas"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
 msgstr "Palikti nelygumų sluoksnį"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:6
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
@@ -491,111 +493,150 @@ msgid "Add a border around an image"
 msgstr "Pridėti apie paveikslėlį rėmelį"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
+#| msgid "Border size"
+msgid "Border Layer"
+msgstr "Rėmelio sluoksnis"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border X size"
 msgstr "Rėmelio X dydis"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border Y size"
 msgstr "Rėmelio Y dydis"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Border color"
 msgstr "Rėmelio spalva"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:7
 msgid "Delta value on color"
 msgstr "Spalvos delta reikšmė"
 
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+#| msgid "_Alien Glow"
+msgid "Alien Glow"
+msgstr "Ateivių švytėjimas"
+
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+#| msgid "_Arrow..."
+msgid "Arrow"
+msgstr "Rodyklė"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#| msgid "Background color"
+msgid "Background"
+msgstr "Fonas"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 msgid "Create an arrow graphic with an eerie glow for web pages"
 msgstr "Sukurti klaikiai švytinčią grafinę rodyklę žiniatinklio puslapiams"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Down"
 msgstr "Žemyn"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: ../plug-ins/script-fu/scripts/camo.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten image"
 msgstr "Suploti paveikslėlį"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 msgid "Glow color"
 msgstr "Švytėjimo spalva"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
 msgid "Left"
 msgstr "Kairėn"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Orientation"
 msgstr "Orientacija"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "Right"
 msgstr "Dešinėn"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:12
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
 #: ../plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Size"
 msgstr "Dydis"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:13
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:10
 msgid "Up"
 msgstr "Aukštyn"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:14
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:11
 msgid "_Arrow..."
 msgstr "_Rodyklė..."
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Bar"
+msgstr "Juosta"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
 msgid "Bar height"
 msgstr "Juostos aukštis"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
 msgid "Bar length"
 msgstr "Juostos ilgis"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 msgid "Create an Hrule graphic with an eerie glow for web pages"
 msgstr "Sukurti klaikiai švytinčią Hrule žiniatinklio puslapiams"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:7
 msgid "_Hrule..."
 msgstr "_Horizontalus brūkšnys..."
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+#| msgid "_Bullet..."
+msgid "Bullet"
+msgstr "Punktas"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 msgid "Create a bullet graphic with an eerie glow for web pages"
 msgstr "Sukurti klaikiai švytintį grafinį punktą žiniatinklio puslapiams"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
 msgid "Radius"
 msgstr "Spindulys"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:7
 msgid "_Bullet..."
 msgstr "_Punktas..."
 
@@ -604,27 +645,34 @@ msgstr "_Punktas..."
 msgid "B_utton..."
 msgstr "_Mygtukas..."
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#| msgid "_Buttons"
+msgid "Button"
+msgstr "Mygtukas"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 msgid "Create a button graphic with an eerie glow for web pages"
 msgstr "Sukurti klaikiai švytintį grafinį elementą žiniatinklio puslapiams"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+msgid "Glow"
+msgstr "Švytėjimas"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
 msgid "Glow radius"
 msgstr "Švytėjimo spindulys"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:12
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
 msgid "Padding"
 msgstr "Užpildymas"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:14
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:12
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:11
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
@@ -634,7 +682,7 @@ msgstr "Teksto spalva"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "Add an eerie glow around the selected region (or alpha)"
-msgstr "Aplinkt pasirinktą regioną (ar permatomumą) pridėti klaikų švytėjimą"
+msgstr "Aplink pasirinktą regioną (ar permatomumą) pridėti klaikų švytėjimą"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
@@ -677,17 +725,11 @@ msgid "Width of gaps"
 msgstr "Tarpų plotis"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-msgid ""
-"Add a gradient effect, a drop shadow, and a background to the selected "
-"region (or alpha)"
-msgstr ""
-"Pasirinktam regionui (ar permatomumui) pridėti gradiento efektą, šešėlį ir "
-"foną"
+msgid "Add a gradient effect, a drop shadow, and a background to the selected region (or alpha)"
+msgstr "Pasirinktam regionui (ar permatomumui) pridėti gradiento efektą, šešėlį ir foną"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-msgid ""
-"Create a plain text logo with a gradient effect, a drop shadow, and a "
-"background"
+msgid "Create a plain text logo with a gradient effect, a drop shadow, and a background"
 msgstr "Sukurti paprasto teksto logotipą su gradiento efektu, šešėliu ir fonu"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
@@ -712,71 +754,85 @@ msgstr "Sukurti paprastą logotipą su šešėliu ir spindėjimu"
 msgid "Bevel width"
 msgstr "Nuožulnaus krašto plotis"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
 msgid "Create a simple, beveled button graphic for webpages"
 msgstr "Sukurti paprastą grafinį mygtuką nuožulniais kraštais tinklalapiams"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:2
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Gradient"
+msgstr "Gradientas"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
 msgid "Lower-right color"
 msgstr "Apatinė dešinė spalva"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
 msgid "Pressed"
 msgstr "Paspaustas"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 msgid "Simple _Beveled Button..."
 msgstr "Paprastas mygtukas _nuožulniais kraštais..."
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:13
 msgid "Upper-left color"
 msgstr "Viršutinė kairė spalva"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Create a beveled pattern arrow for webpages"
 msgstr "Sukurti nuožulnaus rašto rodyklę žiniatinklio svetainėms"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
 msgid "Create a beveled pattern bullet for webpages"
 msgstr "Sukurti nuožulnaus rašto punktą žiniatinklio svetainėms"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 msgid "Diameter"
 msgstr "Diametras"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:9
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent background"
 msgstr "Permatomas fonas"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
 msgid "Create a beveled pattern button for webpages"
 msgstr "Sukurti nuožulnaus rašto mygtuką žiniatinklio svetainėms"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
 msgid "Create a beveled pattern heading for webpages"
 msgstr "Sukurti nuožulnaus rašto antraštę žiniatinklio svetainėms"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
 msgid "H_eading..."
 msgstr "_Antraštė..."
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 msgid "Create a beveled pattern hrule for webpages"
 msgstr "Sukurti nuožulnaus rašto hrule žiniatinklio svetainėms"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "Aukštis"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+msgid "Rule"
+msgstr "Taisyklė"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
@@ -788,36 +844,33 @@ msgid "Blend Animation needs at least three source layers"
 msgstr "Pereinančiai animacijai turi būti bent trys šaltinio sluoksniai"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
-msgid ""
-"Create intermediate layers to blend two or more layers over a background as "
-"an animation"
-msgstr ""
-"Sukurti tarpinius sluoksnius sujungiančius du ar daugiau sluoksnių virš fono "
-"kaip animaciją"
+msgid "Create intermediate layers to blend two or more layers over a background as an animation"
+msgstr "Sukurti tarpinius sluoksnius sujungiančius du ar daugiau sluoksnių virš fono kaip animaciją"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+msgid "Frame"
+msgstr "Kadras"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Intermediate frames"
 msgstr "Tarpiniai kadrai"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
 msgid "Looped"
 msgstr "Ciklinis"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "Max. blur radius"
 msgstr "Maks. išliejimo spindulys"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:7
 msgid "_Blend..."
 msgstr "_Perėjimas..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
-msgid ""
-"Add blended backgrounds, highlights, and shadows to the selected region (or "
-"alpha)"
-msgstr ""
-"Pasirinktoje (arba permatomoje) srityje pridėti pereinamų spalvų fonus, "
-"paryškintas vietas ir šešėlius"
+msgid "Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
+msgstr "Pasirinktoje (arba permatomoje) srityje pridėti pereinamų spalvų fonus, paryškintas vietas ir šešėlius"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -846,16 +899,6 @@ msgstr "P.planas-Fonas-RGB"
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
 msgid "FG-Transparent"
 msgstr "P.planas-Permatomas"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/land.scm.h:3
-#: ../plug-ins/script-fu/scripts/lava.scm.h:2
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
-msgid "Gradient"
-msgstr "Gradientas"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
@@ -912,12 +955,8 @@ msgid "Corona width"
 msgstr "Karūnos plotis"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
-msgid ""
-"Create intermediate layers to produce an animated 'burn-in' transition "
-"between two layers"
-msgstr ""
-"Sukurti tarpinius sluoksnius animuoto „išdeginamo“ perėjimo tarp dviejų "
-"sluoksnių sukūrimui"
+msgid "Create intermediate layers to produce an animated 'burn-in' transition between two layers"
+msgstr "Sukurti tarpinius sluoksnius animuoto „išdeginamo“ perėjimo tarp dviejų sluoksnių sukūrimui"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
@@ -936,12 +975,8 @@ msgid "Speed (pixels/frame)"
 msgstr "Greitis (pikseliai/kadras)"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
-msgid ""
-"The Burn-In script needs two layers in total. A foreground layer with "
-"transparency and a background layer."
-msgstr ""
-"Naudojant išdeginimo scenarijų reikalingi du sluoksniai. Permatomo priekinio "
-"plano sluoksnio ir fono sluoksnio."
+msgid "The Burn-In script needs two layers in total. A foreground layer with transparency and a background layer."
+msgstr "Naudojant išdeginimo scenarijų reikalingi du sluoksniai. Permatomo priekinio plano sluoksnio ir fono sluoksnio."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -979,14 +1014,43 @@ msgid "_Camouflage..."
 msgstr "_Kamufliažas..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#| msgid "Bevel width"
+msgid "Bevel Highlight"
+msgstr "Nuožulnaus krašto plotis"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
+#| msgid "Shadow"
+msgid "Bevel Shadow"
+msgstr "Nuožulnaus krašto šešėlis"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Carve white areas"
 msgstr "Išgraviruoti baltas vietas"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+msgid "Carved Surface"
+msgstr "Padalintas paviršius"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#| msgid "Create shadow"
+msgid "Cast Shadow"
+msgstr "Sukurti šešėlį"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:6
 msgid "Image to carve"
 msgstr "Graviruotinas paveikslėlis"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
+#| msgid "Invert"
+msgid "Inset"
+msgstr "Invertuoti"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
 msgid "Stencil C_arve..."
 msgstr "Trafaretinis _raižymas..."
 
@@ -994,23 +1058,19 @@ msgstr "Trafaretinis _raižymas..."
 msgid "Background Image"
 msgstr "Fono paveikslėlis"
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 msgid "Carve raised text"
 msgstr "Išgraviruoti iškeltą tekstą"
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
 msgid "Carved..."
 msgstr "Graviruotas..."
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
-msgid ""
-"Create a logo with text raised above or carved in to the specified "
-"background image"
-msgstr ""
-"Sukurti logotipą su tekstu iškelti į viršų arba išgraviruotu nurodytame fono "
-"paveikslėlyje"
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+msgid "Create a logo with text raised above or carved in to the specified background image"
+msgstr "Sukurti logotipą su tekstu iškelti į viršų arba išgraviruotu nurodytame fono paveikslėlyje"
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:12
 msgid "Padding around text"
 msgstr "Užpildymas aplink tekstą"
 
@@ -1067,50 +1127,74 @@ msgid "Keep background"
 msgstr "Palikti foną"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
-msgid ""
-"Add a chrome effect to the selected region (or alpha) using a specified "
-"(grayscale) stencil"
-msgstr ""
-"Pasirinktam regionui (ar permatomumui) pridėti chromo efektą naudojant "
-"nurodytą (pilką) trafaretą"
+msgid "Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
+msgstr "Pasirinktam regionui (ar permatomumui) pridėti chromo efektą naudojant nurodytą (pilką) trafaretą"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#| msgid "C_hrome..."
+msgid "Chrome"
+msgstr "Chromas"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
 msgstr "Chromo balansas"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
 msgstr "Chromo koeficientas"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
 msgstr "Chromo šviesumas"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
 msgstr "Chromo sodrumas"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
 msgid "Chrome white areas"
 msgstr "Chromuoti baltus plotus"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+#| msgid "Drop shadow"
+msgid "Drop Shadow"
+msgstr "Mesti šešėlį"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment map"
 msgstr "Aplinkos žemėlapis"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#| msgid "Highlight color"
+msgid "Highlight"
+msgstr "Paryškinimas"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:12
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "Highlight balance"
 msgstr "Išryškinimo balansas"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
+msgid "Layer 1"
+msgstr "Sluoksnis 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
+msgid "Layer 2"
+msgstr "Sluoksnis 2"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
+msgid "Layer 3"
+msgstr "Sluoksnis 3"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
 msgid "Stencil C_hrome..."
 msgstr "Trafaretinis c_hromas..."
 
@@ -1135,41 +1219,42 @@ msgid "Circuit seed"
 msgstr "Schemos sėkla"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid ""
-"Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr ""
-"Užpildyti pasirinktą regiona (ar permatomumą) trasomis, kokios yra ant "
-"mikroschemų"
+#| msgid "Separate layer"
+msgid "Effect layer"
+msgstr "Efekto sluoksnis"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr "Užpildyti pasirinktą regiona (ar permatomumą) trasomis, kokios yra ant mikroschemų"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
 #: ../plug-ins/script-fu/scripts/predator.scm.h:3
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "Keep selection"
 msgstr "Palikti pasirinkimą"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "No background (only for separate layer)"
 msgstr "Nėra fono (tik atskiram sluoksniui)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
-msgid "Oilify mask size"
-msgstr ""
-
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+msgid "Oilify mask size"
+msgstr "Padidinti kaukę"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
 #: ../plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate layer"
 msgstr "Atskiras sluoksnis"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:8
 msgid "_Circuit..."
 msgstr "S_chema..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr ""
-"Pasirinktam regionui (ar permatomumui) pridėti audinį primenančią tekstūrą"
+msgstr "Pasirinktam regionui (ar permatomumui) pridėti audinį primenančią tekstūrą"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -1207,20 +1292,21 @@ msgid "Darken only"
 msgstr "Tik patamsinti"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
-msgid "Stains"
+#| msgid "Stains"
+msgid "Stain"
 msgstr "Dėmės"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
+msgid "Stains"
+msgstr "Dėmės"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:5
 msgid "_Coffee Stain..."
 msgstr "_Kavos dėmė..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
-msgid ""
-"Add a comic-book effect to the selected region (or alpha) by outlining and "
-"filling with a gradient"
-msgstr ""
-"Pasirinktam regionui (ar permatomumui) pridėti komiksų efektą pridedant "
-"kontūrus ir užpildant gradientu"
+msgid "Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
+msgstr "Pasirinktam regionui (ar permatomumui) pridėti komiksų efektą pridedant kontūrus ir užpildant gradientu"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1228,8 +1314,7 @@ msgstr "_Komiksai..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
-msgstr ""
-"Sukurti komiksų stiliaus logotipą pridedant kontūrus ir užpildant gradientu"
+msgstr "Sukurti komiksų stiliaus logotipą pridedant kontūrus ir užpildant gradientu"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1241,12 +1326,8 @@ msgid "Outline size"
 msgstr "Kontūro dydis"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-msgid ""
-"Add a metallic effect to the selected region (or alpha) with reflections and "
-"perspective shadows"
-msgstr ""
-"Pasirinktam regionui (ar permatumumui) pridėti metalinį efektą su "
-"atspindžiais ir šešėliais"
+msgid "Add a metallic effect to the selected region (or alpha) with reflections and perspective shadows"
+msgstr "Pasirinktam regionui (ar permatumumui) pridėti metalinį efektą su atspindžiais ir šešėliais"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1258,6 +1339,8 @@ msgstr "Sukurti metalinį logotipą su atspindžiais ir perspektyvų šešėliai
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels)"
 msgstr "Efekto dydis (taškeliais)"
 
@@ -1267,8 +1350,7 @@ msgstr "Fono paveikslėlis"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
-msgstr ""
-"Sukurti logotipą su kristalo/gelio efektu perkeliant paveikslėlį į vidų"
+msgstr "Sukurti logotipą su kristalo/gelio efektu perkeliant paveikslėlį į vidų"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
@@ -1284,7 +1366,7 @@ msgstr "Nepertraukiamas triukšmas pritaikomas su Skirtumų sluoksnio veiksena"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
-msgstr ""
+msgstr "Sumažinti žymėjimą"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
@@ -1303,8 +1385,9 @@ msgid "Spread"
 msgstr "Paskleisti"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "Threshold (bigger 1<-->255 smaller)"
-msgstr "Slenkstis (didesnis 1<-->255 mažesnis)"
+#| msgid "Threshold (bigger 1<-->255 smaller)"
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "Slenkstis (didesnis 1<-->254 mažesnis)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
@@ -1335,12 +1418,10 @@ msgid "Color"
 msgstr "Spalva"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "X poslinkis"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "Y poslinkis"
 
@@ -1444,11 +1525,8 @@ msgid "Black on white"
 msgstr "Juoda ant balto"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid ""
-"Create an image filled with previews of fonts matching a fontname filter"
-msgstr ""
-"Sukurti paveikslėlį užpildytą šriftų atitinkančių šriftų pavadinimų filtrą "
-"peržiūromis"
+msgid "Create an image filled with previews of fonts matching a fontname filter"
+msgstr "Sukurti paveikslėlį užpildytą šriftų atitinkančių šriftų pavadinimų filtrą peržiūromis"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1483,12 +1561,8 @@ msgid "_Text"
 msgstr "_Tekstas"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-msgid ""
-"Add a frost effect to the selected region (or alpha) with an added drop "
-"shadow"
-msgstr ""
-"Pasirinktam regionui (ar permatomumui) pridėti šerkšno efektą su metamu "
-"šešėliu"
+msgid "Add a frost effect to the selected region (or alpha) with an added drop shadow"
+msgstr "Pasirinktam regionui (ar permatomumui) pridėti šerkšno efektą su metamu šešėliu"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1528,112 +1602,65 @@ msgstr "Šešėlio stiprumas (%s)"
 msgid "_Fuzzy Border..."
 msgstr "_Neryškus rėmelis..."
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "Autocrop"
-msgstr "Automatinis apkirpimas"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "GIMP žiniatinklio svetainės žymelė"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr ""
-"Sukurti didelės antraštės paveikslėlį naudojant gimp.org svetainės temą"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "Naudotojo žinyno žymelė"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr "Sukurti mažos antraštės paveikslėlį naudojant gimp.org svetainės temą"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "Kaip kurti ir naudoti _pažymėjimus"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-msgid "Dark color"
-msgstr "Tamsi spalva"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "Kaip kurti, atverti ir išsaugoti _failus"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight color"
-msgstr "Paryškinimo spalva"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "Paprastų _objektų piešimas"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-msgid "Index image"
-msgstr "Rodyklinis paveikslėlis"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "Kaip naudoti _dialogus"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-msgid "Number of colors"
-msgstr "Spalvų kiekis"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "Įskiepių _registras"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-msgid "Remove background"
-msgstr "Pašalinti foną"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "_Kontūrų naudojimas"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-msgid "Select-by-color threshold"
-msgstr "„Pasirinkti pagal spalvą“ slenkstis"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "_Pagrindiniai principai"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-msgid "Shadow color"
-msgstr "Šešėlio spalva"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "Žiniatinklio s_vetainė kūrėjams"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
-msgid "_Big Header..."
-msgstr "_Didelė antraštė..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "_Pagrindinė žiniatinklio svetainė"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
-msgid "_Small Header..."
-msgstr "_Maža antraštė..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "_Paveikslėlių paruošimas žiniatinkliui"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid ""
-"Create an image of a Tube Button Label Header using the gimp.org webpage "
-"theme"
-msgstr ""
-"Sukurti vamzdinio mygtuko etiketės antraštės paveikslėlį naudojant gimp.org "
-"tinklalapio temą"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "_Naudotojo žinyno žiniatinklio svetainė"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr "Sukurti vamzdinio mygtuko etiketę naudojant gimp.org tinklalapio temą"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid ""
-"Create an image of a second level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr ""
-"Sukurti antro lygmens vamzdinio mygtuko etiketę naudojant gimp.org "
-"tinklalapio temą"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-msgid ""
-"Create an image of a third level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr ""
-"Sukurti trečio lygmens vamzdinio mygtuko etiketę naudojant gimp.org "
-"tinklalapio temą"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-msgid "T_ube Sub-Button Label..."
-msgstr "_Vamzdinio antrinio mygtuko etiketė..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
-msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "_Vamzdinio tretinio mygtuko etiketė..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
-msgid "_General Tube Labels..."
-msgstr "_Bendros vamzdinės etiketės..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
-msgid "_Tube Button Label..."
-msgstr "V_amzdinio mygtuko etiketė..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "_Darbas su skaitmeninių fotoaparatų nuotraukomis"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
-msgid ""
-"Add gradients, patterns, shadows, and bump maps to the selected region (or "
-"alpha)"
-msgstr ""
-"Pasirinktam regionui (ar permatomumui) pridėti gradientus, raštus, šešėlius "
-"ir nelygumus"
+msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
+msgstr "Pasirinktam regionui (ar permatomumui) pridėti gradientus, raštus, šešėlius ir nelygumus"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1668,6 +1695,7 @@ msgid "Pattern (text)"
 msgstr "Raštas (tekstas)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:13
 msgid "Shadow"
 msgstr "Šešėlis"
 
@@ -1695,19 +1723,13 @@ msgstr "Pasirinktam regionui "
 msgid "Create a logo that looks like glowing hot metal"
 msgstr "Sukurti logotipą atrodantį kaip švytintis karštas metalas"
 
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-msgid "Effect size (pixels * 3)"
-msgstr "Efekto dydis (pikseliai * 3)"
-
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
 msgstr "Karštas šv_ytėjimas..."
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
-msgstr ""
-"Pasirinktam regionui (ar permatomumui) pridėti švytėjimo ir nuožulnumo "
-"efektus"
+msgstr "Pasirinktam regionui (ar permatomumui) pridėti švytėjimo ir nuožulnumo efektus"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -1737,9 +1759,7 @@ msgstr "Kitas _gradientas..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
+msgid "Draw a grid as specified by the lists of X and Y locations using the current brush"
 msgstr "Esamu teptuku nupiešti tinklelį nurodytą X ir Y vietų sąrašų"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
@@ -1860,11 +1880,11 @@ msgid "_Lava..."
 msgstr "_Lava..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
-msgstr ""
-"Užpildyti sluoksnį spinduliais sklindančiais iš jo centro naudojant "
-"priekinio plano spalvą"
+#| msgid ""
+#| "Fill a layer with rays emanating outward from its center using the FG "
+#| "color"
+msgid "Fill a layer with rays emanating outward from its center using the foreground color"
+msgstr "Užpildyti sluoksnį spinduliais sklindančiais iš jo centro naudojant priekinio plano spalvą"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -1934,9 +1954,7 @@ msgstr "_Stačiakampis..."
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
-msgstr ""
-"Konvertuoti pasirinktą regioną (ar permatomumą) į neoninio ženklo stiliaus "
-"objektą"
+msgstr "Konvertuoti pasirinktą regioną (ar permatomumą) į neoninio ženklo stiliaus objektą"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
@@ -1945,10 +1963,6 @@ msgstr "Sukurti neoninio ženklo stiliaus logotipą "
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
 msgstr "Sukurti šešėlį"
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
-msgid "Effect size (pixels * 5)"
-msgstr "Efekto dydis (taškeliai  * 5)"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
@@ -1991,6 +2005,42 @@ msgstr "Sepija"
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
 msgstr "_Sena fotografija..."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
+msgid "All characters in the name are either white-spaces or characters which can not appear in filenames."
+msgstr "Visi simboliai pavadinime yra arba nematomi, arba neleistini failų pavadinimuose."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
+msgid "Export the active palette as a CSS stylesheet with the color entry name as their class name, and the color itself as the color attribute"
+msgstr "Eksportuoti aktyvią paletę kaip CSS stilių su spalvos įrašo pavadinimu kaip klasės pavadinimu ir pačia spalva kaip spalvos atributu"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Eksportuoti aktyvią paletę kaip PHP žodyną (pavadinimas => spalva)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Eksportuoti aktyvią paletę kaip Python žodyną (pavadinimas: spalva)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "Eksportuoti aktyvią paletę kaip java.util.Hashtable<String, Color>"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
+msgid "Folder for the output file"
+msgstr "Aplankas išvesties failui"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
+msgid "The filename you entered is not a suitable name for a file."
+msgstr "Įvestas failo pavadinimas yra netinkamas."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:8
+msgid "The name of the file to create (if a file with this name already exist, it will be replaced)"
+msgstr "Failo pavadinimas (jei toks failas jau yra, jis bus pakeitas)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
+msgid "Write all the colors in a palette to a text file, one hexadecimal value per line (no names)"
+msgstr "Įrašyti visas paletės spalvas į tekstinį failą, po vieną šešioliktainę vertę eilutėje (be pavadinimų)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -2155,11 +2205,8 @@ msgid "Black"
 msgstr "Juoda"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
-msgstr ""
-"Sukurti daugiasluoksnį paveikslėlį esamam paveikslėliui pridedant "
-"raibuliavimo efektą"
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
+msgstr "Sukurti daugiasluoksnį paveikslėlį esamam paveikslėliui pridedant raibuliavimo efektą"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
@@ -2199,8 +2246,7 @@ msgid "Edge radius"
 msgstr "Krašto spindulys"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid ""
-"Round the corners of an image and optionally add a drop-shadow and background"
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr "Suapvalinti paveikslėlio kampus ir pageidaujant pridėti šešėlį ir foną"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
@@ -2262,8 +2308,7 @@ msgstr "Apvalainas _stačiakampis..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
-"Paveikslėliui pridėti skaidrės rėmelį, krumpliaračio skylutes ir užrašus"
+msgstr "Paveikslėliui pridėti skaidrės rėmelį, krumpliaračio skylutes ir užrašus"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
@@ -2314,10 +2359,8 @@ msgid "_Spinning Globe..."
 msgstr "Besisukantis _gaublys..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"Dabartiniame sluoksnyje pridėti spirografų, epitrochoidų ir lisažu kreives"
+msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr "Dabartiniame sluoksnyje pridėti spirografų, epitrochoidų ir lisažu kreives"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2338,10 +2381,6 @@ msgstr "Spalvos metodas"
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
 msgstr "Epitrochoidas"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
-msgid "Frame"
-msgstr "Kadras"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient: Loop Sawtooth"
@@ -2440,48 +2479,11 @@ msgstr "Tipas"
 msgid "_Spyrogimp..."
 msgstr "_Spyrogimp..."
 
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-msgid "Burst color"
-msgstr "Sprogimo spalva"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
-msgid "Create a logo using a starburst gradient"
-msgstr "Sukurti logotipą naudojant žvaigždės sprogimo gradientą"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-msgid "Effect size (pixels * 30)"
-msgstr "Efekto dydis (taškeliai * 30)"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-msgid ""
-"Fill the selected region (or alpha) with a starburst gradient and add a "
-"shadow"
-msgstr ""
-"Užpildyti pasirinktą regioną (ar nepermatomumą) žvaigždės sprogimo gradientu "
-"ir pridėti šešėlį"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
-msgid "Starb_urst..."
-msgstr "Ž_vaigždės sprogimas..."
-
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-msgstr ""
-"Sukurti logotipą naudojant uolienos tekstūrą, novos švytėjimą ir šešėlį"
+msgstr "Sukurti logotipą naudojant uolienos tekstūrą, novos švytėjimą ir šešėlį"
 
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-msgid "Effect size (pixels * 4)"
-msgstr "Efekto dydis (taškeliai * 4)"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-msgid ""
-"Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
-"and shadow"
-msgstr ""
-"Užpildyti pasirinktą regioną (ar permatomumą) uolienos tekstūra, novos "
-"švytėjimu ir šešėliu"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
 msgstr "Žvai_gždėtas vaizdas..."
 
@@ -2550,10 +2552,8 @@ msgid "Antialias"
 msgstr "Glotninimas"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
-msgid ""
-"Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr ""
-"Sukurti logotipą atvaizduojant nurodytą tekstą per apskritimo perimetrą"
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgstr "Sukurti logotipą atvaizduojant nurodytą tekstą per apskritimo perimetrą"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
@@ -2564,23 +2564,16 @@ msgid "Text C_ircle..."
 msgstr "Teksto apskr_itimas..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-msgid ""
-"Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr ""
-"Sukurti tekstūruotą logotipą su šviesos efektais, šešėliais ir mozaikiniu "
-"fonu"
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr "Sukurti tekstūruotą logotipą su šviesos efektais, šešėliais ir mozaikiniu fonu"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
 msgstr "Perėjimo pradžia"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
-msgid ""
-"Fill the selected region (or alpha) with a texture and add highlights, "
-"shadows, and a mosaic background"
-msgstr ""
-"Užpildyti pasirinktą regioną (ar permatomumą) tekstūra ir pridėti šviesos "
-"efektus, šešėlius bei mozaikinį foną"
+msgid "Fill the selected region (or alpha) with a texture and add highlights, shadows, and a mosaic background"
+msgstr "Užpildyti pasirinktą regioną (ar permatomumą) tekstūra ir pridėti šviesos efektus, šešėlius bei mozaikinį foną"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2671,12 +2664,8 @@ msgid "Amplitude"
 msgstr "Amplitudė"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
-msgid ""
-"Create a multi-layer image with an effect like a stone was thrown into the "
-"current image"
-msgstr ""
-"Sukurti daugiasluoksnį paveikslėlį su efektu lyg į esamą paveikslėlį būtų "
-"mestas akmuo"
+msgid "Create a multi-layer image with an effect like a stone was thrown into the current image"
+msgstr "Sukurti daugiasluoksnį paveikslėlį su efektu lyg į esamą paveikslėlį būtų mestas akmuo"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2691,12 +2680,8 @@ msgid "_Waves..."
 msgstr "_Bangos..."
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:1
-msgid ""
-"Create a new layer filled with a weave effect to be used as an overlay or "
-"bump map"
-msgstr ""
-"Sukurti naują sluoksnį užpildytą bangavimo efektu panaudotu kaip padengimu "
-"ar iškilimu"
+msgid "Create a new layer filled with a weave effect to be used as an overlay or bump map"
+msgstr "Sukurti naują sluoksnį užpildytą bangavimo efektu panaudotu kaip padengimu ar iškilimu"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2730,67 +2715,9 @@ msgstr "Gijų ilgis"
 msgid "_Weave..."
 msgstr "_Audimas..."
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "GIMP žiniatinklio svetainės žymelė"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "Naudotojo žinyno žymelė"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "Kaip kurti ir naudoti _pažymėjimus"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "Kaip kurti, atverti ir išsaugoti _failus"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "Paprastų _objektų piešimas"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "Kaip naudoti _dialogus"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "Įskiepių _registras"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "_Kontūrų naudojimas"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "_Pagrindiniai principai"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "Žiniatinklio s_vetainė kūrėjams"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "_Pagrindinė žiniatinklio svetainė"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "_Paveikslėlių paruošimas žiniatinkliui"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "_Naudotojo žinyno žiniatinklio svetainė"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "_Darbas su skaitmeninių fotoaparatų nuotraukomis"
-
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr ""
-"Pasirinktam regionui (ar permatomumui) pridėti subtilų peršviečiamą trimatį "
-"efektą"
+msgstr "Pasirinktam regionui (ar permatomumui) pridėti subtilų peršviečiamą trimatį efektą"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
@@ -2812,18 +2739,23 @@ msgstr "Metamo šešėlio spalva"
 msgid "Drop shadow opacity"
 msgstr "Metamo šešėlio nepermatomumas"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight X offset"
 msgstr "Paryškinimo X poslinkis"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight Y offset"
 msgstr "Paryškinimo Y poslinkis"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Highlight color"
+msgstr "Paryškinimo spalva"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Highlight opacity"
 msgstr "Paryškinimo nepermatomumas"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
 msgstr "_Xach efektas..."
+
