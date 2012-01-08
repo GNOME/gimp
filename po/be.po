@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-23 21:13+0300\n"
-"PO-Revision-Date: 2011-12-23 21:13+0300\n"
+"POT-Creation-Date: 2012-01-08 15:22+0300\n"
+"PO-Revision-Date: 2012-01-08 15:22+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -10995,6 +10995,21 @@ msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Падвышэньне рэзкасьці"
 
+#: ../app/paint/paint-enums.c:144
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Акружына"
+
+#: ../app/paint/paint-enums.c:145
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Квадрат"
+
+#: ../app/paint/paint-enums.c:146
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Ромб"
+
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
 msgstr "Спалучыць маскі"
@@ -13794,52 +13809,56 @@ msgstr "Непразрыстасьць відарыса агляду"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Памер вочка сеткі для зьменнай колькасьці правілаў пабудовы"
 
-#: ../app/tools/gimptransformoptions.c:138
-msgid "Limit rotation steps to 15 degrees"
-msgstr "Абмежаваць крок павароту 15 ґрадусамі"
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "Ператварыць: "
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Direction"
 msgstr "Напрамак"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "Інтэрпаляцыя:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Абразаньне:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "Непразрыстасьць відарыса"
 
-#: ../app/tools/gimptransformoptions.c:311
+#: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
 msgstr "Паказаць агляд відарыса"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "Накіроўныя"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 ґрадусаў  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+msgid "Limit rotation steps to 15 degrees"
+msgstr "Абмежаваць крок павароту 15 ґрадусамі"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Захоўваць прапорцыі (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+msgid "Keep the original aspect ratio"
+msgstr "Захоўваць спачатныя суадносіны бакоў"
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
