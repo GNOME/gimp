@@ -10,15 +10,15 @@
 # Petr Kovar <pknbe@volny.cz>, 2008, 2009.
 # JardaK <krejci@zstenis.com>, 2009.
 # Marek Černocký <marek@manet.cz>, 2011, 2012.
-# Miroslav Šulc <fordfrog@fordfrog.name>, 2010, 2011.
+# Miroslav Šulc <fordfrog@fordfrog.name>, 2010, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-06 18:39+0000\n"
-"PO-Revision-Date: 2012-01-06 19:54+0100\n"
+"POT-Creation-Date: 2012-01-07 21:21+0000\n"
+"PO-Revision-Date: 2012-01-08 13:46+0100\n"
 "Last-Translator: Miroslav Šulc <fordfrog@fordfrog.name>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5381,8 +5381,6 @@ msgid "Toggle fullscreen view"
 msgstr "Přepnout zobrazení na celou obrazovku"
 
 #: ../app/actions/view-actions.c:238
-#| msgctxt "config-action"
-#| msgid "Use _GEGL"
 msgctxt "view-action"
 msgid "Use GEGL"
 msgstr "Použít GEGL"
@@ -11013,6 +11011,21 @@ msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Zaostřit"
 
+#: ../app/paint/paint-enums.c:144
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Kruh"
+
+#: ../app/paint/paint-enums.c:145
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Čtverc"
+
+#: ../app/paint/paint-enums.c:146
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Kosočtverec"
+
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
 msgstr "Kombinovat masky"
@@ -11093,19 +11106,16 @@ msgid "Brush '%s' is not a generated brush"
 msgstr "Stopa „%s“ není generovaná stopa"
 
 #: ../app/pdb/gimppdb-utils.c:134
-#| msgid "Invalid empty paint method name"
 msgid "Invalid empty paint dynamics name"
 msgstr "Neplatný prázdný název dynamiky malování"
 
 #: ../app/pdb/gimppdb-utils.c:143
 #, c-format
-#| msgid "Pattern '%s' not found"
 msgid "Paint dynamics '%s' not found"
 msgstr "Dynamika malování „%s“ nebyla nalezena"
 
 #: ../app/pdb/gimppdb-utils.c:148
 #, c-format
-#| msgid "Gradient '%s' is not editable"
 msgid "Paint dynamics '%s' is not editable"
 msgstr "Dynamika malování „%s“ není upravitelná"
 
@@ -13805,52 +13815,56 @@ msgstr "Krytí náhledu obrázku"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Velikost buňky mřížky pro proměnný počet kompozičních vodítek"
 
-#: ../app/tools/gimptransformoptions.c:138
-msgid "Limit rotation steps to 15 degrees"
-msgstr "Omezit kroky otáčení na 15 stupňů"
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "Transformace:"
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Direction"
 msgstr "Směr"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "Interpolace:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Oříznutí:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "Krytí obrázku"
 
-#: ../app/tools/gimptransformoptions.c:311
+#: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
 msgstr "Zobrazit náhled obrázku"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "Vodítka"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 stupňů  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+msgid "Limit rotation steps to 15 degrees"
+msgstr "Omezit kroky otáčení na 15 stupňů"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Zachovat poměr stran  (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+msgid "Keep the original aspect ratio"
+msgstr "Zachovat původní poměr stran"
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
