@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-24 18:58+0100\n"
+"POT-Creation-Date: 2012-01-09 00:47+0100\n"
 "PO-Revision-Date: 2011-12-24 18:11+0100\n"
 "Last-Translator: Quim Perez i Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -515,7 +515,7 @@ msgstr "Fotograma %d de %d"
 
 #: ../plug-ins/common/animation-play.c:1474
 msgid "Stop playback"
-msgstr "Atura la reproducció"
+msgstr "Para la reproducció"
 
 #: ../plug-ins/common/antialias.c:84
 msgid "Antialias using the Scale3X edge-extrapolation algorithm"
@@ -2554,7 +2554,7 @@ msgstr "Descompon"
 
 #: ../plug-ins/common/decompose.c:1516
 msgid "Extract Channels"
-msgstr "Extreu els canals"
+msgstr "Extrau els canals"
 
 #: ../plug-ins/common/decompose.c:1563
 msgid "_Decompose to layers"
@@ -2680,7 +2680,7 @@ msgstr "Elimina les bandes verticals de la imatge"
 
 #: ../plug-ins/common/destripe.c:109
 msgid "Des_tripe..."
-msgstr "_Treu les bandes..."
+msgstr "_Trau les bandes..."
 
 #: ../plug-ins/common/destripe.c:270
 msgid "Destriping"
@@ -2688,7 +2688,7 @@ msgstr "S'estan traient les bandes"
 
 #: ../plug-ins/common/destripe.c:440
 msgid "Destripe"
-msgstr "Treu les bandes"
+msgstr "Trau les bandes"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
 #: ../plug-ins/common/file-ps.c:3172 ../plug-ins/common/file-ps.c:3370
@@ -3089,7 +3089,7 @@ msgstr "No s'accepta esta profunditat de bits (%d)"
 #: ../plug-ins/file-sgi/sgi.c:576 ../plug-ins/file-xjt/xjt.c:1696
 #, c-format
 msgid "Saving '%s'"
-msgstr "S'està desant «%s»"
+msgstr "S'està alçant «%s»"
 
 #: ../plug-ins/common/file-compressor.c:159
 msgid "gzip archive"
@@ -3286,7 +3286,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:468
 msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr "No s'ha pogut reduir més els colors. S'està desant com a opac."
+msgstr "No s'ha pogut reduir més els colors. S'està alçant com a opac."
 
 #: ../plug-ins/common/file-gif-save.c:583
 #, c-format
@@ -3841,8 +3841,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "No s'ha pogut escriure al fitxer «%s» : %s"
 
 #: ../plug-ins/common/file-pdf-load.c:296
-#: ../plug-ins/common/file-pdf-save.c:273
-#: ../plug-ins/common/file-pdf-save.c:288
+#: ../plug-ins/common/file-pdf-save.c:289
 msgid "Portable Document Format"
 msgstr "Format de Document Portable"
 
@@ -3894,15 +3893,15 @@ msgstr "_Resolució:"
 msgid "pixels/%a"
 msgstr "píxels/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:303
+#: ../plug-ins/common/file-pdf-save.c:304
 msgid "_Create multipage PDF..."
 msgstr "Crea un PDF amb pàgines..."
 
-#: ../plug-ins/common/file-pdf-save.c:396
+#: ../plug-ins/common/file-pdf-save.c:401
 msgid "You must select a file to save!"
 msgstr "Heu de seleccionar un fitxer per alçar."
 
-#: ../plug-ins/common/file-pdf-save.c:405
+#: ../plug-ins/common/file-pdf-save.c:410
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3915,47 +3914,47 @@ msgstr ""
 "Assegureu-vos que heu posat un nom de fitxer vàlid i que la ubicació no és "
 "de només lectura."
 
-#: ../plug-ins/common/file-pdf-save.c:715
-#: ../plug-ins/common/file-pdf-save.c:832
+#: ../plug-ins/common/file-pdf-save.c:733
+#: ../plug-ins/common/file-pdf-save.c:850
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omet les capes ocultes o les capes que tenen opacitat zero."
 
-#: ../plug-ins/common/file-pdf-save.c:719
-#: ../plug-ins/common/file-pdf-save.c:836
+#: ../plug-ins/common/file-pdf-save.c:737
+#: ../plug-ins/common/file-pdf-save.c:854
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Converteix els mapes de bits en gràfics vectorials quan siga possible"
 
-#: ../plug-ins/common/file-pdf-save.c:723
-#: ../plug-ins/common/file-pdf-save.c:840
+#: ../plug-ins/common/file-pdf-save.c:741
+#: ../plug-ins/common/file-pdf-save.c:858
 msgid "Apply layer masks before saving"
 msgstr "Aplica la màscara de la capa abans d'alçar"
 
-#: ../plug-ins/common/file-pdf-save.c:726
-#: ../plug-ins/common/file-pdf-save.c:843
+#: ../plug-ins/common/file-pdf-save.c:744
+#: ../plug-ins/common/file-pdf-save.c:861
 msgid "Keeping the masks will not change the output"
 msgstr "Si es conserven les màscares no afectarà l'eixida"
 
-#: ../plug-ins/common/file-pdf-save.c:779
+#: ../plug-ins/common/file-pdf-save.c:797
 msgid "Save to:"
 msgstr "Alça-ho a:"
 
-#: ../plug-ins/common/file-pdf-save.c:783
+#: ../plug-ins/common/file-pdf-save.c:801
 msgid "Browse..."
 msgstr "Navega..."
 
-#: ../plug-ins/common/file-pdf-save.c:784
+#: ../plug-ins/common/file-pdf-save.c:802
 msgid "Multipage PDF export"
 msgstr "Exporta com a PDF amb pàgines"
 
-#: ../plug-ins/common/file-pdf-save.c:817
+#: ../plug-ins/common/file-pdf-save.c:835
 msgid "Remove the selected pages"
 msgstr "Suprimeix les pàgines seleccionades"
 
-#: ../plug-ins/common/file-pdf-save.c:827
+#: ../plug-ins/common/file-pdf-save.c:845
 msgid "Add this image"
 msgstr "Afig esta Imatge"
 
-#: ../plug-ins/common/file-pdf-save.c:940
+#: ../plug-ins/common/file-pdf-save.c:958
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: per tal d'alçar el fitxer, cal afegir com a mínim una imatge."
 
@@ -3978,7 +3977,7 @@ msgstr "No s'ha pogut obrir el fitxer PNG: %s"
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr ""
 "S'ha produït un error en la generació de l'estructura del PNG quan s'estava "
-"desant el fitxer «%s»"
+"alçant el fitxer «%s»"
 
 #: ../plug-ins/common/file-png.c:738
 #, c-format
@@ -4008,7 +4007,7 @@ msgstr ""
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr ""
 "S'ha produït un error en la generació de l'estructura del PNG quan s'estava "
-"desant el fitxer «%s»"
+"alçant el fitxer «%s»"
 
 #: ../plug-ins/common/file-png.c:1272
 #, c-format
@@ -4829,14 +4828,14 @@ msgid "'%s' is not a valid X cursor."
 msgstr "«%s» no és un cursor X vàlid."
 
 #: ../plug-ins/common/file-xmc.c:686
-#, c-format
-msgid "The width of frame %d of '%s' is too big for X cursor."
-msgstr "L'amplada del fotograma %d de «%s» és massa gran pel cursor X."
+#, fuzzy, c-format
+msgid "Frame %d of '%s' is too wide for an X cursor."
+msgstr "L'amplada de «%s» és massa gran pel cursor X."
 
 #: ../plug-ins/common/file-xmc.c:693
-#, c-format
-msgid "The height of frame %d of '%s' is too big for X cursor."
-msgstr "L'alçada del fotograma %d de «%s» és massa gran pel cursor X."
+#, fuzzy, c-format
+msgid "Frame %d of '%s' is too high for an X cursor."
+msgstr "L'amplada de «%s» és massa gran pel cursor X."
 
 #: ../plug-ins/common/file-xmc.c:896
 #, c-format
@@ -4844,14 +4843,14 @@ msgid "there is no image chunk in \"%s\"."
 msgstr "Manca un bocí de la imatge a «%s». "
 
 #: ../plug-ins/common/file-xmc.c:938
-#, c-format
-msgid "The width of '%s' is too big for X cursor."
+#, fuzzy, c-format
+msgid "'%s' is too wide for an X cursor."
 msgstr "L'amplada de «%s» és massa gran pel cursor X."
 
 #: ../plug-ins/common/file-xmc.c:945
-#, c-format
-msgid "The height of '%s' is too big for X cursor."
-msgstr "L'alçada de «%s» és massa gran pel cursor X."
+#, fuzzy, c-format
+msgid "'%s' is too high for an X cursor."
+msgstr "L'amplada de «%s» és massa gran pel cursor X."
 
 #: ../plug-ins/common/file-xmc.c:1015
 #, c-format
@@ -4993,31 +4992,31 @@ msgid "Comment is limited to %d characters."
 msgstr "El comentari està limitat a %d caràcters."
 
 #: ../plug-ins/common/file-xmc.c:1489
-#, c-format
-msgid "This plug-in can only handle RGBA image format with 8bit color depth."
+#, fuzzy, c-format
+msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr ""
 "Este connector només accepta el format d'imatge RGBA amb una profunditat de "
 "color de 8 bits."
 
 #: ../plug-ins/common/file-xmc.c:1507
-#, c-format
-msgid "Width of '%s' is too large. Please reduce more than %dpx."
-msgstr "L'amplada de «%s» és massa gran. Reduïu-la en més de %dpx."
+#, fuzzy, c-format
+msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
+msgstr "L'alçada de «%s» és massa gran. Reduïu-la en més de %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1514
-#, c-format
-msgid "Height of '%s' is too large. Please reduce more than %dpx."
+#, fuzzy, c-format
+msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "L'alçada de «%s» és massa gran. Reduïu-la en més de %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1521
 #, c-format
-msgid "The size of '%s' is zero!"
-msgstr "La mida de «%s» és zero."
+msgid "Width and/or height of frame '%s' is zero!"
+msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1561
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Cannot save the cursor because the hot spot is not on '%s'.\n"
+"Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-"
 "crop."
 msgstr ""
@@ -5025,10 +5024,10 @@ msgstr ""
 "Canvieu la posició del punt calent, la geometria de la capa o a alçar la "
 "capa sense l'escapçat automàtic."
 
-#: ../plug-ins/common/file-xmc.c:1717
-#, c-format
+#: ../plug-ins/common/file-xmc.c:1718
+#, fuzzy, c-format
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames which "
+"Your cursor was successfully saved but it contains one or more frames whose "
 "width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
@@ -5036,12 +5035,13 @@ msgstr ""
 "excedeixen l'alçada o l'amplada en %ipx .\n"
 "Això pot fer que no es veja correctament en algunes pantalles."
 
-#: ../plug-ins/common/file-xmc.c:1724
+#: ../plug-ins/common/file-xmc.c:1725
+#, fuzzy
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
-"nominal size is not supported by gnome-appearance-properties.\n"
-"You can satisfy it by checking \"Replace the size of all frame...\" in the "
-"save dialog, or your cursor may not appear in gnome-appearance-properties."
+"nominal size is not supported by GNOME settings.\n"
+"You can satisfy it by checking \"Replace the size of all frames...\" in the "
+"save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
 "S'ha alçat el cursor, però conté un o més fotogrames amb una mida nominal "
 "que no és compatible amb el gnome-appearance-properties.\n"
@@ -5049,16 +5049,16 @@ msgstr ""
 "mida de tots els fotogrames...» al diàleg d'alçar. Si no ho feu el cursor "
 "pot no aparèixer a gnome-appearance-properties."
 
-#: ../plug-ins/common/file-xmc.c:1961
-#, c-format
+#: ../plug-ins/common/file-xmc.c:1962
+#, fuzzy, c-format
 msgid ""
-"The parasite \"%s\" is too long for X cursor.\n"
-"The overflowed string was dropped."
+"The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
+"fit."
 msgstr ""
 "El paràsit «%s» és massa llarg pel cursor X.\n"
 "S'ha suprimit la cadena que sobrepassa."
 
-#: ../plug-ins/common/file-xmc.c:2163
+#: ../plug-ins/common/file-xmc.c:2164
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -11276,7 +11276,7 @@ msgstr "_Atura"
 
 #: ../plug-ins/help-browser/dialog.c:574
 msgid "Stop loading this page"
-msgstr "Atura la càrrega d'esta pàgina"
+msgstr "Para la càrrega d'esta pàgina"
 
 #: ../plug-ins/help-browser/dialog.c:579
 msgid "Go to the index page"
@@ -11735,7 +11735,7 @@ msgstr "Mou cap a dalt"
 #: ../plug-ins/imagemap/imap_cmd_paste.c:50
 #: ../plug-ins/imagemap/imap_menu.c:160
 msgid "Paste"
-msgstr "Enganxa"
+msgstr "Apega"
 
 #: ../plug-ins/imagemap/imap_cmd_select.c:52
 msgid "Select"
@@ -12690,7 +12690,7 @@ msgstr "Qualitat de suavitzat de vores. Com més alta millor, però va més lent
 
 #: ../plug-ins/map-object/map-object-ui.c:547
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "Atura't quan les diferències de píxels són més altes que este valor"
+msgstr "Para't quan les diferències de píxels són més altes que este valor"
 
 #: ../plug-ins/map-object/map-object-ui.c:582
 msgid "Point light"
@@ -13175,6 +13175,21 @@ msgstr "Captura de _pantalla..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "No s'ha capturat cap dada"
+
+#~ msgid "The width of frame %d of '%s' is too big for X cursor."
+#~ msgstr "L'amplada del fotograma %d de «%s» és massa gran pel cursor X."
+
+#~ msgid "The height of frame %d of '%s' is too big for X cursor."
+#~ msgstr "L'alçada del fotograma %d de «%s» és massa gran pel cursor X."
+
+#~ msgid "The height of '%s' is too big for X cursor."
+#~ msgstr "L'alçada de «%s» és massa gran pel cursor X."
+
+#~ msgid "Width of '%s' is too large. Please reduce more than %dpx."
+#~ msgstr "L'amplada de «%s» és massa gran. Reduïu-la en més de %dpx."
+
+#~ msgid "The size of '%s' is zero!"
+#~ msgstr "La mida de «%s» és zero."
 
 #~ msgid "Ascii"
 #~ msgstr "ASCII"
