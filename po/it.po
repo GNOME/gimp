@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-05 15:07+0100\n"
-"PO-Revision-Date: 2011-12-05 15:09+0100\n"
+"POT-Creation-Date: 2012-01-08 23:38+0100\n"
+"PO-Revision-Date: 2012-01-09 00:06+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -5139,7 +5139,7 @@ msgid "New Path Options"
 msgstr "Nuove opzioni tracciato"
 
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:199
-#: ../app/tools/gimpvectortool.c:1970
+#: ../app/tools/gimpvectortool.c:1969
 msgid "Stroke Path"
 msgstr "Delinea tracciato"
 
@@ -5604,12 +5604,12 @@ msgstr "Ri_pristina zoom (%d%%)"
 msgid "Re_vert Zoom"
 msgstr "Ri_pristina zoom"
 
-#: ../app/actions/view-actions.c:732
+#: ../app/actions/view-actions.c:731
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Alt_ro (%s)..."
 
-#: ../app/actions/view-actions.c:741
+#: ../app/actions/view-actions.c:740
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
@@ -7544,7 +7544,7 @@ msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
 #: ../app/core/gimpbrush-load.c:286 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
-#: ../app/tools/gimpvectortool.c:318
+#: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Senza nome"
 
@@ -8902,7 +8902,7 @@ msgctxt "plural"
 msgid "percent"
 msgstr "percento"
 
-#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:478
+#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:493
 msgid "About GIMP"
 msgstr "Informazioni su GIMP"
 
@@ -10613,24 +10613,24 @@ msgstr "A"
 msgid "_Sample Merged"
 msgstr "Campionamento diffu_so"
 
-#: ../app/display/gimpdisplayshell.c:509
+#: ../app/display/gimpdisplayshell.c:508
 msgid "Access the image menu"
 msgstr "Accedi al menu immagine"
 
-#: ../app/display/gimpdisplayshell.c:623
+#: ../app/display/gimpdisplayshell.c:622
 msgid "Zoom image when window size changes"
 msgstr "Zooma l'immagine quando cambia la dimensione della finestra"
 
-#: ../app/display/gimpdisplayshell.c:652
+#: ../app/display/gimpdisplayshell.c:651
 msgid "Toggle Quick Mask"
 msgstr "Commuta maschera veloce"
 
-#: ../app/display/gimpdisplayshell.c:675
+#: ../app/display/gimpdisplayshell.c:674
 msgid "Navigate the image display"
 msgstr "Naviga nella finestra immagine"
 
-#: ../app/display/gimpdisplayshell.c:743
-#: ../app/display/gimpdisplayshell.c:1321 ../app/widgets/gimptoolbox.c:256
+#: ../app/display/gimpdisplayshell.c:742
+#: ../app/display/gimpdisplayshell.c:1320 ../app/widgets/gimptoolbox.c:256
 msgid "Drop image files here to open them"
 msgstr "Trascina e rilascia qui i file immagine per aprirli"
 
@@ -11062,6 +11062,21 @@ msgstr "Sfoca"
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Contrasta"
+
+#: ../app/paint/paint-enums.c:144
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Cerchio"
+
+#: ../app/paint/paint-enums.c:145
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Quadro"
+
+#: ../app/paint/paint-enums.c:146
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Diamante"
 
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
@@ -12259,23 +12274,23 @@ msgstr "Prelievo colore: imposta i colori dai pixel di un'immagine"
 msgid "C_olor Picker"
 msgstr "Prelievo c_olore"
 
-#: ../app/tools/gimpcolorpickertool.c:228
+#: ../app/tools/gimpcolorpickertool.c:231
 msgid "Click in any image to view its color"
 msgstr "Fare clic sull'immagine per visualizzare il colore"
 
-#: ../app/tools/gimpcolorpickertool.c:235 ../app/tools/gimppainttool.c:477
+#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:477
 msgid "Click in any image to pick the foreground color"
 msgstr "Fare clic sull'immagine per prelevare il colore di primo piano"
 
-#: ../app/tools/gimpcolorpickertool.c:243 ../app/tools/gimppainttool.c:483
+#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:483
 msgid "Click in any image to pick the background color"
 msgstr "Fare clic sull'immagine per prelevare il colore di sfondo"
 
-#: ../app/tools/gimpcolorpickertool.c:251
+#: ../app/tools/gimpcolorpickertool.c:254
 msgid "Click in any image to add the color to the palette"
 msgstr "Fare clic sull'immagine per aggiungere il colore alla tavolozza"
 
-#: ../app/tools/gimpcolorpickertool.c:306
+#: ../app/tools/gimpcolorpickertool.c:309
 msgid "Color Picker Information"
 msgstr "Informazioni sul prelievo colore"
 
@@ -12521,17 +12536,17 @@ msgstr "Campo"
 msgid "Exposure"
 msgstr "Esposizione"
 
-#: ../app/tools/gimpeditselectiontool.c:244
+#: ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
 msgstr "Sposta selezione"
 
-#: ../app/tools/gimpeditselectiontool.c:248
-#: ../app/tools/gimpeditselectiontool.c:1243
+#: ../app/tools/gimpeditselectiontool.c:246
+#: ../app/tools/gimpeditselectiontool.c:1241
 msgid "Move Floating Selection"
 msgstr "Sposta selezione fluttuante"
 
-#: ../app/tools/gimpeditselectiontool.c:457
-#: ../app/tools/gimpeditselectiontool.c:734
+#: ../app/tools/gimpeditselectiontool.c:455
+#: ../app/tools/gimpeditselectiontool.c:732
 msgid "Move: "
 msgstr "Sposta: "
 
@@ -12745,24 +12760,24 @@ msgstr ""
 msgid "_Free Select"
 msgstr "A mano _libera"
 
-#: ../app/tools/gimpfreeselecttool.c:1031
+#: ../app/tools/gimpfreeselecttool.c:1030
 msgid "Click to complete selection"
 msgstr "Fare clic per completare la selezione"
 
-#: ../app/tools/gimpfreeselecttool.c:1035
+#: ../app/tools/gimpfreeselecttool.c:1034
 msgid "Click-Drag to move segment vertex"
 msgstr "Fare clic e trascinare per spostare il capo del segmento"
 
-#: ../app/tools/gimpfreeselecttool.c:1040
+#: ../app/tools/gimpfreeselecttool.c:1039
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr "Invio esegue, Esc annulla, Backspace rimuove l'ultimo segmento"
 
-#: ../app/tools/gimpfreeselecttool.c:1044
+#: ../app/tools/gimpfreeselecttool.c:1043
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Clic e trascina crea un segmento libero, clic crea un segmento poligonale"
 
-#: ../app/tools/gimpfreeselecttool.c:1563
+#: ../app/tools/gimpfreeselecttool.c:1562
 msgctxt "command"
 msgid "Free Select"
 msgstr "Selezione libera"
@@ -13234,19 +13249,19 @@ msgstr "Strumento sposta: sposta livelli, selezioni e altri oggetti"
 msgid "_Move"
 msgstr "_Sposta"
 
-#: ../app/tools/gimpmovetool.c:247 ../app/tools/gimpmovetool.c:552
+#: ../app/tools/gimpmovetool.c:249 ../app/tools/gimpmovetool.c:554
 msgid "Move Guide: "
 msgstr "Sposta guida:"
 
-#: ../app/tools/gimpmovetool.c:546
+#: ../app/tools/gimpmovetool.c:548
 msgid "Remove Guide"
 msgstr "Rimuovi guida"
 
-#: ../app/tools/gimpmovetool.c:546
+#: ../app/tools/gimpmovetool.c:548
 msgid "Cancel Guide"
 msgstr "Elimina guida"
 
-#: ../app/tools/gimpmovetool.c:552
+#: ../app/tools/gimpmovetool.c:554
 msgid "Add Guide: "
 msgstr "Aggiungi guida:"
 
@@ -13906,52 +13921,56 @@ msgstr ""
 "Dimensione di una cella di griglia per guide di composizione di numero "
 "variabile"
 
-#: ../app/tools/gimptransformoptions.c:138
-msgid "Limit rotation steps to 15 degrees"
-msgstr "Limita i passi di rotazione a 15 gradi"
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "Trasforma:"
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Direction"
 msgstr "Direzione"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "Interpolazione:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Ritaglio:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "Opacità immagine"
 
-#: ../app/tools/gimptransformoptions.c:311
+#: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
 msgstr "Mostra anteprima immagine"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "Guide"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 gradi  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+msgid "Limit rotation steps to 15 degrees"
+msgstr "Limita i passi di rotazione a 15 gradi"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Mantieni l'aspetto  (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+msgid "Keep the original aspect ratio"
+msgstr "Mantieni il rapporto proporzioni originale"
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
@@ -14007,136 +14026,136 @@ msgstr "Strumento tracciati: crea e modifica tracciati"
 msgid "Pat_hs"
 msgstr "_Tracciati"
 
-#: ../app/tools/gimpvectortool.c:251
+#: ../app/tools/gimpvectortool.c:250
 msgid "The active path is locked."
 msgstr "Il tracciato attivo è bloccato"
 
-#: ../app/tools/gimpvectortool.c:341
+#: ../app/tools/gimpvectortool.c:340
 msgid "Add Stroke"
 msgstr "Aggiungi tratto"
 
-#: ../app/tools/gimpvectortool.c:365
+#: ../app/tools/gimpvectortool.c:364
 msgid "Add Anchor"
 msgstr "Aggiungi àncora"
 
-#: ../app/tools/gimpvectortool.c:391
+#: ../app/tools/gimpvectortool.c:390
 msgid "Insert Anchor"
 msgstr "Inserisci àncora"
 
-#: ../app/tools/gimpvectortool.c:422
+#: ../app/tools/gimpvectortool.c:421
 msgid "Drag Handle"
 msgstr "Trascina maniglia"
 
-#: ../app/tools/gimpvectortool.c:453
+#: ../app/tools/gimpvectortool.c:452
 msgid "Drag Anchor"
 msgstr "Trascina àncora"
 
-#: ../app/tools/gimpvectortool.c:471
+#: ../app/tools/gimpvectortool.c:470
 msgid "Drag Anchors"
 msgstr "Trascina àncore"
 
-#: ../app/tools/gimpvectortool.c:494
+#: ../app/tools/gimpvectortool.c:493
 msgid "Drag Curve"
 msgstr "Trascina curve"
 
-#: ../app/tools/gimpvectortool.c:523
+#: ../app/tools/gimpvectortool.c:522
 msgid "Connect Strokes"
 msgstr "Collega tratti"
 
-#: ../app/tools/gimpvectortool.c:555
+#: ../app/tools/gimpvectortool.c:554
 msgid "Drag Path"
 msgstr "Trascina tracciato"
 
-#: ../app/tools/gimpvectortool.c:566
+#: ../app/tools/gimpvectortool.c:565
 msgid "Convert Edge"
 msgstr "Converti margine"
 
-#: ../app/tools/gimpvectortool.c:597
+#: ../app/tools/gimpvectortool.c:596
 msgid "Delete Anchor"
 msgstr "Elimina àncora"
 
-#: ../app/tools/gimpvectortool.c:620
+#: ../app/tools/gimpvectortool.c:619
 msgid "Delete Segment"
 msgstr "Elimina segmento"
 
-#: ../app/tools/gimpvectortool.c:839
+#: ../app/tools/gimpvectortool.c:838
 msgid "Move Anchors"
 msgstr "Sposta àncore"
 
-#: ../app/tools/gimpvectortool.c:1202
+#: ../app/tools/gimpvectortool.c:1201
 msgid "Click to pick path to edit"
 msgstr "Fare clic sul tracciato per modificarlo"
 
-#: ../app/tools/gimpvectortool.c:1206
+#: ../app/tools/gimpvectortool.c:1205
 msgid "Click to create a new path"
 msgstr "Fare clic per creare un nuovo tracciato"
 
-#: ../app/tools/gimpvectortool.c:1210
+#: ../app/tools/gimpvectortool.c:1209
 msgid "Click to create a new component of the path"
 msgstr "Fare clic per creare un nuovo componente del tracciato"
 
-#: ../app/tools/gimpvectortool.c:1214
+#: ../app/tools/gimpvectortool.c:1213
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Fare clic o clic e trascinare per creare una nuova àncora"
 
-#: ../app/tools/gimpvectortool.c:1226 ../app/tools/gimpvectortool.c:1233
+#: ../app/tools/gimpvectortool.c:1225 ../app/tools/gimpvectortool.c:1232
 msgid "Click-Drag to move the anchor around"
 msgstr "Fare clic e trascinare per spostare l'àncora"
 
-#: ../app/tools/gimpvectortool.c:1237 ../app/tools/gimpvectortool.c:1260
+#: ../app/tools/gimpvectortool.c:1236 ../app/tools/gimpvectortool.c:1259
 msgid "Click-Drag to move the anchors around"
 msgstr "Fare clic e trascinare per spostare le àncore"
 
-#: ../app/tools/gimpvectortool.c:1243
+#: ../app/tools/gimpvectortool.c:1242
 msgid "Click-Drag to move the handle around"
 msgstr "Fare clic e trascinare per spostare l'àncora"
 
-#: ../app/tools/gimpvectortool.c:1250
+#: ../app/tools/gimpvectortool.c:1249
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Fare clic e trascinare per spostare le ancore simmetricamente"
 
-#: ../app/tools/gimpvectortool.c:1265
+#: ../app/tools/gimpvectortool.c:1264
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Fare clic e trascinare per modificare la forma della curva"
 
-#: ../app/tools/gimpvectortool.c:1268
+#: ../app/tools/gimpvectortool.c:1267
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: simmetricamente"
 
-#: ../app/tools/gimpvectortool.c:1273
+#: ../app/tools/gimpvectortool.c:1272
 msgid "Click-Drag to move the component around"
 msgstr "Fare clic e trascinare per spostare il componente"
 
-#: ../app/tools/gimpvectortool.c:1281
+#: ../app/tools/gimpvectortool.c:1280
 msgid "Click-Drag to move the path around"
 msgstr "Fare clic e trascinare per spostare il tracciato"
 
-#: ../app/tools/gimpvectortool.c:1285
+#: ../app/tools/gimpvectortool.c:1284
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Fare clic per inserire un'àncora nel tracciato"
 
-#: ../app/tools/gimpvectortool.c:1293
+#: ../app/tools/gimpvectortool.c:1292
 msgid "Click to delete this anchor"
 msgstr "Fare clic per cancellare quest'àncora"
 
-#: ../app/tools/gimpvectortool.c:1297
+#: ../app/tools/gimpvectortool.c:1296
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Fare clic per collegare quest'àncora con il punto finale selezionato"
 
-#: ../app/tools/gimpvectortool.c:1302
+#: ../app/tools/gimpvectortool.c:1301
 msgid "Click to open up the path"
 msgstr "Fare clic per aprire il tracciato"
 
-#: ../app/tools/gimpvectortool.c:1306
+#: ../app/tools/gimpvectortool.c:1305
 msgid "Click to make this node angular"
 msgstr "Fare clic per rendere angolare questo nodo"
 
-#: ../app/tools/gimpvectortool.c:1806
+#: ../app/tools/gimpvectortool.c:1805
 msgid "Delete Anchors"
 msgstr "Elimina àncora"
 
-#: ../app/tools/gimpvectortool.c:1964
+#: ../app/tools/gimpvectortool.c:1963
 msgid "There is no active layer or channel to stroke to"
 msgstr "Non c'è un livello o un canale attivo da disegnare"
 
