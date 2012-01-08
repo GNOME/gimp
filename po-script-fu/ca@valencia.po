@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-24 17:47+0100\n"
+"POT-Creation-Date: 2012-01-09 00:48+0100\n"
 "PO-Revision-Date: 2011-12-22 23:13+0100\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
@@ -2143,12 +2143,12 @@ msgstr "Nou pin_zell..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
-msgstr "Enganxa el contingut del porta-retalls en un pinzell nou"
+msgstr "Apega el contingut del porta-retalls en un pinzell nou"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
 msgid "There is no image data in the clipboard to paste."
-msgstr "No hi ha dades de cap imatge al porta-retalls per a enganxar."
+msgstr "No hi ha dades de cap imatge al porta-retalls per a apegar."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
@@ -2156,7 +2156,7 @@ msgstr "Nou _patró..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
-msgstr "Enganxa el contingut del porta-retalls en un patró nou"
+msgstr "Apega el contingut del porta-retalls en un patró nou"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
