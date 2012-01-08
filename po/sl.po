@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-06 21:41+0000\n"
-"PO-Revision-Date: 2011-12-06 23:58+0100\n"
+"POT-Creation-Date: 2012-01-08 17:56+0000\n"
+"PO-Revision-Date: 2012-01-08 19:52+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -5157,7 +5157,7 @@ msgstr "Možnosti nove poti"
 
 #: ../app/actions/vectors-commands.c:392
 #: ../app/tools/gimpvectoroptions.c:199
-#: ../app/tools/gimpvectortool.c:1970
+#: ../app/tools/gimpvectortool.c:1969
 msgid "Stroke Path"
 msgstr "Vleci poteze po poti"
 
@@ -5622,12 +5622,12 @@ msgstr "Po_vrni povečavo (%d%%)"
 msgid "Re_vert Zoom"
 msgstr "Po_vrni povečavo"
 
-#: ../app/actions/view-actions.c:732
+#: ../app/actions/view-actions.c:731
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "D_rugo (%s) ..."
 
-#: ../app/actions/view-actions.c:741
+#: ../app/actions/view-actions.c:740
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Povečava (%s)"
@@ -7338,7 +7338,7 @@ msgstr "Neveljaven niz UTF-8 v datoteki čopičev '%s'."
 #: ../app/core/gimpbrush-load.c:286
 #: ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
-#: ../app/tools/gimpvectortool.c:318
+#: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Neimenovano"
 
@@ -8664,7 +8664,7 @@ msgid "percent"
 msgstr "odstotkov"
 
 #: ../app/dialogs/about-dialog.c:113
-#: ../app/gui/gui.c:478
+#: ../app/gui/gui.c:493
 msgid "About GIMP"
 msgstr "O programu GIMP"
 
@@ -10339,24 +10339,24 @@ msgstr "V"
 msgid "_Sample Merged"
 msgstr "_Vzorči spojeno"
 
-#: ../app/display/gimpdisplayshell.c:509
+#: ../app/display/gimpdisplayshell.c:508
 msgid "Access the image menu"
 msgstr "Dostopi do menija slike"
 
-#: ../app/display/gimpdisplayshell.c:623
+#: ../app/display/gimpdisplayshell.c:622
 msgid "Zoom image when window size changes"
 msgstr "Prilagodi povečavo slike ob spremenjeni velikosti okna"
 
-#: ../app/display/gimpdisplayshell.c:652
+#: ../app/display/gimpdisplayshell.c:651
 msgid "Toggle Quick Mask"
 msgstr "Vključi/izključi hitro masko"
 
-#: ../app/display/gimpdisplayshell.c:675
+#: ../app/display/gimpdisplayshell.c:674
 msgid "Navigate the image display"
 msgstr "Krmari po prikazu slike"
 
-#: ../app/display/gimpdisplayshell.c:743
-#: ../app/display/gimpdisplayshell.c:1321
+#: ../app/display/gimpdisplayshell.c:742
+#: ../app/display/gimpdisplayshell.c:1320
 #: ../app/widgets/gimptoolbox.c:256
 msgid "Drop image files here to open them"
 msgstr "Semkaj spustite datoteke slik, ki jih želite odpreti."
@@ -10786,6 +10786,24 @@ msgstr "Zabriši"
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Izostri"
+
+#: ../app/paint/paint-enums.c:144
+#, fuzzy
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Krog"
+
+#: ../app/paint/paint-enums.c:145
+#, fuzzy
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Kvadrat"
+
+#: ../app/paint/paint-enums.c:146
+#, fuzzy
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Karo"
 
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
@@ -11931,25 +11949,25 @@ msgstr "Orodje Kapalka: Izberite barve slikovnih točk"
 msgid "C_olor Picker"
 msgstr "_Kapalka"
 
-#: ../app/tools/gimpcolorpickertool.c:228
+#: ../app/tools/gimpcolorpickertool.c:231
 msgid "Click in any image to view its color"
 msgstr "Za ogled barve kliknite v sliko"
 
-#: ../app/tools/gimpcolorpickertool.c:235
+#: ../app/tools/gimpcolorpickertool.c:238
 #: ../app/tools/gimppainttool.c:477
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknite v katero koli sliko, da izberete barvo ospredja"
 
-#: ../app/tools/gimpcolorpickertool.c:243
+#: ../app/tools/gimpcolorpickertool.c:246
 #: ../app/tools/gimppainttool.c:483
 msgid "Click in any image to pick the background color"
 msgstr "Kliknite v katero koli sliko, da izberete barvo ozadja"
 
-#: ../app/tools/gimpcolorpickertool.c:251
+#: ../app/tools/gimpcolorpickertool.c:254
 msgid "Click in any image to add the color to the palette"
 msgstr "Za dodajanje barve na paleto kliknite v sliko"
 
-#: ../app/tools/gimpcolorpickertool.c:306
+#: ../app/tools/gimpcolorpickertool.c:309
 msgid "Color Picker Information"
 msgstr "Podatki kapalke"
 
@@ -12193,17 +12211,17 @@ msgstr "Obseg"
 msgid "Exposure"
 msgstr "Osvetlitev"
 
-#: ../app/tools/gimpeditselectiontool.c:244
+#: ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
 msgstr "Premakni izbor"
 
-#: ../app/tools/gimpeditselectiontool.c:248
-#: ../app/tools/gimpeditselectiontool.c:1243
+#: ../app/tools/gimpeditselectiontool.c:246
+#: ../app/tools/gimpeditselectiontool.c:1241
 msgid "Move Floating Selection"
 msgstr "Premakni plavajoči izbor"
 
-#: ../app/tools/gimpeditselectiontool.c:457
-#: ../app/tools/gimpeditselectiontool.c:734
+#: ../app/tools/gimpeditselectiontool.c:455
+#: ../app/tools/gimpeditselectiontool.c:732
 msgid "Move: "
 msgstr "Premakni: "
 
@@ -12399,23 +12417,23 @@ msgstr "Orodje Prosto izbiranje: Izberite z roko narisano območje s prostimi in
 msgid "_Free Select"
 msgstr "_Prosto izbiranje"
 
-#: ../app/tools/gimpfreeselecttool.c:1031
+#: ../app/tools/gimpfreeselecttool.c:1030
 msgid "Click to complete selection"
 msgstr "Kliknite, če želite zaključiti izbor."
 
-#: ../app/tools/gimpfreeselecttool.c:1035
+#: ../app/tools/gimpfreeselecttool.c:1034
 msgid "Click-Drag to move segment vertex"
 msgstr "Kliknite in povlecite, da premaknete vrh odseka."
 
-#: ../app/tools/gimpfreeselecttool.c:1040
+#: ../app/tools/gimpfreeselecttool.c:1039
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr "Enter uveljavi, Esc prekliče, vračalka odstrani zadnji odsek"
 
-#: ../app/tools/gimpfreeselecttool.c:1044
+#: ../app/tools/gimpfreeselecttool.c:1043
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "S klikom in vleko dodate prosti odsek, s klikom dodate mnogokotni odsek"
 
-#: ../app/tools/gimpfreeselecttool.c:1563
+#: ../app/tools/gimpfreeselecttool.c:1562
 msgctxt "command"
 msgid "Free Select"
 msgstr "Prosto izbiranje"
@@ -12886,20 +12904,20 @@ msgstr "Orodje Premakni: Premakne plasti, izbor in druge predmete"
 msgid "_Move"
 msgstr "_Premakni"
 
-#: ../app/tools/gimpmovetool.c:247
-#: ../app/tools/gimpmovetool.c:552
+#: ../app/tools/gimpmovetool.c:249
+#: ../app/tools/gimpmovetool.c:554
 msgid "Move Guide: "
 msgstr "Premakni vodilo: "
 
-#: ../app/tools/gimpmovetool.c:546
+#: ../app/tools/gimpmovetool.c:548
 msgid "Remove Guide"
 msgstr "Odstrani vodilo"
 
-#: ../app/tools/gimpmovetool.c:546
+#: ../app/tools/gimpmovetool.c:548
 msgid "Cancel Guide"
 msgstr "Prekliči vodilo"
 
-#: ../app/tools/gimpmovetool.c:552
+#: ../app/tools/gimpmovetool.c:554
 msgid "Add Guide: "
 msgstr "Dodaj vodilo: "
 
@@ -13538,52 +13556,57 @@ msgstr "Prekrivnost predogleda slike"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Velikost mrežne celice za spremenljivo število vodil pri skladanju"
 
-#: ../app/tools/gimptransformoptions.c:138
-msgid "Limit rotation steps to 15 degrees"
-msgstr "Omeji korak sukanja na 15 stopinj"
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "Transformiraj:"
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Direction"
 msgstr "Smer"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "Interpolacija:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Odrezanost:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "Prekrivnost slike"
 
-#: ../app/tools/gimptransformoptions.c:311
+#: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
 msgstr "Pokaži predogled slike"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "Vodila"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 stopinj  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+msgid "Limit rotation steps to 15 degrees"
+msgstr "Omeji korak sukanja na 15 stopinj"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Ohrani razmerje stranic (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+#, fuzzy
+msgid "Keep the original aspect ratio"
+msgstr "Ohrani izvorno razmerje stranic"
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
@@ -13639,138 +13662,138 @@ msgstr "Orodje Poti: Ustvari in uredi poti"
 msgid "Pat_hs"
 msgstr "Po_ti"
 
-#: ../app/tools/gimpvectortool.c:251
+#: ../app/tools/gimpvectortool.c:250
 msgid "The active path is locked."
 msgstr "Aktivna pot je zaklenjena."
 
-#: ../app/tools/gimpvectortool.c:341
+#: ../app/tools/gimpvectortool.c:340
 msgid "Add Stroke"
 msgstr "Dodaj potezo"
 
-#: ../app/tools/gimpvectortool.c:365
+#: ../app/tools/gimpvectortool.c:364
 msgid "Add Anchor"
 msgstr "Dodaj sidro"
 
-#: ../app/tools/gimpvectortool.c:391
+#: ../app/tools/gimpvectortool.c:390
 msgid "Insert Anchor"
 msgstr "Vstavi sidro"
 
-#: ../app/tools/gimpvectortool.c:422
+#: ../app/tools/gimpvectortool.c:421
 msgid "Drag Handle"
 msgstr "Povleci ročico"
 
-#: ../app/tools/gimpvectortool.c:453
+#: ../app/tools/gimpvectortool.c:452
 msgid "Drag Anchor"
 msgstr "Povleci sidro"
 
-#: ../app/tools/gimpvectortool.c:471
+#: ../app/tools/gimpvectortool.c:470
 msgid "Drag Anchors"
 msgstr "Povleci sidra"
 
-#: ../app/tools/gimpvectortool.c:494
+#: ../app/tools/gimpvectortool.c:493
 msgid "Drag Curve"
 msgstr "Povleci krivuljo"
 
-#: ../app/tools/gimpvectortool.c:523
+#: ../app/tools/gimpvectortool.c:522
 msgid "Connect Strokes"
 msgstr "Poveži poteze"
 
-#: ../app/tools/gimpvectortool.c:555
+#: ../app/tools/gimpvectortool.c:554
 msgid "Drag Path"
 msgstr "Povleci pot"
 
-#: ../app/tools/gimpvectortool.c:566
+#: ../app/tools/gimpvectortool.c:565
 msgid "Convert Edge"
 msgstr "Pretvori rob"
 
-#: ../app/tools/gimpvectortool.c:597
+#: ../app/tools/gimpvectortool.c:596
 msgid "Delete Anchor"
 msgstr "Izbriši sidro"
 
-#: ../app/tools/gimpvectortool.c:620
+#: ../app/tools/gimpvectortool.c:619
 msgid "Delete Segment"
 msgstr "Izbriši odsek"
 
-#: ../app/tools/gimpvectortool.c:839
+#: ../app/tools/gimpvectortool.c:838
 msgid "Move Anchors"
 msgstr "Premakni sidra"
 
-#: ../app/tools/gimpvectortool.c:1202
+#: ../app/tools/gimpvectortool.c:1201
 msgid "Click to pick path to edit"
 msgstr "Kliknite za izbor poti za urejanje"
 
-#: ../app/tools/gimpvectortool.c:1206
+#: ../app/tools/gimpvectortool.c:1205
 msgid "Click to create a new path"
 msgstr "Kliknite za ustvarjanje nove poti"
 
-#: ../app/tools/gimpvectortool.c:1210
+#: ../app/tools/gimpvectortool.c:1209
 msgid "Click to create a new component of the path"
 msgstr "Kliknite za ustvarjanje nove komponente poti"
 
-#: ../app/tools/gimpvectortool.c:1214
+#: ../app/tools/gimpvectortool.c:1213
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Kliknite ali kliknite in povlecite, da ustvarite novo sidro."
 
-#: ../app/tools/gimpvectortool.c:1226
-#: ../app/tools/gimpvectortool.c:1233
+#: ../app/tools/gimpvectortool.c:1225
+#: ../app/tools/gimpvectortool.c:1232
 msgid "Click-Drag to move the anchor around"
 msgstr "Kliknite in povlecite, da premaknete sidro."
 
-#: ../app/tools/gimpvectortool.c:1237
-#: ../app/tools/gimpvectortool.c:1260
+#: ../app/tools/gimpvectortool.c:1236
+#: ../app/tools/gimpvectortool.c:1259
 msgid "Click-Drag to move the anchors around"
 msgstr "Kliknite in povlecite, da premaknete sidra."
 
-#: ../app/tools/gimpvectortool.c:1243
+#: ../app/tools/gimpvectortool.c:1242
 msgid "Click-Drag to move the handle around"
 msgstr "Kliknite in povlecite, da premaknete ročico."
 
-#: ../app/tools/gimpvectortool.c:1250
+#: ../app/tools/gimpvectortool.c:1249
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Kliknite in povlecite, da premaknete ročice simetrično."
 
-#: ../app/tools/gimpvectortool.c:1265
+#: ../app/tools/gimpvectortool.c:1264
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Kliknite in povlecite, da spremenite obliko krivulje."
 
-#: ../app/tools/gimpvectortool.c:1268
+#: ../app/tools/gimpvectortool.c:1267
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: simetrično"
 
-#: ../app/tools/gimpvectortool.c:1273
+#: ../app/tools/gimpvectortool.c:1272
 msgid "Click-Drag to move the component around"
 msgstr "Kliknite in povlecite, da premaknete komponento."
 
-#: ../app/tools/gimpvectortool.c:1281
+#: ../app/tools/gimpvectortool.c:1280
 msgid "Click-Drag to move the path around"
 msgstr "Kliknite in povlecite, da premaknete pot."
 
-#: ../app/tools/gimpvectortool.c:1285
+#: ../app/tools/gimpvectortool.c:1284
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Kliknite in povlecite, da vstavite sidrišče v pot."
 
-#: ../app/tools/gimpvectortool.c:1293
+#: ../app/tools/gimpvectortool.c:1292
 msgid "Click to delete this anchor"
 msgstr "Kliknite, da izbrišete to sidro."
 
-#: ../app/tools/gimpvectortool.c:1297
+#: ../app/tools/gimpvectortool.c:1296
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Kliknite, da povežete to vozlišče z izbrano končno točko."
 
-#: ../app/tools/gimpvectortool.c:1302
+#: ../app/tools/gimpvectortool.c:1301
 msgid "Click to open up the path"
 msgstr "Kliknite, da odprete pot."
 
-#: ../app/tools/gimpvectortool.c:1306
+#: ../app/tools/gimpvectortool.c:1305
 msgid "Click to make this node angular"
 msgstr "Kliknite, da naredite to vozlišče kotno."
 
-#: ../app/tools/gimpvectortool.c:1806
+#: ../app/tools/gimpvectortool.c:1805
 msgid "Delete Anchors"
 msgstr "Izbriši sidra"
 
-#: ../app/tools/gimpvectortool.c:1964
+#: ../app/tools/gimpvectortool.c:1963
 msgid "There is no active layer or channel to stroke to"
 msgstr "Ni aktivnih plasti ali kanalov, da bi risali nanje"
 
