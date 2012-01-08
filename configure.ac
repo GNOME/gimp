@@ -43,6 +43,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 m4_define([babl_required_version], [0.1.6])
 m4_define([gegl_required_version], [0.1.8])
 m4_define([glib_required_version], [2.30.2])
+m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.7])
 m4_define([gdk_pixbuf_required_version], [2.24.0])
 m4_define([cairo_required_version], [1.10.2])
@@ -478,6 +479,7 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 
 PKG_CHECK_MODULES(BABL, babl >= babl_required_version)
 PKG_CHECK_MODULES(GEGL, gegl >= gegl_required_version)
+PKG_CHECK_MODULES(ATK, atk >= atk_required_version)
 
 AM_PATH_GLIB_2_0(glib_required_version, :,
   AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
