@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-24 17:48+0100\n"
+"POT-Creation-Date: 2012-01-09 00:46+0100\n"
 "PO-Revision-Date: 2011-12-24 16:28+0100\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -575,27 +575,27 @@ msgstr "En_ganxa l'objecte"
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "Enganxa l'objecte"
+msgstr "Apega l'objecte"
 
 #: ../app/actions/buffers-actions.c:51
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into"
-msgstr "Enganxa l'objecte _dins"
+msgstr "Apega l'objecte _dins"
 
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Enganxa l'objecte dins la selecció"
+msgstr "Apega l'objecte dins la selecció"
 
 #: ../app/actions/buffers-actions.c:57
 msgctxt "buffers-action"
 msgid "Paste Buffer as _New"
-msgstr "Enganxa l'objecte com a _nou"
+msgstr "Apega l'objecte com a _nou"
 
 #: ../app/actions/buffers-actions.c:58
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
-msgstr "Enganxa l'objecte en una imatge nova"
+msgstr "Apega l'objecte en una imatge nova"
 
 #: ../app/actions/buffers-actions.c:63
 msgctxt "buffers-action"
@@ -1877,7 +1877,7 @@ msgstr "_Edita"
 #: ../app/actions/edit-actions.c:64
 msgctxt "edit-action"
 msgid "Paste _as"
-msgstr "Enganxa com _a"
+msgstr "Apega com _a"
 
 #: ../app/actions/edit-actions.c:65
 msgctxt "edit-action"
@@ -1987,22 +1987,22 @@ msgstr "Copia de la regió seleccionada tot el que està visible"
 #: ../app/actions/edit-actions.c:128
 msgctxt "edit-action"
 msgid "_Paste"
-msgstr "_Enganxa"
+msgstr "_Apega"
 
 #: ../app/actions/edit-actions.c:129
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
-msgstr "Enganxa el contingut del porta-retalls"
+msgstr "Apega el contingut del porta-retalls"
 
 #: ../app/actions/edit-actions.c:134
 msgctxt "edit-action"
 msgid "Paste _Into"
-msgstr "Enganxa _a"
+msgstr "Apega _a"
 
 #: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "Enganxa el contingut del porta-retalls damunt de la selecció actual"
+msgstr "Apega el contingut del porta-retalls damunt de la selecció actual"
 
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
@@ -2065,12 +2065,12 @@ msgstr "Copia de la regió seleccionada tot el que està visible"
 #: ../app/actions/edit-actions.c:178
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "_Enganxa l'objecte amb nom..."
+msgstr "_Apega l'objecte amb nom..."
 
 #: ../app/actions/edit-actions.c:179
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
-msgstr "Enganxa el contingut del porta-retalls del GIMP"
+msgstr "Apega el contingut del porta-retalls del GIMP"
 
 #: ../app/actions/edit-actions.c:184
 msgctxt "edit-action"
@@ -2164,7 +2164,7 @@ msgstr "Píxels que s'han copiat al porta-retalls"
 #: ../app/actions/edit-commands.c:324 ../app/actions/edit-commands.c:359
 #: ../app/actions/edit-commands.c:538
 msgid "There is no image data in the clipboard to paste."
-msgstr "No hi ha cap imatge al porta-retalls per enganxar."
+msgstr "No hi ha cap imatge al porta-retalls per apegar."
 
 #: ../app/actions/edit-commands.c:347 ../app/core/gimpbrushclipboard.c:172
 #: ../app/core/gimppatternclipboard.c:172 ../app/widgets/gimpclipboard.c:345
@@ -3670,7 +3670,7 @@ msgstr "Inhabilita la màscara _de capa"
 #: ../app/actions/layers-actions.c:260
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
-msgstr "Treu l'efecte de la màscara de la capa"
+msgstr "Trau l'efecte de la màscara de la capa"
 
 #: ../app/actions/layers-actions.c:269
 msgctxt "layers-action"
@@ -4675,7 +4675,7 @@ msgstr "_Copia"
 #: ../app/actions/text-tool-actions.c:68
 msgctxt "text-tool-action"
 msgid "_Paste"
-msgstr "_Enganxa"
+msgstr "_Apega"
 
 #: ../app/actions/text-tool-actions.c:73
 msgctxt "text-tool-action"
@@ -5040,7 +5040,7 @@ msgstr "Co_pia el camí"
 #: ../app/actions/vectors-actions.c:129
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
-msgstr "_Enganxa el camí"
+msgstr "_Apega el camí"
 
 #: ../app/actions/vectors-actions.c:134
 msgctxt "vectors-action"
@@ -7074,7 +7074,7 @@ msgstr "Ancora la selecció flotant"
 #: ../app/core/core-enums.c:862 ../app/core/gimp-edit.c:261
 msgctxt "undo-type"
 msgid "Paste"
-msgstr "Enganxa"
+msgstr "Apega"
 
 #: ../app/core/core-enums.c:863 ../app/core/gimp-edit.c:502
 msgctxt "undo-type"
@@ -7175,7 +7175,7 @@ msgstr "Bloqueja/desbloqueja el canal alfa"
 #: ../app/core/core-enums.c:891
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
-msgstr "Atura l'acció de canviar la mida del grup de capes"
+msgstr "Para l'acció de canviar la mida del grup de capes"
 
 #: ../app/core/core-enums.c:892
 msgctxt "undo-type"
@@ -9664,7 +9664,7 @@ msgstr "Mida màxima del _fitxer de miniatures:"
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1563
 msgid "Saving Images"
-msgstr "S'està desant les imatges"
+msgstr "S'està alçant les imatges"
 
 #: ../app/dialogs/preferences-dialog.c:1566
 msgid "Confirm closing of unsa_ved images"
@@ -11085,6 +11085,24 @@ msgstr "Difumina"
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Ressalta"
+
+#: ../app/paint/paint-enums.c:144
+#, fuzzy
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Cercle"
+
+#: ../app/paint/paint-enums.c:145
+#, fuzzy
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Quadrat"
+
+#: ../app/paint/paint-enums.c:146
+#, fuzzy
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Diamant"
 
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
@@ -12746,11 +12764,11 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselecttool.c:304
 msgid "Mark foreground by painting on the object to extract"
-msgstr "Marqueu el primer pla pintant l'objecte que voleu extreure"
+msgstr "Marqueu el primer pla pintant l'objecte que voleu extraure"
 
 #: ../app/tools/gimpforegroundselecttool.c:309
 msgid "Roughly outline the object to extract"
-msgstr "Resseguiu a mà alçada l'objecte que voleu extreure"
+msgstr "Resseguiu a mà alçada l'objecte que voleu extraure"
 
 #: ../app/tools/gimpforegroundselecttool.c:751
 msgctxt "command"
@@ -13674,7 +13692,7 @@ msgstr "Feu clic i arrossegueu per afegir a la selecció actual"
 
 #: ../app/tools/gimpselectiontool.c:272
 msgid "Click-Drag to subtract from the current selection"
-msgstr "Feu clic i arrossegueu per sostreure de la selecció actual"
+msgstr "Feu clic i arrossegueu per sostraure de la selecció actual"
 
 #: ../app/tools/gimpselectiontool.c:281
 msgid "Click-Drag to intersect with the current selection"
@@ -13932,52 +13950,56 @@ msgstr "Opacitat de la previsualització de la imatge"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Mida de la cel·la de la graella per un nombre variable de guies"
 
-#: ../app/tools/gimptransformoptions.c:138
-msgid "Limit rotation steps to 15 degrees"
-msgstr "Limita el pas de la rotació a 15 graus"
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "Transforma:"
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Direction"
 msgstr "Direcció"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "Interpolació:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Retallat:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "Opacitat de la imatge"
 
-#: ../app/tools/gimptransformoptions.c:311
+#: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
 msgstr "Mostra la previsualització de la imatge"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "Guies"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 graus (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+msgid "Limit rotation steps to 15 degrees"
+msgstr "Limita el pas de la rotació a 15 graus"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Conserva l'aspecte (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+msgid "Keep the original aspect ratio"
+msgstr ""
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
@@ -14990,7 +15012,7 @@ msgstr "Ja existeix un fitxer anomenat «%s»."
 
 #: ../app/widgets/gimpdnd-xds.c:242
 msgid "Do you want to replace it with the image you are saving?"
-msgstr "Voleu reemplaçar-lo amb la imatge que esteu desant?"
+msgstr "Voleu reemplaçar-lo amb la imatge que esteu alçant?"
 
 #. String used to separate dockables, e.g. "Tool Options, Layers"
 #: ../app/widgets/gimpdock.h:34
@@ -16023,7 +16045,7 @@ msgstr ""
 #: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Saving '%s'"
-msgstr "S'està desant «%s»"
+msgstr "S'està alçant «%s»"
 
 #: ../app/xcf/xcf.c:403
 #, c-format
