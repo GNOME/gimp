@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-24 17:44+0100\n"
+"POT-Creation-Date: 2012-01-09 00:47+0100\n"
 "PO-Revision-Date: 2011-12-22 22:51+0100\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
@@ -1327,11 +1327,11 @@ msgstr "Enllaçat"
 
 #: ../libgimpwidgets/gimpstock.c:132
 msgid "Paste as New"
-msgstr "Enganxa com a un de nou"
+msgstr "Apega com a un de nou"
 
 #: ../libgimpwidgets/gimpstock.c:133
 msgid "Paste Into"
-msgstr "Enganxa-ho a dins"
+msgstr "Apega-ho a dins"
 
 #: ../libgimpwidgets/gimpstock.c:134
 msgid "_Reset"
@@ -1599,7 +1599,7 @@ msgstr "E_xtracció de negre:"
 
 #: ../modules/color-selector-cmyk.c:188
 msgid "The percentage of black to pull out of the colored inks."
-msgstr "El percentatge de negre a treure de les tintes acolorides."
+msgstr "El percentatge de negre a traure de les tintes acolorides."
 
 #: ../modules/color-selector-water.c:81
 msgid "Watercolor style color selector"
@@ -1945,7 +1945,7 @@ msgstr "Nota %02x activa"
 #: ../modules/controller-midi.c:357
 #, c-format
 msgid "Note %02x off"
-msgstr "Nota %02x aturada"
+msgstr "Nota %02x parada"
 
 #: ../modules/controller-midi.c:360
 #, c-format
