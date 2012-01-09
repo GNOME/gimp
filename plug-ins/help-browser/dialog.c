@@ -361,6 +361,7 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
                                    GimpHelpLocale *locale)
 {
   gchar *sort_key = item->title;
+
 #if DEBUG_SORT_HELP_ITEMS
   g_printerr ("%s: processing %s (parent %s)\n",
               G_STRFUNC,
@@ -369,13 +370,15 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
 #endif
 
   if (item->sort &&
-      g_regex_match_simple("^[0-9]+([.][0-9]+)*$", item->sort, 0, 0))
+      g_regex_match_simple ("^[0-9]+([.][0-9]+)*$", item->sort, 0, 0))
     {
       sort_key = item->sort;
+
 #if DEBUG_SORT_HELP_ITEMS
-      g_printerr("%s: sort key = %s\n", G_STRFUNC, sort_key);
+      g_printerr ("%s: sort key = %s\n", G_STRFUNC, sort_key);
 #endif
     }
+
   item->index = 0;
 
   if (sort_key)
@@ -408,8 +411,9 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
         }
 
       g_strfreev (indices);
+
 #if DEBUG_SORT_HELP_ITEMS
-  g_printerr("%s: index = %lu\n", G_STRFUNC, item->index);
+      g_printerr ("%s: index = %lu\n", G_STRFUNC, item->index);
 #endif
     }
 
