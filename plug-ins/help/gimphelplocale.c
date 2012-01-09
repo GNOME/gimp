@@ -451,6 +451,7 @@ locale_parser_parse_item (LocaleParser  *parser,
   const gchar *id     = NULL;
   const gchar *ref    = NULL;
   const gchar *title  = NULL;
+  const gchar *sort   = NULL;  /* optional sort key provided by doc team */
   const gchar *parent = NULL;
 
   for (; *names && *values; names++, values++)
@@ -463,6 +464,9 @@ locale_parser_parse_item (LocaleParser  *parser,
 
       if (! strcmp (*names, "title"))
         title = *values;
+
+      if (! strcmp (*names, "sort"))
+        sort = *values;
 
       if (! strcmp (*names, "parent"))
         parent = *values;
@@ -479,7 +483,7 @@ locale_parser_parse_item (LocaleParser  *parser,
 
       g_hash_table_insert (parser->locale->help_id_mapping,
                            g_strdup (id),
-                           gimp_help_item_new (ref, title, parent));
+                           gimp_help_item_new (ref, title, sort, parent));
 
 #ifdef GIMP_HELP_DEBUG
       g_printerr ("help (%s): added mapping \"%s\" -> \"%s\"\n",

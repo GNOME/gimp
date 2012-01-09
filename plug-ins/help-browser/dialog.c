@@ -360,38 +360,57 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
                                    GimpHelpItem   *item,
                                    GimpHelpLocale *locale)
 {
-#if 0
+  gchar *sort_key = item->title;
+#if DEBUG_SORT_HELP_ITEMS
   g_printerr ("%s: processing %s (parent %s)\n",
               G_STRFUNC,
               item->title  ? item->title  : "NULL",
               item->parent ? item->parent : "NULL");
 #endif
 
-  if (item->title)
+  if (item->sort &&
+      g_regex_match_simple("^[0-9]+([.][0-9]+)*$", item->sort, 0, 0))
     {
-      gchar **indices = g_strsplit (item->title, ".", -1);
+      sort_key = item->sort;
+#if DEBUG_SORT_HELP_ITEMS
+      g_printerr("%s: sort key = %s\n", G_STRFUNC, sort_key);
+#endif
+    }
+  item->index = 0;
+
+  if (sort_key)
+    {
+      const gint max_tokens = GIMP_HELP_BROWSER_INDEX_MAX_DEPTH;
+      gchar* *indices = g_strsplit (sort_key, ".", max_tokens + 1);
       gint    i;
 
-      for (i = 0; i < 5; i++)
+      for (i = 0; i < max_tokens; i++)
         {
           gunichar c;
 
           if (! indices[i])
-            break;
+            {
+              /* make sure that all item->index's are comparable */
+              item->index <<= (8 * (max_tokens - i));
+              break;
+            }
 
+          item->index <<= 8;  /* NOP if i = 0 */
           c = g_utf8_get_char (indices[i]);
-
           if (g_unichar_isdigit (c))
             {
-              item->index += atoi (indices[i]) << (8 * (5 - i));
+              item->index += atoi (indices[i]);
             }
           else if (g_utf8_strlen (indices[i], -1) == 1)
             {
-              item->index += (c & 0xFF) << (8 * (5 - i));
+              item->index += (c & 0xFF);
             }
         }
 
       g_strfreev (indices);
+#if DEBUG_SORT_HELP_ITEMS
+  g_printerr("%s: index = %lu\n", G_STRFUNC, item->index);
+#endif
     }
 
   if (item->parent && strlen (item->parent))

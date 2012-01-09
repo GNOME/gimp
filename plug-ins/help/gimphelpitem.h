@@ -28,16 +28,18 @@ struct _GimpHelpItem
 {
   gchar *ref;
   gchar *title;
+  gchar *sort;   /* optional sort key provided by doc team */
   gchar *parent;
 
   /*  extra fields used by the help-browser  */
   GList *children;
-  gint   index;
+  gulong index;
 };
 
 
 GimpHelpItem * gimp_help_item_new  (const gchar   *ref,
                                     const gchar   *title,
+                                    const gchar   *sort,
                                     const gchar   *parent);
 void           gimp_help_item_free (GimpHelpItem  *item);
 
