@@ -6,14 +6,14 @@
 # Alper Ersoy <aersoy@tfz.net>, 2001.
 # Görkem Çetin <gorkem@kde.org>, 2003, 2004.
 # Ubuntu Türkiye Çeviri Takımı tarafından çevrilmiştir, 2010.
-# Muhammet Kara <muhammet.k@gmail.com>, 2011.
+# Muhammet Kara <muhammet.k@gmail.com>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-18 00:25+0000\n"
-"PO-Revision-Date: 2011-12-31 19:18+0000\n"
+"POT-Creation-Date: 2012-01-07 21:21+0000\n"
+"PO-Revision-Date: 2012-01-10 14:58+0200\n"
 "Last-Translator: Muhammet Kara <muhammet.k@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2368,8 +2368,6 @@ msgid "Export the image again"
 msgstr "Görüntüyü tekrar dışa aktar"
 
 #: ../app/actions/file-actions.c:152
-#| msgctxt "file-action"
-#| msgid "Overwrite"
 msgctxt "file-action"
 msgid "Over_write"
 msgstr "_Üzerine Yaz"
@@ -2396,7 +2394,6 @@ msgstr "%s konumuna dışa aktar"
 
 #: ../app/actions/file-actions.c:298
 #, c-format
-#| msgid "Overwrite %s"
 msgid "Over_write %s"
 msgstr "%s'in _Üzerine Yaz"
 
@@ -4342,8 +4339,6 @@ msgid "_Sharpen"
 msgstr "_Keskinleştir"
 
 #: ../app/actions/select-actions.c:82
-#| msgctxt "select-action"
-#| msgid "Remove fuzzyness from the selection"
 msgctxt "select-action"
 msgid "Remove fuzziness from the selection"
 msgstr "Seçimin bulanıklığını gider"
@@ -4738,94 +4733,70 @@ msgstr ""
 "Tüm araç seçeneklerini öntanımlı değerlerine geri almak istiyor musunuz?"
 
 #: ../app/actions/tool-presets-actions.c:44
-#| msgctxt "tool-preset-action"
-#| msgid "Tool Preset Menu"
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
 msgstr "Araç Önayarları Menüsü"
 
 #: ../app/actions/tool-presets-actions.c:48
-#| msgctxt "tool-preset-action"
-#| msgid "_New Tool Preset"
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
 msgstr "_Yeni Araç Önayarı"
 
 #: ../app/actions/tool-presets-actions.c:49
-#| msgctxt "tool-preset-action"
-#| msgid "Create a new tool preset"
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
 msgstr "Yeni bir araç önayarı oluştur"
 
 #: ../app/actions/tool-presets-actions.c:54
-#| msgctxt "tool-preset-action"
-#| msgid "D_uplicate Tool Preset"
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
 msgstr "Araç Önayarını _Çoğalt"
 
 #: ../app/actions/tool-presets-actions.c:55
-#| msgctxt "tool-preset-action"
-#| msgid "Duplicate this tool preset"
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
 msgstr "Bu araç önayarını çoğalt"
 
 #: ../app/actions/tool-presets-actions.c:60
-#, fuzzy
 #| msgctxt "tool-preset-action"
 #| msgid "Copy Tool Preset _Location"
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
-msgstr "Araç Önayarı _Yerini Kopyala"
+msgstr "Araç Önayarı _Konumunu Kopyala"
 
 #: ../app/actions/tool-presets-actions.c:61
-#, fuzzy
 #| msgctxt "tool-preset-action"
 #| msgid "Copy tool preset file location to clipboard"
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
-msgstr "Araç önayarı dosyası yerini panoya kopyala"
+msgstr "Araç önayarı dosyası konumunu panoya kopyala"
 
 #: ../app/actions/tool-presets-actions.c:66
-#| msgctxt "tool-options-action"
-#| msgid "_Delete Tool Preset"
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
 msgstr "Araç Önayarını _Sil"
 
 #: ../app/actions/tool-presets-actions.c:67
-#| msgctxt "tool-preset-action"
-#| msgid "Delete this tool preset"
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
 msgstr "Bu araç önayarını sil"
 
 #: ../app/actions/tool-presets-actions.c:72
-#| msgctxt "tool-preset-action"
-#| msgid "_Refresh Tool Presets"
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
 msgstr "_Araç Önayarlarını Yenile"
 
 #: ../app/actions/tool-presets-actions.c:73
-#| msgctxt "tool-preset-action"
-#| msgid "Refresh tool presets"
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
 msgstr "Araç önayarlarını yenile"
 
 #: ../app/actions/tool-presets-actions.c:81
-#| msgctxt "tool-preset-action"
-#| msgid "_Edit Tool Preset..."
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
 msgstr "Araç Önayarını _Düzenle..."
 
 #: ../app/actions/tool-presets-actions.c:82
-#| msgctxt "tool-preset-action"
-#| msgid "Edit this tool preset"
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
 msgstr "Bu araç önayarını düzenle"
@@ -5409,8 +5380,6 @@ msgid "Toggle fullscreen view"
 msgstr "Tam ekran görünümünü değiştir"
 
 #: ../app/actions/view-actions.c:238
-#| msgctxt "config-action"
-#| msgid "Use _GEGL"
 msgctxt "view-action"
 msgid "Use GEGL"
 msgstr "GEGL Kullan"
@@ -5980,12 +5949,12 @@ msgstr "Süslü"
 #: ../app/config/config-enums.c:236
 msgctxt "handedness"
 msgid "Left-handed"
-msgstr ""
+msgstr "Sol-elli"
 
 #: ../app/config/config-enums.c:237
 msgctxt "handedness"
 msgid "Right-handed"
-msgstr ""
+msgstr "Sağ-elli"
 
 #: ../app/config/gimpconfig-file.c:67 ../app/core/gimpbrushgenerated-save.c:62
 #: ../app/core/gimpcurve-save.c:52 ../app/core/gimpgradient-save.c:50
@@ -10219,12 +10188,10 @@ msgid "Select Font Folders"
 msgstr "Yazıyüzü Dizinlerini Seç"
 
 #: ../app/dialogs/preferences-dialog.c:2749
-#| msgid "Tool Presets"
 msgid "Tool Preset Folders"
 msgstr "Araç Önayar Klasörleri"
 
 #: ../app/dialogs/preferences-dialog.c:2751
-#| msgid "Select Theme Folders"
 msgid "Select Tool Preset Folders"
 msgstr "Araç Önayar Klasörlerini Seç"
 
@@ -10534,15 +10501,11 @@ msgid "Diagonal lines"
 msgstr "Köşegen çizgileri"
 
 #: ../app/display/display-enums.c:66
-#| msgctxt "transform-grid-type"
-#| msgid "Number of grid lines"
 msgctxt "guides-type"
 msgid "Number of lines"
 msgstr "Çizgi sayısı"
 
 #: ../app/display/display-enums.c:67
-#| msgctxt "transform-grid-type"
-#| msgid "Grid line spacing"
 msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Çizgi aralığı"
@@ -10848,7 +10811,6 @@ msgid ""
 msgstr ""
 
 #: ../app/gegl/gimpoperationcagetransform.c:125
-#| msgid "Fill with _background color"
 msgid "Fill with plain color"
 msgstr "Düz renk ile doldur"
 
@@ -10968,7 +10930,7 @@ msgstr "Yumuşak vuruşlarla boya"
 
 #: ../app/paint/gimppaintoptions.c:259
 msgid "Depth of smoothing"
-msgstr ""
+msgstr "Yumuşatma derinliği"
 
 #: ../app/paint/gimppaintoptions.c:263
 msgid "Gravity of the pen"
@@ -11034,6 +10996,28 @@ msgstr "Bulanıklaştır"
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Keskinleştir"
+
+#: ../app/paint/paint-enums.c:144
+#| msgctxt "brush-generated-shape"
+#| msgid "Circle"
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Çember"
+
+#: ../app/paint/paint-enums.c:145
+#| msgctxt "cap-style"
+#| msgid "Square"
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Kare"
+
+#: ../app/paint/paint-enums.c:146
+#, fuzzy
+#| msgctxt "brush-generated-shape"
+#| msgid "Diamond"
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Elmas"
 
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
@@ -11892,7 +11876,7 @@ msgstr "Bu Ayarları, Düzey olarak düzenle"
 
 #: ../app/tools/gimpbucketfilloptions.c:93
 msgid "Which area will be filled"
-msgstr ""
+msgstr "Hangi alan doldurulacak"
 
 #: ../app/tools/gimpbucketfilloptions.c:98
 msgid "Allow completely transparent regions to be filled"
@@ -12299,7 +12283,7 @@ msgstr "Seçim çerçevesindeki herşeyi söndür"
 
 #: ../app/tools/gimpcropoptions.c:82
 msgid "Crop only currently selected layer"
-msgstr ""
+msgstr "Sadece şu anda seçili olan katmanı kırp"
 
 #: ../app/tools/gimpcropoptions.c:88
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
@@ -12551,15 +12535,11 @@ msgid "_Flip"
 msgstr "_Çevir"
 
 #: ../app/tools/gimpfliptool.c:187
-#| msgctxt "drawable-action"
-#| msgid "Flip horizontally"
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Yatay çevir"
 
 #: ../app/tools/gimpfliptool.c:190
-#| msgctxt "drawable-action"
-#| msgid "Flip vertically"
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Dikey çevir"
@@ -12568,7 +12548,6 @@ msgstr "Dikey çevir"
 #. * could be if someone defined FLIP_DIAGONAL, say...
 #.
 #: ../app/tools/gimpfliptool.c:196
-#| msgid "Flip"
 msgctxt "undo-desc"
 msgid "Flip"
 msgstr "Çevir"
@@ -13053,7 +13032,6 @@ msgstr "Otomatik yeniden boyutlandırma penceresi"
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:177
 #, c-format
-#| msgid "Direction"
 msgid "Direction  (%s)"
 msgstr "Yön  (%s)"
 
@@ -13337,7 +13315,6 @@ msgid "Transformation Matrix"
 msgstr "Dönüşüm Dizeyi"
 
 #: ../app/tools/gimpperspectivetool.c:256
-#| msgid "Perspective"
 msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Perspektif"
@@ -13556,7 +13533,7 @@ msgstr "Ö_lçeklendir"
 #, c-format
 msgctxt "undo-type"
 msgid "Scale to %d x %d"
-msgstr ""
+msgstr "%d x %d'ye ölçekle"
 
 #: ../app/tools/gimpselectionoptions.c:84
 msgid "Enable feathering of selection edges"
@@ -13708,7 +13685,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:196
 msgid "Use an external editor window for text entry"
-msgstr ""
+msgstr "Metin girişi için harici bir metin düzenleyici kullan"
 
 #: ../app/tools/gimptextoptions.c:510
 msgid "Font"
@@ -13815,7 +13792,7 @@ msgstr "Otomatik olarak en uygun ikili eşiğe göre ayarla"
 
 #: ../app/tools/gimptool.c:978
 msgid "Can't work on an empty image, add a layer first"
-msgstr ""
+msgstr "Boş bir görüntü üzerinde çalışılamaz, önce bir katman ekleyin"
 
 #: ../app/tools/gimptransformoptions.c:99
 msgid "Direction of transformation"
@@ -13826,7 +13803,6 @@ msgid "Interpolation method"
 msgstr "Aradeğerleme yöntemi"
 
 #: ../app/tools/gimptransformoptions.c:111
-#| msgid "How to clip..."
 msgid "How to clip"
 msgstr "Nasıl kırpılır"
 
@@ -13838,68 +13814,67 @@ msgid "Show a preview of the transformed image"
 msgstr "Bu görüntü için bir gözden geçirme penceresi aç"
 
 #: ../app/tools/gimptransformoptions.c:122
-#, fuzzy
 #| msgctxt "windows-action"
 #| msgid "Switch to the previous image"
 msgid "Opacity of the preview image"
-msgstr "Önceki görüntüye çevir"
+msgstr "Önizleme görüntüsünün ışık geçirmezliği"
 
 #: ../app/tools/gimptransformoptions.c:133
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr ""
 
-#: ../app/tools/gimptransformoptions.c:138
-#, fuzzy
-#| msgid "Limit rotation step to 15 degrees"
-msgid "Limit rotation steps to 15 degrees"
-msgstr "Döndürme sınırı birimi 15 derece"
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "Dönüştür:"
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Direction"
 msgstr "Yön"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "Aradeğerleme:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Kırpma:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "Görüntü ışık geçirmezliği"
 
-#: ../app/tools/gimptransformoptions.c:311
-#, fuzzy
+#: ../app/tools/gimptransformoptions.c:312
 #| msgid "Show image size"
 msgid "Show image preview"
-msgstr "Görüntü boyutunu göster"
+msgstr "Görüntü önizlemesini göster"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
-#| msgctxt "image-action"
-#| msgid "_Guides"
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "Kılavuzlar"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 derece  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+#| msgid "Limit rotation step to 15 degrees"
+msgid "Limit rotation steps to 15 degrees"
+msgstr "Döndürme adımlarını 15 derece ile sınırla"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Görünüşü koru  (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+msgid "Keep the original aspect ratio"
+msgstr "Özgün en/boy oranını koru"
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
@@ -14824,6 +14799,8 @@ msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
 msgstr ""
+"Bu cihazın kayıtlı ayarlarını silmek üzeresiniz.\n"
+"Bu cihazın bir dahaki takılışında, öntanımlı ayarlar kullanılacak."
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:141
@@ -15310,11 +15287,11 @@ msgid "Lock alpha channel"
 msgstr "Görünür kanalını kilitle"
 
 #: ../app/widgets/gimpmessagebox.c:433
-#, fuzzy, c-format
+#, c-format
 #| msgid "Message repeated once."
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
-msgstr[0] "İleti bir kez yinelendi."
+msgstr[0] "İleti %d kere yinelendi."
 
 #: ../app/widgets/gimppaletteeditor.c:226
 #: ../app/widgets/gimppaletteeditor.c:682
@@ -15492,12 +15469,12 @@ msgstr "%d ppi, %s"
 #: ../app/widgets/gimptextbuffer-serialize.c:338
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
-msgstr ""
+msgstr "\"%s\" özniteliği, bu bağlamdaki <%s> elemanında geçersizdir"
 
 #: ../app/widgets/gimptextbuffer-serialize.c:410
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
-msgstr ""
+msgstr "Metnin en dışındaki eleman <markup> olmalıdır, <%s> değil"
 
 #: ../app/widgets/gimptextbuffer.c:1454
 #, c-format
@@ -15523,7 +15500,7 @@ msgstr "Seçili metinin biçemini temizle"
 #: ../app/widgets/gimptextstyleeditor.c:247
 #: ../app/widgets/gimptextstyleeditor.c:256
 msgid "Change color of selected text"
-msgstr ""
+msgstr "Seçilen metnin rengini değiştir"
 
 #: ../app/widgets/gimptextstyleeditor.c:272
 msgid "Change kerning of selected text"
