@@ -734,6 +734,8 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
                                   gint               view_size)
 {
   GtkWidget *dialog;
+  gchar    **ids;
+  gint       i;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
@@ -742,38 +744,22 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
   /*  If the identifier is a list, try to find a matching dialog and
    *  raise it. If there's no match, use the first list item.
    */
-  if (strchr (identifiers, '|'))
+  ids = g_strsplit (identifiers, "|", 0);
+  for (i = 0; ids[i]; i++)
     {
-      gchar **ids = g_strsplit (identifiers, "|", 0);
-      gint    i;
-
-      for (i = 0; ids[i]; i++)
-        {
-          if (gimp_dialog_factory_find_widget (factory, ids[i]))
-            break;
-        }
-
-      dialog = gimp_dialog_factory_dialog_new_internal (factory,
-                                                        screen,
-                                                        NULL,
-                                                        NULL,
-                                                        ids[i] ? ids[i] : ids[0],
-                                                        view_size,
-                                                        TRUE,
-                                                        TRUE);
-      g_strfreev (ids);
+      if (gimp_dialog_factory_find_widget (factory, ids[i]))
+        break;
     }
-  else
-    {
-      dialog = gimp_dialog_factory_dialog_new_internal (factory,
-                                                        screen,
-                                                        NULL,
-                                                        NULL,
-                                                        identifiers,
-                                                        view_size,
-                                                        TRUE,
-                                                        TRUE);
-    }
+
+  dialog = gimp_dialog_factory_dialog_new_internal (factory,
+                                                    screen,
+                                                    NULL,
+                                                    NULL,
+                                                    ids[i] ? ids[i] : ids[0],
+                                                    view_size,
+                                                    TRUE,
+                                                    TRUE);
+  g_strfreev (ids);
 
   return dialog;
 }
