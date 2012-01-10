@@ -8,7 +8,6 @@ EXTRA_DIST = \
 	dockrc-2-6				\
 	dockrc-2-8				\
 	dockrc-expected				\
-	gimprc-single-window			\
 	sessionrc				\
 	sessionrc-2-6				\
 	sessionrc-2-8-multi-window		\

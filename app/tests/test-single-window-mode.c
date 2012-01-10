@@ -129,7 +129,6 @@ int main(int argc, char **argv)
 {
   Gimp  *gimp   = NULL;
   gint   result = -1;
-  gchar *gimprc;
 
   gimp_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
@@ -140,11 +139,7 @@ int main(int argc, char **argv)
 
   /* Launch GIMP in single-window mode */
   g_setenv ("GIMP_TESTING_SESSIONRC_NAME", "sessionrc-2-8-single-window", TRUE /*overwrite*/);
-  gimprc = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
-                             "app/tests/gimpdir/gimprc-single-window",
-                             NULL);
-  gimp = gimp_init_for_gui_testing_with_rc (TRUE /*show_gui*/, gimprc);
-  g_free (gimprc);
+  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
   gimp_test_run_mainloop_until_idle ();
 
   ADD_TEST (new_dockable_not_in_new_window);
