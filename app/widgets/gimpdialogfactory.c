@@ -400,6 +400,27 @@ gimp_dialog_factory_dialog_sane (GimpDialogFactory      *factory,
   return TRUE;
 }
 
+/**
+ * gimp_dialog_factory_dialog_new_internal:
+ * @factory:
+ * @screen:
+ * @context:
+ * @ui_manager:
+ * @identifier:
+ * @view_size:
+ * @return_existing:   If %TRUE, (or if the dialog is a singleton),
+ *                     don't create a new dialog if it exists, instead
+ *                     return the existing one
+ * @present:           If %TRUE, the toplevel that contains the dialog (if any)
+ *                     will be gtk_window_present():ed
+ * @create_containers: If %TRUE, then containers for the
+ *                     dialog/dockable will be created as well. If you
+ *                     want to manage your own containers, pass %FALSE
+ *
+ * This is the lowest level dialog factory creation function.
+ *
+ * Returns: A created or existing #GtkWidget.
+ **/
 static GtkWidget *
 gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                          GdkScreen         *screen,
@@ -408,7 +429,8 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                          const gchar       *identifier,
                                          gint               view_size,
                                          gboolean           return_existing,
-                                         gboolean           present)
+                                         gboolean           present,
+                                         gboolean           create_containers)
 {
   GimpDialogFactoryEntry *entry    = NULL;
   GtkWidget              *dialog   = NULL;
@@ -444,14 +466,11 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
     {
       GtkWidget *dock              = NULL;
       GtkWidget *dock_window       = NULL;
-      gboolean   called_from_raise = FALSE;
-
-      called_from_raise = (context == NULL);
 
       /* What follows is special-case code for some entires. At some
        * point we might want to abstract this block of code away.
        */
-      if (called_from_raise)
+      if (create_containers)
         {
           if (entry->dockable)
             {
@@ -661,8 +680,9 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
                                                   ui_manager,
                                                   identifier,
                                                   view_size,
-                                                  FALSE,
-                                                  present);
+                                                  FALSE /*return_existing*/,
+                                                  present,
+                                                  FALSE /*create_containers*/);
 }
 
 GimpContext *
@@ -757,8 +777,9 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
                                                     NULL,
                                                     ids[i] ? ids[i] : ids[0],
                                                     view_size,
-                                                    TRUE,
-                                                    TRUE);
+                                                    TRUE /*return_existing*/,
+                                                    TRUE /*present*/,
+                                                    TRUE /*create_containers*/);
   g_strfreev (ids);
 
   return dialog;
@@ -798,8 +819,9 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
                                                   gimp_dock_get_ui_manager (dock),
                                                   identifier,
                                                   view_size,
-                                                  FALSE,
-                                                  FALSE);
+                                                  FALSE /*return_existing*/,
+                                                  FALSE /*present*/,
+                                                  FALSE /*create_containers*/);
 }
 
 void
