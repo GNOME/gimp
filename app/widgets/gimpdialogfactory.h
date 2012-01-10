@@ -135,6 +135,8 @@ GimpDialogFactoryEntry *
                                                               const gchar             *identifier);
 GimpSessionInfo *   gimp_dialog_factory_find_session_info    (GimpDialogFactory       *factory,
                                                               const gchar             *identifier);
+GtkWidget *         gimp_dialog_factory_find_widget          (GimpDialogFactory       *factory,
+                                                              const gchar             *identifier);
 GtkWidget *         gimp_dialog_factory_dialog_new           (GimpDialogFactory       *factory,
                                                               GdkScreen               *screen,
                                                               GimpUIManager           *ui_manager,

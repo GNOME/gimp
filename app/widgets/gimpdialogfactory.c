@@ -348,6 +348,23 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
   return NULL;
 }
 
+GtkWidget *
+gimp_dialog_factory_find_widget (GimpDialogFactory *factory,
+                                 const gchar       *identifier)
+{
+  GimpSessionInfo *info;
+
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (identifier != NULL, NULL);
+
+  info = gimp_dialog_factory_find_session_info (factory, identifier);
+
+  if (info)
+    return gimp_session_info_get_widget (info);
+  else
+    return NULL;
+}
+
 /**
  * gimp_dialog_factory_dialog_sane:
  * @factory:
@@ -419,12 +436,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
   /*  a singleton dialog is always returned if it already exisits  */
   if (return_existing || entry->singleton)
     {
-      GimpSessionInfo *info;
-
-      info = gimp_dialog_factory_find_session_info (factory, identifier);
-
-      if (info)
-        dialog = gimp_session_info_get_widget (info);
+      dialog = gimp_dialog_factory_find_widget (factory, identifier);
     }
 
   /*  create the dialog if it was not found  */
@@ -737,10 +749,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
 
       for (i = 0; ids[i]; i++)
         {
-          GimpSessionInfo *info;
-
-          info = gimp_dialog_factory_find_session_info (factory, ids[i]);
-          if (info && gimp_session_info_get_widget (info))
+          if (gimp_dialog_factory_find_widget (factory, ids[i]))
             break;
         }
 

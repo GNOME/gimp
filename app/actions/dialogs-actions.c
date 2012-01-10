@@ -272,13 +272,12 @@ static gboolean
 dialogs_actions_toolbox_exists (Gimp *gimp)
 {
   GimpDialogFactory *factory       = gimp_dialog_factory_get_singleton ();
-  GimpSessionInfo   *info          = NULL;
   gboolean           toolbox_found = FALSE;
   GList             *iter;
 
   /* First look in session managed windows */
-  info = gimp_dialog_factory_find_session_info (factory, "gimp-toolbox-window");
-  toolbox_found = info && gimp_session_info_get_widget (info);
+  toolbox_found =
+    gimp_dialog_factory_find_widget (factory, "gimp-toolbox-window") != NULL;
 
   /* Then in image windows */
   if (! toolbox_found)

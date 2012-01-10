@@ -868,14 +868,14 @@ context_set_color_index (gint      index,
 static GimpPaletteEditor *
 context_get_palette_editor (void)
 {
-  GimpSessionInfo *info = NULL;
+  GtkWidget *widget;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (gimp_dialog_factory_get_singleton ()), NULL);
 
-  info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
-                                                "gimp-palette-editor");
-  if (info && gimp_session_info_get_widget (info))
-    return GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));
+  widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
+                                            "gimp-palette-editor");
+  if (widget)
+    return GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (widget)));
 
   return NULL;
 }
@@ -883,14 +883,14 @@ context_get_palette_editor (void)
 static GimpColormapEditor *
 context_get_colormap_editor (void)
 {
-  GimpSessionInfo *info = NULL;
+  GtkWidget *widget;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (gimp_dialog_factory_get_singleton ()), NULL);
 
-  info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
-                                                "gimp-indexed-palette");
-  if (info && gimp_session_info_get_widget (info))
-    return GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (info))));
+  widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
+                                            "gimp-indexed-palette");
+  if (widget)
+    return GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (widget)));
 
   return NULL;
 }

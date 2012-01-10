@@ -126,7 +126,7 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
                                            gdouble              image_y)
 {
   GimpStatusbar   *statusbar;
-  GimpSessionInfo *session_info;
+  GtkWidget       *widget;
   GimpImage       *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -159,13 +159,13 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
 
   gimp_statusbar_update_cursor (statusbar, precision, image_x, image_y);
 
-  session_info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
-                                                        "gimp-cursor-view");
-  if (session_info && gimp_session_info_get_widget (session_info))
+  widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
+                                            "gimp-cursor-view");
+  if (widget)
     {
       GtkWidget *cursor_view;
 
-      cursor_view = gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (session_info)));
+      cursor_view = gtk_bin_get_child (GTK_BIN (widget));
 
       if (cursor_view)
         {
@@ -187,8 +187,8 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
 void
 gimp_display_shell_clear_software_cursor (GimpDisplayShell *shell)
 {
-  GimpStatusbar     *statusbar;
-  GimpSessionInfo   *session_info;
+  GimpStatusbar *statusbar;
+  GtkWidget     *widget;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -198,13 +198,13 @@ gimp_display_shell_clear_software_cursor (GimpDisplayShell *shell)
 
   gimp_statusbar_clear_cursor (statusbar);
 
-  session_info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
-                                                        "gimp-cursor-view");
-  if (session_info && gimp_session_info_get_widget (session_info))
+  widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
+                                            "gimp-cursor-view");
+  if (widget)
     {
       GtkWidget *cursor_view;
 
-      cursor_view = gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (session_info)));
+      cursor_view = gtk_bin_get_child (GTK_BIN (widget));
 
       if (cursor_view)
         gimp_cursor_view_clear_cursor (GIMP_CURSOR_VIEW (cursor_view));

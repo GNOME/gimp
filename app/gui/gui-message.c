@@ -98,13 +98,11 @@ gui_message_error_console (GimpMessageSeverity  severity,
   /* try to avoid raising the error console for not so severe messages */
   if (severity < GIMP_MESSAGE_ERROR)
     {
-      GimpSessionInfo *info;
-
-      info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
-                                                    "gimp-error-console");
-
-      if (info && GIMP_IS_DOCKABLE (gimp_session_info_get_widget (info)))
-        dockable = gimp_session_info_get_widget (info);
+      GtkWidget *widget =
+        gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
+                                         "gimp-error-console");
+      if (GIMP_IS_DOCKABLE (widget))
+        dockable = widget;
     }
 
   if (! dockable)
