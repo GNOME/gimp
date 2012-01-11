@@ -1769,6 +1769,7 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
 
     case GIMP_RECTANGLE_TOOL_DEAD:
     case GIMP_RECTANGLE_TOOL_CREATING:
+    case GIMP_RECTANGLE_TOOL_AUTO_SHRINK:
       gimp_draw_tool_push_group (draw_tool, stroke_group);
 
       gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
@@ -2538,7 +2539,10 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
                                    &shrunk_x2,
                                    &shrunk_y2))
     {
+      GimpRectangleFunction original_function = private->function;
+
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
+      private->function = GIMP_RECTANGLE_TOOL_AUTO_SHRINK;
 
       private->x1 = offset_x + shrunk_x1;
       private->y1 = offset_x + shrunk_y1;
@@ -2552,6 +2556,7 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
       gimp_rectangle_tool_update_handle_sizes (rect_tool);
       gimp_rectangle_tool_update_highlight (rect_tool);
 
+      private->function = original_function;
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
     }
 
@@ -2840,6 +2845,7 @@ gimp_rectangle_tool_rect_rubber_banding_func (GimpRectangleTool *rect_tool)
       case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
       case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
       case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
+      case GIMP_RECTANGLE_TOOL_AUTO_SHRINK:
         rect_rubber_banding_func = TRUE;
         break;
 
