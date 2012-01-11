@@ -29,8 +29,6 @@
 
 /* This is reads and writes compressed image files for GIMP
  *
- * You need to have gzip or bzip2 installed for it to work.
- *
  * It should work with file names of the form
  * filename.foo.[gz|bz2] where foo is some already-recognized extension
  *
