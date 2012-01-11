@@ -2,13 +2,13 @@
 # translation of gimp.HEAD.ar2.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Khaled Hosny <khaledhosny@eglug.org>, 2006, 2008, 2009, 2010, 2011.
+# Khaled Hosny <khaledhosny@eglug.org>, 2006, 2008, 2009, 2010, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-21 00:06+0200\n"
-"PO-Revision-Date: 2011-12-21 00:05+0200\n"
+"POT-Creation-Date: 2012-01-11 22:51+0200\n"
+"PO-Revision-Date: 2012-01-11 22:50+0200\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
@@ -1335,20 +1335,20 @@ msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "عن جمب"
 
-#: ../app/actions/dialogs-actions.c:329
+#: ../app/actions/dialogs-actions.c:328
 #: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:555
 msgid "Toolbox"
 msgstr "صندوق الأدوات"
 
-#: ../app/actions/dialogs-actions.c:330
+#: ../app/actions/dialogs-actions.c:329
 msgid "Raise the toolbox"
 msgstr "ارفع صندوق الأدوات"
 
-#: ../app/actions/dialogs-actions.c:334
+#: ../app/actions/dialogs-actions.c:333
 msgid "New Toolbox"
 msgstr "صندوق أدوات جديد"
 
-#: ../app/actions/dialogs-actions.c:335
+#: ../app/actions/dialogs-actions.c:334
 msgid "Create a new toolbox"
 msgstr "أنشئ صندوق أدوات جديد"
 
@@ -8794,7 +8794,7 @@ msgid ""
 msgstr "أمتأكد أنك تريد إزالة '%s' من القائمة وحذفه من القرص؟"
 
 #: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:161
-#: ../app/gui/gui-message.c:145
+#: ../app/gui/gui-message.c:143
 msgid "GIMP Message"
 msgstr "رسالة جمب"
 
@@ -10752,44 +10752,43 @@ msgstr "حجم الفرشاة"
 
 #: ../app/paint/gimppaintoptions.c:159
 msgid "Every stamp has its own opacity"
-msgstr ""
+msgstr "لكل ختم عتامته الخاصة"
 
 #: ../app/paint/gimppaintoptions.c:165
 msgid "Ignore fuzziness of the current brush"
-msgstr ""
+msgstr "تجاهل ضبابية الفرشاة الحالية"
 
 #: ../app/paint/gimppaintoptions.c:170
 msgid "Scatter brush as you paint"
-msgstr ""
+msgstr "بعثر الفرشاة أثناء التلوين"
 
 #: ../app/paint/gimppaintoptions.c:174
 msgid "Distance of scattering"
-msgstr ""
+msgstr "مسافة البعثرة"
 
 #: ../app/paint/gimppaintoptions.c:184
 msgid "Distance over which strokes fade out"
-msgstr ""
+msgstr "المسافة التي ستُبهت الضربات عبرها"
 
 #: ../app/paint/gimppaintoptions.c:192
 msgid "Reverse direction of fading"
-msgstr ""
+msgstr "اعكس اتجاه الإبهات"
 
 #: ../app/paint/gimppaintoptions.c:196
 msgid "How fade is repeated as you paint"
-msgstr ""
+msgstr "كيفية تكرار الإبهات أثناء التلوين"
 
 #: ../app/paint/gimppaintoptions.c:255
-#, fuzzy
 msgid "Paint smoother strokes"
-msgstr "أزِل الطفيلي"
+msgstr "اجعل ضربات الفرشاة أنعم"
 
 #: ../app/paint/gimppaintoptions.c:259
 msgid "Depth of smoothing"
-msgstr ""
+msgstr "عمق التنعيم"
 
 #: ../app/paint/gimppaintoptions.c:263
 msgid "Gravity of the pen"
-msgstr ""
+msgstr "اتجاه جاذبية القلم"
 
 #: ../app/paint/gimppencil.c:41 ../app/tools/gimppenciltool.c:50
 msgid "Pencil"
@@ -10851,6 +10850,21 @@ msgstr "تمويه"
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "تحديد"
+
+#: ../app/paint/paint-enums.c:144
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "دائرة"
+
+#: ../app/paint/paint-enums.c:145
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "مربع"
+
+#: ../app/paint/paint-enums.c:146
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "معيّن"
 
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
@@ -11188,8 +11202,9 @@ msgid "Set text layer attribute"
 msgstr "حدد صفة طبقة النص"
 
 #: ../app/pdb/vectors-cmds.c:323
+#, fuzzy
 msgid "Remove path stroke"
-msgstr ""
+msgstr "أزل ضربة المسار"
 
 #: ../app/pdb/vectors-cmds.c:359
 msgid "Close path stroke"
@@ -13165,29 +13180,27 @@ msgstr "وحدة حجم التحديد"
 
 #: ../app/tools/gimprectangleoptions.c:187
 msgid "Enable lock of aspect ratio, width, height or size"
-msgstr ""
+msgstr "فعّل وصْد نسبة الارتفاع أو العرض أو الارتفاع أو الحجم"
 
 #: ../app/tools/gimprectangleoptions.c:196
-#, fuzzy
 msgid "Choose what has to be locked"
-msgstr "بكسلات المسار النشط موصدة."
+msgstr "حدد ما الذي سيُوصد"
 
 #: ../app/tools/gimprectangleoptions.c:205
 msgid "Custom fixed width"
-msgstr ""
+msgstr "عرض ثابت محدد"
 
 #: ../app/tools/gimprectangleoptions.c:214
 msgid "Custom fixed height"
-msgstr ""
+msgstr "ارتفاع ثابت محدد"
 
 #: ../app/tools/gimprectangleoptions.c:308
 msgid "Unit of fixed width, height or size"
-msgstr ""
+msgstr "وحدة العرض أو الارتفاع أو الحجم الثابتين"
 
 #: ../app/tools/gimprectangleoptions.c:317
-#, fuzzy
 msgid "Expand selection from center outwards"
-msgstr "مدد من المركز"
+msgstr "مدد التحديد من المركز باتجاه الأطراف"
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:761
@@ -13247,7 +13260,7 @@ msgstr "أداة التحديد المستطيل: حدد منطقة مستطيل
 msgid "_Rectangle Select"
 msgstr "تحديد _مستطيل"
 
-#: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2015
+#: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2016
 msgid "Rectangle: "
 msgstr "مستطيل: "
 
@@ -13324,9 +13337,8 @@ msgid "Scale to %d x %d"
 msgstr "حجّم إلى %d × %d"
 
 #: ../app/tools/gimpselectionoptions.c:84
-#, fuzzy
 msgid "Enable feathering of selection edges"
-msgstr "مدّد التحديد"
+msgstr ""
 
 #: ../app/tools/gimpselectionoptions.c:90
 msgid "Radius of feathering"
@@ -13603,52 +13615,56 @@ msgstr "عتامة الصورة المحوّلة"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr ""
 
-#: ../app/tools/gimptransformoptions.c:138
-msgid "Limit rotation steps to 15 degrees"
-msgstr "اقصر خطوات التدوير على 15 درجة"
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "التحويل:"
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Direction"
 msgstr "الاتجاه"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "الزيادة:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "التقصير:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "إعتام الصورة"
 
-#: ../app/tools/gimptransformoptions.c:311
+#: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
 msgstr "اعرض معاينة للصورة"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "الأدلة"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 درجة  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+msgid "Limit rotation steps to 15 degrees"
+msgstr "اقصر خطوات التدوير على 15 درجة"
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "أبقِ الجانب (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+msgid "Keep the original aspect ratio"
+msgstr "أبق على نسبة الارتفاع الأصلية"
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
