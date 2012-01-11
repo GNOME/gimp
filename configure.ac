@@ -1145,6 +1145,8 @@ if test "x$have_zlib" = xyes; then
 fi
 
 AC_SUBST(FILE_PSP)
+
+AM_CONDITIONAL(HAVE_Z, test "x$have_zlib" = xyes)
 AC_SUBST(Z_LIBS)
 
 
@@ -1161,6 +1163,7 @@ if test -z "$BZIP2_LIBS"; then
     [have_libbzip2="no (libbzip2 library not found)"])
 fi
 
+AM_CONDITIONAL(HAVE_BZIP2, test "x$have_libbzip2" = xyes)
 AC_SUBST(BZIP2_LIBS)
 
 
@@ -2150,6 +2153,7 @@ plug-ins/Makefile
 plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile
 plug-ins/file-bmp/Makefile
+plug-ins/file-compressor/Makefile
 plug-ins/file-faxg3/Makefile
 plug-ins/file-fits/Makefile
 plug-ins/file-fli/Makefile

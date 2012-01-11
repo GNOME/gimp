@@ -25,6 +25,12 @@ if HAVE_MAC_TWAIN
 twain = twain
 endif
 
+if HAVE_Z
+if HAVE_BZIP2
+file_compressor = file-compressor
+endif
+endif
+
 if HAVE_PNG
 file_ico = file-ico
 endif
@@ -53,6 +59,7 @@ SUBDIRS = \
 	$(pygimp)		\
 	color-rotate		\
 	file-bmp		\
+	$(file_compressor)	\
 	file-faxg3		\
 	file-fits		\
 	file-fli		\

@@ -92,7 +92,6 @@ libexec_PROGRAMS = \
 	engrave \
 	$(FILE_AA) \
 	file-cel \
-	file-compressor \
 	file-csource \
 	file-desktop-link \
 	file-dicom \
@@ -1038,21 +1037,6 @@ file_cel_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_cel_RC)
-
-file_compressor_SOURCES = \
-	file-compressor.c
-
-file_compressor_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(file_compressor_RC)
 
 file_csource_SOURCES = \
 	file-csource.c
