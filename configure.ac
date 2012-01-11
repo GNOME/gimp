@@ -1148,6 +1148,22 @@ AC_SUBST(FILE_PSP)
 AC_SUBST(Z_LIBS)
 
 
+####################
+# Check for libbzip2
+####################
+
+have_libbzip2=yes
+if test -z "$BZIP2_LIBS"; then
+  AC_CHECK_LIB(bz2, BZ2_bzCompress,
+    [AC_CHECK_HEADER(bzlib.h,
+      BZIP2_LIBS='-lbz2',
+      [have_libbzip2="no (libbzip2 header files not found)"])],
+    [have_libbzip2="no (libbzip2 library not found)"])
+fi
+
+AC_SUBST(BZIP2_LIBS)
+
+
 ##################
 # Check for libpng
 ##################

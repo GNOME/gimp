@@ -81,16 +81,10 @@
 
 #include <libgimp/gimp.h>
 
-#ifdef G_OS_WIN32
-#define STRICT
-#define WinMain WinMain_foo
-#include <windows.h>
-#include <io.h> /* _get_osfhandle */
-#undef WinMain
-#endif
-
 #include "libgimp/stdplugins-intl.h"
 
+#include <zlib.h>
+#include <bzlib.h>
 
 /* Author 1: Josh MacDonald (url.c)          */
 /* Author 2: Daniel Risacher (gz.c)          */
@@ -101,6 +95,10 @@
  * that metric, I figure this plug-in is worth about $10,000 USD */
 /* But you got it free.   Magic of Gnu. */
 
+typedef gboolean (*LoadFn) (const char *infile,
+                            const char *outfile);
+typedef gboolean (*SaveFn) (const char *infile,
+                            const char *outfile);
 
 typedef struct _Compressor Compressor;
 
@@ -116,16 +114,12 @@ struct _Compressor
   const gchar *load_proc;
   const gchar *load_blurb;
   const gchar *load_help;
-  const gchar *load_program;
-  const gchar *load_options;
-  const gchar *load_program_win32;
+  LoadFn       load_fn;
 
   const gchar *save_proc;
   const gchar *save_blurb;
   const gchar *save_help;
-  const gchar *save_program;
-  const gchar *save_options;
-  const gchar *save_program_win32;
+  SaveFn       save_fn;
 };
 
 
@@ -151,7 +145,18 @@ static gint32              load_image     (const Compressor   *compressor,
 static gboolean            valid_file     (const gchar        *filename);
 static const gchar       * find_extension (const Compressor   *compressor,
                                            const gchar        *filename);
-
+static gboolean
+gzip_load                                 (const char         *infile,
+                                           const char         *outfile);
+static gboolean
+gzip_save                                 (const char         *infile,
+                                           const char         *outfile);
+static gboolean
+bzip2_load                                (const char         *infile,
+                                           const char         *outfile);
+static gboolean
+bzip2_save                                (const char         *infile,
+                                           const char         *outfile);
 
 static const Compressor compressors[] =
 {
@@ -166,14 +171,12 @@ static const Compressor compressors[] =
     "file-gz-load",
     "loads files compressed with gzip",
     "You need to have gzip installed.",
-    "gzip", "-cfd",
-    "minigzip -d",
+    gzip_load,
 
     "file-gz-save",
     "saves files compressed with gzip",
     "You need to have gzip installed.",
-    "gzip", "-cfn",
-    "minigzip"
+    gzip_save
   },
 
   {
@@ -187,14 +190,12 @@ static const Compressor compressors[] =
     "file-bz2-load",
     "loads files compressed with bzip2",
     "You need to have bzip2 installed.",
-    "bzip2", "-cfd",
-    "bzip2 -cfd",
+    bzip2_load,
 
     "file-bz2-save",
     "saves files compressed with bzip2",
     "You need to have bzip2 installed",
-    "bzip2", "-cf",
-    "bzip2 -cf"
+    bzip2_save
   }
 };
 
@@ -409,139 +410,13 @@ save_image (const Compressor  *compressor,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-#ifndef G_OS_WIN32
-  {
-    FILE *f;
-    gint  pid;
+  if (!compressor->save_fn (tmpname, filename))
+    {
+      g_unlink (tmpname);
+      g_free (tmpname);
 
-    f = g_fopen (filename, "wb");
-
-    if (! f)
-      {
-        g_unlink (tmpname);
-        g_free (tmpname);
-
-        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                     _("Could not open '%s' for writing: %s"),
-                     gimp_filename_to_utf8 (filename), g_strerror (errno));
-
-        return GIMP_PDB_EXECUTION_ERROR;
-      }
-
-    /* fork off a compressor process */
-    if ((pid = fork ()) < 0)
-      {
-        g_message ("fork() failed: %s", g_strerror (errno));
-
-        fclose (f);
-        g_unlink (tmpname);
-        g_free (tmpname);
-
-        return GIMP_PDB_EXECUTION_ERROR;
-      }
-    else if (pid == 0)  /* child process */
-      {
-        /* make stdout for this process be the output file */
-        if (dup2 (fileno (f), fileno (stdout)) == -1)
-          g_printerr ("dup2() failed: %s", g_strerror (errno));
-
-        /* and compress into it */
-        execlp (compressor->save_program,
-                compressor->save_program,
-                compressor->save_options, tmpname, NULL);
-
-        g_printerr ("execlp(\"%s %s\") failed: %s",
-                    compressor->save_program,
-                    compressor->save_options,
-                    g_strerror (errno));
-
-        _exit(127);
-      }
-    else
-      {
-        gint wpid;
-        gint process_status;
-
-        fclose (f);
-
-        wpid = waitpid (pid, &process_status, 0);
-
-        if ((wpid < 0)
-            || !WIFEXITED (process_status)
-            || (WEXITSTATUS (process_status) != 0))
-          {
-            g_message ("%s exited abnormally on file '%s'",
-                       compressor->save_program,
-                       gimp_filename_to_utf8 (tmpname));
-
-            g_unlink (tmpname);
-            g_free (tmpname);
-
-            return GIMP_PDB_EXECUTION_ERROR;
-          }
-      }
-  }
-#else  /* G_OS_WIN32 */
-  {
-    FILE                *in;
-    FILE                *out;
-    STARTUPINFO          startupinfo;
-    PROCESS_INFORMATION  processinfo;
-
-    in  = g_fopen (tmpname, "rb");
-    out = g_fopen (filename, "wb");
-
-    if (in == NULL)
-      {
-        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                     _("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (tmpname), g_strerror (errno));
-        g_free (tmpname);
-
-        return GIMP_PDB_EXECUTION_ERROR;
-      }
-
-    if (out == NULL)
-      {
-        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                     _("Could not open '%s' for writing: %s"),
-                     gimp_filename_to_utf8 (filename), g_strerror (errno));
-        g_free (tmpname);
-
-        return GIMP_PDB_EXECUTION_ERROR;
-      }
-
-    startupinfo.cb          = sizeof (STARTUPINFO);
-    startupinfo.lpReserved  = NULL;
-    startupinfo.lpDesktop   = NULL;
-    startupinfo.lpTitle     = NULL;
-    startupinfo.dwFlags     = (STARTF_FORCEOFFFEEDBACK |
-                               STARTF_USESHOWWINDOW    |
-                               STARTF_USESTDHANDLES);
-    startupinfo.wShowWindow = SW_SHOWMINNOACTIVE;
-    startupinfo.cbReserved2 = 0;
-    startupinfo.lpReserved2 = NULL;
-    startupinfo.hStdInput   = (HANDLE) _get_osfhandle (fileno (in));
-    startupinfo.hStdOutput  = (HANDLE) _get_osfhandle (fileno (out));
-    startupinfo.hStdError   = GetStdHandle (STD_ERROR_HANDLE);
-
-    if (! CreateProcess (NULL, compressor->save_program_win32, NULL, NULL,
-                         TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
-                         &startupinfo, &processinfo))
-      {
-        g_message ("CreateProcess failed: %d", GetLastError ());
-        g_free (tmpname);
-
-        return GIMP_PDB_EXECUTION_ERROR;
-      }
-
-    CloseHandle (processinfo.hThread);
-    WaitForSingleObject (processinfo.hProcess, INFINITE);
-
-    fclose (in);
-    fclose (out);
-  }
-#endif /* G_OS_WIN32 */
+      return GIMP_PDB_EXECUTION_ERROR;
+    }
 
   g_unlink (tmpname);
   g_free (tmpname);
@@ -576,144 +451,12 @@ load_image (const Compressor   *compressor,
   /* find a temp name */
   tmpname = gimp_temp_name (ext + 1);
 
-#ifndef G_OS_WIN32
-  {
-    FILE *f;
-    gint  pid;
-
-    f = g_fopen (tmpname, "wb");
-
-    if (! f)
-      {
-        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                     _("Could not open '%s' for writing: %s"),
-                     gimp_filename_to_utf8 (tmpname), g_strerror (errno));
-        g_free (tmpname);
-
-        *status = GIMP_PDB_EXECUTION_ERROR;
-        return -1;
-      }
-
-    /* fork off a compressor and wait for it */
-    if ((pid = fork ()) < 0)
-      {
-        g_message ("fork() failed: %s", g_strerror (errno));
-
-        g_unlink (tmpname);
-        g_free (tmpname);
-        fclose (f);
-
-        *status = GIMP_PDB_EXECUTION_ERROR;
-        return -1;
-      }
-    else if (pid == 0)  /* child process */
-      {
-        /* make stdout for this child process be the temp file */
-        if (dup2 (fileno (f), fileno (stdout)) == -1)
-          g_printerr ("dup2() failed: %s", g_strerror (errno));
-
-        /* and uncompress into it */
-        execlp (compressor->load_program,
-                compressor->load_program,
-                compressor->load_options, filename, NULL);
-
-        g_printerr ("execlp(\"%s %s\") failed: %s",
-                    compressor->load_program,
-                    compressor->load_options,
-                    g_strerror (errno));
-
-        _exit(127);
-      }
-    else  /* parent process */
-      {
-        gint wpid;
-        gint process_status;
-
-        fclose (f);
-
-        wpid = waitpid (pid, &process_status, 0);
-
-        if ((wpid < 0)
-            || !WIFEXITED (process_status)
-            || (WEXITSTATUS (process_status) != 0))
-          {
-            g_message ("%s exited abnormally on file '%s'",
-                       compressor->load_program,
-                       gimp_filename_to_utf8 (filename));
-
-            g_unlink (tmpname);
-            g_free (tmpname);
-
-            *status = GIMP_PDB_EXECUTION_ERROR;
-            return -1;
-          }
-      }
-  }
-#else
-  {
-    FILE                *in;
-    FILE                *out;
-    SECURITY_ATTRIBUTES  secattr;
-    STARTUPINFO          startupinfo;
-    PROCESS_INFORMATION  processinfo;
-
-    in  = g_fopen (filename, "rb");
-    out = g_fopen (tmpname, "wb");
-
-    if (in == NULL)
-      {
-        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                     _("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (filename), g_strerror (errno));
-        g_free (tmpname);
-
-        *status = GIMP_PDB_EXECUTION_ERROR;
-        return -1;
-      }
-
-    if (out == NULL)
-      {
-        g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                     _("Could not open '%s' for writing: %s"),
-                     gimp_filename_to_utf8 (tmpname), g_strerror (errno));
-        g_free (tmpname);
-
-        *status = GIMP_PDB_EXECUTION_ERROR;
-        return -1;
-      }
-
-    startupinfo.cb          = sizeof (STARTUPINFO);
-    startupinfo.lpReserved  = NULL;
-    startupinfo.lpDesktop   = NULL;
-    startupinfo.lpTitle     = NULL;
-    startupinfo.dwFlags     = (STARTF_FORCEOFFFEEDBACK |
-                               STARTF_USESHOWWINDOW    |
-                               STARTF_USESTDHANDLES);
-    startupinfo.wShowWindow = SW_SHOWMINNOACTIVE;
-    startupinfo.cbReserved2 = 0;
-    startupinfo.lpReserved2 = NULL;
-    startupinfo.hStdInput   = (HANDLE) _get_osfhandle (fileno (in));
-    startupinfo.hStdOutput  = (HANDLE) _get_osfhandle (fileno (out));
-    startupinfo.hStdError   = GetStdHandle (STD_ERROR_HANDLE);
-
-    if (! CreateProcess (NULL, compressor->load_program_win32, NULL, NULL,
-                         TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
-                         &startupinfo, &processinfo))
-      {
-        g_message ("CreateProcess failed: %d", GetLastError ());
-        g_free (tmpname);
-
-        *status = GIMP_PDB_EXECUTION_ERROR;
-        return -1;
-      }
-
-    CloseHandle (processinfo.hThread);
-    WaitForSingleObject (processinfo.hProcess, INFINITE);
-
-    fclose (in);
-    fclose (out);
-  }
-#endif /* G_OS_WIN32 */
+  if (!compressor->load_fn (filename, tmpname))
+    {
+      g_free (tmpname);
+      *status = GIMP_PDB_EXECUTION_ERROR;
+      return -1;
+    }
 
   /* now that we uncompressed it, load the temp file */
 
@@ -782,4 +525,214 @@ find_extension (const Compressor *compressor,
           ext = strrchr (filename_copy, '.');
         }
     }
+}
+
+static gboolean
+gzip_load (const char *infile,
+           const char *outfile)
+{
+  gboolean ret;
+  gzFile in;
+  FILE *out;
+  char buf[16384];
+  int len;
+
+  ret = FALSE;
+  in = NULL;
+  out = NULL;
+
+  do
+    {
+      in = gzopen (infile, "rb");
+      if (!in)
+        break;
+
+      out = fopen (outfile, "wb");
+      if (!out)
+        break;
+
+      while (TRUE)
+        {
+          len = gzread (in, buf, sizeof buf);
+
+          if (len < 0)
+            break;
+          else if (len == 0)
+            {
+              ret = TRUE;
+              break;
+            }
+
+          if (fwrite(buf, 1, len, out) != len)
+            break;
+        }
+    }
+  while (0);
+
+  if (in)
+    if (gzclose (in) != Z_OK)
+      ret = FALSE;
+
+  if (out)
+    fclose (out);
+
+  return ret;
+}
+
+static gboolean
+gzip_save (const char *infile,
+           const char *outfile)
+{
+  gboolean ret;
+  FILE *in;
+  gzFile out;
+  char buf[16384];
+  int len;
+
+  ret = FALSE;
+  in = NULL;
+  out = NULL;
+
+  do
+    {
+      in = fopen (infile, "rb");
+      if (!in)
+        break;
+
+      out = gzopen (outfile, "wb");
+      if (!out)
+        break;
+
+      while (TRUE)
+        {
+          len = fread (buf, 1, sizeof buf, in);
+          if (ferror (in))
+            break;
+
+          if (len < 0)
+            break;
+          else if (len == 0)
+            {
+              ret = TRUE;
+              break;
+            }
+
+          if (gzwrite (out, buf, len) != len)
+            break;
+        }
+    }
+  while (0);
+
+  if (in)
+    fclose (in);
+
+  if (out)
+    if (gzclose (out) != Z_OK)
+      ret = FALSE;
+
+  return ret;
+}
+
+static gboolean
+bzip2_load (const char *infile,
+            const char *outfile)
+{
+  gboolean ret;
+  BZFILE *in;
+  FILE *out;
+  char buf[16384];
+  int len;
+
+  ret = FALSE;
+  in = NULL;
+  out = NULL;
+
+  do
+    {
+      in = BZ2_bzopen (infile, "rb");
+      if (!in)
+        break;
+
+      out = fopen (outfile, "wb");
+      if (!out)
+        break;
+
+      while (TRUE)
+        {
+          len = BZ2_bzread (in, buf, sizeof buf);
+
+          if (len < 0)
+            break;
+          else if (len == 0)
+            {
+              ret = TRUE;
+              break;
+            }
+
+          if (fwrite(buf, 1, len, out) != len)
+            break;
+        }
+    }
+  while (0);
+
+  if (in)
+    BZ2_bzclose (in);
+
+  if (out)
+    fclose (out);
+
+  return ret;
+}
+
+static gboolean
+bzip2_save (const char *infile,
+            const char *outfile)
+{
+  gboolean ret;
+  FILE *in;
+  BZFILE *out;
+  char buf[16384];
+  int len;
+
+  ret = FALSE;
+  in = NULL;
+  out = NULL;
+
+  do
+    {
+      in = fopen (infile, "rb");
+      if (!in)
+        break;
+
+      out = BZ2_bzopen (outfile, "wb");
+      if (!out)
+        break;
+
+      while (TRUE)
+        {
+          len = fread (buf, 1, sizeof buf, in);
+          if (ferror (in))
+            break;
+
+          if (len < 0)
+            break;
+          else if (len == 0)
+            {
+              ret = TRUE;
+              break;
+            }
+
+          if (BZ2_bzwrite (out, buf, len) != len)
+            break;
+        }
+    }
+  while (0);
+
+  if (in)
+    fclose (in);
+
+  if (out)
+    BZ2_bzclose (out);
+
+  return ret;
 }
