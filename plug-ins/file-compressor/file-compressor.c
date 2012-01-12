@@ -539,34 +539,31 @@ gzip_load (const char *infile,
   in = NULL;
   out = NULL;
 
-  do
+  in = gzopen (infile, "rb");
+  if (!in)
+    goto out;
+
+  out = fopen (outfile, "wb");
+  if (!out)
+    goto out;
+
+  while (TRUE)
     {
-      in = gzopen (infile, "rb");
-      if (!in)
-        break;
+      len = gzread (in, buf, sizeof buf);
 
-      out = fopen (outfile, "wb");
-      if (!out)
+      if (len < 0)
         break;
-
-      while (TRUE)
+      else if (len == 0)
         {
-          len = gzread (in, buf, sizeof buf);
-
-          if (len < 0)
-            break;
-          else if (len == 0)
-            {
-              ret = TRUE;
-              break;
-            }
-
-          if (fwrite(buf, 1, len, out) != len)
-            break;
+          ret = TRUE;
+          break;
         }
-    }
-  while (0);
 
+      if (fwrite(buf, 1, len, out) != len)
+        break;
+    }
+
+ out:
   if (in)
     if (gzclose (in) != Z_OK)
       ret = FALSE;
@@ -591,36 +588,33 @@ gzip_save (const char *infile,
   in = NULL;
   out = NULL;
 
-  do
+  in = fopen (infile, "rb");
+  if (!in)
+    goto out;
+
+  out = gzopen (outfile, "wb");
+  if (!out)
+    goto out;
+
+  while (TRUE)
     {
-      in = fopen (infile, "rb");
-      if (!in)
+      len = fread (buf, 1, sizeof buf, in);
+      if (ferror (in))
         break;
 
-      out = gzopen (outfile, "wb");
-      if (!out)
+      if (len < 0)
         break;
-
-      while (TRUE)
+      else if (len == 0)
         {
-          len = fread (buf, 1, sizeof buf, in);
-          if (ferror (in))
-            break;
-
-          if (len < 0)
-            break;
-          else if (len == 0)
-            {
-              ret = TRUE;
-              break;
-            }
-
-          if (gzwrite (out, buf, len) != len)
-            break;
+          ret = TRUE;
+          break;
         }
-    }
-  while (0);
 
+      if (gzwrite (out, buf, len) != len)
+        break;
+    }
+
+ out:
   if (in)
     fclose (in);
 
@@ -645,34 +639,31 @@ bzip2_load (const char *infile,
   in = NULL;
   out = NULL;
 
-  do
+  in = BZ2_bzopen (infile, "rb");
+  if (!in)
+    goto out;
+
+  out = fopen (outfile, "wb");
+  if (!out)
+    goto out;
+
+  while (TRUE)
     {
-      in = BZ2_bzopen (infile, "rb");
-      if (!in)
-        break;
+      len = BZ2_bzread (in, buf, sizeof buf);
 
-      out = fopen (outfile, "wb");
-      if (!out)
+      if (len < 0)
         break;
-
-      while (TRUE)
+      else if (len == 0)
         {
-          len = BZ2_bzread (in, buf, sizeof buf);
-
-          if (len < 0)
-            break;
-          else if (len == 0)
-            {
-              ret = TRUE;
-              break;
-            }
-
-          if (fwrite(buf, 1, len, out) != len)
-            break;
+          ret = TRUE;
+          break;
         }
-    }
-  while (0);
 
+      if (fwrite(buf, 1, len, out) != len)
+        break;
+    }
+
+ out:
   if (in)
     BZ2_bzclose (in);
 
@@ -696,36 +687,33 @@ bzip2_save (const char *infile,
   in = NULL;
   out = NULL;
 
-  do
+  in = fopen (infile, "rb");
+  if (!in)
+    goto out;
+
+  out = BZ2_bzopen (outfile, "wb");
+  if (!out)
+    goto out;
+
+  while (TRUE)
     {
-      in = fopen (infile, "rb");
-      if (!in)
+      len = fread (buf, 1, sizeof buf, in);
+      if (ferror (in))
         break;
 
-      out = BZ2_bzopen (outfile, "wb");
-      if (!out)
+      if (len < 0)
         break;
-
-      while (TRUE)
+      else if (len == 0)
         {
-          len = fread (buf, 1, sizeof buf, in);
-          if (ferror (in))
-            break;
-
-          if (len < 0)
-            break;
-          else if (len == 0)
-            {
-              ret = TRUE;
-              break;
-            }
-
-          if (BZ2_bzwrite (out, buf, len) != len)
-            break;
+          ret = TRUE;
+          break;
         }
-    }
-  while (0);
 
+      if (BZ2_bzwrite (out, buf, len) != len)
+        break;
+    }
+
+ out:
   if (in)
     fclose (in);
 
