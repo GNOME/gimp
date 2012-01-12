@@ -55,7 +55,6 @@ plug-ins/common/emboss.c
 plug-ins/common/engrave.c
 plug-ins/common/file-aa.c
 plug-ins/common/file-cel.c
-plug-ins/common/file-compressor.c
 plug-ins/common/file-csource.c
 plug-ins/common/file-desktop-link.c
 plug-ins/common/file-dicom.c
@@ -155,6 +154,7 @@ plug-ins/common/wind.c
 plug-ins/file-bmp/bmp-read.c
 plug-ins/file-bmp/bmp-write.c
 plug-ins/file-bmp/bmp.c
+plug-ins/file-compressor/file-compressor.c
 plug-ins/file-faxg3/faxg3.c
 plug-ins/file-fits/fits.c
 plug-ins/file-fli/fli-gimp.c
