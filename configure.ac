@@ -1166,6 +1166,10 @@ fi
 AM_CONDITIONAL(HAVE_BZIP2, test "x$have_libbzip2" = xyes)
 AC_SUBST(BZIP2_LIBS)
 
+have_compressor=no
+if test "x$have_zlib" = xyes && test "x$have_libbzip2" = xyes; then
+   have_compressor=yes
+fi
 
 ##################
 # Check for libpng
@@ -2286,6 +2290,7 @@ Optional Features:
 
 Optional Plug-Ins:
   Ascii Art:           $have_libaa
+  Compressor:          $have_compressor
   Help Browser:        $have_webkit
   LCMS:                $have_lcms
   JPEG:                $jpeg_ok
