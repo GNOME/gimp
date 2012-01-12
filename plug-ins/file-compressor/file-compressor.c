@@ -168,12 +168,12 @@ static const Compressor compressors[] =
 
     "file-gz-load",
     "loads files compressed with gzip",
-    "You need to have gzip installed.",
+    "This procedure loads files in the gzip compressed format.",
     gzip_load,
 
     "file-gz-save",
     "saves files compressed with gzip",
-    "You need to have gzip installed.",
+    "This procedure saves files in the gzip compressed format.",
     gzip_save
   },
 
@@ -187,12 +187,12 @@ static const Compressor compressors[] =
 
     "file-bz2-load",
     "loads files compressed with bzip2",
-    "You need to have bzip2 installed.",
+    "This procedure loads files in the bzip2 compressed format.",
     bzip2_load,
 
     "file-bz2-save",
     "saves files compressed with bzip2",
-    "You need to have bzip2 installed",
+    "This procedure saves files in the bzip2 compressed format.",
     bzip2_save
   }
 };
