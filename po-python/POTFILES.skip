@@ -13,6 +13,7 @@ modules
 plug-ins/color-rotate
 plug-ins/common
 plug-ins/file-bmp
+plug-ins/file-compressor
 plug-ins/file-faxg3
 plug-ins/file-fits
 plug-ins/file-fli
