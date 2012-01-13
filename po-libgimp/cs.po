@@ -1404,16 +1404,16 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Použít tuto hodnotu jako semínko náhodného generátoru – to umožňuje "
+"Použít tuto hodnotu jako hnízdo náhodného generátoru – to umožňuje "
 "zopakovat danou „náhodnou“ operaci"
 
 #: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
-msgstr "_Nové semínko"
+msgstr "_Nové hnízdo"
 
 #: ../libgimpwidgets/gimpwidgets.c:533
 msgid "Seed random number generator with a generated random number"
-msgstr "Semínko generátoru náhodného čísla z generovaného náhodného čísla"
+msgstr "Hnízdo generátoru náhodného čísla z generovaného náhodného čísla"
 
 #: ../libgimpwidgets/gimpwidgets.c:537
 msgid "_Randomize"
