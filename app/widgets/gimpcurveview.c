@@ -44,7 +44,9 @@ enum
   PROP_GIMP,
   PROP_BASE_LINE,
   PROP_GRID_ROWS,
-  PROP_GRID_COLUMNS
+  PROP_GRID_COLUMNS,
+  PROP_X_AXIS_LABEL,
+  PROP_Y_AXIS_LABEL
 };
 
 enum
@@ -156,6 +158,16 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_X_AXIS_LABEL,
+                                   g_param_spec_string ("x-axis-label", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_Y_AXIS_LABEL,
+                                   g_param_spec_string ("y-axis-label", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
+
   curve_view_signals[CUT_CLIPBOARD] =
     g_signal_new ("cut-clipboard",
                   G_TYPE_FROM_CLASS (klass),
@@ -209,6 +221,9 @@ gimp_curve_view_init (GimpCurveView *view)
   view->range_y_min = 0.0;
   view->range_y_max = 1.0;
 
+  view->x_axis_label = NULL;
+  view->y_axis_label = NULL;
+
   gtk_widget_set_can_focus (GTK_WIDGET (view), TRUE);
   gtk_widget_add_events (GTK_WIDGET (view),
                          GDK_BUTTON_PRESS_MASK   |
@@ -224,16 +239,28 @@ gimp_curve_view_finalize (GObject *object)
 {
   GimpCurveView *view = GIMP_CURVE_VIEW (object);
 
-  if (view->xpos_layout)
+  if (view->layout)
     {
-      g_object_unref (view->xpos_layout);
-      view->xpos_layout = NULL;
+      g_object_unref (view->layout);
+      view->layout = NULL;
     }
 
   if (view->cursor_layout)
     {
       g_object_unref (view->cursor_layout);
       view->cursor_layout = NULL;
+    }
+
+  if (view->x_axis_label)
+    {
+      g_free (view->x_axis_label);
+      view->x_axis_label = NULL;
+    }
+
+  if (view->y_axis_label)
+    {
+      g_free (view->y_axis_label);
+      view->y_axis_label = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -274,6 +301,12 @@ gimp_curve_view_set_property (GObject      *object,
     case PROP_BASE_LINE:
       view->draw_base_line = g_value_get_boolean (value);
       break;
+    case PROP_X_AXIS_LABEL:
+      view->x_axis_label = g_value_dup_string (value);
+      break;
+    case PROP_Y_AXIS_LABEL:
+      view->y_axis_label = g_value_dup_string (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -302,6 +335,12 @@ gimp_curve_view_get_property (GObject    *object,
     case PROP_BASE_LINE:
       g_value_set_boolean (value, view->draw_base_line);
       break;
+    case PROP_X_AXIS_LABEL:
+      gimp_curve_view_set_x_axis_label (view, g_value_get_string (value));
+      break;
+    case PROP_Y_AXIS_LABEL:
+      gimp_curve_view_set_y_axis_label (view, g_value_get_string (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -316,10 +355,10 @@ gimp_curve_view_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  if (view->xpos_layout)
+  if (view->layout)
     {
-      g_object_unref (view->xpos_layout);
-      view->xpos_layout = NULL;
+      g_object_unref (view->layout);
+      view->layout = NULL;
     }
 
   if (view->cursor_layout)
@@ -462,6 +501,8 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gint           border;
   gint           width;
   gint           height;
+  gint           layout_x;
+  gint           layout_y;
   gdouble        x, y;
   gint           i;
 
@@ -498,6 +539,42 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
 
   gimp_curve_view_draw_grid (view, cr, width, height, border);
+
+  /*  Draw the axis labels  */
+
+  if (view->x_axis_label)
+    {
+      if (! view->layout)
+            view->layout = gtk_widget_create_pango_layout (widget, NULL);
+
+      pango_layout_set_text (view->layout, view->x_axis_label, -1);
+      pango_layout_get_pixel_size (view->layout, &layout_x, &layout_y);
+
+      cairo_move_to (cr,
+                     width - border - layout_x,
+                     height + border - layout_y);
+      pango_cairo_show_layout (cr, view->layout);
+      cairo_fill (cr);
+    }
+
+  if (view->y_axis_label)
+    {
+      if (! view->layout)
+            view->layout = gtk_widget_create_pango_layout (widget, NULL);
+
+      pango_layout_set_text (view->layout, view->y_axis_label, -1);
+      pango_layout_get_pixel_size (view->layout, &layout_x, &layout_y);
+
+      cairo_save (cr);
+      cairo_rotate (cr, G_PI / 2);
+      cairo_move_to (cr,
+                     2 * border,
+                     -(border + layout_y));
+      pango_cairo_show_layout (cr, view->layout);
+      cairo_fill (cr);
+      cairo_restore (cr);
+    }
+
 
   /*  Draw the background curves  */
   for (list = view->bg_curves; list; list = g_list_next (list))
@@ -550,8 +627,6 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
   if (view->xpos >= 0.0)
     {
-      gint  layout_x;
-      gint  layout_y;
       gchar buf[32];
 
       gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
@@ -568,11 +643,11 @@ gimp_curve_view_expose (GtkWidget      *widget,
       /* and xpos indicator */
       g_snprintf (buf, sizeof (buf), "x:%d", (gint) (view->xpos * 255.999));
 
-      if (! view->xpos_layout)
-        view->xpos_layout = gtk_widget_create_pango_layout (widget, NULL);
+      if (! view->layout)
+        view->layout = gtk_widget_create_pango_layout (widget, NULL);
 
-      pango_layout_set_text (view->xpos_layout, buf, -1);
-      pango_layout_get_pixel_size (view->xpos_layout, &layout_x, &layout_y);
+      pango_layout_set_text (view->layout, buf, -1);
+      pango_layout_get_pixel_size (view->layout, &layout_x, &layout_y);
 
       if (view->xpos < 0.5)
         layout_x = border;
@@ -582,7 +657,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
       cairo_move_to (cr,
                      border + (gdouble) width * view->xpos + layout_x,
                      border + height - border - layout_y);
-      pango_cairo_show_layout (cr, view->xpos_layout);
+      pango_cairo_show_layout (cr, view->layout);
       cairo_fill (cr);
     }
 
@@ -1275,6 +1350,40 @@ gimp_curve_view_set_xpos (GimpCurveView *view,
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
+void
+gimp_curve_view_set_x_axis_label (GimpCurveView *view,
+                                  const gchar   *label)
+{
+  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+
+  if (view->x_axis_label)
+    {
+      g_free (view->x_axis_label);
+      view->x_axis_label = NULL;
+    }
+  view->x_axis_label = g_strdup (label);
+
+  g_object_notify (G_OBJECT (view), "x-axis-label");
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
+void
+gimp_curve_view_set_y_axis_label (GimpCurveView *view,
+                                  const gchar   *label)
+{
+  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+
+  if (view->y_axis_label)
+    {
+      g_free (view->y_axis_label);
+      view->y_axis_label = NULL;
+    }
+  view->y_axis_label = g_strdup (label);
+
+  g_object_notify (G_OBJECT (view), "y-axis-label");
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
 
 /*  private functions  */
 

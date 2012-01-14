@@ -57,7 +57,8 @@ struct _GimpCurveView
   GdkCursorType      cursor_type;
 
   gdouble            xpos;
-  PangoLayout       *xpos_layout;
+
+  PangoLayout       *layout;
 
   gdouble            range_x_min;
   gdouble            range_x_max;
@@ -68,6 +69,9 @@ struct _GimpCurveView
   gdouble            cursor_y;
   PangoLayout       *cursor_layout;
   PangoRectangle     cursor_rect;
+
+  gchar             *x_axis_label;
+  gchar             *y_axis_label;
 };
 
 struct _GimpCurveViewClass
@@ -107,6 +111,11 @@ void        gimp_curve_view_set_range_y       (GimpCurveView *view,
                                                gdouble        max);
 void        gimp_curve_view_set_xpos          (GimpCurveView *view,
                                                gdouble        x);
+
+void        gimp_curve_view_set_x_axis_label  (GimpCurveView *view,
+                                               const gchar   *label);
+void        gimp_curve_view_set_y_axis_label  (GimpCurveView *view,
+                                               const gchar   *label);
 
 
 #endif /* __GIMP_CURVE_VIEW_H__ */

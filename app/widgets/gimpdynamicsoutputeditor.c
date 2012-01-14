@@ -22,8 +22,9 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -171,6 +172,8 @@ gimp_dynamics_output_editor_constructed (GObject *object)
   GtkCellRenderer                 *cell;
   GtkTreeSelection                *tree_sel;
   gint                             i;
+  GimpDynamicsOutputType           output_type;
+  const gchar                     *type_desc;
 
   editor  = GIMP_DYNAMICS_OUTPUT_EDITOR (object);
   private = GET_PRIVATE (object);
@@ -184,6 +187,17 @@ gimp_dynamics_output_editor_constructed (GObject *object)
   g_object_set (private->curve_view,
                 "border-width", CURVE_BORDER,
                 NULL);
+
+  g_object_get (private->output,
+               "type", &output_type,
+               NULL);
+
+  if (gimp_enum_get_value (GIMP_TYPE_DYNAMICS_OUTPUT_TYPE, output_type,
+                           NULL, NULL, &type_desc, NULL))
+    g_object_set (private->curve_view,
+                  "y-axis-label", type_desc,
+                  NULL);
+
   gtk_widget_set_size_request (private->curve_view,
                                CURVE_SIZE + CURVE_BORDER * 2,
                                CURVE_SIZE + CURVE_BORDER * 2);
@@ -412,6 +426,9 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
           gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
                                      input_curve, &inputs[i].color);
           private->active_curve = input_curve;
+
+          gimp_curve_view_set_x_axis_label (GIMP_CURVE_VIEW (private->curve_view),
+                                            inputs[i].label);
         }
       else if (use_input)
         {
