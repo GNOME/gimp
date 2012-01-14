@@ -778,6 +778,21 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
   return writable_dir;
 }
 
+static gboolean
+gimp_data_factory_is_dir_writable (const gchar *dirname,
+                                   GList       *writable_path)
+{
+  GList *list;
+
+  for (list = writable_path; list; list = g_list_next (list))
+    {
+      if (g_str_has_prefix (dirname, list->data))
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_data_factory_load_data_recursive (const GimpDatafileData *file_data,
                                        gpointer                data)
@@ -799,13 +814,19 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
   GimpDataLoadContext              *context = data;
   GimpDataFactory                  *factory = context->factory;
   GHashTable                       *cache   = context->cache;
-  const GimpDataFactoryLoaderEntry *loader;
+  const GimpDataFactoryLoaderEntry *loader  = NULL;
+  GError                           *error   = NULL;
+  GList                            *data_list;
   gint                              i;
 
   for (i = 0; i < factory->priv->n_loader_entries; i++)
     {
       loader = &factory->priv->loader_entries[i];
 
+      /* a loder matches if its extension matches, or if it doesn't
+       * have an extension, which is the case for the fallback loader,
+       * which must be last in the loader array
+       */
       if (! loader->extension ||
           gimp_datafiles_check_extension (file_data->filename,
                                           loader->extension))
@@ -815,80 +836,79 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
   return;
 
  insert:
-  {
-    GList    *cached_data;
-    gboolean  load_from_disk = TRUE;
+  if (cache)
+    {
+      GList *cached_data;
 
-    if (cache &&
-        (cached_data = g_hash_table_lookup (cache, file_data->filename)))
-      {
-        GimpData *data = cached_data->data;
+      cached_data = g_hash_table_lookup (cache, file_data->filename);
 
-        load_from_disk = (gimp_data_get_mtime (data) == 0 ||
-                          gimp_data_get_mtime (data) != file_data->mtime);
+      if (cached_data &&
+          gimp_data_get_mtime (cached_data->data) != 0 &&
+          gimp_data_get_mtime (cached_data->data) == file_data->mtime)
+        {
+          GList *list;
 
-        if (! load_from_disk)
-          {
-            GList *list;
+          for (list = cached_data; list; list = g_list_next (list))
+            gimp_container_add (factory->priv->container, list->data);
 
-            for (list = cached_data; list; list = g_list_next (list))
-              gimp_container_add (factory->priv->container, list->data);
-          }
-      }
+          return;
+        }
+    }
 
-    if (load_from_disk)
-      {
-        GList  *data_list;
-        GError *error = NULL;
+  data_list = loader->load_func (context->context, file_data->filename, &error);
 
-        data_list = loader->load_func (context->context,
-                                       file_data->filename, &error);
+  if (G_LIKELY (data_list))
+    {
+      GList    *list;
+      gboolean  obsolete;
+      gboolean  writable  = FALSE;
+      gboolean  deletable = FALSE;
 
-        if (G_LIKELY (data_list))
-          {
-            GList    *writable_list;
-            GList    *list;
-            gboolean  writable;
-            gboolean  deletable;
+      obsolete = (strstr (file_data->dirname,
+                          GIMP_OBSOLETE_DATA_DIR_NAME) != 0);
 
-            writable_list = g_object_get_data (G_OBJECT (factory),
-                                               WRITABLE_PATH_KEY);
+      /* obsolete files are immutable, don't check their writability */
+      if (! obsolete)
+        {
+          GList *writable_list;
 
-            deletable = (g_list_length (data_list) == 1 &&
-                         g_list_find_custom (writable_list, file_data->dirname,
-                                             (GCompareFunc) strcmp) != NULL);
+          writable_list = g_object_get_data (G_OBJECT (factory),
+                                             WRITABLE_PATH_KEY);
 
-            writable = (deletable && loader->writable);
+          deletable = (g_list_length (data_list) == 1 &&
+                       gimp_data_factory_is_dir_writable (file_data->dirname,
+                                                          writable_list));
 
-            for (list = data_list; list; list = g_list_next (list))
-              {
-                GimpData *data = list->data;
+          writable = (deletable && loader->writable);
+        }
 
-                gimp_data_set_filename (data, file_data->filename,
-                                        writable, deletable);
-                gimp_data_set_mtime (data, file_data->mtime);
+      for (list = data_list; list; list = g_list_next (list))
+        {
+          GimpData *data = list->data;
 
-                gimp_data_clean (data);
+          gimp_data_set_filename (data, file_data->filename,
+                                  writable, deletable);
+          gimp_data_set_mtime (data, file_data->mtime);
 
-                if (strstr (file_data->dirname, GIMP_OBSOLETE_DATA_DIR_NAME))
-                  gimp_container_add (factory->priv->container_obsolete,
-                                      GIMP_OBJECT (data));
-                else
-                  gimp_container_add (factory->priv->container,
-                                      GIMP_OBJECT (data));
+          gimp_data_clean (data);
 
-                g_object_unref (data);
-              }
+          if (obsolete)
+            gimp_container_add (factory->priv->container_obsolete,
+                                GIMP_OBJECT (data));
+          else
+            gimp_container_add (factory->priv->container,
+                                GIMP_OBJECT (data));
 
-            g_list_free (data_list);
-          }
+          g_object_unref (data);
+        }
 
-        if (G_UNLIKELY (error))
-          {
-            gimp_message (factory->priv->gimp, NULL, GIMP_MESSAGE_ERROR,
-                          _("Failed to load data:\n\n%s"), error->message);
-            g_clear_error (&error);
-          }
-      }
-  }
+      g_list_free (data_list);
+    }
+
+  if (G_UNLIKELY (error))
+    {
+      gimp_message (factory->priv->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    _("Failed to load data:\n\n%s"), error->message);
+      g_clear_error (&error);
+    }
 }
