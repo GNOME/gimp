@@ -314,7 +314,6 @@ gimp_color_frame_expose (GtkWidget      *widget,
                       menu_allocation.height / 2.0 +
                       color_area_allocation.height / 2.0) / scale - h / 2.0);
       pango_cairo_show_layout (cr, frame->number_layout);
-      cairo_fill (cr);
 
       cairo_destroy (cr);
     }
