@@ -302,10 +302,10 @@ gimp_curve_view_set_property (GObject      *object,
       view->draw_base_line = g_value_get_boolean (value);
       break;
     case PROP_X_AXIS_LABEL:
-      view->x_axis_label = g_value_dup_string (value);
+      gimp_curve_view_set_x_axis_label (view, g_value_get_string (value));
       break;
     case PROP_Y_AXIS_LABEL:
-      view->y_axis_label = g_value_dup_string (value);
+      gimp_curve_view_set_y_axis_label (view, g_value_get_string (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -336,10 +336,10 @@ gimp_curve_view_get_property (GObject    *object,
       g_value_set_boolean (value, view->draw_base_line);
       break;
     case PROP_X_AXIS_LABEL:
-      gimp_curve_view_set_x_axis_label (view, g_value_get_string (value));
+      g_value_set_string (value, view->x_axis_label);
       break;
     case PROP_Y_AXIS_LABEL:
-      gimp_curve_view_set_y_axis_label (view, g_value_get_string (value));
+      g_value_set_string (value, view->y_axis_label);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
