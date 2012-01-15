@@ -545,33 +545,37 @@ gimp_curve_view_expose (GtkWidget      *widget,
   if (view->x_axis_label)
     {
       if (! view->layout)
-            view->layout = gtk_widget_create_pango_layout (widget, NULL);
+        view->layout = gtk_widget_create_pango_layout (widget, NULL);
 
       pango_layout_set_text (view->layout, view->x_axis_label, -1);
       pango_layout_get_pixel_size (view->layout, &layout_x, &layout_y);
 
       cairo_move_to (cr,
                      width - border - layout_x,
-                     height + border - layout_y);
+                     height - border - layout_y);
+
+      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
       pango_cairo_show_layout (cr, view->layout);
-      cairo_fill (cr);
     }
 
   if (view->y_axis_label)
     {
       if (! view->layout)
-            view->layout = gtk_widget_create_pango_layout (widget, NULL);
+        view->layout = gtk_widget_create_pango_layout (widget, NULL);
 
       pango_layout_set_text (view->layout, view->y_axis_label, -1);
       pango_layout_get_pixel_size (view->layout, &layout_x, &layout_y);
 
       cairo_save (cr);
-      cairo_rotate (cr, G_PI / 2);
+
       cairo_move_to (cr,
                      2 * border,
-                     -(border + layout_y));
+                     2 * border + layout_x);
+      cairo_rotate (cr, - G_PI / 2);
+
+      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
       pango_cairo_show_layout (cr, view->layout);
-      cairo_fill (cr);
+
       cairo_restore (cr);
     }
 
@@ -658,7 +662,6 @@ gimp_curve_view_expose (GtkWidget      *widget,
                      border + (gdouble) width * view->xpos + layout_x,
                      border + height - border - layout_y);
       pango_cairo_show_layout (cr, view->layout);
-      cairo_fill (cr);
     }
 
   if (view->cursor_x >= 0.0 && view->cursor_x <= 1.0 &&
@@ -690,6 +693,9 @@ gimp_curve_view_expose (GtkWidget      *widget,
       y = border * 2 + 3;
       w = view->cursor_rect.width;
       h = view->cursor_rect.height;
+
+      if (view->x_axis_label)
+        x += border + view->cursor_rect.height; /* coincidentially the right value */
 
       cairo_push_group (cr);
 
@@ -730,7 +736,6 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
       cairo_move_to (cr, x, y);
       pango_cairo_show_layout (cr, view->cursor_layout);
-      cairo_fill (cr);
 
       cairo_pop_group_to_source (cr);
       cairo_paint_with_alpha (cr, 0.6);
@@ -1357,16 +1362,15 @@ gimp_curve_view_set_x_axis_label (GimpCurveView *view,
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
 
   if (view->x_axis_label)
-    {
-      g_free (view->x_axis_label);
-      view->x_axis_label = NULL;
-    }
+    g_free (view->x_axis_label);
+
   view->x_axis_label = g_strdup (label);
 
   g_object_notify (G_OBJECT (view), "x-axis-label");
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
+
 void
 gimp_curve_view_set_y_axis_label (GimpCurveView *view,
                                   const gchar   *label)
@@ -1374,16 +1378,15 @@ gimp_curve_view_set_y_axis_label (GimpCurveView *view,
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
 
   if (view->y_axis_label)
-    {
-      g_free (view->y_axis_label);
-      view->y_axis_label = NULL;
-    }
+    g_free (view->y_axis_label);
+
   view->y_axis_label = g_strdup (label);
 
   g_object_notify (G_OBJECT (view), "y-axis-label");
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
+
 
 /*  private functions  */
 
