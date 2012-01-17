@@ -5792,12 +5792,12 @@ msgstr "Dělení"
 #: ../app/base/base-enums.c:129
 msgctxt "layer-mode-effects"
 msgid "Dodge"
-msgstr "Zesvětlení"
+msgstr "Zesvětlování"
 
 #: ../app/base/base-enums.c:130
 msgctxt "layer-mode-effects"
 msgid "Burn"
-msgstr "Ztmavení"
+msgstr "Ztmavování"
 
 #: ../app/base/base-enums.c:131
 msgctxt "layer-mode-effects"
