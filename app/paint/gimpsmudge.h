@@ -41,6 +41,7 @@ struct _GimpSmudge
   gboolean       initialized;
   PixelRegion    accumPR;
   guchar        *accum_data;
+  gint           accum_size;
 };
 
 struct _GimpSmudgeClass
