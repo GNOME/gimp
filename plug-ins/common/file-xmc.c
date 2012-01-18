@@ -2159,8 +2159,9 @@ make_framename (guint32   size,
       if (Counter[i].size == 0) /* the end of Counter elements */
         {
           if (i > MAX_SIZE_NUM)
-            { /* the number of different nominal size is over MAX_SIZE_NUM! */
+            {
               g_set_error (errorp, 0, 0,
+                           /* translators: the %i is *always* 8 here */
                            _("Sorry, this plug-in cannot handle a cursor "
                              "which contains over %i different nominal sizes."),
                            MAX_SIZE_NUM);

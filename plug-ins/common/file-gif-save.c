@@ -2377,11 +2377,15 @@ comment_entry_callback (GtkTextBuffer *buffer)
   gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
   text = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 
-  if (strlen (text) > 240)
-    {
-      g_message (_("The default comment is limited to %d characters."), 240);
+#define MAX_COMMENT 240
 
-      gtk_text_buffer_get_iter_at_offset (buffer, &start_iter, 240 - 1);
+  if (strlen (text) > MAX_COMMENT)
+    {
+      /* translators: the %d is *always* 240 here */
+      g_message (_("The default comment is limited to %d characters."),
+                 MAX_COMMENT);
+
+      gtk_text_buffer_get_iter_at_offset (buffer, &start_iter, MAX_COMMENT - 1);
       gtk_text_buffer_get_end_iter (buffer, &end_iter);
 
       /*  this calls us recursivaly, but in the else branch
