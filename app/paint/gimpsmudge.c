@@ -96,6 +96,7 @@ gimp_smudge_class_init (GimpSmudgeClass *klass)
 
   paint_core_class->paint = gimp_smudge_paint;
 
+  brush_core_class->handles_changing_brush = TRUE;
   brush_core_class->handles_transforming_brush = TRUE;
   brush_core_class->handles_dynamic_transforming_brush = TRUE;
 }
