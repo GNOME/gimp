@@ -4745,79 +4745,66 @@ msgstr ""
 "Вы действительно хотите вернуться к исходным параметрам всех инструментов?"
 
 #: ../app/actions/tool-presets-actions.c:44
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
 msgstr "Меню профилей инструментов"
 
 #: ../app/actions/tool-presets-actions.c:48
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
-msgstr "_Создать профиль инструмента"
+msgstr "_Создать профиль"
 
 #: ../app/actions/tool-presets-actions.c:49
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
 msgstr "Создать новый профиль инструмента"
 
 #: ../app/actions/tool-presets-actions.c:54
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
-msgstr "Создать _копию профиля инструмента"
+msgstr "Создать _копию профиля"
 
 #: ../app/actions/tool-presets-actions.c:55
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
 msgstr "Создать копию этого профиля инструментов"
 
 #: ../app/actions/tool-presets-actions.c:60
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
-msgstr "Скопировать _расположение профиля инструмента"
+msgstr "Скопировать _расположение профиля"
 
 #: ../app/actions/tool-presets-actions.c:61
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
 msgstr "Скопировать расположение файла профиля инструмента в буфер обмена"
 
 #: ../app/actions/tool-presets-actions.c:66
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr "_Удалить профиль инструмента"
+msgstr "_Удалить профиль"
 
 #: ../app/actions/tool-presets-actions.c:67
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
 msgstr "Удалить этот профиль инструмента"
 
 #: ../app/actions/tool-presets-actions.c:72
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
-msgstr "О_бновить список профилей инструментов"
+msgstr "О_бновить список профилей"
 
 #: ../app/actions/tool-presets-actions.c:73
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr "Обновить список профилей инструментов"
+msgstr "Обновить список профилей"
 
 #: ../app/actions/tool-presets-actions.c:81
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr "_Изменить профиль инструмента..."
+msgstr "_Изменить профиль..."
 
 #: ../app/actions/tool-presets-actions.c:82
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
 msgstr "Изменить этот профиль инструмента"
@@ -10174,14 +10161,12 @@ msgid "Select Font Folders"
 msgstr "Выбрать папки со шрифтами"
 
 #: ../app/dialogs/preferences-dialog.c:2749
-#, fuzzy
 msgid "Tool Preset Folders"
-msgstr "Профили инструментов"
+msgstr "Папки с профилями инструментов"
 
 #: ../app/dialogs/preferences-dialog.c:2751
-#, fuzzy
 msgid "Select Tool Preset Folders"
-msgstr "Выбрать папки стилей оформления"
+msgstr "Выбрать папки с профилями инструментов"
 
 #: ../app/dialogs/preferences-dialog.c:2753
 msgid "Plug-In Folders"
@@ -10788,16 +10773,14 @@ msgid "Invalid character sequence in URI"
 msgstr "Неправильная последовательность символов в URI"
 
 #: ../app/gegl/gimp-gegl-enums.c:24
-#, fuzzy
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
-msgstr "Создать новое изображение"
+msgstr "Создать или изменить рамку"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
-#, fuzzy
 msgctxt "cage-mode"
 msgid "Deform the cage to deform the image"
-msgstr "Сделать размер слоя равным размеру изображения"
+msgstr "Деформировать рамку и её содержимое"
 
 #: ../app/gegl/gimpcurvesconfig.c:385
 msgid "not a GIMP Curves file"
@@ -11839,9 +11822,8 @@ msgid "Blend does not operate on indexed layers."
 msgstr "Градиентная заливка не действует на индексированные слои."
 
 #: ../app/tools/gimpblendtool.c:187
-#, fuzzy
 msgid "No gradient available for use with this tool."
-msgstr "Нет текстур, доступных для использования с этим инструментом."
+msgstr "Нет градиентов, доступных для использования с этим инструментом."
 
 #: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:623
 #, c-format
@@ -14342,7 +14324,7 @@ msgstr "Соотношение сторон"
 #: ../app/widgets/gimpbrushfactoryview.c:80
 #: ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
-msgstr "Ячейки"
+msgstr "Интервал"
 
 #: ../app/widgets/gimpbrusheditor.c:215
 #: ../app/widgets/gimpbrushfactoryview.c:84
@@ -14685,7 +14667,7 @@ msgstr "Настроить контроллер ввода"
 #: ../app/widgets/gimpcontrollermouse.c:88
 #: ../app/widgets/gimpcontrollermouse.c:91
 msgid "Button 8"
-msgstr "Кнопка 8"
+msgstr "Клавиша 8"
 
 #: ../app/widgets/gimpcontrollermouse.c:95
 #: ../app/widgets/gimpcontrollermouse.c:98
@@ -14696,7 +14678,7 @@ msgstr "Кнопка 8"
 #: ../app/widgets/gimpcontrollermouse.c:113
 #: ../app/widgets/gimpcontrollermouse.c:116
 msgid "Button 9"
-msgstr "Кнопка 9"
+msgstr "Клавиша 9"
 
 #: ../app/widgets/gimpcontrollermouse.c:120
 #: ../app/widgets/gimpcontrollermouse.c:123
@@ -14707,7 +14689,7 @@ msgstr "Кнопка 9"
 #: ../app/widgets/gimpcontrollermouse.c:138
 #: ../app/widgets/gimpcontrollermouse.c:141
 msgid "Button 10"
-msgstr "Кнопка 10"
+msgstr "Клавиша 10"
 
 #: ../app/widgets/gimpcontrollermouse.c:145
 #: ../app/widgets/gimpcontrollermouse.c:148
@@ -14718,7 +14700,7 @@ msgstr "Кнопка 10"
 #: ../app/widgets/gimpcontrollermouse.c:163
 #: ../app/widgets/gimpcontrollermouse.c:166
 msgid "Button 11"
-msgstr "Кнопка 11"
+msgstr "Клавиша 11"
 
 #: ../app/widgets/gimpcontrollermouse.c:170
 #: ../app/widgets/gimpcontrollermouse.c:173
@@ -14729,16 +14711,15 @@ msgstr "Кнопка 11"
 #: ../app/widgets/gimpcontrollermouse.c:188
 #: ../app/widgets/gimpcontrollermouse.c:191
 msgid "Button 12"
-msgstr "Кнопка 12"
+msgstr "Клавиша 12"
 
 #: ../app/widgets/gimpcontrollermouse.c:203
 msgid "Mouse Buttons"
 msgstr "Клавиши мыши"
 
 #: ../app/widgets/gimpcontrollermouse.c:244
-#, fuzzy
 msgid "Mouse Button Events"
-msgstr "Действия колеса мыши"
+msgstr "Действия клавиш мыши"
 
 #: ../app/widgets/gimpcontrollerwheel.c:69
 #: ../app/widgets/gimpcontrollerwheel.c:72
