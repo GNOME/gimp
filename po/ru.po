@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-05 17:53+0400\n"
-"PO-Revision-Date: 2011-12-05 17:54+0400\n"
+"POT-Creation-Date: 2012-01-20 04:27+0400\n"
+"PO-Revision-Date: 2012-01-20 07:54+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -1349,20 +1349,20 @@ msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "О GIMP"
 
-#: ../app/actions/dialogs-actions.c:329
+#: ../app/actions/dialogs-actions.c:328
 #: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:555
 msgid "Toolbox"
 msgstr "Панель инструментов"
 
-#: ../app/actions/dialogs-actions.c:330
+#: ../app/actions/dialogs-actions.c:329
 msgid "Raise the toolbox"
 msgstr "Поднять панель инструментов"
 
-#: ../app/actions/dialogs-actions.c:334
+#: ../app/actions/dialogs-actions.c:333
 msgid "New Toolbox"
 msgstr "Добавить панель инструментов"
 
-#: ../app/actions/dialogs-actions.c:335
+#: ../app/actions/dialogs-actions.c:334
 msgid "Create a new toolbox"
 msgstr "Создать новую панель инструментов"
 
@@ -5135,7 +5135,7 @@ msgid "New Path Options"
 msgstr "Параметры нового контура"
 
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:199
-#: ../app/tools/gimpvectortool.c:1970
+#: ../app/tools/gimpvectortool.c:1969
 msgid "Stroke Path"
 msgstr "Обводка по контуру"
 
@@ -5600,12 +5600,12 @@ msgstr "Вернуть _масштаб (%d%%)"
 msgid "Re_vert Zoom"
 msgstr "_Вернуть масштаб"
 
-#: ../app/actions/view-actions.c:732
+#: ../app/actions/view-actions.c:731
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "_Другой (%s) ..."
 
-#: ../app/actions/view-actions.c:741
+#: ../app/actions/view-actions.c:740
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Масштаб (%s)"
@@ -7451,12 +7451,12 @@ msgid "Updating tag cache"
 msgstr "Обновляется кэш меток"
 
 #: ../app/core/gimpbrush-load.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read %d byte from '%s': %s"
 msgid_plural "Could not read %d bytes from '%s': %s"
-msgstr[0] "Невозможно прочесть %d байт из '%s': %s"
-msgstr[1] "Невозможно прочесть %d байт из '%s': %s"
-msgstr[2] "Невозможно прочесть %d байт из '%s': %s"
+msgstr[0] "Не удалось прочесть %d байт из '%s': %s"
+msgstr[1] "Не удалось прочесть %d байта из '%s': %s"
+msgstr[2] "Не удалось прочесть %d байт из '%s': %s"
 
 #: ../app/core/gimpbrush-load.c:200
 #, c-format
@@ -7497,7 +7497,7 @@ msgstr "Недопустимая строка UTF-8 в файле кисти '%s
 
 #: ../app/core/gimpbrush-load.c:286 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
-#: ../app/tools/gimpvectortool.c:318
+#: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Безымянный"
 
@@ -7827,7 +7827,7 @@ msgstr ""
 msgid "You don't have any writable data folder configured."
 msgstr "Каталоги данных с правами на запись не обнаружены."
 
-#: ../app/core/gimpdatafactory.c:889
+#: ../app/core/gimpdatafactory.c:911
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8720,7 +8720,6 @@ msgid "Invert Selection"
 msgstr "Инвертирование выделения"
 
 #: ../app/core/gimpselection.c:177
-#, fuzzy
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Граница из выделения"
@@ -8752,7 +8751,7 @@ msgstr ""
 #: ../app/core/gimpselection.c:854
 msgctxt "undo-type"
 msgid "Float Selection"
-msgstr "Выделение в плавающее"
+msgstr "Выделение в плавающий слой"
 
 #: ../app/core/gimpselection.c:870
 msgid "Floated Layer"
@@ -8839,7 +8838,7 @@ msgctxt "plural"
 msgid "percent"
 msgstr "проценты"
 
-#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:478
+#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:493
 msgid "About GIMP"
 msgstr "О GIMP"
 
@@ -8929,7 +8928,7 @@ msgid ""
 msgstr "Вы действительно хотите удалить '%s' из списка и с диска?"
 
 #: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:161
-#: ../app/gui/gui-message.c:145
+#: ../app/gui/gui-message.c:143
 msgid "GIMP Message"
 msgstr "Сообщение GIMP"
 
@@ -10501,7 +10500,7 @@ msgstr "Количество линий"
 #: ../app/display/display-enums.c:67
 msgctxt "guides-type"
 msgid "Line spacing"
-msgstr "Интерлиньяж"
+msgstr "Интервал между линиями"
 
 #: ../app/display/gimpcursorview.c:216 ../app/display/gimpcursorview.c:222
 #: ../app/display/gimpcursorview.c:241 ../app/display/gimpcursorview.c:247
@@ -10511,7 +10510,7 @@ msgstr "Интерлиньяж"
 #: ../app/display/gimpcursorview.c:674 ../app/display/gimpcursorview.c:675
 #: ../app/display/gimpcursorview.c:788 ../app/display/gimpcursorview.c:789
 #: ../app/display/gimpcursorview.c:790 ../app/display/gimpcursorview.c:791
-#: ../app/widgets/gimpcolorframe.c:634
+#: ../app/widgets/gimpcolorframe.c:633
 msgid "n/a"
 msgstr "н/д"
 
@@ -10551,24 +10550,24 @@ msgstr "В"
 msgid "_Sample Merged"
 msgstr "_Сводить слои"
 
-#: ../app/display/gimpdisplayshell.c:509
+#: ../app/display/gimpdisplayshell.c:508
 msgid "Access the image menu"
 msgstr "Доступ к меню изображения"
 
-#: ../app/display/gimpdisplayshell.c:623
+#: ../app/display/gimpdisplayshell.c:622
 msgid "Zoom image when window size changes"
 msgstr "При изменении размера окна изменять размер изображения"
 
-#: ../app/display/gimpdisplayshell.c:652
+#: ../app/display/gimpdisplayshell.c:651
 msgid "Toggle Quick Mask"
 msgstr "Переключить быструю маску"
 
-#: ../app/display/gimpdisplayshell.c:675
+#: ../app/display/gimpdisplayshell.c:674
 msgid "Navigate the image display"
 msgstr "Навигация по изображению"
 
-#: ../app/display/gimpdisplayshell.c:743
-#: ../app/display/gimpdisplayshell.c:1321 ../app/widgets/gimptoolbox.c:256
+#: ../app/display/gimpdisplayshell.c:742
+#: ../app/display/gimpdisplayshell.c:1320 ../app/widgets/gimptoolbox.c:256
 msgid "Drop image files here to open them"
 msgstr "Перетащите сюда изображения, которые хотите открыть"
 
@@ -10964,7 +10963,7 @@ msgstr "Штамп по перспективе"
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Инструмент Штамп по перспективе не работает с индексированными слоями."
 
-#: ../app/paint/gimpsmudge.c:83 ../app/tools/gimpsmudgetool.c:53
+#: ../app/paint/gimpsmudge.c:84 ../app/tools/gimpsmudgetool.c:53
 msgid "Smudge"
 msgstr "Размазывание"
 
@@ -11012,6 +11011,21 @@ msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Резкость"
 
+#: ../app/paint/paint-enums.c:144
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Окружность"
+
+#: ../app/paint/paint-enums.c:145
+msgctxt "ink-blob-type"
+msgid "Квадрат"
+msgstr "Квадратные"
+
+#: ../app/paint/paint-enums.c:146
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Ромб"
+
 #: ../app/pdb/channel-cmds.c:184
 msgid "Combine Masks"
 msgstr "Объединить маски"
@@ -11032,7 +11046,7 @@ msgstr "Перспектива"
 #: ../app/pdb/item-transform-cmds.c:611 ../app/pdb/transform-tools-cmds.c:418
 #: ../app/tools/gimpsheartool.c:112
 msgid "Shearing"
-msgstr "Искривление"
+msgstr "Наклон"
 
 #: ../app/pdb/drawable-transform-cmds.c:1138
 #: ../app/pdb/item-transform-cmds.c:709 ../app/pdb/transform-tools-cmds.c:507
@@ -12203,23 +12217,23 @@ msgstr "Пипетка: получение цвета из изображени�
 msgid "C_olor Picker"
 msgstr "_Пипетка"
 
-#: ../app/tools/gimpcolorpickertool.c:228
+#: ../app/tools/gimpcolorpickertool.c:231
 msgid "Click in any image to view its color"
 msgstr "Щёлкните любое изображение для просмотра его цвета"
 
-#: ../app/tools/gimpcolorpickertool.c:235 ../app/tools/gimppainttool.c:477
+#: ../app/tools/gimpcolorpickertool.c:238 ../app/tools/gimppainttool.c:477
 msgid "Click in any image to pick the foreground color"
 msgstr "Щёлкните любое изображение, чтобы снять с него цвет переднего плана"
 
-#: ../app/tools/gimpcolorpickertool.c:243 ../app/tools/gimppainttool.c:483
+#: ../app/tools/gimpcolorpickertool.c:246 ../app/tools/gimppainttool.c:483
 msgid "Click in any image to pick the background color"
 msgstr "Щёлкните любое изображение, чтобы снять с него цвет фона"
 
-#: ../app/tools/gimpcolorpickertool.c:251
+#: ../app/tools/gimpcolorpickertool.c:254
 msgid "Click in any image to add the color to the palette"
 msgstr "Щёлкните любое изображение, чтобы добавить цвет в палитру"
 
-#: ../app/tools/gimpcolorpickertool.c:306
+#: ../app/tools/gimpcolorpickertool.c:309
 msgid "Color Picker Information"
 msgstr "Информация о цвете"
 
@@ -12462,17 +12476,17 @@ msgstr "Диапазон"
 msgid "Exposure"
 msgstr "Экспозиция"
 
-#: ../app/tools/gimpeditselectiontool.c:244
+#: ../app/tools/gimpeditselectiontool.c:242
 msgid "Move Selection"
 msgstr "Перемещение выделения"
 
-#: ../app/tools/gimpeditselectiontool.c:248
-#: ../app/tools/gimpeditselectiontool.c:1243
+#: ../app/tools/gimpeditselectiontool.c:246
+#: ../app/tools/gimpeditselectiontool.c:1241
 msgid "Move Floating Selection"
 msgstr "Переместить плавающее выделение"
 
-#: ../app/tools/gimpeditselectiontool.c:457
-#: ../app/tools/gimpeditselectiontool.c:734
+#: ../app/tools/gimpeditselectiontool.c:455
+#: ../app/tools/gimpeditselectiontool.c:732
 msgid "Move: "
 msgstr "Перемещение: "
 
@@ -12681,27 +12695,27 @@ msgstr ""
 msgid "_Free Select"
 msgstr "С_вободное выделение"
 
-#: ../app/tools/gimpfreeselecttool.c:1031
+#: ../app/tools/gimpfreeselecttool.c:1030
 msgid "Click to complete selection"
 msgstr "Щёлкните для завершения выделения"
 
-#: ../app/tools/gimpfreeselecttool.c:1035
+#: ../app/tools/gimpfreeselecttool.c:1034
 msgid "Click-Drag to move segment vertex"
 msgstr "Щёлкните и потащите, чтобы переместить вершину сегмента"
 
-#: ../app/tools/gimpfreeselecttool.c:1040
+#: ../app/tools/gimpfreeselecttool.c:1039
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "Ввод завершает выделение, Escape отменяет его, Забой убирает последний "
 "сегмент"
 
-#: ../app/tools/gimpfreeselecttool.c:1044
+#: ../app/tools/gimpfreeselecttool.c:1043
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Щелчок и перетаскивание рисует произвольную линию, щелчок добавляет прямой "
 "отрезок"
 
-#: ../app/tools/gimpfreeselecttool.c:1563
+#: ../app/tools/gimpfreeselecttool.c:1562
 msgctxt "command"
 msgid "Free Select"
 msgstr "Свободное выделение"
@@ -12888,7 +12902,7 @@ msgstr "Чувствительность"
 
 #: ../app/tools/gimpinkoptions-gui.c:94
 #: ../app/widgets/gimpdynamicseditor.c:144
-#: ../app/widgets/gimpdynamicsoutputeditor.c:71
+#: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Tilt"
 msgstr "Наклон"
 
@@ -13168,19 +13182,19 @@ msgstr "Перемещение: перемещение слоев, выделе�
 msgid "_Move"
 msgstr "_Перемещение"
 
-#: ../app/tools/gimpmovetool.c:247 ../app/tools/gimpmovetool.c:552
+#: ../app/tools/gimpmovetool.c:249 ../app/tools/gimpmovetool.c:554
 msgid "Move Guide: "
 msgstr "Переместить направляющую:"
 
-#: ../app/tools/gimpmovetool.c:546
+#: ../app/tools/gimpmovetool.c:548
 msgid "Remove Guide"
 msgstr "Удалить направляющую"
 
-#: ../app/tools/gimpmovetool.c:546
+#: ../app/tools/gimpmovetool.c:548
 msgid "Cancel Guide"
 msgstr "Отменить направляющую"
 
-#: ../app/tools/gimpmovetool.c:552
+#: ../app/tools/gimpmovetool.c:554
 msgid "Add Guide: "
 msgstr "Добавить направляющую:"
 
@@ -13471,7 +13485,7 @@ msgstr "Прямоугольное выделение: выделение пря
 msgid "_Rectangle Select"
 msgstr "Пр_ямоугольное выделение"
 
-#: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2015
+#: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2016
 msgid "Rectangle: "
 msgstr "Прямоугольник: "
 
@@ -13601,15 +13615,15 @@ msgstr "Нажмите, чтобы прицепить плавающее выд�
 
 #: ../app/tools/gimpsheartool.c:83
 msgid "Shear"
-msgstr "Искривление"
+msgstr "Наклон"
 
 #: ../app/tools/gimpsheartool.c:84
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "Искривление: искривление слоев, выделенных областей или контуров"
+msgstr "Наклон: наклон слоёв, выделений или контуров"
 
 #: ../app/tools/gimpsheartool.c:85
 msgid "S_hear"
-msgstr "_Искривление"
+msgstr "_Наклон"
 
 #: ../app/tools/gimpsheartool.c:135
 msgid "Shear magnitude _X:"
@@ -13623,20 +13637,20 @@ msgstr "Коэффициент искривления по _Y:"
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g"
-msgstr "Гор. наклон на %-3.3g"
+msgstr "Горизонтальный наклон на %-3.3g"
 
 #: ../app/tools/gimpsheartool.c:259
 #, c-format
 msgctxt "undo-type"
 msgid "Shear vertically by %-3.3g"
-msgstr "Верт. наклон на %-3.3g"
+msgstr "Вертикальный наклон на %-3.3g"
 
 #. e.g. user entered numbers but no notification callback
 #: ../app/tools/gimpsheartool.c:264
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
-msgstr "Гор. наклон на %-3.3g, верт. наклон на %-3.3g"
+msgstr "Горизонт. наклон на %-3.3g, верт. наклон на %-3.3g"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -13832,53 +13846,57 @@ msgstr ""
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr ""
 
-#: ../app/tools/gimptransformoptions.c:138
-msgid "Limit rotation steps to 15 degrees"
-msgstr ""
-
-#: ../app/tools/gimptransformoptions.c:276
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Transform:"
 msgstr "Преобразование:"
 
-#: ../app/tools/gimptransformoptions.c:285
+#: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
-#: ../app/widgets/gimpdynamicsoutputeditor.c:70
+#: ../app/widgets/gimpdynamicsoutputeditor.c:71
 msgid "Direction"
 msgstr "Направление"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:290
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Interpolation:"
 msgstr "Интерполяция:"
 
 #. the clipping menu
-#: ../app/tools/gimptransformoptions.c:299
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Обрезка:"
 
-#: ../app/tools/gimptransformoptions.c:309
+#: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
 msgstr "Непрозрачность изображения"
 
-#: ../app/tools/gimptransformoptions.c:311
+#: ../app/tools/gimptransformoptions.c:312
 #, fuzzy
 msgid "Show image preview"
 msgstr "Показать размер изображения"
 
 #. the guides frame
-#: ../app/tools/gimptransformoptions.c:317
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Guides"
 msgstr "Направляющие"
 
-#: ../app/tools/gimptransformoptions.c:345
+#: ../app/tools/gimptransformoptions.c:346
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 градусов  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:349
+#: ../app/tools/gimptransformoptions.c:347
+msgid "Limit rotation steps to 15 degrees"
+msgstr ""
+
+#: ../app/tools/gimptransformoptions.c:351
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Сохранить пропорции  (%s)"
+
+#: ../app/tools/gimptransformoptions.c:352
+msgid "Keep the original aspect ratio"
+msgstr ""
 
 #: ../app/tools/gimptransformtool.c:212
 msgid "Transforming"
@@ -13934,136 +13952,136 @@ msgstr "Контуры: создание и правка контуров"
 msgid "Pat_hs"
 msgstr "Ко_нтуры"
 
-#: ../app/tools/gimpvectortool.c:251
+#: ../app/tools/gimpvectortool.c:250
 msgid "The active path is locked."
 msgstr "Активный контур заблокирован от изменений"
 
-#: ../app/tools/gimpvectortool.c:341
+#: ../app/tools/gimpvectortool.c:340
 msgid "Add Stroke"
 msgstr "Добавить контур"
 
-#: ../app/tools/gimpvectortool.c:365
+#: ../app/tools/gimpvectortool.c:364
 msgid "Add Anchor"
 msgstr "Добавка узла"
 
-#: ../app/tools/gimpvectortool.c:391
+#: ../app/tools/gimpvectortool.c:390
 msgid "Insert Anchor"
 msgstr "Вставка узла"
 
-#: ../app/tools/gimpvectortool.c:422
+#: ../app/tools/gimpvectortool.c:421
 msgid "Drag Handle"
 msgstr "Перемещение рычага"
 
-#: ../app/tools/gimpvectortool.c:453
+#: ../app/tools/gimpvectortool.c:452
 msgid "Drag Anchor"
 msgstr "Перемещение узла"
 
-#: ../app/tools/gimpvectortool.c:471
+#: ../app/tools/gimpvectortool.c:470
 msgid "Drag Anchors"
 msgstr "Переместить узлы"
 
-#: ../app/tools/gimpvectortool.c:494
+#: ../app/tools/gimpvectortool.c:493
 msgid "Drag Curve"
 msgstr "Перемещение контура"
 
-#: ../app/tools/gimpvectortool.c:523
+#: ../app/tools/gimpvectortool.c:522
 msgid "Connect Strokes"
 msgstr "Соединить контуры"
 
-#: ../app/tools/gimpvectortool.c:555
+#: ../app/tools/gimpvectortool.c:554
 msgid "Drag Path"
 msgstr "Перемещение контура"
 
-#: ../app/tools/gimpvectortool.c:566
+#: ../app/tools/gimpvectortool.c:565
 msgid "Convert Edge"
 msgstr "Преобразовать угол"
 
-#: ../app/tools/gimpvectortool.c:597
+#: ../app/tools/gimpvectortool.c:596
 msgid "Delete Anchor"
 msgstr "Удаление узла"
 
-#: ../app/tools/gimpvectortool.c:620
+#: ../app/tools/gimpvectortool.c:619
 msgid "Delete Segment"
 msgstr "Удаление сегмента"
 
-#: ../app/tools/gimpvectortool.c:839
+#: ../app/tools/gimpvectortool.c:838
 msgid "Move Anchors"
 msgstr "Перемещение узлов"
 
-#: ../app/tools/gimpvectortool.c:1202
+#: ../app/tools/gimpvectortool.c:1201
 msgid "Click to pick path to edit"
 msgstr "Нажмите, чтобы выбрать контур для правки"
 
-#: ../app/tools/gimpvectortool.c:1206
+#: ../app/tools/gimpvectortool.c:1205
 msgid "Click to create a new path"
 msgstr "Нажмите, чтобы создать новый контур"
 
-#: ../app/tools/gimpvectortool.c:1210
+#: ../app/tools/gimpvectortool.c:1209
 msgid "Click to create a new component of the path"
 msgstr "Нажмите, чтобы создать новый компонент контура"
 
-#: ../app/tools/gimpvectortool.c:1214
+#: ../app/tools/gimpvectortool.c:1213
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Щёлкните или щёлкните и потащите для создания нового узла"
 
-#: ../app/tools/gimpvectortool.c:1226 ../app/tools/gimpvectortool.c:1233
+#: ../app/tools/gimpvectortool.c:1225 ../app/tools/gimpvectortool.c:1232
 msgid "Click-Drag to move the anchor around"
 msgstr "Щёлкните и потащите, чтобы переместить узел"
 
-#: ../app/tools/gimpvectortool.c:1237 ../app/tools/gimpvectortool.c:1260
+#: ../app/tools/gimpvectortool.c:1236 ../app/tools/gimpvectortool.c:1259
 msgid "Click-Drag to move the anchors around"
 msgstr "Щёлкните и потащите, чтобы переместить узлы"
 
-#: ../app/tools/gimpvectortool.c:1243
+#: ../app/tools/gimpvectortool.c:1242
 msgid "Click-Drag to move the handle around"
 msgstr "Щёлкните и потащите, чтобы переместить рычаг"
 
-#: ../app/tools/gimpvectortool.c:1250
+#: ../app/tools/gimpvectortool.c:1249
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Щёлкните и потащите, чтобы переместить рычаги симметрично"
 
-#: ../app/tools/gimpvectortool.c:1265
+#: ../app/tools/gimpvectortool.c:1264
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Щёлкните и потащите, чтобы изменить фигуру кривой"
 
-#: ../app/tools/gimpvectortool.c:1268
+#: ../app/tools/gimpvectortool.c:1267
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: симметрично"
 
-#: ../app/tools/gimpvectortool.c:1273
+#: ../app/tools/gimpvectortool.c:1272
 msgid "Click-Drag to move the component around"
 msgstr "Щёлкните и потащите, чтобы переместить компонент"
 
-#: ../app/tools/gimpvectortool.c:1281
+#: ../app/tools/gimpvectortool.c:1280
 msgid "Click-Drag to move the path around"
 msgstr "Щёлкните и потащите, чтобы переместить контур"
 
-#: ../app/tools/gimpvectortool.c:1285
+#: ../app/tools/gimpvectortool.c:1284
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Щёлкните и потащите, чтобы вставить узел в контур"
 
-#: ../app/tools/gimpvectortool.c:1293
+#: ../app/tools/gimpvectortool.c:1292
 msgid "Click to delete this anchor"
 msgstr "Щёлкните, чтобы удалить этот узел"
 
-#: ../app/tools/gimpvectortool.c:1297
+#: ../app/tools/gimpvectortool.c:1296
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Щёлкните, чтобы соединить этот узел с выбранным конечным узлом"
 
-#: ../app/tools/gimpvectortool.c:1302
+#: ../app/tools/gimpvectortool.c:1301
 msgid "Click to open up the path"
 msgstr "Щёлкните, чтобы разомкнуть контур"
 
-#: ../app/tools/gimpvectortool.c:1306
+#: ../app/tools/gimpvectortool.c:1305
 msgid "Click to make this node angular"
 msgstr "Щёлкните, чтобы сделать этот узел угловым"
 
-#: ../app/tools/gimpvectortool.c:1806
+#: ../app/tools/gimpvectortool.c:1805
 msgid "Delete Anchors"
 msgstr "Удалить узлы"
 
-#: ../app/tools/gimpvectortool.c:1964
+#: ../app/tools/gimpvectortool.c:1963
 msgid "There is no active layer or channel to stroke to"
 msgstr "Нет активного слоя или канала для обводки"
 
@@ -14382,55 +14400,55 @@ msgstr ""
 "Шестнадцатеричная нотация цветов, принятая в HTML и CSS. Сюда также можно "
 "ввести название цвета по CSS."
 
-#: ../app/widgets/gimpcolorframe.c:512
+#: ../app/widgets/gimpcolorframe.c:511
 msgid "Index:"
 msgstr "Номер:"
 
-#: ../app/widgets/gimpcolorframe.c:525 ../app/widgets/gimpcolorframe.c:551
+#: ../app/widgets/gimpcolorframe.c:524 ../app/widgets/gimpcolorframe.c:550
 msgid "Red:"
 msgstr "Красный:"
 
-#: ../app/widgets/gimpcolorframe.c:526 ../app/widgets/gimpcolorframe.c:552
+#: ../app/widgets/gimpcolorframe.c:525 ../app/widgets/gimpcolorframe.c:551
 msgid "Green:"
 msgstr "Зеленый:"
 
-#: ../app/widgets/gimpcolorframe.c:527 ../app/widgets/gimpcolorframe.c:553
+#: ../app/widgets/gimpcolorframe.c:526 ../app/widgets/gimpcolorframe.c:552
 msgid "Blue:"
 msgstr "Синий:"
 
-#: ../app/widgets/gimpcolorframe.c:540 ../app/widgets/gimpcolorframe.c:573
+#: ../app/widgets/gimpcolorframe.c:539 ../app/widgets/gimpcolorframe.c:572
 msgid "Value:"
 msgstr "Яркость"
 
-#: ../app/widgets/gimpcolorframe.c:564
+#: ../app/widgets/gimpcolorframe.c:563
 msgid "Hex:"
 msgstr "Hex:"
 
-#: ../app/widgets/gimpcolorframe.c:571
+#: ../app/widgets/gimpcolorframe.c:570
 msgid "Hue:"
 msgstr "Тон:"
 
-#: ../app/widgets/gimpcolorframe.c:572
+#: ../app/widgets/gimpcolorframe.c:571
 msgid "Sat.:"
 msgstr "Насыщенность:"
 
-#: ../app/widgets/gimpcolorframe.c:590
+#: ../app/widgets/gimpcolorframe.c:589
 msgid "Cyan:"
 msgstr "Голубой:"
 
-#: ../app/widgets/gimpcolorframe.c:591
+#: ../app/widgets/gimpcolorframe.c:590
 msgid "Magenta:"
 msgstr "Пурпурный:"
 
-#: ../app/widgets/gimpcolorframe.c:592
+#: ../app/widgets/gimpcolorframe.c:591
 msgid "Yellow:"
 msgstr "Желтый:"
 
-#: ../app/widgets/gimpcolorframe.c:593
+#: ../app/widgets/gimpcolorframe.c:592
 msgid "Black:"
 msgstr "Черный:"
 
-#: ../app/widgets/gimpcolorframe.c:613
+#: ../app/widgets/gimpcolorframe.c:612
 msgid "Alpha:"
 msgstr "Альфа-канал:"
 
@@ -14810,7 +14828,7 @@ msgstr ""
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:141
-#: ../app/widgets/gimpdynamicsoutputeditor.c:68
+#: ../app/widgets/gimpdynamicsoutputeditor.c:69
 msgid "Pressure"
 msgstr "Нажим"
 
@@ -14824,7 +14842,7 @@ msgstr "Наклон по Y"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:143
 #: ../app/widgets/gimpdynamicseditor.c:145
-#: ../app/widgets/gimpdynamicsoutputeditor.c:72
+#: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Wheel"
 msgstr "Колесо"
 
@@ -14850,7 +14868,7 @@ msgid "%s Curve"
 msgstr "Кривая %s"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:471
-#: ../app/widgets/gimpdynamicsoutputeditor.c:195
+#: ../app/widgets/gimpdynamicsoutputeditor.c:209
 msgid "_Reset Curve"
 msgstr "С_бросить"
 
@@ -14941,17 +14959,17 @@ msgid "Mapping matrix"
 msgstr "Матрица привязки"
 
 #: ../app/widgets/gimpdynamicseditor.c:142
-#: ../app/widgets/gimpdynamicsoutputeditor.c:69
+#: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Velocity"
 msgstr "Скорость"
 
 #: ../app/widgets/gimpdynamicseditor.c:146
-#: ../app/widgets/gimpdynamicsoutputeditor.c:73
+#: ../app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Random"
 msgstr "Случайность"
 
 #: ../app/widgets/gimpdynamicseditor.c:147
-#: ../app/widgets/gimpdynamicsoutputeditor.c:74
+#: ../app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Fade"
 msgstr "Угасание"
 
