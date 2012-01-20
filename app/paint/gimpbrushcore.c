@@ -336,7 +336,7 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
                                                              paint_options,
                                                              fade_point);
 
-              if (scale < 0.0001)
+              if (scale < 0.0000001)
                 return FALSE;
             }
         }
