@@ -231,10 +231,10 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
 
   pixel_region_init_data (&smudge->accumPR, smudge->accum_data,
                           bytes, bytes * smudge->accum_size,
-                          area->x - x,
-                          area->y - y,
-                          area->width,
-                          area->height);
+                          0,
+                          0,
+                          smudge->accum_size,
+                          smudge->accum_size);
 
   return TRUE;
 }
