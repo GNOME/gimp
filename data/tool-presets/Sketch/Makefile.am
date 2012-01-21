@@ -2,7 +2,7 @@
 
 toolpresetssketchdatadir = $(gimpdatadir)/tool-presets/Sketch
 
-toolpresetssketchdata_DATA =	\
+toolpresetssketchdata_DATA = \
 	Blue_Pen.gtp		\
 	Eraser_Soft.gtp		\
 	Ink_Smooth.gtp		\
@@ -10,8 +10,4 @@ toolpresetssketchdata_DATA =	\
 	Pencil.gtp		\
 	Pencil_Soft.gtp
 
-
-
-
 EXTRA_DIST = $(toolpresetssketchdata_DATA)
- 

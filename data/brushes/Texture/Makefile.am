@@ -2,7 +2,7 @@
 
 brushtexturedatadir = $(gimpdatadir)/brushes/Texture
 
-brushtexturedata_DATA =		\
+brushtexturedata_DATA = \
 	Cell_01.gbr		\
 	Cell_02.gbr		\
 	Smoke.gbr		\
@@ -14,6 +14,5 @@ brushtexturedata_DATA =		\
 	Texture_Hose_03.gih	\
 	Vegetation_01.gbr	\
 	Vegetation_02.gih
-
 
 EXTRA_DIST = $(brushtexturedata_DATA)

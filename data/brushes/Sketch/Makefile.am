@@ -2,7 +2,7 @@
 
 brushsketchdatadir = $(gimpdatadir)/brushes/Sketch
 
-brushsketchdata_DATA =		\
+brushsketchdata_DATA = \
 	Chalk_01.gih		\
 	Chalk_02.gih		\
 	Chalk_03.gih		\
@@ -11,6 +11,5 @@ brushsketchdata_DATA =		\
 	Pencil_01.gih		\
 	Pencil_02.gih		\
 	Pencil_Scratch.gbr
-
 
 EXTRA_DIST = $(brushsketchdata_DATA)

@@ -2,7 +2,7 @@
 
 toolpresetsfxdatadir = $(gimpdatadir)/tool-presets/FX
 
-toolpresetsfxdata_DATA =	\
+toolpresetsfxdata_DATA = \
 	Crop-16-9.gtp		\
 	Crop-Composition.gtp	\
 	Fill_Paper.gtp		\
@@ -12,7 +12,4 @@ toolpresetsfxdata_DATA =	\
 	Smooth_Clone.gtp	\
 	Vignette.gtp
 
-
-
 EXTRA_DIST = $(toolpresetsfxdata_DATA)
- 

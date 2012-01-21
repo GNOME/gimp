@@ -5,4 +5,3 @@ SUBDIRS = \
 	Paint		\
 	Selection	\
 	Sketch
-

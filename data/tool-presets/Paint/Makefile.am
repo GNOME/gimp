@@ -2,7 +2,7 @@
 
 toolpresetspaintdatadir = $(gimpdatadir)/tool-presets/Paint
 
-toolpresetspaintdata_DATA =	\
+toolpresetspaintdata_DATA = \
 	Airbrush.gtp		\
 	Basic_Round_Detail.gtp	\
 	Bristles.gtp		\
@@ -17,7 +17,4 @@ toolpresetspaintdata_DATA =	\
 	Splatters.gtp		\
 	Vegetal.gtp
 
-
-
 EXTRA_DIST = $(toolpresetspaintdata_DATA)
- 

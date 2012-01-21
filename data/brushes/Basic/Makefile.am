@@ -2,7 +2,7 @@
 
 brushbasicdatadir = $(gimpdatadir)/brushes/Basic
 
-brushbasicdata_DATA =		\
+brushbasicdata_DATA = \
 	1_pixel.vbr		\
 	Block_01.vbr		\
 	Block_02.vbr		\
