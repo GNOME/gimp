@@ -3,6 +3,9 @@
 brushdatadir = $(gimpdatadir)/brushes
 obsoletebrushdatadir = $(gimpdatadir)/brushes/gimp-obsolete-files
 
+SUBDIRS = \
+	Basic
+
 brushdata_DATA = \
 	confetti.gbr			\
 	dunes.gbr			\
