@@ -1,0 +1,22 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-eraser")
+(name "Eraser Hard")
+(tool-options "GimpEraserOptions"
+    (tool "gimp-eraser-tool")
+    (brush "Block_01")
+    (dynamics "Pressure_Opacity")
+    (pattern "Pine")
+    (palette "Default")
+    (font "Sans")
+    (brush-size 80.000000)
+    (gradient-reverse yes))
+(use-fg-bg no)
+(use-brush yes)
+(use-dynamics yes)
+(use-gradient yes)
+(use-pattern yes)
+(use-palette yes)
+(use-font yes)
+
+# end of GIMP tool preset file

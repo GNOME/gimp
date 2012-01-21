@@ -1,0 +1,26 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-paintbrush")
+(name "Noise")
+(tool-options "GimpPaintOptions"
+    (tool "gimp-paintbrush-tool")
+    (foreground (color-rgb 0.102075 0.183901 0.594317))
+    (brush "Sponge_01")
+    (dynamics "Pressure_Opacity")
+    (pattern "Pine")
+    (gradient "FG to Transparent")
+    (font "Arial")
+    (brush-size 450.000000)
+    (brush-angle 90.000000)
+    (jitter-amount 2.758621)
+    (fade-length 138.000000)
+    (fade-unit percent))
+(use-fg-bg no)
+(use-brush yes)
+(use-dynamics yes)
+(use-gradient no)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

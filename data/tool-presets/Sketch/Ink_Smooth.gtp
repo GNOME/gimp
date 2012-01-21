@@ -1,0 +1,31 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-ink")
+(name "Ink Smooth")
+(tool-options "GimpInkOptions"
+    (tool "gimp-ink-tool")
+    (foreground (color-rgb 0.000000 0.023605 0.142004))
+    (brush "Clipboard")
+    (dynamics "Negative_Size_Pressure")
+    (pattern "Pine")
+    (gradient "FG to BG (RGB)")
+    (palette "Default")
+    (font "Sans")
+    (brush-size 250.000000)
+    (use-smoothing yes)
+    (smoothing-quality 75)
+    (smoothing-factor 300.000000)
+    (size 10.000000)
+    (vel-sensitivity 0.900000)
+    (tilt-sensitivity 0.000000)
+    (blob-aspect 3.264353)
+    (blob-angle -1.012197))
+(use-fg-bg no)
+(use-brush no)
+(use-dynamics no)
+(use-gradient no)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

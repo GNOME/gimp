@@ -1,0 +1,26 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-blend")
+(name "FX Radial Softlight")
+(tool-options "GimpBlendOptions"
+    (tool "gimp-blend-tool")
+    (foreground (color-rgb 0.102075 0.183901 0.594317))
+    (paint-mode softlight-mode)
+    (brush "Clipboard")
+    (dynamics "Dynamics Off")
+    (pattern "Pine")
+    (gradient "FG to Transparent")
+    (palette "Default")
+    (font "Sans")
+    (brush-size 400.000000)
+    (dynamics-expanded yes)
+    (gradient-type radial))
+(use-fg-bg no)
+(use-brush no)
+(use-dynamics yes)
+(use-gradient yes)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

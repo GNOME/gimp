@@ -1,0 +1,26 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-paintbrush")
+(name "Vegetation")
+(tool-options "GimpPaintOptions"
+    (tool "gimp-paintbrush-tool")
+    (foreground (color-rgb 0.102075 0.183901 0.594317))
+    (brush "Vegetation_02")
+    (dynamics "Perspective")
+    (pattern "Paper")
+    (gradient "FG to BG (RGB)")
+    (font "Sans")
+    (brush-size 250.000000)
+    (application-mode incremental)
+    (jitter-amount 0.350000)
+    (fade-length 138.000000)
+    (fade-unit percent))
+(use-fg-bg no)
+(use-brush yes)
+(use-dynamics yes)
+(use-gradient no)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

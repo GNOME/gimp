@@ -1,0 +1,21 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-paintbrush")
+(name "Structure")
+(tool-options "GimpPaintOptions"
+    (tool "gimp-paintbrush-tool")
+    (brush "Structure")
+    (dynamics "Perspective")
+    (pattern "Paper")
+    (gradient "FG to BG (RGB)")
+    (font "Sans")
+    (brush-size 283.550000))
+(use-fg-bg no)
+(use-brush yes)
+(use-dynamics yes)
+(use-gradient yes)
+(use-pattern yes)
+(use-palette yes)
+(use-font yes)
+
+# end of GIMP tool preset file

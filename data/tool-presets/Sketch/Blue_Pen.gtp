@@ -1,0 +1,29 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-paintbrush")
+(name "Blue Pen (Multiply)")
+(tool-options "GimpPaintOptions"
+    (tool "gimp-paintbrush-tool")
+    (foreground (color-rgb 0.102075 0.183901 0.594317))
+    (opacity 0.750000)
+    (paint-mode multiply-mode)
+    (brush "Hardness 075")
+    (dynamics "Pen_Generic")
+    (pattern "Paper")
+    (gradient "Tropical Colors")
+    (font "Sans")
+    (brush-size 15.000000)
+    (application-mode incremental)
+    (use-jitter yes)
+    (jitter-amount 0.150000)
+    (fade-length 138.000000)
+    (fade-unit percent))
+(use-fg-bg yes)
+(use-brush yes)
+(use-dynamics yes)
+(use-gradient no)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

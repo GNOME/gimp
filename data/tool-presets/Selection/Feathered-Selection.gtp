@@ -1,0 +1,29 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-rect-select")
+(name "Feathered Selection")
+(tool-options "GimpRectangleSelectOptions"
+    (aspect-denominator 424.483617)
+    (aspect-numerator 453.543307)
+    (guide center-lines)
+    (tool "gimp-rect-select-tool")
+    (paint-info "gimp-paintbrush")
+    (brush "Hardness 050")
+    (dynamics "Pressure_Opacity")
+    (pattern "Pine")
+    (gradient "FG to BG (RGB)")
+    (palette "Default")
+    (font "Sans")
+    (feather yes)
+    (feather-radius 25.000000)
+    (round-corners yes)
+    (corner-radius 50.000000))
+(use-fg-bg no)
+(use-brush no)
+(use-dynamics no)
+(use-gradient no)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

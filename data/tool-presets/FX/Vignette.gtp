@@ -1,0 +1,29 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-blend")
+(name "Vignette")
+(tool-options "GimpBlendOptions"
+    (tool "gimp-blend-tool")
+    (opacity 0.924000)
+    (paint-mode multiply-mode)
+    (brush "Clipboard")
+    (dynamics "Dynamics Off")
+    (pattern "Pine")
+    (gradient "FG to BG (RGB)")
+    (palette "Default")
+    (font "Sans")
+    (brush-size 21.180000)
+    (brush-aspect-ratio -0.400000)
+    (dynamics-expanded yes)
+    (gradient-reverse yes)
+    (offset 33.000000)
+    (gradient-type radial))
+(use-fg-bg no)
+(use-brush no)
+(use-dynamics no)
+(use-gradient yes)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

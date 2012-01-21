@@ -1,0 +1,30 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-ellipse-select")
+(name "Circle 200px")
+(tool-options "GimpRectangleSelectOptions"
+    (aspect-denominator 200.000000)
+    (aspect-numerator 200.000000)
+    (desired-fixed-size-height 200.000000)
+    (desired-fixed-size-width 200.000000)
+    (fixed-rule size)
+    (fixed-rule-active yes)
+    (overridden-fixed-size yes)
+    (tool "gimp-ellipse-select-tool")
+    (paint-info "gimp-paintbrush")
+    (brush "Hardness 050")
+    (dynamics "Pressure_Opacity")
+    (pattern "Pine")
+    (gradient "FG to BG (RGB)")
+    (palette "Default")
+    (font "Sans")
+    (operation add))
+(use-fg-bg no)
+(use-brush no)
+(use-dynamics no)
+(use-gradient no)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

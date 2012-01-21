@@ -1,0 +1,25 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-smudge")
+(name "Smudge Rough")
+(tool-options "GimpSmudgeOptions"
+    (tool "gimp-smudge-tool")
+    (foreground (color-rgb 1.000000 1.000000 1.000000))
+    (background (color-rgb 0.000000 0.000000 0.000000))
+    (opacity 0.500000)
+    (brush "Acrylic_01")
+    (dynamics "Pressure_Opacity")
+    (pattern "Paper")
+    (font "Sans")
+    (brush-size 100.000000)
+    (jitter-amount 0.339806)
+    (rate 60.000000))
+(use-fg-bg no)
+(use-brush yes)
+(use-dynamics yes)
+(use-gradient no)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

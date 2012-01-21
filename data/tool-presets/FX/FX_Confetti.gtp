@@ -1,0 +1,29 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-paintbrush")
+(name "FX Confetti")
+(tool-options "GimpPaintOptions"
+    (tool "gimp-paintbrush-tool")
+    (foreground (color-rgb 0.102075 0.183901 0.594317))
+    (opacity 0.800000)
+    (brush "1_Pixel")
+    (dynamics "Confetti")
+    (pattern "Paper")
+    (gradient "Tropical Colors")
+    (font "Sans")
+    (brush-size 100.000000)
+    (brush-aspect-ratio 0.100000)
+    (use-jitter yes)
+    (jitter-amount 5.000000)
+    (dynamics-expanded yes)
+    (fade-length 140.000000)
+    (fade-unit percent))
+(use-fg-bg no)
+(use-brush yes)
+(use-dynamics yes)
+(use-gradient yes)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file

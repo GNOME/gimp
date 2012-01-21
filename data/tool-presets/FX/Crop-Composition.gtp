@@ -1,0 +1,25 @@
+# GIMP tool preset file
+
+(stock-id "gimp-tool-crop")
+(name "Crop Composition")
+(tool-options "GimpCropOptions"
+    (aspect-denominator 1251.403099)
+    (aspect-numerator 1835.387351)
+    (guide thirds)
+    (tool "gimp-crop-tool")
+    (paint-info "gimp-paintbrush")
+    (brush "Hardness 050")
+    (dynamics "Pressure_Opacity")
+    (pattern "Pine")
+    (gradient "FG to BG (RGB)")
+    (palette "Default")
+    (font "Sans"))
+(use-fg-bg no)
+(use-brush no)
+(use-dynamics no)
+(use-gradient no)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file
