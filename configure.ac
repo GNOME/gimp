@@ -2235,7 +2235,13 @@ themes/Small/Makefile
 data/Makefile
 data/brushes/Makefile
 data/brushes/Basic/Makefile
+data/brushes/Media/Makefile
+data/brushes/Sketch/Makefile
+data/brushes/Splatters/Makefile
+data/brushes/Texture/Makefile
 data/dynamics/Makefile
+data/dynamics/Basic/Makefile
+data/dynamics/FX/Makefile
 data/environ/Makefile
 data/gradients/Makefile
 data/images/Makefile
@@ -2244,6 +2250,11 @@ data/palettes/Makefile
 data/patterns/Makefile
 data/tags/Makefile
 data/tips/Makefile
+data/tool-presets/Makefile
+data/tool-presets/FX/Makefile
+data/tool-presets/Paint/Makefile
+data/tool-presets/Selection/Makefile
+data/tool-presets/Sketch/Makefile
 desktop/Makefile
 desktop/gimp.desktop.in
 etc/Makefile

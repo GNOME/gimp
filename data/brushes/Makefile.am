@@ -4,7 +4,11 @@ brushdatadir = $(gimpdatadir)/brushes
 obsoletebrushdatadir = $(gimpdatadir)/brushes/gimp-obsolete-files
 
 SUBDIRS = \
-	Basic
+	Basic		\
+	Media		\
+	Sketch		\
+	Splatters	\
+	Texture
 
 brushdata_DATA = \
 	confetti.gbr			\

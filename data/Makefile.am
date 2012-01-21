@@ -10,7 +10,8 @@ SUBDIRS = \
 	palettes	\
 	patterns	\
 	tips		\
-	tags
+	tags		\
+	tool-presets
 
 fontdir = $(gimpdatadir)/fonts
 
