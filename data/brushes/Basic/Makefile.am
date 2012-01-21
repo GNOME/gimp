@@ -10,7 +10,7 @@ brushbasicdata_DATA =		\
 	Hardness_025.vbr	\
 	Hardness_050.vbr	\
 	Hardness_075.vbr	\
-	Hardness 100.vbr	\
+	Hardness_100.vbr	\
 	Star.vbr
 
 EXTRA_DIST = $(brushbasicdata_DATA)
