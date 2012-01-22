@@ -1,5 +1,9 @@
 ## Makefile.am for gimp/data/dynamics
 
+SUBDIRS = \
+	Basic \
+	FX
+
 dynamicsdatadir = $(gimpdatadir)/dynamics
 
 dynamicsdata_DATA = \
