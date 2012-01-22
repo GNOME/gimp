@@ -30,16 +30,14 @@
 #define GIMP_TOOL_PRESET_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_PRESET_EDITOR, GimpToolPresetEditorClass))
 
 
-typedef struct _GimpToolPresetEditorClass GimpToolPresetEditorClass;
+typedef struct _GimpToolPresetEditorPrivate GimpToolPresetEditorPrivate;
+typedef struct _GimpToolPresetEditorClass   GimpToolPresetEditorClass;
 
 struct _GimpToolPresetEditor
 {
-  GimpDataEditor  parent_instance;
+  GimpDataEditor               parent_instance;
 
-  GimpToolPreset *tool_preset_model;
-
-  GtkWidget      *tool_icon;
-  GtkWidget      *tool_label;
+  GimpToolPresetEditorPrivate *priv;
 };
 
 struct _GimpToolPresetEditorClass
