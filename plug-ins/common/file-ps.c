@@ -87,21 +87,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#ifdef G_OS_WIN32
-/* On Win32 we don't use pipes. Use a real output file for ghostscript */
-#define USE_REAL_OUTPUTFILE
-#endif
-
-#ifdef USE_REAL_OUTPUTFILE
-
-#ifdef G_OS_WIN32
-#include <process.h>            /* For _getpid() */
-#endif
-#else
-#ifdef HAVE_SYS_WAIT_H
-#include <sys/wait.h>
-#endif
-#endif
+#include <ghostscript/ierrors.h>
+#include <ghostscript/iapi.h>
+#include <ghostscript/gdevdsp.h>
 
 #define VERSIO 1.17
 static const gchar dversio[] = "v1.17  19-Sep-2004";
@@ -118,14 +106,6 @@ static const gchar dversio[] = "v1.17  19-Sep-2004";
 
 
 #define STR_LENGTH 64
-
-#ifndef G_OS_WIN32
-#define DEFAULT_GS_PROG "gs"
-#else
-/* We want the console ghostscript application. It should be in the PATH */
-#define DEFAULT_GS_PROG "gswin32c"
-#endif
-
 
 /* Load info */
 typedef struct
@@ -243,11 +223,9 @@ static FILE * ps_open          (const gchar       *filename,
                                 gint              *lly,
                                 gint              *urx,
                                 gint              *ury,
-                                gboolean          *is_epsf,
-                                gint              *ChildPid);
+                                gboolean          *is_epsf);
 
-static void   ps_close         (FILE              *ifp,
-                                gint              ChildPid);
+static void   ps_close         (FILE              *ifp);
 
 static gboolean  skip_ps       (FILE              *ifp);
 
@@ -1013,7 +991,6 @@ load_image (const gchar  *filename,
   gint32    image_ID = 0;
   gint32   *image_list, *nl;
   guint     page_count;
-  gint      ChildPid;
   FILE     *ifp;
   gchar    *temp;
   gint      llx, lly, urx, ury;
@@ -1043,8 +1020,7 @@ load_image (const gchar  *filename,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf,
-                 &ChildPid);
+  ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
   if (!ifp)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR,
@@ -1111,7 +1087,7 @@ load_image (const gchar  *filename,
         }
     }
 
-  ps_close (ifp, ChildPid);
+  ps_close (ifp);
 
   if (ps_pagemode == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
     {
@@ -1514,10 +1490,8 @@ ps_open (const gchar      *filename,
          gint             *lly,
          gint             *urx,
          gint             *ury,
-         gboolean         *is_epsf,
-         gint             *ChildPidPtr)
+         gboolean         *is_epsf)
 {
-  const gchar  *gs;
   const gchar  *driver;
   GPtrArray    *cmdA;
   gchar       **pcmdA;
@@ -1530,13 +1504,9 @@ ps_open (const gchar      *filename,
   gint          offy = 0;
   gboolean      is_pdf;
   gboolean      maybe_epsf = FALSE;
-  GError       *error = NULL;
-  GSpawnFlags   flags;
-#ifndef USE_REAL_OUTPUTFILE
-  gint          ChildStdout;
-#endif
+  int           code;
+  void         *instance;
 
-  *ChildPidPtr = 0;
   resolution = loadopt->resolution;
   *llx = *lly = 0;
   width = loadopt->width;
@@ -1631,25 +1601,16 @@ ps_open (const gchar      *filename,
       break;
     }
 
-#ifdef USE_REAL_OUTPUTFILE
   /* For instance, the Win32 port of ghostscript doesn't work correctly when
    * using standard output as output file.
    * Thus, use a real output file.
    */
-  pnmfile = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "p%lx",
-                             g_get_tmp_dir (), (gulong) getpid ());
-#else
-  pnmfile = "-";
-#endif
-
-  gs = g_getenv ("GS_PROG");
-  if (gs == NULL)
-    gs = DEFAULT_GS_PROG;
+  pnmfile = gimp_temp_name ("pnm");
 
   /* Build command array */
   cmdA = g_ptr_array_new ();
 
-  g_ptr_array_add (cmdA, g_strdup (gs));
+  g_ptr_array_add (cmdA, g_strdup (g_get_prgname ()));
   g_ptr_array_add (cmdA, g_strdup_printf ("-sDEVICE=%s", driver));
   g_ptr_array_add (cmdA, g_strdup_printf ("-r%d", resolution));
 
@@ -1712,7 +1673,7 @@ ps_open (const gchar      *filename,
 #ifdef PS_DEBUG
   {
     gchar **p = pcmdA;
-    g_print ("Starting command:\n");
+    g_print ("Passing args (argc=%d):\n", cmdA->len - 1);
 
     while (*p)
       {
@@ -1722,75 +1683,18 @@ ps_open (const gchar      *filename,
   }
 #endif
 
-  /* Start the command */
-#ifndef USE_REAL_OUTPUTFILE
-  flags = G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD;
-
-  if ( !g_spawn_async_with_pipes (NULL,         /* working dir */
-                                  pcmdA,        /* command array */
-                                  NULL,         /* environment */
-                                  flags,        /* Flags */
-                                  NULL, NULL,   /* Child setup and userdata */
-                                  ChildPidPtr,
-                                  NULL,         /* stdin */
-                                  &ChildStdout,
-                                  NULL,         /* stderr */
-                                  &error) )
-    {
-      g_message (_("Error starting Ghostscript. Make sure that Ghostscript "
-                   "is installed and - if necessary - use the environment "
-                   "variable GS_PROG to tell GIMP about its location.\n(%s)"),
-                 error->message);
-      g_error_free (error);
-
-      *ChildPidPtr = 0;
-
-      goto out;
-    }
-
-#ifdef PS_DEBUG
-  g_print ("Ghostscript started with pid=%d\n", *ChildPidPtr);
-#endif
-
-  /* Get a file pointer from the descriptor */
-  fd_popen = fdopen (ChildStdout, "rb");
-
-#else
-
-  /* Use a real outputfile. Wait until ghostscript has finished */
-  flags = G_SPAWN_SEARCH_PATH |
-          G_SPAWN_STDOUT_TO_DEV_NULL |
-          G_SPAWN_STDERR_TO_DEV_NULL;
-
-  if ( !g_spawn_sync (NULL,       /* working dir */
-                      pcmdA,      /* command array */
-                      NULL,       /* environment */
-                      flags,      /* Flags */
-                      NULL, NULL, /* Child setup and userdata */
-                      NULL,       /* stdout */
-                      NULL,       /* stderr */
-                      NULL,       /* exit code */
-                      &error) )
-    {
-      g_message (_("Error starting Ghostscript. Make sure that Ghostscript "
-                   "is installed and - if necessary - use the environment "
-                   "variable GS_PROG to tell GIMP about its location.\n(%s)"),
-                 error->message);
-      g_error_free (error);
-
-      g_unlink (pnmfile);
-
-      goto out;
-    }
+  code = gsapi_new_instance (&instance, NULL);
+  if (code == 0) {
+    code = gsapi_init_with_args (instance, cmdA->len - 1, pcmdA);
+    code = gsapi_exit (instance);
+    gsapi_delete_instance (instance);
+  }
 
   /* Don't care about exit status of ghostscript. */
   /* Just try to read what it wrote. */
 
   fd_popen = g_fopen (pnmfile, "rb");
 
-#endif
-
-out:
   g_ptr_array_free (cmdA, FALSE);
   g_strfreev (pcmdA);
 
@@ -1800,53 +1704,11 @@ out:
 
 /* Close the PNM-File of the PostScript interpreter */
 static void
-ps_close (FILE *ifp, gint ChildPid)
+ps_close (FILE *ifp)
 {
-
-#ifndef USE_REAL_OUTPUTFILE
-  int status;
-  pid_t RetVal;
-
-  /* Enabling the code below causes us to read the pipe until EOF even
-   * if we dont want all images. Should be enabled if people report that
-   * the gs subprocess does not finish. For now it is disabled since it
-   * causes a significant slowdown.
-   */
-#ifdef EMPTY_PIPE
-  guchar buf[8192];
-
-#ifdef PS_DEBUG
-  g_print ("Reading rest from pipe\n");
-#endif
-
-  while (fread (buf, sizeof (buf), 1, ifp));
-#endif  /*  EMPTY_PIPE  */
-
-  /* Finish reading from pipe. */
-  fclose (ifp);
-
-  /* Wait for the child to exit */
-  if (ChildPid)
-    {
-#ifdef PS_DEBUG
-    g_print ("Waiting for %d to finish\n", (int)ChildPid);
-#endif
-
-    RetVal = waitpid (ChildPid, &status, 0);
-
-#ifdef PS_DEBUG
-    if (RetVal == -1)
-      g_print ("waitpid() failed\n");
-    else
-      g_print ("child has finished\n");
-#endif
-    }
-
-#else  /*  USE_REAL_OUTPUTFILE  */
  /* If a real outputfile was used, close the file and remove it. */
   fclose (ifp);
   g_unlink (pnmfile);
-#endif
 }
 
 
@@ -1869,7 +1731,7 @@ read_pnmraw_type (FILE *ifp,
   for (;;)
     {
       if (thrd == EOF) return -1;
-#if defined (WIN32)
+#ifdef G_OS_WIN32
       if (thrd == '\r') thrd = getc (ifp);
 #endif
       if ((thrd == '\n') && (frst == 'P') && (scnd >= '1') && (scnd <= '6'))
