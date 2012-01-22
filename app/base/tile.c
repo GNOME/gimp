@@ -294,7 +294,7 @@ tile_detach (Tile *tile,
   TileLink  *tmp;
 
 #ifdef TILE_DEBUG
-  g_printerr ("tile_detach: %p ~> (%p,%d) r%d *%d\n",
+  g_printerr ("tile_detach: %p ~> (%p,%d) r%d *%u\n",
               tile, tm, tile_num, tile->ref_count, tile->share_count);
 #endif
 

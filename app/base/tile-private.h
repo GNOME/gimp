@@ -47,7 +47,7 @@ struct _Tile
                          */
   gshort  write_count;  /* write count: number of references that are
                            for write access */
-  gshort  share_count;  /* share count: number of tile managers that
+  guint   share_count;  /* share count: number of tile managers that
                            hold this tile */
   guint   dirty : 1;    /* is the tile dirty? has it been modified? */
   guint   valid : 1;    /* is the tile valid? */

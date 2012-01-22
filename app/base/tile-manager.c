@@ -236,7 +236,7 @@ tile_manager_get (TileManager *tm,
 
 #ifdef DEBUG_TILE_MANAGER
   if (G_UNLIKELY (tile->share_count && tile->write_count))
-    g_printerr (">> MEEPITY %d,%d <<\n", tile->share_count, tile->write_count);
+    g_printerr (">> MEEPITY %u,%d <<\n", tile->share_count, tile->write_count);
 #endif
 
   if (wantread)
