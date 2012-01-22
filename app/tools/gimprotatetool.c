@@ -150,11 +150,11 @@ gimp_rotate_tool_key_press (GimpTool    *tool,
           gtk_spin_button_spin (angle_spin, GTK_SPIN_STEP_BACKWARD, 0.0);
           return TRUE;
 
-        case GDK_KEY_Left:
+        case GDK_KEY_Right:
           gtk_spin_button_spin (angle_spin, GTK_SPIN_PAGE_FORWARD, 0.0);
           return TRUE;
 
-        case GDK_KEY_Right:
+        case GDK_KEY_Left:
           gtk_spin_button_spin (angle_spin, GTK_SPIN_PAGE_BACKWARD, 0.0);
           return TRUE;
 
