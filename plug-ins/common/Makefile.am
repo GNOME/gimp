@@ -111,7 +111,7 @@ libexec_PROGRAMS = \
 	file-pix \
 	$(FILE_PNG) \
 	file-pnm \
-	file-ps \
+	$(FILE_PS) \
 	$(FILE_PSP) \
 	file-raw \
 	file-sunras \
@@ -196,6 +196,7 @@ EXTRA_PROGRAMS = \
 	file-pdf-load \
 	file-pdf-save \
 	file-png \
+	file-ps \
 	file-psp \
 	file-svg \
 	file-tiff-load \
@@ -1381,6 +1382,7 @@ file_ps_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GS_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_ps_RC)

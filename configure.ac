@@ -1171,6 +1171,25 @@ if test "x$have_zlib" = xyes && test "x$have_libbzip2" = xyes; then
    have_compressor=yes
 fi
 
+
+###############################
+# Check for Ghostscript library
+###############################
+
+have_gs=yes
+if test -z "$GS_LIBS"; then
+  AC_CHECK_LIB(gs, gsapi_new_instance,
+    [AC_CHECK_HEADER(ghostscript/iapi.h,
+      FILE_PS='file-ps$(EXEEXT)'; GS_LIBS='-lgs',
+      [have_gs="no (Ghostscript header files not found)"])],
+    [have_gs="no (Ghostscript library not found)"])
+fi
+
+AC_SUBST(FILE_PS)
+AM_CONDITIONAL(HAVE_GS, test "x$have_gs" = xyes)
+AC_SUBST(GS_LIBS)
+
+
 ##################
 # Check for libpng
 ##################
@@ -2303,6 +2322,7 @@ Optional Features:
 Optional Plug-Ins:
   Ascii Art:           $have_libaa
   Compressor:          $have_compressor
+  Ghostscript:         $have_gs
   Help Browser:        $have_webkit
   LCMS:                $have_lcms
   JPEG:                $jpeg_ok
