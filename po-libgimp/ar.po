@@ -61,7 +61,7 @@ msgstr "ادمج الطبقات المرئية"
 #: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "الملحقة %s لا يمكناه التعامل مع إزاحات أو أحجام أو تعتيم الطبقات"
+msgstr "الملحقة %s لا يمكنها التعامل مع إزاحات أو أحجام أو تعتيم الطبقات"
 
 #: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
