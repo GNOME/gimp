@@ -43,6 +43,14 @@ struct _GimpToolPresetEditorPrivate
 
   GtkWidget      *tool_icon;
   GtkWidget      *tool_label;
+
+  GtkWidget      *fg_bg_toggle;
+  GtkWidget      *brush_toggle;
+  GtkWidget      *dynamics_toggle;
+  GtkWidget      *gradient_toggle;
+  GtkWidget      *pattern_toggle;
+  GtkWidget      *palette_toggle;
+  GtkWidget      *font_toggle;
 };
 
 
@@ -146,38 +154,45 @@ gimp_tool_preset_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-fg-bg",
-                                       _("Apply stored FG/BG"));
+  button = editor->priv->fg_bg_toggle =
+    gimp_prop_check_button_new (G_OBJECT (preset), "use-fg-bg",
+                                _("Apply stored FG/BG"));
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-brush",
-                                       _("Apply stored brush"));
+  button = editor->priv->brush_toggle =
+    gimp_prop_check_button_new (G_OBJECT (preset), "use-brush",
+                                _("Apply stored brush"));
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-dynamics",
-                                       _("Apply stored dynamics"));
+  button = editor->priv->dynamics_toggle =
+    gimp_prop_check_button_new (G_OBJECT (preset), "use-dynamics",
+                                _("Apply stored dynamics"));
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-gradient",
-                                       _("Apply stored gradient"));
+  button = editor->priv->gradient_toggle =
+    gimp_prop_check_button_new (G_OBJECT (preset), "use-gradient",
+                                _("Apply stored gradient"));
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-pattern",
-                                       _("Apply stored pattern"));
+  button = editor->priv->pattern_toggle =
+    gimp_prop_check_button_new (G_OBJECT (preset), "use-pattern",
+                                _("Apply stored pattern"));
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-palette",
-                                       _("Apply stored palette"));
+  button = editor->priv->palette_toggle =
+    gimp_prop_check_button_new (G_OBJECT (preset), "use-palette",
+                                _("Apply stored palette"));
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-font",
-                                       _("Apply stored font"));
+  button = editor->priv->font_toggle =
+    gimp_prop_check_button_new (G_OBJECT (preset), "use-font",
+                                _("Apply stored font"));
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -249,33 +264,56 @@ gimp_tool_preset_editor_new (GimpContext     *context,
 static void
 gimp_tool_preset_editor_sync_data (GimpToolPresetEditor *editor)
 {
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  GimpToolInfo   *tool_info;
-  const gchar    *stock_id;
-  gchar          *label;
+  GimpToolPresetEditorPrivate *priv        = editor->priv;
+  GimpDataEditor              *data_editor = GIMP_DATA_EDITOR (editor);
+  GimpToolPreset              *preset;
+  GimpToolInfo                *tool_info;
+  GimpContextPropMask          serialize_props;
+  const gchar                 *stock_id;
+  gchar                       *label;
 
-  g_signal_handlers_block_by_func (editor->priv->tool_preset_model,
+  g_signal_handlers_block_by_func (priv->tool_preset_model,
                                    gimp_tool_preset_editor_notify_model,
                                    editor);
 
   gimp_config_copy (GIMP_CONFIG (data_editor->data),
-                    GIMP_CONFIG (editor->priv->tool_preset_model),
+                    GIMP_CONFIG (priv->tool_preset_model),
                     GIMP_CONFIG_PARAM_SERIALIZE);
 
-  g_signal_handlers_unblock_by_func (editor->priv->tool_preset_model,
+  g_signal_handlers_unblock_by_func (priv->tool_preset_model,
                                      gimp_tool_preset_editor_notify_model,
                                      editor);
 
-  tool_info = editor->priv->tool_preset_model->tool_options->tool_info;
+  tool_info = priv->tool_preset_model->tool_options->tool_info;
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
   label    = g_strdup_printf (_("%s Preset"), tool_info->blurb);
 
-  gtk_image_set_from_stock (GTK_IMAGE (editor->priv->tool_icon),
+  gtk_image_set_from_stock (GTK_IMAGE (priv->tool_icon),
                             stock_id, GTK_ICON_SIZE_MENU);
-  gtk_label_set_text (GTK_LABEL (editor->priv->tool_label), label);
+  gtk_label_set_text (GTK_LABEL (priv->tool_label), label);
 
   g_free (label);
+
+  preset = GIMP_TOOL_PRESET (data_editor->data);
+
+  serialize_props =
+    gimp_context_get_serialize_properties (GIMP_CONTEXT (preset->tool_options));
+
+  gtk_widget_set_sensitive (priv->fg_bg_toggle,
+                            (serialize_props & GIMP_CONTEXT_FOREGROUND_MASK) != 0);
+  gtk_widget_set_sensitive (priv->brush_toggle,
+                            (serialize_props & GIMP_CONTEXT_BRUSH_MASK) != 0);
+  gtk_widget_set_sensitive (priv->dynamics_toggle,
+                            (serialize_props & GIMP_CONTEXT_DYNAMICS_MASK) != 0);
+  gtk_widget_set_sensitive (priv->gradient_toggle,
+                            (serialize_props & GIMP_CONTEXT_GRADIENT_MASK) != 0);
+  gtk_widget_set_sensitive (priv->pattern_toggle,
+                            (serialize_props & GIMP_CONTEXT_PATTERN_MASK) != 0);
+  gtk_widget_set_sensitive (priv->palette_toggle,
+                            (serialize_props & GIMP_CONTEXT_PALETTE_MASK) != 0);
+  gtk_widget_set_sensitive (priv->font_toggle,
+                            (serialize_props & GIMP_CONTEXT_FONT_MASK) != 0);
  }
 
 static void

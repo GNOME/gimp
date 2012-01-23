@@ -137,7 +137,7 @@ gimp_tool_options_check_tool_info (GimpToolOptions *options,
                                    GimpToolInfo    *tool_info,
                                    gboolean         warn)
 {
-  if (G_OBJECT_TYPE (options) == tool_info->tool_options_type)
+  if (tool_info && G_OBJECT_TYPE (options) == tool_info->tool_options_type)
     {
       return tool_info;
     }
@@ -145,7 +145,7 @@ gimp_tool_options_check_tool_info (GimpToolOptions *options,
     {
       GList *list;
 
-      for (list = gimp_get_tool_info_iter (tool_info->gimp);
+      for (list = gimp_get_tool_info_iter (GIMP_CONTEXT (options)->gimp);
            list;
            list = g_list_next (list))
         {
@@ -157,7 +157,7 @@ gimp_tool_options_check_tool_info (GimpToolOptions *options,
                 g_printerr ("%s: correcting bogus deserialized tool "
                             "type '%s' with right type '%s'\n",
                             g_type_name (G_OBJECT_TYPE (options)),
-                            gimp_object_get_name (tool_info),
+                            tool_info ? gimp_object_get_name (tool_info) : "NULL",
                             gimp_object_get_name (new_info));
 
               return new_info;
@@ -205,7 +205,16 @@ gimp_tool_options_set_property (GObject      *object,
         tool_info = gimp_tool_options_check_tool_info (options, tool_info, TRUE);
 
         if (! options->tool_info)
-          options->tool_info = g_value_dup_object (value);
+          {
+            options->tool_info = g_object_ref (tool_info);
+
+            if (tool_info->context_props)
+              gimp_context_define_properties (GIMP_CONTEXT (options),
+                                              tool_info->context_props, FALSE);
+
+            gimp_context_set_serialize_properties (GIMP_CONTEXT (options),
+                                                   tool_info->context_props);
+          }
       }
       break;
 

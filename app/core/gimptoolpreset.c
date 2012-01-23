@@ -335,9 +335,10 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
     {
     case PROP_TOOL_OPTIONS:
       {
-        GObject *options;
-        gchar   *type_name;
-        GType    type;
+        GObject             *options;
+        gchar               *type_name;
+        GType                type;
+        GimpContextPropMask  serialize_props;
 
         if (! gimp_scanner_parse_string (scanner, &type_name))
           {
@@ -381,10 +382,37 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
             break;
           }
 
-        /* this is a hack */
-        g_object_set (options,
-                      "tool-info", gimp_context_get_tool (GIMP_CONTEXT (options)),
-                      NULL);
+        /* we need both tool and tool-info on the options */
+        if (gimp_context_get_tool (GIMP_CONTEXT (options)))
+          {
+            g_object_set (options,
+                          "tool-info",
+                          gimp_context_get_tool (GIMP_CONTEXT (options)),
+                          NULL);
+          }
+        else if (GIMP_TOOL_OPTIONS (options)->tool_info)
+          {
+            g_object_set (options,
+                          "tool", GIMP_TOOL_OPTIONS (options)->tool_info,
+                          NULL);
+          }
+        else
+          {
+            /* if we have none, the options set_property() logic will
+             * replace the NULL with its best guess
+             */
+            g_object_set (options,
+                          "tool",      NULL,
+                          "tool-info", NULL,
+                          NULL);
+          }
+
+        serialize_props =
+          gimp_context_get_serialize_properties (GIMP_CONTEXT (options));
+
+        gimp_context_set_serialize_properties (GIMP_CONTEXT (options),
+                                               serialize_props |
+                                               GIMP_CONTEXT_TOOL_MASK);
 
         g_value_take_object (value, options);
       }
@@ -413,8 +441,38 @@ gimp_tool_preset_set_options (GimpToolPreset  *preset,
 
   if (options)
     {
+      GimpContextPropMask serialize_props;
+
       preset->tool_options =
         GIMP_TOOL_OPTIONS (gimp_config_duplicate (GIMP_CONFIG (options)));
+
+      serialize_props =
+        gimp_context_get_serialize_properties (GIMP_CONTEXT (preset->tool_options));
+
+      gimp_context_set_serialize_properties (GIMP_CONTEXT (preset->tool_options),
+                                             serialize_props |
+                                             GIMP_CONTEXT_TOOL_MASK);
+
+      if (! (serialize_props & GIMP_CONTEXT_FOREGROUND_MASK))
+        g_object_set (preset, "use-fg-bg", FALSE, NULL);
+
+      if (! (serialize_props & GIMP_CONTEXT_BRUSH_MASK))
+        g_object_set (preset, "use-brush", FALSE, NULL);
+
+      if (! (serialize_props & GIMP_CONTEXT_DYNAMICS_MASK))
+        g_object_set (preset, "use-dynamics", FALSE, NULL);
+
+      if (! (serialize_props & GIMP_CONTEXT_GRADIENT_MASK))
+        g_object_set (preset, "use-gradient", FALSE, NULL);
+
+      if (! (serialize_props & GIMP_CONTEXT_PATTERN_MASK))
+        g_object_set (preset, "use-pattern", FALSE, NULL);
+
+      if (! (serialize_props & GIMP_CONTEXT_PALETTE_MASK))
+        g_object_set (preset, "use-palette", FALSE, NULL);
+
+      if (! (serialize_props & GIMP_CONTEXT_FONT_MASK))
+        g_object_set (preset, "use-font", FALSE, NULL);
 
       g_signal_connect (preset->tool_options, "notify",
                         G_CALLBACK (gimp_tool_preset_options_notify),
@@ -461,27 +519,37 @@ gimp_tool_preset_new (GimpContext *context,
 GimpContextPropMask
 gimp_tool_preset_get_prop_mask (GimpToolPreset *preset)
 {
-  GimpContextPropMask  use_props = 0;
+  GimpContextPropMask serialize_props;
+  GimpContextPropMask use_props = 0;
 
   g_return_val_if_fail (GIMP_IS_TOOL_PRESET (preset), 0);
 
+  serialize_props =
+    gimp_context_get_serialize_properties (GIMP_CONTEXT (preset->tool_options));
+
   if (preset->use_fg_bg)
     {
-      use_props |= GIMP_CONTEXT_FOREGROUND_MASK;
-      use_props |= GIMP_CONTEXT_BACKGROUND_MASK;
+      use_props |= (GIMP_CONTEXT_FOREGROUND_MASK & serialize_props);
+      use_props |= (GIMP_CONTEXT_BACKGROUND_MASK & serialize_props);
     }
+
   if (preset->use_brush)
-    use_props |= GIMP_CONTEXT_BRUSH_MASK;
+    use_props |= (GIMP_CONTEXT_BRUSH_MASK & serialize_props);
+
   if (preset->use_dynamics)
-    use_props |= GIMP_CONTEXT_DYNAMICS_MASK;
+    use_props |= (GIMP_CONTEXT_DYNAMICS_MASK & serialize_props);
+
   if (preset->use_pattern)
-    use_props |= GIMP_CONTEXT_PATTERN_MASK;
+    use_props |= (GIMP_CONTEXT_PATTERN_MASK & serialize_props);
+
   if (preset->use_palette)
-    use_props |= GIMP_CONTEXT_PALETTE_MASK;
+    use_props |= (GIMP_CONTEXT_PALETTE_MASK & serialize_props);
+
   if (preset->use_gradient)
-    use_props |= GIMP_CONTEXT_GRADIENT_MASK;
+    use_props |= (GIMP_CONTEXT_GRADIENT_MASK & serialize_props);
+
   if (preset->use_font)
-    use_props |= GIMP_CONTEXT_FONT_MASK;
+    use_props |= (GIMP_CONTEXT_FONT_MASK & serialize_props);
 
   return use_props;
 }
