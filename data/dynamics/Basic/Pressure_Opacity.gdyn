@@ -2,7 +2,7 @@
 
 (name "Pressure_Opacity")
 (opacity-output
-    (use-pressure no)
+    (use-pressure yes)
     (use-velocity no)
     (use-direction no)
     (use-tilt no)
@@ -107,7 +107,7 @@
     (use-direction no)
     (use-tilt no)
     (use-wheel no)
-    (use-random yes)
+    (use-random no)
     (use-fade no)
     (pressure-curve
         (curve-type smooth)
