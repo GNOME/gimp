@@ -455,6 +455,7 @@ app/widgets/gimplayertreeview.c
 app/widgets/gimpmenudock.c
 app/widgets/gimpmessagebox.c
 app/widgets/gimppaletteeditor.c
+app/widgets/gimppanedbox.c
 app/widgets/gimppdbdialog.c
 app/widgets/gimpprofilechooserdialog.c
 app/widgets/gimpprogressdialog.c
