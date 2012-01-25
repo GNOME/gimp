@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-08 15:22+0300\n"
-"PO-Revision-Date: 2012-01-08 15:22+0300\n"
+"POT-Creation-Date: 2012-01-25 22:48+0300\n"
+"PO-Revision-Date: 2012-01-25 19:51+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "Language: be\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../app/about.h:26 ../desktop/gimp.desktop.in.in.h:2
+#: ../app/about.h:26 ../desktop/gimp.desktop.in.in.h:1
 msgid "GNU Image Manipulation Program"
 msgstr "GIMP — праґрама праекту GNU для працы зь відарысамі"
 
@@ -353,7 +353,7 @@ msgid "Tool Presets"
 msgstr "Наборы настроек"
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:404
-#: ../app/widgets/gimptoolpreseteditor.c:75
+#: ../app/widgets/gimptoolpreseteditor.c:92
 msgid "Tool Preset Editor"
 msgstr "Рэдактар набору настроек"
 
@@ -1337,20 +1337,20 @@ msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Пра GIMP"
 
-#: ../app/actions/dialogs-actions.c:329
+#: ../app/actions/dialogs-actions.c:328
 #: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:555
 msgid "Toolbox"
 msgstr "Панэль прылад"
 
-#: ../app/actions/dialogs-actions.c:330
+#: ../app/actions/dialogs-actions.c:329
 msgid "Raise the toolbox"
 msgstr "Узьняць панэль прылад"
 
-#: ../app/actions/dialogs-actions.c:334
+#: ../app/actions/dialogs-actions.c:333
 msgid "New Toolbox"
 msgstr "Стварыць панэль прылад"
 
-#: ../app/actions/dialogs-actions.c:335
+#: ../app/actions/dialogs-actions.c:334
 msgid "Create a new toolbox"
 msgstr "Стварыць новую панэль прылад"
 
@@ -7280,7 +7280,7 @@ msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Дрыжэньне"
 
-#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:366
+#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
 #: ../app/gui/session.c:392 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:206
 #, c-format
@@ -7813,7 +7813,7 @@ msgstr ""
 msgid "You don't have any writable data folder configured."
 msgstr "Каталёґ для запісваньня даньняў ня быў выбраны."
 
-#: ../app/core/gimpdatafactory.c:889
+#: ../app/core/gimpdatafactory.c:911
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8916,7 +8916,7 @@ msgid ""
 msgstr "Ці жадаеш сапраўды прыбраць «%s» са сьпісу й выдаліць яго з дыску?"
 
 #: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:161
-#: ../app/gui/gui-message.c:145
+#: ../app/gui/gui-message.c:143
 msgid "GIMP Message"
 msgstr "Паведамленьне GIMP"
 
@@ -10494,7 +10494,7 @@ msgstr "Прагалы між лініямі"
 #: ../app/display/gimpcursorview.c:674 ../app/display/gimpcursorview.c:675
 #: ../app/display/gimpcursorview.c:788 ../app/display/gimpcursorview.c:789
 #: ../app/display/gimpcursorview.c:790 ../app/display/gimpcursorview.c:791
-#: ../app/widgets/gimpcolorframe.c:634
+#: ../app/widgets/gimpcolorframe.c:633
 msgid "n/a"
 msgstr "н/н"
 
@@ -10947,7 +10947,7 @@ msgstr "Кланаваньне з пэрспэктывай"
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Кланаваньне з пэрспэктывай не працуе на індэксаваных пластах."
 
-#: ../app/paint/gimpsmudge.c:83 ../app/tools/gimpsmudgetool.c:53
+#: ../app/paint/gimpsmudge.c:84 ../app/tools/gimpsmudgetool.c:53
 msgid "Smudge"
 msgstr "Пэцкаль"
 
@@ -12870,7 +12870,7 @@ msgstr "Адчувальнасьць"
 
 #: ../app/tools/gimpinkoptions-gui.c:94
 #: ../app/widgets/gimpdynamicseditor.c:144
-#: ../app/widgets/gimpdynamicsoutputeditor.c:71
+#: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Tilt"
 msgstr "Нахіл"
 
@@ -13450,7 +13450,7 @@ msgstr "Вылучальнік прастакутнікаў: вылучае пр
 msgid "_Rectangle Select"
 msgstr "Вылучыць _прастакутнік"
 
-#: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2015
+#: ../app/tools/gimprectangletool.c:1146 ../app/tools/gimprectangletool.c:2016
 msgid "Rectangle: "
 msgstr "Прастакутнік:"
 
@@ -13815,7 +13815,7 @@ msgstr "Ператварыць: "
 
 #: ../app/tools/gimptransformoptions.c:286
 #: ../app/widgets/gimpdynamicseditor.c:143
-#: ../app/widgets/gimpdynamicsoutputeditor.c:70
+#: ../app/widgets/gimpdynamicsoutputeditor.c:71
 msgid "Direction"
 msgstr "Напрамак"
 
@@ -14359,55 +14359,55 @@ msgstr ""
 "Шаснаццаткавая натацыя колера, такая сама, як у HTML ды CSS. Можна ўжываць "
 "назвы колераў CSS."
 
-#: ../app/widgets/gimpcolorframe.c:512
+#: ../app/widgets/gimpcolorframe.c:511
 msgid "Index:"
 msgstr "Пералік:"
 
-#: ../app/widgets/gimpcolorframe.c:525 ../app/widgets/gimpcolorframe.c:551
+#: ../app/widgets/gimpcolorframe.c:524 ../app/widgets/gimpcolorframe.c:550
 msgid "Red:"
 msgstr "Чырвоны:"
 
-#: ../app/widgets/gimpcolorframe.c:526 ../app/widgets/gimpcolorframe.c:552
+#: ../app/widgets/gimpcolorframe.c:525 ../app/widgets/gimpcolorframe.c:551
 msgid "Green:"
 msgstr "Зялёны:"
 
-#: ../app/widgets/gimpcolorframe.c:527 ../app/widgets/gimpcolorframe.c:553
+#: ../app/widgets/gimpcolorframe.c:526 ../app/widgets/gimpcolorframe.c:552
 msgid "Blue:"
 msgstr "Сіні:"
 
-#: ../app/widgets/gimpcolorframe.c:540 ../app/widgets/gimpcolorframe.c:573
+#: ../app/widgets/gimpcolorframe.c:539 ../app/widgets/gimpcolorframe.c:572
 msgid "Value:"
 msgstr "Яркасьць:"
 
-#: ../app/widgets/gimpcolorframe.c:564
+#: ../app/widgets/gimpcolorframe.c:563
 msgid "Hex:"
 msgstr "Шаснаццаткавы:"
 
-#: ../app/widgets/gimpcolorframe.c:571
+#: ../app/widgets/gimpcolorframe.c:570
 msgid "Hue:"
 msgstr "Адценьне:"
 
-#: ../app/widgets/gimpcolorframe.c:572
+#: ../app/widgets/gimpcolorframe.c:571
 msgid "Sat.:"
 msgstr "Насычанасьць:"
 
-#: ../app/widgets/gimpcolorframe.c:590
+#: ../app/widgets/gimpcolorframe.c:589
 msgid "Cyan:"
 msgstr "Блакітны:"
 
-#: ../app/widgets/gimpcolorframe.c:591
+#: ../app/widgets/gimpcolorframe.c:590
 msgid "Magenta:"
 msgstr "Пурпуровы:"
 
-#: ../app/widgets/gimpcolorframe.c:592
+#: ../app/widgets/gimpcolorframe.c:591
 msgid "Yellow:"
 msgstr "Жоўты:"
 
-#: ../app/widgets/gimpcolorframe.c:593
+#: ../app/widgets/gimpcolorframe.c:592
 msgid "Black:"
 msgstr "Чорны:"
 
-#: ../app/widgets/gimpcolorframe.c:613
+#: ../app/widgets/gimpcolorframe.c:612
 msgid "Alpha:"
 msgstr "Альфа:"
 
@@ -14786,7 +14786,7 @@ msgstr ""
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:141
-#: ../app/widgets/gimpdynamicsoutputeditor.c:68
+#: ../app/widgets/gimpdynamicsoutputeditor.c:69
 msgid "Pressure"
 msgstr "Націсканьне"
 
@@ -14800,7 +14800,7 @@ msgstr "Нахіл па Y"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:143
 #: ../app/widgets/gimpdynamicseditor.c:145
-#: ../app/widgets/gimpdynamicsoutputeditor.c:72
+#: ../app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Wheel"
 msgstr "Кола"
 
@@ -14826,7 +14826,7 @@ msgid "%s Curve"
 msgstr "Крывая %s"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:471
-#: ../app/widgets/gimpdynamicsoutputeditor.c:195
+#: ../app/widgets/gimpdynamicsoutputeditor.c:209
 msgid "_Reset Curve"
 msgstr "_Вернуць крывую"
 
@@ -14916,17 +14916,17 @@ msgid "Mapping matrix"
 msgstr "Матрыца ператварэньня"
 
 #: ../app/widgets/gimpdynamicseditor.c:142
-#: ../app/widgets/gimpdynamicsoutputeditor.c:69
+#: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Velocity"
 msgstr "Хуткасьць"
 
 #: ../app/widgets/gimpdynamicseditor.c:146
-#: ../app/widgets/gimpdynamicsoutputeditor.c:73
+#: ../app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Random"
 msgstr "Адвольнасьць"
 
 #: ../app/widgets/gimpdynamicseditor.c:147
-#: ../app/widgets/gimpdynamicsoutputeditor.c:74
+#: ../app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Fade"
 msgstr "Аслабленьне"
 
@@ -15285,6 +15285,10 @@ msgstr "Нявызначана"
 msgid "Columns:"
 msgstr "Слупкі:"
 
+#: ../app/widgets/gimppanedbox.c:58
+msgid "You can drop dockable dialogs here"
+msgstr "Дакавальныя дыялёґі можна перенесьці сюды"
+
 #: ../app/widgets/gimpprofilechooserdialog.c:127
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Профіль колераў ICC (*.icc, *.icm)"
@@ -15624,39 +15628,39 @@ msgstr "Аднавіць набор…"
 msgid "Delete Tool Preset..."
 msgstr "Выдаліць набор…"
 
-#: ../app/widgets/gimptoolpreseteditor.c:126
+#: ../app/widgets/gimptoolpreseteditor.c:148
 msgid "Icon:"
 msgstr "Значка:"
 
-#: ../app/widgets/gimptoolpreseteditor.c:136
+#: ../app/widgets/gimptoolpreseteditor.c:159
 msgid "Apply stored FG/BG"
 msgstr "Ужыць захаваныя КР/КА"
 
-#: ../app/widgets/gimptoolpreseteditor.c:141
+#: ../app/widgets/gimptoolpreseteditor.c:165
 msgid "Apply stored brush"
 msgstr "Ужыць захаваны пэндзаль"
 
-#: ../app/widgets/gimptoolpreseteditor.c:146
+#: ../app/widgets/gimptoolpreseteditor.c:171
 msgid "Apply stored dynamics"
 msgstr "Ужыць захаваную дынаміку"
 
-#: ../app/widgets/gimptoolpreseteditor.c:151
+#: ../app/widgets/gimptoolpreseteditor.c:177
 msgid "Apply stored gradient"
 msgstr "Ужыць захаваны ґрадыент"
 
-#: ../app/widgets/gimptoolpreseteditor.c:156
+#: ../app/widgets/gimptoolpreseteditor.c:183
 msgid "Apply stored pattern"
 msgstr "Ужыць захаваны ўзор"
 
-#: ../app/widgets/gimptoolpreseteditor.c:161
+#: ../app/widgets/gimptoolpreseteditor.c:189
 msgid "Apply stored palette"
 msgstr "Ужыць захаваную палітру"
 
-#: ../app/widgets/gimptoolpreseteditor.c:166
+#: ../app/widgets/gimptoolpreseteditor.c:195
 msgid "Apply stored font"
 msgstr "Ужыць захаваны шрыфт"
 
-#: ../app/widgets/gimptoolpreseteditor.c:258
+#: ../app/widgets/gimptoolpreseteditor.c:290
 #, c-format
 msgid "%s Preset"
 msgstr "Набор %s"
@@ -15904,17 +15908,17 @@ msgid "Error saving XCF file: %s"
 msgstr "Памылка захоўваньня файла XCF: %s."
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
-msgid "fuzzy"
-msgstr "пушысты"
-
-#: ../data/tags/gimp-tags-default.xml.in.h:2
 msgid "round"
 msgstr "круглы"
 
-#: ../desktop/gimp.desktop.in.in.h:1
-msgid "Create images and edit photographs"
-msgstr "Стварэньне відарысаў і праўленьне фатаздымкаў"
+#: ../data/tags/gimp-tags-default.xml.in.h:2
+msgid "fuzzy"
+msgstr "пушысты"
 
-#: ../desktop/gimp.desktop.in.in.h:3
+#: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Рэдактар відарысаў"
+
+#: ../desktop/gimp.desktop.in.in.h:3
+msgid "Create images and edit photographs"
+msgstr "Стварэньне відарысаў і праўленьне фатаздымкаў"
