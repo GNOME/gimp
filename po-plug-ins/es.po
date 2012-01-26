@@ -10,25 +10,26 @@
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Pablo del Campo <pablodc@par001001-703>, 2004.
 # Alonso Lara <keko@khor-ha.net>, 2005.
-# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2011, 2012.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2009, 2011.
 # Benjamín Valero Espinosa <benjavalero@gmail.com>, 2011.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2011, 2012.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-25 16:29+0000\n"
-"PO-Revision-Date: 2012-01-25 19:13+0100\n"
-"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
+"POT-Creation-Date: 2012-01-26 12:00+0000\n"
+"PO-Revision-Date: 2012-01-26 13:28+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:118
 msgid "Original"
@@ -5016,13 +5017,6 @@ msgstr ""
 "Ello desbaratará la pantalla en ciertos entornos."
 
 #: ../plug-ins/common/file-xmc.c:1725
-#, fuzzy
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "whose nominal size is not supported by gnome-appearance-properties.\n"
-#| "You can satisfy it by checking \"Replace the size of all frame...\" in "
-#| "the save dialog, or your cursor may not appear in gnome-appearance-"
-#| "properties."
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by GNOME settings.\n"
@@ -5030,22 +5024,19 @@ msgid ""
 "save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
 "El cursor se ha guardado con éxito pero contiene uno o más cuadros cuyo "
-"tamaño nominal no está soportado por gnome-appearance-properties.\n"
+"tamaño nominal no está soportado por los ajustes de GNOME.\n"
 "Puede satisfacerlo marcando «Sustituir el tamaño de todos los cuadros...» en "
-"el diálogo de Guardar, o el cursor podría no aparecer en gnome-appearance-"
-"properties."
+"el diálogo de Guardar, o el cursor podría no aparecer en los ajustes de "
+"GNOME."
 
 #: ../plug-ins/common/file-xmc.c:1962
-#, fuzzy, c-format
-#| msgid ""
-#| "The parasite \"%s\" is too long for X cursor.\n"
-#| "The overflowed string was dropped."
+#, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
 "fit."
 msgstr ""
-"El parásito «%s» es demasiado grande para un cursor X.\n"
-"La cadena excedida se ha descartado."
+"El parásito «%s» es demasiado grande para un comentario de cursor X. Se ha "
+"recortado para que quepa."
 
 #. translators: the %i is *always* 8 here
 #: ../plug-ins/common/file-xmc.c:2165
@@ -8481,8 +8472,6 @@ msgid "Large"
 msgstr "Grande"
 
 #: ../plug-ins/common/web-page.c:317
-#, fuzzy
-#| msgid "Default"
 msgctxt "web-page"
 msgid "Default"
 msgstr "Predeterminada"
@@ -8765,8 +8754,6 @@ msgid "Image Composing"
 msgstr "Composición de imagen"
 
 #: ../plug-ins/file-fits/fits.c:1044
-#, fuzzy
-#| msgid "None"
 msgctxt "composing"
 msgid "None"
 msgstr "Ninguno"
@@ -9740,8 +9727,6 @@ msgstr "Seno"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
-#, fuzzy
-#| msgid "None"
 msgctxt "color-function"
 msgid "None"
 msgstr "Ninguno"
@@ -10911,28 +10896,20 @@ msgstr ""
 "tenga alguna influencia"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:1
-#, fuzzy
-#| msgid "Animated MNG Options"
 msgid "Animated GIF Options"
-msgstr "Opciones del MNG animado"
+msgstr "Opciones del GIF animado"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:2
-#, fuzzy
-#| msgid "MNG animation"
 msgid "As _animation"
-msgstr "Animación MNG"
+msgstr "Como _animación"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:3
-#, fuzzy
-#| msgid "MNG Options"
 msgid "GIF Options"
-msgstr "Opciones de MNG"
+msgstr "Opciones de GIF"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:4
-#, fuzzy
-#| msgid "Interlace"
 msgid "I_nterlace"
-msgstr "Entrelazar"
+msgstr "E_ntrelazar"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
 msgid "U_se disposal entered above for all frames"
@@ -10947,10 +10924,8 @@ msgid "_Frame disposal where unspecified:"
 msgstr "Residuo de cuadros cuando no esté especi_ficado:"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
-#, fuzzy
-#| msgid "Comment:"
 msgid "_GIF comment:"
-msgstr "Comentario:"
+msgstr "Comentario de _GIF:"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
 msgid "_Loop forever"
@@ -10961,52 +10936,36 @@ msgid "_Use delay entered above for all frames"
 msgstr "_Usar el retraso introducido más arriba para todos los cuadros"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:2
-#, fuzzy
-#| msgid "PNG compression level:"
 msgid "Co_mpression level:"
-msgstr "Nivel de compresión de PNG:"
+msgstr "Nivel de co_mpresión:"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:3
-#, fuzzy
-#| msgid "Sa_ve Defaults"
 msgid "S_ave Defaults"
 msgstr "_Guardar predet."
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:4
-#, fuzzy
-#| msgid "Save background color"
 msgid "Save _background color"
-msgstr "Guardar el color de fondo"
+msgstr "Guardar el color de _fondo"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
-#, fuzzy
-#| msgid "Save resolution"
 msgid "Save _resolution"
-msgstr "Guardar la resolución"
+msgstr "Guardar la _resolución"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:6
-#, fuzzy
-#| msgid "Save _color values from transparent pixels"
 msgid "Save color _values from transparent pixels"
-msgstr "Guardar los valores de los _colores de los píxeles transparentes"
+msgstr "Guardar los _valores de los colores de los píxeles transparentes"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
-#, fuzzy
-#| msgid "_Save comment to file"
 msgid "Save comme_nt"
-msgstr "G_uardar el comentario en un archivo"
+msgstr "G_uardar el comentario"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-#, fuzzy
-#| msgid "Save creation time"
 msgid "Save creation _time"
-msgstr "Guardar la hora de creación"
+msgstr "Guardar la _hora de creación"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
-#, fuzzy
-#| msgid "Start offset:"
 msgid "Save layer o_ffset"
-msgstr "Desplazamiento de inicio:"
+msgstr "Guardar el desplazamiento de _capa"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Interlacing (Adam7)"
@@ -12412,11 +12371,9 @@ msgid "Color:"
 msgstr "Color:"
 
 #: ../plug-ins/lighting/lighting-ui.c:418
-#, fuzzy
-#| msgid "None"
 msgctxt "light-source"
 msgid "None"
-msgstr "Ninguno"
+msgstr "Ninguna"
 
 #: ../plug-ins/lighting/lighting-ui.c:419
 msgid "Directional"
@@ -13122,8 +13079,6 @@ msgstr "C_entro:"
 
 #. if and how to center the image on the page
 #: ../plug-ins/print/print-page-layout.c:461
-#, fuzzy
-#| msgid "None"
 msgctxt "center-mode"
 msgid "None"
 msgstr "Ninguno"
