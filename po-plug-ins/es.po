@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the gimp package.
 #
 #
+#
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>, 2000-2002.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
@@ -13,22 +14,21 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2009, 2011.
 # Benjamín Valero Espinosa <benjavalero@gmail.com>, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-25 16:02+0000\n"
-"PO-Revision-Date: 2012-01-25 17:19+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2012-01-25 16:29+0000\n"
+"PO-Revision-Date: 2012-01-25 19:13+0100\n"
+"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:118
 msgid "Original"
@@ -307,8 +307,6 @@ msgid "Align Visible Layers"
 msgstr "Alinear capas visibles"
 
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
-#, fuzzy
-#| msgid "None"
 msgctxt "align-style"
 msgid "None"
 msgstr "Ninguno"
@@ -1180,8 +1178,6 @@ msgid "sin^p, stepped"
 msgstr "sin^p, paso a paso"
 
 #: ../plug-ins/common/cml-explorer.c:166
-#, fuzzy
-#| msgid "None"
 msgctxt "cml-composition"
 msgid "None"
 msgstr "Ninguno"
@@ -3891,10 +3887,8 @@ msgid "pixels/%a"
 msgstr "píxeles/%a"
 
 #: ../plug-ins/common/file-pdf-save.c:304
-#, fuzzy
-#| msgid "Create Guides..."
 msgid "_Create multipage PDF..."
-msgstr "Crear guías…"
+msgstr "_Crear PDF de varias páginas…"
 
 #: ../plug-ins/common/file-pdf-save.c:401
 msgid "You must select a file to save!"
@@ -3934,35 +3928,27 @@ msgid "Keeping the masks will not change the output"
 msgstr "Mantener las máscaras no cambiará la salida"
 
 #: ../plug-ins/common/file-pdf-save.c:797
-#, fuzzy
-#| msgid "Separate to:"
 msgid "Save to:"
-msgstr "Separara a:"
+msgstr "Guardar en:"
 
 #: ../plug-ins/common/file-pdf-save.c:801
-#, fuzzy
-#| msgid "_RGB Noise..."
 msgid "Browse..."
-msgstr "Ruido _RGB…"
+msgstr "Explorar…"
 
 #: ../plug-ins/common/file-pdf-save.c:802
 msgid "Multipage PDF export"
 msgstr "Exportación de PDF de varias páginas"
 
 #: ../plug-ins/common/file-pdf-save.c:835
-#, fuzzy
-#| msgid "Deletes the selected Preset"
 msgid "Remove the selected pages"
-msgstr "Borra el preajuste seleccionado"
+msgstr "Eliminar las páginas seleccionadas"
 
 # Pendiente hasa que sepa lo que significa. FVD
 # Puede ser una imagen pix de Alias WaveFront
 # Gracias ¿Quién lo dice? pon tus iniciales. FVD
 #: ../plug-ins/common/file-pdf-save.c:845
-#, fuzzy
-#| msgid "Alias Pix image"
 msgid "Add this image"
-msgstr "Imagen Pix de Alias"
+msgstr "Añadir esta imagen"
 
 #: ../plug-ins/common/file-pdf-save.c:958
 msgid "Error! In order to save the file, at least one image should be added!"
@@ -4001,10 +3987,9 @@ msgid "Unknown color model in PNG file '%s'."
 msgstr "Modelo de color desconocido en el archivo PNG «%s»."
 
 #: ../plug-ins/common/file-png.c:878
-#, fuzzy, c-format
-#| msgid "Could not create working folder '%s': %s"
+#, c-format
 msgid "Could not create new image for '%s': %s"
-msgstr "No se pudo crear la carpeta de trabajo: «%s»: %s"
+msgstr "No se pudo crear una imagen nueva para «%s»: %s"
 
 #: ../plug-ins/common/file-png.c:927
 msgid ""
@@ -4030,10 +4015,8 @@ msgid "Error loading UI file '%s': %s"
 msgstr "Ocurrió un error al cargar el archivo de IU «%s»: %s"
 
 #: ../plug-ins/common/file-png.c:1896
-#, fuzzy
-#| msgid "Unknown reason"
 msgid "Unknown error"
-msgstr "Razón desconocida"
+msgstr "Error desconocido"
 
 #: ../plug-ins/common/file-pnm.c:248
 msgid "PNM Image"
@@ -4107,10 +4090,8 @@ msgid "Raw"
 msgstr "Crudo"
 
 #: ../plug-ins/common/file-pnm.c:1227
-#, fuzzy
-#| msgid "ASCII art"
 msgid "ASCII"
-msgstr "Arte ASCII"
+msgstr "ASCII"
 
 #: ../plug-ins/common/file-ps.c:579 ../plug-ins/common/file-ps.c:671
 msgid "PostScript document"
@@ -4211,8 +4192,6 @@ msgid "Text antialiasing"
 msgstr "Suavizado de texto"
 
 #: ../plug-ins/common/file-ps.c:3113 ../plug-ins/common/file-ps.c:3125
-#, fuzzy
-#| msgid "None"
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Ninguno"
@@ -4304,11 +4283,9 @@ msgid "Data Compression"
 msgstr "Compresión de datos"
 
 #: ../plug-ins/common/file-psp.c:647
-#, fuzzy
-#| msgid "None"
 msgctxt "compression"
 msgid "None"
-msgstr "Ninguno"
+msgstr "Ninguna"
 
 #: ../plug-ins/common/file-psp.c:648
 msgid "RLE"
@@ -4834,16 +4811,14 @@ msgid "'%s' is not a valid X cursor."
 msgstr "«%s» no es un cursor X válido."
 
 #: ../plug-ins/common/file-xmc.c:686
-#, fuzzy, c-format
-#| msgid "The width of '%s' is too big for X cursor."
+#, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
-msgstr "La anchura de «%s» es demasiado grande para el cursor X."
+msgstr "El fotograma %d de «%s» es demasiado ancho para un cursor X."
 
 #: ../plug-ins/common/file-xmc.c:693
-#, fuzzy, c-format
-#| msgid "The width of '%s' is too big for X cursor."
+#, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
-msgstr "La anchura de «%s» es demasiado grande para el cursor X."
+msgstr "El fotograma %d de «%s» es demasiado alto para un cursor X."
 
 #: ../plug-ins/common/file-xmc.c:896
 #, c-format
@@ -4851,16 +4826,14 @@ msgid "there is no image chunk in \"%s\"."
 msgstr "No hay ningún bloque de imagen en «%s»."
 
 #: ../plug-ins/common/file-xmc.c:938
-#, fuzzy, c-format
-#| msgid "The width of '%s' is too big for X cursor."
+#, c-format
 msgid "'%s' is too wide for an X cursor."
-msgstr "La anchura de «%s» es demasiado grande para el cursor X."
+msgstr "«%s» es demasiado ancho para un cursor X."
 
 #: ../plug-ins/common/file-xmc.c:945
-#, fuzzy, c-format
-#| msgid "The width of '%s' is too big for X cursor."
+#, c-format
 msgid "'%s' is too high for an X cursor."
-msgstr "La anchura de «%s» es demasiado grande para el cursor X."
+msgstr "«%s» es demasiado alto para un cursor X."
 
 #: ../plug-ins/common/file-xmc.c:1015
 #, c-format
@@ -4998,25 +4971,21 @@ msgid "Comment is limited to %d characters."
 msgstr "El comentario está limitado a %d caracteres."
 
 #: ../plug-ins/common/file-xmc.c:1489
-#, fuzzy, c-format
-#| msgid ""
-#| "This plug-in can only handle RGBA image format with 8bit color depth."
+#, c-format
 msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr ""
-"Este complemento sólo puede manejar el formato de imagen RGBA con una "
+"Este complemento sólo puede manejar archivos de imagen RGBA con una "
 "profundidad de color de 8 bits."
 
 #: ../plug-ins/common/file-xmc.c:1507
-#, fuzzy, c-format
-#| msgid "Height of '%s' is too large. Please reduce more than %dpx."
+#, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
-msgstr "La altura de «%s» es excesiva. Redúzcala más de %dpx."
+msgstr "El fotograma «%s» es demasiado ancho. Redúzcalo a %dpx como máximo."
 
 #: ../plug-ins/common/file-xmc.c:1514
-#, fuzzy, c-format
-#| msgid "Height of '%s' is too large. Please reduce more than %dpx."
+#, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
-msgstr "La altura de «%s» es excesiva. Redúzcala más de %dpx."
+msgstr "El fotograma «%s» es demasiado alto. Redúzcalo a %dpx como máximo."
 
 #: ../plug-ins/common/file-xmc.c:1521
 #, c-format
@@ -5024,26 +4993,19 @@ msgid "Width and/or height of frame '%s' is zero!"
 msgstr "La anchura y/o la altura del cuadro «%s» es cero."
 
 #: ../plug-ins/common/file-xmc.c:1561
-#, fuzzy, c-format
-#| msgid ""
-#| "Cannot save the cursor because the hot spot is not on '%s'.\n"
-#| "Try to change the hot spot position, layer geometry or save without auto-"
-#| "crop."
+#, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-"
 "crop."
 msgstr ""
-"No se pudo guardar el cursor porque el punto activo no está sobre «%s».\n"
+"No se pudo guardar el cursor porque el punto activo no está sobre el "
+"fotograma «%s».\n"
 "Trate de cambiar la posición del punto activo o la geometría de las capas, o "
 "guárdelo sin auto-recortar."
 
 #: ../plug-ins/common/file-xmc.c:1718
-#, fuzzy, c-format
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "which width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
+#, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "width or height is more than %ipx.\n"
