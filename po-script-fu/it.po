@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-03 17:49+0200\n"
-"PO-Revision-Date: 2011-09-16 01:24+0200\n"
+"PO-Revision-Date: 2012-01-27 22:51+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1383,7 +1383,7 @@ msgstr "Cancella"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase every other row or column"
-msgstr "Cancella ogni altra riga o colonna"
+msgstr "Cancella una riga o colonna sì e una no"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
