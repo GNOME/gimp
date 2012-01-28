@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-30 21:53+0100\n"
-"PO-Revision-Date: 2011-11-30 21:55+0100\n"
+"POT-Creation-Date: 2012-01-28 22:09+0100\n"
+"PO-Revision-Date: 2012-01-28 22:09+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: \n"
@@ -1492,7 +1492,7 @@ msgstr "Cancella"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase every other row or column"
-msgstr "Cancella ogni altra riga o colonna"
+msgstr "Cancella una riga o colonna sì e una no"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1953,7 +1953,9 @@ msgstr "_Lava..."
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
-msgstr "Riempie un livello di raggi proiettati dal suo centro usando il colore di primo piano"
+msgstr ""
+"Riempie un livello di raggi proiettati dal suo centro usando il colore di "
+"primo piano"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
