@@ -183,7 +183,9 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
 
   gimp_smudge_accumulator_size(paint_options, &smudge->accum_size);
 
-  /*  adjust the x and y coordinates to the upper left corner of the accumulator  */
+  /*  adjust the x and y coordinates to the upper left corner of the
+   *  accumulator
+   */
   gimp_smudge_accumulator_coords (paint_core, coords, &x, &y);
 
   /*  Allocate the accumulation buffer */
@@ -363,7 +365,7 @@ gimp_smudge_accumulator_coords (GimpPaintCore    *paint_core,
                                 gint             *x,
                                 gint             *y)
 {
-  GimpSmudge         *smudge   = GIMP_SMUDGE (paint_core);
+  GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
 
   *x = (gint) coords->x - smudge->accum_size / 2;
   *y = (gint) coords->y - smudge->accum_size / 2;
