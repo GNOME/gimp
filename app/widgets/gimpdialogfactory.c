@@ -350,19 +350,33 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
 
 GtkWidget *
 gimp_dialog_factory_find_widget (GimpDialogFactory *factory,
-                                 const gchar       *identifier)
+                                 const gchar       *identifiers)
 {
-  GimpSessionInfo *info;
+  gchar **ids;
+  gint    i;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-  g_return_val_if_fail (identifier != NULL, NULL);
+  g_return_val_if_fail (identifiers != NULL, NULL);
 
-  info = gimp_dialog_factory_find_session_info (factory, identifier);
+  ids = g_strsplit (identifiers, "|", 0);
 
-  if (info)
-    return gimp_session_info_get_widget (info);
-  else
-    return NULL;
+  for (i = 0; ids[i]; i++)
+    {
+      GimpSessionInfo *info;
+
+      info = gimp_dialog_factory_find_session_info (factory, ids[i]);
+
+      if (info)
+        {
+          g_strfreev (ids);
+
+          return gimp_session_info_get_widget (info);
+        }
+    }
+
+  g_strfreev (ids);
+
+  return NULL;
 }
 
 /**
@@ -763,6 +777,9 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
 
   /*  If the identifier is a list, try to find a matching dialog and
    *  raise it. If there's no match, use the first list item.
+   *
+   *  (we split the identifier list manually here because we must pass
+   *  a single identifier, not a list, to new_internal() below)
    */
   ids = g_strsplit (identifiers, "|", 0);
   for (i = 0; ids[i]; i++)
