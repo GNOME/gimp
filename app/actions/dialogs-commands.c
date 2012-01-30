@@ -26,8 +26,7 @@
 #include "core/gimp.h"
 
 #include "widgets/gimpdialogfactory.h"
-
-#include "display/gimpwindowstrategy.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "actions.h"
 #include "dialogs-commands.h"

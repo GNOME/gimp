@@ -33,11 +33,10 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdockcolumns.h"
+#include "widgets/gimpwindowstrategy.h"
 
-#include "display/gimpimagewindow.h"
-
+#include "gimpimagewindow.h"
 #include "gimpsinglewindowstrategy.h"
-#include "gimpwindowstrategy.h"
 
 
 static void        gimp_single_window_strategy_window_strategy_iface_init (GimpWindowStrategyInterface *iface);

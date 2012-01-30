@@ -39,6 +39,7 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -49,7 +50,6 @@
 #include "display/gimpdisplayshell-scale-dialog.h"
 #include "display/gimpdisplayshell-scroll.h"
 #include "display/gimpimagewindow.h"
-#include "display/gimpwindowstrategy.h"
 
 #include "actions.h"
 #include "view-commands.h"

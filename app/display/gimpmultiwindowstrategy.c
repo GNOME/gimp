@@ -28,9 +28,9 @@
 #include "core/gimp.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "gimpmultiwindowstrategy.h"
-#include "gimpwindowstrategy.h"
 
 
 static void        gimp_multi_window_strategy_window_strategy_iface_init (GimpWindowStrategyInterface *iface);

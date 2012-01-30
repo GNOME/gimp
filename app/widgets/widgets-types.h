@@ -235,6 +235,7 @@ typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 typedef struct _GimpDialogFactory            GimpDialogFactory;
 typedef struct _GimpTextBuffer               GimpTextBuffer;
 typedef struct _GimpUIConfigurer             GimpUIConfigurer;
+typedef struct _GimpWindowStrategy           GimpWindowStrategy;
 
 
 /*  session management objects and structs  */

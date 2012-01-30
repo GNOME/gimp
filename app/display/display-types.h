@@ -35,7 +35,6 @@ typedef struct _GimpMotionBuffer         GimpMotionBuffer;
 typedef struct _GimpImageWindow          GimpImageWindow;
 typedef struct _GimpMultiWindowStrategy  GimpMultiWindowStrategy;
 typedef struct _GimpSingleWindowStrategy GimpSingleWindowStrategy;
-typedef struct _GimpWindowStrategy       GimpWindowStrategy;
 
 typedef struct _GimpCursorView           GimpCursorView;
 typedef struct _GimpNavigationEditor     GimpNavigationEditor;

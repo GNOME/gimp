@@ -33,10 +33,10 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpwindowstrategy.h"
 
 #include "dialogs/stroke-dialog.h"
 

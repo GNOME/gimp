@@ -44,11 +44,11 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
-#include "display/gimpwindowstrategy.h"
 
 #include "dialogs/fade-dialog.h"
 

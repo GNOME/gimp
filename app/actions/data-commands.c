@@ -39,8 +39,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
-
-#include "display/gimpwindowstrategy.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "dialogs/data-delete-dialog.h"
 

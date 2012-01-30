@@ -41,8 +41,7 @@
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimptooloptionseditor.h"
 #include "widgets/gimpuimanager.h"
-
-#include "display/gimpwindowstrategy.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "dialogs/data-delete-dialog.h"
 

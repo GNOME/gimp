@@ -22,12 +22,12 @@
 
 #include <gtk/gtk.h>
 
-#include "display-types.h"
+#include "widgets-types.h"
 
 #include "gimpwindowstrategy.h"
 
 
-static void   gimp_window_strategy_iface_base_init   (GimpWindowStrategyInterface *strategy_iface);
+static void   gimp_window_strategy_iface_base_init (GimpWindowStrategyInterface *strategy_iface);
 
 
 GType
@@ -88,4 +88,3 @@ gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
 
   return NULL;
 }
-

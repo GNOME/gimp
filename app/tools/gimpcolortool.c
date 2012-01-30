@@ -42,6 +42,7 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
@@ -49,7 +50,6 @@
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
-#include "display/gimpwindowstrategy.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpcolortool.h"

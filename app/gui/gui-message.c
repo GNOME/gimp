@@ -40,8 +40,7 @@
 #include "widgets/gimpprogressdialog.h"
 #include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpwidgets-utils.h"
-
-#include "display/gimpwindowstrategy.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "gui-message.h"
 

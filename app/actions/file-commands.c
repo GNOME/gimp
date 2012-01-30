@@ -51,7 +51,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
-#include "display/gimpwindowstrategy.h"
 
 #include "dialogs/file-save-dialog.h"
 
