@@ -49,6 +49,7 @@
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
+#include "display/gimpwindowstrategy.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpcolortool.h"
@@ -656,15 +657,17 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
     case GIMP_COLOR_PICK_MODE_PALETTE:
       {
-        GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-        GdkScreen        *screen;
+        GimpDisplayShell *shell  = gimp_display_get_shell (tool->display);
+        GdkScreen        *screen = gtk_widget_get_screen (GTK_WIDGET (shell));
         GtkWidget        *dockable;
 
-        screen = gtk_widget_get_screen (GTK_WIDGET (shell));
-        dockable = gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
+        dockable =
+          gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (tool->display->gimp)),
+                                                     tool->display->gimp,
+                                                     gimp_dialog_factory_get_singleton (),
                                                      screen,
-                                                     "gimp-palette-editor",
-                                                     -1);
+                                                     "gimp-palette-editor");
+
         if (dockable)
           {
             GtkWidget *palette_editor;

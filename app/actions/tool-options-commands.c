@@ -42,6 +42,8 @@
 #include "widgets/gimptooloptionseditor.h"
 #include "widgets/gimpuimanager.h"
 
+#include "display/gimpwindowstrategy.h"
+
 #include "dialogs/data-delete-dialog.h"
 
 #include "tool-options-commands.h"
@@ -51,7 +53,8 @@
 
 /*  local function prototypes  */
 
-static void   tool_options_show_preset_editor (GimpEditor     *editor,
+static void   tool_options_show_preset_editor (Gimp           *gimp,
+                                               GimpEditor     *editor,
                                                GimpToolPreset *preset);
 
 
@@ -62,13 +65,14 @@ tool_options_save_new_preset_cmd_callback (GtkAction *action,
                                            gpointer   user_data)
 {
   GimpEditor  *editor  = GIMP_EDITOR (user_data);
-  GimpContext *context = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
+  Gimp        *gimp    = gimp_editor_get_ui_manager (editor)->gimp;
+  GimpContext *context = gimp_get_user_context (gimp);
   GimpData    *data;
 
   data = gimp_data_factory_data_new (context->gimp->tool_preset_factory,
                                      context, _("Untitled"));
 
-  tool_options_show_preset_editor (editor, GIMP_TOOL_PRESET (data));
+  tool_options_show_preset_editor (gimp, editor, GIMP_TOOL_PRESET (data));
 }
 
 void
@@ -77,7 +81,8 @@ tool_options_save_preset_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
-  GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
+  Gimp           *gimp      = gimp_editor_get_ui_manager (editor)->gimp;
+  GimpContext    *context   = gimp_get_user_context (gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
 
@@ -89,7 +94,7 @@ tool_options_save_preset_cmd_callback (GtkAction *action,
       gimp_config_sync (G_OBJECT (tool_info->tool_options),
                         G_OBJECT (preset->tool_options), 0);
 
-      tool_options_show_preset_editor (editor, preset);
+      tool_options_show_preset_editor (gimp, editor, preset);
     }
 }
 
@@ -99,7 +104,8 @@ tool_options_restore_preset_cmd_callback (GtkAction *action,
                                           gpointer   data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
-  GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
+  Gimp           *gimp      = gimp_editor_get_ui_manager (editor)->gimp;
+  GimpContext    *context   = gimp_get_user_context (gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
 
@@ -121,7 +127,8 @@ tool_options_edit_preset_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
-  GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
+  Gimp           *gimp      = gimp_editor_get_ui_manager (editor)->gimp;
+  GimpContext    *context   = gimp_get_user_context (gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
 
@@ -130,7 +137,7 @@ tool_options_edit_preset_cmd_callback (GtkAction *action,
 
   if (preset)
     {
-      tool_options_show_preset_editor (editor, preset);
+      tool_options_show_preset_editor (gimp, editor, preset);
     }
 }
 
@@ -225,15 +232,18 @@ tool_options_reset_all_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-tool_options_show_preset_editor (GimpEditor     *editor,
+tool_options_show_preset_editor (Gimp           *gimp,
+                                 GimpEditor     *editor,
                                  GimpToolPreset *preset)
 {
   GtkWidget *dockable;
 
   dockable =
-    gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                      gtk_widget_get_screen (GTK_WIDGET (editor)),
-                                      "gimp-tool-preset-editor", -1);
+    gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                               gimp,
+                                               gimp_dialog_factory_get_singleton (),
+                                               gtk_widget_get_screen (GTK_WIDGET (editor)),
+                                               "gimp-tool-preset-editor");
 
   gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
                              GIMP_DATA (preset));

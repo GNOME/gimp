@@ -36,6 +36,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpwindowstrategy.h"
 
 #include "dialogs/stroke-dialog.h"
 
@@ -317,9 +318,11 @@ select_save_cmd_callback (GtkAction *action,
   gimp_selection_save (GIMP_SELECTION (gimp_image_get_mask (image)));
   gimp_image_flush (image);
 
-  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                    gtk_widget_get_screen (widget),
-                                    "gimp-channel-list", -1);
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (image->gimp)),
+                                             image->gimp,
+                                             gimp_dialog_factory_get_singleton (),
+                                             gtk_widget_get_screen (widget),
+                                             "gimp-channel-list");
 }
 
 void

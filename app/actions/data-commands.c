@@ -40,6 +40,8 @@
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 
+#include "display/gimpwindowstrategy.h"
+
 #include "dialogs/data-delete-dialog.h"
 
 #include "actions.h"
@@ -256,8 +258,12 @@ data_edit_cmd_callback (GtkAction   *action,
       GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (view));
       GtkWidget *dockable;
 
-      dockable = gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (), screen,
-                                                   value, -1);
+      dockable =
+        gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
+                                                   context->gimp,
+                                                   gimp_dialog_factory_get_singleton (),
+                                                   screen,
+                                                   value);
 
       gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
                                  data);

@@ -48,6 +48,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
+#include "display/gimpwindowstrategy.h"
 
 #include "dialogs/fade-dialog.h"
 
@@ -445,12 +446,16 @@ void
 edit_named_paste_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
+  Gimp      *gimp;
   GtkWidget *widget;
+  return_if_no_gimp (gimp, data);
   return_if_no_widget (widget, data);
 
-  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                    gtk_widget_get_screen (widget),
-                                    "gimp-buffer-list|gimp-buffer-grid", -1);
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                             gimp,
+                                             gimp_dialog_factory_get_singleton (),
+                                             gtk_widget_get_screen (widget),
+                                             "gimp-buffer-list|gimp-buffer-grid");
 }
 
 void

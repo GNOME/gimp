@@ -34,6 +34,12 @@
 #include "core/gimpgrouplayer.h"
 #include "core/gimpprojection.h"
 
+#include "widgets/gimpactiongroup.h"
+#include "widgets/gimpcolordialog.h"
+#include "widgets/gimpdock.h"
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpuimanager.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
@@ -43,12 +49,7 @@
 #include "display/gimpdisplayshell-scale-dialog.h"
 #include "display/gimpdisplayshell-scroll.h"
 #include "display/gimpimagewindow.h"
-
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpcolordialog.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpuimanager.h"
+#include "display/gimpwindowstrategy.h"
 
 #include "actions.h"
 #include "view-commands.h"
@@ -315,12 +316,16 @@ void
 view_navigation_window_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
+  Gimp             *gimp;
   GimpDisplayShell *shell;
+  return_if_no_gimp (gimp, data);
   return_if_no_shell (shell, data);
 
-  gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                    gtk_widget_get_screen (GTK_WIDGET (shell)),
-                                    "gimp-navigation-view", -1);
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                             gimp,
+                                             gimp_dialog_factory_get_singleton (),
+                                             gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                             "gimp-navigation-view");
 }
 
 void
