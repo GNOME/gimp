@@ -63,15 +63,15 @@ gimp_window_strategy_iface_base_init (GimpWindowStrategyInterface *strategy_ifac
 
   initialized = TRUE;
 
-  strategy_iface->create_dockable_dialog = NULL;
+  strategy_iface->show_dockable_dialog = NULL;
 }
 
 GtkWidget *
-gimp_window_strategy_create_dockable_dialog (GimpWindowStrategy *strategy,
-                                             Gimp               *gimp,
-                                             GimpDialogFactory  *factory,
-                                             GdkScreen          *screen,
-                                             const gchar        *identifiers)
+gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
+                                           Gimp               *gimp,
+                                           GimpDialogFactory  *factory,
+                                           GdkScreen          *screen,
+                                           const gchar        *identifiers)
 {
   GimpWindowStrategyInterface *iface;
 
@@ -79,12 +79,12 @@ gimp_window_strategy_create_dockable_dialog (GimpWindowStrategy *strategy,
 
   iface = GIMP_WINDOW_STRATEGY_GET_INTERFACE (strategy);
 
-  if (iface->create_dockable_dialog)
-    return iface->create_dockable_dialog (strategy,
-                                          gimp,
-                                          factory,
-                                          screen,
-                                          identifiers);
+  if (iface->show_dockable_dialog)
+    return iface->show_dockable_dialog (strategy,
+                                        gimp,
+                                        factory,
+                                        screen,
+                                        identifiers);
 
   return NULL;
 }

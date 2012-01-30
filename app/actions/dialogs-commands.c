@@ -61,9 +61,9 @@ dialogs_create_dockable_cmd_callback (GtkAction   *action,
   return_if_no_widget (widget, data);
 
   if (value)
-    gimp_window_strategy_create_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                                 gimp,
-                                                 gimp_dialog_factory_get_singleton (),
-                                                 gtk_widget_get_screen (widget),
-                                                 value);
+    gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                               gimp,
+                                               gimp_dialog_factory_get_singleton (),
+                                               gtk_widget_get_screen (widget),
+                                               value);
 }

@@ -41,7 +41,7 @@
 
 
 static void        gimp_single_window_strategy_window_strategy_iface_init (GimpWindowStrategyInterface *iface);
-static GtkWidget * gimp_single_window_strategy_create_dockable_dialog     (GimpWindowStrategy          *strategy,
+static GtkWidget * gimp_single_window_strategy_show_dockable_dialog       (GimpWindowStrategy          *strategy,
                                                                            Gimp                        *gimp,
                                                                            GimpDialogFactory           *factory,
                                                                            GdkScreen                   *screen,
@@ -68,15 +68,15 @@ gimp_single_window_strategy_init (GimpSingleWindowStrategy *strategy)
 static void
 gimp_single_window_strategy_window_strategy_iface_init (GimpWindowStrategyInterface *iface)
 {
-  iface->create_dockable_dialog = gimp_single_window_strategy_create_dockable_dialog;
+  iface->show_dockable_dialog = gimp_single_window_strategy_show_dockable_dialog;
 }
 
 static GtkWidget *
-gimp_single_window_strategy_create_dockable_dialog (GimpWindowStrategy *strategy,
-                                                    Gimp               *gimp,
-                                                    GimpDialogFactory  *factory,
-                                                    GdkScreen          *screen,
-                                                    const gchar        *identifiers)
+gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
+                                                  Gimp               *gimp,
+                                                  GimpDialogFactory  *factory,
+                                                  GdkScreen          *screen,
+                                                  const gchar        *identifiers)
 {
   GList           *windows = gimp_get_image_windows (gimp);
   GtkWidget       *widget  = NULL;

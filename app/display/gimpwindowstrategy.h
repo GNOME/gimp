@@ -35,20 +35,20 @@ struct _GimpWindowStrategyInterface
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  GtkWidget       * (* create_dockable_dialog)         (GimpWindowStrategy *strategy,
-                                                        Gimp               *gimp,
-                                                        GimpDialogFactory  *factory,
-                                                        GdkScreen          *screen,
-                                                        const gchar        *identifiers);
+  GtkWidget * (* show_dockable_dialog) (GimpWindowStrategy *strategy,
+                                        Gimp               *gimp,
+                                        GimpDialogFactory  *factory,
+                                        GdkScreen          *screen,
+                                        const gchar        *identifiers);
 };
 
 
-GType              gimp_window_strategy_interface_get_type     (void) G_GNUC_CONST;
-GtkWidget        * gimp_window_strategy_create_dockable_dialog (GimpWindowStrategy *strategy,
-                                                                Gimp               *gimp,
-                                                                GimpDialogFactory  *factory,
-                                                                GdkScreen          *screen,
-                                                                const gchar        *identifiers);
+GType       gimp_window_strategy_interface_get_type   (void) G_GNUC_CONST;
+GtkWidget * gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
+                                                       Gimp               *gimp,
+                                                       GimpDialogFactory  *factory,
+                                                       GdkScreen          *screen,
+                                                       const gchar        *identifiers);
 
 
 #endif  /*  __GIMP_WINDOW_STRATEGY_H__  */
