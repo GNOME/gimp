@@ -26,6 +26,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpgradient.h"
@@ -36,6 +37,7 @@
 #include "gimpview.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-indicator-area.h"
+#include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
 
@@ -51,9 +53,13 @@ brush_preview_clicked (GtkWidget       *widget,
                        GdkModifierType  state,
                        GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                    gtk_widget_get_screen (widget),
-                                    "gimp-brush-grid|gimp-brush-list", -1);
+  GimpContext *context = gimp_toolbox_get_context (toolbox);
+
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
+                                             context->gimp,
+                                             gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
+                                             gtk_widget_get_screen (widget),
+                                             "gimp-brush-grid|gimp-brush-list");
 }
 
 static void
@@ -73,9 +79,13 @@ pattern_preview_clicked (GtkWidget       *widget,
                          GdkModifierType  state,
                          GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                    gtk_widget_get_screen (widget),
-                                    "gimp-pattern-grid|gimp-pattern-list", -1);
+  GimpContext *context = gimp_toolbox_get_context (toolbox);
+
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
+                                             context->gimp,
+                                             gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
+                                             gtk_widget_get_screen (widget),
+                                             "gimp-pattern-grid|gimp-pattern-list");
 }
 
 static void
@@ -95,9 +105,13 @@ gradient_preview_clicked (GtkWidget       *widget,
                           GdkModifierType  state,
                           GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                    gtk_widget_get_screen (widget),
-                                    "gimp-gradient-list|gimp-gradient-grid", -1);
+  GimpContext *context = gimp_toolbox_get_context (toolbox);
+
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
+                                             context->gimp,
+                                             gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
+                                             gtk_widget_get_screen (widget),
+                                             "gimp-gradient-list|gimp-gradient-grid");
 }
 
 static void

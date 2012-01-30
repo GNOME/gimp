@@ -37,6 +37,7 @@
 #include "gimpviewablebutton.h"
 #include "gimpviewablebox.h"
 #include "gimpviewrenderergradient.h"
+#include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
 
@@ -620,9 +621,11 @@ gimp_viewable_box_edit_clicked (GtkWidget          *widget,
   const gchar *editor_id = g_object_get_data (G_OBJECT (button),
                                               "gimp-viewable-box-editor");
 
-  gimp_dialog_factory_dialog_raise (button->dialog_factory,
-                                    gtk_widget_get_screen (widget),
-                                    editor_id, -1);
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (button->context->gimp)),
+                                             button->context->gimp,
+                                             gimp_dialog_factory_get_singleton (),
+                                             gtk_widget_get_screen (widget),
+                                             editor_id);
 }
 
 static void

@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
@@ -35,6 +36,7 @@
 #include "gimpview.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-image-area.h"
+#include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
 
@@ -44,9 +46,13 @@ image_preview_clicked (GtkWidget       *widget,
                        GdkModifierType  state,
                        GimpToolbox     *toolbox)
 {
-  gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                    gtk_widget_get_screen (widget),
-                                    "gimp-image-list|gimp-image-grid", -1);
+  GimpContext *context = gimp_toolbox_get_context (toolbox);
+
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
+                                             context->gimp,
+                                             gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
+                                             gtk_widget_get_screen (widget),
+                                             "gimp-image-list|gimp-image-grid");
 }
 
 static void

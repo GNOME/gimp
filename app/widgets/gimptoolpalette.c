@@ -35,6 +35,7 @@
 #include "gimptoolpalette.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
+#include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
 
@@ -361,12 +362,14 @@ gimp_tool_palette_tool_button_press (GtkWidget       *widget,
 
   if (event->type == GDK_2BUTTON_PRESS && event->button == 1)
     {
-      GimpDock *dock = GIMP_DOCK (private->toolbox);
+      GimpContext *context = gimp_toolbox_get_context (private->toolbox);
+      GimpDock    *dock    = GIMP_DOCK (private->toolbox);
 
-      gimp_dialog_factory_dialog_raise (gimp_dock_get_dialog_factory (dock),
-                                        gtk_widget_get_screen (widget),
-                                        "gimp-tool-options",
-                                        -1);
+      gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
+                                                 context->gimp,
+                                                 gimp_dock_get_dialog_factory (dock),
+                                                 gtk_widget_get_screen (widget),
+                                                 "gimp-tool-options");
     }
 
   return FALSE;

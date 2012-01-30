@@ -45,6 +45,7 @@
 #include "gimpdialogfactory.h"
 #include "gimppropwidgets.h"
 #include "gimpview.h"
+#include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
 
@@ -453,11 +454,16 @@ gimp_device_status_view_clicked (GtkWidget       *widget,
                                  GdkModifierType  state,
                                  const gchar     *identifier)
 {
+  GimpDeviceStatus  *status;
   GimpDialogFactory *dialog_factory;
 
+  status = GIMP_DEVICE_STATUS (gtk_widget_get_ancestor (widget,
+                                                        GIMP_TYPE_DEVICE_STATUS));
   dialog_factory = gimp_dialog_factory_get_singleton ();
 
-  gimp_dialog_factory_dialog_raise (dialog_factory,
-                                    gtk_widget_get_screen (widget),
-                                    identifier, -1);
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (status->gimp)),
+                                             status->gimp,
+                                             dialog_factory,
+                                             gtk_widget_get_screen (widget),
+                                             identifier);
 }
