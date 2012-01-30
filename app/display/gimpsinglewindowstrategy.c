@@ -109,6 +109,11 @@ gimp_single_window_strategy_create_dockable_dialog (GimpWindowStrategy *strategy
                                       -1 /*index*/);
         }
     }
+  else if (gimp_dialog_factory_find_widget (factory, identifiers))
+    {
+      /* if the dialog is already open, simply raise it */
+      return gimp_dialog_factory_dialog_raise (factory, screen, identifiers, -1);
+   }
   else
     {
       GtkWidget *dockbook;
