@@ -28,7 +28,7 @@ Utilities of general interest
 @str: 
 @len: 
 @warning_format: 
-@Varargs: 
+@...: 
 @Returns: 
 
 

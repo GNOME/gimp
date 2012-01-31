@@ -58,7 +58,7 @@ GimpEnumStore
 
 @enum_type: 
 @n_values: 
-@Varargs: 
+@...: 
 @Returns: 
 
 

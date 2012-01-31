@@ -224,7 +224,7 @@ all other GIMP Library headers.
 
 @name: 
 @n_return_vals: 
-@Varargs: 
+@...: 
 @Returns: 
 
 

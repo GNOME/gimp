@@ -52,7 +52,7 @@ GimpBrowser
 @browser: 
 @first_type_label: 
 @first_type_id: 
-@Varargs: 
+@...: 
 
 
 <!-- ##### FUNCTION gimp_browser_set_widget ##### -->

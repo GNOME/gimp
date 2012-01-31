@@ -48,7 +48,7 @@ A widget providing a popup menu of integer values (e.g. enums).
 
 @first_label: 
 @first_value: 
-@Varargs: 
+@...: 
 @Returns: 
 
 
@@ -79,7 +79,7 @@ A widget providing a popup menu of integer values (e.g. enums).
 </para>
 
 @combo_box: 
-@Varargs: 
+@...: 
 
 
 <!-- ##### FUNCTION gimp_int_combo_box_append ##### -->
@@ -88,7 +88,7 @@ A widget providing a popup menu of integer values (e.g. enums).
 </para>
 
 @combo_box: 
-@Varargs: 
+@...: 
 
 
 <!-- ##### FUNCTION gimp_int_combo_box_set_active ##### -->

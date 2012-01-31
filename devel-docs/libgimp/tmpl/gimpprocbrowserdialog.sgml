@@ -49,7 +49,7 @@ GimpProcBrowserDialog
 @role: 
 @help_func: 
 @help_id: 
-@Varargs: 
+@...: 
 @Returns: 
 
 

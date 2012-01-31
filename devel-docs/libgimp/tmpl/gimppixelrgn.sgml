@@ -168,7 +168,7 @@ fast ways of accessing and modifying portions of a drawable.
 </para>
 
 @nrgns: 
-@Varargs: 
+@...: 
 @Returns: 
 
 

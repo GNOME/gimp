@@ -55,7 +55,7 @@ Functions for embedding the progress bar into a plug-in's GUI.
 </para>
 
 @format: 
-@Varargs: 
+@...: 
 @Returns: 
 
 
@@ -92,7 +92,7 @@ Functions for embedding the progress bar into a plug-in's GUI.
 </para>
 
 @format: 
-@Varargs: 
+@...: 
 @Returns: 
 
 

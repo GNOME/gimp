@@ -28,7 +28,7 @@ helper functions.
 
 @in_frame: 
 @frame_title: 
-@Varargs: 
+@...: 
 @Returns: 
 
 
@@ -42,7 +42,7 @@ helper functions.
 @radio_button_callback: 
 @radio_button_callback_data: 
 @initial: 
-@Varargs: 
+@...: 
 @Returns: 
 
 
@@ -65,7 +65,7 @@ helper functions.
 @radio_button_callback: 
 @radio_button_callback_data: 
 @initial: 
-@Varargs: 
+@...: 
 @Returns: 
 
 
@@ -385,6 +385,6 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 </para>
 
 @label: 
-@Varargs: 
+@...: 
 
 

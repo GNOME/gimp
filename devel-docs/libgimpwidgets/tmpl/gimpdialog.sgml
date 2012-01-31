@@ -48,7 +48,7 @@ dialog-related stuff.
 @flags: 
 @help_func: 
 @help_id: 
-@Varargs: 
+@...: 
 @Returns: 
 
 
@@ -84,7 +84,7 @@ dialog-related stuff.
 </para>
 
 @dialog: 
-@Varargs: 
+@...: 
 
 
 <!-- ##### FUNCTION gimp_dialog_add_buttons_valist ##### -->

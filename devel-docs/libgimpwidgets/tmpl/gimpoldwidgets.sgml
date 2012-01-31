@@ -29,7 +29,7 @@ GimpIntComboBox
 @menu_item_callback: 
 @menu_item_callback_data: 
 @initial: 
-@Varargs: 
+@...: 
 @Returns: 
 
 
@@ -68,7 +68,7 @@ GimpIntComboBox
 </para>
 
 @menu_only: 
-@Varargs: 
+@...: 
 @Returns: 
 
 
@@ -81,7 +81,7 @@ GimpIntComboBox
 @menu_item_callback: 
 @menu_item_callback_data: 
 @initial: 
-@Varargs: 
+@...: 
 @Returns: 
 
 
