@@ -19,21 +19,9 @@ brushdata_DATA = \
 	pixel.gbr			\
 	\
 	Calligraphic.vbr		\
-	Diagonal-Star.vbr		\
-	Round-Fuzzy.vbr			\
-	Round.vbr			\
 	\
-	Acrylic1.gih			\
-	Acrylic2.gih			\
-	Acrylic3.gih			\
-	Acrylic4.gih			\
-	Chalk1.gih			\
-	Chalk2.gih			\
 	Grass1.gih			\
-	SketchBrush-64.gih		\
 	confetti.gih			\
-	feltpen.gih			\
-	hsparks.gih			\
 	vine.gih
 
 obsoletebrushdata_DATA = \
@@ -71,8 +59,11 @@ obsoletebrushdata_DATA = \
 	Diagonal-Star-11.vbr		\
 	Diagonal-Star-17.vbr		\
 	Diagonal-Star-25.vbr		\
+	feltpen.gih			\
 	\
 	SketchBrush-16.gih		\
-	SketchBrush-32.gih
+	SketchBrush-32.gih		\
+	SketchBrush-64.gih
+
 
 EXTRA_DIST = $(brushdata_DATA) $(obsoletebrushdata_DATA)
