@@ -7,6 +7,46 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.6.11 to GIMP 2.6.12
+===================================================
+
+* Bugs fixed:
+
+ 627328 - GIMP 2.6.10 segfaults when CTRL-left click on a layer mask
+ 631885 - GIMP fails to import a path from SVG
+ 631728 - Crash or Gtk-CRITICAL on File->Open
+ 641259 - [abrt] gimp-2:2.6.11-1.fc14: py-slice.py:172:slice:TypeError: integer argument expected, got float
+ 640219 - gimp(1) manpage fixes
+ 640612 - Sample Colorize does not function non-interactively
+ 646947 - file-pdf-load: Don't use deprecated API
+ 639203 - file-psp: fix for bogus input data
+ 639203 - Fixes for some buffer overflow problems
+ 652280 - Guard against crash due to quitting while DND is processed
+ 660305 - fails to build with -Werror=format-security
+
+ ... plus a ton of others.
+
+* Updated translations:
+
+ Asturian (ast)
+ Catalan (Valencian) (ca@valencia)
+ Danish (da)
+ Greek (el)
+ Esperanto (eo)
+ Spanish (es)
+ Italian (it)
+ Japanese (ja)
+ Kazakh (kk)
+ Latvian (la)
+ Norwegian Nynorsk (nn)
+ Polish (pl)
+ Portuguese (pt)
+ Brazilian Portuguese (pt_BR)
+ Russian (ru)
+ Turkish (tr)
+ Simplified Chinese (zh_CN)
+
+
 Overview of Changes from GIMP 2.6.10 to GIMP 2.6.11
 ===================================================
 
