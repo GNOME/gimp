@@ -689,41 +689,41 @@ ReadImage (FILE                  *fd,
                                     (gdouble) max_progress);
           }
 
-    if (channels == 4)
-      {
-        gboolean  has_alpha = FALSE;
+        if (channels == 4)
+          {
+            gboolean  has_alpha = FALSE;
 
-        /* at least one pixel should have nonzero alpha */
-        for (ypos = 0; ypos < height; ypos++)
-          {
-        temp = dest + (ypos * rowstride);
-        for (xpos = 0; xpos < width; xpos++)
-          {
-            if (temp[3])
+            /* at least one pixel should have nonzero alpha */
+            for (ypos = 0; ypos < height; ypos++)
               {
-            has_alpha = TRUE;
-            break;
+                temp = dest + (ypos * rowstride);
+                for (xpos = 0; xpos < width; xpos++)
+                  {
+                    if (temp[3])
+                      {
+                        has_alpha = TRUE;
+                        break;
+                      }
+                    temp += 4;
+                  }
+                if (has_alpha)
+                  break;
               }
-            temp += 4;
-          }
-        if (has_alpha)
-          break;
-          }
 
-        /* workaround unwanted behaviour when all alpha pixels are zero */
-        if (!has_alpha)
-          {
-        for (ypos = 0; ypos < height; ypos++)
-          {
-            temp = dest + (ypos * rowstride);
-            for (xpos = 0; xpos < width; xpos++)
+            /* workaround unwanted behaviour when all alpha pixels are zero */
+            if (!has_alpha)
               {
-            temp[3] = 255;
-            temp += 4;
+                for (ypos = 0; ypos < height; ypos++)
+                  {
+                    temp = dest + (ypos * rowstride);
+                    for (xpos = 0; xpos < width; xpos++)
+                      {
+                        temp[3] = 255;
+                        temp += 4;
+                      }
+                  }
               }
           }
-          }
-      }
       }
       break;
 
