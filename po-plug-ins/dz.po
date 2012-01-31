@@ -12144,14 +12144,6 @@ msgstr " '%s' ཨེཆ་ཊི་ཊི་ལན་ཨང་རྟགས་: %
 msgid "wget exited abnormally on URI '%s'"
 msgstr "ང་བཅས་ཀྱི་ ཡུ་ཨཱར་ཨའི་གུར་ཨ་རྟག་དང་མ་འདྲཝ་སྦེ་ཕྱིར་ཐོན་འགྱོ་ཚར་ཏེ་འོངས་ཨིན།'%s'"
 
-#. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:180
-#, c-format
-msgid "(timeout is %d second)"
-msgid_plural "(timeout is %d seconds)"
-msgstr[0] "(ངལ་མཚམས་དེ་སྐར་ཆ་%dཨིན།)"
-msgstr[1] ""
-
 #. The fourth line is either the network request or an error
 #: ../plug-ins/uri/uri-backend-wget.c:209
 msgid "Opening URI"

@@ -283,23 +283,9 @@ msgstr "ཚེས་གྲངས་ཀྱི་ཐོག་ལས་ འཚོ�
 msgid "Searching by type"
 msgstr "དབྱེ་བའི་ཐོག་ལས་ འཚོལ་ཞིབ་འབད་དོ།"
 
-#: ../libgimp/gimpprocbrowserdialog.c:454
-#, c-format
-msgid "%d procedure"
-msgid_plural "%d procedures"
-msgstr[0] "%d བྱ་སྒོའི་ལམ་ལུགས་ཚུ།"
-msgstr[1] ""
-
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "ཁྱོད་ཀྱི་འདྲི་དཔྱད་ཀྱི་ལུ་མཐུན་སྒྲིག་མིན་འདུག"
-
-#: ../libgimp/gimpprocbrowserdialog.c:467
-#, c-format
-msgid "%d procedure matches your query"
-msgid_plural "%d procedures match your query"
-msgstr[0] "ཁྱོད་ཀྱི་འདྲི་དཔྱད་ཀྱི་དང་ %d བྱ་སྒོའི་ལམ་ལུགས་དེ་ མཐུན་སྒྲིག་འབདཝ་མས།"
-msgstr[1] ""
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:516
@@ -714,13 +700,6 @@ msgstr "ཇི་ཨཱི་ཨེམ་པི་ རྒྱ་བསྐྱེ�
 #: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "གནས་སྐབས་ཀྱི་བྱ་སྒོའི་ལམ་ལུགས།"
-
-#: ../libgimpbase/gimpmemsize.c:180
-#, c-format
-msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d བཱའིཊི།"
-msgstr[1] ""
 
 #: ../libgimpbase/gimpmemsize.c:186
 #, c-format
