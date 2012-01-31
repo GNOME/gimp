@@ -23,6 +23,7 @@ Overview of Changes from GIMP 2.6.11 to GIMP 2.6.12
  639203 - Fixes for some buffer overflow problems
  652280 - Guard against crash due to quitting while DND is processed
  660305 - fails to build with -Werror=format-security
+ 623045 - script-fu: make server IPv6 aware
 
  ... plus a ton of others.
 
