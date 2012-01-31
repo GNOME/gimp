@@ -352,8 +352,9 @@ GtkWidget *
 gimp_dialog_factory_find_widget (GimpDialogFactory *factory,
                                  const gchar       *identifiers)
 {
-  gchar **ids;
-  gint    i;
+  GtkWidget  *widget = NULL;
+  gchar     **ids;
+  gint        i;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (identifiers != NULL, NULL);
@@ -368,15 +369,16 @@ gimp_dialog_factory_find_widget (GimpDialogFactory *factory,
 
       if (info)
         {
-          g_strfreev (ids);
+          widget =  gimp_session_info_get_widget (info);
 
-          return gimp_session_info_get_widget (info);
+          if (widget)
+            break;
         }
     }
 
   g_strfreev (ids);
 
-  return NULL;
+  return widget;
 }
 
 /**
