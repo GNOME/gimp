@@ -56,7 +56,6 @@
 #define MENU_WIDGET_ICON_SIZE        GTK_ICON_SIZE_MENU
 #define MENU_WIDGET_SPACING          4
 #define TAB_HOVER_TIMEOUT            500
-#define GIMP_N_TAB_STYLE_CANDIDATES  3 /* G_N_ELEMENTS (gimp_tab_style_candidates); */
 #define GIMP_DOCKABLE_DETACH_REF_KEY "gimp-dockable-detach-ref"
 
 
@@ -66,6 +65,16 @@ enum
   DOCKABLE_REMOVED,
   DOCKABLE_REORDERED,
   LAST_SIGNAL
+};
+
+/* List of candidates for the automatic style, starting with the
+ * biggest first
+ */
+static const GimpTabStyle gimp_tab_style_candidates[] =
+{
+  GIMP_TAB_STYLE_PREVIEW_BLURB,
+  GIMP_TAB_STYLE_PREVIEW_NAME,
+  GIMP_TAB_STYLE_PREVIEW
 };
 
 struct _GimpDockbookPrivate
@@ -81,7 +90,7 @@ struct _GimpDockbookPrivate
   /* Cache for "what actual tab style for automatic styles can we use
    * for a given dockbook width
    */
-  gint            min_width_for_style[GIMP_N_TAB_STYLE_CANDIDATES];
+  gint            min_width_for_style[G_N_ELEMENTS (gimp_tab_style_candidates)];
 
   /* We need a list separate from the GtkContainer children list,
    * because we need to do calculations for all dockables before we
@@ -177,25 +186,12 @@ static guint dockbook_signals[LAST_SIGNAL] = { 0 };
 
 static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 
-/* List of candidates for the automatic style, starting with the
- * biggest first
- */
-static GimpTabStyle gimp_tab_style_candidates[] =
-{
-  GIMP_TAB_STYLE_PREVIEW_BLURB,
-  GIMP_TAB_STYLE_PREVIEW_NAME,
-  GIMP_TAB_STYLE_PREVIEW,
-};
-
 
 static void
 gimp_dockbook_class_init (GimpDockbookClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  if (G_N_ELEMENTS (gimp_tab_style_candidates) != GIMP_N_TAB_STYLE_CANDIDATES)
-    g_error ("Update GIMP_N_TAB_STYLE_CANDIDATES");
 
   dockbook_signals[DOCKABLE_ADDED] =
     g_signal_new ("dockable-added",
@@ -726,7 +722,7 @@ gimp_dockbook_refresh_tab_layout_lut (GimpDockbook *dockbook)
     }
 
   /* Calculate space taken with auto tab style for all candidates */
-  for (i = 0; i < GIMP_N_TAB_STYLE_CANDIDATES; i++)
+  for (i = 0; i < G_N_ELEMENTS (gimp_tab_style_candidates); i++)
     {
       gint         size_with_candidate = 0;
       GimpTabStyle candidate           = gimp_tab_style_candidates[i];
@@ -836,7 +832,7 @@ gimp_dockbook_update_automatic_tab_style (GimpDockbook *dockbook)
    * the smallest style (which we always fall back to if we don't get
    * a better match)
    */
-  for (i = 0; i < GIMP_N_TAB_STYLE_CANDIDATES; i++)
+  for (i = 0; i < G_N_ELEMENTS (gimp_tab_style_candidates); i++)
     {
       tab_style = gimp_tab_style_candidates[i];
       if (available_space > dockbook->p->min_width_for_style[i])
