@@ -1044,9 +1044,9 @@ gimp_data_compare (GimpData *data1,
   if (private1->internal != private2->internal)
     return private1->internal ? -1 : 1;
 
-  /*  keep user-writable objects above system resource files  */
-  if (private1->writable != private2->writable)
-    return private1->writable ? -1 : 1;
+  /*  keep user-deletable objects above system resource files  */
+  if (private1->deletable != private2->deletable)
+    return private1->deletable ? -1 : 1;
 
   return gimp_object_name_collate ((GimpObject *) data1,
                                    (GimpObject *) data2);
