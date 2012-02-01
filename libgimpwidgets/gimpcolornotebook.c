@@ -50,7 +50,6 @@
  **/
 
 
-#define DEFAULT_TAB_BORDER     0
 #define DEFAULT_TAB_ICON_SIZE  GTK_ICON_SIZE_BUTTON
 
 
@@ -127,13 +126,6 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
   selector_class->set_config            = gimp_color_notebook_set_config;
 
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("tab-border",
-                                                             NULL,
-                                                             "Width of the border around the tab contents",
-                                                             0, G_MAXINT,
-                                                             DEFAULT_TAB_BORDER,
-                                                             G_PARAM_READABLE));
-  gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tab-icon-size",
                                                               NULL,
                                                               "Size for icons displayed in the tab",
@@ -200,19 +192,13 @@ gimp_color_notebook_style_updated (GtkWidget *widget)
 {
   GimpColorNotebookPrivate *private = GET_PRIVATE (widget);
   GList                    *list;
-  gint                      tab_border;
   GtkIconSize               icon_size;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gtk_widget_style_get (widget,
-                        "tab-border",    &tab_border,
                         "tab-icon_size", &icon_size,
                         NULL);
-
-  g_object_set (private->notebook,
-                "tab-border", tab_border,
-                NULL);
 
   for (list = private->selectors; list; list = g_list_next (list))
     {

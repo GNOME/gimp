@@ -27,9 +27,7 @@
     -GimpDockWindow-menu-preview-size: small-toolbar;
     -GimpToolPalette-tool-icon-size:   menu;
     -GimpToolPalette-button-relief:    none;
-    -GimpDockbook-tab-border:          0;
     -GimpDockbook-tab-icon-size:       menu;
-    -GimpColorNotebook-tab-border:     0;
     -GimpColorNotebook-tab-icon-size:  menu;
     -GimpDeviceEditor-handle-size:     12;
     -GimpDockable-content-border:      1;
@@ -45,6 +43,14 @@
 
 GimpToolDialog {
     -GtkDialog-action-area-border: 6;
+}
+
+GimpColorNotebook tab {
+    padding: 0 0 0 0;
+}
+
+GimpDockbook tab {
+    padding: 0 0 0 0;
 }
 
 GimpDockable {
