@@ -7,14 +7,14 @@
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011.
-# Aviary.pl <gnomepl@aviary.pl>, 2011.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011, 2012.
+# Aviary.pl <gnomepl@aviary.pl>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-29 18:42+0100\n"
-"PO-Revision-Date: 2011-12-29 18:43+0100\n"
+"POT-Creation-Date: 2012-02-02 18:49+0100\n"
+"PO-Revision-Date: 2012-02-02 18:48+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -80,7 +80,7 @@ msgid "To:"
 msgstr "Do:"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:416
-#: ../plug-ins/common/file-ps.c:3234 ../plug-ins/imagemap/imap_menu.c:213
+#: ../plug-ins/common/file-ps.c:3096 ../plug-ins/imagemap/imap_menu.c:213
 msgid "Gray"
 msgstr "Szary"
 
@@ -902,7 +902,7 @@ msgstr "_Azymut:"
 msgid "_Elevation:"
 msgstr "Wz_niesienie:"
 
-#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3388
+#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3250
 msgid "_X offset:"
 msgstr "Przesunięcie _X:"
 
@@ -914,7 +914,7 @@ msgstr ""
 "Przesunięcie może być regulowane przez kliknięcie i przeciąganie podglądu za "
 "pomocą środkowego przycisku myszy."
 
-#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3397
+#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3259
 msgid "_Y offset:"
 msgstr "Przesunięcie _Y:"
 
@@ -1023,16 +1023,14 @@ msgstr "Wczytanie ustawień miksera kanałów"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:892
-#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-compressor.c:497
-#: ../plug-ins/common/file-compressor.c:666
-#: ../plug-ins/common/file-dicom.c:340 ../plug-ins/common/file-gbr.c:368
-#: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:640
-#: ../plug-ins/common/file-jp2-load.c:194
+#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-gbr.c:368 ../plug-ins/common/file-gif-load.c:355
+#: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
 #: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:752
-#: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1037
-#: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1717
+#: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1014
+#: ../plug-ins/common/file-ps.c:2910 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
@@ -1063,22 +1061,18 @@ msgstr "Zapis ustawień miksera kanałów"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:840
-#: ../plug-ins/common/file-cel.c:585 ../plug-ins/common/file-compressor.c:425
-#: ../plug-ins/common/file-compressor.c:507
-#: ../plug-ins/common/file-compressor.c:589
-#: ../plug-ins/common/file-compressor.c:677
-#: ../plug-ins/common/file-csource.c:407 ../plug-ins/common/file-dicom.c:1351
-#: ../plug-ins/common/file-gbr.c:663 ../plug-ins/common/file-gif-save.c:782
-#: ../plug-ins/common/file-gih.c:1258 ../plug-ins/common/file-html-table.c:236
-#: ../plug-ins/common/file-mng.c:649 ../plug-ins/common/file-mng.c:984
-#: ../plug-ins/common/file-pat.c:486 ../plug-ins/common/file-pcx.c:712
-#: ../plug-ins/common/file-pix.c:526 ../plug-ins/common/file-png.c:1285
-#: ../plug-ins/common/file-pnm.c:1010 ../plug-ins/common/file-ps.c:1214
-#: ../plug-ins/common/file-raw.c:591 ../plug-ins/common/file-raw.c:619
-#: ../plug-ins/common/file-sunras.c:565 ../plug-ins/common/file-tga.c:1171
-#: ../plug-ins/common/file-tiff-save.c:684 ../plug-ins/common/file-xbm.c:1036
-#: ../plug-ins/common/file-xmc.c:1455 ../plug-ins/common/file-xwd.c:619
-#: ../plug-ins/common/sphere-designer.c:2121
+#: ../plug-ins/common/file-cel.c:585 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-dicom.c:1351 ../plug-ins/common/file-gbr.c:663
+#: ../plug-ins/common/file-gif-save.c:782 ../plug-ins/common/file-gih.c:1258
+#: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
+#: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:486
+#: ../plug-ins/common/file-pcx.c:712 ../plug-ins/common/file-pix.c:526
+#: ../plug-ins/common/file-png.c:1285 ../plug-ins/common/file-pnm.c:1010
+#: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
+#: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
+#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
+#: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1455
+#: ../plug-ins/common/file-xwd.c:619 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1652
@@ -2681,7 +2675,7 @@ msgid "Destripe"
 msgstr "Usunięcie pasków"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
-#: ../plug-ins/common/file-ps.c:3172 ../plug-ins/common/file-ps.c:3370
+#: ../plug-ins/common/file-ps.c:3034 ../plug-ins/common/file-ps.c:3232
 #: ../plug-ins/common/file-raw.c:1134 ../plug-ins/common/smooth-palette.c:437
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
@@ -2993,7 +2987,7 @@ msgid "Engrave"
 msgstr "Grawerowanie"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/file-html-table.c:600
-#: ../plug-ins/common/file-ps.c:3182 ../plug-ins/common/file-ps.c:3379
+#: ../plug-ins/common/file-ps.c:3044 ../plug-ins/common/file-ps.c:3241
 #: ../plug-ins/common/file-raw.c:1147 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
@@ -3035,9 +3029,9 @@ msgstr "Wczytaj paletę KISS"
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
-#: ../plug-ins/common/file-pdf-load.c:842 ../plug-ins/common/file-pix.c:348
+#: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:348
 #: ../plug-ins/common/file-png.c:759 ../plug-ins/common/file-pnm.c:499
-#: ../plug-ins/common/file-ps.c:1043 ../plug-ins/common/file-raw.c:716
+#: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
 #: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
@@ -3066,7 +3060,7 @@ msgstr "Nieobsługiwana głębia kolorów (%d)."
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
 #: ../plug-ins/common/file-png.c:1292 ../plug-ins/common/file-pnm.c:1015
-#: ../plug-ins/common/file-ps.c:1219 ../plug-ins/common/file-sunras.c:570
+#: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
@@ -3077,22 +3071,6 @@ msgstr "Nieobsługiwana głębia kolorów (%d)."
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie \"%s\""
-
-#: ../plug-ins/common/file-compressor.c:159
-msgid "gzip archive"
-msgstr "Archiwum gzip"
-
-#: ../plug-ins/common/file-compressor.c:180
-msgid "bzip archive"
-msgstr "Archiwum bzip"
-
-#: ../plug-ins/common/file-compressor.c:389
-msgid "No sensible file extension, saving as compressed XCF."
-msgstr "Brak sensownego rozszerzenia pliku, zapis jako skompresowany plik XCF."
-
-#: ../plug-ins/common/file-compressor.c:571
-msgid "No sensible file extension, attempting to load with file magic."
-msgstr "Brak sensownego rozszerzenia, próba odgadnięcia formatu pliku."
 
 #: ../plug-ins/common/file-csource.c:113
 msgid "C source code"
@@ -3171,8 +3149,8 @@ msgstr "\"%s\" nie jest plikiem DICOM."
 msgid "Cannot save images with alpha channel."
 msgstr "Nie można zapisać obrazów z kanałem alfa."
 
-#: ../plug-ins/common/file-dicom.c:1334 ../plug-ins/common/file-ps.c:1204
-#: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-xwd.c:609
+#: ../plug-ins/common/file-dicom.c:1334 ../plug-ins/common/file-ps.c:1180
+#: ../plug-ins/common/file-ps.c:1212 ../plug-ins/common/file-xwd.c:609
 #: ../plug-ins/file-fits/fits.c:466 ../plug-ins/file-xjt/xjt.c:1691
 msgid "Cannot operate on unknown image types."
 msgstr "Nie można pracować na nieznanych typach obrazów."
@@ -3357,7 +3335,8 @@ msgstr ""
 msgid "Error writing output file."
 msgstr "Błąd podczas zapisywania pliku wyjściowego."
 
-#: ../plug-ins/common/file-gif-save.c:2382
+#. translators: the %d is *always* 240 here
+#: ../plug-ins/common/file-gif-save.c:2385
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Długość domyślnego komentarza jest ograniczona do %d znaków."
@@ -3826,69 +3805,73 @@ msgstr "Dolna krawędź jest poza zakresem (musi być < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Zapisanie do pliku \"%s\" się nie powiodło: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:296
-#: ../plug-ins/common/file-pdf-save.c:273
-#: ../plug-ins/common/file-pdf-save.c:288
+#: ../plug-ins/common/file-pdf-load.c:300
+#: ../plug-ins/common/file-pdf-save.c:289
 msgid "Portable Document Format"
 msgstr "Portable Document Format (PDF)"
 
-#: ../plug-ins/common/file-pdf-load.c:543
-#: ../plug-ins/common/file-pdf-load.c:562
+#: ../plug-ins/common/file-pdf-load.c:548
+#: ../plug-ins/common/file-pdf-load.c:567
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Nie można wczytać \"%s\": %s"
 
-#: ../plug-ins/common/file-pdf-load.c:876
+#: ../plug-ins/common/file-pdf-load.c:895
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:878 ../plug-ins/common/file-ps.c:1126
+#: ../plug-ins/common/file-pdf-load.c:897 ../plug-ins/common/file-ps.c:1102
 #, c-format
 msgid "%s-pages"
 msgstr "%s-stron"
 
-#: ../plug-ins/common/file-pdf-load.c:1068
+#: ../plug-ins/common/file-pdf-load.c:1088
 msgid "Import from PDF"
 msgstr "Import z PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1073 ../plug-ins/common/file-ps.c:3100
+#: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2962
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "Za_importuj"
 
-#: ../plug-ins/common/file-pdf-load.c:1106
+#: ../plug-ins/common/file-pdf-load.c:1126
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Błąd podczas uzyskiwania liczby stron z podanego pliku PDF."
 
-#: ../plug-ins/common/file-pdf-load.c:1148
+#: ../plug-ins/common/file-pdf-load.c:1168
 msgid "_Width (pixels):"
 msgstr "_Szerokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1149
+#: ../plug-ins/common/file-pdf-load.c:1169
 msgid "_Height (pixels):"
 msgstr "_Wysokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1151
+#: ../plug-ins/common/file-pdf-load.c:1171
 msgid "_Resolution:"
 msgstr "_Rozdzielczość:"
 
-#: ../plug-ins/common/file-pdf-load.c:1431
-#: ../plug-ins/common/file-pdf-load.c:1432 ../plug-ins/common/file-svg.c:917
+#. Antialiasing
+#: ../plug-ins/common/file-pdf-load.c:1182
+msgid "Use _Anti-aliasing"
+msgstr "Użycie _wygładzania"
+
+#: ../plug-ins/common/file-pdf-load.c:1460
+#: ../plug-ins/common/file-pdf-load.c:1461 ../plug-ins/common/file-svg.c:917
 #: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
 #, c-format
 msgid "pixels/%a"
 msgstr "piksele/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:303
+#: ../plug-ins/common/file-pdf-save.c:304
 msgid "_Create multipage PDF..."
 msgstr "_Utwórz wielostronicowy plik PDF..."
 
-#: ../plug-ins/common/file-pdf-save.c:396
+#: ../plug-ins/common/file-pdf-save.c:401
 msgid "You must select a file to save!"
 msgstr "Należy wybrać plik do zapisu."
 
-#: ../plug-ins/common/file-pdf-save.c:405
+#: ../plug-ins/common/file-pdf-save.c:410
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3901,47 +3884,47 @@ msgstr ""
 "Proszę się upewnić, że podano prawidłową nazwę pliku i zaznaczone położenie "
 "nie jest tylko do odczytu."
 
-#: ../plug-ins/common/file-pdf-save.c:715
-#: ../plug-ins/common/file-pdf-save.c:832
+#: ../plug-ins/common/file-pdf-save.c:733
+#: ../plug-ins/common/file-pdf-save.c:850
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Pominięcie ukrytych warstw i warstw o zerowym kryciu"
 
-#: ../plug-ins/common/file-pdf-save.c:719
-#: ../plug-ins/common/file-pdf-save.c:836
+#: ../plug-ins/common/file-pdf-save.c:737
+#: ../plug-ins/common/file-pdf-save.c:854
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Konwersja bitmap do grafik wektorowych, jeśli to możliwe"
 
-#: ../plug-ins/common/file-pdf-save.c:723
-#: ../plug-ins/common/file-pdf-save.c:840
+#: ../plug-ins/common/file-pdf-save.c:741
+#: ../plug-ins/common/file-pdf-save.c:858
 msgid "Apply layer masks before saving"
 msgstr "Zastosowanie masek warstw przed zapisaniem"
 
-#: ../plug-ins/common/file-pdf-save.c:726
-#: ../plug-ins/common/file-pdf-save.c:843
+#: ../plug-ins/common/file-pdf-save.c:744
+#: ../plug-ins/common/file-pdf-save.c:861
 msgid "Keeping the masks will not change the output"
 msgstr "Utrzymanie masek nie zmieni pliku wyjściowego"
 
-#: ../plug-ins/common/file-pdf-save.c:779
+#: ../plug-ins/common/file-pdf-save.c:797
 msgid "Save to:"
 msgstr "Zapisywanie do:"
 
-#: ../plug-ins/common/file-pdf-save.c:783
+#: ../plug-ins/common/file-pdf-save.c:801
 msgid "Browse..."
 msgstr "Przeglądaj..."
 
-#: ../plug-ins/common/file-pdf-save.c:784
+#: ../plug-ins/common/file-pdf-save.c:802
 msgid "Multipage PDF export"
 msgstr "Eksport wielostronicowych plików PDF"
 
-#: ../plug-ins/common/file-pdf-save.c:817
+#: ../plug-ins/common/file-pdf-save.c:835
 msgid "Remove the selected pages"
 msgstr "Usunięcie zaznaczonych stron"
 
-#: ../plug-ins/common/file-pdf-save.c:827
+#: ../plug-ins/common/file-pdf-save.c:845
 msgid "Add this image"
 msgstr "Dodanie tego obrazu"
 
-#: ../plug-ins/common/file-pdf-save.c:940
+#: ../plug-ins/common/file-pdf-save.c:958
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Błąd. Aby zapisać plik, należy dodać co najmniej jeden obraz."
 
@@ -4082,147 +4065,134 @@ msgstr "Surowy"
 msgid "ASCII"
 msgstr "ASCII"
 
-#: ../plug-ins/common/file-ps.c:601 ../plug-ins/common/file-ps.c:693
+#: ../plug-ins/common/file-ps.c:579 ../plug-ins/common/file-ps.c:671
 msgid "PostScript document"
 msgstr "Dokument PostScript"
 
-#: ../plug-ins/common/file-ps.c:620 ../plug-ins/common/file-ps.c:709
+#: ../plug-ins/common/file-ps.c:598 ../plug-ins/common/file-ps.c:687
 msgid "Encapsulated PostScript image"
 msgstr "Zagnieżdżalny obraz PostScript"
 
-#: ../plug-ins/common/file-ps.c:640
+#: ../plug-ins/common/file-ps.c:618
 msgid "PDF document"
 msgstr "Dokument PDF"
 
-#: ../plug-ins/common/file-ps.c:1051
+#: ../plug-ins/common/file-ps.c:1027
 #, c-format
 msgid "Could not interpret Postscript file '%s'"
 msgstr "Nie można zinterpretować pliku PostScript \"%s\""
 
-#: ../plug-ins/common/file-ps.c:1193
+#: ../plug-ins/common/file-ps.c:1169
 #, c-format
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Zapis PostScript nie obsługuje obrazów z kanałami alfa"
 
-#: ../plug-ins/common/file-ps.c:1740 ../plug-ins/common/file-ps.c:1775
-#, c-format
-msgid ""
-"Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
-"location.\n"
-"(%s)"
-msgstr ""
-"Błąd podczas uruchamiania Ghostscript. Proszę się upewnić, że pakiet "
-"Ghostscript jest zainstalowany i, jeśli to wymagane, użyć zmiennej "
-"środowiskowej GS_PROG do przekazania programowi GIMP jego położenia.\n"
-"(%s)"
-
-#: ../plug-ins/common/file-ps.c:1942 ../plug-ins/common/file-tiff-load.c:999
+#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:999
 #, c-format
 msgid "Page %d"
 msgstr "Strona %d"
 
-#: ../plug-ins/common/file-ps.c:2607 ../plug-ins/common/file-ps.c:2738
-#: ../plug-ins/common/file-ps.c:2887 ../plug-ins/common/file-ps.c:3011
+#: ../plug-ins/common/file-ps.c:2469 ../plug-ins/common/file-ps.c:2600
+#: ../plug-ins/common/file-ps.c:2749 ../plug-ins/common/file-ps.c:2873
 #: ../plug-ins/common/file-sunras.c:1504 ../plug-ins/common/file-sunras.c:1610
 #: ../plug-ins/file-fits/fits.c:850 ../plug-ins/file-fits/fits.c:973
 msgid "Write error occurred"
 msgstr "Wystąpił błąd zapisu"
 
-#: ../plug-ins/common/file-ps.c:3095
+#: ../plug-ins/common/file-ps.c:2957
 msgid "Import from PostScript"
 msgstr "Import z pliku PostScript"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3139
+#: ../plug-ins/common/file-ps.c:3001
 msgid "Rendering"
 msgstr "Renderowanie"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3155 ../plug-ins/common/file-svg.c:911
+#: ../plug-ins/common/file-ps.c:3017 ../plug-ins/common/file-svg.c:911
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "Rozdzielczość:"
 
-#: ../plug-ins/common/file-ps.c:3194
+#: ../plug-ins/common/file-ps.c:3056
 msgid "Pages:"
 msgstr "Strony:"
 
-#: ../plug-ins/common/file-ps.c:3201
+#: ../plug-ins/common/file-ps.c:3063
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Strony do wczytania (np.: 1-4 lub 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3206 ../plug-ins/common/sphere-designer.c:2657
+#: ../plug-ins/common/file-ps.c:3068 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "Warstwy"
 
-#: ../plug-ins/common/file-ps.c:3209
+#: ../plug-ins/common/file-ps.c:3071
 msgid "Images"
 msgstr "Obrazy"
 
-#: ../plug-ins/common/file-ps.c:3212
+#: ../plug-ins/common/file-ps.c:3074
 msgid "Open as"
 msgstr "Otwórz jako"
 
-#: ../plug-ins/common/file-ps.c:3216
+#: ../plug-ins/common/file-ps.c:3078
 msgid "Try Bounding Box"
 msgstr "Prostokąt ograniczający"
 
 #. Colouring
-#: ../plug-ins/common/file-ps.c:3229
+#: ../plug-ins/common/file-ps.c:3091
 msgid "Coloring"
 msgstr "Kolory obrazu"
 
-#: ../plug-ins/common/file-ps.c:3233
+#: ../plug-ins/common/file-ps.c:3095
 msgid "B/W"
 msgstr "Czarno Biały"
 
-#: ../plug-ins/common/file-ps.c:3235 ../plug-ins/common/file-xpm.c:479
+#: ../plug-ins/common/file-ps.c:3097 ../plug-ins/common/file-xpm.c:479
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "Kolor"
 
-#: ../plug-ins/common/file-ps.c:3236 ../plug-ins/file-fits/fits.c:1032
+#: ../plug-ins/common/file-ps.c:3098 ../plug-ins/file-fits/fits.c:1032
 msgid "Automatic"
 msgstr "Automatycznie"
 
-#: ../plug-ins/common/file-ps.c:3247
+#: ../plug-ins/common/file-ps.c:3109
 msgid "Text antialiasing"
 msgstr "Wygładzanie tekstu"
 
-#: ../plug-ins/common/file-ps.c:3251 ../plug-ins/common/file-ps.c:3263
+#: ../plug-ins/common/file-ps.c:3113 ../plug-ins/common/file-ps.c:3125
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Brak"
 
-#: ../plug-ins/common/file-ps.c:3252 ../plug-ins/common/file-ps.c:3264
+#: ../plug-ins/common/file-ps.c:3114 ../plug-ins/common/file-ps.c:3126
 msgid "Weak"
 msgstr "Słabe"
 
-#: ../plug-ins/common/file-ps.c:3253 ../plug-ins/common/file-ps.c:3265
+#: ../plug-ins/common/file-ps.c:3115 ../plug-ins/common/file-ps.c:3127
 msgid "Strong"
 msgstr "Silne"
 
-#: ../plug-ins/common/file-ps.c:3259
+#: ../plug-ins/common/file-ps.c:3121
 msgid "Graphic antialiasing"
 msgstr "Wygładzanie grafiki"
 
-#: ../plug-ins/common/file-ps.c:3337
+#: ../plug-ins/common/file-ps.c:3199
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3354
+#: ../plug-ins/common/file-ps.c:3216
 msgid "Image Size"
 msgstr "Wymiary obrazu"
 
-#: ../plug-ins/common/file-ps.c:3403
+#: ../plug-ins/common/file-ps.c:3265
 msgid "_Keep aspect ratio"
 msgstr "_Zachowanie współczynnika proporcji"
 
-#: ../plug-ins/common/file-ps.c:3409
+#: ../plug-ins/common/file-ps.c:3271
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4231,42 +4201,42 @@ msgstr ""
 "współczynnika proporcji."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3419
+#: ../plug-ins/common/file-ps.c:3281
 msgid "Unit"
 msgstr "Jednostka"
 
-#: ../plug-ins/common/file-ps.c:3423
+#: ../plug-ins/common/file-ps.c:3285
 msgid "_Inch"
 msgstr "_Cal"
 
-#: ../plug-ins/common/file-ps.c:3424
+#: ../plug-ins/common/file-ps.c:3286
 msgid "_Millimeter"
 msgstr "_Milimetr"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3435
+#: ../plug-ins/common/file-ps.c:3297
 #: ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Obrót"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3450
+#: ../plug-ins/common/file-ps.c:3312
 msgid "Output"
 msgstr "Wyjście"
 
-#: ../plug-ins/common/file-ps.c:3456
+#: ../plug-ins/common/file-ps.c:3318
 msgid "_PostScript level 2"
 msgstr "_PostScript poziom 2"
 
-#: ../plug-ins/common/file-ps.c:3465
+#: ../plug-ins/common/file-ps.c:3327
 msgid "_Encapsulated PostScript"
 msgstr "Zag_nieżdżalny PostScript"
 
-#: ../plug-ins/common/file-ps.c:3474
+#: ../plug-ins/common/file-ps.c:3336
 msgid "P_review"
 msgstr "_Podgląd"
 
-#: ../plug-ins/common/file-ps.c:3496
+#: ../plug-ins/common/file-ps.c:3358
 msgid "Preview _size:"
 msgstr "_Rozmiar podglądu:"
 
@@ -5036,7 +5006,8 @@ msgstr ""
 "Pasożyt \"%s\" jest za długi dla komentarza kursora systemu X. Został "
 "skrócony, aby pasował."
 
-#: ../plug-ins/common/file-xmc.c:2164
+#. translators: the %i is *always* 8 here
+#: ../plug-ins/common/file-xmc.c:2165
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -5113,7 +5084,7 @@ msgid "Composing images"
 msgstr "Składanie obrazów"
 
 #: ../plug-ins/common/film.c:423 ../plug-ins/common/guillotine.c:215
-#: ../plug-ins/help-browser/dialog.c:1109
+#: ../plug-ins/help-browser/dialog.c:1132
 msgid "Untitled"
 msgstr "Bez nazwy"
 
@@ -8621,20 +8592,20 @@ msgid "Alpha channel will be ignored."
 msgstr "Kanał alfy zostanie zignorowany."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-write.c:860
+#: ../plug-ins/file-bmp/bmp-write.c:861
 msgid "_Run-Length Encoded"
 msgstr "_Kodowanie długości serii"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-write.c:873
+#: ../plug-ins/file-bmp/bmp-write.c:874
 msgid "Co_mpatibility Options"
 msgstr "Opcje zgo_dności"
 
-#: ../plug-ins/file-bmp/bmp-write.c:883
+#: ../plug-ins/file-bmp/bmp-write.c:884
 msgid "_Do not write color space information"
 msgstr "_Bez zapisywania informacji o przestrzeni kolorów"
 
-#: ../plug-ins/file-bmp/bmp-write.c:885
+#: ../plug-ins/file-bmp/bmp-write.c:886
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -8646,25 +8617,41 @@ msgstr ""
 "zapisuje informacji o przestrzeni kolorów do pliku."
 
 #. Advanced Options
-#: ../plug-ins/file-bmp/bmp-write.c:901 ../plug-ins/file-jpeg/jpeg-save.c:901
+#: ../plug-ins/file-bmp/bmp-write.c:902 ../plug-ins/file-jpeg/jpeg-save.c:901
 msgid "_Advanced Options"
 msgstr "Ustawienia za_awansowane"
 
-#: ../plug-ins/file-bmp/bmp-write.c:916
+#: ../plug-ins/file-bmp/bmp-write.c:917
 msgid "16 bits"
 msgstr "16 bitów"
 
-#: ../plug-ins/file-bmp/bmp-write.c:952
+#: ../plug-ins/file-bmp/bmp-write.c:953
 msgid "24 bits"
 msgstr "24 bity"
 
-#: ../plug-ins/file-bmp/bmp-write.c:969
+#: ../plug-ins/file-bmp/bmp-write.c:970
 msgid "32 bits"
 msgstr "32 bity"
 
 #: ../plug-ins/file-bmp/bmp.c:123 ../plug-ins/file-bmp/bmp.c:142
 msgid "Windows BMP image"
 msgstr "Obraz BMP systemu Windows"
+
+#: ../plug-ins/file-compressor/file-compressor.c:162
+msgid "gzip archive"
+msgstr "Archiwum gzip"
+
+#: ../plug-ins/file-compressor/file-compressor.c:181
+msgid "bzip archive"
+msgstr "Archiwum bzip"
+
+#: ../plug-ins/file-compressor/file-compressor.c:388
+msgid "No sensible file extension, saving as compressed XCF."
+msgstr "Brak sensownego rozszerzenia pliku, zapis jako skompresowany plik XCF."
+
+#: ../plug-ins/file-compressor/file-compressor.c:444
+msgid "No sensible file extension, attempting to load with file magic."
+msgstr "Brak sensownego rozszerzenia, próba odgadnięcia formatu pliku."
 
 #: ../plug-ins/file-faxg3/faxg3.c:102
 msgid "G3 fax image"
@@ -11195,76 +11182,76 @@ msgid "_Second Flares"
 msgstr "_Dodatkowe błyski"
 
 #: ../plug-ins/help-browser/dialog.c:184
-#: ../plug-ins/help-browser/dialog.c:1110
+#: ../plug-ins/help-browser/dialog.c:1133
 msgid "GIMP Help Browser"
 msgstr "Przeglądarka pomocy programu GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:559
+#: ../plug-ins/help-browser/dialog.c:582
 msgid "Go back one page"
 msgstr "Przechodzi do poprzedniej strony"
 
-#: ../plug-ins/help-browser/dialog.c:564
+#: ../plug-ins/help-browser/dialog.c:587
 msgid "Go forward one page"
 msgstr "Przechodzi do następnej strony"
 
-#: ../plug-ins/help-browser/dialog.c:569
+#: ../plug-ins/help-browser/dialog.c:592
 msgid "_Reload"
 msgstr "_Wczytaj ponownie"
 
-#: ../plug-ins/help-browser/dialog.c:569
+#: ../plug-ins/help-browser/dialog.c:592
 msgid "Reload current page"
 msgstr "Ponownie wczytuje bieżącą stronę"
 
-#: ../plug-ins/help-browser/dialog.c:574
+#: ../plug-ins/help-browser/dialog.c:597
 msgid "_Stop"
 msgstr "_Zatrzymaj"
 
-#: ../plug-ins/help-browser/dialog.c:574
+#: ../plug-ins/help-browser/dialog.c:597
 msgid "Stop loading this page"
 msgstr "Zatrzymuje wczytywanie tej strony"
 
-#: ../plug-ins/help-browser/dialog.c:579
+#: ../plug-ins/help-browser/dialog.c:602
 msgid "Go to the index page"
 msgstr "Przechodzi do strony indeksowej"
 
-#: ../plug-ins/help-browser/dialog.c:584
+#: ../plug-ins/help-browser/dialog.c:607
 msgid "C_opy location"
 msgstr "Sk_opiuj położenie"
 
-#: ../plug-ins/help-browser/dialog.c:585
+#: ../plug-ins/help-browser/dialog.c:608
 msgid "Copy the location of this page to the clipboard"
 msgstr "Kopiuje położenie tej strony do schowka"
 
-#: ../plug-ins/help-browser/dialog.c:605
+#: ../plug-ins/help-browser/dialog.c:628
 msgid "Find text in current page"
 msgstr "Wyszukuje tekst na bieżącej stronie"
 
-#: ../plug-ins/help-browser/dialog.c:610
+#: ../plug-ins/help-browser/dialog.c:633
 msgid "Find _Again"
 msgstr "Wyszukaj p_onownie"
 
-#: ../plug-ins/help-browser/dialog.c:629
+#: ../plug-ins/help-browser/dialog.c:652
 msgid "S_how Index"
 msgstr "Wyświetl _indeks"
 
-#: ../plug-ins/help-browser/dialog.c:630
+#: ../plug-ins/help-browser/dialog.c:653
 msgid "Toggle the visibility of the sidebar"
 msgstr "Przełącza widoczność paska bocznego"
 
-#: ../plug-ins/help-browser/dialog.c:651
+#: ../plug-ins/help-browser/dialog.c:674
 msgid "Visit the GIMP documentation website"
 msgstr "Odwiedza stronę dokumentacji programu GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:1151
+#: ../plug-ins/help-browser/dialog.c:1174
 msgid "Find:"
 msgstr "Wyszukiwanie:"
 
-#: ../plug-ins/help-browser/dialog.c:1168
+#: ../plug-ins/help-browser/dialog.c:1191
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Poprzedni"
 
-#: ../plug-ins/help-browser/dialog.c:1180
+#: ../plug-ins/help-browser/dialog.c:1203
 msgctxt "search"
 msgid "_Next"
 msgstr "_Następny"
