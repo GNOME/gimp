@@ -262,7 +262,7 @@ query (void)
     { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 }
     /* XXX: Nice to have API at some point, but needs work
     { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)" },
-    { GIMP_PDB_INT32,     "antialiasing", "Enable antialiasing" },
+    { GIMP_PDB_INT32,     "antialiasing", "Use anti-aliasing" },
     { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)" },
     { GIMP_PDB_INT32ARRAY,"pages",        "The pages to load"                }
     */
@@ -1179,7 +1179,7 @@ load_dialog (PopplerDocument  *doc,
                     &loadvals.resolution);
 
   /* Antialiasing*/
-  antialias = gtk_check_button_new_with_mnemonic (_("_Enable Antialiasing"));
+  antialias = gtk_check_button_new_with_mnemonic (_("Use _Anti-aliasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (antialias), loadvals.antialias);
   gtk_box_pack_start (GTK_BOX (vbox), antialias, FALSE, FALSE, 0);
 
