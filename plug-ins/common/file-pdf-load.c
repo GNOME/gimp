@@ -48,12 +48,14 @@ typedef struct
 {
   GimpPageSelectorTarget target;
   gdouble                resolution;
+  gboolean               antialias;
 } PdfLoadVals;
 
 static PdfLoadVals loadvals =
 {
   GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-  100.00  /* 100 dpi   */
+  100.00,  /* 100 dpi   */
+  TRUE
 };
 
 typedef struct
@@ -75,6 +77,7 @@ static gint32            load_image        (PopplerDocument        *doc,
                                             GimpRunMode             run_mode,
                                             GimpPageSelectorTarget  target,
                                             guint32                 resolution,
+                                            gboolean                antialias,
                                             PdfSelectedPages       *pages);
 
 static GimpPDBStatusType load_dialog       (PopplerDocument        *doc,
@@ -259,6 +262,7 @@ query (void)
     { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 }
     /* XXX: Nice to have API at some point, but needs work
     { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)" },
+    { GIMP_PDB_INT32,     "antialiasing", "Enable antialiasing" },
     { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)" },
     { GIMP_PDB_INT32ARRAY,"pages",        "The pages to load"                }
     */
@@ -413,6 +417,7 @@ run (const gchar      *name,
                                  run_mode,
                                  loadvals.target,
                                  loadvals.resolution,
+                                 loadvals.antialias,
                                  &pages);
 
           if (image_ID != -1)
@@ -771,7 +776,8 @@ static cairo_surface_t *
 render_page_to_surface (PopplerPage *page,
                         int          width,
                         int          height,
-                        double       scale)
+                        double       scale,
+                        gboolean     antialias)
 {
   cairo_surface_t *surface;
   cairo_t *cr;
@@ -784,6 +790,19 @@ render_page_to_surface (PopplerPage *page,
 
   if (scale != 1.0)
     cairo_scale (cr, scale, scale);
+
+  if (! antialias)
+    {
+      cairo_font_options_t* options = cairo_font_options_create ();
+
+      cairo_get_font_options (cr, options);
+      cairo_font_options_set_antialias (options, CAIRO_ANTIALIAS_NONE);
+
+      cairo_set_font_options (cr, options);
+      cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
+
+      cairo_font_options_destroy (options);
+    }
 
   poppler_page_render (page, cr);
   cairo_restore (cr);
@@ -828,6 +847,7 @@ load_image (PopplerDocument        *doc,
             GimpRunMode             run_mode,
             GimpPageSelectorTarget  target,
             guint32                 resolution,
+            gboolean                antialias,
             PdfSelectedPages       *pages)
 {
   gint32   image_ID = 0;
@@ -883,7 +903,7 @@ load_image (PopplerDocument        *doc,
           gimp_image_set_resolution (image_ID, resolution, resolution);
         }
 
-      surface = render_page_to_surface (page, width, height, scale);
+      surface = render_page_to_surface (page, width, height, scale, antialias);
 
       layer_from_surface (image_ID, page_label, i, surface,
                           doc_progress, 1.0 / pages->n_pages);
@@ -959,7 +979,7 @@ get_thumb_surface (PopplerDocument *doc,
       width  *= scale;
       height *= scale;
 
-      surface = render_page_to_surface (page, width, height, scale);
+      surface = render_page_to_surface (page, width, height, scale, TRUE);
     }
 
   g_object_unref (page);
@@ -1050,6 +1070,7 @@ load_dialog (PopplerDocument  *doc,
   GtkWidget  *title;
   GtkWidget  *selector;
   GtkWidget  *resolution;
+  GtkWidget  *antialias;
   GtkWidget  *hbox;
 
   ThreadData  thread_data;
@@ -1157,6 +1178,15 @@ load_dialog (PopplerDocument  *doc,
   g_signal_connect (resolution, "x-changed",
                     G_CALLBACK (gimp_resolution_entry_update_x_in_dpi),
                     &loadvals.resolution);
+
+  /* Antialiasing*/
+  antialias = gtk_check_button_new_with_mnemonic (_("_Enable Antialiasing"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (antialias), loadvals.antialias);
+  gtk_box_pack_start (GTK_BOX (vbox), antialias, FALSE, FALSE, 0);
+
+  g_signal_connect (antialias, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update), &loadvals.antialias);
+  gtk_widget_show (antialias);
 
   /* Setup done; display the dialog */
   gtk_widget_show (dialog);
