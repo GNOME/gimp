@@ -429,7 +429,6 @@ WriteBMP (const gchar  *filename,
   FromL (Bitmap_Head.biClrImp, &puffer[0x20]);
 
   Write (outfile, puffer, 36);
-  write_color_map (outfile, Red, Green, Blue, MapSize);
 
   if (mask_info_size > 0)
     {
@@ -514,6 +513,8 @@ WriteBMP (const gchar  *filename,
 
       Write (outfile, puffer, color_space_size);
     }
+
+  write_color_map (outfile, Red, Green, Blue, MapSize);
 
   /* After that is done, we write the image ... */
 
