@@ -793,15 +793,14 @@ render_page_to_surface (PopplerPage *page,
 
   if (! antialias)
     {
-      cairo_font_options_t* options = cairo_font_options_create ();
+      cairo_font_options_t *options = cairo_font_options_create ();
 
       cairo_get_font_options (cr, options);
       cairo_font_options_set_antialias (options, CAIRO_ANTIALIAS_NONE);
-
       cairo_set_font_options (cr, options);
-      cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
-
       cairo_font_options_destroy (options);
+
+      cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
     }
 
   poppler_page_render (page, cr);
