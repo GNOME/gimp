@@ -14,41 +14,55 @@
      bugzilla.gimp.org and to the news section on www.gimp.org, or that
      someone can do the changes for you.
 
- ( ) Make sure the checkout is up to date, clean from uncommitted changes.
-
- ( ) Check that the version number is correct in configure.ac
-
- ( ) Run 'make maintainer-clean -k' or 'git clean -x -d -f'
-
- ( ) Run ./autogen.sh --enable-gtk-doc
-
- ( ) Do a complete build of the source tree.
-
- ( ) Check if NEWS, authors.xml, README or INSTALL need to be updated,
-     as well as any release notes on gimp.org. Don't forget to add any
-     "Index of new symbols in GIMP 2.x" to the gtk-doc generated
-     devel-docs.
+ ( ) Check if NEWS, authors.xml (and the generated AUTHORS), README or
+     INSTALL need to be updated, as well as any release notes on
+     gimp.org. Don't forget to add any "Index of new symbols in GIMP
+     2.x" to the gtk-doc generated devel-docs.
 
  ( ) Does the splash screen need to be changed?
 
- ( ) Run 'make distcheck'. Avoid passing make -j since that can cause
-     mysterious fails
+ ( ) Check that the version number is correct in configure.ac. It should
+     be the version number of the release you are about to make.
 
- ( ) If there are problems with 'make distcheck', fix them and try again.
+ ( ) Make dist tarballs:
 
- ( ) Commit changes that you had to do to get 'make distcheck' running.
+     [ ] Start with a checkout of the GIMP tree. Make sure the checkout
+         is up to date, clean from uncommitted changes.
 
- ( ) Run 'make dist' to create the final tarball. This will generate
-     ChangeLog. Note that we don't bother with any release commit,
-     that's what tags are for (see below).
+     [ ] Run 'git clean -x -d -f' (Warning: you will lose any files that
+         are not added).
+
+     [ ] Run 'git diff'. This should not generate any output, or your
+         tree has local modifications.
+
+     [ ] Run ./autogen.sh --enable-gtk-doc
+
+     [ ] Run 'make' to do a complete build of the source tree.
+
+     [ ] Run 'make distcheck'. Avoid passing make -j since that can
+         cause mysterious fails.
+
+     [ ] If changes to generated files are made by the above command
+         (run 'git diff' to find out), commit+push them and repeat from
+         the beginning of this sub-section.
+
+     [ ] If there are problems reported by 'make distcheck', fix
+         them. If you made changes in the tree to get 'make distcheck'
+         running, commit+push them and repeat from the beginning of this
+         sub-section.
+
+     [ ] If 'make distcheck' passed and created tarballs, go to the next
+         item.
+
+ [ ] A successful run of the 'make distcheck' would create the final
+     dist tarballs. It will include a ChangeLog generated from the 'git
+     log'. Note that we don't bother with any release commit, that's
+     what tags are for (see below).
 
  ( ) Use md5sum to create a checksum of the tarball (tar.bz2).
 
  ( ) Upload the tarball (tar.bz2) and the .md5 file to your home directory
      on ftp.gimp.org.  Keep a copy of the .md5 file around.
-
- ( ) Commit the changes to generated files that were changed by
-     running 'make dist'.
 
  ( ) Tag the release (don't forget to push the tag)
         git tag -s GIMP_2_x_y
@@ -69,7 +83,8 @@
      downloads/index.htrw.  Commit this change, the web server should
      then update itself soon (usually less than an hour).
 
- ( ) Bump the version number in configure.ac and commit this change.
+ ( ) Bump the version number (past the tagged version) in configure.ac
+     and commit this change.
 
  ( ) Grab a properly chilled beverage and enjoy yourself.
 
