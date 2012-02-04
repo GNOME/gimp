@@ -5,10 +5,6 @@
 (tool-options "GimpInkOptions"
     (tool "gimp-ink-tool")
     (foreground (color-rgb 0.102075 0.183901 0.594317))
-    (brush "Clipboard")
-    (dynamics "Dynamics Off")
-    (pattern "Paper")
-    (font "Sans")
     (brush-size 400.000000)
     (size 10.000000)
     (tilt-angle 5.000000)

@@ -4,11 +4,8 @@
 (name "Eraser Soft")
 (tool-options "GimpEraserOptions"
     (tool "gimp-eraser-tool")
-    (brush "Hardness 050")
+    (brush "1_Hardness 050")
     (dynamics "Pressure_Opacity")
-    (pattern "Pine")
-    (palette "Default")
-    (font "Sans")
     (brush-size 80.000000))
 (use-fg-bg no)
 (use-brush yes)

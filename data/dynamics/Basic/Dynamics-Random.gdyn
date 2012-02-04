@@ -2,12 +2,12 @@
 
 (name "Dynamics_Random")
 (opacity-output
-    (use-pressure yes)
+    (use-pressure no)
     (use-velocity no)
     (use-direction no)
     (use-tilt no)
     (use-wheel no)
-    (use-random no)
+    (use-random yes)
     (use-fade no)
     (pressure-curve
         (curve-type smooth)

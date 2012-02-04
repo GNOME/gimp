@@ -1,15 +1,13 @@
 # GIMP tool preset file
 
 (stock-id "gimp-tool-paintbrush")
-(name "Basic Round")
+(name "Soft Oil Brush")
 (tool-options "GimpPaintOptions"
     (tool "gimp-paintbrush-tool")
     (foreground (color-rgb 0.000000 0.023605 0.142004))
-    (brush "Hardness 100")
+    (brush "Oils_02")
     (dynamics "Pressure_Opacity")
-    (pattern "Paper")
-    (gradient "Tropical Colors")
-    (font "Sans")
+    (gradient "FG to BG (RGB)")
     (brush-size 80.000000)
     (jitter-amount 0.350000)
     (fade-length 138.000000)

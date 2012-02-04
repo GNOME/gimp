@@ -4,12 +4,10 @@
 (name "Pencil")
 (tool-options "GimpPaintOptions"
     (tool "gimp-paintbrush-tool")
-    (opacity 0.500000)
+    (opacity 0.250000)
     (brush "Pencil_01")
     (dynamics "Pencil_Generic")
-    (pattern "Paper")
     (gradient "FG to BG (RGB)")
-    (font "Sans")
     (brush-size 50.000000)
     (application-mode incremental)
     (use-jitter yes)

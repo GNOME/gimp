@@ -3,14 +3,14 @@
 brushbasicdatadir = $(gimpdatadir)/brushes/Basic
 
 brushbasicdata_DATA = \
-	1_pixel.vbr		\
-	Block_01.vbr		\
-	Block_02.vbr		\
-	Block_03.vbr		\
-	Hardness_025.vbr	\
-	Hardness_050.vbr	\
-	Hardness_075.vbr	\
-	Hardness_100.vbr	\
+	1-pixel.vbr		\
+	Block-01.vbr		\
+	Block-02.vbr		\
+	Block-03.vbr		\
+	Hardness-025.vbr	\
+	Hardness-050.vbr	\
+	Hardness-075.vbr	\
+	Hardness-100.vbr	\
 	Star.vbr
 
 EXTRA_DIST = $(brushbasicdata_DATA)

@@ -4,17 +4,17 @@ toolpresetspaintdatadir = $(gimpdatadir)/tool-presets/Paint
 
 toolpresetspaintdata_DATA = \
 	Airbrush.gtp		\
-	Basic_Round_Detail.gtp	\
+	Basic-Knife.gtp		\
+	Basic-Round.gtp		\
+	Basic-Round-Detail.gtp	\
 	Bristles.gtp		\
-	Smudge_Rough.gtp	\
-	Soft_Oil.gtp		\
-	Structure.gtp		\
-	Basic_Knife.gtp		\
-	Basic_Round.gtp		\
-	Eraser_Hard.gtp		\
+	Eraser-Hard.gtp		\
 	Noise.gtp		\
-	Smudge_Soft.gtp		\
+	Smudge-Rough.gtp	\
+	Smudge-Soft.gtp		\
+	Soft-Oil.gtp		\
 	Splatters.gtp		\
+	Structure.gtp		\
 	Vegetal.gtp
 
 EXTRA_DIST = $(toolpresetspaintdata_DATA)

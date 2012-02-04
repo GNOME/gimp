@@ -2254,7 +2254,9 @@ themes/Small/Makefile
 data/Makefile
 data/brushes/Makefile
 data/brushes/Basic/Makefile
+data/brushes/gimp-obsolete-files/Makefile
 data/brushes/Media/Makefile
+data/brushes/Legacy/Makefile
 data/brushes/Sketch/Makefile
 data/brushes/Splatters/Makefile
 data/brushes/Texture/Makefile

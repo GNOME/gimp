@@ -5,12 +5,6 @@
 (tool-options "GimpInkOptions"
     (tool "gimp-ink-tool")
     (foreground (color-rgb 0.000000 0.023605 0.142004))
-    (brush "Clipboard")
-    (dynamics "Negative_Size_Pressure")
-    (pattern "Pine")
-    (gradient "FG to BG (RGB)")
-    (palette "Default")
-    (font "Sans")
     (brush-size 250.000000)
     (use-smoothing yes)
     (smoothing-quality 75)

@@ -5,10 +5,9 @@
 (tool-options "GimpCloneOptions"
     (tool "gimp-clone-tool")
     (foreground (color-rgb 0.318741 0.318741 0.318741))
-    (brush "Hardness 050")
+    (brush "1_Hardness 050")
     (dynamics "Dynamics Off")
     (pattern "Paper")
-    (font "Sans")
     (brush-size 150.000000)
     (sample-merged yes))
 (use-fg-bg no)
