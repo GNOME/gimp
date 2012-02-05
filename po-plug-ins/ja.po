@@ -5,20 +5,20 @@
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # Ken Okubo <se5k-ookb@asahi-net.or.jp>, 2009
-# Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2011.
+# Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-26 09:54+0000\n"
-"PO-Revision-Date: 2011-12-26 22:01+0900\n"
+"POT-Creation-Date: 2012-02-04 19:01+0000\n"
+"PO-Revision-Date: 2012-02-03 23:13+0900\n"
 "Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -77,7 +77,7 @@ msgid "To:"
 msgstr "回転後の色範囲:"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:416
-#: ../plug-ins/common/file-ps.c:3234 ../plug-ins/imagemap/imap_menu.c:213
+#: ../plug-ins/common/file-ps.c:3096 ../plug-ins/imagemap/imap_menu.c:213
 msgid "Gray"
 msgstr "グレー"
 
@@ -905,7 +905,7 @@ msgstr "方向(_A):"
 msgid "_Elevation:"
 msgstr "持ち上げ(_E):"
 
-#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3388
+#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3250
 msgid "_X offset:"
 msgstr "X オフセット(_X):"
 
@@ -916,7 +916,7 @@ msgid ""
 msgstr ""
 "オフセットの調整は、プレビューをマウスの中ボタンでドラッグしても可能です。"
 
-#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3397
+#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3259
 msgid "_Y offset:"
 msgstr "Y オフセット(_Y):"
 
@@ -1025,16 +1025,14 @@ msgstr "チャンネルミキサー設定読み込み"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:892
-#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-compressor.c:497
-#: ../plug-ins/common/file-compressor.c:666
-#: ../plug-ins/common/file-dicom.c:340 ../plug-ins/common/file-gbr.c:368
-#: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:640
-#: ../plug-ins/common/file-jp2-load.c:194
+#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-gbr.c:368 ../plug-ins/common/file-gif-load.c:355
+#: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
 #: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:752
-#: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1037
-#: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1717
+#: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1014
+#: ../plug-ins/common/file-ps.c:2910 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
@@ -1067,22 +1065,18 @@ msgstr "チャンネルミキサー設定保存"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:840
-#: ../plug-ins/common/file-cel.c:585 ../plug-ins/common/file-compressor.c:425
-#: ../plug-ins/common/file-compressor.c:507
-#: ../plug-ins/common/file-compressor.c:589
-#: ../plug-ins/common/file-compressor.c:677
-#: ../plug-ins/common/file-csource.c:407 ../plug-ins/common/file-dicom.c:1351
-#: ../plug-ins/common/file-gbr.c:663 ../plug-ins/common/file-gif-save.c:782
-#: ../plug-ins/common/file-gih.c:1258 ../plug-ins/common/file-html-table.c:236
-#: ../plug-ins/common/file-mng.c:649 ../plug-ins/common/file-mng.c:984
-#: ../plug-ins/common/file-pat.c:486 ../plug-ins/common/file-pcx.c:712
-#: ../plug-ins/common/file-pix.c:526 ../plug-ins/common/file-png.c:1285
-#: ../plug-ins/common/file-pnm.c:1010 ../plug-ins/common/file-ps.c:1214
-#: ../plug-ins/common/file-raw.c:591 ../plug-ins/common/file-raw.c:619
-#: ../plug-ins/common/file-sunras.c:565 ../plug-ins/common/file-tga.c:1171
-#: ../plug-ins/common/file-tiff-save.c:684 ../plug-ins/common/file-xbm.c:1036
-#: ../plug-ins/common/file-xmc.c:1455 ../plug-ins/common/file-xwd.c:619
-#: ../plug-ins/common/sphere-designer.c:2121
+#: ../plug-ins/common/file-cel.c:585 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-dicom.c:1351 ../plug-ins/common/file-gbr.c:663
+#: ../plug-ins/common/file-gif-save.c:782 ../plug-ins/common/file-gih.c:1258
+#: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
+#: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:486
+#: ../plug-ins/common/file-pcx.c:712 ../plug-ins/common/file-pix.c:526
+#: ../plug-ins/common/file-png.c:1285 ../plug-ins/common/file-pnm.c:1010
+#: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
+#: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
+#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
+#: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1455
+#: ../plug-ins/common/file-xwd.c:619 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:306 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1652
@@ -2700,7 +2694,7 @@ msgid "Destripe"
 msgstr "ストライプ除去"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
-#: ../plug-ins/common/file-ps.c:3172 ../plug-ins/common/file-ps.c:3370
+#: ../plug-ins/common/file-ps.c:3034 ../plug-ins/common/file-ps.c:3232
 #: ../plug-ins/common/file-raw.c:1134 ../plug-ins/common/smooth-palette.c:437
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
@@ -3012,7 +3006,7 @@ msgid "Engrave"
 msgstr "彫金"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/file-html-table.c:600
-#: ../plug-ins/common/file-ps.c:3182 ../plug-ins/common/file-ps.c:3379
+#: ../plug-ins/common/file-ps.c:3044 ../plug-ins/common/file-ps.c:3241
 #: ../plug-ins/common/file-raw.c:1147 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
@@ -3054,9 +3048,9 @@ msgstr "KISS パレットの読み込み"
 #: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
-#: ../plug-ins/common/file-pdf-load.c:842 ../plug-ins/common/file-pix.c:348
+#: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:348
 #: ../plug-ins/common/file-png.c:759 ../plug-ins/common/file-pnm.c:499
-#: ../plug-ins/common/file-ps.c:1043 ../plug-ins/common/file-raw.c:716
+#: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
 #: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
@@ -3085,7 +3079,7 @@ msgstr "利用できない色数 (%d)!"
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
 #: ../plug-ins/common/file-png.c:1292 ../plug-ins/common/file-pnm.c:1015
-#: ../plug-ins/common/file-ps.c:1219 ../plug-ins/common/file-sunras.c:570
+#: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
 #: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
@@ -3096,22 +3090,6 @@ msgstr "利用できない色数 (%d)!"
 #, c-format
 msgid "Saving '%s'"
 msgstr "'%s' を保存しています"
-
-#: ../plug-ins/common/file-compressor.c:159
-msgid "gzip archive"
-msgstr "gzip アーカイブ"
-
-#: ../plug-ins/common/file-compressor.c:180
-msgid "bzip archive"
-msgstr "bzip アーカイブ"
-
-#: ../plug-ins/common/file-compressor.c:389
-msgid "No sensible file extension, saving as compressed XCF."
-msgstr "拡張子が判別できません。 gzip 圧縮した xcf ファイルとして保存します。"
-
-#: ../plug-ins/common/file-compressor.c:571
-msgid "No sensible file extension, attempting to load with file magic."
-msgstr "拡張子が判別できません。 file magic を使用して読み込みます。"
 
 #: ../plug-ins/common/file-csource.c:113
 msgid "C source code"
@@ -3190,8 +3168,8 @@ msgstr "'%s' は DICOM ファイルではありません"
 msgid "Cannot save images with alpha channel."
 msgstr "アルファチャンネルを持った画像は保存できません。"
 
-#: ../plug-ins/common/file-dicom.c:1334 ../plug-ins/common/file-ps.c:1204
-#: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-xwd.c:609
+#: ../plug-ins/common/file-dicom.c:1334 ../plug-ins/common/file-ps.c:1180
+#: ../plug-ins/common/file-ps.c:1212 ../plug-ins/common/file-xwd.c:609
 #: ../plug-ins/file-fits/fits.c:466 ../plug-ins/file-xjt/xjt.c:1691
 msgid "Cannot operate on unknown image types."
 msgstr "不明な画像タイプは扱えません。"
@@ -3374,7 +3352,8 @@ msgstr ""
 msgid "Error writing output file."
 msgstr "出力ファイル書き込みエラー。"
 
-#: ../plug-ins/common/file-gif-save.c:2382
+#. translators: the %d is *always* 240 here
+#: ../plug-ins/common/file-gif-save.c:2385
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "デフォルトのコメントは %d 文字までです。"
@@ -3846,71 +3825,75 @@ msgstr ""
 msgid "Writing to file '%s' failed: %s"
 msgstr "ファイル '%s' の書き込みに失敗しました。 %s"
 
-#: ../plug-ins/common/file-pdf-load.c:296
-#: ../plug-ins/common/file-pdf-save.c:273
-#: ../plug-ins/common/file-pdf-save.c:288
+#: ../plug-ins/common/file-pdf-load.c:300
+#: ../plug-ins/common/file-pdf-save.c:289
 msgid "Portable Document Format"
 msgstr "PDF 形式"
 
-#: ../plug-ins/common/file-pdf-load.c:543
-#: ../plug-ins/common/file-pdf-load.c:562
+#: ../plug-ins/common/file-pdf-load.c:548
+#: ../plug-ins/common/file-pdf-load.c:567
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr ""
 "'%s' を読み込めませんでした。\n"
 "%s"
 
-#: ../plug-ins/common/file-pdf-load.c:876
+#: ../plug-ins/common/file-pdf-load.c:895
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:878 ../plug-ins/common/file-ps.c:1126
+#: ../plug-ins/common/file-pdf-load.c:897 ../plug-ins/common/file-ps.c:1102
 #, c-format
 msgid "%s-pages"
 msgstr "%s-ページ"
 
-#: ../plug-ins/common/file-pdf-load.c:1068
+#: ../plug-ins/common/file-pdf-load.c:1088
 msgid "Import from PDF"
 msgstr "PDF ドキュメントから画像にインポート"
 
-#: ../plug-ins/common/file-pdf-load.c:1073 ../plug-ins/common/file-ps.c:3100
+#: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2962
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "インポート(_I)"
 
-#: ../plug-ins/common/file-pdf-load.c:1106
+#: ../plug-ins/common/file-pdf-load.c:1126
 msgid "Error getting number of pages from the given PDF file."
 msgstr "PDF ファイルからページ数を取得するときにエラーが発生しました。"
 
-#: ../plug-ins/common/file-pdf-load.c:1148
+#: ../plug-ins/common/file-pdf-load.c:1168
 msgid "_Width (pixels):"
 msgstr "幅 (ピクセル)(_W):"
 
-#: ../plug-ins/common/file-pdf-load.c:1149
+#: ../plug-ins/common/file-pdf-load.c:1169
 msgid "_Height (pixels):"
 msgstr "高さ (ピクセル)(_H):"
 
-#: ../plug-ins/common/file-pdf-load.c:1151
+#: ../plug-ins/common/file-pdf-load.c:1171
 msgid "_Resolution:"
 msgstr "解像度(_R):"
 
-#: ../plug-ins/common/file-pdf-load.c:1431
-#: ../plug-ins/common/file-pdf-load.c:1432 ../plug-ins/common/file-svg.c:917
+#. Antialiasing
+#: ../plug-ins/common/file-pdf-load.c:1182
+msgid "Use _Anti-aliasing"
+msgstr "なめらかに(_A)"
+
+#: ../plug-ins/common/file-pdf-load.c:1460
+#: ../plug-ins/common/file-pdf-load.c:1461 ../plug-ins/common/file-svg.c:917
 #: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
 #, c-format
 msgid "pixels/%a"
 msgstr "ピクセル/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:303
+#: ../plug-ins/common/file-pdf-save.c:304
 msgid "_Create multipage PDF..."
 msgstr "PDF (複数ページ)の生成(_C)..."
 
-#: ../plug-ins/common/file-pdf-save.c:396
+#: ../plug-ins/common/file-pdf-save.c:401
 msgid "You must select a file to save!"
 msgstr "保存するファイルを選択してください"
 
-#: ../plug-ins/common/file-pdf-save.c:405
+#: ../plug-ins/common/file-pdf-save.c:410
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3923,49 +3906,49 @@ msgstr ""
 "ファイル名が正しいか、ファイルを作成する場所が書き込み可能かどうか確認してく"
 "ださい。"
 
-#: ../plug-ins/common/file-pdf-save.c:715
-#: ../plug-ins/common/file-pdf-save.c:832
+#: ../plug-ins/common/file-pdf-save.c:733
+#: ../plug-ins/common/file-pdf-save.c:850
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "不可視レイヤーと不透明度ゼロのレイヤーは保存しない"
 
-#: ../plug-ins/common/file-pdf-save.c:719
-#: ../plug-ins/common/file-pdf-save.c:836
+#: ../plug-ins/common/file-pdf-save.c:737
+#: ../plug-ins/common/file-pdf-save.c:854
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "可能ならばビットマップをベクターグラフィックスに変換する"
 
-#: ../plug-ins/common/file-pdf-save.c:723
-#: ../plug-ins/common/file-pdf-save.c:840
+#: ../plug-ins/common/file-pdf-save.c:741
+#: ../plug-ins/common/file-pdf-save.c:858
 msgid "Apply layer masks before saving"
 msgstr "保存前にレイヤーマスクを適用する"
 
-#: ../plug-ins/common/file-pdf-save.c:726
-#: ../plug-ins/common/file-pdf-save.c:843
+#: ../plug-ins/common/file-pdf-save.c:744
+#: ../plug-ins/common/file-pdf-save.c:861
 msgid "Keeping the masks will not change the output"
 msgstr ""
 "レイヤーマスクを保持したままの場合、レイヤーマスクはエクスポート結果に反映さ"
 "れません"
 
-#: ../plug-ins/common/file-pdf-save.c:779
+#: ../plug-ins/common/file-pdf-save.c:797
 msgid "Save to:"
 msgstr "保存場所とファイル名:"
 
-#: ../plug-ins/common/file-pdf-save.c:783
+#: ../plug-ins/common/file-pdf-save.c:801
 msgid "Browse..."
 msgstr "参照..."
 
-#: ../plug-ins/common/file-pdf-save.c:784
+#: ../plug-ins/common/file-pdf-save.c:802
 msgid "Multipage PDF export"
 msgstr "PDF (複数ページ) の生成"
 
-#: ../plug-ins/common/file-pdf-save.c:817
+#: ../plug-ins/common/file-pdf-save.c:835
 msgid "Remove the selected pages"
 msgstr "選択したページを削除"
 
-#: ../plug-ins/common/file-pdf-save.c:827
+#: ../plug-ins/common/file-pdf-save.c:845
 msgid "Add this image"
 msgstr "この画像を追加"
 
-#: ../plug-ins/common/file-pdf-save.c:940
+#: ../plug-ins/common/file-pdf-save.c:958
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "エラー発生! ファイルを保存するには画像を追加する必要があります。"
 
@@ -4107,152 +4090,139 @@ msgstr "Raw"
 msgid "ASCII"
 msgstr "ASCII"
 
-#: ../plug-ins/common/file-ps.c:601 ../plug-ins/common/file-ps.c:693
+#: ../plug-ins/common/file-ps.c:579 ../plug-ins/common/file-ps.c:671
 msgid "PostScript document"
 msgstr "PostScript ドキュメント"
 
-#: ../plug-ins/common/file-ps.c:620 ../plug-ins/common/file-ps.c:709
+#: ../plug-ins/common/file-ps.c:598 ../plug-ins/common/file-ps.c:687
 msgid "Encapsulated PostScript image"
 msgstr "EPS 形式"
 
-#: ../plug-ins/common/file-ps.c:640
+#: ../plug-ins/common/file-ps.c:618
 msgid "PDF document"
 msgstr "PDF ドキュメント"
 
-#: ../plug-ins/common/file-ps.c:1051
+#: ../plug-ins/common/file-ps.c:1027
 #, c-format
 msgid "Could not interpret Postscript file '%s'"
 msgstr "PostScript ドキュメント '%s' を解釈できませんでした"
 
-#: ../plug-ins/common/file-ps.c:1193
+#: ../plug-ins/common/file-ps.c:1169
 #, c-format
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript 形式による保存はアルファチャンネルを取り扱えません"
 
-#: ../plug-ins/common/file-ps.c:1740 ../plug-ins/common/file-ps.c:1775
-#, c-format
-msgid ""
-"Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
-"location.\n"
-"(%s)"
-msgstr ""
-"Ghostscript 起動時にエラーが発生しました。\n"
-"Ghostscript がインストールされているか確認し、必要ならば環境変数 'GS_PROG' "
-"に Ghostscript へのパスを設定してください。\n"
-"(%s)"
-
-#: ../plug-ins/common/file-ps.c:1942 ../plug-ins/common/file-tiff-load.c:999
+#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:999
 #, c-format
 msgid "Page %d"
 msgstr "%d ページ"
 
-#: ../plug-ins/common/file-ps.c:2607 ../plug-ins/common/file-ps.c:2738
-#: ../plug-ins/common/file-ps.c:2887 ../plug-ins/common/file-ps.c:3011
+#: ../plug-ins/common/file-ps.c:2469 ../plug-ins/common/file-ps.c:2600
+#: ../plug-ins/common/file-ps.c:2749 ../plug-ins/common/file-ps.c:2873
 #: ../plug-ins/common/file-sunras.c:1504 ../plug-ins/common/file-sunras.c:1610
 #: ../plug-ins/file-fits/fits.c:850 ../plug-ins/file-fits/fits.c:973
 msgid "Write error occurred"
 msgstr "書き込みエラーが発生しました"
 
-#: ../plug-ins/common/file-ps.c:3095
+#: ../plug-ins/common/file-ps.c:2957
 msgid "Import from PostScript"
 msgstr "PostScript ドキュメントから画像にインポート"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3139
+#: ../plug-ins/common/file-ps.c:3001
 msgid "Rendering"
 msgstr "解像度とサイズ"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3155 ../plug-ins/common/file-svg.c:911
+#: ../plug-ins/common/file-ps.c:3017 ../plug-ins/common/file-svg.c:911
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "解像度:"
 
-#: ../plug-ins/common/file-ps.c:3194
+#: ../plug-ins/common/file-ps.c:3056
 msgid "Pages:"
 msgstr "ページ:"
 
-#: ../plug-ins/common/file-ps.c:3201
+#: ../plug-ins/common/file-ps.c:3063
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "読み込むページ番号 (例: 1-4 あるいは 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3206 ../plug-ins/common/sphere-designer.c:2657
+#: ../plug-ins/common/file-ps.c:3068 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "レイヤー"
 
-#: ../plug-ins/common/file-ps.c:3209
+#: ../plug-ins/common/file-ps.c:3071
 msgid "Images"
 msgstr "画像"
 
-#: ../plug-ins/common/file-ps.c:3212
+#: ../plug-ins/common/file-ps.c:3074
 msgid "Open as"
 msgstr "新規に開く"
 
-#: ../plug-ins/common/file-ps.c:3216
+#: ../plug-ins/common/file-ps.c:3078
 msgid "Try Bounding Box"
 msgstr "境界枠を調べる"
 
 #. Colouring
-#: ../plug-ins/common/file-ps.c:3229
+#: ../plug-ins/common/file-ps.c:3091
 msgid "Coloring"
 msgstr "色の設定"
 
-#: ../plug-ins/common/file-ps.c:3233
+#: ../plug-ins/common/file-ps.c:3095
 msgid "B/W"
 msgstr "モノクロ 2 階調"
 
 # 「色」とすべき箇所と「カラー」とすべき箇所（あるいはその他の表記）が衝突している
-#: ../plug-ins/common/file-ps.c:3235 ../plug-ins/common/file-xpm.c:479
+#: ../plug-ins/common/file-ps.c:3097 ../plug-ins/common/file-xpm.c:479
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "カラー"
 
-#: ../plug-ins/common/file-ps.c:3236 ../plug-ins/file-fits/fits.c:1032
+#: ../plug-ins/common/file-ps.c:3098 ../plug-ins/file-fits/fits.c:1032
 msgid "Automatic"
 msgstr "自動"
 
-#: ../plug-ins/common/file-ps.c:3247
+#: ../plug-ins/common/file-ps.c:3109
 msgid "Text antialiasing"
 msgstr ""
 "テキストの\n"
 "アンチエイリアス"
 
-#: ../plug-ins/common/file-ps.c:3251 ../plug-ins/common/file-ps.c:3263
+#: ../plug-ins/common/file-ps.c:3113 ../plug-ins/common/file-ps.c:3125
 msgctxt "antialiasing"
 msgid "None"
 msgstr "しない"
 
-#: ../plug-ins/common/file-ps.c:3252 ../plug-ins/common/file-ps.c:3264
+#: ../plug-ins/common/file-ps.c:3114 ../plug-ins/common/file-ps.c:3126
 msgid "Weak"
 msgstr "少し"
 
-#: ../plug-ins/common/file-ps.c:3253 ../plug-ins/common/file-ps.c:3265
+#: ../plug-ins/common/file-ps.c:3115 ../plug-ins/common/file-ps.c:3127
 msgid "Strong"
 msgstr "強く"
 
-#: ../plug-ins/common/file-ps.c:3259
+#: ../plug-ins/common/file-ps.c:3121
 msgid "Graphic antialiasing"
 msgstr ""
 "グラフィックの\n"
 "アンチエイリアス"
 
-#: ../plug-ins/common/file-ps.c:3337
+#: ../plug-ins/common/file-ps.c:3199
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3354
+#: ../plug-ins/common/file-ps.c:3216
 msgid "Image Size"
 msgstr "画像サイズ"
 
-#: ../plug-ins/common/file-ps.c:3403
+#: ../plug-ins/common/file-ps.c:3265
 msgid "_Keep aspect ratio"
 msgstr "縦横比を維持する(_K)"
 
-#: ../plug-ins/common/file-ps.c:3409
+#: ../plug-ins/common/file-ps.c:3271
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4261,42 +4231,42 @@ msgstr ""
 "されて出力されます。"
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3419
+#: ../plug-ins/common/file-ps.c:3281
 msgid "Unit"
 msgstr "単位"
 
-#: ../plug-ins/common/file-ps.c:3423
+#: ../plug-ins/common/file-ps.c:3285
 msgid "_Inch"
 msgstr "インチ(_I)"
 
-#: ../plug-ins/common/file-ps.c:3424
+#: ../plug-ins/common/file-ps.c:3286
 msgid "_Millimeter"
 msgstr "ミリメートル(_M)"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3435
+#: ../plug-ins/common/file-ps.c:3297
 #: ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "回転"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3450
+#: ../plug-ins/common/file-ps.c:3312
 msgid "Output"
 msgstr "出力"
 
-#: ../plug-ins/common/file-ps.c:3456
+#: ../plug-ins/common/file-ps.c:3318
 msgid "_PostScript level 2"
 msgstr "_PostScript レベル 2"
 
-#: ../plug-ins/common/file-ps.c:3465
+#: ../plug-ins/common/file-ps.c:3327
 msgid "_Encapsulated PostScript"
 msgstr "_EPS 形式"
 
-#: ../plug-ins/common/file-ps.c:3474
+#: ../plug-ins/common/file-ps.c:3336
 msgid "P_review"
 msgstr "プレビュー(_R)"
 
-#: ../plug-ins/common/file-ps.c:3496
+#: ../plug-ins/common/file-ps.c:3358
 msgid "Preview _size:"
 msgstr "プレビューサイズ(_S):"
 
@@ -4602,7 +4572,7 @@ msgstr "TGA 形式"
 #. rle
 #: ../plug-ins/common/file-tga.c:1381
 msgid "_RLE compression"
-msgstr "_RLE 圧縮"
+msgstr "RLE 圧縮(_R)"
 
 #: ../plug-ins/common/file-tga.c:1395
 msgid "Or_igin:"
@@ -4794,7 +4764,7 @@ msgstr "識別子プレフィックス(_I):"
 #. hotspot toggle
 #: ../plug-ins/common/file-xbm.c:1243
 msgid "_Write hot spot values"
-msgstr "ホットスポット値を記述する(_W)"
+msgstr "ホットスポットの値を書き込む(_W)"
 
 #: ../plug-ins/common/file-xbm.c:1266 ../plug-ins/common/file-xmc.c:1089
 msgid "Hot spot _X:"
@@ -4838,13 +4808,13 @@ msgstr "'%s' は有効な X カーソルではありません。"
 
 #: ../plug-ins/common/file-xmc.c:686
 #, c-format
-msgid "The width of frame %d of '%s' is too big for X cursor."
-msgstr "'%2$s' の 第 %1$d フレームの幅は X カーソルには大き過ぎます。"
+msgid "Frame %d of '%s' is too wide for an X cursor."
+msgstr "'%2$s' の第 %1$d フレームの幅は X カーソルには大き過ぎます。"
 
 #: ../plug-ins/common/file-xmc.c:693
 #, c-format
-msgid "The height of frame %d of '%s' is too big for X cursor."
-msgstr "'%2$s' の 第 %1$d フレームの高さは X カーソルには大き過ぎます。"
+msgid "Frame %d of '%s' is too high for an X cursor."
+msgstr "'%2$s' の第 %1$d フレームの高さは X カーソルには大き過ぎます。"
 
 #: ../plug-ins/common/file-xmc.c:896
 #, c-format
@@ -4853,12 +4823,12 @@ msgstr "\"%s\" にイメージチャンクがありません。"
 
 #: ../plug-ins/common/file-xmc.c:938
 #, c-format
-msgid "The width of '%s' is too big for X cursor."
+msgid "'%s' is too wide for an X cursor."
 msgstr "'%s' の幅は X カーソルには大き過ぎます。"
 
 #: ../plug-ins/common/file-xmc.c:945
 #, c-format
-msgid "The height of '%s' is too big for X cursor."
+msgid "'%s' is too high for an X cursor."
 msgstr "'%s' の高さは X カーソルには大き過ぎます。"
 
 #: ../plug-ins/common/file-xmc.c:1015
@@ -4886,7 +4856,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1114
 msgid "_Auto-Crop all frames."
-msgstr "すべてのフレームの自動切り取り(_A)"
+msgstr "すべてのフレームの自動切り抜き(_A)"
 
 #: ../plug-ins/common/file-xmc.c:1127
 msgid ""
@@ -4990,77 +4960,79 @@ msgstr "コメントの字数は、 %d 字 (半角英数文字換算) までで�
 
 #: ../plug-ins/common/file-xmc.c:1489
 #, c-format
-msgid "This plug-in can only handle RGBA image format with 8bit color depth."
-msgstr "このプラグインは、RGBA 8 bit カラーモデルしか扱えません。"
+msgid "This plug-in can only handle RGBA image files with 8bit color depth."
+msgstr ""
+"このプラグインは、色深度が 8 ビットの RGBA 画像ファイルしか扱えません。"
 
 #: ../plug-ins/common/file-xmc.c:1507
 #, c-format
-msgid "Width of '%s' is too large. Please reduce more than %dpx."
-msgstr "'%s' の幅が大きすぎます。(%d ピクセル以下にしてください。)"
+msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
+msgstr "フレーム '%s' の幅が大きすぎます。(%d ピクセル以下にしてください。)"
 
 #: ../plug-ins/common/file-xmc.c:1514
 #, c-format
-msgid "Height of '%s' is too large. Please reduce more than %dpx."
-msgstr "'%s' の高さが大きすぎます。(%d ピクセル以下にしてください。)"
+msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
+msgstr "フレーム '%s' の高さが大きすぎます。(%d ピクセル以下にしてください。)"
 
 #: ../plug-ins/common/file-xmc.c:1521
 #, c-format
-msgid "The size of '%s' is zero!"
-msgstr "`%s' の幅または高さがゼロです。"
+msgid "Width and/or height of frame '%s' is zero!"
+msgstr "フレーム '%s' の幅または高さ (または両方とも) がゼロです。"
 
 #: ../plug-ins/common/file-xmc.c:1561
 #, c-format
 msgid ""
-"Cannot save the cursor because the hot spot is not on '%s'.\n"
+"Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-"
 "crop."
 msgstr ""
-"'%s' 上にホットスポットが存在していないため、カーソルを保存できません。\n"
+"フレーム '%s' 上にホットスポットが存在していないため、カーソルを保存できませ"
+"ん。\n"
 "ホットスポットの位置を変更するか、レイヤーの位置を調整するか、[すべてのフレー"
-"ムを自動切り取り] をオフにして保存し直してください。"
+"ムの自動切り抜き] をオフにして保存し直してください。"
 
-#: ../plug-ins/common/file-xmc.c:1717
+#: ../plug-ins/common/file-xmc.c:1718
 #, c-format
 msgid ""
-"Your cursor was successfully saved but it contains one or more frames which "
+"Your cursor was successfully saved but it contains one or more frames whose "
 "width or height is more than %ipx.\n"
 "It will clutter the screen in some environments."
 msgstr ""
-"この画像は X マウスカーソルとして保存されましたが、幅または高さが %i px を越"
-"えるフレームを含んでいます。\n"
+"この画像は X マウスカーソルとして保存されましたが、幅または高さが %i ピクセル"
+"より大きく設定されているフレームを含んでいます。\n"
 "環境によってはスクリーンを混乱させるかもしれません。"
 
-#: ../plug-ins/common/file-xmc.c:1724
+#: ../plug-ins/common/file-xmc.c:1725
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
-"nominal size is not supported by gnome-appearance-properties.\n"
-"You can satisfy it by checking \"Replace the size of all frame...\" in the "
-"save dialog, or your cursor may not appear in gnome-appearance-properties."
+"nominal size is not supported by GNOME settings.\n"
+"You can satisfy it by checking \"Replace the size of all frames...\" in the "
+"save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"この画像は X マウスカーソルとして保存されましたが、[外観の設定] (gnome-"
-"appearance-properties) でサポートされない名目サイズを持つフレームを含んでいま"
-"す。\n"
-"[外観の設定] でこのカーソルが現れないかもしれませんので、それを避けたいとき"
+"この画像は X マウスカーソルとして保存されましたが、いくつかのフレームは "
+"GNOME の設定でサポートされない名目サイズを含んでいます。\n"
+"GNOME の設定時にこのカーソルを指定できないかもしれません。それを避けたいとき"
 "は [サイズ指定済のものを含めた全フレームにこの値を適用する] を指定して保存し"
 "直してください。"
 
-#: ../plug-ins/common/file-xmc.c:1961
+#: ../plug-ins/common/file-xmc.c:1962
 #, c-format
 msgid ""
-"The parasite \"%s\" is too long for X cursor.\n"
-"The overflowed string was dropped."
+"The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
+"fit."
 msgstr ""
-"\"%s\" は X カーソルのパラサイトとしては長すぎます。\n"
-"超過部分は削除されました。"
+"パラサイト (\"%s\") は X カーソルのコメントとしては長すぎます。超過部分は削除"
+"されました。"
 
-#: ../plug-ins/common/file-xmc.c:2163
+#. translators: the %i is *always* 8 here
+#: ../plug-ins/common/file-xmc.c:2165
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
 "nominal sizes."
 msgstr ""
-"このプラグインは、%i 種類以上のノーマルサイズを持つ X カーソルを扱うことがで"
-"きません。"
+"このプラグインは、%i 種類以上の名目サイズを持つ X カーソルを扱うことができま"
+"せん。"
 
 #: ../plug-ins/common/file-xpm.c:174 ../plug-ins/common/file-xpm.c:199
 msgid "X PixMap image"
@@ -5130,7 +5102,7 @@ msgid "Composing images"
 msgstr "画像合成中"
 
 #: ../plug-ins/common/film.c:423 ../plug-ins/common/guillotine.c:215
-#: ../plug-ins/help-browser/dialog.c:1109
+#: ../plug-ins/help-browser/dialog.c:1132
 msgid "Untitled"
 msgstr "名称未設定"
 
@@ -5840,10 +5812,12 @@ msgstr "%s から %s へ変換しています..."
 msgid "Could not load ICC profile from '%s'"
 msgstr "'%s' から ICCカラープロファイルが読み込めません"
 
+# 実際の表示では、このメッセージの後に改行が入りカラープロファイル名が表示される。
+# 「次の」を加えコロンを無くしたほうがダイアログ表示として体裁が良い。
 #: ../plug-ins/common/lcms.c:1151
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
-msgstr "画像 '%s' に埋め込まれているカラープロファイル:"
+msgstr "画像 '%s' には次のカラープロファイルが埋め込まれています。"
 
 #: ../plug-ins/common/lcms.c:1195
 #, c-format
@@ -6470,11 +6444,11 @@ msgstr "タイル可能(_I)"
 
 #: ../plug-ins/common/noise-solid.c:655
 msgid "_X size:"
-msgstr "_X サイズ:"
+msgstr "X サイズ(_X):"
 
 #: ../plug-ins/common/noise-solid.c:668
 msgid "_Y size:"
-msgstr "_Y サイズ:"
+msgstr "Y サイズ(_Y):"
 
 #: ../plug-ins/common/noise-spread.c:87
 msgid "Move pixels around randomly"
@@ -7143,7 +7117,7 @@ msgstr "ずれの量(_A):"
 
 #: ../plug-ins/common/sinus.c:186
 msgid "Generate complex sinusoidal textures"
-msgstr "複雑なSin関数的テクスチャーを生成します"
+msgstr "複雑な Sin 関数的テクスチャーを生成します"
 
 #: ../plug-ins/common/sinus.c:191
 msgid "_Sinus..."
@@ -7165,11 +7139,11 @@ msgstr "描画設定"
 
 #: ../plug-ins/common/sinus.c:701
 msgid "_X scale:"
-msgstr "_X 拡大縮小:"
+msgstr "X 拡大縮小(_X):"
 
 #: ../plug-ins/common/sinus.c:710
 msgid "_Y scale:"
-msgstr "_Y 拡大縮小:"
+msgstr "Y 拡大縮小(_Y):"
 
 #: ../plug-ins/common/sinus.c:719
 msgid "Co_mplexity:"
@@ -7185,7 +7159,7 @@ msgstr "乱数種(_A):"
 
 #: ../plug-ins/common/sinus.c:751
 msgid "_Force tiling?"
-msgstr "強制的に並べる?(_F)"
+msgstr "強制的に並べる(_F)"
 
 #: ../plug-ins/common/sinus.c:764
 msgid "_Ideal"
@@ -7215,7 +7189,7 @@ msgstr "描画色/背景色(_F)"
 
 #: ../plug-ins/common/sinus.c:807
 msgid "C_hoose here:"
-msgstr "ここで選択(_H):"
+msgstr "色を指定(_H):"
 
 #: ../plug-ins/common/sinus.c:820
 msgid "First color"
@@ -7264,7 +7238,7 @@ msgstr "混色(_B)"
 
 #: ../plug-ins/common/sinus.c:1050
 msgid "Do _preview"
-msgstr "プレビューする(_P)"
+msgstr "プレビュー(_P)"
 
 #: ../plug-ins/common/smooth-palette.c:83
 msgid "Derive a smooth color palette from the image"
@@ -7341,35 +7315,35 @@ msgstr "フレア強度を設定します"
 
 #: ../plug-ins/common/sparkle.c:400
 msgid "_Spike length:"
-msgstr "尖りの長さ(_S):"
+msgstr "とがりの長さ(_S):"
 
 #: ../plug-ins/common/sparkle.c:403
 msgid "Adjust the spike length"
-msgstr "尖りの長さを設定します"
+msgstr "とがりの長さを設定します"
 
 #: ../plug-ins/common/sparkle.c:413
 msgid "Sp_ike points:"
-msgstr "尖りの数(_I):"
+msgstr "とがりの数(_I):"
 
 #: ../plug-ins/common/sparkle.c:416
 msgid "Adjust the number of spikes"
-msgstr "尖りの数を設定します"
+msgstr "とがりの数を設定します"
 
 #: ../plug-ins/common/sparkle.c:426
 msgid "Spi_ke angle (-1: random):"
-msgstr "尖りの角度 (-1: 乱数)(_K):"
+msgstr "とがりの角度(_K) (-1: 乱数):"
 
 #: ../plug-ins/common/sparkle.c:429
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
-msgstr "尖りの角度を設定します (-1 を指定するとランダムに角度が設定されます)"
+msgstr "とがりの角度を設定します (-1 を指定するとランダムに角度が設定されます)"
 
 #: ../plug-ins/common/sparkle.c:440
 msgid "Spik_e density:"
-msgstr "尖り密度(_E):"
+msgstr "とがり密度(_E):"
 
 #: ../plug-ins/common/sparkle.c:443
 msgid "Adjust the spike density"
-msgstr "尖りの密度を設定します"
+msgstr "とがりの密度を設定します"
 
 #: ../plug-ins/common/sparkle.c:453
 msgid "Tr_ansparency:"
@@ -7377,7 +7351,7 @@ msgstr "透明度(_A):"
 
 #: ../plug-ins/common/sparkle.c:456
 msgid "Adjust the opacity of the spikes"
-msgstr "尖りの不透明度を設定します"
+msgstr "とがりの不透明度を設定します"
 
 #: ../plug-ins/common/sparkle.c:466
 msgid "_Random hue:"
@@ -7417,7 +7391,7 @@ msgstr "縁付加(_D)"
 
 #: ../plug-ins/common/sparkle.c:536
 msgid "Draw a border of spikes around the image"
-msgstr "有効のときは画像の境界にも尖りを描画します"
+msgstr "有効のときは画像の境界にもとがりを描画します"
 
 #: ../plug-ins/common/sparkle.c:550
 msgid "_Natural color"
@@ -8671,20 +8645,20 @@ msgid "Alpha channel will be ignored."
 msgstr "アルファチャンネルは無視されます"
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-write.c:860
+#: ../plug-ins/file-bmp/bmp-write.c:861
 msgid "_Run-Length Encoded"
 msgstr "RLE エンコード(_R)"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-write.c:873
+#: ../plug-ins/file-bmp/bmp-write.c:874
 msgid "Co_mpatibility Options"
 msgstr "互換性のオプション(_M)"
 
-#: ../plug-ins/file-bmp/bmp-write.c:883
+#: ../plug-ins/file-bmp/bmp-write.c:884
 msgid "_Do not write color space information"
 msgstr "色空間の情報を書き込まない(_D)"
 
-#: ../plug-ins/file-bmp/bmp-write.c:885
+#: ../plug-ins/file-bmp/bmp-write.c:886
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -8695,25 +8669,41 @@ msgstr ""
 "ファイルへ書き込みますが、この設定をオンにした場合は書き込みません。"
 
 #. Advanced Options
-#: ../plug-ins/file-bmp/bmp-write.c:901 ../plug-ins/file-jpeg/jpeg-save.c:901
+#: ../plug-ins/file-bmp/bmp-write.c:902 ../plug-ins/file-jpeg/jpeg-save.c:901
 msgid "_Advanced Options"
 msgstr "詳細設定(_A)"
 
-#: ../plug-ins/file-bmp/bmp-write.c:916
+#: ../plug-ins/file-bmp/bmp-write.c:917
 msgid "16 bits"
 msgstr "16 ビット"
 
-#: ../plug-ins/file-bmp/bmp-write.c:952
+#: ../plug-ins/file-bmp/bmp-write.c:953
 msgid "24 bits"
 msgstr "24 ビット"
 
-#: ../plug-ins/file-bmp/bmp-write.c:969
+#: ../plug-ins/file-bmp/bmp-write.c:970
 msgid "32 bits"
 msgstr "32 ビット"
 
 #: ../plug-ins/file-bmp/bmp.c:123 ../plug-ins/file-bmp/bmp.c:142
 msgid "Windows BMP image"
 msgstr "Windows BMP 画像"
+
+#: ../plug-ins/file-compressor/file-compressor.c:162
+msgid "gzip archive"
+msgstr "gzip アーカイブ"
+
+#: ../plug-ins/file-compressor/file-compressor.c:181
+msgid "bzip archive"
+msgstr "bzip アーカイブ"
+
+#: ../plug-ins/file-compressor/file-compressor.c:388
+msgid "No sensible file extension, saving as compressed XCF."
+msgstr "拡張子が判別できません。 gzip 圧縮した xcf ファイルとして保存します。"
+
+#: ../plug-ins/file-compressor/file-compressor.c:444
+msgid "No sensible file extension, attempting to load with file magic."
+msgstr "拡張子が判別できません。 file magic を使用して読み込みます。"
 
 #: ../plug-ins/file-faxg3/faxg3.c:102
 msgid "G3 fax image"
@@ -11201,11 +11191,11 @@ msgstr "輝き(_L)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3737
 msgid "# of Spikes:"
-msgstr "尖りの数:"
+msgstr "とがりの数:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3749
 msgid "Spike thickness:"
-msgstr "尖りの太さ:"
+msgstr "とがりの太さ:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3763
 msgid "_Rays"
@@ -11245,76 +11235,76 @@ msgid "_Second Flares"
 msgstr "二次フレア(_S)"
 
 #: ../plug-ins/help-browser/dialog.c:184
-#: ../plug-ins/help-browser/dialog.c:1110
+#: ../plug-ins/help-browser/dialog.c:1133
 msgid "GIMP Help Browser"
 msgstr "GIMP ヘルプブラウザー"
 
-#: ../plug-ins/help-browser/dialog.c:559
+#: ../plug-ins/help-browser/dialog.c:582
 msgid "Go back one page"
 msgstr "前に表示したページに戻ります"
 
-#: ../plug-ins/help-browser/dialog.c:564
+#: ../plug-ins/help-browser/dialog.c:587
 msgid "Go forward one page"
 msgstr "次に表示したページに進みます"
 
-#: ../plug-ins/help-browser/dialog.c:569
+#: ../plug-ins/help-browser/dialog.c:592
 msgid "_Reload"
 msgstr "再読み込み(_R)"
 
-#: ../plug-ins/help-browser/dialog.c:569
+#: ../plug-ins/help-browser/dialog.c:592
 msgid "Reload current page"
 msgstr "このページを再読み込みします"
 
-#: ../plug-ins/help-browser/dialog.c:574
+#: ../plug-ins/help-browser/dialog.c:597
 msgid "_Stop"
 msgstr "中止(_S)"
 
-#: ../plug-ins/help-browser/dialog.c:574
+#: ../plug-ins/help-browser/dialog.c:597
 msgid "Stop loading this page"
 msgstr "このページの読み込みを中止します"
 
-#: ../plug-ins/help-browser/dialog.c:579
+#: ../plug-ins/help-browser/dialog.c:602
 msgid "Go to the index page"
 msgstr "索引ページへ"
 
-#: ../plug-ins/help-browser/dialog.c:584
+#: ../plug-ins/help-browser/dialog.c:607
 msgid "C_opy location"
 msgstr "場所のコピー(_O)"
 
-#: ../plug-ins/help-browser/dialog.c:585
+#: ../plug-ins/help-browser/dialog.c:608
 msgid "Copy the location of this page to the clipboard"
 msgstr "このページの場所をクリップボードにコピーします"
 
-#: ../plug-ins/help-browser/dialog.c:605
+#: ../plug-ins/help-browser/dialog.c:628
 msgid "Find text in current page"
 msgstr "字句の検索"
 
-#: ../plug-ins/help-browser/dialog.c:610
+#: ../plug-ins/help-browser/dialog.c:633
 msgid "Find _Again"
 msgstr "再検索(_A)"
 
-#: ../plug-ins/help-browser/dialog.c:629
+#: ../plug-ins/help-browser/dialog.c:652
 msgid "S_how Index"
 msgstr "目次の表示(_H)"
 
-#: ../plug-ins/help-browser/dialog.c:630
+#: ../plug-ins/help-browser/dialog.c:653
 msgid "Toggle the visibility of the sidebar"
 msgstr "目次 (サイドバー) の表示/非表示を切り替えます"
 
-#: ../plug-ins/help-browser/dialog.c:651
+#: ../plug-ins/help-browser/dialog.c:674
 msgid "Visit the GIMP documentation website"
 msgstr "GIMP Documentation ウェブサイトへ移動"
 
-#: ../plug-ins/help-browser/dialog.c:1151
+#: ../plug-ins/help-browser/dialog.c:1174
 msgid "Find:"
 msgstr "検索:"
 
-#: ../plug-ins/help-browser/dialog.c:1168
+#: ../plug-ins/help-browser/dialog.c:1191
 msgctxt "search"
 msgid "_Previous"
 msgstr "前(_P)"
 
-#: ../plug-ins/help-browser/dialog.c:1180
+#: ../plug-ins/help-browser/dialog.c:1203
 msgctxt "search"
 msgid "_Next"
 msgstr "次(_N)"
@@ -11557,7 +11547,7 @@ msgstr "円(_I)"
 
 #: ../plug-ins/imagemap/imap_circle.c:263
 msgid "Center _x:"
-msgstr "中心 _X:"
+msgstr "中心の X 座標(_X):"
 
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
@@ -11574,7 +11564,7 @@ msgstr "ピクセル"
 
 #: ../plug-ins/imagemap/imap_circle.c:270
 msgid "Center _y:"
-msgstr "中心 _Y:"
+msgstr "中心の Y 座標(_Y):"
 
 #: ../plug-ins/imagemap/imap_cmd_clear.c:50
 msgid "Clear"
@@ -12020,11 +12010,11 @@ msgstr "設定"
 
 #: ../plug-ins/imagemap/imap_menu.c:169
 msgid "Move Area to Front"
-msgstr "範囲を前面に移動"
+msgstr "領域を最前面に移動"
 
 #: ../plug-ins/imagemap/imap_menu.c:171
 msgid "Move Area to Bottom"
-msgstr "範囲を最背面に移動"
+msgstr "領域を最背面に移動"
 
 #: ../plug-ins/imagemap/imap_menu.c:173
 msgid "Delete Area"
@@ -12180,11 +12170,11 @@ msgstr "メニュー"
 
 #: ../plug-ins/imagemap/imap_preferences.c:405
 msgid "Number of _undo levels (1 - 99):"
-msgstr "作業履歴のエントリ数 (1 - 99)(_U):"
+msgstr "作業履歴のエントリー数(_U) (1 - 99):"
 
 #: ../plug-ins/imagemap/imap_preferences.c:410
 msgid "Number of M_RU entries (1 - 16):"
-msgstr "M_RU エントリの数 (1 - 16):"
+msgstr "MRU のエントリー数(_R) (1 - 16):"
 
 #: ../plug-ins/imagemap/imap_preferences.c:419
 msgid "Select Color"
@@ -12220,11 +12210,11 @@ msgstr "矩形(_R)"
 
 #: ../plug-ins/imagemap/imap_rectangle.c:387
 msgid "Upper left _x:"
-msgstr "左上 _X:"
+msgstr "左上の X 座標(_X):"
 
 #: ../plug-ins/imagemap/imap_rectangle.c:394
 msgid "Upper left _y:"
-msgstr "左上 _Y:"
+msgstr "左上の Y 座標(_Y):"
 
 #: ../plug-ins/imagemap/imap_selection.c:349
 msgid "#"
@@ -13177,6 +13167,32 @@ msgstr "スクリーンショット(_S)..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "何も取り込まれませんでした"
+
+#~ msgid ""
+#~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
+#~ "if necessary - use the environment variable GS_PROG to tell GIMP about "
+#~ "its location.\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "Ghostscript 起動時にエラーが発生しました。\n"
+#~ "Ghostscript がインストールされているか確認し、必要ならば環境変数 "
+#~ "'GS_PROG' に Ghostscript へのパスを設定してください。\n"
+#~ "(%s)"
+
+#~ msgid "The width of frame %d of '%s' is too big for X cursor."
+#~ msgstr "'%2$s' の 第 %1$d フレームの幅は X カーソルには大き過ぎます。"
+
+#~ msgid "The height of frame %d of '%s' is too big for X cursor."
+#~ msgstr "'%2$s' の 第 %1$d フレームの高さは X カーソルには大き過ぎます。"
+
+#~ msgid "The height of '%s' is too big for X cursor."
+#~ msgstr "'%s' の高さは X カーソルには大き過ぎます。"
+
+#~ msgid "Width of '%s' is too large. Please reduce more than %dpx."
+#~ msgstr "'%s' の幅が大きすぎます。(%d ピクセル以下にしてください。)"
+
+#~ msgid "The size of '%s' is zero!"
+#~ msgstr "`%s' の幅または高さがゼロです。"
 
 #~ msgid "Ascii"
 #~ msgstr "ASCII"
@@ -14502,19 +14518,20 @@ msgstr "何も取り込まれませんでした"
 #~ msgstr "フレア強度を調節する"
 
 #~ msgid "Adjust the Spike Length"
-#~ msgstr "尖りの長さを調節する"
+#~ msgstr "とがりの長さを調節する"
 
 #~ msgid "Adjust the Number of Spikes"
-#~ msgstr "尖りの数を調節する"
+#~ msgstr "とがりの数を調節する"
 
 #~ msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
-#~ msgstr "尖りの角度を調節する (-1 を指定するとランダムに角度が設定されます)"
+#~ msgstr ""
+#~ "とがりの角度を調節する (-1 を指定するとランダムに角度が設定されます)"
 
 #~ msgid "Adjust the Spike Density"
-#~ msgstr "尖りの密度を調節する"
+#~ msgstr "とがりの密度を調節する"
 
 #~ msgid "Adjust the Opacity of the Spikes"
-#~ msgstr "尖りの不透明度を調節する"
+#~ msgstr "とがりの不透明度を調節する"
 
 #~ msgid "Adjust the Value how much the Hue should be changed randomly"
 #~ msgstr "色相をどの程度ランダムに変えるか調節する"
@@ -14529,7 +14546,7 @@ msgstr "何も取り込まれませんでした"
 #~ msgstr "反転効果にするかどうか"
 
 #~ msgid "Draw a Border of Spikes around the Image"
-#~ msgstr "尖りの縁を画像につけるかどうか"
+#~ msgstr "とがりの縁を画像につけるかどうか"
 
 #~ msgid "Textures"
 #~ msgstr "テクスチャー"
@@ -14839,7 +14856,7 @@ msgstr "何も取り込まれませんでした"
 #~ msgstr "色相回転:"
 
 #~ msgid "Spike Thickness:"
-#~ msgstr "尖りの太さ:"
+#~ msgstr "とがりの太さ:"
 
 #~ msgid "Size Factor Gradient:"
 #~ msgstr "大きさ倍率グラデーション:"
