@@ -397,12 +397,12 @@ tiff_warning (const gchar *module,
 
   if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered"))
     {
-      const char *name;
-      va_list     ap_test;
+      va_list ap_test;
 
       G_VA_COPY (ap_test, ap);
 
-      name = va_arg (ap_test, const char *);
+      va_arg (ap_test, const char *); /* ignore first arg */
+
       tag  = va_arg (ap_test, int);
     }
   /* for older versions of libtiff? */
