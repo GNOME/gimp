@@ -1227,7 +1227,7 @@ get_drawable_image (GimpDrawable *drawable)
   gint             stride;
   gpointer         pr;
   gboolean         indexed       = FALSE;
-  int              bpp           = drawable->bpp, cairo_bpp;
+  int              bpp           = drawable->bpp;
 
   if (gimp_drawable_is_indexed (drawable_ID))
     {
@@ -1247,23 +1247,19 @@ get_drawable_image (GimpDrawable *drawable)
       if (! indexed)
         {
           format = CAIRO_FORMAT_RGB24;
-          cairo_bpp = 3;
         }
       else
         {
           format = CAIRO_FORMAT_RGB24;
-          cairo_bpp = 3;
         }
       break;
     case 3: /* RGB */
       format = CAIRO_FORMAT_RGB24;
-      cairo_bpp = 3;
       break;
 
     case 2: /* GRAYA or INDEXEDA */
     case 4: /* RGBA */
       format = CAIRO_FORMAT_ARGB32;
-      cairo_bpp = 4;
       break;
 
     default:
