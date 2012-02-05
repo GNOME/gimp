@@ -253,7 +253,7 @@ load_old_preset (const gchar *fname)
   len = fread (&pcvals, 1, sizeof (pcvals), f);
   fclose (f);
 
-  return 0;
+  return (len != sizeof (pcvals)) ? -1 : 0;
 }
 
 static unsigned int
