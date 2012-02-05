@@ -4,22 +4,22 @@
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2002
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2004
+# Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2011.
 #
 # Replaced: & -> ＆
-# Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-12-07 13:01+0000\n"
+"POT-Creation-Date: 2012-02-04 19:01+0000\n"
 "PO-Revision-Date: 2011-12-07 21:47+0900\n"
 "Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
