@@ -587,11 +587,11 @@ gimp_container_tree_view_set_context (GimpContainerView *view,
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
-  parent_view_iface->set_context (view, context);
-
   if (tree_view->model)
     gimp_container_tree_store_set_context (GIMP_CONTAINER_TREE_STORE (tree_view->model),
                                            context);
+
+  parent_view_iface->set_context (view, context);
 }
 
 static void
