@@ -236,6 +236,8 @@ gimp_tool_preset_editor_set_data (GimpDataEditor *editor,
       if (preset_editor->priv->tool_preset_model)
         gimp_tool_preset_editor_sync_data (preset_editor);
     }
+
+  gtk_widget_set_sensitive (GTK_WIDGET (editor), editor->data_editable);
 }
 
 
