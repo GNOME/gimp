@@ -90,6 +90,10 @@ static void          gimp_container_tree_view_set_view_size     (GimpContainerVi
 
 static void          gimp_container_tree_view_real_edit_name    (GimpContainerTreeView       *tree_view);
 
+static void          gimp_container_tree_view_name_started      (GtkCellRendererText         *cell,
+                                                                 GtkCellEditable             *editable,
+                                                                 const gchar                 *path_str,
+                                                                 GimpContainerTreeView       *tree_view);
 static void          gimp_container_tree_view_name_canceled     (GtkCellRendererText         *cell,
                                                                  GimpContainerTreeView       *tree_view);
 
@@ -274,6 +278,9 @@ gimp_container_tree_view_constructed (GObject *object)
                                        "sensitive",  GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
                                        NULL);
 
+  g_signal_connect (tree_view->priv->name_cell, "editing-started",
+                    G_CALLBACK (gimp_container_tree_view_name_started),
+                    tree_view);
   g_signal_connect (tree_view->priv->name_cell, "editing-canceled",
                     G_CALLBACK (gimp_container_tree_view_name_canceled),
                     tree_view);
@@ -811,22 +818,7 @@ gimp_container_tree_view_real_edit_name (GimpContainerTreeView *tree_view)
       gimp_container_tree_view_get_selected_single (tree_view,
                                                     &selected_iter))
     {
-      GimpViewRenderer *renderer;
-      const gchar      *real_name;
-      GtkTreePath      *path;
-
-      gtk_tree_model_get (tree_view->model, &selected_iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
-                          -1);
-
-      real_name = gimp_object_get_name (renderer->viewable);
-
-      g_object_unref (renderer);
-
-      gtk_tree_store_set (GTK_TREE_STORE (tree_view->model),
-                          &selected_iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, real_name,
-                          -1);
+      GtkTreePath *path;
 
       path = gtk_tree_model_get_path (tree_view->model, &selected_iter);
 
@@ -841,6 +833,36 @@ gimp_container_tree_view_real_edit_name (GimpContainerTreeView *tree_view)
 
 
 /*  callbacks  */
+
+static void
+gimp_container_tree_view_name_started (GtkCellRendererText   *cell,
+                                       GtkCellEditable       *editable,
+                                       const gchar           *path_str,
+                                       GimpContainerTreeView *tree_view)
+{
+  GtkTreePath *path;
+  GtkTreeIter  iter;
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
+    {
+      GimpViewRenderer *renderer;
+      const gchar      *real_name;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
+
+      real_name = gimp_object_get_name (renderer->viewable);
+
+      g_object_unref (renderer);
+
+      gtk_entry_set_text (GTK_ENTRY (editable), real_name);
+    }
+
+  gtk_tree_path_free (path);
+}
 
 static void
 gimp_container_tree_view_name_canceled (GtkCellRendererText   *cell,
@@ -1107,19 +1129,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                 {
                   if (edit_cell)
                     {
-                      if (edit_cell == tree_view->priv->name_cell)
-                        {
-                          const gchar *real_name;
-
-                          real_name = gimp_object_get_name (renderer->viewable);
-
-                          gtk_tree_store_set (GTK_TREE_STORE (tree_view->model),
-                                              &iter,
-                                              GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,
-                                              real_name,
-                                              -1);
-                        }
-
                       gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
                                                         column, edit_cell, TRUE);
                     }
