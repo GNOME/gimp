@@ -43,7 +43,9 @@ static void tool_options_actions_update_presets (GimpActionGroup *group,
                                                  const gchar     *action_prefix,
                                                  GCallback        callback,
                                                  const gchar     *help_id,
-                                                 GimpContainer   *presets);
+                                                 GimpContainer   *presets,
+                                                 gboolean         need_writable,
+                                                 gboolean         need_deletable);
 
 
 /*  global variables  */
@@ -93,6 +95,8 @@ static const GimpActionEntry tool_options_actions[] =
 
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 #define SET_HIDE_EMPTY(action,condition) \
         gimp_action_group_set_action_hide_empty (group, action, (condition) != 0)
 
@@ -123,22 +127,30 @@ tool_options_actions_update (GimpActionGroup *group,
   tool_options_actions_update_presets (group, "tool-options-save-preset",
                                        G_CALLBACK (tool_options_save_preset_cmd_callback),
                                        GIMP_HELP_TOOL_OPTIONS_SAVE,
-                                       tool_info->presets);
+                                       tool_info->presets,
+                                       TRUE /* writable */,
+                                       FALSE /* deletable */);
 
   tool_options_actions_update_presets (group, "tool-options-restore-preset",
                                        G_CALLBACK (tool_options_restore_preset_cmd_callback),
                                        GIMP_HELP_TOOL_OPTIONS_RESTORE,
-                                       tool_info->presets);
+                                       tool_info->presets,
+                                       FALSE /* writable */,
+                                       FALSE /* deletable */);
 
   tool_options_actions_update_presets (group, "tool-options-edit-preset",
                                        G_CALLBACK (tool_options_edit_preset_cmd_callback),
                                        GIMP_HELP_TOOL_OPTIONS_EDIT,
-                                       tool_info->presets);
+                                       tool_info->presets,
+                                       FALSE /* writable */,
+                                       FALSE /* deletable */);
 
   tool_options_actions_update_presets (group, "tool-options-delete-preset",
                                        G_CALLBACK (tool_options_delete_preset_cmd_callback),
                                        GIMP_HELP_TOOL_OPTIONS_DELETE,
-                                       tool_info->presets);
+                                       tool_info->presets,
+                                       FALSE /* writable */,
+                                       TRUE /* deletable */);
 }
 
 
@@ -149,7 +161,9 @@ tool_options_actions_update_presets (GimpActionGroup *group,
                                      const gchar     *action_prefix,
                                      GCallback        callback,
                                      const gchar     *help_id,
-                                     GimpContainer   *presets)
+                                     GimpContainer   *presets,
+                                     gboolean         need_writable,
+                                     gboolean         need_deletable)
 {
   GList *list;
   gint   n_children = 0;
@@ -190,14 +204,22 @@ tool_options_actions_update_presets (GimpActionGroup *group,
            list;
            list = g_list_next (list), i++)
         {
-          GimpObject *options = list->data;
+          GimpObject *preset = list->data;
 
           entry.name     = g_strdup_printf ("%s-%03d", action_prefix, i);
-          entry.label    = gimp_object_get_name (options);
-          entry.stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (options));
+          entry.label    = gimp_object_get_name (preset);
+          entry.stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (preset));
           entry.value    = i;
 
           gimp_action_group_add_enum_actions (group, NULL, &entry, 1, callback);
+
+          if (need_writable)
+            SET_SENSITIVE (entry.name,
+                           gimp_data_is_writable (GIMP_DATA (preset)));
+
+          if (need_deletable)
+            SET_SENSITIVE (entry.name,
+                           gimp_data_is_deletable (GIMP_DATA (preset)));
 
           g_free ((gchar *) entry.name);
         }
@@ -205,4 +227,5 @@ tool_options_actions_update_presets (GimpActionGroup *group,
 }
 
 #undef SET_VISIBLE
+#undef SET_SENSITIVE
 #undef SET_HIDE_EMPTY
