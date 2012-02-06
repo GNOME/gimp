@@ -27,7 +27,8 @@
                                         GIMP_CONTEXT_OPACITY_MASK    | \
                                         GIMP_CONTEXT_PAINT_MODE_MASK | \
                                         GIMP_CONTEXT_BRUSH_MASK      | \
-                                        GIMP_CONTEXT_DYNAMICS_MASK
+                                        GIMP_CONTEXT_DYNAMICS_MASK   | \
+                                        GIMP_CONTEXT_PALETTE_MASK
 
 
 typedef struct _GimpJitterOptions   GimpJitterOptions;
