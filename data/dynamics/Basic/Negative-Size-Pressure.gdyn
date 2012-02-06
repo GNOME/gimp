@@ -1,6 +1,6 @@
 # GIMP dynamics file
 
-(name "Negative_Size_Pressure")
+(name "Negative Size Pressure")
 (opacity-output
     (use-pressure yes)
     (use-velocity no)

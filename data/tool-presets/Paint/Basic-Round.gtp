@@ -5,8 +5,8 @@
 (tool-options "GimpPaintOptions"
     (tool "gimp-paintbrush-tool")
     (foreground (color-rgb 0.000000 0.023605 0.142004))
-    (brush "1_Hardness 100")
-    (dynamics "Pressure_Opacity")
+    (brush "2. Hardness 100")
+    (dynamics "Pressure Opacity")
     (gradient "Tropical Colors")
     (brush-size 80.000000)
     (jitter-amount 0.350000)

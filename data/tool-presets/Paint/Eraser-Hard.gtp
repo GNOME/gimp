@@ -4,8 +4,8 @@
 (name "Eraser Hard")
 (tool-options "GimpEraserOptions"
     (tool "gimp-eraser-tool")
-    (brush "1_Block_01")
-    (dynamics "Pressure_Opacity")
+    (brush "2. Block 01")
+    (dynamics "Pressure Opacity")
     (brush-size 80.000000)
     (gradient-reverse yes))
 (use-fg-bg no)

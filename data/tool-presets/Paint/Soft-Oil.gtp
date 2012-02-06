@@ -5,8 +5,8 @@
 (tool-options "GimpPaintOptions"
     (tool "gimp-paintbrush-tool")
     (foreground (color-rgb 0.000000 0.023605 0.142004))
-    (brush "Oils_02")
-    (dynamics "Pressure_Opacity")
+    (brush "Oils 02")
+    (dynamics "Pressure Opacity")
     (gradient "FG to BG (RGB)")
     (brush-size 80.000000)
     (jitter-amount 0.350000)

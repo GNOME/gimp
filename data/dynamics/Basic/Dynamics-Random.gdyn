@@ -1,6 +1,6 @@
 # GIMP dynamics file
 
-(name "Dynamics_Random")
+(name "Dynamics Random")
 (opacity-output
     (use-pressure no)
     (use-velocity no)

@@ -1,6 +1,6 @@
 # GIMP dynamics file
 
-(name "Pencil_Shader")
+(name "Pencil Shader")
 (opacity-output
     (use-pressure yes)
     (use-velocity no)

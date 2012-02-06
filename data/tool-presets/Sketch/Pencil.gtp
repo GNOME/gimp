@@ -5,8 +5,8 @@
 (tool-options "GimpPaintOptions"
     (tool "gimp-paintbrush-tool")
     (opacity 0.250000)
-    (brush "Pencil_01")
-    (dynamics "Pencil_Generic")
+    (brush "Pencil 01")
+    (dynamics "Pencil Generic")
     (gradient "FG to BG (RGB)")
     (brush-size 50.000000)
     (application-mode incremental)

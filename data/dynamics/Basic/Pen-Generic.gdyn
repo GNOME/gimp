@@ -1,6 +1,6 @@
 # GIMP dynamics file
 
-(name "Pen_Generic")
+(name "Pen Generic")
 (opacity-output
     (use-pressure yes)
     (use-velocity yes)

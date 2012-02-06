@@ -5,8 +5,8 @@
 (tool-options "GimpSmudgeOptions"
     (tool "gimp-smudge-tool")
     (opacity 0.500000)
-    (brush "1_Hardness 050")
-    (dynamics "Pressure_Opacity")
+    (brush "2. Hardness 050")
+    (dynamics "Pressure Opacity")
     (brush-size 100.000000)
     (jitter-amount 0.339806)
     (rate 60.000000))

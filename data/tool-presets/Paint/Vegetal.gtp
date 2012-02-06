@@ -4,8 +4,8 @@
 (name "Vegetation")
 (tool-options "GimpPaintOptions"
     (tool "gimp-paintbrush-tool")
-    (brush "Vegetation_02")
-    (dynamics "Pressure_Opacity")
+    (brush "Vegetation 02")
+    (dynamics "Pressure Opacity")
     (gradient "FG to BG (RGB)")
     (brush-size 250.000000)
     (application-mode incremental)

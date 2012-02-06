@@ -1,6 +1,6 @@
 # GIMP dynamics file
 
-(name "Pressure_Opacity")
+(name "Pressure Opacity")
 (opacity-output
     (use-pressure yes)
     (use-velocity no)

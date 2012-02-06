@@ -1,6 +1,6 @@
 # GIMP dynamics file
 
-(name "Basic_Simple")
+(name "Basic Simple")
 (opacity-output
     (use-pressure yes)
     (use-velocity no)
