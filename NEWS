@@ -15,7 +15,7 @@ UI:
 
  - Minor application menu fixes on the Mac
  - Make the toolbox arbitrarily resizable again
- - Add axis labels to the dynamics curves to make them more ovbious
+ - Add axis labels to the dynamics curves to make them more obvious
  - Fix dockable showing to do the right thing in both MWM and SWM
  - Fix some glitches in the tool preset UI, like proper sensitivity
 
