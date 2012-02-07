@@ -28,6 +28,7 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -496,6 +497,25 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 
       g_free (path_original);
       g_free (path_translated);
+    }
+
+  if ((proc->menu_label || proc->menu_paths) &&
+      ! proc->file_proc                      &&
+      proc->image_types_val)
+    {
+      GimpContext  *context = gimp_get_user_context (group->gimp);
+      GimpImage    *image = context ? gimp_context_get_image (context) : NULL;
+      GimpDrawable *drawable = NULL;
+      gboolean      sensitive;
+
+      if (image)
+        drawable = gimp_image_get_active_drawable (image);
+
+      sensitive = gimp_plug_in_procedure_get_sensitive (proc, drawable);
+
+      gimp_action_group_set_action_sensitive (group,
+                                              gimp_object_get_name (proc),
+                                              sensitive);
     }
 }
 
