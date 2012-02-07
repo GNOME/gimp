@@ -11,4 +11,4 @@ brushlegacydata_DATA = \
 	pepper.gbr	\
 	vine.gih
 
-EXTRA_DIST = $(brushmlegacydata_DATA)
+EXTRA_DIST = $(brushlegacydata_DATA)
