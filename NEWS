@@ -15,42 +15,42 @@ UI:
 
  - Minor application menu fixes on the Mac
  - Make the toolbox arbitrarily resizable again
+ - Add axis labels to the dynamics curves to make them more ovbious
+ - Fix dockable showing to do the right thing in both MWM and SWM
+ - Fix some glitches in the tool preset UI, like proper sensitivity
 
 
 Core:
 
- - foo
-
-
-Libgimp:
-
- - foo
+ - Restore autoshrink functionality in the rectangle tools
+ - Allow smudge to work with dynamic brushes
+ - Make sure tool presets and tool options are consistent after loading
 
 
 Plug-ins:
 
- - foo
+ - Proper toplevel item sorting in the help browser
+ - Use libraries instead of launching programs in file-compressor
+ - Use the Ghostscript library instead of launching ghostscript
+ - Allow to switch off antialiasing when importing from PDF
 
 
-Script-Fu:
+Data:
 
- - foo
-
-
-Developer documentation:
-
- - foo
+ - Add a new set of default brushes and tool presets from Ramon Miranda
 
 
 Source and build system:
 
  - Remove the unmaintained makefile.msc build system
  - Explicitly link plug-ins to -lm when needed
+ - Also create .xz tarballs
 
 
 General:
 
- - foo
+ - Lots of bug fixes
+ - Tons and tons of translation updates
 
 
 Changes in GIMP 2.7.4
