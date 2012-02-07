@@ -129,10 +129,10 @@ def save_ora(img, drawable, filename, raw_filename):
         return layer
 
     # save layers
-    for lay in img.layers:
+    for i, lay in enumerate(img.layers):
         x, y = lay.offsets
         opac = lay.opacity / 100.0 # needs to be between 0.0 and 1.0
-        add_layer(x, y, opac, lay, 'data/%s.png' % lay.name.decode('utf-8'), lay.visible)
+        add_layer(x, y, opac, lay, 'data/%03d.png' % i, lay.visible)
 
     # save thumbnail
     w, h = img.width, img.height
