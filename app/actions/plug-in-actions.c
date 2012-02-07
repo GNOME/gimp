@@ -503,8 +503,8 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
       ! proc->file_proc                      &&
       proc->image_types_val)
     {
-      GimpContext  *context = gimp_get_user_context (group->gimp);
-      GimpImage    *image = context ? gimp_context_get_image (context) : NULL;
+      GimpContext  *context  = gimp_get_user_context (group->gimp);
+      GimpImage    *image    = gimp_context_get_image (context);
       GimpDrawable *drawable = NULL;
       gboolean      sensitive;
 

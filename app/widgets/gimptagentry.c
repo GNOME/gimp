@@ -876,6 +876,7 @@ gimp_tag_entry_parse_tags (GimpTagEntry *entry)
   parsed_tags[length] = NULL;
 
   g_list_free (tag_list);
+
   return parsed_tags;
 }
 
