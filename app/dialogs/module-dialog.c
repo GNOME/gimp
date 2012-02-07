@@ -473,6 +473,7 @@ dialog_info_update (GimpModuleDB *db,
   for (i = 0; i < N_INFOS; i++)
     gtk_label_set_text (GTK_LABEL (dialog->label[i]),
                         text[i] ? text[i] : "--");
+  g_free (location);
 
   /* Show errors */
   show_error = (module->state == GIMP_MODULE_STATE_ERROR &&

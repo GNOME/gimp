@@ -236,6 +236,12 @@ gimp_stroke_options_finalize (GObject *object)
 {
   GimpStrokeOptionsPrivate *private = GET_PRIVATE (object);
 
+  if (private->dash_info)
+    {
+      gimp_dash_pattern_free (private->dash_info);
+      private->dash_info = NULL;
+    }
+
   if (private->paint_options)
     {
       g_object_unref (private->paint_options);

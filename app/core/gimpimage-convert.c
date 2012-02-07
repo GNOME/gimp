@@ -2285,6 +2285,7 @@ select_colors_rgb (QuantizeObj *quantobj,
     {
       compute_color_rgb (quantobj, histogram, &boxlist[i], i);
     }
+  g_free (boxlist);
 }
 
 

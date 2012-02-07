@@ -341,6 +341,7 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
       vector_tool->cur_stroke = gimp_bezier_stroke_new ();
       gimp_vectors_stroke_add (vector_tool->vectors, vector_tool->cur_stroke);
+      g_object_unref (vector_tool->cur_stroke);
 
       vector_tool->undo_motion = TRUE;
 
@@ -610,7 +611,6 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 
 
   /* deleting a segment (opening up a stroke) */
-
   if (vector_tool->function == VECTORS_DELETE_SEGMENT &&
       gimp_vector_tool_check_writable (vector_tool))
     {
@@ -621,7 +621,10 @@ gimp_vector_tool_button_press (GimpTool            *tool,
       new_stroke = gimp_stroke_open (vector_tool->cur_stroke,
                                      vector_tool->cur_anchor);
       if (new_stroke)
-        gimp_vectors_stroke_add (vector_tool->vectors, new_stroke);
+        {
+          gimp_vectors_stroke_add (vector_tool->vectors, new_stroke);
+          g_object_unref (new_stroke);
+        }
 
       vector_tool->undo_motion = TRUE;
       vector_tool->cur_stroke = NULL;
@@ -1881,6 +1884,7 @@ gimp_vector_tool_verify_state (GimpVectorTool *vector_tool)
             }
         }
 
+      g_list_free (anchors);
       anchors = gimp_stroke_get_draw_controls (cur_stroke);
 
       for (list = anchors; list; list = g_list_next (list))
@@ -1890,6 +1894,8 @@ gimp_vector_tool_verify_state (GimpVectorTool *vector_tool)
           if (cur_anchor == vector_tool->cur_anchor)
             cur_anchor_valid = TRUE;
         }
+
+      g_list_free (anchors);
     }
 
   if (! cur_stroke_valid)

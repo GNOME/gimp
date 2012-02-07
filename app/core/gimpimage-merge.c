@@ -419,6 +419,7 @@ gimp_image_merge_layers (GimpImage     *image,
 {
   GList            *list;
   GSList           *reverse_list = NULL;
+  GSList           *layers;
   PixelRegion       src1PR, src2PR, maskPR;
   PixelRegion      *mask;
   GimpLayer        *merge_layer;
@@ -600,14 +601,14 @@ gimp_image_merge_layers (GimpImage     *image,
   gimp_item_set_parasites (GIMP_ITEM (merge_layer), parasites);
   g_object_unref (parasites);
 
-  while (reverse_list)
+  for (layers = reverse_list; layers; layers = g_slist_next (layers))
     {
       CombinationMode      operation;
       GimpLayerModeEffects mode;
       gint                 x3, y3, x4, y4;
       gboolean             active[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
 
-      layer = reverse_list->data;
+      layer = layers->data;
 
       /*  determine what sort of operation is being attempted and
        *  if it's actually legal...
@@ -679,8 +680,6 @@ gimp_image_merge_layers (GimpImage     *image,
                        operation);
 
       gimp_image_remove_layer (image, layer, TRUE, NULL);
-
-      reverse_list = g_slist_next (reverse_list);
     }
 
   g_slist_free (reverse_list);

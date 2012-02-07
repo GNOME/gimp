@@ -87,11 +87,11 @@ static void        about_dialog_add_message   (GtkWidget       *vbox);
 GtkWidget *
 about_dialog_create (GimpContext *context)
 {
-  static GimpAboutDialog *dialog = NULL;
+  static GimpAboutDialog dialog;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  if (! dialog)
+  if (! dialog.dialog)
     {
       GtkWidget *widget;
       GtkWidget *container;
@@ -99,9 +99,7 @@ about_dialog_create (GimpContext *context)
       GList     *children;
       gchar     *copyright;
 
-      dialog = g_new0 (GimpAboutDialog, 1);
-
-      dialog->n_authors = G_N_ELEMENTS (authors) - 1;
+      dialog.n_authors = G_N_ELEMENTS (authors) - 1;
 
       pixbuf = about_dialog_load_logo ();
 
@@ -133,9 +131,9 @@ about_dialog_create (GimpContext *context)
 
       g_free (copyright);
 
-      dialog->dialog = widget;
+      dialog.dialog = widget;
 
-      g_object_add_weak_pointer (G_OBJECT (widget), (gpointer) &dialog);
+      g_object_add_weak_pointer (G_OBJECT (widget), (gpointer) &dialog.dialog);
 
       g_signal_connect (widget, "response",
                         G_CALLBACK (gtk_widget_destroy),
@@ -143,10 +141,10 @@ about_dialog_create (GimpContext *context)
 
       g_signal_connect (widget, "map",
                         G_CALLBACK (about_dialog_map),
-                        dialog);
+                        &dialog);
       g_signal_connect (widget, "unmap",
                         G_CALLBACK (about_dialog_unmap),
-                        dialog);
+                        &dialog);
 
       /*  kids, don't try this at home!  */
       container = gtk_dialog_get_content_area (GTK_DIALOG (widget));
@@ -154,7 +152,7 @@ about_dialog_create (GimpContext *context)
 
       if (GTK_IS_BOX (children->data))
         {
-          about_dialog_add_animation (children->data, dialog);
+          about_dialog_add_animation (children->data, &dialog);
           about_dialog_add_message (children->data);
         }
       else
@@ -163,9 +161,9 @@ about_dialog_create (GimpContext *context)
       g_list_free (children);
     }
 
-  gtk_window_present (GTK_WINDOW (dialog->dialog));
+  gtk_window_present (GTK_WINDOW (dialog.dialog));
 
-  return dialog->dialog;
+  return dialog.dialog;
 }
 
 static void

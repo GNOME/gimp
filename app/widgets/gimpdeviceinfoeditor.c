@@ -487,6 +487,7 @@ gimp_device_info_editor_constructed (GObject *object)
           label = gtk_label_new (string);
           gtk_container_add (GTK_CONTAINER (frame), label);
           gtk_widget_show (label);
+          g_free (string);
         }
     }
 }

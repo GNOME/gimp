@@ -1049,7 +1049,7 @@ gimp_draw_tool_on_vectors_handle (GimpDrawTool      *draw_tool,
 
   while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
     {
-      GList *anchor_list = gimp_stroke_get_draw_anchors (stroke);
+      GList *anchor_list;
       GList *list;
 
       anchor_list = g_list_concat (gimp_stroke_get_draw_anchors (stroke),

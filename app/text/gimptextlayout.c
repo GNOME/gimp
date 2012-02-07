@@ -550,6 +550,7 @@ gimp_text_layout_set_markup (GimpTextLayout *layout)
   g_free (close_tag);
 
   pango_layout_set_markup (layout->layout, markup, -1);
+  g_free (markup);
 }
 
 static void

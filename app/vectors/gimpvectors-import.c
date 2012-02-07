@@ -356,7 +356,7 @@ gimp_vectors_import (GimpImage    *image,
               if (! merge)
                 gimp_vectors_thaw (vectors);
 
-              g_list_free (path->strokes);
+              g_list_free_full (path->strokes, g_object_unref);
               path->strokes = NULL;
             }
 

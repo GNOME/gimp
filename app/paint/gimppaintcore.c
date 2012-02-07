@@ -178,6 +178,12 @@ gimp_paint_core_finalize (GObject *object)
   g_free (core->undo_desc);
   core->undo_desc = NULL;
 
+  if (core->stroke_buffer)
+    {
+      g_array_free (core->stroke_buffer, TRUE);
+      core->stroke_buffer = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 

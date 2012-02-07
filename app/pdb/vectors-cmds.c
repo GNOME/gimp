@@ -695,6 +695,7 @@ vectors_stroke_new_from_points_invoker (GimpProcedure      *procedure,
                                                   vectors);
 
               gimp_vectors_stroke_add (vectors, stroke);
+              g_object_unref (stroke);
 
               stroke_id = gimp_stroke_get_ID (stroke);
 
@@ -817,6 +818,7 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure      *procedure,
                                               vectors);
 
           gimp_vectors_stroke_add (vectors, stroke);
+          g_object_unref (stroke);
 
           stroke_id = gimp_stroke_get_ID (stroke);
         }
@@ -1036,6 +1038,7 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure      *procedure,
                                               vectors);
 
           gimp_vectors_stroke_add (vectors, stroke);
+          g_object_unref (stroke);
 
           stroke_id = gimp_stroke_get_ID (stroke);
         }

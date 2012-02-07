@@ -337,7 +337,7 @@ gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
     }
 
   array = gimp_array_new ((const guint8 *) points,
-                          n_coords * sizeof (GimpVector2), FALSE);
+                          n_coords * sizeof (GimpVector2), TRUE);
 
   item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
                        "shell",  shell,
@@ -346,6 +346,7 @@ gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
                        NULL);
 
   gimp_array_free (array);
+  g_free (points);
 
   return item;
 }

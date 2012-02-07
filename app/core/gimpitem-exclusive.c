@@ -121,6 +121,8 @@ gimp_item_toggle_exclusive_visible (GimpItem    *item,
       g_list_free (on);
       g_list_free (off);
     }
+
+  g_list_free (ancestry);
 }
 
 

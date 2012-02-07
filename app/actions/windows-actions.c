@@ -357,6 +357,7 @@ windows_actions_update_display_accels (GimpActionGroup *group)
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                             action_name);
+      g_free (action_name);
 
       if (action)
         {

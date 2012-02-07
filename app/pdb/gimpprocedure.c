@@ -764,6 +764,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                     }
                 }
 
+              g_value_unset (&string_value);
               return FALSE;
             }
 

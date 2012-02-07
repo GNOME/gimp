@@ -22,6 +22,7 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "text-types.h"
 
 #include "core/gimp.h"
@@ -125,6 +126,8 @@ gimp_text_layer_xcf_save_prepare (GimpTextLayer *layer)
        *  while the text layer is saved to XCF.
        */
       gimp_item_parasite_attach (GIMP_ITEM (layer), parasite, FALSE);
+
+      gimp_parasite_free (parasite);
     }
 }
 

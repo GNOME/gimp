@@ -313,6 +313,8 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->edit_button, FALSE);
   gtk_widget_set_sensitive (list->up_button,   FALSE);
   gtk_widget_set_sensitive (list->down_button, FALSE);
+
+  g_free (controller_types);
 }
 
 static void

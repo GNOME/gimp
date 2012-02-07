@@ -333,6 +333,7 @@ gimp_number_pair_entry_finalize (GObject *object)
       priv->num_separators = 0;
     }
 
+  g_free (priv->default_text);
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 

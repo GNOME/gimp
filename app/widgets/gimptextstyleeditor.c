@@ -424,6 +424,7 @@ gimp_text_style_editor_finalize (GObject *object)
       editor->fonts = NULL;
     }
 
+  g_list_free (editor->toggles);
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 

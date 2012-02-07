@@ -741,6 +741,7 @@ HELP
                                               vectors);
 
 	  gimp_vectors_stroke_add (vectors, stroke);
+	  g_object_unref (stroke);
 
 	  stroke_id = gimp_stroke_get_ID (stroke);
 
@@ -797,6 +798,7 @@ HELP
                                           vectors);
 
       gimp_vectors_stroke_add (vectors, stroke);
+      g_object_unref (stroke);
 
       stroke_id = gimp_stroke_get_ID (stroke);
     }
@@ -1021,6 +1023,7 @@ HELP
                                           vectors);
 
       gimp_vectors_stroke_add (vectors, stroke);
+      g_object_unref (stroke);
 
       stroke_id = gimp_stroke_get_ID (stroke);
     }

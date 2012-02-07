@@ -236,6 +236,7 @@ gimp_text_buffer_serialize (GtkTextBuffer     *register_buffer,
     }
   while (! gtk_text_iter_equal (&iter, end));
 
+  g_slist_free (tag_list);
   /* Close any open tags */
   for (tag_list = active_tags; tag_list; tag_list = tag_list->next)
     close_tag (GIMP_TEXT_BUFFER (register_buffer), string, tag_list->data);

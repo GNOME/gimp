@@ -241,6 +241,8 @@ xcf_load_image (Gimp     *gimp,
                                                      NULL));
 
               container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+
+              g_list_free (item_path);
             }
           else
             {
@@ -1727,7 +1729,10 @@ xcf_load_old_path (XcfInfo   *info,
 
   /* skip empty compatibility paths */
   if (num_points == 0)
-    return FALSE;
+    {
+      g_free (name);
+      return FALSE;
+    }
 
   points = g_new0 (GimpVectorsCompatPoint, num_points);
 
@@ -1856,6 +1861,7 @@ xcf_load_vector (XcfInfo   *info,
 #endif
 
   vectors = gimp_vectors_new (image, name);
+  g_free (name);
 
   gimp_item_set_visible (GIMP_ITEM (vectors), visible, FALSE);
   gimp_item_set_linked (GIMP_ITEM (vectors), linked, FALSE);
@@ -1957,6 +1963,9 @@ xcf_load_vector (XcfInfo   *info,
                              NULL);
 
       gimp_vectors_stroke_add (vectors, stroke);
+
+      g_object_unref (stroke);
+      g_value_array_free (control_points);
     }
 
   gimp_image_add_vectors (image, vectors,
