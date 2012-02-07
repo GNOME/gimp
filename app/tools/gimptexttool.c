@@ -40,6 +40,7 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpundostack.h"
 
 #include "text/gimptext.h"
 #include "text/gimptext-vectors.h"
@@ -145,7 +146,8 @@ static void      gimp_text_tool_text_notify     (GimpText          *text,
 static void      gimp_text_tool_text_changed    (GimpText          *text,
                                                  GimpTextTool      *text_tool);
 
-static gboolean  gimp_text_tool_apply           (GimpTextTool      *text_tool);
+static gboolean  gimp_text_tool_apply           (GimpTextTool      *text_tool,
+                                                 gboolean           push_undo);
 
 static void      gimp_text_tool_create_layer    (GimpTextTool      *text_tool,
                                                  GimpText          *text);
@@ -926,8 +928,10 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
           (x2 - x1) != gimp_item_get_width  (item)   ||
           (y2 - y1) != gimp_item_get_height (item))
         {
-          GimpUnit box_unit = text_tool->proxy->box_unit;
-          gdouble  xres, yres;
+          GimpUnit  box_unit = text_tool->proxy->box_unit;
+          gdouble   xres, yres;
+          gboolean  push_undo = TRUE;
+          GimpUndo *undo;
 
           gimp_image_get_resolution (text_tool->image, &xres, &yres);
 
@@ -939,16 +943,36 @@ gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
                                                             box_unit, yres),
                         NULL);
 
-          gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
-                                       _("Reshape Text Layer"));
+          undo = gimp_image_undo_can_compress (text_tool->image,
+                                               GIMP_TYPE_UNDO_STACK,
+                                               GIMP_UNDO_GROUP_TEXT);
+
+          if (undo &&
+              gimp_undo_get_age (undo) <= TEXT_UNDO_TIMEOUT &&
+              g_object_get_data (G_OBJECT (undo), "reshape-text-layer") == (gpointer) item)
+            push_undo = FALSE;
+
+          if (push_undo)
+            {
+              gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
+                                           _("Reshape Text Layer"));
+
+              undo = gimp_image_undo_can_compress (text_tool->image, GIMP_TYPE_UNDO_STACK,
+                                                   GIMP_UNDO_GROUP_TEXT);
+
+              if (undo)
+                g_object_set_data (G_OBJECT (undo), "reshape-text-layer",
+                                   (gpointer) item);
+            }
 
           gimp_item_translate (item,
                                x1 - gimp_item_get_offset_x (item),
                                y1 - gimp_item_get_offset_y (item),
-                               TRUE);
-          gimp_text_tool_apply (text_tool);
+                               push_undo);
+          gimp_text_tool_apply (text_tool, push_undo);
 
-          gimp_image_undo_group_end (text_tool->image);
+          if (push_undo)
+            gimp_image_undo_group_end (text_tool->image);
         }
     }
 
@@ -985,7 +1009,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
                                                 text_tool);
 
           if (text_tool->pending)
-            gimp_text_tool_apply (text_tool);
+            gimp_text_tool_apply (text_tool, TRUE);
 
           g_object_unref (text_tool->text);
           text_tool->text = NULL;
@@ -1067,6 +1091,12 @@ gimp_text_tool_layer_notify (GimpTextLayer    *layer,
     }
 }
 
+static gboolean
+gimp_text_tool_apply_idle (gpointer text_tool)
+{
+  return gimp_text_tool_apply (text_tool, TRUE);
+}
+
 static void
 gimp_text_tool_proxy_notify (GimpText         *text,
                              const GParamSpec *pspec,
@@ -1086,7 +1116,7 @@ gimp_text_tool_proxy_notify (GimpText         *text,
 
       text_tool->idle_id =
         g_idle_add_full (G_PRIORITY_LOW,
-                         (GSourceFunc) gimp_text_tool_apply, text_tool,
+                         gimp_text_tool_apply_idle, text_tool,
                          NULL);
     }
 }
@@ -1161,7 +1191,8 @@ gimp_text_tool_text_changed (GimpText     *text,
 }
 
 static gboolean
-gimp_text_tool_apply (GimpTextTool *text_tool)
+gimp_text_tool_apply (GimpTextTool *text_tool,
+                      gboolean      push_undo)
 {
   const GParamSpec *pspec = NULL;
   GimpImage        *image;
@@ -1169,7 +1200,6 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   GObject          *src;
   GObject          *dest;
   GList            *list;
-  gboolean          push_undo  = TRUE;
   gboolean          undo_group = FALSE;
 
   if (text_tool->idle_id)
@@ -1406,7 +1436,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
                                                         box_unit, yres),
                     NULL);
 
-      gimp_text_tool_apply (text_tool); /* unblocks drawing */
+      gimp_text_tool_apply (text_tool, TRUE); /* unblocks drawing */
     }
   else
     {
