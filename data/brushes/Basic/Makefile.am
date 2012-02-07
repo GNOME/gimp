@@ -11,6 +11,7 @@ brushbasicdata_DATA = \
 	Hardness-050.vbr	\
 	Hardness-075.vbr	\
 	Hardness-100.vbr	\
+	pixel.gbr		\
 	Star.vbr
 
 EXTRA_DIST = $(brushbasicdata_DATA)

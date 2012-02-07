@@ -9,49 +9,39 @@ obsoletebrushdata_DATA = \
 	20x20squareBlur.gbr		\
 	5x5square.gbr			\
 	5x5squareBlur.gbr		\
-	confetti.gih			\
-	confetti.gbr			\
-	dunes.gbr			\
-	galaxy.gbr			\
-	galaxy_big.gbr			\
-	galaxy_small.gbr		\
-	\
 	Calligraphic-Brush-0.vbr	\
 	Calligraphic-Brush-1.vbr	\
 	Calligraphic-Brush-2.vbr	\
 	Calligraphic-Brush-3.vbr	\
 	Circle-1.vbr			\
-	Circle-3.vbr			\
-	Circle-5.vbr			\
-	Circle-7.vbr			\
-	Circle-9.vbr			\
 	Circle-11.vbr			\
 	Circle-13.vbr			\
 	Circle-15.vbr			\
 	Circle-17.vbr			\
 	Circle-19.vbr			\
-	Circle-Fuzzy-3.vbr		\
-	Circle-Fuzzy-5.vbr		\
-	Circle-Fuzzy-7.vbr		\
-	Circle-Fuzzy-9.vbr		\
+	Circle-3.vbr			\
+	Circle-5.vbr			\
+	Circle-7.vbr			\
+	Circle-9.vbr			\
 	Circle-Fuzzy-11.vbr		\
 	Circle-Fuzzy-13.vbr		\
 	Circle-Fuzzy-15.vbr		\
 	Circle-Fuzzy-17.vbr		\
 	Circle-Fuzzy-19.vbr		\
+	Circle-Fuzzy-3.vbr		\
+	Circle-Fuzzy-5.vbr		\
+	Circle-Fuzzy-7.vbr		\
+	Circle-Fuzzy-9.vbr		\
 	Diagonal-Star-11.vbr		\
 	Diagonal-Star-17.vbr		\
 	Diagonal-Star-25.vbr		\
-	feltpen.gih			\
-	\
+	Grass1.gih			\
 	SketchBrush-16.gih		\
 	SketchBrush-32.gih		\
 	SketchBrush-64.gih		\
+	feltpen.gih			\
+	galaxy_small.gbr		\
 	pepper.gbr			\
-	pixel.gbr			\
-	\
-	Grass1.gih			\
-	vine.gih
-
+	pixel.gbr
 
 EXTRA_DIST = $(obsoletebrushdata_DATA)

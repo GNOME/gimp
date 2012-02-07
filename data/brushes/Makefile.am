@@ -8,4 +8,3 @@ SUBDIRS = \
 	Sketch			\
 	Splatters		\
 	Texture
-
