@@ -746,41 +746,6 @@ gimp_data_set_filename (GimpData    *data,
       if (! GIMP_DATA_GET_CLASS (data)->save)
         private->writable = FALSE;
     }
-
-  if (private->filename)
-    {
-      const gchar *tag_blacklist[] = { "brushes",
-                                       "dynamics",
-                                       "patterns",
-                                       "palettes",
-                                       "gradients",
-                                       "tool-presets" };
-
-      gchar   *file_path   = g_path_get_dirname (private->filename);
-      gchar   *tag_text    = g_path_get_basename (file_path);
-      gint     i           = 0;
-      gboolean blacklisted = FALSE;
-
-      for (i = 0; i <  G_N_ELEMENTS (tag_blacklist); i++)
-        {
-          if (! g_strcmp0 (tag_text, tag_blacklist[i]))
-            {
-              blacklisted = TRUE;
-            }
-        }
-
-      if (! blacklisted)
-        {
-          GimpTag *tag = gimp_tag_new (tag_text);
-
-          gimp_tag_set_internal (tag, TRUE);
-          gimp_tagged_add_tag (GIMP_TAGGED (data), tag);
-          g_object_unref (tag);
-        }
-
-      g_free (file_path);
-      g_free (tag_text);
-    }
 }
 
 /**
@@ -872,6 +837,94 @@ gimp_data_get_filename (GimpData *data)
   private = GIMP_DATA_GET_PRIVATE (data);
 
   return private->filename;
+}
+
+static const gchar *tag_blacklist[] = { "brushes",
+                                        "dynamics",
+                                        "patterns",
+                                        "palettes",
+                                        "gradients",
+                                        "tool-presets" };
+
+/**
+ * gimp_data_set_folder_tags:
+ * @data:          a #Gimpdata object.
+ * @top_directory: the top directory of the currently processed data
+ *                 hierarchy, or %NULL if that top directory is
+ *                 currently processed itself
+ *
+ * Sets tags based on all folder names below top_directory. So if the
+ * data's filename is /home/foo/.gimp/brushes/Flowers/Roses/rose.gbr,
+ * it will add "Flowers" and "Roses" tags.
+ *
+ * if the top directory (as passed, or as derived from the data's
+ * filename) does not end with one of the default data directory names
+ * (brushes, patterns etc), its name will be added as tag too.
+ **/
+void
+gimp_data_set_folder_tags (GimpData    *data,
+                           const gchar *top_directory)
+{
+  GimpDataPrivate *private;
+  gchar           *dirname;
+
+  g_return_if_fail (GIMP_IS_DATA (data));
+
+  private = GIMP_DATA_GET_PRIVATE (data);
+
+  if (private->internal)
+    return;
+
+  g_return_if_fail (private->filename != NULL);
+
+  dirname = g_path_get_dirname (private->filename);
+
+  /*  if this data is in a subfolder, walk up the hierarchy and
+   *  set each folder on the way as tag, except the top_directory
+   */
+  if (top_directory)
+    {
+      do
+        {
+          gchar   *basename = g_path_get_basename (dirname);
+          GimpTag *tag      = gimp_tag_new (basename);
+          gchar   *tmp;
+
+          gimp_tag_set_internal (tag, TRUE);
+          gimp_tagged_add_tag (GIMP_TAGGED (data), tag);
+          g_object_unref (tag);
+          g_free (basename);
+
+          tmp = g_path_get_dirname (dirname);
+          g_free (dirname);
+          dirname = tmp;
+        }
+      while (strcmp (dirname, top_directory));
+    }
+
+  if (dirname)
+    {
+      gchar *basename = g_path_get_basename (dirname);
+      gint   i;
+
+      for (i = 0; i <  G_N_ELEMENTS (tag_blacklist); i++)
+        {
+          if (! strcmp (basename, tag_blacklist[i]))
+            break;
+        }
+
+      if (i == G_N_ELEMENTS (tag_blacklist))
+        {
+          GimpTag *tag = gimp_tag_new (basename);
+
+          gimp_tag_set_internal (tag, TRUE);
+          gimp_tagged_add_tag (GIMP_TAGGED (data), tag);
+          g_object_unref (tag);
+        }
+
+      g_free (basename);
+      g_free (dirname);
+    }
 }
 
 const gchar *

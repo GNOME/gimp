@@ -91,6 +91,9 @@ void          gimp_data_create_filename  (GimpData     *data,
                                           const gchar  *dest_dir);
 const gchar * gimp_data_get_filename     (GimpData     *data);
 
+void          gimp_data_set_folder_tags  (GimpData     *data,
+                                          const gchar  *top_directory);
+
 const gchar * gimp_data_get_mime_type    (GimpData     *data);
 
 gboolean      gimp_data_is_writable      (GimpData     *data);

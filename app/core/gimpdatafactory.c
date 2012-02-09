@@ -309,6 +309,7 @@ typedef struct
   GimpDataFactory *factory;
   GimpContext     *context;
   GHashTable      *cache;
+  const gchar     *top_directory;
 } GimpDataLoadContext;
 
 static void
@@ -798,6 +799,19 @@ gimp_data_factory_load_data_recursive (const GimpDatafileData *file_data,
                                        gpointer                data)
 {
   GimpDataLoadContext *context = data;
+  gboolean             top_set = FALSE;
+
+  /*  When processing subdirectories, set the top_directory if it's
+   *  unset. This way me make sure gimp_data_set_folder_tags()'
+   *  calling convention is honored: pass NULL when processing the
+   *  toplevel directory itself, and pass the toplevel directory when
+   *  processing any folder inside.
+   */
+  if (! context->top_directory)
+    {
+      context->top_directory = file_data->dirname;
+      top_set = TRUE;
+    }
 
   gimp_datafiles_read_directories (file_data->filename, G_FILE_TEST_IS_REGULAR,
                                    gimp_data_factory_load_data, context);
@@ -805,6 +819,12 @@ gimp_data_factory_load_data_recursive (const GimpDatafileData *file_data,
   gimp_datafiles_read_directories (file_data->filename, G_FILE_TEST_IS_DIR,
                                    gimp_data_factory_load_data_recursive,
                                    context);
+
+  /*  Unset, the string is only valid within this function, and will
+   *  be set again for the next subdirectory.
+   */
+  if (top_set)
+    context->top_directory = NULL;
 }
 
 static void
@@ -893,11 +913,17 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
           gimp_data_clean (data);
 
           if (obsolete)
-            gimp_container_add (factory->priv->container_obsolete,
-                                GIMP_OBJECT (data));
+            {
+              gimp_container_add (factory->priv->container_obsolete,
+                                  GIMP_OBJECT (data));
+            }
           else
-            gimp_container_add (factory->priv->container,
-                                GIMP_OBJECT (data));
+            {
+              gimp_data_set_folder_tags (data, context->top_directory);
+
+              gimp_container_add (factory->priv->container,
+                                  GIMP_OBJECT (data));
+            }
 
           g_object_unref (data);
         }
