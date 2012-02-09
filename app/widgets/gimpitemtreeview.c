@@ -1562,14 +1562,28 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
   if (! item_view->priv->inserting_item)
     {
       GimpItemTreeViewClass *item_view_class;
+      GimpViewRenderer      *renderer;
+      GimpItem              *expanded_item;
       GimpItem              *active_item;
+
+      gtk_tree_model_get (GIMP_CONTAINER_TREE_VIEW (item_view)->model, iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
+      expanded_item = GIMP_ITEM (renderer->viewable);
+      g_object_unref (renderer);
 
       item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
       active_item = item_view_class->get_active_item (item_view->priv->image);
 
-      if (active_item)
-        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (item_view),
-                                         GIMP_VIEWABLE (active_item));
+      /*  select the active item only if it was made visible by expanding
+       *  its immediate parent. See bug #666561.
+       */
+      if (active_item &&
+          gimp_item_get_parent (active_item) == expanded_item)
+        {
+          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (item_view),
+                                           GIMP_VIEWABLE (active_item));
+        }
     }
 }
