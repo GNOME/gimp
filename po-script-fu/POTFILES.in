@@ -3,13 +3,13 @@
 
 [encoding: UTF-8]
 
+plug-ins/script-fu/script-fu.c
 plug-ins/script-fu/script-fu-console.c
 plug-ins/script-fu/script-fu-eval.c
 plug-ins/script-fu/script-fu-interface.c
 plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
 plug-ins/script-fu/script-fu-text-console.c
-plug-ins/script-fu/script-fu.c
 plug-ins/script-fu/scripts/3d-outline.scm
 plug-ins/script-fu/scripts/3dTruchet.scm
 plug-ins/script-fu/scripts/add-bevel.scm
@@ -33,8 +33,8 @@ plug-ins/script-fu/scripts/blended-logo.scm
 plug-ins/script-fu/scripts/bovinated-logo.scm
 plug-ins/script-fu/scripts/burn-in-anim.scm
 plug-ins/script-fu/scripts/camo.scm
-plug-ins/script-fu/scripts/carve-it.scm
 plug-ins/script-fu/scripts/carved-logo.scm
+plug-ins/script-fu/scripts/carve-it.scm
 plug-ins/script-fu/scripts/chalk.scm
 plug-ins/script-fu/scripts/chip-away.scm
 plug-ins/script-fu/scripts/chrome-it.scm
@@ -82,10 +82,10 @@ plug-ins/script-fu/scripts/reverse-layers.scm
 plug-ins/script-fu/scripts/ripply-anim.scm
 plug-ins/script-fu/scripts/round-corners.scm
 plug-ins/script-fu/scripts/script-fu-set-cmap.scm
+plug-ins/script-fu/scripts/selection-round.scm
 plug-ins/script-fu/scripts/select-to-brush.scm
 plug-ins/script-fu/scripts/select-to-image.scm
 plug-ins/script-fu/scripts/select-to-pattern.scm
-plug-ins/script-fu/scripts/selection-round.scm
 plug-ins/script-fu/scripts/slide.scm
 plug-ins/script-fu/scripts/sota-chrome-logo.scm
 plug-ins/script-fu/scripts/speed-text.scm
@@ -94,11 +94,12 @@ plug-ins/script-fu/scripts/spyrogimp.scm
 plug-ins/script-fu/scripts/starscape-logo.scm
 plug-ins/script-fu/scripts/swirltile.scm
 plug-ins/script-fu/scripts/swirly-pattern.scm
-plug-ins/script-fu/scripts/t-o-p-logo.scm
+plug-ins/script-fu/scripts/test-sphere.scm
 plug-ins/script-fu/scripts/text-circle.scm
 plug-ins/script-fu/scripts/textured-logo.scm
 plug-ins/script-fu/scripts/tileblur.scm
 plug-ins/script-fu/scripts/title-header.scm
+plug-ins/script-fu/scripts/t-o-p-logo.scm
 plug-ins/script-fu/scripts/truchet.scm
 plug-ins/script-fu/scripts/unsharp-mask.scm
 plug-ins/script-fu/scripts/waves-anim.scm
