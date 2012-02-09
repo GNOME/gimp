@@ -1373,7 +1373,7 @@ gimp_text_buffer_get_iter_at_index (GimpTextBuffer *buffer,
 
               if (g_list_find (buffer->kerning_tags, tag))
                 {
-                  index -= WORD_JOINER_LENGTH;
+                  index = MAX (0, index - WORD_JOINER_LENGTH);
 
                   break;
                 }
