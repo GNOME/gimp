@@ -705,6 +705,9 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
   force_output = gimp_dynamics_get_output (dynamics,
                                            GIMP_DYNAMICS_OUTPUT_FORCE);
 
+  if (!force_output)
+    return GIMP_BRUSH_SOFT;
+
   if (gimp_dynamics_output_is_enabled (force_output))
     return GIMP_BRUSH_PRESSURE;
 
