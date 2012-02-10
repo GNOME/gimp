@@ -329,7 +329,7 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
     {
       GList               *writable_list = NULL;
       gchar               *tmp;
-      GimpDataLoadContext  load_context;
+      GimpDataLoadContext  load_context = { 0, };
 
       load_context.factory = factory;
       load_context.context = context;
