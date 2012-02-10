@@ -47,7 +47,6 @@
     <xi:include href="xml/reduce-region.xml" />
     <xi:include href="xml/scale-region.xml" />
     <xi:include href="xml/subsample-region.xml" />
-    <xi:include href="xml/layer-modes.xml" />
   </part>
 
   <part id="app-composite-part">
@@ -103,7 +102,6 @@
       <xi:include href="xml/tile-private.xml" />
       <xi:include href="xml/tile-cache.xml" />
       <xi:include href="xml/tile-manager.xml" />
-      <xi:include href="xml/tile-manager-crop.xml" />
       <xi:include href="xml/tile-manager-preview.xml" />
       <xi:include href="xml/tile-manager-private.xml" />
       <xi:include href="xml/tile-pyramid.xml" />
@@ -193,6 +191,7 @@
       <xi:include href="xml/gimpdrawablestack.xml" />
       <xi:include href="xml/gimpdocumentlist.xml" />
       <xi:include href="xml/gimptoolpresets.xml" />
+      <xi:include href="xml/gimpitemtree.xml" />
       <xi:include href="xml/gimptreehandler.xml" />
     </chapter>
 
@@ -250,6 +249,10 @@
       <xi:include href="xml/gimpcurve-map.xml" />
       <xi:include href="xml/gimpcurve-load.xml" />
       <xi:include href="xml/gimpcurve-save.xml" />
+      <xi:include href="xml/gimpdynamics.xml" />
+      <xi:include href="xml/gimpdynamics-load.xml" />
+      <xi:include href="xml/gimpdynamics-save.xml" />
+      <xi:include href="xml/gimpdynamicsoutput.xml" />
       <xi:include href="xml/gimpgradient.xml" />
       <xi:include href="xml/gimpgradient-load.xml" />
       <xi:include href="xml/gimpgradient-save.xml" />
@@ -260,6 +263,9 @@
       <xi:include href="xml/gimppattern-header.xml" />
       <xi:include href="xml/gimppattern-load.xml" />
       <xi:include href="xml/gimppatternclipboard.xml" />
+      <xi:include href="xml/gimptoolpreset.xml" />
+      <xi:include href="xml/gimptoolpreset-load.xml" />
+      <xi:include href="xml/gimptoolpreset-save.xml" />
     </chapter>
 
     <chapter id="app-core-drawable">
@@ -427,6 +433,7 @@
       <title>The GimpVectors Objects</title>
       <xi:include href="xml/vectors-types.xml" />
       <xi:include href="xml/gimpanchor.xml" />
+      <xi:include href="xml/gimpbezierdesc.xml" />
       <xi:include href="xml/gimpbezierstroke.xml" />
       <xi:include href="xml/gimpstroke.xml" />
       <xi:include href="xml/gimpstroke-new.xml" />
@@ -578,7 +585,6 @@
       <title>Initialization &amp; Font Management</title>
       <xi:include href="xml/gimp-fonts.xml" />
       <xi:include href="xml/gimpfont.xml" />
-      <xi:include href="xml/gimpfont-utils.xml" />
       <xi:include href="xml/gimpfontlist.xml" />
     </chapter>
 
@@ -610,6 +616,11 @@
     <title>Display</title>
     <xi:include href="xml/display-enums.xml" />
 
+    <chapter id="app-image-window">
+      <title>The GimpImageWindow Widget</title>
+      <xi:include href="xml/gimpimagewindow.xml" />
+    </chapter>
+
     <chapter id="app-display-display">
       <title>The GimpDisplay Object</title>
       <xi:include href="xml/gimpdisplay.xml" />
@@ -624,17 +635,17 @@
       <xi:include href="xml/gimpdisplayshell.xml" />
       <xi:include href="xml/gimpdisplayshell-appearance.xml" />
       <xi:include href="xml/gimpdisplayshell-callbacks.xml" />
+      <xi:include href="xml/gimpdisplayshell-tool-events.xml" />
       <xi:include href="xml/gimpdisplayshell-close.xml" />
-      <xi:include href="xml/gimpdisplayshell-coords.xml" />
       <xi:include href="xml/gimpdisplayshell-cursor.xml" />
       <xi:include href="xml/gimpdisplayshell-dnd.xml" />
       <xi:include href="xml/gimpdisplayshell-draw.xml" />
+      <xi:include href="xml/gimpdisplayshell-expose.xml" />
       <xi:include href="xml/gimpdisplayshell-filter-dialog.xml" />
       <xi:include href="xml/gimpdisplayshell-filter.xml" />
       <xi:include href="xml/gimpdisplayshell-handlers.xml" />
       <xi:include href="xml/gimpdisplayshell-icon.xml" />
       <xi:include href="xml/gimpdisplayshell-layer-select.xml" />
-      <xi:include href="xml/gimpdisplayshell-preview.xml" />
       <xi:include href="xml/gimpdisplayshell-render.xml" />
       <xi:include href="xml/gimpdisplayshell-scale.xml" />
       <xi:include href="xml/gimpdisplayshell-scale-dialog.xml" />
@@ -667,8 +678,11 @@
       <xi:include href="xml/gimpcanvasprogress.xml" />
       <xi:include href="xml/gimpcanvasproxygroup.xml" />
       <xi:include href="xml/gimpcanvasrectangle.xml" />
+      <xi:include href="xml/gimpcanvasrectangleguides.xml" />
       <xi:include href="xml/gimpcanvassamplepoint.xml" />
       <xi:include href="xml/gimpcanvastextcursor.xml" />
+      <xi:include href="xml/gimpcanvasgransformguides.xml" />
+      <xi:include href="xml/gimpcanvasgransformpreview.xml" />
     </chapter>
 
     <chapter id="app-display-utils">
@@ -799,6 +813,7 @@
       <xi:include href="xml/gimprectangletool.xml" />
       <xi:include href="xml/gimprectangleoptions.xml" />
       <xi:include href="xml/gimptexttool.xml" />
+      <xi:include href="xml/gimptexttool-editor.xml" />
       <xi:include href="xml/gimptextoptions.xml" />
       <xi:include href="xml/gimpvectortool.xml" />
       <xi:include href="xml/gimpvectoroptions.xml" />
@@ -823,6 +838,7 @@
     <chapter id="app-widgets-devices">
       <title>Input Device Management</title>
       <xi:include href="xml/gimpdevices.xml" />
+      <xi:include href="xml/gimpdevicemanager.xml" />
       <xi:include href="xml/gimpdeviceinfo.xml" />
     </chapter>
 
@@ -833,6 +849,7 @@
       <xi:include href="xml/gimpcontrollerlist.xml" />
       <xi:include href="xml/gimpcontrollerinfo.xml" />
       <xi:include href="xml/gimpcontrollerkeyboard.xml" />
+      <xi:include href="xml/gimpcontrollermouse.xml" />
       <xi:include href="xml/gimpcontrollerwheel.xml" />
     </chapter>
 
@@ -845,6 +862,9 @@
       <title>Dock Windows &amp; Widgets</title>
       <xi:include href="xml/gimpwindow.xml" />
       <xi:include href="xml/gimpdockwindow.xml" />
+      <xi:include href="xml/gimppanedbox.xml" />
+      <xi:include href="xml/gimpdockcolumns.xml" />
+      <xi:include href="xml/gimpdockcontainer.xml" />
       <xi:include href="xml/gimpdock.xml" />
       <xi:include href="xml/gimpmenudock.xml" />
       <xi:include href="xml/gimptoolbox.xml" />
@@ -852,7 +872,6 @@
       <xi:include href="xml/gimptoolbox-color-area.xml" />
       <xi:include href="xml/gimptoolbox-image-area.xml" />
       <xi:include href="xml/gimptoolbox-indicator-area.xml" />
-      <xi:include href="xml/gimpdockseparator.xml" />
       <xi:include href="xml/gimpdockbook.xml" />
       <xi:include href="xml/gimpdockable.xml" />
       <xi:include href="xml/gimpdocked.xml" />
@@ -956,8 +975,6 @@
       <xi:include href="xml/gimpmessagedialog.xml" />
       <xi:include href="xml/gimpprofilechooserdialog.xml" />
       <xi:include href="xml/gimpprogressdialog.xml" />
-      <xi:include href="xml/gimptexteditor.xml" />
-      <xi:include href="xml/gimptextproxy.xml" />
       <xi:include href="xml/gimptooldialog.xml" />
       <xi:include href="xml/gimpviewabledialog.xml" />
     </chapter>
@@ -970,6 +987,16 @@
       <xi:include href="xml/gimpgradientselect.xml" />
       <xi:include href="xml/gimppaletteselect.xml" />
       <xi:include href="xml/gimppatternselect.xml" />
+    </chapter>
+
+    <chapter id="app-widgets-text-editing">
+      <title>Misc. Dialogs</title>
+      <xi:include href="xml/gimptextbuffer.xml" />
+      <xi:include href="xml/gimptextbuffer-serialize.xml" />
+      <xi:include href="xml/gimptexteditor.xml" />
+      <xi:include href="xml/gimptextproxy.xml" />
+      <xi:include href="xml/gimptextstyleeditor.xml" />
+      <xi:include href="xml/gimptexttag.xml" />
     </chapter>
 
     <chapter id="app-widgets-misc-widgets">
@@ -1044,8 +1071,6 @@
 
     <chapter id="app-widgets-constructors">
       <title>Convenience Constructors</title>
-      <xi:include href="xml/gimpunitstore.xml" />
-      <xi:include href="xml/gimpunitcombobox.xml" />
       <xi:include href="xml/gimpscalecombobox.xml" />
       <xi:include href="xml/gimppropwidgets.xml" />
       <xi:include href="xml/gimpwidgets-constructors.xml" />
@@ -1079,7 +1104,6 @@
       <title>Stuff that Should not be here</title>
       <xi:include href="xml/gtkwrapbox.xml" />
       <xi:include href="xml/gtkhwrapbox.xml" />
-      <xi:include href="xml/gtkvwrapbox.xml" />
     </chapter>
   </part>
 

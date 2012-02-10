@@ -515,7 +515,6 @@ gimp_threads_leave
 gimp_get_empty_display
 gimp_get_display_by_ID
 gimp_get_display_ID
-gimp_get_display_window
 gimp_create_display
 gimp_delete_display
 gimp_reconnect_displays
@@ -554,7 +553,6 @@ gimp_edit_cut
 gimp_edit_copy
 gimp_edit_copy_visible
 gimp_edit_paste
-gimp_edit_paste_as_new
 gimp_edit_named_cut
 gimp_edit_named_copy
 gimp_edit_named_copy_visible
@@ -635,7 +633,6 @@ gimp_parameters_append_valist
 gimp_parameters_free
 gimp_value_array_truncate
 gimp_get_temp_filename
-gimp_container_get_neighbor_of_active
 GIMP_CONSTRAIN_LINE_90_DEGREES
 GIMP_CONSTRAIN_LINE_45_DEGREES
 GIMP_CONSTRAIN_LINE_15_DEGREES
@@ -679,7 +676,6 @@ gimp_brush_get_mask
 gimp_brush_get_pixmap
 gimp_brush_get_spacing
 gimp_brush_set_spacing
-gimp_brush_spacing_changed
 <SUBSECTION Standard>
 GimpBrushClass
 GIMP_BRUSH
@@ -792,6 +788,57 @@ gimp_brush_pipe_get_type
 GIMP_BRUSH_PIPE_CLASS
 GIMP_IS_BRUSH_PIPE_CLASS
 GIMP_BRUSH_PIPE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpdynamics</FILE>
+<TITLE>GimpDynamics</TITLE>
+GimpDynamics
+GimpDynamicsClass
+gimp_dynamics_get_output
+gimp_dynamics_get_standard
+gimp_dynamics_new
+<SUBSECTION Standard>
+GIMP_DYNAMICS
+GIMP_DYNAMICS_CLASS
+GIMP_DYNAMICS_GET_CLASS
+GIMP_IS_DYNAMICS
+GIMP_IS_DYNAMICS_CLASS
+GIMP_TYPE_DYNAMICS
+gimp_dynamics_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimpdynamics-load</FILE>
+<TITLE>GimpDynamics-load</TITLE>
+GIMP_DYNAMICS_FILE_EXTENSION
+gimp_dynamics_load
+</SECTION>
+
+<SECTION>
+<FILE>gimpdynamics-save</FILE>
+<TITLE>GimpDynamics-save</TITLE>
+gimp_dynamics_save
+</SECTION>
+
+<SECTION>
+<FILE>gimpdynamicsoutput</FILE>
+<TITLE>GimpDynamicsOutput</TITLE>
+GimpDynamicsOutput
+GimpDynamicsOutputClass
+gimp_dynamics_output_new
+gimp_dynamics_output_is_enabled
+gimp_dynamics_output_get_linear_value
+gimp_dynamics_output_get_angular_value
+gimp_dynamics_output_get_aspect_value
+<SUBSECTION Standard>
+GIMP_DYNAMICS_OUTPUT
+GIMP_DYNAMICS_OUTPUT_CLASS
+GIMP_DYNAMICS_OUTPUT_GET_CLASS
+GIMP_IS_DYNAMICS_OUTPUT
+GIMP_IS_DYNAMICS_OUTPUT_CLASS
+GIMP_TYPE_DYNAMICS_OUTPUT
+gimp_dynamics_output_get_type
 </SECTION>
 
 <SECTION>
@@ -1136,7 +1183,6 @@ gimp_data_get_mime_type
 gimp_data_duplicate
 gimp_data_make_internal
 gimp_data_compare
-gimp_data_name_compare
 GIMP_DATA_ERROR
 gimp_data_error_quark
 <SUBSECTION Standard>
@@ -1206,7 +1252,6 @@ GIMP_IS_DOCUMENT_LIST_CLASS
 GimpDrawable
 GimpDrawablePrivate
 gimp_drawable_estimate_memsize
-gimp_drawable_configure
 gimp_drawable_update
 gimp_drawable_alpha_changed
 gimp_drawable_invalidate_boundary
@@ -1225,21 +1270,16 @@ gimp_drawable_swap_pixels
 gimp_drawable_push_undo
 gimp_drawable_fill
 gimp_drawable_fill_by_type
-gimp_drawable_mask_bounds
-gimp_drawable_mask_intersect
 gimp_drawable_has_alpha
-gimp_drawable_has_floating_sel
 gimp_drawable_type
 gimp_drawable_type_with_alpha
 gimp_drawable_type_without_alpha
 gimp_drawable_is_rgb
 gimp_drawable_is_gray
 gimp_drawable_is_indexed
-gimp_drawable_is_text_layer
 gimp_drawable_bytes
 gimp_drawable_bytes_with_alpha
 gimp_drawable_bytes_without_alpha
-gimp_drawable_has_floating_sel
 gimp_drawable_get_colormap
 gimp_drawable_attach_floating_sel
 gimp_drawable_detach_floating_sel
@@ -1640,12 +1680,9 @@ gimp_image_get_component_visible
 gimp_image_mode_changed
 gimp_image_alpha_changed
 gimp_image_invalidate
-gimp_image_update_guide
-gimp_image_update_sample_point
 gimp_image_sample_point_added
 gimp_image_sample_point_removed
 gimp_image_colormap_changed
-gimp_image_selection_control
 gimp_image_quick_mask_changed
 gimp_image_size_changed_detailed
 gimp_image_undo_is_enabled
@@ -1705,25 +1742,10 @@ gimp_image_get_vectors_by_name
 gimp_image_add_layer
 gimp_image_add_layers
 gimp_image_remove_layer
-gimp_image_raise_layer
-gimp_image_lower_layer
-gimp_image_raise_layer_to_top
-gimp_image_lower_layer_to_bottom
-gimp_image_reorder_layer
 gimp_image_add_channel
 gimp_image_remove_channel
-gimp_image_raise_channel
-gimp_image_lower_channel
-gimp_image_raise_channel_to_top
-gimp_image_lower_channel_to_bottom
-gimp_image_reorder_channel
 gimp_image_add_vectors
 gimp_image_remove_vectors
-gimp_image_raise_vectors
-gimp_image_lower_vectors
-gimp_image_raise_vectors_to_top
-gimp_image_lower_vectors_to_bottom
-gimp_image_reorder_vectors
 gimp_image_pick_layer
 gimp_image_coords_in_active_pickable
 gimp_image_invalidate_previews
@@ -1743,6 +1765,8 @@ GIMP_IMAGE_GET_CLASS
 <TITLE>GimpImagefile</TITLE>
 GimpImagefile
 gimp_imagefile_new
+gimp_imagefile_get_thumbnail
+gimp_imagefile_get_gicon
 gimp_imagefile_set_mime_type
 gimp_imagefile_update
 gimp_imagefile_check_thumbnail
@@ -1829,7 +1853,6 @@ gimp_item_get_container
 gimp_item_get_container_iter
 gimp_item_get_index
 gimp_item_get_path
-gimp_item_configure
 gimp_item_duplicate
 gimp_item_convert
 gimp_item_rename
@@ -1912,7 +1935,6 @@ gimp_layer_apply_mask
 gimp_layer_add_alpha
 gimp_layer_flatten
 gimp_layer_resize_to_image
-gimp_layer_boundary
 gimp_layer_get_mask
 gimp_layer_get_floating_sel_drawable
 gimp_layer_set_floating_sel_drawable
@@ -2031,6 +2053,29 @@ GIMP_LIST_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpitemtree</FILE>
+<TITLE>GimpItemTree</TITLE>
+GimpItemTree
+GimpItemTreeClass
+gimp_item_tree_add_item
+gimp_item_tree_get_active_item
+gimp_item_tree_get_insert_pos
+gimp_item_tree_get_item_by_name
+gimp_item_tree_new
+gimp_item_tree_remove_item
+gimp_item_tree_rename_item
+gimp_item_tree_reorder_item
+gimp_item_tree_set_active_item
+<SUBSECTION Standard>
+GIMP_IS_ITEM_TREE
+GIMP_IS_ITEM_TREE_CLASS
+GIMP_ITEM_TREE
+GIMP_ITEM_TREE_CLASS
+GIMP_TYPE_ITEM_TREE
+gimp_item_tree_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gimpitemstack</FILE>
 <TITLE>GimpItemStack</TITLE>
 GimpItemStack
@@ -2040,7 +2085,6 @@ gimp_item_stack_is_flat
 gimp_item_stack_get_item_iter
 gimp_item_stack_get_item_list
 gimp_item_stack_get_item_by_tattoo
-gimp_item_stack_get_item_by_name
 gimp_item_stack_get_parent_by_path
 gimp_item_stack_invalidate_previews
 <SUBSECTION Standard>
@@ -2245,7 +2289,6 @@ gimp_progress_set_text
 gimp_progress_set_value
 gimp_progress_get_value
 gimp_progress_pulse
-gimp_progress_get_window
 gimp_progress_message
 gimp_progress_cancel
 gimp_progress_update_and_flush
@@ -2436,7 +2479,16 @@ GIMP_DEFAULT_IMAGE_HEIGHT
 GimpTemplate
 gimp_template_new
 gimp_template_set_from_image
-gimp_template_create_image
+gimp_template_get_width
+gimp_template_get_height
+gimp_template_get_unit
+gimp_template_get_resolution_x
+gimp_template_get_resolution_y
+gimp_template_get_resolution_unit
+gimp_template_get_image_type
+gimp_template_get_fill_type
+gimp_template_get_comment
+gimp_template_get_initial_size
 <SUBSECTION Standard>
 GimpTemplateClass
 GIMP_TEMPLATE
@@ -2484,6 +2536,16 @@ GIMP_FILL_OPTIONS_GET_CLASS
 <TITLE>GimpStrokeOptions</TITLE>
 GimpStrokeOptions
 gimp_stroke_options_new
+gimp_stroke_options_get_method
+gimp_stroke_options_get_width
+gimp_stroke_options_get_unit
+gimp_stroke_options_get_cap_style
+gimp_stroke_options_get_join_style
+gimp_stroke_options_get_miter_limit
+gimp_stroke_options_get_dash_offset
+gimp_stroke_options_get_dash_info
+gimp_stroke_options_get_paint_options
+gimp_stroke_options_get_emulate_dynamics
 gimp_stroke_options_take_dash_pattern
 gimp_stroke_options_prepare
 gimp_stroke_options_finish
@@ -2538,22 +2600,33 @@ GIMP_TOOL_OPTIONS_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimptoolpresets</FILE>
-<TITLE>GimpToolPresets</TITLE>
-GimpToolPresets
-gimp_tool_presets_new
-gimp_tool_presets_get_options
-gimp_tool_presets_save
-gimp_tool_presets_load
+<FILE>gimptoolpreset</FILE>
+<TITLE>GimpToolPreset</TITLE>
+GimpToolPreset
+GimpToolPresetClass
+gimp_tool_preset_get_prop_mask
+gimp_tool_preset_new
 <SUBSECTION Standard>
-GimpToolPresetsClass
-GIMP_TOOL_PRESETS
-GIMP_IS_TOOL_PRESETS
-GIMP_TYPE_TOOL_PRESETS
-gimp_tool_presets_get_type
-GIMP_TOOL_PRESETS_CLASS
-GIMP_IS_TOOL_PRESETS_CLASS
-GIMP_TOOL_PRESETS_GET_CLASS
+GIMP_IS_TOOL_PRESET
+GIMP_IS_TOOL_PRESET_CLASS
+GIMP_TOOL_PRESET
+GIMP_TOOL_PRESET_CLASS
+GIMP_TOOL_PRESET_GET_CLASS
+GIMP_TYPE_TOOL_PRESET
+gimp_tool_preset_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimptoolpreset-load</FILE>
+<TITLE>GimpToolPreset-load</TITLE>
+GIMP_TOOL_PRESET_FILE_EXTENSION
+gimp_tool_preset_load
+</SECTION>
+
+<SECTION>
+<FILE>gimptoolpreset-save</FILE>
+<TITLE>GimpToolPreset-save</TITLE>
+gimp_tool_preset_save
 </SECTION>
 
 <SECTION>
@@ -2603,12 +2676,12 @@ GIMP_UNDO_STACK_GET_CLASS
 
 <SECTION>
 <FILE>gimpviewable</FILE>
+<TITLE>GimpViewable</TITLE>
 GIMP_VIEWABLE_MAX_BUTTON_SIZE
 GIMP_VIEWABLE_MAX_MENU_SIZE
 GIMP_VIEWABLE_MAX_PREVIEW_SIZE
 GIMP_VIEWABLE_MAX_POPUP_SIZE
 GIMP_VIEWABLE_PRIORITY_IDLE
-<TITLE>GimpViewable</TITLE>
 GimpViewable
 gimp_viewable_invalidate_preview
 gimp_viewable_size_changed
@@ -2631,6 +2704,8 @@ gimp_viewable_preview_is_frozen
 gimp_viewable_get_parent
 gimp_viewable_set_parent
 gimp_viewable_get_children
+gimp_viewable_get_expanded
+gimp_viewable_set_expanded
 gimp_viewable_is_ancestor
 <SUBSECTION Standard>
 GimpViewableClass
@@ -2939,7 +3014,7 @@ GIMP_CANVAS_PATH_GET_CLASS
 GimpCanvasCursor
 GimpCanvasCursorClass
 gimp_canvas_cursor_new
-gimp_canvas_cursor_set_coords
+gimp_canvas_cursor_set
 <SUBSECTION Standard>
 GIMP_CANVAS_CURSOR
 GIMP_IS_CANVAS_CURSOR
@@ -2964,6 +3039,23 @@ gimp_canvas_rectangle_get_type
 GIMP_CANVAS_RECTANGLE_CLASS
 GIMP_IS_CANVAS_RECTANGLE_CLASS
 GIMP_CANVAS_RECTANGLE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcanvasrectangleguides</FILE>
+<TITLE>GimpCanvasRectangleGuides</TITLE>
+GimpCanvasRectangleGuides
+GimpCanvasRectangleGuidesClass
+gimp_canvas_rectangle_guides_new
+gimp_canvas_rectangle_guides_set
+<SUBSECTION Standard>
+GIMP_CANVAS_RECTANGLE_GUIDES
+GIMP_CANVAS_RECTANGLE_GUIDES_CLASS
+GIMP_CANVAS_RECTANGLE_GUIDES_GET_CLASS
+GIMP_IS_CANVAS_RECTANGLE_GUIDES
+GIMP_IS_CANVAS_RECTANGLE_GUIDES_CLASS
+GIMP_TYPE_CANVAS_RECTANGLE_GUIDES
+gimp_canvas_rectangle_guides_get_type
 </SECTION>
 
 <SECTION>
@@ -3236,6 +3328,39 @@ GIMP_CANVAS_TEXT_CURSOR_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcanvastransformguides</FILE>
+<TITLE>GimpCanvasTransformGuides</TITLE>
+GimpCanvasTransformGuides
+GimpCanvasTransformGuidesClass
+gimp_canvas_transform_guides_new
+gimp_canvas_transform_guides_set
+<SUBSECTION Standard>
+GIMP_CANVAS_TRANSFORM_GUIDES
+GIMP_CANVAS_TRANSFORM_GUIDES_CLASS
+GIMP_CANVAS_TRANSFORM_GUIDES_GET_CLASS
+GIMP_IS_CANVAS_TRANSFORM_GUIDES
+GIMP_IS_CANVAS_TRANSFORM_GUIDES_CLASS
+GIMP_TYPE_CANVAS_TRANSFORM_GUIDES
+gimp_canvas_transform_guides_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimpcanvastransformpreview</FILE>
+<TITLE>GimpCanvasTransformPreview</TITLE>
+GimpCanvasTransformPreview
+GimpCanvasTransformPreviewClass
+gimp_canvas_transform_preview_new
+<SUBSECTION Standard>
+GIMP_CANVAS_TRANSFORM_PREVIEW
+GIMP_CANVAS_TRANSFORM_PREVIEW_CLASS
+GIMP_CANVAS_TRANSFORM_PREVIEW_GET_CLASS
+GIMP_IS_CANVAS_TRANSFORM_PREVIEW
+GIMP_IS_CANVAS_TRANSFORM_PREVIEW_CLASS
+GIMP_TYPE_CANVAS_TRANSFORM_PREVIEW
+gimp_canvas_transform_preview_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gimpcanvasboundary</FILE>
 <TITLE>GimpCanvasBoundary</TITLE>
 GimpCanvasBoundary
@@ -3349,20 +3474,53 @@ GIMP_DISPLAY_OPTIONS_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpimagewindow</FILE>
+<TITLE>GimpImageWindow</TITLE>
+GimpImageWindow
+GimpImageWindowClass
+gimp_image_window_add_shell
+gimp_image_window_destroy
+gimp_image_window_get_active_shell
+gimp_image_window_get_default_dockbook
+gimp_image_window_get_fullscreen
+gimp_image_window_get_left_docks
+gimp_image_window_get_n_shells
+gimp_image_window_get_right_docks
+gimp_image_window_get_shell
+gimp_image_window_get_show_menubar
+gimp_image_window_get_show_statusbar
+gimp_image_window_get_ui_manager
+gimp_image_window_has_toolbox
+gimp_image_window_is_iconified
+gimp_image_window_keep_canvas_pos
+gimp_image_window_new
+gimp_image_window_remove_shell
+gimp_image_window_set_active_shell
+gimp_image_window_set_fullscreen
+gimp_image_window_set_show_menubar
+gimp_image_window_set_show_statusbar
+gimp_image_window_shrink_wrap
+<SUBSECTION Standard>
+GIMP_IMAGE_WINDOW
+GIMP_IMAGE_WINDOW_CLASS
+GIMP_IMAGE_WINDOW_GET_CLASS
+GIMP_IS_IMAGE_WINDOW
+GIMP_IS_IMAGE_WINDOW_CLASS
+GIMP_TYPE_IMAGE_WINDOW
+gimp_image_window_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gimpdisplayshell</FILE>
 <TITLE>GimpDisplayShell</TITLE>
 PROJ_ROUND
 PROJ_ROUND64
-SCREEN_XRES
-SCREEN_YRES
 SCALEX
 SCALEY
 UNSCALEX
 UNSCALEY
 FUNSCALEX
 FUNSCALEY
-GIMP_DISPLAY_RENDER_BUF_WIDTH
-GIMP_DISPLAY_RENDER_BUF_HEIGHT
 GimpDisplayShell
 gimp_display_shell_new
 gimp_display_shell_reconnect
@@ -3375,15 +3533,9 @@ gimp_display_shell_get_unit
 gimp_display_shell_set_unit
 gimp_display_shell_snap_coords
 gimp_display_shell_mask_bounds
-gimp_display_shell_expose_area
-gimp_display_shell_expose_guide
-gimp_display_shell_expose_sample_point
-gimp_display_shell_expose_full
 gimp_display_shell_flush
 gimp_display_shell_pause
 gimp_display_shell_resume
-gimp_display_shell_update_icon
-gimp_display_shell_shrink_wrap
 gimp_display_shell_set_highlight
 gimp_display_shell_set_mask
 <SUBSECTION Standard>
@@ -3401,14 +3553,10 @@ GIMP_DISPLAY_SHELL_GET_CLASS
 <FILE>gimpdisplayshell-appearance</FILE>
 <TITLE>GimpDisplayShell-appearance</TITLE>
 gimp_display_shell_appearance_update
-gimp_display_shell_set_fullscreen
-gimp_display_shell_get_fullscreen
 gimp_display_shell_set_show_selection
 gimp_display_shell_get_show_selection
 gimp_display_shell_set_show_layer
 gimp_display_shell_get_show_layer
-gimp_display_shell_set_show_transform
-gimp_display_shell_get_show_transform
 gimp_display_shell_set_show_grid
 gimp_display_shell_get_show_grid
 gimp_display_shell_set_show_guides
@@ -3438,28 +3586,25 @@ gimp_display_shell_get_padding
 <SECTION>
 <FILE>gimpdisplayshell-callbacks</FILE>
 <TITLE>GimpDisplayShell-callbacks</TITLE>
-gimp_display_shell_events
 gimp_display_shell_canvas_realize
 gimp_display_shell_canvas_size_allocate
 gimp_display_shell_canvas_expose
-gimp_display_shell_canvas_tool_events
-gimp_display_shell_hruler_button_press
-gimp_display_shell_vruler_button_press
+gimp_display_shell_canvas_expose_after
+gimp_display_shell_navigation_button_press
 gimp_display_shell_origin_button_press
 gimp_display_shell_quick_mask_button_press
 gimp_display_shell_quick_mask_toggled
-gimp_display_shell_nav_button_press
 </SECTION>
 
 <SECTION>
-<FILE>gimpdisplayshell-coords</FILE>
-<TITLE>GimpDisplayShell-coords</TITLE>
-gimp_display_shell_get_event_coords
-gimp_display_shell_get_device_coords
-gimp_display_shell_get_time_coords
-gimp_display_shell_get_event_state
-gimp_display_shell_get_device_state
-gimp_display_shell_eval_event
+<FILE>gimpdisplayshell-tool-events</FILE>
+<TITLE>GimpDisplayShell-tool-events</TITLE>
+gimp_display_shell_events
+gimp_display_shell_canvas_tool_events
+gimp_display_shell_buffer_hover
+gimp_display_shell_buffer_stroke
+gimp_display_shell_hruler_button_press
+gimp_display_shell_vruler_button_press
 </SECTION>
 
 <SECTION>
@@ -3475,8 +3620,6 @@ gimp_display_shell_set_cursor
 gimp_display_shell_unset_cursor
 gimp_display_shell_set_override_cursor
 gimp_display_shell_unset_override_cursor
-gimp_display_shell_update_cursor
-gimp_display_shell_clear_cursor
 </SECTION>
 
 <SECTION>
@@ -3488,16 +3631,20 @@ gimp_display_shell_dnd_init
 <SECTION>
 <FILE>gimpdisplayshell-draw</FILE>
 <TITLE>GimpDisplayShell-draw</TITLE>
-gimp_display_shell_draw_guide
-gimp_display_shell_draw_guides
-gimp_display_shell_draw_grid
-gimp_display_shell_draw_pen
-gimp_display_shell_draw_sample_point
-gimp_display_shell_draw_sample_points
-gimp_display_shell_draw_vector
-gimp_display_shell_draw_vectors
-gimp_display_shell_draw_cursor
-gimp_display_shell_draw_area
+gimp_display_shell_draw_checkerboard
+gimp_display_shell_draw_get_scaled_image_size
+gimp_display_shell_draw_get_scaled_image_size_for_scale
+gimp_display_shell_draw_image
+gimp_display_shell_draw_selection_in
+gimp_display_shell_draw_selection_out
+</SECTION>
+
+<SECTION>
+<FILE>gimpdisplayshell-expose</FILE>
+<TITLE>GimpDisplayShell-expose</TITLE>
+gimp_display_shell_expose_area
+gimp_display_shell_expose_full
+gimp_display_shell_expose_region
 </SECTION>
 
 <SECTION>
@@ -3524,8 +3671,6 @@ gimp_display_shell_disconnect
 <FILE>gimpdisplayshell-icon</FILE>
 <TITLE>GimpDisplayShell-icon</TITLE>
 gimp_display_shell_icon_update
-gimp_display_shell_icon_idle_update
-gimp_display_shell_icon_idle_stop
 </SECTION>
 
 <SECTION>
@@ -3535,16 +3680,10 @@ gimp_display_shell_layer_select_init
 </SECTION>
 
 <SECTION>
-<FILE>gimpdisplayshell-preview</FILE>
-<TITLE>GimpDisplayShell-preview</TITLE>
-gimp_display_shell_preview_transform
-</SECTION>
-
-<SECTION>
 <FILE>gimpdisplayshell-render</FILE>
 <TITLE>GimpDisplayShell-render</TITLE>
-gimp_display_shell_render_init
-gimp_display_shell_render_exit
+GIMP_DISPLAY_RENDER_BUF_WIDTH
+GIMP_DISPLAY_RENDER_BUF_HEIGHT
 gimp_display_shell_render
 </SECTION>
 
@@ -3606,15 +3745,16 @@ gimp_display_shell_autoscroll_stop
 Selection
 gimp_display_shell_selection_init
 gimp_display_shell_selection_free
-gimp_display_shell_selection_control
-gimp_display_shell_selection_set_hidden
-gimp_display_shell_selection_layer_set_hidden
+gimp_display_shell_selection_pause
+gimp_display_shell_selection_resume
+gimp_display_shell_selection_restart
+gimp_display_shell_selection_set_show
+gimp_display_shell_selection_undraw
 </SECTION>
 
 <SECTION>
 <FILE>gimpdisplayshell-title</FILE>
 <TITLE>GimpDisplayShell-title</TITLE>
-gimp_display_shell_title_init
 gimp_display_shell_title_update
 </SECTION>
 
@@ -3622,15 +3762,11 @@ gimp_display_shell_title_update
 <FILE>gimpdisplayshell-progress</FILE>
 <TITLE>GimpDisplayShell-progress</TITLE>
 gimp_display_shell_progress_iface_init
-gimp_display_shell_progress_window_state_changed
 </SECTION>
 
 <SECTION>
 <FILE>gimpdisplayshell-transform</FILE>
 <TITLE>GimpDisplayShell-transform</TITLE>
-gimp_display_shell_transform_coordinate
-gimp_display_shell_untransform_coordinate
-gimp_display_shell_transform_points
 gimp_display_shell_transform_segments
 gimp_display_shell_transform_coords
 gimp_display_shell_transform_xy
@@ -3920,17 +4056,18 @@ GIMP_PAINT_CORE_UNDO_GET_CLASS
 
 <SECTION>
 <FILE>gimpbrushcore</FILE>
+<TITLE>GimpBrushCore</TITLE>
 BRUSH_CORE_SUBSAMPLE
 BRUSH_CORE_SOLID_SUBSAMPLE
 BRUSH_CORE_JITTER_LUTSIZE
-<TITLE>GimpBrushCore</TITLE>
 GimpBrushCore
 gimp_brush_core_set_brush
-gimp_brush_core_create_bound_segs
+gimp_brush_core_set_dynamics
 gimp_brush_core_paste_canvas
 gimp_brush_core_replace_canvas
 gimp_brush_core_color_area_with_pixmap
 gimp_brush_core_get_brush_mask
+gimp_brush_core_eval_transform_dynamics
 <SUBSECTION Standard>
 GimpBrushCoreClass
 GIMP_BRUSH_CORE
@@ -4047,26 +4184,17 @@ GIMP_INK_OPTIONS_GET_CLASS
 
 <SECTION>
 <FILE>gimppaintoptions</FILE>
+<TITLE>GimpPaintOptions</TITLE>
 GIMP_PAINT_OPTIONS_CONTEXT_MASK
-GimpDynamicOptions
 GimpFadeOptions
 GimpGradientOptions
 GimpJitterOptions
-<TITLE>GimpPaintOptions</TITLE>
 GimpPaintOptions
 gimp_paint_options_new
 gimp_paint_options_get_fade
 gimp_paint_options_get_gradient_color
 gimp_paint_options_get_jitter
 gimp_paint_options_get_brush_mode
-gimp_paint_options_get_dynamic_color
-gimp_paint_options_get_dynamic_hardness
-gimp_paint_options_get_dynamic_opacity
-gimp_paint_options_get_dynamic_rate
-gimp_paint_options_get_dynamic_size
-gimp_paint_options_get_dynamic_aspect_ratio
-gimp_paint_options_get_dynamic_angle
-gimp_paint_options_get_dynamic_hardness
 <SUBSECTION Standard>
 GimpPaintOptionsClass
 GIMP_PAINT_OPTIONS
@@ -4201,9 +4329,6 @@ gimp_fonts_reset
 <TITLE>GimpFilteredContainer</TITLE>
 GimpFilteredContainer
 gimp_filtered_container_new
-gimp_filtered_container_get_filter
-gimp_filtered_container_set_filter
-gimp_filtered_container_get_tag_count
 <SUBSECTION Standard>
 GimpFilteredContainerClass
 GIMP_FILTERED_CONTAINER
@@ -4417,7 +4542,6 @@ GIMP_ALIGN_OPTIONS_GET_CLASS
 GimpAlignTool
 GimpAlignToolFunction
 gimp_align_tool_register
-ALIGN_TOOL_NUM_BUTTONS
 <SUBSECTION Standard>
 GimpAlignToolClass
 GIMP_ALIGN_TOOL
@@ -4466,7 +4590,7 @@ GIMP_BLEND_TOOL_GET_CLASS
 <FILE>gimpbrushtool</FILE>
 <TITLE>GimpBrushTool</TITLE>
 GimpBrushTool
-gimp_brush_tool_draw_brush
+gimp_brush_tool_create_outline
 <SUBSECTION Standard>
 GimpBrushToolClass
 GIMP_BRUSH_TOOL
@@ -4784,27 +4908,29 @@ gimp_draw_tool_stop
 gimp_draw_tool_is_active
 gimp_draw_tool_pause
 gimp_draw_tool_resume
-gimp_draw_tool_is_drawn
-gimp_draw_tool_set_vectors
-gimp_draw_tool_set_transform
 gimp_draw_tool_calc_distance
 gimp_draw_tool_calc_distance_square
-gimp_draw_tool_in_radius
-gimp_draw_tool_set_clip_rect
-gimp_draw_tool_draw_line
-gimp_draw_tool_draw_dashed_line
-gimp_draw_tool_draw_guide_line
-gimp_draw_tool_draw_rectangle
-gimp_draw_tool_draw_arc
-gimp_draw_tool_draw_rectangle_by_anchor
-gimp_draw_tool_draw_arc_by_anchor
-gimp_draw_tool_draw_cross_by_anchor
-gimp_draw_tool_draw_handle
-gimp_draw_tool_draw_corner
-gimp_draw_tool_draw_lines
-gimp_draw_tool_draw_strokes
-gimp_draw_tool_draw_boundary
-gimp_draw_tool_draw_text_cursor
+gimp_draw_tool_add_preview
+gimp_draw_tool_remove_preview
+gimp_draw_tool_add_item
+gimp_draw_tool_remove_item
+gimp_draw_tool_add_stroke_group
+gimp_draw_tool_add_fill_group
+gimp_draw_tool_push_group
+gimp_draw_tool_pop_group
+gimp_draw_tool_add_line
+gimp_draw_tool_add_guide
+gimp_draw_tool_add_crosshair
+gimp_draw_tool_add_sample_point
+gimp_draw_tool_add_rectangle
+gimp_draw_tool_add_rectangle_guides
+gimp_draw_tool_add_arc
+gimp_draw_tool_add_handle
+gimp_draw_tool_add_corner
+gimp_draw_tool_add_lines
+gimp_draw_tool_add_strokes
+gimp_draw_tool_add_boundary
+gimp_draw_tool_add_text_cursor
 gimp_draw_tool_on_handle
 gimp_draw_tool_on_vectors
 gimp_draw_tool_on_vectors_curve
@@ -5133,11 +5259,10 @@ GIMP_ISCISSORS_OPTIONS_GET_CLASS
 
 <SECTION>
 <FILE>gimpiscissorstool</FILE>
+<TITLE>GimpIscissorsTool</TITLE>
 IscissorsState
-IscissorsDraw
 IscissorsOps
 ICurve
-<TITLE>GimpIscissorsTool</TITLE>
 GimpIscissorsTool
 gimp_iscissors_tool_register
 GIMP_ISCISSORS_TOOL_GET_OPTIONS
@@ -5219,8 +5344,8 @@ GIMP_MEASURE_OPTIONS_GET_CLASS
 
 <SECTION>
 <FILE>gimpmeasuretool</FILE>
-MeasureFunction
 <TITLE>GimpMeasureTool</TITLE>
+MeasureFunction
 GimpMeasureTool
 gimp_measure_tool_register
 GIMP_MEASURE_TOOL_GET_OPTIONS
@@ -5640,6 +5765,8 @@ gimp_text_tool_copy_clipboard
 gimp_text_tool_paste_clipboard
 gimp_text_tool_create_vectors
 gimp_text_tool_create_vectors_warped
+gimp_text_tool_clear_layout
+gimp_text_tool_ensure_layout
 <SUBSECTION Standard>
 GimpTextToolClass
 GIMP_TEXT_TOOL
@@ -5648,6 +5775,23 @@ GIMP_TYPE_TEXT_TOOL
 gimp_text_tool_get_type
 GIMP_TEXT_TOOL_CLASS
 GIMP_IS_TEXT_TOOL_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimptexttool-editor</FILE>
+<TITLE>GimpTextTool-editor</TITLE>
+gimp_text_tool_editor_button_press
+gimp_text_tool_editor_button_release
+gimp_text_tool_editor_finalize
+gimp_text_tool_editor_get_cursor_rect
+gimp_text_tool_editor_halt
+gimp_text_tool_editor_init
+gimp_text_tool_editor_key_press
+gimp_text_tool_editor_key_release
+gimp_text_tool_editor_motion
+gimp_text_tool_editor_position
+gimp_text_tool_editor_start
+gimp_text_tool_reset_im_context
 </SECTION>
 
 <SECTION>
@@ -5681,6 +5825,7 @@ gimp_tool_button_release
 gimp_tool_motion
 gimp_tool_set_focus_display
 gimp_tool_key_press
+gimp_tool_key_release
 gimp_tool_set_modifier_state
 gimp_tool_set_active_modifier_state
 gimp_tool_oper_update
@@ -5795,8 +5940,6 @@ GIMP_TRANSFORM_OPTIONS_GET_CLASS
 GimpTransformTool
 TransInfo
 TRANS_INFO_SIZE
-gimp_transform_tool_recalc
-gimp_transform_tool_expose_preview
 GIMP_TRANSFORM_TOOL_GET_OPTIONS
 <SUBSECTION Standard>
 GimpTransformToolClass
@@ -5857,6 +6000,19 @@ gimp_vector_tool_get_type
 GIMP_VECTOR_TOOL_CLASS
 GIMP_IS_VECTOR_TOOL_CLASS
 GIMP_VECTOR_TOOL_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpbezierdesc</FILE>
+<TITLE>GimpBezierDesc</TITLE>
+gimp_bezier_desc_copy
+gimp_bezier_desc_free
+gimp_bezier_desc_new
+gimp_bezier_desc_new_from_bound_segs
+gimp_bezier_desc_translate
+<SUBSECTION Standard>
+GIMP_TYPE_BEZIER_DESC
+gimp_bezier_desc_get_type
 </SECTION>
 
 <SECTION>
@@ -5922,7 +6078,6 @@ gimp_stroke_rotate
 gimp_stroke_flip
 gimp_stroke_flip_free
 gimp_stroke_transform
-gimp_stroke_get_bezier
 gimp_stroke_get_draw_anchors
 gimp_stroke_get_draw_controls
 gimp_stroke_get_draw_lines
@@ -5969,7 +6124,6 @@ gimp_vectors_get_distance
 gimp_vectors_get_n_strokes
 gimp_vectors_interpolate
 gimp_vectors_bounds
-gimp_vectors_make_bezier
 <SUBSECTION Standard>
 GimpVectorsClass
 GIMP_VECTORS
@@ -6256,7 +6410,7 @@ GimpDynamicsEditor
 gimp_dynamics_editor_new
 <SUBSECTION Standard>
 GimpDynamicsEditorClass
-GIMP_Dynamics_EDITOR
+GIMP_DYNAMICS_EDITOR
 GIMP_IS_DYNAMICS_EDITOR
 GIMP_TYPE_DYNAMICS_EDITOR
 gimp_dynamics_editor_get_type
@@ -6526,7 +6680,6 @@ GIMP_COMPONENT_EDITOR_GET_CLASS
 <FILE>gimpcontainereditor</FILE>
 <TITLE>GimpContainerEditor</TITLE>
 GimpContainerEditor
-gimp_container_editor_construct
 <SUBSECTION Standard>
 GimpContainerEditorClass
 GIMP_CONTAINER_EDITOR
@@ -6728,7 +6881,6 @@ gimp_data_factory_view_get_data_factory
 gimp_data_factory_view_get_children_type
 gimp_data_factory_view_has_data_new_func
 gimp_data_factory_view_have
-gimp_data_factory_view_construct
 <SUBSECTION Standard>
 GimpDataFactoryViewClass
 GIMP_DATA_FACTORY_VIEW
@@ -6787,6 +6939,23 @@ GIMP_CONTROLLER_KEYBOARD_CLASS
 GIMP_IS_CONTROLLER_KEYBOARD_CLASS
 GIMP_CONTROLLER_KEYBOARD_GET_CLASS
 GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+</SECTION>
+
+<SECTION>
+<FILE>gimpcontrollermouse</FILE>
+<TITLE>GimpControllerMouse</TITLE>
+GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+GimpControllerMouse
+GimpControllerMouseClass
+gimp_controller_mouse_button
+<SUBSECTION Standard>
+GIMP_CONTROLLER_MOUSE
+GIMP_CONTROLLER_MOUSE_CLASS
+GIMP_CONTROLLER_MOUSE_GET_CLASS
+GIMP_IS_CONTROLLER_MOUSE
+GIMP_IS_CONTROLLER_MOUSE_CLASS
+GIMP_TYPE_CONTROLLER_MOUSE
+gimp_controller_mouse_get_type
 </SECTION>
 
 <SECTION>
@@ -6903,14 +7072,26 @@ GIMP_DBUS_SERVICE_GET_CLASS
 
 <SECTION>
 <FILE>gimpdeviceinfo</FILE>
-GIMP_DEVICE_INFO_CONTEXT_MASK
 <TITLE>GimpDeviceInfo</TITLE>
+GIMP_DEVICE_INFO_CONTEXT_MASK
 GimpDeviceInfo
 gimp_device_info_new
-gimp_device_info_set_from_device
+gimp_device_info_get_device
+gimp_device_info_set_device
+gimp_device_info_get_mode
+gimp_device_info_set_mode
+gimp_device_info_has_cursor
+gimp_device_info_get_n_axes
+gimp_device_info_get_axis_use
+gimp_device_info_set_axis_use
+gimp_device_info_get_n_keys
+gimp_device_info_get_key
+gimp_device_info_set_key
+gimp_device_info_get_curve
+gimp_device_info_map_axis
 gimp_device_info_changed
 gimp_device_info_get_by_device
-gimp_device_info_changed_by_device
+gimp_device_info_compare
 <SUBSECTION Standard>
 GimpDeviceInfoClass
 GIMP_DEVICE_INFO
@@ -6924,11 +7105,10 @@ GIMP_DEVICE_INFO_GET_CLASS
 
 <SECTION>
 <FILE>gimpdevicestatus</FILE>
-GimpDeviceStatusEntry
 <TITLE>GimpDeviceStatus</TITLE>
+GimpDeviceStatusEntry
 GimpDeviceStatus
 gimp_device_status_new
-gimp_device_status_update
 <SUBSECTION Standard>
 GimpDeviceStatusClass
 GIMP_DEVICE_STATUS
@@ -6945,28 +7125,16 @@ GIMP_DEVICE_STATUS_GET_CLASS
 <TITLE>GimpDialogFactory</TITLE>
 GimpDialogFactory
 gimp_dialog_factory_new
-gimp_dialog_factory_from_name
-gimp_dialog_factory_set_constructor
 gimp_dialog_factory_register_entry
 gimp_dialog_factory_find_entry
 gimp_dialog_factory_find_session_info
 gimp_dialog_factory_dialog_new
 gimp_dialog_factory_dialog_raise
 gimp_dialog_factory_dockable_new
-gimp_dialog_factory_dock_new
 gimp_dialog_factory_add_dialog
 gimp_dialog_factory_add_foreign
 gimp_dialog_factory_remove_dialog
-gimp_dialog_factory_show_toolbox
 gimp_dialog_factory_hide_dialog
-gimp_dialog_factories_session_save
-gimp_dialog_factories_session_restore
-gimp_dialog_factories_session_clear
-gimp_dialog_factories_show_with_display
-gimp_dialog_factories_hide_with_display
-gimp_dialog_factories_toggle
-gimp_dialog_factories_set_busy
-gimp_dialog_factories_unset_busy
 gimp_dialog_factory_from_widget
 gimp_dialog_factory_set_has_min_size
 gimp_dialog_factory_get_has_min_size
@@ -6974,7 +7142,6 @@ GIMP_DIALOG_VISIBILITY_KEY
 GimpDialogVisibilityState
 GimpDialogNewFunc
 GimpDialogFactoryEntry
-GimpDialogConstructor
 <SUBSECTION Standard>
 GimpDialogFactoryClass
 GIMP_DIALOG_FACTORY
@@ -7007,7 +7174,6 @@ GIMP_WINDOW_GET_CLASS
 GimpDockWindow
 GimpDockWindowPrivate
 gimp_dock_window_get_id
-gimp_dock_window_get_ui_manager
 <SUBSECTION Standard>
 GimpDockWindowClass
 GIMP_DOCK_WINDOW
@@ -7020,17 +7186,77 @@ GIMP_DOCK_WINDOW_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimppanedbox</FILE>
+<TITLE>GimpPanedBox</TITLE>
+GimpPanedBox
+GimpPanedBoxClass
+gimp_paned_box_add_widget
+gimp_paned_box_new
+gimp_paned_box_remove_widget
+gimp_paned_box_set_drag_handler
+gimp_paned_box_set_dropped_cb
+gimp_paned_box_will_handle_drag
+<SUBSECTION Standard>
+GIMP_IS_PANED_BOX
+GIMP_IS_PANED_BOX_CLASS
+GIMP_PANED_BOX
+GIMP_PANED_BOX_CLASS
+GIMP_PANED_BOX_GET_CLASS
+GIMP_TYPE_PANED_BOX
+GimpPanedBoxPrivate
+gimp_paned_box_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimpdockcolumns</FILE>
+<TITLE>GimpDockColumns</TITLE>
+GimpDockColumns
+GimpDockColumnsClass
+gimp_dock_columns_add_dock
+gimp_dock_columns_get_context
+gimp_dock_columns_get_dialog_factory
+gimp_dock_columns_get_docks
+gimp_dock_columns_get_ui_manager
+gimp_dock_columns_new
+gimp_dock_columns_prepare_dockbook
+gimp_dock_columns_remove_dock
+gimp_dock_columns_set_context
+<SUBSECTION Standard>
+GIMP_DOCK_COLUMNS
+GIMP_DOCK_COLUMNS_CLASS
+GIMP_DOCK_COLUMNS_GET_CLASS
+GIMP_IS_DOCK_COLUMNS
+GIMP_IS_DOCK_COLUMNS_CLASS
+GIMP_TYPE_DOCK_COLUMNS
+GimpDockColumnsPrivate
+gimp_dock_columns_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimpdockcontainer</FILE>
+<TITLE>GimpDockContainer</TITLE>
+GimpDockContainerInterface
+gimp_dock_container_add_dock
+gimp_dock_container_get_dock_side
+gimp_dock_container_get_docks
+gimp_dock_container_get_ui_manager
+<SUBSECTION Standard>
+GIMP_DOCK_CONTAINER
+GIMP_DOCK_CONTAINER_GET_INTERFACE
+GIMP_IS_DOCK_CONTAINER
+GIMP_TYPE_DOCK_CONTAINER
+gimp_dock_container_interface_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gimpdock</FILE>
 <TITLE>GimpDock</TITLE>
 GimpDock
 GimpDockPrivate
-gimp_dock_setup
 gimp_dock_add
 gimp_dock_remove
 gimp_dock_add_book
 gimp_dock_remove_book
-gimp_dock_set_aux_info
-gimp_dock_get_aux_info
 <SUBSECTION Standard>
 GimpDockClass
 GIMP_DOCK
@@ -7043,35 +7269,14 @@ GIMP_DOCK_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpdockseparator</FILE>
-<TITLE>GimpDockSeparator</TITLE>
-GimpDockSeparator
-gimp_dock_separator_new
-gimp_dock_separator_set_show_label
-<SUBSECTION Standard>
-GimpDockSeparatorClass
-GIMP_DOCK_SEPARATOR
-GIMP_IS_DOCK_SEPARATOR
-GIMP_TYPE_DOCK_SEPARATOR
-gimp_dock_separator_get_type
-GIMP_DOCK_SEPARATOR_CLASS
-GIMP_IS_DOCK_SEPARATOR_CLASS
-GIMP_DOCK_SEPARATOR_GET_CLASS
-</SECTION>
-
-<SECTION>
 <FILE>gimpdockable</FILE>
 GIMP_DOCKABLE_DRAG_OFFSET
 <TITLE>GimpDockable</TITLE>
 GimpDockable
 gimp_dockable_new
-gimp_dockable_set_aux_info
-gimp_dockable_get_aux_info
 gimp_dockable_set_locked
 gimp_dockable_is_locked
 gimp_dockable_set_tab_style
-gimp_dockable_get_tab_widget
-gimp_dockable_get_drag_widget
 gimp_dockable_set_context
 gimp_dockable_get_menu
 gimp_dockable_detach
@@ -7455,8 +7660,6 @@ GIMP_HISTOGRAM_VIEW_GET_CLASS
 <TITLE>GimpLanguageEntry</TITLE>
 GimpLanguageEntry
 gimp_language_entry_new
-gimp_language_entry_get_iso_code
-gimp_language_entry_set_iso_code
 <SUBSECTION Standard>
 GimpLanguageEntryClass
 GIMP_LANGUAGE_ENTRY
@@ -7489,7 +7692,7 @@ GIMP_LANGUAGE_STORE_GET_CLASS
 <SECTION>
 <FILE>gimplanguagestore-parser</FILE>
 <TITLE>GimpLanguageStore-parser</TITLE>
-gimp_language_store_populate
+gimp_language_store_parse_iso_codes
 </SECTION>
 
 <SECTION>
@@ -7497,8 +7700,6 @@ gimp_language_store_populate
 <TITLE>GimpMenuDock</TITLE>
 GimpMenuDock
 gimp_menu_dock_new
-gimp_menu_dock_set_auto_follow_active
-gimp_menu_dock_set_show_image_menu
 <SUBSECTION Standard>
 GimpMenuDockClass
 GIMP_MENU_DOCK
@@ -7549,7 +7750,6 @@ GIMP_IMAGE_VIEW_GET_CLASS
 GimpGetContainerFunc
 GimpGetItemFunc
 GimpSetItemFunc
-GimpReorderItemFunc
 GimpAddItemFunc
 GimpRemoveItemFunc
 GimpNewItemFunc
@@ -7593,8 +7793,8 @@ GIMP_LAYER_TREE_VIEW_GET_CLASS
 
 <SECTION>
 <FILE>gimpactionfactory</FILE>
-GimpActionFactoryEntry
 <TITLE>GimpActionFactory</TITLE>
+GimpActionFactoryEntry
 GimpActionFactory
 gimp_action_factory_new
 gimp_action_factory_group_register
@@ -7967,8 +8167,8 @@ GIMP_PALETTE_VIEW_GET_CLASS
 
 <SECTION>
 <FILE>gimpviewrenderer</FILE>
-GIMP_VIEW_MAX_BORDER_WIDTH
 <TITLE>GimpViewRenderer</TITLE>
+GIMP_VIEW_MAX_BORDER_WIDTH
 GimpViewRenderer
 gimp_view_renderer_new
 gimp_view_renderer_new_full
@@ -7985,10 +8185,10 @@ gimp_view_renderer_update
 gimp_view_renderer_update_idle
 gimp_view_renderer_remove_idle
 gimp_view_renderer_draw
-gimp_view_renderer_default_render_surface
-gimp_view_renderer_default_render_stock
-gimp_view_renderer_render_surface
+gimp_view_renderer_render_stock
 gimp_view_renderer_render_pixbuf
+gimp_view_renderer_render_temp_buf
+gimp_view_renderer_render_temp_buf_simple
 <SUBSECTION Standard>
 GimpViewRendererClass
 GIMP_VIEW_RENDERER
@@ -8241,8 +8441,6 @@ GIMP_SELECTION_EDITOR_GET_CLASS
 GimpSessionInfo
 gimp_session_info_new
 gimp_session_info_restore
-gimp_session_info_set_geometry
-gimp_session_info_get_geometry
 gimp_session_info_get_info
 gimp_session_info_clear_info
 <SUBSECTION Standard>
@@ -8266,8 +8464,6 @@ gimp_session_info_aux_new_from_props
 gimp_session_info_aux_set_props
 gimp_session_info_aux_serialize
 gimp_session_info_aux_deserialize
-gimp_session_info_aux_set_list
-gimp_session_info_aux_get_list
 </SECTION>
 
 <SECTION>
@@ -8390,6 +8586,8 @@ GIMP_STROKE_EDITOR_GET_CLASS
 GimpTemplateEditor
 gimp_template_editor_new
 gimp_template_editor_show_advanced
+gimp_template_editor_get_size_se
+gimp_template_editor_get_template
 <SUBSECTION Standard>
 GimpTemplateEditorClass
 GIMP_TEMPLATE_EDITOR
@@ -8415,6 +8613,73 @@ gimp_template_view_get_type
 GIMP_TEMPLATE_VIEW_CLASS
 GIMP_IS_TEMPLATE_VIEW_CLASS
 GIMP_TEMPLATE_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimptextbuffer</FILE>
+<TITLE>GimpTextBuffer</TITLE>
+GimpTextBuffer
+GimpTextBufferClass
+gimp_text_buffer_change_baseline
+gimp_text_buffer_change_kerning
+gimp_text_buffer_change_size
+gimp_text_buffer_clear_insert_tags
+gimp_text_buffer_get_iter_at_index
+gimp_text_buffer_get_iter_baseline
+gimp_text_buffer_get_iter_color
+gimp_text_buffer_get_iter_font
+gimp_text_buffer_get_iter_index
+gimp_text_buffer_get_iter_kerning
+gimp_text_buffer_get_iter_size
+gimp_text_buffer_get_markup
+gimp_text_buffer_get_text
+gimp_text_buffer_has_markup
+gimp_text_buffer_insert
+gimp_text_buffer_load
+gimp_text_buffer_name_to_tag
+gimp_text_buffer_new
+gimp_text_buffer_save
+gimp_text_buffer_set_baseline
+gimp_text_buffer_set_color
+gimp_text_buffer_set_font
+gimp_text_buffer_set_insert_tags
+gimp_text_buffer_set_kerning
+gimp_text_buffer_set_markup
+gimp_text_buffer_set_size
+gimp_text_buffer_set_text
+gimp_text_buffer_tag_to_name
+<SUBSECTION Standard>
+GIMP_IS_TEXT_BUFFER
+GIMP_IS_TEXT_BUFFER_CLASS
+GIMP_TEXT_BUFFER
+GIMP_TEXT_BUFFER_CLASS
+GIMP_TYPE_TEXT_BUFFER
+gimp_text_buffer_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimptextbuffer-serialize</FILE>
+<TITLE>GimpTextBuffer-serialize</TITLE>
+WORD_JOINER
+WORD_JOINER_LENGTH
+gimp_text_buffer_deserialize
+gimp_text_buffer_post_deserialize
+gimp_text_buffer_pre_serialize
+gimp_text_buffer_serialize
+</SECTION>
+
+<SECTION>
+<FILE>gimptexttag</FILE>
+GIMP_TEXT_PROP_NAME_BASELINE
+GIMP_TEXT_PROP_NAME_COLOR
+GIMP_TEXT_PROP_NAME_FONT
+GIMP_TEXT_PROP_NAME_KERNING
+GIMP_TEXT_PROP_NAME_SIZE
+gimp_text_tag_get_baseline
+gimp_text_tag_get_color
+gimp_text_tag_get_font
+gimp_text_tag_get_kerning
+gimp_text_tag_get_size
 </SECTION>
 
 <SECTION>
@@ -8449,6 +8714,23 @@ GIMP_TYPE_TEXT_PROXY
 gimp_text_proxy_get_type
 GIMP_TEXT_PROXY_CLASS
 GIMP_IS_TEXT_PROXY_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimptextstyleeditor</FILE>
+<TITLE>GimpTextStyleEditor</TITLE>
+GimpTextStyleEditor
+GimpTextStyleEditorClass
+gimp_text_style_editor_list_tags
+gimp_text_style_editor_new
+<SUBSECTION Standard>
+GIMP_IS_TEXT_STYLE_EDITOR
+GIMP_IS_TEXT_STYLE_EDITOR_CLASS
+GIMP_TEXT_STYLE_EDITOR
+GIMP_TEXT_STYLE_EDITOR_CLASS
+GIMP_TEXT_STYLE_EDITOR_GET_CLASS
+GIMP_TYPE_TEXT_STYLE_EDITOR
+gimp_text_style_editor_get_type
 </SECTION>
 
 <SECTION>
@@ -8490,6 +8772,8 @@ GIMP_TOOL_OPTIONS_EDITOR_GET_CLASS
 <TITLE>GimpToolbox</TITLE>
 GimpToolbox
 gimp_toolbox_new
+gimp_toolbox_get_context
+gimp_toolbox_set_drag_handler
 <SUBSECTION Standard>
 GimpToolboxClass
 GIMP_TOOLBOX
@@ -8573,47 +8857,6 @@ gimp_tool_editor_get_type
 GIMP_TOOL_EDITOR_CLASS
 GIMP_IS_TOOL_EDITOR_CLASS
 GIMP_TOOL_EDITOR_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpunitcombobox</FILE>
-<TITLE>GimpUnitComboBox</TITLE>
-GimpUnitComboBox
-gimp_unit_combo_box_new
-gimp_unit_combo_box_new_with_model
-gimp_unit_combo_box_get_active
-gimp_unit_combo_box_set_active
-<SUBSECTION Standard>
-GimpUnitComboBoxClass
-GIMP_UNIT_COMBO_BOX
-GIMP_IS_UNIT_COMBO_BOX
-GIMP_TYPE_UNIT_COMBO_BOX
-gimp_unit_combo_box_get_type
-GIMP_UNIT_COMBO_BOX_CLASS
-GIMP_IS_UNIT_COMBO_BOX_CLASS
-GIMP_UNIT_COMBO_BOX_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpunitstore</FILE>
-<TITLE>GimpUnitStore</TITLE>
-GimpUnitStore
-gimp_unit_store_new
-gimp_unit_store_set_pixel_value
-gimp_unit_store_set_pixel_values
-gimp_unit_store_set_resolution
-gimp_unit_store_set_resolutions
-gimp_unit_store_get_value
-gimp_unit_store_get_values
-<SUBSECTION Standard>
-GimpUnitStoreClass
-GIMP_UNIT_STORE
-GIMP_IS_UNIT_STORE
-GIMP_TYPE_UNIT_STORE
-gimp_unit_store_get_type
-GIMP_UNIT_STORE_CLASS
-GIMP_IS_UNIT_STORE_CLASS
-GIMP_UNIT_STORE_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -8742,22 +8985,6 @@ gtk_hwrap_box_get_type
 GTK_HWRAP_BOX_CLASS
 GTK_IS_HWRAP_BOX_CLASS
 GTK_HWRAP_BOX_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gtkvwrapbox</FILE>
-<TITLE>GtkVWrapBox</TITLE>
-GtkVWrapBox
-gtk_vwrap_box_new
-<SUBSECTION Standard>
-GtkVWrapBoxClass
-GTK_VWRAP_BOX
-GTK_IS_VWRAP_BOX
-GTK_TYPE_VWRAP_BOX
-gtk_vwrap_box_get_type
-GTK_VWRAP_BOX_CLASS
-GTK_IS_VWRAP_BOX_CLASS
-GTK_VWRAP_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -9051,7 +9278,6 @@ siox_drb
 <FILE>temp-buf</FILE>
 TempBuf
 temp_buf_new
-temp_buf_new_check
 temp_buf_copy
 temp_buf_resize
 temp_buf_scale
@@ -9101,22 +9327,13 @@ tile_manager_map
 tile_manager_width
 tile_manager_height
 tile_manager_bpp
-tile_manager_get_offsets
-tile_manager_set_offsets
 tile_manager_get_memsize
 tile_manager_get_tile_coordinates
-tile_manager_tiles_per_col
-tile_manager_tiles_per_row
 tile_manager_map_over_tile
 tile_manager_read_pixel_data
 tile_manager_write_pixel_data
 tile_manager_read_pixel_data_1
 tile_manager_write_pixel_data_1
-</SECTION>
-
-<SECTION>
-<FILE>tile-manager-crop</FILE>
-tile_manager_crop
 </SECTION>
 
 <SECTION>
@@ -9311,9 +9528,9 @@ GIMP_TYPE_FILL_STYLE
 GimpFillStyle
 GIMP_TYPE_GRAVITY_TYPE
 GimpGravityType
-GIMP_TYPE_ALIGNMENT
+GIMP_TYPE_ALIGNMENT_TYPE
 GimpAlignmentType
-GIMP_TYPE_ALIGN_REFERENCE
+GIMP_TYPE_ALIGN_REFERENCE_TYPE
 GimpAlignReferenceType
 GIMP_TYPE_JOIN_STYLE
 GimpJoinStyle
@@ -9327,8 +9544,6 @@ GIMP_TYPE_ROTATION_TYPE
 GimpRotationType
 GIMP_TYPE_VIEW_SIZE
 GimpViewSize
-GIMP_TYPE_SELECTION_CONTROL
-GimpSelectionControl
 GIMP_TYPE_STROKE_METHOD
 GimpStrokeMethod
 GIMP_TYPE_THUMBNAIL_SIZE
@@ -9564,7 +9779,6 @@ gimp_drawable_threshold
 <SECTION>
 <FILE>gimpdrawable-transform</FILE>
 <TITLE>GimpDrawable-transform</TITLE>
-GimpTransformBoundingBox
 gimp_drawable_transform_tiles_affine
 gimp_drawable_transform_tiles_flip
 gimp_drawable_transform_tiles_rotate
@@ -9600,13 +9814,13 @@ GIMP_GUIDE_GET_CLASS
 <SECTION>
 <FILE>gimpsamplepoint</FILE>
 <TITLE>GimpSamplePoint</TITLE>
-GIMP_SAMPLE_POINT_DRAW_SIZE
-GIMP_TYPE_SAMPLE_POINT
 GimpSamplePoint
-gimp_sample_point_get_type
 gimp_sample_point_new
 gimp_sample_point_ref
 gimp_sample_point_unref
+<SUBSECTION Standard>
+GIMP_TYPE_SAMPLE_POINT
+gimp_sample_point_get_type
 </SECTION>
 
 <SECTION>
@@ -9628,6 +9842,10 @@ gimp_image_color_hash_rgb_to_indexed
 <FILE>gimpimage-colormap</FILE>
 <TITLE>GimpImage-colormap</TITLE>
 GIMP_IMAGE_COLORMAP_SIZE
+gimp_image_colormap_init
+gimp_image_colormap_dispose
+gimp_image_colormap_free
+gimp_image_get_colormap_palette
 gimp_image_get_colormap
 gimp_image_get_colormap_size
 gimp_image_set_colormap
@@ -9717,6 +9935,11 @@ gimp_image_merge_visible_vectors
 <SECTION>
 <FILE>gimpimage-new</FILE>
 <TITLE>GimpImage-new</TITLE>
+gimp_image_new_from_buffer
+gimp_image_new_from_component
+gimp_image_new_from_drawable
+gimp_image_new_from_pixbuf
+gimp_image_new_from_template
 gimp_image_new_get_last_template
 gimp_image_new_set_last_template
 </SECTION>
@@ -9819,13 +10042,15 @@ gimp_image_undo_push_item_rename
 gimp_image_undo_push_item_displace
 gimp_image_undo_push_item_linked
 gimp_image_undo_push_item_visibility
+gimp_image_undo_push_item_reorder
+gimp_image_undo_push_item_parasite
+gimp_image_undo_push_item_parasite_remove
 gimp_image_undo_push_layer_add
 gimp_image_undo_push_layer_remove
 gimp_image_undo_push_layer_mask_add
 gimp_image_undo_push_layer_mask_remove
 gimp_image_undo_push_layer_mask_apply
 gimp_image_undo_push_layer_mask_show
-gimp_image_undo_push_layer_reorder
 gimp_image_undo_push_layer_mode
 gimp_image_undo_push_layer_opacity
 gimp_image_undo_push_layer_lock_alpha
@@ -9836,12 +10061,10 @@ gimp_image_undo_push_text_layer
 gimp_image_undo_push_text_layer_modified
 gimp_image_undo_push_channel_add
 gimp_image_undo_push_channel_remove
-gimp_image_undo_push_channel_reorder
 gimp_image_undo_push_channel_color
 gimp_image_undo_push_vectors_add
 gimp_image_undo_push_vectors_remove
 gimp_image_undo_push_vectors_mod
-gimp_image_undo_push_vectors_reorder
 gimp_image_undo_push_fs_to_layer
 gimp_image_undo_push_image_parasite
 gimp_image_undo_push_image_parasite_remove
@@ -9963,6 +10186,7 @@ gimp_scan_convert_free
 gimp_scan_convert_set_pixel_ratio
 gimp_scan_convert_set_clip_rectangle
 gimp_scan_convert_add_polyline
+gimp_scan_convert_add_bezier
 gimp_scan_convert_stroke
 gimp_scan_convert_render
 gimp_scan_convert_render_full
@@ -10104,7 +10328,6 @@ GimpScaleCallback
 
 <SECTION>
 <FILE>dialogs-constructors</FILE>
-dialogs_dockable_constructor
 dialogs_image_new_new
 dialogs_file_open_new
 dialogs_file_open_location_new
@@ -10118,7 +10341,6 @@ dialogs_about_get
 dialogs_error_get
 dialogs_close_all_get
 dialogs_quit_get
-dialogs_toolbox_get
 dialogs_brush_grid_view_new
 dialogs_brush_list_view_new
 dialogs_buffer_grid_view_new
@@ -10162,9 +10384,6 @@ dialogs_palette_import_get
 <SECTION>
 <FILE>dialogs</FILE>
 global_dialog_factory
-global_dock_factory
-global_toolbox_factory
-global_display_factory
 global_recent_docks
 dialogs_init
 dialogs_exit
@@ -10263,7 +10482,6 @@ themes_exit
 themes_list_themes
 themes_get_theme_dir
 themes_get_theme_file
-themes_apply_theme
 </SECTION>
 
 <SECTION>
@@ -10536,38 +10754,6 @@ subsample_indexed_region
 </SECTION>
 
 <SECTION>
-<FILE>layer-modes</FILE>
-dissolve_pixels
-layer_modes_setup
-layer_normal_mode
-layer_dissolve_mode
-layer_multiply_mode
-layer_divide_mode
-layer_screen_mode
-layer_overlay_mode
-layer_difference_mode
-layer_addition_mode
-layer_subtract_mode
-layer_darken_only_mode
-layer_lighten_only_mode
-layer_hue_mode
-layer_saturation_mode
-layer_value_mode
-layer_color_mode
-layer_behind_mode
-layer_replace_mode
-layer_erase_mode
-layer_anti_erase_mode
-layer_color_erase_mode
-layer_dodge_mode
-layer_burn_mode
-layer_hardlight_mode
-layer_softlight_mode
-layer_grain_extract_mode
-layer_grain_merge_mode
-</SECTION>
-
-<SECTION>
 <FILE>pdb-types</FILE>
 GimpPDBCompatMode
 </SECTION>
@@ -10586,11 +10772,13 @@ register_convert_procs
 register_display_procs
 register_drawable_procs
 register_drawable_transform_procs
+register_dynamics_procs
 register_edit_procs
 register_fileops_procs
 register_floating_sel_procs
 register_font_select_procs
 register_fonts_procs
+register_gimp_procs
 register_gimprc_procs
 register_gradient_procs
 register_gradient_select_procs
@@ -10599,14 +10787,15 @@ register_grid_procs
 register_guides_procs
 register_help_procs
 register_image_procs
+register_image_select_procs
+register_item_procs
+register_item__transform_procs
 register_layer_procs
 register_message_procs
-register_misc_procs
 register_paint_tools_procs
 register_palette_procs
 register_palette_select_procs
 register_palettes_procs
-register_parasite_procs
 register_paths_procs
 register_pattern_procs
 register_pattern_select_procs
@@ -10814,7 +11003,6 @@ gimp_plug_in_progress_end
 gimp_plug_in_progress_set_text
 gimp_plug_in_progress_set_value
 gimp_plug_in_progress_pulse
-gimp_plug_in_progress_get_window
 gimp_plug_in_progress_install
 gimp_plug_in_progress_uninstall
 gimp_plug_in_progress_cancel
@@ -11059,7 +11247,6 @@ GIMP_IS_EDIT_SELECTION_TOOL_CLASS
 <SECTION>
 <FILE>gimppaintoptions-gui</FILE>
 <TITLE>GimpPaintOptions-gui</TITLE>
-GIMP_PAINT_OPTIONS_TABLE_KEY
 gimp_paint_options_gui
 </SECTION>
 
@@ -11084,6 +11271,7 @@ tool_manager_button_release_active
 tool_manager_motion_active
 tool_manager_focus_display_active
 tool_manager_key_press_active
+tool_manager_key_release_active
 tool_manager_modifier_state_active
 tool_manager_active_modifier_state_active
 tool_manager_oper_update_active
@@ -11097,8 +11285,6 @@ GIMP_TYPE_BUTTON_PRESS_TYPE
 GimpButtonPressType
 GIMP_TYPE_BUTTON_RELEASE_TYPE
 GimpButtonReleaseType
-GIMP_TYPE_RECTANGLE_GUIDE
-GimpRectangleGuide
 GIMP_TYPE_RECTANGLE_CONSTRAINT
 GimpRectangleConstraint
 GIMP_TYPE_RECTANGLE_PRECISION
@@ -11113,10 +11299,6 @@ GIMP_TYPE_TRANSFORM_TYPE
 GimpTransformType
 GIMP_TYPE_VECTOR_MODE
 GimpVectorMode
-GIMP_TYPE_TRANSFORM_PREVIEW_TYPE
-GimpTransformPreviewType
-GIMP_TYPE_TRANSFORM_GRID_TYPE
-GimpTransformGridType
 SelectFunction
 GimpToolAction
 GimpTranslateMode
@@ -11173,7 +11355,6 @@ gimp_anchor_get_type
 <FILE>vectors-types</FILE>
 GimpAnchorType
 GimpAnchorFeatureType
-GimpBezierDesc
 GimpVectorExtendMode
 </SECTION>
 
@@ -11197,17 +11378,34 @@ gimp_cursor_set
 </SECTION>
 
 <SECTION>
+<FILE>gimpdevicemanager</FILE>
+<TITLE>GimpDeviceManager</TITLE>
+GimpDeviceManager
+GimpDeviceManagerClass
+gimp_device_manager_get_current_device
+gimp_device_manager_new
+gimp_device_manager_set_current_device
+<SUBSECTION Standard>
+GIMP_DEVICE_MANAGER
+GIMP_DEVICE_MANAGER_CLASS
+GIMP_DEVICE_MANAGER_GET_CLASS
+GIMP_IS_DEVICE_MANAGER
+GIMP_IS_DEVICE_MANAGER_CLASS
+GIMP_TYPE_DEVICE_MANAGER
+gimp_device_manager_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gimpdevices</FILE>
-GimpDeviceChangeNotify
 gimp_devices_init
 gimp_devices_exit
-gimp_devices_clear
 gimp_devices_restore
 gimp_devices_save
-gimp_devices_get_list
-gimp_devices_get_current
+gimp_devices_clear
+gimp_devices_get_manager
+gimp_devices_add_widget
+gimp_devices_check_callback
 gimp_devices_check_change
-gimp_devices_select_device
 </SECTION>
 
 <SECTION>
@@ -11367,17 +11565,13 @@ gimp_table_attach_stock
 gimp_enum_radio_box_add
 gimp_enum_radio_frame_add
 gimp_get_icon_size
-gimp_get_mod_name_shift
-gimp_get_mod_name_control
-gimp_get_mod_name_alt
-gimp_get_mod_separator
 gimp_get_mod_string
 gimp_suggest_modifiers
+gimp_modifiers_to_channel_op
 gimp_get_screen_resolution
 gimp_rgb_get_gdk_color
 gimp_rgb_set_gdk_color
 gimp_window_set_hint
-gimp_window_get_native
 gimp_window_set_transient_for
 gimp_text_buffer_load
 gimp_text_buffer_save
@@ -11520,6 +11714,7 @@ return_if_no_gimp
 return_if_no_context
 return_if_no_image
 return_if_no_display
+return_if_no_shell
 return_if_no_widget
 return_if_no_drawable
 return_if_no_layer
@@ -12166,7 +12361,6 @@ tools_color_average_radius_cmd_callback
 tools_ink_blob_size_cmd_callback
 tools_ink_blob_aspect_cmd_callback
 tools_ink_blob_angle_cmd_callback
-tools_paint_brush_scale_cmd_callback
 tools_paint_brush_angle_cmd_callback
 tools_paint_brush_aspect_ratio_cmd_callback
 tools_fg_select_brush_size_cmd_callback
@@ -12247,11 +12441,13 @@ window_move_to_screen_cmd_callback
 
 <SECTION>
 <FILE>windows-commands</FILE>
-windows_show_toolbox_cmd_callback
-windows_show_display_cmd_callback
-windows_show_dock_cmd_callback
+windows_hide_docks_cmd_callback
 windows_open_recent_cmd_callback
-windows_show_toolbox
+windows_show_display_cmd_callback
+windows_show_display_next_cmd_callback
+windows_show_display_previous_cmd_callback
+windows_show_dock_cmd_callback
+windows_use_single_window_mode_cmd_callback
 </SECTION>
 
 <SECTION>
