@@ -884,6 +884,12 @@ gimp_data_set_folder_tags (GimpData    *data,
    */
   if (top_directory)
     {
+      size_t top_directory_len = strlen (top_directory);
+
+      g_return_if_fail (g_str_has_prefix (dirname, top_directory)
+                        && (dirname[top_directory_len] == '\0'
+                            || G_IS_DIR_SEPARATOR (dirname[top_directory_len])));
+
       do
         {
           gchar   *basename = g_path_get_basename (dirname);
