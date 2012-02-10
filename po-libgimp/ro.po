@@ -1,22 +1,23 @@
 # Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2010.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-25 19:37+0000\n"
-"PO-Revision-Date: 2011-08-26 22:41+0200\n"
+"POT-Creation-Date: 2011-12-13 08:27+0000\n"
+"PO-Revision-Date: 2011-12-13 15:55+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
-"Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
+"Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2;\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);;\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1077
@@ -40,7 +41,7 @@ msgstr "anulat"
 
 #: ../libgimp/gimpbrushselectbutton.c:178
 msgid "Brush Selection"
-msgstr "Selecție penel"
+msgstr "Selecție de penel"
 
 #: ../libgimp/gimpbrushselectbutton.c:927
 #: ../libgimp/gimppatternselectbutton.c:725
@@ -106,12 +107,12 @@ msgstr "Convertește la RGB"
 #: ../libgimp/gimpexport.c:315
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Plugin-ul %s poate manipula numai imagini în scală de gri"
+msgstr "Plugin-ul %s poate manipula numai imagini în tonuri de gri"
 
 #: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:366
 msgid "Convert to Grayscale"
-msgstr "Convertește la scală de gri"
+msgstr "Convertește la tonuri de gri"
 
 #: ../libgimp/gimpexport.c:324
 #, c-format
@@ -144,7 +145,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:344
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Plugin-ul %s poate manipula numai imagini RGB sau în scală de gri"
+msgstr "Plugin-ul %s poate manipula numai imagini RGB sau în tonuri de gri"
 
 #: ../libgimp/gimpexport.c:353
 #, c-format
@@ -154,7 +155,8 @@ msgstr "Plugin-ul %s poate manipula numai imagini RGB sau indexate"
 #: ../libgimp/gimpexport.c:363
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "Plugin-ul %s poate manipula numai imagini în scală de gri sau indexate"
+msgstr ""
+"Plugin-ul %s poate manipula numai imagini în tonuri de gri sau indexate"
 
 #: ../libgimp/gimpexport.c:374
 #, c-format
@@ -181,7 +183,7 @@ msgstr "Export de fișier"
 msgid "_Ignore"
 msgstr "_Ignoră"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:989
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:988
 msgid "_Export"
 msgstr "_Exportă"
 
@@ -195,10 +197,11 @@ msgid ""
 msgstr ""
 "Imaginea trebuie exportată înainte de a putea fi salvată ca %s, deoarece:"
 
+# convertire conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #. the footline
 #: ../libgimp/gimpexport.c:622
 msgid "The export conversion won't modify your original image."
-msgstr "Conversia pentru export nu va modifica imaginea originală."
+msgstr "Convertirea pentru export nu va modifica imaginea originală."
 
 #: ../libgimp/gimpexport.c:725
 #, c-format
@@ -218,7 +221,7 @@ msgstr ""
 "Sunteți pe cale de a salva un canal (selecție salvată) ca %s.\n"
 "Acest lucru nu va salva straturile vizibile."
 
-#: ../libgimp/gimpexport.c:980
+#: ../libgimp/gimpexport.c:979
 msgid "Export Image as "
 msgstr "Exportă imaginea ca "
 
@@ -234,7 +237,10 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "Selecție degrade"
 
-#: ../libgimp/gimpmenu.c:459 ../libgimpwidgets/gimpintstore.c:238
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
+#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:241
 msgid "(Empty)"
 msgstr "(Gol)"
 
@@ -488,46 +494,55 @@ msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
+# dropdown pentru tabla de șah, în preferințe -> afișor
 #: ../libgimpbase/gimpbaseenums.c:202
 msgctxt "check-size"
 msgid "Small"
-msgstr "Mic"
+msgstr "Mică"
 
+# dropdown pentru tabla de șah, în preferințe -> afișor
 #: ../libgimpbase/gimpbaseenums.c:203
 msgctxt "check-size"
 msgid "Medium"
-msgstr "Mediu"
+msgstr "Medie"
 
+# dropdown pentru tabla de șah, în preferințe -> afișor
 #: ../libgimpbase/gimpbaseenums.c:204
 msgctxt "check-size"
 msgid "Large"
 msgstr "Mare"
 
+# dropdown pentru tabla de șah, în preferințe -> afișor
 #: ../libgimpbase/gimpbaseenums.c:237
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Tablă de șah luminoasă"
 
+# dropdown pentru tabla de șah, în preferințe -> afișor
 #: ../libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Tablă de șah de luminozitate medie"
 
+# dropdown pentru tabla de șah, în preferințe -> afișor
 #: ../libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Tablă de șah întunecată"
 
+# dropdown pentru tabla de șah, în preferințe -> afișor
 #: ../libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
 msgid "White only"
 msgstr "Numai alb"
 
+# dropdown pentru tabla de șah, în preferințe -> afișor
 #: ../libgimpbase/gimpbaseenums.c:241
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Numai gri"
 
+# dropdown pentru tabla de șah, în preferințe -> afișor
 #: ../libgimpbase/gimpbaseenums.c:242
 msgctxt "check-type"
 msgid "Black only"
@@ -673,7 +688,7 @@ msgstr "Culoare RGB"
 #: ../libgimpbase/gimpbaseenums.c:509
 msgctxt "image-base-type"
 msgid "Grayscale"
-msgstr "Scală de gri"
+msgstr "Tonuri de gri"
 
 #: ../libgimpbase/gimpbaseenums.c:510
 msgctxt "image-base-type"
@@ -693,12 +708,12 @@ msgstr "RGB-alfa"
 #: ../libgimpbase/gimpbaseenums.c:545
 msgctxt "image-type"
 msgid "Grayscale"
-msgstr "Scală de gri"
+msgstr "Tonuri de gri"
 
 #: ../libgimpbase/gimpbaseenums.c:546
 msgctxt "image-type"
 msgid "Grayscale-alpha"
-msgstr "Scală de gri-alfa"
+msgstr "Tonuri de gri-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:547
 msgctxt "image-type"
@@ -907,7 +922,7 @@ msgstr "Centrat"
 #: ../libgimpbase/gimpbaseenums.c:1174
 msgctxt "text-justification"
 msgid "Filled"
-msgstr "Unplut"
+msgstr "Umplut"
 
 #: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
 #: ../modules/color-selector-cmyk-lcms.c:424
@@ -945,9 +960,10 @@ msgstr ""
 msgid "The default RGB working space color profile."
 msgstr "Profilul de culoare al spațiului de lucru RGB implicit."
 
+# convertire conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/4c3cad3138a3566d
 #: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "Profilul de culoare CMYK folosit pentru conversia între RGB și CMYK."
+msgstr "Profilul de culoare CMYK folosit pentru a converti între RGB și CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color profile used for simulating a printed version (softproof)."
@@ -1020,33 +1036,33 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "valoarea pentru elementul %s nu este un șir valid UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:445
+#: ../libgimpconfig/gimpconfig-deserialize.c:444
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
-"pentru expresia booleană %s era prevăzut „yes” sau „no”, s-a obținut „%s”"
+"se aștepta „yes” sau „no” pentru expresia booleană %s, s-a obținut „%s”"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:519
+#: ../libgimpconfig/gimpconfig-deserialize.c:518
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "valoare „%s” nevalidă pentru expresia %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:534
+#: ../libgimpconfig/gimpconfig-deserialize.c:533
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "valoare „%ld” nevalidă pentru expresia %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:603
+#: ../libgimpconfig/gimpconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "în timpul prelucrării expresiei „%s”: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:507
-#: ../libgimpconfig/gimpscanner.c:588
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
+#: ../libgimpconfig/gimpscanner.c:641
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
-msgstr "eroare fatală de interpretare"
+msgstr "eroare fatală de parsare"
 
 #: ../libgimpconfig/gimpconfig-path.c:387
 #, c-format
@@ -1094,15 +1110,21 @@ msgstr ""
 msgid "Could not create '%s': %s"
 msgstr "Nu s-a putut crea „%s”: %s"
 
-#: ../libgimpconfig/gimpscanner.c:264
+#: ../libgimpconfig/gimpscanner.c:268
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "șir UTF-8 nevalid"
 
-#: ../libgimpconfig/gimpscanner.c:615
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpscanner.c:431
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token, got '%s'"
+msgstr "se aștepta „yes” sau „no” pentru expresia booleană, s-a obținut „%s”"
+
+#: ../libgimpconfig/gimpscanner.c:668
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Eroare la prelucrarea „%s” în linia %d: %s"
+msgstr "Eroare la parsarea „%s” în linia %d: %s"
 
 #: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
 #: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
@@ -1117,7 +1139,7 @@ msgstr "Eroare de modúl"
 
 #: ../libgimpmodule/gimpmodule.c:386
 msgid "Loaded"
-msgstr "Incărcat"
+msgstr "Încărcat"
 
 #: ../libgimpmodule/gimpmodule.c:387
 msgid "Load failed"
@@ -1157,19 +1179,19 @@ msgstr "Nu s-a putut crea miniatura pentru %s: %s"
 msgid "_Search:"
 msgstr "_Caută:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:134
+#: ../libgimpwidgets/gimpcolorbutton.c:135
 msgid "_Foreground Color"
 msgstr "_Culoare de prim-plan "
 
-#: ../libgimpwidgets/gimpcolorbutton.c:138
+#: ../libgimpwidgets/gimpcolorbutton.c:139
 msgid "_Background Color"
 msgstr "_Culoade de fundal"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:142
+#: ../libgimpwidgets/gimpcolorbutton.c:143
 msgid "Blac_k"
 msgstr "_Negru"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:146
+#: ../libgimpwidgets/gimpcolorbutton.c:147
 msgid "_White"
 msgstr "_Alb"
 
@@ -1242,39 +1264,39 @@ msgid "Gigabytes"
 msgstr "Gibibaiți"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:281
-#: ../libgimpwidgets/gimppageselector.c:1177
+#: ../libgimpwidgets/gimppageselector.c:282
+#: ../libgimpwidgets/gimppageselector.c:1178
 msgid "Nothing selected"
 msgstr "Nu este nimic selectat"
 
-#: ../libgimpwidgets/gimppageselector.c:299
+#: ../libgimpwidgets/gimppageselector.c:300
 msgid "Select _All"
 msgstr "Selecte_ază tot"
 
-#: ../libgimpwidgets/gimppageselector.c:319
+#: ../libgimpwidgets/gimppageselector.c:320
 msgid "Select _range:"
 msgstr "Selectează _intervalul:"
 
-#: ../libgimpwidgets/gimppageselector.c:331
+#: ../libgimpwidgets/gimppageselector.c:332
 msgid "Open _pages as"
 msgstr "Deschide _paginile ca"
 
-#: ../libgimpwidgets/gimppageselector.c:432
+#: ../libgimpwidgets/gimppageselector.c:433
 msgid "Page 000"
 msgstr "Pagina 000"
 
-#: ../libgimpwidgets/gimppageselector.c:520
-#: ../libgimpwidgets/gimppageselector.c:757
+#: ../libgimpwidgets/gimppageselector.c:521
+#: ../libgimpwidgets/gimppageselector.c:758
 #, c-format
 msgid "Page %d"
 msgstr "Pgina %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1182
+#: ../libgimpwidgets/gimppageselector.c:1183
 msgid "One page selected"
 msgstr "O pagină selectată"
 
-#: ../libgimpwidgets/gimppageselector.c:1189
-#: ../libgimpwidgets/gimppageselector.c:1193
+#: ../libgimpwidgets/gimppageselector.c:1190
+#: ../libgimpwidgets/gimppageselector.c:1194
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1282,11 +1304,11 @@ msgstr[0] "%d pagină selectată"
 msgstr[1] "%d pagini selectate"
 msgstr[2] "%d de pagini selectate"
 
-#: ../libgimpwidgets/gimppatheditor.c:237
+#: ../libgimpwidgets/gimppatheditor.c:239
 msgid "Writable"
 msgstr "Scriibil"
 
-#: ../libgimpwidgets/gimppatheditor.c:246
+#: ../libgimpwidgets/gimppatheditor.c:248
 msgid "Folder"
 msgstr "Dosar"
 
@@ -1295,8 +1317,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Clic pe pipetă, după care clic o culoare oriunde pe ecran pentru a selecta "
-"acea culoare."
+"Clic pe pipetă, după care clic pe o culoare oriunde pe ecran pentru a "
+"selecta acea culoare."
 
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:290
@@ -1392,7 +1414,7 @@ msgstr "_Rotește"
 
 #: ../libgimpwidgets/gimpstock.c:341
 msgid "_Shear"
-msgstr "_Foarfecă"
+msgstr "_Înclină"
 
 # valabil la unitățile de măsură de afișate ca drop-down menu
 #: ../libgimpwidgets/gimpunitmenu.c:264
@@ -1653,7 +1675,7 @@ msgstr "Dispozitiv:"
 
 #: ../modules/controller-dx-dinput.c:196
 msgid "The device to read DirectInput events from."
-msgstr "Dispozitivul de la care sunt cititie evenimentele DirectInput."
+msgstr "Dispozitivul de la care sunt citite evenimentele DirectInput."
 
 # hm ?
 #: ../modules/controller-dx-dinput.c:205
