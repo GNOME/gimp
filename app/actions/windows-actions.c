@@ -42,7 +42,6 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-utils.h"
 
 #include "dialogs/dialogs.h"
 

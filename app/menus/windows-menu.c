@@ -40,7 +40,6 @@
 #include "widgets/gimpuimanager.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-utils.h"
 
 #include "dialogs/dialogs.h"
 

@@ -586,6 +586,22 @@ gimp_display_get_by_ID (Gimp *gimp,
   return NULL;
 }
 
+/**
+ * gimp_display_get_action_name:
+ * @display:
+ *
+ * Returns: The action name for the given display. The action name
+ * depends on the display ID. The result must be freed with g_free().
+ **/
+gchar *
+gimp_display_get_action_name (GimpDisplay *display)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+
+  return g_strdup_printf ("windows-display-%04d",
+                          gimp_display_get_ID (display));
+}
+
 Gimp *
 gimp_display_get_gimp (GimpDisplay *display)
 {
