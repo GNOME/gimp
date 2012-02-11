@@ -886,9 +886,9 @@ gimp_data_set_folder_tags (GimpData    *data,
     {
       size_t top_directory_len = strlen (top_directory);
 
-      g_return_if_fail (g_str_has_prefix (dirname, top_directory)
-                        && (dirname[top_directory_len] == '\0'
-                            || G_IS_DIR_SEPARATOR (dirname[top_directory_len])));
+      g_return_if_fail (g_str_has_prefix (dirname, top_directory) &&
+                        (dirname[top_directory_len] == '\0' ||
+                         G_IS_DIR_SEPARATOR (dirname[top_directory_len])));
 
       do
         {
