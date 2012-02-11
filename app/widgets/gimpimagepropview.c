@@ -310,7 +310,7 @@ static void
 gimp_image_prop_view_label_set_filename (GtkWidget *label,
                                          GimpImage *image)
 {
-  const gchar *uri = gimp_image_get_uri (image);
+  const gchar *uri = gimp_image_get_any_uri (image);
 
   if (uri)
     {
@@ -330,7 +330,11 @@ static void
 gimp_image_prop_view_label_set_filesize (GtkWidget *label,
                                          GimpImage *image)
 {
-  gchar *filename = gimp_image_get_filename (image);
+  const gchar *uri      = gimp_image_get_any_uri (image);
+  gchar       *filename = NULL;
+
+  if (uri)
+    filename = g_filename_from_uri (uri, NULL, NULL);
 
   if (filename)
     {
