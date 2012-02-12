@@ -58,6 +58,10 @@ enum
 
 
 static void        print_page_setup_notify            (GtkPrintOperation *operation);
+static void        update_custom_widget               (GtkPrintOperation *operation,
+                                                       GtkWidget         *custom_widget,
+                                                       GtkPageSetup      *page_setup,
+                                                       GtkPrintSettings  *print_settings);
 
 static GtkWidget * print_size_frame                   (PrintData    *data,
                                                        GtkSizeGroup *label_group,
@@ -187,6 +191,9 @@ print_page_layout_gui (PrintData   *data,
   g_signal_connect_object (data->operation, "notify::default-page-setup",
                            G_CALLBACK (print_page_setup_notify),
                            main_hbox, 0);
+  g_signal_connect_object (data->operation, "update-custom-widget",
+                           G_CALLBACK (update_custom_widget),
+                           main_hbox, 0);
 
   gimp_help_connect (main_hbox, gimp_standard_help_func, help_id, NULL);
 
@@ -202,6 +209,15 @@ print_page_setup_notify (GtkPrintOperation *operation)
 
   print_size_info_set_page_setup (&info);
   print_preview_set_page_setup (PRINT_PREVIEW (info.preview), setup);
+}
+
+static void
+update_custom_widget (GtkPrintOperation *operation,
+                      GtkWidget         *custom_widget,
+                      GtkPageSetup      *page_setup,
+                      GtkPrintSettings  *print_settings)
+{
+  gtk_print_operation_set_default_page_setup (operation, page_setup);
 }
 
 
