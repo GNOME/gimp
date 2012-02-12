@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-02 18:49+0100\n"
-"PO-Revision-Date: 2012-02-02 18:48+0100\n"
+"POT-Creation-Date: 2012-02-12 21:52+0100\n"
+"PO-Revision-Date: 2012-02-12 21:53+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -616,7 +616,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:887 ../plug-ins/common/file-pnm.c:583
+#: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
 #: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
@@ -1028,7 +1028,7 @@ msgstr "Wczytanie ustawień miksera kanałów"
 #: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
-#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:752
+#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:756
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1014
 #: ../plug-ins/common/file-ps.c:2910 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
@@ -1067,7 +1067,7 @@ msgstr "Zapis ustawień miksera kanałów"
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
 #: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:486
 #: ../plug-ins/common/file-pcx.c:712 ../plug-ins/common/file-pix.c:526
-#: ../plug-ins/common/file-png.c:1285 ../plug-ins/common/file-pnm.c:1010
+#: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
 #: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
@@ -2244,7 +2244,7 @@ msgstr "Wygięcie"
 #: ../plug-ins/common/curve-bend.c:1262
 #: ../plug-ins/gimpressionist/orientmap.c:590
 #: ../plug-ins/gimpressionist/sizemap.c:459
-#: ../plug-ins/print/print-page-layout.c:171
+#: ../plug-ins/print/print-page-layout.c:175
 msgid "Preview"
 msgstr "Podgląd"
 
@@ -2680,7 +2680,7 @@ msgstr "Usunięcie pasków"
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
-#: ../plug-ins/print/print-page-layout.c:264
+#: ../plug-ins/print/print-page-layout.c:280
 msgid "_Width:"
 msgstr "_Szerokość:"
 
@@ -2992,7 +2992,7 @@ msgstr "Grawerowanie"
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
-#: ../plug-ins/print/print-page-layout.c:266
+#: ../plug-ins/print/print-page-layout.c:282
 msgid "_Height:"
 msgstr "_Wysokość:"
 
@@ -3030,7 +3030,7 @@ msgstr "Wczytaj paletę KISS"
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:759 ../plug-ins/common/file-pnm.c:499
+#: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
 #: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
@@ -3059,7 +3059,7 @@ msgstr "Nieobsługiwana głębia kolorów (%d)."
 #: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1292 ../plug-ins/common/file-pnm.c:1015
+#: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
@@ -3610,7 +3610,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1829
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1902
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Nie można bezstratnie zapisać przezroczystości, zapisano zamiast tego krycie."
@@ -3644,7 +3644,7 @@ msgid "Save creation time"
 msgstr "Zapis czasu powstania"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1878
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1951
 msgid "PNG"
 msgstr "PNG"
 
@@ -3858,7 +3858,7 @@ msgstr "Użycie _wygładzania"
 
 #: ../plug-ins/common/file-pdf-load.c:1460
 #: ../plug-ins/common/file-pdf-load.c:1461 ../plug-ins/common/file-svg.c:917
-#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
+#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:301
 #, c-format
 msgid "pixels/%a"
 msgstr "piksele/%a"
@@ -3932,38 +3932,38 @@ msgstr "Błąd. Aby zapisać plik, należy dodać co najmniej jeden obraz."
 msgid "Alias Pix image"
 msgstr "Obraz Alias Pix"
 
-#: ../plug-ins/common/file-png.c:275 ../plug-ins/common/file-png.c:296
-#: ../plug-ins/common/file-png.c:316 ../plug-ins/common/file-png.c:333
+#: ../plug-ins/common/file-png.c:279 ../plug-ins/common/file-png.c:300
+#: ../plug-ins/common/file-png.c:320 ../plug-ins/common/file-png.c:337
 msgid "PNG image"
 msgstr "Obraz PNG"
 
-#: ../plug-ins/common/file-png.c:640
+#: ../plug-ins/common/file-png.c:644
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "Błąd podczas wczytywania pliku PNG: %s"
 
-#: ../plug-ins/common/file-png.c:728
+#: ../plug-ins/common/file-png.c:732
 #, c-format
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr ""
 "Błąd podczas tworzenia struktur odczytu PNG podczas zapisywania \"%s\"."
 
-#: ../plug-ins/common/file-png.c:738
+#: ../plug-ins/common/file-png.c:742
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Błąd podczas odczytywania pliku \"%s\". Plik może być uszkodzony."
 
-#: ../plug-ins/common/file-png.c:867
+#: ../plug-ins/common/file-png.c:871
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Nieznany model kolorów w pliku PNG \"%s\"."
 
-#: ../plug-ins/common/file-png.c:878
+#: ../plug-ins/common/file-png.c:882
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Nie można utworzyć nowego obrazu dla \"%s\": %s"
 
-#: ../plug-ins/common/file-png.c:927
+#: ../plug-ins/common/file-png.c:936
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3971,22 +3971,43 @@ msgstr ""
 "Plik PNG określa przesunięcie, które powoduje umieszczenie zawartości "
 "warstwy poza obrazem."
 
-#: ../plug-ins/common/file-png.c:1262
+#: ../plug-ins/common/file-png.c:1238
+msgid "Apply PNG Offset"
+msgstr "Zastosowanie przesunięcia PNG"
+
+#: ../plug-ins/common/file-png.c:1242
+msgid "Ignore PNG offset"
+msgstr "Ignorowanie przesunięcia PNG"
+
+#: ../plug-ins/common/file-png.c:1243
+msgid "Apply PNG offset to layer"
+msgstr "Zastosowanie przesunięcia PNG do warstwy"
+
+#: ../plug-ins/common/file-png.c:1267
+#, c-format
+msgid ""
+"The PNG image you are importing specifies an offset of %d, %d. Do you want "
+"to apply this offset to the layer?"
+msgstr ""
+"Importowany obraz PNG określa przesunięcie %d, %d. Zastosować to "
+"przesunięcie do warstwy?"
+
+#: ../plug-ins/common/file-png.c:1335
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "Błąd podczas tworzenia struktur zapisu PNG podczas zapisywania \"%s\"."
 
-#: ../plug-ins/common/file-png.c:1272
+#: ../plug-ins/common/file-png.c:1345
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Błąd podczas zapisywania pliku \"%s\". Nie można zapisać obrazu."
 
-#: ../plug-ins/common/file-png.c:1895
+#: ../plug-ins/common/file-png.c:1968
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika \"%s\": %s"
 
-#: ../plug-ins/common/file-png.c:1896
+#: ../plug-ins/common/file-png.c:1969
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
@@ -12340,7 +12361,7 @@ msgstr "Intensywność światła"
 #: ../plug-ins/lighting/lighting-ui.c:469
 #: ../plug-ins/map-object/map-object-ui.c:613
 #: ../plug-ins/map-object/map-object-ui.c:940
-#: ../plug-ins/print/print-page-layout.c:355
+#: ../plug-ins/print/print-page-layout.c:371
 msgid "Position"
 msgstr "Położenie"
 
@@ -12739,12 +12760,12 @@ msgid "Z scale (size)"
 msgstr "Skala Z (rozmiar)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:414
+#: ../plug-ins/print/print-page-layout.c:430
 msgid "_Top:"
 msgstr "_Góra:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:433
+#: ../plug-ins/print/print-page-layout.c:449
 msgid "_Bottom:"
 msgstr "_Dół:"
 
@@ -12753,7 +12774,7 @@ msgid "Images for the Cap Faces"
 msgstr "Obrazy na płaszczyznach walca"
 
 #: ../plug-ins/map-object/map-object-ui.c:1181
-#: ../plug-ins/print/print-page-layout.c:231
+#: ../plug-ins/print/print-page-layout.c:247
 msgid "Size"
 msgstr "Rozmiar"
 
@@ -12982,78 +13003,70 @@ msgstr "Warstwa zawinięcia"
 msgid "Page Curl"
 msgstr "Zawinięcie strony"
 
-#: ../plug-ins/print/print-page-layout.c:149
+#: ../plug-ins/print/print-page-layout.c:153
 msgid "Ignore Page _Margins"
 msgstr "Ignorowanie _marginesów stron"
 
 #. crop marks toggle
-#: ../plug-ins/print/print-page-layout.c:160
+#: ../plug-ins/print/print-page-layout.c:164
 msgid "_Draw Crop Marks"
 msgstr "_Rysuj znaki kadrowania"
 
-#: ../plug-ins/print/print-page-layout.c:306
+#: ../plug-ins/print/print-page-layout.c:322
 msgid "_X resolution:"
 msgstr "Rozdzielczość _X:"
 
-#: ../plug-ins/print/print-page-layout.c:310
+#: ../plug-ins/print/print-page-layout.c:326
 msgid "_Y resolution:"
 msgstr "Rozdzielczość _Y:"
 
-#: ../plug-ins/print/print-page-layout.c:381
+#: ../plug-ins/print/print-page-layout.c:397
 msgid "_Left:"
 msgstr "_Lewo:"
 
-#: ../plug-ins/print/print-page-layout.c:400
+#: ../plug-ins/print/print-page-layout.c:416
 msgid "_Right:"
 msgstr "_Prawo:"
 
-#: ../plug-ins/print/print-page-layout.c:454
+#: ../plug-ins/print/print-page-layout.c:470
 msgid "C_enter:"
 msgstr "Ś_rodek:"
 
 #. if and how to center the image on the page
-#: ../plug-ins/print/print-page-layout.c:461
+#: ../plug-ins/print/print-page-layout.c:477
 msgctxt "center-mode"
 msgid "None"
 msgstr "Brak"
 
-#: ../plug-ins/print/print-page-layout.c:462
+#: ../plug-ins/print/print-page-layout.c:478
 msgid "Horizontally"
 msgstr "Poziomo"
 
-#: ../plug-ins/print/print-page-layout.c:463
+#: ../plug-ins/print/print-page-layout.c:479
 msgid "Vertically"
 msgstr "Pionowo"
 
-#: ../plug-ins/print/print-page-layout.c:464
+#: ../plug-ins/print/print-page-layout.c:480
 msgid "Both"
 msgstr "Obie"
 
-#: ../plug-ins/print/print.c:102
+#: ../plug-ins/print/print.c:89
 msgid "Print the image"
 msgstr "Drukuje obraz"
 
-#: ../plug-ins/print/print.c:107
+#: ../plug-ins/print/print.c:94
 msgid "_Print..."
 msgstr "Wy_drukuj..."
 
-#: ../plug-ins/print/print.c:118
-msgid "Adjust page size and orientation for printing"
-msgstr "Dostosowuje rozmiar i ułożenie strony do drukowania"
-
-#: ../plug-ins/print/print.c:124
-msgid "Page Set_up"
-msgstr "_Ustawienia strony"
-
-#: ../plug-ins/print/print.c:263
+#: ../plug-ins/print/print.c:216
 msgid "Image Settings"
 msgstr "Ustawienia obrazu"
 
-#: ../plug-ins/print/print.c:347
+#: ../plug-ins/print/print.c:267
 msgid "An error occurred while trying to print:"
 msgstr "Wystąpił błąd podczas próby wydrukowania:"
 
-#: ../plug-ins/print/print.c:374
+#: ../plug-ins/print/print.c:294
 msgid "Printing"
 msgstr "Drukowanie"
 
