@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_SCALE_H__
-#define __GIMP_BRUSH_SCALE_H__
+#ifndef __GIMP_BRUSH_TRANSFORM_H__
+#define __GIMP_BRUSH_TRANSFORM_H__
 
 
 /*  virtual functions of GimpBrush, don't call directly  */
@@ -48,4 +48,4 @@ void      gimp_brush_transform_matrix      (gdouble      width,
                                             GimpMatrix3 *matrix);
 
 
-#endif  /*  __GIMP_BRUSH_SCALE_H__  */
+#endif  /*  __GIMP_BRUSH_TRANSFORM_H__  */
