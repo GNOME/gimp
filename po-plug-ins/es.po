@@ -12,24 +12,24 @@
 # Alonso Lara <keko@khor-ha.net>, 2005.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2009, 2011.
 # Benjamín Valero Espinosa <benjavalero@gmail.com>, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2011, 2012.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-05 05:48+0000\n"
-"PO-Revision-Date: 2012-02-05 19:01+0100\n"
-"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
+"POT-Creation-Date: 2012-02-13 07:20+0000\n"
+"PO-Revision-Date: 2012-02-13 12:09+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:118
 msgid "Original"
@@ -621,7 +621,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:887 ../plug-ins/common/file-pnm.c:583
+#: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
 #: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
@@ -1036,7 +1036,7 @@ msgstr "Cargar la configuración del mezclador de canales"
 #: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
-#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:752
+#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:756
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1014
 #: ../plug-ins/common/file-ps.c:2910 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
@@ -1075,7 +1075,7 @@ msgstr "Guardar la configuración del mezclador de canales"
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
 #: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:486
 #: ../plug-ins/common/file-pcx.c:712 ../plug-ins/common/file-pix.c:526
-#: ../plug-ins/common/file-png.c:1285 ../plug-ins/common/file-pnm.c:1010
+#: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
 #: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
@@ -2262,7 +2262,7 @@ msgstr "Doblar según curva"
 #: ../plug-ins/common/curve-bend.c:1262
 #: ../plug-ins/gimpressionist/orientmap.c:590
 #: ../plug-ins/gimpressionist/sizemap.c:459
-#: ../plug-ins/print/print-page-layout.c:171
+#: ../plug-ins/print/print-page-layout.c:175
 msgid "Preview"
 msgstr "Vista previa"
 
@@ -2700,7 +2700,7 @@ msgstr "Anti-bandas"
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
-#: ../plug-ins/print/print-page-layout.c:264
+#: ../plug-ins/print/print-page-layout.c:280
 msgid "_Width:"
 msgstr "A_nchura:"
 
@@ -3015,7 +3015,7 @@ msgstr "Grabado"
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
-#: ../plug-ins/print/print-page-layout.c:266
+#: ../plug-ins/print/print-page-layout.c:282
 msgid "_Height:"
 msgstr "A_ltura:"
 
@@ -3053,7 +3053,7 @@ msgstr "Cargar paleta KISS"
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:759 ../plug-ins/common/file-pnm.c:499
+#: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
 #: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
@@ -3082,7 +3082,7 @@ msgstr "¡Profundidad de bits no soportada (%d)!"
 #: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1292 ../plug-ins/common/file-pnm.c:1015
+#: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
@@ -3635,7 +3635,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1829
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1902
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No se pudo guardar la transparencia sin pérdidas, guardando la opacidad en "
@@ -3657,7 +3657,7 @@ msgstr "Entrelazar"
 msgid "Save background color"
 msgstr "Guardar el color de fondo"
 
-#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:9
+#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:3
 msgid "Save gamma"
 msgstr "Guardar gamma"
 
@@ -3670,7 +3670,7 @@ msgid "Save creation time"
 msgstr "Guardar la hora de creación"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1878
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1951
 msgid "PNG"
 msgstr "PNG"
 
@@ -3714,7 +3714,7 @@ msgstr "Disposición predeterminada del cuadro:"
 msgid "PNG compression level:"
 msgstr "Nivel de compresión de PNG:"
 
-#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:1
+#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:10
 msgid "Choose a high compression level for small file size"
 msgstr ""
 "Seleccione un nivel de compresión alto para obtener un tamaño de archivo "
@@ -3740,7 +3740,7 @@ msgstr "Bucle"
 msgid "Default frame delay:"
 msgstr "Retardo predeterminado del cuadro:"
 
-#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:11
+#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "milliseconds"
 msgstr "milisegundos"
 
@@ -3887,7 +3887,7 @@ msgstr "Usar _Antialias"
 
 #: ../plug-ins/common/file-pdf-load.c:1460
 #: ../plug-ins/common/file-pdf-load.c:1461 ../plug-ins/common/file-svg.c:917
-#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
+#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:301
 #, c-format
 msgid "pixels/%a"
 msgstr "píxeles/%a"
@@ -3967,37 +3967,37 @@ msgstr "Error: para guardar el archivo, debe añadirse al menos una imagen."
 msgid "Alias Pix image"
 msgstr "Imagen Pix de Alias"
 
-#: ../plug-ins/common/file-png.c:275 ../plug-ins/common/file-png.c:296
-#: ../plug-ins/common/file-png.c:316 ../plug-ins/common/file-png.c:333
+#: ../plug-ins/common/file-png.c:279 ../plug-ins/common/file-png.c:300
+#: ../plug-ins/common/file-png.c:320 ../plug-ins/common/file-png.c:337
 msgid "PNG image"
 msgstr "Imagen PNG"
 
-#: ../plug-ins/common/file-png.c:640
+#: ../plug-ins/common/file-png.c:644
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "Ocurrió un error al abrir el archivo PNG: %s"
 
-#: ../plug-ins/common/file-png.c:728
+#: ../plug-ins/common/file-png.c:732
 #, c-format
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr "Error al crear la estructura de lectura PNG al guardar «%s»."
 
-#: ../plug-ins/common/file-png.c:738
+#: ../plug-ins/common/file-png.c:742
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Ocurrió un error al leer el archivo «%s». ¿Está corrupto el archivo?"
 
-#: ../plug-ins/common/file-png.c:867
+#: ../plug-ins/common/file-png.c:871
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modelo de color desconocido en el archivo PNG «%s»."
 
-#: ../plug-ins/common/file-png.c:878
+#: ../plug-ins/common/file-png.c:882
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "No se pudo crear una imagen nueva para «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:927
+#: ../plug-ins/common/file-png.c:936
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -4005,22 +4005,43 @@ msgstr ""
 "El archivo PNG especifica un desplazamiento que ha causado que la capa sea "
 "posicionada fuera de la imagen."
 
-#: ../plug-ins/common/file-png.c:1262
+#: ../plug-ins/common/file-png.c:1238
+msgid "Apply PNG Offset"
+msgstr "Aplicar desplazamiento de PNG"
+
+#: ../plug-ins/common/file-png.c:1242
+msgid "Ignore PNG offset"
+msgstr "Ignorar el desplazamiento de PNG"
+
+#: ../plug-ins/common/file-png.c:1243
+msgid "Apply PNG offset to layer"
+msgstr "Aplicar desplazamiento de PNG a la capa"
+
+#: ../plug-ins/common/file-png.c:1267
+#, c-format
+msgid ""
+"The PNG image you are importing specifies an offset of %d, %d. Do you want "
+"to apply this offset to the layer?"
+msgstr ""
+"La imagen PNG que está importando especifica un desplazamiento de %d, %d. "
+"¿Quiere aplicar este desplazamiento a la capa?"
+
+#: ../plug-ins/common/file-png.c:1335
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "Error al crear la estructura de escritura PNG al guardar «%s»."
 
-#: ../plug-ins/common/file-png.c:1272
+#: ../plug-ins/common/file-png.c:1345
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Ocurrió un error al guardar «%s». No se pudo guardar la imagen."
 
-#: ../plug-ins/common/file-png.c:1895
+#: ../plug-ins/common/file-png.c:1968
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Ocurrió un error al cargar el archivo de IU «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:1896
+#: ../plug-ins/common/file-png.c:1969
 msgid "Unknown error"
 msgstr "Error desconocido"
 
@@ -8994,7 +9015,7 @@ msgid "Comment"
 msgstr "Comentario"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1189
-#: ../plug-ins/ui/plug-in-file-png.ui.h:12
+#: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
 msgstr "_Cargar predet."
 
@@ -10901,80 +10922,80 @@ msgstr ""
 "tenga alguna influencia"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:1
-msgid "Animated GIF Options"
-msgstr "Opciones del GIF animado"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
-msgid "As _animation"
-msgstr "Como _animación"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
-msgid "GIF Options"
-msgstr "Opciones de GIF"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
 msgid "I_nterlace"
 msgstr "E_ntrelazar"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
+msgid "_GIF comment:"
+msgstr "Comentario de _GIF:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
+msgid "As _animation"
+msgstr "Como _animación"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+msgid "GIF Options"
+msgstr "Opciones de GIF"
+
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
-msgid "U_se disposal entered above for all frames"
-msgstr "U_sar el residuo introducido más arriba para todos los cuadros"
+msgid "_Loop forever"
+msgstr "Buc_le perpetuo"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
 msgid "_Delay between frames where unspecified:"
 msgstr "Retraso entre cua_dros cuando no esté especificado:"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "_Frame disposal where unspecified:"
 msgstr "Residuo de cuadros cuando no esté especi_ficado:"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
-msgid "_GIF comment:"
-msgstr "Comentario de _GIF:"
-
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
-msgid "_Loop forever"
-msgstr "Buc_le perpetuo"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
 msgid "_Use delay entered above for all frames"
 msgstr "_Usar el retraso introducido más arriba para todos los cuadros"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
+msgid "U_se disposal entered above for all frames"
+msgstr "U_sar el residuo introducido más arriba para todos los cuadros"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:11
+msgid "Animated GIF Options"
+msgstr "Opciones del GIF animado"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:1
+msgid "_Interlacing (Adam7)"
+msgstr "Entrela_zado (Adam7)"
+
 #: ../plug-ins/ui/plug-in-file-png.ui.h:2
-msgid "Co_mpression level:"
-msgstr "Nivel de co_mpresión:"
-
-#: ../plug-ins/ui/plug-in-file-png.ui.h:3
-msgid "S_ave Defaults"
-msgstr "_Guardar predet."
-
-#: ../plug-ins/ui/plug-in-file-png.ui.h:4
 msgid "Save _background color"
 msgstr "Guardar el color de _fondo"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:4
+msgid "Save layer o_ffset"
+msgstr "Guardar el desplazamiento de _capa"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
 msgid "Save _resolution"
 msgstr "Guardar la _resolución"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:6
-msgid "Save color _values from transparent pixels"
-msgstr "Guardar los _valores de los colores de los píxeles transparentes"
+msgid "Save creation _time"
+msgstr "Guardar la _hora de creación"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 msgid "Save comme_nt"
 msgstr "G_uardar el comentario"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-msgid "Save creation _time"
-msgstr "Guardar la _hora de creación"
+msgid "Save color _values from transparent pixels"
+msgstr "Guardar los _valores de los colores de los píxeles transparentes"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:10
-msgid "Save layer o_ffset"
-msgstr "Guardar el desplazamiento de _capa"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:9
+msgid "Co_mpression level:"
+msgstr "Nivel de co_mpresión:"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:11
-msgid "_Interlacing (Adam7)"
-msgstr "Entrela_zado (Adam7)"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:12
+msgid "S_ave Defaults"
+msgstr "_Guardar predet."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -12414,7 +12435,7 @@ msgstr "Intensidad de la luz"
 #: ../plug-ins/lighting/lighting-ui.c:469
 #: ../plug-ins/map-object/map-object-ui.c:613
 #: ../plug-ins/map-object/map-object-ui.c:940
-#: ../plug-ins/print/print-page-layout.c:355
+#: ../plug-ins/print/print-page-layout.c:371
 msgid "Position"
 msgstr "Posición"
 
@@ -12809,12 +12830,12 @@ msgid "Z scale (size)"
 msgstr "Escala Z (tamaño)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:414
+#: ../plug-ins/print/print-page-layout.c:430
 msgid "_Top:"
 msgstr "S_uperior:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:433
+#: ../plug-ins/print/print-page-layout.c:449
 msgid "_Bottom:"
 msgstr "I_nferior:"
 
@@ -12823,7 +12844,7 @@ msgid "Images for the Cap Faces"
 msgstr "Imágenes para las tapas"
 
 #: ../plug-ins/map-object/map-object-ui.c:1181
-#: ../plug-ins/print/print-page-layout.c:231
+#: ../plug-ins/print/print-page-layout.c:247
 msgid "Size"
 msgstr "Tamaño"
 
@@ -13053,78 +13074,70 @@ msgstr "Capa del enrollamiento"
 msgid "Page Curl"
 msgstr "Página enrollada"
 
-#: ../plug-ins/print/print-page-layout.c:149
+#: ../plug-ins/print/print-page-layout.c:153
 msgid "Ignore Page _Margins"
 msgstr "Ignorar los _márgenes de la página"
 
 #. crop marks toggle
-#: ../plug-ins/print/print-page-layout.c:160
+#: ../plug-ins/print/print-page-layout.c:164
 msgid "_Draw Crop Marks"
 msgstr "_Dibujar marcas de corte"
 
-#: ../plug-ins/print/print-page-layout.c:306
+#: ../plug-ins/print/print-page-layout.c:322
 msgid "_X resolution:"
 msgstr "Resolución _X:"
 
-#: ../plug-ins/print/print-page-layout.c:310
+#: ../plug-ins/print/print-page-layout.c:326
 msgid "_Y resolution:"
 msgstr "Resolución _Y:"
 
-#: ../plug-ins/print/print-page-layout.c:381
+#: ../plug-ins/print/print-page-layout.c:397
 msgid "_Left:"
 msgstr "I_zquierda:"
 
-#: ../plug-ins/print/print-page-layout.c:400
+#: ../plug-ins/print/print-page-layout.c:416
 msgid "_Right:"
 msgstr "De_recha:"
 
-#: ../plug-ins/print/print-page-layout.c:454
+#: ../plug-ins/print/print-page-layout.c:470
 msgid "C_enter:"
 msgstr "C_entro:"
 
 #. if and how to center the image on the page
-#: ../plug-ins/print/print-page-layout.c:461
+#: ../plug-ins/print/print-page-layout.c:477
 msgctxt "center-mode"
 msgid "None"
 msgstr "Ninguno"
 
-#: ../plug-ins/print/print-page-layout.c:462
+#: ../plug-ins/print/print-page-layout.c:478
 msgid "Horizontally"
 msgstr "Horizontalmente"
 
-#: ../plug-ins/print/print-page-layout.c:463
+#: ../plug-ins/print/print-page-layout.c:479
 msgid "Vertically"
 msgstr "Verticalmente"
 
-#: ../plug-ins/print/print-page-layout.c:464
+#: ../plug-ins/print/print-page-layout.c:480
 msgid "Both"
 msgstr "Ambos"
 
-#: ../plug-ins/print/print.c:102
+#: ../plug-ins/print/print.c:89
 msgid "Print the image"
 msgstr "Imprimir la imagen"
 
-#: ../plug-ins/print/print.c:107
+#: ../plug-ins/print/print.c:94
 msgid "_Print..."
 msgstr "_Imprimir…"
 
-#: ../plug-ins/print/print.c:118
-msgid "Adjust page size and orientation for printing"
-msgstr "Ajustar el tamaño y la orientación de impresión de la página"
-
-#: ../plug-ins/print/print.c:124
-msgid "Page Set_up"
-msgstr "_Preparación de la página"
-
-#: ../plug-ins/print/print.c:263
+#: ../plug-ins/print/print.c:216
 msgid "Image Settings"
 msgstr "Ajustes de la imagen"
 
-#: ../plug-ins/print/print.c:347
+#: ../plug-ins/print/print.c:267
 msgid "An error occurred while trying to print:"
 msgstr "Ocurrió un error durante la impresión:"
 
-#: ../plug-ins/print/print.c:374
+#: ../plug-ins/print/print.c:294
 msgid "Printing"
 msgstr "Impresión"
 
@@ -13189,3 +13202,9 @@ msgstr "_Captura de pantalla…"
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "No se capturó nada"
+
+#~ msgid "Adjust page size and orientation for printing"
+#~ msgstr "Ajustar el tamaño y la orientación de impresión de la página"
+
+#~ msgid "Page Set_up"
+#~ msgstr "_Preparación de la página"
