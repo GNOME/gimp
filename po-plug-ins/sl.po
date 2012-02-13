@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standardni vtičniki\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-02 19:21+0000\n"
-"PO-Revision-Date: 2012-02-02 22:32+0100\n"
+"POT-Creation-Date: 2012-02-13 07:20+0000\n"
+"PO-Revision-Date: 2012-02-13 09:41+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -633,7 +633,7 @@ msgstr "_Navpične"
 #: ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431
 #: ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:887
+#: ../plug-ins/common/file-png.c:891
 #: ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763
 #: ../plug-ins/common/file-sunras.c:977
@@ -1100,7 +1100,7 @@ msgstr "Naloži nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-pat.c:337
 #: ../plug-ins/common/file-pcx.c:361
 #: ../plug-ins/common/file-pix.c:343
-#: ../plug-ins/common/file-png.c:752
+#: ../plug-ins/common/file-png.c:756
 #: ../plug-ins/common/file-pnm.c:494
 #: ../plug-ins/common/file-ps.c:1014
 #: ../plug-ins/common/file-ps.c:2910
@@ -1161,7 +1161,7 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-pat.c:486
 #: ../plug-ins/common/file-pcx.c:712
 #: ../plug-ins/common/file-pix.c:526
-#: ../plug-ins/common/file-png.c:1285
+#: ../plug-ins/common/file-png.c:1358
 #: ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190
 #: ../plug-ins/common/file-raw.c:591
@@ -2359,7 +2359,7 @@ msgstr "Ukrivljanje slike"
 #: ../plug-ins/common/curve-bend.c:1262
 #: ../plug-ins/gimpressionist/orientmap.c:590
 #: ../plug-ins/gimpressionist/sizemap.c:459
-#: ../plug-ins/print/print-page-layout.c:171
+#: ../plug-ins/print/print-page-layout.c:175
 msgid "Preview"
 msgstr "Predogled"
 
@@ -2821,7 +2821,7 @@ msgstr "Odstrani trakove"
 #: ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
-#: ../plug-ins/print/print-page-layout.c:264
+#: ../plug-ins/print/print-page-layout.c:280
 msgid "_Width:"
 msgstr "_Širina:"
 
@@ -3149,7 +3149,7 @@ msgstr "Vgraviraj"
 #: ../plug-ins/common/tile.c:432
 #: ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
-#: ../plug-ins/print/print-page-layout.c:266
+#: ../plug-ins/print/print-page-layout.c:282
 msgid "_Height:"
 msgstr "_Višina:"
 
@@ -3193,7 +3193,7 @@ msgstr "Naloži paleto KISS"
 #: ../plug-ins/common/file-pcx.c:366
 #: ../plug-ins/common/file-pdf-load.c:861
 #: ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:759
+#: ../plug-ins/common/file-png.c:763
 #: ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020
 #: ../plug-ins/common/file-raw.c:716
@@ -3236,7 +3236,7 @@ msgstr "Nepodprta bitna globina (%d)!"
 #: ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644
 #: ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1292
+#: ../plug-ins/common/file-png.c:1365
 #: ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195
 #: ../plug-ins/common/file-sunras.c:570
@@ -3743,7 +3743,7 @@ msgstr "Barvna komponenta %d slike '%s' je podpisana. To trenutno ni podprto."
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: ../plug-ins/common/file-mng.c:534
-#: ../plug-ins/common/file-png.c:1829
+#: ../plug-ins/common/file-png.c:1902
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Prosojnosti ni mogoče shraniti brez izgub, zato bo shranjena prekrivnost."
 
@@ -3764,7 +3764,7 @@ msgid "Save background color"
 msgstr "Shrani barvo ozadja"
 
 #: ../plug-ins/common/file-mng.c:1371
-#: ../plug-ins/ui/plug-in-file-png.ui.h:9
+#: ../plug-ins/ui/plug-in-file-png.ui.h:3
 msgid "Save gamma"
 msgstr "Shrani gamo"
 
@@ -3778,7 +3778,7 @@ msgstr "Shrani čas nastanka"
 
 #. Dialog init
 #: ../plug-ins/common/file-mng.c:1411
-#: ../plug-ins/common/file-png.c:1878
+#: ../plug-ins/common/file-png.c:1951
 msgid "PNG"
 msgstr "PNG"
 
@@ -3823,7 +3823,7 @@ msgid "PNG compression level:"
 msgstr "Raven stiskanja PNG:"
 
 #: ../plug-ins/common/file-mng.c:1465
-#: ../plug-ins/ui/plug-in-file-png.ui.h:1
+#: ../plug-ins/ui/plug-in-file-png.ui.h:10
 msgid "Choose a high compression level for small file size"
 msgstr "Izberite visoko raven stiskanja za manjše datoteke"
 
@@ -3848,7 +3848,7 @@ msgid "Default frame delay:"
 msgstr "Privzeta zakasnitev slik:"
 
 #: ../plug-ins/common/file-mng.c:1542
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:11
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "milliseconds"
 msgstr "milisekund"
 
@@ -3998,7 +3998,7 @@ msgstr "Uporabi _glajenje robov"
 #: ../plug-ins/common/file-pdf-load.c:1461
 #: ../plug-ins/common/file-svg.c:917
 #: ../plug-ins/common/file-wmf.c:698
-#: ../plug-ins/print/print-page-layout.c:285
+#: ../plug-ins/print/print-page-layout.c:301
 #, c-format
 msgid "pixels/%a"
 msgstr "slik. točk/%a"
@@ -4071,58 +4071,75 @@ msgstr "Napaka! Če želite shraniti datoteko, morate dodati vsaj eno sliko!"
 msgid "Alias Pix image"
 msgstr "Slika Alias PIX"
 
-#: ../plug-ins/common/file-png.c:275
-#: ../plug-ins/common/file-png.c:296
-#: ../plug-ins/common/file-png.c:316
-#: ../plug-ins/common/file-png.c:333
+#: ../plug-ins/common/file-png.c:279
+#: ../plug-ins/common/file-png.c:300
+#: ../plug-ins/common/file-png.c:320
+#: ../plug-ins/common/file-png.c:337
 msgid "PNG image"
 msgstr "Slika PNG"
 
-#: ../plug-ins/common/file-png.c:640
+#: ../plug-ins/common/file-png.c:644
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "Napaka pri nalaganju datoteke PNG: %s"
 
-#: ../plug-ins/common/file-png.c:728
+#: ../plug-ins/common/file-png.c:732
 #, c-format
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr "Napaka pri ustvarjanju bralne strukture za PNG pri shranjevanju '%s'."
 
-#: ../plug-ins/common/file-png.c:738
+#: ../plug-ins/common/file-png.c:742
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Napaka pri branju '%s'. Je datoteka poškodovana?"
 
-#: ../plug-ins/common/file-png.c:867
+#: ../plug-ins/common/file-png.c:871
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Neznan barvni model v datoteki PNG '%s'."
 
-#: ../plug-ins/common/file-png.c:878
+#: ../plug-ins/common/file-png.c:882
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Nove slike za '%s' ni mogoče ustvariti: %s"
 
-#: ../plug-ins/common/file-png.c:927
+#: ../plug-ins/common/file-png.c:936
 msgid "The PNG file specifies an offset that caused the layer to be positioned outside the image."
 msgstr "Datoteka PNG navaja zamik, ki je povzročil, da je plast vzpostavljena zunaj slike."
 
-#: ../plug-ins/common/file-png.c:1262
+#: ../plug-ins/common/file-png.c:1238
+msgid "Apply PNG Offset"
+msgstr "Uveljavi odmik PNG"
+
+#: ../plug-ins/common/file-png.c:1242
+msgid "Ignore PNG offset"
+msgstr "Prezri odmik PNG"
+
+#: ../plug-ins/common/file-png.c:1243
+msgid "Apply PNG offset to layer"
+msgstr "Uveljavi odmik PNG na plasti"
+
+#: ../plug-ins/common/file-png.c:1267
+#, c-format
+msgid "The PNG image you are importing specifies an offset of %d, %d. Do you want to apply this offset to the layer?"
+msgstr "Slika PNG, ki jo uvažate, določa odmik %d, %d. Želite uveljaviti ta odmik na plasti?"
+
+#: ../plug-ins/common/file-png.c:1335
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "Napaka pri ustvarjanju pisalne strukture za PNG pri shranjevanju '%s'."
 
-#: ../plug-ins/common/file-png.c:1272
+#: ../plug-ins/common/file-png.c:1345
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Napaka pri shranjevanju '%s'. Slike ni mogoče shraniti."
 
-#: ../plug-ins/common/file-png.c:1895
+#: ../plug-ins/common/file-png.c:1968
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Napaka pri nalaganju datoteke up. vmesnika '%s': %s"
 
-#: ../plug-ins/common/file-png.c:1896
+#: ../plug-ins/common/file-png.c:1969
 msgid "Unknown error"
 msgstr "Neznana napaka"
 
@@ -9066,7 +9083,7 @@ msgid "Comment"
 msgstr "Komentar"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1189
-#: ../plug-ins/ui/plug-in-file-png.ui.h:12
+#: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
 msgstr "_Naloži privzete vrednosti"
 
@@ -10919,80 +10936,80 @@ msgid "Voronoi-mode makes only the smvector closest to the given point have any 
 msgstr "Način Voronoi dovoli vplivati le vektorju smvector, ki je dani točki najbližji"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:1
-msgid "Animated GIF Options"
-msgstr "Možnosti za animirani GIF ..."
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
-msgid "As _animation"
-msgstr "Kot _animacija"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
-msgid "GIF Options"
-msgstr "Možnosti GIF"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
 msgid "I_nterlace"
 msgstr "Preple_ti"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
+msgid "_GIF comment:"
+msgstr "Komentar _GIF:"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
+msgid "As _animation"
+msgstr "Kot _animacija"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+msgid "GIF Options"
+msgstr "Možnosti GIF"
+
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
-msgid "U_se disposal entered above for all frames"
-msgstr "Upo_rabi zgoraj vneseno opustitev za vse sličice"
+msgid "_Loop forever"
+msgstr "Zan_kaj neskončno"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
 msgid "_Delay between frames where unspecified:"
 msgstr "_Zakasnitev med sličicami, kjer ni določena:"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "_Frame disposal where unspecified:"
 msgstr "Opu_stitev sličic, kjer ni določena:"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
-msgid "_GIF comment:"
-msgstr "Komentar _GIF:"
-
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
-msgid "_Loop forever"
-msgstr "Zan_kaj neskončno"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
 msgid "_Use delay entered above for all frames"
 msgstr "_Uporabi zgoraj vneseno zakasnitev za vse sličice"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
+msgid "U_se disposal entered above for all frames"
+msgstr "Upo_rabi zgoraj vneseno opustitev za vse sličice"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:11
+msgid "Animated GIF Options"
+msgstr "Možnosti za animirani GIF ..."
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:1
+msgid "_Interlacing (Adam7)"
+msgstr "P_repletanje (Adam7)"
+
 #: ../plug-ins/ui/plug-in-file-png.ui.h:2
-msgid "Co_mpression level:"
-msgstr "Raven s_tiskanja:"
-
-#: ../plug-ins/ui/plug-in-file-png.ui.h:3
-msgid "S_ave Defaults"
-msgstr "S_hrani privzete vrednosti"
-
-#: ../plug-ins/ui/plug-in-file-png.ui.h:4
 msgid "Save _background color"
 msgstr "Shrani _barvo ozadja"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:4
+msgid "Save layer o_ffset"
+msgstr "Shrani _odmik plasti"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
 msgid "Save _resolution"
 msgstr "Shrani _ločljivost"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:6
-msgid "Save color _values from transparent pixels"
-msgstr "Shrani barvne _vrednosti iz prosojnih slikovnih točk"
+msgid "Save creation _time"
+msgstr "Shrani _čas nastanka"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 msgid "Save comme_nt"
 msgstr "Shrani kome_ntar"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-msgid "Save creation _time"
-msgstr "Shrani _čas nastanka"
+msgid "Save color _values from transparent pixels"
+msgstr "Shrani barvne _vrednosti iz prosojnih slikovnih točk"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:10
-msgid "Save layer o_ffset"
-msgstr "Shrani _odmik plasti"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:9
+msgid "Co_mpression level:"
+msgstr "Raven s_tiskanja:"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:11
-msgid "_Interlacing (Adam7)"
-msgstr "P_repletanje (Adam7)"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:12
+msgid "S_ave Defaults"
+msgstr "S_hrani privzete vrednosti"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -12416,7 +12433,7 @@ msgstr "Jakost svetlobe"
 #: ../plug-ins/lighting/lighting-ui.c:469
 #: ../plug-ins/map-object/map-object-ui.c:613
 #: ../plug-ins/map-object/map-object-ui.c:940
-#: ../plug-ins/print/print-page-layout.c:355
+#: ../plug-ins/print/print-page-layout.c:371
 msgid "Position"
 msgstr "Položaj"
 
@@ -12807,12 +12824,12 @@ msgid "Z scale (size)"
 msgstr "Sprememba merila Z (velikost)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:414
+#: ../plug-ins/print/print-page-layout.c:430
 msgid "_Top:"
 msgstr "_Na vrhu:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:433
+#: ../plug-ins/print/print-page-layout.c:449
 msgid "_Bottom:"
 msgstr "_Na dnu:"
 
@@ -12821,7 +12838,7 @@ msgid "Images for the Cap Faces"
 msgstr "Slike za površino valja"
 
 #: ../plug-ins/map-object/map-object-ui.c:1181
-#: ../plug-ins/print/print-page-layout.c:231
+#: ../plug-ins/print/print-page-layout.c:247
 msgid "Size"
 msgstr "Velikost"
 
@@ -13050,78 +13067,70 @@ msgstr "Zavihaj plast"
 msgid "Page Curl"
 msgstr "Zavihaj"
 
-#: ../plug-ins/print/print-page-layout.c:149
+#: ../plug-ins/print/print-page-layout.c:153
 msgid "Ignore Page _Margins"
 msgstr "Prezri _robove strani"
 
 #. crop marks toggle
-#: ../plug-ins/print/print-page-layout.c:160
+#: ../plug-ins/print/print-page-layout.c:164
 msgid "_Draw Crop Marks"
 msgstr "_Nariši oznake obrezave"
 
-#: ../plug-ins/print/print-page-layout.c:306
+#: ../plug-ins/print/print-page-layout.c:322
 msgid "_X resolution:"
 msgstr "Ločljivost _X:"
 
-#: ../plug-ins/print/print-page-layout.c:310
+#: ../plug-ins/print/print-page-layout.c:326
 msgid "_Y resolution:"
 msgstr "Ločljivost _Y:"
 
-#: ../plug-ins/print/print-page-layout.c:381
+#: ../plug-ins/print/print-page-layout.c:397
 msgid "_Left:"
 msgstr "_Levo:"
 
-#: ../plug-ins/print/print-page-layout.c:400
+#: ../plug-ins/print/print-page-layout.c:416
 msgid "_Right:"
 msgstr "_Desno:"
 
-#: ../plug-ins/print/print-page-layout.c:454
+#: ../plug-ins/print/print-page-layout.c:470
 msgid "C_enter:"
 msgstr "_Sredinsko:"
 
 #. if and how to center the image on the page
-#: ../plug-ins/print/print-page-layout.c:461
+#: ../plug-ins/print/print-page-layout.c:477
 msgctxt "center-mode"
 msgid "None"
 msgstr "Brez"
 
-#: ../plug-ins/print/print-page-layout.c:462
+#: ../plug-ins/print/print-page-layout.c:478
 msgid "Horizontally"
 msgstr "Vodoravno"
 
-#: ../plug-ins/print/print-page-layout.c:463
+#: ../plug-ins/print/print-page-layout.c:479
 msgid "Vertically"
 msgstr "Navpično"
 
-#: ../plug-ins/print/print-page-layout.c:464
+#: ../plug-ins/print/print-page-layout.c:480
 msgid "Both"
 msgstr "Oboje"
 
-#: ../plug-ins/print/print.c:102
+#: ../plug-ins/print/print.c:89
 msgid "Print the image"
 msgstr "Natisni sliko"
 
-#: ../plug-ins/print/print.c:107
+#: ../plug-ins/print/print.c:94
 msgid "_Print..."
 msgstr "_Natisni ..."
 
-#: ../plug-ins/print/print.c:118
-msgid "Adjust page size and orientation for printing"
-msgstr "Prilagodi velikost in postavitev strani za tiskanje"
-
-#: ../plug-ins/print/print.c:124
-msgid "Page Set_up"
-msgstr "Nastavitev st_rani"
-
-#: ../plug-ins/print/print.c:263
+#: ../plug-ins/print/print.c:216
 msgid "Image Settings"
 msgstr "Nastavitve slike"
 
-#: ../plug-ins/print/print.c:347
+#: ../plug-ins/print/print.c:267
 msgid "An error occurred while trying to print:"
 msgstr "Pri poskusu tiskanja je prišlo do napake:"
 
-#: ../plug-ins/print/print.c:374
+#: ../plug-ins/print/print.c:294
 msgid "Printing"
 msgstr "Tiskanje"
 
