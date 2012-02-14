@@ -175,7 +175,6 @@ file_save_dialog_response (GtkWidget *save_dialog,
       return;
     }
 
-  gimp_file_dialog_set_sensitive (dialog, FALSE);
   handler_id = g_signal_connect (dialog, "destroy",
                                  G_CALLBACK (gtk_widget_destroyed),
                                  &dialog);
@@ -183,6 +182,8 @@ file_save_dialog_response (GtkWidget *save_dialog,
   if (file_save_dialog_check_uri (save_dialog, gimp,
                                   &uri, &basename, &save_proc))
     {
+      gimp_file_dialog_set_sensitive (dialog, FALSE);
+
       if (file_save_dialog_save_image (GIMP_PROGRESS (save_dialog),
                                        gimp,
                                        dialog->image,
@@ -239,13 +240,13 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
       g_free (uri);
       g_free (basename);
+
+      if (dialog)
+        gimp_file_dialog_set_sensitive (dialog, TRUE);
     }
 
   if (dialog)
-    {
-      gimp_file_dialog_set_sensitive (dialog, TRUE);
-      g_signal_handler_disconnect (dialog, handler_id);
-    }
+    g_signal_handler_disconnect (dialog, handler_id);
 }
 
 /*
