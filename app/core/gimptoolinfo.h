@@ -45,7 +45,7 @@ struct _GimpToolInfo
   gchar               *blurb;
   gchar               *help;
 
-  gchar               *menu_path;
+  gchar               *menu_label;
   gchar               *menu_accel;
 
   gchar               *help_domain;
@@ -73,7 +73,7 @@ GimpToolInfo * gimp_tool_info_new          (Gimp                *gimp,
                                             const gchar         *identifier,
                                             const gchar         *blurb,
                                             const gchar         *help,
-                                            const gchar         *menu_path,
+                                            const gchar         *menu_label,
                                             const gchar         *menu_accel,
                                             const gchar         *help_domain,
                                             const gchar         *help_id,

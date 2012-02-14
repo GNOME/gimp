@@ -738,7 +738,7 @@ tools_actions_setup (GimpActionGroup *group)
     {
       GimpToolInfo *tool_info = list->data;
 
-      if (tool_info->menu_path)
+      if (tool_info->menu_label)
         {
           GimpStringActionEntry  entry;
           const gchar           *stock_id;
@@ -756,7 +756,7 @@ tools_actions_setup (GimpActionGroup *group)
 
           entry.name        = name;
           entry.stock_id    = stock_id;
-          entry.label       = tool_info->menu_path;
+          entry.label       = tool_info->menu_label;
           entry.accelerator = tool_info->menu_accel;
           entry.tooltip     = tool_info->help;
           entry.help_id     = tool_info->help_id;

@@ -93,7 +93,7 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
   tool_info->blurb             = NULL;
   tool_info->help              = NULL;
 
-  tool_info->menu_path         = NULL;
+  tool_info->menu_label        = NULL;
   tool_info->menu_accel        = NULL;
 
   tool_info->help_domain       = NULL;
@@ -141,10 +141,10 @@ gimp_tool_info_finalize (GObject *object)
       tool_info->blurb = NULL;
     }
 
-  if (tool_info->menu_path)
+  if (tool_info->menu_label)
     {
-      g_free (tool_info->menu_path);
-      tool_info->menu_path = NULL;
+      g_free (tool_info->menu_label);
+      tool_info->menu_label = NULL;
     }
   if (tool_info->menu_accel)
     {
@@ -231,7 +231,7 @@ gimp_tool_info_new (Gimp                *gimp,
                     const gchar         *identifier,
                     const gchar         *blurb,
                     const gchar         *help,
-                    const gchar         *menu_path,
+                    const gchar         *menu_label,
                     const gchar         *menu_accel,
                     const gchar         *help_domain,
                     const gchar         *help_id,
@@ -245,7 +245,7 @@ gimp_tool_info_new (Gimp                *gimp,
   g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (blurb != NULL, NULL);
   g_return_val_if_fail (help != NULL, NULL);
-  g_return_val_if_fail (menu_path != NULL, NULL);
+  g_return_val_if_fail (menu_label != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (paint_core_name != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
@@ -268,7 +268,7 @@ gimp_tool_info_new (Gimp                *gimp,
   tool_info->blurb             = g_strdup (blurb);
   tool_info->help              = g_strdup (help);
 
-  tool_info->menu_path         = g_strdup (menu_path);
+  tool_info->menu_label        = g_strdup (menu_label);
   tool_info->menu_accel        = g_strdup (menu_accel);
 
   tool_info->help_domain       = g_strdup (help_domain);
