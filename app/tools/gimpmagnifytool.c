@@ -90,7 +90,7 @@ gimp_magnify_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-zoom-tool",
                 _("Zoom"),
                 _("Zoom Tool: Adjust the zoom level"),
-                NC_("tool", "_Zoom"), "Z",
+                N_("_Zoom"), "Z",
                 NULL, GIMP_HELP_TOOL_ZOOM,
                 GIMP_STOCK_TOOL_ZOOM,
                 data);
