@@ -12342,7 +12342,7 @@ msgstr "اقلب"
 #: ../app/tools/gimpfliptool.c:85
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
-msgstr "أداة القلب: اقلب الطبقة، أو التحديد أو المسار أفقا أو رأسيا"
+msgstr "أداة القلب: اقلب الطبقة، أو التحديد أو المسار أفقيا أو رأسيا"
 
 #: ../app/tools/gimpfliptool.c:87
 msgid "_Flip"
@@ -12508,7 +12508,7 @@ msgstr "حدّد ضبابيا"
 
 #: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr "أداة التحديد الضبابي: حدد مناطق متصلة على اعتيار اللون"
+msgstr "أداة التحديد الضبابي: حدد مناطق متصلة على اعتبار اللون"
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fu_zzy Select"
