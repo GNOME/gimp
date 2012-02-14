@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-04 19:01+0000\n"
+"POT-Creation-Date: 2012-02-14 11:20+0000\n"
 "PO-Revision-Date: 2012-01-22 00:24+0900\n"
 "Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../app/about.h:26 ../desktop/gimp.desktop.in.in.h:2
+#: ../app/about.h:26 ../desktop/gimp.desktop.in.in.h:1
 msgid "GNU Image Manipulation Program"
 msgstr "GIMP (GNU Image Manipulation Program)"
 
@@ -844,7 +844,7 @@ msgstr "この設定をオンにすると、可能な限り GEGL を画像処理
 #: ../app/actions/context-actions.c:46
 msgctxt "context-action"
 msgid "_Context"
-msgstr "状況適応ヘルプ(_C)"
+msgstr "コンテキスト(_C)"
 
 #: ../app/actions/context-actions.c:48
 msgctxt "context-action"
@@ -4159,146 +4159,146 @@ msgctxt "patterns-action"
 msgid "Edit pattern"
 msgstr "パターンの編集"
 
-#: ../app/actions/plug-in-actions.c:84
+#: ../app/actions/plug-in-actions.c:85
 msgctxt "plug-in-action"
 msgid "Filte_rs"
 msgstr "フィルター(_R)"
 
-#: ../app/actions/plug-in-actions.c:86
+#: ../app/actions/plug-in-actions.c:87
 msgctxt "plug-in-action"
 msgid "Recently Used"
 msgstr "最近使ったフィルター"
 
-#: ../app/actions/plug-in-actions.c:88
+#: ../app/actions/plug-in-actions.c:89
 msgctxt "plug-in-action"
 msgid "_Blur"
 msgstr "ぼかし(_B)"
 
-#: ../app/actions/plug-in-actions.c:90
+#: ../app/actions/plug-in-actions.c:91
 msgctxt "plug-in-action"
 msgid "_Noise"
 msgstr "ノイズ(_N)"
 
-#: ../app/actions/plug-in-actions.c:92
+#: ../app/actions/plug-in-actions.c:93
 msgctxt "plug-in-action"
 msgid "Edge-De_tect"
 msgstr "輪郭抽出(_T)"
 
-#: ../app/actions/plug-in-actions.c:94
+#: ../app/actions/plug-in-actions.c:95
 msgctxt "plug-in-action"
 msgid "En_hance"
 msgstr "強調(_H)"
 
-#: ../app/actions/plug-in-actions.c:96
+#: ../app/actions/plug-in-actions.c:97
 msgctxt "plug-in-action"
 msgid "C_ombine"
 msgstr "合成(_O)"
 
-#: ../app/actions/plug-in-actions.c:98
+#: ../app/actions/plug-in-actions.c:99
 msgctxt "plug-in-action"
 msgid "_Generic"
 msgstr "汎用(_G)"
 
-#: ../app/actions/plug-in-actions.c:100
+#: ../app/actions/plug-in-actions.c:101
 msgctxt "plug-in-action"
 msgid "_Light and Shadow"
 msgstr "照明と投影(_L)"
 
-#: ../app/actions/plug-in-actions.c:102
+#: ../app/actions/plug-in-actions.c:103
 msgctxt "plug-in-action"
 msgid "_Distorts"
 msgstr "変形(_D)"
 
-#: ../app/actions/plug-in-actions.c:104
+#: ../app/actions/plug-in-actions.c:105
 msgctxt "plug-in-action"
 msgid "_Artistic"
 msgstr "芸術的効果(_A)"
 
-#: ../app/actions/plug-in-actions.c:106
+#: ../app/actions/plug-in-actions.c:107
 msgctxt "plug-in-action"
 msgid "_Decor"
 msgstr "装飾(_D)"
 
-#: ../app/actions/plug-in-actions.c:108
+#: ../app/actions/plug-in-actions.c:109
 msgctxt "plug-in-action"
 msgid "_Map"
 msgstr "マップ(_M)"
 
-#: ../app/actions/plug-in-actions.c:110
+#: ../app/actions/plug-in-actions.c:111
 msgctxt "plug-in-action"
 msgid "_Render"
 msgstr "下塗り(_R)"
 
-#: ../app/actions/plug-in-actions.c:112
+#: ../app/actions/plug-in-actions.c:113
 msgctxt "plug-in-action"
 msgid "_Clouds"
 msgstr "雲(_C)"
 
-#: ../app/actions/plug-in-actions.c:114
+#: ../app/actions/plug-in-actions.c:115
 msgctxt "plug-in-action"
 msgid "_Nature"
 msgstr "自然(_N)"
 
-#: ../app/actions/plug-in-actions.c:116
+#: ../app/actions/plug-in-actions.c:117
 msgctxt "plug-in-action"
 msgid "_Pattern"
 msgstr "パターン(_P)"
 
-#: ../app/actions/plug-in-actions.c:118
+#: ../app/actions/plug-in-actions.c:119
 msgctxt "plug-in-action"
 msgid "_Web"
 msgstr "ウェブ(_W)"
 
-#: ../app/actions/plug-in-actions.c:120
+#: ../app/actions/plug-in-actions.c:121
 msgctxt "plug-in-action"
 msgid "An_imation"
 msgstr "アニメーション(_I)"
 
-#: ../app/actions/plug-in-actions.c:123
+#: ../app/actions/plug-in-actions.c:124
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
 msgstr "すべてのフィルターのリセット(_F)"
 
-#: ../app/actions/plug-in-actions.c:124
+#: ../app/actions/plug-in-actions.c:125
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
 msgstr "すべてのフィルター設定を既定値に戻します"
 
-#: ../app/actions/plug-in-actions.c:132
+#: ../app/actions/plug-in-actions.c:133
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
 msgstr "フィルターの再適用(_P)"
 
-#: ../app/actions/plug-in-actions.c:134
+#: ../app/actions/plug-in-actions.c:135
 msgctxt "plug-in-action"
 msgid "Rerun the last used plug-in using the same settings"
 msgstr "前回と同じ設定でフィルターを再実行します"
 
-#: ../app/actions/plug-in-actions.c:139
+#: ../app/actions/plug-in-actions.c:140
 msgctxt "plug-in-action"
 msgid "R_e-Show Last"
 msgstr "フィルターの再表示(_E)"
 
-#: ../app/actions/plug-in-actions.c:140
+#: ../app/actions/plug-in-actions.c:141
 msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
 msgstr "前回使ったフィルターのダイアログを表示します"
 
-#: ../app/actions/plug-in-actions.c:531
+#: ../app/actions/plug-in-actions.c:551
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "\"%s\" の再適用(_P)"
 
-#: ../app/actions/plug-in-actions.c:532
+#: ../app/actions/plug-in-actions.c:552
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "\"%s\" の再表示(_E)"
 
-#: ../app/actions/plug-in-actions.c:548
+#: ../app/actions/plug-in-actions.c:568
 msgid "Repeat Last"
 msgstr "フィルターの再適用"
 
-#: ../app/actions/plug-in-actions.c:550
+#: ../app/actions/plug-in-actions.c:570
 msgid "Re-Show Last"
 msgstr "フィルターの再表示"
 
@@ -4775,52 +4775,52 @@ msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "右から左へ"
 
-#: ../app/actions/tool-options-actions.c:54
+#: ../app/actions/tool-options-actions.c:56
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
 msgstr "ツールオプションのメニュー"
 
-#: ../app/actions/tool-options-actions.c:58
+#: ../app/actions/tool-options-actions.c:60
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
 msgstr "ツールプリセットの保存(_S)"
 
-#: ../app/actions/tool-options-actions.c:62
+#: ../app/actions/tool-options-actions.c:64
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
 msgstr "ツールプリセットの更新(_R)"
 
-#: ../app/actions/tool-options-actions.c:66
+#: ../app/actions/tool-options-actions.c:68
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
 msgstr "ツールプリセットの編集(_D)"
 
-#: ../app/actions/tool-options-actions.c:70
+#: ../app/actions/tool-options-actions.c:72
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
 msgstr "ツールプリセットの削除(_D)"
 
-#: ../app/actions/tool-options-actions.c:74
+#: ../app/actions/tool-options-actions.c:76
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
 msgstr "新しいツールプリセット(_N)..."
 
-#: ../app/actions/tool-options-actions.c:79
+#: ../app/actions/tool-options-actions.c:81
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
 msgstr "ツールオプションをリセット(_E)"
 
-#: ../app/actions/tool-options-actions.c:80
+#: ../app/actions/tool-options-actions.c:82
 msgctxt "tool-options-action"
 msgid "Reset to default values"
 msgstr "このツールオプションを既定値に戻します"
 
-#: ../app/actions/tool-options-actions.c:85
+#: ../app/actions/tool-options-actions.c:87
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
 msgstr "すべてのツールオプションのリセット(_A)"
 
-#: ../app/actions/tool-options-actions.c:86
+#: ../app/actions/tool-options-actions.c:88
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
 msgstr "すべてのツールオプションを既定値に戻します"
@@ -5213,7 +5213,7 @@ msgid "New Path Options"
 msgstr "新しいパスを追加"
 
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:199
-#: ../app/tools/gimpvectortool.c:1969
+#: ../app/tools/gimpvectortool.c:1975
 msgid "Stroke Path"
 msgstr "パスの境界線を描画"
 
@@ -5707,47 +5707,47 @@ msgstr "スクリーン %s"
 msgid "Move this window to screen %s"
 msgstr "このウィンドウをスクリーン %s に移動します"
 
-#: ../app/actions/windows-actions.c:96
+#: ../app/actions/windows-actions.c:95
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "ウィンドウ(_W)"
 
-#: ../app/actions/windows-actions.c:98
+#: ../app/actions/windows-actions.c:97
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "最近閉じたドック(_R)"
 
-#: ../app/actions/windows-actions.c:100
+#: ../app/actions/windows-actions.c:99
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "ドッキング可能なダイアログ(_D)"
 
-#: ../app/actions/windows-actions.c:103
+#: ../app/actions/windows-actions.c:102
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr "次の画像"
 
-#: ../app/actions/windows-actions.c:104
+#: ../app/actions/windows-actions.c:103
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "次の画像に移動します"
 
-#: ../app/actions/windows-actions.c:109
+#: ../app/actions/windows-actions.c:108
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "前の画像"
 
-#: ../app/actions/windows-actions.c:110
+#: ../app/actions/windows-actions.c:109
 msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "前の画像に移動します"
 
-#: ../app/actions/windows-actions.c:118
+#: ../app/actions/windows-actions.c:117
 msgctxt "windows-action"
 msgid "Hide Docks"
 msgstr "ドックを隠す"
 
-#: ../app/actions/windows-actions.c:119
+#: ../app/actions/windows-actions.c:118
 msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
@@ -5755,12 +5755,12 @@ msgstr ""
 "この設定をオンにすると、ドックとダイアログを隠して画像ウィンドウのみを表示し"
 "ます。"
 
-#: ../app/actions/windows-actions.c:125
+#: ../app/actions/windows-actions.c:124
 msgctxt "windows-action"
 msgid "Single-Window Mode"
 msgstr "シングルウィンドウモード"
 
-#: ../app/actions/windows-actions.c:126
+#: ../app/actions/windows-actions.c:125
 msgctxt "windows-action"
 msgid ""
 "When enabled GIMP is in a single-window mode. Far from completely "
@@ -7902,8 +7902,8 @@ msgstr ""
 "'%s' を削除できません。\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:427 ../app/core/gimpdatafactory.c:456
-#: ../app/core/gimpdatafactory.c:622 ../app/core/gimpdatafactory.c:644
+#: ../app/core/gimpdatafactory.c:428 ../app/core/gimpdatafactory.c:457
+#: ../app/core/gimpdatafactory.c:623 ../app/core/gimpdatafactory.c:645
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7913,18 +7913,18 @@ msgstr ""
 "データ保存に失敗しました。\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:536 ../app/core/gimpdatafactory.c:539
+#: ../app/core/gimpdatafactory.c:537 ../app/core/gimpdatafactory.c:540
 #: ../app/core/gimpitem.c:493 ../app/core/gimpitem.c:496
 msgid "copy"
 msgstr "コピー"
 
-#: ../app/core/gimpdatafactory.c:548 ../app/core/gimpitem.c:505
+#: ../app/core/gimpdatafactory.c:549 ../app/core/gimpitem.c:505
 #, c-format
 msgid "%s copy"
 msgstr "%s コピー"
 
 # '%s' はフォルダー名を指す
-#: ../app/core/gimpdatafactory.c:741
+#: ../app/core/gimpdatafactory.c:742
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -7935,7 +7935,7 @@ msgstr ""
 "フォルダーを作成するか、設定ダイアログの [フォルダー] セクションでフォルダー"
 "を指定し直してください。"
 
-#: ../app/core/gimpdatafactory.c:762
+#: ../app/core/gimpdatafactory.c:763
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -7946,12 +7946,12 @@ msgstr ""
 "更した場合、この現象が起こり得ます。) 設定ダイアログの [フォルダー] セクショ"
 "ンでフォルダーを指定し直してください。"
 
-#: ../app/core/gimpdatafactory.c:772
+#: ../app/core/gimpdatafactory.c:773
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "書き込み可能なデータフォルダーが設定されていません。"
 
-#: ../app/core/gimpdatafactory.c:911
+#: ../app/core/gimpdatafactory.c:937
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8484,7 +8484,7 @@ msgid "(Preview may be out of date)"
 msgstr "(プレビューが古すぎます)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:437
+#: ../app/core/gimpimagefile.c:774 ../app/widgets/gimpimagepropview.c:441
 #: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
@@ -8952,17 +8952,17 @@ msgctxt "plural"
 msgid "percent"
 msgstr "パーセント"
 
-#: ../app/dialogs/about-dialog.c:113 ../app/gui/gui.c:493
+#: ../app/dialogs/about-dialog.c:111 ../app/gui/gui.c:493
 msgid "About GIMP"
 msgstr "GIMP について"
 
-#: ../app/dialogs/about-dialog.c:122
+#: ../app/dialogs/about-dialog.c:120
 msgid "Visit the GIMP website"
 msgstr "GIMP ウェブサイトへ"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:128
+#: ../app/dialogs/about-dialog.c:126
 msgid "translator-credits"
 msgstr ""
 "SHIRASAKI Yasuhiro\n"
@@ -8974,11 +8974,11 @@ msgstr ""
 "Ken Okubo\n"
 "NISHIBORI Kiyotaka"
 
-#: ../app/dialogs/about-dialog.c:518
+#: ../app/dialogs/about-dialog.c:516
 msgid "GIMP is brought to you by"
 msgstr "GIMP の提供は"
 
-#: ../app/dialogs/about-dialog.c:592
+#: ../app/dialogs/about-dialog.c:590
 msgid "This is an unstable development release."
 msgstr ""
 "このバージョンは開発途上版です\n"
@@ -9151,7 +9151,7 @@ msgstr "画像をエクスポート"
 msgid "_Export"
 msgstr "エクスポート(_E)"
 
-#: ../app/dialogs/file-save-dialog.c:430
+#: ../app/dialogs/file-save-dialog.c:431
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9161,7 +9161,7 @@ msgstr ""
 "す。選択したファイル形式に合った拡張子を入力するか、拡張子を全く入力しないで"
 "ください。"
 
-#: ../app/dialogs/file-save-dialog.c:557
+#: ../app/dialogs/file-save-dialog.c:558
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9170,7 +9170,7 @@ msgstr ""
 "xcf 形式で画像を保存したいときは、メニューの [ファイル] → [保存] を実行してく"
 "ださい。"
 
-#: ../app/dialogs/file-save-dialog.c:564
+#: ../app/dialogs/file-save-dialog.c:565
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9180,7 +9180,7 @@ msgstr ""
 "xcf 形式以外の画像ファイル形式で保存したいときは、メニューの [ファイル] → [エ"
 "クスポート] を実行してください。"
 
-#: ../app/dialogs/file-save-dialog.c:570
+#: ../app/dialogs/file-save-dialog.c:571
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9188,23 +9188,23 @@ msgstr ""
 "指定されたファイル名には既知のファイル拡張子がありません。既知のファイル拡張"
 "子を入力するか、ファイル形式の一覧からファイル形式を選択してください。"
 
-#: ../app/dialogs/file-save-dialog.c:584
+#: ../app/dialogs/file-save-dialog.c:585
 msgid "Extension Mismatch"
 msgstr "拡張子が一致しません"
 
-#: ../app/dialogs/file-save-dialog.c:600
+#: ../app/dialogs/file-save-dialog.c:601
 msgid "The given file extension does not match the chosen file type."
 msgstr "指定のファイル拡張子は選択したファイル形式と一致しません。"
 
-#: ../app/dialogs/file-save-dialog.c:604
+#: ../app/dialogs/file-save-dialog.c:605
 msgid "Do you want to save the image using this name anyway?"
 msgstr "画像をこの名前で保存してもよろしいですか？"
 
-#: ../app/dialogs/file-save-dialog.c:659
+#: ../app/dialogs/file-save-dialog.c:660
 msgid "Saving canceled"
 msgstr "保存をキャンセルしました"
 
-#: ../app/dialogs/file-save-dialog.c:667 ../app/widgets/gimpdnd-xds.c:185
+#: ../app/dialogs/file-save-dialog.c:668 ../app/widgets/gimpdnd-xds.c:185
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -9415,23 +9415,23 @@ msgstr "メモリー中のみ"
 msgid "No longer available"
 msgstr "利用可能なものがありません"
 
-#: ../app/dialogs/module-dialog.c:494
+#: ../app/dialogs/module-dialog.c:495
 msgid "Author:"
 msgstr "作者:"
 
-#: ../app/dialogs/module-dialog.c:495
+#: ../app/dialogs/module-dialog.c:496
 msgid "Version:"
 msgstr "バージョン:"
 
-#: ../app/dialogs/module-dialog.c:496
+#: ../app/dialogs/module-dialog.c:497
 msgid "Date:"
 msgstr "日付:"
 
-#: ../app/dialogs/module-dialog.c:497
+#: ../app/dialogs/module-dialog.c:498
 msgid "Copyright:"
 msgstr "著作権:"
 
-#: ../app/dialogs/module-dialog.c:498
+#: ../app/dialogs/module-dialog.c:499
 msgid "Location:"
 msgstr "場所:"
 
@@ -10073,7 +10073,7 @@ msgid "Vertical"
 msgstr "垂直"
 
 #: ../app/dialogs/preferences-dialog.c:2336
-#: ../app/widgets/gimpimagepropview.c:466
+#: ../app/widgets/gimpimagepropview.c:470
 msgid "ppi"
 msgstr "dpi"
 
@@ -11526,13 +11526,13 @@ msgstr "パスストロークの回転"
 msgid "Flip path stroke"
 msgstr "パスストロークの反転"
 
-#: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:816
-#: ../app/pdb/vectors-cmds.c:1035
+#: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:817
+#: ../app/pdb/vectors-cmds.c:1037
 msgid "Add path stroke"
 msgstr "パスストロークの追加"
 
-#: ../app/pdb/vectors-cmds.c:868 ../app/pdb/vectors-cmds.c:921
-#: ../app/pdb/vectors-cmds.c:982
+#: ../app/pdb/vectors-cmds.c:870 ../app/pdb/vectors-cmds.c:923
+#: ../app/pdb/vectors-cmds.c:984
 msgid "Extend path stroke"
 msgstr "パスストロークの拡張"
 
@@ -11687,7 +11687,7 @@ msgstr ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 
-#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1367
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1397
 msgid "Add Text Layer"
 msgstr "テキストレイヤーを追加"
 
@@ -11735,7 +11735,7 @@ msgstr "フォントがないので文字機能は利用できません。"
 msgid "Empty Text Layer"
 msgstr "空のテキストレイヤー"
 
-#: ../app/text/gimptextlayer-xcf.c:75
+#: ../app/text/gimptextlayer-xcf.c:76
 #, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
@@ -13229,7 +13229,9 @@ msgstr ""
 "表示倍率を調整します"
 
 #: ../app/tools/gimpmagnifytool.c:93
-msgctxt "tool"
+#, fuzzy
+#| msgctxt "view-action"
+#| msgid "_Zoom"
 msgid "_Zoom"
 msgstr "ズーム(_Z)"
 
@@ -13938,33 +13940,33 @@ msgstr "テキストボックス:"
 msgid "Language:"
 msgstr "言語:"
 
-#: ../app/tools/gimptexttool.c:189
+#: ../app/tools/gimptexttool.c:191
 msgid "Text"
 msgstr "テキスト"
 
-#: ../app/tools/gimptexttool.c:190
+#: ../app/tools/gimptexttool.c:192
 msgid "Text Tool: Create or edit text layers"
 msgstr ""
 "[テキスト]\n"
 "テキストレイヤーの作成・編集を行います"
 
-#: ../app/tools/gimptexttool.c:191
+#: ../app/tools/gimptexttool.c:193
 msgid "Te_xt"
 msgstr "テキスト(_X)"
 
-#: ../app/tools/gimptexttool.c:943
+#: ../app/tools/gimptexttool.c:958
 msgid "Reshape Text Layer"
 msgstr "テキストレイヤーの変形"
 
-#: ../app/tools/gimptexttool.c:1478 ../app/tools/gimptexttool.c:1481
+#: ../app/tools/gimptexttool.c:1508 ../app/tools/gimptexttool.c:1511
 msgid "Confirm Text Editing"
 msgstr "文字編集確認"
 
-#: ../app/tools/gimptexttool.c:1485
+#: ../app/tools/gimptexttool.c:1515
 msgid "Create _New Layer"
 msgstr "新しいテキストレイヤーの追加(_N)"
 
-#: ../app/tools/gimptexttool.c:1509
+#: ../app/tools/gimptexttool.c:1539
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13978,7 +13980,7 @@ msgstr ""
 "このレイヤーを編集することも、文字アトリビュートを用いて新しいテキストレイ"
 "ヤーを生成することもできます。"
 
-#: ../app/tools/gimptexttool-editor.c:1159
+#: ../app/tools/gimptexttool-editor.c:1172
 msgid "GIMP Text Editor"
 msgstr "GIMP テキストエディター"
 
@@ -14160,128 +14162,128 @@ msgstr "アクティブなパスは保護されています。"
 msgid "Add Stroke"
 msgstr "ストロークの追加"
 
-#: ../app/tools/gimpvectortool.c:364
+#: ../app/tools/gimpvectortool.c:365
 msgid "Add Anchor"
 msgstr "アンカーの追加"
 
-#: ../app/tools/gimpvectortool.c:390
+#: ../app/tools/gimpvectortool.c:391
 msgid "Insert Anchor"
 msgstr "アンカーの挿入"
 
-#: ../app/tools/gimpvectortool.c:421
+#: ../app/tools/gimpvectortool.c:422
 msgid "Drag Handle"
 msgstr "ハンドルのドラッグ"
 
-#: ../app/tools/gimpvectortool.c:452
+#: ../app/tools/gimpvectortool.c:453
 msgid "Drag Anchor"
 msgstr "アンカーのドラッグ"
 
-#: ../app/tools/gimpvectortool.c:470
+#: ../app/tools/gimpvectortool.c:471
 msgid "Drag Anchors"
 msgstr "アンカーのドラッグ"
 
-#: ../app/tools/gimpvectortool.c:493
+#: ../app/tools/gimpvectortool.c:494
 msgid "Drag Curve"
 msgstr "カーブのドラッグ"
 
-#: ../app/tools/gimpvectortool.c:522
+#: ../app/tools/gimpvectortool.c:523
 msgid "Connect Strokes"
 msgstr "ストロークの接続"
 
-#: ../app/tools/gimpvectortool.c:554
+#: ../app/tools/gimpvectortool.c:555
 msgid "Drag Path"
 msgstr "パスのドラッグ"
 
-#: ../app/tools/gimpvectortool.c:565
+#: ../app/tools/gimpvectortool.c:566
 msgid "Convert Edge"
 msgstr "辺の変換"
 
-#: ../app/tools/gimpvectortool.c:596
+#: ../app/tools/gimpvectortool.c:597
 msgid "Delete Anchor"
 msgstr "アンカーの削除"
 
-#: ../app/tools/gimpvectortool.c:619
+#: ../app/tools/gimpvectortool.c:620
 msgid "Delete Segment"
 msgstr "セグメントの削除"
 
-#: ../app/tools/gimpvectortool.c:838
+#: ../app/tools/gimpvectortool.c:842
 msgid "Move Anchors"
 msgstr "アンカーの移動"
 
-#: ../app/tools/gimpvectortool.c:1201
+#: ../app/tools/gimpvectortool.c:1205
 msgid "Click to pick path to edit"
 msgstr "クリック: パスを編集します"
 
-#: ../app/tools/gimpvectortool.c:1205
+#: ../app/tools/gimpvectortool.c:1209
 msgid "Click to create a new path"
 msgstr "クリック: 新しいパスを作成します"
 
-#: ../app/tools/gimpvectortool.c:1209
+#: ../app/tools/gimpvectortool.c:1213
 msgid "Click to create a new component of the path"
 msgstr "クリック: パスの新しいコンポーネントを作成します"
 
-#: ../app/tools/gimpvectortool.c:1213
+#: ../app/tools/gimpvectortool.c:1217
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "クリック-ドラッグ: 新しいアンカーを作成します"
 
-#: ../app/tools/gimpvectortool.c:1225 ../app/tools/gimpvectortool.c:1232
+#: ../app/tools/gimpvectortool.c:1229 ../app/tools/gimpvectortool.c:1236
 msgid "Click-Drag to move the anchor around"
 msgstr "クリック-ドラッグ: アンカーを移動します"
 
-#: ../app/tools/gimpvectortool.c:1236 ../app/tools/gimpvectortool.c:1259
+#: ../app/tools/gimpvectortool.c:1240 ../app/tools/gimpvectortool.c:1263
 msgid "Click-Drag to move the anchors around"
 msgstr "クリック-ドラッグ: アンカーを移動します"
 
-#: ../app/tools/gimpvectortool.c:1242
+#: ../app/tools/gimpvectortool.c:1246
 msgid "Click-Drag to move the handle around"
 msgstr "クリック-ドラッグ: ハンドルを移動します"
 
-#: ../app/tools/gimpvectortool.c:1249
+#: ../app/tools/gimpvectortool.c:1253
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "クリック-ドラッグ: 両ハンドルを対称的に移動します"
 
-#: ../app/tools/gimpvectortool.c:1264
+#: ../app/tools/gimpvectortool.c:1268
 msgid "Click-Drag to change the shape of the curve"
 msgstr "クリック-ドラッグ: カーブの形状を変えます"
 
-#: ../app/tools/gimpvectortool.c:1267
+#: ../app/tools/gimpvectortool.c:1271
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: 対称に"
 
-#: ../app/tools/gimpvectortool.c:1272
+#: ../app/tools/gimpvectortool.c:1276
 msgid "Click-Drag to move the component around"
 msgstr "クリック-ドラッグ: コンポーネントを移動します"
 
-#: ../app/tools/gimpvectortool.c:1280
+#: ../app/tools/gimpvectortool.c:1284
 msgid "Click-Drag to move the path around"
 msgstr "クリック-ドラッグ: パスを移動します"
 
-#: ../app/tools/gimpvectortool.c:1284
+#: ../app/tools/gimpvectortool.c:1288
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "クリック: アンカーをパス上に挿入します"
 
-#: ../app/tools/gimpvectortool.c:1292
+#: ../app/tools/gimpvectortool.c:1296
 msgid "Click to delete this anchor"
 msgstr "クリック: このアンカーを削除します"
 
-#: ../app/tools/gimpvectortool.c:1296
+#: ../app/tools/gimpvectortool.c:1300
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "クリック: このアンカーと選択した端点を接続します"
 
-#: ../app/tools/gimpvectortool.c:1301
+#: ../app/tools/gimpvectortool.c:1305
 msgid "Click to open up the path"
 msgstr "クリック: パスを開きます"
 
-#: ../app/tools/gimpvectortool.c:1305
+#: ../app/tools/gimpvectortool.c:1309
 msgid "Click to make this node angular"
 msgstr "クリック: このノードを角にします"
 
-#: ../app/tools/gimpvectortool.c:1805
+#: ../app/tools/gimpvectortool.c:1810
 msgid "Delete Anchors"
 msgstr "アンカーの削除"
 
-#: ../app/tools/gimpvectortool.c:1963
+#: ../app/tools/gimpvectortool.c:1969
 msgid "There is no active layer or channel to stroke to"
 msgstr "ストロークするためのアクティブレイヤーやアクティブパスがありません"
 
@@ -14790,33 +14792,33 @@ msgstr "準備済み"
 msgid "Available Controllers"
 msgstr "利用可能なコントローラー"
 
-#: ../app/widgets/gimpcontrollerlist.c:275
+#: ../app/widgets/gimpcontrollerlist.c:277
 msgid "Active Controllers"
 msgstr "アクティブなコントローラー"
 
-#: ../app/widgets/gimpcontrollerlist.c:291
+#: ../app/widgets/gimpcontrollerlist.c:293
 msgid "Configure the selected controller"
 msgstr "選択したコントローラーの設定"
 
-#: ../app/widgets/gimpcontrollerlist.c:299
+#: ../app/widgets/gimpcontrollerlist.c:301
 msgid "Move the selected controller up"
 msgstr "選択したコントローラーを上に移動"
 
-#: ../app/widgets/gimpcontrollerlist.c:307
+#: ../app/widgets/gimpcontrollerlist.c:309
 msgid "Move the selected controller down"
 msgstr "選択したコントローラーを下に移動"
 
-#: ../app/widgets/gimpcontrollerlist.c:425
+#: ../app/widgets/gimpcontrollerlist.c:427
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "'%s' をアクティブなコントローラーの一覧に追加します"
 
-#: ../app/widgets/gimpcontrollerlist.c:476
+#: ../app/widgets/gimpcontrollerlist.c:478
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "'%s' をアクティブなコントローラーの一覧から削除します"
 
-#: ../app/widgets/gimpcontrollerlist.c:510
+#: ../app/widgets/gimpcontrollerlist.c:512
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -14827,7 +14829,7 @@ msgstr ""
 "キーボードコントローラーは、既にアクティブなコントローラーの一覧に入っていま"
 "す。"
 
-#: ../app/widgets/gimpcontrollerlist.c:521
+#: ../app/widgets/gimpcontrollerlist.c:523
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -14838,7 +14840,7 @@ msgstr ""
 "ホイールコントローラーは、既にアクティブなコントローラーの一覧に入っていま"
 "す。"
 
-#: ../app/widgets/gimpcontrollerlist.c:532
+#: ../app/widgets/gimpcontrollerlist.c:534
 msgid ""
 "There can only be one active mouse controller.\n"
 "\n"
@@ -14848,24 +14850,24 @@ msgstr ""
 "\n"
 "マウスコントローラーは、既にアクティブなコントローラーの一覧に入っています。"
 
-#: ../app/widgets/gimpcontrollerlist.c:558
+#: ../app/widgets/gimpcontrollerlist.c:560
 msgid "Remove Controller?"
 msgstr "コントローラーを削除しますか?"
 
-#: ../app/widgets/gimpcontrollerlist.c:563
+#: ../app/widgets/gimpcontrollerlist.c:565
 msgid "Disable Controller"
 msgstr "コントローラーの無効化"
 
-#: ../app/widgets/gimpcontrollerlist.c:565
+#: ../app/widgets/gimpcontrollerlist.c:567
 msgid "Remove Controller"
 msgstr "コントローラーの削除"
 
-#: ../app/widgets/gimpcontrollerlist.c:577
+#: ../app/widgets/gimpcontrollerlist.c:579
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "コントローラー '%s' を削除しますか?"
 
-#: ../app/widgets/gimpcontrollerlist.c:581
+#: ../app/widgets/gimpcontrollerlist.c:583
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -14879,7 +14881,7 @@ msgstr ""
 "[コントローラーの無効化] を選ぶと、イベント割り当ては削除せずにコントローラー"
 "を無効化します。"
 
-#: ../app/widgets/gimpcontrollerlist.c:633
+#: ../app/widgets/gimpcontrollerlist.c:635
 msgid "Configure Input Controller"
 msgstr "入力コントローラーの設定"
 
@@ -15063,7 +15065,7 @@ msgid "Keys"
 msgstr "キー"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:364
-#: ../app/widgets/gimpdeviceinfoeditor.c:580
+#: ../app/widgets/gimpdeviceinfoeditor.c:582
 #, c-format
 msgid "none"
 msgstr "なし"
@@ -15490,22 +15492,22 @@ msgid "Number of paths:"
 msgstr "パス数:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:407
+#: ../app/widgets/gimpimagepropview.c:411
 msgid "None"
 msgstr "なし"
 
-#: ../app/widgets/gimpimagepropview.c:461
+#: ../app/widgets/gimpimagepropview.c:465
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "ピクセル/%s"
 
-#: ../app/widgets/gimpimagepropview.c:463
+#: ../app/widgets/gimpimagepropview.c:467
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:484
+#: ../app/widgets/gimpimagepropview.c:488
 msgid "colors"
 msgstr "色"
 
@@ -15657,7 +15659,7 @@ msgstr "タグを付ける"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1732
+#: ../app/widgets/gimptagentry.c:1734
 msgid ","
 msgstr ","
 
@@ -15700,12 +15702,12 @@ msgstr "%d x %d dpi, %s"
 msgid "%d ppi, %s"
 msgstr "%d dpi, %s"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:338
+#: ../app/widgets/gimptextbuffer-serialize.c:340
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr "テキスト中で使われている <%2$s> 要素の \"%1$s\" 属性は無効です。"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:410
+#: ../app/widgets/gimptextbuffer-serialize.c:412
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "最も外側の要素は <%s> ではなく <markup> でなければいけません"
@@ -15906,7 +15908,7 @@ msgstr "パレットを適用"
 msgid "Apply stored font"
 msgstr "フォントを適用"
 
-#: ../app/widgets/gimptoolpreseteditor.c:290
+#: ../app/widgets/gimptoolpreseteditor.c:292
 #, c-format
 msgid "%s Preset"
 msgstr "%s のプリセット"
@@ -16093,7 +16095,7 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "不定"
 
-#: ../app/xcf/xcf-load.c:334
+#: ../app/xcf/xcf-load.c:336
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -16101,7 +16103,7 @@ msgstr ""
 "この XCF ファイルは壊れています。できる限り読み込みましたが、完全に読み込むこ"
 "とはできませんでした。"
 
-#: ../app/xcf/xcf-load.c:345
+#: ../app/xcf/xcf-load.c:347
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -16109,7 +16111,7 @@ msgstr ""
 "この XCF ファイルは壊れています。このファイルからは画像データを部分的でさえ読"
 "み込むことができませんでした。"
 
-#: ../app/xcf/xcf-load.c:418
+#: ../app/xcf/xcf-load.c:420
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -16166,21 +16168,25 @@ msgstr ""
 
 # タグ
 #: ../data/tags/gimp-tags-default.xml.in.h:1
-msgid "fuzzy"
-msgstr "fuzzy"
-
-# タグ
-#: ../data/tags/gimp-tags-default.xml.in.h:2
 msgid "round"
 msgstr "round"
 
-#: ../desktop/gimp.desktop.in.in.h:1
+# タグ
+#: ../data/tags/gimp-tags-default.xml.in.h:2
+msgid "fuzzy"
+msgstr "fuzzy"
+
+#: ../desktop/gimp.desktop.in.in.h:2
+msgid "Image Editor"
+msgstr "画像エディター"
+
+#: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "画像の作成と写真の編集を行います"
 
-#: ../desktop/gimp.desktop.in.in.h:3
-msgid "Image Editor"
-msgstr "画像エディター"
+#~ msgctxt "tool"
+#~ msgid "_Zoom"
+#~ msgstr "ズーム(_Z)"
 
 #~ msgid "Opacity:"
 #~ msgstr "不透明度:"
