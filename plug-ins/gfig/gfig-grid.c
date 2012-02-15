@@ -41,7 +41,7 @@
 #define TAN_1o6PI_RAD 1 / SQRT3        /* Tangent 1/6 Pi Radians == SIN / COS */
 #define RECIP_TAN_1o6PI_RAD SQRT3      /* Reciprocal of Tangent 1/6 Pi Radians */
 
-gint           grid_gc_type           = GTK_STATE_NORMAL;
+gint           grid_gc_type           = GFIG_NORMAL_GC;
 
 static void    draw_grid_polar     (cairo_t  *drawgc);
 static void    draw_grid_sq        (cairo_t  *drawgc);
@@ -415,16 +415,16 @@ draw_grid_sq (cairo_t *cr)
 
   for (loop = 0 ; loop < preview_height ; loop += step)
     {
-      cairo_move_to (cr, 0, loop);
-      cairo_line_to (cr, preview_width, loop);
+      cairo_move_to (cr, 0 + .5, loop + .5);
+      cairo_line_to (cr, preview_width + .5, loop + .5);
     }
 
   /* Draw the vertical lines */
 
   for (loop = 0 ; loop < preview_width ; loop += step)
     {
-      cairo_move_to (cr, loop, 0);
-      cairo_line_to (cr, loop, preview_height);
+      cairo_move_to (cr, loop + .5, 0 + .5);
+      cairo_line_to (cr, loop + .5, preview_height + .5);
     }
   cairo_stroke (cr);
 }

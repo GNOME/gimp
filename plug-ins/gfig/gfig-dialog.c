@@ -1323,7 +1323,7 @@ gfig_prefs_action_callback (GtkAction *widget,
                                              _("White"),       LAYER_WHITE_BG,
                                              _("Copy"),        LAYER_COPY_BG,
                                              NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (page_menu_bg), 0);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (page_menu_bg), selvals.onlayerbg);
 
       g_signal_connect (page_menu_bg, "changed",
                         G_CALLBACK (paint_combo_callback),
@@ -1479,7 +1479,7 @@ gfig_grid_action_callback (GtkAction *action,
                                       _("Polar"),     POLAR_GRID,
                                       _("Isometric"), ISO_GRID,
                                       NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), selvals.opts.gridtype);
 
       g_signal_connect (combo, "changed",
                         G_CALLBACK (gridtype_combo_callback),
@@ -1501,7 +1501,7 @@ gfig_grid_action_callback (GtkAction *action,
                                       _("Lighter"),   GFIG_LIGHTER_GC,
                                       _("Very dark"), GFIG_VERY_DARK_GC,
                                       NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), grid_gc_type);
 
       g_signal_connect (combo, "changed",
                         G_CALLBACK (gridtype_combo_callback),
