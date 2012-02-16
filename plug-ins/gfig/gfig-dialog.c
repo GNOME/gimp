@@ -210,6 +210,7 @@ gfig_dialog (void)
   GtkWidget    *frame;
   gint          img_width;
   gint          img_height;
+  GimpImageType img_type;
   GtkWidget    *toggle;
   GtkWidget    *right_vbox;
   GtkWidget    *hbox;
@@ -221,6 +222,7 @@ gfig_dialog (void)
 
   img_width  = gimp_drawable_width (gfig_context->drawable_id);
   img_height = gimp_drawable_height (gfig_context->drawable_id);
+  img_type   = gimp_drawable_type_with_alpha (gfig_context->drawable_id);
 
   /*
    * See if there is a "gfig" parasite.  If so, this is a gfig layer,
@@ -249,7 +251,7 @@ gfig_dialog (void)
     {
       newlayer = gimp_layer_new (gfig_context->image_id, "GFig",
                                  img_width, img_height,
-                                 GIMP_RGBA_IMAGE, 100.0, GIMP_NORMAL_MODE);
+                                 img_type, 100.0, GIMP_NORMAL_MODE);
       gimp_drawable_fill (newlayer, GIMP_TRANSPARENT_FILL);
       gimp_image_insert_layer (gfig_context->image_id, newlayer, -1, -1);
       gfig_context->drawable_id = newlayer;
@@ -1790,8 +1792,9 @@ paint_combo_callback (GtkWidget *widget,
 
   switch (mtype)
     {
-    case PAINT_TYPE_MENU:
-      selvals.painttype = (PaintType) value;
+    case PAINT_BGS_MENU:
+      selvals.onlayerbg = (LayersBGType) value;
+      break;
 
     default:
       g_return_if_reached ();
