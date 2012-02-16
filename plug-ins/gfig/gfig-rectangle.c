@@ -25,7 +25,6 @@
 #include "config.h"
 
 #include <libgimp/gimp.h>
-#undef GDK_DISABLE_DEPRECATED
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
@@ -34,32 +33,16 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static void        d_draw_rectangle   (GfigObject *obj);
+static void        d_draw_rectangle   (GfigObject *obj,
+                                       cairo_t    *cr);
 static void        d_paint_rectangle  (GfigObject *obj);
 static GfigObject *d_copy_rectangle   (GfigObject *obj);
 
 static void        d_update_rectangle (GdkPoint   *pnt);
 
-static gint
-gfig_scale_x (gint x)
-{
-  if (!selvals.scaletoimage)
-    return (gint) (x * (1 / scale_x_factor));
-  else
-    return x;
-}
-
-static gint
-gfig_scale_y (gint y)
-{
-  if (!selvals.scaletoimage)
-    return (gint) (y * (1 / scale_y_factor));
-  else
-    return y;
-}
-
 static void
-d_draw_rectangle (GfigObject *obj)
+d_draw_rectangle (GfigObject *obj,
+                  cairo_t    *cr)
 {
   DobjPoints *first_pnt;
   DobjPoints *second_pnt;
@@ -71,15 +54,17 @@ d_draw_rectangle (GfigObject *obj)
   if (!first_pnt)
     return; /* End-of-line */
 
+  draw_sqr (&first_pnt->pnt, obj == gfig_context->selected_obj, cr);
+
   second_pnt = first_pnt->next;
 
   if (!second_pnt)
-    {
-      g_warning ("Internal error - rectangle no edge pnt");
-    }
+    return;
 
-  draw_sqr (&first_pnt->pnt, obj == gfig_context->selected_obj);
-  draw_sqr (&second_pnt->pnt, obj == gfig_context->selected_obj);
+  if (obj == obj_creating)
+    draw_circle (&second_pnt->pnt, TRUE, cr);
+  else
+    draw_sqr (&second_pnt->pnt, obj == gfig_context->selected_obj, cr);
 
   xmin = MIN (gfig_scale_x (first_pnt->pnt.x),
               gfig_scale_x (second_pnt->pnt.x));
@@ -90,11 +75,8 @@ d_draw_rectangle (GfigObject *obj)
   ymax = MAX (gfig_scale_y (first_pnt->pnt.y),
               gfig_scale_y (second_pnt->pnt.y));
 
-  gdk_draw_rectangle (gtk_widget_get_window (gfig_context->preview),
-                      gfig_gc,
-                      FALSE,
-                      xmin, ymin,
-                      xmax - xmin, ymax - ymin);
+  cairo_rectangle (cr, xmin + .5, ymin + .5, xmax - xmin, ymax - ymin);
+  draw_item (cr, FALSE);
 }
 
 static void
@@ -181,10 +163,7 @@ d_update_rectangle (GdkPoint *pnt)
 {
   DobjPoints *first_pnt;
   DobjPoints *second_pnt;
-  gint        xmin, ymin;
-  gint        xmax, ymax;
 
-  /* Undraw last one then draw new one */
   first_pnt = obj_creating->points;
 
   if (!first_pnt)
@@ -192,21 +171,6 @@ d_update_rectangle (GdkPoint *pnt)
 
   if ((second_pnt = first_pnt->next))
     {
-      /* Undraw current */
-      draw_circle (&second_pnt->pnt, TRUE);
-
-      xmin = MIN (gfig_scale_x (first_pnt->pnt.x),
-                  gfig_scale_x (second_pnt->pnt.x));
-      ymin = MIN (gfig_scale_y (first_pnt->pnt.y),
-                  gfig_scale_y (second_pnt->pnt.y));
-      xmax = MAX (gfig_scale_x (first_pnt->pnt.x),
-                  gfig_scale_x (second_pnt->pnt.x));
-      ymax = MAX (gfig_scale_y (first_pnt->pnt.y),
-                  gfig_scale_y (second_pnt->pnt.y));
-      gdk_draw_rectangle (gtk_widget_get_window (gfig_context->preview),
-                          gfig_gc,
-                          FALSE,
-                          xmin, ymin, xmax - xmin, ymax - ymin);
       second_pnt->pnt.x = pnt->x;
       second_pnt->pnt.y = pnt->y;
     }
@@ -215,20 +179,6 @@ d_update_rectangle (GdkPoint *pnt)
       second_pnt = new_dobjpoint (pnt->x, pnt->y);
       first_pnt->next = second_pnt;
     }
-
-  draw_circle (&second_pnt->pnt, TRUE);
-
-  xmin = MIN (gfig_scale_x (first_pnt->pnt.x),
-              gfig_scale_x (second_pnt->pnt.x));
-  ymin = MIN (gfig_scale_y (first_pnt->pnt.y),
-              gfig_scale_y (second_pnt->pnt.y));
-  xmax = MAX (gfig_scale_x (first_pnt->pnt.x),
-              gfig_scale_x (second_pnt->pnt.x));
-  ymax = MAX (gfig_scale_y (first_pnt->pnt.y),
-              gfig_scale_y (second_pnt->pnt.y));
-  gdk_draw_rectangle (gtk_widget_get_window (gfig_context->preview),
-                      gfig_gc, FALSE,
-                      xmin, ymin, xmax - xmin, ymax - ymin);
 }
 
 void
@@ -250,7 +200,6 @@ d_rectangle_end (GdkPoint *pnt,
     }
   else
     {
-      draw_circle (pnt, TRUE);
       add_to_all_obj (gfig_context->current_obj, obj_creating);
     }
 

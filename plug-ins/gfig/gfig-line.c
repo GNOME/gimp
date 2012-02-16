@@ -25,7 +25,6 @@
 #include "config.h"
 
 #include <libgimp/gimp.h>
-#undef GDK_DISABLE_DEPRECATED
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
@@ -36,7 +35,8 @@
 
 
 static GfigObject *d_copy_line   (GfigObject *obj);
-static void        d_draw_line   (GfigObject *obj);
+static void        d_draw_line   (GfigObject *obj,
+                                  cairo_t    *cr);
 static void        d_paint_line  (GfigObject *obj);
 
 static void        d_update_line (GdkPoint   *pnt);
@@ -55,7 +55,8 @@ d_copy_line (GfigObject *obj)
 }
 
 static void
-d_draw_line (GfigObject *obj)
+d_draw_line (GfigObject *obj,
+             cairo_t    *cr)
 {
   DobjPoints *spnt;
   DobjPoints *epnt;
@@ -69,13 +70,16 @@ d_draw_line (GfigObject *obj)
 
   while (spnt && epnt)
     {
-      draw_sqr (&spnt->pnt, obj == gfig_context->selected_obj);
+      draw_sqr (&spnt->pnt, obj == gfig_context->selected_obj, cr);
       /* Go around all the points drawing a line from one to the next */
-      gfig_draw_line (spnt->pnt.x, spnt->pnt.y, epnt->pnt.x, epnt->pnt.y);
+      gfig_draw_line (spnt->pnt.x, spnt->pnt.y, epnt->pnt.x, epnt->pnt.y, cr);
       spnt = epnt;
       epnt = epnt->next;
     }
-  draw_sqr (&spnt->pnt, obj == gfig_context->selected_obj);
+  if (obj_creating == obj)
+    draw_circle (&spnt->pnt, TRUE, cr);
+  else
+    draw_sqr (&spnt->pnt, obj == gfig_context->selected_obj, cr);
 }
 
 static void
@@ -131,15 +135,10 @@ d_line_object_class_init (void)
   class->update    = d_update_line;
 }
 
-/* Update end point of line */
 static void
 d_update_line (GdkPoint *pnt)
 {
   DobjPoints *spnt, *epnt;
-  /* Get last but one segment and undraw it -
-   * Then draw new segment in.
-   * always dealing with the static object.
-   */
 
   /* Get start of segments */
   spnt = obj_creating->points;
@@ -149,31 +148,10 @@ d_update_line (GdkPoint *pnt)
 
   if ((epnt = spnt->next))
     {
-      /* undraw  current */
-      /* Draw square on point */
-      draw_circle (&epnt->pnt, TRUE);
-
-      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                     gfig_gc,
-                     spnt->pnt.x,
-                     spnt->pnt.y,
-                     epnt->pnt.x,
-                     epnt->pnt.y);
       g_free (epnt);
     }
 
-  /* draw new */
-  /* Draw circle on point */
-  draw_circle (pnt, TRUE);
-
   epnt = new_dobjpoint (pnt->x, pnt->y);
-
-  gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                 gfig_gc,
-                 spnt->pnt.x,
-                 spnt->pnt.y,
-                 epnt->pnt.x,
-                 epnt->pnt.y);
   spnt->next = epnt;
 }
 
@@ -183,7 +161,6 @@ d_line_start (GdkPoint *pnt,
 {
   if (!obj_creating || !shift_down)
     {
-      /* Draw square on point */
       /* Must delete obj_creating if we have one */
       obj_creating = d_new_object (LINE, pnt->x, pnt->y);
     }
@@ -198,9 +175,6 @@ void
 d_line_end (GdkPoint *pnt,
             gboolean  shift_down)
 {
-  /* Undraw the last circle */
-  draw_circle (pnt, TRUE);
-
   if (shift_down)
     {
       if (tmp_line)

@@ -26,7 +26,6 @@
 #include <stdlib.h>
 
 #include <libgimp/gimp.h>
-#undef GDK_DISABLE_DEPRECATED
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
@@ -42,14 +41,14 @@
 #define TAN_1o6PI_RAD 1 / SQRT3        /* Tangent 1/6 Pi Radians == SIN / COS */
 #define RECIP_TAN_1o6PI_RAD SQRT3      /* Reciprocal of Tangent 1/6 Pi Radians */
 
-static GdkGC  *grid_hightlight_drawgc = NULL;
 gint           grid_gc_type           = GTK_STATE_NORMAL;
 
-static void    draw_grid_polar     (GdkGC     *drawgc);
-static void    draw_grid_sq        (GdkGC     *drawgc);
-static void    draw_grid_iso       (GdkGC     *drawgc);
+static void    draw_grid_polar     (cairo_t  *drawgc);
+static void    draw_grid_sq        (cairo_t  *drawgc);
+static void    draw_grid_iso       (cairo_t  *drawgc);
 
-static GdkGC * gfig_get_grid_gc    (GtkWidget *widget,
+static cairo_t * gfig_get_grid_gc  (cairo_t   *cr,
+                                    GtkWidget *widget,
                                     gint       gctype);
 
 static void    find_grid_pos_polar (GdkPoint  *p,
@@ -190,41 +189,6 @@ find_grid_pos_polar (GdkPoint *p,
 void
 gfig_grid_colours (GtkWidget *widget)
 {
-  GdkColormap *colormap;
-  GdkGCValues  values;
-  GdkColor     col1;
-  GdkColor     col2;
-  guchar       stipple[8] =
-  {
-    0xAA,    /*  ####----  */
-    0x55,    /*  ###----#  */
-    0xAA,    /*  ##----##  */
-    0x55,    /*  #----###  */
-    0xAA,    /*  ----####  */
-    0x55,    /*  ---####-  */
-    0xAA,    /*  --####--  */
-    0x55,    /*  -####---  */
-  };
-
-  colormap = gdk_screen_get_rgb_colormap (gtk_widget_get_screen (widget));
-
-  gdk_color_parse ("gray50", &col1);
-  gdk_colormap_alloc_color (colormap, &col1, FALSE, TRUE);
-
-  gdk_color_parse ("gray80", &col2);
-  gdk_colormap_alloc_color (colormap, &col2, FALSE, TRUE);
-
-  values.background.pixel = col1.pixel;
-  values.foreground.pixel = col2.pixel;
-  values.fill    = GDK_OPAQUE_STIPPLED;
-  values.stipple = gdk_bitmap_create_from_data (gtk_widget_get_window (widget),
-                                                (gchar *) stipple, 4, 4);
-  grid_hightlight_drawgc = gdk_gc_new_with_values (gtk_widget_get_window (widget),
-                                                   &values,
-                                                   GDK_GC_FOREGROUND |
-                                                   GDK_GC_BACKGROUND |
-                                                   GDK_GC_FILL       |
-                                                   GDK_GC_STIPPLE);
 }
 
 void
@@ -395,7 +359,7 @@ find_grid_pos (GdkPoint *p,
 }
 
 static void
-draw_grid_polar (GdkGC *drawgc)
+draw_grid_polar (cairo_t *cr)
 {
     gdouble       inner_radius;
     gdouble       outer_radius;
@@ -408,16 +372,11 @@ draw_grid_polar (GdkGC *drawgc)
       {
         gdouble t;
         gdouble sector_size = 2 * G_PI / current_sectors;
-
-        gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
-                      drawgc,
-                      0,
-                      0.5 + (preview_width / 2 - outer_radius),
-                      0.5 + (preview_height / 2 - outer_radius),
-                      0.5 + (outer_radius * 2),
-                      0.5 + (outer_radius * 2),
-                      0,
-                      360 * 64);
+        cairo_arc (cr,
+                   0.5 + preview_width / 2,
+                   0.5 + preview_height / 2,
+                   outer_radius, 0, 2 * G_PI);
+        cairo_stroke (cr);
 
         while ((current_sectors < selvals.opts.grid_sectors_desired)
                && (inner_radius * sector_size
@@ -431,13 +390,13 @@ draw_grid_polar (GdkGC *drawgc)
           {
             gdouble normal_x = cos (selvals.opts.grid_rotation+t);
             gdouble normal_y = sin (selvals.opts.grid_rotation+t);
-
-            gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                           drawgc,
+            cairo_move_to (cr,
                            0.5 + (preview_width / 2 + inner_radius * normal_x),
-                           0.5 + (preview_height / 2 - inner_radius * normal_y),
+                           0.5 + (preview_height / 2 - inner_radius * normal_y));
+            cairo_line_to (cr,
                            0.5 + (preview_width / 2 + outer_radius * normal_x),
-                           0.5 + (preview_height / 2 - outer_radius * normal_y) );
+                           0.5 + (preview_height / 2 - outer_radius * normal_y));
+            cairo_stroke (cr);
           }
       }
 
@@ -446,7 +405,7 @@ draw_grid_polar (GdkGC *drawgc)
 
 
 static void
-draw_grid_sq (GdkGC *drawgc)
+draw_grid_sq (cairo_t *cr)
 {
   gint step;
   gint loop;
@@ -456,29 +415,22 @@ draw_grid_sq (GdkGC *drawgc)
 
   for (loop = 0 ; loop < preview_height ; loop += step)
     {
-      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                     drawgc,
-                     0,
-                     loop,
-                     preview_width,
-                     loop);
+      cairo_move_to (cr, 0, loop);
+      cairo_line_to (cr, preview_width, loop);
     }
 
   /* Draw the vertical lines */
 
   for (loop = 0 ; loop < preview_width ; loop += step)
     {
-      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                     drawgc,
-                     loop,
-                     0,
-                     loop,
-                     preview_height);
+      cairo_move_to (cr, loop, 0);
+      cairo_line_to (cr, loop, preview_height);
     }
+  cairo_stroke (cr);
 }
 
 static void
-draw_grid_iso (GdkGC *drawgc)
+draw_grid_iso (cairo_t *cr)
 {
   /* vstep is an int since it's defined from grid size */
   gint    vstep;
@@ -496,13 +448,10 @@ draw_grid_iso (GdkGC *drawgc)
   /* Draw the vertical lines - These are easy */
   for (loop = 0 ; loop < preview_width ; loop += hstep)
     {
-      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                     drawgc,
-                     (gint)loop,
-                     (gint)0,
-                     (gint)loop,
-                     (gint)preview_height);
+      cairo_move_to (cr, loop, 0);
+      cairo_line_to (cr, loop, preview_height);
     }
+  cairo_stroke (cr);
 
   /* draw diag lines at a Theta of +/- 1/6 Pi Rad */
 
@@ -517,55 +466,50 @@ draw_grid_iso (GdkGC *drawgc)
   /* Draw diag lines */
   for (loop = diagonal_start ; loop < diagonal_end ; loop += vstep)
     {
-      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                      drawgc,
-                     (gint)0,
-                     (gint)loop,
-                     (gint)diagonal_width,
-                     (gint)loop + diagonal_height);
+      cairo_move_to (cr, 0, loop);
+      cairo_line_to (cr, diagonal_width, loop + diagonal_height);
 
-      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                     drawgc,
-                     (gint)0,
-                     (gint)loop,
-                     (gint)diagonal_width,
-                     (gint)loop - diagonal_height);
+      cairo_move_to (cr, 0, loop);
+      cairo_line_to (cr, diagonal_width, loop - diagonal_height);
     }
+  cairo_stroke (cr);
 }
 
-static GdkGC *
-gfig_get_grid_gc (GtkWidget *w, gint gctype)
+static cairo_t *
+gfig_get_grid_gc (cairo_t *cr, GtkWidget *w, gint gctype)
 {
-  GtkStyle *style = gtk_widget_get_style (w);
   switch (gctype)
     {
-    case GFIG_BLACK_GC:
-      return style->black_gc;
-    case GFIG_WHITE_GC:
-      return style->white_gc;
-    case GFIG_GREY_GC:
-      return grid_hightlight_drawgc;
-    case GTK_STATE_NORMAL:
-      return style->bg_gc[GTK_STATE_NORMAL];
-    case GTK_STATE_ACTIVE:
-      return style->bg_gc[GTK_STATE_ACTIVE];
-    case GTK_STATE_PRELIGHT:
-      return style->bg_gc[GTK_STATE_PRELIGHT];
-    case GTK_STATE_SELECTED:
-      return style->bg_gc[GTK_STATE_SELECTED];
-    case GTK_STATE_INSENSITIVE:
-      return style->bg_gc[GTK_STATE_INSENSITIVE];
     default:
-      g_warning ("Unknown type for grid colouring\n");
-      return style->bg_gc[GTK_STATE_PRELIGHT];
+    case GFIG_NORMAL_GC:
+      cairo_set_source_rgb (cr, .92, .92, .92);
+      break;
+    case GFIG_BLACK_GC:
+      cairo_set_source_rgb (cr, 0., 0., 0.);
+      break;
+    case GFIG_WHITE_GC:
+      cairo_set_source_rgb (cr, 1., 1., 1.);
+      break;
+    case GFIG_GREY_GC:
+      cairo_set_source_rgb (cr, .5, .5, .5);
+      break;
+    case GFIG_DARKER_GC:
+      cairo_set_source_rgb (cr, .25, .25, .25);
+      break;
+    case GFIG_LIGHTER_GC:
+      cairo_set_source_rgb (cr, .75, .75, .75);
+      break;
+    case GFIG_VERY_DARK_GC:
+      cairo_set_source_rgb (cr, .125, .125, .125);
+      break;
     }
+
+  return cr;
 }
 
 void
-draw_grid (void)
+draw_grid (cairo_t *cr)
 {
-  GdkGC *drawgc;
-
   /* Get the size of the preview and calc where the lines go */
   /* Draw in prelight to start with... */
   /* Always start in the upper left corner for rect.
@@ -579,16 +523,17 @@ draw_grid (void)
     }
 
   if (selvals.opts.drawgrid)
-    drawgc = gfig_get_grid_gc (gfig_context->preview, grid_gc_type);
+    gfig_get_grid_gc (cr, gfig_context->preview, grid_gc_type);
   else
     return;
 
+  cairo_set_line_width (cr, 1.);
   if (selvals.opts.gridtype == RECT_GRID)
-    draw_grid_sq (drawgc);
+    draw_grid_sq (cr);
   else if (selvals.opts.gridtype == POLAR_GRID)
-    draw_grid_polar (drawgc);
+    draw_grid_polar (cr);
   else if (selvals.opts.gridtype == ISO_GRID)
-    draw_grid_iso (drawgc);
+    draw_grid_iso (cr);
 }
 
 

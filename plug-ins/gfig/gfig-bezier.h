@@ -27,7 +27,8 @@
 
 extern GfigObject *tmp_bezier;
 
-void d_draw_bezier              (GfigObject *obj);
+void d_draw_bezier              (GfigObject *obj,
+                                 cairo_t    *cr);
 
 void d_bezier_object_class_init (void);
 

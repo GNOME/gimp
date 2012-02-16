@@ -38,7 +38,6 @@
 #endif
 
 #include <libgimp/gimp.h>
-#undef GDK_DISABLE_DEPRECATED
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
@@ -160,8 +159,6 @@ static void       gfig_grid_action_callback  (GtkAction *action,
                                               gpointer   data);
 static void       gfig_prefs_action_callback (GtkAction *action,
                                               gpointer   data);
-static gint       gfig_scale_x               (gint       x);
-static gint       gfig_scale_y               (gint       y);
 static void       toggle_show_image          (void);
 static void       gridtype_combo_callback    (GtkWidget *widget,
                                               gpointer data);
@@ -191,7 +188,6 @@ static void     lower_selected_obj           (GtkWidget *widget,
 static void     toggle_obj_type              (GtkRadioAction *action,
                                               GtkRadioAction *current,
                                               gpointer        data);
-static void     gfig_new_gc                  (void);
 
 static GtkUIManager *create_ui_manager       (GtkWidget *window);
 
@@ -486,9 +482,9 @@ gfig_dialog (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gfig_context->show_background);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gfig_preview_expose),
-                    NULL);
+  g_signal_connect_swapped (toggle, "toggled",
+                    G_CALLBACK (gtk_widget_queue_draw),
+                    gfig_context->preview);
   gtk_widget_show (toggle);
 
   /* "snap to grid" checkbutton at bottom of style frame */
@@ -522,8 +518,6 @@ gfig_dialog (void)
   gtk_widget_show (main_hbox);
 
   gtk_widget_show (top_level_dlg);
-
-  gfig_new_gc (); /* Need this for drawing */
 
   gfig = gfig_load_from_parasite ();
   if (gfig)
@@ -782,41 +776,60 @@ gfig_clear_action_callback (GtkWidget *widget,
   gfig_paint_callback ();
 }
 
+void
+draw_item (cairo_t *cr, gboolean fill)
+{
+  cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
+
+  if (fill)
+    {
+      cairo_fill_preserve (cr);
+    }
+  else
+    {
+      cairo_set_line_width (cr, 3.0);
+      cairo_stroke_preserve (cr);
+    }
+
+  cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
+  cairo_set_line_width (cr, 1.0);
+  cairo_stroke (cr);
+}
 
 /* Given a point x, y draw a circle */
 void
 draw_circle (GdkPoint *p,
-             gboolean  selected)
+             gboolean  selected,
+             cairo_t  *cr)
 {
   if (!selvals.opts.showcontrol)
     return;
 
-  gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
-                gfig_gc,
-                selected,
-                p->x - SQ_SIZE/2,
-                p->y - SQ_SIZE/2,
-                SQ_SIZE,
-                SQ_SIZE,
-                0,
-                360*64);
+  cairo_arc (cr,
+             gfig_scale_x (p->x) + .5,
+             gfig_scale_y (p->y) + .5,
+             SQ_SIZE / 2,
+             0, 2 * G_PI);
+
+  draw_item (cr, selected);
 }
 
 /* Given a point x, y draw a square around it */
 void
 draw_sqr (GdkPoint *p,
-          gboolean  selected)
+          gboolean  selected,
+          cairo_t  *cr)
 {
   if (!selvals.opts.showcontrol)
     return;
 
-  gdk_draw_rectangle (gtk_widget_get_window (gfig_context->preview),
-                      gfig_gc,
-                      selected,
-                      gfig_scale_x (p->x) - SQ_SIZE / 2,
-                      gfig_scale_y (p->y) - SQ_SIZE / 2,
-                      SQ_SIZE,
-                      SQ_SIZE);
+  cairo_rectangle (cr,
+                   gfig_scale_x (p->x) + .5 - SQ_SIZE / 2,
+                   gfig_scale_y (p->y) + .5 - SQ_SIZE / 2,
+                   SQ_SIZE,
+                   SQ_SIZE);
+
+  draw_item (cr, selected);
 }
 
 static void
@@ -1480,13 +1493,13 @@ gfig_grid_action_callback (GtkAction *action,
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridtypemenu),
                                  (gpointer) &gfig_opt_widget.gridtypemenu);
 
-      combo = gimp_int_combo_box_new (_("Normal"),    GTK_STATE_NORMAL,
+      combo = gimp_int_combo_box_new (_("Normal"),    GFIG_NORMAL_GC,
                                       _("Black"),     GFIG_BLACK_GC,
                                       _("White"),     GFIG_WHITE_GC,
                                       _("Grey"),      GFIG_GREY_GC,
-                                      _("Darker"),    GTK_STATE_ACTIVE,
-                                      _("Lighter"),   GTK_STATE_PRELIGHT,
-                                      _("Very dark"), GTK_STATE_SELECTED,
+                                      _("Darker"),    GFIG_DARKER_GC,
+                                      _("Lighter"),   GFIG_LIGHTER_GC,
+                                      _("Very dark"), GFIG_VERY_DARK_GC,
                                       NULL);
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 0);
 
@@ -2013,7 +2026,7 @@ gfig_paint_callback (void)
       back_pixbuf = NULL;
     }
 
-  gfig_preview_expose (gfig_context->preview, NULL);
+  gtk_widget_queue_draw (gfig_context->preview);
 }
 
 /* Draw the grid on the screen
@@ -2112,7 +2125,7 @@ scale_to_orginal_x (gdouble *list)
   *list *= scale_x_factor;
 }
 
-static gint
+gint
 gfig_scale_x (gint x)
 {
   if (!selvals.scaletoimage)
@@ -2127,7 +2140,7 @@ scale_to_orginal_y (gdouble *list)
   *list *= scale_y_factor;
 }
 
-static gint
+gint
 gfig_scale_y (gint y)
 {
   if (!selvals.scaletoimage)
@@ -2166,45 +2179,28 @@ scale_to_xy (gdouble *list,
 
 void
 gfig_draw_arc (gint x, gint y, gint width, gint height, gint angle1,
-               gint angle2)
+               gint angle2, cairo_t *cr)
 {
-  gdk_draw_arc (gtk_widget_get_window (gfig_context->preview),
-                gfig_gc,
-                FALSE,
-                gfig_scale_x (x - width),
-                gfig_scale_y (y - height),
-                gfig_scale_x (2 * width),
-                gfig_scale_y (2 * height),
-                angle1 * 64,
-                angle2 * 64);
+  cairo_save (cr);
+
+  cairo_translate (cr, gfig_scale_x (x), gfig_scale_y (y));
+  cairo_scale (cr, gfig_scale_x (width), gfig_scale_y (height));
+
+  if (angle1 < angle2)
+    cairo_arc (cr, 0., 0., 1., angle1 * G_PI / 180, angle2 * G_PI / 180);
+  else
+    cairo_arc_negative (cr, 0., 0., 1., angle1 * G_PI / 180, angle2 * G_PI / 180);
+
+  cairo_restore (cr);
+
+  draw_item (cr, FALSE);
 }
 
 void
-gfig_draw_line (gint x0, gint y0, gint x1, gint y1)
+gfig_draw_line (gint x0, gint y0, gint x1, gint y1, cairo_t *cr)
 {
-  gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                 gfig_gc,
-                 gfig_scale_x (x0),
-                 gfig_scale_y (y0),
-                 gfig_scale_x (x1),
-                 gfig_scale_y (y1));
-}
+  cairo_move_to (cr, gfig_scale_x (x0) + .5, gfig_scale_y (y0) + .5);
+  cairo_line_to (cr, gfig_scale_x (x1) + .5, gfig_scale_y (y1) + .5);
 
-static void
-gfig_new_gc (void)
-{
-  GdkColor fg, bg;
-
-  /*  create a new graphics context  */
-  gfig_gc = gdk_gc_new (gtk_widget_get_window (gfig_context->preview));
-
-  gdk_gc_set_function (gfig_gc, GDK_INVERT);
-
-  fg.pixel = 0xFFFFFFFF;
-  bg.pixel = 0x00000000;
-  gdk_gc_set_foreground (gfig_gc, &fg);
-  gdk_gc_set_background (gfig_gc, &bg);
-
-  gdk_gc_set_line_attributes (gfig_gc, 1,
-                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_MITER);
+  draw_item (cr, FALSE);
 }

@@ -24,7 +24,6 @@
 #include "config.h"
 
 #include <libgimp/gimp.h>
-#undef GDK_DISABLE_DEPRECATED
 #include <libgimp/gimpui.h>
 
 #include "gfig.h"
@@ -52,6 +51,8 @@ static GtkWidget *pos_label;       /* XY pos marker */
 
 static void       gfig_preview_realize  (GtkWidget *widget);
 static gboolean   gfig_preview_events   (GtkWidget *widget,
+                                         GdkEvent  *event);
+static gboolean   gfig_preview_expose   (GtkWidget *widget,
                                          GdkEvent  *event);
 
 static gint       gfig_invscale_x        (gint      x);
@@ -145,7 +146,7 @@ gfig_preview_realize (GtkWidget *widget)
 }
 
 static void
-draw_background (void)
+draw_background (cairo_t  *cr)
 {
   if (! back_pixbuf)
     back_pixbuf = gimp_image_get_thumbnail (gfig_context->image_id,
@@ -153,27 +154,32 @@ draw_background (void)
                                             GIMP_PIXBUF_LARGE_CHECKS);
 
   if (back_pixbuf)
-    gdk_draw_pixbuf (gtk_widget_get_window (gfig_context->preview),
-                     gtk_widget_get_style (gfig_context->preview)->fg_gc[GTK_STATE_NORMAL],
-                     back_pixbuf, 0, 0,
-                     0, 0,
-                     gdk_pixbuf_get_width (back_pixbuf),
-                     gdk_pixbuf_get_height (back_pixbuf),
-                     GDK_RGB_DITHER_NONE, 0, 0);
+    {
+      gdk_cairo_set_source_pixbuf (cr, back_pixbuf, 0, 0);
+      cairo_paint (cr);
+    }
 }
 
-gboolean
+static gboolean
 gfig_preview_expose (GtkWidget *widget,
                      GdkEvent  *event)
 {
-  gdk_window_clear (gtk_widget_get_window (gfig_context->preview));
+  cairo_t *cr = gdk_cairo_create (event->expose.window);
 
   if (gfig_context->show_background)
-    draw_background ();
+    draw_background (cr);
 
-  draw_grid ();
-  draw_objects (gfig_context->current_obj->obj_list, TRUE);
+  draw_grid (cr);
+  draw_objects (gfig_context->current_obj->obj_list, TRUE, cr);
 
+  if (obj_creating)
+    {
+      GList *single = g_list_prepend (NULL, obj_creating);
+      draw_objects (single, TRUE, cr);
+      g_list_free (single);
+    }
+
+  cairo_destroy (cr);
   return FALSE;
 }
 
@@ -232,6 +238,8 @@ gfig_preview_events (GtkWidget *widget,
                 }
             }
           object_start (&point, bevent->state & GDK_SHIFT_MASK);
+
+          gtk_widget_queue_draw (widget);
         }
 
       break;
@@ -291,6 +299,7 @@ gfig_preview_events (GtkWidget *widget,
       if (obj_creating)
         {
           obj_creating->class->update (&point);
+          gtk_widget_queue_draw (widget);
         }
       gfig_pos_update (point.x, point.y);
       break;

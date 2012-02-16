@@ -73,7 +73,6 @@ void       object_end              (GdkPoint *pnt, gint shift_down);
 extern gint       line_no;
 extern gint       preview_width, preview_height;
 extern gint       need_to_scale;
-extern GdkGC     *gfig_gc;
 extern gdouble    scale_x_factor, scale_y_factor;
 extern GdkPixbuf *back_pixbuf;
 
@@ -165,6 +164,8 @@ gchar *get_line (gchar *buf,
                  FILE  *from,
                  gint   init);
 
+gint            gfig_scale_x    (gint      x);
+gint            gfig_scale_y    (gint      y);
 void            scale_to_xy     (gdouble *list,
                                  gint     size);
 void            scale_to_original_xy (gdouble *list,
@@ -175,10 +176,14 @@ void gfig_paint (BrushType brush_type,
                  gint      seg_count,
                  gdouble   line_pnts[]);
 
+void draw_item   (cairo_t *cr,
+                  gboolean fill);
 void draw_circle (GdkPoint *p,
-                  gboolean  selected);
+                  gboolean  selected,
+                  cairo_t  *cr);
 void draw_sqr    (GdkPoint *p,
-                  gboolean  selected);
+                  gboolean  selected,
+                  cairo_t  *cr);
 
 void       list_button_update   (GFigObj *obj);
 
@@ -198,12 +203,14 @@ void    gfig_draw_arc           (gint x,
                                  gint width,
                                  gint height,
                                  gint angle1,
-                                 gint angle2);
+                                 gint angle2,
+                                 cairo_t *cr);
 
 void    gfig_draw_line          (gint x0,
                                  gint y0,
                                  gint x1,
-                                 gint y1);
+                                 gint y1,
+                                 cairo_t *cr);
 
 void      gfig_paint_callback   (void);
 GFigObj  *gfig_load             (const gchar *filename,

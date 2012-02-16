@@ -90,7 +90,6 @@ static gint       load_options            (GFigObj *gfig,
                                            FILE    *fp);
 /* globals */
 
-GdkGC        *gfig_gc;
 GfigObjectClass dobj_class[10];
 GFigContext  *gfig_context;
 GtkWidget    *top_level_dlg;

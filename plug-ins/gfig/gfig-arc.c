@@ -27,7 +27,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-#undef GDK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -83,7 +82,8 @@ static void        arc_drawing_details (GfigObject *obj,
                                         gboolean    draw_cnts,
                                         gboolean    do_scale);
 
-static void        d_draw_arc          (GfigObject *obj);
+static void        d_draw_arc          (GfigObject *obj,
+                                        cairo_t    *cr);
 
 static void        d_paint_arc         (GfigObject *obj);
 
@@ -380,13 +380,6 @@ arc_drawing_details (GfigObject *obj,
   if (!pnt3)
     return; /* Still not fully drawn */
 
-  if (draw_cnts)
-    {
-      draw_sqr (&pnt1->pnt, obj == gfig_context->selected_obj);
-      draw_sqr (&pnt2->pnt, obj == gfig_context->selected_obj);
-      draw_sqr (&pnt3->pnt, obj == gfig_context->selected_obj);
-    }
-
   if (do_scale)
     {
       /* Adjust pnts for scaling */
@@ -441,8 +434,10 @@ arc_drawing_details (GfigObject *obj,
 }
 
 static void
-d_draw_arc (GfigObject *obj)
+d_draw_arc (GfigObject *obj,
+            cairo_t    *cr)
 {
+  DobjPoints *pnt1, *pnt2, *pnt3;
   GdkPoint center_pnt;
   gdouble  radius, minang, arcang;
 
@@ -451,9 +446,20 @@ d_draw_arc (GfigObject *obj)
   if (!obj)
     return;
 
+  pnt1 = obj->points;
+  pnt2 = pnt1 ? pnt1->next : NULL;
+  pnt3 = pnt2 ? pnt2->next : NULL;
+
+  if (! pnt3)
+    return;
+
+  draw_sqr (&pnt1->pnt, obj == gfig_context->selected_obj, cr);
+  draw_sqr (&pnt2->pnt, obj == gfig_context->selected_obj, cr);
+  draw_sqr (&pnt3->pnt, obj == gfig_context->selected_obj, cr);
+
   arc_drawing_details (obj, &minang, &center_pnt, &arcang, &radius,
                        TRUE, FALSE);
-  gfig_draw_arc (center_pnt.x, center_pnt.y, radius, radius, minang, arcang);
+  gfig_draw_arc (center_pnt.x, center_pnt.y, radius, radius, -minang, -(minang + arcang), cr);
 }
 
 static void
@@ -587,33 +593,10 @@ d_update_arc_line (GdkPoint *pnt)
 
   if ((epnt = spnt->next))
     {
-      /* undraw  current */
-      /* Draw square on point */
-      draw_circle (&epnt->pnt, TRUE);
-
-      gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                     /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
-                     gfig_gc,
-                     spnt->pnt.x,
-                     spnt->pnt.y,
-                     epnt->pnt.x,
-                     epnt->pnt.y);
       g_free (epnt);
     }
 
-  /* draw new */
-  /* Draw circle on point */
-  draw_circle (pnt, TRUE);
-
   epnt = new_dobjpoint (pnt->x, pnt->y);
-
-  gdk_draw_line (gtk_widget_get_window (gfig_context->preview),
-                 /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
-                 gfig_gc,
-                 spnt->pnt.x,
-                 spnt->pnt.y,
-                 epnt->pnt.x,
-                 epnt->pnt.y);
   spnt->next = epnt;
 }
 
@@ -648,7 +631,6 @@ d_arc_line_start (GdkPoint *pnt,
 {
   if (!obj_creating || !shift_down)
     {
-      /* Draw square on point */
       /* Must delete obj_creating if we have one */
       obj_creating = d_new_object (LINE, pnt->x, pnt->y);
     }
@@ -664,8 +646,6 @@ d_arc_start (GdkPoint *pnt,
              gboolean  shift_down)
 {
   /* Draw lines to start with -- then convert to an arc */
-  if (!tmp_line)
-    draw_sqr (pnt, TRUE);
   d_arc_line_start (pnt, TRUE); /* TRUE means multiple pointed line */
 }
 
@@ -673,9 +653,6 @@ static void
 d_arc_line_end (GdkPoint *pnt,
                 gboolean  shift_down)
 {
-  /* Undraw the last circle */
-  draw_circle (pnt, TRUE);
-
   if (shift_down)
     {
       if (tmp_line)
@@ -749,7 +726,6 @@ d_arc_end (GdkPoint *pnt,
         {
           selvals.scaletoimage = 0;
         }
-      /*d_draw_arc (newarc);*/
       gtk_widget_queue_draw (gfig_context->preview);
       if (need_to_scale)
         {

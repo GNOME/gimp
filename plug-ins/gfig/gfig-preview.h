@@ -29,9 +29,6 @@
 
 GtkWidget *make_preview            (void);
 
-gboolean   gfig_preview_expose     (GtkWidget    *widget,
-                                    GdkEvent     *event);
-
 void       gfig_pos_enable         (GtkWidget    *widget,
                                     gpointer      data);
 

@@ -27,6 +27,7 @@
 #include "gfig-types.h"
 #include "gfig-style.h"
 
+typedef void        (*DobjDrawFunc)   (GfigObject *, cairo_t *);
 typedef void        (*DobjFunc)       (GfigObject *);
 typedef GfigObject *(*DobjGenFunc)    (GfigObject *);
 
@@ -43,7 +44,7 @@ typedef struct
   const gchar  *name;
 
   /* virtuals */
-  DobjFunc      drawfunc;   /* How do I draw myself */
+  DobjDrawFunc  drawfunc;   /* How do I draw myself */
   DobjFunc      paintfunc;  /* Draw me on canvas */
   DobjGenFunc   copyfunc;   /* copy */
   void         (*update) (GdkPoint   *pnt);
@@ -82,7 +83,8 @@ void        d_delete_dobjpoints      (DobjPoints *pnts);
 void        object_update            (GdkPoint   *pnt);
 GList      *copy_all_objs            (GList      *objs);
 void        draw_objects             (GList      *objs,
-                                      gboolean    show_single);
+                                      gboolean    show_single,
+                                      cairo_t    *cr);
 
 GfigObject *d_load_object            (gchar      *desc,
                                       FILE       *fp);
