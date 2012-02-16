@@ -72,7 +72,6 @@ d_draw_spiral (GfigObject *obj,
   gdouble     sp_cons;
   gint        loop;
   GdkPoint    start_pnt = { 0, 0 };
-  GdkPoint    first_pnt;
   gboolean    do_line = FALSE;
   gint        clock_wise = 1;
 
@@ -147,7 +146,6 @@ d_draw_spiral (GfigObject *obj,
       else
         {
           do_line = TRUE;
-          first_pnt = calc_pnt;
         }
       start_pnt = calc_pnt;
     }

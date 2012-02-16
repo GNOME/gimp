@@ -199,8 +199,8 @@ arc_details (GdkPoint *vert_a,
   double sum_sides2;
   double area;
   double circumcircle_R;
-  double line1_grad, line1_const;
-  double line2_grad, line2_const;
+  double line1_grad = 0, line1_const = 0;
+  double line2_grad = 0, line2_const = 0;
   double inter_x = 0.0, inter_y = 0.0;
   int    got_x = 0, got_y = 0;
 
@@ -474,7 +474,7 @@ d_paint_arc (GfigObject *obj)
   gdouble  ang_loop;
   gdouble  radius;
   gint     loop;
-  GdkPoint first_pnt, last_pnt = { 0, 0 };
+  GdkPoint last_pnt = { 0, 0 };
   gboolean first = TRUE;
   GdkPoint center_pnt;
   gdouble  minang, arcang;
@@ -533,7 +533,6 @@ d_paint_arc (GfigObject *obj)
 
       if (first)
         {
-          first_pnt = calc_pnt;
           first = FALSE;
         }
     }

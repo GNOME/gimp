@@ -147,7 +147,7 @@ d_paint_poly (GfigObject *obj)
   /* first point center */
   /* Next point is radius */
   gdouble    *line_pnts;
-  gint        seg_count = 0;
+  gint        seg_count;
   gint        i = 0;
   DobjPoints *center_pnt;
   DobjPoints *radius_pnt;
@@ -271,7 +271,6 @@ d_poly2lines (GfigObject *obj)
 {
   /* first point center */
   /* Next point is radius */
-  gint        seg_count = 0;
   DobjPoints *center_pnt;
   DobjPoints *radius_pnt;
   gint16      shift_x;
@@ -286,9 +285,6 @@ d_poly2lines (GfigObject *obj)
   gboolean    first = TRUE;
 
   g_assert (obj != NULL);
-
-  /* count - add one to close polygon */
-  seg_count = obj->type_data + 1;
 
   center_pnt = obj->points;
 
@@ -358,7 +354,6 @@ d_star2lines (GfigObject *obj)
 {
   /* first point center */
   /* Next point is radius */
-  gint        seg_count = 0;
   DobjPoints *center_pnt;
   DobjPoints *outer_radius_pnt;
   DobjPoints *inner_radius_pnt;
@@ -375,9 +370,6 @@ d_star2lines (GfigObject *obj)
   gboolean    first = TRUE;
 
   g_assert (obj != NULL);
-
-  /* count - add one to close polygon */
-  seg_count = 2 * obj->type_data + 1;
 
   center_pnt = obj->points;
 
