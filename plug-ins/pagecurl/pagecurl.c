@@ -159,7 +159,7 @@ static const guint8 *curl_pixbufs[] =
 
 static GtkWidget *curl_image = NULL;
 
-static gint   sel_x1, sel_y1, sel_x2, sel_y2;
+static gint   sel_x, sel_y;
 static gint   true_sel_width, true_sel_height;
 static gint   sel_width, sel_height;
 static gint   drawable_position;
@@ -262,8 +262,10 @@ run (const gchar      *name,
   drawable_id = param[2].data.d_drawable;
   image_id = param[1].data.d_image;
 
-  if (gimp_drawable_is_rgb (drawable_id)
-       || gimp_drawable_is_gray (drawable_id))
+  if ((gimp_drawable_is_rgb (drawable_id) ||
+       gimp_drawable_is_gray (drawable_id)) &&
+      gimp_drawable_mask_intersect (drawable_id, &sel_x, &sel_y,
+                                    &true_sel_width, &true_sel_height))
     {
       switch (run_mode)
 	{
@@ -648,13 +650,6 @@ init_calculation (gint32 drawable_id)
 	 image_layers[drawable_position] != drawable_id)
     drawable_position++;
 
-  /* Get the bounds of the active selection */
-  gimp_drawable_mask_bounds (drawable_id,
-			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  true_sel_width = sel_x2 - sel_x1;
-  true_sel_height = sel_y2 - sel_y1;
-
   switch (curl.orientation)
     {
     case CURL_ORIENTATION_VERTICAL:
@@ -747,7 +742,7 @@ do_curl_effect (gint32 drawable_id)
   gimp_drawable_fill (curl_layer->drawable_id, GIMP_TRANSPARENT_FILL);
 
   gimp_drawable_offsets (drawable_id, &x1, &y1);
-  gimp_layer_set_offsets (curl_layer->drawable_id, sel_x1 + x1, sel_y1 + y1);
+  gimp_layer_set_offsets (curl_layer->drawable_id, sel_x + x1, sel_y + y1);
   gimp_tile_cache_ntiles (2 * (curl_layer->width / gimp_tile_width () + 1));
 
   gimp_pixel_rgn_init (&dest_rgn, curl_layer,
@@ -941,10 +936,10 @@ clear_curled_region (gint32 drawable_id)
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
   gimp_pixel_rgn_init (&src_rgn, drawable,
-		       sel_x1, sel_y1, true_sel_width, true_sel_height,
+		       sel_x, sel_y, true_sel_width, true_sel_height,
 		       FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       sel_x1, sel_y1, true_sel_width, true_sel_height,
+		       sel_x, sel_y, true_sel_width, true_sel_height,
 		       TRUE, TRUE);
   alpha_pos = dest_rgn.bpp - 1;
 
@@ -967,16 +962,16 @@ clear_curled_region (gint32 drawable_id)
                 {
                 case CURL_ORIENTATION_VERTICAL:
 		  x = (CURL_EDGE_RIGHT (curl.edge) ?
-                       x1 - sel_x1 : sel_width  - 1 - (x1 - sel_x1));
+                       x1 - sel_x : sel_width  - 1 - (x1 - sel_x));
 		  y = (CURL_EDGE_UPPER (curl.edge) ?
-                       y1 - sel_y1 : sel_height - 1 - (y1 - sel_y1));
+                       y1 - sel_y : sel_height - 1 - (y1 - sel_y));
                   break;
 
                 case CURL_ORIENTATION_HORIZONTAL:
 		  x = (CURL_EDGE_LOWER (curl.edge) ?
-                       y1 - sel_y1 : sel_width - 1 - (y1 - sel_y1));
+                       y1 - sel_y : sel_width - 1 - (y1 - sel_y));
                   y = (CURL_EDGE_LEFT (curl.edge)  ?
-                       x1 - sel_x1 : sel_height - 1 - (x1 - sel_x1));
+                       x1 - sel_x : sel_height - 1 - (x1 - sel_x));
                   break;
                 }
 
@@ -1012,7 +1007,8 @@ clear_curled_region (gint32 drawable_id)
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable_id, TRUE);
   gimp_drawable_update (drawable_id,
-			sel_x1, sel_y1, true_sel_width, true_sel_height);
+                        sel_x, sel_y,
+                        true_sel_width, true_sel_height);
   gimp_drawable_detach (drawable);
 }
 

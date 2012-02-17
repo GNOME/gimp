@@ -82,10 +82,8 @@ gdouble              xbild;
 gdouble              ybild;
 gdouble              xdiff;
 gdouble              ydiff;
-gint                 sel_x1;
-gint                 sel_y1;
-gint                 sel_x2;
-gint                 sel_y2;
+gint                 sel_x;
+gint                 sel_y;
 gint                 preview_width;
 gint                 preview_height;
 gdouble             *gg;
@@ -281,11 +279,10 @@ run (const gchar      *name,
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &sel_x, &sel_y,
+                                      &sel_width, &sel_height))
+    return;
 
   /* Calculate preview size */
   if (sel_width > sel_height)

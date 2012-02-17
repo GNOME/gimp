@@ -480,22 +480,20 @@ randomize (GimpDrawable *drawable,
   guchar *next_row, *nr;
   guchar *tmp;
   gint row, col;
-  gint x1, y1, x2, y2;
+  gint x, y;
   gint cnt;
   gint i, j, k;
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_position (preview, &x, &y);
       gimp_preview_get_size (preview, &width, &height);
-      x2 = x1 + width;
-      y2 = y1 + height;
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width     = (x2 - x1);
-      height    = (y2 - y1);
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x, &y, &width, &height))
+        return;
     }
 
   bytes = drawable->bpp;
@@ -503,17 +501,17 @@ randomize (GimpDrawable *drawable,
   /*
    *  allocate row buffers
    */
-  prev_row = g_new (guchar, (x2 - x1 + 2) * bytes);
-  cur_row = g_new (guchar, (x2 - x1 + 2) * bytes);
-  next_row = g_new (guchar, (x2 - x1 + 2) * bytes);
-  dest = g_new (guchar, (x2 - x1) * bytes);
+  prev_row = g_new (guchar, (width + 2) * bytes);
+  cur_row = g_new (guchar, (width + 2) * bytes);
+  next_row = g_new (guchar, (width + 2) * bytes);
+  dest = g_new (guchar, width * bytes);
 
   /*
    *  initialize the pixel regions
    */
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, width, height, TRUE, TRUE);
-  gimp_pixel_rgn_init (&destPR2, drawable, x1, y1, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, x, y, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, x, y, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&destPR2, drawable, x, y, width, height, TRUE, TRUE);
   sp = &srcPR;
   dp = &destPR;
   tp = NULL;
@@ -527,18 +525,18 @@ randomize (GimpDrawable *drawable,
       /*
        *  prepare the first row and previous row
        */
-      randomize_prepare_row (sp, pr, x1, y1 - 1, (x2 - x1));
-      randomize_prepare_row (sp, cr, x1, y1, (x2 - x1));
+      randomize_prepare_row (sp, pr, x, y - 1, width);
+      randomize_prepare_row (sp, cr, x, y, width);
       /*
        *  loop through the rows, applying the selected convolution
        */
-      for (row = y1; row < y2; row++)
+      for (row = y; row < y + height; row++)
         {
           /*  prepare the next row  */
-          randomize_prepare_row (sp, nr, x1, row + 1, (x2 - x1));
+          randomize_prepare_row (sp, nr, x, row + 1, width);
 
           d = dest;
-          for (col = 0; col < (x2 - x1); col++)
+          for (col = 0; col < width; col++)
             {
               if (g_rand_int_range (gr, 0, 100) <= (gint) pivals.rndm_pct)
                 {
@@ -636,7 +634,7 @@ randomize (GimpDrawable *drawable,
            *  Save the modified row, shuffle the row pointers, and every
            *  so often, update the progress meter.
            */
-          gimp_pixel_rgn_set_row (dp, dest, x1, row, (x2 - x1));
+          gimp_pixel_rgn_set_row (dp, dest, x, row, width);
 
           tmp = pr;
           pr = cr;
@@ -646,7 +644,7 @@ randomize (GimpDrawable *drawable,
           if (! preview && PROG_UPDATE_TIME)
             {
               gdouble base = (gdouble) cnt / pivals.rndm_rcount;
-              gdouble inc  = (gdouble) row / ((y2 - y1) * pivals.rndm_rcount);
+              gdouble inc  = (gdouble) row / (height * pivals.rndm_rcount);
 
               gimp_progress_update (base + inc);
             }
@@ -687,7 +685,7 @@ randomize (GimpDrawable *drawable,
     {
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_drawable_update (drawable->drawable_id, x, y, width, height);
     }
 
   /*

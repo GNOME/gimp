@@ -353,24 +353,23 @@ sobel (GimpDrawable *drawable,
   guchar       *next_row, *nr;
   guchar       *tmp;
   gint          row, col;
-  gint          x1, y1, x2, y2;
+  gint          x, y;
   gboolean      alpha;
   gint          counter;
   guchar       *preview_buffer = NULL;
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_position (preview, &x, &y);
       gimp_preview_get_size (preview, &width, &height);
-      x2 = x1 + width;
-      y2 = y1 + height;
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x, &y, &width, &height))
+        return;
+
       gimp_progress_init (_("Sobel edge detecting"));
-      width  = x2 - x1;
-      height = y2 - y1;
     }
 
   /* Get the size of the input image. (This will/must be the same
@@ -405,14 +404,14 @@ sobel (GimpDrawable *drawable,
   cr = cur_row  + bytes;
   nr = next_row + bytes;
 
-  sobel_prepare_row (&srcPR, pr, x1, y1 - 1, width);
-  sobel_prepare_row (&srcPR, cr, x1, y1, width);
+  sobel_prepare_row (&srcPR, pr, x, y - 1, width);
+  sobel_prepare_row (&srcPR, cr, x, y, width);
   counter =0;
   /*  loop through the rows, applying the sobel convolution  */
-  for (row = y1; row < y2; row++)
+  for (row = y; row < y + height; row++)
     {
       /*  prepare the next row  */
-      sobel_prepare_row (&srcPR, nr, x1, row + 1, width);
+      sobel_prepare_row (&srcPR, nr, x, row + 1, width);
 
       d = dest;
       for (col = 0; col < width * bytes; col++)
@@ -450,16 +449,16 @@ sobel (GimpDrawable *drawable,
       /*  store the dest  */
       if (preview)
         {
-          memcpy (preview_buffer + width * (row - y1) * bytes,
+          memcpy (preview_buffer + width * (row - y) * bytes,
                   dest,
                   width * bytes);
         }
       else
         {
-          gimp_pixel_rgn_set_row (&destPR, dest, x1, row, width);
+          gimp_pixel_rgn_set_row (&destPR, dest, x, row, width);
 
           if ((row % 20) == 0)
-            gimp_progress_update ((double) row / (double) (y2 - y1));
+            gimp_progress_update ((double) row / (double) height);
         }
     }
 
@@ -474,7 +473,7 @@ sobel (GimpDrawable *drawable,
       /*  update the sobeled region  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+      gimp_drawable_update (drawable->drawable_id, x, y, width, height);
     }
 
   g_free (prev_row);

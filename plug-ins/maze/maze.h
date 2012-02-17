@@ -60,8 +60,8 @@ enum CellTypes {
 };
 
 extern MazeValues mvals;
-extern guint      sel_w;
-extern guint      sel_h;
+extern gint      sel_w;
+extern gint      sel_h;
 extern GRand     *gr;
 
 

@@ -92,8 +92,8 @@ MazeValues mvals =
 
 GRand *gr;
 
-guint sel_w;
-guint sel_h;
+gint sel_w;
+gint sel_h;
 
 
 MAIN ()
@@ -147,7 +147,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint               x1, y1, x2, y2;
+  gint               x, y;
 
 #ifdef MAZE_DEBUG
   g_print("maze PID: %d\n",getpid());
@@ -166,16 +166,18 @@ run (const gchar      *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  /* get the selection width and height for the GUI. Return if the
+   * selection and drawable do not intersect.
+   */
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x, &y, &sel_w, &sel_h))
+    return;
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
       gimp_get_data (PLUG_IN_PROC, &mvals);
-
-      /* The interface needs to know the dimensions of the image... */
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      sel_w = x2 - x1;
-      sel_h = y2 - y1;
 
       /* Acquire info with a dialog */
       if (! maze_dialog ())
