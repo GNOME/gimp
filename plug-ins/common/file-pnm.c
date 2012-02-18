@@ -428,7 +428,9 @@ run (const gchar      *name,
           else
             {
               psvals.raw = (param[5].data.d_int32) ? TRUE : FALSE;
+              pbm = (strcmp (name, PBM_SAVE_PROC) == 0);
             }
+          break;
 
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly retrieve data  */
