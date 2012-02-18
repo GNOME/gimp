@@ -97,3 +97,7 @@ GimpHistogramView:selected {
 GimpOverlayFrame {
     -GtkButton-focus-line-width: 1;
 }
+
+GimpRuler {
+    background-color: @bg_color;
+}
