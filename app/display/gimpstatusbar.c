@@ -251,9 +251,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                           statusbar);
 
   statusbar->progressbar = g_object_new (GTK_TYPE_PROGRESS_BAR,
-                                         "text-xalign", 0.0,
-                                         "text-yalign", 0.5,
-                                         "ellipsize",   PANGO_ELLIPSIZE_END,
+                                         "show-text", TRUE,
+                                         "ellipsize", PANGO_ELLIPSIZE_END,
                                          NULL);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->progressbar, TRUE, TRUE, 0);
   /*  don't show the progress bar  */
