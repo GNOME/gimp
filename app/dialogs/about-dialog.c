@@ -81,8 +81,10 @@ static gboolean    about_dialog_anim_expose   (GtkWidget       *widget,
 static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
 
+#ifdef GIMP_UNSTABLE
 static void        about_dialog_add_unstable_message
                                               (GtkWidget       *vbox);
+#endif /* GIMP_UNSTABLE */
 
 
 GtkWidget *
@@ -154,7 +156,9 @@ about_dialog_create (GimpContext *context)
       if (GTK_IS_BOX (children->data))
         {
           about_dialog_add_animation (children->data, &dialog);
+#ifdef GIMP_UNSTABLE
           about_dialog_add_unstable_message (children->data);
+#endif /* GIMP_UNSTABLE */
         }
       else
         g_warning ("%s: ooops, no box in this container?", G_STRLOC);
@@ -582,10 +586,11 @@ about_dialog_timer (gpointer data)
   return TRUE;
 }
 
+#ifdef GIMP_UNSTABLE
+
 static void
 about_dialog_add_unstable_message (GtkWidget *vbox)
 {
-#ifdef GIMP_UNSTABLE
   GtkWidget *label;
 
   label = gtk_label_new (_("This is an unstable development release."));
@@ -595,6 +600,6 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (vbox), label, 2);
   gtk_widget_show (label);
-#endif
 }
 
+#endif /* GIMP_UNSTABLE */
