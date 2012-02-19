@@ -261,25 +261,25 @@ static const GimpEnumActionEntry view_zoom_actions[] =
 
   { "view-zoom-out", GTK_STOCK_ZOOM_OUT,
     NC_("view-zoom-action", "Zoom _Out"), "minus",
-    NC_("view-action", "Zoom out"),
+    NC_("view-zoom-action", "Zoom out"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-in", GTK_STOCK_ZOOM_IN,
     NC_("view-zoom-action", "Zoom _In"), "plus",
-    NC_("view-action", "Zoom in"),
+    NC_("view-zoom-action", "Zoom in"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-out-accel", GIMP_STOCK_CHAR_PICKER,
     NC_("view-zoom-action", "Zoom Out"), "KP_Subtract",
-    NC_("view-action", "Zoom out"),
+    NC_("view-zoom-action", "Zoom out"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-in-accel", GIMP_STOCK_CHAR_PICKER,
     NC_("view-zoom-action", "Zoom In"), "KP_Add",
-    NC_("view-action", "Zoom in"),
+    NC_("view-zoom-action", "Zoom in"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
