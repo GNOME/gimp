@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-16 10:31+0000\n"
-"PO-Revision-Date: 2012-02-16 16:30+0100\n"
+"POT-Creation-Date: 2012-02-19 18:19+0000\n"
+"PO-Revision-Date: 2012-02-19 19:35+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -5438,9 +5438,9 @@ msgstr "_Oddalji"
 
 #: ../app/actions/view-actions.c:264
 #: ../app/actions/view-actions.c:276
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out"
-msgstr "Oddalji"
+msgstr "Pomanjšaj"
 
 #: ../app/actions/view-actions.c:269
 msgctxt "view-zoom-action"
@@ -5449,9 +5449,9 @@ msgstr "_Približaj"
 
 #: ../app/actions/view-actions.c:270
 #: ../app/actions/view-actions.c:282
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in"
-msgstr "Približaj"
+msgstr "Povečaj"
 
 #: ../app/actions/view-actions.c:275
 msgctxt "view-zoom-action"
@@ -8663,26 +8663,26 @@ msgctxt "plural"
 msgid "percent"
 msgstr "odstotkov"
 
-#: ../app/dialogs/about-dialog.c:111
+#: ../app/dialogs/about-dialog.c:114
 #: ../app/gui/gui.c:493
 msgid "About GIMP"
 msgstr "O programu GIMP"
 
-#: ../app/dialogs/about-dialog.c:120
+#: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
 msgstr "Obiščite spletno stran GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:126
+#: ../app/dialogs/about-dialog.c:129
 msgid "translator-credits"
 msgstr "Martin Srebotnjak"
 
-#: ../app/dialogs/about-dialog.c:516
+#: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
 msgstr "GIMPa vam zagotavlja"
 
-#: ../app/dialogs/about-dialog.c:590
+#: ../app/dialogs/about-dialog.c:596
 msgid "This is an unstable development release."
 msgstr "To je nestabilna razvojna različica."
 
@@ -15651,3 +15651,4 @@ msgstr "Urejevalnik slik"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Ustvari slike in uredi fotografije"
+
