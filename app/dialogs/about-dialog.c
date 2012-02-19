@@ -81,7 +81,8 @@ static gboolean    about_dialog_anim_expose   (GtkWidget       *widget,
 static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
 
-static void        about_dialog_add_message   (GtkWidget       *vbox);
+static void        about_dialog_add_unstable_message
+                                              (GtkWidget       *vbox);
 
 
 GtkWidget *
@@ -153,7 +154,7 @@ about_dialog_create (GimpContext *context)
       if (GTK_IS_BOX (children->data))
         {
           about_dialog_add_animation (children->data, &dialog);
-          about_dialog_add_message (children->data);
+          about_dialog_add_unstable_message (children->data);
         }
       else
         g_warning ("%s: ooops, no box in this container?", G_STRLOC);
@@ -582,7 +583,7 @@ about_dialog_timer (gpointer data)
 }
 
 static void
-about_dialog_add_message (GtkWidget *vbox)
+about_dialog_add_unstable_message (GtkWidget *vbox)
 {
 #ifdef GIMP_UNSTABLE
   GtkWidget *label;
