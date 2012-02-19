@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-14 18:37+0100\n"
-"PO-Revision-Date: 2012-02-14 18:38+0100\n"
+"POT-Creation-Date: 2012-02-19 20:23+0100\n"
+"PO-Revision-Date: 2012-02-19 20:24+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -5416,7 +5416,7 @@ msgid "Zoom _Out"
 msgstr "_Dalej"
 
 #: ../app/actions/view-actions.c:264 ../app/actions/view-actions.c:276
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Zmniejszenie"
 
@@ -5426,7 +5426,7 @@ msgid "Zoom _In"
 msgstr "_Bliżej"
 
 #: ../app/actions/view-actions.c:270 ../app/actions/view-actions.c:282
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Powiększenie"
 
@@ -8905,17 +8905,17 @@ msgctxt "plural"
 msgid "percent"
 msgstr "procent"
 
-#: ../app/dialogs/about-dialog.c:111 ../app/gui/gui.c:493
+#: ../app/dialogs/about-dialog.c:114 ../app/gui/gui.c:493
 msgid "About GIMP"
 msgstr "Informacje o programie GIMP"
 
-#: ../app/dialogs/about-dialog.c:120
+#: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
 msgstr "Witryna programu GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:126
+#: ../app/dialogs/about-dialog.c:129
 msgid "translator-credits"
 msgstr ""
 "Paweł Dziekoński, 1999-2000\n"
@@ -8925,11 +8925,11 @@ msgstr ""
 "Piotr Drąg <piotrdrag@gmail.com>, 2011, 2012\n"
 "Aviary.pl <gnomepl@aviary.pl>, 2011, 2012"
 
-#: ../app/dialogs/about-dialog.c:516
+#: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
 msgstr "GIMP został dostarczony przez"
 
-#: ../app/dialogs/about-dialog.c:590
+#: ../app/dialogs/about-dialog.c:596
 msgid "This is an unstable development release."
 msgstr "To jest niestabilna wersja rozwojowa."
 
@@ -10705,7 +10705,7 @@ msgstr[2] ""
 
 #: ../app/display/gimpdisplayshell-dnd.c:232
 #: ../app/display/gimpdisplayshell-dnd.c:635
-#: ../app/display/gimpdisplayshell-dnd.c:695
+#: ../app/display/gimpdisplayshell-dnd.c:693
 msgid "Drop New Layer"
 msgstr "Upuszczenie nowej warstwy"
 
