@@ -304,7 +304,14 @@ gimp_dockbook_dispose (GObject *object)
   gimp_dockbook_remove_tab_timeout (dockbook);
 
   while (dockbook->p->dockables)
-    gimp_dockbook_remove (dockbook, dockbook->p->dockables->data);
+    {
+      GimpDockable *dockable = dockbook->p->dockables->data;
+
+      g_object_ref (dockable);
+      gimp_dockbook_remove (dockbook, dockable);
+      gtk_widget_destroy (GTK_WIDGET (dockable));
+      g_object_unref (dockable);
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -1586,7 +1593,7 @@ static GtkIconSize
 gimp_dockbook_get_tab_icon_size (GimpDockbook *dockbook)
 {
   GtkIconSize tab_size = DEFAULT_TAB_ICON_SIZE;
-  
+
   gtk_widget_style_get (GTK_WIDGET (dockbook),
                         "tab-icon-size", &tab_size,
                         NULL);

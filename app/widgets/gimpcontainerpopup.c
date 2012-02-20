@@ -499,8 +499,7 @@ gimp_container_popup_set_view_type (GimpContainerPopup *popup,
     {
       popup->view_type = view_type;
 
-      gtk_container_remove (GTK_CONTAINER (popup->frame),
-                            GTK_WIDGET (popup->editor));
+      gtk_widget_destroy (GTK_WIDGET (popup->editor));
       gimp_container_popup_create_view (popup);
     }
 }

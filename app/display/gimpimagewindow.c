@@ -426,21 +426,6 @@ gimp_image_window_constructed (GObject *object)
 }
 
 static void
-gimp_image_window_clear_docks (GimpDockColumns *columns)
-{
-  GList *docks;
-
-  do
-    {
-      docks = gimp_dock_columns_get_docks (columns);
-
-      if (docks)
-        gimp_dock_columns_remove_dock (columns, docks->data);
-    }
-  while (docks);
-}
-
-static void
 gimp_image_window_dispose (GObject *object)
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (object);
@@ -457,18 +442,6 @@ gimp_image_window_dispose (GObject *object)
     {
       g_object_unref (private->menubar_manager);
       private->menubar_manager = NULL;
-    }
-
-  if (private->left_docks)
-    {
-      gimp_image_window_clear_docks (GIMP_DOCK_COLUMNS (private->left_docks));
-      private->left_docks = NULL;
-    }
-
-  if (private->right_docks)
-    {
-      gimp_image_window_clear_docks (GIMP_DOCK_COLUMNS (private->right_docks));
-      private->right_docks = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);

@@ -656,7 +656,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   old_child = gtk_bin_get_child (GTK_BIN (button));
 
   if (old_child)
-    gtk_container_remove (GTK_CONTAINER (button), old_child);
+    gtk_widget_destroy (old_child);
 
   image = gtk_image_new_from_stock (stock_id, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);

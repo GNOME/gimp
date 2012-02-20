@@ -179,7 +179,14 @@ gimp_dock_columns_dispose (GObject *object)
   GimpDockColumns *dock_columns = GIMP_DOCK_COLUMNS (object);
 
   while (dock_columns->p->docks)
-    gimp_dock_columns_remove_dock (dock_columns, dock_columns->p->docks->data);
+    {
+      GimpDock *dock = dock_columns->p->docks->data;
+
+      g_object_ref (dock);
+      gimp_dock_columns_remove_dock (dock_columns, dock);
+      gtk_widget_destroy (GTK_WIDGET (dock));
+      g_object_unref (dock);
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

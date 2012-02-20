@@ -469,7 +469,7 @@ gimp_container_grid_view_remove_item (GimpContainerView *container_view,
   if (view == (GtkWidget *) grid_view->selected_item)
     grid_view->selected_item = NULL;
 
-  gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box), view);
+  gtk_widget_destroy (view);
 }
 
 static void
@@ -520,8 +520,7 @@ gimp_container_grid_view_clear_items (GimpContainerView *view)
   grid_view->selected_item = NULL;
 
   while (GTK_WRAP_BOX (grid_view->wrap_box)->children)
-    gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box),
-                          GTK_WRAP_BOX (grid_view->wrap_box)->children->widget);
+    gtk_widget_destroy (GTK_WRAP_BOX (grid_view->wrap_box)->children->widget);
 
   parent_view_iface->clear_items (view);
 }

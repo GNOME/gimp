@@ -347,7 +347,11 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
             }
           else
             {
+              g_object_ref (dockbook);
               gimp_dock_remove_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook));
+              gtk_widget_destroy (GTK_WIDGET (dockbook));
+              g_object_unref (dockbook);
+
               n_books--;
             }
 

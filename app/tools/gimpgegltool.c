@@ -679,8 +679,7 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
 
   if (tool->options_table)
     {
-      gtk_container_remove (GTK_CONTAINER (tool->options_frame),
-                            tool->options_table);
+      gtk_widget_destroy (tool->options_table);
       tool->options_table = NULL;
     }
 

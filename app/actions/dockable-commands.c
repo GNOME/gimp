@@ -62,7 +62,12 @@ dockable_close_tab_cmd_callback (GtkAction *action,
   GimpDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
-    gimp_dockbook_remove (dockbook, dockable);
+    {
+      g_object_ref (dockable);
+      gimp_dockbook_remove (dockbook, dockable);
+      gtk_widget_destroy (GTK_WIDGET (dockable));
+      g_object_unref (dockable);
+    }
 }
 
 void
@@ -188,7 +193,10 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
                       gimp_dockbook_add (dockbook, GIMP_DOCKABLE (new_dockable),
                                          page_num);
 
+                      g_object_ref (dockable);
                       gimp_dockbook_remove (dockbook, dockable);
+                      gtk_widget_destroy (GTK_WIDGET (dockable));
+                      g_object_unref (dockable);
 
                       gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
                                                      page_num);

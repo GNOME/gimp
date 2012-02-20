@@ -168,7 +168,14 @@ gimp_paned_box_dispose (GObject *object)
   GimpPanedBox *paned_box = GIMP_PANED_BOX (object);
 
   while (paned_box->p->widgets)
-    gimp_paned_box_remove_widget (paned_box, paned_box->p->widgets->data);
+    {
+      GtkWidget *widget = paned_box->p->widgets->data;
+
+      g_object_ref (widget);
+      gimp_paned_box_remove_widget (paned_box, widget);
+      gtk_widget_destroy (widget);
+      g_object_unref (widget);
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

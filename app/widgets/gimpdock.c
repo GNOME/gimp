@@ -201,7 +201,14 @@ gimp_dock_dispose (GObject *object)
   GimpDock *dock = GIMP_DOCK (object);
 
   while (dock->p->dockbooks)
-    gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->p->dockbooks->data));
+    {
+      GimpDockbook *dockbook = dock->p->dockbooks->data;
+
+      g_object_ref (dockbook);
+      gimp_dock_remove_book (dock, dockbook);
+      gtk_widget_destroy (GTK_WIDGET (dockbook));
+      g_object_unref (dockbook);
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
