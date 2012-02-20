@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-15 12:01+0000\n"
-"PO-Revision-Date: 2012-02-15 23:38+0900\n"
+"POT-Creation-Date: 2012-02-19 17:02+0000\n"
+"PO-Revision-Date: 2012-02-19 22:16+0900\n"
 "Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -5496,7 +5496,7 @@ msgid "Zoom _Out"
 msgstr "縮小表示(_O)"
 
 #: ../app/actions/view-actions.c:264 ../app/actions/view-actions.c:276
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "表示倍率を下げて縮小表示します"
 
@@ -5506,7 +5506,7 @@ msgid "Zoom _In"
 msgstr "拡大表示(_I)"
 
 #: ../app/actions/view-actions.c:270 ../app/actions/view-actions.c:282
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "表示倍率を上げて拡大表示します"
 
@@ -8952,17 +8952,17 @@ msgctxt "plural"
 msgid "percent"
 msgstr "パーセント"
 
-#: ../app/dialogs/about-dialog.c:111 ../app/gui/gui.c:493
+#: ../app/dialogs/about-dialog.c:114 ../app/gui/gui.c:493
 msgid "About GIMP"
 msgstr "GIMP について"
 
-#: ../app/dialogs/about-dialog.c:120
+#: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
 msgstr "GIMP ウェブサイトへ"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:126
+#: ../app/dialogs/about-dialog.c:129
 msgid "translator-credits"
 msgstr ""
 "SHIRASAKI Yasuhiro\n"
@@ -8974,11 +8974,11 @@ msgstr ""
 "Ken Okubo\n"
 "NISHIBORI Kiyotaka"
 
-#: ../app/dialogs/about-dialog.c:516
+#: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
 msgstr "GIMP の提供は"
 
-#: ../app/dialogs/about-dialog.c:590
+#: ../app/dialogs/about-dialog.c:596
 msgid "This is an unstable development release."
 msgstr ""
 "このバージョンは開発途上版です\n"
@@ -10740,7 +10740,7 @@ msgstr[0] ""
 
 #: ../app/display/gimpdisplayshell-dnd.c:232
 #: ../app/display/gimpdisplayshell-dnd.c:635
-#: ../app/display/gimpdisplayshell-dnd.c:695
+#: ../app/display/gimpdisplayshell-dnd.c:693
 msgid "Drop New Layer"
 msgstr "新しいレイヤーをドロップ"
 
@@ -16180,6 +16180,14 @@ msgstr "画像エディター"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "画像の作成と写真の編集を行います"
+
+#~ msgctxt "view-action"
+#~ msgid "Zoom out"
+#~ msgstr "表示倍率を下げて縮小表示します"
+
+#~ msgctxt "view-action"
+#~ msgid "Zoom in"
+#~ msgstr "表示倍率を上げて拡大表示します"
 
 #~ msgctxt "tool"
 #~ msgid "_Zoom"
