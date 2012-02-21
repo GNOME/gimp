@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-13 07:20+0000\n"
-"PO-Revision-Date: 2012-02-13 12:09+0100\n"
+"POT-Creation-Date: 2012-02-13 11:11+0000\n"
+"PO-Revision-Date: 2012-02-21 17:08+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -4698,7 +4698,7 @@ msgstr "Fax CCITT grupo _4"
 
 #: ../plug-ins/common/file-tiff-save.c:1102
 msgid "Save _color values from transparent pixels"
-msgstr "Guardar los valores de los _colores de los píxeles transparentes"
+msgstr "Guardar los valores de los colores de los píxeles _transparentes"
 
 #: ../plug-ins/common/file-tiff-save.c:1118 ../plug-ins/common/file-xbm.c:1235
 msgid "Comment:"
@@ -8699,7 +8699,7 @@ msgstr ""
 #. Advanced Options
 #: ../plug-ins/file-bmp/bmp-write.c:902 ../plug-ins/file-jpeg/jpeg-save.c:901
 msgid "_Advanced Options"
-msgstr "Opciones _avanzadas"
+msgstr "_Opciones avanzadas"
 
 #: ../plug-ins/file-bmp/bmp-write.c:917
 msgid "16 bits"
@@ -8912,7 +8912,7 @@ msgstr "JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:863
 msgid "_Quality:"
-msgstr "_Calidad:"
+msgstr "Ca_lidad:"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:867
 msgid "JPEG quality parameter"
@@ -9017,11 +9017,11 @@ msgstr "Comentario"
 #: ../plug-ins/file-jpeg/jpeg-save.c:1189
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
-msgstr "_Cargar predet."
+msgstr "C_argar predet."
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1198
 msgid "Sa_ve Defaults"
-msgstr "_Guardar predet."
+msgstr "Gua_rdar predet."
 
 #: ../plug-ins/file-jpeg/jpeg.c:139 ../plug-ins/file-jpeg/jpeg.c:177
 msgid "JPEG image"
@@ -10975,7 +10975,7 @@ msgstr "Guardar el desplazamiento de _capa"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
 msgid "Save _resolution"
-msgstr "Guardar la _resolución"
+msgstr "Guardar la re_solución"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:6
 msgid "Save creation _time"
@@ -11366,7 +11366,7 @@ msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
 msgstr ""
-"Por favor, intale el paquete adicional de ayuda o use el manual en línea en "
+"Por favor, instale el paquete adicional de ayuda o use el manual en línea en "
 "http://docs.gimp.org/."
 
 #: ../plug-ins/help/gimphelpdomain.c:196
@@ -11376,7 +11376,7 @@ msgstr "¿Quizá le faltan los «backends» de GIO y necesita instalar GVFS?"
 #: ../plug-ins/help/gimphelpdomain.c:215
 #, c-format
 msgid "Help ID '%s' unknown"
-msgstr "La ID de ayuda «%s» es desconocida"
+msgstr "El ID de la ayuda «%s» es desconocido"
 
 #: ../plug-ins/help/gimphelplocale.c:208
 #, c-format
