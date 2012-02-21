@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef __GFIG_ENUMS_H__
-#define __GFIG_ENUMS_H__
+#ifndef __GFIG_TYPES_H__
+#define __GFIG_TYPES_H__
 
 typedef enum
 {
@@ -112,4 +112,4 @@ typedef struct _GFigObj    GFigObj;
 typedef struct _GfigObject GfigObject;
 typedef struct _Style      Style;
 
-#endif /* __GFIG_ENUMS_H__ */
+#endif /* __GFIG_TYPES_H__ */
