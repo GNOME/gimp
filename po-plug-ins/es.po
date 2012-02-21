@@ -21,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-02-13 11:11+0000\n"
-"PO-Revision-Date: 2012-02-21 17:08+0100\n"
+"PO-Revision-Date: 2012-02-21 17:12+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -8936,11 +8936,11 @@ msgstr "Intervalo (filas de MCU):"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
 msgid "Use _restart markers"
-msgstr "Usar marcadores de _reinicio"
+msgstr "Usar marcadores de rei_nicio"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:976
 msgid "_Optimize"
-msgstr "_Optimizar"
+msgstr "Optimi_zar"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:990
 msgid "_Progressive"
@@ -8960,7 +8960,7 @@ msgstr "Guardar los datos _XMP"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1055
 msgid "_Use quality settings from original image"
-msgstr "_Usar los ajustes de calidad de la imagen original"
+msgstr "Usar los ajustes de calidad de la i_magen original"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1061
 msgid ""
