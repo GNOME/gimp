@@ -236,7 +236,9 @@ gimp_spin_scale_size_request (GtkWidget      *widget,
 
   if (private->label)
     {
-      gint char_width, digit_width, char_pixels;
+      gint char_width;
+      gint digit_width;
+      gint char_pixels;
 
       char_width = pango_font_metrics_get_approximate_char_width (metrics);
       digit_width = pango_font_metrics_get_approximate_digit_width (metrics);
@@ -373,11 +375,10 @@ gimp_spin_scale_get_target (GtkWidget *widget,
                             gdouble    x,
                             gdouble    y)
 {
-  PangoFontMetrics *metrics;
-  GtkAllocation     allocation;
-  PangoRectangle    logical;
-  gint              layout_x;
-  gint              layout_y;
+  GtkAllocation   allocation;
+  PangoRectangle  logical;
+  gint            layout_x;
+  gint            layout_y;
 
   gtk_widget_get_allocation (widget, &allocation);
   gtk_entry_get_layout_offsets (GTK_ENTRY (widget), &layout_x, &layout_y);
