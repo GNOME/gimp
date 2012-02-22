@@ -430,16 +430,16 @@ draw_wireframe_plane (cairo_t *cr,
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
                             &x2, &y2, &mapvals.viewpoint, &b);
 
-      cairo_move_to (cr, RINT (x1), RINT (y1));
-      cairo_line_to (cr, RINT (x2), RINT (y2));
+      cairo_move_to (cr, RINT (x1) + 0.5, RINT (y1) + 0.5);
+      cairo_line_to (cr, RINT (x2) + 0.5, RINT (y2) + 0.5);
 
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
                             &x1, &y1, &mapvals.viewpoint, &c);
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
                             &x2, &y2, &mapvals.viewpoint, &d);
 
-      cairo_move_to (cr, RINT (x1), RINT (y1));
-      cairo_line_to (cr, RINT (x2), RINT (y2));
+      cairo_move_to (cr, RINT (x1) + 0.5, RINT (y1) + 0.5);
+      cairo_line_to (cr, RINT (x2) + 0.5, RINT (y2) + 0.5);
 
       gimp_vector3_sub (&a, &a, &dir1);
       gimp_vector3_sub (&b, &b, &dir1);
@@ -540,8 +540,8 @@ draw_wireframe_sphere (cairo_t *cr,
           gimp_vector_3d_to_2d (startx, starty, pw, ph,
                                 &x2, &y2, &mapvals.viewpoint, &p[cnt + 1]);
 
-          cairo_move_to (cr, (gint) (x1 + 0.5), (gint) (y1 + 0.5));
-          cairo_line_to (cr, (gint) (x2 + 0.5), (gint) (y2 + 0.5));
+          cairo_move_to (cr, (gint) (x1 + 0.5) + 0.5, (gint) (y1 + 0.5) + 0.5);
+          cairo_line_to (cr, (gint) (x2 + 0.5) + 0.5, (gint) (y2 + 0.5) + 0.5);
         }
     }
 
@@ -555,8 +555,8 @@ draw_wireframe_sphere (cairo_t *cr,
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
                             &x2, &y2, &mapvals.viewpoint, &p[cnt2 + 1]);
 
-      cairo_move_to (cr, RINT (x1), RINT (y1));
-      cairo_line_to (cr, RINT (x2), RINT (y2));
+      cairo_move_to (cr, RINT (x1) + 0.5, RINT (y1) + 0.5);
+      cairo_line_to (cr, RINT (x2) + 0.5, RINT (y2) + 0.5);
 
       cnt2 += 2;
     }
@@ -588,8 +588,8 @@ draw_line (cairo_t    *cr,
   gimp_vector_3d_to_2d (startx, starty, pw, ph,
                         &x2, &y2, &mapvals.viewpoint, &b);
 
-  cairo_move_to (cr, RINT (x1), RINT (y1));
-  cairo_line_to (cr, RINT (x2), RINT (y2));
+  cairo_move_to (cr, RINT (x1) + 0.5, RINT (y1) + 0.5);
+  cairo_line_to (cr, RINT (x2) + 0.5, RINT (y2) + 0.5);
 }
 
 static void
