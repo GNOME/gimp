@@ -6,14 +6,94 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-28 22:09+0100\n"
-"PO-Revision-Date: 2012-01-28 22:09+0100\n"
+"POT-Creation-Date: 2012-02-22 13:17+0100\n"
+"PO-Revision-Date: 2012-02-22 13:17+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/script-fu/script-fu.c:110
+msgid "Interactive console for Script-Fu development"
+msgstr "Console interattiva per sviluppo Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:116
+msgid "_Console"
+msgstr "_Console"
+
+#: ../plug-ins/script-fu/script-fu.c:140
+msgid "Server for remote Script-Fu operation"
+msgstr "Server per le operazioni Script-Fu remote"
+
+#: ../plug-ins/script-fu/script-fu.c:145
+msgid "_Start Server..."
+msgstr "Avvia _server..."
+
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "_GIMP Online"
+msgstr "_GIMP online"
+
+#: ../plug-ins/script-fu/script-fu.c:302
+msgid "_User Manual"
+msgstr "Manuale _utente"
+
+#: ../plug-ins/script-fu/script-fu.c:305
+msgid "_Script-Fu"
+msgstr "_Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:307
+msgid "_Test"
+msgstr "_Test"
+
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "P_ulsanti"
+
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "_Logotipi"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "_Motivi"
+
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Web Page Themes"
+msgstr "Temi per pagine _web"
+
+#: ../plug-ins/script-fu/script-fu.c:319
+msgid "_Alien Glow"
+msgstr "Bagliore _alieno"
+
+#: ../plug-ins/script-fu/script-fu.c:321
+msgid "_Beveled Pattern"
+msgstr "Motivo in _bassorilievo"
+
+#: ../plug-ins/script-fu/script-fu.c:323
+msgid "_Classic.Gimp.Org"
+msgstr "_Classico gimp.org"
+
+#: ../plug-ins/script-fu/script-fu.c:326
+msgid "Alpha to _Logo"
+msgstr "Alfa a _logotipo"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Rilegge tutti gli Script-Fu disponibili"
+
+#: ../plug-ins/script-fu/script-fu.c:334
+msgid "_Refresh Scripts"
+msgstr "_Aggiorna gli script"
+
+#: ../plug-ins/script-fu/script-fu.c:357
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Impossibile usare \"Ricarica scripts\" mentre una finestra di dialogo Script-"
+"fu è aperta. Chiudere tutte le finestre Script-fu e riprovare."
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
 #: ../plug-ins/script-fu/script-fu-console.c:197
@@ -135,86 +215,6 @@ msgstr "Porta del server:"
 msgid "Server logfile:"
 msgstr "File di log del server:"
 
-#: ../plug-ins/script-fu/script-fu.c:110
-msgid "Interactive console for Script-Fu development"
-msgstr "Console interattiva per sviluppo Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:116
-msgid "_Console"
-msgstr "_Console"
-
-#: ../plug-ins/script-fu/script-fu.c:140
-msgid "Server for remote Script-Fu operation"
-msgstr "Server per le operazioni Script-Fu remote"
-
-#: ../plug-ins/script-fu/script-fu.c:145
-msgid "_Start Server..."
-msgstr "Avvia _server..."
-
-#: ../plug-ins/script-fu/script-fu.c:301
-msgid "_GIMP Online"
-msgstr "_GIMP online"
-
-#: ../plug-ins/script-fu/script-fu.c:302
-msgid "_User Manual"
-msgstr "Manuale _utente"
-
-#: ../plug-ins/script-fu/script-fu.c:305
-msgid "_Script-Fu"
-msgstr "_Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:307
-msgid "_Test"
-msgstr "_Test"
-
-#: ../plug-ins/script-fu/script-fu.c:310
-msgid "_Buttons"
-msgstr "P_ulsanti"
-
-#: ../plug-ins/script-fu/script-fu.c:312
-msgid "_Logos"
-msgstr "_Logotipi"
-
-#: ../plug-ins/script-fu/script-fu.c:314
-msgid "_Patterns"
-msgstr "_Motivi"
-
-#: ../plug-ins/script-fu/script-fu.c:317
-msgid "_Web Page Themes"
-msgstr "Temi per pagine _web"
-
-#: ../plug-ins/script-fu/script-fu.c:319
-msgid "_Alien Glow"
-msgstr "Bagliore _alieno"
-
-#: ../plug-ins/script-fu/script-fu.c:321
-msgid "_Beveled Pattern"
-msgstr "Motivo in _bassorilievo"
-
-#: ../plug-ins/script-fu/script-fu.c:323
-msgid "_Classic.Gimp.Org"
-msgstr "_Classico gimp.org"
-
-#: ../plug-ins/script-fu/script-fu.c:326
-msgid "Alpha to _Logo"
-msgstr "Alfa a _logotipo"
-
-#: ../plug-ins/script-fu/script-fu.c:329
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Rilegge tutti gli Script-Fu disponibili"
-
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "_Refresh Scripts"
-msgstr "_Aggiorna gli script"
-
-#: ../plug-ins/script-fu/script-fu.c:357
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"Impossibile usare \"Ricarica scripts\" mentre una finestra di dialogo Script-"
-"fu è aperta. Chiudere tutte le finestre Script-fu e riprovare."
-
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
 msgstr "Pr_ofilo 3D..."
@@ -262,10 +262,10 @@ msgstr "Impostazioni predefinite mappa a sbalzo"
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:2
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 msgid "Font"
 msgstr "Carattere"
 
@@ -298,10 +298,10 @@ msgstr "Carattere"
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:3
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
 msgid "Font size (pixels)"
 msgstr "Dimensione font (pixel)"
 
@@ -373,10 +373,10 @@ msgstr "Raggio sfocatura ombra"
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 msgid "Text"
 msgstr "Testo"
 
@@ -406,8 +406,8 @@ msgstr "Truchet 3_D..."
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "Background color"
 msgstr "Colore sfondo"
@@ -1041,54 +1041,37 @@ msgstr "Definizione"
 msgid "_Camouflage..."
 msgstr "_Camuffamento..."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
-msgid "Bevel Highlight"
-msgstr "Rilievo alteluci"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
-msgid "Bevel Shadow"
-msgstr "Rilievo ombre"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
-msgid "Carve white areas"
-msgstr "Aree bianche scolpite"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
-msgid "Carved Surface"
-msgstr "Superficie scolpita"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-msgid "Cast Shadow"
-msgstr "Proietta ombra"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:6
-msgid "Image to carve"
-msgstr "Immagine da scolpire"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
-msgid "Inset"
-msgstr "Riquadro"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
-msgid "Stencil C_arve..."
-msgstr "Scolpitur_a..."
-
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "Background Image"
 msgstr "Immagine di sfondo"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
+msgid "Bevel Highlight"
+msgstr "Rilievo alteluci"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+msgid "Bevel Shadow"
+msgstr "Rilievo ombre"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 msgid "Carve raised text"
 msgstr "Testo scolpito in rilievo"
 
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
+msgid "Carved Surface"
+msgstr "Superficie scolpita"
+
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
 msgid "Carved..."
 msgstr "Scolpito..."
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
+msgid "Cast Shadow"
+msgstr "Proietta ombra"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
 msgid ""
@@ -1098,9 +1081,26 @@ msgstr ""
 "Crea un logotipo con testo scolpito in alto o bassorilievo sull'immagine di "
 "sfondo specificata"
 
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
+msgid "Inset"
+msgstr "Riquadro"
+
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:12
 msgid "Padding around text"
 msgstr "Rilievo attorno al testo"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Carve white areas"
+msgstr "Aree bianche scolpite"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:6
+msgid "Image to carve"
+msgstr "Immagine da scolpire"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
+msgid "Stencil C_arve..."
+msgstr "Scolpitur_a..."
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:2
 msgid "Chalk color"
@@ -1799,8 +1799,8 @@ msgid "Bevel height (sharpness)"
 msgstr "Altezza rilievo (nitidezza)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 msgid "Border size (pixels)"
 msgstr "Dimensione bordo (pixel)"
 
@@ -2364,6 +2364,23 @@ msgstr "Tavolozza"
 msgid "Se_t Colormap..."
 msgstr "Impos_ta mappa colori..."
 
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "Concave"
+msgstr "Concavo"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
+#, no-c-format
+msgid "Radius (%)"
+msgstr "Raggio (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
+msgid "Round the corners of the current selection"
+msgstr "Arrotonda gli spigoli della selezione corrente"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
+msgid "Rounded R_ectangle..."
+msgstr "R_ettangolo arrotondato..."
+
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
 msgstr "Converte una selezione in un pennello"
@@ -2387,23 +2404,6 @@ msgstr "Converte la selezione in un motivo"
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
 msgstr "Al _motivo..."
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
-msgid "Concave"
-msgstr "Concavo"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
-#, no-c-format
-msgid "Radius (%)"
-msgstr "Raggio (%)"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
-msgid "Round the corners of the current selection"
-msgstr "Arrotonda gli spigoli della selezione corrente"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid "Rounded R_ectangle..."
-msgstr "R_ettangolo arrotondato..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
@@ -2624,33 +2624,9 @@ msgstr "Angolo spirale"
 msgid "_Swirly..."
 msgstr "_Spirale..."
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
-msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr "Aggiunge un logotipo usando un effetto a \"traccia di particelle\""
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
-msgid "Base color"
-msgstr "Colore base"
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
-msgid "Create a logo using a Trace Of Particles effect"
-msgstr "Crea un logotipo usando l'effetto a \"traccia di particelle\""
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
-msgid "Edge only"
-msgstr "Solo margine"
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
-msgid "Edge width"
-msgstr "Larghezza margine"
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
-msgid "Hit rate"
-msgstr "Frequenza di esecuzione"
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
-msgid "_Particle Trace..."
-msgstr "Traccia di _particella..."
+#: ../plug-ins/script-fu/scripts/test-sphere.scm.h:1
+msgid "_Sphere..."
+msgstr "_Sfera..."
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
@@ -2753,6 +2729,34 @@ msgstr "Crea un titolo decorativo per il web"
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
 msgstr "Intestazione titolo web..."
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "Add a Trace of Particles effect to the selected region (or alpha)"
+msgstr "Aggiunge un logotipo usando un effetto a \"traccia di particelle\""
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+msgid "Base color"
+msgstr "Colore base"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+msgid "Create a logo using a Trace Of Particles effect"
+msgstr "Crea un logotipo usando l'effetto a \"traccia di particelle\""
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+msgid "Edge only"
+msgstr "Solo margine"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+msgid "Edge width"
+msgstr "Larghezza margine"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+msgid "Hit rate"
+msgstr "Frequenza di esecuzione"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
+msgid "_Particle Trace..."
+msgstr "Traccia di _particella..."
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
 msgid "Create an image filled with a Truchet pattern"
