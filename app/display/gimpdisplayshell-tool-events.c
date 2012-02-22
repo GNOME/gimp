@@ -1993,6 +1993,7 @@ gimp_display_shell_compress_motion (GimpDisplayShell *shell)
 
       if (!event)
         {
+          break;
           /* Do nothing */
         }
       else if ((gtk_get_event_widget (event) == shell->canvas) &&

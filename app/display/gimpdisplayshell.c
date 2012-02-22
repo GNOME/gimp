@@ -187,14 +187,6 @@ G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
 static guint display_shell_signals[LAST_SIGNAL] = { 0 };
 
 
-static const gchar display_rc_style[] =
-  "style \"check-button-style\"\n"
-  "{\n"
-  "  GtkToggleButton::child-displacement-x = 0\n"
-  "  GtkToggleButton::child-displacement-y = 0\n"
-  "}\n"
-  "widget \"*\" style \"check-button-style\"";
-
 static void
 gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 {
@@ -300,8 +292,6 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                    g_param_spec_object ("icon", NULL, NULL,
                                                         GDK_TYPE_PIXBUF,
                                                         GIMP_PARAM_READWRITE));
-
-  gtk_rc_parse_string (display_rc_style);
 }
 
 static void
@@ -315,6 +305,25 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
+  GtkCssProvider *css;
+  const gchar    *str;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (shell),
+                                  GTK_ORIENTATION_VERTICAL);
+
+  str =
+    "GimpDisplayShell GtkCheckButton {\n"
+    "    -GtkButton-child-displacement-x: 0;\n"
+    "    -GtkButton-child-displacement-y: 0;\n"
+    "}\n";
+
+  css = gtk_css_provider_new ();
+  gtk_css_provider_load_from_data (css, str, -1, NULL);
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (shell)),
+                                  GTK_STYLE_PROVIDER (css),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (css);
+
   shell->options            = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
   shell->fullscreen_options = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
   shell->no_image_options   = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
