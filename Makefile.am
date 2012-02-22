@@ -35,7 +35,7 @@ SUBDIRS = \
 	$(GIMP_MODULES)		\
 	$(GIMP_PLUGINS)		\
 	etc			\
-	devel-docs		\
+##	devel-docs		\
 	docs			\
 	build
 
