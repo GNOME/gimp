@@ -1,6 +1,6 @@
-# Norwegian translation of gimp-modules.
+# Norwegian bokmål translation of libgimp.
 # Copyright (C) 1999-2001 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1999-2011.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2012.
 # Runar Ingebrigtsen <ringe@skolelinux.no>, 2004
 # Sigurd Gartmann <sigurdga@yahoo-inc.com>, 2004, 2007
 #
@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-18 23:20+0200\n"
-"PO-Revision-Date: 2011-07-18 23:21+0200\n"
+"POT-Creation-Date: 2012-02-22 08:38+0100\n"
+"PO-Revision-Date: 2012-02-22 08:40+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
-"Language-Team: Norwegian <i18n-no@lister.ping.uio.no>\n"
+"Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: no\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -183,7 +183,7 @@ msgstr "Eksporter fil"
 msgid "_Ignore"
 msgstr "_Ignorer"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:989
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:988
 msgid "_Export"
 msgstr "_Eksporter"
 
@@ -218,7 +218,7 @@ msgstr ""
 "Du er i ferd med å lagre en kanal (lagret utvalg) som %s.\n"
 "Dette vil ikke lagre synlige lag."
 
-#: ../libgimp/gimpexport.c:980
+#: ../libgimp/gimpexport.c:979
 msgid "Export Image as "
 msgstr "Eksporter bilde som"
 
@@ -234,7 +234,10 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "Graderingsutvalg"
 
-#: ../libgimp/gimpmenu.c:459 ../libgimpwidgets/gimpintstore.c:238
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
+#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:241
 msgid "(Empty)"
 msgstr "(Tomt)"
 
@@ -553,16 +556,14 @@ msgid "Average"
 msgstr "Gjennomsnitt"
 
 #: ../libgimpbase/gimpbaseenums.c:333
-#, fuzzy
 msgctxt "dodge-burn-type"
 msgid "Dodge"
-msgstr "Lysne"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:334
-#, fuzzy
 msgctxt "dodge-burn-type"
 msgid "Burn"
-msgstr "Mørkne"
+msgstr "Brenn"
 
 #: ../libgimpbase/gimpbaseenums.c:400
 msgctxt "gradient-type"
@@ -575,10 +576,9 @@ msgid "Bi-linear"
 msgstr "Bilineær"
 
 #: ../libgimpbase/gimpbaseenums.c:402
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Radial"
-msgstr "Radiell"
+msgstr "Radial"
 
 #: ../libgimpbase/gimpbaseenums.c:403
 msgctxt "gradient-type"
@@ -856,10 +856,9 @@ msgid "None"
 msgstr "Ingen"
 
 #: ../libgimpbase/gimpbaseenums.c:1138
-#, fuzzy
 msgctxt "text-hint-style"
 msgid "Slight"
-msgstr "Lyse toner"
+msgstr "Lett"
 
 #: ../libgimpbase/gimpbaseenums.c:1139
 msgctxt "text-hint-style"
@@ -999,29 +998,29 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "verdi for tegn %s er ikke gyldig UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:445
+#: ../libgimpconfig/gimpconfig-deserialize.c:444
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "forventet «yes» eller «no» for boolesk tegn %s, fikk «%s»"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:519
+#: ../libgimpconfig/gimpconfig-deserialize.c:518
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ugyldig verdi «%s» for tegn %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:534
+#: ../libgimpconfig/gimpconfig-deserialize.c:533
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ugyldig verdi «%ld» for tegn %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:603
+#: ../libgimpconfig/gimpconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "under lesing av «%s»: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:507
-#: ../libgimpconfig/gimpscanner.c:588
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
+#: ../libgimpconfig/gimpscanner.c:641
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "fatal feil i tolking"
@@ -1071,12 +1070,18 @@ msgstr ""
 msgid "Could not create '%s': %s"
 msgstr "Kunne ikke opprette «%s»: %s"
 
-#: ../libgimpconfig/gimpscanner.c:264
+#: ../libgimpconfig/gimpscanner.c:268
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "ugyldig UTF-8-streng"
 
-#: ../libgimpconfig/gimpscanner.c:615
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpscanner.c:431
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token, got '%s'"
+msgstr "forventet «yes» eller «no» for boolsk tegn, fikk «%s»"
+
+#: ../libgimpconfig/gimpscanner.c:668
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr ""
@@ -1134,19 +1139,19 @@ msgstr "Kunne ikke opprette miniatyrbilde for %s: %s"
 msgid "_Search:"
 msgstr "_Søk:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:134
+#: ../libgimpwidgets/gimpcolorbutton.c:135
 msgid "_Foreground Color"
 msgstr "_Forgrunnsfarge"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:138
+#: ../libgimpwidgets/gimpcolorbutton.c:139
 msgid "_Background Color"
 msgstr "_Bakgrunnsfarge"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:142
+#: ../libgimpwidgets/gimpcolorbutton.c:143
 msgid "Blac_k"
 msgstr "_Svart"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:146
+#: ../libgimpwidgets/gimpcolorbutton.c:147
 msgid "_White"
 msgstr "_Hvit"
 
@@ -1163,15 +1168,15 @@ msgstr "Ingen"
 msgid "Scales"
 msgstr "Skalaer"
 
-#: ../libgimpwidgets/gimpcolorselection.c:217
+#: ../libgimpwidgets/gimpcolorselection.c:220
 msgid "Current:"
 msgstr "Gjeldende:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:226
+#: ../libgimpwidgets/gimpcolorselection.c:229
 msgid "Old:"
 msgstr "Gammel:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:311
+#: ../libgimpwidgets/gimpcolorselection.c:314
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1179,23 +1184,23 @@ msgstr ""
 "Heksadesimal fargenotasjon som brukt i HTML og CSS.  Dette feltet godtar "
 "også CSS-fargenavn."
 
-#: ../libgimpwidgets/gimpcolorselection.c:317
+#: ../libgimpwidgets/gimpcolorselection.c:320
 msgid "HTML _notation:"
 msgstr "_HTML-notasjon:"
 
-#: ../libgimpwidgets/gimpfileentry.c:197
+#: ../libgimpwidgets/gimpfileentry.c:200
 msgid "Open a file selector to browse your folders"
 msgstr "Åpne en filvelger for å lete i mappene dine"
 
-#: ../libgimpwidgets/gimpfileentry.c:198
+#: ../libgimpwidgets/gimpfileentry.c:201
 msgid "Open a file selector to browse your files"
 msgstr "Åpne en filvelger for å lete i filene dine"
 
-#: ../libgimpwidgets/gimpfileentry.c:358
+#: ../libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
 msgstr "Velg mappe"
 
-#: ../libgimpwidgets/gimpfileentry.c:360
+#: ../libgimpwidgets/gimpfileentry.c:363
 msgid "Select File"
 msgstr "Velg fil"
 
@@ -1203,63 +1208,63 @@ msgstr "Velg fil"
 msgid "Press F1 for more help"
 msgstr "Trykk F1 for mer hjelp"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:217
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
 msgid "Kilobytes"
 msgstr "Kilobyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:218
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
 msgid "Megabytes"
 msgstr "Megabyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:219
+#: ../libgimpwidgets/gimpmemsizeentry.c:222
 msgid "Gigabytes"
 msgstr "Gigabyte"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:278
-#: ../libgimpwidgets/gimppageselector.c:1174
+#: ../libgimpwidgets/gimppageselector.c:282
+#: ../libgimpwidgets/gimppageselector.c:1178
 msgid "Nothing selected"
 msgstr "Ingenting valgt"
 
-#: ../libgimpwidgets/gimppageselector.c:296
+#: ../libgimpwidgets/gimppageselector.c:300
 msgid "Select _All"
 msgstr "Velg _alt"
 
-#: ../libgimpwidgets/gimppageselector.c:316
+#: ../libgimpwidgets/gimppageselector.c:320
 msgid "Select _range:"
 msgstr "Velg _område:"
 
-#: ../libgimpwidgets/gimppageselector.c:328
+#: ../libgimpwidgets/gimppageselector.c:332
 msgid "Open _pages as"
 msgstr "Åpne _sider som"
 
-#: ../libgimpwidgets/gimppageselector.c:429
+#: ../libgimpwidgets/gimppageselector.c:433
 msgid "Page 000"
 msgstr "Side 000"
 
-#: ../libgimpwidgets/gimppageselector.c:517
-#: ../libgimpwidgets/gimppageselector.c:754
+#: ../libgimpwidgets/gimppageselector.c:521
+#: ../libgimpwidgets/gimppageselector.c:758
 #, c-format
 msgid "Page %d"
 msgstr "Side %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1179
+#: ../libgimpwidgets/gimppageselector.c:1183
 msgid "One page selected"
 msgstr "En side valgt"
 
-#: ../libgimpwidgets/gimppageselector.c:1186
 #: ../libgimpwidgets/gimppageselector.c:1190
+#: ../libgimpwidgets/gimppageselector.c:1194
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d side valgt"
 msgstr[1] "Alle %d sidene valgt"
 
-#: ../libgimpwidgets/gimppatheditor.c:234
+#: ../libgimpwidgets/gimppatheditor.c:239
 msgid "Writable"
 msgstr "Skrivbar"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#: ../libgimpwidgets/gimppatheditor.c:248
 msgid "Folder"
 msgstr "Mappe"
 
@@ -1272,7 +1277,7 @@ msgstr ""
 "for å velge denne fargen."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:287
+#: ../libgimpwidgets/gimppreview.c:290
 msgid "_Preview"
 msgstr "_Forhåndsvisning"
 
