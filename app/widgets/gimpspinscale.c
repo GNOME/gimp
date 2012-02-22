@@ -78,6 +78,8 @@ static void       gimp_spin_scale_get_property   (GObject          *object,
                                                   GValue           *value,
                                                   GParamSpec       *pspec);
 
+static void       gimp_spin_scale_size_request   (GtkWidget        *widget,
+                                                  GtkRequisition   *requisition);
 static void       gimp_spin_scale_style_set      (GtkWidget        *widget,
                                                   GtkStyle         *prev_style);
 static gboolean   gimp_spin_scale_expose         (GtkWidget        *widget,
@@ -111,6 +113,7 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
   object_class->set_property         = gimp_spin_scale_set_property;
   object_class->get_property         = gimp_spin_scale_get_property;
 
+  widget_class->size_request         = gimp_spin_scale_size_request;
   widget_class->style_set            = gimp_spin_scale_style_set;
   widget_class->expose_event         = gimp_spin_scale_expose;
   widget_class->button_press_event   = gimp_spin_scale_button_press;
@@ -177,7 +180,12 @@ gimp_spin_scale_set_property (GObject      *object,
     case PROP_LABEL:
       g_free (private->label);
       private->label = g_value_dup_string (value);
-      gtk_widget_queue_draw (GTK_WIDGET (object));
+      if (private->layout)
+        {
+          g_object_unref (private->layout);
+          private->layout = NULL;
+        }
+      gtk_widget_queue_resize (GTK_WIDGET (object));
       break;
 
     default:
@@ -207,31 +215,47 @@ gimp_spin_scale_get_property (GObject    *object,
 }
 
 static void
-gimp_spin_scale_style_set (GtkWidget *widget,
-                           GtkStyle  *prev_style)
+gimp_spin_scale_size_request (GtkWidget      *widget,
+                              GtkRequisition *requisition)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
   GtkStyle             *style   = gtk_widget_get_style (widget);
   PangoContext         *context = gtk_widget_get_pango_context (widget);
   PangoFontMetrics     *metrics;
   gint                  height;
-  GtkBorder             border;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
 
   metrics = pango_context_get_metrics (context, style->font_desc,
                                        pango_context_get_language (context));
 
-  height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics));
+  height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) +
+                         pango_font_metrics_get_descent (metrics));
+
+  requisition->height += height;
+
+  if (private->label)
+    {
+      gint char_width, digit_width, char_pixels;
+
+      char_width = pango_font_metrics_get_approximate_char_width (metrics);
+      digit_width = pango_font_metrics_get_approximate_digit_width (metrics);
+      char_pixels = PANGO_PIXELS (MAX (char_width, digit_width));
+
+      /* ~3 chars for the ellipses */
+      requisition->width += char_pixels * 3;
+    }
 
   pango_font_metrics_unref (metrics);
+}
 
-  border.left   = 2;
-  border.right  = 2;
-  border.top    = height + 2;
-  border.bottom = 2;
+static void
+gimp_spin_scale_style_set (GtkWidget *widget,
+                           GtkStyle  *prev_style)
+{
+  GimpSpinScalePrivate *private = GET_PRIVATE (widget);
 
-  gtk_entry_set_inner_border (GTK_ENTRY (widget), &border);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   if (private->layout)
     {
@@ -301,32 +325,37 @@ gimp_spin_scale_expose (GtkWidget      *widget,
       gtk_widget_is_drawable (widget) &&
       event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
     {
-      const GtkBorder *border;
-      gint             layout_width;
+      GtkRequisition requisition;
+      GtkAllocation  allocation;
+      PangoRectangle logical;
+      gint           layout_offset_x;
+      gint           layout_offset_y;
+
+      GTK_WIDGET_CLASS (parent_class)->size_request (widget, &requisition);
+      gtk_widget_get_allocation (widget, &allocation);
 
       if (! private->layout)
-        private->layout = gtk_widget_create_pango_layout (widget,
-                                                          private->label);
+        {
+          private->layout = gtk_widget_create_pango_layout (widget,
+                                                            private->label);
+          pango_layout_set_ellipsize (private->layout, PANGO_ELLIPSIZE_END);
+        }
 
-      pango_layout_get_pixel_size (private->layout, &layout_width, NULL);
+      pango_layout_set_width (private->layout,
+                              PANGO_SCALE *
+                              (allocation.width - requisition.width));
+      pango_layout_get_pixel_extents (private->layout, NULL, &logical);
 
-      border = gtk_entry_get_inner_border (GTK_ENTRY (widget));
+      gtk_entry_get_layout_offsets (GTK_ENTRY (widget), NULL, &layout_offset_y);
 
       if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-        {
-          if (border)
-            cairo_move_to (cr, w - layout_width - border->right,
-                           border->right /* sic! */);
-          else
-            cairo_move_to (cr, w - layout_width - 2, 2);
-        }
+        layout_offset_x = w - logical.width - 2;
       else
-        {
-          if (border)
-            cairo_move_to (cr, border->left, border->left /* sic! */);
-          else
-            cairo_move_to (cr, 2, 2);
-        }
+        layout_offset_x = 2;
+
+      layout_offset_x -= logical.x;
+
+      cairo_move_to (cr, layout_offset_x, layout_offset_y);
 
       gdk_cairo_set_source_color (cr,
                                   &style->text[gtk_widget_get_state (widget)]);
@@ -344,14 +373,19 @@ gimp_spin_scale_get_target (GtkWidget *widget,
                             gdouble    x,
                             gdouble    y)
 {
-  GtkAllocation allocation;
-  gint          layout_x;
-  gint          layout_y;
+  PangoFontMetrics *metrics;
+  GtkAllocation     allocation;
+  PangoRectangle    logical;
+  gint              layout_x;
+  gint              layout_y;
 
   gtk_widget_get_allocation (widget, &allocation);
   gtk_entry_get_layout_offsets (GTK_ENTRY (widget), &layout_x, &layout_y);
+  pango_layout_get_pixel_extents (gtk_entry_get_layout (GTK_ENTRY (widget)),
+                                  NULL, &logical);
 
-  if (x > layout_x && y > layout_y)
+  if (x > layout_x && x < layout_x + logical.width &&
+      y > layout_y && y < layout_y + logical.height)
     {
       return TARGET_NUMBER;
     }
