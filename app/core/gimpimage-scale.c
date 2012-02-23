@@ -102,7 +102,10 @@ gimp_image_scale (GimpImage             *image,
                                    new_width,
                                    new_height);
 
-  /*  Set the new width and height  */
+  /*  Set the new width and height early, so below image item setters
+   *  (esp. guides and sample points) don't choke about moving stuff
+   *  out of the image
+   */
   g_object_set (image,
                 "width",  new_width,
                 "height", new_height,
@@ -178,13 +181,15 @@ gimp_image_scale (GimpImage             *image,
       switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          gimp_image_undo_push_guide (image, NULL, guide);
-          gimp_guide_set_position (guide, (position * new_height) / old_height);
+          gimp_image_move_guide (image, guide,
+                                 (position * new_height) / old_height,
+                                 TRUE);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          gimp_image_undo_push_guide (image, NULL, guide);
-          gimp_guide_set_position (guide, (position * new_width) / old_width);
+          gimp_image_move_guide (image, guide,
+                                 (position * new_width) / old_width,
+                                 TRUE);
           break;
 
         default:
@@ -199,9 +204,10 @@ gimp_image_scale (GimpImage             *image,
     {
       GimpSamplePoint *sample_point = list->data;
 
-      gimp_image_undo_push_sample_point (image, NULL, sample_point);
-      sample_point->x = sample_point->x * new_width / old_width;
-      sample_point->y = sample_point->y * new_height / old_height;
+      gimp_image_move_sample_point (image, sample_point,
+                                    sample_point->x * new_width  / old_width,
+                                    sample_point->y * new_height / old_height,
+                                    TRUE);
     }
 
   gimp_image_undo_group_end (image);
