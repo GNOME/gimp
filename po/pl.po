@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-19 20:23+0100\n"
-"PO-Revision-Date: 2012-02-19 20:24+0100\n"
+"POT-Creation-Date: 2012-02-23 22:03+0100\n"
+"PO-Revision-Date: 2012-02-23 22:04+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -5682,12 +5682,8 @@ msgstr "Tryb jednego okna"
 
 #: ../app/actions/windows-actions.c:125
 msgctxt "windows-action"
-msgid ""
-"When enabled GIMP is in a single-window mode. Far from completely "
-"implemented!"
-msgstr ""
-"Kiedy jest włączone, program GIMP działa w trybie jednego okna. Ta opcja nie "
-"została jeszcze ukończona."
+msgid "When enabled GIMP is in a single-window mode."
+msgstr "Kiedy jest włączone, program GIMP działa w trybie jednego okna."
 
 #: ../app/base/base-enums.c:23
 msgctxt "curve-type"
@@ -14536,11 +14532,11 @@ msgstr "Tylko indeksowane obrazy posiadają paletę kolorów."
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../app/widgets/gimpcontainerpopup.c:592
+#: ../app/widgets/gimpcontainerpopup.c:591
 msgid "Smaller Previews"
 msgstr "Mniejsze podglądy"
 
-#: ../app/widgets/gimpcontainerpopup.c:597
+#: ../app/widgets/gimpcontainerpopup.c:596
 msgid "Larger Previews"
 msgstr "Większe podglądy"
 
