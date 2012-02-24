@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-19 18:19+0000\n"
-"PO-Revision-Date: 2012-02-21 16:56+0100\n"
+"POT-Creation-Date: 2012-02-23 18:43+0000\n"
+"PO-Revision-Date: 2012-02-24 10:26+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5693,13 +5693,10 @@ msgid "Single-Window Mode"
 msgstr "Modo de ventana única"
 
 #: ../app/actions/windows-actions.c:125
+#| msgid "Use GIMP in a single-window mode."
 msgctxt "windows-action"
-msgid ""
-"When enabled GIMP is in a single-window mode. Far from completely "
-"implemented!"
-msgstr ""
-"Cuando se activa, GIMP está en el modo de ventana única. Aún lejos de estar "
-"completamente implementado."
+msgid "When enabled GIMP is in a single-window mode."
+msgstr "Cuando GIMP está en modo de ventana única."
 
 #: ../app/base/base-enums.c:23
 msgctxt "curve-type"
@@ -14584,11 +14581,11 @@ msgstr "Solamente las imágenes indexadas tienen un mapa de colores."
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../app/widgets/gimpcontainerpopup.c:592
+#: ../app/widgets/gimpcontainerpopup.c:591
 msgid "Smaller Previews"
 msgstr "Vistas previas diminutas"
 
-#: ../app/widgets/gimpcontainerpopup.c:597
+#: ../app/widgets/gimpcontainerpopup.c:596
 msgid "Larger Previews"
 msgstr "Vistas previas enormes"
 
@@ -16086,6 +16083,14 @@ msgstr "Editor de imagen"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Cree imágenes y edite fotografías"
+
+#~ msgctxt "windows-action"
+#~ msgid ""
+#~ "When enabled GIMP is in a single-window mode. Far from completely "
+#~ "implemented!"
+#~ msgstr ""
+#~ "Cuando se activa, GIMP está en el modo de ventana única. Aún lejos de "
+#~ "estar completamente implementado."
 
 #~ msgctxt "view-action"
 #~ msgid "Zoom out"
