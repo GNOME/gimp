@@ -9,10 +9,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-6\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&component=Internationalisation\n"
-"POT-Creation-Date: 2009-10-03 19:34+0900\n"
-"PO-Revision-Date: 2009-10-03 21:29+0900\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-02-05 18:25+0000\n"
+"PO-Revision-Date: 2012-02-22 22:44+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -96,101 +96,101 @@ msgstr ""
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "バッチインタプリタ '%s' を利用できません。バッチモードは無効です。"
 
-#: ../app/main.c:144 ../tools/gimp-remote.c:60
+#: ../app/main.c:148 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr "バージョン情報を表示して終了する"
 
-#: ../app/main.c:149
+#: ../app/main.c:153
 msgid "Show license information and exit"
 msgstr "ライセンス情報を表示して終了する"
 
-#: ../app/main.c:154
+#: ../app/main.c:158
 msgid "Be more verbose"
 msgstr "詳細なメッセージを表示する"
 
-#: ../app/main.c:159
+#: ../app/main.c:163
 msgid "Start a new GIMP instance"
 msgstr "新しいインスタンスを起動する"
 
-#: ../app/main.c:164
+#: ../app/main.c:168
 msgid "Open images as new"
 msgstr "指定ドキュメントを新しい画像（名称未設定）として開く"
 
-#: ../app/main.c:169
+#: ../app/main.c:173
 msgid "Run without a user interface"
 msgstr "ユーザーインタフェースなしで実行する"
 
-#: ../app/main.c:174
+#: ../app/main.c:178
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "ブラシ、グラデーション、パターンなどを読み込まない"
 
-#: ../app/main.c:179
+#: ../app/main.c:183
 msgid "Do not load any fonts"
 msgstr "フォントを読み込まない"
 
-#: ../app/main.c:184
+#: ../app/main.c:188
 msgid "Do not show a startup window"
 msgstr "起動時にスタートアップウィンドウ（スプラッシュ）を表示しない"
 
-#: ../app/main.c:189
+#: ../app/main.c:193
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "GIMP とプラグインの間でメモリを共有しない"
 
-#: ../app/main.c:194
+#: ../app/main.c:198
 msgid "Do not use special CPU acceleration functions"
 msgstr "特別な CPU アクセラレータ機能を使用しない"
 
-#: ../app/main.c:199
+#: ../app/main.c:203
 msgid "Use an alternate sessionrc file"
 msgstr "指定された sessionrc ファイルを使用する"
 
-#: ../app/main.c:204
+#: ../app/main.c:208
 msgid "Use an alternate user gimprc file"
 msgstr "指定されたユーザー gimprc ファイルを使用する"
 
-#: ../app/main.c:209
+#: ../app/main.c:213
 msgid "Use an alternate system gimprc file"
 msgstr "指定されたシステム gimprc ファイルを使用する"
 
-#: ../app/main.c:214
+#: ../app/main.c:218
 msgid "Batch command to run (can be used multiple times)"
 msgstr "バッチコマンドの設定（複数回設定可能）"
 
-#: ../app/main.c:219
+#: ../app/main.c:223
 msgid "The procedure to process batch commands with"
 msgstr "バッチコマンドとともに起動するプロシージャの指定"
 
-#: ../app/main.c:224
+#: ../app/main.c:228
 msgid "Send messages to console instead of using a dialog"
 msgstr "警告をコンソールに出力（ダイアログに表示しない）"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:230
+#: ../app/main.c:234
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB 互換モードの指定 (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:236
+#: ../app/main.c:240
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "クラッシュ時のデバッグ対応の指定 (never|query|always)"
 
-#: ../app/main.c:241
+#: ../app/main.c:245
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "致命的でないデバッグシグナルに対するハンドラを有効にする"
 
-#: ../app/main.c:246
+#: ../app/main.c:250
 msgid "Make all warnings fatal"
 msgstr "すべての警告を致命的として扱う"
 
-#: ../app/main.c:251
+#: ../app/main.c:255
 msgid "Output a gimprc file with default settings"
 msgstr "既定の gimprc ファイルを出力する"
 
-#: ../app/main.c:355
+#: ../app/main.c:383
 msgid "[FILE|URI...]"
 msgstr "[ファイル|URI...]"
 
-#: ../app/main.c:373
+#: ../app/main.c:401
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -198,20 +198,20 @@ msgstr ""
 "ユーザーインタフェースを初期化できませんでした。\n"
 "ディスプレイに対して適切な設定がされているか確認してください。"
 
-#: ../app/main.c:392
+#: ../app/main.c:420
 msgid "Another GIMP instance is already running."
 msgstr "GIMP は既に実行されています。"
 
-#: ../app/main.c:462
+#: ../app/main.c:490
 msgid "GIMP output. Type any character to close this window."
 msgstr "(GIMP output) 何かキーを押すとこのウィンドウを閉じます"
 
-#: ../app/main.c:463
+#: ../app/main.c:491
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（何かキーを押すとこのウィンドウを閉じます）\n"
 
-#: ../app/main.c:480
+#: ../app/main.c:508
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "（GIMP output.） このウィンドウを最小化しても構いませんが、閉じないでくださ"
@@ -690,7 +690,7 @@ msgid "New Channel Color"
 msgstr "チャンネル表示色"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:584
+#: ../app/display/gimpdisplayshell-dnd.c:603
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
@@ -849,11 +849,11 @@ msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:220
-#: ../app/dialogs/file-open-dialog.c:264
+#: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:229
+#: ../app/dialogs/file-open-dialog.c:273
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:537
+#: ../app/display/gimpdisplayshell-dnd.c:556
 #: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:981
 #, c-format
@@ -2677,7 +2677,7 @@ msgstr "反転しています"
 msgid "Rotating"
 msgstr "回転しています"
 
-#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:639
+#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:642
 msgid "Cannot crop because the current selection is empty."
 msgstr "何も選択されてないので切り抜けません。"
 
@@ -2690,12 +2690,12 @@ msgid "Scale Image"
 msgstr "画像の拡大・縮小"
 
 #. Scaling
-#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1101
+#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1104
 #: ../app/dialogs/preferences-dialog.c:1925
 #: ../app/pdb/drawable-transform-cmds.c:682
 #: ../app/pdb/drawable-transform-cmds.c:758 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:289
-#: ../app/pdb/layer-cmds.c:334 ../app/pdb/transform-tools-cmds.c:291
+#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:292
+#: ../app/pdb/layer-cmds.c:337 ../app/pdb/transform-tools-cmds.c:291
 #: ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
 msgstr "拡大・縮小"
@@ -2965,7 +2965,7 @@ msgstr "レイヤーマスクを編集(_E)"
 
 #: ../app/actions/layers-actions.c:223
 msgid "Work on the layer mask"
-msgstr "レイヤーマスクを有効に"
+msgstr "レイヤーマスクを編集対象にします"
 
 #: ../app/actions/layers-actions.c:229
 msgid "S_how Layer Mask"
@@ -3095,50 +3095,50 @@ msgstr "背面のレイヤーをアクティブにします"
 msgid "Set Opacity"
 msgstr "透明度の設定"
 
-#: ../app/actions/layers-commands.c:203
+#: ../app/actions/layers-commands.c:204
 msgid "Layer Attributes"
 msgstr "レイヤー名の変更"
 
-#: ../app/actions/layers-commands.c:206
+#: ../app/actions/layers-commands.c:207
 msgid "Edit Layer Attributes"
 msgstr "レイヤー名の変更"
 
-#: ../app/actions/layers-commands.c:249 ../app/actions/layers-commands.c:251
-#: ../app/actions/layers-commands.c:319 ../app/actions/layers-commands.c:323
+#: ../app/actions/layers-commands.c:250 ../app/actions/layers-commands.c:252
+#: ../app/actions/layers-commands.c:320 ../app/actions/layers-commands.c:324
 #: ../app/widgets/gimpdrawabletreeview.c:326
 #: ../app/widgets/gimplayertreeview.c:835
 msgid "New Layer"
 msgstr "新規レイヤー"
 
-#: ../app/actions/layers-commands.c:254
+#: ../app/actions/layers-commands.c:255
 msgid "Create a New Layer"
 msgstr "新しいレイヤーを追加"
 
-#: ../app/actions/layers-commands.c:352
+#: ../app/actions/layers-commands.c:355
 msgid "Visible"
 msgstr "可視部分コピー"
 
-#: ../app/actions/layers-commands.c:571
+#: ../app/actions/layers-commands.c:574
 msgid "Set Layer Boundary Size"
 msgstr "レイヤーサイズの変更"
 
-#: ../app/actions/layers-commands.c:612 ../app/core/gimplayer.c:251
+#: ../app/actions/layers-commands.c:615 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
 msgstr "レイヤーの拡大・縮小"
 
-#: ../app/actions/layers-commands.c:649
+#: ../app/actions/layers-commands.c:652
 msgid "Crop Layer"
 msgstr "レイヤーの切り抜き"
 
-#: ../app/actions/layers-commands.c:788
+#: ../app/actions/layers-commands.c:791
 msgid "Layer Mask to Selection"
 msgstr "レイヤーマスクを選択範囲に"
 
-#: ../app/actions/layers-commands.c:1036
+#: ../app/actions/layers-commands.c:1039
 msgid "Please select a channel first"
 msgstr "最初にチャンネルを選択してください"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1282
+#: ../app/actions/layers-commands.c:1047 ../app/core/gimplayer.c:1283
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "レイヤーマスク追加"
@@ -5623,7 +5623,7 @@ msgstr "貼り付け"
 msgid "Cut"
 msgstr "切り取り"
 
-#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:160
+#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:161
 #: ../app/widgets/widgets-enums.c:265
 msgid "Text"
 msgstr "テキスト"
@@ -6723,8 +6723,8 @@ msgstr "レイヤー"
 msgid "Rename Layer"
 msgstr "レイヤー名変更"
 
-#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:434
-#: ../app/pdb/layer-cmds.c:470
+#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:437
+#: ../app/pdb/layer-cmds.c:473
 msgid "Move Layer"
 msgstr "レイヤーを移動"
 
@@ -6740,7 +6740,7 @@ msgstr "レイヤーを反転"
 msgid "Rotate Layer"
 msgstr "レイヤーを回転"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1329
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1330
 #: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
@@ -6755,40 +6755,40 @@ msgstr ""
 "フローティング選択範囲\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1265
+#: ../app/core/gimplayer.c:1266
 #, c-format
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "既にレイヤーマスクがあります。これ以上レイヤーマスクを付加する事はできませ"
 "ん。"
 
-#: ../app/core/gimplayer.c:1276
+#: ../app/core/gimplayer.c:1277
 #, c-format
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "指定したレイヤーと異る大きさを持つレイヤーマスクを付加することはできません。"
 
-#: ../app/core/gimplayer.c:1384
+#: ../app/core/gimplayer.c:1385
 msgid "Transfer Alpha to Mask"
 msgstr "アルファチャンネルをマスクに変換"
 
-#: ../app/core/gimplayer.c:1556 ../app/core/gimplayermask.c:235
+#: ../app/core/gimplayer.c:1557 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "レイヤーマスクを適用"
 
-#: ../app/core/gimplayer.c:1557
+#: ../app/core/gimplayer.c:1558
 msgid "Delete Layer Mask"
 msgstr "レイヤーマスクを削除"
 
-#: ../app/core/gimplayer.c:1669
+#: ../app/core/gimplayer.c:1670
 msgid "Add Alpha Channel"
 msgstr "アルファチャンネルを追加"
 
-#: ../app/core/gimplayer.c:1723
+#: ../app/core/gimplayer.c:1724
 msgid "Remove Alpha Channel"
 msgstr "アルファチャンネルを削除"
 
-#: ../app/core/gimplayer.c:1745
+#: ../app/core/gimplayer.c:1746
 msgid "Layer to Image Size"
 msgstr "レイヤーをキャンバスに合わせる"
 
@@ -7172,7 +7172,7 @@ msgstr "モード(_M): "
 msgid "_Opacity:"
 msgstr "不透明度(_O): "
 
-#: ../app/dialogs/file-open-dialog.c:253
+#: ../app/dialogs/file-open-dialog.c:262
 msgid "Open layers"
 msgstr "レイヤーとして開く"
 
@@ -8651,8 +8651,8 @@ msgid_plural ""
 msgstr[0] "保存しない場合は %d 分前からの変更が破棄されます。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
-#: ../app/display/gimpdisplayshell-dnd.c:587
-#: ../app/display/gimpdisplayshell-dnd.c:658
+#: ../app/display/gimpdisplayshell-dnd.c:606
+#: ../app/display/gimpdisplayshell-dnd.c:677
 msgid "Drop New Layer"
 msgstr "新しいレイヤーをドロップ"
 
@@ -8660,12 +8660,12 @@ msgstr "新しいレイヤーをドロップ"
 msgid "Drop New Path"
 msgstr "新しいパスをドロップ"
 
-#: ../app/display/gimpdisplayshell-dnd.c:497
+#: ../app/display/gimpdisplayshell-dnd.c:513
 #: ../app/widgets/gimplayertreeview.c:719
 msgid "Drop layers"
 msgstr "レイヤーをドロップ"
 
-#: ../app/display/gimpdisplayshell-dnd.c:648
+#: ../app/display/gimpdisplayshell-dnd.c:667
 #: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "ドロップされたバッファ"
@@ -8732,7 +8732,7 @@ msgstr "(消去)"
 msgid "(none)"
 msgstr "(なし)"
 
-#: ../app/display/gimpstatusbar.c:346
+#: ../app/display/gimpstatusbar.c:364
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "<i>%s</i> をキャンセル"
@@ -9309,11 +9309,11 @@ msgstr "プラグイン初期化中"
 msgid "Starting Extensions"
 msgstr "拡張機能起動中"
 
-#: ../app/plug-in/gimppluginmanager.c:296
+#: ../app/plug-in/gimppluginmanager.c:290
 msgid "Plug-In Interpreters"
 msgstr "プラグイン インタプリタ"
 
-#: ../app/plug-in/gimppluginmanager.c:303
+#: ../app/plug-in/gimppluginmanager.c:297
 msgid "Plug-In Environment"
 msgstr "プラグインの環境"
 
@@ -9378,7 +9378,7 @@ msgstr ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:879
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:901
 msgid "Add Text Layer"
 msgstr "テキストレイヤーを追加"
 
@@ -9441,7 +9441,7 @@ msgstr ""
 "テキストパラサイトに間違いが見られます。（テキストを編集しなければ問題ありま"
 "せん。）"
 
-#: ../app/tools/gimp-tools.c:327
+#: ../app/tools/gimp-tools.c:335
 msgid ""
 "This tool has\n"
 "no options."
@@ -10358,25 +10358,25 @@ msgstr ""
 msgid "_Free Select"
 msgstr "自由選択(_F)"
 
-#: ../app/tools/gimpfreeselecttool.c:1116
+#: ../app/tools/gimpfreeselecttool.c:1117
 msgid "Click to complete selection"
 msgstr "クリックで選択範囲を確定します"
 
-#: ../app/tools/gimpfreeselecttool.c:1120
+#: ../app/tools/gimpfreeselecttool.c:1121
 msgid "Click-Drag to move segment vertex"
 msgstr "クリック-ドラッグで頂点を移動します"
 
-#: ../app/tools/gimpfreeselecttool.c:1125
+#: ../app/tools/gimpfreeselecttool.c:1126
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "リターンキーで選択範囲を確定、エスケープキーでキャンセル、バックスペースキー"
 "で最後に書いた境界線を取り消します"
 
-#: ../app/tools/gimpfreeselecttool.c:1129
+#: ../app/tools/gimpfreeselecttool.c:1130
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "クリック-ドラッグで手書きの境界線、クリックで直線の境界線を追加します"
 
-#: ../app/tools/gimpfreeselecttool.c:1581
+#: ../app/tools/gimpfreeselecttool.c:1582
 msgctxt "command"
 msgid "Free Select"
 msgstr "自由選択"
@@ -10415,12 +10415,12 @@ msgstr "GEGL 操作(_G)"
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "インデックスレイヤーでは GEGL 操作はできません。"
 
-#: ../app/tools/gimpgegltool.c:338
+#: ../app/tools/gimpgegltool.c:339
 msgid "_Operation:"
 msgstr "操作(_O): "
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:411
+#: ../app/tools/gimpgegltool.c:412
 msgid "Operation Settings"
 msgstr "操作設定"
 
@@ -11276,29 +11276,29 @@ msgstr "テキストからパスを生成"
 msgid "Text along Path"
 msgstr "パスに沿ってテキストを配置"
 
-#: ../app/tools/gimptexttool.c:161
+#: ../app/tools/gimptexttool.c:162
 msgid "Text Tool: Create or edit text layers"
 msgstr ""
 "【テキスト】\n"
 "テキストレイヤーの作成・編集を行います"
 
-#: ../app/tools/gimptexttool.c:162
+#: ../app/tools/gimptexttool.c:163
 msgid "Te_xt"
 msgstr "テキスト(_X)"
 
-#: ../app/tools/gimptexttool.c:956
+#: ../app/tools/gimptexttool.c:987
 msgid "GIMP Text Editor"
 msgstr "GIMP テキストエディタ"
 
-#: ../app/tools/gimptexttool.c:1072 ../app/tools/gimptexttool.c:1075
+#: ../app/tools/gimptexttool.c:1103 ../app/tools/gimptexttool.c:1106
 msgid "Confirm Text Editing"
 msgstr "文字編集確認"
 
-#: ../app/tools/gimptexttool.c:1079
+#: ../app/tools/gimptexttool.c:1110
 msgid "Create _New Layer"
 msgstr "新しいテキストレイヤーを追加(_N)"
 
-#: ../app/tools/gimptexttool.c:1103
+#: ../app/tools/gimptexttool.c:1134
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11312,7 +11312,7 @@ msgstr ""
 "このレイヤーを編集することも、文字アトリビュートを用いて新しいテキストレイ"
 "ヤーを生成することもできます。"
 
-#: ../app/tools/gimptexttool.c:1315
+#: ../app/tools/gimptexttool.c:1356
 msgid "Reshape Text Layer"
 msgstr "テキストレイヤーの変形"
 
@@ -11902,11 +11902,11 @@ msgstr "カラーマップを持つのはインデックス画像のみです。
 msgid "Palette"
 msgstr "パレット"
 
-#: ../app/widgets/gimpcontainerpopup.c:540
+#: ../app/widgets/gimpcontainerpopup.c:571
 msgid "Smaller Previews"
 msgstr "小さなプレビュー"
 
-#: ../app/widgets/gimpcontainerpopup.c:545
+#: ../app/widgets/gimpcontainerpopup.c:576
 msgid "Larger Previews"
 msgstr "大きなプレビュー"
 
@@ -12401,21 +12401,21 @@ msgstr "GIMP ヘルプブラウザ・プラグインが起動できませんで�
 msgid "Use _Web Browser"
 msgstr "ウェブブラウザを使用"
 
-#: ../app/widgets/gimphelp.c:614
+#: ../app/widgets/gimphelp.c:615
 msgid "GIMP user manual is missing"
 msgstr "GIMP ユーザーマニュアルが見つかりません"
 
-#: ../app/widgets/gimphelp.c:621
+#: ../app/widgets/gimphelp.c:622
 msgid "_Read Online"
 msgstr "オンライン版を参照"
 
-#: ../app/widgets/gimphelp.c:645
+#: ../app/widgets/gimphelp.c:646
 msgid "The GIMP user manual is not installed on your computer."
 msgstr ""
 "GIMP ユーザーマニュアルが\n"
 "インストールされていません。"
 
-#: ../app/widgets/gimphelp.c:648
+#: ../app/widgets/gimphelp.c:649
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
