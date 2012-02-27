@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-19 18:19+0000\n"
-"PO-Revision-Date: 2012-02-19 19:35+0100\n"
+"POT-Creation-Date: 2012-02-24 13:18+0000\n"
+"PO-Revision-Date: 2012-02-27 10:10+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -5464,170 +5464,180 @@ msgid "Zoom In"
 msgstr "Povečaj"
 
 #: ../app/actions/view-actions.c:300
+#: ../app/actions/view-actions.c:306
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
 #: ../app/actions/view-actions.c:301
+#: ../app/actions/view-actions.c:307
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "16:1"
 
-#: ../app/actions/view-actions.c:306
+#: ../app/actions/view-actions.c:312
+#: ../app/actions/view-actions.c:318
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:307
+#: ../app/actions/view-actions.c:313
+#: ../app/actions/view-actions.c:319
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "8:1"
 
-#: ../app/actions/view-actions.c:312
+#: ../app/actions/view-actions.c:324
+#: ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:313
+#: ../app/actions/view-actions.c:325
+#: ../app/actions/view-actions.c:331
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "4:1"
 
-#: ../app/actions/view-actions.c:318
+#: ../app/actions/view-actions.c:336
+#: ../app/actions/view-actions.c:342
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:319
+#: ../app/actions/view-actions.c:337
+#: ../app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "2:1"
 
-#: ../app/actions/view-actions.c:324
+#: ../app/actions/view-actions.c:348
+#: ../app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:325
+#: ../app/actions/view-actions.c:349
+#: ../app/actions/view-actions.c:355
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "1:1"
 
-#: ../app/actions/view-actions.c:330
+#: ../app/actions/view-actions.c:360
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:331
+#: ../app/actions/view-actions.c:361
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "1:2"
 
-#: ../app/actions/view-actions.c:336
+#: ../app/actions/view-actions.c:366
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:337
+#: ../app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "1:4"
 
-#: ../app/actions/view-actions.c:342
+#: ../app/actions/view-actions.c:372
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12,5%)"
 
-#: ../app/actions/view-actions.c:343
+#: ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "1:8"
 
-#: ../app/actions/view-actions.c:348
+#: ../app/actions/view-actions.c:378
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6,25%)"
 
-#: ../app/actions/view-actions.c:349
+#: ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "1:16"
 
-#: ../app/actions/view-actions.c:354
+#: ../app/actions/view-actions.c:384
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "D_rugo ..."
 
-#: ../app/actions/view-actions.c:355
+#: ../app/actions/view-actions.c:385
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Nastavite faktor povečave po meri"
 
-#: ../app/actions/view-actions.c:363
+#: ../app/actions/view-actions.c:393
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Iz _teme"
 
-#: ../app/actions/view-actions.c:364
+#: ../app/actions/view-actions.c:394
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Uporabi barvo ozadja trenutne teme"
 
-#: ../app/actions/view-actions.c:369
+#: ../app/actions/view-actions.c:399
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Barva _svetlih polj vzorca"
 
-#: ../app/actions/view-actions.c:370
+#: ../app/actions/view-actions.c:400
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Uporabi svetlo sivo barvo"
 
-#: ../app/actions/view-actions.c:375
+#: ../app/actions/view-actions.c:405
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Barva _temnih polj vzorca"
 
-#: ../app/actions/view-actions.c:376
+#: ../app/actions/view-actions.c:406
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Uporabi temno sivo barvo"
 
-#: ../app/actions/view-actions.c:381
+#: ../app/actions/view-actions.c:411
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
 msgstr "Izberi barvo po _meri ..."
 
-#: ../app/actions/view-actions.c:382
+#: ../app/actions/view-actions.c:412
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Uporabi naključno barvo"
 
-#: ../app/actions/view-actions.c:387
+#: ../app/actions/view-actions.c:417
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Kot v _nastavitvah"
 
-#: ../app/actions/view-actions.c:389
+#: ../app/actions/view-actions.c:419
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Ponastavi barvo zapolnjevanja platna na barvo iz nastavitev"
 
-#: ../app/actions/view-actions.c:588
+#: ../app/actions/view-actions.c:618
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Po_vrni povečavo (%d%%)"
 
-#: ../app/actions/view-actions.c:596
+#: ../app/actions/view-actions.c:626
 msgid "Re_vert Zoom"
 msgstr "Po_vrni povečavo"
 
-#: ../app/actions/view-actions.c:731
+#: ../app/actions/view-actions.c:761
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "D_rugo (%s) ..."
 
-#: ../app/actions/view-actions.c:740
+#: ../app/actions/view-actions.c:770
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Povečava (%s)"
@@ -5702,8 +5712,8 @@ msgstr "Enookenski način"
 
 #: ../app/actions/windows-actions.c:125
 msgctxt "windows-action"
-msgid "When enabled GIMP is in a single-window mode. Far from completely implemented!"
-msgstr "Če način omogočite, bo GIMP uporabljal le eno okno. Še ni povsem implementirano!"
+msgid "When enabled GIMP is in a single-window mode."
+msgstr "Če je vključeno, deluje GIMP v enookenskem načinu."
 
 #: ../app/base/base-enums.c:23
 msgctxt "curve-type"
@@ -14174,11 +14184,11 @@ msgstr "Katalog barv imajo samo indeksirane slike."
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../app/widgets/gimpcontainerpopup.c:592
+#: ../app/widgets/gimpcontainerpopup.c:591
 msgid "Smaller Previews"
 msgstr "Manjši predogledi"
 
-#: ../app/widgets/gimpcontainerpopup.c:597
+#: ../app/widgets/gimpcontainerpopup.c:596
 msgid "Larger Previews"
 msgstr "Večji predogledi"
 
