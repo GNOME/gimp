@@ -1923,6 +1923,7 @@ prefs_dialog_new (Gimp       *gimp,
                                     _("_Gradient"), GIMP_STOCK_GRADIENT,
                                     GTK_BOX (vbox2), size_group);
 
+  /*  Move Tool */
   vbox2 = prefs_frame_new (_("Move Tool"),
                            GTK_CONTAINER (vbox), FALSE);
 
@@ -2019,6 +2020,19 @@ prefs_dialog_new (Gimp       *gimp,
   gimp_template_editor_show_advanced (GIMP_TEMPLATE_EDITOR (editor), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
+
+  /*  Quick Mask Color */
+  vbox2 = prefs_frame_new (_("Quick Mask"), GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+  button = gimp_prop_color_button_new (object, "quick-mask-color",
+                                       _("Set the default Quick Mask color"),
+                                       COLOR_BUTTON_WIDTH,
+                                       COLOR_BUTTON_HEIGHT,
+                                       GIMP_COLOR_AREA_SMALL_CHECKS);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                gimp_get_user_context (gimp));
+  prefs_widget_add_aligned (button, _("Quick Mask color:"),
+                            GTK_TABLE (table), 0, TRUE, NULL);
 
 
 

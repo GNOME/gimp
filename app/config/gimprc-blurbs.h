@@ -283,6 +283,9 @@ N_("Sets whether GIMP should create previews of layers and channels. " \
 N_("Sets the preview size used for layers and channel previews in newly " \
    "created dialogs.")
 
+#define QUICK_MASK_COLOR_BLURB \
+N_("Sets the default quick mask color.")
+
 #define RESIZE_WINDOWS_ON_RESIZE_BLURB \
 N_("When enabled, the image window will automatically resize itself " \
    "whenever the physical image size changes.")

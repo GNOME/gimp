@@ -20,9 +20,11 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "config-types.h"
@@ -98,6 +100,7 @@ enum
   PROP_COLOR_MANAGEMENT,
   PROP_COLOR_PROFILE_POLICY,
   PROP_SAVE_DOCUMENT_HISTORY,
+  PROP_QUICK_MASK_COLOR,
   PROP_USE_GEGL,
 
   /* ignored, only for backward compatibility: */
@@ -136,6 +139,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
+  GimpRGB       red          = { 1.0, 0, 0, 0.5 };
 
   object_class->finalize     = gimp_core_config_finalize;
   object_class->set_property = gimp_core_config_set_property;
@@ -430,6 +434,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                     SAVE_DOCUMENT_HISTORY_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_QUICK_MASK_COLOR,
+                                "quick-mask-color", QUICK_MASK_COLOR_BLURB,
+                                TRUE, &red,
+                                GIMP_PARAM_STATIC_STRINGS);
 
   /*  not serialized  */
   g_object_class_install_property (object_class, PROP_USE_GEGL,
@@ -708,6 +716,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_SAVE_DOCUMENT_HISTORY:
       core_config->save_document_history = g_value_get_boolean (value);
       break;
+    case PROP_QUICK_MASK_COLOR:
+      gimp_value_get_rgb (value, &core_config->quick_mask_color);
+      break;
     case PROP_USE_GEGL:
       core_config->use_gegl = g_value_get_boolean (value);
       break;
@@ -876,6 +887,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_SAVE_DOCUMENT_HISTORY:
       g_value_set_boolean (value, core_config->save_document_history);
+      break;
+    case PROP_QUICK_MASK_COLOR:
+      gimp_value_set_rgb (value, &core_config->quick_mask_color);
       break;
     case PROP_USE_GEGL:
       g_value_set_boolean (value, core_config->use_gegl);

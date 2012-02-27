@@ -760,6 +760,8 @@ gimp_image_constructed (GObject *object)
 
   private->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
 
+  private->quick_mask_color = config->quick_mask_color;
+
   if (private->base_type == GIMP_INDEXED)
     gimp_image_colormap_init (image);
 
