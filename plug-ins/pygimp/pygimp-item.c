@@ -48,12 +48,38 @@ static PyMethodDef item_methods[] = {
 static PyObject *
 item_get_parent(PyGimpLayer *self, void *closure)
 {
-    /*  Not implemented yet */
-    return NULL;
+    gint32 id = gimp_item_get_parent(self->ID);
+
+    if (id == -1) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    }
+
+    return pygimp_item_new(id);
+}
+
+static PyObject *
+item_get_children(PyGimpLayer *self, void *closure)
+{
+    gint32 *children;
+    gint n_children, i;
+    PyObject *ret;
+
+    children = gimp_item_get_children(self->ID, &n_children);
+
+    ret = PyList_New(n_children);
+
+    for (i = 0; i < n_children; i++)
+	PyList_SetItem(ret, i, pygimp_item_new(children[i]));
+
+    g_free(children);
+
+    return ret;
 }
 
 static PyGetSetDef item_getsets[] = {
     { "parent", (getter)item_get_parent, (setter)0 },
+    { "children", (getter) item_get_children, (setter)0 },
     { NULL, (getter)0, (setter)0 }
 };
 

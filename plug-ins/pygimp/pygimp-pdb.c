@@ -291,7 +291,7 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 	    value = pygimp_channel_new(params[i].data.d_channel);
 	    break;
 	case GIMP_PDB_ITEM:
-	    value = PyInt_FromLong(params[i].data.d_item);
+	    value = pygimp_item_new(params[i].data.d_item);
 	    break;
 	case GIMP_PDB_DRAWABLE:
 	    value = pygimp_drawable_new(NULL, params[i].data.d_drawable);
@@ -590,6 +590,10 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    }
 	    break;
 	case GIMP_PDB_VECTORS:
+	    if (item == Py_None) {
+		ret[i].data.d_vectors = -1;
+		break;
+	    }
 	    check(!pygimp_vectors_check(item));
 	    ret[i].data.d_vectors = ((PyGimpVectors *)item)->ID;
 	    break;
