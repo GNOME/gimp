@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-22 13:11+0100\n"
-"PO-Revision-Date: 2012-02-22 13:14+0100\n"
+"POT-Creation-Date: 2012-02-28 18:04+0100\n"
+"PO-Revision-Date: 2012-02-28 18:07+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: \n"
@@ -5444,172 +5444,172 @@ msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Zoom avanti"
 
-#: ../app/actions/view-actions.c:300
+#: ../app/actions/view-actions.c:300 ../app/actions/view-actions.c:306
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:301
+#: ../app/actions/view-actions.c:301 ../app/actions/view-actions.c:307
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Zoom 16:1"
 
-#: ../app/actions/view-actions.c:306
+#: ../app/actions/view-actions.c:312 ../app/actions/view-actions.c:318
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:307
+#: ../app/actions/view-actions.c:313 ../app/actions/view-actions.c:319
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Zoom 8:1"
 
-#: ../app/actions/view-actions.c:312
+#: ../app/actions/view-actions.c:324 ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:313
+#: ../app/actions/view-actions.c:325 ../app/actions/view-actions.c:331
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Zoom 4:1"
 
-#: ../app/actions/view-actions.c:318
+#: ../app/actions/view-actions.c:336 ../app/actions/view-actions.c:342
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:319
+#: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Zoom 2:1"
 
-#: ../app/actions/view-actions.c:324
+#: ../app/actions/view-actions.c:348 ../app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:325
+#: ../app/actions/view-actions.c:349 ../app/actions/view-actions.c:355
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Zoom 1:1"
 
-#: ../app/actions/view-actions.c:330
+#: ../app/actions/view-actions.c:360
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:331
+#: ../app/actions/view-actions.c:361
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Zoom 1:2"
 
-#: ../app/actions/view-actions.c:336
+#: ../app/actions/view-actions.c:366
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:337
+#: ../app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Zoom 1:4"
 
-#: ../app/actions/view-actions.c:342
+#: ../app/actions/view-actions.c:372
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:343
+#: ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Zoom 1:8"
 
-#: ../app/actions/view-actions.c:348
+#: ../app/actions/view-actions.c:378
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:349
+#: ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Zoom 1:16"
 
-#: ../app/actions/view-actions.c:354
+#: ../app/actions/view-actions.c:384
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "Alt_ro..."
 
-#: ../app/actions/view-actions.c:355
+#: ../app/actions/view-actions.c:385
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Imposta un livello di zoom personalizzato"
 
-#: ../app/actions/view-actions.c:363
+#: ../app/actions/view-actions.c:393
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Dal _tema"
 
-#: ../app/actions/view-actions.c:364
+#: ../app/actions/view-actions.c:394
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Usa il colore di sfondo del tema corrente"
 
-#: ../app/actions/view-actions.c:369
+#: ../app/actions/view-actions.c:399
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Co_lore a scacchi chiaro"
 
-#: ../app/actions/view-actions.c:370
+#: ../app/actions/view-actions.c:400
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Usa il colore a scacchi chiaro"
 
-#: ../app/actions/view-actions.c:375
+#: ../app/actions/view-actions.c:405
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Colore a scacchi _scuro"
 
-#: ../app/actions/view-actions.c:376
+#: ../app/actions/view-actions.c:406
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Usa il colore a scacchi scuro"
 
-#: ../app/actions/view-actions.c:381
+#: ../app/actions/view-actions.c:411
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
 msgstr "Seleziona un _colore personalizzato..."
 
-#: ../app/actions/view-actions.c:382
+#: ../app/actions/view-actions.c:412
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Usa un colore arbitrario"
 
-#: ../app/actions/view-actions.c:387
+#: ../app/actions/view-actions.c:417
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Come nelle _preferenze"
 
-#: ../app/actions/view-actions.c:389
+#: ../app/actions/view-actions.c:419
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr ""
 "Reimposta il colore di riempimento al valore configurato nelle preferenze"
 
-#: ../app/actions/view-actions.c:588
+#: ../app/actions/view-actions.c:618
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Ri_pristina zoom (%d%%)"
 
-#: ../app/actions/view-actions.c:596
+#: ../app/actions/view-actions.c:626
 msgid "Re_vert Zoom"
 msgstr "Ri_pristina zoom"
 
-#: ../app/actions/view-actions.c:731
+#: ../app/actions/view-actions.c:761
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Alt_ro (%s)..."
 
-#: ../app/actions/view-actions.c:740
+#: ../app/actions/view-actions.c:770
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
@@ -5687,12 +5687,8 @@ msgstr "Modalità a finestra singola"
 
 #: ../app/actions/windows-actions.c:125
 msgctxt "windows-action"
-msgid ""
-"When enabled GIMP is in a single-window mode. Far from completely "
-"implemented!"
-msgstr ""
-"Se abilitata, GIMP funzionerà in modalità finestra singola. Attenzione: "
-"questa modalità non è stata ancora del tutto implementata!"
+msgid "When enabled GIMP is in a single-window mode."
+msgstr "Se abilitata GIMP funzionerà in modalità a finestra singola."
 
 #: ../app/base/base-enums.c:23
 msgctxt "curve-type"
