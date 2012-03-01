@@ -487,6 +487,224 @@ CODE
     );
 }
 
+sub context_get_brush_size {
+    $blurb = 'Get brush size in pixels.';
+    $help = 'Get the brush size in pixels for brush based paint tools.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "size", type => "0 < float",
+          desc => "brush size in pixels" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-size", &size,
+                   NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_brush_size {
+    $blurb = 'Set brush size in pixels.';
+    $help = 'Set the brush size in pixels for brush based paint tools.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "size", type => "0 < float",
+          desc => "brush size in pixels" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GList *options;
+  GList *list;
+
+  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+  for (list = options; list; list = g_list_next (list))
+    g_object_set (list->data,
+                  "brush-size", (gdouble) size,
+                   NULL);
+
+  g_list_free (options);
+}
+CODE
+    );
+}
+
+sub context_set_brush_default_size {
+    $blurb = 'Set brush size to its default.';
+    $help = <<'HELP';
+Set the brush size to the default (max of width and height) for
+paintbrush, airbrush, or pencil tools.
+HELP
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "brush-size", (gdouble) MAX (brush->mask->width,
+                                                   brush->mask->height),
+                      NULL);
+
+      g_list_free (options);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub context_set_brush_aspect_ratio {
+    $blurb = 'Set brush aspect ratio.';
+    $help = 'Set the aspect ratio for brush based paint tools.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "aspect", type => "-20 <= float <= 20",
+          desc => "aspect ratio" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GList *options;
+  GList *list;
+
+  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+  for (list = options; list; list = g_list_next (list))
+    g_object_set (list->data,
+                  "brush-aspect-ratio", (gdouble) aspect,
+                   NULL);
+
+  g_list_free (options);
+}
+CODE
+    );
+}
+
+sub context_get_brush_aspect_ratio {
+    $blurb = 'Get brush aspect ratio.';
+    $help = 'Set the aspect ratio for brush based paint tools.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "aspect", type => "-20 <= float <= 20",
+          desc => "aspect ratio" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-aspect-ratio", &aspect,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_brush_angle {
+    $blurb = 'Set brush angle in degrees.';
+    $help = 'Set the angle in degrees for brush based paint tools.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+	{ name => "angle", type => "-180 <= float <= 180",
+	  desc => "angle in degrees" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GList *options;
+  GList *list;
+
+  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+  for (list = options; list; list = g_list_next (list))
+    g_object_set (list->data,
+                  "brush-angle", (gdouble) angle,
+                   NULL);
+
+  g_list_free (options);
+}
+CODE
+    );
+}
+
+sub context_get_brush_angle {
+    $blurb = 'Get brush angle in degrees.';
+    $help = 'Set the angle in degrees for brush based paint tools.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+	{ name => "angle", type => "-180 <= float <= 180",
+	  desc => "angle in degrees" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-angle", &angle,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub context_get_dynamics {
     $blurb = 'Retrieve the currently active paint dynamics.';
 
@@ -1495,7 +1713,491 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h"
+sub context_get_ink_size {
+    $blurb = 'Get ink blob size in pixels.';
+    $help = 'Get the ink blob size in pixels for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @outargs = (
+        { name => "size", type => "0 <= float <= 200",
+          desc => "ink blob size in pixels" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "size", &size,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_set_ink_size {
+    $blurb = 'Set ink blob size in pixels.';
+    $help = 'Set the ink blob size in pixels for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "size", type => "0 <= float <= 200",
+          desc => "ink blob size in pixels" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_set (options,
+                  "size", size,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_get_ink_angle {
+    $blurb = 'Get ink angle in degrees.';
+    $help = 'Get the ink angle in degrees for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @outargs = (
+        { name => "angle", type => "-90 <= float <= 90",
+          desc => "ink angle in degrees" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "tilt-angle", &angle,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_set_ink_angle {
+    $blurb = 'Set ink angle in degrees.';
+    $help = 'Set the ink angle in degrees for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "angle", type => "-90 <= float <= 90",
+          desc => "ink angle in degrees" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_set (options,
+                  "tilt-angle", angle,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_get_ink_size_sensitivity {
+    $blurb = 'Get ink size sensitivity.';
+    $help = 'Get the ink size sensitivity for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @outargs = (
+        { name => "size", type => "0 <= float <= 1",
+          desc => "ink size sensitivity" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "size-sensitivity", &size,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_set_ink_size_sensitivity {
+    $blurb = 'Set ink size sensitivity.';
+    $help = 'Set the ink size sensitivity for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "size", type => "0 <= float <= 1",
+          desc => "ink size sensitivity" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_set (options,
+                  "size-sensitivity", size,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_get_ink_tilt_sensitivity {
+    $blurb = 'Get ink tilt sensitivity.';
+    $help = 'Get the ink tilt sensitivity for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @outargs = (
+        { name => "tilt", type => "0 <= float <= 1",
+          desc => "ink tilt sensitivity" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "tilt-sensitivity", &tilt,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_set_ink_tilt_sensitivity {
+    $blurb = 'Set ink tilt sensitivity.';
+    $help = 'Set the ink tilt sensitivity for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "tilt", type => "0 <= float <= 1",
+          desc => "ink tilt sensitivity" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_set (options,
+                  "tilt-sensitivity", tilt,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_get_ink_speed_sensitivity {
+    $blurb = 'Get ink speed sensitivity.';
+    $help = 'Get the ink speed sensitivity for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @outargs = (
+        { name => "speed", type => "0 <= float <= 1",
+          desc => "ink speed sensitivity" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "vel-sensitivity", &speed,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_set_ink_speed_sensitivity {
+    $blurb = 'Set ink speed sensitivity.';
+    $help = 'Set the ink speed sensitivity for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "speed", type => "0 <= float <= 1",
+          desc => "ink speed sensitivity" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_set (options,
+                  "vel-sensitivity", speed,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_get_ink_blob_type {
+    $blurb = 'Get ink blob type.';
+    $help = 'Get the ink blob type for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @outargs = (
+        { name => "type", type => "enum GimpInkBlobType",
+          desc => "Ink blob type" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "blob-type", &type,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_set_ink_blob_type {
+    $blurb = 'Set ink blob type.';
+    $help = 'Set the ink blob type for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "type", type => "enum GimpInkBlobType",
+          desc => "Ink blob type" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_set (options,
+                  "blob-type", type,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_get_ink_blob_aspect_ratio {
+    $blurb = 'Get ink blob aspect ratio.';
+    $help = 'Get the ink blob aspect ratio for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @outargs = (
+        { name => "aspect", type => "1 <= float <= 10",
+          desc => "ink blob aspect ratio" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "blob-aspect", &aspect,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_set_ink_blob_aspect_ratio {
+    $blurb = 'Set ink blob aspect ratio.';
+    $help = 'Set the ink blob aspect ratio for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "aspect", type => "1 <= float <= 10",
+          desc => "ink blob aspect ratio" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_set (options,
+                  "blob-aspect", aspect,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_get_ink_blob_angle {
+    $blurb = 'Get ink blob angle in degrees.';
+    $help = 'Get the ink blob angle in degrees for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @outargs = (
+        { name => "angle", type => "-180 <= float <= 180",
+          desc => "ink blob angle in degrees" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    {
+      g_object_get (options,
+		    "blob-angle", &angle,
+		    NULL);
+      angle *= (180-0 / G_PI);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub context_set_ink_blob_angle {
+    $blurb = 'Set ink blob angle in degrees.';
+    $help = 'Set the ink blob angle in degrees for ink tool.';
+
+    &ejs_pdb_misc('2012', '2.8');
+
+    @inargs = (
+        { name => "angle", type => "-180 <= float <= 180",
+          desc => "ink blob angle in degrees" }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_set (options,
+                  "blob-angle", (gdouble) angle * G_PI / 180.0,
+                  NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+@headers = qw("base/temp-buf.h"
+              "core/gimp.h"
+              "core/gimpbrush.h"
               "core/gimpcontainer.h"
               "core/gimpdatafactory.h"
               "libgimpconfig/gimpconfig.h"
@@ -1515,6 +2217,10 @@ CODE
             context_get_opacity context_set_opacity
             context_get_paint_mode context_set_paint_mode
             context_get_brush context_set_brush
+            context_get_brush_size
+            context_set_brush_size context_set_brush_default_size
+            context_get_brush_aspect_ratio context_set_brush_aspect_ratio
+            context_get_brush_angle context_set_brush_angle
             context_get_dynamics context_set_dynamics
             context_get_pattern context_set_pattern
             context_get_gradient context_set_gradient
@@ -1531,7 +2237,15 @@ CODE
             context_get_interpolation context_set_interpolation
             context_get_transform_direction context_set_transform_direction
             context_get_transform_resize context_set_transform_resize
-            context_get_transform_recursion context_set_transform_recursion);
+            context_get_transform_recursion context_set_transform_recursion
+            context_get_ink_size context_set_ink_size
+            context_get_ink_angle context_set_ink_angle
+            context_get_ink_size_sensitivity context_set_ink_size_sensitivity
+            context_get_ink_tilt_sensitivity context_set_ink_tilt_sensitivity
+            context_get_ink_speed_sensitivity context_set_ink_speed_sensitivity
+            context_get_ink_blob_type context_set_ink_blob_type
+            context_get_ink_blob_aspect_ratio context_set_ink_blob_aspect_ratio
+            context_get_ink_blob_angle context_set_ink_blob_angle);
 
 %exports = (app => [@procs], lib => [@procs]);
 

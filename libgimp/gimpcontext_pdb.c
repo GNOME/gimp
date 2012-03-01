@@ -635,6 +635,222 @@ gimp_context_set_brush (const gchar *name)
 }
 
 /**
+ * gimp_context_get_brush_size:
+ * @size: brush size in pixels.
+ *
+ * Get brush size in pixels.
+ *
+ * Get the brush size in pixels for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_brush_size (gdouble size)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-brush-size",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, size,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_brush_size:
+ * @size: brush size in pixels.
+ *
+ * Set brush size in pixels.
+ *
+ * Set the brush size in pixels for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_brush_size (gdouble size)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-size",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, size,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_brush_default_size:
+ *
+ * Set brush size to its default.
+ *
+ * Set the brush size to the default (max of width and height) for
+ * paintbrush, airbrush, or pencil tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_brush_default_size (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-default-size",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_brush_aspect_ratio:
+ * @aspect: aspect ratio.
+ *
+ * Get brush aspect ratio.
+ *
+ * Set the aspect ratio for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_brush_aspect_ratio (gdouble aspect)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-brush-aspect-ratio",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, aspect,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_brush_aspect_ratio:
+ * @aspect: aspect ratio.
+ *
+ * Set brush aspect ratio.
+ *
+ * Set the aspect ratio for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_brush_aspect_ratio (gdouble aspect)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-aspect-ratio",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, aspect,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_brush_angle:
+ * @angle: angle in degrees.
+ *
+ * Get brush angle in degrees.
+ *
+ * Set the angle in degrees for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_brush_angle (gdouble angle)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-brush-angle",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, angle,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_brush_angle:
+ * @angle: angle in degrees.
+ *
+ * Set brush angle in degrees.
+ *
+ * Set the angle in degrees for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_brush_angle (gdouble angle)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-angle",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, angle,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_dynamics:
  *
  * Retrieve the currently active paint dynamics.
@@ -1782,6 +1998,494 @@ gimp_context_set_transform_recursion (gint transform_recursion)
   return_vals = gimp_run_procedure ("gimp-context-set-transform-recursion",
                                     &nreturn_vals,
                                     GIMP_PDB_INT32, transform_recursion,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_ink_size:
+ *
+ * Get ink blob size in pixels.
+ *
+ * Get the ink blob size in pixels for ink tool.
+ *
+ * Returns: ink blob size in pixels.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_context_get_ink_size (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble size = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-ink-size",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    size = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return size;
+}
+
+/**
+ * gimp_context_set_ink_size:
+ * @size: ink blob size in pixels.
+ *
+ * Set ink blob size in pixels.
+ *
+ * Set the ink blob size in pixels for ink tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_ink_size (gdouble size)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-ink-size",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, size,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_ink_angle:
+ *
+ * Get ink angle in degrees.
+ *
+ * Get the ink angle in degrees for ink tool.
+ *
+ * Returns: ink angle in degrees.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_context_get_ink_angle (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble angle = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-ink-angle",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    angle = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return angle;
+}
+
+/**
+ * gimp_context_set_ink_angle:
+ * @angle: ink angle in degrees.
+ *
+ * Set ink angle in degrees.
+ *
+ * Set the ink angle in degrees for ink tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_ink_angle (gdouble angle)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-ink-angle",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, angle,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_ink_size_sensitivity:
+ *
+ * Get ink size sensitivity.
+ *
+ * Get the ink size sensitivity for ink tool.
+ *
+ * Returns: ink size sensitivity.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_context_get_ink_size_sensitivity (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble size = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-ink-size-sensitivity",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    size = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return size;
+}
+
+/**
+ * gimp_context_set_ink_size_sensitivity:
+ * @size: ink size sensitivity.
+ *
+ * Set ink size sensitivity.
+ *
+ * Set the ink size sensitivity for ink tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_ink_size_sensitivity (gdouble size)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-ink-size-sensitivity",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, size,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_ink_tilt_sensitivity:
+ *
+ * Get ink tilt sensitivity.
+ *
+ * Get the ink tilt sensitivity for ink tool.
+ *
+ * Returns: ink tilt sensitivity.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_context_get_ink_tilt_sensitivity (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble tilt = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-ink-tilt-sensitivity",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    tilt = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return tilt;
+}
+
+/**
+ * gimp_context_set_ink_tilt_sensitivity:
+ * @tilt: ink tilt sensitivity.
+ *
+ * Set ink tilt sensitivity.
+ *
+ * Set the ink tilt sensitivity for ink tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_ink_tilt_sensitivity (gdouble tilt)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-ink-tilt-sensitivity",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, tilt,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_ink_speed_sensitivity:
+ *
+ * Get ink speed sensitivity.
+ *
+ * Get the ink speed sensitivity for ink tool.
+ *
+ * Returns: ink speed sensitivity.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_context_get_ink_speed_sensitivity (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble speed = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-ink-speed-sensitivity",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    speed = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return speed;
+}
+
+/**
+ * gimp_context_set_ink_speed_sensitivity:
+ * @speed: ink speed sensitivity.
+ *
+ * Set ink speed sensitivity.
+ *
+ * Set the ink speed sensitivity for ink tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_ink_speed_sensitivity (gdouble speed)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-ink-speed-sensitivity",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, speed,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_ink_blob_type:
+ *
+ * Get ink blob type.
+ *
+ * Get the ink blob type for ink tool.
+ *
+ * Returns: Ink blob type.
+ *
+ * Since: GIMP 2.8
+ **/
+GimpInkBlobType
+gimp_context_get_ink_blob_type (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpInkBlobType type = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-ink-blob-type",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    type = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return type;
+}
+
+/**
+ * gimp_context_set_ink_blob_type:
+ * @type: Ink blob type.
+ *
+ * Set ink blob type.
+ *
+ * Set the ink blob type for ink tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_ink_blob_type (GimpInkBlobType type)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-ink-blob-type",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, type,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_ink_blob_aspect_ratio:
+ *
+ * Get ink blob aspect ratio.
+ *
+ * Get the ink blob aspect ratio for ink tool.
+ *
+ * Returns: ink blob aspect ratio.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_context_get_ink_blob_aspect_ratio (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble aspect = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-ink-blob-aspect-ratio",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    aspect = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return aspect;
+}
+
+/**
+ * gimp_context_set_ink_blob_aspect_ratio:
+ * @aspect: ink blob aspect ratio.
+ *
+ * Set ink blob aspect ratio.
+ *
+ * Set the ink blob aspect ratio for ink tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_ink_blob_aspect_ratio (gdouble aspect)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-ink-blob-aspect-ratio",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, aspect,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_ink_blob_angle:
+ *
+ * Get ink blob angle in degrees.
+ *
+ * Get the ink blob angle in degrees for ink tool.
+ *
+ * Returns: ink blob angle in degrees.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_context_get_ink_blob_angle (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble angle = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-ink-blob-angle",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    angle = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return angle;
+}
+
+/**
+ * gimp_context_set_ink_blob_angle:
+ * @angle: ink blob angle in degrees.
+ *
+ * Set ink blob angle in degrees.
+ *
+ * Set the ink blob angle in degrees for ink tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_ink_blob_angle (gdouble angle)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-ink-blob-angle",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, angle,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

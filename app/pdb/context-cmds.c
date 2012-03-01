@@ -28,7 +28,9 @@
 
 #include "pdb-types.h"
 
+#include "base/temp-buf.h"
 #include "core/gimp.h"
+#include "core/gimpbrush.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
@@ -417,6 +419,233 @@ context_set_brush_invoker (GimpProcedure      *procedure,
         gimp_context_set_brush (context, brush);
       else
         success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_brush_size_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble size;
+
+  size = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      /* all options should have the same value, so pick a random one */
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-paintbrush");
+
+      if (options)
+        g_object_get (options,
+                      "brush-size", &size,
+                       NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_set_brush_size_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble size;
+
+  size = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "brush-size", (gdouble) size,
+                       NULL);
+
+      g_list_free (options);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_set_brush_default_size_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GValueArray  *args,
+                                        GError            **error)
+{
+  gboolean success = TRUE;
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "brush-size", (gdouble) MAX (brush->mask->width,
+                                                   brush->mask->height),
+                      NULL);
+
+      g_list_free (options);
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GValueArray  *args,
+                                        GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble aspect;
+
+  aspect = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      /* all options should have the same value, so pick a random one */
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-paintbrush");
+
+      if (options)
+        g_object_get (options,
+                      "brush-aspect-ratio", &aspect,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_set_brush_aspect_ratio_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GValueArray  *args,
+                                        GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble aspect;
+
+  aspect = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "brush-aspect-ratio", (gdouble) aspect,
+                       NULL);
+
+      g_list_free (options);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_brush_angle_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble angle;
+
+  angle = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      /* all options should have the same value, so pick a random one */
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-paintbrush");
+
+      if (options)
+        g_object_get (options,
+                      "brush-angle", &angle,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_set_brush_angle_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble angle;
+
+  angle = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "brush-angle", (gdouble) angle,
+                       NULL);
+
+      g_list_free (options);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1249,6 +1478,513 @@ context_set_transform_recursion_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
+static GValueArray *
+context_get_ink_size_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gdouble size = 0.0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "size", &size,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], size);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_ink_size_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble size;
+
+  size = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-ink");
+
+      if (options)
+        g_object_set (options,
+                      "size", size,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_ink_angle_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gdouble angle = 0.0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "tilt-angle", &angle,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], angle);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_ink_angle_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble angle;
+
+  angle = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-ink");
+
+      if (options)
+        g_object_set (options,
+                      "tilt-angle", angle,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GValueArray  *args,
+                                          GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gdouble size = 0.0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "size-sensitivity", &size,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], size);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_ink_size_sensitivity_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GValueArray  *args,
+                                          GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble size;
+
+  size = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-ink");
+
+      if (options)
+        g_object_set (options,
+                      "size-sensitivity", size,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GValueArray  *args,
+                                          GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gdouble tilt = 0.0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "tilt-sensitivity", &tilt,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], tilt);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_ink_tilt_sensitivity_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GValueArray  *args,
+                                          GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble tilt;
+
+  tilt = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-ink");
+
+      if (options)
+        g_object_set (options,
+                      "tilt-sensitivity", tilt,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
+                                           Gimp               *gimp,
+                                           GimpContext        *context,
+                                           GimpProgress       *progress,
+                                           const GValueArray  *args,
+                                           GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gdouble speed = 0.0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "vel-sensitivity", &speed,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], speed);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_ink_speed_sensitivity_invoker (GimpProcedure      *procedure,
+                                           Gimp               *gimp,
+                                           GimpContext        *context,
+                                           GimpProgress       *progress,
+                                           const GValueArray  *args,
+                                           GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble speed;
+
+  speed = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-ink");
+
+      if (options)
+        g_object_set (options,
+                      "vel-sensitivity", speed,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_ink_blob_type_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gint32 type = 0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "blob-type", &type,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (&return_vals->values[1], type);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_ink_blob_type_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  gint32 type;
+
+  type = g_value_get_enum (&args->values[0]);
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-ink");
+
+      if (options)
+        g_object_set (options,
+                      "blob-type", type,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
+                                           Gimp               *gimp,
+                                           GimpContext        *context,
+                                           GimpProgress       *progress,
+                                           const GValueArray  *args,
+                                           GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gdouble aspect = 0.0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    g_object_get (options,
+                  "blob-aspect", &aspect,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], aspect);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_ink_blob_aspect_ratio_invoker (GimpProcedure      *procedure,
+                                           Gimp               *gimp,
+                                           GimpContext        *context,
+                                           GimpProgress       *progress,
+                                           const GValueArray  *args,
+                                           GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble aspect;
+
+  aspect = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-ink");
+
+      if (options)
+        g_object_set (options,
+                      "blob-aspect", aspect,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_ink_blob_angle_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  gdouble angle = 0.0;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-ink");
+
+  if (options)
+    {
+      g_object_get (options,
+                    "blob-angle", &angle,
+                    NULL);
+      angle *= (180-0 / G_PI);
+    }
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], angle);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_ink_blob_angle_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble angle;
+
+  angle = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-ink");
+
+      if (options)
+        g_object_set (options,
+                      "blob-angle", (gdouble) angle * G_PI / 180.0,
+                      NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_context_procs (GimpPDB *pdb)
 {
@@ -1650,6 +2386,161 @@ register_context_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-brush-size
+   */
+  procedure = gimp_procedure_new (context_get_brush_size_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-brush-size");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-brush-size",
+                                     "Get brush size in pixels.",
+                                     "Get the brush size in pixels for brush based paint tools.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("size",
+                                                    "size",
+                                                    "brush size in pixels",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-brush-size
+   */
+  procedure = gimp_procedure_new (context_set_brush_size_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-brush-size");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush-size",
+                                     "Set brush size in pixels.",
+                                     "Set the brush size in pixels for brush based paint tools.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("size",
+                                                    "size",
+                                                    "brush size in pixels",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-brush-default-size
+   */
+  procedure = gimp_procedure_new (context_set_brush_default_size_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-brush-default-size");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush-default-size",
+                                     "Set brush size to its default.",
+                                     "Set the brush size to the default (max of width and height) for paintbrush, airbrush, or pencil tools.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-brush-aspect-ratio
+   */
+  procedure = gimp_procedure_new (context_get_brush_aspect_ratio_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-brush-aspect-ratio");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-brush-aspect-ratio",
+                                     "Get brush aspect ratio.",
+                                     "Set the aspect ratio for brush based paint tools.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("aspect",
+                                                    "aspect",
+                                                    "aspect ratio",
+                                                    -20, 20, -20,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-brush-aspect-ratio
+   */
+  procedure = gimp_procedure_new (context_set_brush_aspect_ratio_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-brush-aspect-ratio");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush-aspect-ratio",
+                                     "Set brush aspect ratio.",
+                                     "Set the aspect ratio for brush based paint tools.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("aspect",
+                                                    "aspect",
+                                                    "aspect ratio",
+                                                    -20, 20, -20,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-brush-angle
+   */
+  procedure = gimp_procedure_new (context_get_brush_angle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-brush-angle");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-brush-angle",
+                                     "Get brush angle in degrees.",
+                                     "Set the angle in degrees for brush based paint tools.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "angle in degrees",
+                                                    -180, 180, -180,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-brush-angle
+   */
+  procedure = gimp_procedure_new (context_set_brush_angle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-brush-angle");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush-angle",
+                                     "Set brush angle in degrees.",
+                                     "Set the angle in degrees for brush based paint tools.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "angle in degrees",
+                                                    -180, 180, -180,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2462,6 +3353,376 @@ register_context_procs (GimpPDB *pdb)
                                                       "The transform recursion level",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-ink-size
+   */
+  procedure = gimp_procedure_new (context_get_ink_size_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-ink-size");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-ink-size",
+                                     "Get ink blob size in pixels.",
+                                     "Get the ink blob size in pixels for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("size",
+                                                        "size",
+                                                        "ink blob size in pixels",
+                                                        0, 200, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-ink-size
+   */
+  procedure = gimp_procedure_new (context_set_ink_size_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-ink-size");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-ink-size",
+                                     "Set ink blob size in pixels.",
+                                     "Set the ink blob size in pixels for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("size",
+                                                    "size",
+                                                    "ink blob size in pixels",
+                                                    0, 200, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-ink-angle
+   */
+  procedure = gimp_procedure_new (context_get_ink_angle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-ink-angle");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-ink-angle",
+                                     "Get ink angle in degrees.",
+                                     "Get the ink angle in degrees for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("angle",
+                                                        "angle",
+                                                        "ink angle in degrees",
+                                                        -90, 90, -90,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-ink-angle
+   */
+  procedure = gimp_procedure_new (context_set_ink_angle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-ink-angle");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-ink-angle",
+                                     "Set ink angle in degrees.",
+                                     "Set the ink angle in degrees for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "ink angle in degrees",
+                                                    -90, 90, -90,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-ink-size-sensitivity
+   */
+  procedure = gimp_procedure_new (context_get_ink_size_sensitivity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-ink-size-sensitivity");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-ink-size-sensitivity",
+                                     "Get ink size sensitivity.",
+                                     "Get the ink size sensitivity for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("size",
+                                                        "size",
+                                                        "ink size sensitivity",
+                                                        0, 1, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-ink-size-sensitivity
+   */
+  procedure = gimp_procedure_new (context_set_ink_size_sensitivity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-ink-size-sensitivity");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-ink-size-sensitivity",
+                                     "Set ink size sensitivity.",
+                                     "Set the ink size sensitivity for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("size",
+                                                    "size",
+                                                    "ink size sensitivity",
+                                                    0, 1, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-ink-tilt-sensitivity
+   */
+  procedure = gimp_procedure_new (context_get_ink_tilt_sensitivity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-ink-tilt-sensitivity");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-ink-tilt-sensitivity",
+                                     "Get ink tilt sensitivity.",
+                                     "Get the ink tilt sensitivity for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("tilt",
+                                                        "tilt",
+                                                        "ink tilt sensitivity",
+                                                        0, 1, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-ink-tilt-sensitivity
+   */
+  procedure = gimp_procedure_new (context_set_ink_tilt_sensitivity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-ink-tilt-sensitivity");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-ink-tilt-sensitivity",
+                                     "Set ink tilt sensitivity.",
+                                     "Set the ink tilt sensitivity for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("tilt",
+                                                    "tilt",
+                                                    "ink tilt sensitivity",
+                                                    0, 1, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-ink-speed-sensitivity
+   */
+  procedure = gimp_procedure_new (context_get_ink_speed_sensitivity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-ink-speed-sensitivity");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-ink-speed-sensitivity",
+                                     "Get ink speed sensitivity.",
+                                     "Get the ink speed sensitivity for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("speed",
+                                                        "speed",
+                                                        "ink speed sensitivity",
+                                                        0, 1, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-ink-speed-sensitivity
+   */
+  procedure = gimp_procedure_new (context_set_ink_speed_sensitivity_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-ink-speed-sensitivity");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-ink-speed-sensitivity",
+                                     "Set ink speed sensitivity.",
+                                     "Set the ink speed sensitivity for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("speed",
+                                                    "speed",
+                                                    "ink speed sensitivity",
+                                                    0, 1, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-ink-blob-type
+   */
+  procedure = gimp_procedure_new (context_get_ink_blob_type_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-ink-blob-type");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-ink-blob-type",
+                                     "Get ink blob type.",
+                                     "Get the ink blob type for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("type",
+                                                      "type",
+                                                      "Ink blob type",
+                                                      GIMP_TYPE_INK_BLOB_TYPE,
+                                                      GIMP_INK_BLOB_TYPE_CIRCLE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-ink-blob-type
+   */
+  procedure = gimp_procedure_new (context_set_ink_blob_type_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-ink-blob-type");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-ink-blob-type",
+                                     "Set ink blob type.",
+                                     "Set the ink blob type for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("type",
+                                                  "type",
+                                                  "Ink blob type",
+                                                  GIMP_TYPE_INK_BLOB_TYPE,
+                                                  GIMP_INK_BLOB_TYPE_CIRCLE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-ink-blob-aspect-ratio
+   */
+  procedure = gimp_procedure_new (context_get_ink_blob_aspect_ratio_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-ink-blob-aspect-ratio");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-ink-blob-aspect-ratio",
+                                     "Get ink blob aspect ratio.",
+                                     "Get the ink blob aspect ratio for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("aspect",
+                                                        "aspect",
+                                                        "ink blob aspect ratio",
+                                                        1, 10, 1,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-ink-blob-aspect-ratio
+   */
+  procedure = gimp_procedure_new (context_set_ink_blob_aspect_ratio_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-ink-blob-aspect-ratio");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-ink-blob-aspect-ratio",
+                                     "Set ink blob aspect ratio.",
+                                     "Set the ink blob aspect ratio for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("aspect",
+                                                    "aspect",
+                                                    "ink blob aspect ratio",
+                                                    1, 10, 1,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-ink-blob-angle
+   */
+  procedure = gimp_procedure_new (context_get_ink_blob_angle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-ink-blob-angle");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-ink-blob-angle",
+                                     "Get ink blob angle in degrees.",
+                                     "Get the ink blob angle in degrees for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("angle",
+                                                        "angle",
+                                                        "ink blob angle in degrees",
+                                                        -180, 180, -180,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-ink-blob-angle
+   */
+  procedure = gimp_procedure_new (context_set_ink_blob_angle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-ink-blob-angle");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-ink-blob-angle",
+                                     "Set ink blob angle in degrees.",
+                                     "Set the ink blob angle in degrees for ink tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2012",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("angle",
+                                                    "angle",
+                                                    "ink blob angle in degrees",
+                                                    -180, 180, -180,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

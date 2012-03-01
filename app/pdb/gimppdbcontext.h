@@ -70,6 +70,7 @@ GimpContext      * gimp_pdb_context_new               (Gimp           *gimp,
 
 GimpPaintOptions * gimp_pdb_context_get_paint_options (GimpPDBContext *context,
                                                        const gchar    *name);
+GList            * gimp_pdb_context_get_brush_options (GimpPDBContext *context);
 
 
 #endif  /*  __GIMP_PDB_CONTEXT_H__  */

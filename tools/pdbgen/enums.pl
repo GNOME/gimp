@@ -622,6 +622,16 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE) ],
 	  mapping => { GIMP_BLUR_CONVOLVE => '0',
 		       GIMP_SHARPEN_CONVOLVE => '1' }
+	},
+    GimpInkBlobType =>
+	{ contig => 1,
+	  header => 'paint/paint-enums.h',
+	  symbols => [ qw(GIMP_INK_BLOB_TYPE_CIRCLE
+			  GIMP_INK_BLOB_TYPE_SQUARE
+			  GIMP_INK_BLOB_TYPE_DIAMOND) ],
+	  mapping => { GIMP_INK_BLOB_TYPE_CIRCLE => '0',
+		       GIMP_INK_BLOB_TYPE_SQUARE => '1',
+		       GIMP_INK_BLOB_TYPE_DIAMOND => '2' }
 	}
 );
 

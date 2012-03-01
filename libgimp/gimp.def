@@ -72,12 +72,23 @@ EXPORTS
 	gimp_context_get_antialias
 	gimp_context_get_background
 	gimp_context_get_brush
+	gimp_context_get_brush_angle
+	gimp_context_get_brush_aspect_ratio
+	gimp_context_get_brush_size
 	gimp_context_get_dynamics
 	gimp_context_get_feather
 	gimp_context_get_feather_radius
 	gimp_context_get_font
 	gimp_context_get_foreground
 	gimp_context_get_gradient
+	gimp_context_get_ink_angle
+	gimp_context_get_ink_blob_angle
+	gimp_context_get_ink_blob_aspect_ratio
+	gimp_context_get_ink_blob_type
+	gimp_context_get_ink_size
+	gimp_context_get_ink_size_sensitivity
+	gimp_context_get_ink_speed_sensitivity
+	gimp_context_get_ink_tilt_sensitivity
 	gimp_context_get_interpolation
 	gimp_context_get_opacity
 	gimp_context_get_paint_method
@@ -98,6 +109,10 @@ EXPORTS
 	gimp_context_set_antialias
 	gimp_context_set_background
 	gimp_context_set_brush
+	gimp_context_set_brush_angle
+	gimp_context_set_brush_aspect_ratio
+	gimp_context_set_brush_default_size
+	gimp_context_set_brush_size
 	gimp_context_set_default_colors
 	gimp_context_set_defaults
 	gimp_context_set_dynamics
@@ -106,6 +121,14 @@ EXPORTS
 	gimp_context_set_font
 	gimp_context_set_foreground
 	gimp_context_set_gradient
+	gimp_context_set_ink_angle
+	gimp_context_set_ink_blob_angle
+	gimp_context_set_ink_blob_aspect_ratio
+	gimp_context_set_ink_blob_type
+	gimp_context_set_ink_size
+	gimp_context_set_ink_size_sensitivity
+	gimp_context_set_ink_speed_sensitivity
+	gimp_context_set_ink_tilt_sensitivity
 	gimp_context_set_interpolation
 	gimp_context_set_opacity
 	gimp_context_set_paint_method

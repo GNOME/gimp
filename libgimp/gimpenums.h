@@ -167,6 +167,18 @@ typedef enum
 } GimpHueRange;
 
 
+#define GIMP_TYPE_INK_BLOB_TYPE (gimp_ink_blob_type_get_type ())
+
+GType gimp_ink_blob_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_INK_BLOB_TYPE_CIRCLE,
+  GIMP_INK_BLOB_TYPE_SQUARE,
+  GIMP_INK_BLOB_TYPE_DIAMOND
+} GimpInkBlobType;
+
+
 #define GIMP_TYPE_LAYER_MODE_EFFECTS (gimp_layer_mode_effects_get_type ())
 
 GType gimp_layer_mode_effects_get_type (void) G_GNUC_CONST;

@@ -31,6 +31,7 @@
 #include "core/gimplist.h"
 #include "core/gimppaintinfo.h"
 
+#include "paint/gimpbrushcore.h"
 #include "paint/gimppaintoptions.h"
 
 #include "gimppdbcontext.h"
@@ -393,4 +394,25 @@ gimp_pdb_context_get_paint_options (GimpPDBContext *context,
 
   return (GimpPaintOptions *)
     gimp_container_get_child_by_name (context->paint_options_list, name);
+}
+
+GList *
+gimp_pdb_context_get_brush_options (GimpPDBContext *context)
+{
+  GList *brush_options = NULL;
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
+
+  for (list = GIMP_LIST (context->paint_options_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpPaintOptions *options = list->data;
+
+      if (g_type_is_a (options->paint_info->paint_type, GIMP_TYPE_BRUSH_CORE))
+        brush_options = g_list_prepend (brush_options, options);
+    }
+
+  return g_list_reverse (brush_options);
 }

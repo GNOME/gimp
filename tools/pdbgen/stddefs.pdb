@@ -69,6 +69,10 @@ sub david_pdb_misc {
     contrib_pdb_misc('David Gowers', '', @_);
 }
 
+sub ejs_pdb_misc {
+    contrib_pdb_misc('Ed Swartz', '', @_);
+}
+
 sub federico_pdb_misc {
     contrib_pdb_misc('Federico Mena Quintero', '', @_);
 }
