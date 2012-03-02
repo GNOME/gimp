@@ -489,6 +489,7 @@ EXPORTS
 	gimp_image_undo_thaw
 	gimp_image_unset_active_channel
 	gimp_image_width
+	gimp_ink_blob_type_get_type
 	gimp_install_cmap
 	gimp_install_procedure
 	gimp_install_temp_proc
