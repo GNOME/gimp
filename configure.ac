@@ -1969,12 +1969,6 @@ AC_SUBST(gimplocaledir)
 # Some defines for the build
 ############################
 
-GIMPINSTALL=
-if test "$INSTALL" = "$ac_install_sh"; then
-  GIMPINSTALL="gimpinstall-gimp_tool_version"
-fi
-AC_SUBST(GIMPINSTALL)
-
 AM_CONDITIONAL(STATICLIBS, test "x$enable_static" = xyes)
 
 # a tuned version of glib-mkenums

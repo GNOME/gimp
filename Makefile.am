@@ -32,8 +32,6 @@ SUBDIRS = \
 	docs		\
 	build
 
-bin_SCRIPTS = @GIMPINSTALL@
-
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \
 	gimp-@GIMP_PKGCONFIG_VERSION@.pc	\
@@ -46,8 +44,6 @@ if HAVE_XSLTPROC
 	$(XSLTPROC) -o $(@) $(top_srcdir)/authors.xsl $< || rm -f $(@)
 endif
 
-
-EXTRA_SCRIPTS = gimpinstall-@GIMP_TOOL_VERSION@
 
 EXTRA_DIST = \
 	AUTHORS			\
@@ -78,9 +74,6 @@ EXTRA_DIST = \
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
-
-gimpinstall-@GIMP_TOOL_VERSION@:
-	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-@GIMP_TOOL_VERSION@
 
 check-defs:
 	@$(PYTHON) $(top_srcdir)/tools/defcheck.py $(top_srcdir) || \
