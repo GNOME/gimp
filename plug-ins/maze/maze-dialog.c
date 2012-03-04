@@ -113,7 +113,7 @@ static void        div_entry_callback    (GtkWidget   *entry,
 static void        height_width_callback (gint         width,
                                           GtkWidget  **div_entry);
 
-static GtkWidget * divbox_new            (guint       *max,
+static GtkWidget * divbox_new            (gint        *max,
                                           GtkWidget   *friend,
                                           GtkWidget  **div_entry);
 
@@ -289,7 +289,7 @@ maze_dialog (void)
 }
 
 static GtkWidget*
-divbox_new (guint      *max,
+divbox_new (gint       *max,
 	    GtkWidget  *friend,
 	    GtkWidget **div_entry)
 {
@@ -364,12 +364,12 @@ div_button_callback (GtkWidget *button,
 		     GtkWidget *entry)
 {
   const gchar *text;
-  guint        max, divs;
+  gint         max, divs;
   gint         direction;
 
   direction = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button),
                                                   "direction"));
-  max = *((guint*) g_object_get_data (G_OBJECT (entry), "max"));
+  max = *((gint*) g_object_get_data (G_OBJECT (entry), "max"));
 
   /* Tileable mazes shall have only an even number of divisions.
      Other mazes have odd. */
@@ -467,7 +467,7 @@ static void
 div_entry_callback (GtkWidget *entry,
 		    GtkWidget *friend)
 {
-  guint divs, width, max;
+  gint divs, width, max;
   EntscaleIntData *userdata;
   EntscaleIntCallback friend_callback;
 
@@ -475,7 +475,7 @@ div_entry_callback (GtkWidget *entry,
   if (divs < 4) /* If this is under 4 (e.g. 0), something's weird.      */
     return;     /* But it'll probably be ok, so just return and ignore. */
 
-  max = *((guint*) g_object_get_data (G_OBJECT (entry), "max"));
+  max = *((gint*) g_object_get_data (G_OBJECT (entry), "max"));
 
   /* I say "width" here, but it could be height.*/
 
@@ -496,10 +496,10 @@ static void
 height_width_callback (gint        width,
 		       GtkWidget **div_entry)
 {
-  guint divs, max;
+  gint divs, max;
   gpointer data;
 
-  max = *((guint*) g_object_get_data(G_OBJECT(*div_entry), "max"));
+  max = *((gint*) g_object_get_data(G_OBJECT(*div_entry), "max"));
   divs = max / width;
 
   g_snprintf (buffer, BUFSIZE, "%d", divs );
