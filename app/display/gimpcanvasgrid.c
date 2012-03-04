@@ -206,6 +206,13 @@ gimp_canvas_grid_draw (GimpCanvasItem   *item,
 
   g_return_if_fail (private->grid->xspacing > 0 && private->grid->yspacing > 0);
 
+  /*  skip grid drawing when the space between grid lines starts
+   *  disappearing, see bug #599267.
+   */
+  if (private->grid->xspacing * shell->scale_x < 2.0 ||
+      private->grid->yspacing * shell->scale_y < 2.0)
+    return;
+
   cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
 
   x1 = floor (dx1);
