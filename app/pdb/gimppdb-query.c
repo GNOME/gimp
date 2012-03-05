@@ -295,7 +295,7 @@ gimp_pdb_proc_info (GimpPDB          *pdb,
       return TRUE;
     }
 
-  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_PROCEDURE_NOT_FOUND,
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND,
                _("Procedure '%s' not found"), proc_name);
 
   return FALSE;

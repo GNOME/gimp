@@ -352,7 +352,8 @@ gimp_procedure_execute (GimpProcedure  *procedure,
               if (return_vals->n_values > 1 &&
                   G_VALUE_HOLDS_STRING (&return_vals->values[1]))
                 {
-                  g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_FAILED,
+                  g_set_error_literal (error, GIMP_PDB_ERROR,
+                                       GIMP_PDB_ERROR_FAILED,
 				       g_value_get_string (&return_vals->values[1]));
                 }
             }
@@ -366,7 +367,8 @@ gimp_procedure_execute (GimpProcedure  *procedure,
     {
       g_warning ("%s: no return values, shouldn't happen", G_STRFUNC);
 
-      pdb_error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+      pdb_error = g_error_new (GIMP_PDB_ERROR,
+                               GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
                                _("Procedure '%s' returned no return values"),
                                gimp_object_get_name (procedure));
 
@@ -476,15 +478,15 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
         {
           switch ((GimpPdbErrorCode) error->code)
             {
-            case GIMP_PDB_FAILED:
-            case GIMP_PDB_PROCEDURE_NOT_FOUND:
-            case GIMP_PDB_INVALID_ARGUMENT:
-            case GIMP_PDB_INVALID_RETURN_VALUE:
-            case GIMP_PDB_INTERNAL_ERROR:
+            case GIMP_PDB_ERROR_FAILED:
+            case GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND:
+            case GIMP_PDB_ERROR_INVALID_ARGUMENT:
+            case GIMP_PDB_ERROR_INVALID_RETURN_VALUE:
+            case GIMP_PDB_ERROR_INTERNAL_ERROR:
               g_value_set_enum (&value, GIMP_PDB_CALLING_ERROR);
               break;
 
-            case GIMP_PDB_CANCELLED:
+            case GIMP_PDB_ERROR_CANCELLED:
               g_value_set_enum (&value, GIMP_PDB_CANCEL);
               break;
 
@@ -636,7 +638,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
           if (return_vals)
             {
               g_set_error (error,
-                           GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+                           GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
                            _("Procedure '%s' returned a wrong value type "
                              "for return value '%s' (#%d). "
                              "Expected %s, got %s."),
@@ -648,7 +650,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
           else
             {
               g_set_error (error,
-                           GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                           GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                            _("Procedure '%s' has been called with a "
                              "wrong value type for argument '%s' (#%d). "
                              "Expected %s, got %s."),
@@ -680,7 +682,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                   if (return_vals)
                     {
                       g_set_error (error,
-                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+                                   GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
                                    _("Procedure '%s' returned an "
                                      "invalid ID for argument '%s'. "
                                      "Most likely a plug-in is trying "
@@ -692,7 +695,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                   else
                     {
                       g_set_error (error,
-                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                                   GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                    _("Procedure '%s' has been called with an "
                                      "invalid ID for argument '%s'. "
                                      "Most likely a plug-in is trying "
@@ -708,7 +712,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                   if (return_vals)
                     {
                       g_set_error (error,
-                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+                                   GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
                                    _("Procedure '%s' returned an "
                                      "invalid ID for argument '%s'. "
                                      "Most likely a plug-in is trying "
@@ -720,7 +725,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                   else
                     {
                       g_set_error (error,
-                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                                   GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                    _("Procedure '%s' has been called with an "
                                      "invalid ID for argument '%s'. "
                                      "Most likely a plug-in is trying "
@@ -740,7 +746,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                   if (return_vals)
                     {
                       g_set_error (error,
-                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_RETURN_VALUE,
+                                   GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
                                    _("Procedure '%s' returned "
                                      "'%s' as return value '%s' "
                                      "(#%d, type %s). "
@@ -753,7 +760,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                   else
                     {
                       g_set_error (error,
-                                   GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                                   GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                    _("Procedure '%s' has been called with "
                                      "value '%s' for argument '%s' "
                                      "(#%d, type %s). "

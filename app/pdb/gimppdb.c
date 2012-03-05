@@ -301,7 +301,7 @@ gimp_pdb_execute_procedure_by_name_args (GimpPDB       *pdb,
   if (list == NULL)
     {
       GError *pdb_error = g_error_new (GIMP_PDB_ERROR,
-                                       GIMP_PDB_PROCEDURE_NOT_FOUND,
+                                       GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND,
                                        _("Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE, pdb_error);
@@ -371,7 +371,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
   if (! procedure)
     {
       GError *pdb_error = g_error_new (GIMP_PDB_ERROR,
-                                       GIMP_PDB_PROCEDURE_NOT_FOUND,
+                                       GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND,
                                        _("Procedure '%s' not found"), name);
 
       return_vals = gimp_procedure_get_return_values (NULL, FALSE, pdb_error);
@@ -405,7 +405,8 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
 
           g_value_array_free (args);
 
-          pdb_error = g_error_new (GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+          pdb_error = g_error_new (GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                    _("Procedure '%s' has been called with a "
                                      "wrong type for argument #%d. "
                                      "Expected %s, got %s."),
@@ -426,7 +427,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
       if (error_msg)
         {
           GError *pdb_error = g_error_new_literal (GIMP_PDB_ERROR,
-                                                   GIMP_PDB_INTERNAL_ERROR,
+                                                   GIMP_PDB_ERROR_INTERNAL_ERROR,
                                                    error_msg);
           g_warning ("%s: %s", G_STRFUNC, error_msg);
           g_free (error_msg);

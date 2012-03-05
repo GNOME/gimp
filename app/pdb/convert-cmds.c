@@ -148,7 +148,8 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
               else if (pal->n_colors > MAXNUMCOLORS)
                 {
                   g_set_error_literal (error,
-                                       GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                                       GIMP_PDB_ERROR,
+                                       GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                        _("Cannot convert to a palette "
                                          "with more than 256 colors."));
                   success = FALSE;
@@ -203,7 +204,8 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
         }
       else
         {
-          g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+          g_set_error_literal (error, GIMP_PDB_ERROR,
+                               GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                "Dither matrix length must be width * height");
           success = FALSE;
         }

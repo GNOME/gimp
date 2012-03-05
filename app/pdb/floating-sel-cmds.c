@@ -60,7 +60,8 @@ floating_sel_remove_invoker (GimpProcedure      *procedure,
         }
       else
         {
-          g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+          g_set_error_literal (error, GIMP_PDB_ERROR,
+                               GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                _("Cannot remove this layer because "
                                  "it is not a floating selection."));
           success = FALSE;
@@ -92,7 +93,8 @@ floating_sel_anchor_invoker (GimpProcedure      *procedure,
         }
       else
         {
-          g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+          g_set_error_literal (error, GIMP_PDB_ERROR,
+                               GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                _("Cannot anchor this layer because "
                                  "it is not a floating selection."));
           success = FALSE;
@@ -124,7 +126,8 @@ floating_sel_to_layer_invoker (GimpProcedure      *procedure,
         }
       else
         {
-          g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+          g_set_error_literal (error, GIMP_PDB_ERROR,
+                               GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                _("Cannot convert this layer to a normal layer "
                                  "because it is not a floating selection."));
           success = FALSE;

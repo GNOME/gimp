@@ -2355,7 +2355,8 @@ image_set_resolution_invoker (GimpProcedure      *procedure,
           ! FINITE (yresolution) ||
           yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
         {
-          g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+          g_set_error_literal (error, GIMP_PDB_ERROR,
+                               GIMP_PDB_ERROR_INVALID_ARGUMENT,
                                _("Image resolution is out of bounds, "
                                  "using the default resolution instead."));
           success = FALSE;

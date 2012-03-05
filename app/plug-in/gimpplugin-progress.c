@@ -327,7 +327,7 @@ get_cancel_return_values (GimpProcedure *procedure)
   GValueArray *return_vals;
   GError      *error;
 
-  error = g_error_new_literal (GIMP_PDB_ERROR, GIMP_PDB_CANCELLED,
+  error = g_error_new_literal (GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
                                _("Cancelled"));
   return_vals = gimp_procedure_get_return_values (procedure, FALSE, error);
   g_error_free (error);

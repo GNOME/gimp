@@ -69,7 +69,7 @@ gimp_pdb_get_brush (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
 			   _("Invalid empty brush name"));
       return NULL;
     }
@@ -78,12 +78,12 @@ gimp_pdb_get_brush (Gimp         *gimp,
 
   if (! brush)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Brush '%s' not found"), name);
     }
   else if (writable && ! gimp_data_is_writable (GIMP_DATA (brush)))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Brush '%s' is not editable"), name);
       return NULL;
     }
@@ -109,7 +109,7 @@ gimp_pdb_get_generated_brush (Gimp         *gimp,
 
   if (! GIMP_IS_BRUSH_GENERATED (brush))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Brush '%s' is not a generated brush"), name);
       return NULL;
     }
@@ -130,7 +130,7 @@ gimp_pdb_get_dynamics (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
 			   _("Invalid empty paint dynamics name"));
       return NULL;
     }
@@ -139,12 +139,12 @@ gimp_pdb_get_dynamics (Gimp         *gimp,
 
   if (! dynamics)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Paint dynamics '%s' not found"), name);
     }
   else if (writable && ! gimp_data_is_writable (GIMP_DATA (dynamics)))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Paint dynamics '%s' is not editable"), name);
       return NULL;
     }
@@ -164,7 +164,7 @@ gimp_pdb_get_pattern (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
 			   _("Invalid empty pattern name"));
       return NULL;
     }
@@ -173,7 +173,7 @@ gimp_pdb_get_pattern (Gimp         *gimp,
 
   if (! pattern)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Pattern '%s' not found"), name);
     }
 
@@ -193,7 +193,7 @@ gimp_pdb_get_gradient (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
 			   _("Invalid empty gradient name"));
       return NULL;
     }
@@ -202,12 +202,12 @@ gimp_pdb_get_gradient (Gimp         *gimp,
 
   if (! gradient)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Gradient '%s' not found"), name);
     }
   else if (writable && ! gimp_data_is_writable (GIMP_DATA (gradient)))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Gradient '%s' is not editable"), name);
       return NULL;
     }
@@ -228,7 +228,7 @@ gimp_pdb_get_palette (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
 			   _("Invalid empty palette name"));
       return NULL;
     }
@@ -237,12 +237,12 @@ gimp_pdb_get_palette (Gimp         *gimp,
 
   if (! palette)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Palette '%s' not found"), name);
     }
   else if (writable && ! gimp_data_is_writable (GIMP_DATA (palette)))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Palette '%s' is not editable"), name);
       return NULL;
     }
@@ -262,7 +262,7 @@ gimp_pdb_get_font (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
 			   _("Invalid empty font name"));
       return NULL;
     }
@@ -272,7 +272,7 @@ gimp_pdb_get_font (Gimp         *gimp,
 
   if (! font)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Font '%s' not found"), name);
     }
 
@@ -291,7 +291,7 @@ gimp_pdb_get_buffer (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
 			   _("Invalid empty buffer name"));
       return NULL;
     }
@@ -301,7 +301,7 @@ gimp_pdb_get_buffer (Gimp         *gimp,
 
   if (! buffer)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Named buffer '%s' not found"), name);
     }
 
@@ -320,7 +320,7 @@ gimp_pdb_get_paint_info (Gimp         *gimp,
 
   if (! name || ! strlen (name))
     {
-      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error_literal (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
 			   _("Invalid empty paint method name"));
       return NULL;
     }
@@ -330,7 +330,7 @@ gimp_pdb_get_paint_info (Gimp         *gimp,
 
   if (! paint_info)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Paint method '%s' does not exist"), name);
     }
 
@@ -349,7 +349,7 @@ gimp_pdb_item_is_attached (GimpItem  *item,
 
   if (! gimp_item_is_attached (item))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be used because it has not "
                      "been added to an image"),
                    gimp_object_get_name (item),
@@ -359,7 +359,7 @@ gimp_pdb_item_is_attached (GimpItem  *item,
 
   if (image && image != gimp_item_get_image (item))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be used because it is "
                      "attached to another image"),
                    gimp_object_get_name (item),
@@ -388,7 +388,7 @@ gimp_pdb_item_is_in_tree (GimpItem   *item,
 
   if (! gimp_item_get_tree (item))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be used because it is not "
                      "a direct child of an item tree"),
                    gimp_object_get_name (item),
@@ -416,7 +416,7 @@ gimp_pdb_item_is_in_same_tree (GimpItem   *item,
 
   if (gimp_item_get_tree (item) != gimp_item_get_tree (item2))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Items '%s' (%d) and '%s' (%d) cannot be used "
                      "because they are not part of the same item tree"),
                    gimp_object_get_name (item),
@@ -441,7 +441,7 @@ gimp_pdb_item_is_not_ancestor (GimpItem  *item,
   if (gimp_viewable_is_ancestor (GIMP_VIEWABLE (item),
                                  GIMP_VIEWABLE (not_descendant)))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) must not be an ancestor of "
                      "'%s' (%d)"),
                    gimp_object_get_name (item),
@@ -465,7 +465,7 @@ gimp_pdb_item_is_floating (GimpItem  *item,
 
   if (! g_object_is_floating (item))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) has already been added to an image"),
                    gimp_object_get_name (item),
                    gimp_item_get_ID (item));
@@ -473,7 +473,7 @@ gimp_pdb_item_is_floating (GimpItem  *item,
     }
   else if (gimp_item_get_image (item) != dest_image)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Trying to add item '%s' (%d) to wrong image"),
                    gimp_object_get_name (item),
                    gimp_item_get_ID (item));
@@ -492,7 +492,7 @@ gimp_pdb_item_is_writable (GimpItem  *item,
 
   if (gimp_item_is_content_locked (item))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be modified because its "
                      "contents are locked"),
                    gimp_object_get_name (item),
@@ -512,7 +512,7 @@ gimp_pdb_item_is_group (GimpItem  *item,
 
   if (! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be used because it is "
                      "not a group item"),
                    gimp_object_get_name (item),
@@ -532,7 +532,7 @@ gimp_pdb_item_is_not_group (GimpItem  *item,
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be modified because it "
                      "is a group item"),
                    gimp_object_get_name (item),
@@ -553,7 +553,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
 
   if (! gimp_item_is_text_layer (GIMP_ITEM (layer)))
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Layer '%s' (%d) cannot be used because it is not "
                      "a text layer"),
                    gimp_object_get_name (layer),
@@ -594,7 +594,7 @@ gimp_pdb_image_is_base_type (GimpImage          *image,
   if (gimp_image_base_type (image) == type)
     return TRUE;
 
-  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                _("Image '%s' (%d) is of type '%s', "
                  "but an image of type '%s' is expected"),
                gimp_image_get_display_name (image),
@@ -617,7 +617,7 @@ gimp_pdb_image_is_not_base_type (GimpImage          *image,
   if (gimp_image_base_type (image) != type)
     return TRUE;
 
-  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                _("Image '%s' (%d) is already of type '%s'"),
                gimp_image_get_display_name (image),
                gimp_image_get_ID (image),
@@ -645,7 +645,7 @@ gimp_pdb_get_vectors_stroke (GimpVectors  *vectors,
       stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_ID);
 
       if (! stroke)
-        g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+        g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                      _("Vectors object %d does not contain stroke with ID %d"),
                      gimp_item_get_ID (GIMP_ITEM (vectors)), stroke_ID);
     }
