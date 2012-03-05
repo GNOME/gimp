@@ -476,6 +476,7 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
         {
           switch ((GimpPdbErrorCode) error->code)
             {
+            case GIMP_PDB_FAILED:
             case GIMP_PDB_PROCEDURE_NOT_FOUND:
             case GIMP_PDB_INVALID_ARGUMENT:
             case GIMP_PDB_INVALID_RETURN_VALUE:
