@@ -115,15 +115,9 @@ gimp_display_shell_set_sample_point_style (GimpDisplayShell *shell,
   cairo_set_line_width (cr, 1.0);
 
   if (active)
-    cairo_set_source_rgb (cr,
-                          sample_point_active.r,
-                          sample_point_active.g,
-                          sample_point_active.b);
+    gimp_cairo_set_source_rgb (cr, &sample_point_active);
   else
-    cairo_set_source_rgb (cr,
-                          sample_point_normal.r,
-                          sample_point_normal.g,
-                          sample_point_normal.b);
+    gimp_cairo_set_source_rgb (cr, &sample_point_normal);
 }
 
 void
@@ -165,10 +159,7 @@ gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
     case GIMP_GRID_DOTS:
     case GIMP_GRID_INTERSECTIONS:
     case GIMP_GRID_SOLID:
-      cairo_set_source_rgb (cr,
-                            grid->fgcolor.r,
-                            grid->fgcolor.g,
-                            grid->fgcolor.b);
+      gimp_cairo_set_source_rgb (cr, &grid->fgcolor);
       break;
     }
 }
