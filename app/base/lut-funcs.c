@@ -287,7 +287,7 @@ posterize_lut_new (gint levels,
 typedef struct
 {
   GimpHistogram *histogram;
-  gint           part[5][257];
+  gint           part[5][256];
 } hist_lut_struct;
 
 static gfloat
@@ -296,19 +296,15 @@ equalize_lut_func (hist_lut_struct *hlut,
                    gint             channel,
                    gfloat           value)
 {
-  gint i = 0;
   gint j;
 
   /* don't equalize the alpha channel */
   if ((nchannels == 2 || nchannels == 4) && channel == nchannels - 1)
     return value;
 
-  j = (gint) (value * 255.0 + 0.5);
+  j = RINT (CLAMP (value * 255.0, 0, 255));
 
-  while (hlut->part[channel][i + 1] <= j)
-    i++;
-
-  return i / 255.0;
+  return hlut->part[channel][j] / 255.;
 }
 
 static void
@@ -316,48 +312,27 @@ equalize_lut_setup (GimpLut       *lut,
                     GimpHistogram *hist,
                     gint           n_channels)
 {
-  gint            i, k, j;
+  gint            i, k;
   hist_lut_struct hlut;
-  gdouble         pixels_per_value;
-  gdouble         desired;
-  gdouble         sum, dif;
+  gdouble         pixels;
 
   g_return_if_fail (lut != NULL);
   g_return_if_fail (hist != NULL);
 
   /* Find partition points */
-  pixels_per_value = gimp_histogram_get_count (hist,
-                                               GIMP_HISTOGRAM_VALUE,
-                                               0, 255) / 256.0;
+  pixels = gimp_histogram_get_count (hist, GIMP_HISTOGRAM_VALUE, 0, 255);
 
   for (k = 0; k < n_channels; k++)
     {
-      /* First and last points in partition */
-      hlut.part[k][0]   = 0;
-      hlut.part[k][256] = 256;
+      gdouble sum = 0;
 
-      /* Find intermediate points */
-      j   = 0;
-      sum = (gimp_histogram_get_channel (hist, k, 0) +
-             gimp_histogram_get_channel (hist, k, 1));
-
-      for (i = 1; i < 256; i++)
+      for (i = 0; i < 256; i++)
         {
-          desired = i * pixels_per_value;
+          gdouble histi = gimp_histogram_get_channel (hist, k, i);
 
-          while (sum < desired && j < 256)
-            {
-              j++;
-              sum += gimp_histogram_get_channel (hist, k, j + 1);
-            }
+          sum += histi;
 
-          /* Nearest sum */
-          dif = sum - gimp_histogram_get_channel (hist, k, j);
-
-          if ((sum - desired) > (dif / 2.0))
-            hlut.part[k][i] = j;
-          else
-            hlut.part[k][i] = j + 1;
+          hlut.part[k][i] = RINT (sum * 255. / pixels);
         }
     }
 
