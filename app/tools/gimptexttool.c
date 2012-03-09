@@ -1029,6 +1029,10 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
 
       if (text)
         {
+          if (text->unit != text_tool->proxy->unit)
+            gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (options->size_entry),
+                                      text->unit);
+
           gimp_config_sync (G_OBJECT (text), G_OBJECT (text_tool->proxy), 0);
 
           if (text->markup)
