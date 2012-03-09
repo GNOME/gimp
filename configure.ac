@@ -1399,7 +1399,7 @@ AC_SUBST(FILE_PDF_LOAD)
 # Check for cairo-pdf
 #####################
 
-AC_ARG_WITH(cairo_pdf,[  --without-cairo-pdf       build without cairo-pdf support])
+AC_ARG_WITH(cairo_pdf,[  --without-cairo-pdf     build without cairo-pdf support])
 have_cairo_pdf=no
 if test "x$with_cairo_pdf" != xno; then
   have_cairo_pdf=yes
@@ -1658,7 +1658,7 @@ fi
 # Check for libgudev
 ####################
 
-AC_ARG_WITH(gudev, [  --without-gudev        build without GUdev support])
+AC_ARG_WITH(gudev, [  --without-gudev         build without GUdev support])
 
 have_libgudev=no
 
@@ -1889,7 +1889,7 @@ AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 # Check for xvfb-run
 ####################
 
-AC_ARG_WITH(xvfb-run,  [  --without-xvfb-run      Do not use xvfb-run for UI-dependent automatic tests])
+AC_ARG_WITH(xvfb-run,  [  --without-xvfb-run      do not use xvfb-run for UI-dependent automatic tests])
 
 have_xvfb_run="no (disabled)"
 if test "x$with_xvfb_run" != "xno"; then
