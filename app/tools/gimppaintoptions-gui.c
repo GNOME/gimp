@@ -76,28 +76,26 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GObject          *config  = G_OBJECT (tool_options);
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (tool_options);
   GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
-  GtkWidget        *frame;
-  GtkWidget        *table;
+  GtkWidget        *hbox;
   GtkWidget        *menu;
-  GtkWidget        *scale;
   GtkWidget        *label;
-  GtkWidget        *button;
-  GtkWidget        *incremental_toggle = NULL;
+  GtkWidget        *scale;
   GType             tool_type;
 
   tool_type = tool_options->tool_info->tool_type;
 
-  /*  the main table  */
-  table = gtk_table_new (3, 1, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
   /*  the paint mode menu  */
-  menu  = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                     _("Mode:"), 0.0, 0.5,
-                                     menu, 2, FALSE);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Mode:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  menu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), menu, TRUE, TRUE, 0);
+  gtk_widget_show (menu);
 
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
@@ -117,7 +115,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the brush  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
+      GtkWidget *button;
       GtkWidget *hbox;
+      GtkWidget *frame;
 
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options),
                                         _("Brush"), 2,
@@ -219,6 +219,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the "smooth stroke" options  */
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL))
     {
+      GtkWidget *frame;
+
       frame = smoothing_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
@@ -229,14 +231,15 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
       tool_type == GIMP_TYPE_ERASER_TOOL)
     {
-      incremental_toggle =
-        gimp_prop_enum_check_button_new (config,
-                                         "application-mode",
-                                         _("Incremental"),
-                                         GIMP_PAINT_CONSTANT,
-                                         GIMP_PAINT_INCREMENTAL);
-      gtk_box_pack_start (GTK_BOX (vbox), incremental_toggle, FALSE, FALSE, 0);
-      gtk_widget_show (incremental_toggle);
+      GtkWidget *button;
+
+      button = gimp_prop_enum_check_button_new (config,
+                                                "application-mode",
+                                                _("Incremental"),
+                                                GIMP_PAINT_CONSTANT,
+                                                GIMP_PAINT_INCREMENTAL);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
     }
 
   /* the "hard edge" toggle */
@@ -248,6 +251,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
+      GtkWidget *button;
+
       button = gimp_prop_check_button_new (config, "hard", _("Hard edge"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
