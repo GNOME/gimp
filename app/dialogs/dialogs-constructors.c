@@ -78,6 +78,7 @@
 #include "preferences-dialog.h"
 #include "quit-dialog.h"
 #include "tips-dialog.h"
+#include "action-search-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -192,6 +193,15 @@ dialogs_about_get (GimpDialogFactory *factory,
                    gint               view_size)
 {
   return about_dialog_create (context);
+}
+
+GtkWidget *
+dialogs_action_search_get (GimpDialogFactory *factory,
+                           GimpContext       *context,
+                           GimpUIManager     *ui_manager,
+                           gint               view_size)
+{
+  return action_search_dialog_create ();
 }
 
 GtkWidget *

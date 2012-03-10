@@ -13,6 +13,8 @@ AM_CPPFLAGS = \
 noinst_LIBRARIES = libappdialogs.a
 
 libappdialogs_a_sources = \
+	action-search-dialog.c		\
+	action-search-dialog.h		\
 	dialogs-types.h			\
 	dialogs.c			\
 	dialogs.h			\

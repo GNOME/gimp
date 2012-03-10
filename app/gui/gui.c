@@ -527,6 +527,13 @@ gui_restore_after_callback (Gimp               *gimp,
 
 #undef PREFERENCES
 
+    gui_add_to_app_menu (image_ui_manager, group,
+                         "/dummy-menubar/image-popup/Help/dialogs-search-action",
+                         _("Search and Run a Command"));
+
+    /*  the preferences group  */
+    group = ige_mac_menu_add_app_menu_group ();
+
     item = gtk_separator_menu_item_new ();
     gtkosx_application_insert_app_menu_item (osx_app, item, 7);
 

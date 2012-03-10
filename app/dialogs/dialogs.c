@@ -278,6 +278,8 @@ static const GimpDialogFactoryEntry entries[] =
             dialogs_tips_get,               TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-about-dialog",
             dialogs_about_get,              TRUE, FALSE, FALSE),
+  TOPLEVEL ("gimp-action-search-dialog",
+            dialogs_action_search_get,      TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-error-dialog",
             dialogs_error_get,              TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-close-all-dialog",
