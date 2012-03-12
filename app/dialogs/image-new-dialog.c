@@ -82,7 +82,8 @@ image_new_dialog_new (GimpContext *context)
 {
   ImageNewDialog *dialog;
   GtkWidget      *main_vbox;
-  GtkWidget      *table;
+  GtkWidget      *hbox;
+  GtkWidget      *label;
   GimpSizeEntry  *entry;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -126,10 +127,14 @@ image_new_dialog_new (GimpContext *context)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  /*  The template combo  */
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new_with_mnemonic (_("_Template:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   dialog->combo = g_object_new (GIMP_TYPE_CONTAINER_COMBO_BOX,
                                 "container",         context->gimp->templates,
@@ -139,10 +144,10 @@ image_new_dialog_new (GimpContext *context)
                                 "ellipsize",         PANGO_ELLIPSIZE_NONE,
                                 "focus-on-click",    FALSE,
                                 NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), dialog->combo, TRUE, TRUE, 0);
+  gtk_widget_show (dialog->combo);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Template:"),  0.0, 0.5,
-                             dialog->combo, 1, TRUE);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->combo);
 
   g_signal_connect (dialog->context, "template-changed",
                     G_CALLBACK (image_new_template_changed),

@@ -881,7 +881,7 @@ gimp_perspective_clone_options_gui (GimpToolOptions *tool_options)
   GtkWidget *mode;
   GtkWidget *button;
   GtkWidget *hbox;
-  GtkWidget *table;
+  GtkWidget *label;
   GtkWidget *combo;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -911,15 +911,17 @@ gimp_perspective_clone_options_gui (GimpToolOptions *tool_options)
   gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox,
                              GIMP_PATTERN_CLONE, TRUE);
 
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Alignment:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   combo = gimp_prop_enum_combo_box_new (config, "align-mode", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Alignment:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
 
   return vbox;
 }

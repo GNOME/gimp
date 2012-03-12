@@ -271,7 +271,7 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
   GtkWidget *inner_frame;
-  GtkWidget *table;
+  GtkWidget *label;
   GtkWidget *scale;
   GtkWidget *menu;
   GtkWidget *combo;
@@ -318,15 +318,17 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
 #endif
 
   /*  the repeat type  */
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (inner_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Repeat:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   combo = gimp_prop_enum_combo_box_new (config, "fade-repeat", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Repeat:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
 
   checkbox = gimp_prop_check_button_new (config, "fade-reverse",
                                          _("Reverse"));
