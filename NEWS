@@ -25,6 +25,9 @@ Core:
  - Restore autoshrink functionality in the rectangle tools
  - Allow smudge to work with dynamic brushes
  - Make sure tool presets and tool options are consistent after loading
+ - Add automatic tags for the folders a file lives in
+ - Make the default Quick Mask color configurable
+ - Fix Color Balance so the "range" setting actually makes a difference
 
 
 Plug-ins:
@@ -33,11 +36,23 @@ Plug-ins:
  - Use libraries instead of launching programs in file-compressor
  - Use the Ghostscript library instead of launching ghostscript
  - Allow to switch off antialiasing when importing from PDF
+ - Embed the page setup in the main print dialog
+ - Port Gfig to cairo
+
+
+Libgimp:
+
+ - Add PDB API to modify a lot of paint and ink options
 
 
 Data:
 
  - Add a new set of default brushes and tool presets from Ramon Miranda
+
+
+Developer documentation:
+
+ - Udate everything including app/ so all functions appear again
 
 
 Source and build system:
