@@ -138,6 +138,15 @@ Operation modes of the convolve tool.
 @GIMP_BLUE_HUES: 
 @GIMP_MAGENTA_HUES: 
 
+<!-- ##### ENUM GimpInkBlobType ##### -->
+<para>
+
+</para>
+
+@GIMP_INK_BLOB_TYPE_CIRCLE: 
+@GIMP_INK_BLOB_TYPE_SQUARE: 
+@GIMP_INK_BLOB_TYPE_DIAMOND: 
+
 <!-- ##### ENUM GimpLayerModeEffects ##### -->
 <para>
 

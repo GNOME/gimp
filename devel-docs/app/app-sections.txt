@@ -8133,6 +8133,7 @@ GIMP_DIALOG_FACTORY_GET_CLASS
 <SECTION>
 <FILE>gimpwindowstrategy</FILE>
 <TITLE>GimpWindowStrategy</TITLE>
+GimpWindowStrategy
 GimpWindowStrategyInterface
 gimp_window_strategy_show_dockable_dialog
 <SUBSECTION Standard>
@@ -8254,6 +8255,7 @@ gimp_dock_columns_get_type
 <SECTION>
 <FILE>gimpdockcontainer</FILE>
 <TITLE>GimpDockContainer</TITLE>
+GimpDockContainer
 GimpDockContainerInterface
 gimp_dock_container_add_dock
 gimp_dock_container_get_dock_side
@@ -8744,6 +8746,7 @@ gimp_icon_picker_get_type
 <SECTION>
 <FILE>gimplanguagecombobox</FILE>
 <TITLE>GimpLanguageComboBox</TITLE>
+GimpLanguageComboBox
 GimpLanguageComboBoxClass
 gimp_language_combo_box_get_code
 gimp_language_combo_box_new
@@ -9653,6 +9656,7 @@ GIMP_SELECTION_EDITOR_GET_CLASS
 <SECTION>
 <FILE>gimpsessionmanaged</FILE>
 <TITLE>GimpSessionManaged</TITLE>
+GimpSessionManaged
 GimpSessionManagedInterface
 gimp_session_managed_get_aux_info
 gimp_session_managed_set_aux_info
@@ -12360,8 +12364,9 @@ gimp_pdb_proc_info
 <TITLE>GimpPDBContext</TITLE>
 GimpPDBContext
 GimpPDBContextClass
-gimp_pdb_context_get_paint_options
 gimp_pdb_context_new
+gimp_pdb_context_get_paint_options
+gimp_pdb_context_get_brush_options
 <SUBSECTION Standard>
 GIMP_IS_PDB_CONTEXT
 GIMP_IS_PDB_CONTEXT_CLASS
