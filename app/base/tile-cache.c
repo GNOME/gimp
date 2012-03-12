@@ -107,7 +107,8 @@ tile_cache_exit (void)
     }
 
   if (cur_cache_size > 0)
-    g_warning ("tile cache not empty (%ld bytes left)", cur_cache_size);
+    g_warning ("tile cache not empty (%"G_GUINT64_FORMAT" bytes left)",
+               cur_cache_size);
 
   tile_cache_set_size (0);
 
