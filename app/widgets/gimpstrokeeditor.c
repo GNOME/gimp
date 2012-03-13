@@ -221,7 +221,7 @@ gimp_stroke_editor_constructed (GObject *object)
 
   for (value = store->enum_class->values; value->value_name; value++)
     {
-      GtkTreeIter  iter;
+      GtkTreeIter  iter = { 0, };
       const gchar *desc;
 
       desc = gimp_enum_value_get_desc (store->enum_class, value);
