@@ -1893,7 +1893,7 @@ xcf_load_vector (XcfInfo   *info,
 
       GValueArray *control_points;
       GValue       value = { 0, };
-      GimpAnchor   anchor;
+      GimpAnchor   anchor = { { 0, } };
       GType        stroke_type;
 
       g_value_init (&value, GIMP_TYPE_ANCHOR);
