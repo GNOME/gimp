@@ -36,7 +36,7 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
                           GimpProgress       *progress,
                           GimpDesaturateMode  mode)
 {
-  GeglNode *desaturate;
+  GeglNode *node;
   GObject  *config;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -44,21 +44,21 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  desaturate = g_object_new (GEGL_TYPE_NODE,
-                             "operation", "gimp:desaturate",
-                             NULL);
+  node = g_object_new (GEGL_TYPE_NODE,
+                       "operation", "gimp:desaturate",
+                       NULL);
 
   config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
                          "mode", mode,
                          NULL);
 
-  gegl_node_set (desaturate,
+  gegl_node_set (node,
                  "config", config,
                  NULL);
 
   g_object_unref (config);
 
   gimp_drawable_apply_operation (drawable, progress, _("Desaturate"),
-                                 desaturate, TRUE);
-  g_object_unref  (desaturate);
+                                 node, TRUE);
+  g_object_unref (node);
 }

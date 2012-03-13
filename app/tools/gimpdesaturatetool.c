@@ -48,7 +48,6 @@ static gboolean   gimp_desaturate_tool_initialize    (GimpTool           *tool,
 
 static GeglNode * gimp_desaturate_tool_get_operation (GimpImageMapTool   *im_tool,
                                                       GObject           **config);
-static void       gimp_desaturate_tool_map           (GimpImageMapTool   *im_tool);
 static void       gimp_desaturate_tool_dialog        (GimpImageMapTool   *im_tool);
 
 static void       gimp_desaturate_tool_config_notify (GObject            *object,
@@ -91,7 +90,6 @@ gimp_desaturate_tool_class_init (GimpDesaturateToolClass *klass)
   im_tool_class->dialog_desc   = _("Desaturate (Remove Colors)");
 
   im_tool_class->get_operation = gimp_desaturate_tool_get_operation;
-  im_tool_class->map           = gimp_desaturate_tool_map;
   im_tool_class->dialog        = gimp_desaturate_tool_dialog;
 }
 
@@ -158,11 +156,6 @@ gimp_desaturate_tool_get_operation (GimpImageMapTool  *image_map_tool,
                  NULL);
 
   return node;
-}
-
-static void
-gimp_desaturate_tool_map (GimpImageMapTool *image_map_tool)
-{
 }
 
 
