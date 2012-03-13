@@ -72,7 +72,7 @@ header files installed.
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: lcms,
      libpng, libjpeg, libpoppler, libtiff, webkit, libmng, librsvg,
-     libwmf, libz, libbzip2, libgs, libaa and libjasper.
+     libwmf, libz, libbzip2, libgs (Ghostscript), libaa and libjasper.
 
  10. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development
