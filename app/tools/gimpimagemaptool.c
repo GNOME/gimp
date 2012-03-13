@@ -540,7 +540,8 @@ gimp_image_map_tool_map (GimpImageMapTool *tool)
   gint              off_x, off_y;
   GeglRectangle     visible;
 
-  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->map (tool);
+  if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->map)
+    GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->map (tool);
 
   gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
 
