@@ -52,8 +52,10 @@ GType             gimp_tile_backend_tile_manager_get_type (void) G_GNUC_CONST;
 GeglTileBackend * gimp_tile_backend_tile_manager_new (TileManager *tm,
                                                       gboolean     write);
 
-GeglBuffer      * gimp_tile_manager_get_gegl_buffer  (TileManager *tm,
-                                                      gboolean     write);
+GeglBuffer      * gimp_tile_manager_get_gegl_buffer  (TileManager  *tm,
+                                                      gboolean      write);
+GeglBuffer      * gimp_drawable_get_gegl_buffer      (GimpDrawable *drawable,
+                                                      gboolean      write);
 
 G_END_DECLS
 

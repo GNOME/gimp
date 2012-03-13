@@ -272,3 +272,11 @@ gimp_tile_manager_get_gegl_buffer (TileManager *tm,
 
   return buffer;
 }
+
+GeglBuffer *
+gimp_drawable_get_gegl_buffer (GimpDrawable *drawable,
+                               gboolean      write)
+{
+  return gimp_tile_manager_get_gegl_buffer (gimp_drawable_get_tiles (drawable), write);
+}
+
