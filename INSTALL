@@ -69,7 +69,7 @@ header files installed.
      method for accessing remote files.
 
   9. You may want to install other third party libraries or programs
-     that are needed for some of the available plugins. We recommend
+     that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: lcms,
      libpng, libjpeg, libpoppler, libtiff, webkit, libmng, librsvg,
      libwmf, libz, libbzip2, libgs, libaa and libjasper.
@@ -334,7 +334,7 @@ When ./configure fails on plug-ins
 There are some GIMP plug-ins that need additional third-party libraries
 installed on your system. For example to compile the plug-ins that load
 and save JPEG, PNG or TIFF files you need the related libraries and header
-files installed, otherwise you'll get a message that plugin xyz will not
+files installed, otherwise you'll get a message that plug-in xyz will not
 be built.
 
 If you are sure that those libraries are correctly installed, but configure
