@@ -69,7 +69,7 @@
         git push origin GIMP_2_x_y
 
  ( ) Move the tarball and the .md5 file to its final destination in the
-     FTP area (/home/ftp/pub/gimp/v2.x).
+     FTP area (/ftp/pub/gimp/v2.x).
 
  ( ) Update the 0.0_LATEST-IS- file in the directory on the FTP server.
 
