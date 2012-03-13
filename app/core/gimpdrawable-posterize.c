@@ -21,19 +21,11 @@
 
 #include "core-types.h"
 
-#include "base/gimplut.h"
-#include "base/lut-funcs.h"
-
 #include "gegl/gimpposterizeconfig.h"
-
-/* temp */
-#include "gimp.h"
-#include "gimpimage.h"
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-posterize.h"
-#include "gimpdrawable-process.h"
 
 #include "gimp-intl.h"
 
@@ -45,40 +37,28 @@ gimp_drawable_posterize (GimpDrawable *drawable,
                          GimpProgress *progress,
                          gint          levels)
 {
-  GimpPosterizeConfig *config;
+  GeglNode *node;
+  GObject  *config;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (! gimp_drawable_is_indexed (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
+  node = g_object_new (GEGL_TYPE_NODE,
+                       "operation", "gimp:posterize",
+                       NULL);
+
   config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG,
                          "levels", levels,
                          NULL);
 
-  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
-    {
-      GeglNode *node;
-
-      node = g_object_new (GEGL_TYPE_NODE,
-                           "operation", "gimp:posterize",
-                           NULL);
-      gegl_node_set (node,
-                     "config", config,
-                     NULL);
-
-      gimp_drawable_apply_operation (drawable, progress, _("Posterize"),
-                                     node, TRUE);
-      g_object_unref (node);
-    }
-  else
-    {
-      GimpLut *lut;
-
-      lut = posterize_lut_new (config->levels, gimp_drawable_bytes (drawable));
-
-      gimp_drawable_process_lut (drawable, progress, _("Posterize"), lut);
-      gimp_lut_free (lut);
-    }
+  gegl_node_set (node,
+                 "config", config,
+                 NULL);
 
   g_object_unref (config);
+
+  gimp_drawable_apply_operation (drawable, progress, _("Posterize"),
+                                 node, TRUE);
+  g_object_unref (node);
 }

@@ -38,12 +38,6 @@ GimpLut * intersect_lut_new             (gdouble        value,
 GimpLut * threshold_lut_new             (gdouble        value,
                                          gint           n_channels);
 
-GimpLut * posterize_lut_new             (gint           levels,
-                                         gint           n_channels);
-void      posterize_lut_setup           (GimpLut       *lut,
-                                         gint           levels,
-                                         gint           n_channels);
-
 GimpLut * equalize_lut_new              (GimpHistogram *histogram,
                                          gint           n_channels);
 

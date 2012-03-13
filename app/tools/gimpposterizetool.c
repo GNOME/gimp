@@ -26,9 +26,6 @@
 
 #include "tools-types.h"
 
-#include "base/gimplut.h"
-#include "base/lut-funcs.h"
-
 #include "gegl/gimpposterizeconfig.h"
 
 #include "core/gimpdrawable.h"
@@ -48,15 +45,12 @@
 #define SLIDER_WIDTH 200
 
 
-static void       gimp_posterize_tool_finalize       (GObject           *object);
-
 static gboolean   gimp_posterize_tool_initialize     (GimpTool          *tool,
                                                       GimpDisplay       *display,
                                                       GError           **error);
 
 static GeglNode * gimp_posterize_tool_get_operation  (GimpImageMapTool  *im_tool,
                                                       GObject          **config);
-static void       gimp_posterize_tool_map            (GimpImageMapTool  *im_tool);
 static void       gimp_posterize_tool_dialog         (GimpImageMapTool  *im_tool);
 
 static void       gimp_posterize_tool_config_notify  (GObject           *object,
@@ -92,44 +86,20 @@ gimp_posterize_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass)
 {
-  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
-
-  object_class->finalize       = gimp_posterize_tool_finalize;
 
   tool_class->initialize       = gimp_posterize_tool_initialize;
 
   im_tool_class->dialog_desc   = _("Posterize (Reduce Number of Colors)");
 
   im_tool_class->get_operation = gimp_posterize_tool_get_operation;
-  im_tool_class->map           = gimp_posterize_tool_map;
   im_tool_class->dialog        = gimp_posterize_tool_dialog;
 }
 
 static void
 gimp_posterize_tool_init (GimpPosterizeTool *posterize_tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (posterize_tool);
-
-  posterize_tool->lut = gimp_lut_new ();
-
-  im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
-  im_tool->apply_data = posterize_tool->lut;
-}
-
-static void
-gimp_posterize_tool_finalize (GObject *object)
-{
-  GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (object);
-
-  if (posterize_tool->lut)
-    {
-      gimp_lut_free (posterize_tool->lut);
-      posterize_tool->lut = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
@@ -192,16 +162,6 @@ gimp_posterize_tool_get_operation (GimpImageMapTool  *image_map_tool,
                  NULL);
 
   return node;
-}
-
-static void
-gimp_posterize_tool_map (GimpImageMapTool *image_map_tool)
-{
-  GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
-
-  posterize_lut_setup (posterize_tool->lut,
-                       posterize_tool->config->levels,
-                       gimp_drawable_bytes (image_map_tool->drawable));
 }
 
 

@@ -236,52 +236,6 @@ threshold_lut_new (gdouble value,
   return lut;
 }
 
-/* --------------- posterize ---------------- */
-
-static gfloat
-posterize_lut_func (gint   *ilevels,
-                    gint    n_channels,
-                    gint    channel,
-                    gfloat  value)
-{
-  gint levels;
-
-  /* don't posterize the alpha channel */
-  if ((n_channels == 2 || n_channels == 4) && channel == n_channels -1)
-    return value;
-
-  if (*ilevels < 2)
-    levels = 2;
-  else
-    levels = *ilevels;
-
-  value = RINT (value * (levels - 1.0)) / (levels - 1.0);
-
-  return value;
-}
-
-void
-posterize_lut_setup (GimpLut *lut,
-                     gint     levels,
-                     gint     n_channels)
-{
-  g_return_if_fail (lut != NULL);
-
-  gimp_lut_setup_exact (lut,
-                        (GimpLutFunc) posterize_lut_func, &levels, n_channels);
-}
-
-GimpLut *
-posterize_lut_new (gint levels,
-                   gint n_channels)
-{
-  GimpLut *lut = gimp_lut_new ();
-
-  posterize_lut_setup (lut, levels, n_channels);
-
-  return lut;
-}
-
 /* --------------- equalize ------------- */
 
 typedef struct

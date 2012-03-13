@@ -38,7 +38,6 @@ struct _GimpPosterizeTool
   GimpImageMapTool     parent_instance;
 
   GimpPosterizeConfig *config;
-  GimpLut             *lut;
 
   /*  dialog  */
   GtkAdjustment       *levels_data;
