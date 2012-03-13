@@ -27,61 +27,63 @@
 
 /*  operations  */
 
-typedef struct _GimpOperationTileSink         GimpOperationTileSink;
-typedef struct _GimpOperationTileSource       GimpOperationTileSource;
+typedef struct _GimpOperationTileSink           GimpOperationTileSink;
+typedef struct _GimpOperationTileSource         GimpOperationTileSource;
 
-typedef struct _GimpOperationPointFilter      GimpOperationPointFilter;
-typedef struct _GimpOperationColorBalance     GimpOperationColorBalance;
-typedef struct _GimpOperationColorize         GimpOperationColorize;
-typedef struct _GimpOperationCageCoefCalc     GimpOperationCageCoefCalc;
-typedef struct _GimpOperationCageTransform    GimpOperationCageTransform;
-typedef struct _GimpOperationCurves           GimpOperationCurves;
-typedef struct _GimpOperationDesaturate       GimpOperationDesaturate;
-typedef struct _GimpOperationHueSaturation    GimpOperationHueSaturation;
-typedef struct _GimpOperationLevels           GimpOperationLevels;
-typedef struct _GimpOperationPosterize        GimpOperationPosterize;
-typedef struct _GimpOperationThreshold        GimpOperationThreshold;
+typedef struct _GimpOperationCageCoefCalc       GimpOperationCageCoefCalc;
+typedef struct _GimpOperationCageTransform      GimpOperationCageTransform;
 
-typedef struct _GimpOperationPointLayerMode   GimpOperationPointLayerMode;
-typedef struct _GimpOperationDissolveMode     GimpOperationDissolveMode;
-typedef struct _GimpOperationBehindMode       GimpOperationBehindMode;
-typedef struct _GimpOperationMultiplyMode     GimpOperationMultiplyMode;
-typedef struct _GimpOperationScreenMode       GimpOperationScreenMode;
-typedef struct _GimpOperationOverlayMode      GimpOperationOverlayMode;
-typedef struct _GimpOperationDifferenceMode   GimpOperationDifferenceMode;
-typedef struct _GimpOperationAdditionMode     GimpOperationAdditionMode;
-typedef struct _GimpOperationSubtractMode     GimpOperationSubtractMode;
-typedef struct _GimpOperationDarkenOnlyMode   GimpOperationDarkenOnlyMode;
-typedef struct _GimpOperationLightenOnlyMode  GimpOperationLightenOnlyMode;
-typedef struct _GimpOperationHueMode          GimpOperationHueMode;
-typedef struct _GimpOperationSaturationMode   GimpOperationSaturationMode;
-typedef struct _GimpOperationColorMode        GimpOperationColorMode;
-typedef struct _GimpOperationValueMode        GimpOperationValueMode;
-typedef struct _GimpOperationDivideMode       GimpOperationDivideMode;
-typedef struct _GimpOperationDodgeMode        GimpOperationDodgeMode;
-typedef struct _GimpOperationBurnMode         GimpOperationBurnMode;
-typedef struct _GimpOperationHardlightMode    GimpOperationHardlightMode;
-typedef struct _GimpOperationSoftlightMode    GimpOperationSoftlightMode;
-typedef struct _GimpOperationGrainExtractMode GimpOperationGrainExtractMode;
-typedef struct _GimpOperationGrainMergeMode   GimpOperationGrainMergeMode;
-typedef struct _GimpOperationColorEraseMode   GimpOperationColorEraseMode;
-typedef struct _GimpOperationEraseMode        GimpOperationEraseMode;
-typedef struct _GimpOperationReplaceMode      GimpOperationReplaceMode;
-typedef struct _GimpOperationAntiEraseMode    GimpOperationAntiEraseMode;
+typedef struct _GimpOperationPointFilter        GimpOperationPointFilter;
+typedef struct _GimpOperationBrightnessContrast GimpOperationBrightnessContrast;
+typedef struct _GimpOperationColorBalance       GimpOperationColorBalance;
+typedef struct _GimpOperationColorize           GimpOperationColorize;
+typedef struct _GimpOperationCurves             GimpOperationCurves;
+typedef struct _GimpOperationDesaturate         GimpOperationDesaturate;
+typedef struct _GimpOperationHueSaturation      GimpOperationHueSaturation;
+typedef struct _GimpOperationLevels             GimpOperationLevels;
+typedef struct _GimpOperationPosterize          GimpOperationPosterize;
+typedef struct _GimpOperationThreshold          GimpOperationThreshold;
+
+typedef struct _GimpOperationPointLayerMode     GimpOperationPointLayerMode;
+typedef struct _GimpOperationDissolveMode       GimpOperationDissolveMode;
+typedef struct _GimpOperationBehindMode         GimpOperationBehindMode;
+typedef struct _GimpOperationMultiplyMode       GimpOperationMultiplyMode;
+typedef struct _GimpOperationScreenMode         GimpOperationScreenMode;
+typedef struct _GimpOperationOverlayMode        GimpOperationOverlayMode;
+typedef struct _GimpOperationDifferenceMode     GimpOperationDifferenceMode;
+typedef struct _GimpOperationAdditionMode       GimpOperationAdditionMode;
+typedef struct _GimpOperationSubtractMode       GimpOperationSubtractMode;
+typedef struct _GimpOperationDarkenOnlyMode     GimpOperationDarkenOnlyMode;
+typedef struct _GimpOperationLightenOnlyMode    GimpOperationLightenOnlyMode;
+typedef struct _GimpOperationHueMode            GimpOperationHueMode;
+typedef struct _GimpOperationSaturationMode     GimpOperationSaturationMode;
+typedef struct _GimpOperationColorMode          GimpOperationColorMode;
+typedef struct _GimpOperationValueMode          GimpOperationValueMode;
+typedef struct _GimpOperationDivideMode         GimpOperationDivideMode;
+typedef struct _GimpOperationDodgeMode          GimpOperationDodgeMode;
+typedef struct _GimpOperationBurnMode           GimpOperationBurnMode;
+typedef struct _GimpOperationHardlightMode      GimpOperationHardlightMode;
+typedef struct _GimpOperationSoftlightMode      GimpOperationSoftlightMode;
+typedef struct _GimpOperationGrainExtractMode   GimpOperationGrainExtractMode;
+typedef struct _GimpOperationGrainMergeMode     GimpOperationGrainMergeMode;
+typedef struct _GimpOperationColorEraseMode     GimpOperationColorEraseMode;
+typedef struct _GimpOperationEraseMode          GimpOperationEraseMode;
+typedef struct _GimpOperationReplaceMode        GimpOperationReplaceMode;
+typedef struct _GimpOperationAntiEraseMode      GimpOperationAntiEraseMode;
 
 
 /*  operation config objects  */
 
-typedef struct _GimpBrightnessContrastConfig  GimpBrightnessContrastConfig;
-typedef struct _GimpCageConfig                GimpCageConfig;
-typedef struct _GimpColorBalanceConfig        GimpColorBalanceConfig;
-typedef struct _GimpColorizeConfig            GimpColorizeConfig;
-typedef struct _GimpCurvesConfig              GimpCurvesConfig;
-typedef struct _GimpDesaturateConfig          GimpDesaturateConfig;
-typedef struct _GimpHueSaturationConfig       GimpHueSaturationConfig;
-typedef struct _GimpLevelsConfig              GimpLevelsConfig;
-typedef struct _GimpPosterizeConfig           GimpPosterizeConfig;
-typedef struct _GimpThresholdConfig           GimpThresholdConfig;
+typedef struct _GimpBrightnessContrastConfig    GimpBrightnessContrastConfig;
+typedef struct _GimpCageConfig                  GimpCageConfig;
+typedef struct _GimpColorBalanceConfig          GimpColorBalanceConfig;
+typedef struct _GimpColorizeConfig              GimpColorizeConfig;
+typedef struct _GimpCurvesConfig                GimpCurvesConfig;
+typedef struct _GimpDesaturateConfig            GimpDesaturateConfig;
+typedef struct _GimpHueSaturationConfig         GimpHueSaturationConfig;
+typedef struct _GimpLevelsConfig                GimpLevelsConfig;
+typedef struct _GimpPosterizeConfig             GimpPosterizeConfig;
+typedef struct _GimpThresholdConfig             GimpThresholdConfig;
 
 
 /*  temporary stuff  */

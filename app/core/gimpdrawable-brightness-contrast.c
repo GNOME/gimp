@@ -62,12 +62,13 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
       GeglNode *node;
 
       node = g_object_new (GEGL_TYPE_NODE,
-                           "operation", "gegl:brightness-contrast",
+                           "operation", "gimp:brightness-contrast",
+                           "config",    config,
                            NULL);
-      gimp_brightness_contrast_config_set_node (config, node);
 
       gimp_drawable_apply_operation (drawable, progress,
-                                     C_("undo-type", "Brightness_Contrast"), node, TRUE);
+                                     C_("undo-type", "Brightness-Contrast")
+                                     , node, TRUE);
       g_object_unref (node);
     }
   else
@@ -78,7 +79,8 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
                                          config->contrast,
                                          gimp_drawable_bytes (drawable));
 
-      gimp_drawable_process_lut (drawable, progress, C_("undo-type", "Brightness-Contrast"),
+      gimp_drawable_process_lut (drawable, progress,
+                                 C_("undo-type", "Brightness-Contrast"),
                                  lut);
       gimp_lut_free (lut);
     }

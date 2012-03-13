@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 
 #include "gimp-gegl.h"
+#include "gimpoperationbrightnesscontrast.h"
 #include "gimpoperationcagecoefcalc.h"
 #include "gimpoperationcagetransform.h"
 #include "gimpoperationcolorbalance.h"
@@ -97,6 +98,7 @@ gimp_gegl_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SOURCE);
 
+  g_type_class_ref (GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_BALANCE);

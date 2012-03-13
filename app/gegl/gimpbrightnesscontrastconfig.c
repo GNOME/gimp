@@ -135,27 +135,6 @@ gimp_brightness_contrast_config_set_property (GObject      *object,
 
 /*  public functions  */
 
-void
-gimp_brightness_contrast_config_set_node (GimpBrightnessContrastConfig *config,
-                                          GeglNode                     *node)
-{
-  gdouble brightness;
-  gdouble contrast;
-
-  g_return_if_fail (GIMP_IS_BRIGHTNESS_CONTRAST_CONFIG (config));
-  g_return_if_fail (GEGL_IS_NODE (node));
-
-  brightness = config->brightness / 2.0;
-  contrast   = (config->contrast < 0 ?
-                (config->contrast + 1.0) :
-                config->contrast * 4.0 + 1.0);
-
-  gegl_node_set (node,
-                 "brightness", brightness,
-                 "contrast",   contrast,
-                 NULL);
-}
-
 GimpLevelsConfig *
 gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *config)
 {

@@ -195,6 +195,11 @@ gimp_brightness_contrast_tool_get_operation (GimpImageMapTool  *im_tool,
                                              GObject          **config)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
+  GeglNode                   *node;
+
+  node = g_object_new (GEGL_TYPE_NODE,
+                       "operation", "gimp:brightness-contrast",
+                       NULL);
 
   bc_tool->config = g_object_new (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG, NULL);
 
@@ -204,18 +209,17 @@ gimp_brightness_contrast_tool_get_operation (GimpImageMapTool  *im_tool,
                            G_CALLBACK (brightness_contrast_config_notify),
                            G_OBJECT (bc_tool), 0);
 
-  return g_object_new (GEGL_TYPE_NODE,
-                       "operation", "gegl:brightness-contrast",
-                       NULL);
+  gegl_node_set (node,
+                 "config", bc_tool->config,
+                 NULL);
+
+  return node;
 }
 
 static void
 gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
-
-  gimp_brightness_contrast_config_set_node (bc_tool->config,
-                                            im_tool->operation);
 
   brightness_contrast_lut_setup (bc_tool->lut,
                                  bc_tool->config->brightness / 2.0,
