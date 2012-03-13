@@ -37,22 +37,22 @@
 #include "gimp-gegl-utils.h"
 
 
-struct _GimpTileBackendTileManagerPrivate 
+struct _GimpTileBackendTileManagerPrivate
 {
-  TileManager     *tile_manager;
-  int              write;
+  TileManager *tile_manager;
+  int          write;
 };
 
 
 
-static void     gimp_tile_backend_tile_manager_finalize (GObject *object);
-static void     gimp_tile_backend_tile_manager_dispose (GObject *object);
-static gpointer gimp_tile_backend_tile_manager_command      (GeglTileSource  *tile_store,
-                                                             GeglTileCommand  command,
-                                                             gint             x,
-                                                             gint             y,
-                                                             gint             z,
-                                                             gpointer         data);
+static void     gimp_tile_backend_tile_manager_finalize (GObject         *object);
+static void     gimp_tile_backend_tile_manager_dispose  (GObject         *object);
+static gpointer gimp_tile_backend_tile_manager_command  (GeglTileSource  *tile_store,
+                                                         GeglTileCommand  command,
+                                                         gint             x,
+                                                         gint             y,
+                                                         gint             z,
+                                                         gpointer         data);
 
 static void       gimp_tile_write   (GimpTileBackendTileManager *ram,
                                      gint                        x,
@@ -72,8 +72,8 @@ gimp_tile_backend_tile_manager_class_init (GimpTileBackendTileManagerClass *klas
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_tile_backend_tile_manager_finalize;
-  object_class->dispose     = gimp_tile_backend_tile_manager_dispose;
+  object_class->finalize = gimp_tile_backend_tile_manager_finalize;
+  object_class->dispose  = gimp_tile_backend_tile_manager_dispose;
 
   g_type_class_add_private (klass, sizeof (GimpTileBackendTileManagerPrivate));
 }
@@ -86,31 +86,33 @@ gimp_tile_backend_tile_manager_init (GimpTileBackendTileManager *backend)
   backend->priv = G_TYPE_INSTANCE_GET_PRIVATE (backend,
                                                GIMP_TYPE_TILE_BACKEND_TILE_MANAGER,
                                                GimpTileBackendTileManagerPrivate);
-  source->command  = gimp_tile_backend_tile_manager_command;
+
+  source->command = gimp_tile_backend_tile_manager_command;
 }
 
 static void
 gimp_tile_backend_tile_manager_dispose (GObject *object)
 {
   GimpTileBackendTileManager *backend = GIMP_TILE_BACKEND_TILE_MANAGER (object);
-  g_warning ("gimp tile backend is dying!!!!!! %p\n", backend);
+
   if (backend->priv->tile_manager)
     {
       tile_manager_unref (backend->priv->tile_manager);
       backend->priv->tile_manager = NULL;
     }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
 gimp_tile_backend_tile_manager_finalize (GObject *object)
 {
-  GimpTileBackendTileManager *backend = GIMP_TILE_BACKEND_TILE_MANAGER (object);
-  g_warning ("gimp tile backend is dying!!!!!! %p\n", backend);
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void tile_done (Tile *tile, void *data)
+static void
+tile_done (Tile *tile,
+           void *data)
 {
   tile_release (data, FALSE);
 }
@@ -155,7 +157,7 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
             /* use the GimpTile directly as GEGL tile */
             tile = gegl_tile_new_bare ();
             gegl_tile_set_data_full (tile, tile_data_pointer (gimp_tile, 0, 0),
-            tile_size, (void*)tile_done, gimp_tile);
+                                     tile_size, (void*)tile_done, gimp_tile);
           }
         else
           {
@@ -187,9 +189,11 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
     case GEGL_TILE_VOID:
     case GEGL_TILE_EXIST:
       return NULL;
+
     default:
       g_assert (command < GEGL_TILE_LAST_COMMAND && command >= 0);
     }
+
   return NULL;
 }
 
@@ -200,10 +204,10 @@ gimp_tile_write (GimpTileBackendTileManager *backend_tm,
                  gint                        z,
                  guchar                     *source)
 {
-  Tile     *gimp_tile;
-  gint      tile_stride;
-  gint      gimp_tile_stride;
-  int       row;
+  Tile *gimp_tile;
+  gint  tile_stride;
+  gint  gimp_tile_stride;
+  int   row;
 
   gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
                                    x, y, TRUE, TRUE);
@@ -224,6 +228,7 @@ gimp_tile_write (GimpTileBackendTileManager *backend_tm,
                   gimp_tile_stride);
         }
     }
+
   tile_release (gimp_tile, FALSE);
 }
 
@@ -231,7 +236,7 @@ GeglTileBackend *
 gimp_tile_backend_tile_manager_new (TileManager *tm,
                                     gboolean     write)
 {
-  GeglTileBackend *ret;
+  GeglTileBackend            *ret;
   GimpTileBackendTileManager *backend_tm;
 
   gint             width  = tile_manager_width (tm);
@@ -260,9 +265,10 @@ gimp_tile_manager_get_gegl_buffer (TileManager *tm,
 {
   GeglTileBackend *backend;
   GeglBuffer      *buffer;
+
   backend = gimp_tile_backend_tile_manager_new (tm, write);
   buffer = gegl_buffer_new_for_backend (NULL, backend);
   g_object_unref (backend);
+
   return buffer;
 }
-
