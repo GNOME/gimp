@@ -151,11 +151,11 @@ gimp_drawable_apply_operation_private (GimpDrawable       *drawable,
   outbuf = gimp_tile_manager_get_gegl_buffer (dest_tiles, TRUE);
 
   input  = gegl_node_new_child (gegl,
-                                "operation",    "buffer-source",
+                                "operation",    "gegl:buffer-source",
                                 "buffer", inbuf,
                                 NULL);
   output = gegl_node_new_child (gegl,
-                                "operation",    "write-buffer",
+                                "operation",    "gegl:write-buffer",
                                 "buffer", outbuf,
                                 NULL);
   g_object_unref (inbuf);
