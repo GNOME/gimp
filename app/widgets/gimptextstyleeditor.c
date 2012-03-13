@@ -693,10 +693,10 @@ gimp_text_style_editor_set_color (GimpTextStyleEditor *editor,
 {
   GimpRGB color;
 
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+
   if (color_tag)
     gimp_text_tag_get_color (color_tag, &color);
-  else
-    gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
   g_signal_handlers_block_by_func (editor->color_button,
                                    gimp_text_style_editor_color_changed,
