@@ -26,9 +26,6 @@
 
 #include "gimp-gegl-types.h"
 
-/*  temp cruft  */
-#include "base/threshold.h"
-
 #include "gimpthresholdconfig.h"
 
 
@@ -130,20 +127,4 @@ gimp_threshold_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-
-/*  temp cruft  */
-
-void
-gimp_threshold_config_to_cruft (GimpThresholdConfig *config,
-                                Threshold           *cruft,
-                                gboolean             color)
-{
-  g_return_if_fail (GIMP_IS_THRESHOLD_CONFIG (config));
-  g_return_if_fail (cruft != NULL);
-
-  cruft->low_threshold  = config->low  * 255.999;
-  cruft->high_threshold = config->high * 255.999;
-  cruft->color          = color;
 }

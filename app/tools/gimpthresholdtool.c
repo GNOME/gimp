@@ -26,7 +26,6 @@
 #include "tools-types.h"
 
 #include "base/gimphistogram.h"
-#include "base/threshold.h"
 
 #include "gegl/gimpthresholdconfig.h"
 
@@ -57,7 +56,6 @@ static gboolean   gimp_threshold_tool_initialize      (GimpTool          *tool,
 
 static GeglNode * gimp_threshold_tool_get_operation   (GimpImageMapTool  *im_tool,
                                                        GObject          **config);
-static void       gimp_threshold_tool_map             (GimpImageMapTool  *im_tool);
 static void       gimp_threshold_tool_dialog          (GimpImageMapTool  *im_tool);
 
 static void       gimp_threshold_tool_config_notify   (GObject           *object,
@@ -112,28 +110,19 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
   im_tool_class->export_dialog_title = _("Export Threshold Settings");
 
   im_tool_class->get_operation       = gimp_threshold_tool_get_operation;
-  im_tool_class->map                 = gimp_threshold_tool_map;
   im_tool_class->dialog              = gimp_threshold_tool_dialog;
 }
 
 static void
 gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (t_tool);
-
-  t_tool->threshold = g_slice_new0 (Threshold);
   t_tool->histogram = gimp_histogram_new ();
-
-  im_tool->apply_func = (GimpImageMapApplyFunc) threshold;
-  im_tool->apply_data = t_tool->threshold;
 }
 
 static void
 gimp_threshold_tool_finalize (GObject *object)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (object);
-
-  g_slice_free (Threshold, t_tool->threshold);
 
   if (t_tool->histogram)
     {
@@ -203,16 +192,6 @@ gimp_threshold_tool_get_operation (GimpImageMapTool  *image_map_tool,
                  NULL);
 
   return node;
-}
-
-static void
-gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
-{
-  GimpThresholdTool *t_tool   = GIMP_THRESHOLD_TOOL (image_map_tool);
-  GimpDrawable      *drawable = image_map_tool->drawable;
-
-  gimp_threshold_config_to_cruft (t_tool->config, t_tool->threshold,
-                                  gimp_drawable_is_rgb (drawable));
 }
 
 

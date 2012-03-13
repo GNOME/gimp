@@ -51,10 +51,5 @@ struct _GimpThresholdConfigClass
 
 GType   gimp_threshold_config_get_type (void) G_GNUC_CONST;
 
-/*  temp cruft  */
-void    gimp_threshold_config_to_cruft (GimpThresholdConfig *config,
-                                        Threshold           *cruft,
-                                        gboolean             color);
-
 
 #endif /* __GIMP_THRESHOLD_CONFIG_H__ */

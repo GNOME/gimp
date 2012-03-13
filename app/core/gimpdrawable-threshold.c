@@ -21,18 +21,11 @@
 
 #include "core-types.h"
 
-#include "base/threshold.h"
-
 #include "gegl/gimpthresholdconfig.h"
-
-/* temp */
-#include "gimp.h"
-#include "gimpimage.h"
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-threshold.h"
-#include "gimpdrawable-process.h"
 
 #include "gimp-intl.h"
 
@@ -45,42 +38,29 @@ gimp_drawable_threshold (GimpDrawable *drawable,
                          gint          low,
                          gint          high)
 {
-  GimpThresholdConfig *config;
+  GeglNode *node;
+  GObject  *config;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (! gimp_drawable_is_indexed (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+  node = g_object_new (GEGL_TYPE_NODE,
+                       "operation", "gimp:threshold",
+                       NULL);
 
   config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG,
                          "low",  low  / 255.0,
                          "high", high / 255.0,
                          NULL);
 
-  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
-    {
-      GeglNode *node;
-
-      node = g_object_new (GEGL_TYPE_NODE,
-                           "operation", "gimp:threshold",
-                           NULL);
-      gegl_node_set (node,
-                     "config", config,
-                     NULL);
-
-      gimp_drawable_apply_operation (drawable, progress, _("Threshold"),
-                                     node, TRUE);
-      g_object_unref (node);
-    }
-  else
-    {
-      Threshold cruft;
-
-      gimp_threshold_config_to_cruft (config, &cruft,
-                                      gimp_drawable_is_rgb (drawable));
-
-      gimp_drawable_process (drawable, progress, _("Threshold"),
-                             (PixelProcessorFunc) threshold, &cruft);
-    }
+  gegl_node_set (node,
+                 "config", config,
+                 NULL);
 
   g_object_unref (config);
+
+  gimp_drawable_apply_operation (drawable, progress, _("Threshold"),
+                                 node, TRUE);
+  g_object_unref (node);
 }

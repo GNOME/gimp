@@ -52,8 +52,6 @@ libappbase_a_SOURCES = \
 	siox.h			\
 	temp-buf.c		\
 	temp-buf.h		\
-	threshold.c		\
-	threshold.h		\
 	tile.c			\
 	tile.h			\
 	tile-private.h		\
