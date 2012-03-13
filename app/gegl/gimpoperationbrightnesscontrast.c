@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationcolorbalance.c
+ * gimpoperationbrightnesscontrast.c
  * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
