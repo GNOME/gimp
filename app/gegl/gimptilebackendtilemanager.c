@@ -247,7 +247,7 @@ gimp_tile_backend_tile_manager_new (TileManager *tm,
   ret = g_object_new (GIMP_TYPE_TILE_BACKEND_TILE_MANAGER,
                       "tile-width",  TILE_WIDTH,
                       "tile-height", TILE_HEIGHT,
-                      "format",      gimp_bpp_to_babl_format (bpp, FALSE),
+                      "format",      gimp_bpp_to_babl_format (bpp, TRUE),
                       NULL);
   backend_tm = GIMP_TILE_BACKEND_TILE_MANAGER (ret);
   backend_tm->priv->write = write;
