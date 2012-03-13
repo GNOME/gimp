@@ -1456,6 +1456,16 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
   *temp_tiles = NULL;
 }
 
+GeglBuffer *
+gimp_drawable_get_buffer (GimpDrawable *drawable,
+                          gboolean      write)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return gimp_tile_manager_get_gegl_buffer (gimp_drawable_get_tiles (drawable),
+                                            write);
+}
+
 TileManager *
 gimp_drawable_get_tiles (GimpDrawable *drawable)
 {

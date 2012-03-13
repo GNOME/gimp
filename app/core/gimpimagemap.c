@@ -44,7 +44,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "gegl/gimptilebackendtilemanager.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-shadow.h"
@@ -803,12 +803,13 @@ gimp_image_map_data_written (GObject             *operation,
                              const GeglRectangle *extent,
                              GimpImageMap        *image_map)
 {
-  PixelRegion srcPR;
-  PixelRegion destPR;
+  GimpImage   *image;
+  PixelRegion  srcPR;
+  PixelRegion  destPR;
 
-  if (!gimp_channel_is_empty (
-         gimp_image_get_mask (
-           gimp_item_get_image (GIMP_ITEM (image_map->drawable)))))
+  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+
+  if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
       /* Reset to initial drawable conditions. */
       pixel_region_init (&srcPR, image_map->undo_tiles,

@@ -28,8 +28,7 @@
 
 #include "base/tile-manager.h"
 
-#include "gegl/gimptilebackendtilemanager.h"
-
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
@@ -148,8 +147,9 @@ gimp_drawable_apply_operation_private (GimpDrawable       *drawable,
                 "dont-cache", TRUE,
                 NULL);
 
-  inbuf = gimp_drawable_get_gegl_buffer (drawable, FALSE);
+  inbuf  = gimp_drawable_get_buffer (drawable, FALSE);
   outbuf = gimp_tile_manager_get_gegl_buffer (dest_tiles, TRUE);
+
   input  = gegl_node_new_child (gegl,
                                 "operation",    "buffer-source",
                                 "buffer", inbuf,

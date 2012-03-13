@@ -258,25 +258,3 @@ gimp_tile_backend_tile_manager_new (TileManager *tm,
 
   return ret;
 }
-
-GeglBuffer *
-gimp_tile_manager_get_gegl_buffer (TileManager *tm,
-                                   gboolean     write)
-{
-  GeglTileBackend *backend;
-  GeglBuffer      *buffer;
-
-  backend = gimp_tile_backend_tile_manager_new (tm, write);
-  buffer = gegl_buffer_new_for_backend (NULL, backend);
-  g_object_unref (backend);
-
-  return buffer;
-}
-
-GeglBuffer *
-gimp_drawable_get_gegl_buffer (GimpDrawable *drawable,
-                               gboolean      write)
-{
-  return gimp_tile_manager_get_gegl_buffer (gimp_drawable_get_tiles (drawable), write);
-}
-
