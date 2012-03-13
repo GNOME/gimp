@@ -28,6 +28,9 @@
 
 #include "base/tile-manager.h"
 
+#include "gegl/gimptilebackendtilemanager.h"
+
+
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-shadow.h"
@@ -130,6 +133,7 @@ gimp_drawable_apply_operation_private (GimpDrawable       *drawable,
                                        TileManager         *dest_tiles,
                                        const GeglRectangle *rect)
 {
+  GeglBuffer    *inbuf, *outbuf;
   GeglNode      *gegl;
   GeglNode      *input;
   GeglNode      *output;
@@ -144,16 +148,18 @@ gimp_drawable_apply_operation_private (GimpDrawable       *drawable,
                 "dont-cache", TRUE,
                 NULL);
 
+  inbuf = gimp_drawable_get_gegl_buffer (drawable, FALSE);
+  outbuf = gimp_tile_manager_get_gegl_buffer (dest_tiles, TRUE);
   input  = gegl_node_new_child (gegl,
-                                "operation",    "gimp:tilemanager-source",
-                                "tile-manager", gimp_drawable_get_tiles (drawable),
-                                "linear",       linear,
+                                "operation",    "buffer-source",
+                                "buffer", inbuf,
                                 NULL);
   output = gegl_node_new_child (gegl,
-                                "operation",    "gimp:tilemanager-sink",
-                                "tile-manager", dest_tiles,
-                                "linear",       linear,
+                                "operation",    "write-buffer",
+                                "buffer", outbuf,
                                 NULL);
+  g_object_unref (inbuf);
+  g_object_unref (outbuf);
 
   gegl_node_add_child (gegl, operation);
 
