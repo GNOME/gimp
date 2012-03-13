@@ -26,8 +26,6 @@ libappbase_a_SOURCES = \
 	boundary.h		\
 	color-balance.c		\
 	color-balance.h		\
-	colorize.c		\
-	colorize.h		\
 	cpercep.c		\
 	cpercep.h		\
 	curves.c		\

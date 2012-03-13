@@ -38,7 +38,6 @@ struct _GimpColorizeTool
   GimpImageMapTool    parent_instance;
 
   GimpColorizeConfig *config;
-  Colorize           *colorize;
 
   /*  dialog  */
   GtkAdjustment      *hue_data;

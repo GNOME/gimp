@@ -27,8 +27,6 @@
 
 #include "tools-types.h"
 
-#include "base/colorize.h"
-
 #include "gegl/gimpcolorizeconfig.h"
 
 #include "core/gimpdrawable.h"
@@ -51,15 +49,12 @@
 
 /*  local function prototypes  */
 
-static void       gimp_colorize_tool_finalize      (GObject          *object);
-
 static gboolean   gimp_colorize_tool_initialize    (GimpTool         *tool,
                                                     GimpDisplay      *display,
                                                     GError          **error);
 
 static GeglNode * gimp_colorize_tool_get_operation (GimpImageMapTool *im_tool,
                                                     GObject         **config);
-static void       gimp_colorize_tool_map           (GimpImageMapTool *im_tool);
 static void       gimp_colorize_tool_dialog        (GimpImageMapTool *im_tool);
 
 static void       gimp_colorize_tool_config_notify (GObject          *object,
@@ -98,11 +93,8 @@ gimp_colorize_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
 {
-  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
-
-  object_class->finalize             = gimp_colorize_tool_finalize;
 
   tool_class->initialize             = gimp_colorize_tool_initialize;
 
@@ -112,31 +104,12 @@ gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
   im_tool_class->export_dialog_title = _("Export Colorize Settings");
 
   im_tool_class->get_operation       = gimp_colorize_tool_get_operation;
-  im_tool_class->map                 = gimp_colorize_tool_map;
   im_tool_class->dialog              = gimp_colorize_tool_dialog;
 }
 
 static void
 gimp_colorize_tool_init (GimpColorizeTool *col_tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (col_tool);
-
-  col_tool->colorize = g_slice_new0 (Colorize);
-
-  colorize_init (col_tool->colorize);
-
-  im_tool->apply_func = (GimpImageMapApplyFunc) colorize;
-  im_tool->apply_data = col_tool->colorize;
-}
-
-static void
-gimp_colorize_tool_finalize (GObject *object)
-{
-  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (object);
-
-  g_slice_free (Colorize, col_tool->colorize);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
@@ -194,14 +167,6 @@ gimp_colorize_tool_get_operation (GimpImageMapTool  *im_tool,
                  NULL);
 
   return node;
-}
-
-static void
-gimp_colorize_tool_map (GimpImageMapTool *image_map_tool)
-{
-  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
-
-  gimp_colorize_config_to_cruft (col_tool->config, col_tool->colorize);
 }
 
 
