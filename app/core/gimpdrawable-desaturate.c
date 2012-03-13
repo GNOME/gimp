@@ -21,18 +21,11 @@
 
 #include "core-types.h"
 
-#include "base/desaturate.h"
-
 #include "gegl/gimpdesaturateconfig.h"
-
-/* temp */
-#include "gimp.h"
-#include "gimpimage.h"
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-desaturate.h"
 #include "gimpdrawable-operation.h"
-#include "gimpdrawable-process.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"
@@ -43,37 +36,29 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
                           GimpProgress       *progress,
                           GimpDesaturateMode  mode)
 {
+  GeglNode *desaturate;
+  GObject  *config;
+
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_drawable_is_rgb (drawable));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
-    {
-      GeglNode *desaturate;
-      GObject  *config;
-
-      desaturate = g_object_new (GEGL_TYPE_NODE,
-                                 "operation", "gimp:desaturate",
-                                 NULL);
-
-      config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
-                             "mode", mode,
+  desaturate = g_object_new (GEGL_TYPE_NODE,
+                             "operation", "gimp:desaturate",
                              NULL);
 
-      gegl_node_set (desaturate,
-                     "config", config,
-                     NULL);
+  config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
+                         "mode", mode,
+                         NULL);
 
-      g_object_unref (config);
+  gegl_node_set (desaturate,
+                 "config", config,
+                 NULL);
 
-      gimp_drawable_apply_operation (drawable, progress, _("Desaturate"),
-                                     desaturate, TRUE);
-      g_object_unref  (desaturate);
-    }
-  else
-    {
-      gimp_drawable_process (drawable, progress, _("Desaturate"),
-                             (PixelProcessorFunc) desaturate_region, &mode);
-    }
+  g_object_unref (config);
+
+  gimp_drawable_apply_operation (drawable, progress, _("Desaturate"),
+                                 desaturate, TRUE);
+  g_object_unref  (desaturate);
 }

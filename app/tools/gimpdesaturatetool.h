@@ -38,7 +38,6 @@ struct _GimpDesaturateTool
   GimpImageMapTool       parent_instance;
 
   GimpDesaturateConfig  *config;
-  GimpDesaturateMode     mode;  /*  only for legacy mode  */
 
   /*  dialog  */
   GtkWidget             *button;

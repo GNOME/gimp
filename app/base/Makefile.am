@@ -32,8 +32,6 @@ libappbase_a_SOURCES = \
 	cpercep.h		\
 	curves.c		\
 	curves.h		\
-	desaturate.c		\
-	desaturate.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimplut.c		\

@@ -26,8 +26,6 @@
 
 #include "tools-types.h"
 
-#include "base/desaturate.h"
-
 #include "gegl/gimpdesaturateconfig.h"
 
 #include "core/gimpdrawable.h"
@@ -100,10 +98,6 @@ gimp_desaturate_tool_class_init (GimpDesaturateToolClass *klass)
 static void
 gimp_desaturate_tool_init (GimpDesaturateTool *desaturate_tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (desaturate_tool);
-
-  im_tool->apply_func = (GimpImageMapApplyFunc) desaturate_region;
-  im_tool->apply_data = &desaturate_tool->mode;
 }
 
 static gboolean
@@ -169,15 +163,12 @@ gimp_desaturate_tool_get_operation (GimpImageMapTool  *image_map_tool,
 static void
 gimp_desaturate_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpDesaturateTool *desaturate_tool = GIMP_DESATURATE_TOOL (image_map_tool);
-
-  desaturate_tool->mode = desaturate_tool->config->mode;
 }
 
 
-/**********************/
+/***********************/
 /*  Desaturate dialog  */
-/**********************/
+/***********************/
 
 static void
 gimp_desaturate_tool_dialog (GimpImageMapTool *image_map_tool)
