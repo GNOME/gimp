@@ -81,12 +81,10 @@ struct _GimpImageMap
   PixelRegionIterator   *PRI;
 
   GeglNode              *gegl;
-  GeglBuffer            *input_buffer;
   GeglNode              *input;
   GeglNode              *translate;
   GeglNode              *operation;
   GeglNode              *output;
-  GeglBuffer            *output_buffer;
   GeglProcessor         *processor;
 
   guint                  idle_id;
@@ -181,9 +179,6 @@ gimp_image_map_init (GimpImageMap *image_map)
 
   image_map->pixel_count   = 0;
 
-  image_map->input_buffer = NULL;
-  image_map->output_buffer = NULL;
-
   if (image_map->timer)
     g_timer_stop (image_map->timer);
 }
@@ -203,17 +198,6 @@ static void
 gimp_image_map_finalize (GObject *object)
 {
   GimpImageMap *image_map = GIMP_IMAGE_MAP (object);
-
-  if (image_map->input_buffer)
-    {
-      g_object_unref (image_map->input_buffer);
-      image_map->input_buffer = NULL;
-    }
-  if (image_map->output_buffer)
-    {
-      g_object_unref (image_map->output_buffer);
-      image_map->output_buffer = NULL;
-    }
 
   if (image_map->undo_desc)
     {
@@ -394,20 +378,13 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
   if (image_map->operation)
     {
-      if (image_map->input_buffer)
-        {
-          g_object_unref (image_map->input_buffer);
-          image_map->input_buffer = NULL;
-        }
-      if (image_map->output_buffer)
-        {
-          g_object_unref (image_map->output_buffer);
-          image_map->output_buffer = NULL;
-        }
+      GeglBuffer *input_buffer;
+      GeglBuffer *output_buffer;
 
-      image_map->input_buffer =
+      input_buffer =
         gimp_tile_manager_get_gegl_buffer (image_map->undo_tiles, FALSE);
-      image_map->output_buffer = gimp_tile_manager_get_gegl_buffer (gimp_drawable_get_shadow_tiles (image_map->drawable), TRUE);
+      output_buffer =
+        gimp_tile_manager_get_gegl_buffer (gimp_drawable_get_shadow_tiles (image_map->drawable), TRUE);
 
       if (! image_map->gegl)
         {
@@ -481,7 +458,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
         }
 
       gegl_node_set (image_map->input,
-                     "buffer", image_map->input_buffer,
+                     "buffer", input_buffer,
                      NULL);
 
       gegl_node_set (image_map->translate,
@@ -490,11 +467,14 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                      NULL);
 
       gegl_node_set (image_map->output,
-                     "buffer", image_map->output_buffer,
+                     "buffer", output_buffer,
                      NULL);
 
       image_map->processor = gegl_node_new_processor (image_map->output,
                                                       &rect);
+
+      g_object_unref (input_buffer);
+      g_object_unref (output_buffer);
     }
   else
     {
