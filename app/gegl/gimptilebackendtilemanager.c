@@ -40,6 +40,7 @@
 struct _GimpTileBackendTileManagerPrivate 
 {
   TileManager     *tile_manager;
+  int              write;
 };
 
 
@@ -140,7 +141,7 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
         int       row;
 
         gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
-                                         x, y, TRUE, FALSE);
+                                         x, y, TRUE, backend_tm->priv->write);
         if (!gimp_tile)
           return NULL;
         g_return_val_if_fail (gimp_tile != NULL, NULL);
@@ -154,7 +155,7 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
             /* use the GimpTile directly as GEGL tile */
             tile = gegl_tile_new_bare ();
             gegl_tile_set_data_full (tile, tile_data_pointer (gimp_tile, 0, 0),
-            tile_size, tile_done, gimp_tile);
+            tile_size, (void*)tile_done, gimp_tile);
           }
         else
           {
@@ -175,6 +176,8 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
     case GEGL_TILE_SET:
       {
         GeglTile *tile  = data;
+        if (backend_tm->priv->write == FALSE)
+          return NULL;
         gimp_tile_write (backend_tm, x, y, z, gegl_tile_get_data (tile));
         gegl_tile_mark_as_stored (tile);
         return NULL;
@@ -208,22 +211,29 @@ gimp_tile_write (GimpTileBackendTileManager *backend_tm,
   if (!gimp_tile)
     return;
 
-  tile_stride      = TILE_WIDTH * tile_bpp (gimp_tile);
-  gimp_tile_stride = tile_ewidth (gimp_tile) * tile_bpp (gimp_tile);
-
-  for (row = 0; row < tile_eheight (gimp_tile); row++)
+  if (source != tile_data_pointer (gimp_tile, 0, 0))
     {
-      memcpy (tile_data_pointer (gimp_tile, 0, row),
-              source + row * tile_stride,
-              gimp_tile_stride);
+      /* only copy when we are not 0 copy */
+      tile_stride      = TILE_WIDTH * tile_bpp (gimp_tile);
+      gimp_tile_stride = tile_ewidth (gimp_tile) * tile_bpp (gimp_tile);
+
+      for (row = 0; row < tile_eheight (gimp_tile); row++)
+        {
+          memcpy (tile_data_pointer (gimp_tile, 0, row),
+                  source + row * tile_stride,
+                  gimp_tile_stride);
+        }
     }
   tile_release (gimp_tile, FALSE);
 }
 
 GeglTileBackend *
-gimp_tile_backend_tile_manager_new (TileManager *tm)
+gimp_tile_backend_tile_manager_new (TileManager *tm,
+                                    gboolean     write)
 {
   GeglTileBackend *ret;
+  GimpTileBackendTileManager *backend_tm;
+
   gint             width  = tile_manager_width (tm);
   gint             height = tile_manager_height (tm);
   gint             bpp    = tile_manager_bpp (tm);
@@ -234,10 +244,25 @@ gimp_tile_backend_tile_manager_new (TileManager *tm)
                       "tile-height", TILE_HEIGHT,
                       "format",      gimp_bpp_to_babl_format (bpp, FALSE),
                       NULL);
+  backend_tm = GIMP_TILE_BACKEND_TILE_MANAGER (ret);
+  backend_tm->priv->write = write;
 
-  GIMP_TILE_BACKEND_TILE_MANAGER (ret)->priv->tile_manager = tile_manager_ref (tm);
+  backend_tm->priv->tile_manager = tile_manager_ref (tm);
 
   gegl_tile_backend_set_extent (ret, &rect);
 
   return ret;
 }
+
+GeglBuffer *
+gimp_tile_manager_get_gegl_buffer (TileManager *tm,
+                                   gboolean     write)
+{
+  GeglTileBackend *backend;
+  GeglBuffer      *buffer;
+  backend = gimp_tile_backend_tile_manager_new (tm, write);
+  buffer = gegl_buffer_new_for_backend (NULL, backend);
+  g_object_unref (backend);
+  return buffer;
+}
+

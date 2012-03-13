@@ -49,9 +49,11 @@ struct _GimpTileBackendTileManagerClass
 
 GType             gimp_tile_backend_tile_manager_get_type (void) G_GNUC_CONST;
 
-GeglTileBackend * gimp_tile_backend_tile_manager_new      (TileManager *tm);
+GeglTileBackend * gimp_tile_backend_tile_manager_new (TileManager *tm,
+                                                      gboolean     write);
 
-void              gimp_tile_backend_tile_manager_stats    (void);
+GeglBuffer      * gimp_tile_manager_get_gegl_buffer  (TileManager *tm,
+                                                      gboolean     write);
 
 G_END_DECLS
 
