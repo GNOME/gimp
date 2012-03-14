@@ -89,40 +89,6 @@ brightness_contrast_lut_new (gdouble brightness,
   return lut;
 }
 
-/* ---------------- invert ------------------ */
-
-static gfloat
-invert_lut_func (gpointer  unused,
-                 gint      n_channels,
-                 gint      channel,
-                 gfloat    value)
-{
-  /* don't invert the alpha channel */
-  if ((n_channels == 2 || n_channels == 4) && channel == n_channels -1)
-    return value;
-
-  return 1.0 - value;
-}
-
-static void
-invert_lut_setup (GimpLut *lut,
-                  gint     n_channels)
-{
-  g_return_if_fail (lut != NULL);
-
-  gimp_lut_setup_exact (lut, (GimpLutFunc) invert_lut_func, NULL, n_channels);
-}
-
-GimpLut *
-invert_lut_new (gint n_channels)
-{
-  GimpLut *lut = gimp_lut_new ();
-
-  invert_lut_setup (lut, n_channels);
-
-  return lut;
-}
-
 /* ---------------- Threshold ------------------ */
 
 static gfloat
