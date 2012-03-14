@@ -1154,13 +1154,21 @@ AC_SUBST(Z_LIBS)
 # Check for libbzip2
 ####################
 
-have_libbzip2=yes
-if test -z "$BZIP2_LIBS"; then
+AC_ARG_WITH(gs,  [  --without-bzip2         build without bzip2 support])
+
+have_libbzip2=no
+if test "x$with_bzip2" != xno; then
+  have_libbzip2=yes
   AC_CHECK_LIB(bz2, BZ2_bzCompress,
     [AC_CHECK_HEADER(bzlib.h,
       BZIP2_LIBS='-lbz2',
       [have_libbzip2="no (libbzip2 header files not found)"])],
     [have_libbzip2="no (libbzip2 library not found)"])
+  if test "x$have_libbzip2" != xyes -a "x$with_bzip2" = xyes; then
+    AC_MSG_ERROR([
+*** Checks for bzip2 library failed. You can build without it by passing
+*** --without-bzip2 to configure but you won't be able to use compressed files then.])
+  fi
 fi
 
 AM_CONDITIONAL(HAVE_BZIP2, test "x$have_libbzip2" = xyes)
@@ -1176,13 +1184,21 @@ fi
 # Check for Ghostscript library
 ###############################
 
-have_gs=yes
-if test -z "$GS_LIBS"; then
+AC_ARG_WITH(gs,  [  --without-gs            build without Ghostscript support])
+
+have_gs=no
+if test "x$with_gs" != xno; then
+  have_gs=yes
   AC_CHECK_LIB(gs, gsapi_new_instance,
     [AC_CHECK_HEADER(ghostscript/iapi.h,
       FILE_PS='file-ps$(EXEEXT)'; GS_LIBS='-lgs',
       [have_gs="no (Ghostscript header files not found)"])],
     [have_gs="no (Ghostscript library not found)"])
+  if test "x$have_gs" != xyes -a "x$with_gs" = xyes; then
+    AC_MSG_ERROR([
+*** Checks for Ghostscript library failed. You can build without it by passing
+*** --without-gs to configure but you won't be able to use Postscript files then.])
+  fi
 fi
 
 AC_SUBST(FILE_PS)
