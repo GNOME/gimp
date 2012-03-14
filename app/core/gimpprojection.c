@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gegl-buffer-backend.h>
 
 #include "core-types.h"
 
@@ -26,6 +27,8 @@
 #include "base/tile-private.h"  /* EEK */
 #include "base/tile-manager.h"
 #include "base/tile-pyramid.h"
+
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimparea.h"
@@ -372,6 +375,8 @@ GeglNode *
 gimp_projection_get_sink_node (GimpProjection *proj)
 {
   GeglNode *graph;
+  GeglBuffer *buffer;
+  TileManager *tiles;
 
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
 
@@ -387,12 +392,15 @@ gimp_projection_get_sink_node (GimpProjection *proj)
   graph = gimp_projectable_get_graph (proj->projectable);
   gegl_node_add_child (proj->graph, graph);
 
+  tiles  = gimp_projection_get_tiles (GIMP_PICKABLE (proj));
+  buffer = gimp_tile_manager_get_gegl_buffer (tiles, TRUE);
+
   proj->sink_node =
     gegl_node_new_child (proj->graph,
-                         "operation",    "gimp:tilemanager-sink",
-                         "tile-manager", gimp_projection_get_tiles (GIMP_PICKABLE (proj)),
-                         "linear",       TRUE,
+                         "operation",    "gegl:write-buffer",
+                         "buffer", buffer,
                          NULL);
+  g_object_unref (buffer);
 
   gegl_node_connect_to (graph,           "output",
                         proj->sink_node, "input");
@@ -424,11 +432,16 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
 
       if (proj->sink_node)
         {
-          TileManager *tiles = tile_pyramid_get_tiles (proj->pyramid, 0, NULL);
+          TileManager *tiles;
+          GeglBuffer *buffer;
+          tiles = tile_pyramid_get_tiles (proj->pyramid, 0, NULL);
+          buffer = gimp_tile_manager_get_gegl_buffer (tiles, TRUE);
 
           gegl_node_set (proj->sink_node,
-                         "tile-manager", tiles,
+                         "buffer", buffer,
                          NULL);
+
+          g_object_unref (buffer);
         }
     }
 
@@ -762,7 +775,19 @@ gimp_projection_invalidate (GimpProjection *proj,
                             guint           h)
 {
   if (proj->pyramid)
-    tile_pyramid_invalidate_area (proj->pyramid, x, y, w, h);
+    {
+      if (proj->sink_node)
+        {
+          GeglBuffer *buffer;
+          gegl_node_get (proj->sink_node, "buffer", &buffer, NULL);
+
+          /* makes the buffer drop all GimpTiles */
+          gegl_tile_source_reinit ((void*)buffer);
+          g_object_unref (buffer);
+        }
+
+      tile_pyramid_invalidate_area (proj->pyramid, x, y, w, h);
+    }
 }
 
 static void
