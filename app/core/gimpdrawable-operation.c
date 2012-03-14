@@ -88,12 +88,12 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_apply_operation_with_config (GimpDrawable *drawable,
-                                           GimpProgress *progress,
-                                           const gchar  *undo_desc,
-                                           const gchar  *operation_type,
-                                           GObject      *config,
-                                           gboolean      linear)
+gimp_drawable_apply_operation_by_name (GimpDrawable *drawable,
+                                       GimpProgress *progress,
+                                       const gchar  *undo_desc,
+                                       const gchar  *operation_type,
+                                       GObject      *config,
+                                       gboolean      linear)
 {
   GeglNode *node;
 
@@ -102,15 +102,16 @@ gimp_drawable_apply_operation_with_config (GimpDrawable *drawable,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (operation_type != NULL);
-  g_return_if_fail (GIMP_IS_IMAGE_MAP_CONFIG (config));
+  g_return_if_fail (config == NULL || GIMP_IS_IMAGE_MAP_CONFIG (config));
 
   node = g_object_new (GEGL_TYPE_NODE,
                        "operation", operation_type,
                        NULL);
 
-  gegl_node_set (node,
-                 "config", config,
-                 NULL);
+  if (config)
+    gegl_node_set (node,
+                   "config", config,
+                   NULL);
 
   gimp_drawable_apply_operation (drawable, progress, undo_desc,
                                  node, TRUE);

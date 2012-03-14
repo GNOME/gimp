@@ -210,10 +210,10 @@ posterize_invoker (GimpProcedure      *procedure,
                                           "levels", levels,
                                           NULL);
 
-          gimp_drawable_apply_operation_with_config (drawable, progress,
-                                                     _("Posterize"),
-                                                     "gimp:posterize",
-                                                     config, TRUE);
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 _("Posterize"),
+                                                 "gimp:posterize",
+                                                 config, TRUE);
 
           g_object_unref (config);
         }
@@ -248,10 +248,10 @@ desaturate_invoker (GimpProcedure      *procedure,
                                           "mode", GIMP_DESATURATE_LIGHTNESS,
                                           NULL);
 
-          gimp_drawable_apply_operation_with_config (drawable, progress,
-                                                     _("Desaturate"),
-                                                     "gimp:desaturate",
-                                                     config, TRUE);
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 _("Desaturate"),
+                                                 "gimp:desaturate",
+                                                 config, TRUE);
 
           g_object_unref (config);
         }
@@ -288,10 +288,10 @@ desaturate_full_invoker (GimpProcedure      *procedure,
                                           "mode", desaturate_mode,
                                           NULL);
 
-          gimp_drawable_apply_operation_with_config (drawable, progress,
-                                                     _("Desaturate"),
-                                                     "gimp:desaturate",
-                                                     config, TRUE);
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 _("Desaturate"),
+                                                 "gimp:desaturate",
+                                                 config, TRUE);
 
           g_object_unref (config);
         }
@@ -511,10 +511,10 @@ colorize_invoker (GimpProcedure      *procedure,
                                           "lightness",  lightness  / 100.0,
                                           NULL);
 
-          gimp_drawable_apply_operation_with_config (drawable, progress,
-                                                     C_("undo-type", "Colorize"),
-                                                     "gimp:colorize",
-                                                     config, TRUE);
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 C_("undo-type", "Colorize"),
+                                                 "gimp:colorize",
+                                                 config, TRUE);
 
           g_object_unref (config);
         }
@@ -664,10 +664,10 @@ threshold_invoker (GimpProcedure      *procedure,
                                           "high", high_threshold / 255.0,
                                           NULL);
 
-          gimp_drawable_apply_operation_with_config (drawable, progress,
-                                                     _("Threshold"),
-                                                     "gimp:threshold",
-                                                     config, TRUE);
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 _("Threshold"),
+                                                 "gimp:threshold",
+                                                 config, TRUE);
 
           g_object_unref (config);
         }
