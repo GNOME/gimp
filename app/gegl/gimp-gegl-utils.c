@@ -87,32 +87,18 @@ gimp_babl_format_to_legacy_bpp (const Babl *format)
 TileManager *
 gimp_buffer_to_tiles (GeglBuffer *buffer)
 {
-  const Babl    *format     = gegl_buffer_get_format (buffer);
-  TileManager   *new_tiles  = NULL;
-  GeglNode      *source     = NULL;
-  GeglNode      *sink       = NULL;
+  TileManager *new_tiles;
+  GeglBuffer  *temp;
 
-  g_return_val_if_fail (buffer != NULL, NULL);
-
-  /* Setup and process the graph */
-  new_tiles = tile_manager_new (gegl_buffer_get_width (buffer),
-                                gegl_buffer_get_height (buffer),
+  gint  width  = gegl_buffer_get_width (buffer);
+  gint  height = gegl_buffer_get_height (buffer);
+  const Babl *format = gegl_buffer_get_format (buffer);
+  
+  new_tiles = tile_manager_new (width, height,
                                 gimp_babl_format_to_legacy_bpp (format));
-  source = gegl_node_new_child (NULL,
-                                "operation", "gegl:buffer-source",
-                                "buffer",    buffer,
-                                NULL);
-  sink = gegl_node_new_child (NULL,
-                              "operation",    "gimp:tilemanager-sink",
-                              "tile-manager", new_tiles,
-                              NULL);
-  gegl_node_link_many (source, sink, NULL);
-  gegl_node_process (sink);
-
-  /* Clenaup */
-  g_object_unref (sink);
-  g_object_unref (source);
-
+  temp = gimp_tile_manager_get_gegl_buffer (new_tiles, TRUE);
+  gegl_buffer_copy (buffer, NULL, temp, NULL);
+  g_object_unref (temp);
   return new_tiles;
 }
 
