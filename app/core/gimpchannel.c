@@ -51,6 +51,7 @@
 #include "gimpchannel-project.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
+#include "gimpdrawable-operation.h"
 #include "gimpdrawable-stroke.h"
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
@@ -1396,11 +1397,13 @@ static void
 gimp_channel_real_invert (GimpChannel *channel,
                           gboolean     push_undo)
 {
+  GimpDrawable *drawable = GIMP_DRAWABLE (channel);
+
   if (push_undo)
     gimp_channel_push_undo (channel,
                             GIMP_CHANNEL_GET_CLASS (channel)->invert_desc);
   else
-    gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
+    gimp_drawable_invalidate_boundary (drawable);
 
   if (channel->bounds_known && channel->empty)
     {
@@ -1408,22 +1411,15 @@ gimp_channel_real_invert (GimpChannel *channel,
     }
   else
     {
-      PixelRegion  maskPR;
-      GimpLut     *lut;
+      GeglNode *node = g_object_new (GEGL_TYPE_NODE,
+                                     "operation", "gegl:invert",
+                                     NULL);
 
-      pixel_region_init (&maskPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                         0, 0,
-                         gimp_item_get_width  (GIMP_ITEM (channel)),
-                         gimp_item_get_height (GIMP_ITEM (channel)), TRUE);
+      gimp_drawable_apply_operation_to_tiles (drawable, NULL, NULL,
+                                              node, TRUE,
+                                              gimp_drawable_get_tiles (drawable));
 
-      lut = invert_lut_new (1);
-
-      pixel_regions_process_parallel ((PixelProcessorFunc)
-                                      gimp_lut_process_inline,
-                                      lut, 1, &maskPR);
-
-      gimp_lut_free (lut);
+      g_object_unref (node);
 
       channel->bounds_known = FALSE;
 
