@@ -25,7 +25,6 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpdrawable-levels.h"

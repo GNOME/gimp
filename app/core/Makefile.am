@@ -126,16 +126,12 @@ libappcore_a_sources = \
 	gimpdrawable-bucket-fill.h		\
 	gimpdrawable-color-balance.c		\
 	gimpdrawable-color-balance.h		\
-	gimpdrawable-colorize.c			\
-	gimpdrawable-colorize.h			\
 	gimpdrawable-combine.c			\
 	gimpdrawable-combine.h			\
 	gimpdrawable-convert.c			\
 	gimpdrawable-convert.h			\
 	gimpdrawable-curves.c			\
 	gimpdrawable-curves.h			\
-	gimpdrawable-desaturate.c		\
-	gimpdrawable-desaturate.h		\
 	gimpdrawable-equalize.c			\
 	gimpdrawable-equalize.h			\
 	gimpdrawable-foreground-extract.c	\
@@ -152,8 +148,6 @@ libappcore_a_sources = \
 	gimpdrawable-offset.h			\
 	gimpdrawable-operation.c		\
 	gimpdrawable-operation.h		\
-	gimpdrawable-posterize.c		\
-	gimpdrawable-posterize.h		\
 	gimpdrawable-preview.c			\
 	gimpdrawable-preview.h			\
 	gimpdrawable-private.h			\
@@ -163,8 +157,6 @@ libappcore_a_sources = \
 	gimpdrawable-shadow.h			\
 	gimpdrawable-stroke.c			\
 	gimpdrawable-stroke.h			\
-	gimpdrawable-threshold.c		\
-	gimpdrawable-threshold.h		\
 	gimpdrawable-transform.c		\
 	gimpdrawable-transform.h		\
 	gimpdrawablemodundo.c			\

@@ -26,18 +26,19 @@
 #include "base/gimphistogram.h"
 #include "core/gimpdrawable-brightness-contrast.h"
 #include "core/gimpdrawable-color-balance.h"
-#include "core/gimpdrawable-colorize.h"
 #include "core/gimpdrawable-curves.h"
-#include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpdrawable-hue-saturation.h"
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpdrawable-levels.h"
-#include "core/gimpdrawable-posterize.h"
-#include "core/gimpdrawable-threshold.h"
+#include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpparamspecs.h"
+#include "gegl/gimpcolorizeconfig.h"
+#include "gegl/gimpdesaturateconfig.h"
+#include "gegl/gimpposterizeconfig.h"
+#include "gegl/gimpthresholdconfig.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -201,13 +202,23 @@ posterize_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          ! gimp_drawable_is_indexed (drawable))
+        {
+          GObject *config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG,
+                                          "levels", levels,
+                                          NULL);
 
-      if (success)
-        gimp_drawable_posterize (drawable, progress, levels);
+          gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                     _("Posterize"),
+                                                     "gimp:posterize",
+                                                     config, TRUE);
+
+          g_object_unref (config);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -229,13 +240,23 @@ desaturate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          ! gimp_drawable_is_rgb (drawable))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          gimp_drawable_is_rgb (drawable))
+        {
+          GObject *config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
+                                          "mode", GIMP_DESATURATE_LIGHTNESS,
+                                          NULL);
 
-      if (success)
-        gimp_drawable_desaturate (drawable, progress, GIMP_DESATURATE_LIGHTNESS);
+          gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                     _("Desaturate"),
+                                                     "gimp:desaturate",
+                                                     config, TRUE);
+
+          g_object_unref (config);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -259,13 +280,23 @@ desaturate_full_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          ! gimp_drawable_is_rgb (drawable))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          gimp_drawable_is_rgb (drawable))
+        {
+          GObject *config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
+                                          "mode", desaturate_mode,
+                                          NULL);
 
-      if (success)
-        gimp_drawable_desaturate (drawable, progress, desaturate_mode);
+          gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                     _("Desaturate"),
+                                                     "gimp:desaturate",
+                                                     config, TRUE);
+
+          g_object_unref (config);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -470,14 +501,25 @@ colorize_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          ! gimp_drawable_is_rgb (drawable))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          gimp_drawable_is_rgb (drawable))
+        {
+          GObject *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG,
+                                          "hue",        hue        / 360.0,
+                                          "saturation", saturation / 100.0,
+                                          "lightness",  lightness  / 100.0,
+                                          NULL);
 
-      if (success)
-        gimp_drawable_colorize (drawable, progress,
-                                hue, saturation, lightness);
+          gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                     C_("undo-type", "Colorize"),
+                                                     "gimp:colorize",
+                                                     config, TRUE);
+
+          g_object_unref (config);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -613,15 +655,24 @@ threshold_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable) ||
-          (low_threshold > high_threshold))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          ! gimp_drawable_is_indexed (drawable))
+        {
+          GObject *config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG,
+                                          "low",  low_threshold  / 255.0,
+                                          "high", high_threshold / 255.0,
+                                          NULL);
 
-      if (success)
-        gimp_drawable_threshold (drawable, progress,
-                                 low_threshold, high_threshold);
+          gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                     _("Threshold"),
+                                                     "gimp:threshold",
+                                                     config, TRUE);
+
+          g_object_unref (config);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,

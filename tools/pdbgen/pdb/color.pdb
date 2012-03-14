@@ -192,16 +192,26 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpdrawable-posterize.h") ],
+        headers => [ qw("gegl/gimpposterizeconfig.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-      gimp_drawable_is_indexed (drawable))
-    success = FALSE;
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      ! gimp_drawable_is_indexed (drawable))
+    {
+      GObject *config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG,
+                                      "levels", levels,
+                                      NULL);
 
-  if (success)
-    gimp_drawable_posterize (drawable, progress, levels);
+      gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                 _("Posterize"),
+                                                 "gimp:posterize",
+                                                 config, TRUE);
+
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -223,16 +233,26 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-desaturate.h") ],
+	headers => [ qw("gegl/gimpdesaturateconfig.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-      ! gimp_drawable_is_rgb (drawable))
-    success = FALSE;
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      gimp_drawable_is_rgb (drawable))
+    {
+      GObject *config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
+                                      "mode", GIMP_DESATURATE_LIGHTNESS,
+                                      NULL);
 
-  if (success)
-    gimp_drawable_desaturate (drawable, progress, GIMP_DESATURATE_LIGHTNESS);
+      gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                 _("Desaturate"),
+                                                 "gimp:desaturate",
+                                                 config, TRUE);
+
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -261,16 +281,26 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-desaturate.h") ],
+	headers => [ qw("gegl/gimpdesaturateconfig.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-      ! gimp_drawable_is_rgb (drawable))
-    success = FALSE;
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      gimp_drawable_is_rgb (drawable))
+    {
+      GObject *config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
+                                      "mode", desaturate_mode,
+                                      NULL);
 
-  if (success)
-    gimp_drawable_desaturate (drawable, progress, desaturate_mode);
+      gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                 _("Desaturate"),
+                                                 "gimp:desaturate",
+                                                 config, TRUE);
+
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -514,17 +544,28 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-colorize.h") ],
+	headers => [ qw("gegl/gimpcolorizeconfig.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-      ! gimp_drawable_is_rgb (drawable))
-    success = FALSE;
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      gimp_drawable_is_rgb (drawable))
+    {
+      GObject *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG,
+                                      "hue",        hue        / 360.0,
+                                      "saturation", saturation / 100.0,
+                                      "lightness",  lightness  / 100.0,
+                                      NULL);
 
-  if (success)
-    gimp_drawable_colorize (drawable, progress,
-                            hue, saturation, lightness);
+      gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                 C_("undo-type", "Colorize"),
+                                                 "gimp:colorize",
+                                                 config, TRUE);
+
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -680,18 +721,27 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-threshold.h") ],
+	headers => [ qw("gegl/gimpthresholdconfig.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-      gimp_drawable_is_indexed (drawable) ||
-      (low_threshold > high_threshold))
-    success = FALSE;
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      ! gimp_drawable_is_indexed (drawable))
+    {
+      GObject *config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG,
+                                      "low",  low_threshold  / 255.0,
+                                      "high", high_threshold / 255.0,
+                                      NULL);
 
-  if (success)
-    gimp_drawable_threshold (drawable, progress,
-                             low_threshold, high_threshold);
+      gimp_drawable_apply_operation_with_config (drawable, progress,
+                                                 _("Threshold"),
+                                                 "gimp:threshold",
+                                                 config, TRUE);
+
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -699,6 +749,7 @@ CODE
 
 
 @headers = qw("core/gimpdrawable.h"
+              "core/gimpdrawable-operation.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 
