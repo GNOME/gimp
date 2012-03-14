@@ -89,16 +89,17 @@ gimp_buffer_to_tiles (GeglBuffer *buffer)
 {
   TileManager *new_tiles;
   GeglBuffer  *temp;
+  gint         width  = gegl_buffer_get_width (buffer);
+  gint         height = gegl_buffer_get_height (buffer);
+  const Babl  *format = gegl_buffer_get_format (buffer);
 
-  gint  width  = gegl_buffer_get_width (buffer);
-  gint  height = gegl_buffer_get_height (buffer);
-  const Babl *format = gegl_buffer_get_format (buffer);
-  
   new_tiles = tile_manager_new (width, height,
                                 gimp_babl_format_to_legacy_bpp (format));
-  temp = gimp_tile_manager_get_gegl_buffer (new_tiles, TRUE);
+
+  temp = gimp_tile_manager_create_buffer (new_tiles, TRUE);
   gegl_buffer_copy (buffer, NULL, temp, NULL);
   g_object_unref (temp);
+
   return new_tiles;
 }
 
@@ -157,8 +158,8 @@ gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
 }
 
 GeglBuffer *
-gimp_tile_manager_get_gegl_buffer (TileManager *tm,
-                                   gboolean     write)
+gimp_tile_manager_create_buffer (TileManager *tm,
+                                 gboolean     write)
 {
   GeglTileBackend *backend;
   GeglBuffer      *buffer;

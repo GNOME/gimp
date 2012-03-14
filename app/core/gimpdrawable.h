@@ -178,8 +178,9 @@ void            gimp_drawable_init_src_region    (GimpDrawable       *drawable,
                                                   gint                height,
                                                   TileManager       **temp_tiles);
 
-GeglBuffer    * gimp_drawable_get_buffer         (GimpDrawable       *drawable,
+GeglBuffer    * gimp_drawable_create_buffer      (GimpDrawable       *drawable,
                                                   gboolean            write);
+
 TileManager   * gimp_drawable_get_tiles          (GimpDrawable       *drawable);
 void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,
                                                   gboolean            push_undo,

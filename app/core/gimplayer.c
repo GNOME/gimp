@@ -1200,11 +1200,8 @@ gimp_layer_new_from_buffer (GeglBuffer           *buffer,
                           type, name,
                           opacity, mode);
 
-  dest = gimp_tile_manager_get_gegl_buffer (gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                                            TRUE);
-
+  dest = gimp_drawable_create_buffer (GIMP_DRAWABLE (layer), TRUE);
   gegl_buffer_copy (buffer, NULL, dest, NULL);
-
   g_object_unref (dest);
 
   return layer;

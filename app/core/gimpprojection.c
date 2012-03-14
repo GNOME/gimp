@@ -393,7 +393,7 @@ gimp_projection_get_sink_node (GimpProjection *proj)
   gegl_node_add_child (proj->graph, graph);
 
   tiles  = gimp_projection_get_tiles (GIMP_PICKABLE (proj));
-  buffer = gimp_tile_manager_get_gegl_buffer (tiles, TRUE);
+  buffer = gimp_tile_manager_create_buffer (tiles, TRUE);
 
   proj->sink_node =
     gegl_node_new_child (proj->graph,
@@ -433,9 +433,10 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
       if (proj->sink_node)
         {
           TileManager *tiles;
-          GeglBuffer *buffer;
+          GeglBuffer  *buffer;
+
           tiles = tile_pyramid_get_tiles (proj->pyramid, 0, NULL);
-          buffer = gimp_tile_manager_get_gegl_buffer (tiles, TRUE);
+          buffer = gimp_tile_manager_create_buffer (tiles, TRUE);
 
           gegl_node_set (proj->sink_node,
                          "buffer", buffer,

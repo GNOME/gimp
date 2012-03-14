@@ -93,8 +93,8 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 
   new_tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
 
-  src_buffer  = gimp_drawable_get_buffer (drawable, FALSE);
-  dest_buffer = gimp_tile_manager_get_gegl_buffer (new_tiles, TRUE);
+  src_buffer  = gimp_drawable_create_buffer (drawable, FALSE);
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
 
   if (offset_x >= 0)
     {

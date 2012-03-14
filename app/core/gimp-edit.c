@@ -518,7 +518,7 @@ gimp_edit_extract (GimpImage     *image,
       GeglBuffer *temp;
       GimpBuffer *buffer;
 
-      temp = gimp_tile_manager_get_gegl_buffer (tiles, TRUE);
+      temp = gimp_tile_manager_create_buffer (tiles, TRUE);
       tile_manager_unref (tiles);
 
       buffer = gimp_buffer_new (temp, _("Global Buffer"),

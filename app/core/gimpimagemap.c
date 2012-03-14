@@ -382,9 +382,9 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       GeglBuffer *output_buffer;
 
       input_buffer =
-        gimp_tile_manager_get_gegl_buffer (image_map->undo_tiles, FALSE);
+        gimp_tile_manager_create_buffer (image_map->undo_tiles, FALSE);
       output_buffer =
-        gimp_tile_manager_get_gegl_buffer (gimp_drawable_get_shadow_tiles (image_map->drawable), TRUE);
+        gimp_tile_manager_create_buffer (gimp_drawable_get_shadow_tiles (image_map->drawable), TRUE);
 
       if (! image_map->gegl)
         {

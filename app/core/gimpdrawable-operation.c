@@ -180,8 +180,8 @@ gimp_drawable_apply_operation_private (GimpDrawable        *drawable,
                 "dont-cache", TRUE,
                 NULL);
 
-  inbuf  = gimp_drawable_get_buffer (drawable, FALSE);
-  outbuf = gimp_tile_manager_get_gegl_buffer (dest_tiles, TRUE);
+  inbuf  = gimp_drawable_create_buffer (drawable, FALSE);
+  outbuf = gimp_tile_manager_create_buffer (dest_tiles, TRUE);
 
   input  = gegl_node_new_child (gegl,
                                 "operation", "gegl:buffer-source",
