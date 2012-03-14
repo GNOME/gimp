@@ -29,12 +29,6 @@ void      brightness_contrast_lut_setup (GimpLut       *lut,
 
 GimpLut * invert_lut_new                (gint           n_channels);
 
-GimpLut * add_lut_new                   (gdouble        amount,
-                                         gint           n_channels);
-
-GimpLut * intersect_lut_new             (gdouble        value,
-                                         gint           n_channels);
-
 GimpLut * threshold_lut_new             (gdouble        value,
                                          gint           n_channels);
 
