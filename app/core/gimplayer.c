@@ -1166,6 +1166,51 @@ gimp_layer_new (GimpImage            *image,
 }
 
 /**
+ * gimp_layer_new_from_buffer:
+ * @buffer:     The buffer to make the new layer from.
+ * @dest_image: The image the new layer will be added to.
+ * @type:       The #GimpImageType of the new layer.
+ * @name:       The new layer's name.
+ * @opacity:    The new layer's opacity.
+ * @mode:       The new layer's mode.
+ *
+ * Copies %buffer to a layer taking into consideration the
+ * possibility of transforming the contents to meet the requirements
+ * of the target image type
+ *
+ * Return value: The new layer.
+ **/
+GimpLayer *
+gimp_layer_new_from_buffer (GeglBuffer           *buffer,
+                            GimpImage            *dest_image,
+                            GimpImageType         type,
+                            const gchar          *name,
+                            gdouble               opacity,
+                            GimpLayerModeEffects  mode)
+{
+  GimpLayer  *layer;
+  GeglBuffer *dest;
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+
+  layer = gimp_layer_new (dest_image,
+                          gegl_buffer_get_width  (buffer),
+                          gegl_buffer_get_height (buffer),
+                          type, name,
+                          opacity, mode);
+
+  dest = gimp_tile_manager_get_gegl_buffer (gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
+                                            TRUE);
+
+  gegl_buffer_copy (buffer, NULL, dest, NULL);
+
+  g_object_unref (dest);
+
+  return layer;
+}
+
+/**
  * gimp_layer_new_from_tiles:
  * @tiles:      The buffer to make the new layer from.
  * @dest_image: The image the new layer will be added to.

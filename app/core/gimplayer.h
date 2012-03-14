@@ -77,6 +77,12 @@ GimpLayer     * gimp_layer_new                 (GimpImage            *image,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
 
+GimpLayer     * gimp_layer_new_from_buffer     (GeglBuffer           *buffer,
+                                                GimpImage            *dest_image,
+                                                GimpImageType         type,
+                                                const gchar          *name,
+                                                gdouble               opacity,
+                                                GimpLayerModeEffects  mode);
 GimpLayer     * gimp_layer_new_from_tiles      (TileManager          *tiles,
                                                 GimpImage            *dest_image,
                                                 GimpImageType         type,
