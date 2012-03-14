@@ -422,8 +422,8 @@ gimp_drawable_duplicate (GimpItem *item,
       GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
       GimpImageType  image_type   = gimp_drawable_type (drawable);
-      PixelRegion    srcPR;
-      PixelRegion    destPR;
+      GeglBuffer    *src;
+      GeglBuffer    *dest;
 
       new_drawable->private->type = image_type;
 
@@ -435,18 +435,13 @@ gimp_drawable_duplicate (GimpItem *item,
                           gimp_item_get_height (new_item),
                           gimp_drawable_bytes (new_drawable));
 
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         0, 0,
-                         gimp_item_get_width  (item),
-                         gimp_item_get_height (item),
-                         FALSE);
-      pixel_region_init (&destPR, gimp_drawable_get_tiles (new_drawable),
-                         0, 0,
-                         gimp_item_get_width  (new_item),
-                         gimp_item_get_height (new_item),
-                         TRUE);
+      src  = gimp_drawable_get_buffer (drawable, FALSE);
+      dest = gimp_drawable_get_buffer (new_drawable, TRUE);
 
-      copy_region (&srcPR, &destPR);
+      gegl_buffer_copy (src, NULL, dest, NULL);
+
+      g_object_unref (src);
+      g_object_unref (dest);
     }
 
   return new_item;
