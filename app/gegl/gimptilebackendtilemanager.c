@@ -216,9 +216,11 @@ gimp_tile_write (GimpTileBackendTileManager *backend_tm,
   if (!gimp_tile)
     return;
 
+  /* if the memory pointer already points to the data, there is
+   * no point in copying it
+   */
   if (source != tile_data_pointer (gimp_tile, 0, 0))
     {
-      /* only copy when we are not 0 copy */
       tile_stride      = TILE_WIDTH * tile_bpp (gimp_tile);
       gimp_tile_stride = tile_ewidth (gimp_tile) * tile_bpp (gimp_tile);
 
@@ -230,7 +232,7 @@ gimp_tile_write (GimpTileBackendTileManager *backend_tm,
         }
     }
 
-  tile_release (gimp_tile, FALSE);
+  tile_release (gimp_tile, TRUE);
 }
 
 GeglTileBackend *
