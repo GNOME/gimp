@@ -20,6 +20,7 @@
 #include <cairo.h>
 #include <gegl.h>
 #include <gegl-plugin.h>
+#include <gegl-buffer-backend.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -753,6 +754,17 @@ gimp_drawable_real_update (GimpDrawable *drawable,
       gegl_operation_invalidate (GEGL_OPERATION (operation), &rect, FALSE);
 
       g_object_unref (operation);
+      {
+        GeglBuffer *buffer = NULL;
+        gegl_node_get (drawable->private->tile_source_node,
+                       "buffer", &buffer,
+                       NULL);
+        if (buffer)
+          {
+            gegl_tile_source_reinit (GEGL_TILE_SOURCE (buffer));
+            g_object_unref (buffer);
+          }
+      }
     }
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
@@ -837,9 +849,13 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
     gimp_drawable_alpha_changed (drawable);
 
   if (drawable->private->tile_source_node)
-    gegl_node_set (drawable->private->tile_source_node,
-                   "tile-manager", gimp_drawable_get_tiles (drawable),
-                   NULL);
+    {
+      GeglBuffer *buffer = gimp_drawable_get_buffer (drawable, FALSE);
+      gegl_node_set (drawable->private->tile_source_node,
+                     "buffer", buffer,
+                     NULL);
+      g_object_unref (buffer);
+    }
 }
 
 static GeglNode *
@@ -1544,6 +1560,7 @@ gimp_drawable_set_tiles_full (GimpDrawable  *drawable,
 GeglNode *
 gimp_drawable_get_source_node (GimpDrawable *drawable)
 {
+  GeglBuffer *buffer;
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   if (drawable->private->source_node)
@@ -1551,13 +1568,15 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
 
   drawable->private->source_node = gegl_node_new ();
 
+  buffer = gimp_drawable_get_buffer (drawable, FALSE);
+
   drawable->private->tile_source_node =
     gegl_node_new_child (drawable->private->source_node,
-                         "operation",    "gimp:tilemanager-source",
-                         "tile-manager", gimp_drawable_get_tiles (drawable),
-                         "linear",       TRUE,
+                         "operation",    "gegl:buffer-source",
+                         "buffer", buffer,
                          NULL);
 
+  g_object_unref (buffer);
   gimp_drawable_sync_source_node (drawable, FALSE);
 
   return drawable->private->source_node;
