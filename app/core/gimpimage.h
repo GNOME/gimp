@@ -57,6 +57,10 @@
                                             (t) == GIMP_GRAY_IMAGE     ? 1 : \
                                             (t) == GIMP_INDEXEDA_IMAGE ? 2 : \
                                             (t) == GIMP_INDEXED_IMAGE  ? 1 : -1)
+#define GIMP_IMAGE_TYPE_FROM_BYTES(b)      ((b) == 4 ? GIMP_RGBA_IMAGE  :    \
+                                            (b) == 3 ? GIMP_RGB_IMAGE   :    \
+                                            (b) == 2 ? GIMP_GRAYA_IMAGE :    \
+                                            (b) == 1 ? GIMP_GRAY_IMAGE : -1)
 #define GIMP_IMAGE_TYPE_BASE_TYPE(t)      (((t) == GIMP_RGB_IMAGE ||         \
                                             (t) == GIMP_RGBA_IMAGE) ?        \
                                            GIMP_RGB :                        \
