@@ -26,8 +26,11 @@
 
 #include "base/temp-buf.h"
 #include "base/pixel-region.h"
+#include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
+
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimpbuffer.h"
@@ -198,8 +201,9 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
 
   if (gimp->global_buffer)
     {
-      TileManager   *tiles = gimp_buffer_get_tiles (gimp->global_buffer);
-      GimpImageType  type  = gimp_buffer_get_image_type (gimp->global_buffer);
+      GeglBuffer    *buffer = gimp_buffer_get_buffer (gimp->global_buffer);
+      TileManager   *tiles  = gimp_buffer_to_tiles (buffer);
+      GimpImageType  type   = gimp_buffer_get_image_type (gimp->global_buffer);
 
       width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 512);
       height = MIN (gimp_buffer_get_height (gimp->global_buffer), 512);
@@ -265,6 +269,8 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
           temp_buf_copy (temp, brush->pixmap);
           temp_buf_free (temp);
         }
+
+      tile_manager_unref (tiles);
     }
   else
     {

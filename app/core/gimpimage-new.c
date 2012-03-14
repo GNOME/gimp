@@ -276,16 +276,7 @@ gimp_image_new_from_buffer (Gimp       *gimp,
   g_return_val_if_fail (invoke == NULL || GIMP_IS_IMAGE (invoke), NULL);
   g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
 
-  switch (tile_manager_bpp (paste->tiles))
-    {
-    case 1: type = GIMP_GRAY_IMAGE;  break;
-    case 2: type = GIMP_GRAYA_IMAGE; break;
-    case 3: type = GIMP_RGB_IMAGE;   break;
-    case 4: type = GIMP_RGBA_IMAGE;  break;
-    default:
-      g_return_val_if_reached (NULL);
-      break;
-    }
+  type = gimp_buffer_get_image_type (paste);
 
   /*  create a new image  (always of type GIMP_RGB)  */
   image = gimp_create_image (gimp,
@@ -305,9 +296,10 @@ gimp_image_new_from_buffer (Gimp       *gimp,
       gimp_image_set_unit (image, gimp_image_get_unit (invoke));
     }
 
-  layer = gimp_layer_new_from_tiles (paste->tiles, image, type,
-                                     _("Pasted Layer"),
-                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (paste),
+                                      image, type,
+                                      _("Pasted Layer"),
+                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (image, layer, NULL, 0, TRUE);
 

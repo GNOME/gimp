@@ -31,6 +31,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimp.h"
 #include "gimp-edit.h"
 #include "gimpbuffer.h"
@@ -185,9 +187,10 @@ gimp_edit_paste (GimpImage    *image,
   else
     type = gimp_image_base_type_with_alpha (image);
 
-  layer = gimp_layer_new_from_tiles (paste->tiles, image, type,
-                                     _("Pasted Layer"),
-                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (paste),
+                                      image, type,
+                                      _("Pasted Layer"),
+                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   if (! layer)
     return NULL;
@@ -512,10 +515,16 @@ gimp_edit_extract (GimpImage     *image,
 
   if (tiles)
     {
-      GimpBuffer *buffer = gimp_buffer_new (tiles, _("Global Buffer"),
-                                            offset_x, offset_y, FALSE);
+      GeglBuffer *temp;
+      GimpBuffer *buffer;
 
+      temp = gimp_tile_manager_get_gegl_buffer (tiles, TRUE);
       tile_manager_unref (tiles);
+
+      buffer = gimp_buffer_new (temp, _("Global Buffer"),
+                                GIMP_IMAGE_TYPE_FROM_BYTES (tile_manager_bpp (tiles)),
+                                offset_x, offset_y, FALSE);
+      g_object_unref (temp);
 
       return buffer;
     }

@@ -17,18 +17,17 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <glib-object.h>
-
-#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-#include "base/tile-manager-preview.h"
 #include "base/temp-buf.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpbuffer.h"
+#include "gimpimage.h"
 
 
 static void      gimp_buffer_finalize         (GObject       *object);
@@ -86,7 +85,6 @@ gimp_buffer_class_init (GimpBufferClass *klass)
 static void
 gimp_buffer_init (GimpBuffer *buffer)
 {
-  buffer->tiles = NULL;
 }
 
 static void
@@ -94,10 +92,10 @@ gimp_buffer_finalize (GObject *object)
 {
   GimpBuffer *buffer = GIMP_BUFFER (object);
 
-  if (buffer->tiles)
+  if (buffer->buffer)
     {
-      tile_manager_unref (buffer->tiles);
-      buffer->tiles = NULL;
+      g_object_unref (buffer->buffer);
+      buffer->buffer = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -110,7 +108,7 @@ gimp_buffer_get_memsize (GimpObject *object,
   GimpBuffer *buffer  = GIMP_BUFFER (object);
   gint64      memsize = 0;
 
-  memsize += tile_manager_get_memsize (buffer->tiles, FALSE);
+  /* FIXME memsize += tile_manager_get_memsize (buffer->tiles, FALSE); */
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -197,8 +195,21 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                              gint          height)
 {
   GimpBuffer *buffer = GIMP_BUFFER (viewable);
+  TempBuf    *preview;
 
-  return tile_manager_get_preview (buffer->tiles, width, height);
+  preview = temp_buf_new (width, height, gimp_buffer_get_bytes (buffer),
+                          0, 0, NULL);
+
+  gegl_buffer_get (buffer->buffer,
+                   MIN ((gdouble) width / (gdouble) gimp_buffer_get_width (buffer),
+                        (gdouble) height / (gdouble) gimp_buffer_get_height (buffer)),
+                   NULL,
+                   gimp_bpp_to_babl_format (gimp_buffer_get_bytes (buffer),
+                                            TRUE),
+                   temp_buf_get_data (preview),
+                   width * gimp_buffer_get_bytes (buffer));
+
+  return preview;
 }
 
 static gchar *
@@ -214,30 +225,32 @@ gimp_buffer_get_description (GimpViewable  *viewable,
 }
 
 GimpBuffer *
-gimp_buffer_new (TileManager *tiles,
-                 const gchar *name,
-                 gint         offset_x,
-                 gint         offset_y,
-                 gboolean     copy_pixels)
+gimp_buffer_new (GeglBuffer    *buffer,
+                 const gchar   *name,
+                 GimpImageType  image_type,
+                 gint           offset_x,
+                 gint           offset_y,
+                 gboolean       copy_pixels)
 {
-  GimpBuffer *buffer;
+  GimpBuffer *gimp_buffer;
 
-  g_return_val_if_fail (tiles != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  buffer = g_object_new (GIMP_TYPE_BUFFER,
-                         "name", name,
-                         NULL);
+  gimp_buffer = g_object_new (GIMP_TYPE_BUFFER,
+                              "name", name,
+                              NULL);
 
-  if (copy_pixels)
-    buffer->tiles = tile_manager_duplicate (tiles);
+  if (TRUE /* FIXME copy_pixels */)
+    gimp_buffer->buffer = gegl_buffer_dup (buffer);
   else
-    buffer->tiles = tile_manager_ref (tiles);
+    gimp_buffer->buffer = g_object_ref (buffer);
 
-  buffer->offset_x = offset_x;
-  buffer->offset_y = offset_y;
+  gimp_buffer->image_type = image_type;
+  gimp_buffer->offset_x   = offset_x;
+  gimp_buffer->offset_y   = offset_y;
 
-  return buffer;
+  return gimp_buffer;
 }
 
 GimpBuffer *
@@ -246,15 +259,13 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
                              gint         offset_x,
                              gint         offset_y)
 {
-  GimpBuffer  *buffer;
-  TileManager *tiles;
-  guchar      *pixels;
-  PixelRegion  destPR;
-  gint         width;
-  gint         height;
-  gint         rowstride;
-  gint         channels;
-  gint         y;
+  GimpBuffer   *gimp_buffer;
+  GeglBuffer   *buffer;
+  gint          width;
+  gint          height;
+  gint          rowstride;
+  gint          channels;
+  GeglRectangle rect = { 0, };
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -264,22 +275,22 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
   rowstride = gdk_pixbuf_get_rowstride (pixbuf);
   channels  = gdk_pixbuf_get_n_channels (pixbuf);
 
-  tiles = tile_manager_new (width, height, channels);
+  rect.width = width;
+  rect.height = height;
 
-  pixel_region_init (&destPR, tiles, 0, 0, width, height, TRUE);
+  buffer = gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
+                                             gimp_bpp_to_babl_format (channels,
+                                                                      TRUE),
+                                             &rect, rowstride,
+                                             NULL, NULL);
 
-  for (y = 0, pixels = gdk_pixbuf_get_pixels (pixbuf);
-       y < height;
-       y++, pixels += rowstride)
-    {
-      pixel_region_set_row (&destPR, 0, y, width, pixels);
-   }
+  gimp_buffer = gimp_buffer_new (buffer, name,
+                                 GIMP_IMAGE_TYPE_FROM_BYTES (channels),
+                                 offset_x, offset_y, FALSE);
 
-  buffer = gimp_buffer_new (tiles, name, offset_x, offset_y, FALSE);
+  g_object_unref (buffer);
 
-  tile_manager_unref (tiles);
-
-  return buffer;
+  return gimp_buffer;
 }
 
 gint
@@ -287,7 +298,7 @@ gimp_buffer_get_width (const GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
 
-  return tile_manager_width (buffer->tiles);
+  return gegl_buffer_get_width (buffer->buffer);
 }
 
 gint
@@ -295,7 +306,7 @@ gimp_buffer_get_height (const GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
 
-  return tile_manager_height (buffer->tiles);
+  return gegl_buffer_get_height (buffer->buffer);
 }
 
 gint
@@ -303,7 +314,7 @@ gimp_buffer_get_bytes (const GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
 
-  return tile_manager_bpp (buffer->tiles);
+  return GIMP_IMAGE_TYPE_BYTES (buffer->image_type);
 }
 
 GimpImageType
@@ -311,21 +322,13 @@ gimp_buffer_get_image_type (const GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
 
-  switch (tile_manager_bpp (buffer->tiles))
-    {
-    case 1: return GIMP_GRAY_IMAGE;
-    case 2: return GIMP_GRAYA_IMAGE;
-    case 3: return GIMP_RGB_IMAGE;
-    case 4: return GIMP_RGBA_IMAGE;
-    }
-
-  return 0;
+  return buffer->image_type;
 }
 
-TileManager *
-gimp_buffer_get_tiles (const GimpBuffer *buffer)
+GeglBuffer *
+gimp_buffer_get_buffer (const GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
 
-  return buffer->tiles;
+  return buffer->buffer;
 }

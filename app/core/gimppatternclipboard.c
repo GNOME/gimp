@@ -25,9 +25,8 @@
 #include "core-types.h"
 
 #include "base/temp-buf.h"
-#include "base/pixel-region.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimpbuffer.h"
@@ -189,25 +188,25 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
 
   if (gimp->global_buffer)
     {
-      gint         width;
-      gint         height;
-      gint         bytes;
-      PixelRegion  bufferPR;
-      PixelRegion  maskPR;
+      GimpBuffer    *buffer = gimp->global_buffer;
+      GeglRectangle  rect = { 0, };
+      gint           width;
+      gint           height;
+      gint           bytes;
 
-      width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 512);
-      height = MIN (gimp_buffer_get_height (gimp->global_buffer), 512);
-      bytes  = gimp_buffer_get_bytes (gimp->global_buffer);
+      width  = MIN (gimp_buffer_get_width  (buffer), 512);
+      height = MIN (gimp_buffer_get_height (buffer), 512);
+      bytes  = gimp_buffer_get_bytes (buffer);
+
+      rect.width  = width;
+      rect.height = height;
 
       pattern->mask = temp_buf_new (width, height, bytes, 0, 0, NULL);
 
-      pixel_region_init (&bufferPR,
-                         gimp_buffer_get_tiles (gimp->global_buffer),
-                         0, 0, width, height, FALSE);
-      pixel_region_init_temp_buf (&maskPR, pattern->mask,
-                                  0, 0, width, height);
-
-      copy_region (&bufferPR, &maskPR);
+      gegl_buffer_get (gimp_buffer_get_buffer (buffer), 1.0, &rect,
+                       gimp_bpp_to_babl_format (bytes, TRUE),
+                       temp_buf_get_data (pattern->mask),
+                       width * gimp_buffer_get_bytes (buffer));
     }
   else
     {
