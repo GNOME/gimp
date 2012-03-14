@@ -739,32 +739,35 @@ gimp_drawable_real_update (GimpDrawable *drawable,
 {
   if (drawable->private->tile_source_node)
     {
-      GObject       *operation;
-      GeglRectangle  rect;
+      GObject    *operation = NULL;
+      GeglBuffer *buffer    = NULL;
 
       g_object_get (drawable->private->tile_source_node,
                     "gegl-operation", &operation,
                     NULL);
 
-      rect.x      = x;
-      rect.y      = y;
-      rect.width  = width;
-      rect.height = height;
+      if (operation)
+        {
+          GeglRectangle rect;
 
-      gegl_operation_invalidate (GEGL_OPERATION (operation), &rect, FALSE);
+          rect.x      = x;
+          rect.y      = y;
+          rect.width  = width;
+          rect.height = height;
 
-      g_object_unref (operation);
-      {
-        GeglBuffer *buffer = NULL;
-        gegl_node_get (drawable->private->tile_source_node,
-                       "buffer", &buffer,
-                       NULL);
-        if (buffer)
-          {
-            gegl_tile_source_reinit (GEGL_TILE_SOURCE (buffer));
-            g_object_unref (buffer);
-          }
-      }
+          gegl_operation_invalidate (GEGL_OPERATION (operation), &rect, FALSE);
+          g_object_unref (operation);
+        }
+
+      gegl_node_get (drawable->private->tile_source_node,
+                     "buffer", &buffer,
+                     NULL);
+
+      if (buffer)
+        {
+          gegl_tile_source_reinit (GEGL_TILE_SOURCE (buffer));
+          g_object_unref (buffer);
+        }
     }
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
@@ -851,6 +854,7 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   if (drawable->private->tile_source_node)
     {
       GeglBuffer *buffer = gimp_drawable_get_buffer (drawable, FALSE);
+
       gegl_node_set (drawable->private->tile_source_node,
                      "buffer", buffer,
                      NULL);
@@ -1572,11 +1576,12 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
 
   drawable->private->tile_source_node =
     gegl_node_new_child (drawable->private->source_node,
-                         "operation",    "gegl:buffer-source",
-                         "buffer", buffer,
+                         "operation", "gegl:buffer-source",
+                         "buffer",    buffer,
                          NULL);
 
   g_object_unref (buffer);
+
   gimp_drawable_sync_source_node (drawable, FALSE);
 
   return drawable->private->source_node;
