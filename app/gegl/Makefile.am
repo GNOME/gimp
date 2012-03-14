@@ -46,9 +46,6 @@ libappgegl_a_sources = \
 	gimpthresholdconfig.c			\
 	gimpthresholdconfig.h			\
 	\
-	gimpoperationtilesink.c			\
-	gimpoperationtilesink.h			\
-	\
 	gimpoperationpointfilter.c		\
 	gimpoperationpointfilter.h		\
 	gimpoperationbrightnesscontrast.c	\

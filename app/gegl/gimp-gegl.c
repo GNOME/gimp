@@ -42,7 +42,6 @@
 #include "gimpoperationlevels.h"
 #include "gimpoperationposterize.h"
 #include "gimpoperationthreshold.h"
-#include "gimpoperationtilesink.h"
 
 #include "gimpoperationpointlayermode.h"
 #include "gimpoperationdissolvemode.h"
@@ -93,8 +92,6 @@ gimp_gegl_init (Gimp *gimp)
   g_signal_connect (config, "notify::tile-cache-size",
                     G_CALLBACK (gimp_gegl_notify_tile_cache_size),
                     NULL);
-
-  g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SINK);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
