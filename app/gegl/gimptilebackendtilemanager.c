@@ -152,7 +152,8 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
         tile_stride      = TILE_WIDTH * tile_bpp (gimp_tile);
         gimp_tile_stride = tile_ewidth (gimp_tile) * tile_bpp (gimp_tile);
 
-        if (tile_stride == gimp_tile_stride)
+        if (tile_stride == gimp_tile_stride && 
+            TILE_HEIGHT == tile_eheight (gimp_tile))
           {
             /* use the GimpTile directly as GEGL tile */
             tile = gegl_tile_new_bare ();
