@@ -161,12 +161,6 @@ gimp_projection_construct_gegl (GimpProjection *proj,
     gegl_processor_set_rectangle (proj->processor, &rect);
 
   while (gegl_processor_work (proj->processor, NULL));
-
-  /* FIXME: Reuse it when it can handle dirty rects when painting
-   * properly
-   */
-  g_object_unref (proj->processor);
-  proj->processor = NULL;
 }
 
 static void
