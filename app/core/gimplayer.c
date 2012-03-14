@@ -40,7 +40,6 @@
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable-convert.h"
-#include "gimpdrawable-invert.h"
 #include "gimperror.h"
 #include "gimpimage-undo-push.h"
 #include "gimpimage-undo.h"

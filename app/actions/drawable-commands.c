@@ -26,8 +26,8 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable-equalize.h"
-#include "core/gimpdrawable-invert.h"
 #include "core/gimpdrawable-levels.h"
+#include "core/gimpdrawable-operation.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem-linked.h"
@@ -87,7 +87,9 @@ drawable_invert_cmd_callback (GtkAction *action,
       return;
     }
 
-  gimp_drawable_invert (drawable, GIMP_PROGRESS (display));
+  gimp_drawable_apply_operation_by_name (drawable, GIMP_PROGRESS (display),
+                                         _("Invert"), "gegl:invert",
+                                         NULL, TRUE);
   gimp_image_flush (image);
 }
 

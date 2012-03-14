@@ -30,7 +30,6 @@
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpdrawable-hue-saturation.h"
-#include "core/gimpdrawable-invert.h"
 #include "core/gimpdrawable-levels.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
@@ -348,13 +347,17 @@ invert_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          ! gimp_drawable_is_indexed (drawable))
+        {
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 _("Invert"),
+                                                 "gegl:invert",
+                                                 NULL, TRUE);
+        }
+      else
         success = FALSE;
-
-      if (success)
-        gimp_drawable_invert (drawable, progress);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
