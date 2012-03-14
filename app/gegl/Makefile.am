@@ -48,8 +48,6 @@ libappgegl_a_sources = \
 	\
 	gimpoperationtilesink.c			\
 	gimpoperationtilesink.h			\
-	gimpoperationtilesource.c		\
-	gimpoperationtilesource.h		\
 	\
 	gimpoperationpointfilter.c		\
 	gimpoperationpointfilter.h		\

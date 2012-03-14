@@ -43,7 +43,6 @@
 #include "gimpoperationposterize.h"
 #include "gimpoperationthreshold.h"
 #include "gimpoperationtilesink.h"
-#include "gimpoperationtilesource.h"
 
 #include "gimpoperationpointlayermode.h"
 #include "gimpoperationdissolvemode.h"
@@ -96,7 +95,6 @@ gimp_gegl_init (Gimp *gimp)
                     NULL);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SINK);
-  g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SOURCE);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
