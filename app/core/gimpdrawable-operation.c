@@ -132,7 +132,7 @@ gimp_drawable_apply_operation_to_tiles (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-  g_return_if_fail (undo_desc != NULL);
+  g_return_if_fail (progress == NULL || undo_desc != NULL);
   g_return_if_fail (GEGL_IS_NODE (operation));
   g_return_if_fail (new_tiles != NULL);
 
@@ -157,11 +157,11 @@ gimp_drawable_apply_operation_to_tiles (GimpDrawable *drawable,
 /*  private functions  */
 
 static void
-gimp_drawable_apply_operation_private (GimpDrawable       *drawable,
-                                       GimpProgress       *progress,
-                                       const gchar        *undo_desc,
-                                       GeglNode           *operation,
-                                       gboolean            linear,
+gimp_drawable_apply_operation_private (GimpDrawable        *drawable,
+                                       GimpProgress        *progress,
+                                       const gchar         *undo_desc,
+                                       GeglNode            *operation,
+                                       gboolean             linear,
                                        TileManager         *dest_tiles,
                                        const GeglRectangle *rect)
 {
@@ -184,12 +184,12 @@ gimp_drawable_apply_operation_private (GimpDrawable       *drawable,
   outbuf = gimp_tile_manager_get_gegl_buffer (dest_tiles, TRUE);
 
   input  = gegl_node_new_child (gegl,
-                                "operation",    "gegl:buffer-source",
-                                "buffer", inbuf,
+                                "operation", "gegl:buffer-source",
+                                "buffer",    inbuf,
                                 NULL);
   output = gegl_node_new_child (gegl,
-                                "operation",    "gegl:write-buffer",
-                                "buffer", outbuf,
+                                "operation", "gegl:write-buffer",
+                                "buffer",    outbuf,
                                 NULL);
   g_object_unref (inbuf);
   g_object_unref (outbuf);
