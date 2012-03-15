@@ -32,6 +32,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "vectors/gimpvectors.h"
 
 #include "gimp.h"
@@ -574,12 +576,8 @@ gimp_image_merge_layers (GimpImage     *image,
       gimp_item_set_offset (GIMP_ITEM (merge_layer), x1, y1);
 
       /*  clear the layer  */
-      pixel_region_init (&src1PR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
-                         0, 0,
-                         (x2 - x1), (y2 - y1),
-                         TRUE);
-      clear_region (&src1PR);
+      gegl_buffer_clear (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (merge_layer)),
+                         NULL);
 
       /*  Find the index in the layer list of the bottom layer--we need this
        *  in order to add the final, merged layer to the layer list correctly
