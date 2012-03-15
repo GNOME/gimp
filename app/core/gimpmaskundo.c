@@ -150,8 +150,6 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       gegl_buffer_copy (mask_undo->buffer, NULL,
                         gimp_drawable_get_write_buffer (drawable), &dest_rect);
 
-      gegl_buffer_flush (gimp_drawable_get_write_buffer (drawable));
-
       g_object_unref (mask_undo->buffer);
     }
 

@@ -241,6 +241,8 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     {
       /*  Otherwise, fill the vacated regions  */
 
+      gegl_buffer_flush (dest_buffer);
+
       if (fill_type == GIMP_OFFSET_BACKGROUND)
         {
           GimpRGB color;

@@ -1507,9 +1507,14 @@ gimp_drawable_get_read_buffer (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
+  if (drawable->private->write_buffer)
+    gegl_buffer_flush (drawable->private->write_buffer);
+
   if (! drawable->private->read_buffer)
     drawable->private->read_buffer = gimp_drawable_create_buffer (drawable,
                                                                   FALSE);
+  else
+    gimp_gegl_buffer_refetch_tiles (drawable->private->read_buffer);
 
   return drawable->private->read_buffer;
 }
@@ -1522,6 +1527,8 @@ gimp_drawable_get_write_buffer (GimpDrawable *drawable)
   if (! drawable->private->write_buffer)
     drawable->private->write_buffer = gimp_drawable_create_buffer (drawable,
                                                                    TRUE);
+  else
+    gimp_gegl_buffer_refetch_tiles (drawable->private->write_buffer);
 
   return drawable->private->write_buffer;
 }
@@ -1530,6 +1537,9 @@ TileManager *
 gimp_drawable_get_tiles (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  if (drawable->private->write_buffer)
+    gegl_buffer_flush (drawable->private->write_buffer);
 
   return GIMP_DRAWABLE_GET_CLASS (drawable)->get_tiles (drawable);
 }

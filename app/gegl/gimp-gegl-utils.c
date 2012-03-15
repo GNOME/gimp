@@ -170,3 +170,11 @@ gimp_tile_manager_create_buffer (TileManager *tm,
 
   return buffer;
 }
+
+void
+gimp_gegl_buffer_refetch_tiles (GeglBuffer *buffer)
+{
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
+  gegl_tile_source_reinit (GEGL_TILE_SOURCE (buffer));
+}
