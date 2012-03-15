@@ -343,8 +343,6 @@ void  extract_from_indexed_pixels         (guchar       *src,
 
 /*  Region functions  */
 
-void  clear_region                        (PixelRegion  *dest);
-
 void  color_region                        (PixelRegion  *dest,
                                            const guchar *color);
 void  color_region_mask                   (PixelRegion  *dest,

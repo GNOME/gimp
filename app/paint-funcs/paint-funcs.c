@@ -1783,35 +1783,6 @@ extract_from_indexed_pixels (guchar       *src,
 /**************************************************/
 
 void
-clear_region (PixelRegion *dest)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (1, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      if (dest->w * dest->bytes == dest->rowstride)
-        {
-          memset (dest->data, 0, dest->w * dest->h * dest->bytes);
-        }
-      else
-        {
-          guchar *d = dest->data;
-          gint    h = dest->h;
-
-          while (h--)
-            {
-              memset (d, 0, dest->w * dest->bytes);
-
-              d += dest->rowstride;
-            }
-        }
-    }
-}
-
-
-void
 color_region (PixelRegion  *dest,
               const guchar *col)
 {
