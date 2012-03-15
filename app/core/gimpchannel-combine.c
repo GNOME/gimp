@@ -43,8 +43,8 @@ gimp_channel_combine_rect (GimpChannel    *mask,
                            gint            w,
                            gint            h)
 {
-  PixelRegion maskPR;
-  guchar      color;
+  GeglColor     *color;
+  GeglRectangle  rect;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
@@ -55,15 +55,19 @@ gimp_channel_combine_rect (GimpChannel    *mask,
                                   &x, &y, &w, &h))
     return;
 
-  pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                     x, y, w, h, TRUE);
-
   if (op == GIMP_CHANNEL_OP_ADD || op == GIMP_CHANNEL_OP_REPLACE)
-    color = OPAQUE_OPACITY;
+    color = gegl_color_new ("#fff");
   else
-    color = TRANSPARENT_OPACITY;
+    color = gegl_color_new ("#000");
 
-  color_region (&maskPR, &color);
+  rect.x      = x;
+  rect.y      = y;
+  rect.width  = w;
+  rect.height = h;
+
+  gegl_buffer_set_color (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask)),
+                         &rect, color);
+  g_object_unref (color);
 
   /*  Determine new boundary  */
   if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && ! mask->empty)

@@ -36,6 +36,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimp.h"
 #include "gimpbezierdesc.h"
 #include "gimpchannel.h"
@@ -290,7 +292,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   gint         bytes;
   gint         off_x;
   gint         off_y;
-  guchar       bg[1] = { 0, };
+  GeglBuffer  *tmp_buffer;
   PixelRegion  maskPR;
   PixelRegion  basePR;
 
@@ -343,8 +345,10 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
    * of the stroke.
    */
   mask = tile_manager_new (w, h, 1);
-  pixel_region_init (&maskPR, mask, 0, 0, w, h, TRUE);
-  color_region (&maskPR, bg);
+
+  tmp_buffer = gimp_tile_manager_create_buffer (mask, TRUE);
+  gegl_buffer_clear (tmp_buffer, NULL);
+  g_object_unref (tmp_buffer);
 
   /* render the stroke into it */
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);

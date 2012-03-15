@@ -1366,8 +1366,7 @@ static void
 gimp_channel_real_all (GimpChannel *channel,
                        gboolean     push_undo)
 {
-  PixelRegion maskPR;
-  guchar      bg = OPAQUE_OPACITY;
+  GeglColor *color;
 
   if (push_undo)
     gimp_channel_push_undo (channel,
@@ -1376,12 +1375,10 @@ gimp_channel_real_all (GimpChannel *channel,
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
   /*  clear the channel  */
-  pixel_region_init (&maskPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (channel)),
-                     gimp_item_get_height (GIMP_ITEM (channel)), TRUE);
-  color_region (&maskPR, &bg);
+  color = gegl_color_new ("#fff");
+  gegl_buffer_set_color (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+                         NULL, color);
+  g_object_unref (color);
 
   /*  we know the bounds  */
   channel->bounds_known = TRUE;
