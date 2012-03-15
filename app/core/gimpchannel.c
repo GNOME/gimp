@@ -27,8 +27,6 @@
 #include "core-types.h"
 
 #include "base/boundary.h"
-#include "base/gimplut.h"
-#include "base/lut-funcs.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 #include "base/tile.h"
@@ -1283,26 +1281,25 @@ static void
 gimp_channel_real_sharpen (GimpChannel *channel,
                            gboolean     push_undo)
 {
-  PixelRegion  maskPR;
-  GimpLut     *lut;
+  GimpDrawable *drawable = GIMP_DRAWABLE (channel);
+  GeglNode     *node;
 
   if (push_undo)
     gimp_channel_push_undo (channel,
                             GIMP_CHANNEL_GET_CLASS (channel)->sharpen_desc);
   else
-    gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
+    gimp_drawable_invalidate_boundary (drawable);
 
-  pixel_region_init (&maskPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (channel)),
-                     gimp_item_get_height (GIMP_ITEM (channel)),
-                     TRUE);
-  lut = threshold_lut_new (0.5, 1);
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:threshold",
+                              "value",     0.5,
+                              NULL);
 
-  pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process_inline,
-                                  lut, 1, &maskPR);
-  gimp_lut_free (lut);
+  gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
+                                           node, TRUE,
+                                           gimp_drawable_get_write_buffer (drawable));
+
+  g_object_unref (node);
 
   channel->bounds_known = FALSE;
 
