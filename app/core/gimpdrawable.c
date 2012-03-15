@@ -1812,6 +1812,14 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
   gimp_drawable_fill (drawable, pattern ? NULL : &color, pattern);
 }
 
+const Babl *
+gimp_drawable_get_babl_format (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return gimp_bpp_to_babl_format (gimp_drawable_bytes (drawable), TRUE);
+}
+
 gboolean
 gimp_drawable_has_alpha (const GimpDrawable *drawable)
 {
