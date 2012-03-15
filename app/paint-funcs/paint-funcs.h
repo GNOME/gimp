@@ -19,11 +19,6 @@
 #define __PAINT_FUNCS_H__
 
 
-/*  Called initially to setup rendering features  */
-void  paint_funcs_setup     (void);
-void  paint_funcs_free      (void);
-
-
 /*  Paint functions  */
 
 void  color_pixels          (guchar       *dest,

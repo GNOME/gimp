@@ -175,16 +175,6 @@ cubic (gdouble dx,
 /*********************/
 
 void
-paint_funcs_setup (void)
-{
-}
-
-void
-paint_funcs_free (void)
-{
-}
-
-void
 combine_indexed_and_indexed_pixels (const guchar   *src1,
                                     const guchar   *src2,
                                     guchar         *dest,

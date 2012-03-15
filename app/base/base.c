@@ -34,7 +34,6 @@
 
 #include "config/gimpbaseconfig.h"
 
-#include "paint-funcs/paint-funcs.h"
 #include "composite/gimp-composite.h"
 
 #include "base.h"
@@ -107,8 +106,6 @@ base_init (GimpBaseConfig *config,
 
   gimp_composite_init (be_verbose, use_cpu_accel);
 
-  paint_funcs_setup ();
-
   return swap_is_ok;
 }
 
@@ -122,7 +119,6 @@ base_exit (void)
 #endif
 
   pixel_processor_exit ();
-  paint_funcs_free ();
   tile_cache_exit ();
   tile_swap_exit ();
 
