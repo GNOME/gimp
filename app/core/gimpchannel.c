@@ -1316,8 +1316,6 @@ gimp_channel_real_clear (GimpChannel *channel,
                          const gchar *undo_desc,
                          gboolean     push_undo)
 {
-  PixelRegion maskPR;
-
   if (push_undo)
     {
       if (! undo_desc)
@@ -1332,22 +1330,18 @@ gimp_channel_real_clear (GimpChannel *channel,
 
   if (channel->bounds_known && ! channel->empty)
     {
-      pixel_region_init (&maskPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                         channel->x1, channel->y1,
-                         channel->x2 - channel->x1,
-                         channel->y2 - channel->y1, TRUE);
-      clear_region (&maskPR);
+      GeglRectangle rect = { channel->x1,
+                             channel->y1,
+                             channel->x2 - channel->x1,
+                             channel->y2 - channel->y1 };
+
+      gegl_buffer_clear (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+                         &rect);
     }
   else
     {
-      /*  clear the mask  */
-      pixel_region_init (&maskPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                         0, 0,
-                         gimp_item_get_width  (GIMP_ITEM (channel)),
-                         gimp_item_get_height (GIMP_ITEM (channel)), TRUE);
-      clear_region (&maskPR);
+      gegl_buffer_clear (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+                         NULL);
     }
 
   /*  we know the bounds  */
