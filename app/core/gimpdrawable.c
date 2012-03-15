@@ -921,14 +921,23 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
 
   if (! tiles)
     {
-      PixelRegion srcPR, destPR;
+      GeglBuffer    *dest_buffer;
+      GeglRectangle  src_rect;
+      GeglRectangle  dest_rect = { 0, };
 
       tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         x, y, width, height, FALSE);
-      pixel_region_init (&destPR, tiles,
-                         0, 0, width, height, TRUE);
-      copy_region (&srcPR, &destPR);
+
+      dest_buffer = gimp_tile_manager_create_buffer (tiles, TRUE);
+
+      src_rect.x      = x;
+      src_rect.y      = y;
+      src_rect.width  = width;
+      src_rect.height = height;
+
+      gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), &src_rect,
+                        dest_buffer, &dest_rect);
+
+      g_object_unref (dest_buffer);
 
       new_tiles = TRUE;
     }
