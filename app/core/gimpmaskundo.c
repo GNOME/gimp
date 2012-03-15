@@ -21,10 +21,9 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
 #include "base/tile-manager.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpchannel.h"
 #include "gimpmaskundo.h"
@@ -83,20 +82,27 @@ gimp_mask_undo_constructed (GObject *object)
 
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
-      GimpDrawable *drawable = GIMP_DRAWABLE (channel);
-      PixelRegion   srcPR, destPR;
+      GimpDrawable  *drawable = GIMP_DRAWABLE (channel);
+      GeglBuffer    *dest_buffer;
+      GeglRectangle  src_rect;
+      GeglRectangle  dest_rect = { 0, };
 
       mask_undo->tiles = tile_manager_new (x2 - x1, y2 - y1,
                                            gimp_drawable_bytes (drawable));
       mask_undo->x = x1;
       mask_undo->y = y1;
 
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         x1, y1, x2 - x1, y2 - y1, FALSE);
-      pixel_region_init (&destPR, mask_undo->tiles,
-                         0, 0, x2 - x1, y2 - y1, TRUE);
+      dest_buffer = gimp_tile_manager_create_buffer (mask_undo->tiles, TRUE);
 
-      copy_region (&srcPR, &destPR);
+      src_rect.x      = x1;
+      src_rect.y      = y1;
+      src_rect.width  = x2 - x1;
+      src_rect.height = y2 - y1;
+
+      gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), &src_rect,
+                        dest_buffer, &dest_rect);
+
+      g_object_unref (dest_buffer);
     }
 }
 
@@ -120,8 +126,8 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 {
   GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (undo);
   GimpChannel  *channel   = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
+  GimpDrawable *drawable  = GIMP_DRAWABLE (channel);
   TileManager  *new_tiles;
-  PixelRegion   srcPR, destPR;
   gint          x1, y1, x2, y2;
   gint          width  = 0;
   gint          height = 0;
@@ -130,21 +136,25 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
+      GeglBuffer    *dest_buffer;
+      GeglRectangle  src_rect;
+      GeglRectangle  dest_rect = { 0, };
+
       new_tiles = tile_manager_new (x2 - x1, y2 - y1, 1);
 
-      pixel_region_init (&srcPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                         x1, y1, x2 - x1, y2 - y1, FALSE);
-      pixel_region_init (&destPR, new_tiles,
-                         0, 0, x2 - x1, y2 - y1, TRUE);
+      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
 
-      copy_region (&srcPR, &destPR);
+      src_rect.x      = x1;
+      src_rect.y      = y1;
+      src_rect.width  = x2 - x1;
+      src_rect.height = y2 - y1;
 
-      pixel_region_init (&srcPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                         x1, y1, x2 - x1, y2 - y1, TRUE);
+      gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), &src_rect,
+                        dest_buffer, &dest_rect);
 
-      clear_region (&srcPR);
+      gegl_buffer_clear (gimp_drawable_get_read_buffer (drawable), &src_rect);
+
+      g_object_unref (dest_buffer);
     }
   else
     {
@@ -153,22 +163,27 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   if (mask_undo->tiles)
     {
+      GeglBuffer    *src_buffer;
+      GeglRectangle  dest_rect;
+
       width  = tile_manager_width  (mask_undo->tiles);
       height = tile_manager_height (mask_undo->tiles);
 
-      pixel_region_init (&srcPR, mask_undo->tiles,
-                         0, 0, width, height, FALSE);
-      pixel_region_init (&destPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                         mask_undo->x, mask_undo->y, width, height, TRUE);
+      src_buffer = gimp_tile_manager_create_buffer (mask_undo->tiles, FALSE);
 
-      copy_region (&srcPR, &destPR);
+      dest_rect.x = mask_undo->x;
+      dest_rect.y = mask_undo->y;
+
+      gegl_buffer_copy (src_buffer, NULL,
+                        gimp_drawable_get_write_buffer (drawable), &dest_rect);
+
+      g_object_unref (src_buffer);
 
       tile_manager_unref (mask_undo->tiles);
     }
 
   /* invalidate the current bounds and boundary of the mask */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
+  gimp_drawable_invalidate_boundary (drawable);
 
   if (mask_undo->tiles)
     {
