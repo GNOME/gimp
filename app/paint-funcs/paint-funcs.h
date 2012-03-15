@@ -369,8 +369,6 @@ void  shade_region                        (PixelRegion *src,
 
 void  copy_region                         (PixelRegion *src,
                                            PixelRegion *dest);
-void  copy_region_nocow                   (PixelRegion *src,
-                                           PixelRegion *dest);
 
 void  add_alpha_region                    (PixelRegion *src,
                                            PixelRegion *dest);

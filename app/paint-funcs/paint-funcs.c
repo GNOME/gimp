@@ -2001,31 +2001,6 @@ copy_region (PixelRegion *src,
     }
 }
 
-void
-copy_region_nocow (PixelRegion *src,
-                   PixelRegion *dest)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (2, src, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      const guchar *s      = src->data;
-      guchar       *d      = dest->data;
-      gint          pixels = src->w * src->bytes;
-      gint          h      = src->h;
-
-      while (h --)
-        {
-          memcpy (d, s, pixels);
-
-          s += src->rowstride;
-          d += dest->rowstride;
-        }
-    }
-}
-
 
 void
 add_alpha_region (PixelRegion *src,
