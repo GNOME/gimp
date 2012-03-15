@@ -1878,8 +1878,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
 {
   GimpItem      *item;
   GimpDrawable  *drawable;
-  PixelRegion    srcPR, destPR;
   TileManager   *new_tiles;
+  GeglBuffer    *dest_buffer;
   GimpImageType  new_type;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
@@ -1892,27 +1892,17 @@ gimp_layer_add_alpha (GimpLayer *layer)
 
   new_type = gimp_drawable_type_with_alpha (drawable);
 
-  /*  Allocate the new tiles  */
   new_tiles = tile_manager_new (gimp_item_get_width  (item),
                                 gimp_item_get_height (item),
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     0, 0,
-                     gimp_item_get_width  (item),
-                     gimp_item_get_height (item),
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     gimp_item_get_width  (item),
-                     gimp_item_get_height (item),
-                     TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
 
-  /*  Add an alpha channel  */
-  add_alpha_region (&srcPR, &destPR);
+  gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+                    dest_buffer, NULL);
 
-  /*  Set the new tiles  */
+  g_object_unref (dest_buffer);
+
   gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
                            gimp_item_is_attached (GIMP_ITEM (layer)),
                            C_("undo-type", "Add Alpha Channel"),
