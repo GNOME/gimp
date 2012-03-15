@@ -564,10 +564,8 @@ void
 gimp_selection_load (GimpSelection *selection,
                      GimpChannel   *channel)
 {
-  GeglBuffer *src;
-  GeglBuffer *dest;
-  gint        width;
-  gint        height;
+  gint width;
+  gint height;
 
   g_return_if_fail (GIMP_IS_SELECTION (selection));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
@@ -582,13 +580,10 @@ gimp_selection_load (GimpSelection *selection,
                           C_("undo-type", "Channel to Selection"));
 
   /*  copy the channel to the mask  */
-  src  = gimp_drawable_create_buffer (GIMP_DRAWABLE (channel), FALSE);
-  dest = gimp_drawable_create_buffer (GIMP_DRAWABLE (selection), TRUE);
-
-  gegl_buffer_copy (src, NULL, dest, NULL);
-
-  g_object_unref (src);
-  g_object_unref (dest);
+  gegl_buffer_copy (gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel)),
+                    NULL,
+                    gimp_drawable_get_write_buffer (GIMP_DRAWABLE (selection)),
+                    NULL);
 
   GIMP_CHANNEL (selection)->bounds_known = FALSE;
 

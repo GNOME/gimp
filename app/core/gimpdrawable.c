@@ -301,6 +301,18 @@ gimp_drawable_finalize (GObject *object)
 
   gimp_drawable_free_shadow_tiles (drawable);
 
+  if (drawable->private->read_buffer)
+    {
+      g_object_unref (drawable->private->read_buffer);
+      drawable->private->read_buffer = NULL;
+    }
+
+  if (drawable->private->write_buffer)
+    {
+      g_object_unref (drawable->private->write_buffer);
+      drawable->private->write_buffer = NULL;
+    }
+
   if (drawable->private->source_node)
     {
       g_object_unref (drawable->private->source_node);
@@ -422,8 +434,6 @@ gimp_drawable_duplicate (GimpItem *item,
       GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
       GimpImageType  image_type   = gimp_drawable_type (drawable);
-      GeglBuffer    *src;
-      GeglBuffer    *dest;
 
       new_drawable->private->type = image_type;
 
@@ -435,13 +445,8 @@ gimp_drawable_duplicate (GimpItem *item,
                           gimp_item_get_height (new_item),
                           gimp_drawable_bytes (new_drawable));
 
-      src  = gimp_drawable_create_buffer (drawable, FALSE);
-      dest = gimp_drawable_create_buffer (new_drawable, TRUE);
-
-      gegl_buffer_copy (src, NULL, dest, NULL);
-
-      g_object_unref (src);
-      g_object_unref (dest);
+      gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+                        gimp_drawable_get_write_buffer (new_drawable), NULL);
     }
 
   return new_item;
@@ -838,6 +843,18 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   drawable->private->tiles = tiles;
   drawable->private->type  = type;
 
+  if (drawable->private->read_buffer)
+    {
+      g_object_unref (drawable->private->read_buffer);
+      drawable->private->read_buffer = NULL;
+    }
+
+  if (drawable->private->write_buffer)
+    {
+      g_object_unref (drawable->private->write_buffer);
+      drawable->private->write_buffer = NULL;
+    }
+
   gimp_item_set_offset (item, offset_x, offset_y);
   gimp_item_set_size (item,
                       tile_manager_width  (tiles),
@@ -847,14 +864,9 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
     gimp_drawable_alpha_changed (drawable);
 
   if (drawable->private->tile_source_node)
-    {
-      GeglBuffer *buffer = gimp_drawable_create_buffer (drawable, FALSE);
-
-      gegl_node_set (drawable->private->tile_source_node,
-                     "buffer", buffer,
-                     NULL);
-      g_object_unref (buffer);
-    }
+    gegl_node_set (drawable->private->tile_source_node,
+                   "buffer", gimp_drawable_get_read_buffer (drawable),
+                   NULL);
 }
 
 static GeglNode *
@@ -1471,14 +1483,36 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
   *temp_tiles = NULL;
 }
 
-GeglBuffer *
+static GeglBuffer *
 gimp_drawable_create_buffer (GimpDrawable *drawable,
                              gboolean      write)
 {
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
   return gimp_tile_manager_create_buffer (gimp_drawable_get_tiles (drawable),
                                           write);
+}
+
+GeglBuffer *
+gimp_drawable_get_read_buffer (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  if (! drawable->private->read_buffer)
+    drawable->private->read_buffer = gimp_drawable_create_buffer (drawable,
+                                                                  FALSE);
+
+  return drawable->private->read_buffer;
+}
+
+GeglBuffer *
+gimp_drawable_get_write_buffer (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  if (! drawable->private->write_buffer)
+    drawable->private->write_buffer = gimp_drawable_create_buffer (drawable,
+                                                                   TRUE);
+
+  return drawable->private->write_buffer;
 }
 
 TileManager *
@@ -1559,7 +1593,6 @@ gimp_drawable_set_tiles_full (GimpDrawable  *drawable,
 GeglNode *
 gimp_drawable_get_source_node (GimpDrawable *drawable)
 {
-  GeglBuffer *buffer;
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   if (drawable->private->source_node)
@@ -1567,15 +1600,11 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
 
   drawable->private->source_node = gegl_node_new ();
 
-  buffer = gimp_drawable_create_buffer (drawable, FALSE);
-
   drawable->private->tile_source_node =
     gegl_node_new_child (drawable->private->source_node,
                          "operation", "gegl:buffer-source",
-                         "buffer",    buffer,
+                         "buffer",    gimp_drawable_get_read_buffer (drawable),
                          NULL);
-
-  g_object_unref (buffer);
 
   gimp_drawable_sync_source_node (drawable, FALSE);
 

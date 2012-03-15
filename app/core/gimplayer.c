@@ -1200,9 +1200,8 @@ gimp_layer_new_from_buffer (GeglBuffer           *buffer,
                           type, name,
                           opacity, mode);
 
-  dest = gimp_drawable_create_buffer (GIMP_DRAWABLE (layer), TRUE);
+  dest = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (layer));
   gegl_buffer_copy (buffer, NULL, dest, NULL);
-  g_object_unref (dest);
 
   return layer;
 }
@@ -1692,8 +1691,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
             GeglRectangle  src_rect;
             GeglRectangle  dest_rect;
 
-            src  = gimp_drawable_create_buffer (GIMP_DRAWABLE (channel), FALSE);
-            dest = gimp_drawable_create_buffer (GIMP_DRAWABLE (mask), TRUE);
+            src  = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel));
+            dest = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask));
 
             src_rect.x      = copy_x;
             src_rect.y      = copy_y;
@@ -1704,9 +1703,6 @@ gimp_layer_create_mask (const GimpLayer *layer,
             dest_rect.y = copy_y - offset_y;
 
             gegl_buffer_copy (src, &src_rect, dest, &dest_rect);
-
-            g_object_unref (src);
-            g_object_unref (dest);
 
             GIMP_CHANNEL (mask)->bounds_known = FALSE;
           }

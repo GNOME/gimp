@@ -93,7 +93,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 
   new_tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
 
-  src_buffer  = gimp_drawable_create_buffer (drawable, FALSE);
+  src_buffer  = gimp_drawable_get_read_buffer (drawable);
   dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
 
   if (offset_x >= 0)
@@ -322,7 +322,6 @@ gimp_drawable_offset (GimpDrawable   *drawable,
         }
     }
 
-  g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
   gimp_drawable_set_tiles (drawable, gimp_item_is_attached (item),

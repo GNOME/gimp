@@ -25,6 +25,9 @@ struct _GimpDrawablePrivate
   TileManager   *tiles;  /* tiles for drawable data */
   TileManager   *shadow; /* shadow buffer tiles     */
 
+  GeglBuffer    *read_buffer;
+  GeglBuffer    *write_buffer;
+
   GeglNode      *source_node;
   GeglNode      *tile_source_node;
 

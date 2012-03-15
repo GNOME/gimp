@@ -180,7 +180,7 @@ gimp_drawable_apply_operation_private (GimpDrawable        *drawable,
                 "dont-cache", TRUE,
                 NULL);
 
-  inbuf  = gimp_drawable_create_buffer (drawable, FALSE);
+  inbuf  = gimp_drawable_get_read_buffer (drawable);
   outbuf = gimp_tile_manager_create_buffer (dest_tiles, TRUE);
 
   input  = gegl_node_new_child (gegl,
@@ -191,7 +191,6 @@ gimp_drawable_apply_operation_private (GimpDrawable        *drawable,
                                 "operation", "gegl:write-buffer",
                                 "buffer",    outbuf,
                                 NULL);
-  g_object_unref (inbuf);
   g_object_unref (outbuf);
 
   gegl_node_add_child (gegl, operation);

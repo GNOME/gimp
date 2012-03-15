@@ -660,12 +660,11 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
         }
 
       /*  Copy from the image to the new tiles  */
-      src = gimp_drawable_create_buffer (image_map->drawable, TRUE);
-      dest = gimp_tile_manager_create_buffer (image_map->undo_tiles, FALSE);
+      src = gimp_drawable_get_read_buffer (image_map->drawable);
+      dest = gimp_tile_manager_create_buffer (image_map->undo_tiles, TRUE);
 
       gegl_buffer_copy (src, rect, dest, &dest_rect);
 
-      g_object_unref (src);
       g_object_unref (dest);
 
       /*  Set the offsets  */
@@ -817,7 +816,7 @@ gimp_image_map_data_written (GObject             *operation,
       GeglRectangle  dest_rect;
 
       src = gimp_tile_manager_create_buffer (image_map->undo_tiles, FALSE);
-      dest = gimp_drawable_create_buffer (image_map->drawable, TRUE);
+      dest = gimp_drawable_get_write_buffer (image_map->drawable);
 
       src_rect.x      = extent->x - image_map->undo_offset_x;
       src_rect.y      = extent->y - image_map->undo_offset_y;
@@ -830,7 +829,6 @@ gimp_image_map_data_written (GObject             *operation,
       gegl_buffer_copy (src, &src_rect, dest, &dest_rect);
 
       g_object_unref (src);
-      g_object_unref (dest);
     }
 
   /* Apply the result of the gegl graph. */
