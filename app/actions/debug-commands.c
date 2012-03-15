@@ -329,7 +329,6 @@ debug_show_image_graph (GimpImage *source_image)
   GeglNode        *image_graph = gimp_projectable_get_graph (projectable);
   GeglNode        *output_node = gegl_node_get_output_proxy (image_graph, "output");
   GimpImage       *new_image   = NULL;
-  TileManager     *tiles       = NULL;
   GimpLayer       *layer       = NULL;
   GeglNode        *introspect  = NULL;
   GeglNode        *sink        = NULL;
@@ -349,16 +348,15 @@ debug_show_image_graph (GimpImage *source_image)
   gegl_node_process (sink);
 
   /* Create a new image of the result */
-  tiles = gimp_buffer_to_tiles (buffer);
   new_name = g_strdup_printf ("%s GEGL graph",
                               file_utils_uri_display_name (gimp_image_get_uri_or_untitled (source_image)));
   new_image = gimp_create_image (gimp,
-                                 tile_manager_width (tiles),
-                                 tile_manager_height (tiles),
+                                 gegl_buffer_get_width (buffer),
+                                 gegl_buffer_get_height (buffer),
                                  GIMP_RGB,
                                  FALSE);
   gimp_image_set_uri (new_image, new_name);
-  layer = gimp_layer_new_from_tiles (tiles,
+  layer = gimp_layer_new_from_buffer (buffer,
                                      new_image,
                                      GIMP_RGBA_IMAGE,
                                      new_name,
@@ -370,7 +368,6 @@ debug_show_image_graph (GimpImage *source_image)
   /* Cleanup */
   g_object_unref (new_image);
   g_free (new_name);
-  tile_manager_unref (tiles);
   g_object_unref (buffer);
   g_object_unref (sink);
   g_object_unref (introspect);
