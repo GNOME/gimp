@@ -20,7 +20,6 @@
 #include <cairo.h>
 #include <gegl.h>
 #include <gegl-plugin.h>
-#include <gegl-buffer-backend.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"

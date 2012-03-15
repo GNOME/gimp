@@ -18,7 +18,6 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <gegl-buffer-backend.h>
 
 #include "core-types.h"
 
