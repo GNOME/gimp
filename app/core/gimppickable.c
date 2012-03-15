@@ -121,6 +121,21 @@ gimp_pickable_get_bytes (GimpPickable *pickable)
   return 0;
 }
 
+GeglBuffer *
+gimp_pickable_get_buffer (GimpPickable *pickable)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->get_buffer)
+    return pickable_iface->get_buffer (pickable);
+
+  return NULL;
+}
+
 TileManager *
 gimp_pickable_get_tiles (GimpPickable *pickable)
 {

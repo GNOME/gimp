@@ -350,11 +350,11 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
 
   gimp_pickable_flush (pickable);
 
-  layer = gimp_layer_new_from_tiles (gimp_pickable_get_tiles (pickable),
-                                     image,
-                                     gimp_image_base_type_with_alpha (image),
-                                     _("Visible"),
-                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  layer = gimp_layer_new_from_buffer (gimp_pickable_get_buffer (pickable),
+                                      image,
+                                      gimp_image_base_type_with_alpha (image),
+                                      _("Visible"),
+                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (image, layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

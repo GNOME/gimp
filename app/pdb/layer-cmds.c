@@ -116,11 +116,11 @@ layer_new_from_visible_invoker (GimpProcedure      *procedure,
 
       gimp_pickable_flush (pickable);
 
-      layer = gimp_layer_new_from_tiles (gimp_pickable_get_tiles (pickable),
-                                         dest_image,
-                                         gimp_image_base_type_with_alpha (dest_image),
-                                         name,
-                                         GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+      layer = gimp_layer_new_from_buffer (gimp_pickable_get_buffer (pickable),
+                                          dest_image,
+                                          gimp_image_base_type_with_alpha (dest_image),
+                                          name,
+                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

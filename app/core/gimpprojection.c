@@ -64,6 +64,7 @@ static void        gimp_projection_pickable_flush        (GimpPickable    *picka
 static GimpImage * gimp_projection_get_image             (GimpPickable    *pickable);
 static GimpImageType gimp_projection_get_image_type      (GimpPickable    *pickable);
 static gint        gimp_projection_get_bytes             (GimpPickable    *pickable);
+static GeglBuffer  * gimp_projection_get_buffer          (GimpPickable    *pickable);
 static TileManager * gimp_projection_get_tiles           (GimpPickable    *pickable);
 static gboolean    gimp_projection_get_pixel_at          (GimpPickable    *pickable,
                                                           gint             x,
@@ -150,6 +151,7 @@ gimp_projection_init (GimpProjection *proj)
 {
   proj->projectable              = NULL;
   proj->pyramid                  = NULL;
+  proj->buffer                   = NULL;
   proj->update_areas             = NULL;
   proj->idle_render.idle_id      = 0;
   proj->idle_render.update_areas = NULL;
@@ -163,6 +165,7 @@ gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image      = gimp_projection_get_image;
   iface->get_image_type = gimp_projection_get_image_type;
   iface->get_bytes      = gimp_projection_get_bytes;
+  iface->get_buffer     = gimp_projection_get_buffer;
   iface->get_tiles      = gimp_projection_get_tiles;
   iface->get_pixel_at   = gimp_projection_get_pixel_at;
   iface->get_opacity_at = gimp_projection_get_opacity_at;
@@ -189,6 +192,12 @@ gimp_projection_finalize (GObject *object)
     {
       tile_pyramid_destroy (proj->pyramid);
       proj->pyramid = NULL;
+    }
+
+  if (proj->buffer)
+    {
+      g_object_unref (proj->buffer);
+      proj->buffer = NULL;
     }
 
   if (proj->graph)
@@ -310,6 +319,21 @@ static gint
 gimp_projection_get_bytes (GimpPickable *pickable)
 {
   return GIMP_IMAGE_TYPE_BYTES (gimp_projection_get_image_type (pickable));
+}
+
+static GeglBuffer *
+gimp_projection_get_buffer (GimpPickable *pickable)
+{
+  GimpProjection *proj = GIMP_PROJECTION (pickable);
+
+  if (! proj->buffer)
+    {
+      TileManager *tiles = gimp_projection_get_tiles (pickable);
+
+      proj->buffer = gimp_tile_manager_create_buffer (tiles, FALSE);
+    }
+
+  return proj->buffer;
 }
 
 static TileManager *
@@ -780,7 +804,10 @@ gimp_projection_invalidate (GimpProjection *proj,
       if (proj->sink_node)
         {
           GeglBuffer *buffer;
-          gegl_node_get (proj->sink_node, "buffer", &buffer, NULL);
+
+          gegl_node_get (proj->sink_node,
+                         "buffer", &buffer,
+                         NULL);
 
           /* makes the buffer drop all GimpTiles */
           gegl_tile_source_reinit ((void*)buffer);
@@ -896,6 +923,12 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
     {
       tile_pyramid_destroy (proj->pyramid);
       proj->pyramid = NULL;
+    }
+
+  if (proj->buffer)
+    {
+      g_object_unref (proj->buffer);
+      proj->buffer = NULL;
     }
 
   gimp_projectable_get_offset (proj->projectable, &off_x, &off_y);

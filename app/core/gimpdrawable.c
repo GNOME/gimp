@@ -273,6 +273,7 @@ gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image      = (GimpImage     * (*) (GimpPickable *pickable)) gimp_item_get_image;
   iface->get_image_type = (GimpImageType   (*) (GimpPickable *pickable)) gimp_drawable_type;
   iface->get_bytes      = (gint            (*) (GimpPickable *pickable)) gimp_drawable_bytes;
+  iface->get_buffer     = (GeglBuffer    * (*) (GimpPickable *pickable)) gimp_drawable_get_read_buffer;
   iface->get_tiles      = (TileManager   * (*) (GimpPickable *pickable)) gimp_drawable_get_tiles;
   iface->get_pixel_at   = gimp_drawable_get_pixel_at;
 }

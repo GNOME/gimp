@@ -71,6 +71,7 @@ struct _GimpImageMap
   gchar                 *undo_desc;
 
   TileManager           *undo_tiles;
+  GeglBuffer            *undo_buffer;
   gint                   undo_offset_x;
   gint                   undo_offset_y;
 
@@ -102,6 +103,7 @@ static void            gimp_image_map_finalize       (GObject             *objec
 static GimpImage     * gimp_image_map_get_image      (GimpPickable        *pickable);
 static GimpImageType   gimp_image_map_get_image_type (GimpPickable        *pickable);
 static gint            gimp_image_map_get_bytes      (GimpPickable        *pickable);
+static GeglBuffer    * gimp_image_map_get_buffer     (GimpPickable        *pickable);
 static TileManager   * gimp_image_map_get_tiles      (GimpPickable        *pickable);
 static gboolean        gimp_image_map_get_pixel_at   (GimpPickable        *pickable,
                                                       gint                 x,
@@ -154,6 +156,7 @@ gimp_image_map_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image      = gimp_image_map_get_image;
   iface->get_image_type = gimp_image_map_get_image_type;
   iface->get_bytes      = gimp_image_map_get_bytes;
+  iface->get_buffer     = gimp_image_map_get_buffer;
   iface->get_tiles      = gimp_image_map_get_tiles;
   iface->get_pixel_at   = gimp_image_map_get_pixel_at;
 }
@@ -209,6 +212,12 @@ gimp_image_map_finalize (GObject *object)
     {
       tile_manager_unref (image_map->undo_tiles);
       image_map->undo_tiles = NULL;
+    }
+
+  if (image_map->undo_buffer)
+    {
+      g_object_unref (image_map->undo_buffer);
+      image_map->undo_buffer = NULL;
     }
 
   gimp_image_map_cancel_any_idle_jobs (image_map);
@@ -267,6 +276,24 @@ gimp_image_map_get_bytes (GimpPickable *pickable)
   GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
 
   return gimp_pickable_get_bytes (GIMP_PICKABLE (image_map->drawable));
+}
+
+static GeglBuffer *
+gimp_image_map_get_buffer (GimpPickable *pickable)
+{
+  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
+
+  if (image_map->undo_tiles)
+    {
+      if (! image_map->undo_buffer)
+        image_map->undo_buffer =
+          gimp_tile_manager_create_buffer (image_map->undo_tiles,
+                                           FALSE);
+
+      return image_map->undo_buffer;
+    }
+  else
+    return gimp_pickable_get_buffer (GIMP_PICKABLE (image_map->drawable));
 }
 
 static TileManager *
@@ -542,6 +569,12 @@ gimp_image_map_commit (GimpImageMap *image_map)
 
       tile_manager_unref (image_map->undo_tiles);
       image_map->undo_tiles = NULL;
+
+      if (image_map->undo_buffer)
+        {
+          g_object_unref (image_map->undo_buffer);
+          image_map->undo_buffer = NULL;
+        }
     }
 }
 
@@ -589,6 +622,12 @@ gimp_image_map_clear (GimpImageMap *image_map)
       /*  Free the undo_tiles tile manager  */
       tile_manager_unref (image_map->undo_tiles);
       image_map->undo_tiles = NULL;
+
+      if (image_map->undo_buffer)
+        {
+          g_object_unref (image_map->undo_buffer);
+          image_map->undo_buffer = NULL;
+        }
     }
 }
 
@@ -632,7 +671,7 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
       undo_height   = 0;
     }
 
-  if (! image_map->undo_tiles     ||
+  if (! image_map->undo_tiles      ||
       undo_offset_x != rect->x     ||
       undo_offset_y != rect->y     ||
       undo_width    != rect->width ||
@@ -645,7 +684,7 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
       /* If either the extents changed or the tiles don't exist,
        * allocate new
        */
-      if (! image_map->undo_tiles   ||
+      if (! image_map->undo_tiles    ||
           undo_width  != rect->width ||
           undo_height != rect->height)
         {
@@ -670,6 +709,12 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
       /*  Set the offsets  */
       image_map->undo_offset_x = rect->x;
       image_map->undo_offset_y = rect->y;
+    }
+
+  if (image_map->undo_buffer)
+    {
+      g_object_unref (image_map->undo_buffer);
+      image_map->undo_buffer = NULL;
     }
 }
 

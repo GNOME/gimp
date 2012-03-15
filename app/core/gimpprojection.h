@@ -55,6 +55,8 @@ struct _GimpProjection
   GimpProjectable          *projectable;
 
   TilePyramid              *pyramid;
+  GeglBuffer               *buffer;
+
   GeglNode                 *graph;
   GeglNode                 *sink_node;
   GeglProcessor            *processor;
