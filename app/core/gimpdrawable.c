@@ -542,7 +542,7 @@ gimp_drawable_resize (GimpItem    *item,
                       gint         offset_y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  PixelRegion   srcPR, destPR;
+  PixelRegion   destPR;
   TileManager  *new_tiles;
   gint          new_offset_x;
   gint          new_offset_y;
@@ -596,20 +596,24 @@ gimp_drawable_resize (GimpItem    *item,
   /*  Determine whether anything needs to be copied  */
   if (copy_width && copy_height)
     {
-      pixel_region_init (&srcPR,
-                         gimp_drawable_get_tiles (drawable),
-                         copy_x - gimp_item_get_offset_x (item),
-                         copy_y - gimp_item_get_offset_y (item),
-                         copy_width,
-                         copy_height,
-                         FALSE);
+      GeglBuffer    *dest_buffer;
+      GeglRectangle  src_rect;
+      GeglRectangle  dest_rect;
 
-      pixel_region_init (&destPR, new_tiles,
-                         copy_x - new_offset_x, copy_y - new_offset_y,
-                         copy_width, copy_height,
-                         TRUE);
+      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
 
-      copy_region (&srcPR, &destPR);
+      src_rect.x      = copy_x - gimp_item_get_offset_x (item);
+      src_rect.y      = copy_y - gimp_item_get_offset_y (item);
+      src_rect.width  = copy_width;
+      src_rect.height = copy_height;
+
+      dest_rect.x = copy_x - new_offset_x;
+      dest_rect.y = copy_y - new_offset_y;
+
+      gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), &src_rect,
+                        dest_buffer, &dest_rect);
+
+      g_object_unref (dest_buffer);
     }
 
   gimp_drawable_set_tiles_full (drawable, gimp_item_is_attached (item), NULL,
