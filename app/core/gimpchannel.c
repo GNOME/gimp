@@ -1254,21 +1254,29 @@ gimp_channel_real_feather (GimpChannel *channel,
                            gdouble      radius_y,
                            gboolean     push_undo)
 {
-  PixelRegion srcPR;
+  GimpDrawable *drawable = GIMP_DRAWABLE (channel);
+  GeglNode     *node;
 
   if (push_undo)
     gimp_channel_push_undo (channel,
                             GIMP_CHANNEL_GET_CLASS (channel)->feather_desc);
   else
-    gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
+    gimp_drawable_invalidate_boundary (drawable);
 
-  pixel_region_init (&srcPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (channel)),
-                     gimp_item_get_height (GIMP_ITEM (channel)),
-                     TRUE);
-  gaussian_blur_region (&srcPR, radius_x, radius_y);
+  /* 3.5 is completely magic and picked to visually match the old
+   * gaussian_blur_region() on a crappy laptop display
+   */
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:gaussian-blur",
+                              "std-dev-x", radius_x / 3.5,
+                              "std-dev-y", radius_y / 3.5,
+                              NULL);
+
+  gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
+                                           node, TRUE,
+                                           gimp_drawable_get_write_buffer (drawable));
+
+  g_object_unref (node);
 
   channel->bounds_known = FALSE;
 
