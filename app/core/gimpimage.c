@@ -2534,46 +2534,6 @@ gimp_image_inc_instance_count (GimpImage *image)
 /*  color transforms / utilities  */
 
 void
-gimp_image_get_foreground (const GimpImage *image,
-                           GimpContext     *context,
-                           GimpImageType    dest_type,
-                           guchar          *fg)
-{
-  GimpRGB  color;
-  guchar   pfg[3];
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (fg != NULL);
-
-  gimp_context_get_foreground (context, &color);
-
-  gimp_rgb_get_uchar (&color, &pfg[0], &pfg[1], &pfg[2]);
-
-  gimp_image_transform_color (image, dest_type, fg, GIMP_RGB, pfg);
-}
-
-void
-gimp_image_get_background (const GimpImage *image,
-                           GimpContext     *context,
-                           GimpImageType    dest_type,
-                           guchar          *bg)
-{
-  GimpRGB  color;
-  guchar   pbg[3];
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (bg != NULL);
-
-  gimp_context_get_background (context, &color);
-
-  gimp_rgb_get_uchar (&color, &pbg[0], &pbg[1], &pbg[2]);
-
-  gimp_image_transform_color (image, dest_type, bg, GIMP_RGB, pbg);
-}
-
-void
 gimp_image_get_color (const GimpImage *src_image,
                       GimpImageType    src_type,
                       const guchar    *src,
@@ -2625,6 +2585,40 @@ gimp_image_get_color (const GimpImage *src_image,
     *rgba = *src;
   else
     *rgba = OPAQUE_OPACITY;
+}
+
+void
+gimp_image_get_foreground (const GimpImage *image,
+                           GimpContext     *context,
+                           GimpImageType    dest_type,
+                           guchar          *fg)
+{
+  GimpRGB color;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (fg != NULL);
+
+  gimp_context_get_foreground (context, &color);
+
+  gimp_image_transform_rgb (image, dest_type, &color, fg);
+}
+
+void
+gimp_image_get_background (const GimpImage *image,
+                           GimpContext     *context,
+                           GimpImageType    dest_type,
+                           guchar          *bg)
+{
+  GimpRGB color;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (bg != NULL);
+
+  gimp_context_get_background (context, &color);
+
+  gimp_image_transform_rgb (image, dest_type, &color, bg);
 }
 
 void

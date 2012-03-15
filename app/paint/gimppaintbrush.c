@@ -119,11 +119,14 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpImage                *image;
   GimpRGB                   gradient_color;
   TempBuf                  *area;
-  guchar                    col[MAX_CHANNELS];
   GimpPaintApplicationMode  paint_appl_mode;
   gdouble                   fade_point;
   gdouble                   grad_point;
   gdouble                   force;
+  guchar                    pixel[MAX_CHANNELS] = { OPAQUE_OPACITY,
+                                                    OPAQUE_OPACITY,
+                                                    OPAQUE_OPACITY,
+                                                    OPAQUE_OPACITY };
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -155,26 +158,17 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                                       paint_options,
                                                       fade_point);
 
-  /* optionally take the color from the current gradient */
   if (gimp_paint_options_get_gradient_color (paint_options, image,
                                              grad_point,
                                              paint_core->pixel_dist,
                                              &gradient_color))
     {
-      guchar pixel[MAX_CHANNELS] = { OPAQUE_OPACITY,
-                                     OPAQUE_OPACITY,
-                                     OPAQUE_OPACITY,
-                                     OPAQUE_OPACITY };
+      /* optionally take the color from the current gradient */
 
       opacity *= gradient_color.a;
 
-      gimp_rgb_get_uchar (&gradient_color,
-                          &col[RED],
-                          &col[GREEN],
-                          &col[BLUE]);
-
-      gimp_image_transform_color (image, gimp_drawable_type (drawable), pixel,
-                                  GIMP_RGB, col);
+      gimp_image_transform_rgb (image, gimp_drawable_type (drawable),
+                                &gradient_color, pixel);
 
       color_pixels (temp_buf_get_data (area), pixel,
                     area->width * area->height,
@@ -182,9 +176,12 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
-  /* otherwise check if the brush has a pixmap and use that to color the area */
   else if (brush_core->brush && brush_core->brush->pixmap)
     {
+      /* otherwise check if the brush has a pixmap and use that to
+       * color the area
+       */
+
       gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
                                               coords,
                                               area,
@@ -192,15 +189,14 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
-  /* otherwise fill the area with the foreground color */
   else
     {
+      /* otherwise fill the area with the foreground color */
+
       gimp_image_get_foreground (image, context, gimp_drawable_type (drawable),
-                                 col);
+                                 pixel);
 
-      col[area->bytes - 1] = OPAQUE_OPACITY;
-
-      color_pixels (temp_buf_get_data (area), col,
+      color_pixels (temp_buf_get_data (area), pixel,
                     area->width * area->height,
                     area->bytes);
     }

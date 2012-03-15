@@ -19,9 +19,11 @@
 
 #include <stdlib.h>
 
+#include <cairo.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -569,13 +571,10 @@ gimp_edit_fill_internal (GimpImage            *image,
 
     case GIMP_WHITE_FILL:
       {
-        guchar tmp_col[MAX_CHANNELS];
+        GimpRGB white;
 
-        tmp_col[RED]   = 255;
-        tmp_col[GREEN] = 255;
-        tmp_col[BLUE]  = 255;
-        gimp_image_transform_color (image, drawable_type, col,
-                                    GIMP_RGB, tmp_col);
+        gimp_rgb_set (&white, 1.0, 1.0, 1.0);
+        gimp_image_transform_rgb (image, drawable_type, &white, col);
       }
       break;
 

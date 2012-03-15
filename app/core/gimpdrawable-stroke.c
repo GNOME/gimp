@@ -367,16 +367,10 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
     {
     case GIMP_FILL_STYLE_SOLID:
       {
-        guchar tmp_col[MAX_CHANNELS] = { 0, };
-        guchar col[MAX_CHANNELS]     = { 0, };
+        guchar col[MAX_CHANNELS] = { 0, };
 
-        gimp_rgb_get_uchar (&context->foreground,
-                            &tmp_col[RED],
-                            &tmp_col[GREEN],
-                            &tmp_col[BLUE]);
-
-        gimp_image_transform_color (image, gimp_drawable_type (drawable), col,
-                                    GIMP_RGB, tmp_col);
+        gimp_image_get_foreground (image, context,
+                                   gimp_drawable_type (drawable), col);
         col[bytes - 1] = OPAQUE_OPACITY;
 
         color_region_mask (&basePR, &maskPR, col);
