@@ -511,11 +511,13 @@ gimp_channel_translate (GimpItem *item,
                         gint      off_y,
                         gboolean  push_undo)
 {
-  GimpChannel *channel  = GIMP_CHANNEL (item);
-  GimpChannel *tmp_mask = NULL;
-  gint         width, height;
-  PixelRegion  srcPR, destPR;
-  gint         x1, y1, x2, y2;
+  GimpChannel   *channel    = GIMP_CHANNEL (item);
+  GimpChannel   *tmp_mask   = NULL;
+  GeglBuffer    *tmp_buffer = NULL;
+  gint           width, height;
+  GeglRectangle  src_rect;
+  GeglRectangle  dest_rect;
+  gint           x1, y1, x2, y2;
 
   gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
 
@@ -543,34 +545,36 @@ gimp_channel_translate (GimpItem *item,
        */
       tmp_mask = gimp_channel_new_mask (gimp_item_get_image (item),
                                         width, height);
+      tmp_buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (tmp_mask));
 
-      pixel_region_init (&srcPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                         x1 - off_x, y1 - off_y, width, height, FALSE);
-      pixel_region_init (&destPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (tmp_mask)),
-                         0, 0, width, height, TRUE);
-      copy_region (&srcPR, &destPR);
+      src_rect.x      = x1 - off_x;
+      src_rect.y      = y1 - off_y;
+      src_rect.width  = width;
+      src_rect.height = height;
+
+      dest_rect.x = 0;
+      dest_rect.y = 0;
+
+      gegl_buffer_copy (gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel)),
+                        &src_rect,
+                        tmp_buffer,
+                        &dest_rect);
     }
 
   /*  clear the mask  */
-  pixel_region_init (&srcPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (channel)),
-                     gimp_item_get_height (GIMP_ITEM (channel)), TRUE);
-  clear_region (&srcPR);
+  gegl_buffer_clear (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+                     NULL);
 
   if (width != 0 && height != 0)
     {
       /*  copy the temp mask back to the mask  */
-      pixel_region_init (&srcPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (tmp_mask)),
-                         0, 0, width, height, FALSE);
-      pixel_region_init (&destPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                         x1, y1, width, height, TRUE);
-      copy_region (&srcPR, &destPR);
+      dest_rect.x = x1;
+      dest_rect.y = y1;
+
+      gegl_buffer_copy (tmp_buffer,
+                        NULL,
+                        gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+                        &dest_rect);
 
       /*  free the temporary mask  */
       g_object_unref (tmp_mask);
