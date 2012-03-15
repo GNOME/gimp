@@ -1415,9 +1415,9 @@ gimp_channel_real_invert (GimpChannel *channel,
                                      "operation", "gegl:invert",
                                      NULL);
 
-      gimp_drawable_apply_operation_to_tiles (drawable, NULL, NULL,
-                                              node, TRUE,
-                                              gimp_drawable_get_tiles (drawable));
+      gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
+                                               node, TRUE,
+                                               gimp_drawable_get_write_buffer (drawable));
 
       g_object_unref (node);
 

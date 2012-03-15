@@ -492,7 +492,8 @@ gimp_drawable_scale (GimpItem              *item,
                                     gimp_item_get_height (item)),
                      NULL);
 
-      gimp_drawable_apply_operation_to_tiles (drawable, progress, C_("undo-type", "Scale"),
+      gimp_drawable_apply_operation_to_tiles (drawable, progress,
+                                              C_("undo-type", "Scale"),
                                               scale, TRUE, new_tiles);
       g_object_unref (scale);
     }
