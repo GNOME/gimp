@@ -36,7 +36,7 @@ struct _GimpMaskUndo
 {
   GimpItemUndo  parent_instance;
 
-  TileManager  *tiles;
+  GeglBuffer   *buffer;
   gint          x;
   gint          y;
 };
