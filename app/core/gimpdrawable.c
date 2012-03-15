@@ -767,7 +767,7 @@ gimp_drawable_real_update (GimpDrawable *drawable,
 
       if (buffer)
         {
-          gegl_tile_source_reinit (GEGL_TILE_SOURCE (buffer));
+          gimp_gegl_buffer_refetch_tiles (buffer);
           g_object_unref (buffer);
         }
     }

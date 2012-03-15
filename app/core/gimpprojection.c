@@ -810,7 +810,7 @@ gimp_projection_invalidate (GimpProjection *proj,
                          NULL);
 
           /* makes the buffer drop all GimpTiles */
-          gegl_tile_source_reinit ((void*)buffer);
+          gimp_gegl_buffer_refetch_tiles (buffer);
           g_object_unref (buffer);
         }
 
