@@ -21,10 +21,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-
-#include "paint-funcs/paint-funcs.h"
-
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpguide.h"
@@ -381,33 +377,17 @@ static void
 gimp_image_duplicate_mask (GimpImage *image,
                            GimpImage *new_image)
 {
-  GimpChannel *mask;
-  GimpChannel *new_mask;
-  TileManager *src_tiles;
-  TileManager *dest_tiles;
-  PixelRegion  srcPR, destPR;
+  GimpDrawable *mask;
+  GimpDrawable *new_mask;
 
-  mask     = gimp_image_get_mask (image);
-  new_mask = gimp_image_get_mask (new_image);
+  mask     = GIMP_DRAWABLE (gimp_image_get_mask (image));
+  new_mask = GIMP_DRAWABLE (gimp_image_get_mask (new_image));
 
-  src_tiles  = gimp_drawable_get_tiles (GIMP_DRAWABLE (mask));
-  dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (new_mask));
+  gegl_buffer_copy (gimp_drawable_get_read_buffer (mask), NULL,
+                    gimp_drawable_get_write_buffer (new_mask), NULL);
 
-  pixel_region_init (&srcPR, src_tiles,
-                     0, 0,
-                     gimp_image_get_width  (image),
-                     gimp_image_get_height (image),
-                     FALSE);
-  pixel_region_init (&destPR, dest_tiles,
-                     0, 0,
-                     gimp_image_get_width  (image),
-                     gimp_image_get_height (image),
-                     TRUE);
-
-  copy_region (&srcPR, &destPR);
-
-  new_mask->bounds_known   = FALSE;
-  new_mask->boundary_known = FALSE;
+  GIMP_CHANNEL (new_mask)->bounds_known   = FALSE;
+  GIMP_CHANNEL (new_mask)->boundary_known = FALSE;
 }
 
 static void
