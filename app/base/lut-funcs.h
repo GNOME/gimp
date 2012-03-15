@@ -27,9 +27,6 @@ void      brightness_contrast_lut_setup (GimpLut       *lut,
                                          gdouble        contrast,
                                          gint           n_channels);
 
-GimpLut * threshold_lut_new             (gdouble        value,
-                                         gint           n_channels);
-
 GimpLut * equalize_lut_new              (GimpHistogram *histogram,
                                          gint           n_channels);
 

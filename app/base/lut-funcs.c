@@ -89,46 +89,6 @@ brightness_contrast_lut_new (gdouble brightness,
   return lut;
 }
 
-/* ---------------- Threshold ------------------ */
-
-static gfloat
-threshold_lut_func (gdouble *min,
-                    gint     n_channels,
-                    gint     channel,
-                    gfloat   value)
-{
-  /* don't change the alpha channel */
-  if ((n_channels == 2 || n_channels == 4) && channel == n_channels -1)
-    return value;
-
-  if (value < *min)
-    return 0.0;
-
-  return 1.0;
-}
-
-static void
-threshold_lut_setup (GimpLut *lut,
-                     gdouble  value,
-                     gint     n_channels)
-{
-  g_return_if_fail (lut != NULL);
-
-  gimp_lut_setup_exact (lut,
-                        (GimpLutFunc) threshold_lut_func, &value, n_channels);
-}
-
-GimpLut *
-threshold_lut_new (gdouble value,
-                   gint    n_channels)
-{
-  GimpLut *lut = gimp_lut_new ();
-
-  threshold_lut_setup (lut, value, n_channels);
-
-  return lut;
-}
-
 /* --------------- equalize ------------- */
 
 typedef struct
