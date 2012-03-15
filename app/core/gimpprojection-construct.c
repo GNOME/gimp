@@ -22,9 +22,8 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
-#include "base/tile-manager.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimplayer.h"
 #include "gimppickable.h"
@@ -41,7 +40,6 @@ static void   gimp_projection_construct_gegl   (GimpProjection *proj,
                                                 gint            w,
                                                 gint            h);
 static void   gimp_projection_construct_legacy (GimpProjection *proj,
-                                                gboolean        with_layers,
                                                 gint            x,
                                                 gint            y,
                                                 gint            w,
@@ -64,55 +62,6 @@ gimp_projection_construct (GimpProjection *proj,
 {
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
-#if 0
-  GList *layers = gimp_projectable_get_layers (proj->projectable);
-
-  if (layers && ! layers->next) /* a single layer */
-    {
-      GimpLayer    *layer    = layers->data;
-      GimpDrawable *drawable = GIMP_DRAWABLE (layer);
-      GimpItem     *item     = GIMP_ITEM (layer);
-      gint          width, height;
-      gint          off_x, off_y;
-
-      gimp_projectable_get_offset (proj->projectable, &proj_off_x, &proj_off_y);
-      gimp_projectable_get_size (proj->projectable, &width, &height);
-
-      gimp_item_get_offset (item, &off_x, &off_y);
-
-      if (gimp_drawable_has_alpha (drawable)                    &&
-          gimp_item_get_visible (item)                          &&
-          gimp_item_get_width  (item) == width                  &&
-          gimp_item_get_height (item) == height                 &&
-          ! gimp_drawable_is_indexed (layer)                    &&
-          gimp_layer_get_opacity (layer) == GIMP_OPACITY_OPAQUE &&
-          off_x == 0                                            &&
-          off_y == 0                                            &&
-          proj_offset_x == 0                                    &&
-          proj_offset_y == 0)
-        {
-          PixelRegion srcPR, destPR;
-
-          g_printerr ("cow-projection!");
-
-          pixel_region_init (&srcPR,
-                             gimp_drawable_get_tiles (layer),
-                             x, y, w,h, FALSE);
-          pixel_region_init (&destPR,
-                             gimp_pickable_get_tiles (GIMP_PICKABLE (proj)),
-                             x, y, w,h, TRUE);
-
-          copy_region (&srcPR, &destPR);
-
-          proj->construct_flag = TRUE;
-
-          gimp_projection_construct_legacy (proj, FALSE, x, y, w, h);
-
-          return;
-        }
-    }
-#endif
-
   /*  First, determine if the projection image needs to be
    *  initialized--this is the case when there are no visible
    *  layers that cover the entire canvas--either because layers
@@ -131,7 +80,7 @@ gimp_projection_construct (GimpProjection *proj,
     {
       proj->construct_flag = FALSE;
 
-      gimp_projection_construct_legacy (proj, TRUE, x, y, w, h);
+      gimp_projection_construct_legacy (proj, x, y, w, h);
     }
 }
 
@@ -145,27 +94,24 @@ gimp_projection_construct_gegl (GimpProjection *proj,
                                 gint            w,
                                 gint            h)
 {
-  GeglNode      *sink;
-  GeglRectangle  rect;
-
-  sink = gimp_projection_get_sink_node (proj);
-
-  rect.x      = x;
-  rect.y      = y;
-  rect.width  = w;
-  rect.height = h;
+  GeglRectangle  rect = { x, y, w, h };
 
   if (! proj->processor)
-    proj->processor = gegl_node_new_processor (sink, &rect);
+    {
+      GeglNode *sink = gimp_projection_get_sink_node (proj);
+
+      proj->processor = gegl_node_new_processor (sink, &rect);
+    }
   else
-    gegl_processor_set_rectangle (proj->processor, &rect);
+    {
+      gegl_processor_set_rectangle (proj->processor, &rect);
+    }
 
   while (gegl_processor_work (proj->processor, NULL));
 }
 
 static void
 gimp_projection_construct_legacy (GimpProjection *proj,
-                                  gboolean        with_layers,
                                   gint            x,
                                   gint            y,
                                   gint            w,
@@ -186,22 +132,19 @@ gimp_projection_construct_legacy (GimpProjection *proj,
         }
     }
 
-  if (with_layers)
+  for (list = gimp_projectable_get_layers (proj->projectable);
+       list;
+       list = g_list_next (list))
     {
-      for (list = gimp_projectable_get_layers (proj->projectable);
-           list;
-           list = g_list_next (list))
-        {
-          GimpLayer *layer = list->data;
+      GimpLayer *layer = list->data;
 
-          if (! gimp_layer_is_floating_sel (layer) &&
-              gimp_item_get_visible (GIMP_ITEM (layer)))
-            {
-              /*  only add layers that are visible and not floating selections
-               *  to the list
-               */
-              reverse_list = g_list_prepend (reverse_list, layer);
-            }
+      if (! gimp_layer_is_floating_sel (layer) &&
+          gimp_item_get_visible (GIMP_ITEM (layer)))
+        {
+          /*  only add layers that are visible and not floating selections
+           *  to the list
+           */
+          reverse_list = g_list_prepend (reverse_list, layer);
         }
     }
 
@@ -308,11 +251,14 @@ gimp_projection_initialize (GimpProjection *proj,
 
   if (! coverage)
     {
-      PixelRegion region;
+      TileManager   *tiles;
+      GeglBuffer    *buffer;
+      GeglRectangle  rect = { x, y, w, h };
 
-      pixel_region_init (&region,
-                         gimp_pickable_get_tiles (GIMP_PICKABLE (proj)),
-                         x, y, w, h, TRUE);
-      clear_region (&region);
+      tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (proj));
+
+      buffer = gimp_tile_manager_create_buffer (tiles, TRUE);
+      gegl_buffer_clear (buffer, &rect);
+      g_object_unref (buffer);
     }
 }
