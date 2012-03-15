@@ -400,10 +400,6 @@ void  multiply_alpha_region               (PixelRegion *srcR);
 
 void  separate_alpha_region               (PixelRegion *srcR);
 
-void  gaussian_blur_region                (PixelRegion *srcR,
-                                           gdouble      radius_x,
-                                           gdouble      radius_y);
-
 void  border_region                       (PixelRegion *src,
                                            gint16       xradius,
                                            gint16       yradius,
