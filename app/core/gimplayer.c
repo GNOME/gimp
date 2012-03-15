@@ -1687,18 +1687,26 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
         if ((copy_width || copy_height) && ! channel_empty)
           {
-            pixel_region_init (&srcPR,
-                               gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                               copy_x, copy_y,
-                               copy_width, copy_height,
-                               FALSE);
-            pixel_region_init (&destPR,
-                               gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                               copy_x - offset_x, copy_y - offset_y,
-                               copy_width, copy_height,
-                               TRUE);
+            GeglBuffer    *src;
+            GeglBuffer    *dest;
+            GeglRectangle  src_rect;
+            GeglRectangle  dest_rect;
 
-            copy_region (&srcPR, &destPR);
+            src  = gimp_drawable_create_buffer (GIMP_DRAWABLE (channel), FALSE);
+            dest = gimp_drawable_create_buffer (GIMP_DRAWABLE (mask), TRUE);
+
+            src_rect.x      = copy_x;
+            src_rect.y      = copy_y;
+            src_rect.width  = copy_width;
+            src_rect.height = copy_height;
+
+            dest_rect.x = copy_x - offset_x;
+            dest_rect.y = copy_y - offset_y;
+
+            gegl_buffer_copy (src, &src_rect, dest, &dest_rect);
+
+            g_object_unref (src);
+            g_object_unref (dest);
 
             GIMP_CHANNEL (mask)->bounds_known = FALSE;
           }

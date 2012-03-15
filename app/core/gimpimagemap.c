@@ -638,6 +638,10 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
       undo_width    != rect->width ||
       undo_height   != rect->height)
     {
+      GeglBuffer    *src;
+      GeglBuffer    *dest;
+      GeglRectangle  dest_rect = { 0, };
+
       /* If either the extents changed or the tiles don't exist,
        * allocate new
        */
@@ -656,18 +660,13 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
         }
 
       /*  Copy from the image to the new tiles  */
-      pixel_region_init (&image_map->srcPR,
-                         gimp_drawable_get_tiles (image_map->drawable),
-                         rect->x, rect->y,
-                         rect->width, rect->height,
-                         FALSE);
-      pixel_region_init (&image_map->destPR,
-                         image_map->undo_tiles,
-                         0, 0,
-                         rect->width, rect->height,
-                         TRUE);
+      src = gimp_drawable_create_buffer (image_map->drawable, TRUE);
+      dest = gimp_tile_manager_create_buffer (image_map->undo_tiles, FALSE);
 
-      copy_region (&image_map->srcPR, &image_map->destPR);
+      gegl_buffer_copy (src, rect, dest, &dest_rect);
+
+      g_object_unref (src);
+      g_object_unref (dest);
 
       /*  Set the offsets  */
       image_map->undo_offset_x = rect->x;
@@ -805,26 +804,33 @@ gimp_image_map_data_written (GObject             *operation,
 {
   GimpImage   *image;
   PixelRegion  srcPR;
-  PixelRegion  destPR;
 
   image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
   if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
       /* Reset to initial drawable conditions. */
-      pixel_region_init (&srcPR, image_map->undo_tiles,
-                         extent->x - image_map->undo_offset_x,
-                         extent->y - image_map->undo_offset_y,
-                         extent->width,
-                         extent->height,
-                         FALSE);
-      pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
-                         extent->x,
-                         extent->y,
-                         extent->width,
-                         extent->height,
-                         TRUE);
-      copy_region (&srcPR, &destPR);
+
+      GeglBuffer    *src;
+      GeglBuffer    *dest;
+      GeglRectangle  src_rect;
+      GeglRectangle  dest_rect;
+
+      src = gimp_tile_manager_create_buffer (image_map->undo_tiles, FALSE);
+      dest = gimp_drawable_create_buffer (image_map->drawable, TRUE);
+
+      src_rect.x      = extent->x - image_map->undo_offset_x;
+      src_rect.y      = extent->y - image_map->undo_offset_y;
+      src_rect.width  = extent->width;
+      src_rect.height = extent->height;
+
+      dest_rect.x = extent->x;
+      dest_rect.y = extent->y;
+
+      gegl_buffer_copy (src, &src_rect, dest, &dest_rect);
+
+      g_object_unref (src);
+      g_object_unref (dest);
     }
 
   /* Apply the result of the gegl graph. */
