@@ -117,6 +117,13 @@ tile_done (Tile *tile,
   tile_release (data, FALSE);
 }
 
+static void
+tile_done_writing (Tile *tile,
+                   void *data)
+{
+  tile_release (data, TRUE);
+}
+
 static gpointer
 gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
                                         GeglTileCommand  command,
@@ -158,7 +165,9 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
             /* use the GimpTile directly as GEGL tile */
             tile = gegl_tile_new_bare ();
             gegl_tile_set_data_full (tile, tile_data_pointer (gimp_tile, 0, 0),
-                                     tile_size, (void*)tile_done, gimp_tile);
+                                     tile_size, backend_tm->priv->write?
+                                     (void*)tile_done_writing:(void*)tile_done,
+                                     gimp_tile);
           }
         else
           {
@@ -170,7 +179,7 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
                         tile_data_pointer (gimp_tile, 0, row),
                         gimp_tile_stride);
               }
-            tile_release (gimp_tile, FALSE);
+            tile_release (gimp_tile, backend_tm->priv->write);
           }
 
         return tile;
@@ -209,6 +218,8 @@ gimp_tile_write (GimpTileBackendTileManager *backend_tm,
   gint  tile_stride;
   gint  gimp_tile_stride;
   int   row;
+
+  g_assert (backend_tm->priv->write);
 
   gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
                                    x, y, TRUE, TRUE);
