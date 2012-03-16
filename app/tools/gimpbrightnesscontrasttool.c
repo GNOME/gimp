@@ -27,9 +27,6 @@
 
 #include "tools-types.h"
 
-#include "base/gimplut.h"
-#include "base/lut-funcs.h"
-
 #include "gegl/gimpbrightnesscontrastconfig.h"
 
 #include "core/gimpdrawable.h"
@@ -50,8 +47,6 @@
 
 #define SLIDER_WIDTH 200
 
-
-static void   gimp_brightness_contrast_tool_finalize       (GObject               *object);
 
 static gboolean gimp_brightness_contrast_tool_initialize   (GimpTool              *tool,
                                                             GimpDisplay           *display,
@@ -78,7 +73,6 @@ static void   gimp_brightness_contrast_tool_motion         (GimpTool            
 static GeglNode *
               gimp_brightness_contrast_tool_get_operation  (GimpImageMapTool      *image_map_tool,
                                                             GObject              **config);
-static void   gimp_brightness_contrast_tool_map            (GimpImageMapTool      *image_map_tool);
 static void   gimp_brightness_contrast_tool_dialog         (GimpImageMapTool      *image_map_tool);
 
 static void   brightness_contrast_config_notify            (GObject                    *object,
@@ -119,11 +113,8 @@ gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass)
 {
-  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
-
-  object_class->finalize             = gimp_brightness_contrast_tool_finalize;
 
   tool_class->initialize             = gimp_brightness_contrast_tool_initialize;
   tool_class->button_press           = gimp_brightness_contrast_tool_button_press;
@@ -136,33 +127,12 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
   im_tool_class->export_dialog_title = _("Export Brightness-Contrast settings");
 
   im_tool_class->get_operation       = gimp_brightness_contrast_tool_get_operation;
-  im_tool_class->map                 = gimp_brightness_contrast_tool_map;
   im_tool_class->dialog              = gimp_brightness_contrast_tool_dialog;
 }
 
 static void
 gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (bc_tool);
-
-  bc_tool->lut = gimp_lut_new ();
-
-  im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
-  im_tool->apply_data = bc_tool->lut;
-}
-
-static void
-gimp_brightness_contrast_tool_finalize (GObject *object)
-{
-  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (object);
-
-  if (bc_tool->lut)
-    {
-      gimp_lut_free (bc_tool->lut);
-      bc_tool->lut = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
@@ -214,17 +184,6 @@ gimp_brightness_contrast_tool_get_operation (GimpImageMapTool  *im_tool,
                  NULL);
 
   return node;
-}
-
-static void
-gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
-{
-  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
-
-  brightness_contrast_lut_setup (bc_tool->lut,
-                                 bc_tool->config->brightness / 2.0,
-                                 bc_tool->config->contrast,
-                                 gimp_drawable_bytes (im_tool->drawable));
 }
 
 static void

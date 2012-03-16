@@ -122,8 +122,6 @@ libappcore_a_sources = \
 	gimpdrawable.h				\
 	gimpdrawable-blend.c			\
 	gimpdrawable-blend.h			\
-	gimpdrawable-brightness-contrast.c	\
-	gimpdrawable-brightness-contrast.h	\
 	gimpdrawable-bucket-fill.c		\
 	gimpdrawable-bucket-fill.h		\
 	gimpdrawable-color-balance.c		\

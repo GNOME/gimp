@@ -19,14 +19,6 @@
 #define __LUT_FUNCS_H__
 
 
-GimpLut * brightness_contrast_lut_new   (gdouble        brightness,
-                                         gdouble        contrast,
-                                         gint           n_channels);
-void      brightness_contrast_lut_setup (GimpLut       *lut,
-                                         gdouble        brightness,
-                                         gdouble        contrast,
-                                         gint           n_channels);
-
 GimpLut * equalize_lut_new              (GimpHistogram *histogram,
                                          gint           n_channels);
 

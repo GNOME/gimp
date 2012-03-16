@@ -28,67 +28,6 @@
 #include "lut-funcs.h"
 
 
-/* ---------- Brightness/Contrast -----------*/
-
-typedef struct
-{
-  gdouble brightness;
-  gdouble contrast;
-} BrightnessContrastLutData;
-
-static gfloat
-brightness_contrast_lut_func (BrightnessContrastLutData *data,
-                              gint                       nchannels,
-                              gint                       channel,
-                              gfloat                     value)
-{
-  gdouble slant;
-
-  /* return the original value for the alpha channel */
-  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
-    return value;
-
-  /* apply brightness */
-  if (data->brightness < 0.0)
-    value = value * (1.0 + data->brightness);
-  else
-    value = value + ((1.0 - value) * data->brightness);
-
-  slant = tan ((data->contrast + 1) * G_PI_4);
-  value = (value - 0.5) * slant + 0.5;
-
-  return value;
-}
-
-void
-brightness_contrast_lut_setup (GimpLut *lut,
-                               gdouble  brightness,
-                               gdouble  contrast,
-                               gint     n_channels)
-{
-  BrightnessContrastLutData data;
-
-  g_return_if_fail (lut != NULL);
-
-  data.brightness = brightness;
-  data.contrast   = contrast;
-
-  gimp_lut_setup (lut,
-                  (GimpLutFunc) brightness_contrast_lut_func, &data, n_channels);
-}
-
-GimpLut *
-brightness_contrast_lut_new (gdouble brightness,
-                             gdouble contrast,
-                             gint    n_channels)
-{
-  GimpLut *lut = gimp_lut_new ();
-
-  brightness_contrast_lut_setup (lut, brightness, contrast, n_channels);
-
-  return lut;
-}
-
 /* --------------- equalize ------------- */
 
 typedef struct

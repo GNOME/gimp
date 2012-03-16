@@ -38,7 +38,6 @@ struct _GimpBrightnessContrastTool
   GimpImageMapTool              parent_instance;
 
   GimpBrightnessContrastConfig *config;
-  GimpLut                      *lut;
 
   gdouble                       x, y;
   gdouble                       dx, dy;
