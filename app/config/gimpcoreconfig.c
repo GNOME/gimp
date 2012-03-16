@@ -443,7 +443,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   g_object_class_install_property (object_class, PROP_USE_GEGL,
                                    g_param_spec_boolean ("use-gegl",
                                                          "Use GEGL", NULL,
-                                                         FALSE,
+                                                         TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
