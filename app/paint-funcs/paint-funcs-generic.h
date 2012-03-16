@@ -965,24 +965,6 @@ initial_inten_a_pixels (const guchar   *src,
 }
 
 inline void
-copy_component_pixels (const guchar *src,
-                       guchar       *dest,
-                       guint         length,
-                       guint         bytes,
-                       guint         pixel)
-{
-  src += pixel;
-
-  while (length --)
-    {
-      *dest = *src;
-
-      src += bytes;
-      dest++;
-    }
-}
-
-inline void
 copy_color_pixels (const guchar *src,
                    guchar       *dest,
                    guint         length,

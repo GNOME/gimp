@@ -3558,30 +3558,6 @@ copy_gray_to_region (PixelRegion *src,
 }
 
 void
-copy_component (PixelRegion *src,
-                PixelRegion *dest,
-                guint        pixel)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (2, src, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      const guchar *s = src->data;
-      guchar       *d = dest->data;
-      gint          h = src->h;
-
-      while (h--)
-        {
-          copy_component_pixels (s, d, src->w, src->bytes, pixel);
-          s += src->rowstride;
-          d += dest->rowstride;
-        }
-    }
-}
-
-void
 copy_color (PixelRegion *src,
             PixelRegion *dest)
 {
