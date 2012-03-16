@@ -497,33 +497,6 @@ add_alpha_pixels (const guchar *src,
 
 
 inline void
-flatten_pixels (const guchar *src,
-                guchar       *dest,
-                const guchar *bg,
-                guint         length,
-                guint         bytes)
-{
-  const guint alpha = bytes - 1;
-
-  while (length --)
-    {
-      guint b;
-
-      for (b = 0; b < alpha; b++)
-        {
-          gint t1, t2;
-
-          dest[b] = (INT_MULT (src[b], src[alpha], t1) +
-                     INT_MULT (bg[b], (255 - src[alpha]), t2));
-        }
-
-      src += bytes;
-      dest += alpha;
-    }
-}
-
-
-inline void
 gray_to_rgb_pixels (const guchar *src,
                     guchar       *dest,
                     guint         length,

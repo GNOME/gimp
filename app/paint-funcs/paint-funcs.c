@@ -1951,31 +1951,6 @@ add_alpha_region (PixelRegion *src,
 
 
 void
-flatten_region (PixelRegion *src,
-                PixelRegion *dest,
-                guchar      *bg)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (2, src, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      const guchar *s = src->data;
-      guchar       *d = dest->data;
-      gint          h = src->h;
-
-      while (h --)
-        {
-          flatten_pixels (s, d, bg, src->w, src->bytes);
-          s += src->rowstride;
-          d += dest->rowstride;
-        }
-    }
-}
-
-
-void
 extract_alpha_region (PixelRegion *src,
                       PixelRegion *mask,
                       PixelRegion *dest)

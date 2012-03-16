@@ -75,12 +75,6 @@ void  add_alpha_pixels      (const guchar *src,
                              guint         length,
                              guint         bytes);
 
-void  flatten_pixels        (const guchar *src,
-                             guchar       *dest,
-                             const guchar *bg,
-                             guint         length,
-                             guint         bytes);
-
 void  gray_to_rgb_pixels    (const guchar *src,
                              guchar       *dest,
                              guint         length,
@@ -354,10 +348,6 @@ void  copy_region                         (PixelRegion *src,
 
 void  add_alpha_region                    (PixelRegion *src,
                                            PixelRegion *dest);
-
-void  flatten_region                      (PixelRegion *src,
-                                           PixelRegion *dest,
-                                           guchar      *bg);
 
 void  extract_alpha_region                (PixelRegion *src,
                                            PixelRegion *mask,
