@@ -22,7 +22,9 @@
 #define __GIMP_GEGL_NODES_H__
 
 
-GeglNode * gimp_gegl_create_flatten_node (const GimpRGB *background);
+GeglNode * gimp_gegl_create_flatten_node       (const GimpRGB *background);
+GeglNode * gimp_gegl_create_apply_opacity_node (GeglBuffer    *mask,
+                                                gdouble        opacity);
 
 
 #endif /* __GIMP_GEGL_NODES_H__ */

@@ -67,3 +67,39 @@ gimp_gegl_create_flatten_node (const GimpRGB *background)
 
   return node;
 }
+
+GeglNode *
+gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
+                                     gdouble     opacity)
+{
+  GeglNode  *node;
+  GeglNode  *input;
+  GeglNode  *output;
+  GeglNode  *opacity_node;
+  GeglNode  *mask_source;
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (mask), NULL);
+
+  node = gegl_node_new ();
+
+  input  = gegl_node_get_input_proxy  (node, "input");
+  output = gegl_node_get_output_proxy (node, "output");
+
+  opacity_node = gegl_node_new_child (node,
+                                      "operation", "gegl:opacity",
+                                      "value",     opacity,
+                                      NULL);
+  mask_source = gegl_node_new_child (node,
+                                     "operation", "gegl:buffer-source",
+                                     "buffer",    mask,
+                                     NULL);
+
+  gegl_node_connect_to (input,        "output",
+                        opacity_node, "input");
+  gegl_node_connect_to (mask_source,  "output",
+                        opacity_node, "aux");
+  gegl_node_connect_to (opacity_node, "output",
+                        output,       "input");
+
+  return node;
+}

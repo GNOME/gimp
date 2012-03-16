@@ -1789,7 +1789,6 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   GimpItem      *item;
   GimpImage     *image;
   GimpLayerMask *mask;
-  PixelRegion    srcPR, maskPR;
   gboolean       view_changed = FALSE;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
@@ -1835,6 +1834,10 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 
   if (mode == GIMP_MASK_APPLY)
     {
+      GeglBuffer *mask_buffer;
+      GeglBuffer *dest_buffer;
+      GeglNode   *apply_opacity;
+
       if (push_undo)
         gimp_drawable_push_undo (GIMP_DRAWABLE (layer), NULL,
                                  0, 0,
@@ -1843,20 +1846,15 @@ gimp_layer_apply_mask (GimpLayer         *layer,
                                  NULL, FALSE);
 
       /*  Combine the current layer's alpha channel and the mask  */
-      pixel_region_init (&srcPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                         0, 0,
-                         gimp_item_get_width  (item),
-                         gimp_item_get_height (item),
-                         TRUE);
-      pixel_region_init (&maskPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                         0, 0,
-                         gimp_item_get_width  (item),
-                         gimp_item_get_height (item),
-                         FALSE);
+      mask_buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (mask));
+      dest_buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (layer));
 
-      apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
+      apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0);
+
+      gimp_drawable_apply_operation_to_buffer (GIMP_DRAWABLE (layer), NULL, NULL,
+                                               apply_opacity, TRUE, dest_buffer);
+
+      g_object_unref (apply_opacity);
     }
 
   g_signal_handlers_disconnect_by_func (mask,
