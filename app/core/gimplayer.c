@@ -20,9 +20,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <cairo.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
@@ -37,6 +39,7 @@
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimp-apply-operation.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
@@ -1719,6 +1722,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case GIMP_ADD_COPY_MASK:
       {
         TileManager *copy_tiles = NULL;
+        GeglBuffer  *src_buffer;
+        GeglBuffer  *dest_buffer;
 
         if (! gimp_drawable_is_gray (drawable))
           {
@@ -1733,31 +1738,37 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
             gimp_drawable_convert_tiles_grayscale (drawable, copy_tiles);
 
-            pixel_region_init (&srcPR, copy_tiles,
-                               0, 0,
-                               gimp_item_get_width  (item),
-                               gimp_item_get_height (item),
-                               FALSE);
+            src_buffer = gimp_tile_manager_create_buffer (copy_tiles, FALSE);
           }
         else
           {
-            pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                               0, 0,
-                               gimp_item_get_width  (item),
-                               gimp_item_get_height (item),
-                               FALSE);
+            src_buffer = gimp_drawable_get_read_buffer (drawable);
+            g_object_ref (src_buffer);
           }
+
+        dest_buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask));
 
         if (gimp_drawable_has_alpha (drawable))
           {
-            guchar black_uchar[] = { 0, 0, 0, 0 };
+            GeglNode *flatten;
+            GimpRGB   background;
 
-            flatten_region (&srcPR, &destPR, black_uchar);
+            gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
+            flatten = gimp_gegl_create_flatten_node (&background);
+
+            gimp_apply_operation (src_buffer,
+                                  NULL, NULL,
+                                  flatten, TRUE,
+                                  dest_buffer, NULL);
+
+            g_object_unref (flatten);
           }
         else
           {
-            copy_region (&srcPR, &destPR);
+            gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
           }
+
+        g_object_unref (src_buffer);
 
         if (copy_tiles)
           tile_manager_unref (copy_tiles);
