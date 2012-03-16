@@ -202,11 +202,15 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
   if (gimp->global_buffer)
     {
       GeglBuffer    *buffer = gimp_buffer_get_buffer (gimp->global_buffer);
-      TileManager   *tiles  = gimp_buffer_to_tiles (buffer);
+      GeglBuffer    *dest_buffer;
+      GeglRectangle  rect   = { 0, };
       GimpImageType  type   = gimp_buffer_get_image_type (gimp->global_buffer);
 
       width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 512);
       height = MIN (gimp_buffer_get_height (gimp->global_buffer), 512);
+
+      rect.width  = width;
+      rect.height = height;
 
       brush->mask   = temp_buf_new (width, height, 1, 0, 0, NULL);
       brush->pixmap = temp_buf_new (width, height, 3, 0, 0, NULL);
@@ -214,63 +218,34 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       /*  copy the alpha channel into the brush's mask  */
       if (GIMP_IMAGE_TYPE_HAS_ALPHA (type))
         {
-          PixelRegion bufferPR;
-          PixelRegion maskPR;
+          dest_buffer =
+            gegl_buffer_linear_new_from_data (temp_buf_get_data (brush->mask),
+                                              babl_format ("A u8"),
+                                              &rect,
+                                              width * brush->mask->bytes,
+                                              NULL, NULL);
 
-          pixel_region_init (&bufferPR, tiles,
-                             0, 0, width, height, FALSE);
-          pixel_region_init_temp_buf (&maskPR, brush->mask,
-                                      0, 0, width, height);
+          gegl_buffer_copy (buffer, NULL, dest_buffer, NULL);
 
-          extract_alpha_region (&bufferPR, NULL, &maskPR);
+          g_object_unref (dest_buffer);
         }
       else
         {
-          PixelRegion maskPR;
-          guchar      opaque = OPAQUE_OPACITY;
-
-          pixel_region_init_temp_buf (&maskPR, brush->mask,
-                                      0, 0, width, height);
-          color_region (&maskPR, &opaque);
+          memset (temp_buf_get_data (brush->mask), OPAQUE_OPACITY,
+                  width * height);
         }
 
       /*  copy the color channels into the brush's pixmap  */
-      if (GIMP_IMAGE_TYPE_IS_RGB (type))
-        {
-          PixelRegion bufferPR;
-          PixelRegion pixmapPR;
+      dest_buffer =
+        gegl_buffer_linear_new_from_data (temp_buf_get_data (brush->pixmap),
+                                          babl_format ("RGB u8"),
+                                          &rect,
+                                          width * brush->pixmap->bytes,
+                                          NULL, NULL);
 
-          pixel_region_init (&bufferPR, tiles,
-                             0, 0, width, height, FALSE);
-          pixel_region_init_temp_buf (&pixmapPR, brush->pixmap,
-                                      0, 0, width, height);
+      gegl_buffer_copy (buffer, NULL, dest_buffer, NULL);
 
-          if (GIMP_IMAGE_TYPE_HAS_ALPHA (type))
-            copy_color (&bufferPR, &pixmapPR);
-          else
-            copy_region (&bufferPR, &pixmapPR);
-        }
-      else
-        {
-          PixelRegion  bufferPR;
-          PixelRegion  tempPR;
-          TempBuf     *temp = temp_buf_new (width, height, 1, 0, 0, NULL);
-
-          pixel_region_init (&bufferPR, tiles,
-                             0, 0, width, height, FALSE);
-          pixel_region_init_temp_buf (&tempPR, temp,
-                                      0, 0, width, height);
-
-          if (GIMP_IMAGE_TYPE_HAS_ALPHA (type))
-            copy_component (&bufferPR, &tempPR, 0);
-          else
-            copy_region (&bufferPR, &tempPR);
-
-          temp_buf_copy (temp, brush->pixmap);
-          temp_buf_free (temp);
-        }
-
-      tile_manager_unref (tiles);
+      g_object_unref (dest_buffer);
     }
   else
     {
