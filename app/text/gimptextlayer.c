@@ -33,10 +33,7 @@
 
 #include "text-types.h"
 
-#include "base/pixel-region.h"
 #include "base/tile-manager.h"
-
-#include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
@@ -658,19 +655,21 @@ static void
 gimp_text_layer_render_layout (GimpTextLayer  *layer,
                                GimpTextLayout *layout)
 {
-  GimpDrawable    *drawable = GIMP_DRAWABLE (layer);
-  GimpItem        *item     = GIMP_ITEM (layer);
-  GimpImage       *image    = gimp_item_get_image (item);
-  cairo_t         *cr;
-  cairo_surface_t *surface;
-  PixelRegion      layerPR;
-  const guchar    *data;
-  GimpImageType    layer_type;
-  gint             layer_alpha_byte;
-  gint             rowstride;
-  gint             width;
-  gint             height;
-  gpointer         pr;
+  GimpDrawable       *drawable = GIMP_DRAWABLE (layer);
+  GimpItem           *item     = GIMP_ITEM (layer);
+  GimpImage          *image    = gimp_item_get_image (item);
+  GeglBuffer         *buffer;
+  const Babl         *format;
+  GeglBufferIterator *iter;
+  cairo_t            *cr;
+  cairo_surface_t    *surface;
+  const guchar       *data;
+  GimpImageType       layer_type;
+  gint                bytes;
+  gint                layer_alpha_byte;
+  gint                rowstride;
+  gint                width;
+  gint                height;
 
   g_return_if_fail (gimp_drawable_has_alpha (drawable));
 
@@ -683,29 +682,32 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
   cairo_destroy (cr);
 
-  pixel_region_init (&layerPR, gimp_drawable_get_tiles (drawable),
-                     0, 0, width, height, TRUE);
-
   layer_type = gimp_drawable_type (drawable);
-  layer_alpha_byte = layerPR.bytes - 1;
 
   cairo_surface_flush (surface);
   data      = cairo_image_surface_get_data (surface);
   rowstride = cairo_image_surface_get_stride (surface);
 
-  for (pr = pixel_regions_register (1, &layerPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  buffer = gimp_drawable_get_read_buffer (drawable);
+  format = gimp_drawable_get_babl_format (drawable);
+  bytes = babl_format_get_bytes_per_pixel (format);
+
+  layer_alpha_byte = bytes - 1;
+
+  iter = gegl_buffer_iterator_new (buffer, NULL, format,
+                                   GEGL_BUFFER_WRITE);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src  = data + layerPR.y * rowstride + layerPR.x * 4;
-      guchar       *dest = layerPR.data;
-      gint          rows = layerPR.h;
+      const guchar *src  = data + iter->roi[0].y * rowstride + iter->roi[0].x * 4;
+      guchar       *dest = iter->data[0];
+      gint          rows = iter->roi[0].height;
 
       while (rows--)
         {
           const guchar *s = src;
           guchar       *d = dest;
-          gint          w = layerPR.w;
+          gint          w = iter->roi[0].width;
 
           while (w--)
             {
@@ -722,11 +724,11 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
               d[layer_alpha_byte] = color[3];
 
               s += 4;
-              d += layerPR.bytes;
+              d += bytes;
             }
 
           src  += rowstride;
-          dest += layerPR.rowstride;
+          dest += iter->roi[0].width * bytes;
         }
     }
 
