@@ -1865,26 +1865,6 @@ blend_region (PixelRegion *src1,
 
 
 void
-shade_region (PixelRegion *src,
-              PixelRegion *dest,
-              guchar      *color,
-              guchar       blend)
-{
-  const guchar *s = src->data;
-  guchar       *d = dest->data;
-  gint          h = src->h;
-
-  while (h --)
-    {
-      blend_pixels (s, d, color, blend, src->w, src->bytes);
-
-      s += src->rowstride;
-      d += dest->rowstride;
-    }
-}
-
-
-void
 copy_region (PixelRegion *src,
              PixelRegion *dest)
 {

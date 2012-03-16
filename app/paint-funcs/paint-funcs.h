@@ -338,11 +338,6 @@ void  blend_region                        (PixelRegion *src1,
                                            PixelRegion *dest,
                                            guchar       blend);
 
-void  shade_region                        (PixelRegion *src,
-                                           PixelRegion *dest,
-                                           guchar      *color,
-                                           guchar       blend);
-
 void  copy_region                         (PixelRegion *src,
                                            PixelRegion *dest);
 
