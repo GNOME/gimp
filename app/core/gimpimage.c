@@ -1974,6 +1974,25 @@ gimp_image_mask_changed (GimpImage *image)
 
 /*  image components  */
 
+const Babl *
+gimp_image_get_component_format (const GimpImage *image,
+                                 GimpChannelType  channel)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  switch (channel)
+    {
+    case GIMP_RED_CHANNEL:     return babl_format ("R u8");
+    case GIMP_GREEN_CHANNEL:   return babl_format ("G u8");
+    case GIMP_BLUE_CHANNEL:    return babl_format ("B u8");
+    case GIMP_GRAY_CHANNEL:    return babl_format ("Y u8");
+    case GIMP_INDEXED_CHANNEL: return babl_format ("Y u8");
+    case GIMP_ALPHA_CHANNEL:   return babl_format ("A u8");
+    }
+
+  return NULL;
+}
+
 gint
 gimp_image_get_component_index (const GimpImage *image,
                                 GimpChannelType  channel)

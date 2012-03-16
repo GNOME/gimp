@@ -237,6 +237,8 @@ void            gimp_image_mask_changed          (GimpImage          *image);
 
 /*  image components  */
 
+const Babl    * gimp_image_get_component_format  (const GimpImage    *image,
+                                                  GimpChannelType     channel);
 gint            gimp_image_get_component_index   (const GimpImage    *image,
                                                   GimpChannelType     channel);
 

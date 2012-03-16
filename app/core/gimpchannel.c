@@ -1695,36 +1695,36 @@ gimp_channel_new_from_component (GimpImage       *image,
 {
   GimpProjection *projection;
   GimpChannel    *channel;
-  TileManager    *proj_tiles;
-  PixelRegion     src;
-  PixelRegion     dest;
+  GeglBuffer     *src_buffer;
+  TileManager    *dest_tiles;
+  GeglBuffer     *dest_buffer;
   gint            width;
   gint            height;
-  gint            pixel;
+  const Babl     *format;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  pixel = gimp_image_get_component_index (image, type);
+  format = gimp_image_get_component_format (image, type);
 
-  g_return_val_if_fail (pixel != -1, NULL);
+  g_return_val_if_fail (format != NULL, NULL);
 
   projection = gimp_image_get_projection (image);
 
   gimp_pickable_flush (GIMP_PICKABLE (projection));
 
-  proj_tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (projection));
-  width  = tile_manager_width  (proj_tiles);
-  height = tile_manager_height (proj_tiles);
+  src_buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (projection));
+  width  = gegl_buffer_get_width  (src_buffer);
+  height = gegl_buffer_get_height (src_buffer);
 
   channel = gimp_channel_new (image, width, height, name, color);
 
-  pixel_region_init (&src, proj_tiles,
-                     0, 0, width, height, FALSE);
-  pixel_region_init (&dest,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     0, 0, width, height, TRUE);
+  dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (channel));
+  dest_buffer = gimp_tile_manager_create_buffer_with_format (dest_tiles,
+                                                             format, TRUE);
 
-  copy_component (&src, &dest, pixel);
+  gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
+
+  g_object_unref (dest_buffer);
 
   return channel;
 }

@@ -106,7 +106,7 @@ channel_new_from_component_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_image_get_component_index (image, component) != -1)
+      if (gimp_image_get_component_format (image, component) != NULL)
         channel = gimp_channel_new_from_component (image,
                                                    component, name, NULL);
 
