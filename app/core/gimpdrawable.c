@@ -1264,6 +1264,9 @@ gimp_drawable_update (GimpDrawable *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
+  if (drawable->private->write_buffer)
+    gegl_buffer_flush (drawable->private->write_buffer);
+
   g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
                  x, y, width, height);
 }
