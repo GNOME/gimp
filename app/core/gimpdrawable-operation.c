@@ -137,7 +137,6 @@ gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
   GeglRectangle rect;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (progress == NULL || undo_desc != NULL);
   g_return_if_fail (GEGL_IS_NODE (operation));
@@ -171,7 +170,6 @@ gimp_drawable_apply_operation_to_tiles (GimpDrawable *drawable,
   GeglBuffer *dest_buffer;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (progress == NULL || undo_desc != NULL);
   g_return_if_fail (GEGL_IS_NODE (operation));
