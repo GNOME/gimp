@@ -161,10 +161,18 @@ GeglBuffer *
 gimp_tile_manager_create_buffer (TileManager *tm,
                                  gboolean     write)
 {
+  return gimp_tile_manager_create_buffer_with_format (tm, NULL, write);
+}
+
+GeglBuffer *
+gimp_tile_manager_create_buffer_with_format (TileManager *tm,
+                                             const Babl  *format,
+                                             gboolean     write)
+{
   GeglTileBackend *backend;
   GeglBuffer      *buffer;
 
-  backend = gimp_tile_backend_tile_manager_new (tm, write);
+  backend = gimp_tile_backend_tile_manager_new (tm, format, write);
   buffer = gegl_buffer_new_for_backend (NULL, backend);
   g_object_unref (backend);
 

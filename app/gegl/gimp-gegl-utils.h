@@ -32,6 +32,9 @@ const gchar * gimp_interpolation_to_gegl_filter (GimpInterpolationType  interpol
 
 GeglBuffer  * gimp_tile_manager_create_buffer   (TileManager           *tm,
                                                  gboolean               write);
+GeglBuffer *  gimp_tile_manager_create_buffer_with_format (TileManager *tm,
+                                                           const Babl  *format,
+                                                           gboolean     write);
 
 void          gimp_gegl_buffer_refetch_tiles    (GeglBuffer            *buffer);
 

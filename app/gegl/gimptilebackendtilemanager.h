@@ -53,6 +53,7 @@ struct _GimpTileBackendTileManagerClass
 GType             gimp_tile_backend_tile_manager_get_type (void) G_GNUC_CONST;
 
 GeglTileBackend * gimp_tile_backend_tile_manager_new      (TileManager *tm,
+                                                           const Babl  *format,
                                                            gboolean     write);
 
 

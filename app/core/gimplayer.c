@@ -1607,13 +1607,18 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case GIMP_ADD_ALPHA_TRANSFER_MASK:
       if (gimp_drawable_has_alpha (drawable))
         {
-          pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                             0, 0,
-                             gimp_item_get_width  (item),
-                             gimp_item_get_height (item),
-                             FALSE);
+          TileManager *dest_tiles;
+          GeglBuffer  *dest_buffer;
 
-          extract_alpha_region (&srcPR, NULL, &destPR);
+          dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (mask));
+          dest_buffer = gimp_tile_manager_create_buffer_with_format (dest_tiles,
+                                                                     babl_format ("A u8"),
+                                                                     TRUE);
+
+          gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+                            dest_buffer, NULL);
+
+          g_object_unref (dest_buffer);
 
           if (add_mask_type == GIMP_ADD_ALPHA_TRANSFER_MASK)
             {

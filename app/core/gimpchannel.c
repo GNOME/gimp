@@ -39,6 +39,8 @@
 
 #include "gegl/gimp-gegl-nodes.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimp.h"
 #include "gimp-utils.h"
 #include "gimpcontainer.h"
@@ -1654,9 +1656,10 @@ gimp_channel_new_from_alpha (GimpImage     *image,
                              const GimpRGB *color)
 {
   GimpChannel *channel;
+  TileManager *dest_tiles;
+  GeglBuffer  *dest_buffer;
   gint         width;
   gint         height;
-  PixelRegion  srcPR, destPR;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -1669,14 +1672,15 @@ gimp_channel_new_from_alpha (GimpImage     *image,
 
   gimp_channel_clear (channel, NULL, FALSE);
 
-  pixel_region_init (&srcPR,
-                     gimp_drawable_get_tiles (drawable),
-                     0, 0, width, height, FALSE);
-  pixel_region_init (&destPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     0, 0, width, height, TRUE);
+  dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (channel));
+  dest_buffer = gimp_tile_manager_create_buffer_with_format (dest_tiles,
+                                                             babl_format ("A u8"),
+                                                             TRUE);
 
-  extract_alpha_region (&srcPR, NULL, &destPR);
+  gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+                    dest_buffer, NULL);
+
+  g_object_unref (dest_buffer);
 
   channel->bounds_known = FALSE;
 

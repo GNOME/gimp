@@ -93,6 +93,12 @@ gimp_gegl_init (Gimp *gimp)
                     G_CALLBACK (gimp_gegl_notify_tile_cache_size),
                     NULL);
 
+  babl_format_new ("name", "A u8",
+                   babl_model ("RGBA"),
+                   babl_type ("u8"),
+                   babl_component ("A"),
+                   NULL);
+
   g_type_class_ref (GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
