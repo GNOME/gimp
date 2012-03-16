@@ -256,8 +256,9 @@ gimp_projection_initialize (GimpProjection *proj,
 
       if (proj->use_gegl)
         {
-          g_assert (proj->sink_node);
-          gegl_node_get (proj->sink_node, "buffer", &buffer, NULL);
+          /* GEGL should really do this for us... */
+          gegl_node_get (gimp_projection_get_sink_node (proj),
+                         "buffer", &buffer, NULL);
         }
       else
         {
