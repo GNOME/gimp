@@ -251,13 +251,21 @@ gimp_projection_initialize (GimpProjection *proj,
 
   if (! coverage)
     {
-      TileManager   *tiles;
       GeglBuffer    *buffer;
       GeglRectangle  rect = { x, y, w, h };
 
-      tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (proj));
+      if (proj->use_gegl)
+        {
+          g_assert (proj->sink_node);
+          gegl_node_get (proj->sink_node, "buffer", &buffer, NULL);
+        }
+      else
+        {
+          TileManager *tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (proj));
 
-      buffer = gimp_tile_manager_create_buffer (tiles, TRUE);
+          buffer = gimp_tile_manager_create_buffer (tiles, TRUE);
+        }
+
       gegl_buffer_clear (buffer, &rect);
       g_object_unref (buffer);
     }
