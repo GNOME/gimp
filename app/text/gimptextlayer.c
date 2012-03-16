@@ -688,7 +688,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   data      = cairo_image_surface_get_data (surface);
   rowstride = cairo_image_surface_get_stride (surface);
 
-  buffer = gimp_drawable_get_read_buffer (drawable);
+  buffer = gimp_drawable_get_write_buffer (drawable);
   format = gimp_drawable_get_babl_format (drawable);
   bytes = babl_format_get_bytes_per_pixel (format);
 
