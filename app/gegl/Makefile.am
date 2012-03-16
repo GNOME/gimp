@@ -20,6 +20,8 @@ libappgegl_a_sources = \
 	gimp-gegl-types.h			\
 	gimp-gegl.c				\
 	gimp-gegl.h				\
+	gimp-gegl-nodes.c			\
+	gimp-gegl-nodes.h			\
 	gimp-gegl-utils.c			\
 	gimp-gegl-utils.h			\
 	gimptilebackendtilemanager.c		\

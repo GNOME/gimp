@@ -34,12 +34,14 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable-convert.h"
+#include "gimpdrawable-operation.h"
 #include "gimperror.h"
 #include "gimpimage-undo-push.h"
 #include "gimpimage-undo.h"
@@ -1914,12 +1916,10 @@ void
 gimp_layer_flatten (GimpLayer   *layer,
                     GimpContext *context)
 {
-  GimpItem      *item;
-  GimpDrawable  *drawable;
-  PixelRegion    srcPR, destPR;
+  GeglNode      *flatten;
   TileManager   *new_tiles;
   GimpImageType  new_type;
-  guchar         bg[4];
+  GimpRGB        background;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -1927,36 +1927,20 @@ gimp_layer_flatten (GimpLayer   *layer,
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
 
-  item     = GIMP_ITEM (layer);
-  drawable = GIMP_DRAWABLE (layer);
+  new_type = gimp_drawable_type_without_alpha (GIMP_DRAWABLE (layer));
 
-  new_type = gimp_drawable_type_without_alpha (drawable);
-
-  gimp_image_get_background (gimp_item_get_image (item), context,
-                             gimp_drawable_type (drawable),
-                             bg);
-
-  /*  Allocate the new tiles  */
-  new_tiles = tile_manager_new (gimp_item_get_width  (item),
-                                gimp_item_get_height (item),
+  new_tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (layer)),
+                                gimp_item_get_height (GIMP_ITEM (layer)),
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     0, 0,
-                     gimp_item_get_width  (item),
-                     gimp_item_get_height (item),
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     gimp_item_get_width  (item),
-                     gimp_item_get_height (item),
-                     TRUE);
+  gimp_context_get_background (context, &background);
+  flatten = gimp_gegl_create_flatten_node (&background);
 
-  /*  Remove alpha channel  */
-  flatten_region (&srcPR, &destPR, bg);
+  gimp_drawable_apply_operation_to_tiles (GIMP_DRAWABLE (layer), NULL, NULL,
+                                          flatten, TRUE, new_tiles);
 
-  /*  Set the new tiles  */
+  g_object_unref (flatten);
+
   gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
                            gimp_item_is_attached (GIMP_ITEM (layer)),
                            C_("undo-type", "Remove Alpha Channel"),

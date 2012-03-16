@@ -37,6 +37,8 @@
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
 
+#include "gegl/gimp-gegl-nodes.h"
+
 #include "gimp.h"
 #include "gimp-utils.h"
 #include "gimpcontainer.h"
@@ -456,27 +458,21 @@ gimp_channel_convert (GimpItem  *item,
 
   if (gimp_drawable_has_alpha (drawable))
     {
+      GeglNode    *flatten;
       TileManager *new_tiles;
-      PixelRegion  srcPR;
-      PixelRegion  destPR;
-      guchar       bg[1] = { 0 };
+      GimpRGB      background;
 
       new_tiles = tile_manager_new (gimp_item_get_width (item),
                                     gimp_item_get_height (item),
                                     GIMP_IMAGE_TYPE_BYTES (GIMP_GRAY_IMAGE));
 
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         0, 0,
-                         gimp_item_get_width  (item),
-                         gimp_item_get_height (item),
-                         FALSE);
-      pixel_region_init (&destPR, new_tiles,
-                         0, 0,
-                         gimp_item_get_width (item),
-                         gimp_item_get_height (item),
-                         TRUE);
+      gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
+      flatten = gimp_gegl_create_flatten_node (&background);
 
-      flatten_region (&srcPR, &destPR, bg);
+      gimp_drawable_apply_operation_to_tiles (drawable, NULL, NULL,
+                                              flatten, TRUE, new_tiles);
+
+      g_object_unref (flatten);
 
       gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
                                     new_tiles, GIMP_GRAY_IMAGE,

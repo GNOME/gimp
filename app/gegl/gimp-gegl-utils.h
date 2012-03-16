@@ -35,5 +35,8 @@ GeglBuffer  * gimp_tile_manager_create_buffer   (TileManager           *tm,
 
 void          gimp_gegl_buffer_refetch_tiles    (GeglBuffer            *buffer);
 
+void          gimp_gegl_color_set_rgba          (GeglColor     *color,
+                                                 const GimpRGB *rgb);
+
 
 #endif /* __GIMP_GEGL_UTILS_H__ */
