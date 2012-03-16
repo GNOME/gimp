@@ -30,22 +30,12 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimp-apply-operation.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-shadow.h"
 #include "gimpimagemapconfig.h"
 #include "gimpprogress.h"
-
-
-/*  local function prototypes  */
-
-static void   gimp_drawable_apply_operation_private (GimpDrawable        *drawable,
-                                                     GimpProgress        *progress,
-                                                     const gchar         *undo_desc,
-                                                     GeglNode            *operation,
-                                                     gboolean             linear,
-                                                     GeglBuffer          *dest_buffer,
-                                                     const GeglRectangle *rect);
 
 
 /*  public functions  */
@@ -75,13 +65,10 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
     gimp_tile_manager_create_buffer (gimp_drawable_get_shadow_tiles (drawable),
                                      TRUE);
 
-  gimp_drawable_apply_operation_private (drawable,
-                                         progress,
-                                         undo_desc,
-                                         operation,
-                                         linear,
-                                         dest_buffer,
-                                         &rect);
+  gimp_apply_operation (gimp_drawable_get_read_buffer (drawable),
+                        progress, undo_desc,
+                        operation, linear,
+                        dest_buffer, &rect);
 
   g_object_unref (dest_buffer);
 
@@ -134,29 +121,16 @@ gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
                                          gboolean      linear,
                                          GeglBuffer   *dest_buffer)
 {
-  GeglRectangle rect;
-
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (progress == NULL || undo_desc != NULL);
   g_return_if_fail (GEGL_IS_NODE (operation));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
-  rect.x      = 0;
-  rect.y      = 0;
-  rect.width  = gegl_buffer_get_width  (dest_buffer);
-  rect.height = gegl_buffer_get_height (dest_buffer);
-
-  gimp_drawable_apply_operation_private (drawable,
-                                         progress,
-                                         undo_desc,
-                                         operation,
-                                         linear,
-                                         dest_buffer,
-                                         &rect);
-
-  if (progress)
-    gimp_progress_end (progress);
+  gimp_apply_operation (gimp_drawable_get_read_buffer (drawable),
+                        progress, undo_desc,
+                        operation, linear,
+                        dest_buffer, NULL);
 }
 
 void
@@ -185,60 +159,4 @@ gimp_drawable_apply_operation_to_tiles (GimpDrawable *drawable,
                                            dest_buffer);
 
   g_object_unref (dest_buffer);
-}
-
-
-/*  private functions  */
-
-static void
-gimp_drawable_apply_operation_private (GimpDrawable        *drawable,
-                                       GimpProgress        *progress,
-                                       const gchar         *undo_desc,
-                                       GeglNode            *operation,
-                                       gboolean             linear,
-                                       GeglBuffer          *dest_buffer,
-                                       const GeglRectangle *rect)
-{
-  GeglBuffer    *src_buffer;
-  GeglNode      *gegl;
-  GeglNode      *src_node;
-  GeglNode      *dest_node;
-  GeglProcessor *processor;
-  gdouble        value;
-
-  gegl = gegl_node_new ();
-
-  /* Disable caching on all children of the node unless explicitly re-enabled.
-   */
-  g_object_set (gegl,
-                "dont-cache", TRUE,
-                NULL);
-
-  src_buffer = gimp_drawable_get_read_buffer (drawable);
-
-  src_node = gegl_node_new_child (gegl,
-                                  "operation", "gegl:buffer-source",
-                                  "buffer",    src_buffer,
-                                  NULL);
-  dest_node = gegl_node_new_child (gegl,
-                                   "operation", "gegl:write-buffer",
-                                   "buffer",    dest_buffer,
-                                   NULL);
-
-  gegl_node_add_child (gegl, operation);
-
-  gegl_node_link_many (src_node, operation, dest_node, NULL);
-
-  processor = gegl_node_new_processor (dest_node, rect);
-
-  if (progress)
-    gimp_progress_start (progress, undo_desc, FALSE);
-
-  while (gegl_processor_work (processor, &value))
-    if (progress)
-      gimp_progress_set_value (progress, value);
-
-  g_object_unref (processor);
-
-  g_object_unref (gegl);
 }
