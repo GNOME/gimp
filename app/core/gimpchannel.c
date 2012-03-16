@@ -1195,34 +1195,31 @@ gimp_channel_real_bounds (GimpChannel *channel,
 static gboolean
 gimp_channel_real_is_empty (GimpChannel *channel)
 {
-  PixelRegion  maskPR;
-  guchar      *data;
-  gint         x, y;
-  gpointer     pr;
+  GeglBuffer         *buffer;
+  GeglBufferIterator *iter;
 
   if (channel->bounds_known)
     return channel->empty;
 
-  pixel_region_init (&maskPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (channel)),
-                     gimp_item_get_height (GIMP_ITEM (channel)), FALSE);
+  buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel));
 
-  for (pr = pixel_regions_register (1, &maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  iter = gegl_buffer_iterator_new (buffer, NULL, babl_format ("Y u8"),
+                                   GEGL_BUFFER_READ);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      /*  check if any pixel in the channel is non-zero  */
-      data = maskPR.data;
+      guchar *data = iter->data[0];
+      gint    i;
 
-      for (y = 0; y < maskPR.h; y++)
-        for (x = 0; x < maskPR.w; x++)
-          if (*data++)
+      for (i = 0; i < iter->length; i++)
+        {
+          if (data[i])
             {
-              pixel_regions_process_stop (pr);
+              gegl_buffer_iterator_stop (iter);
+
               return FALSE;
             }
+        }
     }
 
   /*  The mask is empty, meaning we can set the bounds as known  */
