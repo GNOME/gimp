@@ -3557,29 +3557,6 @@ copy_gray_to_region (PixelRegion *src,
     }
 }
 
-void
-copy_color (PixelRegion *src,
-            PixelRegion *dest)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (2, src, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      const guchar *s = src->data;
-      guchar       *d = dest->data;
-      gint          h = src->h;
-
-      while (h--)
-        {
-          copy_color_pixels (s, d, src->w, src->bytes);
-          s += src->rowstride;
-          d += dest->rowstride;
-        }
-    }
-}
-
 struct initial_regions_struct
 {
   guint                 opacity;
