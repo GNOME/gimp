@@ -364,11 +364,6 @@ void  convolve_region                     (PixelRegion         *srcR,
                                            GimpConvolutionType  mode,
                                            gboolean             alpha_weighting);
 
-
-void  multiply_alpha_region               (PixelRegion *srcR);
-
-void  separate_alpha_region               (PixelRegion *srcR);
-
 void  border_region                       (PixelRegion *src,
                                            gint16       xradius,
                                            gint16       yradius,
