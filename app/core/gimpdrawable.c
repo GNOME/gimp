@@ -542,7 +542,7 @@ gimp_drawable_resize (GimpItem    *item,
                       gint         offset_y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  PixelRegion   destPR;
+  GeglBuffer   *dest_buffer;
   TileManager  *new_tiles;
   gint          new_offset_x;
   gint          new_offset_y;
@@ -575,32 +575,34 @@ gimp_drawable_resize (GimpItem    *item,
   new_tiles = tile_manager_new (new_width, new_height,
                                 gimp_drawable_bytes (drawable));
 
-  /*  Determine whether the new tiles need to be initially cleared  */
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
+
   if (copy_width  != new_width ||
       copy_height != new_height)
     {
-      guchar bg[MAX_CHANNELS] = { 0, };
+      /*  Clear the new tiles if needed  */
 
-      pixel_region_init (&destPR, new_tiles,
-                         0, 0,
-                         new_width, new_height,
-                         TRUE);
+      GeglColor *col;
+      guchar     bg[MAX_CHANNELS] = { 0, };
 
       if (! gimp_drawable_has_alpha (drawable) && ! GIMP_IS_CHANNEL (drawable))
         gimp_image_get_background (gimp_item_get_image (item), context,
                                    gimp_drawable_type (drawable), bg);
 
-      color_region (&destPR, bg);
+      col = gegl_color_new (NULL);
+      gegl_color_set_pixel (col, gimp_drawable_get_babl_format (drawable), bg);
+
+      gegl_buffer_set_color (dest_buffer, NULL, col);
+
+      g_object_unref (col);
     }
 
-  /*  Determine whether anything needs to be copied  */
   if (copy_width && copy_height)
     {
-      GeglBuffer    *dest_buffer;
+      /*  Copy the pixels in the intersection  */
+
       GeglRectangle  src_rect;
       GeglRectangle  dest_rect;
-
-      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
 
       src_rect.x      = copy_x - gimp_item_get_offset_x (item);
       src_rect.y      = copy_y - gimp_item_get_offset_y (item);
@@ -613,8 +615,9 @@ gimp_drawable_resize (GimpItem    *item,
       gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), &src_rect,
                         dest_buffer, &dest_rect);
 
-      g_object_unref (dest_buffer);
     }
+
+  g_object_unref (dest_buffer);
 
   gimp_drawable_set_tiles_full (drawable, gimp_item_is_attached (item), NULL,
                                 new_tiles, gimp_drawable_type (drawable),
@@ -1714,7 +1717,6 @@ gimp_drawable_fill (GimpDrawable      *drawable,
   GimpItem      *item;
   GimpImage     *image;
   GimpImageType  drawable_type;
-  PixelRegion    destPR;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (color != NULL || pattern != NULL);
@@ -1725,39 +1727,50 @@ gimp_drawable_fill (GimpDrawable      *drawable,
 
   drawable_type = gimp_drawable_type (drawable);
 
-  pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
-                     0, 0, gimp_item_get_width  (item), gimp_item_get_height (item),
-                     TRUE);
-
   if (color)
     {
-      guchar tmp[MAX_CHANNELS];
-      guchar c[MAX_CHANNELS];
+      GeglColor *col;
+      guchar     c[MAX_CHANNELS];
 
-      gimp_rgba_get_uchar (color,
-                           &tmp[RED],
-                           &tmp[GREEN],
-                           &tmp[BLUE],
-                           &tmp[ALPHA]);
-
-      gimp_image_transform_color (image, drawable_type, c, GIMP_RGB, tmp);
+      gimp_image_transform_rgb (image, drawable_type, color, c);
 
       if (GIMP_IMAGE_TYPE_HAS_ALPHA (drawable_type))
-        c[GIMP_IMAGE_TYPE_BYTES (drawable_type) - 1] = tmp[ALPHA];
+        gimp_rgba_get_uchar (color, NULL, NULL, NULL,
+                             c + GIMP_IMAGE_TYPE_BYTES (drawable_type) - 1);
       else
         c[GIMP_IMAGE_TYPE_BYTES (drawable_type)] = OPAQUE_OPACITY;
 
-      color_region (&destPR, c);
+      col = gegl_color_new (NULL);
+      gegl_color_set_pixel (col, gimp_drawable_get_babl_format (drawable), c);
+
+      gegl_buffer_set_color (gimp_drawable_get_write_buffer (drawable),
+                             NULL, col);
+
+      g_object_unref (col);
     }
   else
     {
-      TempBuf  *pat_buf;
-      gboolean  new_buf;
+      GeglBuffer    *src_buffer;
+      GeglRectangle  rect = { 0, };
+      TempBuf       *pat_buf;
+      gboolean       new_buf;
 
       pat_buf = gimp_image_transform_temp_buf (image, drawable_type,
                                                pattern->mask, &new_buf);
 
-      pattern_region (&destPR, NULL, pat_buf, 0, 0);
+      rect.width  = pat_buf->width;
+      rect.height = pat_buf->height;
+
+      src_buffer = gegl_buffer_linear_new_from_data (temp_buf_get_data (pat_buf),
+                                                     gimp_bpp_to_babl_format (pat_buf->bytes, TRUE),
+                                                     &rect,
+                                                     rect.width * pat_buf->bytes,
+                                                     NULL, NULL);
+
+      gegl_buffer_set_pattern (gimp_drawable_get_write_buffer (drawable),
+                               NULL, src_buffer, 0, 0);
+
+      g_object_unref (src_buffer);
 
       if (new_buf)
         temp_buf_free (pat_buf);

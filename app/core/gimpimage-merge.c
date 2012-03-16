@@ -521,8 +521,10 @@ gimp_image_merge_layers (GimpImage     *image,
   if (merge_type == GIMP_FLATTEN_IMAGE ||
       gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
     {
-      GimpImageType type;
-      guchar        bg[4] = { 0, 0, 0, 0 };
+      GeglColor     *color;
+      GeglRectangle  rect = { 0, };
+      GimpImageType  type;
+      guchar         bg[4] = { 0, 0, 0, 0 };
 
       type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (image));
 
@@ -543,14 +545,16 @@ gimp_image_merge_layers (GimpImage     *image,
                                  gimp_drawable_type (GIMP_DRAWABLE (merge_layer)),
                                  bg);
 
-      /*  init the pixel region  */
-      pixel_region_init (&src1PR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
-                         0, 0, (x2 - x1), (y2 - y1),
-                         TRUE);
+      rect.width  = x2 - x1;
+      rect.height = y2 - y1;
 
-      /*  set the region to the background color  */
-      color_region (&src1PR, bg);
+      color = gegl_color_new (NULL);
+      gegl_color_set_pixel (color, gimp_drawable_get_babl_format (GIMP_DRAWABLE (merge_layer)), bg);
+
+      gegl_buffer_set_color (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (merge_layer)),
+                             &rect, color);
+
+      g_object_unref (color);
 
       position = 0;
     }

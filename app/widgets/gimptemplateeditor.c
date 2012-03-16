@@ -390,7 +390,7 @@ gimp_template_editor_constructed (GObject *object)
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
                                         GIMP_FOREGROUND_FILL,
-                                        GIMP_TRANSPARENT_FILL);
+                                        GIMP_PATTERN_FILL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("_Fill with:"), 0.0, 0.5,
                              combo, 1, FALSE);

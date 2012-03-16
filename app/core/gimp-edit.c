@@ -544,6 +544,7 @@ gimp_edit_fill_internal (GimpImage            *image,
                          const gchar          *undo_desc)
 {
   TileManager   *buf_tiles;
+  GeglBuffer    *dest_buffer;
   PixelRegion    bufPR;
   gint           x, y, width, height;
   GimpImageType  drawable_type;
@@ -597,22 +598,45 @@ gimp_edit_fill_internal (GimpImage            *image,
 
   buf_tiles = tile_manager_new (width, height, tiles_bytes);
 
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (buf_tiles, TRUE);
 
   if (pat_buf)
     {
-      pattern_region (&bufPR, NULL, pat_buf, 0, 0);
+      GeglBuffer    *src_buffer;
+      GeglRectangle  rect = { 0, };
+
+      rect.width  = pat_buf->width;
+      rect.height = pat_buf->height;
+
+      src_buffer = gegl_buffer_linear_new_from_data (temp_buf_get_data (pat_buf),
+                                                     gimp_bpp_to_babl_format (tiles_bytes, TRUE),
+                                                     &rect,
+                                                     rect.width * pat_buf->bytes,
+                                                     NULL, NULL);
+
+      gegl_buffer_set_pattern (dest_buffer, NULL, src_buffer, 0, 0);
+
+      g_object_unref (src_buffer);
 
       if (new_buf)
         temp_buf_free (pat_buf);
     }
   else
     {
+      GeglColor *color;
+
       if (gimp_drawable_has_alpha (drawable))
         col[gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 
-      color_region (&bufPR, col);
+      color = gegl_color_new (NULL);
+      gegl_color_set_pixel (color, gimp_drawable_get_babl_format (drawable), col);
+
+      gegl_buffer_set_color (dest_buffer, NULL, color);
+
+      g_object_unref (color);
     }
+
+  g_object_unref (dest_buffer);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, FALSE);
   gimp_drawable_apply_region (drawable, &bufPR,
