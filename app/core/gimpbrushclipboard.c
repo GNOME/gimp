@@ -25,10 +25,6 @@
 #include "core-types.h"
 
 #include "base/temp-buf.h"
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-
-#include "paint-funcs/paint-funcs.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -36,7 +32,6 @@
 #include "gimpbuffer.h"
 #include "gimpbrushclipboard.h"
 #include "gimpimage.h"
-#include "gimppickable.h"
 
 #include "gimp-intl.h"
 
