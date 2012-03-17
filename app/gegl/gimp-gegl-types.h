@@ -32,6 +32,7 @@ typedef struct _GimpOperationTileSource         GimpOperationTileSource;
 
 typedef struct _GimpOperationCageCoefCalc       GimpOperationCageCoefCalc;
 typedef struct _GimpOperationCageTransform      GimpOperationCageTransform;
+typedef struct _GimpOperationSetAlpha           GimpOperationSetAlpha;
 
 typedef struct _GimpOperationPointFilter        GimpOperationPointFilter;
 typedef struct _GimpOperationBrightnessContrast GimpOperationBrightnessContrast;

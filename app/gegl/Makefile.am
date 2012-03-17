@@ -48,6 +48,13 @@ libappgegl_a_sources = \
 	gimpthresholdconfig.c			\
 	gimpthresholdconfig.h			\
 	\
+	gimpoperationcagecoefcalc.c		\
+	gimpoperationcagecoefcalc.h		\
+	gimpoperationcagetransform.c		\
+	gimpoperationcagetransform.h		\
+	gimpoperationsetalpha.c			\
+	gimpoperationsetalpha.h			\
+	\
 	gimpoperationpointfilter.c		\
 	gimpoperationpointfilter.h		\
 	gimpoperationbrightnesscontrast.c	\
@@ -56,10 +63,6 @@ libappgegl_a_sources = \
 	gimpoperationcolorbalance.h		\
 	gimpoperationcolorize.c			\
 	gimpoperationcolorize.h			\
-	gimpoperationcagecoefcalc.c		\
-	gimpoperationcagecoefcalc.h		\
-	gimpoperationcagetransform.c		\
-	gimpoperationcagetransform.h		\
 	gimpoperationcurves.c			\
 	gimpoperationcurves.h			\
 	gimpoperationdesaturate.c		\
