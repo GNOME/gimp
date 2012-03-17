@@ -1318,9 +1318,12 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
         {
           GimpLayer *layer = GIMP_LAYER (renderer->viewable);
 
-          if (gimp_layer_get_edit_mask (layer))
-            gimp_action_group_set_action_active (group,
-                                                 "layers-mask-edit", FALSE);
+          if (gimp_layer_get_mask (layer) &&
+              gimp_layer_get_edit_mask (layer))
+            {
+              gimp_action_group_set_action_active (group,
+                                                   "layers-mask-edit", FALSE);
+            }
 
           g_object_unref (renderer);
         }
