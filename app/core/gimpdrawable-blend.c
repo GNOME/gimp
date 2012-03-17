@@ -573,7 +573,6 @@ gradient_precalc_shapeburst (GimpImage    *image,
   gfloat      *distp;
   gint         size;
   gpointer     pr;
-  guchar       white[1] = { OPAQUE_OPACITY };
 
   /*  allocate the distance map  */
   distR.tiles = tile_manager_new (PR->w, PR->h, sizeof (gfloat));
@@ -614,6 +613,8 @@ gradient_precalc_shapeburst (GimpImage    *image,
         }
       else
         {
+          guchar white[1] = { OPAQUE_OPACITY };
+
           /*  Otherwise, just fill the shapeburst to white  */
           color_region (&tempR, white);
         }
