@@ -156,7 +156,7 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
                                                                     TRUE),
                                            &rect, rowstride,
                                            (GDestroyNotify) g_object_unref,
-                                           pixbuf);
+                                           g_object_ref (pixbuf));
 }
 
 GeglBuffer *
