@@ -427,15 +427,15 @@ gimp_scan_convert_compose_value (GimpScanConvert *sc,
 /**
  * gimp_scan_convert_render_full:
  * @sc:           a #GimpScanConvert context
- * @tile_manager: the #TileManager to render to
- * @off_x:        horizontal offset into the @tile_manager
- * @off_y:        vertical offset into the @tile_manager
- * @replace:      if true the original content of the @tile_manager gets
+ * @tiles:        the #TileManager to render to
+ * @off_x:        horizontal offset into the @tiles
+ * @off_y:        vertical offset into the @tiles
+ * @replace:      if true the original content of the @tiles gets
  *                destroyed
  * @antialias:    if true the rendering happens antialiased
  * @value:        value to use for covered pixels
  *
- * This function renders the area described by the path to the @tile_manager,
+ * This function renders the area described by the path to the @tiles,
  * taking the offset @off_x and @off_y in the tilemanager into account.
  * The rendering can happen antialiased and be rendered on top of existing
  * content or replacing it completely. The @value specifies the opacity value
@@ -447,7 +447,7 @@ gimp_scan_convert_compose_value (GimpScanConvert *sc,
  */
 void
 gimp_scan_convert_render_full (GimpScanConvert *sc,
-                               TileManager     *tile_manager,
+                               TileManager     *tiles,
                                gint             off_x,
                                gint             off_y,
                                gboolean         replace,
@@ -463,12 +463,13 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   gint             width, height;
 
   g_return_if_fail (sc != NULL);
-  g_return_if_fail (tile_manager != NULL);
+  g_return_if_fail (tiles != NULL);
+  g_return_if_fail (tile_manager_bpp (tiles) == 1);
 
   x      = 0;
   y      = 0;
-  width  = tile_manager_width (tile_manager);
-  height = tile_manager_height (tile_manager);
+  width  = tile_manager_width (tiles);
+  height = tile_manager_height (tiles);
 
   if (sc->clip && ! gimp_rectangle_intersect (x, y, width, height,
                                               sc->clip_x, sc->clip_y,
@@ -476,9 +477,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
                                               &x, &y, &width, &height))
     return;
 
-  pixel_region_init (&maskPR, tile_manager, x, y, width, height, TRUE);
-
-  g_return_if_fail (maskPR.bytes == 1);
+  pixel_region_init (&maskPR, tiles, x, y, width, height, TRUE);
 
   path.status   = CAIRO_STATUS_SUCCESS;
   path.data     = (cairo_path_data_t *) sc->path_data->data;
@@ -492,6 +491,11 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
       const gint stride   = cairo_format_stride_for_width (CAIRO_FORMAT_A8,
                                                            maskPR.w);
 
+      /*  cairo rowstrides are always multiples of 4, whereas
+       *  maskPR.rowstride can be anything, so to be able to create an
+       *  image surface, we maybe have to create our own temporary
+       *  buffer
+       */
       if (maskPR.rowstride != stride)
         {
           const guchar *src = maskPR.data;
