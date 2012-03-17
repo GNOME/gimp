@@ -1158,7 +1158,6 @@ gimp_image_real_mode_changed (GimpImage *image)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GList            *layers;
-  GList            *layer;
 
   /* FIXME gegl migration hack */
   layers = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (private->layers->container));
