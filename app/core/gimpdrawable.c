@@ -1739,34 +1739,20 @@ gimp_drawable_fill (GimpDrawable      *drawable,
                     const GimpRGB     *color,
                     const GimpPattern *pattern)
 {
-  GimpItem      *item;
-  GimpImage     *image;
-  GimpImageType  drawable_type;
-
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (color != NULL || pattern != NULL);
   g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
 
-  item  = GIMP_ITEM (drawable);
-  image = gimp_item_get_image (item);
-
-  drawable_type = gimp_drawable_type (drawable);
-
   if (color)
     {
+      GimpRGB    c = *color;
       GeglColor *col;
-      guchar     c[MAX_CHANNELS];
 
-      gimp_image_transform_rgb (image, drawable_type, color, c);
-
-      if (GIMP_IMAGE_TYPE_HAS_ALPHA (drawable_type))
-        gimp_rgba_get_uchar (color, NULL, NULL, NULL,
-                             c + GIMP_IMAGE_TYPE_BYTES (drawable_type) - 1);
-      else
-        c[GIMP_IMAGE_TYPE_BYTES (drawable_type)] = OPAQUE_OPACITY;
+      if (! gimp_drawable_has_alpha (drawable))
+        gimp_rgb_set_alpha (&c, 1.0);
 
       col = gegl_color_new (NULL);
-      gegl_color_set_pixel (col, gimp_drawable_get_babl_format (drawable), c);
+      gimp_gegl_color_set_rgba (col, &c);
 
       gegl_buffer_set_color (gimp_drawable_get_write_buffer (drawable),
                              NULL, col);
@@ -1775,36 +1761,18 @@ gimp_drawable_fill (GimpDrawable      *drawable,
     }
   else
     {
-      GeglBuffer    *src_buffer;
-      GeglRectangle  rect = { 0, };
-      TempBuf       *pat_buf;
-      gboolean       new_buf;
-
-      pat_buf = gimp_image_transform_temp_buf (image, drawable_type,
-                                               pattern->mask, &new_buf);
-
-      rect.width  = pat_buf->width;
-      rect.height = pat_buf->height;
-
-      src_buffer = gegl_buffer_linear_new_from_data (temp_buf_get_data (pat_buf),
-                                                     gimp_bpp_to_babl_format (pat_buf->bytes, TRUE),
-                                                     &rect,
-                                                     rect.width * pat_buf->bytes,
-                                                     NULL, NULL);
+      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
 
       gegl_buffer_set_pattern (gimp_drawable_get_write_buffer (drawable),
                                NULL, src_buffer, 0, 0);
 
       g_object_unref (src_buffer);
-
-      if (new_buf)
-        temp_buf_free (pat_buf);
     }
 
   gimp_drawable_update (drawable,
                         0, 0,
-                        gimp_item_get_width  (item),
-                        gimp_item_get_height (item));
+                        gimp_item_get_width  (GIMP_ITEM (drawable)),
+                        gimp_item_get_height (GIMP_ITEM (drawable)));
 }
 
 void
