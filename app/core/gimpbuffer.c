@@ -259,30 +259,16 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
                              gint         offset_x,
                              gint         offset_y)
 {
-  GimpBuffer   *gimp_buffer;
-  GeglBuffer   *buffer;
-  gint          width;
-  gint          height;
-  gint          rowstride;
-  gint          channels;
-  GeglRectangle rect = { 0, };
+  GimpBuffer *gimp_buffer;
+  GeglBuffer *buffer;
+  gint        channels;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  width     = gdk_pixbuf_get_width (pixbuf);
-  height    = gdk_pixbuf_get_height (pixbuf);
-  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-  channels  = gdk_pixbuf_get_n_channels (pixbuf);
+  channels = gdk_pixbuf_get_n_channels (pixbuf);
 
-  rect.width = width;
-  rect.height = height;
-
-  buffer = gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
-                                             gimp_bpp_to_babl_format (channels,
-                                                                      TRUE),
-                                             &rect, rowstride,
-                                             NULL, NULL);
+  buffer = gimp_pixbuf_create_buffer (pixbuf);
 
   gimp_buffer = gimp_buffer_new (buffer, name,
                                  GIMP_IMAGE_TYPE_FROM_BYTES (channels),

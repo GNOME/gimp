@@ -133,6 +133,33 @@ gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
 }
 
 GeglBuffer *
+gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
+{
+  gint          width;
+  gint          height;
+  gint          rowstride;
+  gint          channels;
+  GeglRectangle rect = { 0, };
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
+
+  width     = gdk_pixbuf_get_width (pixbuf);
+  height    = gdk_pixbuf_get_height (pixbuf);
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  channels  = gdk_pixbuf_get_n_channels (pixbuf);
+
+  rect.width = width;
+  rect.height = height;
+
+  return gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
+                                           gimp_bpp_to_babl_format (channels,
+                                                                    TRUE),
+                                           &rect, rowstride,
+                                           (GDestroyNotify) g_object_unref,
+                                           pixbuf);
+}
+
+GeglBuffer *
 gimp_tile_manager_create_buffer (TileManager *tm,
                                  const Babl  *format,
                                  gboolean     write)
