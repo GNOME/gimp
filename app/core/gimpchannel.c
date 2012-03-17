@@ -1072,13 +1072,10 @@ gimp_channel_real_bounds (GimpChannel *channel,
                           gint        *x2,
                           gint        *y2)
 {
-  PixelRegion  maskPR;
-  guchar      *data, *data1;
-  gint         x, y;
-  gint         ex, ey;
-  gint         tx1, tx2, ty1, ty2;
-  gint         minx, maxx;
-  gpointer     pr;
+  GeglBuffer         *buffer;
+  GeglBufferIterator *iter;
+  GeglRectangle      *roi;
+  gint                tx1, tx2, ty1, ty2;
 
   /*  if the channel's bounds have already been reliably calculated...  */
   if (channel->bounds_known)
@@ -1097,63 +1094,57 @@ gimp_channel_real_bounds (GimpChannel *channel,
   tx2 = 0;
   ty2 = 0;
 
-  pixel_region_init (&maskPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (channel)),
-                     gimp_item_get_height (GIMP_ITEM (channel)), FALSE);
+  buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel));
 
-  for (pr = pixel_regions_register (1, &maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  iter = gegl_buffer_iterator_new (buffer, NULL, babl_format ("Y u8"),
+                                   GEGL_BUFFER_READ);
+  roi = &iter->roi[0];
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      data1 = data = maskPR.data;
-      ex = maskPR.x + maskPR.w;
-      ey = maskPR.y + maskPR.h;
+      guchar *data  = iter->data[0];
+      guchar *data1 = data;
+      gint    ex    = roi->x + roi->width;
+      gint    ey    = roi->y + roi->height;
+      gint    x, y;
 
       /*  only check the pixels if this tile is not fully within the
        *  currently computed bounds
        */
-      if (maskPR.x < tx1 || ex > tx2 ||
-          maskPR.y < ty1 || ey > ty2)
+      if (roi->x < tx1 || ex > tx2 ||
+          roi->y < ty1 || ey > ty2)
         {
           /* Check upper left and lower right corners to see if we can
            * avoid checking the rest of the pixels in this tile
            */
-          if (data[0] && data[maskPR.rowstride*(maskPR.h - 1) + maskPR.w - 1])
+          if (data[0] && data[iter->length - 1])
             {
-              if (maskPR.x < tx1)
-                tx1 = maskPR.x;
-              if (ex > tx2)
-                tx2 = ex;
-              if (maskPR.y < ty1)
-                ty1 = maskPR.y;
-              if (ey > ty2)
-                ty2 = ey;
+              if (roi->x < tx1) tx1 = roi->x;
+              if (ex > tx2)     tx2 = ex;
+
+              if (roi->y < ty1) ty1 = roi->y;
+              if (ey > ty2)     ty2 = ey;
             }
           else
             {
-              for (y = maskPR.y; y < ey; y++, data1 += maskPR.rowstride)
+              for (y = roi->y; y < ey; y++, data1 += roi->width)
                 {
-                  for (x = maskPR.x, data = data1; x < ex; x++, data++)
+                  for (x = roi->x, data = data1; x < ex; x++, data++)
                     {
                       if (*data)
                         {
-                          minx = x;
-                          maxx = x;
+                          gint minx = x;
+                          gint maxx = x;
 
                           for (; x < ex; x++, data++)
                             if (*data)
                               maxx = x;
 
-                          if (minx < tx1)
-                            tx1 = minx;
-                          if (maxx > tx2)
-                            tx2 = maxx;
-                          if (y < ty1)
-                            ty1 = y;
-                          if (y > ty2)
-                            ty2 = y;
+                          if (minx < tx1) tx1 = minx;
+                          if (maxx > tx2) tx2 = maxx;
+
+                          if (y < ty1) ty1 = y;
+                          if (y > ty2) ty2 = y;
                         }
                     }
                 }
