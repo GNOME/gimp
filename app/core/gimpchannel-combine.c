@@ -26,8 +26,6 @@
 
 #include "core-types.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
@@ -213,13 +211,16 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                                    gdouble         b,
                                    gboolean        antialias)
 {
-  PixelRegion  maskPR;
-  gdouble      a_sqr;
-  gdouble      b_sqr;
-  gdouble      ellipse_center_x;
-  gint         x0, y0;
-  gint         width, height;
-  gpointer     pr;
+  GeglBuffer         *buffer;
+  GeglBufferIterator *iter;
+  GeglRectangle      *roi;
+  GeglRectangle       rect;
+  gint                bpp;
+  gdouble             a_sqr;
+  gdouble             b_sqr;
+  gdouble             ellipse_center_x;
+  gint                x0, y0;
+  gint                width, height;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (a >= 0.0 && b >= 0.0);
@@ -241,27 +242,34 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
 
   ellipse_center_x = x + a;
 
-  pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                     x0, y0, width, height, TRUE);
+  rect.x      = x0;
+  rect.y      = y0;
+  rect.width  = width;
+  rect.height = height;
 
-  for (pr = pixel_regions_register (1, &maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask));
+
+  iter = gegl_buffer_iterator_new (buffer, &rect, babl_format ("Y u8"),
+                                   GEGL_BUFFER_READWRITE);
+  roi = &iter->roi[0];
+  bpp = 1;
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      guchar *data = maskPR.data;
+      guchar *data = iter->data[0];
       gint    py;
 
-      for (py = maskPR.y;
-           py < maskPR.y + maskPR.h;
-           py++, data += maskPR.rowstride)
+      for (py = roi->y;
+           py < roi->y + roi->height;
+           py++, data += roi->width * bpp)
         {
-          const gint px = maskPR.x;
+          const gint px = roi->x;
           gdouble    ellipse_center_y;
 
           if (py >= y + b && py < y + h - b)
             {
               /*  we are on a row without rounded corners  */
-              gimp_channel_combine_span (data, op, 0, maskPR.w, 255);
+              gimp_channel_combine_span (data, op, 0, roi->width, 255);
               continue;
             }
 
@@ -295,7 +303,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
 
               gimp_channel_combine_span (data, op,
                                          MAX (x_start - px, 0),
-                                         MIN (x_end   - px, maskPR.w), 255);
+                                         MIN (x_end   - px, roi->width), 255);
             }
           else  /* use antialiasing */
             {
@@ -312,7 +320,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
               gint         x_start  = px;
               gint         cur_x;
 
-              for (cur_x = px; cur_x < (px + maskPR.w); cur_x++)
+              for (cur_x = px; cur_x < (px + roi->width); cur_x++)
                 {
                   gfloat  xj;
                   gfloat  xdist;
@@ -366,7 +374,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                       if (last_val != -1)
                         gimp_channel_combine_span (data, op,
                                                    MAX (x_start - px, 0),
-                                                   MIN (cur_x   - px, maskPR.w),
+                                                   MIN (cur_x   - px, roi->width),
                                                    last_val);
 
                       x_start = cur_x;
@@ -380,7 +388,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                     {
                       gimp_channel_combine_span (data, op,
                                                  MAX (x_start - px, 0),
-                                                 MIN (cur_x   - px, maskPR.w),
+                                                 MIN (cur_x   - px, roi->width),
                                                  last_val);
 
                       x_start = cur_x;
@@ -397,7 +405,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
 
               gimp_channel_combine_span (data, op,
                                          MAX (x_start - px, 0),
-                                         MIN (cur_x   - px, maskPR.w),
+                                         MIN (cur_x   - px, roi->width),
                                          last_val);
             }
         }
@@ -412,14 +420,11 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
   /*  determine new boundary  */
   if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && ! mask->empty)
     {
-      if (x < mask->x1)
-        mask->x1 = x;
-      if (y < mask->y1)
-        mask->y1 = y;
-      if ((x + w) > mask->x2)
-        mask->x2 = (x + w);
-      if ((y + h) > mask->y2)
-        mask->y2 = (y + h);
+      if (x < mask->x1) mask->x1 = x;
+      if (y < mask->y1) mask->y1 = y;
+
+      if ((x + w) > mask->x2) mask->x2 = (x + w);
+      if ((y + h) > mask->y2) mask->y2 = (y + h);
     }
   else if (op == GIMP_CHANNEL_OP_REPLACE || mask->empty)
     {
