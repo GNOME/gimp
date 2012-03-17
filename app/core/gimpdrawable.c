@@ -787,8 +787,6 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpImageBaseType  new_base_type,
                                  gboolean           push_undo)
 {
-  g_return_if_fail (new_base_type != GIMP_INDEXED);
-
   switch (new_base_type)
     {
     case GIMP_RGB:
@@ -797,6 +795,10 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
 
     case GIMP_GRAY:
       gimp_drawable_convert_grayscale (drawable, push_undo);
+      break;
+
+    case GIMP_INDEXED:
+      gimp_drawable_convert_indexed (drawable, dest_image, push_undo);
       break;
 
     default:
