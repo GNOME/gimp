@@ -543,58 +543,44 @@ gimp_edit_fill_internal (GimpImage            *image,
                          GimpLayerModeEffects  paint_mode,
                          const gchar          *undo_desc)
 {
-  TileManager   *buf_tiles;
-  GeglBuffer    *dest_buffer;
-  PixelRegion    bufPR;
-  gint           x, y, width, height;
-  GimpImageType  drawable_type;
-  gint           tiles_bytes;
-  const Babl    *format;
-  guchar         col[MAX_CHANNELS];
-  TempBuf       *pat_buf = NULL;
-  gboolean       new_buf;
+  TileManager *buf_tiles;
+  GeglBuffer  *dest_buffer;
+  PixelRegion  bufPR;
+  gint         x, y, width, height;
+  gint         tiles_bytes;
+  const Babl  *format;
+  GimpRGB      color;
+  GimpPattern *pattern = NULL;
 
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
-  drawable_type = gimp_drawable_type (drawable);
-  tiles_bytes   = gimp_drawable_bytes (drawable);
-  format        = gimp_drawable_get_babl_format (drawable);
+  tiles_bytes = gimp_drawable_bytes (drawable);
+  format      = gimp_drawable_get_babl_format (drawable);
 
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
-      gimp_image_get_foreground (image, context, drawable_type, col);
+      gimp_context_get_foreground (context, &color);
       break;
 
     case GIMP_BACKGROUND_FILL:
     case GIMP_TRANSPARENT_FILL:
-      gimp_image_get_background (image, context, drawable_type, col);
+      gimp_context_get_background (context, &color);
       break;
 
     case GIMP_WHITE_FILL:
-      {
-        GimpRGB white;
-
-        gimp_rgb_set (&white, 1.0, 1.0, 1.0);
-        gimp_image_transform_rgb (image, drawable_type, &white, col);
-      }
+      gimp_rgb_set (&color, 1.0, 1.0, 1.0);
       break;
 
     case GIMP_PATTERN_FILL:
-      {
-        GimpPattern *pattern = gimp_context_get_pattern (context);
-
-        pat_buf = gimp_image_transform_temp_buf (image, drawable_type,
-                                                 pattern->mask, &new_buf);
-
-        if (! gimp_drawable_has_alpha (drawable) &&
-            (pat_buf->bytes == 2 || pat_buf->bytes == 4))
-          {
-            tiles_bytes++;
-            format = gimp_drawable_get_babl_format_with_alpha (drawable);
-          }
-      }
+      pattern = gimp_context_get_pattern (context);
+      if (! gimp_drawable_has_alpha (drawable) &&
+          (pattern->mask->bytes == 2 || pattern->mask->bytes == 4))
+        {
+          tiles_bytes++;
+          format = gimp_drawable_get_babl_format_with_alpha (drawable);
+        }
       break;
 
     case GIMP_NO_FILL:
@@ -605,40 +591,42 @@ gimp_edit_fill_internal (GimpImage            *image,
 
   dest_buffer = gimp_tile_manager_create_buffer (buf_tiles, format, TRUE);
 
-  if (pat_buf)
+  if (pattern)
     {
       GeglBuffer    *src_buffer;
       GeglRectangle  rect = { 0, };
+      gint           pat_bytes;
 
-      rect.width  = pat_buf->width;
-      rect.height = pat_buf->height;
+      rect.width  = pattern->mask->width;
+      rect.height = pattern->mask->height;
 
-      src_buffer = gegl_buffer_linear_new_from_data (temp_buf_get_data (pat_buf),
-                                                     format,
-                                                     &rect,
-                                                     rect.width * pat_buf->bytes,
-                                                     NULL, NULL);
+      pat_bytes = pattern->mask->bytes;
+
+      src_buffer =
+        gegl_buffer_linear_new_from_data (temp_buf_get_data (pattern->mask),
+                                          gimp_bpp_to_babl_format (pat_bytes,
+                                                                   TRUE),
+                                          &rect,
+                                          rect.width * pat_bytes,
+                                          NULL, NULL);
 
       gegl_buffer_set_pattern (dest_buffer, NULL, src_buffer, 0, 0);
 
       g_object_unref (src_buffer);
-
-      if (new_buf)
-        temp_buf_free (pat_buf);
     }
   else
     {
-      GeglColor *color;
+      GeglColor *gegl_color;
 
       if (gimp_drawable_has_alpha (drawable))
-        col[gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+        gimp_rgb_set_alpha (&color, 1.0);
 
-      color = gegl_color_new (NULL);
-      gegl_color_set_pixel (color, gimp_drawable_get_babl_format (drawable), col);
+      gegl_color = gegl_color_new (NULL);
+      gimp_gegl_color_set_rgba (gegl_color, &color);
 
-      gegl_buffer_set_color (dest_buffer, NULL, color);
+      gegl_buffer_set_color (dest_buffer, NULL, gegl_color);
 
-      g_object_unref (color);
+      g_object_unref (gegl_color);
     }
 
   g_object_unref (dest_buffer);
