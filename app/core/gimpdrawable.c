@@ -747,8 +747,7 @@ gimp_drawable_real_update (GimpDrawable *drawable,
 {
   if (drawable->private->tile_source_node)
     {
-      GObject    *operation = NULL;
-      GeglBuffer *buffer    = NULL;
+      GObject *operation = NULL;
 
       g_object_get (drawable->private->tile_source_node,
                     "gegl-operation", &operation,
@@ -765,16 +764,6 @@ gimp_drawable_real_update (GimpDrawable *drawable,
 
           gegl_operation_invalidate (GEGL_OPERATION (operation), &rect, FALSE);
           g_object_unref (operation);
-        }
-
-      gegl_node_get (drawable->private->tile_source_node,
-                     "buffer", &buffer,
-                     NULL);
-
-      if (buffer)
-        {
-          gimp_gegl_buffer_refetch_tiles (buffer);
-          g_object_unref (buffer);
         }
     }
 
@@ -1266,6 +1255,9 @@ gimp_drawable_update (GimpDrawable *drawable,
 
   if (drawable->private->write_buffer)
     gegl_buffer_flush (drawable->private->write_buffer);
+
+  if (drawable->private->read_buffer)
+    gimp_gegl_buffer_refetch_tiles (drawable->private->read_buffer);
 
   g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
                  x, y, width, height);
