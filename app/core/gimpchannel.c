@@ -27,7 +27,6 @@
 #include "core-types.h"
 
 #include "base/boundary.h"
-#include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 #include "base/tile.h"
 #include "base/tile-manager.h"
