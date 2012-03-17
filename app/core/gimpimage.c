@@ -1156,6 +1156,15 @@ gimp_image_get_description (GimpViewable  *viewable,
 static void
 gimp_image_real_mode_changed (GimpImage *image)
 {
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GList            *layers;
+  GList            *layer;
+
+  /* FIXME gegl migration hack */
+  layers = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (private->layers->container));
+  g_list_foreach (layers, (GFunc) gimp_drawable_recreate_buffers, NULL);
+  g_list_free (layers);
+
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
 }
 
@@ -1177,10 +1186,22 @@ static void
 gimp_image_real_colormap_changed (GimpImage *image,
                                   gint       color_index)
 {
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->colormap)
+    {
+      babl_palette_set_palette (private->babl_palette_rgb,
+                                babl_format ("RGB u8"),
+                                private->colormap,
+                                private->n_colors);
+      babl_palette_set_palette (private->babl_palette_rgba,
+                                babl_format ("RGB u8"),
+                                private->colormap,
+                                private->n_colors);
+    }
+
   if (gimp_image_base_type (image) == GIMP_INDEXED)
     {
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-
       gimp_image_color_hash_invalidate (image, color_index);
 
       /* A colormap alteration affects the whole image */

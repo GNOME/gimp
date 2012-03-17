@@ -1500,8 +1500,10 @@ static GeglBuffer *
 gimp_drawable_create_buffer (GimpDrawable *drawable,
                              gboolean      write)
 {
-  return gimp_tile_manager_create_buffer (gimp_drawable_get_tiles (drawable),
-                                          write);
+  TileManager *tiles  = gimp_drawable_get_tiles (drawable);
+  const Babl  *format = gimp_drawable_get_babl_format (drawable);
+
+  return gimp_tile_manager_create_buffer_with_format (tiles, format, write);
 }
 
 GeglBuffer *
@@ -1533,6 +1535,29 @@ gimp_drawable_get_write_buffer (GimpDrawable *drawable)
     gimp_gegl_buffer_refetch_tiles (drawable->private->write_buffer);
 
   return drawable->private->write_buffer;
+}
+
+void
+gimp_drawable_recreate_buffers (GimpDrawable *drawable)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  if (drawable->private->read_buffer)
+    {
+      g_object_unref (drawable->private->read_buffer);
+      drawable->private->read_buffer = NULL;
+    }
+
+  if (drawable->private->write_buffer)
+    {
+      g_object_unref (drawable->private->write_buffer);
+      drawable->private->write_buffer = NULL;
+    }
+
+  if (drawable->private->tile_source_node)
+    gegl_node_set (drawable->private->tile_source_node,
+                   "buffer", gimp_drawable_get_read_buffer (drawable),
+                   NULL);
 }
 
 TileManager *
@@ -1824,9 +1849,32 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
 const Babl *
 gimp_drawable_get_babl_format (const GimpDrawable *drawable)
 {
+  GimpImageType type;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  return gimp_bpp_to_babl_format (gimp_drawable_bytes (drawable), TRUE);
+  type = gimp_drawable_type (drawable);
+
+  switch (type)
+    {
+    case GIMP_RGB_IMAGE:    return babl_format ("RGB u8");
+    case GIMP_RGBA_IMAGE:   return babl_format ("RGBA u8");
+    case GIMP_GRAY_IMAGE:   return babl_format ("Y u8");
+    case GIMP_GRAYA_IMAGE:  return babl_format ("YA u8");
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      {
+        GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+        return (type == GIMP_INDEXED_IMAGE ?
+                gimp_image_colormap_get_rgb_format (image) :
+                gimp_image_colormap_get_rgba_format (image));
+      }
+    }
+
+  g_warn_if_reached ();
+
+  return NULL;
 }
 
 gboolean

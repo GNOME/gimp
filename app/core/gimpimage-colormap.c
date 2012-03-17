@@ -71,6 +71,10 @@ gimp_image_colormap_init (GimpImage *image)
   private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
   private->palette  = GIMP_PALETTE (gimp_palette_new (NULL, palette_name));
 
+  /* FIXME name palette */
+  private->babl_palette_rgb  = babl_new_palette (NULL, FALSE);
+  private->babl_palette_rgba = babl_new_palette (NULL, TRUE);
+
   gimp_palette_set_columns  (private->palette, 16);
 
   gimp_data_make_internal (GIMP_DATA (private->palette), palette_id);
@@ -118,6 +122,27 @@ gimp_image_colormap_free (GimpImage *image)
 
   g_object_unref (private->palette);
   private->palette = NULL;
+
+  babl_palette_reset (private->babl_palette_rgb);
+  babl_palette_reset (private->babl_palette_rgba);
+  private->babl_palette_rgb = NULL;
+  private->babl_palette_rgba = NULL;
+}
+
+const Babl *
+gimp_image_colormap_get_rgb_format  (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->babl_palette_rgb;
+}
+
+const Babl *
+gimp_image_colormap_get_rgba_format (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->babl_palette_rgba;
 }
 
 GimpPalette *

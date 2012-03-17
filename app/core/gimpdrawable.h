@@ -181,6 +181,9 @@ void            gimp_drawable_init_src_region    (GimpDrawable       *drawable,
 GeglBuffer    * gimp_drawable_get_read_buffer    (GimpDrawable       *drawable);
 GeglBuffer    * gimp_drawable_get_write_buffer   (GimpDrawable       *drawable);
 
+/* FIXME gegl migration hack */
+void            gimp_drawable_recreate_buffers   (GimpDrawable       *drawable);
+
 TileManager   * gimp_drawable_get_tiles          (GimpDrawable       *drawable);
 void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,
                                                   gboolean            push_undo,
