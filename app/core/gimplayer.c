@@ -1555,8 +1555,6 @@ gimp_layer_create_mask (const GimpLayer *layer,
 {
   GimpDrawable  *drawable;
   GimpItem      *item;
-  PixelRegion    srcPR;
-  PixelRegion    destPR;
   GimpLayerMask *mask;
   GimpImage     *image;
   gchar         *mask_name;
@@ -1594,12 +1592,6 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
     }
 
-  pixel_region_init (&destPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (mask)),
-                     gimp_item_get_height (GIMP_ITEM (mask)),
-                     TRUE);
-
   switch (add_mask_type)
     {
     case GIMP_ADD_WHITE_MASK:
@@ -1625,9 +1617,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
           if (add_mask_type == GIMP_ADD_ALPHA_TRANSFER_MASK)
             {
-              void   *pr;
-              gint    w, h;
-              guchar *alpha_ptr;
+              GeglNode *set_alpha;
 
               gimp_drawable_push_undo (drawable,
                                        C_("undo-type", "Transfer Alpha to Mask"),
@@ -1636,31 +1626,18 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                        gimp_item_get_height (item),
                                        NULL, FALSE);
 
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                                 0, 0,
-                                 gimp_item_get_width  (item),
-                                 gimp_item_get_height (item),
-                                 TRUE);
+              set_alpha = gegl_node_new_child (NULL,
+                                               "operation", "gimp:set-alpha",
+                                               "value",     1.0,
+                                               NULL);
 
-              for (pr = pixel_regions_register (1, &srcPR);
-                   pr != NULL;
-                   pr = pixel_regions_process (pr))
-                {
-                  h = srcPR.h;
+              gimp_apply_operation (gimp_drawable_get_read_buffer (drawable),
+                                    NULL, NULL,
+                                    set_alpha, TRUE,
+                                    gimp_drawable_get_write_buffer (drawable),
+                                    NULL);
 
-                  while (h--)
-                    {
-                      w = srcPR.w;
-                      alpha_ptr = (srcPR.data + h * srcPR.rowstride +
-                                   srcPR.bytes - 1);
-
-                      while (w--)
-                        {
-                          *alpha_ptr = OPAQUE_OPACITY;
-                          alpha_ptr += srcPR.bytes;
-                        }
-                    }
-                }
+              g_object_unref (set_alpha);
             }
         }
       break;
