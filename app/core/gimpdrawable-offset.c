@@ -89,7 +89,9 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   new_tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
 
   src_buffer  = gimp_drawable_get_read_buffer (drawable);
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
+                                                 gimp_drawable_get_babl_format (drawable),
+                                                 TRUE);
 
   if (! wrap_around)
     {

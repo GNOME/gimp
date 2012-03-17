@@ -1660,9 +1660,9 @@ gimp_channel_new_from_alpha (GimpImage     *image,
   gimp_channel_clear (channel, NULL, FALSE);
 
   dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (channel));
-  dest_buffer = gimp_tile_manager_create_buffer_with_format (dest_tiles,
-                                                             babl_format ("A u8"),
-                                                             TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (dest_tiles,
+                                                 babl_format ("A u8"),
+                                                 TRUE);
 
   gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
                     dest_buffer, NULL);
@@ -1706,8 +1706,7 @@ gimp_channel_new_from_component (GimpImage       *image,
   channel = gimp_channel_new (image, width, height, name, color);
 
   dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (channel));
-  dest_buffer = gimp_tile_manager_create_buffer_with_format (dest_tiles,
-                                                             format, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (dest_tiles, format, TRUE);
 
   gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
 

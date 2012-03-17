@@ -25,16 +25,12 @@
 const Babl  * gimp_bpp_to_babl_format           (guint                  bpp,
                                                  gboolean               linear) G_GNUC_CONST;
 
-TileManager * gimp_buffer_to_tiles              (GeglBuffer            *buffer);
-
 const gchar * gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects   mode) G_GNUC_CONST;
 const gchar * gimp_interpolation_to_gegl_filter (GimpInterpolationType  interpolation) G_GNUC_CONST;
 
-GeglBuffer  * gimp_tile_manager_create_buffer   (TileManager           *tm,
+GeglBuffer *  gimp_tile_manager_create_buffer   (TileManager           *tm,
+                                                 const Babl            *format,
                                                  gboolean               write);
-GeglBuffer *  gimp_tile_manager_create_buffer_with_format (TileManager *tm,
-                                                           const Babl  *format,
-                                                           gboolean     write);
 
 void          gimp_gegl_buffer_refetch_tiles    (GeglBuffer            *buffer);
 

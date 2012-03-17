@@ -520,7 +520,7 @@ gimp_edit_extract (GimpImage     *image,
       GeglBuffer *temp;
       GimpBuffer *buffer;
 
-      temp = gimp_tile_manager_create_buffer (tiles, TRUE);
+      temp = gimp_tile_manager_create_buffer (tiles, NULL, TRUE);
       tile_manager_unref (tiles);
 
       buffer = gimp_buffer_new (temp, _("Global Buffer"),
@@ -549,6 +549,7 @@ gimp_edit_fill_internal (GimpImage            *image,
   gint           x, y, width, height;
   GimpImageType  drawable_type;
   gint           tiles_bytes;
+  const Babl    *format;
   guchar         col[MAX_CHANNELS];
   TempBuf       *pat_buf = NULL;
   gboolean       new_buf;
@@ -558,6 +559,7 @@ gimp_edit_fill_internal (GimpImage            *image,
 
   drawable_type = gimp_drawable_type (drawable);
   tiles_bytes   = gimp_drawable_bytes (drawable);
+  format        = gimp_drawable_get_babl_format (drawable);
 
   switch (fill_type)
     {
@@ -588,7 +590,10 @@ gimp_edit_fill_internal (GimpImage            *image,
 
         if (! gimp_drawable_has_alpha (drawable) &&
             (pat_buf->bytes == 2 || pat_buf->bytes == 4))
-          tiles_bytes++;
+          {
+            tiles_bytes++;
+            format = gimp_drawable_get_babl_format_with_alpha (drawable);
+          }
       }
       break;
 
@@ -598,7 +603,7 @@ gimp_edit_fill_internal (GimpImage            *image,
 
   buf_tiles = tile_manager_new (width, height, tiles_bytes);
 
-  dest_buffer = gimp_tile_manager_create_buffer (buf_tiles, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (buf_tiles, format, TRUE);
 
   if (pat_buf)
     {
@@ -609,7 +614,7 @@ gimp_edit_fill_internal (GimpImage            *image,
       rect.height = pat_buf->height;
 
       src_buffer = gegl_buffer_linear_new_from_data (temp_buf_get_data (pat_buf),
-                                                     gimp_bpp_to_babl_format (tiles_bytes, TRUE),
+                                                     format,
                                                      &rect,
                                                      rect.width * pat_buf->bytes,
                                                      NULL, NULL);

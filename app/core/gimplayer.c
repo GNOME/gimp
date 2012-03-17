@@ -1647,9 +1647,9 @@ gimp_layer_create_mask (const GimpLayer *layer,
           GeglBuffer  *dest_buffer;
 
           dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (mask));
-          dest_buffer = gimp_tile_manager_create_buffer_with_format (dest_tiles,
-                                                                     babl_format ("A u8"),
-                                                                     TRUE);
+          dest_buffer = gimp_tile_manager_create_buffer (dest_tiles,
+                                                         babl_format ("A u8"),
+                                                         TRUE);
 
           gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
                             dest_buffer, NULL);
@@ -1756,7 +1756,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
             gimp_drawable_convert_tiles_grayscale (drawable, copy_tiles);
 
-            src_buffer = gimp_tile_manager_create_buffer (copy_tiles, FALSE);
+            src_buffer = gimp_tile_manager_create_buffer (copy_tiles, NULL,
+                                                          FALSE);
           }
         else
           {
@@ -2032,7 +2033,9 @@ gimp_layer_add_alpha (GimpLayer *layer)
                                 gimp_item_get_height (item),
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
+                                                 gimp_drawable_get_babl_format_with_alpha (GIMP_DRAWABLE (layer)),
+                                                 TRUE);
 
   gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
                     dest_buffer, NULL);

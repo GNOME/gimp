@@ -576,7 +576,9 @@ gimp_drawable_resize (GimpItem    *item,
   new_tiles = tile_manager_new (new_width, new_height,
                                 gimp_drawable_bytes (drawable));
 
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
+                                                 gimp_drawable_get_babl_format (drawable),
+                                                 TRUE);
 
   if (copy_width  != new_width ||
       copy_height != new_height)
@@ -924,7 +926,9 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
 
       tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
 
-      dest_buffer = gimp_tile_manager_create_buffer (tiles, TRUE);
+      dest_buffer = gimp_tile_manager_create_buffer (tiles,
+                                                     gimp_drawable_get_babl_format (drawable),
+                                                     TRUE);
 
       src_rect.x      = x;
       src_rect.y      = y;
@@ -1503,7 +1507,7 @@ gimp_drawable_create_buffer (GimpDrawable *drawable,
   TileManager *tiles  = gimp_drawable_get_tiles (drawable);
   const Babl  *format = gimp_drawable_get_babl_format (drawable);
 
-  return gimp_tile_manager_create_buffer_with_format (tiles, format, write);
+  return gimp_tile_manager_create_buffer (tiles, format, write);
 }
 
 GeglBuffer *
@@ -1869,6 +1873,35 @@ gimp_drawable_get_babl_format (const GimpDrawable *drawable)
         return (type == GIMP_INDEXED_IMAGE ?
                 gimp_image_colormap_get_rgb_format (image) :
                 gimp_image_colormap_get_rgba_format (image));
+      }
+    }
+
+  g_warn_if_reached ();
+
+  return NULL;
+}
+
+const Babl *
+gimp_drawable_get_babl_format_with_alpha (const GimpDrawable *drawable)
+{
+  GimpImageType type;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  type = gimp_drawable_type (drawable);
+
+  switch (type)
+    {
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:   return babl_format ("RGBA u8");
+    case GIMP_GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:  return babl_format ("YA u8");
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      {
+        GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+        return gimp_image_colormap_get_rgba_format (image);
       }
     }
 

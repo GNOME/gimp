@@ -101,7 +101,7 @@ gimp_drawable_convert_tiles_rgb (GimpDrawable *drawable,
 
   g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 4 : 3));
 
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, NULL, TRUE);
 
   gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
                     dest_buffer, NULL);
@@ -124,7 +124,7 @@ gimp_drawable_convert_tiles_grayscale (GimpDrawable *drawable,
 
   g_return_if_fail (tile_manager_bpp (new_tiles) == (has_alpha ? 2 : 1));
 
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, NULL, TRUE);
 
   gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
                     dest_buffer, NULL);

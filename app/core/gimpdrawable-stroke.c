@@ -346,7 +346,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
    */
   mask = tile_manager_new (w, h, 1);
 
-  tmp_buffer = gimp_tile_manager_create_buffer (mask, TRUE);
+  tmp_buffer = gimp_tile_manager_create_buffer (mask, NULL, TRUE);
   gegl_buffer_clear (tmp_buffer, NULL);
   g_object_unref (tmp_buffer);
 
