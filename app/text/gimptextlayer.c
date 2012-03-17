@@ -657,16 +657,14 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 {
   GimpDrawable       *drawable = GIMP_DRAWABLE (layer);
   GimpItem           *item     = GIMP_ITEM (layer);
-  GimpImage          *image    = gimp_item_get_image (item);
   GeglBuffer         *buffer;
   const Babl         *format;
+  const Babl         *fish;
   GeglBufferIterator *iter;
   cairo_t            *cr;
   cairo_surface_t    *surface;
   const guchar       *data;
-  GimpImageType       layer_type;
   gint                bytes;
-  gint                layer_alpha_byte;
   gint                rowstride;
   gint                width;
   gint                height;
@@ -682,17 +680,14 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
   cairo_destroy (cr);
 
-  layer_type = gimp_drawable_type (drawable);
-
   cairo_surface_flush (surface);
   data      = cairo_image_surface_get_data (surface);
   rowstride = cairo_image_surface_get_stride (surface);
 
   buffer = gimp_drawable_get_write_buffer (drawable);
   format = gimp_drawable_get_babl_format (drawable);
-  bytes = babl_format_get_bytes_per_pixel (format);
-
-  layer_alpha_byte = bytes - 1;
+  fish   = babl_fish (babl_format ("RGBA u8"), format);
+  bytes  = babl_format_get_bytes_per_pixel (format);
 
   iter = gegl_buffer_iterator_new (buffer, NULL, format,
                                    GEGL_BUFFER_WRITE);
@@ -719,9 +714,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
                                            color[2],
                                            color[3]);
 
-              gimp_image_transform_color (image,
-                                          layer_type, d, GIMP_RGB, color);
-              d[layer_alpha_byte] = color[3];
+              babl_process (fish, color, d, 1);
 
               s += 4;
               d += bytes;
