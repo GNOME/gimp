@@ -61,6 +61,7 @@ static gint64      gimp_projection_get_memsize           (GimpObject      *objec
 
 static void        gimp_projection_pickable_flush        (GimpPickable    *pickable);
 static GimpImage * gimp_projection_get_image             (GimpPickable    *pickable);
+static const Babl * gimp_projection_get_babl_format      (GimpPickable    *pickable);
 static GimpImageType gimp_projection_get_image_type      (GimpPickable    *pickable);
 static gint        gimp_projection_get_bytes             (GimpPickable    *pickable);
 static GeglBuffer  * gimp_projection_get_buffer          (GimpPickable    *pickable);
@@ -161,14 +162,15 @@ gimp_projection_init (GimpProjection *proj)
 static void
 gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
 {
-  iface->flush          = gimp_projection_pickable_flush;
-  iface->get_image      = gimp_projection_get_image;
-  iface->get_image_type = gimp_projection_get_image_type;
-  iface->get_bytes      = gimp_projection_get_bytes;
-  iface->get_buffer     = gimp_projection_get_buffer;
-  iface->get_tiles      = gimp_projection_get_tiles;
-  iface->get_pixel_at   = gimp_projection_get_pixel_at;
-  iface->get_opacity_at = gimp_projection_get_opacity_at;
+  iface->flush           = gimp_projection_pickable_flush;
+  iface->get_image       = gimp_projection_get_image;
+  iface->get_babl_format = gimp_projection_get_babl_format;
+  iface->get_image_type  = gimp_projection_get_image_type;
+  iface->get_bytes       = gimp_projection_get_bytes;
+  iface->get_buffer      = gimp_projection_get_buffer;
+  iface->get_tiles       = gimp_projection_get_tiles;
+  iface->get_pixel_at    = gimp_projection_get_pixel_at;
+  iface->get_opacity_at  = gimp_projection_get_opacity_at;
 }
 
 static void
@@ -290,6 +292,29 @@ gimp_projection_get_image (GimpPickable *pickable)
   GimpProjection *proj = GIMP_PROJECTION (pickable);
 
   return gimp_projectable_get_image (proj->projectable);
+}
+
+static const Babl *
+gimp_projection_get_babl_format (GimpPickable *pickable)
+{
+  GimpProjection *proj = GIMP_PROJECTION (pickable);
+  GimpImageType   type;
+
+  type = gimp_projectable_get_image_type (proj->projectable);
+
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (type))
+    {
+    case GIMP_RGB:
+    case GIMP_INDEXED:
+      return babl_format ("RGBA u8");
+
+    case GIMP_GRAY:
+      return babl_format ("YA u8");
+    }
+
+  g_assert_not_reached ();
+
+  return NULL;
 }
 
 static GimpImageType

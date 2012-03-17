@@ -106,6 +106,21 @@ gimp_pickable_get_image_type (GimpPickable *pickable)
   return -1;
 }
 
+const Babl *
+gimp_pickable_get_babl_format (GimpPickable *pickable)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), -1);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->get_babl_format)
+    return pickable_iface->get_babl_format (pickable);
+
+  return NULL;
+}
+
 gint
 gimp_pickable_get_bytes (GimpPickable *pickable)
 {

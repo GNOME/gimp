@@ -97,30 +97,31 @@ struct _GimpImageMap
 
 static void   gimp_image_map_pickable_iface_init (GimpPickableInterface *iface);
 
-static void            gimp_image_map_dispose        (GObject             *object);
-static void            gimp_image_map_finalize       (GObject             *object);
+static void            gimp_image_map_dispose         (GObject             *object);
+static void            gimp_image_map_finalize        (GObject             *object);
 
-static GimpImage     * gimp_image_map_get_image      (GimpPickable        *pickable);
-static GimpImageType   gimp_image_map_get_image_type (GimpPickable        *pickable);
-static gint            gimp_image_map_get_bytes      (GimpPickable        *pickable);
-static GeglBuffer    * gimp_image_map_get_buffer     (GimpPickable        *pickable);
-static TileManager   * gimp_image_map_get_tiles      (GimpPickable        *pickable);
-static gboolean        gimp_image_map_get_pixel_at   (GimpPickable        *pickable,
-                                                      gint                 x,
-                                                      gint                 y,
-                                                      guchar              *pixel);
+static GimpImage     * gimp_image_map_get_image       (GimpPickable        *pickable);
+static const Babl    * gimp_image_map_get_babl_format (GimpPickable        *pickable);
+static GimpImageType   gimp_image_map_get_image_type  (GimpPickable        *pickable);
+static gint            gimp_image_map_get_bytes       (GimpPickable        *pickable);
+static GeglBuffer    * gimp_image_map_get_buffer      (GimpPickable        *pickable);
+static TileManager   * gimp_image_map_get_tiles       (GimpPickable        *pickable);
+static gboolean        gimp_image_map_get_pixel_at    (GimpPickable        *pickable,
+                                                       gint                 x,
+                                                       gint                 y,
+                                                       guchar              *pixel);
 
 static void            gimp_image_map_update_undo_tiles
-                                                     (GimpImageMap        *image_map,
-                                                      const GeglRectangle *rect);
-static gboolean        gimp_image_map_do             (GimpImageMap        *image_map);
-static void            gimp_image_map_data_written   (GObject             *operation,
-                                                      const GeglRectangle *extent,
-                                                      GimpImageMap        *image_map);
+                                                      (GimpImageMap        *image_map,
+                                                       const GeglRectangle *rect);
+static gboolean        gimp_image_map_do              (GimpImageMap        *image_map);
+static void            gimp_image_map_data_written    (GObject             *operation,
+                                                       const GeglRectangle *extent,
+                                                       GimpImageMap        *image_map);
 static void            gimp_image_map_cancel_any_idle_jobs
-                                                     (GimpImageMap        *image_map);
+                                                      (GimpImageMap        *image_map);
 static void            gimp_image_map_kill_any_idle_processors
-                                                     (GimpImageMap        *image_map);
+                                                      (GimpImageMap        *image_map);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT,
@@ -153,12 +154,13 @@ gimp_image_map_class_init (GimpImageMapClass *klass)
 static void
 gimp_image_map_pickable_iface_init (GimpPickableInterface *iface)
 {
-  iface->get_image      = gimp_image_map_get_image;
-  iface->get_image_type = gimp_image_map_get_image_type;
-  iface->get_bytes      = gimp_image_map_get_bytes;
-  iface->get_buffer     = gimp_image_map_get_buffer;
-  iface->get_tiles      = gimp_image_map_get_tiles;
-  iface->get_pixel_at   = gimp_image_map_get_pixel_at;
+  iface->get_image       = gimp_image_map_get_image;
+  iface->get_babl_format = gimp_image_map_get_babl_format;
+  iface->get_image_type  = gimp_image_map_get_image_type;
+  iface->get_bytes       = gimp_image_map_get_bytes;
+  iface->get_buffer      = gimp_image_map_get_buffer;
+  iface->get_tiles       = gimp_image_map_get_tiles;
+  iface->get_pixel_at    = gimp_image_map_get_pixel_at;
 }
 
 static void
@@ -260,6 +262,14 @@ gimp_image_map_get_image (GimpPickable *pickable)
   GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
 
   return gimp_pickable_get_image (GIMP_PICKABLE (image_map->drawable));
+}
+
+static const Babl *
+gimp_image_map_get_babl_format (GimpPickable *pickable)
+{
+  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
+
+  return gimp_pickable_get_babl_format (GIMP_PICKABLE (image_map->drawable));
 }
 
 static GimpImageType
