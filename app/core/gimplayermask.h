@@ -37,49 +37,27 @@ struct _GimpLayerMask
   GimpChannel  parent_instance;
 
   GimpLayer   *layer;
-
-  gboolean     apply_mask;    /*  controls mask application  */
-  gboolean     edit_mask;     /*  edit mask or layer?        */
-  gboolean     show_mask;     /*  show mask or layer?        */
 };
 
 struct _GimpLayerMaskClass
 {
   GimpChannelClass  parent_class;
-
-  void (* apply_changed) (GimpLayerMask *layer_mask);
-  void (* edit_changed)  (GimpLayerMask *layer_mask);
-  void (* show_changed)  (GimpLayerMask *layer_mask);
 };
 
 
 /*  function declarations  */
 
-GType           gimp_layer_mask_get_type    (void) G_GNUC_CONST;
+GType           gimp_layer_mask_get_type  (void) G_GNUC_CONST;
 
-GimpLayerMask * gimp_layer_mask_new            (GimpImage           *image,
-                                             gint                 width,
-                                             gint                 height,
-                                             const gchar         *name,
-                                             const GimpRGB       *color);
+GimpLayerMask * gimp_layer_mask_new       (GimpImage           *image,
+                                           gint                 width,
+                                           gint                 height,
+                                           const gchar         *name,
+                                           const GimpRGB       *color);
 
-void            gimp_layer_mask_set_layer   (GimpLayerMask       *layer_mask,
-                                             GimpLayer           *layer);
-GimpLayer     * gimp_layer_mask_get_layer   (const GimpLayerMask *layer_mask);
-
-void            gimp_layer_mask_set_apply   (GimpLayerMask       *layer_mask,
-                                             gboolean             apply,
-                                             gboolean             push_undo);
-gboolean        gimp_layer_mask_get_apply   (const GimpLayerMask *layer_mask);
-
-void            gimp_layer_mask_set_edit    (GimpLayerMask       *layer_mask,
-                                             gboolean             edit);
-gboolean        gimp_layer_mask_get_edit    (const GimpLayerMask *layer_mask);
-
-void            gimp_layer_mask_set_show    (GimpLayerMask       *layer_mask,
-                                             gboolean             show,
-                                             gboolean             push_undo);
-gboolean        gimp_layer_mask_get_show    (const GimpLayerMask *layer_mask);
+void            gimp_layer_mask_set_layer (GimpLayerMask       *layer_mask,
+                                           GimpLayer           *layer);
+GimpLayer     * gimp_layer_mask_get_layer (const GimpLayerMask *layer_mask);
 
 
 #endif /* __GIMP_LAYER_MASK_H__ */

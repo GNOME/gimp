@@ -797,7 +797,7 @@ layer_get_apply_mask_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (layer->mask)
-        apply_mask = gimp_layer_mask_get_apply (layer->mask);
+        apply_mask = gimp_layer_get_apply_mask (layer);
       else
         apply_mask = FALSE;
     }
@@ -829,7 +829,7 @@ layer_set_apply_mask_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (layer->mask)
-        gimp_layer_mask_set_apply (layer->mask, apply_mask, TRUE);
+        gimp_layer_set_apply_mask (layer, apply_mask, TRUE);
       else
         success = FALSE;
     }
@@ -856,7 +856,7 @@ layer_get_show_mask_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (layer->mask)
-        show_mask = gimp_layer_mask_get_show (layer->mask);
+        show_mask = gimp_layer_get_show_mask (layer);
       else
         show_mask = FALSE;
     }
@@ -888,7 +888,7 @@ layer_set_show_mask_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (layer->mask)
-        gimp_layer_mask_set_show (layer->mask, show_mask, TRUE);
+        gimp_layer_set_show_mask (layer, show_mask, TRUE);
       else
         success = FALSE;
     }
@@ -915,7 +915,7 @@ layer_get_edit_mask_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (layer->mask)
-        edit_mask = gimp_layer_mask_get_edit (layer->mask);
+        edit_mask = gimp_layer_get_edit_mask (layer);
       else
         edit_mask = FALSE;
     }
@@ -947,7 +947,7 @@ layer_set_edit_mask_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (layer->mask)
-        gimp_layer_mask_set_edit (layer->mask, edit_mask);
+        gimp_layer_set_edit_mask (layer, edit_mask);
       else
         success = FALSE;
     }

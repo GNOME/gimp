@@ -31,6 +31,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
@@ -39,7 +40,6 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitemundo.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimplayermask.h"
 #include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
@@ -766,7 +766,7 @@ layers_mask_edit_cmd_callback (GtkAction *action,
 
       active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      gimp_layer_mask_set_edit (mask, active);
+      gimp_layer_set_edit_mask (layer, active);
       gimp_image_flush (image);
     }
 }
@@ -788,7 +788,7 @@ layers_mask_show_cmd_callback (GtkAction *action,
 
       active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      gimp_layer_mask_set_show (mask, active, TRUE);
+      gimp_layer_set_show_mask (layer, active, TRUE);
       gimp_image_flush (image);
     }
 }
@@ -810,7 +810,7 @@ layers_mask_disable_cmd_callback (GtkAction *action,
 
       active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      gimp_layer_mask_set_apply (mask, ! active, TRUE);
+      gimp_layer_set_apply_mask (layer, ! active, TRUE);
       gimp_image_flush (image);
     }
 }

@@ -151,7 +151,7 @@ static void       gimp_layer_tree_view_renderer_update            (GimpViewRende
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_update_borders             (GimpLayerTreeView          *view,
                                                                    GtkTreeIter                *iter);
-static void       gimp_layer_tree_view_mask_callback              (GimpLayerMask              *mask,
+static void       gimp_layer_tree_view_mask_callback              (GimpLayer                  *mask,
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_layer_clicked              (GimpCellRendererViewable   *cell,
                                                                    const gchar                *path,
@@ -1119,13 +1119,13 @@ gimp_layer_tree_view_update_menu (GimpLayerTreeView *layer_view,
 
   gimp_action_group_set_action_active (group, "layers-mask-show",
                                        mask &&
-                                       gimp_layer_mask_get_show (mask));
+                                       gimp_layer_get_show_mask (layer));
   gimp_action_group_set_action_active (group, "layers-mask-disable",
                                        mask &&
-                                       ! gimp_layer_mask_get_apply (mask));
+                                       ! gimp_layer_get_apply_mask (layer));
   gimp_action_group_set_action_active (group, "layers-mask-edit",
                                        mask &&
-                                       gimp_layer_mask_get_edit (mask));
+                                       gimp_layer_get_edit_mask (layer));
 }
 
 
@@ -1167,9 +1167,9 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
       closure = g_cclosure_new (G_CALLBACK (gimp_layer_tree_view_mask_callback),
                                 layer_view, NULL);
       g_object_watch_closure (G_OBJECT (renderer), closure);
-      g_signal_connect_closure (mask, "apply-changed", closure, FALSE);
-      g_signal_connect_closure (mask, "edit-changed",  closure, FALSE);
-      g_signal_connect_closure (mask, "show-changed",  closure, FALSE);
+      g_signal_connect_closure (layer, "apply-mask-changed", closure, FALSE);
+      g_signal_connect_closure (layer, "edit-mask-changed",  closure, FALSE);
+      g_signal_connect_closure (layer, "show-mask-changed",  closure, FALSE);
     }
 
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
@@ -1232,18 +1232,21 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
   GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (layer_view);
   GimpViewRenderer      *layer_renderer;
   GimpViewRenderer      *mask_renderer;
+  GimpLayer             *layer;
   GimpLayerMask         *mask       = NULL;
   GimpViewBorderType     layer_type = GIMP_VIEW_BORDER_BLACK;
 
   gtk_tree_model_get (tree_view->model, iter,
                       GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &layer_renderer,
-                      layer_view->priv->model_column_mask,    &mask_renderer,
+                      layer_view->priv->model_column_mask,       &mask_renderer,
                       -1);
+
+  layer = GIMP_LAYER (layer_renderer->viewable);
 
   if (mask_renderer)
     mask = GIMP_LAYER_MASK (mask_renderer->viewable);
 
-  if (! mask || (mask && ! gimp_layer_mask_get_edit (mask)))
+  if (! mask || (mask && ! gimp_layer_get_edit_mask (layer)))
     layer_type = GIMP_VIEW_BORDER_WHITE;
 
   gimp_view_renderer_set_border_type (layer_renderer, layer_type);
@@ -1252,15 +1255,15 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
     {
       GimpViewBorderType mask_color = GIMP_VIEW_BORDER_BLACK;
 
-      if (gimp_layer_mask_get_show (mask))
+      if (gimp_layer_get_show_mask (layer))
         {
           mask_color = GIMP_VIEW_BORDER_GREEN;
         }
-      else if (! gimp_layer_mask_get_apply (mask))
+      else if (! gimp_layer_get_apply_mask (layer))
         {
           mask_color = GIMP_VIEW_BORDER_RED;
         }
-      else if (gimp_layer_mask_get_edit (mask))
+      else if (gimp_layer_get_edit_mask (layer))
         {
           mask_color = GIMP_VIEW_BORDER_WHITE;
         }
@@ -1276,14 +1279,13 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
 }
 
 static void
-gimp_layer_tree_view_mask_callback (GimpLayerMask     *mask,
+gimp_layer_tree_view_mask_callback (GimpLayer         *layer,
                                     GimpLayerTreeView *layer_view)
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (layer_view);
   GtkTreeIter       *iter;
 
-  iter = gimp_container_view_lookup (view, (GimpViewable *)
-                                     gimp_layer_mask_get_layer (mask));
+  iter = gimp_container_view_lookup (view, (GimpViewable *) layer);
 
   gimp_layer_tree_view_update_borders (layer_view, iter);
 }
@@ -1309,14 +1311,14 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
       group = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          layer_view->priv->model_column_mask, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       if (renderer)
         {
-          GimpLayerMask *mask = GIMP_LAYER_MASK (renderer->viewable);
+          GimpLayer *layer = GIMP_LAYER (renderer->viewable);
 
-          if (gimp_layer_mask_get_edit (mask))
+          if (gimp_layer_get_edit_mask (layer))
             gimp_action_group_set_action_active (group,
                                                  "layers-mask-edit", FALSE);
 
@@ -1349,20 +1351,20 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
       group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          layer_view->priv->model_column_mask, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       if (renderer)
         {
-          GimpLayerMask *mask = GIMP_LAYER_MASK (renderer->viewable);
+          GimpLayer *layer = GIMP_LAYER (renderer->viewable);
 
           if (state & GDK_MOD1_MASK)
             gimp_action_group_set_action_active (group, "layers-mask-show",
-                                                 ! gimp_layer_mask_get_show (mask));
+                                                 ! gimp_layer_get_show_mask (layer));
           else if (state & gimp_get_toggle_behavior_mask ())
             gimp_action_group_set_action_active (group, "layers-mask-disable",
-                                                 gimp_layer_mask_get_apply (mask));
-          else if (! gimp_layer_mask_get_edit (mask))
+                                                 gimp_layer_get_apply_mask (layer));
+          else if (! gimp_layer_get_edit_mask (layer))
             gimp_action_group_set_action_active (group,
                                                  "layers-mask-edit", TRUE);
 

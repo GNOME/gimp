@@ -41,6 +41,9 @@ struct _GimpLayer
   gboolean              lock_alpha;       /*  lock the alpha channel     */
 
   GimpLayerMask        *mask;             /*  possible layer mask        */
+  gboolean              apply_mask;       /*  controls mask application  */
+  gboolean              edit_mask;        /*  edit mask or layer?        */
+  gboolean              show_mask;        /*  show mask or layer?        */
 
   GeglNode             *opacity_node;
 
@@ -62,6 +65,9 @@ struct _GimpLayerClass
   void (* mode_changed)       (GimpLayer *layer);
   void (* lock_alpha_changed) (GimpLayer *layer);
   void (* mask_changed)       (GimpLayer *layer);
+  void (* apply_mask_changed) (GimpLayer *layer);
+  void (* edit_mask_changed)  (GimpLayer *layer);
+  void (* show_mask_changed)  (GimpLayer *layer);
 };
 
 
@@ -115,6 +121,20 @@ GimpLayerMask * gimp_layer_add_mask            (GimpLayer            *layer,
 void            gimp_layer_apply_mask          (GimpLayer            *layer,
                                                 GimpMaskApplyMode     mode,
                                                 gboolean              push_undo);
+
+void            gimp_layer_set_apply_mask      (GimpLayer           *layer,
+                                                gboolean             apply,
+                                                gboolean             push_undo);
+gboolean        gimp_layer_get_apply_mask      (const GimpLayer     *layer);
+
+void            gimp_layer_set_edit_mask       (GimpLayer           *layer,
+                                                gboolean             edit);
+gboolean        gimp_layer_get_edit_mask       (const GimpLayer     *layer);
+
+void            gimp_layer_set_show_mask       (GimpLayer           *layer,
+                                                gboolean             show,
+                                                gboolean             push_undo);
+gboolean        gimp_layer_get_show_mask       (const GimpLayer     *layer);
 
 void            gimp_layer_add_alpha           (GimpLayer            *layer);
 void            gimp_layer_flatten             (GimpLayer            *layer,

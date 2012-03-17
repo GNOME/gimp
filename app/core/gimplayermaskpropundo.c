@@ -21,7 +21,7 @@
 
 #include "core-types.h"
 
-#include "gimplayermask.h"
+#include "gimplayer.h"
 #include "gimplayermaskpropundo.h"
 
 
@@ -58,25 +58,25 @@ static void
 gimp_layer_mask_prop_undo_constructed (GObject *object)
 {
   GimpLayerMaskPropUndo *layer_mask_prop_undo;
-  GimpLayerMask         *layer_mask;
+  GimpLayer             *layer;
 
   layer_mask_prop_undo = GIMP_LAYER_MASK_PROP_UNDO (object);
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_LAYER_MASK (GIMP_ITEM_UNDO (object)->item));
+  g_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
 
-  layer_mask = GIMP_LAYER_MASK (GIMP_ITEM_UNDO (object)->item);
+  layer = GIMP_LAYER (GIMP_ITEM_UNDO (object)->item);
 
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_LAYER_MASK_APPLY:
-      layer_mask_prop_undo->apply = gimp_layer_mask_get_apply (layer_mask);
+      layer_mask_prop_undo->apply = gimp_layer_get_apply_mask (layer);
       break;
 
     case GIMP_UNDO_LAYER_MASK_SHOW:
-      layer_mask_prop_undo->show = gimp_layer_mask_get_show (layer_mask);
+      layer_mask_prop_undo->show = gimp_layer_get_show_mask (layer);
       break;
 
     default:
@@ -90,7 +90,7 @@ gimp_layer_mask_prop_undo_pop (GimpUndo            *undo,
                                GimpUndoAccumulator *accum)
 {
   GimpLayerMaskPropUndo *layer_mask_prop_undo = GIMP_LAYER_MASK_PROP_UNDO (undo);
-  GimpLayerMask         *layer_mask           = GIMP_LAYER_MASK (GIMP_ITEM_UNDO (undo)->item);
+  GimpLayer             *layer                = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
@@ -100,8 +100,8 @@ gimp_layer_mask_prop_undo_pop (GimpUndo            *undo,
       {
         gboolean apply;
 
-        apply = gimp_layer_mask_get_apply (layer_mask);
-        gimp_layer_mask_set_apply (layer_mask, layer_mask_prop_undo->apply, FALSE);
+        apply = gimp_layer_get_apply_mask (layer);
+        gimp_layer_set_apply_mask (layer, layer_mask_prop_undo->apply, FALSE);
         layer_mask_prop_undo->apply = apply;
       }
       break;
@@ -110,8 +110,8 @@ gimp_layer_mask_prop_undo_pop (GimpUndo            *undo,
       {
         gboolean show;
 
-        show = gimp_layer_mask_get_show (layer_mask);
-        gimp_layer_mask_set_show (layer_mask, layer_mask_prop_undo->show, FALSE);
+        show = gimp_layer_get_show_mask (layer);
+        gimp_layer_set_show_mask (layer, layer_mask_prop_undo->show, FALSE);
         layer_mask_prop_undo->show = show;
       }
       break;

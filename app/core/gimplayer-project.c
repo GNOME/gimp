@@ -46,7 +46,7 @@ gimp_layer_project_region (GimpDrawable *drawable,
   GimpLayer     *layer = GIMP_LAYER (drawable);
   GimpLayerMask *mask  = gimp_layer_get_mask (layer);
 
-  if (mask && gimp_layer_mask_get_show (mask))
+  if (mask && gimp_layer_get_show_mask (layer))
     {
       /*  If we're showing the layer mask instead of the layer...  */
 
@@ -81,7 +81,7 @@ gimp_layer_project_region (GimpDrawable *drawable,
                                      x, y, width, height,
                                      &temp_layer_tiles);
 
-      if (mask && gimp_layer_mask_get_apply (mask))
+      if (mask && gimp_layer_get_apply_mask (layer))
         {
           gimp_drawable_init_src_region (GIMP_DRAWABLE (mask), &maskPR,
                                          x, y, width, height,

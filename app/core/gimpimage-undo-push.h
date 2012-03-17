@@ -164,10 +164,10 @@ GimpUndo * gimp_image_undo_push_layer_mask_remove   (GimpImage     *image,
                                                      GimpLayerMask *mask);
 GimpUndo * gimp_image_undo_push_layer_mask_apply    (GimpImage     *image,
                                                      const gchar   *undo_desc,
-                                                     GimpLayerMask *mask);
+                                                     GimpLayer     *layer);
 GimpUndo * gimp_image_undo_push_layer_mask_show     (GimpImage     *image,
                                                      const gchar   *undo_desc,
-                                                     GimpLayerMask *mask);
+                                                     GimpLayer     *layer);
 
 
 /*  channel undos  */

@@ -656,34 +656,34 @@ gimp_image_undo_push_layer_mask_remove (GimpImage     *image,
 }
 
 GimpUndo *
-gimp_image_undo_push_layer_mask_apply (GimpImage     *image,
-                                       const gchar   *undo_desc,
-                                       GimpLayerMask *mask)
+gimp_image_undo_push_layer_mask_apply (GimpImage   *image,
+                                       const gchar *undo_desc,
+                                       GimpLayer   *layer)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_LAYER_MASK (mask), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (mask)), NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_LAYER_MASK_PROP_UNDO,
                                GIMP_UNDO_LAYER_MASK_APPLY, undo_desc,
                                GIMP_DIRTY_ITEM_META,
-                               "item", mask,
+                               "item", layer,
                                NULL);
 }
 
 GimpUndo *
-gimp_image_undo_push_layer_mask_show (GimpImage     *image,
-                                      const gchar   *undo_desc,
-                                      GimpLayerMask *mask)
+gimp_image_undo_push_layer_mask_show (GimpImage   *image,
+                                      const gchar *undo_desc,
+                                      GimpLayer   *layer)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_LAYER_MASK (mask), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (mask)), NULL);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_LAYER_MASK_PROP_UNDO,
                                GIMP_UNDO_LAYER_MASK_SHOW, undo_desc,
                                GIMP_DIRTY_ITEM_META,
-                               "item", mask,
+                               "item", layer,
                                NULL);
 }
 

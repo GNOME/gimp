@@ -31,18 +31,8 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
-#include "gimpmarshal.h"
 
 #include "gimp-intl.h"
-
-
-enum
-{
-  APPLY_CHANGED,
-  EDIT_CHANGED,
-  SHOW_CHANGED,
-  LAST_SIGNAL
-};
 
 
 static gboolean        gimp_layer_mask_is_attached       (const GimpItem *item);
@@ -60,8 +50,6 @@ G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
 
 #define parent_class gimp_layer_mask_parent_class
 
-static guint layer_mask_signals[LAST_SIGNAL] = { 0 };
-
 
 static void
 gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
@@ -69,36 +57,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class     = GIMP_ITEM_CLASS (klass);
 
-  layer_mask_signals[APPLY_CHANGED] =
-    g_signal_new ("apply-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLayerMaskClass, apply_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
-  layer_mask_signals[EDIT_CHANGED] =
-    g_signal_new ("edit-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLayerMaskClass, edit_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
-  layer_mask_signals[SHOW_CHANGED] =
-    g_signal_new ("show-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLayerMaskClass, show_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
   viewable_class->default_stock_id = "gimp-layer-mask";
-
-  klass->edit_changed           = NULL;
 
   item_class->is_attached       = gimp_layer_mask_is_attached;
   item_class->is_content_locked = gimp_layer_mask_is_content_locked;
@@ -112,10 +71,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 static void
 gimp_layer_mask_init (GimpLayerMask *layer_mask)
 {
-  layer_mask->layer      = NULL;
-  layer_mask->apply_mask = TRUE;
-  layer_mask->edit_mask  = TRUE;
-  layer_mask->show_mask  = FALSE;
+  layer_mask->layer = NULL;
 }
 
 static gboolean
@@ -157,16 +113,6 @@ gimp_layer_mask_duplicate (GimpItem *item,
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
   new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
-
-  if (GIMP_IS_LAYER_MASK (new_item))
-    {
-      GimpLayerMask *layer_mask     = GIMP_LAYER_MASK (item);
-      GimpLayerMask *new_layer_mask = GIMP_LAYER_MASK (new_item);
-
-      new_layer_mask->apply_mask = layer_mask->apply_mask;
-      new_layer_mask->edit_mask  = layer_mask->edit_mask;
-      new_layer_mask->show_mask  = layer_mask->show_mask;
-    }
 
   return new_item;
 }
@@ -245,108 +191,4 @@ gimp_layer_mask_get_layer (const GimpLayerMask *layer_mask)
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), NULL);
 
   return layer_mask->layer;
-}
-
-void
-gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
-                           gboolean       apply,
-                           gboolean       push_undo)
-{
-  g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
-
-  if (layer_mask->apply_mask != apply)
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer_mask));
-
-      if (push_undo)
-        gimp_image_undo_push_layer_mask_apply (image,
-                                               apply ?
-                                               C_("undo-type", "Enable Layer Mask") :
-                                               C_("undo-type", "Disable Layer Mask"),
-                                               layer_mask);
-
-      layer_mask->apply_mask = apply ? TRUE : FALSE;
-
-      if (layer_mask->layer)
-        {
-          GimpDrawable *drawable = GIMP_DRAWABLE (layer_mask->layer);
-
-          gimp_drawable_update (drawable,
-                                0, 0,
-                                gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                gimp_item_get_height (GIMP_ITEM (drawable)));
-        }
-
-      g_signal_emit (layer_mask, layer_mask_signals[APPLY_CHANGED], 0);
-    }
-}
-
-gboolean
-gimp_layer_mask_get_apply (const GimpLayerMask *layer_mask)
-{
-  g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
-
-  return layer_mask->apply_mask;
-}
-
-void
-gimp_layer_mask_set_edit (GimpLayerMask *layer_mask,
-                          gboolean       edit)
-{
-  g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
-
-  if (layer_mask->edit_mask != edit)
-    {
-      layer_mask->edit_mask = edit ? TRUE : FALSE;
-
-      g_signal_emit (layer_mask, layer_mask_signals[EDIT_CHANGED], 0);
-    }
-}
-
-gboolean
-gimp_layer_mask_get_edit (const GimpLayerMask *layer_mask)
-{
-  g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
-
-  return layer_mask->edit_mask;
-}
-
-void
-gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
-                          gboolean       show,
-                          gboolean       push_undo)
-{
-  g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
-
-  if (layer_mask->show_mask != show)
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer_mask));
-
-      if (push_undo)
-        gimp_image_undo_push_layer_mask_show (image,
-                                              C_("undo-type", "Show Layer Mask"),
-                                              layer_mask);
-
-      layer_mask->show_mask = show ? TRUE : FALSE;
-
-      if (layer_mask->layer)
-        {
-          GimpDrawable *drawable = GIMP_DRAWABLE (layer_mask->layer);
-
-          gimp_drawable_update (drawable,
-                                0, 0,
-                                gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                gimp_item_get_height (GIMP_ITEM (drawable)));
-        }
-
-      g_signal_emit (layer_mask, layer_mask_signals[SHOW_CHANGED], 0);
-    }
-}
-
-gboolean
-gimp_layer_mask_get_show (const GimpLayerMask *layer_mask)
-{
-  g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
-
-  return layer_mask->show_mask;
 }

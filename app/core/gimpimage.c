@@ -3214,7 +3214,7 @@ gimp_image_get_active_drawable (const GimpImage *image)
       GimpLayer     *layer = GIMP_LAYER (active_layer);
       GimpLayerMask *mask  = gimp_layer_get_mask (layer);
 
-      if (mask && gimp_layer_mask_get_edit (mask))
+      if (mask && gimp_layer_get_edit_mask (layer))
         return GIMP_DRAWABLE (mask);
       else
         return GIMP_DRAWABLE (layer);

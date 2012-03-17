@@ -24,10 +24,10 @@
 
 #include "actions-types.h"
 
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimplayermask.h"
 
 #include "text/gimptextlayer.h"
 
@@ -659,9 +659,9 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac &&  mask);
   SET_SENSITIVE ("layers-mask-disable", layer && !fs && !ac &&  mask);
 
-  SET_ACTIVE ("layers-mask-edit",    mask && gimp_layer_mask_get_edit (mask));
-  SET_ACTIVE ("layers-mask-show",    mask && gimp_layer_mask_get_show (mask));
-  SET_ACTIVE ("layers-mask-disable", mask && !gimp_layer_mask_get_apply (mask));
+  SET_ACTIVE ("layers-mask-edit",    mask && gimp_layer_get_edit_mask (layer));
+  SET_ACTIVE ("layers-mask-show",    mask && gimp_layer_get_show_mask (layer));
+  SET_ACTIVE ("layers-mask-disable", mask && !gimp_layer_get_apply_mask (layer));
 
   SET_SENSITIVE ("layers-mask-selection-replace",   layer && !fs && !ac && mask);
   SET_SENSITIVE ("layers-mask-selection-add",       layer && !fs && !ac && mask);

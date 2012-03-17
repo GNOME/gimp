@@ -496,14 +496,12 @@ xcf_save_layer_props (XcfInfo    *info,
 
   if (gimp_layer_get_mask (layer))
     {
-      GimpLayerMask *mask = gimp_layer_get_mask (layer);
-
       xcf_check_error (xcf_save_prop (info, image, PROP_APPLY_MASK, error,
-                                      gimp_layer_mask_get_apply (mask)));
+                                      gimp_layer_get_apply_mask (layer)));
       xcf_check_error (xcf_save_prop (info, image, PROP_EDIT_MASK, error,
-                                      gimp_layer_mask_get_edit (mask)));
+                                      gimp_layer_get_edit_mask (layer)));
       xcf_check_error (xcf_save_prop (info, image, PROP_SHOW_MASK, error,
-                                      gimp_layer_mask_get_show (mask)));
+                                      gimp_layer_get_show_mask (layer)));
     }
   else
     {

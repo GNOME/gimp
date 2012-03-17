@@ -651,7 +651,7 @@ gimp_image_merge_layers (GimpImage     *image,
                          FALSE);
 
       if (gimp_layer_get_mask (layer) &&
-          gimp_layer_mask_get_apply (layer->mask))
+          gimp_layer_get_apply_mask (layer))
         {
           TileManager *tiles;
 

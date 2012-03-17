@@ -369,9 +369,27 @@ xcf_load_add_masks (GimpImage *image)
 
       if (mask)
         {
+          gboolean apply_mask;
+          gboolean edit_mask;
+          gboolean show_mask;
+
+          apply_mask = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
+                                                           "gimp-layer-mask-apply"));
+          edit_mask = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
+                                                          "gimp-layer-mask-edit"));
+          show_mask = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
+                                                          "gimp-layer-mask-show"));
+
           gimp_layer_add_mask (layer, mask, FALSE, NULL);
 
-          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask", NULL);
+          gimp_layer_set_apply_mask (layer, apply_mask, FALSE);
+          gimp_layer_set_edit_mask  (layer, edit_mask);
+          gimp_layer_set_show_mask  (layer, show_mask, FALSE);
+
+          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask",       NULL);
+          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-apply", NULL);
+          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-edit",  NULL);
+          g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-show",  NULL);
         }
     }
 
@@ -1156,10 +1174,6 @@ xcf_load_layer (XcfInfo    *info,
 
       xcf_progress_update (info);
 
-      gimp_layer_mask_set_apply (layer_mask, apply_mask, FALSE);
-      gimp_layer_mask_set_edit  (layer_mask, edit_mask);
-      gimp_layer_mask_set_show  (layer_mask, show_mask, FALSE);
-
       /* don't add the layer mask yet, that won't work for group
        * layers which update their size automatically; instead
        * attach it so it can be added when all layers are loaded
@@ -1167,6 +1181,12 @@ xcf_load_layer (XcfInfo    *info,
       g_object_set_data_full (G_OBJECT (layer), "gimp-layer-mask",
                               g_object_ref_sink (layer_mask),
                               (GDestroyNotify) g_object_unref);
+      g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-apply",
+                         GINT_TO_POINTER (apply_mask));
+      g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-edit",
+                         GINT_TO_POINTER (edit_mask));
+      g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-show",
+                         GINT_TO_POINTER (show_mask));
     }
 
   /* attach the floating selection... */

@@ -31,7 +31,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimplayermask.h"
 
 #include "gimpcanvas.h"
 #include "gimpcanvaslayerboundary.h"
@@ -249,11 +248,10 @@ gimp_canvas_layer_boundary_set_layer (GimpCanvasLayerBoundary *boundary,
 
       if (layer)
         {
-          GimpItem      *item = GIMP_ITEM (layer);
-          GimpLayerMask *mask;
+          GimpItem *item = GIMP_ITEM (layer);
 
-          mask = gimp_layer_get_mask (layer);
-          edit_mask = (mask && gimp_layer_mask_get_edit (mask));
+          edit_mask = (gimp_layer_get_mask (layer) &&
+                       gimp_layer_get_edit_mask (layer));
 
           g_object_set (boundary,
                         "x",      (gdouble) gimp_item_get_offset_x (item),
@@ -272,19 +270,18 @@ gimp_canvas_layer_boundary_set_layer (GimpCanvasLayerBoundary *boundary,
     }
   else if (layer && layer == private->layer)
     {
-      GimpItem      *item = GIMP_ITEM (layer);
-      GimpLayerMask *mask;
-      gint           lx, ly, lw, lh;
-      gdouble        x, y, w ,h;
-      gboolean       edit_mask;
+      GimpItem *item = GIMP_ITEM (layer);
+      gint      lx, ly, lw, lh;
+      gdouble   x, y, w ,h;
+      gboolean  edit_mask;
 
       lx = gimp_item_get_offset_x (item);
       ly = gimp_item_get_offset_y (item);
       lw = gimp_item_get_width  (item);
       lh = gimp_item_get_height (item);
 
-      mask = gimp_layer_get_mask (layer);
-      edit_mask = (mask && gimp_layer_mask_get_edit (mask));
+      edit_mask = (gimp_layer_get_mask (layer) &&
+                   gimp_layer_get_edit_mask (layer));
 
       g_object_get (boundary,
                     "x",      &x,

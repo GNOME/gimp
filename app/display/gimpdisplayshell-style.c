@@ -30,7 +30,6 @@
 
 #include "core/gimpgrid.h"
 #include "core/gimplayer.h"
-#include "core/gimplayermask.h"
 
 #include "widgets/gimpcairo.h"
 
@@ -197,7 +196,7 @@ gimp_display_shell_set_layer_style (GimpDisplayShell *shell,
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
 
   if (gimp_layer_get_mask (layer) &&
-      gimp_layer_mask_get_edit (gimp_layer_get_mask (layer)))
+      gimp_layer_get_edit_mask (layer))
     {
       pattern = gimp_cairo_stipple_pattern_create (&layer_mask_fg,
                                                    &layer_mask_bg,
