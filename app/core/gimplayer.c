@@ -170,12 +170,6 @@ static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
                                                  gint                y);
 
-static void       gimp_layer_transform_color    (GimpImage          *image,
-                                                 PixelRegion        *srcPR,
-                                                 GimpImageType       src_type,
-                                                 PixelRegion        *destPR,
-                                                 GimpImageType       dest_type);
-
 static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  gint                x,
                                                  gint                y,
@@ -1007,50 +1001,6 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
 }
 
 static void
-gimp_layer_transform_color (GimpImage     *image,
-                            PixelRegion   *srcPR,
-                            GimpImageType  src_type,
-                            PixelRegion   *destPR,
-                            GimpImageType  dest_type)
-{
-  GimpImageBaseType base_type  = GIMP_IMAGE_TYPE_BASE_TYPE (src_type);
-  gboolean          src_alpha  = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
-  gboolean          dest_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (dest_type);
-  gpointer          pr;
-
-  for (pr = pixel_regions_register (2, srcPR, destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      const guchar *src  = srcPR->data;
-      guchar       *dest = destPR->data;
-      gint          h    = destPR->h;
-
-      while (h--)
-        {
-          const guchar *s = src;
-          guchar       *d = dest;
-          gint          i;
-
-          for (i = 0; i < destPR->w; i++)
-            {
-              gimp_image_transform_color (image, dest_type, d, base_type, s);
-
-              if (dest_alpha)
-                d[destPR->bytes - 1] = (src_alpha ?
-                                        s[srcPR->bytes - 1] : OPAQUE_OPACITY);
-
-              s += srcPR->bytes;
-              d += destPR->bytes;
-            }
-
-          src  += srcPR->rowstride;
-          dest += destPR->rowstride;
-        }
-    }
-}
-
-static void
 gimp_layer_layer_mask_update (GimpDrawable *drawable,
                               gint          x,
                               gint          y,
@@ -1213,19 +1163,20 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
                            gdouble               opacity,
                            GimpLayerModeEffects  mode)
 {
-  PixelRegion bufPR;
+  GeglBuffer *buffer;
+  GimpLayer  *layer;
 
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
 
-  pixel_region_init (&bufPR, tiles,
-                     0, 0,
-                     tile_manager_width (tiles),
-                     tile_manager_height (tiles),
-                     FALSE);
+  buffer = gimp_tile_manager_create_buffer (tiles, NULL, FALSE);
 
-  return gimp_layer_new_from_region (&bufPR, dest_image, type,
-                                     name, opacity, mode);
+  layer = gimp_layer_new_from_buffer (buffer, dest_image, type,
+                                      name, opacity, mode);
+
+  g_object_unref (buffer);
+
+  return layer;
 }
 
 /**
@@ -1251,184 +1202,22 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode)
 {
-  PixelRegion bufPR = { 0, };
+  GeglBuffer *buffer;
+  GimpLayer  *layer;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (GIMP_IMAGE_TYPE_BASE_TYPE (type) ==
                         gimp_image_base_type (dest_image), NULL);
 
-  pixel_region_init_data (&bufPR, gdk_pixbuf_get_pixels (pixbuf),
-                          gdk_pixbuf_get_n_channels (pixbuf),
-                          gdk_pixbuf_get_rowstride (pixbuf),
-                          0, 0,
-                          gdk_pixbuf_get_width (pixbuf),
-                          gdk_pixbuf_get_height (pixbuf));
+  buffer = gimp_pixbuf_create_buffer (pixbuf);
 
-  return gimp_layer_new_from_region (&bufPR, dest_image, type,
-                                     name, opacity, mode);
-}
+  layer = gimp_layer_new_from_buffer (buffer, dest_image, type,
+                                      name, opacity, mode);
 
-/**
- * gimp_layer_new_from_region:
- * @region:     A readable pixel region.
- * @dest_image: The image the new layer will be added to.
- * @type:       The #GimpImageType of the new layer.
- * @name:       The new layer's name.
- * @opacity:    The new layer's opacity.
- * @mode:       The new layer's mode.
- *
- * Copies %region to a layer taking into consideration the
- * possibility of transforming the contents to meet the requirements
- * of the target image type
- *
- * Return value: The new layer.
- **/
-GimpLayer *
-gimp_layer_new_from_region (PixelRegion          *region,
-                            GimpImage            *dest_image,
-                            GimpImageType         type,
-                            const gchar          *name,
-                            gdouble               opacity,
-                            GimpLayerModeEffects  mode)
-{
-  GimpLayer     *new_layer;
-  PixelRegion    layerPR;
-  GimpImageType  src_type;
-  gint           width;
-  gint           height;
+  g_object_unref (buffer);
 
-  g_return_val_if_fail (region != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
-
-  width  = region->w;
-  height = region->h;
-
-  switch (region->bytes)
-    {
-    case 1: src_type = GIMP_GRAY_IMAGE;  break;
-    case 2: src_type = GIMP_GRAYA_IMAGE; break;
-    case 3: src_type = GIMP_RGB_IMAGE;   break;
-    case 4: src_type = GIMP_RGBA_IMAGE;  break;
-    default:
-      g_return_val_if_reached (NULL);
-      break;
-    }
-
-  new_layer = gimp_layer_new (dest_image, width, height, type, name,
-                              opacity, mode);
-
-  if (! new_layer)
-    {
-      g_warning ("%s: could not allocate new layer", G_STRFUNC);
-      return NULL;
-    }
-
-  pixel_region_init (&layerPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (new_layer)),
-                     0, 0, width, height,
-                     TRUE);
-
-  switch (type)
-    {
-    case GIMP_RGB_IMAGE:
-      switch (src_type)
-        {
-       case GIMP_RGB_IMAGE:
-          copy_region (region, &layerPR);
-          break;
-
-        default:
-          g_warning ("%s: unhandled type conversion", G_STRFUNC);
-          break;
-         }
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      switch (src_type)
-        {
-        case GIMP_RGBA_IMAGE:
-          copy_region (region, &layerPR);
-          break;
-
-        case GIMP_RGB_IMAGE:
-          add_alpha_region (region, &layerPR);
-          break;
-
-        case GIMP_GRAY_IMAGE:
-        case GIMP_GRAYA_IMAGE:
-          gimp_layer_transform_color (dest_image,
-                                      region,   src_type,
-                                      &layerPR, type);
-          break;
-
-        default:
-          g_warning ("%s: unhandled type conversion", G_STRFUNC);
-          break;
-        }
-      break;
-
-    case GIMP_GRAY_IMAGE:
-      switch (src_type)
-        {
-        case GIMP_GRAY_IMAGE:
-          copy_region (region, &layerPR);
-          break;
-
-        default:
-          g_warning ("%s: unhandled type conversion", G_STRFUNC);
-          break;
-        }
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      switch (src_type)
-        {
-        case GIMP_RGB_IMAGE:
-        case GIMP_RGBA_IMAGE:
-          gimp_layer_transform_color (dest_image,
-                                      region,   src_type,
-                                      &layerPR, type);
-          break;
-
-        case GIMP_GRAYA_IMAGE:
-          copy_region (region, &layerPR);
-          break;
-
-        case GIMP_GRAY_IMAGE:
-          add_alpha_region (region, &layerPR);
-          break;
-
-        default:
-          g_warning ("%s: unhandled type conversion", G_STRFUNC);
-          break;
-        }
-      break;
-
-    case GIMP_INDEXED_IMAGE:
-      g_warning ("%s: unhandled type conversion", G_STRFUNC);
-      break;
-
-    case GIMP_INDEXEDA_IMAGE:
-      switch (src_type)
-        {
-        case GIMP_RGB_IMAGE:
-        case GIMP_RGBA_IMAGE:
-        case GIMP_GRAY_IMAGE:
-        case GIMP_GRAYA_IMAGE:
-          gimp_layer_transform_color (dest_image,
-                                      region,   src_type,
-                                      &layerPR, type);
-          break;
-
-        default:
-          g_warning ("%s: unhandled type conversion", G_STRFUNC);
-          break;
-        }
-      break;
-    }
-
-  return new_layer;
+  return layer;
 }
 
 GimpLayer *

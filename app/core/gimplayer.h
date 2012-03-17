@@ -101,12 +101,6 @@ GimpLayer     * gimp_layer_new_from_pixbuf     (GdkPixbuf            *pixbuf,
                                                 const gchar          *name,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
-GimpLayer     * gimp_layer_new_from_region     (PixelRegion          *region,
-                                                GimpImage            *dest_image,
-                                                GimpImageType         type,
-                                                const gchar          *name,
-                                                gdouble               opacity,
-                                                GimpLayerModeEffects  mode);
 
 GimpLayer     * gimp_layer_get_parent          (GimpLayer            *layer);
 
