@@ -19,13 +19,15 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 
 #include "base/temp-buf.h"
+
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimppattern.h"
 #include "gimppattern-load.h"
@@ -262,4 +264,24 @@ gimp_pattern_get_mask (const GimpPattern *pattern)
   g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
 
   return pattern->mask;
+}
+
+GeglBuffer *
+gimp_pattern_create_buffer (const GimpPattern *pattern)
+{
+  GeglRectangle rect = { 0, };
+  gint          bytes;
+
+  g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
+
+  rect.width  = pattern->mask->width;
+  rect.height = pattern->mask->height;
+
+  bytes = pattern->mask->bytes;
+
+  return gegl_buffer_linear_new_from_data (temp_buf_get_data (pattern->mask),
+                                           gimp_bpp_to_babl_format (bytes, TRUE),
+                                           &rect,
+                                           rect.width * bytes,
+                                           NULL, NULL);
 }

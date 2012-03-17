@@ -570,7 +570,7 @@ gimp_edit_fill_internal (GimpImage            *image,
       break;
 
     case GIMP_WHITE_FILL:
-      gimp_rgb_set (&color, 1.0, 1.0, 1.0);
+      gimp_rgba_set (&color, 1.0, 1.0, 1.0, 1.0);
       break;
 
     case GIMP_PATTERN_FILL:
@@ -593,22 +593,7 @@ gimp_edit_fill_internal (GimpImage            *image,
 
   if (pattern)
     {
-      GeglBuffer    *src_buffer;
-      GeglRectangle  rect = { 0, };
-      gint           pat_bytes;
-
-      rect.width  = pattern->mask->width;
-      rect.height = pattern->mask->height;
-
-      pat_bytes = pattern->mask->bytes;
-
-      src_buffer =
-        gegl_buffer_linear_new_from_data (temp_buf_get_data (pattern->mask),
-                                          gimp_bpp_to_babl_format (pat_bytes,
-                                                                   TRUE),
-                                          &rect,
-                                          rect.width * pat_bytes,
-                                          NULL, NULL);
+      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
 
       gegl_buffer_set_pattern (dest_buffer, NULL, src_buffer, 0, 0);
 
@@ -616,14 +601,9 @@ gimp_edit_fill_internal (GimpImage            *image,
     }
   else
     {
-      GeglColor *gegl_color;
+      GeglColor *gegl_color = gegl_color_new (NULL);
 
-      if (gimp_drawable_has_alpha (drawable))
-        gimp_rgb_set_alpha (&color, 1.0);
-
-      gegl_color = gegl_color_new (NULL);
       gimp_gegl_color_set_rgba (gegl_color, &color);
-
       gegl_buffer_set_color (dest_buffer, NULL, gegl_color);
 
       g_object_unref (gegl_color);

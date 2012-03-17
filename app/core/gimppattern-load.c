@@ -41,6 +41,8 @@
 #define _O_BINARY 0
 #endif
 
+#include <gegl.h>
+
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
