@@ -27,8 +27,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-
 #include "gimpchannel.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
@@ -275,49 +273,61 @@ gimp_palette_import_extract (GimpImage     *image,
                              gint           n_colors,
                              gint           threshold)
 {
-  TileManager   *tiles;
-  GimpImageType  type;
-  PixelRegion    region;
-  PixelRegion    mask_region;
-  PixelRegion   *maskPR = NULL;
-  gpointer       pr;
-  GHashTable    *colors = NULL;
+  GeglBuffer         *buffer;
+  GeglBufferIterator *iter;
+  GeglRectangle      *roi;
+  GeglRectangle      *mask_roi = NULL;
+  GeglRectangle       rect     = { x, y, width, height };
+  GimpImageType       type;
+  GHashTable         *colors   = NULL;
+  const Babl         *format;
+  gint                bpp;
+  gint                mask_bpp = 0;
 
-  tiles = gimp_pickable_get_tiles (pickable);
-  type  = gimp_pickable_get_image_type (pickable);
+  buffer = gimp_pickable_get_buffer (pickable);
+  type = gimp_pickable_get_image_type (pickable);
 
-  pixel_region_init (&region, tiles, x, y, width, height, FALSE);
+  format = gimp_pickable_get_babl_format (pickable);
+
+  iter = gegl_buffer_iterator_new (buffer, &rect, format,
+                                   GEGL_BUFFER_READ);
+  roi = &iter->roi[0];
+  bpp = babl_format_get_bytes_per_pixel (format);
 
   if (selection_only &&
       ! gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
       GimpDrawable *mask = GIMP_DRAWABLE (gimp_image_get_mask (image));
 
-      pixel_region_init (&mask_region, gimp_drawable_get_tiles (mask),
-                         x + pickable_off_x, y + pickable_off_y,
-                         width, height,
-                         FALSE);
+      buffer = gimp_drawable_get_read_buffer (mask);
 
-      maskPR = &mask_region;
+      rect.x = x + pickable_off_x;
+      rect.y = y + pickable_off_y;
+
+      format = gimp_drawable_get_babl_format (mask);
+
+      gegl_buffer_iterator_add (iter, buffer, &rect,
+                                gimp_drawable_get_babl_format (mask),
+                                GEGL_BUFFER_READ);
+      mask_roi = &iter->roi[1];
+      mask_bpp = babl_format_get_bytes_per_pixel (format);
     }
 
-  for (pr = pixel_regions_register (maskPR ? 2 : 1, &region, maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data      = region.data;
+      const guchar *data      = iter->data[0];
       const guchar *mask_data = NULL;
       gint          i, j;
 
-      if (maskPR)
-        mask_data = maskPR->data;
+      if (mask_roi)
+        mask_data = iter->data[1];
 
-      for (i = 0; i < region.h; i++)
+      for (i = 0; i < roi->height; i++)
         {
           const guchar *idata = data;
           const guchar *mdata = mask_data;
 
-          for (j = 0; j < region.w; j++)
+          for (j = 0; j < roi->width; j++)
             {
               if (! mdata || *mdata)
                 {
@@ -342,16 +352,16 @@ gimp_palette_import_extract (GimpImage     *image,
                     }
                 }
 
-              idata += region.bytes;
+              idata += bpp;
 
               if (mdata)
-                mdata += maskPR->bytes;
+                mdata += mask_bpp;
             }
 
-          data += region.rowstride;
+          data += roi->width * bpp;
 
           if (mask_data)
-            mask_data += maskPR->rowstride;
+            mask_data += mask_roi->width * mask_bpp;
         }
     }
 
