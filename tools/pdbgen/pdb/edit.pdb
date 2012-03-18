@@ -649,7 +649,6 @@ HELP
         {
           success = gimp_drawable_bucket_fill (drawable, context, fill_mode,
                                                paint_mode, opacity / 100.0,
-                                               TRUE,
                                                FALSE /* don't fill transparent */,
                                                GIMP_SELECT_CRITERION_COMPOSITE,
 	                                       threshold, sample_merged, x, y,
@@ -748,7 +747,6 @@ HELP
         {
           success = gimp_drawable_bucket_fill (drawable, context, fill_mode,
                                                paint_mode, opacity / 100.0,
-                                               TRUE,
                                                fill_transparent,
                                                select_criterion,
                                                threshold, sample_merged, x, y,
