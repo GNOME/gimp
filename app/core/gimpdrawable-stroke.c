@@ -31,14 +31,13 @@
 
 #include "base/boundary.h"
 #include "base/pixel-region.h"
-#include "base/temp-buf.h"
 #include "base/tile-manager.h"
 
-#include "paint-funcs/paint-funcs.h"
-
+#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-apply-operation.h"
 #include "gimpbezierdesc.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -288,12 +287,13 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   GimpImage   *image   = gimp_item_get_image (GIMP_ITEM (drawable));
   TileManager *base;
   TileManager *mask;
+  GeglBuffer  *base_buffer;
+  GeglBuffer  *mask_buffer;
+  GeglNode    *apply_opacity;
   gint         x, y, w, h;
   gint         bytes;
   gint         off_x;
   gint         off_y;
-  GeglBuffer  *tmp_buffer;
-  PixelRegion  maskPR;
   PixelRegion  basePR;
 
   /*  must call gimp_channel_is_empty() instead of relying on
@@ -345,10 +345,9 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
    * of the stroke.
    */
   mask = tile_manager_new (w, h, 1);
+  mask_buffer = gimp_tile_manager_create_buffer (mask, NULL, TRUE);
 
-  tmp_buffer = gimp_tile_manager_create_buffer (mask, NULL, TRUE);
-  gegl_buffer_clear (tmp_buffer, NULL);
-  g_object_unref (tmp_buffer);
+  gegl_buffer_clear (mask_buffer, NULL);
 
   /* render the stroke into it */
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
@@ -360,40 +359,47 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   bytes = gimp_drawable_bytes_with_alpha (drawable);
 
   base = tile_manager_new (w, h, bytes);
-  pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
-  pixel_region_init (&maskPR, mask, 0, 0, w, h, FALSE);
+  base_buffer = gimp_tile_manager_create_buffer (base,
+                                                 gimp_drawable_get_format_with_alpha (drawable),
+                                                 TRUE);
 
   switch (gimp_fill_options_get_style (options))
     {
     case GIMP_FILL_STYLE_SOLID:
       {
-        guchar col[MAX_CHANNELS] = { 0, };
+        GeglColor *color = gegl_color_new (NULL);
+        GimpRGB    fg;
 
-        gimp_image_get_foreground (image, context,
-                                   gimp_drawable_type (drawable), col);
+        gimp_context_get_foreground (context, &fg);
+        gimp_gegl_color_set_rgba (color, &fg);
+        gegl_buffer_set_color (base_buffer, NULL, color);
 
-        color_region_mask (&basePR, &maskPR, col);
+        g_object_unref (color);
       }
       break;
 
     case GIMP_FILL_STYLE_PATTERN:
       {
-        GimpPattern *pattern;
-        TempBuf     *pat_buf;
-        gboolean     new_buf;
+        GimpPattern *pattern        = gimp_context_get_pattern (context);
+        GeglBuffer  *pattern_buffer = gimp_pattern_create_buffer (pattern);
 
-        pattern = gimp_context_get_pattern (context);
-        pat_buf = gimp_image_transform_temp_buf (image,
-                                                 gimp_drawable_type (drawable),
-                                                 pattern->mask, &new_buf);
+        gegl_buffer_set_pattern (base_buffer, NULL, pattern_buffer, 0, 0);
 
-        pattern_region (&basePR, &maskPR, pat_buf, x, y);
-
-        if (new_buf)
-          temp_buf_free (pat_buf);
+        g_object_unref (pattern_buffer);
       }
       break;
     }
+
+  apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0);
+
+  gimp_apply_operation (base_buffer, NULL, NULL,
+                        apply_opacity, TRUE,
+                        base_buffer, NULL);
+
+  g_object_unref (apply_opacity);
+
+  g_object_unref (base_buffer);
+  g_object_unref (mask_buffer);
 
   /* Apply to drawable */
   pixel_region_init (&basePR, base, 0, 0, w, h, FALSE);
