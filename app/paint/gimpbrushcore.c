@@ -1604,13 +1604,13 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
                                         gint                      width,
                                         GimpBrushApplicationMode  mode)
 {
-  const guchar  *mask;
-  guchar        *b;
-  guchar        *p;
-  gdouble        alpha;
-  const gdouble  factor = 0.00392156986;  /*  1.0 / 255.0  */
-  gint           x_index;
-  gint           i;
+  const Babl *fish;
+  guchar     *b;
+  guchar     *p;
+  gint        i;
+
+  fish = babl_fish (babl_format ("RGB u8"), /* brush's pixmap is flat */
+                    gimp_drawable_get_babl_format (drawable));
 
   /*  Make sure x, y are positive  */
   while (x < 0)
@@ -1627,12 +1627,15 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
       /*  ditto, except for the brush mask, so we can pre-multiply the
        *  alpha value
        */
-      mask = (temp_buf_get_data (brush_mask) +
-              (y % brush_mask->height) * brush_mask->width);
+      const guchar *mask = (temp_buf_get_data (brush_mask) +
+                            (y % brush_mask->height) * brush_mask->width);
 
       for (i = 0; i < width; i++)
         {
-          gint byte_loop;
+          const gdouble factor = 1.0 / 255.0;
+          gint          x_index;
+          gint          byte_loop;
+          gdouble       alpha;
 
           /* attempt to avoid doing this calc twice in the loop */
           x_index = ((i + x) % pixmap_mask->width);
@@ -1648,8 +1651,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
             for (byte_loop = 0; byte_loop < bytes - 1; byte_loop++)
               d[byte_loop] *= alpha;
 
-          gimp_image_transform_color (dest, gimp_drawable_type (drawable), d,
-                                      GIMP_RGB, p);
+          babl_process (fish, p, d, 1);
           d += bytes;
         }
     }
@@ -1657,6 +1659,8 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
     {
       for (i = 0; i < width; i++)
         {
+          gint x_index;
+
           /* attempt to avoid doing this calc twice in the loop */
           x_index = ((i + x) % pixmap_mask->width);
           p = b + x_index * pixmap_mask->bytes;
@@ -1666,8 +1670,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
            * maybe we could do this at tool creation or brush switch time?
            * and compute it for the whole brush at once and cache it?
            */
-          gimp_image_transform_color (dest, gimp_drawable_type (drawable), d,
-                                      GIMP_RGB, p);
+          babl_process (fish, p, d, 1);
           d += bytes;
         }
     }
