@@ -133,33 +133,3 @@ gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
                         operation, linear,
                         dest_buffer, NULL);
 }
-
-void
-gimp_drawable_apply_operation_to_tiles (GimpDrawable *drawable,
-                                        GimpProgress *progress,
-                                        const gchar  *undo_desc,
-                                        GeglNode     *operation,
-                                        gboolean      linear,
-                                        TileManager  *dest_tiles)
-{
-  GeglBuffer *dest_buffer;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-  g_return_if_fail (progress == NULL || undo_desc != NULL);
-  g_return_if_fail (GEGL_IS_NODE (operation));
-  g_return_if_fail (dest_tiles != NULL);
-
-  dest_buffer = gimp_tile_manager_create_buffer (dest_tiles,
-                                                 gimp_drawable_get_format (drawable),
-                                                 TRUE);
-
-  gimp_drawable_apply_operation_to_buffer (drawable,
-                                           progress,
-                                           undo_desc,
-                                           operation,
-                                           linear,
-                                           dest_buffer);
-
-  g_object_unref (dest_buffer);
-}

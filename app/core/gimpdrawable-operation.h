@@ -42,12 +42,6 @@ void   gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
                                                 GeglNode     *operation,
                                                 gboolean      linear,
                                                 GeglBuffer   *dest_buffer);
-void   gimp_drawable_apply_operation_to_tiles  (GimpDrawable *drawable,
-                                                GimpProgress *progress,
-                                                const gchar  *undo_desc,
-                                                GeglNode     *operation,
-                                                gboolean      linear,
-                                                TileManager  *dest_tiles);
 
 
 #endif /* __GIMP_DRAWABLE_OPERATION_H__ */
