@@ -34,6 +34,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimp-utils.h"
@@ -2821,58 +2823,30 @@ gimp_image_transform_temp_buf (const GimpImage *dest_image,
                                TempBuf         *temp_buf,
                                gboolean        *new_buf)
 {
-  TempBuf       *ret_buf;
-  GimpImageType  ret_buf_type;
-  gboolean       has_alpha;
-  gboolean       is_rgb;
-  gint           in_bytes;
-  gint           out_bytes;
+  TempBuf    *ret_buf;
+  const Babl *buf_format;
+  const Babl *ret_format;
 
   g_return_val_if_fail (GIMP_IMAGE (dest_image), NULL);
   g_return_val_if_fail (temp_buf != NULL, NULL);
   g_return_val_if_fail (new_buf != NULL, NULL);
 
-  in_bytes  = temp_buf->bytes;
-
-  has_alpha = (in_bytes == 2 || in_bytes == 4);
-  is_rgb    = (in_bytes == 3 || in_bytes == 4);
-
-  if (has_alpha)
-    ret_buf_type = GIMP_IMAGE_TYPE_WITH_ALPHA (dest_type);
-  else
-    ret_buf_type = GIMP_IMAGE_TYPE_WITHOUT_ALPHA (dest_type);
-
-  out_bytes = GIMP_IMAGE_TYPE_BYTES (ret_buf_type);
+  buf_format = gimp_bpp_to_babl_format (temp_buf->bytes, TRUE);
+  ret_format = gimp_image_get_format (dest_image, dest_type);
 
   /*  If the pattern doesn't match the image in terms of color type,
    *  transform it.  (ie  pattern is RGB, image is indexed)
    */
-  if (in_bytes != out_bytes || GIMP_IMAGE_TYPE_IS_INDEXED (dest_type))
+  if (buf_format != ret_format)
     {
-      guchar *src;
-      guchar *dest;
-      gint    size;
-
       ret_buf = temp_buf_new (temp_buf->width, temp_buf->height,
-                              out_bytes, 0, 0, NULL);
+                              babl_format_get_bytes_per_pixel (ret_format),
+                              0, 0, NULL);
 
-      src  = temp_buf_get_data (temp_buf);
-      dest = temp_buf_get_data (ret_buf);
-
-      size = temp_buf->width * temp_buf->height;
-
-      while (size--)
-        {
-          gimp_image_transform_color (dest_image, dest_type, dest,
-                                      is_rgb ? GIMP_RGB : GIMP_GRAY, src);
-
-          /* Handle alpha */
-          if (has_alpha)
-            dest[out_bytes - 1] = src[in_bytes - 1];
-
-          src  += in_bytes;
-          dest += out_bytes;
-        }
+      babl_process (babl_fish (buf_format, ret_format),
+                    temp_buf_get_data (temp_buf),
+                    temp_buf_get_data (ret_buf),
+                    temp_buf->width * temp_buf->height);
 
       *new_buf = TRUE;
     }
