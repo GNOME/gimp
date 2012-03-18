@@ -461,6 +461,7 @@ gimp_channel_convert (GimpItem  *item,
     {
       GeglNode    *flatten;
       TileManager *new_tiles;
+      GeglBuffer  *buffer;
       GimpRGB      background;
 
       new_tiles = tile_manager_new (gimp_item_get_width (item),
@@ -470,10 +471,15 @@ gimp_channel_convert (GimpItem  *item,
       gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
       flatten = gimp_gegl_create_flatten_node (&background);
 
-      gimp_drawable_apply_operation_to_tiles (drawable, NULL, NULL,
-                                              flatten, TRUE, new_tiles);
+      buffer = gimp_tile_manager_create_buffer (new_tiles,
+                                                gimp_drawable_get_format_without_alpha (drawable),
+                                                TRUE);
+
+      gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
+                                               flatten, TRUE, buffer);
 
       g_object_unref (flatten);
+      g_object_unref (buffer);
 
       gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
                                     new_tiles, GIMP_GRAY_IMAGE,
