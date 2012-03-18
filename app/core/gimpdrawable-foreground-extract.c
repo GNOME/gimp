@@ -23,7 +23,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
 #include "base/siox.h"
 #include "base/tile-manager.h"
 
