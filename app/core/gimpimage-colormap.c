@@ -72,8 +72,7 @@ gimp_image_colormap_init (GimpImage *image)
   private->palette  = GIMP_PALETTE (gimp_palette_new (NULL, palette_name));
 
   /* FIXME name palette */
-  private->babl_palette_rgb  = babl_new_palette (NULL, FALSE);
-  private->babl_palette_rgba = babl_new_palette (NULL, TRUE);
+  babl_new_palette (NULL, &private->babl_palette_rgb, &private->babl_palette_rgba);
 
   gimp_palette_set_columns  (private->palette, 16);
 
