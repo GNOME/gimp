@@ -111,12 +111,27 @@ gimp_pickable_get_babl_format (GimpPickable *pickable)
 {
   GimpPickableInterface *pickable_iface;
 
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), -1);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
   pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
 
   if (pickable_iface->get_babl_format)
     return pickable_iface->get_babl_format (pickable);
+
+  return NULL;
+}
+
+const Babl *
+gimp_pickable_get_babl_format_with_alpha (GimpPickable *pickable)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->get_babl_format_with_alpha)
+    return pickable_iface->get_babl_format_with_alpha (pickable);
 
   return NULL;
 }
