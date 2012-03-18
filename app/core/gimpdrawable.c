@@ -474,10 +474,10 @@ gimp_drawable_scale (GimpItem              *item,
 #endif
 
   if (gimp_use_gegl (gimp_item_get_image (item)->gimp) &&
-      ! gimp_drawable_is_indexed (drawable)            &&
       interpolation_type != GIMP_INTERPOLATION_LANCZOS)
     {
-      GeglNode *scale;
+      GeglNode   *scale;
+      GeglBuffer *buffer;
 
       scale = g_object_new (GEGL_TYPE_NODE,
                             "operation", "gegl:scale",
@@ -494,10 +494,15 @@ gimp_drawable_scale (GimpItem              *item,
                                     gimp_item_get_height (item)),
                      NULL);
 
-      gimp_drawable_apply_operation_to_tiles (drawable, progress,
-                                              C_("undo-type", "Scale"),
-                                              scale, TRUE, new_tiles);
+      buffer = gimp_tile_manager_create_buffer (new_tiles,
+                                                gimp_drawable_get_format (drawable),
+                                                TRUE);
+
+      gimp_drawable_apply_operation_to_buffer (drawable, progress,
+                                               C_("undo-type", "Scale"),
+                                               scale, TRUE, buffer);
       g_object_unref (scale);
+      g_object_unref (buffer);
     }
   else
     {
