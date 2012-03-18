@@ -30,6 +30,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
@@ -1604,13 +1606,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
                                         gint                      width,
                                         GimpBrushApplicationMode  mode)
 {
-  const Babl *fish;
-  guchar     *b;
-  guchar     *p;
-  gint        i;
-
-  fish = babl_fish (babl_format ("RGB u8"), /* brush's pixmap is flat */
-                    gimp_drawable_get_babl_format (drawable));
+  guchar *b;
 
   /*  Make sure x, y are positive  */
   while (x < 0)
@@ -1624,54 +1620,57 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
 
   if (mode == GIMP_BRUSH_SOFT && brush_mask)
     {
-      /*  ditto, except for the brush mask, so we can pre-multiply the
-       *  alpha value
-       */
-      const guchar *mask = (temp_buf_get_data (brush_mask) +
-                            (y % brush_mask->height) * brush_mask->width);
+      const Babl   *fish;
+      const guchar *mask     = (temp_buf_get_data (brush_mask) +
+                                (y % brush_mask->height) * brush_mask->width);
+      guchar       *line_buf = g_alloca (width * (pixmap_mask->bytes + 1));
+      guchar       *l        = line_buf;
+      gint          i;
 
+      fish = babl_fish (gimp_bpp_to_babl_format_with_alpha (pixmap_mask->bytes, TRUE),
+                        gimp_drawable_get_babl_format_with_alpha (drawable));
+
+      /* put the source pixmap's pixels, plus the mask's alpha, into
+       * one line, so we can use one single call to babl_process() to
+       * convert the entire line
+       */
       for (i = 0; i < width; i++)
         {
-          const gdouble factor = 1.0 / 255.0;
-          gint          x_index;
-          gint          byte_loop;
-          gdouble       alpha;
+          gint    x_index = ((i + x) % pixmap_mask->width);
+          gint    p_bytes = pixmap_mask->bytes;
+          guchar *p       = b + x_index * p_bytes;
 
-          /* attempt to avoid doing this calc twice in the loop */
-          x_index = ((i + x) % pixmap_mask->width);
-          p = b + x_index * pixmap_mask->bytes;
-          d[bytes - 1] = mask[x_index];
+          while (p_bytes--)
+            *l++ = *p++;
 
-          /* multiply alpha into the pixmap data
-           * maybe we could do this at tool creation or brush switch time?
-           * and compute it for the whole brush at once and cache it?
-           */
-          alpha = d[bytes - 1] * factor;
-          if (alpha)
-            for (byte_loop = 0; byte_loop < bytes - 1; byte_loop++)
-              d[byte_loop] *= alpha;
-
-          babl_process (fish, p, d, 1);
-          d += bytes;
+          *l++ = mask[x_index];
         }
+
+      babl_process (fish, line_buf, d, width);
     }
   else
     {
+      const Babl *fish;
+      guchar     *line_buf = g_alloca (width * (pixmap_mask->bytes));
+      guchar     *l        = line_buf;
+      gint        i;
+
+      fish = babl_fish (gimp_bpp_to_babl_format (pixmap_mask->bytes, TRUE),
+                        gimp_drawable_get_babl_format_with_alpha (drawable));
+
+      /* put the source pixmap's pixels, into one line, so we can use
+       * one single call to babl_process() to convert the entire line
+       */
       for (i = 0; i < width; i++)
         {
-          gint x_index;
+          gint    x_index = ((i + x) % pixmap_mask->width);
+          gint    p_bytes = pixmap_mask->bytes;
+          guchar *p       = b + x_index * p_bytes;
 
-          /* attempt to avoid doing this calc twice in the loop */
-          x_index = ((i + x) % pixmap_mask->width);
-          p = b + x_index * pixmap_mask->bytes;
-          d[bytes - 1] = 255;
-
-          /* multiply alpha into the pixmap data
-           * maybe we could do this at tool creation or brush switch time?
-           * and compute it for the whole brush at once and cache it?
-           */
-          babl_process (fish, p, d, 1);
-          d += bytes;
+          while (p_bytes--)
+            *l++ = *p++;
         }
+
+      babl_process (fish, line_buf, d, width);
     }
 }
