@@ -31,7 +31,6 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-new.h"
@@ -367,15 +366,11 @@ gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
     }
   else
     {
-      gimp_drawable_bucket_fill_full (drawable,
-                                      fill_mode,
-                                      GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
-                                      FALSE,             /* no seed fill */
-                                      FALSE,             /* don't fill transp */
-                                      GIMP_SELECT_CRITERION_COMPOSITE,
-                                      0.0, FALSE,        /* fill params  */
-                                      0.0, 0.0,          /* ignored      */
-                                      color, pattern);
+      gimp_edit_fill_full (image, drawable,
+                           color, pattern,
+                           pattern ?
+                           C_("undo-type", "Drop pattern to layer") :
+                           C_("undo-type", "Drop color to layer"));
     }
 
   gimp_display_shell_dnd_flush (shell, image);

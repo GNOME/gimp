@@ -28,13 +28,12 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-edit.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimppattern.h"
-#include "core/gimptoolinfo.h"
 
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
@@ -235,16 +234,12 @@ gimp_drawable_tree_view_drop_viewable (GimpContainerTreeView   *view,
 {
   if (dest_viewable && GIMP_IS_PATTERN (src_viewable))
     {
-      gimp_drawable_bucket_fill_full (GIMP_DRAWABLE (dest_viewable),
-                                      GIMP_PATTERN_BUCKET_FILL,
-                                      GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
-                                      FALSE,             /* no seed fill */
-                                      FALSE,             /* don't fill transp */
-                                      GIMP_SELECT_CRITERION_COMPOSITE,
-                                      0.0, FALSE,        /* fill params  */
-                                      0.0, 0.0,          /* ignored      */
-                                      NULL, GIMP_PATTERN (src_viewable));
-      gimp_image_flush (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)));
+      gimp_edit_fill_full (gimp_item_get_image (GIMP_ITEM (dest_viewable)),
+                           GIMP_DRAWABLE (dest_viewable),
+                           NULL, GIMP_PATTERN (src_viewable),
+                           C_("undo-type", "Drop pattern to layer"));
+
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (dest_viewable)));
       return;
     }
 
@@ -262,16 +257,12 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
 {
   if (dest_viewable)
     {
-      gimp_drawable_bucket_fill_full (GIMP_DRAWABLE (dest_viewable),
-                                      GIMP_FG_BUCKET_FILL,
-                                      GIMP_NORMAL_MODE, GIMP_OPACITY_OPAQUE,
-                                      FALSE,             /* no seed fill */
-                                      FALSE,             /* don't fill transp */
-                                      GIMP_SELECT_CRITERION_COMPOSITE,
-                                      0.0, FALSE,        /* fill params  */
-                                      0.0, 0.0,          /* ignored      */
-                                      color, NULL);
-      gimp_image_flush (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)));
+      gimp_edit_fill_full (gimp_item_get_image (GIMP_ITEM (dest_viewable)),
+                           GIMP_DRAWABLE (dest_viewable),
+                           color, NULL,
+                           C_("undo-type", "Drop color to layer"));
+
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (dest_viewable)));
     }
 }
 
@@ -316,7 +307,6 @@ static void
 gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
                                      gint                x,
                                      gint                y,
-                                     GimpBucketFillMode  fill_mode,
                                      const GimpRGB      *color,
                                      GimpPattern        *pattern)
 {
@@ -329,25 +319,12 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
 
   if (item)
     {
-      /*  Get the bucket fill context  */
-      GimpContext  *context;
-      GimpToolInfo *tool_info = gimp_get_tool_info (gimp_item_tree_view_get_image (view)->gimp,
-                                                    "gimp-bucket-fill-tool");
-
-      if (tool_info && tool_info->tool_options)
-        context = GIMP_CONTEXT (tool_info->tool_options);
-      else
-        context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view));
-
-      gimp_drawable_bucket_fill_full (GIMP_DRAWABLE (item),
-                                      fill_mode,
-                                      gimp_context_get_paint_mode (context),
-                                      gimp_context_get_opacity (context),
-                                      FALSE, /* no seed fill */
-                                      FALSE, /* don't fill transp */
-                                      GIMP_SELECT_CRITERION_COMPOSITE,
-                                      0.0, FALSE, 0.0, 0.0 /* fill params */,
-                                      color, pattern);
+      gimp_edit_fill_full (gimp_item_get_image (item),
+                           GIMP_DRAWABLE (item),
+                           color, pattern,
+                           pattern ?
+                           C_("undo-type", "Drop pattern to layer") :
+                           C_("undo-type", "Drop color to layer"));
     }
 
   gimp_image_undo_group_end (gimp_item_tree_view_get_image (view));
@@ -363,9 +340,7 @@ gimp_drawable_tree_view_new_pattern_dropped (GtkWidget    *widget,
                                              gpointer      data)
 {
   gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data), x, y,
-                                       GIMP_PATTERN_BUCKET_FILL,
-                                       NULL,
-                                       GIMP_PATTERN (viewable));
+                                       NULL, GIMP_PATTERN (viewable));
 }
 
 static void
@@ -376,7 +351,5 @@ gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
                                            gpointer       data)
 {
   gimp_drawable_tree_view_new_dropped (GIMP_ITEM_TREE_VIEW (data), x, y,
-                                       GIMP_FG_BUCKET_FILL,
-                                       color,
-                                       NULL);
+                                       color, NULL);
 }

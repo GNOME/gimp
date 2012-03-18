@@ -454,6 +454,24 @@ gimp_edit_fill (GimpImage    *image,
 }
 
 gboolean
+gimp_edit_fill_full (GimpImage     *image,
+                     GimpDrawable  *drawable,
+                     const GimpRGB *color,
+                     GimpPattern   *pattern,
+                     const gchar   *undo_desc)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (color != NULL || pattern != NULL, FALSE);
+
+  return gimp_edit_fill_internal (image, drawable,
+                                  color, pattern,
+                                  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                  undo_desc);
+}
+
+gboolean
 gimp_edit_fade (GimpImage   *image,
                 GimpContext *context)
 {
