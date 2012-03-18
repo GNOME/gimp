@@ -1628,7 +1628,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
       gint          i;
 
       fish = babl_fish (gimp_bpp_to_babl_format_with_alpha (pixmap_mask->bytes, TRUE),
-                        gimp_drawable_get_babl_format_with_alpha (drawable));
+                        gimp_drawable_get_format_with_alpha (drawable));
 
       /* put the source pixmap's pixels, plus the mask's alpha, into
        * one line, so we can use one single call to babl_process() to
@@ -1656,7 +1656,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
       gint        i;
 
       fish = babl_fish (gimp_bpp_to_babl_format (pixmap_mask->bytes, TRUE),
-                        gimp_drawable_get_babl_format_with_alpha (drawable));
+                        gimp_drawable_get_format_with_alpha (drawable));
 
       /* put the source pixmap's pixels, into one line, so we can use
        * one single call to babl_process() to convert the entire line

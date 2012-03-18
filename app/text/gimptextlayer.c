@@ -685,7 +685,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   rowstride = cairo_image_surface_get_stride (surface);
 
   buffer = gimp_drawable_get_write_buffer (drawable);
-  format = gimp_drawable_get_babl_format (drawable);
+  format = gimp_drawable_get_format (drawable);
   fish   = babl_fish (babl_format ("RGBA u8"), format);
   bytes  = babl_format_get_bytes_per_pixel (format);
 

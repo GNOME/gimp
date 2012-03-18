@@ -556,7 +556,7 @@ gimp_edit_fill_internal (GimpImage            *image,
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
   tiles_bytes = gimp_drawable_bytes (drawable);
-  format      = gimp_drawable_get_babl_format (drawable);
+  format      = gimp_drawable_get_format (drawable);
 
   switch (fill_type)
     {
@@ -579,7 +579,7 @@ gimp_edit_fill_internal (GimpImage            *image,
           (pattern->mask->bytes == 2 || pattern->mask->bytes == 4))
         {
           tiles_bytes++;
-          format = gimp_drawable_get_babl_format_with_alpha (drawable);
+          format = gimp_drawable_get_format_with_alpha (drawable);
         }
       break;
 

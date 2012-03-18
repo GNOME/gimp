@@ -90,7 +90,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 
   src_buffer  = gimp_drawable_get_read_buffer (drawable);
   dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_babl_format (drawable),
+                                                 gimp_drawable_get_format (drawable),
                                                  TRUE);
 
   if (! wrap_around)

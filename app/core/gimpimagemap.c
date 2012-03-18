@@ -101,8 +101,8 @@ static void            gimp_image_map_dispose         (GObject             *obje
 static void            gimp_image_map_finalize        (GObject             *object);
 
 static GimpImage     * gimp_image_map_get_image       (GimpPickable        *pickable);
-static const Babl    * gimp_image_map_get_babl_format (GimpPickable        *pickable);
-static const Babl    * gimp_image_map_get_babl_format_with_alpha
+static const Babl    * gimp_image_map_get_format      (GimpPickable        *pickable);
+static const Babl    * gimp_image_map_get_format_with_alpha
                                                       (GimpPickable        *pickable);
 static GimpImageType   gimp_image_map_get_image_type  (GimpPickable        *pickable);
 static gint            gimp_image_map_get_bytes       (GimpPickable        *pickable);
@@ -156,14 +156,14 @@ gimp_image_map_class_init (GimpImageMapClass *klass)
 static void
 gimp_image_map_pickable_iface_init (GimpPickableInterface *iface)
 {
-  iface->get_image                  = gimp_image_map_get_image;
-  iface->get_babl_format            = gimp_image_map_get_babl_format;
-  iface->get_babl_format_with_alpha = gimp_image_map_get_babl_format_with_alpha;
-  iface->get_image_type             = gimp_image_map_get_image_type;
-  iface->get_bytes                  = gimp_image_map_get_bytes;
-  iface->get_buffer                 = gimp_image_map_get_buffer;
-  iface->get_tiles                  = gimp_image_map_get_tiles;
-  iface->get_pixel_at               = gimp_image_map_get_pixel_at;
+  iface->get_image             = gimp_image_map_get_image;
+  iface->get_format            = gimp_image_map_get_format;
+  iface->get_format_with_alpha = gimp_image_map_get_format_with_alpha;
+  iface->get_image_type        = gimp_image_map_get_image_type;
+  iface->get_bytes             = gimp_image_map_get_bytes;
+  iface->get_buffer            = gimp_image_map_get_buffer;
+  iface->get_tiles             = gimp_image_map_get_tiles;
+  iface->get_pixel_at          = gimp_image_map_get_pixel_at;
 }
 
 static void
@@ -268,19 +268,19 @@ gimp_image_map_get_image (GimpPickable *pickable)
 }
 
 static const Babl *
-gimp_image_map_get_babl_format (GimpPickable *pickable)
+gimp_image_map_get_format (GimpPickable *pickable)
 {
   GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
 
-  return gimp_pickable_get_babl_format (GIMP_PICKABLE (image_map->drawable));
+  return gimp_pickable_get_format (GIMP_PICKABLE (image_map->drawable));
 }
 
 static const Babl *
-gimp_image_map_get_babl_format_with_alpha (GimpPickable *pickable)
+gimp_image_map_get_format_with_alpha (GimpPickable *pickable)
 {
   GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
 
-  return gimp_pickable_get_babl_format_with_alpha (GIMP_PICKABLE (image_map->drawable));
+  return gimp_pickable_get_format_with_alpha (GIMP_PICKABLE (image_map->drawable));
 }
 
 static GimpImageType
@@ -309,7 +309,7 @@ gimp_image_map_get_buffer (GimpPickable *pickable)
       if (! image_map->undo_buffer)
         image_map->undo_buffer =
           gimp_tile_manager_create_buffer (image_map->undo_tiles,
-                                           gimp_drawable_get_babl_format (image_map->drawable),
+                                           gimp_drawable_get_format (image_map->drawable),
                                            FALSE);
 
       return image_map->undo_buffer;
@@ -427,7 +427,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
   if (image_map->operation)
     {
-      const Babl *format = gimp_drawable_get_babl_format (image_map->drawable);
+      const Babl *format = gimp_drawable_get_format (image_map->drawable);
       GeglBuffer *input_buffer;
       GeglBuffer *output_buffer;
 
@@ -724,7 +724,7 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
       /*  Copy from the image to the new tiles  */
       src = gimp_drawable_get_read_buffer (image_map->drawable);
       dest = gimp_tile_manager_create_buffer (image_map->undo_tiles,
-                                              gimp_drawable_get_babl_format (image_map->drawable),
+                                              gimp_drawable_get_format (image_map->drawable),
                                               TRUE);
 
       gegl_buffer_copy (src, rect, dest, &dest_rect);
@@ -886,7 +886,7 @@ gimp_image_map_data_written (GObject             *operation,
       GeglRectangle  dest_rect;
 
       src = gimp_tile_manager_create_buffer (image_map->undo_tiles,
-                                             gimp_drawable_get_babl_format (image_map->drawable),
+                                             gimp_drawable_get_format (image_map->drawable),
                                              FALSE);
       dest = gimp_drawable_get_write_buffer (image_map->drawable);
 

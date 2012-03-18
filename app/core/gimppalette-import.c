@@ -287,7 +287,7 @@ gimp_palette_import_extract (GimpImage     *image,
   buffer = gimp_pickable_get_buffer (pickable);
   type = gimp_pickable_get_image_type (pickable);
 
-  format = gimp_pickable_get_babl_format (pickable);
+  format = gimp_pickable_get_format (pickable);
 
   iter = gegl_buffer_iterator_new (buffer, &rect, format,
                                    GEGL_BUFFER_READ);
@@ -304,10 +304,10 @@ gimp_palette_import_extract (GimpImage     *image,
       rect.x = x + pickable_off_x;
       rect.y = y + pickable_off_y;
 
-      format = gimp_drawable_get_babl_format (mask);
+      format = gimp_drawable_get_format (mask);
 
       gegl_buffer_iterator_add (iter, buffer, &rect,
-                                gimp_drawable_get_babl_format (mask),
+                                gimp_drawable_get_format (mask),
                                 GEGL_BUFFER_READ);
       mask_roi = &iter->roi[1];
       mask_bpp = babl_format_get_bytes_per_pixel (format);

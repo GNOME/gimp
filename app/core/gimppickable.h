@@ -35,54 +35,53 @@ struct _GimpPickableInterface
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  void            (* flush)                      (GimpPickable *pickable);
-  GimpImage     * (* get_image)                  (GimpPickable *pickable);
-  const Babl    * (* get_babl_format)            (GimpPickable *pickable);
-  const Babl    * (* get_babl_format_with_alpha) (GimpPickable *pickable);
-  GimpImageType   (* get_image_type)             (GimpPickable *pickable);
-  gint            (* get_bytes)                  (GimpPickable *pickable);
-  GeglBuffer    * (* get_buffer)                 (GimpPickable *pickable);
-  TileManager   * (* get_tiles)                  (GimpPickable *pickable);
-  gboolean        (* get_pixel_at)               (GimpPickable *pickable,
-                                                  gint          x,
-                                                  gint          y,
-                                                  guchar       *pixel);
-  gint            (* get_opacity_at)             (GimpPickable *pickable,
-                                                  gint          x,
-                                                  gint          y);
+  void            (* flush)                 (GimpPickable *pickable);
+  GimpImage     * (* get_image)             (GimpPickable *pickable);
+  const Babl    * (* get_format)            (GimpPickable *pickable);
+  const Babl    * (* get_format_with_alpha) (GimpPickable *pickable);
+  GimpImageType   (* get_image_type)        (GimpPickable *pickable);
+  gint            (* get_bytes)             (GimpPickable *pickable);
+  GeglBuffer    * (* get_buffer)            (GimpPickable *pickable);
+  TileManager   * (* get_tiles)             (GimpPickable *pickable);
+  gboolean        (* get_pixel_at)          (GimpPickable *pickable,
+                                             gint          x,
+                                             gint          y,
+                                             guchar       *pixel);
+  gint            (* get_opacity_at)        (GimpPickable *pickable,
+                                             gint          x,
+                                             gint          y);
 };
 
 
-GType           gimp_pickable_interface_get_type (void) G_GNUC_CONST;
+GType           gimp_pickable_interface_get_type    (void) G_GNUC_CONST;
 
-void            gimp_pickable_flush              (GimpPickable *pickable);
-GimpImage     * gimp_pickable_get_image          (GimpPickable *pickable);
-const Babl    * gimp_pickable_get_babl_format    (GimpPickable *pickable);
-const Babl    * gimp_pickable_get_babl_format_with_alpha
-                                                 (GimpPickable *pickable);
-GimpImageType   gimp_pickable_get_image_type     (GimpPickable *pickable);
-gint            gimp_pickable_get_bytes          (GimpPickable *pickable);
-GeglBuffer    * gimp_pickable_get_buffer         (GimpPickable *pickable);
-TileManager   * gimp_pickable_get_tiles          (GimpPickable *pickable);
-gboolean        gimp_pickable_get_pixel_at       (GimpPickable *pickable,
-                                                  gint          x,
-                                                  gint          y,
-                                                  guchar       *pixel);
-gboolean        gimp_pickable_get_color_at       (GimpPickable *pickable,
-                                                  gint          x,
-                                                  gint          y,
-                                                  GimpRGB      *color);
-gint            gimp_pickable_get_opacity_at     (GimpPickable *pickable,
-                                                  gint          x,
-                                                  gint          y);
+void            gimp_pickable_flush                 (GimpPickable *pickable);
+GimpImage     * gimp_pickable_get_image             (GimpPickable *pickable);
+const Babl    * gimp_pickable_get_format            (GimpPickable *pickable);
+const Babl    * gimp_pickable_get_format_with_alpha (GimpPickable *pickable);
+GimpImageType   gimp_pickable_get_image_type        (GimpPickable *pickable);
+gint            gimp_pickable_get_bytes             (GimpPickable *pickable);
+GeglBuffer    * gimp_pickable_get_buffer            (GimpPickable *pickable);
+TileManager   * gimp_pickable_get_tiles             (GimpPickable *pickable);
+gboolean        gimp_pickable_get_pixel_at          (GimpPickable *pickable,
+                                                     gint          x,
+                                                     gint          y,
+                                                     guchar       *pixel);
+gboolean        gimp_pickable_get_color_at          (GimpPickable *pickable,
+                                                     gint          x,
+                                                     gint          y,
+                                                     GimpRGB      *color);
+gint            gimp_pickable_get_opacity_at        (GimpPickable *pickable,
+                                                     gint          x,
+                                                     gint          y);
 
-gboolean        gimp_pickable_pick_color         (GimpPickable *pickable,
-                                                  gint          x,
-                                                  gint          y,
-                                                  gboolean      sample_average,
-                                                  gdouble       average_radius,
-                                                  GimpRGB      *color,
-                                                  gint         *color_index);
+gboolean        gimp_pickable_pick_color            (GimpPickable *pickable,
+                                                     gint          x,
+                                                     gint          y,
+                                                     gboolean      sample_average,
+                                                     gdouble       average_radius,
+                                                     GimpRGB      *color,
+                                                     gint         *color_index);
 
 
 #endif  /* __GIMP_PICKABLE_H__ */

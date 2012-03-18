@@ -269,14 +269,14 @@ gimp_drawable_init (GimpDrawable *drawable)
 static void
 gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
 {
-  iface->get_image                  = (GimpImage     * (*) (GimpPickable *pickable)) gimp_item_get_image;
-  iface->get_babl_format            = (const Babl    * (*) (GimpPickable *pickable)) gimp_drawable_get_babl_format;
-  iface->get_babl_format_with_alpha = (const Babl    * (*) (GimpPickable *pickable)) gimp_drawable_get_babl_format_with_alpha;
-  iface->get_image_type             = (GimpImageType   (*) (GimpPickable *pickable)) gimp_drawable_type;
-  iface->get_bytes                  = (gint            (*) (GimpPickable *pickable)) gimp_drawable_bytes;
-  iface->get_buffer                 = (GeglBuffer    * (*) (GimpPickable *pickable)) gimp_drawable_get_read_buffer;
-  iface->get_tiles                  = (TileManager   * (*) (GimpPickable *pickable)) gimp_drawable_get_tiles;
-  iface->get_pixel_at               = gimp_drawable_get_pixel_at;
+  iface->get_image             = (GimpImage     * (*) (GimpPickable *pickable)) gimp_item_get_image;
+  iface->get_format            = (const Babl    * (*) (GimpPickable *pickable)) gimp_drawable_get_format;
+  iface->get_format_with_alpha = (const Babl    * (*) (GimpPickable *pickable)) gimp_drawable_get_format_with_alpha;
+  iface->get_image_type        = (GimpImageType   (*) (GimpPickable *pickable)) gimp_drawable_type;
+  iface->get_bytes             = (gint            (*) (GimpPickable *pickable)) gimp_drawable_bytes;
+  iface->get_buffer            = (GeglBuffer    * (*) (GimpPickable *pickable)) gimp_drawable_get_read_buffer;
+  iface->get_tiles             = (TileManager   * (*) (GimpPickable *pickable)) gimp_drawable_get_tiles;
+  iface->get_pixel_at          = gimp_drawable_get_pixel_at;
 }
 
 static void
@@ -578,7 +578,7 @@ gimp_drawable_resize (GimpItem    *item,
                                 gimp_drawable_bytes (drawable));
 
   dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_babl_format (drawable),
+                                                 gimp_drawable_get_format (drawable),
                                                  TRUE);
 
   if (copy_width  != new_width ||
@@ -594,7 +594,7 @@ gimp_drawable_resize (GimpItem    *item,
                                    gimp_drawable_type (drawable), bg);
 
       col = gegl_color_new (NULL);
-      gegl_color_set_pixel (col, gimp_drawable_get_babl_format (drawable), bg);
+      gegl_color_set_pixel (col, gimp_drawable_get_format (drawable), bg);
 
       gegl_buffer_set_color (dest_buffer, NULL, col);
 
@@ -930,7 +930,7 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
       tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
 
       dest_buffer = gimp_tile_manager_create_buffer (tiles,
-                                                     gimp_drawable_get_babl_format (drawable),
+                                                     gimp_drawable_get_format (drawable),
                                                      TRUE);
 
       src_rect.x      = x;
@@ -1508,7 +1508,7 @@ gimp_drawable_create_buffer (GimpDrawable *drawable,
                              gboolean      write)
 {
   TileManager *tiles  = gimp_drawable_get_tiles (drawable);
-  const Babl  *format = gimp_drawable_get_babl_format (drawable);
+  const Babl  *format = gimp_drawable_get_format (drawable);
 
   return gimp_tile_manager_create_buffer (tiles, format, write);
 }
@@ -1822,7 +1822,7 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
 }
 
 const Babl *
-gimp_drawable_get_babl_format (const GimpDrawable *drawable)
+gimp_drawable_get_format (const GimpDrawable *drawable)
 {
   GimpImageType type;
 
@@ -1853,7 +1853,7 @@ gimp_drawable_get_babl_format (const GimpDrawable *drawable)
 }
 
 const Babl *
-gimp_drawable_get_babl_format_with_alpha (const GimpDrawable *drawable)
+gimp_drawable_get_format_with_alpha (const GimpDrawable *drawable)
 {
   GimpImageType type;
 

@@ -107,7 +107,7 @@ gimp_pickable_get_image_type (GimpPickable *pickable)
 }
 
 const Babl *
-gimp_pickable_get_babl_format (GimpPickable *pickable)
+gimp_pickable_get_format (GimpPickable *pickable)
 {
   GimpPickableInterface *pickable_iface;
 
@@ -115,14 +115,14 @@ gimp_pickable_get_babl_format (GimpPickable *pickable)
 
   pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
 
-  if (pickable_iface->get_babl_format)
-    return pickable_iface->get_babl_format (pickable);
+  if (pickable_iface->get_format)
+    return pickable_iface->get_format (pickable);
 
   return NULL;
 }
 
 const Babl *
-gimp_pickable_get_babl_format_with_alpha (GimpPickable *pickable)
+gimp_pickable_get_format_with_alpha (GimpPickable *pickable)
 {
   GimpPickableInterface *pickable_iface;
 
@@ -130,8 +130,8 @@ gimp_pickable_get_babl_format_with_alpha (GimpPickable *pickable)
 
   pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
 
-  if (pickable_iface->get_babl_format_with_alpha)
-    return pickable_iface->get_babl_format_with_alpha (pickable);
+  if (pickable_iface->get_format_with_alpha)
+    return pickable_iface->get_format_with_alpha (pickable);
 
   return NULL;
 }

@@ -63,7 +63,7 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
 
   dest_buffer =
     gimp_tile_manager_create_buffer (gimp_drawable_get_shadow_tiles (drawable),
-                                     gimp_drawable_get_babl_format (drawable),
+                                     gimp_drawable_get_format (drawable),
                                      TRUE);
 
   gimp_apply_operation (gimp_drawable_get_read_buffer (drawable),
@@ -151,7 +151,7 @@ gimp_drawable_apply_operation_to_tiles (GimpDrawable *drawable,
   g_return_if_fail (dest_tiles != NULL);
 
   dest_buffer = gimp_tile_manager_create_buffer (dest_tiles,
-                                                 gimp_drawable_get_babl_format (drawable),
+                                                 gimp_drawable_get_format (drawable),
                                                  TRUE);
 
   gimp_drawable_apply_operation_to_buffer (drawable,

@@ -1770,7 +1770,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
   dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_babl_format_with_alpha (GIMP_DRAWABLE (layer)),
+                                                 gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layer)),
                                                  TRUE);
 
   gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
