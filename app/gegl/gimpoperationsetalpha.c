@@ -43,15 +43,17 @@ static void   gimp_operation_set_alpha_set_property (GObject      *object,
                                                      const GValue *value,
                                                      GParamSpec   *pspec);
 
+static void   gimp_operation_set_alpha_prepare      (GeglOperation       *operation);
 static gboolean   gimp_operation_set_alpha_process  (GeglOperation       *operation,
                                                      void                *in_buf,
+                                                     void                *aux_buf,
                                                      void                *out_buf,
                                                      glong                samples,
                                                      const GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationSetAlpha, gimp_operation_set_alpha,
-               GEGL_TYPE_OPERATION_POINT_FILTER)
+               GEGL_TYPE_OPERATION_POINT_COMPOSER)
 
 #define parent_class gimp_operation_set_alpha_parent_class
 
@@ -59,9 +61,9 @@ G_DEFINE_TYPE (GimpOperationSetAlpha, gimp_operation_set_alpha,
 static void
 gimp_operation_set_alpha_class_init (GimpOperationSetAlphaClass *klass)
 {
-  GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
-  GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
-  GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
+  GObjectClass                    *object_class    = G_OBJECT_CLASS (klass);
+  GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
+  GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   object_class->set_property = gimp_operation_set_alpha_set_property;
   object_class->get_property = gimp_operation_set_alpha_get_property;
@@ -69,6 +71,7 @@ gimp_operation_set_alpha_class_init (GimpOperationSetAlphaClass *klass)
   operation_class->name        = "gimp:set-alpha";
   operation_class->categories  = "color";
   operation_class->description = "Set a buffer's alpha channel to a value";
+  operation_class->prepare     = gimp_operation_set_alpha_prepare;
 
   point_class->process         = gimp_operation_set_alpha_process;
 
@@ -126,26 +129,52 @@ gimp_operation_set_alpha_set_property (GObject      *object,
     }
 }
 
+static void
+gimp_operation_set_alpha_prepare (GeglOperation *operation)
+{
+  gegl_operation_set_format (operation, "input",  babl_format ("RGBA float"));
+  gegl_operation_set_format (operation, "aux",    babl_format ("Y float"));
+  gegl_operation_set_format (operation, "output", babl_format ("RGBA float"));
+}
+
 static gboolean
 gimp_operation_set_alpha_process (GeglOperation       *operation,
                                   void                *in_buf,
+                                  void                *aux_buf,
                                   void                *out_buf,
                                   glong                samples,
                                   const GeglRectangle *roi)
 {
   GimpOperationSetAlpha *self = GIMP_OPERATION_SET_ALPHA (operation);
   gfloat                *src  = in_buf;
+  gfloat                *aux  = aux_buf;
   gfloat                *dest = out_buf;
 
-  while (samples--)
+  if (aux)
     {
-      dest[RED]   = src[RED];
-      dest[GREEN] = src[GREEN];
-      dest[BLUE]  = src[BLUE];
-      dest[ALPHA] = self->value;
+      while (samples--)
+        {
+          dest[RED]   = src[RED];
+          dest[GREEN] = src[GREEN];
+          dest[BLUE]  = src[BLUE];
+          dest[ALPHA] = self->value * src[0];
 
-      src  += 4;
-      dest += 4;
+          src  += 4;
+          dest += 4;
+        }
+    }
+  else
+    {
+      while (samples--)
+        {
+          dest[RED]   = src[RED];
+          dest[GREEN] = src[GREEN];
+          dest[BLUE]  = src[BLUE];
+          dest[ALPHA] = self->value;
+
+          src  += 4;
+          dest += 4;
+        }
     }
 
   return TRUE;
