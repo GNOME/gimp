@@ -78,6 +78,50 @@ gimp_bpp_to_babl_format (guint    bpp,
   return NULL;
 }
 
+/**
+ * gimp_bpp_to_babl_format_with_alpha:
+ * @bpp: bytes per pixel
+ * @linear: whether the pixels are linear or gamma-corrected.
+ *
+ * Return the Babl format to use for a given number of bytes per pixel.
+ * This function assumes that the data is 8bit.
+ *
+ * Return value: the Babl format to use
+ **/
+const Babl *
+gimp_bpp_to_babl_format_with_alpha (guint    bpp,
+                                    gboolean linear)
+{
+  g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
+
+  if (linear)
+    {
+      switch (bpp)
+        {
+        case 1:
+        case 2:
+          return babl_format ("YA u8");
+        case 3:
+        case 4:
+          return babl_format ("RGBA u8");
+        }
+    }
+  else
+    {
+      switch (bpp)
+        {
+        case 1:
+        case 2:
+          return babl_format ("Y'A u8");
+        case 3:
+        case 4:
+          return babl_format ("R'G'B'A u8");
+        }
+    }
+
+  return NULL;
+}
+
 const gchar *
 gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode)
 {

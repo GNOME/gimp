@@ -25,21 +25,23 @@
 #include <gdk-pixbuf/gdk-pixbuf.h> /* temp hack */
 
 
-const Babl  * gimp_bpp_to_babl_format           (guint                  bpp,
-                                                 gboolean               linear) G_GNUC_CONST;
+const Babl  * gimp_bpp_to_babl_format            (guint                  bpp,
+                                                  gboolean               linear) G_GNUC_CONST;
+const Babl  * gimp_bpp_to_babl_format_with_alpha (guint                  bpp,
+                                                  gboolean               linear) G_GNUC_CONST;
 
-const gchar * gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects   mode) G_GNUC_CONST;
-const gchar * gimp_interpolation_to_gegl_filter (GimpInterpolationType  interpolation) G_GNUC_CONST;
+const gchar * gimp_layer_mode_to_gegl_operation  (GimpLayerModeEffects   mode) G_GNUC_CONST;
+const gchar * gimp_interpolation_to_gegl_filter  (GimpInterpolationType  interpolation) G_GNUC_CONST;
 
-GeglBuffer  * gimp_tile_manager_create_buffer   (TileManager           *tm,
-                                                 const Babl            *format,
-                                                 gboolean               write);
-GeglBuffer  * gimp_pixbuf_create_buffer         (GdkPixbuf             *pixbuf);
+GeglBuffer  * gimp_tile_manager_create_buffer    (TileManager           *tm,
+                                                  const Babl            *format,
+                                                  gboolean               write);
+GeglBuffer  * gimp_pixbuf_create_buffer          (GdkPixbuf             *pixbuf);
 
-void          gimp_gegl_buffer_refetch_tiles    (GeglBuffer            *buffer);
+void          gimp_gegl_buffer_refetch_tiles     (GeglBuffer            *buffer);
 
-void          gimp_gegl_color_set_rgba          (GeglColor     *color,
-                                                 const GimpRGB *rgb);
+void          gimp_gegl_color_set_rgba           (GeglColor             *color,
+                                                  const GimpRGB         *rgb);
 
 
 #endif /* __GIMP_GEGL_UTILS_H__ */
