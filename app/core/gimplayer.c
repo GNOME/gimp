@@ -962,8 +962,7 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
                            gint          y)
 {
   GimpLayer *layer = GIMP_LAYER (pickable);
-  Tile      *tile;
-  gint       val   = 0;
+  guchar     value;
 
   if (x >= 0 && x < gimp_item_get_width  (GIMP_ITEM (layer)) &&
       y >= 0 && y < gimp_item_get_height (GIMP_ITEM (layer)) &&
@@ -978,26 +977,22 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
       /*  Otherwise, determine if the alpha value at
        *  the given point is non-zero
        */
-      tile = tile_manager_get_tile (gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                                    x, y, TRUE, FALSE);
-
-      val = * ((const guchar *) tile_data_pointer (tile, x, y) +
-               tile_bpp (tile) - 1);
+      gegl_buffer_sample (gimp_drawable_get_read_buffer (GIMP_DRAWABLE (layer)),
+                          x, y, NULL, &value, babl_format ("A u8"),
+                          GEGL_SAMPLER_NEAREST);
 
       if (layer->mask)
         {
-          gint mask_val;
+          gint mask_value;
 
-          mask_val = gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer->mask),
-                                                   x, y);
+          mask_value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer->mask),
+                                                     x, y);
 
-          val = val * mask_val / 255;
+          value = value * mask_value / 255;
         }
-
-      tile_release (tile, FALSE);
     }
 
-  return val;
+  return value;
 }
 
 static void

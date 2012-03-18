@@ -969,32 +969,34 @@ gimp_channel_get_opacity_at (GimpPickable *pickable,
                              gint          y)
 {
   GimpChannel *channel = GIMP_CHANNEL (pickable);
-  Tile        *tile;
-  gint         val;
+  guchar       value;
 
   /*  Some checks to cut back on unnecessary work  */
   if (channel->bounds_known)
     {
-      if (channel->empty)
-        return 0;
-      else if (x < channel->x1 || x >= channel->x2 ||
-               y < channel->y1 || y >= channel->y2)
-        return 0;
+      if (channel->empty   ||
+          x <  channel->x1 ||
+          x >= channel->x2 ||
+          y <  channel->y1 ||
+          y >= channel->y2)
+        {
+          return 0;
+        }
     }
   else
     {
       if (x < 0 || x >= gimp_item_get_width  (GIMP_ITEM (channel)) ||
           y < 0 || y >= gimp_item_get_height (GIMP_ITEM (channel)))
-        return 0;
+        {
+          return 0;
+        }
     }
 
-  tile = tile_manager_get_tile (gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                                x, y,
-                                TRUE, FALSE);
-  val = *(guchar *) (tile_data_pointer (tile, x, y));
-  tile_release (tile, FALSE);
+  gegl_buffer_sample (gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel)),
+                      x, y, NULL, &value, babl_format ("Y u8"),
+                      GEGL_SAMPLER_NEAREST);
 
-  return val;
+  return value;
 }
 
 static gboolean
