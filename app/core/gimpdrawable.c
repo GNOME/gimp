@@ -591,15 +591,16 @@ gimp_drawable_resize (GimpItem    *item,
     {
       /*  Clear the new tiles if needed  */
 
+      GimpRGB    bg;
       GeglColor *col;
-      guchar     bg[MAX_CHANNELS] = { 0, };
 
       if (! gimp_drawable_has_alpha (drawable) && ! GIMP_IS_CHANNEL (drawable))
-        gimp_image_get_background (gimp_item_get_image (item), context,
-                                   gimp_drawable_type (drawable), bg);
+        gimp_context_get_background (context, &bg);
+      else
+        gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
 
       col = gegl_color_new (NULL);
-      gegl_color_set_pixel (col, gimp_drawable_get_format (drawable), bg);
+      gimp_gegl_color_set_rgba (col, &bg);
 
       gegl_buffer_set_color (dest_buffer, NULL, col);
 
