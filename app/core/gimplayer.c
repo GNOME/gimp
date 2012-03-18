@@ -1791,6 +1791,7 @@ gimp_layer_flatten (GimpLayer   *layer,
 {
   GeglNode      *flatten;
   TileManager   *new_tiles;
+  GeglBuffer    *dest_buffer;
   GimpImageType  new_type;
   GimpRGB        background;
 
@@ -1806,13 +1807,18 @@ gimp_layer_flatten (GimpLayer   *layer,
                                 gimp_item_get_height (GIMP_ITEM (layer)),
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
+                                                 gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)),
+                                                 TRUE);
+
   gimp_context_get_background (context, &background);
   flatten = gimp_gegl_create_flatten_node (&background);
 
-  gimp_drawable_apply_operation_to_tiles (GIMP_DRAWABLE (layer), NULL, NULL,
-                                          flatten, TRUE, new_tiles);
+  gimp_drawable_apply_operation_to_buffer (GIMP_DRAWABLE (layer), NULL, NULL,
+                                           flatten, TRUE, dest_buffer);
 
   g_object_unref (flatten);
+  g_object_unref (dest_buffer);
 
   gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
                            gimp_item_is_attached (GIMP_ITEM (layer)),
