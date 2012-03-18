@@ -31,6 +31,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
@@ -67,17 +69,8 @@ static void     gimp_clone_motion       (GimpSourceCore   *source_core,
                                          gint              paint_area_width,
                                          gint              paint_area_height);
 
-static void     gimp_clone_line_image   (GimpImage        *dest_image,
-                                         GimpImageType     dest_type,
-                                         GimpImage        *src_image,
-                                         GimpImageType     src_type,
-                                         guchar           *s,
-                                         guchar           *d,
-                                         gint              src_bytes,
-                                         gint              dest_bytes,
-                                         gint              width);
 static void     gimp_clone_line_pattern (GimpImage        *dest_image,
-                                         GimpImageType     dest_type,
+                                         const Babl       *fish,
                                          GimpPattern      *pattern,
                                          guchar           *d,
                                          gint              x,
@@ -169,75 +162,78 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   GimpSourceOptions  *source_options = GIMP_SOURCE_OPTIONS (paint_options);
   GimpContext        *context        = GIMP_CONTEXT (paint_options);
   GimpImage          *image          = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpImage          *src_image      = NULL;
   GimpDynamicsOutput *force_output;
-  GimpImageType       src_type       = 0;
-  GimpImageType       dest_type;
-  gpointer            pr = NULL;
-  gint                y;
-  PixelRegion         destPR;
-  GimpPattern        *pattern = NULL;
   gdouble             fade_point;
   gdouble             force;
 
   switch (options->clone_type)
     {
     case GIMP_IMAGE_CLONE:
-      src_image = gimp_pickable_get_image (src_pickable);
+      {
+        const Babl  *fish;
+        PixelRegion  destPR;
+        gpointer     pr;
 
-      src_type = gimp_pickable_get_image_type (src_pickable);
+        fish = babl_fish (gimp_pickable_get_babl_format_with_alpha (src_pickable),
+                          gimp_drawable_get_babl_format_with_alpha (drawable));
 
-      if (gimp_pickable_get_bytes (src_pickable) < srcPR->bytes)
-        src_type = GIMP_IMAGE_TYPE_WITH_ALPHA (src_type);
+        pixel_region_init_temp_buf (&destPR, paint_area,
+                                    paint_area_offset_x, paint_area_offset_y,
+                                    paint_area_width, paint_area_height);
 
-      pixel_region_init_temp_buf (&destPR, paint_area,
-                                  paint_area_offset_x, paint_area_offset_y,
-                                  paint_area_width, paint_area_height);
+        pr = pixel_regions_register (2, srcPR, &destPR);
 
-      pr = pixel_regions_register (2, srcPR, &destPR);
+        for (; pr != NULL; pr = pixel_regions_process (pr))
+          {
+            guchar *s = srcPR->data;
+            guchar *d = destPR.data;
+            gint    y;
+
+            for (y = 0; y < destPR.h; y++)
+              {
+                babl_process (fish, s, d, destPR.w);
+
+                s += srcPR->rowstride;
+                d += destPR.rowstride;
+              }
+          }
+      }
       break;
 
     case GIMP_PATTERN_CLONE:
-      pattern = gimp_context_get_pattern (context);
+      {
+        GimpPattern *pattern = gimp_context_get_pattern (context);
+        const Babl  *fish;
+        PixelRegion  destPR;
+        gpointer     pr;
 
-      pixel_region_init_temp_buf (&destPR, paint_area,
-                                  0, 0,
-                                  paint_area->width, paint_area->height);
+        fish = babl_fish (gimp_bpp_to_babl_format (pattern->mask->bytes, TRUE),
+                          gimp_drawable_get_babl_format_with_alpha (drawable));
 
-      pr = pixel_regions_register (1, &destPR);
+        pixel_region_init_temp_buf (&destPR, paint_area,
+                                    0, 0,
+                                    paint_area->width, paint_area->height);
+
+        pr = pixel_regions_register (1, &destPR);
+
+        for (; pr != NULL; pr = pixel_regions_process (pr))
+          {
+            guchar *d = destPR.data;
+            gint    y;
+
+            for (y = 0; y < destPR.h; y++)
+              {
+                gimp_clone_line_pattern (image, fish,
+                                         pattern, d,
+                                         paint_area->x     + src_offset_x,
+                                         paint_area->y + y + src_offset_y,
+                                         destPR.bytes, destPR.w);
+
+                d += destPR.rowstride;
+              }
+          }
+      }
       break;
-    }
-
-  dest_type = gimp_drawable_type (drawable);
-
-  for (; pr != NULL; pr = pixel_regions_process (pr))
-    {
-      guchar *s = srcPR->data;
-      guchar *d = destPR.data;
-
-      for (y = 0; y < destPR.h; y++)
-        {
-          switch (options->clone_type)
-            {
-            case GIMP_IMAGE_CLONE:
-              gimp_clone_line_image (image, dest_type,
-                                     src_image, src_type,
-                                     s, d,
-                                     srcPR->bytes, destPR.bytes, destPR.w);
-              s += srcPR->rowstride;
-              break;
-
-            case GIMP_PATTERN_CLONE:
-              gimp_clone_line_pattern (image, dest_type,
-                                       pattern, d,
-                                       paint_area->x     + src_offset_x,
-                                       paint_area->y + y + src_offset_y,
-                                       destPR.bytes, destPR.w);
-              break;
-            }
-
-          d += destPR.rowstride;
-        }
     }
 
   force_output = gimp_dynamics_get_output (GIMP_BRUSH_CORE (paint_core)->dynamics,
@@ -271,37 +267,8 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 }
 
 static void
-gimp_clone_line_image (GimpImage     *dest_image,
-                       GimpImageType  dest_type,
-                       GimpImage     *src_image,
-                       GimpImageType  src_type,
-                       guchar        *s,
-                       guchar        *d,
-                       gint           src_bytes,
-                       gint           dest_bytes,
-                       gint           width)
-{
-  guchar rgba[MAX_CHANNELS];
-  gint   alpha;
-
-  alpha = dest_bytes - 1;
-
-  while (width--)
-    {
-      gimp_image_get_color (src_image, src_type, s, rgba);
-      gimp_image_transform_color (dest_image, dest_type, d,
-                                  GIMP_RGB, rgba);
-
-      d[alpha] = rgba[ALPHA];
-
-      s += src_bytes;
-      d += dest_bytes;
-    }
-}
-
-static void
 gimp_clone_line_pattern (GimpImage     *dest_image,
-                         GimpImageType  dest_type,
+                         const Babl    *fish,
                          GimpPattern   *pattern,
                          guchar        *d,
                          gint           x,
@@ -309,13 +276,9 @@ gimp_clone_line_pattern (GimpImage     *dest_image,
                          gint           dest_bytes,
                          gint           width)
 {
-  guchar            *pat, *p;
-  GimpImageBaseType  color_type;
-  gint               alpha;
-  gint               pat_bytes;
-  gint               i;
-
-  pat_bytes = pattern->mask->bytes;
+  guchar *pat, *p;
+  gint    pat_bytes = pattern->mask->bytes;
+  gint    i;
 
   /*  Make sure x, y are positive  */
   while (x < 0)
@@ -327,22 +290,11 @@ gimp_clone_line_pattern (GimpImage     *dest_image,
   pat = temp_buf_get_data (pattern->mask) +
     (y % pattern->mask->height) * pattern->mask->width * pat_bytes;
 
-  color_type = (pat_bytes == 3 ||
-                pat_bytes == 4) ? GIMP_RGB : GIMP_GRAY;
-
-  alpha = dest_bytes - 1;
-
   for (i = 0; i < width; i++)
     {
       p = pat + ((i + x) % pattern->mask->width) * pat_bytes;
 
-      gimp_image_transform_color (dest_image, dest_type, d,
-                                  color_type, p);
-
-      if (pat_bytes == 2 || pat_bytes == 4)
-        d[alpha] = p[pat_bytes - 1];
-      else
-        d[alpha] = OPAQUE_OPACITY;
+      babl_process (fish, p, d, 1);
 
       d += dest_bytes;
     }
