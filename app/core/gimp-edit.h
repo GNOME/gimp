@@ -60,11 +60,16 @@ gboolean           gimp_edit_clear              (GimpImage     *image,
 gboolean           gimp_edit_fill               (GimpImage     *image,
                                                  GimpDrawable  *drawable,
                                                  GimpContext   *context,
-                                                 GimpFillType   fill_type);
+                                                 GimpFillType   fill_type,
+                                                 gdouble        opacity,
+                                                 GimpLayerModeEffects  paint_mode);
+
 gboolean           gimp_edit_fill_full          (GimpImage     *image,
                                                  GimpDrawable  *drawable,
                                                  const GimpRGB *color,
                                                  GimpPattern   *pattern,
+                                                 gdouble        opacity,
+                                                 GimpLayerModeEffects  paint_mode,
                                                  const gchar   *undo_desc);
 
 gboolean           gimp_edit_fade               (GimpImage     *image,

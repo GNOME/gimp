@@ -25,6 +25,7 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-edit.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
@@ -166,7 +167,6 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
       GimpContext  *context  = GIMP_CONTEXT (options);
       gint          x, y;
-      GError       *error    = NULL;
 
       x = coords->x;
       y = coords->y;
@@ -181,25 +181,46 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
           y -= off_y;
         }
 
-      if (! gimp_drawable_bucket_fill (drawable,
-                                       context,
-                                       options->fill_mode,
-                                       gimp_context_get_paint_mode (context),
-                                       gimp_context_get_opacity (context),
-                                       ! options->fill_selection,
-                                       options->fill_transparent,
-                                       options->fill_criterion,
-                                       options->threshold,
-                                       options->sample_merged,
-                                       x, y, &error))
+      if (options->fill_selection)
         {
-          gimp_message_literal (display->gimp, G_OBJECT (display),
-                                GIMP_MESSAGE_WARNING, error->message);
-          g_clear_error (&error);
+          GimpFillType fill_type;
+
+          switch (options->fill_mode)
+            {
+            case GIMP_FG_BUCKET_FILL:      fill_type = GIMP_FOREGROUND_FILL;
+            case GIMP_BG_BUCKET_FILL:      fill_type = GIMP_BACKGROUND_FILL;
+            case GIMP_PATTERN_BUCKET_FILL: fill_type = GIMP_PATTERN_FILL;
+            }
+
+          gimp_edit_fill (image, drawable, context, fill_type,
+                          gimp_context_get_opacity (context),
+                          gimp_context_get_paint_mode (context));
+          gimp_image_flush (image);
         }
       else
         {
-          gimp_image_flush (image);
+          GError *error = NULL;
+
+          if (! gimp_drawable_bucket_fill (drawable,
+                                           context,
+                                           options->fill_mode,
+                                           gimp_context_get_paint_mode (context),
+                                           gimp_context_get_opacity (context),
+                                           TRUE,
+                                           options->fill_transparent,
+                                           options->fill_criterion,
+                                           options->threshold,
+                                           options->sample_merged,
+                                           x, y, &error))
+            {
+              gimp_message_literal (display->gimp, G_OBJECT (display),
+                                    GIMP_MESSAGE_WARNING, error->message);
+              g_clear_error (&error);
+            }
+          else
+            {
+              gimp_image_flush (image);
+            }
         }
     }
 

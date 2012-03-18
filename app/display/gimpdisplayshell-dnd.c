@@ -368,6 +368,7 @@ gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
     {
       gimp_edit_fill_full (image, drawable,
                            color, pattern,
+                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
                            pattern ?
                            C_("undo-type", "Drop pattern to layer") :
                            C_("undo-type", "Drop color to layer"));

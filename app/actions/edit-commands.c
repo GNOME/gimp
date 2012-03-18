@@ -483,7 +483,7 @@ edit_fill_cmd_callback (GtkAction *action,
   fill_type = (GimpFillType) value;
 
   gimp_edit_fill (image, drawable, action_data_get_context (data),
-                  fill_type);
+                  fill_type, GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
   gimp_image_flush (image);
 }
 

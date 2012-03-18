@@ -55,18 +55,11 @@
 
 /*  local function protypes  */
 
-static GimpBuffer * gimp_edit_extract         (GimpImage            *image,
-                                               GimpPickable         *pickable,
-                                               GimpContext          *context,
-                                               gboolean              cut_pixels,
-                                               GError              **error);
-static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
-                                               GimpDrawable         *drawable,
-                                               const GimpRGB        *color,
-                                               GimpPattern          *pattern,
-                                               gdouble               opacity,
-                                               GimpLayerModeEffects  paint_mode,
-                                               const gchar          *undo_desc);
+static GimpBuffer * gimp_edit_extract (GimpImage     *image,
+                                       GimpPickable  *pickable,
+                                       GimpContext   *context,
+                                       gboolean       cut_pixels,
+                                       GError       **error);
 
 
 /*  public functions  */
@@ -391,17 +384,19 @@ gimp_edit_clear (GimpImage    *image,
 
   gimp_context_get_background (context, &background);
 
-  return gimp_edit_fill_internal (image, drawable,
-                                  &background, NULL,
-                                  GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
-                                  C_("undo-type", "Clear"));
+  return gimp_edit_fill_full (image, drawable,
+                              &background, NULL,
+                              GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
+                              C_("undo-type", "Clear"));
 }
 
 gboolean
-gimp_edit_fill (GimpImage    *image,
-                GimpDrawable *drawable,
-                GimpContext  *context,
-                GimpFillType  fill_type)
+gimp_edit_fill (GimpImage            *image,
+                GimpDrawable         *drawable,
+                GimpContext          *context,
+                GimpFillType          fill_type,
+                gdouble               opacity,
+                GimpLayerModeEffects  paint_mode)
 {
   GimpRGB      color;
   GimpPattern *pattern = NULL;
@@ -444,31 +439,90 @@ gimp_edit_fill (GimpImage    *image,
 
     default:
       g_warning ("%s: unknown fill type", G_STRFUNC);
-      return gimp_edit_fill (image, drawable, context, GIMP_BACKGROUND_FILL);
+      return gimp_edit_fill (image, drawable,
+                             context, GIMP_BACKGROUND_FILL,
+                             GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
     }
 
-  return gimp_edit_fill_internal (image, drawable,
-                                  &color, pattern,
-                                  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
-                                  undo_desc);
+  return gimp_edit_fill_full (image, drawable,
+                              &color, pattern,
+                              opacity, paint_mode,
+                              undo_desc);
 }
 
 gboolean
-gimp_edit_fill_full (GimpImage     *image,
-                     GimpDrawable  *drawable,
-                     const GimpRGB *color,
-                     GimpPattern   *pattern,
-                     const gchar   *undo_desc)
+gimp_edit_fill_full (GimpImage            *image,
+                     GimpDrawable         *drawable,
+                     const GimpRGB        *color,
+                     GimpPattern          *pattern,
+                     gdouble               opacity,
+                     GimpLayerModeEffects  paint_mode,
+                     const gchar          *undo_desc)
 {
+  TileManager *buf_tiles;
+  GeglBuffer  *dest_buffer;
+  PixelRegion  bufPR;
+  gint         x, y, width, height;
+  gint         tiles_bytes;
+  const Babl  *format;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (color != NULL || pattern != NULL, FALSE);
 
-  return gimp_edit_fill_internal (image, drawable,
-                                  color, pattern,
-                                  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
-                                  undo_desc);
+
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
+    return TRUE;  /*  nothing to do, but the fill succeded  */
+
+  tiles_bytes = gimp_drawable_bytes (drawable);
+  format      = gimp_drawable_get_format (drawable);
+
+  if (pattern)
+    {
+      if (! gimp_drawable_has_alpha (drawable) &&
+          (pattern->mask->bytes == 2 || pattern->mask->bytes == 4))
+        {
+          tiles_bytes++;
+          format = gimp_drawable_get_format_with_alpha (drawable);
+        }
+    }
+
+  buf_tiles = tile_manager_new (width, height, tiles_bytes);
+
+  dest_buffer = gimp_tile_manager_create_buffer (buf_tiles, format, TRUE);
+
+  if (pattern)
+    {
+      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
+
+      gegl_buffer_set_pattern (dest_buffer, NULL, src_buffer, 0, 0);
+
+      g_object_unref (src_buffer);
+    }
+  else
+    {
+      GeglColor *gegl_color = gegl_color_new (NULL);
+
+      gimp_gegl_color_set_rgba (gegl_color, color);
+      gegl_buffer_set_color (dest_buffer, NULL, gegl_color);
+
+      g_object_unref (gegl_color);
+    }
+
+  g_object_unref (dest_buffer);
+
+  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, FALSE);
+  gimp_drawable_apply_region (drawable, &bufPR,
+                              TRUE, undo_desc,
+                              opacity, paint_mode,
+                              NULL, NULL, x, y);
+
+  tile_manager_unref (buf_tiles);
+
+  gimp_drawable_update (drawable, x, y, width, height);
+
+  return TRUE;
 }
 
 gboolean
@@ -561,73 +615,4 @@ gimp_edit_extract (GimpImage     *image,
     }
 
   return NULL;
-}
-
-static gboolean
-gimp_edit_fill_internal (GimpImage            *image,
-                         GimpDrawable         *drawable,
-                         const GimpRGB        *color,
-                         GimpPattern          *pattern,
-                         gdouble               opacity,
-                         GimpLayerModeEffects  paint_mode,
-                         const gchar          *undo_desc)
-{
-  TileManager *buf_tiles;
-  GeglBuffer  *dest_buffer;
-  PixelRegion  bufPR;
-  gint         x, y, width, height;
-  gint         tiles_bytes;
-  const Babl  *format;
-
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
-    return TRUE;  /*  nothing to do, but the fill succeded  */
-
-  tiles_bytes = gimp_drawable_bytes (drawable);
-  format      = gimp_drawable_get_format (drawable);
-
-  if (pattern)
-    {
-      if (! gimp_drawable_has_alpha (drawable) &&
-          (pattern->mask->bytes == 2 || pattern->mask->bytes == 4))
-        {
-          tiles_bytes++;
-          format = gimp_drawable_get_format_with_alpha (drawable);
-        }
-    }
-
-  buf_tiles = tile_manager_new (width, height, tiles_bytes);
-
-  dest_buffer = gimp_tile_manager_create_buffer (buf_tiles, format, TRUE);
-
-  if (pattern)
-    {
-      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
-
-      gegl_buffer_set_pattern (dest_buffer, NULL, src_buffer, 0, 0);
-
-      g_object_unref (src_buffer);
-    }
-  else
-    {
-      GeglColor *gegl_color = gegl_color_new (NULL);
-
-      gimp_gegl_color_set_rgba (gegl_color, color);
-      gegl_buffer_set_color (dest_buffer, NULL, gegl_color);
-
-      g_object_unref (gegl_color);
-    }
-
-  g_object_unref (dest_buffer);
-
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, FALSE);
-  gimp_drawable_apply_region (drawable, &bufPR,
-                              TRUE, undo_desc,
-                              opacity, paint_mode,
-                              NULL, NULL, x, y);
-
-  tile_manager_unref (buf_tiles);
-
-  gimp_drawable_update (drawable, x, y, width, height);
-
-  return TRUE;
 }

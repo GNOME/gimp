@@ -237,6 +237,7 @@ gimp_drawable_tree_view_drop_viewable (GimpContainerTreeView   *view,
       gimp_edit_fill_full (gimp_item_get_image (GIMP_ITEM (dest_viewable)),
                            GIMP_DRAWABLE (dest_viewable),
                            NULL, GIMP_PATTERN (src_viewable),
+                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
                            C_("undo-type", "Drop pattern to layer"));
 
       gimp_image_flush (gimp_item_get_image (GIMP_ITEM (dest_viewable)));
@@ -260,6 +261,7 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
       gimp_edit_fill_full (gimp_item_get_image (GIMP_ITEM (dest_viewable)),
                            GIMP_DRAWABLE (dest_viewable),
                            color, NULL,
+                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
                            C_("undo-type", "Drop color to layer"));
 
       gimp_image_flush (gimp_item_get_image (GIMP_ITEM (dest_viewable)));
@@ -322,6 +324,7 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView   *view,
       gimp_edit_fill_full (gimp_item_get_image (item),
                            GIMP_DRAWABLE (item),
                            color, pattern,
+                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
                            pattern ?
                            C_("undo-type", "Drop pattern to layer") :
                            C_("undo-type", "Drop color to layer"));
