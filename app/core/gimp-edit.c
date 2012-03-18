@@ -62,8 +62,8 @@ static GimpBuffer * gimp_edit_extract         (GimpImage            *image,
                                                GError              **error);
 static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
                                                GimpDrawable         *drawable,
-                                               GimpContext          *context,
-                                               GimpFillType          fill_type,
+                                               const GimpRGB        *color,
+                                               GimpPattern          *pattern,
                                                gdouble               opacity,
                                                GimpLayerModeEffects  paint_mode,
                                                const gchar          *undo_desc);
@@ -382,13 +382,17 @@ gimp_edit_clear (GimpImage    *image,
                  GimpDrawable *drawable,
                  GimpContext  *context)
 {
+  GimpRGB background;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
-  return gimp_edit_fill_internal (image, drawable, context,
-                                  GIMP_TRANSPARENT_FILL,
+  gimp_context_get_background (context, &background);
+
+  return gimp_edit_fill_internal (image, drawable,
+                                  &background, NULL,
                                   GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
                                   C_("undo-type", "Clear"));
 }
@@ -399,6 +403,8 @@ gimp_edit_fill (GimpImage    *image,
                 GimpContext  *context,
                 GimpFillType  fill_type)
 {
+  GimpRGB      color;
+  GimpPattern *pattern = NULL;
   const gchar *undo_desc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -409,22 +415,27 @@ gimp_edit_fill (GimpImage    *image,
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
+      gimp_context_get_foreground (context, &color);
       undo_desc = C_("undo-type", "Fill with Foreground Color");
       break;
 
     case GIMP_BACKGROUND_FILL:
+      gimp_context_get_background (context, &color);
       undo_desc = C_("undo-type", "Fill with Background Color");
       break;
 
     case GIMP_WHITE_FILL:
+      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       undo_desc = C_("undo-type", "Fill with White");
       break;
 
     case GIMP_TRANSPARENT_FILL:
+      gimp_context_get_background (context, &color);
       undo_desc = C_("undo-type", "Fill with Transparency");
       break;
 
     case GIMP_PATTERN_FILL:
+      pattern = gimp_context_get_pattern (context);
       undo_desc = C_("undo-type", "Fill with Pattern");
       break;
 
@@ -436,8 +447,8 @@ gimp_edit_fill (GimpImage    *image,
       return gimp_edit_fill (image, drawable, context, GIMP_BACKGROUND_FILL);
     }
 
-  return gimp_edit_fill_internal (image, drawable, context,
-                                  fill_type,
+  return gimp_edit_fill_internal (image, drawable,
+                                  &color, pattern,
                                   GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
                                   undo_desc);
 }
@@ -537,8 +548,8 @@ gimp_edit_extract (GimpImage     *image,
 static gboolean
 gimp_edit_fill_internal (GimpImage            *image,
                          GimpDrawable         *drawable,
-                         GimpContext          *context,
-                         GimpFillType          fill_type,
+                         const GimpRGB        *color,
+                         GimpPattern          *pattern,
                          gdouble               opacity,
                          GimpLayerModeEffects  paint_mode,
                          const gchar          *undo_desc)
@@ -549,8 +560,6 @@ gimp_edit_fill_internal (GimpImage            *image,
   gint         x, y, width, height;
   gint         tiles_bytes;
   const Babl  *format;
-  GimpRGB      color;
-  GimpPattern *pattern = NULL;
 
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return TRUE;  /*  nothing to do, but the fill succeded  */
@@ -558,33 +567,14 @@ gimp_edit_fill_internal (GimpImage            *image,
   tiles_bytes = gimp_drawable_bytes (drawable);
   format      = gimp_drawable_get_format (drawable);
 
-  switch (fill_type)
+  if (pattern)
     {
-    case GIMP_FOREGROUND_FILL:
-      gimp_context_get_foreground (context, &color);
-      break;
-
-    case GIMP_BACKGROUND_FILL:
-    case GIMP_TRANSPARENT_FILL:
-      gimp_context_get_background (context, &color);
-      break;
-
-    case GIMP_WHITE_FILL:
-      gimp_rgba_set (&color, 1.0, 1.0, 1.0, 1.0);
-      break;
-
-    case GIMP_PATTERN_FILL:
-      pattern = gimp_context_get_pattern (context);
       if (! gimp_drawable_has_alpha (drawable) &&
           (pattern->mask->bytes == 2 || pattern->mask->bytes == 4))
         {
           tiles_bytes++;
           format = gimp_drawable_get_format_with_alpha (drawable);
         }
-      break;
-
-    case GIMP_NO_FILL:
-      return TRUE;  /*  nothing to do, but the fill succeded  */
     }
 
   buf_tiles = tile_manager_new (width, height, tiles_bytes);
@@ -603,7 +593,7 @@ gimp_edit_fill_internal (GimpImage            *image,
     {
       GeglColor *gegl_color = gegl_color_new (NULL);
 
-      gimp_gegl_color_set_rgba (gegl_color, &color);
+      gimp_gegl_color_set_rgba (gegl_color, color);
       gegl_buffer_set_color (dest_buffer, NULL, gegl_color);
 
       g_object_unref (gegl_color);
