@@ -41,7 +41,6 @@
 #include "gimperror.h"
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
-#include "gimpimage-colorhash.h"
 #include "gimpimage-merge.h"
 #include "gimpimage-undo.h"
 #include "gimpitemstack.h"

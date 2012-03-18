@@ -46,7 +46,6 @@
 #include "gimpguide.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
-#include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-sample-points.h"
@@ -595,8 +594,6 @@ gimp_image_class_init (GimpImageClass *klass)
                                                       GIMP_RGB,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
-
-  gimp_image_color_hash_init ();
 
   g_type_class_add_private (klass, sizeof (GimpImagePrivate));
 }
@@ -1203,8 +1200,6 @@ gimp_image_real_colormap_changed (GimpImage *image,
 
   if (gimp_image_base_type (image) == GIMP_INDEXED)
     {
-      gimp_image_color_hash_invalidate (image, color_index);
-
       /* A colormap alteration affects the whole image */
       gimp_image_invalidate (image,
                              0, 0,
