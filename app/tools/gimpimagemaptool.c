@@ -666,7 +666,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_image_flush (gimp_display_get_image (tool->display));
 
-          if (image_map_tool->config)
+          if (image_map_tool->config && image_map_tool->settings_box)
             gimp_settings_box_add_current (GIMP_SETTINGS_BOX (image_map_tool->settings_box),
                                            GIMP_GUI_CONFIG (tool->tool_info->gimp->config)->image_map_tool_max_recent);
         }
