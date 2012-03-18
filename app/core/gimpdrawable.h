@@ -225,7 +225,7 @@ void            gimp_drawable_fill_by_type       (GimpDrawable       *drawable,
                                                   GimpContext        *context,
                                                   GimpFillType        fill_type);
 
-const Babl    * gimp_drawable_get_format        (const GimpDrawable *drawable);
+const Babl    * gimp_drawable_get_format         (const GimpDrawable *drawable);
 const Babl    * gimp_drawable_get_format_with_alpha
                                                  (const GimpDrawable *drawable);
 const Babl    * gimp_drawable_get_format_without_alpha

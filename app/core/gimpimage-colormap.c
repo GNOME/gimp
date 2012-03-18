@@ -129,7 +129,7 @@ gimp_image_colormap_free (GimpImage *image)
 }
 
 const Babl *
-gimp_image_colormap_get_rgb_format  (GimpImage *image)
+gimp_image_colormap_get_rgb_format (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -137,7 +137,7 @@ gimp_image_colormap_get_rgb_format  (GimpImage *image)
 }
 
 const Babl *
-gimp_image_colormap_get_rgba_format (GimpImage *image)
+gimp_image_colormap_get_rgba_format (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 

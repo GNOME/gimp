@@ -170,6 +170,13 @@ GimpImageType      gimp_image_base_type_with_alpha (const GimpImage  *image);
 CombinationMode    gimp_image_get_combination_mode (GimpImageType     dest_type,
                                                     gint              src_bytes);
 
+const Babl * gimp_image_get_format               (const GimpImage    *image,
+                                                  GimpImageType       type);
+const Babl * gimp_image_get_format_with_alpha    (const GimpImage    *image,
+                                                  GimpImageType       type);
+const Babl * gimp_image_get_format_without_alpha (const GimpImage    *image,
+                                                  GimpImageType       type);
+
 gint            gimp_image_get_ID                (const GimpImage    *image);
 GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
                                                   gint                id);

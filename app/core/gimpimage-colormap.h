@@ -26,8 +26,8 @@ void           gimp_image_colormap_init            (GimpImage       *image);
 void           gimp_image_colormap_dispose         (GimpImage       *image);
 void           gimp_image_colormap_free            (GimpImage       *image);
 
-const Babl   * gimp_image_colormap_get_rgb_format  (GimpImage       *image);
-const Babl   * gimp_image_colormap_get_rgba_format (GimpImage       *image);
+const Babl   * gimp_image_colormap_get_rgb_format  (const GimpImage *image);
+const Babl   * gimp_image_colormap_get_rgba_format (const GimpImage *image);
 
 GimpPalette  * gimp_image_get_colormap_palette     (GimpImage       *image);
 
