@@ -349,11 +349,6 @@ void            gimp_image_transform_rgb         (const GimpImage    *dest_image
                                                   GimpImageType       dest_type,
                                                   const GimpRGB      *rgb,
                                                   guchar             *color);
-void            gimp_image_transform_color       (const GimpImage    *dest_image,
-                                                  GimpImageType       dest_type,
-                                                  guchar             *dest,
-                                                  GimpImageBaseType   src_type,
-                                                  const guchar       *src);
 TempBuf       * gimp_image_transform_temp_buf    (const GimpImage    *dest_image,
                                                   GimpImageType       dest_type,
                                                   TempBuf            *temp_buf,

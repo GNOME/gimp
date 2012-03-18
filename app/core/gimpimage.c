@@ -2731,90 +2731,19 @@ gimp_image_transform_rgb (const GimpImage *dest_image,
                           const GimpRGB   *rgb,
                           guchar          *color)
 {
-  guchar col[3];
+  const Babl *dest_format;
+  guchar      col[3];
 
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (color != NULL);
 
+  dest_format = gimp_image_get_format_without_alpha (dest_image, dest_type);
+
   gimp_rgb_get_uchar (rgb, &col[0], &col[1], &col[2]);
 
-  gimp_image_transform_color (dest_image, dest_type, color, GIMP_RGB, col);
-}
-
-void
-gimp_image_transform_color (const GimpImage    *dest_image,
-                            GimpImageType       dest_type,
-                            guchar             *dest,
-                            GimpImageBaseType   src_type,
-                            const guchar       *src)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (dest_image));
-  g_return_if_fail (src_type != GIMP_INDEXED);
-
-  switch (src_type)
-    {
-    case GIMP_RGB:
-      switch (dest_type)
-        {
-        case GIMP_RGB_IMAGE:
-        case GIMP_RGBA_IMAGE:
-          /*  Straight copy  */
-          *dest++ = *src++;
-          *dest++ = *src++;
-          *dest++ = *src++;
-          break;
-
-        case GIMP_GRAY_IMAGE:
-        case GIMP_GRAYA_IMAGE:
-          /*  NTSC conversion  */
-          *dest = GIMP_RGB_LUMINANCE (src[RED],
-                                      src[GREEN],
-                                      src[BLUE]) + 0.5;
-          break;
-
-        case GIMP_INDEXED_IMAGE:
-        case GIMP_INDEXEDA_IMAGE:
-          /*  Least squares method  */
-          *dest = gimp_image_color_hash_rgb_to_indexed (dest_image,
-                                                        src[RED],
-                                                        src[GREEN],
-                                                        src[BLUE]);
-          break;
-        }
-      break;
-
-    case GIMP_GRAY:
-      switch (dest_type)
-        {
-        case GIMP_RGB_IMAGE:
-        case GIMP_RGBA_IMAGE:
-          /*  Gray to RG&B */
-          *dest++ = *src;
-          *dest++ = *src;
-          *dest++ = *src;
-          break;
-
-        case GIMP_GRAY_IMAGE:
-        case GIMP_GRAYA_IMAGE:
-          /*  Straight copy  */
-          *dest = *src;
-          break;
-
-        case GIMP_INDEXED_IMAGE:
-        case GIMP_INDEXEDA_IMAGE:
-          /*  Least squares method  */
-          *dest = gimp_image_color_hash_rgb_to_indexed (dest_image,
-                                                        src[GRAY],
-                                                        src[GRAY],
-                                                        src[GRAY]);
-          break;
-        }
-      break;
-
-    default:
-      break;
-    }
+  babl_process (babl_fish (babl_format ("RGB u8"), dest_format),
+                col, color, 1);
 }
 
 TempBuf *
