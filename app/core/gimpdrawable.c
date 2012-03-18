@@ -1881,6 +1881,35 @@ gimp_drawable_get_format_with_alpha (const GimpDrawable *drawable)
   return NULL;
 }
 
+const Babl *
+gimp_drawable_get_format_without_alpha (const GimpDrawable *drawable)
+{
+  GimpImageType type;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  type = gimp_drawable_type (drawable);
+
+  switch (type)
+    {
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:   return babl_format ("RGB u8");
+    case GIMP_GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:  return babl_format ("Y u8");
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      {
+        GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+        return gimp_image_colormap_get_rgb_format (image);
+      }
+    }
+
+  g_warn_if_reached ();
+
+  return NULL;
+}
+
 gboolean
 gimp_drawable_has_alpha (const GimpDrawable *drawable)
 {
