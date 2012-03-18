@@ -154,13 +154,6 @@ gimp_gegl_tool_initialize (GimpTool     *tool,
   if (! drawable)
     return FALSE;
 
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("GEGL operations do not operate on indexed layers."));
-      return FALSE;
-    }
-
   if (g_tool->config)
     gimp_config_reset (GIMP_CONFIG (g_tool->config));
 
