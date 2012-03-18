@@ -154,7 +154,6 @@ gimp_drawable_bucket_fill_full (GimpDrawable        *drawable,
     {
       gimp_image_transform_rgb (image, gimp_drawable_type (drawable),
                                 color, col);
-      col[gimp_drawable_bytes_with_alpha (drawable) - 1] = OPAQUE_OPACITY;
     }
   else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
     {

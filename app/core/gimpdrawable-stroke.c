@@ -371,7 +371,6 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
         gimp_image_get_foreground (image, context,
                                    gimp_drawable_type (drawable), col);
-        col[bytes - 1] = OPAQUE_OPACITY;
 
         color_region_mask (&basePR, &maskPR, col);
       }

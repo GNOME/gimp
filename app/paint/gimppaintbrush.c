@@ -123,10 +123,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   gdouble                   fade_point;
   gdouble                   grad_point;
   gdouble                   force;
-  guchar                    pixel[MAX_CHANNELS] = { OPAQUE_OPACITY,
-                                                    OPAQUE_OPACITY,
-                                                    OPAQUE_OPACITY,
-                                                    OPAQUE_OPACITY };
+  guchar                    pixel[MAX_CHANNELS];
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -166,6 +163,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       /* optionally take the color from the current gradient */
 
       opacity *= gradient_color.a;
+      gimp_rgb_set_alpha (&gradient_color, GIMP_OPACITY_OPAQUE);
 
       gimp_image_transform_rgb (image, gimp_drawable_type (drawable),
                                 &gradient_color, pixel);

@@ -2727,17 +2727,17 @@ gimp_image_transform_rgb (const GimpImage *dest_image,
                           guchar          *color)
 {
   const Babl *dest_format;
-  guchar      col[3];
+  guchar      col[4];
 
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (color != NULL);
 
-  dest_format = gimp_image_get_format_without_alpha (dest_image, dest_type);
+  dest_format = gimp_image_get_format_with_alpha (dest_image, dest_type);
 
-  gimp_rgb_get_uchar (rgb, &col[0], &col[1], &col[2]);
+  gimp_rgba_get_uchar (rgb, &col[0], &col[1], &col[2], &col[3]);
 
-  babl_process (babl_fish (babl_format ("RGB u8"), dest_format),
+  babl_process (babl_fish (babl_format ("RGBA u8"), dest_format),
                 col, color, 1);
 }
 

@@ -305,9 +305,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   gimp_image_get_foreground (image, context, gimp_drawable_type (drawable),
                              col);
 
-  /*  set the alpha channel  */
-  col[paint_core->canvas_buf->bytes - 1] = OPAQUE_OPACITY;
-
   /*  color the pixels  */
   color_pixels (temp_buf_get_data (paint_core->canvas_buf), col,
                 area->width * area->height, area->bytes);

@@ -141,9 +141,6 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   gimp_image_get_background (image, context, gimp_drawable_type (drawable),
                              col);
 
-  /*  set the alpha channel  */
-  col[area->bytes - 1] = OPAQUE_OPACITY;
-
   /*  color the pixels  */
   color_pixels (temp_buf_get_data (area), col,
                 area->width * area->height, area->bytes);
