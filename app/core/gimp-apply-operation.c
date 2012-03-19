@@ -50,7 +50,6 @@ gimp_apply_operation (GeglBuffer          *src_buffer,
 
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-  g_return_if_fail (progress == NULL || undo_desc != NULL);
   g_return_if_fail (GEGL_IS_NODE (operation));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
@@ -90,7 +89,17 @@ gimp_apply_operation (GeglBuffer          *src_buffer,
   processor = gegl_node_new_processor (dest_node, &rect);
 
   if (progress)
-    gimp_progress_start (progress, undo_desc, FALSE);
+    {
+      if (gimp_progress_is_active (progress))
+        {
+          if (undo_desc)
+            gimp_progress_set_text (progress, undo_desc);
+        }
+      else
+        {
+          gimp_progress_start (progress, undo_desc, FALSE);
+        }
+    }
 
   while (gegl_processor_work (processor, &value))
     if (progress)
