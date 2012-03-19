@@ -119,60 +119,6 @@ color_pixels (guchar       *dest,
     }
 }
 
-void
-color_pixels_mask (guchar       *dest,
-                   const guchar *mask,
-                   const guchar *color,
-                   guint         w,
-                   guint         bytes)
-{
-  guchar c0, c1, c2;
-
-  switch (bytes)
-    {
-    case 1:
-      memset (dest, *color, w);
-      break;
-
-    case 2:
-      c0 = color[0];
-      while (w--)
-        {
-          dest[0] = c0;
-          dest[1] = *mask++;
-          dest += 2;
-        }
-      break;
-
-    case 3:
-      c0 = color[0];
-      c1 = color[1];
-      c2 = color[2];
-      while (w--)
-        {
-          dest[0] = c0;
-          dest[1] = c1;
-          dest[2] = c2;
-          dest += 3;
-        }
-      break;
-
-    case 4:
-      c0 = color[0];
-      c1 = color[1];
-      c2 = color[2];
-      while (w--)
-        {
-          dest[0] = c0;
-          dest[1] = c1;
-          dest[2] = c2;
-          dest[3] = *mask++;
-          dest += 4;
-        }
-      break;
-    }
-}
-
 /*
  * blend_pixels patched 8-24-05 to fix bug #163721.  Note that this change
  * causes the function to treat src1 and src2 asymmetrically.  This gives the

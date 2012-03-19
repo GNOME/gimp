@@ -1768,43 +1768,6 @@ color_region (PixelRegion  *dest,
 }
 
 void
-color_region_mask (PixelRegion  *dest,
-                   PixelRegion  *mask,
-                  const guchar *col)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (2, dest, mask);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      guchar       *d = dest->data;
-      const guchar *m = mask->data;
-      gint          h = dest->h;
-
-      if (dest->w * dest->bytes == dest->rowstride &&
-          mask->w * mask->bytes == mask->rowstride)
-        {
-          /* do it all in one function call if we can
-           * this hasn't been tested to see if it is a
-           * signifigant speed gain yet
-           */
-          color_pixels_mask (d, m, col, dest->w * h, dest->bytes);
-        }
-      else
-        {
-          while (h--)
-            {
-              color_pixels_mask (d, m, col, dest->w, dest->bytes);
-
-              d += dest->rowstride;
-              m += mask->rowstride;
-            }
-        }
-    }
-}
-
-void
 blend_region (PixelRegion *src1,
               PixelRegion *src2,
               PixelRegion *dest,

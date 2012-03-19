@@ -26,12 +26,6 @@ void  color_pixels          (guchar       *dest,
                              guint         w,
                              guint         bytes);
 
-void  color_pixels_mask     (guchar       *dest,
-                             const guchar *mask,
-                             const guchar *color,
-                             guint         w,
-                             guint         bytes);
-
 void  blend_pixels          (const guchar *src1,
                              const guchar *src2,
                              guchar       *dest,
@@ -314,9 +308,6 @@ void  extract_from_indexed_pixels         (guchar       *src,
 /*  Region functions  */
 
 void  color_region                        (PixelRegion  *dest,
-                                           const guchar *color);
-void  color_region_mask                   (PixelRegion  *dest,
-                                           PixelRegion  *mask,
                                            const guchar *color);
 
 void  blend_region                        (PixelRegion *src1,
