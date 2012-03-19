@@ -26,9 +26,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
-
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
 
@@ -442,74 +439,6 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
   gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
 }
 
-static void
-gimp_channel_combine_sub_region_add (gpointer     unused,
-                                     PixelRegion *srcPR,
-                                     PixelRegion *destPR)
-{
-  const guchar *src  = srcPR->data;
-  guchar       *dest = destPR->data;
-  gint          x, y;
-
-  for (y = 0; y < srcPR->h; y++)
-    {
-      for (x = 0; x < srcPR->w; x++)
-        {
-          const guint val = dest[x] + src[x];
-
-          dest[x] = val > 255 ? 255 : val;
-        }
-
-      src  += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
-}
-
-static void
-gimp_channel_combine_sub_region_sub (gpointer     unused,
-                                     PixelRegion *srcPR,
-                                     PixelRegion *destPR)
-{
-  const guchar *src  = srcPR->data;
-  guchar       *dest = destPR->data;
-  gint          x, y;
-
-  for (y = 0; y < srcPR->h; y++)
-    {
-      for (x = 0; x < srcPR->w; x++)
-        {
-          if (src[x] > dest[x])
-            dest[x] = 0;
-          else
-            dest[x] -= src[x];
-        }
-
-      src  += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
-}
-
-static void
-gimp_channel_combine_sub_region_intersect (gpointer     unused,
-                                           PixelRegion *srcPR,
-                                           PixelRegion *destPR)
-{
-  const guchar *src  = srcPR->data;
-  guchar       *dest = destPR->data;
-  gint          x, y;
-
-  for (y = 0; y < srcPR->h; y++)
-    {
-      for (x = 0; x < srcPR->w; x++)
-        {
-          dest[x] = MIN (dest[x], src[x]);
-        }
-
-      src  += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
-}
-
 void
 gimp_channel_combine_mask (GimpChannel    *mask,
                            GimpChannel    *add_on,
@@ -517,8 +446,11 @@ gimp_channel_combine_mask (GimpChannel    *mask,
                            gint            off_x,
                            gint            off_y)
 {
-  PixelRegion srcPR, destPR;
-  gint        x, y, w, h;
+  GeglBuffer         *mask_buffer;
+  GeglBuffer         *add_on_buffer;
+  GeglBufferIterator *iter;
+  GeglRectangle       rect;
+  gint                x, y, w, h;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (GIMP_IS_CHANNEL (add_on));
@@ -532,30 +464,80 @@ gimp_channel_combine_mask (GimpChannel    *mask,
                                   &x, &y, &w, &h))
     return;
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (add_on)),
-                     x - off_x, y - off_y, w, h, FALSE);
-  pixel_region_init (&destPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                     x, y, w, h, TRUE);
+  mask_buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask));
+  add_on_buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (add_on));
+
+  rect.x      = x;
+  rect.y      = y;
+  rect.width  = w;
+  rect.height = h;
+
+  iter = gegl_buffer_iterator_new (mask_buffer, &rect, babl_format ("Y u8"),
+                                   GEGL_BUFFER_READWRITE);
+
+  rect.x -= off_x;
+  rect.y -= off_y;
+
+  gegl_buffer_iterator_add (iter, add_on_buffer, &rect, babl_format ("Y u8"),
+                            GEGL_BUFFER_READ);
 
   switch (op)
     {
     case GIMP_CHANNEL_OP_ADD:
     case GIMP_CHANNEL_OP_REPLACE:
-      pixel_regions_process_parallel ((PixelProcessorFunc)
-                                      gimp_channel_combine_sub_region_add,
-                                      NULL, 2, &srcPR, &destPR);
+      while (gegl_buffer_iterator_next (iter))
+        {
+          guchar *mask_data   = iter->data[0];
+          guchar *add_on_data = iter->data[1];
+          gint    length      = iter->length;
+
+          while (length--)
+            {
+              const guint val = *mask_data + *add_on_data;
+
+              *mask_data = CLAMP (val, 0, 255);
+
+              add_on_data++;
+              mask_data++;
+            }
+        }
       break;
 
     case GIMP_CHANNEL_OP_SUBTRACT:
-      pixel_regions_process_parallel ((PixelProcessorFunc)
-                                      gimp_channel_combine_sub_region_sub,
-                                      NULL, 2, &srcPR, &destPR);
+      while (gegl_buffer_iterator_next (iter))
+        {
+          guchar *mask_data   = iter->data[0];
+          guchar *add_on_data = iter->data[1];
+          gint    length      = iter->length;
+
+          while (length--)
+            {
+              if (*add_on_data > *mask_data)
+                *mask_data = 0;
+              else
+                *mask_data -= *add_on_data;
+
+              add_on_data++;
+              mask_data++;
+            }
+        }
       break;
 
     case GIMP_CHANNEL_OP_INTERSECT:
-      pixel_regions_process_parallel ((PixelProcessorFunc)
-                                      gimp_channel_combine_sub_region_intersect,
-                                      NULL, 2, &srcPR, &destPR);
+      while (gegl_buffer_iterator_next (iter))
+        {
+          guchar *mask_data   = iter->data[0];
+          guchar *add_on_data = iter->data[1];
+          gint    length      = iter->length;
+
+          while (length--)
+            {
+              *mask_data = MIN (*mask_data, *add_on_data);
+
+              add_on_data++;
+              mask_data++;
+            }
+        }
       break;
 
     default:
