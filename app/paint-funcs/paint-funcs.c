@@ -1863,35 +1863,6 @@ add_alpha_region (PixelRegion *src,
 
 
 void
-extract_alpha_region (PixelRegion *src,
-                      PixelRegion *mask,
-                      PixelRegion *dest)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (3, src, mask, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      const guchar *m = mask ? mask->data : NULL;
-      const guchar *s = src->data;
-      guchar       *d = dest->data;
-      gint          h = src->h;
-
-      while (h --)
-        {
-          extract_alpha_pixels (s, m, d, src->w, src->bytes);
-
-          s += src->rowstride;
-          d += dest->rowstride;
-          if (mask)
-            m += mask->rowstride;
-        }
-    }
-}
-
-
-void
 extract_from_region (PixelRegion       *src,
                      PixelRegion       *dest,
                      PixelRegion       *mask,

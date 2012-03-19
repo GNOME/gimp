@@ -41,12 +41,6 @@ void  shade_pixels          (const guchar *src,
                              guint         bytes,
                              gboolean      has_alpha);
 
-void  extract_alpha_pixels  (const guchar *src,
-                             const guchar *mask,
-                             guchar       *dest,
-                             guint         w,
-                             guint         bytes);
-
 void  swap_pixels           (guchar       *src,
                              guchar       *dest,
                              guint         length);

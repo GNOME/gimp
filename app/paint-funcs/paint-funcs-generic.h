@@ -213,41 +213,6 @@ shade_pixels (const guchar *src,
 }
 
 
-inline void
-extract_alpha_pixels (const guchar *src,
-                      const guchar *mask,
-                      guchar       *dest,
-                      guint         w,
-                      guint         bytes)
-{
-  const guint alpha = bytes - 1;
-
-  if (mask)
-    {
-      const guchar *m = mask;
-
-      while (w--)
-        {
-          gint tmp;
-
-          *dest++ = INT_MULT(src[alpha], *m, tmp);
-          m++;
-          src += bytes;
-        }
-    }
-  else
-    {
-      while (w--)
-        {
-          gint tmp;
-
-          *dest++ = INT_MULT(src[alpha], OPAQUE_OPACITY, tmp);
-          src += bytes;
-        }
-    }
-}
-
-
 static inline void
 replace_pixels (const guchar   *src1,
                 const guchar   *src2,
