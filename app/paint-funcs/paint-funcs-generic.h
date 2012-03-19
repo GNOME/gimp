@@ -173,62 +173,6 @@ color_pixels_mask (guchar       *dest,
     }
 }
 
-void
-pattern_pixels_mask (guchar       *dest,
-                     const guchar *mask,
-                     TempBuf      *pattern,
-                     guint         w,
-                     guint         bytes,
-                     gint          x,
-                     gint          y)
-{
-  const guint   alpha = HAS_ALPHA (bytes) ? bytes - 1 : bytes;
-  const guchar *pat;
-  guint         i;
-
-  /*  Get a pointer to the appropriate scanline of the pattern buffer  */
-  pat = (temp_buf_get_data (pattern) +
-         (y % pattern->height) * pattern->width * pattern->bytes);
-
-
-  /*
-   * image data = pattern data for all but alpha
-   *
-   * If (image has alpha)
-   *   if (there's a mask)
-   *     image data = mask for alpha;
-   *   else
-   *     image data = opaque for alpha.
-   *
-   *   if (pattern has alpha)
-   *     multiply existing alpha channel by pattern alpha
-   *     (normalised to (0..1))
-   */
-
-  for (i = 0; i < w; i++)
-    {
-      const guchar *p = pat + ((i + x) % pattern->width) * pattern->bytes;
-      guint         b;
-
-      for (b = 0; b < alpha; b++)
-        dest[b] = p[b];
-
-      if (HAS_ALPHA (bytes))
-        {
-          if (mask)
-            dest[alpha] = *mask++;
-          else
-            dest[alpha] = OPAQUE_OPACITY;
-
-          if (HAS_ALPHA (pattern->bytes))
-            dest[alpha] = (guchar) (dest[alpha] *
-                                    p[alpha] / (gdouble) OPAQUE_OPACITY);
-        }
-
-      dest += bytes;
-    }
-}
-
 /*
  * blend_pixels patched 8-24-05 to fix bug #163721.  Note that this change
  * causes the function to treat src1 and src2 asymmetrically.  This gives the

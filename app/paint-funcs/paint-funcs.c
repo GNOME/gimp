@@ -1805,37 +1805,6 @@ color_region_mask (PixelRegion  *dest,
 }
 
 void
-pattern_region (PixelRegion  *dest,
-                PixelRegion  *mask,
-                TempBuf      *pattern,
-                gint          off_x,
-                gint          off_y)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (2, dest, mask);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      guchar       *d = dest->data;
-      const guchar *m = mask ? mask->data : NULL;
-      gint          y;
-
-      for (y = 0; y < dest->h; y++)
-        {
-          pattern_pixels_mask (d, m, pattern, dest->w, dest->bytes,
-                               off_x + dest->x,
-                               off_y + dest->y + y);
-
-          d += dest->rowstride;
-
-          if (mask)
-            m += mask->rowstride;
-        }
-    }
-}
-
-void
 blend_region (PixelRegion *src1,
               PixelRegion *src2,
               PixelRegion *dest,

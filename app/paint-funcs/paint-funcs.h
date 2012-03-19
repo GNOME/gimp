@@ -32,14 +32,6 @@ void  color_pixels_mask     (guchar       *dest,
                              guint         w,
                              guint         bytes);
 
-void  pattern_pixels_mask   (guchar       *dest,
-                             const guchar *mask,
-                             TempBuf      *pattern,
-                             guint         w,
-                             guint         bytes,
-                             gint          x,
-                             gint          y);
-
 void  blend_pixels          (const guchar *src1,
                              const guchar *src2,
                              guchar       *dest,
@@ -326,12 +318,6 @@ void  color_region                        (PixelRegion  *dest,
 void  color_region_mask                   (PixelRegion  *dest,
                                            PixelRegion  *mask,
                                            const guchar *color);
-
-void  pattern_region                      (PixelRegion  *dest,
-                                           PixelRegion  *mask,
-                                           TempBuf      *pattern,
-                                           gint          off_x,
-                                           gint          off_y);
 
 void  blend_region                        (PixelRegion *src1,
                                            PixelRegion *src2,
