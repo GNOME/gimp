@@ -27,12 +27,13 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
-#include "base/temp-buf.h"
 #include "base/tile-manager.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-nodes.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-apply-operation.h"
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
 #include "gimpcontext.h"
@@ -138,14 +139,15 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                                     GimpPattern         *pattern)
 {
   GimpImage   *image;
-  TileManager *buf_tiles;
-  PixelRegion  bufPR, maskPR;
-  GimpChannel *mask = NULL;
-  gint         bytes;
+  GimpChannel *mask;
+  TileManager *tiles;
+  GeglBuffer  *buffer;
+  GeglBuffer  *mask_buffer;
+  GeglNode    *apply_opacity;
+  PixelRegion  bufPR;
   gint         x1, y1, x2, y2;
-  guchar       col[MAX_CHANNELS];
-  TempBuf     *pat_buf = NULL;
-  gboolean     new_buf = FALSE;
+  gint         mask_offset_x = 0;
+  gint         mask_offset_y = 0;
   gboolean     selection;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -157,29 +159,10 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  bytes     = gimp_drawable_bytes (drawable);
   selection = gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2);
 
   if ((x1 == x2) || (y1 == y2))
     return;
-
-  if (fill_mode == GIMP_FG_BUCKET_FILL ||
-      fill_mode == GIMP_BG_BUCKET_FILL)
-    {
-      gimp_image_transform_rgb (image, gimp_drawable_type (drawable),
-                                color, col);
-    }
-  else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
-    {
-      pat_buf = gimp_image_transform_temp_buf (image,
-                                               gimp_drawable_type (drawable),
-                                               pattern->mask, &new_buf);
-    }
-  else
-    {
-      g_warning ("%s: invalid fill_mode passed", G_STRFUNC);
-      return;
-    }
 
   gimp_set_busy (image->gimp);
 
@@ -209,15 +192,15 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                                  -off_x, -off_y);
     }
 
+  mask_buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (mask));
+
   gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
 
   /*  make sure we handle the mask correctly if it was sample-merged  */
   if (sample_merged)
     {
-      GimpItem *item;
+      GimpItem *item = GIMP_ITEM (drawable);
       gint      off_x, off_y;
-
-      item = GIMP_ITEM (drawable);
 
       /*  Limit the channel bounds to the drawable's extents  */
       gimp_item_get_offset (item, &off_x, &off_y);
@@ -227,11 +210,10 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
       x2 = CLAMP (x2, off_x, (off_x + gimp_item_get_width (item)));
       y2 = CLAMP (y2, off_y, (off_y + gimp_item_get_height (item)));
 
-      pixel_region_init (&maskPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                         x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      mask_offset_x = x1;
+      mask_offset_y = y1;
 
-      /*  translate mask bounds to drawable coords  */
+     /*  translate mask bounds to drawable coords  */
       x1 -= off_x;
       y1 -= off_y;
       x2 -= off_x;
@@ -239,48 +221,64 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
     }
   else
     {
-      pixel_region_init (&maskPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                         x1, y1, (x2 - x1), (y2 - y1), TRUE);
+      mask_offset_x = x1;
+      mask_offset_y = y1;
     }
 
-  /*  if the image doesn't have an alpha channel, make sure that
-   *  the buf_tiles have.  We need the alpha channel to fill with
-   *  the region calculated above
-   */
-  if (! gimp_drawable_has_alpha (drawable))
-    bytes++;
-
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+  tiles = tile_manager_new ((x2 - x1), (y2 - y1),
+                            gimp_drawable_bytes_with_alpha (drawable));
+  buffer = gimp_tile_manager_create_buffer (tiles,
+                                            gimp_drawable_get_format_with_alpha (drawable),
+                                            TRUE);
 
   switch (fill_mode)
     {
     case GIMP_FG_BUCKET_FILL:
     case GIMP_BG_BUCKET_FILL:
-      color_region_mask (&bufPR, &maskPR, col);
+      {
+        GeglColor *gegl_color = gegl_color_new (NULL);
+
+        gimp_gegl_color_set_rgba (gegl_color, color);
+        gegl_buffer_set_color (buffer, NULL, gegl_color);
+
+        g_object_unref (gegl_color);
+      }
       break;
 
     case GIMP_PATTERN_BUCKET_FILL:
-      pattern_region (&bufPR, &maskPR, pat_buf, x1, y1);
+      {
+        GeglBuffer *pattern_buffer = gimp_pattern_create_buffer (pattern);
+
+        gegl_buffer_set_pattern (buffer, NULL, pattern_buffer, -x1, -y1);
+
+        g_object_unref (pattern_buffer);
+      }
       break;
     }
 
+  apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0,
+                                                       mask_offset_x,
+                                                       mask_offset_y);
+
+  gimp_apply_operation (buffer, NULL, NULL,
+                        apply_opacity, 1.0,
+                        buffer, NULL);
+
+  g_object_unref (apply_opacity);
+
+  g_object_unref (buffer);
+  g_object_unref (mask);
+
   /*  Apply it to the image  */
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&bufPR, tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimp_drawable_apply_region (drawable, &bufPR,
                               TRUE, C_("undo-type", "Bucket Fill"),
                               opacity, paint_mode,
                               NULL, NULL, x1, y1);
-  tile_manager_unref (buf_tiles);
+
+  tile_manager_unref (tiles);
 
   gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
-
-  /*  free the mask  */
-  g_object_unref (mask);
-
-  if (new_buf)
-    temp_buf_free (pat_buf);
 
   gimp_unset_busy (image->gimp);
 }

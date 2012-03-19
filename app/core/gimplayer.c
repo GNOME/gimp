@@ -1601,7 +1601,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
       mask_buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (mask));
       dest_buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (layer));
 
-      apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0);
+      apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0,
+                                                           0, 0);
 
       gimp_drawable_apply_operation_to_buffer (GIMP_DRAWABLE (layer), NULL, NULL,
                                                apply_opacity, TRUE, dest_buffer);
