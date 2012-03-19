@@ -90,6 +90,7 @@ GimpLayer     * gimp_layer_new_from_buffer     (GeglBuffer           *buffer,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
 GimpLayer     * gimp_layer_new_from_tiles      (TileManager          *tiles,
+                                                const Babl           *format,
                                                 GimpImage            *dest_image,
                                                 GimpImageType         type,
                                                 const gchar          *name,

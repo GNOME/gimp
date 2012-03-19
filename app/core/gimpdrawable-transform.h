@@ -22,6 +22,7 @@
 TileManager  * gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                                      GimpContext            *context,
                                                      TileManager            *orig_tiles,
+                                                     const Babl             *orig_format,
                                                      gint                    orig_offset_x,
                                                      gint                    orig_offset_y,
                                                      const GimpMatrix3      *matrix,
@@ -35,6 +36,7 @@ TileManager  * gimp_drawable_transform_tiles_affine (GimpDrawable           *dra
 TileManager  * gimp_drawable_transform_tiles_flip   (GimpDrawable           *drawable,
                                                      GimpContext            *context,
                                                      TileManager            *orig_tiles,
+                                                     const Babl             *orig_format,
                                                      gint                    orig_offset_x,
                                                      gint                    orig_offset_y,
                                                      GimpOrientationType     flip_type,
@@ -46,6 +48,7 @@ TileManager  * gimp_drawable_transform_tiles_flip   (GimpDrawable           *dra
 TileManager  * gimp_drawable_transform_tiles_rotate (GimpDrawable           *drawable,
                                                      GimpContext            *context,
                                                      TileManager            *orig_tiles,
+                                                     const Babl             *orig_format,
                                                      gint                    orig_offset_x,
                                                      gint                    orig_offset_y,
                                                      GimpRotationType        rotate_type,
@@ -79,11 +82,13 @@ GimpDrawable * gimp_drawable_transform_rotate       (GimpDrawable           *dra
 
 TileManager  * gimp_drawable_transform_cut          (GimpDrawable           *drawable,
                                                      GimpContext            *context,
+                                                     const Babl            **format,
                                                      gint                   *offset_x,
                                                      gint                   *offset_y,
                                                      gboolean               *new_layer);
 GimpDrawable * gimp_drawable_transform_paste        (GimpDrawable           *drawable,
                                                      TileManager            *tiles,
+                                                     const Babl             *format,
                                                      gint                    offset_x,
                                                      gint                    offset_y,
                                                      gboolean                new_layer);

@@ -126,6 +126,7 @@ static TileManager *
                  gimp_transform_tool_real_transform         (GimpTransformTool     *tr_tool,
                                                              GimpItem              *item,
                                                              TileManager           *orig_tiles,
+                                                             const Babl            *orig_format,
                                                              gint                   orig_offset_x,
                                                              gint                   orig_offset_y,
                                                              gint                  *new_offset_x,
@@ -963,6 +964,7 @@ static TileManager *
 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpItem          *active_item,
                                     TileManager       *orig_tiles,
+                                    const Babl        *orig_format,
                                     gint               orig_offset_x,
                                     gint               orig_offset_y,
                                     gint              *new_offset_x,
@@ -1003,6 +1005,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
       ret = gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
                                                   context,
                                                   orig_tiles,
+                                                  orig_format,
                                                   orig_offset_x,
                                                   orig_offset_y,
                                                   &tr_tool->transform,
@@ -1048,6 +1051,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GimpImage            *image          = gimp_display_get_image (display);
   GimpItem             *active_item    = NULL;
   TileManager          *orig_tiles     = NULL;
+  const Babl           *orig_format    = NULL;
   gint                  orig_offset_x;
   gint                  orig_offset_y;
   TileManager          *new_tiles;
@@ -1117,6 +1121,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
         {
           orig_tiles = gimp_drawable_transform_cut (tool->drawable,
                                                     context,
+                                                    &orig_format,
                                                     &orig_offset_x,
                                                     &orig_offset_y,
                                                     &new_layer);
@@ -1138,6 +1143,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   new_tiles = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (tr_tool,
                                                                   active_item,
                                                                   orig_tiles,
+                                                                  orig_format,
                                                                   orig_offset_x,
                                                                   orig_offset_y,
                                                                   &new_offset_x,
@@ -1155,7 +1161,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
            *  undo...
            */
           gimp_drawable_transform_paste (tool->drawable,
-                                         new_tiles,
+                                         new_tiles, orig_format,
                                          new_offset_x, new_offset_y,
                                          new_layer);
           tile_manager_unref (new_tiles);

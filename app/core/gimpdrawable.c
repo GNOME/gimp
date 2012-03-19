@@ -651,6 +651,7 @@ gimp_drawable_flip (GimpItem            *item,
 
   tiles = gimp_drawable_transform_tiles_flip (drawable, context,
                                               gimp_drawable_get_tiles (drawable),
+                                              gimp_drawable_get_format (drawable),
                                               off_x, off_y,
                                               flip_type, axis,
                                               clip_result,
@@ -659,6 +660,7 @@ gimp_drawable_flip (GimpItem            *item,
   if (tiles)
     {
       gimp_drawable_transform_paste (drawable, tiles,
+                                     gimp_drawable_get_format (drawable),
                                      new_off_x, new_off_y, FALSE);
       tile_manager_unref (tiles);
     }
@@ -681,6 +683,7 @@ gimp_drawable_rotate (GimpItem         *item,
 
   tiles = gimp_drawable_transform_tiles_rotate (drawable, context,
                                                 gimp_drawable_get_tiles (drawable),
+                                                gimp_drawable_get_format (drawable),
                                                 off_x, off_y,
                                                 rotate_type, center_x, center_y,
                                                 clip_result,
@@ -689,6 +692,7 @@ gimp_drawable_rotate (GimpItem         *item,
   if (tiles)
     {
       gimp_drawable_transform_paste (drawable, tiles,
+                                     gimp_drawable_get_format (drawable),
                                      new_off_x, new_off_y, FALSE);
       tile_manager_unref (tiles);
     }
@@ -713,6 +717,7 @@ gimp_drawable_transform (GimpItem               *item,
 
   tiles = gimp_drawable_transform_tiles_affine (drawable, context,
                                                 gimp_drawable_get_tiles (drawable),
+                                                gimp_drawable_get_format (drawable),
                                                 off_x, off_y,
                                                 matrix, direction,
                                                 interpolation_type,
@@ -724,6 +729,7 @@ gimp_drawable_transform (GimpItem               *item,
   if (tiles)
     {
       gimp_drawable_transform_paste (drawable, tiles,
+                                     gimp_drawable_get_format (drawable),
                                      new_off_x, new_off_y, FALSE);
       tile_manager_unref (tiles);
     }

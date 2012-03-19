@@ -581,6 +581,7 @@ gimp_edit_extract (GimpImage     *image,
                    GError       **error)
 {
   TileManager *tiles;
+  const Babl  *format;
   gint         offset_x;
   gint         offset_y;
 
@@ -591,7 +592,7 @@ gimp_edit_extract (GimpImage     *image,
   tiles = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
                                   pickable, context,
                                   cut_pixels, FALSE, FALSE,
-                                  &offset_x, &offset_y, error);
+                                  &format, &offset_x, &offset_y, error);
 
   if (cut_pixels)
     gimp_image_undo_group_end (image);
@@ -601,7 +602,7 @@ gimp_edit_extract (GimpImage     *image,
       GeglBuffer *temp;
       GimpBuffer *buffer;
 
-      temp = gimp_tile_manager_create_buffer (tiles, NULL, TRUE);
+      temp = gimp_tile_manager_create_buffer (tiles, format, TRUE);
       tile_manager_unref (tiles);
 
       buffer = gimp_buffer_new (temp, _("Global Buffer"),

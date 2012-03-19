@@ -620,6 +620,7 @@ gimp_selection_extract (GimpSelection *selection,
                         gboolean       cut_image,
                         gboolean       keep_indexed,
                         gboolean       add_alpha,
+                        const Babl   **format,
                         gint          *offset_x,
                         gint          *offset_y,
                         GError       **error)
@@ -640,6 +641,7 @@ gimp_selection_extract (GimpSelection *selection,
   if (GIMP_IS_ITEM (pickable))
     g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (pickable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   image = gimp_pickable_get_image (pickable);
@@ -675,25 +677,41 @@ gimp_selection_extract (GimpSelection *selection,
   switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_pickable_get_image_type (pickable)))
     {
     case GIMP_RGB:
-      bytes = add_alpha ? 4 : gimp_pickable_get_bytes (pickable);
+      if (add_alpha)
+        *format = gimp_pickable_get_format_with_alpha (pickable);
+      else
+        *format = gimp_pickable_get_format (pickable);
+
       base_type = GIMP_RGB;
       break;
 
     case GIMP_GRAY:
-      bytes = add_alpha ? 2 : gimp_pickable_get_bytes (pickable);
+      if (add_alpha)
+        *format = gimp_pickable_get_format_with_alpha (pickable);
+      else
+        *format = gimp_pickable_get_format (pickable);
+
       base_type = GIMP_GRAY;
       break;
 
     case GIMP_INDEXED:
       if (keep_indexed)
         {
-          bytes = add_alpha ? 2 : gimp_pickable_get_bytes (pickable);
+          if (add_alpha)
+            *format = gimp_pickable_get_format_with_alpha (pickable);
+          else
+            *format = gimp_pickable_get_format (pickable);
+
           base_type = GIMP_GRAY;
         }
       else
         {
-          bytes = (add_alpha ||
-                   GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_pickable_get_image_type (pickable))) ? 4 : 3;
+          if (add_alpha ||
+              GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_pickable_get_image_type (pickable)))
+            *format = babl_format ("RGBA u8");
+          else
+            *format = babl_format ("RGB u8");
+
           base_type = GIMP_INDEXED;
         }
       break;
@@ -702,6 +720,8 @@ gimp_selection_extract (GimpSelection *selection,
       g_assert_not_reached ();
       break;
     }
+
+  bytes = babl_format_get_bytes_per_pixel (*format);
 
   gimp_image_get_background (image, context,
                              gimp_pickable_get_image_type (pickable),
@@ -821,6 +841,7 @@ gimp_selection_float (GimpSelection *selection,
   GimpImage   *image;
   GimpLayer   *layer;
   TileManager *tiles;
+  const Babl  *format;
   gint         x1, y1;
   gint         x2, y2;
 
@@ -848,7 +869,8 @@ gimp_selection_float (GimpSelection *selection,
 
   /*  Cut or copy the selected region  */
   tiles = gimp_selection_extract (selection, GIMP_PICKABLE (drawable), context,
-                                  cut_image, FALSE, TRUE, &x1, &y1, NULL);
+                                  cut_image, FALSE, TRUE,
+                                  &format, &x1, &y1, NULL);
 
   /*  Clear the selection  */
   gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);
@@ -857,7 +879,7 @@ gimp_selection_float (GimpSelection *selection,
    *  because it may be different from the image's type if we cut from
    *  a channel or layer mask
    */
-  layer = gimp_layer_new_from_tiles (tiles,
+  layer = gimp_layer_new_from_tiles (tiles, format,
                                      image,
                                      gimp_drawable_type_with_alpha (drawable),
                                      _("Floated Layer"),

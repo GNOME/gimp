@@ -108,6 +108,7 @@ struct _GimpTransformToolClass
   TileManager * (* transform)     (GimpTransformTool *tool,
                                    GimpItem          *item,
                                    TileManager       *orig_tiles,
+                                   const Babl        *orig_format,
                                    gint               orig_offset_x,
                                    gint               orig_offset_y,
                                    gint              *new_offset_x,

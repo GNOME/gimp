@@ -1138,6 +1138,7 @@ gimp_layer_new_from_buffer (GeglBuffer           *buffer,
 /**
  * gimp_layer_new_from_tiles:
  * @tiles:      The buffer to make the new layer from.
+ * @format:     The tiles' pixel format
  * @dest_image: The image the new layer will be added to.
  * @type:       The #GimpImageType of the new layer.
  * @name:       The new layer's name.
@@ -1152,6 +1153,7 @@ gimp_layer_new_from_buffer (GeglBuffer           *buffer,
  **/
 GimpLayer *
 gimp_layer_new_from_tiles (TileManager          *tiles,
+                           const Babl           *format,
                            GimpImage            *dest_image,
                            GimpImageType         type,
                            const gchar          *name,
@@ -1162,9 +1164,10 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
   GimpLayer  *layer;
 
   g_return_val_if_fail (tiles != NULL, NULL);
+  g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
 
-  buffer = gimp_tile_manager_create_buffer (tiles, NULL, FALSE);
+  buffer = gimp_tile_manager_create_buffer (tiles, format, FALSE);
 
   layer = gimp_layer_new_from_buffer (buffer, dest_image, type,
                                       name, opacity, mode);

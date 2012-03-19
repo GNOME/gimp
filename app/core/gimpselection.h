@@ -64,6 +64,7 @@ TileManager * gimp_selection_extract       (GimpSelection *selection,
                                             gboolean       cut_image,
                                             gboolean       keep_indexed,
                                             gboolean       add_alpha,
+                                            const Babl   **format,
                                             gint          *offset_x,
                                             gint          *offset_y,
                                             GError       **error);
