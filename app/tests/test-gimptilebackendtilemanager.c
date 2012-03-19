@@ -30,7 +30,7 @@
 
 #include "gegl/gimptilebackendtilemanager.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "tests.h"
 #include "gimp-app-test-utils.h"
@@ -50,10 +50,10 @@
 static void
 basic_usage (void)
 {
-  GeglRectangle rect                = { 0, 0, 10, 10 };
-  GeglRectangle pixel_rect          = { 5, 5, 1, 1 };
-  guchar        opaque_magenta8[4]  = { 0xff, 0, 0xff, 0xff };
-  guint16       opaque_magenta16[4] = { 0xffff, 0, 0xffff, 0xffff };
+  GeglRectangle  rect                = { 0, 0, 10, 10 };
+  GeglRectangle  pixel_rect          = { 5, 5, 1, 1 };
+  guint16        opaque_magenta16[4] = { 0xffff, 0, 0xffff, 0xffff };
+  GeglColor     *magenta             = gegl_color_new (NULL);
 
   PixelRegion      pr;
   TileManager     *tm;
@@ -64,13 +64,17 @@ basic_usage (void)
   /* Write some pixels to the tile manager */
   tm = tile_manager_new (rect.width, rect.height, 4);
   pixel_region_init (&pr, tm, rect.x, rect.y, rect.width, rect.height, TRUE);
-  color_region (&pr, opaque_magenta8);
+
+  buffer = gimp_tile_manager_create_buffer (tm, NULL, TRUE);
+  gegl_color_set_rgba (magenta, 1.0, 0.0, 1.0, 1.0);
+  gegl_buffer_set_color (buffer, NULL, magenta);
+  g_object_unref (magenta);
 
   /* Make sure we can read them through the GeglBuffer using the
    * TileManager backend. Use u16 to complicate code paths, decreasing
    * risk of the test accidentally passing
    */
-  backend = gimp_tile_backend_tile_manager_new (tm, FALSE);
+  backend = gimp_tile_backend_tile_manager_new (tm, NULL, FALSE);
   buffer  = gegl_buffer_new_for_backend (NULL, backend);
   gegl_buffer_get (buffer,
                    &pixel_rect, 1.0 /*scale*/,
