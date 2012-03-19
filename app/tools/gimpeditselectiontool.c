@@ -76,8 +76,8 @@ struct _GimpEditSelectionTool
   gint                x, y;            /*  Current x and y coords            */
   gint                num_segs_in;     /*  Num seg in selection boundary     */
   gint                num_segs_out;    /*  Num seg in selection boundary     */
-  BoundSeg           *segs_in;         /*  Pointer to the channel sel. segs  */
-  BoundSeg           *segs_out;        /*  Pointer to the channel sel. segs  */
+  GimpBoundSeg       *segs_in;         /*  Pointer to the channel sel. segs  */
+  GimpBoundSeg       *segs_out;        /*  Pointer to the channel sel. segs  */
 
   gint                x1, y1;          /*  Bounding box of selection mask    */
   gint                x2, y2;
@@ -193,8 +193,8 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   GimpItem              *active_item;
   GimpChannel           *channel;
   gint                   off_x, off_y;
-  const BoundSeg        *segs_in;
-  const BoundSeg        *segs_out;
+  const GimpBoundSeg    *segs_in;
+  const GimpBoundSeg    *segs_out;
   const gchar           *undo_desc;
 
   edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL,
@@ -282,10 +282,10 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                          0, 0, 0, 0);
 
   edit_select->segs_in = g_memdup (segs_in,
-                                   edit_select->num_segs_in * sizeof (BoundSeg));
+                                   edit_select->num_segs_in * sizeof (GimpBoundSeg));
 
   edit_select->segs_out = g_memdup (segs_out,
-                                    edit_select->num_segs_out * sizeof (BoundSeg));
+                                    edit_select->num_segs_out * sizeof (GimpBoundSeg));
 
   if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
     {

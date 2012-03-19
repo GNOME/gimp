@@ -71,9 +71,9 @@ static void   gimp_region_select_tool_cursor_update  (GimpTool              *too
 
 static void   gimp_region_select_tool_draw           (GimpDrawTool          *draw_tool);
 
-static BoundSeg * gimp_region_select_tool_calculate  (GimpRegionSelectTool  *region_sel,
-                                                      GimpDisplay           *display,
-                                                      gint                  *n_segs);
+static GimpBoundSeg * gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
+                                                         GimpDisplay          *display,
+                                                         gint                 *n_segs);
 
 
 G_DEFINE_TYPE (GimpRegionSelectTool, gimp_region_select_tool,
@@ -339,13 +339,13 @@ gimp_region_select_tool_draw (GimpDrawTool *draw_tool)
     }
 }
 
-static BoundSeg *
+static GimpBoundSeg *
 gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
                                    GimpDisplay          *display,
                                    gint                 *n_segs)
 {
   GimpDisplayShell *shell = gimp_display_get_shell (display);
-  BoundSeg         *segs;
+  GimpBoundSeg     *segs;
   PixelRegion       maskPR;
 
   gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
@@ -375,12 +375,12 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
                      gimp_item_get_height (GIMP_ITEM (region_sel->region_mask)),
                      FALSE);
 
-  segs = boundary_find (&maskPR, BOUNDARY_WITHIN_BOUNDS,
-                        0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (region_sel->region_mask)),
-                        gimp_item_get_height (GIMP_ITEM (region_sel->region_mask)),
-                        BOUNDARY_HALF_WAY,
-                        n_segs);
+  segs = gimp_boundary_find (&maskPR, GIMP_BOUNDARY_WITHIN_BOUNDS,
+                             0, 0,
+                             gimp_item_get_width  (GIMP_ITEM (region_sel->region_mask)),
+                             gimp_item_get_height (GIMP_ITEM (region_sel->region_mask)),
+                             GIMP_BOUNDARY_HALF_WAY,
+                             n_segs);
 
   gimp_display_shell_unset_override_cursor (shell);
 

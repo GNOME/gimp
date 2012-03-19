@@ -138,90 +138,90 @@ static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
                                                 gboolean           *active);
 
-static void      gimp_channel_apply_region   (GimpDrawable      *drawable,
-                                              PixelRegion       *src2PR,
-                                              gboolean           push_undo,
-                                              const gchar       *undo_desc,
-                                              gdouble            opacity,
+static void      gimp_channel_apply_region   (GimpDrawable        *drawable,
+                                              PixelRegion         *src2PR,
+                                              gboolean             push_undo,
+                                              const gchar         *undo_desc,
+                                              gdouble              opacity,
                                               GimpLayerModeEffects  mode,
-                                              TileManager       *src1_tiles,
-                                              PixelRegion       *destPR,
-                                              gint               x,
-                                              gint               y);
-static void      gimp_channel_replace_region (GimpDrawable      *drawable,
-                                              PixelRegion       *src2PR,
-                                              gboolean           push_undo,
-                                              const gchar       *undo_desc,
-                                              gdouble            opacity,
-                                              PixelRegion        *maskPR,
-                                              gint               x,
-                                              gint               y);
-static void      gimp_channel_set_tiles      (GimpDrawable      *drawable,
-                                              gboolean           push_undo,
-                                              const gchar       *undo_desc,
-                                              TileManager       *tiles,
-                                              GimpImageType      type,
-                                              gint               offset_x,
-                                              gint               offset_y);
-static GeglNode * gimp_channel_get_node      (GimpItem          *item);
-static void      gimp_channel_swap_pixels    (GimpDrawable      *drawable,
-                                              TileManager       *tiles,
-                                              gboolean           sparse,
-                                              gint               x,
-                                              gint               y,
-                                              gint               width,
-                                              gint               height);
+                                              TileManager         *src1_tiles,
+                                              PixelRegion         *destPR,
+                                              gint                 x,
+                                              gint                 y);
+static void      gimp_channel_replace_region (GimpDrawable        *drawable,
+                                              PixelRegion         *src2PR,
+                                              gboolean             push_undo,
+                                              const gchar         *undo_desc,
+                                              gdouble              opacity,
+                                              PixelRegion          *maskPR,
+                                              gint                 x,
+                                              gint                 y);
+static void      gimp_channel_set_tiles      (GimpDrawable        *drawable,
+                                              gboolean             push_undo,
+                                              const gchar         *undo_desc,
+                                              TileManager         *tiles,
+                                              GimpImageType        type,
+                                              gint                 offset_x,
+                                              gint                 offset_y);
+static GeglNode * gimp_channel_get_node      (GimpItem            *item);
+static void      gimp_channel_swap_pixels    (GimpDrawable        *drawable,
+                                              TileManager         *tiles,
+                                              gboolean             sparse,
+                                              gint                 x,
+                                              gint                 y,
+                                              gint                 width,
+                                              gint                 height);
 
-static gint      gimp_channel_get_opacity_at (GimpPickable      *pickable,
-                                              gint               x,
-                                              gint               y);
+static gint      gimp_channel_get_opacity_at (GimpPickable        *pickable,
+                                              gint                 x,
+                                              gint                 y);
 
-static gboolean   gimp_channel_real_boundary (GimpChannel       *channel,
-                                              const BoundSeg   **segs_in,
-                                              const BoundSeg   **segs_out,
-                                              gint              *num_segs_in,
-                                              gint              *num_segs_out,
-                                              gint               x1,
-                                              gint               y1,
-                                              gint               x2,
-                                              gint               y2);
-static gboolean   gimp_channel_real_bounds   (GimpChannel       *channel,
-                                              gint              *x1,
-                                              gint              *y1,
-                                              gint              *x2,
-                                              gint              *y2);
-static gboolean   gimp_channel_real_is_empty (GimpChannel       *channel);
-static void       gimp_channel_real_feather  (GimpChannel       *channel,
-                                              gdouble            radius_x,
-                                              gdouble            radius_y,
-                                              gboolean           push_undo);
-static void       gimp_channel_real_sharpen  (GimpChannel       *channel,
-                                              gboolean           push_undo);
-static void       gimp_channel_real_clear    (GimpChannel       *channel,
-                                              const gchar       *undo_desc,
-                                              gboolean           push_undo);
-static void       gimp_channel_real_all      (GimpChannel       *channel,
-                                              gboolean           push_undo);
-static void       gimp_channel_real_invert   (GimpChannel       *channel,
-                                              gboolean           push_undo);
-static void       gimp_channel_real_border   (GimpChannel       *channel,
-                                              gint               radius_x,
-                                              gint               radius_y,
-                                              gboolean           feather,
-                                              gboolean           edge_lock,
-                                              gboolean           push_undo);
-static void       gimp_channel_real_grow     (GimpChannel       *channel,
-                                              gint               radius_x,
-                                              gint               radius_y,
-                                              gboolean           push_undo);
-static void       gimp_channel_real_shrink   (GimpChannel       *channel,
-                                              gint               radius_x,
-                                              gint               radius_y,
-                                              gboolean           edge_lock,
-                                              gboolean           push_undo);
+static gboolean   gimp_channel_real_boundary (GimpChannel         *channel,
+                                              const GimpBoundSeg **segs_in,
+                                              const GimpBoundSeg **segs_out,
+                                              gint                *num_segs_in,
+                                              gint                *num_segs_out,
+                                              gint                 x1,
+                                              gint                 y1,
+                                              gint                 x2,
+                                              gint                 y2);
+static gboolean   gimp_channel_real_bounds   (GimpChannel         *channel,
+                                              gint                *x1,
+                                              gint                *y1,
+                                              gint                *x2,
+                                              gint                *y2);
+static gboolean   gimp_channel_real_is_empty (GimpChannel         *channel);
+static void       gimp_channel_real_feather  (GimpChannel         *channel,
+                                              gdouble              radius_x,
+                                              gdouble              radius_y,
+                                              gboolean             push_undo);
+static void       gimp_channel_real_sharpen  (GimpChannel         *channel,
+                                              gboolean             push_undo);
+static void       gimp_channel_real_clear    (GimpChannel         *channel,
+                                              const gchar         *undo_desc,
+                                              gboolean             push_undo);
+static void       gimp_channel_real_all      (GimpChannel         *channel,
+                                              gboolean             push_undo);
+static void       gimp_channel_real_invert   (GimpChannel         *channel,
+                                              gboolean             push_undo);
+static void       gimp_channel_real_border   (GimpChannel         *channel,
+                                              gint                 radius_x,
+                                              gint                 radius_y,
+                                              gboolean             feather,
+                                              gboolean             edge_lock,
+                                              gboolean             push_undo);
+static void       gimp_channel_real_grow     (GimpChannel         *channel,
+                                              gint                 radius_x,
+                                              gint                 radius_y,
+                                              gboolean             push_undo);
+static void       gimp_channel_real_shrink   (GimpChannel         *channel,
+                                              gint                 radius_x,
+                                              gint                 radius_y,
+                                              gboolean             edge_lock,
+                                              gboolean             push_undo);
 
-static void       gimp_channel_validate_tile (TileManager       *tm,
-                                              Tile              *tile);
+static void       gimp_channel_validate_tile (TileManager         *tm,
+                                              Tile                *tile);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE,
@@ -372,8 +372,8 @@ gimp_channel_get_memsize (GimpObject *object,
 {
   GimpChannel *channel = GIMP_CHANNEL (object);
 
-  *gui_size += channel->num_segs_in  * sizeof (BoundSeg);
-  *gui_size += channel->num_segs_out * sizeof (BoundSeg);
+  *gui_size += channel->num_segs_in  * sizeof (GimpBoundSeg);
+  *gui_size += channel->num_segs_out * sizeof (GimpBoundSeg);
 
   return GIMP_OBJECT_CLASS (parent_class)->get_memsize (object, gui_size);
 }
@@ -721,13 +721,13 @@ gimp_channel_stroke (GimpItem           *item,
                      GimpProgress       *progress,
                      GError            **error)
 {
-  GimpChannel    *channel = GIMP_CHANNEL (item);
-  const BoundSeg *segs_in;
-  const BoundSeg *segs_out;
-  gint            n_segs_in;
-  gint            n_segs_out;
-  gboolean        retval = FALSE;
-  gint            offset_x, offset_y;
+  GimpChannel        *channel = GIMP_CHANNEL (item);
+  const GimpBoundSeg *segs_in;
+  const GimpBoundSeg *segs_out;
+  gint                n_segs_in;
+  gint                n_segs_out;
+  gboolean            retval = FALSE;
+  gint                offset_x, offset_y;
 
   if (! gimp_channel_boundary (channel, &segs_in, &segs_out,
                                &n_segs_in, &n_segs_out,
@@ -1000,15 +1000,15 @@ gimp_channel_get_opacity_at (GimpPickable *pickable,
 }
 
 static gboolean
-gimp_channel_real_boundary (GimpChannel     *channel,
-                            const BoundSeg **segs_in,
-                            const BoundSeg **segs_out,
-                            gint            *num_segs_in,
-                            gint            *num_segs_out,
-                            gint             x1,
-                            gint             y1,
-                            gint             x2,
-                            gint             y2)
+gimp_channel_real_boundary (GimpChannel         *channel,
+                            const GimpBoundSeg **segs_in,
+                            const GimpBoundSeg **segs_out,
+                            gint                *num_segs_in,
+                            gint                *num_segs_out,
+                            gint                 x1,
+                            gint                 y1,
+                            gint                 x2,
+                            gint                 y2)
 {
   gint         x3, y3, x4, y4;
   PixelRegion  bPR;
@@ -1025,10 +1025,10 @@ gimp_channel_real_boundary (GimpChannel     *channel,
                              gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
                              x3, y3, x4 - x3, y4 - y3, FALSE);
 
-          channel->segs_out = boundary_find (&bPR, BOUNDARY_IGNORE_BOUNDS,
-                                             x1, y1, x2, y2,
-                                             BOUNDARY_HALF_WAY,
-                                             &channel->num_segs_out);
+          channel->segs_out = gimp_boundary_find (&bPR, GIMP_BOUNDARY_IGNORE_BOUNDS,
+                                                  x1, y1, x2, y2,
+                                                  GIMP_BOUNDARY_HALF_WAY,
+                                                  &channel->num_segs_out);
           x1 = MAX (x1, x3);
           y1 = MAX (y1, y3);
           x2 = MIN (x2, x4);
@@ -1042,10 +1042,10 @@ gimp_channel_real_boundary (GimpChannel     *channel,
                                  gimp_item_get_width  (GIMP_ITEM (channel)),
                                  gimp_item_get_height (GIMP_ITEM (channel)), FALSE);
 
-              channel->segs_in = boundary_find (&bPR, BOUNDARY_WITHIN_BOUNDS,
-                                                x1, y1, x2, y2,
-                                                BOUNDARY_HALF_WAY,
-                                                &channel->num_segs_in);
+              channel->segs_in = gimp_boundary_find (&bPR, GIMP_BOUNDARY_WITHIN_BOUNDS,
+                                                     x1, y1, x2, y2,
+                                                     GIMP_BOUNDARY_HALF_WAY,
+                                                     &channel->num_segs_in);
             }
           else
             {
@@ -1929,15 +1929,15 @@ gimp_channel_new_mask (GimpImage *image,
 }
 
 gboolean
-gimp_channel_boundary (GimpChannel     *channel,
-                       const BoundSeg **segs_in,
-                       const BoundSeg **segs_out,
-                       gint            *num_segs_in,
-                       gint            *num_segs_out,
-                       gint             x1,
-                       gint             y1,
-                       gint             x2,
-                       gint             y2)
+gimp_channel_boundary (GimpChannel         *channel,
+                       const GimpBoundSeg **segs_in,
+                       const GimpBoundSeg **segs_out,
+                       gint                *num_segs_in,
+                       gint                *num_segs_out,
+                       gint                 x1,
+                       gint                 y1,
+                       gint                 x2,
+                       gint                 y2)
 {
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
   g_return_val_if_fail (segs_in != NULL, FALSE);

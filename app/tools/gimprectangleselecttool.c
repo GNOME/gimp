@@ -758,7 +758,7 @@ gimp_rectangle_select_tool_execute (GimpRectangleTool *rectangle,
 
       /*  if the click was inside the marching ants  */
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
-                                        pressx, pressy) > BOUNDARY_HALF_WAY)
+                                        pressx, pressy) > GIMP_BOUNDARY_HALF_WAY)
         {
           gint x1, y1, x2, y2;
 

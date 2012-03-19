@@ -31,8 +31,8 @@ GType            gimp_bezier_desc_get_type (void) G_GNUC_CONST;
 GimpBezierDesc * gimp_bezier_desc_new                 (cairo_path_data_t    *data,
                                                        gint                  n_data);
 
-/* expects sorted BoundSegs */
-GimpBezierDesc * gimp_bezier_desc_new_from_bound_segs (BoundSeg             *bound_segs,
+/* expects sorted GimpBoundSegs */
+GimpBezierDesc * gimp_bezier_desc_new_from_bound_segs (GimpBoundSeg         *bound_segs,
                                                        gint                  n_bound_segs,
                                                        gint                  n_bound_groups);
 

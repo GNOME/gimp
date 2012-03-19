@@ -24,14 +24,14 @@
 
 void       gimp_drawable_fill_boundary   (GimpDrawable       *drawable,
                                           GimpFillOptions    *options,
-                                          const BoundSeg     *bound_segs,
+                                          const GimpBoundSeg *bound_segs,
                                           gint                n_bound_segs,
                                           gint                offset_x,
                                           gint                offset_y,
                                           gboolean            push_undo);
 void       gimp_drawable_stroke_boundary (GimpDrawable       *drawable,
                                           GimpStrokeOptions   *options,
-                                          const BoundSeg     *bound_segs,
+                                          const GimpBoundSeg *bound_segs,
                                           gint                n_bound_segs,
                                           gint                offset_x,
                                           gint                offset_y,

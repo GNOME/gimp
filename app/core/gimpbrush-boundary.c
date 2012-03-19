@@ -45,25 +45,25 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
 
   if (mask)
     {
-      PixelRegion  maskPR;
-      BoundSeg    *bound_segs;
-      gint         n_bound_segs;
+      PixelRegion   maskPR;
+      GimpBoundSeg *bound_segs;
+      gint          n_bound_segs;
 
       pixel_region_init_temp_buf (&maskPR, (TempBuf *) mask,
                                   0, 0, mask->width, mask->height);
 
-      bound_segs = boundary_find (&maskPR, BOUNDARY_WITHIN_BOUNDS,
-                                  0, 0, maskPR.w, maskPR.h,
-                                  0,
-                                  &n_bound_segs);
+      bound_segs = gimp_boundary_find (&maskPR, GIMP_BOUNDARY_WITHIN_BOUNDS,
+                                       0, 0, maskPR.w, maskPR.h,
+                                       0,
+                                       &n_bound_segs);
 
       if (bound_segs)
         {
-          BoundSeg *stroke_segs;
-          gint      n_stroke_groups;
+          GimpBoundSeg *stroke_segs;
+          gint          n_stroke_groups;
 
-          stroke_segs = boundary_sort (bound_segs, n_bound_segs,
-                                       &n_stroke_groups);
+          stroke_segs = gimp_boundary_sort (bound_segs, n_bound_segs,
+                                            &n_stroke_groups);
 
           g_free (bound_segs);
 

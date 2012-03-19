@@ -186,7 +186,7 @@ floating_sel_activate_drawable (GimpLayer *layer)
     }
 }
 
-const BoundSeg *
+const GimpBoundSeg *
 floating_sel_boundary (GimpLayer *layer,
                        gint      *n_segs)
 {
@@ -215,10 +215,10 @@ floating_sel_boundary (GimpLayer *layer,
           pixel_region_init (&bPR,
                              gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                              0, 0, width, height, FALSE);
-          layer->fs.segs = boundary_find (&bPR, BOUNDARY_WITHIN_BOUNDS,
-                                          0, 0, width, height,
-                                          BOUNDARY_HALF_WAY,
-                                          &layer->fs.num_segs);
+          layer->fs.segs = gimp_boundary_find (&bPR, GIMP_BOUNDARY_WITHIN_BOUNDS,
+                                               0, 0, width, height,
+                                               GIMP_BOUNDARY_HALF_WAY,
+                                               &layer->fs.num_segs);
 
           /*  offset the segments  */
           for (i = 0; i < layer->fs.num_segs; i++)
@@ -232,7 +232,7 @@ floating_sel_boundary (GimpLayer *layer,
       else
         {
           layer->fs.num_segs = 4;
-          layer->fs.segs     = g_new0 (BoundSeg, 4);
+          layer->fs.segs     = g_new0 (GimpBoundSeg, 4);
 
           /* top */
           layer->fs.segs[0].x1 = off_x;

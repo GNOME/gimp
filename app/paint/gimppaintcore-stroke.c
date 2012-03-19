@@ -96,26 +96,26 @@ gimp_paint_core_stroke (GimpPaintCore     *core,
 }
 
 gboolean
-gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
-                                 GimpDrawable      *drawable,
-                                 GimpPaintOptions  *paint_options,
-                                 gboolean           emulate_dynamics,
-                                 const BoundSeg    *bound_segs,
-                                 gint               n_bound_segs,
-                                 gint               offset_x,
-                                 gint               offset_y,
-                                 gboolean           push_undo,
-                                 GError           **error)
+gimp_paint_core_stroke_boundary (GimpPaintCore      *core,
+                                 GimpDrawable       *drawable,
+                                 GimpPaintOptions   *paint_options,
+                                 gboolean            emulate_dynamics,
+                                 const GimpBoundSeg *bound_segs,
+                                 gint                n_bound_segs,
+                                 gint                offset_x,
+                                 gint                offset_y,
+                                 gboolean            push_undo,
+                                 GError            **error)
 {
-  BoundSeg   *stroke_segs;
-  gint        n_stroke_segs;
-  gint        off_x;
-  gint        off_y;
-  GimpCoords *coords;
-  gboolean    initialized = FALSE;
-  gint        n_coords;
-  gint        seg;
-  gint        s;
+  GimpBoundSeg *stroke_segs;
+  gint          n_stroke_segs;
+  gint          off_x;
+  gint          off_y;
+  GimpCoords   *coords;
+  gboolean      initialized = FALSE;
+  gint          n_coords;
+  gint          seg;
+  gint          s;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -124,7 +124,8 @@ gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
   g_return_val_if_fail (bound_segs != NULL && n_bound_segs > 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  stroke_segs = boundary_sort (bound_segs, n_bound_segs, &n_stroke_segs);
+  stroke_segs = gimp_boundary_sort (bound_segs, n_bound_segs,
+                                    &n_stroke_segs);
 
   if (n_stroke_segs == 0)
     return TRUE;

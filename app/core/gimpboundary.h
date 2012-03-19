@@ -15,22 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef  __BOUNDARY_H__
-#define  __BOUNDARY_H__
+#ifndef  __GIMP_BOUNDARY_H__
+#define  __GIMP_BOUNDARY_H__
 
 
 /* half intensity for mask */
-#define BOUNDARY_HALF_WAY 127
+#define GIMP_BOUNDARY_HALF_WAY 127
 
 
 typedef enum
 {
-  BOUNDARY_WITHIN_BOUNDS,
-  BOUNDARY_IGNORE_BOUNDS
-} BoundaryType;
+  GIMP_BOUNDARY_WITHIN_BOUNDS,
+  GIMP_BOUNDARY_IGNORE_BOUNDS
+} GimpBoundaryType;
 
 
-struct _BoundSeg
+struct _GimpBoundSeg
 {
   gint   x1;
   gint   y1;
@@ -41,26 +41,26 @@ struct _BoundSeg
 };
 
 
-BoundSeg * boundary_find      (PixelRegion    *maskPR,
-                               BoundaryType    type,
-                               gint            x1,
-                               gint            y1,
-                               gint            x2,
-                               gint            y2,
-                               guchar          threshold,
-                               gint           *num_segs);
-BoundSeg * boundary_sort      (const BoundSeg *segs,
-                               gint            num_segs,
-                               gint           *num_groups);
-BoundSeg * boundary_simplify  (BoundSeg       *sorted_segs,
-                               gint            num_groups,
-                               gint           *num_segs);
+GimpBoundSeg * gimp_boundary_find      (PixelRegion        *maskPR,
+                                        GimpBoundaryType    type,
+                                        gint                x1,
+                                        gint                y1,
+                                        gint                x2,
+                                        gint                y2,
+                                        guchar              threshold,
+                                        gint               *num_segs);
+GimpBoundSeg * gimp_boundary_sort      (const GimpBoundSeg *segs,
+                                        gint                num_segs,
+                                        gint               *num_groups);
+GimpBoundSeg * gimp_boundary_simplify  (GimpBoundSeg       *sorted_segs,
+                                        gint                num_groups,
+                                        gint               *num_segs);
 
 /* offsets in-place */
-void       boundary_offset    (BoundSeg       *segs,
-                               gint            num_segs,
-                               gint            off_x,
-                               gint            off_y);
+void       gimp_boundary_offset        (GimpBoundSeg       *segs,
+                                        gint                num_segs,
+                                        gint                off_x,
+                                        gint                off_y);
 
 
-#endif  /*  __BOUNDARY_H__  */
+#endif  /*  __GIMP_BOUNDARY_H__  */

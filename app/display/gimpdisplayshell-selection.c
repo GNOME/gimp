@@ -61,23 +61,23 @@ struct _Selection
 
 /*  local function prototypes  */
 
-static void      selection_start          (Selection      *selection);
-static void      selection_stop           (Selection      *selection);
+static void      selection_start          (Selection          *selection);
+static void      selection_stop           (Selection          *selection);
 
-static void      selection_draw           (Selection      *selection);
-static void      selection_undraw         (Selection      *selection);
+static void      selection_draw           (Selection          *selection);
+static void      selection_undraw         (Selection          *selection);
 
-static void      selection_render_mask    (Selection      *selection);
+static void      selection_render_mask    (Selection          *selection);
 
-static void      selection_transform_segs (Selection      *selection,
-                                           const BoundSeg *src_segs,
-                                           GimpSegment    *dest_segs,
-                                           gint            n_segs);
-static void      selection_generate_segs  (Selection      *selection);
-static void      selection_free_segs      (Selection      *selection);
+static void      selection_transform_segs (Selection          *selection,
+                                           const GimpBoundSeg *src_segs,
+                                           GimpSegment        *dest_segs,
+                                           gint                n_segs);
+static void      selection_generate_segs  (Selection          *selection);
+static void      selection_free_segs      (Selection          *selection);
 
-static gboolean  selection_start_timeout  (Selection      *selection);
-static gboolean  selection_timeout        (Selection      *selection);
+static gboolean  selection_start_timeout  (Selection          *selection);
+static gboolean  selection_timeout        (Selection          *selection);
 
 static gboolean  selection_window_state_event      (GtkWidget           *shell,
                                                     GdkEventWindowState *event,
@@ -305,10 +305,10 @@ selection_render_mask (Selection *selection)
 }
 
 static void
-selection_transform_segs (Selection      *selection,
-                          const BoundSeg *src_segs,
-                          GimpSegment    *dest_segs,
-                          gint            n_segs)
+selection_transform_segs (Selection          *selection,
+                          const GimpBoundSeg *src_segs,
+                          GimpSegment        *dest_segs,
+                          gint                n_segs)
 {
   const gint xclamp = selection->shell->disp_width + 1;
   const gint yclamp = selection->shell->disp_height + 1;
@@ -351,9 +351,9 @@ selection_transform_segs (Selection      *selection,
 static void
 selection_generate_segs (Selection *selection)
 {
-  GimpImage      *image = gimp_display_get_image (selection->shell->display);
-  const BoundSeg *segs_in;
-  const BoundSeg *segs_out;
+  GimpImage          *image = gimp_display_get_image (selection->shell->display);
+  const GimpBoundSeg *segs_in;
+  const GimpBoundSeg *segs_out;
 
   /*  Ask the image for the boundary of its selected region...
    *  Then transform that information into a new buffer of GimpSegments

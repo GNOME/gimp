@@ -199,7 +199,7 @@ GimpCanvasItem * gimp_draw_tool_add_pen              (GimpDrawTool     *draw_too
                                                       gint              width);
 
 GimpCanvasItem * gimp_draw_tool_add_boundary         (GimpDrawTool     *draw_tool,
-                                                      const BoundSeg   *bound_segs,
+                                                      const GimpBoundSeg *bound_segs,
                                                       gint              n_bound_segs,
                                                       GimpMatrix3      *transform,
                                                       gdouble           offset_x,

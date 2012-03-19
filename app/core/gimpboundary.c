@@ -33,106 +33,106 @@
 #include "gimpboundary.h"
 
 
-/* BoundSeg array growth parameter */
+/* GimpBoundSeg array growth parameter */
 #define MAX_SEGS_INC  2048
 
 
-typedef struct _Boundary Boundary;
+typedef struct _GimpBoundary GimpBoundary;
 
-struct _Boundary
+struct _GimpBoundary
 {
   /*  The array of segments  */
-  BoundSeg *segs;
-  gint      num_segs;
-  gint      max_segs;
+  GimpBoundSeg *segs;
+  gint          num_segs;
+  gint          max_segs;
 
   /*  The array of vertical segments  */
-  gint     *vert_segs;
+  gint         *vert_segs;
 
   /*  The empty segment arrays */
-  gint     *empty_segs_n;
-  gint     *empty_segs_c;
-  gint     *empty_segs_l;
-  gint      max_empty_segs;
+  gint         *empty_segs_n;
+  gint         *empty_segs_c;
+  gint         *empty_segs_l;
+  gint          max_empty_segs;
 };
 
 
 /*  local function prototypes  */
 
-static Boundary * boundary_new        (PixelRegion     *PR);
-static BoundSeg * boundary_free       (Boundary        *boundary,
-                                       gboolean         free_segs);
+static GimpBoundary * gimp_boundary_new        (PixelRegion     *PR);
+static GimpBoundSeg * gimp_boundary_free       (GimpBoundary    *boundary,
+                                                gboolean         free_segs);
 
-static void       boundary_add_seg    (Boundary        *bounrady,
-                                       gint             x1,
-                                       gint             y1,
-                                       gint             x2,
-                                       gint             y2,
-                                       gboolean         open);
+static void       gimp_boundary_add_seg    (GimpBoundary        *bounrady,
+                                            gint             x1,
+                                            gint             y1,
+                                            gint             x2,
+                                            gint             y2,
+                                            gboolean         open);
 
-static void       find_empty_segs     (PixelRegion     *maskPR,
-                                       gint             scanline,
-                                       gint             empty_segs[],
-                                       gint             max_empty,
-                                       gint            *num_empty,
-                                       BoundaryType     type,
-                                       gint             x1,
-                                       gint             y1,
-                                       gint             x2,
-                                       gint             y2,
-                                       guchar           threshold);
-static void       process_horiz_seg   (Boundary        *boundary,
-                                       gint             x1,
-                                       gint             y1,
-                                       gint             x2,
-                                       gint             y2,
-                                       gboolean         open);
-static void       make_horiz_segs     (Boundary        *boundary,
-                                       gint             start,
-                                       gint             end,
-                                       gint             scanline,
-                                       gint             empty[],
-                                       gint             num_empty,
-                                       gint             top);
-static Boundary * generate_boundary   (PixelRegion     *PR,
-                                       BoundaryType     type,
-                                       gint             x1,
-                                       gint             y1,
-                                       gint             x2,
-                                       gint             y2,
-                                       guchar           threshold);
+static void       find_empty_segs     (PixelRegion      *maskPR,
+                                       gint              scanline,
+                                       gint              empty_segs[],
+                                       gint              max_empty,
+                                       gint             *num_empty,
+                                       GimpBoundaryType  type,
+                                       gint              x1,
+                                       gint              y1,
+                                       gint              x2,
+                                       gint              y2,
+                                       guchar            threshold);
+static void       process_horiz_seg   (GimpBoundary     *boundary,
+                                       gint              x1,
+                                       gint              y1,
+                                       gint              x2,
+                                       gint              y2,
+                                       gboolean          open);
+static void       make_horiz_segs     (GimpBoundary     *boundary,
+                                       gint              start,
+                                       gint              end,
+                                       gint              scanline,
+                                       gint              empty[],
+                                       gint              num_empty,
+                                       gint              top);
+static GimpBoundary * generate_boundary   (PixelRegion     *PR,
+                                           GimpBoundaryType     type,
+                                           gint             x1,
+                                           gint             y1,
+                                           gint             x2,
+                                           gint             y2,
+                                           guchar           threshold);
 
-static gint       cmp_segptr_xy1_addr (const BoundSeg **seg_ptr_a,
-                                       const BoundSeg **seg_ptr_b);
-static gint       cmp_segptr_xy2_addr (const BoundSeg **seg_ptr_a,
-                                       const BoundSeg **seg_ptr_b);
+static gint       cmp_segptr_xy1_addr (const GimpBoundSeg **seg_ptr_a,
+                                       const GimpBoundSeg **seg_ptr_b);
+static gint       cmp_segptr_xy2_addr (const GimpBoundSeg **seg_ptr_a,
+                                       const GimpBoundSeg **seg_ptr_b);
 
-static gint       cmp_segptr_xy1      (const BoundSeg **seg_ptr_a,
-                                       const BoundSeg **seg_ptr_b);
-static gint       cmp_segptr_xy2      (const BoundSeg **seg_ptr_a,
-                                       const BoundSeg **seg_ptr_b);
+static gint       cmp_segptr_xy1      (const GimpBoundSeg **seg_ptr_a,
+                                       const GimpBoundSeg **seg_ptr_b);
+static gint       cmp_segptr_xy2      (const GimpBoundSeg **seg_ptr_a,
+                                       const GimpBoundSeg **seg_ptr_b);
 
-static const BoundSeg * find_segment  (const BoundSeg **segs_by_xy1,
-                                       const BoundSeg **segs_by_xy2,
-                                       gint             num_segs,
-                                       gint             x,
-                                       gint             y);
+static const GimpBoundSeg * find_segment  (const GimpBoundSeg **segs_by_xy1,
+                                           const GimpBoundSeg **segs_by_xy2,
+                                           gint             num_segs,
+                                           gint             x,
+                                           gint             y);
 
-static const BoundSeg * find_segment_with_func (const BoundSeg **segs,
-                                                gint             num_segs,
-                                                const BoundSeg  *search_seg,
-                                                GCompareFunc     cmp_func);
+static const GimpBoundSeg * find_segment_with_func (const GimpBoundSeg **segs,
+                                                    gint             num_segs,
+                                                    const GimpBoundSeg  *search_seg,
+                                                    GCompareFunc     cmp_func);
 
-static void       simplify_subdivide  (const BoundSeg  *segs,
-                                       gint             start_idx,
-                                       gint             end_idx,
-                                       GArray         **ret_points);
+static void       simplify_subdivide  (const GimpBoundSeg  *segs,
+                                       gint                 start_idx,
+                                       gint                 end_idx,
+                                       GArray             **ret_points);
 
 
 /*  public functions  */
 
 /**
- * boundary_find:
+ * gimp_boundary_find:
  * @maskPR:    any PixelRegion
  * @type:      type of bounds
  * @x1:        left side of bounds
@@ -140,9 +140,9 @@ static void       simplify_subdivide  (const BoundSeg  *segs,
  * @x2:        right side of bounds
  * @y2:        botton side of bounds
  * @threshold: pixel value of boundary line
- * @num_segs:  number of returned #BoundSeg's
+ * @num_segs:  number of returned #GimpBoundSeg's
  *
- * This function returns an array of #BoundSeg's which describe all
+ * This function returns an array of #GimpBoundSeg's which describe all
  * outlines along pixel value @threahold, optionally within specified
  * bounds instead of the whole region.
  *
@@ -152,17 +152,17 @@ static void       simplify_subdivide  (const BoundSeg  *segs,
  *
  * Return value: the boundary array.
  **/
-BoundSeg *
-boundary_find (PixelRegion  *maskPR,
-               BoundaryType  type,
-               int           x1,
-               int           y1,
-               int           x2,
-               int           y2,
-               guchar        threshold,
-               int          *num_segs)
+GimpBoundSeg *
+gimp_boundary_find (PixelRegion      *maskPR,
+                    GimpBoundaryType  type,
+                    int               x1,
+                    int               y1,
+                    int               x2,
+                    int               y2,
+                    guchar            threshold,
+                    int              *num_segs)
 {
-  Boundary *boundary;
+  GimpBoundary *boundary;
 
   g_return_val_if_fail (maskPR != NULL, NULL);
   g_return_val_if_fail (num_segs != NULL, NULL);
@@ -171,33 +171,33 @@ boundary_find (PixelRegion  *maskPR,
 
   *num_segs = boundary->num_segs;
 
-  return boundary_free (boundary, FALSE);
+  return gimp_boundary_free (boundary, FALSE);
 }
 
 /**
- * boundary_sort:
+ * gimp_boundary_sort:
  * @segs:       unsorted input segs.
  * @num_segs:   number of input segs
  * @num_groups: number of groups in the sorted segs
  *
- * This function takes an array of #BoundSeg's as returned by
- * boundary_find() and sorts it by contiguous groups. The returned
+ * This function takes an array of #GimpBoundSeg's as returned by
+ * gimp_boundary_find() and sorts it by contiguous groups. The returned
  * array contains markers consisting of -1 coordinates and is
  * @num_groups elements longer than @segs.
  *
  * Return value: the sorted segs
  **/
-BoundSeg *
-boundary_sort (const BoundSeg *segs,
-               gint            num_segs,
-               gint           *num_groups)
+GimpBoundSeg *
+gimp_boundary_sort (const GimpBoundSeg *segs,
+                    gint                num_segs,
+                    gint               *num_groups)
 {
-  Boundary        *boundary;
-  const BoundSeg **segs_ptrs_by_xy1;
-  const BoundSeg **segs_ptrs_by_xy2;
-  gint             index;
-  gint             x, y;
-  gint             startx, starty;
+  GimpBoundary        *boundary;
+  const GimpBoundSeg **segs_ptrs_by_xy1;
+  const GimpBoundSeg **segs_ptrs_by_xy2;
+  gint                 index;
+  gint                 x, y;
+  gint                 startx, starty;
 
   g_return_val_if_fail ((segs == NULL && num_segs == 0) ||
                         (segs != NULL && num_segs >  0), NULL);
@@ -208,9 +208,9 @@ boundary_sort (const BoundSeg *segs,
   if (num_segs == 0)
     return NULL;
 
-  /* prepare arrays with BoundSeg pointers sorted by xy1 and xy2 accordingly */
-  segs_ptrs_by_xy1 = g_new (const BoundSeg *, num_segs);
-  segs_ptrs_by_xy2 = g_new (const BoundSeg *, num_segs);
+  /* prepare arrays with GimpBoundSeg pointers sorted by xy1 and xy2 accordingly */
+  segs_ptrs_by_xy1 = g_new (const GimpBoundSeg *, num_segs);
+  segs_ptrs_by_xy2 = g_new (const GimpBoundSeg *, num_segs);
 
   for (index = 0; index < num_segs; index++)
     {
@@ -218,29 +218,29 @@ boundary_sort (const BoundSeg *segs,
       segs_ptrs_by_xy2[index] = segs + index;
     }
 
-  qsort (segs_ptrs_by_xy1, num_segs, sizeof (BoundSeg *),
+  qsort (segs_ptrs_by_xy1, num_segs, sizeof (GimpBoundSeg *),
          (GCompareFunc) cmp_segptr_xy1_addr);
-  qsort (segs_ptrs_by_xy2, num_segs, sizeof (BoundSeg *),
+  qsort (segs_ptrs_by_xy2, num_segs, sizeof (GimpBoundSeg *),
          (GCompareFunc) cmp_segptr_xy2_addr);
 
   for (index = 0; index < num_segs; index++)
-    ((BoundSeg *) segs)[index].visited = FALSE;
+    ((GimpBoundSeg *) segs)[index].visited = FALSE;
 
-  boundary = boundary_new (NULL);
+  boundary = gimp_boundary_new (NULL);
 
   for (index = 0; index < num_segs; index++)
     {
-      const BoundSeg *cur_seg;
+      const GimpBoundSeg *cur_seg;
 
       if (segs[index].visited)
         continue;
 
-      boundary_add_seg (boundary,
-                        segs[index].x1, segs[index].y1,
-                        segs[index].x2, segs[index].y2,
-                        segs[index].open);
+      gimp_boundary_add_seg (boundary,
+                             segs[index].x1, segs[index].y1,
+                             segs[index].x2, segs[index].y2,
+                             segs[index].open);
 
-      ((BoundSeg *) segs)[index].visited = TRUE;
+      ((GimpBoundSeg *) segs)[index].visited = TRUE;
 
       startx = segs[index].x1;
       starty = segs[index].y1;
@@ -253,24 +253,24 @@ boundary_sort (const BoundSeg *segs,
           /*  make sure ordering is correct  */
           if (x == cur_seg->x1 && y == cur_seg->y1)
             {
-              boundary_add_seg (boundary,
-                                cur_seg->x1, cur_seg->y1,
-                                cur_seg->x2, cur_seg->y2,
-                                cur_seg->open);
+              gimp_boundary_add_seg (boundary,
+                                     cur_seg->x1, cur_seg->y1,
+                                     cur_seg->x2, cur_seg->y2,
+                                     cur_seg->open);
               x = cur_seg->x2;
               y = cur_seg->y2;
             }
           else
             {
-              boundary_add_seg (boundary,
-                                cur_seg->x2, cur_seg->y2,
-                                cur_seg->x1, cur_seg->y1,
-                                cur_seg->open);
+              gimp_boundary_add_seg (boundary,
+                                     cur_seg->x2, cur_seg->y2,
+                                     cur_seg->x1, cur_seg->y1,
+                                     cur_seg->open);
               x = cur_seg->x1;
               y = cur_seg->y1;
             }
 
-          ((BoundSeg *) cur_seg)->visited = TRUE;
+          ((GimpBoundSeg *) cur_seg)->visited = TRUE;
         }
 
       if (G_UNLIKELY (x != startx || y != starty))
@@ -278,31 +278,31 @@ boundary_sort (const BoundSeg *segs,
 
       /*  Mark the end of a group  */
       *num_groups = *num_groups + 1;
-      boundary_add_seg (boundary, -1, -1, -1, -1, 0);
+      gimp_boundary_add_seg (boundary, -1, -1, -1, -1, 0);
   }
 
   g_free (segs_ptrs_by_xy1);
   g_free (segs_ptrs_by_xy2);
 
-  return boundary_free (boundary, FALSE);
+  return gimp_boundary_free (boundary, FALSE);
 }
 
 /**
- * boundary_simplify:
+ * gimp_boundary_simplify:
  * @sorted_segs: sorted input segs
  * @num_groups:  number of groups in the sorted segs
  * @num_segs:    number of returned segs.
  *
- * This function takes an array of #BoundSeg's which has been sorted
- * with boundary_sort() and reduces the number of segments while
+ * This function takes an array of #GimpBoundSeg's which has been sorted
+ * with gimp_boundary_sort() and reduces the number of segments while
  * preserving the general shape as close as possible.
  *
  * Return value: the simplified segs.
  **/
-BoundSeg *
-boundary_simplify (BoundSeg *sorted_segs,
-                   gint      num_groups,
-                   gint     *num_segs)
+GimpBoundSeg *
+gimp_boundary_simplify (GimpBoundSeg *sorted_segs,
+                        gint          num_groups,
+                        gint         *num_segs)
 {
   GArray *new_bounds;
   gint    i, seg;
@@ -311,7 +311,7 @@ boundary_simplify (BoundSeg *sorted_segs,
                         (sorted_segs != NULL && num_groups >  0), NULL);
   g_return_val_if_fail (num_segs != NULL, NULL);
 
-  new_bounds = g_array_new (FALSE, FALSE, sizeof (BoundSeg));
+  new_bounds = g_array_new (FALSE, FALSE, sizeof (GimpBoundSeg));
 
   seg = 0;
 
@@ -332,7 +332,7 @@ boundary_simplify (BoundSeg *sorted_segs,
       if (n_points > 0)
         {
           GArray   *tmp_points;
-          BoundSeg  tmp_seg;
+          GimpBoundSeg  tmp_seg;
           gint      j;
 
           tmp_points = g_array_new (FALSE, FALSE, sizeof (gint));
@@ -359,14 +359,14 @@ boundary_simplify (BoundSeg *sorted_segs,
 
   *num_segs = new_bounds->len;
 
-  return (BoundSeg *) g_array_free (new_bounds, FALSE);
+  return (GimpBoundSeg *) g_array_free (new_bounds, FALSE);
 }
 
 void
-boundary_offset (BoundSeg *segs,
-                 gint      num_segs,
-                 gint      off_x,
-                 gint      off_y)
+gimp_boundary_offset (GimpBoundSeg *segs,
+                      gint          num_segs,
+                      gint          off_x,
+                      gint          off_y)
 {
   gint i;
 
@@ -389,10 +389,10 @@ boundary_offset (BoundSeg *segs,
 
 /*  private functions  */
 
-static Boundary *
-boundary_new (PixelRegion *PR)
+static GimpBoundary *
+gimp_boundary_new (PixelRegion *PR)
 {
-  Boundary *boundary = g_slice_new0 (Boundary);
+  GimpBoundary *boundary = g_slice_new0 (GimpBoundary);
 
   if (PR)
     {
@@ -419,11 +419,11 @@ boundary_new (PixelRegion *PR)
   return boundary;
 }
 
-static BoundSeg *
-boundary_free (Boundary *boundary,
-               gboolean  free_segs)
+static GimpBoundSeg *
+gimp_boundary_free (GimpBoundary *boundary,
+                    gboolean      free_segs)
 {
-  BoundSeg *segs = NULL;
+  GimpBoundSeg *segs = NULL;
 
   if (free_segs)
     g_free (boundary->segs);
@@ -435,24 +435,24 @@ boundary_free (Boundary *boundary,
   g_free (boundary->empty_segs_c);
   g_free (boundary->empty_segs_l);
 
-  g_slice_free (Boundary, boundary);
+  g_slice_free (GimpBoundary, boundary);
 
   return segs;
 }
 
 static void
-boundary_add_seg (Boundary *boundary,
-                  gint      x1,
-                  gint      y1,
-                  gint      x2,
-                  gint      y2,
-                  gboolean  open)
+gimp_boundary_add_seg (GimpBoundary *boundary,
+                       gint          x1,
+                       gint          y1,
+                       gint          x2,
+                       gint          y2,
+                       gboolean      open)
 {
   if (boundary->num_segs >= boundary->max_segs)
     {
       boundary->max_segs += MAX_SEGS_INC;
 
-      boundary->segs = g_renew (BoundSeg, boundary->segs, boundary->max_segs);
+      boundary->segs = g_renew (GimpBoundSeg, boundary->segs, boundary->max_segs);
     }
 
   boundary->segs[boundary->num_segs].x1   = x1;
@@ -465,17 +465,17 @@ boundary_add_seg (Boundary *boundary,
 }
 
 static void
-find_empty_segs (PixelRegion  *maskPR,
-                 gint          scanline,
-                 gint          empty_segs[],
-                 gint          max_empty,
-                 gint         *num_empty,
-                 BoundaryType  type,
-                 gint          x1,
-                 gint          y1,
-                 gint          x2,
-                 gint          y2,
-                 guchar        threshold)
+find_empty_segs (PixelRegion      *maskPR,
+                 gint              scanline,
+                 gint              empty_segs[],
+                 gint              max_empty,
+                 gint             *num_empty,
+                 GimpBoundaryType  type,
+                 gint              x1,
+                 gint              y1,
+                 gint              x2,
+                 gint              y2,
+                 guchar            threshold)
 {
   const guchar *data  = NULL;
   Tile         *tile  = NULL;
@@ -497,7 +497,7 @@ find_empty_segs (PixelRegion  *maskPR,
       return;
     }
 
-  if (type == BOUNDARY_WITHIN_BOUNDS)
+  if (type == GIMP_BOUNDARY_WITHIN_BOUNDS)
     {
       if (scanline < y1 || scanline >= y2)
         {
@@ -509,7 +509,7 @@ find_empty_segs (PixelRegion  *maskPR,
       start = x1;
       end   = x2;
     }
-  else if (type == BOUNDARY_IGNORE_BOUNDS)
+  else if (type == GIMP_BOUNDARY_IGNORE_BOUNDS)
     {
       start = maskPR->x;
       end   = maskPR->x + maskPR->w;
@@ -551,7 +551,7 @@ find_empty_segs (PixelRegion  *maskPR,
           endx = MIN (end, endx);
         }
 
-      if (type == BOUNDARY_IGNORE_BOUNDS && (endx > x1 || x < x2))
+      if (type == GIMP_BOUNDARY_IGNORE_BOUNDS && (endx > x1 || x < x2))
         {
           for (; x < endx; x++)
             {
@@ -610,19 +610,19 @@ find_empty_segs (PixelRegion  *maskPR,
 }
 
 static void
-process_horiz_seg (Boundary *boundary,
-                   gint      x1,
-                   gint      y1,
-                   gint      x2,
-                   gint      y2,
-                   gboolean  open)
+process_horiz_seg (GimpBoundary *boundary,
+                   gint          x1,
+                   gint          y1,
+                   gint          x2,
+                   gint          y2,
+                   gboolean      open)
 {
   /*  This procedure accounts for any vertical segments that must be
       drawn to close in the horizontal segments.                     */
 
   if (boundary->vert_segs[x1] >= 0)
     {
-      boundary_add_seg (boundary, x1, boundary->vert_segs[x1], x1, y1, !open);
+      gimp_boundary_add_seg (boundary, x1, boundary->vert_segs[x1], x1, y1, !open);
       boundary->vert_segs[x1] = -1;
     }
   else
@@ -630,23 +630,23 @@ process_horiz_seg (Boundary *boundary,
 
   if (boundary->vert_segs[x2] >= 0)
     {
-      boundary_add_seg (boundary, x2, boundary->vert_segs[x2], x2, y2, open);
+      gimp_boundary_add_seg (boundary, x2, boundary->vert_segs[x2], x2, y2, open);
       boundary->vert_segs[x2] = -1;
     }
   else
     boundary->vert_segs[x2] = y2;
 
-  boundary_add_seg (boundary, x1, y1, x2, y2, open);
+  gimp_boundary_add_seg (boundary, x1, y1, x2, y2, open);
 }
 
 static void
-make_horiz_segs (Boundary *boundary,
-                 gint      start,
-                 gint      end,
-                 gint      scanline,
-                 gint      empty[],
-                 gint      num_empty,
-                 gint      top)
+make_horiz_segs (GimpBoundary *boundary,
+                 gint          start,
+                 gint          end,
+                 gint          scanline,
+                 gint          empty[],
+                 gint          num_empty,
+                 gint          top)
 {
   gint empty_index;
   gint e_s, e_e;    /* empty segment start and end values */
@@ -671,36 +671,36 @@ make_horiz_segs (Boundary *boundary,
     }
 }
 
-static Boundary *
-generate_boundary (PixelRegion  *PR,
-                   BoundaryType  type,
-                   gint          x1,
-                   gint          y1,
-                   gint          x2,
-                   gint          y2,
-                   guchar        threshold)
+static GimpBoundary *
+generate_boundary (PixelRegion      *PR,
+                   GimpBoundaryType  type,
+                   gint              x1,
+                   gint              y1,
+                   gint              x2,
+                   gint              y2,
+                   guchar            threshold)
 {
-  Boundary *boundary;
-  gint      scanline;
-  gint      i;
-  gint      start, end;
-  gint     *tmp_segs;
+  GimpBoundary *boundary;
+  gint          scanline;
+  gint          i;
+  gint          start, end;
+  gint         *tmp_segs;
 
-  gint      num_empty_n = 0;
-  gint      num_empty_c = 0;
-  gint      num_empty_l = 0;
+  gint          num_empty_n = 0;
+  gint          num_empty_c = 0;
+  gint          num_empty_l = 0;
 
-  boundary = boundary_new (PR);
+  boundary = gimp_boundary_new (PR);
 
   start = 0;
   end   = 0;
 
-  if (type == BOUNDARY_WITHIN_BOUNDS)
+  if (type == GIMP_BOUNDARY_WITHIN_BOUNDS)
     {
       start = y1;
       end   = y2;
     }
-  else if (type == BOUNDARY_IGNORE_BOUNDS)
+  else if (type == GIMP_BOUNDARY_IGNORE_BOUNDS)
     {
       start = PR->y;
       end   = PR->y + PR->h;
@@ -787,11 +787,11 @@ cmp_xy (const gint ax,
  * (x1, y1) pairs are equal.
  */
 static gint
-cmp_segptr_xy1_addr (const BoundSeg **seg_ptr_a,
-                     const BoundSeg **seg_ptr_b)
+cmp_segptr_xy1_addr (const GimpBoundSeg **seg_ptr_a,
+                     const GimpBoundSeg **seg_ptr_b)
 {
-  const BoundSeg *seg_a = *seg_ptr_a;
-  const BoundSeg *seg_b = *seg_ptr_b;
+  const GimpBoundSeg *seg_a = *seg_ptr_a;
+  const GimpBoundSeg *seg_b = *seg_ptr_b;
 
   gint result = cmp_xy (seg_a->x1, seg_a->y1, seg_b->x1, seg_b->y1);
 
@@ -811,11 +811,11 @@ cmp_segptr_xy1_addr (const BoundSeg **seg_ptr_a,
  * (x2, y2) pairs are equal.
  */
 static gint
-cmp_segptr_xy2_addr (const BoundSeg **seg_ptr_a,
-                     const BoundSeg **seg_ptr_b)
+cmp_segptr_xy2_addr (const GimpBoundSeg **seg_ptr_a,
+                     const GimpBoundSeg **seg_ptr_b)
 {
-  const BoundSeg *seg_a = *seg_ptr_a;
-  const BoundSeg *seg_b = *seg_ptr_b;
+  const GimpBoundSeg *seg_a = *seg_ptr_a;
+  const GimpBoundSeg *seg_b = *seg_ptr_b;
 
   gint result = cmp_xy (seg_a->x2, seg_a->y2, seg_b->x2, seg_b->y2);
 
@@ -835,9 +835,10 @@ cmp_segptr_xy2_addr (const BoundSeg **seg_ptr_a,
  * Compares (x1, y1) pairs in specified segments.
  */
 static gint
-cmp_segptr_xy1 (const BoundSeg **seg_ptr_a, const BoundSeg **seg_ptr_b)
+cmp_segptr_xy1 (const GimpBoundSeg **seg_ptr_a,
+                const GimpBoundSeg **seg_ptr_b)
 {
-  const BoundSeg *seg_a = *seg_ptr_a, *seg_b = *seg_ptr_b;
+  const GimpBoundSeg *seg_a = *seg_ptr_a, *seg_b = *seg_ptr_b;
 
   return cmp_xy (seg_a->x1, seg_a->y1, seg_b->x1, seg_b->y1);
 }
@@ -846,26 +847,26 @@ cmp_segptr_xy1 (const BoundSeg **seg_ptr_a, const BoundSeg **seg_ptr_b)
  * Compares (x2, y2) pairs in specified segments.
  */
 static gint
-cmp_segptr_xy2 (const BoundSeg **seg_ptr_a,
-                const BoundSeg **seg_ptr_b)
+cmp_segptr_xy2 (const GimpBoundSeg **seg_ptr_a,
+                const GimpBoundSeg **seg_ptr_b)
 {
-  const BoundSeg *seg_a = *seg_ptr_a;
-  const BoundSeg *seg_b = *seg_ptr_b;
+  const GimpBoundSeg *seg_a = *seg_ptr_a;
+  const GimpBoundSeg *seg_b = *seg_ptr_b;
 
   return cmp_xy (seg_a->x2, seg_a->y2, seg_b->x2, seg_b->y2);
 }
 
 
-static const BoundSeg *
-find_segment (const BoundSeg **segs_by_xy1,
-              const BoundSeg **segs_by_xy2,
-              gint             num_segs,
-              gint             x,
-              gint             y)
+static const GimpBoundSeg *
+find_segment (const GimpBoundSeg **segs_by_xy1,
+              const GimpBoundSeg **segs_by_xy2,
+              gint                 num_segs,
+              gint                 x,
+              gint                 y)
 {
-  const BoundSeg *segptr_xy1;
-  const BoundSeg *segptr_xy2;
-  BoundSeg        search_seg;
+  const GimpBoundSeg *segptr_xy1;
+  const GimpBoundSeg *segptr_xy2;
+  GimpBoundSeg        search_seg;
 
   search_seg.x1 = search_seg.x2 = x;
   search_seg.y1 = search_seg.y2 = y;
@@ -887,16 +888,16 @@ find_segment (const BoundSeg **segs_by_xy1,
 }
 
 
-static const BoundSeg *
-find_segment_with_func (const BoundSeg **segs,
-                        gint             num_segs,
-                        const BoundSeg  *search_seg,
-                        GCompareFunc     cmp_func)
+static const GimpBoundSeg *
+find_segment_with_func (const GimpBoundSeg **segs,
+                        gint                 num_segs,
+                        const GimpBoundSeg  *search_seg,
+                        GCompareFunc         cmp_func)
 {
-  const BoundSeg **seg;
-  const BoundSeg *found_seg = NULL;
+  const GimpBoundSeg **seg;
+  const GimpBoundSeg *found_seg = NULL;
 
-  seg = bsearch (&search_seg, segs, num_segs, sizeof (BoundSeg *), cmp_func);
+  seg = bsearch (&search_seg, segs, num_segs, sizeof (GimpBoundSeg *), cmp_func);
 
   if (seg != NULL)
     {
@@ -922,10 +923,10 @@ find_segment_with_func (const BoundSeg **segs,
 /*  simplifying utility functions  */
 
 static void
-simplify_subdivide (const BoundSeg *segs,
-                    gint            start_idx,
-                    gint            end_idx,
-                    GArray        **ret_points)
+simplify_subdivide (const GimpBoundSeg *segs,
+                    gint                start_idx,
+                    gint                end_idx,
+                    GArray            **ret_points)
 {
   gint maxdist_idx;
   gint maxdist;

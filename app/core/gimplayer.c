@@ -492,7 +492,7 @@ gimp_layer_get_memsize (GimpObject *object,
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->mask), gui_size);
 
-  *gui_size += layer->fs.num_segs * sizeof (BoundSeg);
+  *gui_size += layer->fs.num_segs * sizeof (GimpBoundSeg);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

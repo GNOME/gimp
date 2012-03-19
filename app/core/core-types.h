@@ -177,7 +177,7 @@ typedef struct _GimpTagged          GimpTagged;      /* dummy typedef */
 /*  non-object types  */
 
 typedef struct _GimpArea            GimpArea;
-typedef struct _BoundSeg            BoundSeg;
+typedef struct _GimpBoundSeg        GimpBoundSeg;
 typedef struct _GimpCoords          GimpCoords;
 typedef struct _GimpGradientSegment GimpGradientSegment;
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;

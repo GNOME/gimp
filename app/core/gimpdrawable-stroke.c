@@ -56,32 +56,32 @@
 
 /*  local function prototypes  */
 
-static GimpScanConvert * gimp_drawable_render_boundary     (GimpDrawable    *drawable,
-                                                            const BoundSeg  *bound_segs,
-                                                            gint             n_bound_segs,
-                                                            gint             offset_x,
-                                                            gint             offset_y);
-static GimpScanConvert * gimp_drawable_render_vectors      (GimpDrawable    *drawable,
-                                                            GimpVectors     *vectors,
-                                                            gboolean         do_stroke,
-                                                            GError         **error);
-static void              gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
-                                                            GimpFillOptions *options,
-                                                            GimpScanConvert *scan_convert,
-                                                            gboolean         do_stroke,
-                                                            gboolean         push_undo);
+static GimpScanConvert * gimp_drawable_render_boundary     (GimpDrawable        *drawable,
+                                                            const GimpBoundSeg  *bound_segs,
+                                                            gint                 n_bound_segs,
+                                                            gint                 offset_x,
+                                                            gint                 offset_y);
+static GimpScanConvert * gimp_drawable_render_vectors      (GimpDrawable        *drawable,
+                                                            GimpVectors         *vectors,
+                                                            gboolean             do_stroke,
+                                                            GError             **error);
+static void              gimp_drawable_stroke_scan_convert (GimpDrawable        *drawable,
+                                                            GimpFillOptions     *options,
+                                                            GimpScanConvert     *scan_convert,
+                                                            gboolean             do_stroke,
+                                                            gboolean             push_undo);
 
 
 /*  public functions  */
 
 void
-gimp_drawable_fill_boundary (GimpDrawable    *drawable,
-                             GimpFillOptions *options,
-                             const BoundSeg  *bound_segs,
-                             gint             n_bound_segs,
-                             gint             offset_x,
-                             gint             offset_y,
-                             gboolean         push_undo)
+gimp_drawable_fill_boundary (GimpDrawable       *drawable,
+                             GimpFillOptions    *options,
+                             const GimpBoundSeg *bound_segs,
+                             gint                n_bound_segs,
+                             gint                offset_x,
+                             gint                offset_y,
+                             gboolean            push_undo)
 {
   GimpScanConvert *scan_convert;
 
@@ -106,13 +106,13 @@ gimp_drawable_fill_boundary (GimpDrawable    *drawable,
 }
 
 void
-gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
-                               GimpStrokeOptions *options,
-                               const BoundSeg    *bound_segs,
-                               gint               n_bound_segs,
-                               gint               offset_x,
-                               gint               offset_y,
-                               gboolean           push_undo)
+gimp_drawable_stroke_boundary (GimpDrawable       *drawable,
+                               GimpStrokeOptions  *options,
+                               const GimpBoundSeg *bound_segs,
+                               gint                n_bound_segs,
+                               gint                offset_x,
+                               gint                offset_y,
+                               gboolean            push_undo)
 {
   GimpScanConvert *scan_convert;
 
@@ -206,18 +206,19 @@ gimp_drawable_stroke_vectors (GimpDrawable       *drawable,
 /*  private functions  */
 
 static GimpScanConvert *
-gimp_drawable_render_boundary (GimpDrawable    *drawable,
-                               const BoundSeg  *bound_segs,
-                               gint             n_bound_segs,
-                               gint             offset_x,
-                               gint             offset_y)
+gimp_drawable_render_boundary (GimpDrawable       *drawable,
+                               const GimpBoundSeg *bound_segs,
+                               gint                n_bound_segs,
+                               gint                offset_x,
+                               gint                offset_y)
 {
   if (bound_segs)
     {
-      BoundSeg *stroke_segs;
-      gint      n_stroke_segs;
+      GimpBoundSeg *stroke_segs;
+      gint          n_stroke_segs;
 
-      stroke_segs = boundary_sort (bound_segs, n_bound_segs, &n_stroke_segs);
+      stroke_segs = gimp_boundary_sort (bound_segs, n_bound_segs,
+                                        &n_stroke_segs);
 
       if (stroke_segs)
         {

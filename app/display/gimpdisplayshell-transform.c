@@ -234,7 +234,7 @@ gimp_display_shell_untransform_xy_f (const GimpDisplayShell *shell,
  **/
 void
 gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
-                                       const BoundSeg         *src_segs,
+                                       const GimpBoundSeg     *src_segs,
                                        GimpSegment            *dest_segs,
                                        gint                    n_segs,
                                        gdouble                 offset_x,

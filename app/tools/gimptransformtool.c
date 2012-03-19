@@ -835,21 +835,21 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
   if (options->type == GIMP_TRANSFORM_TYPE_SELECTION)
     {
-      GimpMatrix3     matrix = tr_tool->transform;
-      const BoundSeg *orig_in;
-      const BoundSeg *orig_out;
-      BoundSeg       *segs_in;
-      BoundSeg       *segs_out;
-      gint            num_segs_in;
-      gint            num_segs_out;
+      GimpMatrix3         matrix = tr_tool->transform;
+      const GimpBoundSeg *orig_in;
+      const GimpBoundSeg *orig_out;
+      GimpBoundSeg       *segs_in;
+      GimpBoundSeg       *segs_out;
+      gint                num_segs_in;
+      gint                num_segs_out;
 
       gimp_channel_boundary (gimp_image_get_mask (image),
                              &orig_in, &orig_out,
                              &num_segs_in, &num_segs_out,
                              0, 0, 0, 0);
 
-      segs_in  = g_memdup (orig_in,  num_segs_in  * sizeof (BoundSeg));
-      segs_out = g_memdup (orig_out, num_segs_out * sizeof (BoundSeg));
+      segs_in  = g_memdup (orig_in,  num_segs_in  * sizeof (GimpBoundSeg));
+      segs_out = g_memdup (orig_out, num_segs_out * sizeof (GimpBoundSeg));
 
       if (segs_in)
         {

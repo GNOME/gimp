@@ -49,12 +49,12 @@ struct _GimpCanvasBoundaryClass
 
 GType            gimp_canvas_boundary_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_boundary_new      (GimpDisplayShell *shell,
-                                                const BoundSeg   *segs,
-                                                gint              n_segs,
-                                                GimpMatrix3      *transform,
-                                                gdouble           offset_x,
-                                                gdouble           offset_y);
+GimpCanvasItem * gimp_canvas_boundary_new      (GimpDisplayShell   *shell,
+                                                const GimpBoundSeg *segs,
+                                                gint                n_segs,
+                                                GimpMatrix3        *transform,
+                                                gdouble             offset_x,
+                                                gdouble             offset_y);
 
 
 #endif /* __GIMP_CANVAS_BOUNDARY_H__ */

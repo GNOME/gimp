@@ -52,7 +52,7 @@ struct _GimpLayer
   {
     GimpDrawable *drawable;           /*  floating sel is attached to    */
     gboolean      boundary_known;     /*  is the current boundary valid  */
-    BoundSeg     *segs;               /*  boundary of floating sel       */
+    GimpBoundSeg *segs;               /*  boundary of floating sel       */
     gint          num_segs;           /*  number of segs in boundary     */
   } fs;
 };

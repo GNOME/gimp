@@ -52,11 +52,11 @@ typedef struct _GimpCanvasBoundaryPrivate GimpCanvasBoundaryPrivate;
 
 struct _GimpCanvasBoundaryPrivate
 {
-  BoundSeg    *segs;
-  gint         n_segs;
-  GimpMatrix3 *transform;
-  gdouble      offset_x;
-  gdouble      offset_y;
+  GimpBoundSeg *segs;
+  gint          n_segs;
+  GimpMatrix3  *transform;
+  gdouble       offset_x;
+  gdouble       offset_y;
 };
 
 #define GET_PRIVATE(boundary) \
@@ -343,12 +343,12 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_boundary_new (GimpDisplayShell *shell,
-                          const BoundSeg   *segs,
-                          gint              n_segs,
-                          GimpMatrix3      *transform,
-                          gdouble           offset_x,
-                          gdouble           offset_y)
+gimp_canvas_boundary_new (GimpDisplayShell   *shell,
+                          const GimpBoundSeg *segs,
+                          gint                n_segs,
+                          GimpMatrix3        *transform,
+                          gdouble             offset_x,
+                          gdouble             offset_y)
 {
   GimpCanvasItem            *item;
   GimpCanvasBoundaryPrivate *private;
@@ -364,7 +364,7 @@ gimp_canvas_boundary_new (GimpDisplayShell *shell,
   private = GET_PRIVATE (item);
 
   /* puke */
-  private->segs   = g_memdup (segs, n_segs * sizeof (BoundSeg));
+  private->segs   = g_memdup (segs, n_segs * sizeof (GimpBoundSeg));
   private->n_segs = n_segs;
 
   return item;

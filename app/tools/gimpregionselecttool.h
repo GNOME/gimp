@@ -45,7 +45,7 @@ struct _GimpRegionSelectTool
   gdouble            saved_threshold;
 
   GimpChannel       *region_mask;
-  BoundSeg          *segs;
+  GimpBoundSeg      *segs;
   gint               n_segs;
 };
 
