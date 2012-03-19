@@ -35,6 +35,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-apply-operation.h"
 #include "gimp-transform-region.h"
 #include "gimp-transform-resize.h"
 #include "gimpchannel.h"
@@ -81,7 +82,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       gint                   *new_offset_y,
                                       GimpProgress           *progress)
 {
-  PixelRegion  destPR;
   TileManager *new_tiles;
   GimpMatrix3  m;
   GimpMatrix3  inv;
@@ -131,23 +131,63 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   /*  Get the new temporary buffer for the transformed result  */
   new_tiles = tile_manager_new (x2 - x1, y2 - y1,
                                 tile_manager_bpp (orig_tiles));
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0, x2 - x1, y2 - y1, TRUE);
 
-  gimp_transform_region (GIMP_PICKABLE (drawable),
-                         context,
-                         orig_tiles,
-                         orig_offset_x,
-                         orig_offset_y,
-                         &destPR,
-                         x1,
-                         y1,
-                         x2,
-                         y2,
-                         &inv,
-                         interpolation_type,
-                         recursion_level,
-                         progress);
+  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
+    {
+      GeglBuffer  *src_buffer;
+      GeglBuffer  *dest_buffer;
+      GeglNode    *affine;
+      gchar       *matrix_string;
+      GimpMatrix3  gegl_matrix;
+
+      src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format,
+                                                    FALSE);
+      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format,
+                                                     TRUE);
+
+      gimp_matrix3_identity (&gegl_matrix);
+      gimp_matrix3_translate (&gegl_matrix, u1, v1);
+      gimp_matrix3_mult (&inv, &gegl_matrix);
+      gimp_matrix3_translate (&gegl_matrix, -x1, -y1);
+
+      matrix_string = gegl_matrix3_to_string ((GeglMatrix3 *) &gegl_matrix);
+      affine = gegl_node_new_child (NULL,
+                                    "operation", "gegl:transform",
+                                    "transform", matrix_string,
+                                    NULL);
+      g_free (matrix_string);
+
+      gimp_apply_operation (src_buffer, progress, NULL,
+                            affine, TRUE,
+                            dest_buffer, NULL);
+
+      g_object_unref (affine);
+
+      g_object_unref (src_buffer);
+      g_object_unref (dest_buffer);
+    }
+  else
+    {
+      PixelRegion destPR;
+
+      pixel_region_init (&destPR, new_tiles,
+                         0, 0, x2 - x1, y2 - y1, TRUE);
+
+      gimp_transform_region (GIMP_PICKABLE (drawable),
+                             context,
+                             orig_tiles,
+                             orig_offset_x,
+                             orig_offset_y,
+                             &destPR,
+                             x1,
+                             y1,
+                             x2,
+                             y2,
+                             &inv,
+                             interpolation_type,
+                             recursion_level,
+                             progress);
+    }
 
   *new_offset_x = x1;
   *new_offset_y = y1;
