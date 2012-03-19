@@ -28,6 +28,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
@@ -200,22 +202,33 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
       smudge->accum_size != area->width ||
       smudge->accum_size != area->height)
     {
-      guchar fill[4];
+      GeglBuffer    *buffer;
+      GeglRectangle  rect = { 0, 0, smudge->accum_size, smudge->accum_size };
+      GimpRGB        pixel;
+      GeglColor     *color;
 
-      gimp_pickable_get_pixel_at (GIMP_PICKABLE (drawable),
+      buffer = gegl_buffer_linear_new_from_data (smudge->accum_data,
+                                                 gimp_drawable_get_format (drawable),
+                                                 &rect,
+                                                 smudge->accum_size * bytes,
+                                                 NULL, NULL);
+
+      gimp_pickable_get_color_at (GIMP_PICKABLE (drawable),
                                   CLAMP ((gint) coords->x,
                                          0,
                                          gimp_item_get_width (GIMP_ITEM (drawable)) - 1),
                                   CLAMP ((gint) coords->y,
                                          0,
                                          gimp_item_get_height (GIMP_ITEM (drawable)) - 1),
-                                  fill);
+                                  &pixel);
 
-      pixel_region_init_data (&srcPR, smudge->accum_data,
-                              bytes, bytes * smudge->accum_size,
-                              0, 0, smudge->accum_size, smudge->accum_size);
+      color = gegl_color_new (NULL);
+      gimp_gegl_color_set_rgba (color, &pixel);
 
-      color_region (&srcPR, fill);
+      gegl_buffer_set_color (buffer, &rect, color);
+      g_object_unref (color);
+
+      g_object_unref (buffer);
     }
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
