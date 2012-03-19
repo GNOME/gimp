@@ -376,15 +376,17 @@ gimp_projection_get_pixel_at (GimpPickable *pickable,
                               gint          y,
                               guchar       *pixel)
 {
-  TileManager *tiles = gimp_projection_get_tiles (pickable);
+  GeglBuffer *buffer = gimp_projection_get_buffer (pickable);
 
-  if (x <  0                           ||
-      y <  0                           ||
-      x >= tile_manager_width  (tiles) ||
-      y >= tile_manager_height (tiles))
+  if (x <  0                               ||
+      y <  0                               ||
+      x >= gegl_buffer_get_width  (buffer) ||
+      y >= gegl_buffer_get_height (buffer))
     return FALSE;
 
-  tile_manager_read_pixel_data_1 (tiles, x, y, pixel);
+  gegl_buffer_sample (buffer, x, y, NULL, pixel,
+                      gimp_projection_get_format (pickable),
+                      GEGL_SAMPLER_NEAREST);
 
   return TRUE;
 }

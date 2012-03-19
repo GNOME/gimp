@@ -742,8 +742,10 @@ gimp_drawable_get_pixel_at (GimpPickable *pickable,
       y < 0 || y >= gimp_item_get_height (GIMP_ITEM (drawable)))
     return FALSE;
 
-  tile_manager_read_pixel_data_1 (gimp_drawable_get_tiles (drawable), x, y,
-                                  pixel);
+  gegl_buffer_sample (gimp_drawable_get_read_buffer (drawable),
+                      x, y, NULL, pixel,
+                      gimp_drawable_get_format (drawable),
+                      GEGL_SAMPLER_NEAREST);
 
   return TRUE;
 }
