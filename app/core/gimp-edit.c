@@ -31,8 +31,6 @@
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
