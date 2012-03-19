@@ -24,12 +24,13 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "base-types.h"
+#include "core-types.h"
 
-#include "boundary.h"
-#include "pixel-region.h"
-#include "tile.h"
-#include "tile-manager.h"
+#include "base/pixel-region.h"
+#include "base/tile.h"
+#include "base/tile-manager.h"
+
+#include "gimpboundary.h"
 
 
 /* BoundSeg array growth parameter */

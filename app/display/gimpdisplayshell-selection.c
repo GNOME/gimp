@@ -24,9 +24,8 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "base/boundary.h"
-
 #include "core/gimp.h"
+#include "core/gimpboundary.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 

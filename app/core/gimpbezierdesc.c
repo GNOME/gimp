@@ -25,9 +25,8 @@
 
 #include "core-types.h"
 
-#include "base/boundary.h"
-
 #include "gimpbezierdesc.h"
+#include "gimpboundary.h"
 
 
 GType

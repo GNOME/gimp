@@ -28,8 +28,7 @@
 
 #include "display-types.h"
 
-#include "base/boundary.h"
-
+#include "core/gimpboundary.h"
 #include "core/gimpparamspecs.h"
 
 #include "widgets/gimpcairo.h"

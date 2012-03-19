@@ -23,8 +23,7 @@
 
 #include "paint-types.h"
 
-#include "base/boundary.h"
-
+#include "core/gimpboundary.h"
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpcoords.h"

@@ -29,10 +29,10 @@
 
 #include "tools-types.h"
 
-#include "base/boundary.h"
 #include "base/tile-manager.h"
 
 #include "core/gimp.h"
+#include "core/gimpboundary.h"
 #include "core/gimpcontext.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-transform.h"

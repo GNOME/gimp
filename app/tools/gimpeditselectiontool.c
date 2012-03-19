@@ -29,10 +29,9 @@
 
 #include "tools-types.h"
 
-#include "base/boundary.h"
-
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
+#include "core/gimpboundary.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-item-list.h"

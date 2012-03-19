@@ -47,8 +47,6 @@
 
 /* types */
 
-typedef struct _BoundSeg            BoundSeg;
-
 typedef struct _GimpHistogram       GimpHistogram;
 typedef struct _GimpLut             GimpLut;
 

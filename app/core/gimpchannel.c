@@ -26,7 +26,6 @@
 
 #include "core-types.h"
 
-#include "base/boundary.h"
 #include "base/pixel-region.h"
 #include "base/tile.h"
 #include "base/tile-manager.h"
@@ -42,6 +41,7 @@
 
 #include "gimp.h"
 #include "gimp-utils.h"
+#include "gimpboundary.h"
 #include "gimpcontainer.h"
 #include "gimperror.h"
 #include "gimpimage.h"

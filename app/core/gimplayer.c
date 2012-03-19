@@ -29,7 +29,6 @@
 
 #include "core-types.h"
 
-#include "base/boundary.h"
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
 #include "base/tile.h"
@@ -40,6 +39,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-apply-operation.h"
+#include "gimpboundary.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"

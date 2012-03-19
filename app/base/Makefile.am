@@ -22,8 +22,6 @@ libappbase_a_SOURCES = \
 	base-types.h		\
 	base-utils.c		\
 	base-utils.h		\
-	boundary.c		\
-	boundary.h		\
 	color-balance.c		\
 	color-balance.h		\
 	cpercep.c		\

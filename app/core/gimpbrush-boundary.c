@@ -22,11 +22,11 @@
 
 #include "core-types.h"
 
-#include "base/boundary.h"
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
 #include "gimpbezierdesc.h"
+#include "gimpboundary.h"
 #include "gimpbrush.h"
 #include "gimpbrush-boundary.h"
 

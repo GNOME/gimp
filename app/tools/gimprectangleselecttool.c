@@ -25,8 +25,7 @@
 
 #include "tools-types.h"
 
-#include "base/boundary.h"
-
+#include "core/gimpboundary.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimplayer-floating-sel.h"

@@ -23,9 +23,9 @@
 
 #include "core-types.h"
 
-#include "base/boundary.h"
 #include "base/pixel-region.h"
 
+#include "gimpboundary.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
