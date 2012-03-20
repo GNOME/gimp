@@ -56,6 +56,8 @@ GeglTileBackend * gimp_tile_backend_tile_manager_new      (TileManager *tm,
                                                            const Babl  *format,
                                                            gboolean     write);
 
+TileManager     * gimp_tile_backend_tile_manager_get_tiles (GeglTileBackend *backend);
+
 
 G_END_DECLS
 

@@ -236,6 +236,23 @@ gimp_tile_manager_create_buffer (TileManager *tm,
   return buffer;
 }
 
+/* temp hack */
+GeglTileBackend * gegl_buffer_backend (GeglBuffer *buffer);
+
+TileManager *
+gimp_gegl_buffer_get_tiles (GeglBuffer *buffer)
+{
+  GeglTileBackend *backend;
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+
+  backend = gegl_buffer_backend (buffer);
+
+  g_return_val_if_fail (GIMP_IS_TILE_BACKEND_TILE_MANAGER (backend), NULL);
+
+  return gimp_tile_backend_tile_manager_get_tiles (backend);
+}
+
 void
 gimp_gegl_buffer_refetch_tiles (GeglBuffer *buffer)
 {

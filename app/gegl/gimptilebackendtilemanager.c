@@ -280,3 +280,11 @@ gimp_tile_backend_tile_manager_new (TileManager *tm,
 
   return ret;
 }
+
+TileManager *
+gimp_tile_backend_tile_manager_get_tiles (GeglTileBackend *backend)
+{
+  g_return_val_if_fail (GIMP_IS_TILE_BACKEND_TILE_MANAGER (backend), NULL);
+
+  return GIMP_TILE_BACKEND_TILE_MANAGER (backend)->priv->tile_manager;
+}
