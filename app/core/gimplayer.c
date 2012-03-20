@@ -1033,7 +1033,6 @@ gimp_layer_sync_mode_node (GimpLayer *layer)
 
       switch (layer->mode)
         {
-        case GIMP_DISSOLVE_MODE:
         case GIMP_BEHIND_MODE:
         case GIMP_MULTIPLY_MODE:
         case GIMP_SCREEN_MODE:
