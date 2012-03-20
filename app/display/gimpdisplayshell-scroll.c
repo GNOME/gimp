@@ -28,8 +28,6 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "base/tile-manager.h"
-
 #include "core/gimpimage.h"
 #include "core/gimpprojection.h"
 
