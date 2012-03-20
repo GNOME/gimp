@@ -23,8 +23,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpguide.h"
@@ -308,11 +306,12 @@ gimp_image_crop_auto_shrink (GimpImage *image,
 {
   GimpDrawable    *active_drawable = NULL;
   GimpPickable    *pickable;
+  GeglBuffer      *buffer;
+  GeglRectangle    rect;
   ColorsEqualFunc  colors_equal_func;
   guchar           bgcolor[MAX_CHANNELS] = { 0, 0, 0, 0 };
   gboolean         has_alpha;
-  PixelRegion      PR;
-  guchar          *buffer = NULL;
+  guchar          *buf = NULL;
   gint             width, height;
   GimpImageType    type;
   gint             bytes;
@@ -372,34 +371,45 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   width  = x2 - x1;
   height = y2 - y1;
 
-  pixel_region_init (&PR, gimp_pickable_get_tiles (pickable),
-                     x1, y1, width, height, FALSE);
+  buffer = gimp_pickable_get_buffer (pickable);
 
   /* The following could be optimized further by processing
    * the smaller side first instead of defaulting to width    --Sven
    */
 
-  buffer = g_malloc ((width > height ? width : height) * bytes);
+  buf = g_malloc (MAX (width, height) * bytes);
 
   /* Check how many of the top lines are uniform/transparent. */
+  rect.x      = x1;
+  rect.y      = 0;
+  rect.width  = width;
+  rect.height = 1;
+
   abort = FALSE;
   for (y = y1; y < y2 && !abort; y++)
     {
-      pixel_region_get_row (&PR, x1, y, width, buffer, 1);
+      rect.y = y;
+      gegl_buffer_get (buffer, 1.0, &rect, NULL, buf, GEGL_AUTO_ROWSTRIDE);
       for (x = 0; x < width && !abort; x++)
-        abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
+        abort = !(colors_equal_func) (bgcolor, buf + x * bytes, bytes);
     }
   if (y == y2 && !abort)
     goto FINISH;
   y1 = y - 1;
 
   /* Check how many of the bottom lines are uniform/transparent. */
+  rect.x      = x1;
+  rect.y      = 0;
+  rect.width  = width;
+  rect.height = 1;
+
   abort = FALSE;
   for (y = y2; y > y1 && !abort; y--)
     {
-      pixel_region_get_row (&PR, x1, y-1 , width, buffer, 1);
+      rect.y = y - 1;
+      gegl_buffer_get (buffer, 1.0, &rect, NULL, buf, GEGL_AUTO_ROWSTRIDE);
       for (x = 0; x < width && !abort; x++)
-        abort = !(colors_equal_func) (bgcolor, buffer + x * bytes, bytes);
+        abort = !(colors_equal_func) (bgcolor, buf + x * bytes, bytes);
     }
   y2 = y + 1;
 
@@ -407,22 +417,34 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   height = y2 - y1;
 
   /* Check how many of the left lines are uniform/transparent. */
+  rect.x      = 0;
+  rect.y      = y1;
+  rect.width  = 1;
+  rect.height = height;
+
   abort = FALSE;
   for (x = x1; x < x2 && !abort; x++)
     {
-      pixel_region_get_col (&PR, x, y1, height, buffer, 1);
+      rect.x = x;
+      gegl_buffer_get (buffer, 1.0, &rect, NULL, buf, GEGL_AUTO_ROWSTRIDE);
       for (y = 0; y < height && !abort; y++)
-        abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
+        abort = !(colors_equal_func) (bgcolor, buf + y * bytes, bytes);
     }
   x1 = x - 1;
 
   /* Check how many of the right lines are uniform/transparent. */
+  rect.x      = 0;
+  rect.y      = y1;
+  rect.width  = 1;
+  rect.height = height;
+
   abort = FALSE;
   for (x = x2; x > x1 && !abort; x--)
     {
-      pixel_region_get_col (&PR, x-1, y1, height, buffer, 1);
+      rect.x = x - 1;
+      gegl_buffer_get (buffer, 1.0, &rect, NULL, buf, GEGL_AUTO_ROWSTRIDE);
       for (y = 0; y < height && !abort; y++)
-        abort = !(colors_equal_func) (bgcolor, buffer + y * bytes, bytes);
+        abort = !(colors_equal_func) (bgcolor, buf + y * bytes, bytes);
     }
   x2 = x + 1;
 
@@ -434,7 +456,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   retval = TRUE;
 
  FINISH:
-  g_free (buffer);
+  g_free (buf);
   gimp_unset_busy (image->gimp);
 
   return retval;
