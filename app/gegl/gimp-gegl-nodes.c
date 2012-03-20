@@ -108,15 +108,12 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
 
       gegl_node_connect_to (mask_source,  "output",
                             translate,    "input");
-      gegl_node_connect_to (translate,    "output",
-                            opacity_node, "aux");
-    }
-  else
-    {
-      gegl_node_connect_to (mask_source,  "output",
-                            opacity_node, "aux");
+
+      mask_source = translate;
     }
 
+  gegl_node_connect_to (mask_source,  "output",
+                        opacity_node, "aux");
   gegl_node_connect_to (opacity_node, "output",
                         output,       "input");
 
