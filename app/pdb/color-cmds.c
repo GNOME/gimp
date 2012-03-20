@@ -67,8 +67,7 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          ! gimp_drawable_is_indexed (drawable))
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GObject *config = g_object_new (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG,
                                           "brightness", brightness / 127.0,
@@ -212,8 +211,7 @@ posterize_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          ! gimp_drawable_is_indexed (drawable))
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GObject *config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG,
                                           "levels", levels,
@@ -516,7 +514,7 @@ colorize_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          gimp_drawable_is_rgb (drawable))
+          ! gimp_drawable_is_gray (drawable))
         {
           GObject *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG,
                                           "hue",        hue        / 360.0,
@@ -669,8 +667,7 @@ threshold_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          ! gimp_drawable_is_indexed (drawable))
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GObject *config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG,
                                           "low",  low_threshold  / 255.0,
@@ -1117,7 +1114,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-colorize",
                                      "Render the drawable as a grayscale image seen through a colored glass.",
-                                     "Desaturates the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale or indexed drawables.",
+                                     "Desaturates the drawable, then tints it with the specified color. This tool is only valid on RGB color images. It will not operate on grayscale drawables.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2004",

@@ -211,7 +211,7 @@ drawable_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_SENSITIVE ("drawable-equalize",       writable && !children && !is_indexed);
-  SET_SENSITIVE ("drawable-invert",         writable && !children && !is_indexed);
+  SET_SENSITIVE ("drawable-invert",         writable && !children);
   SET_SENSITIVE ("drawable-levels-stretch", writable && !children &&  is_rgb);
   SET_SENSITIVE ("drawable-offset",         writable && !children);
 

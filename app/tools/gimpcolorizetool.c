@@ -124,10 +124,10 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
   if (! drawable)
     return FALSE;
 
-  if (! gimp_drawable_is_rgb (drawable))
+  if (gimp_drawable_is_gray (drawable))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Colorize operates only on RGB color layers."));
+			   _("Colorize does not operate on grayscale layers."));
       return FALSE;
     }
 

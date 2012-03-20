@@ -42,8 +42,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      ! gimp_drawable_is_indexed (drawable))
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GObject *config = g_object_new (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG,
                                       "brightness", brightness / 127.0,
@@ -206,8 +205,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      ! gimp_drawable_is_indexed (drawable))
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GObject *config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG,
                                       "levels", levels,
@@ -539,8 +537,7 @@ sub colorize {
 
     $help = <<'HELP';
 Desaturates the drawable, then tints it with the specified color. This tool is
-only valid on RGB color images. It will not operate on grayscale or indexed
-drawables.
+only valid on RGB color images. It will not operate on grayscale drawables.
 HELP
 
     &neo_pdb_misc('2004', '2.2');
@@ -562,7 +559,7 @@ HELP
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      gimp_drawable_is_rgb (drawable))
+      ! gimp_drawable_is_gray (drawable))
     {
       GObject *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG,
                                       "hue",        hue        / 360.0,
@@ -738,8 +735,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      ! gimp_drawable_is_indexed (drawable))
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
       GObject *config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG,
                                       "low",  low_threshold  / 255.0,

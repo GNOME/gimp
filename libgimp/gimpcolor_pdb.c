@@ -514,7 +514,7 @@ gimp_color_balance (gint32           drawable_ID,
  *
  * Desaturates the drawable, then tints it with the specified color.
  * This tool is only valid on RGB color images. It will not operate on
- * grayscale or indexed drawables.
+ * grayscale drawables.
  *
  * Returns: TRUE on success.
  *
