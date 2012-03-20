@@ -40,8 +40,7 @@ GeglBuffer  * gimp_pixbuf_create_buffer          (GdkPixbuf             *pixbuf)
 
 void          gimp_gegl_buffer_refetch_tiles     (GeglBuffer            *buffer);
 
-void          gimp_gegl_color_set_rgba           (GeglColor             *color,
-                                                  const GimpRGB         *rgb);
+GeglColor   * gimp_gegl_color_new                (const GimpRGB         *rgb);
 
 
 #endif /* __GIMP_GEGL_UTILS_H__ */

@@ -236,11 +236,9 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
     case GIMP_FG_BUCKET_FILL:
     case GIMP_BG_BUCKET_FILL:
       {
-        GeglColor *gegl_color = gegl_color_new (NULL);
+        GeglColor *gegl_color = gimp_gegl_color_new (color);
 
-        gimp_gegl_color_set_rgba (gegl_color, color);
         gegl_buffer_set_color (buffer, NULL, gegl_color);
-
         g_object_unref (gegl_color);
       }
       break;
@@ -250,7 +248,6 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
         GeglBuffer *pattern_buffer = gimp_pattern_create_buffer (pattern);
 
         gegl_buffer_set_pattern (buffer, NULL, pattern_buffer, -x1, -y1);
-
         g_object_unref (pattern_buffer);
       }
       break;

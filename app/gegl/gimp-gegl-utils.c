@@ -226,12 +226,15 @@ gimp_gegl_buffer_refetch_tiles (GeglBuffer *buffer)
   gegl_tile_source_reinit (GEGL_TILE_SOURCE (buffer));
 }
 
-void
-gimp_gegl_color_set_rgba (GeglColor     *color,
-                          const GimpRGB *rgb)
+GeglColor *
+gimp_gegl_color_new (const GimpRGB *rgb)
 {
-  g_return_if_fail (GEGL_IS_COLOR (color));
-  g_return_if_fail (rgb != NULL);
+  GeglColor *color;
 
+  g_return_val_if_fail (rgb != NULL, NULL);
+
+  color = gegl_color_new (NULL);
   gegl_color_set_rgba (color, rgb->r, rgb->g, rgb->b, rgb->a);
+
+  return color;
 }

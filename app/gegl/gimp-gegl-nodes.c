@@ -45,9 +45,7 @@ gimp_gegl_create_flatten_node (const GimpRGB *background)
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  c = gegl_color_new (NULL);
-  gimp_gegl_color_set_rgba (c, background);
-
+  c = gimp_gegl_color_new (background);
   color = gegl_node_new_child (node,
                                "operation", "gegl:color",
                                "value",     c,

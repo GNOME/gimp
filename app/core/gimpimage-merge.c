@@ -545,12 +545,9 @@ gimp_image_merge_layers (GimpImage     *image,
       rect.width  = x2 - x1;
       rect.height = y2 - y1;
 
-      color = gegl_color_new (NULL);
-      gimp_gegl_color_set_rgba (color, &bg);
-
+      color = gimp_gegl_color_new (&bg);
       gegl_buffer_set_color (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (merge_layer)),
                              &rect, color);
-
       g_object_unref (color);
 
       position = 0;

@@ -495,16 +495,13 @@ gimp_edit_fill_full (GimpImage            *image,
       GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
 
       gegl_buffer_set_pattern (dest_buffer, NULL, src_buffer, 0, 0);
-
       g_object_unref (src_buffer);
     }
   else
     {
-      GeglColor *gegl_color = gegl_color_new (NULL);
+      GeglColor *gegl_color = gimp_gegl_color_new (color);
 
-      gimp_gegl_color_set_rgba (gegl_color, color);
       gegl_buffer_set_color (dest_buffer, NULL, gegl_color);
-
       g_object_unref (gegl_color);
     }
 

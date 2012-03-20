@@ -599,11 +599,9 @@ gimp_drawable_resize (GimpItem    *item,
       else
         gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
 
-      col = gegl_color_new (NULL);
-      gimp_gegl_color_set_rgba (col, &bg);
+      col = gimp_gegl_color_new (&bg);
 
       gegl_buffer_set_color (dest_buffer, NULL, col);
-
       g_object_unref (col);
     }
 
@@ -1768,12 +1766,9 @@ gimp_drawable_fill (GimpDrawable      *drawable,
       if (! gimp_drawable_has_alpha (drawable))
         gimp_rgb_set_alpha (&c, 1.0);
 
-      col = gegl_color_new (NULL);
-      gimp_gegl_color_set_rgba (col, &c);
-
+      col = gimp_gegl_color_new (&c);
       gegl_buffer_set_color (gimp_drawable_get_write_buffer (drawable),
                              NULL, col);
-
       g_object_unref (col);
     }
   else
@@ -1782,7 +1777,6 @@ gimp_drawable_fill (GimpDrawable      *drawable,
 
       gegl_buffer_set_pattern (gimp_drawable_get_write_buffer (drawable),
                                NULL, src_buffer, 0, 0);
-
       g_object_unref (src_buffer);
     }
 

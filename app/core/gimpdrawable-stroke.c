@@ -368,24 +368,24 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
     {
     case GIMP_FILL_STYLE_SOLID:
       {
-        GeglColor *color = gegl_color_new (NULL);
         GimpRGB    fg;
+        GeglColor *color;
 
         gimp_context_get_foreground (context, &fg);
-        gimp_gegl_color_set_rgba (color, &fg);
-        gegl_buffer_set_color (base_buffer, NULL, color);
 
+        color = gimp_gegl_color_new (&fg);
+        gegl_buffer_set_color (base_buffer, NULL, color);
         g_object_unref (color);
       }
       break;
 
     case GIMP_FILL_STYLE_PATTERN:
       {
-        GimpPattern *pattern        = gimp_context_get_pattern (context);
-        GeglBuffer  *pattern_buffer = gimp_pattern_create_buffer (pattern);
+        GimpPattern *pattern = gimp_context_get_pattern (context);
+        GeglBuffer  *pattern_buffer;
 
+        pattern_buffer = gimp_pattern_create_buffer (pattern);
         gegl_buffer_set_pattern (base_buffer, NULL, pattern_buffer, 0, 0);
-
         g_object_unref (pattern_buffer);
       }
       break;

@@ -222,9 +222,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                          gimp_item_get_height (GIMP_ITEM (drawable)) - 1),
                                   &pixel);
 
-      color = gegl_color_new (NULL);
-      gimp_gegl_color_set_rgba (color, &pixel);
-
+      color = gimp_gegl_color_new (&pixel);
       gegl_buffer_set_color (buffer, &rect, color);
       g_object_unref (color);
 

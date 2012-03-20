@@ -272,9 +272,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
       else
         gimp_context_get_background (context, &bg);
 
-      color = gegl_color_new (NULL);
-      gimp_gegl_color_set_rgba (color, &bg);
-
+      color = gimp_gegl_color_new (&bg);
       gegl_buffer_set_color (dest_buffer, NULL, color);
       g_object_unref (color);
 
@@ -488,9 +486,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
       else
         gimp_context_get_background (context, &bg);
 
-      color = gegl_color_new (NULL);
-      gimp_gegl_color_set_rgba (color, &bg);
-
+      color = gimp_gegl_color_new (&bg);
       gegl_buffer_set_color (dest_buffer, NULL, color);
       g_object_unref (color);
 

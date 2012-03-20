@@ -97,16 +97,13 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     {
       if (fill_type == GIMP_OFFSET_BACKGROUND)
         {
-          GimpRGB    background;
+          GimpRGB    bg;
           GeglColor *color;
 
-          gimp_context_get_background (context, &background);
+          gimp_context_get_background (context, &bg);
 
-          color = gegl_color_new (NULL);
-          gimp_gegl_color_set_rgba (color, &background);
-
+          color = gimp_gegl_color_new (&bg);
           gegl_buffer_set_color (dest_buffer, NULL, color);
-
           g_object_unref (color);
         }
       else
