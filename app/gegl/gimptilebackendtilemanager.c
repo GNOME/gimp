@@ -2,7 +2,8 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimptilebackendtilemanager.c
- * Copyright (C) 2011 Øyvind Kolås <pippin@gimp.org>
+ * Copyright (C) 2011,2012 Øyvind Kolås <pippin@gimp.org>
+ *               2011      Martin Nordholts
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #include <gegl.h>
@@ -32,6 +34,7 @@
 
 #include "base/tile.h"
 #include "base/tile-manager.h"
+#include "base/tile-manager-private.h"
 
 #include "gimptilebackendtilemanager.h"
 #include "gimp-gegl-utils.h"
@@ -41,8 +44,49 @@ struct _GimpTileBackendTileManagerPrivate
 {
   TileManager *tile_manager;
   int          write;
+  int          mul;
 };
 
+static int gimp_gegl_tile_mul (void)
+{
+  // gegl projection
+  // 8 - 18.6
+  // 4 - 15.09
+  // 2 - 16.09
+  // 1 - 21.5   <---------
+  //------
+  // legacy projection
+  // 1 - 18.6   <---------
+  // 2 - 15.07
+  // 4 - 15.8
+  // 8 - 18.1
+  //
+  // ---------------------------------------- projection 0copy
+  // 1 - 21.15
+  // 2 - 17.6
+  // 4 - 14.9
+  // 8 - 17.036
+  // ---------------------------------------- 2d, with projection 0copy
+  //10 - 14.1
+  // 9 - 15.11
+  // 8 - 18.11  \ 15.2
+  // 7 - 16
+  // 6 - 14.11
+  // 4 - 16.8
+  // 3 - 17.8
+  // 2 - 16.1
+
+  static int mul = 8;
+  static gboolean inited = 0;
+  if (G_LIKELY (inited))
+    return mul;
+  inited = 1;
+  if (g_getenv ("GIMP_GEGL_TILE_MUL"))
+    mul = atoi (g_getenv ("GIMP_GEGL_TILE_MUL"));
+  if (mul < 1)
+    mul = 1;
+  return mul;
+}
 
 
 static void     gimp_tile_backend_tile_manager_finalize (GObject         *object);
@@ -54,12 +98,24 @@ static gpointer gimp_tile_backend_tile_manager_command  (GeglTileSource  *tile_s
                                                          gint             z,
                                                          gpointer         data);
 
-static void       gimp_tile_write   (GimpTileBackendTileManager *ram,
+static void       gimp_tile_write   (GimpTileBackendTileManager *backend_tm,
                                      gint                        x,
                                      gint                        y,
-                                     gint                        z,
                                      guchar                     *source);
 
+static GeglTile * gimp_tile_read (GimpTileBackendTileManager *backend_tm,
+                                  gint                        x,
+                                  gint                        y);
+
+
+static void       gimp_tile_write_mul (GimpTileBackendTileManager *backend_tm,
+                                       gint                        x,
+                                       gint                        y,
+                                       guchar                     *source);
+
+static GeglTile * gimp_tile_read_mul (GimpTileBackendTileManager *backend_tm,
+                                      gint                        x,
+                                      gint                        y);
 
 G_DEFINE_TYPE (GimpTileBackendTileManager, gimp_tile_backend_tile_manager,
                GEGL_TYPE_TILE_BACKEND)
@@ -131,68 +187,28 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
                                         gpointer         data)
 {
   GimpTileBackendTileManager *backend_tm;
-  GeglTileBackend            *backend;
 
   backend_tm = GIMP_TILE_BACKEND_TILE_MANAGER (tile_store);
-  backend    = GEGL_TILE_BACKEND (tile_store);
 
   switch (command)
     {
     case GEGL_TILE_GET:
-      {
-        GeglTile *tile;
-        gint      tile_size;
-        Tile     *gimp_tile;
-        gint      tile_stride;
-        gint      gimp_tile_stride;
-        int       row;
-
-        gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
-                                         x, y, TRUE, backend_tm->priv->write);
-        if (!gimp_tile)
-          return NULL;
-        g_return_val_if_fail (gimp_tile != NULL, NULL);
-
-        tile_size        = gegl_tile_backend_get_tile_size (backend);
-        tile_stride      = TILE_WIDTH * tile_bpp (gimp_tile);
-        gimp_tile_stride = tile_ewidth (gimp_tile) * tile_bpp (gimp_tile);
-
-        if (tile_stride == gimp_tile_stride && 
-            TILE_HEIGHT == tile_eheight (gimp_tile))
-          {
-            /* use the GimpTile directly as GEGL tile */
-            tile = gegl_tile_new_bare ();
-            gegl_tile_set_data_full (tile, tile_data_pointer (gimp_tile, 0, 0),
-                                     tile_size,
-                                     backend_tm->priv->write?
-                                                   tile_done_writing:tile_done,
-                                     gimp_tile);
-          }
-        else
-          {
-            /* create a copy of the tile */
-            tile = gegl_tile_new (tile_size);
-            for (row = 0; row < tile_eheight (gimp_tile); row++)
-              {
-                memcpy (gegl_tile_get_data (tile) + row * tile_stride,
-                        tile_data_pointer (gimp_tile, 0, row),
-                        gimp_tile_stride);
-              }
-            tile_release (gimp_tile, backend_tm->priv->write);
-          }
-
-        return tile;
-      }
-
+      if (backend_tm->priv->mul > 1)
+        return gimp_tile_read_mul (backend_tm, x, y);
+      return gimp_tile_read (backend_tm, x, y);
     case GEGL_TILE_SET:
-      {
-        GeglTile *tile  = data;
-        if (backend_tm->priv->write == FALSE)
+      if (backend_tm->priv->write == FALSE)
+        {
+          g_warning ("writing to a read only geglbuffer");
           return NULL;
-        gimp_tile_write (backend_tm, x, y, z, gegl_tile_get_data (tile));
-        gegl_tile_mark_as_stored (tile);
-        return NULL;
-      }
+        }
+      if (backend_tm->priv->mul > 1)
+        gimp_tile_write_mul (backend_tm, x, y, gegl_tile_get_data (data));
+      else
+        gimp_tile_write (backend_tm, x, y, gegl_tile_get_data (data));
+
+      gegl_tile_mark_as_stored (data);
+      return NULL;
 
     case GEGL_TILE_IDLE:
     case GEGL_TILE_VOID:
@@ -206,11 +222,60 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
   return NULL;
 }
 
+static GeglTile *
+gimp_tile_read (GimpTileBackendTileManager *backend_tm,
+                gint                        x,
+                gint                        y)
+{
+  GeglTileBackend            *backend;
+  GeglTile *tile;
+  gint      tile_size;
+  Tile     *gimp_tile;
+  gint      tile_stride;
+  gint      gimp_tile_stride;
+  int       row;
+
+  backend    = GEGL_TILE_BACKEND (backend_tm);
+  gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
+                                   x, y, TRUE, backend_tm->priv->write);
+  if (!gimp_tile)
+    return NULL;
+  g_return_val_if_fail (gimp_tile != NULL, NULL);
+
+  tile_size        = gegl_tile_backend_get_tile_size (backend);
+  tile_stride      = TILE_WIDTH * tile_bpp (gimp_tile);
+  gimp_tile_stride = tile_ewidth (gimp_tile) * tile_bpp (gimp_tile);
+
+  if (tile_stride == gimp_tile_stride && 
+      TILE_HEIGHT == tile_eheight (gimp_tile))
+    {
+      /* use the GimpTile directly as GEGL tile */
+      tile = gegl_tile_new_bare ();
+      gegl_tile_set_data_full (tile, tile_data_pointer (gimp_tile, 0, 0),
+                               tile_size,
+                               backend_tm->priv->write?
+                                             tile_done_writing:tile_done,
+                               gimp_tile);
+    }
+  else
+    {
+      /* create a copy of the tile */
+      tile = gegl_tile_new (tile_size);
+      for (row = 0; row < tile_eheight (gimp_tile); row++)
+        {
+          memcpy (gegl_tile_get_data (tile) + row * tile_stride,
+                  tile_data_pointer (gimp_tile, 0, row),
+                  gimp_tile_stride);
+        }
+      tile_release (gimp_tile, backend_tm->priv->write);
+    }
+  return tile;
+}
+
 static void
 gimp_tile_write (GimpTileBackendTileManager *backend_tm,
                  gint                        x,
                  gint                        y,
-                 gint                        z,
                  guchar                     *source)
 {
   Tile *gimp_tile;
@@ -245,6 +310,104 @@ gimp_tile_write (GimpTileBackendTileManager *backend_tm,
   tile_release (gimp_tile, TRUE);
 }
 
+
+static GeglTile *
+gimp_tile_read_mul (GimpTileBackendTileManager *backend_tm,
+                    gint                        x,
+                    gint                        y)
+{
+  GeglTileBackend            *backend;
+  GeglTile *tile;
+  gint      tile_size;
+  int       u, v;
+  int       mul = backend_tm->priv->mul;
+  unsigned char *tile_data;
+  void *validate_proc;
+
+  x *= mul;
+  y *= mul;
+
+  validate_proc = backend_tm->priv->tile_manager->validate_proc;
+  backend_tm->priv->tile_manager->validate_proc = NULL;
+
+  backend    = GEGL_TILE_BACKEND (backend_tm);
+  tile_size  = gegl_tile_backend_get_tile_size (backend);
+  tile       = gegl_tile_new (tile_size);
+  tile_data  = gegl_tile_get_data (tile);
+
+  for (u = 0; u < mul; u++)
+  for (v = 0; v < mul; v++)
+  {
+    Tile     *gimp_tile;
+    
+    gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
+                                               x+u, y+v, TRUE, FALSE);
+    if (gimp_tile)
+      {
+        gint ewidth           = tile_ewidth (gimp_tile);
+        gint eheight          = tile_eheight (gimp_tile);
+        gint bpp              = tile_bpp (gimp_tile);
+        gint tile_stride      = mul * TILE_WIDTH * bpp;
+        gint gimp_tile_stride = ewidth * bpp;
+        gint row;
+
+        for (row = 0; row < eheight; row++)
+          {
+            memcpy (tile_data + (row + TILE_HEIGHT * v) * tile_stride + u * TILE_WIDTH * bpp,
+                    tile_data_pointer (gimp_tile, 0, row),
+                    gimp_tile_stride);
+          }
+        tile_release (gimp_tile, FALSE);
+      }
+  }
+
+  backend_tm->priv->tile_manager->validate_proc = validate_proc;
+  return tile;
+}
+
+static void
+gimp_tile_write_mul (GimpTileBackendTileManager *backend_tm,
+                     gint                        x,
+                     gint                        y,
+                     guchar                     *source)
+{
+  int   u, v;
+  int   mul = backend_tm->priv->mul;
+  void *validate_proc;
+
+  g_assert (backend_tm->priv->write);
+  x *= mul;
+  y *= mul;
+
+  validate_proc = backend_tm->priv->tile_manager->validate_proc;
+  backend_tm->priv->tile_manager->validate_proc = NULL;
+
+  for (v = 0; v < mul; v++)
+    for (u = 0; u < mul; u++)
+    {
+      Tile *gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
+                                             x+u, y+v, TRUE, TRUE);
+      if (gimp_tile)
+        {
+          gint  ewidth      = tile_ewidth (gimp_tile);
+          gint  eheight     = tile_eheight (gimp_tile);
+          gint  bpp         = tile_bpp (gimp_tile);
+
+          gint  tile_stride = mul * TILE_WIDTH * bpp;
+          gint  gimp_tile_stride = ewidth * bpp;
+          gint  row;
+
+          for (row = 0; row < eheight; row++)
+              memcpy (tile_data_pointer (gimp_tile, 0, row),
+                      source + (row + v * TILE_HEIGHT) * tile_stride + u * TILE_WIDTH * bpp,
+                      gimp_tile_stride);
+
+          tile_release (gimp_tile, TRUE);
+        }
+    }
+  backend_tm->priv->tile_manager->validate_proc = validate_proc;
+}
+
 GeglTileBackend *
 gimp_tile_backend_tile_manager_new (TileManager *tm,
                                     const Babl  *format,
@@ -256,23 +419,31 @@ gimp_tile_backend_tile_manager_new (TileManager *tm,
   gint             width  = tile_manager_width (tm);
   gint             height = tile_manager_height (tm);
   gint             bpp    = tile_manager_bpp (tm);
+  gint             mul    = gimp_gegl_tile_mul ();
   GeglRectangle    rect   = { 0, 0, width, height };
+
+  write = TRUE;
 
   g_return_val_if_fail (format == NULL ||
                         babl_format_get_bytes_per_pixel (format) ==
                         babl_format_get_bytes_per_pixel (gimp_bpp_to_babl_format (bpp, TRUE)),
                         NULL);
 
+  if (tm->validate_proc)
+    mul = 1;
+
   if (! format)
     format = gimp_bpp_to_babl_format (bpp, TRUE);
 
   ret = g_object_new (GIMP_TYPE_TILE_BACKEND_TILE_MANAGER,
-                      "tile-width",  TILE_WIDTH,
-                      "tile-height", TILE_HEIGHT,
+                      "tile-width",  TILE_WIDTH  * mul,
+                      "tile-height", TILE_HEIGHT * mul,
                       "format",      format,
                       NULL);
+
   backend_tm = GIMP_TILE_BACKEND_TILE_MANAGER (ret);
   backend_tm->priv->write = write;
+  backend_tm->priv->mul = mul;
 
   backend_tm->priv->tile_manager = tile_manager_ref (tm);
 
