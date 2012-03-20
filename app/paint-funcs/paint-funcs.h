@@ -289,10 +289,6 @@ void  copy_region                         (PixelRegion *src,
 void  add_alpha_region                    (PixelRegion *src,
                                            PixelRegion *dest);
 
-void  extract_alpha_region                (PixelRegion *src,
-                                           PixelRegion *mask,
-                                           PixelRegion *dest);
-
 void  convolve_region                     (PixelRegion         *srcR,
                                            PixelRegion         *destR,
                                            const gfloat        *matrix,
