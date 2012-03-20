@@ -273,32 +273,6 @@ void  paint_funcs_color_erase_helper      (GimpRGB       *src,
                                            const GimpRGB *color);
 
 
-/*  extract information from intensity pixels based on
- *  a mask.
- */
-void  extract_from_inten_pixels           (guchar       *src,
-                                           guchar       *dest,
-                                           const guchar *mask,
-                                           const guchar *bg,
-                                           gboolean      cut,
-                                           guint         length,
-                                           guint         src_bytes,
-                                           guint         dest_bytes);
-
-/*  extract information from indexed pixels based on
- *  a mask.
- */
-void  extract_from_indexed_pixels         (guchar       *src,
-                                           guchar       *dest,
-                                           const guchar *mask,
-                                           const guchar *cmap,
-                                           const guchar *bg,
-                                           gboolean      cut,
-                                           guint         length,
-                                           guint         src_bytes,
-                                           guint         dest_bytes);
-
-
 /*  Region functions  */
 
 void  color_region                        (PixelRegion  *dest,
@@ -318,14 +292,6 @@ void  add_alpha_region                    (PixelRegion *src,
 void  extract_alpha_region                (PixelRegion *src,
                                            PixelRegion *mask,
                                            PixelRegion *dest);
-
-void  extract_from_region                 (PixelRegion       *src,
-                                           PixelRegion       *dest,
-                                           PixelRegion       *mask,
-                                           const guchar      *cmap,
-                                           const guchar      *bg,
-                                           GimpImageBaseType  type,
-                                           gboolean           cut);
 
 void  convolve_region                     (PixelRegion         *srcR,
                                            PixelRegion         *destR,
