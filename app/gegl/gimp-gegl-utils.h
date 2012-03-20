@@ -33,6 +33,8 @@ const Babl  * gimp_bpp_to_babl_format_with_alpha (guint                  bpp,
 const gchar * gimp_layer_mode_to_gegl_operation  (GimpLayerModeEffects   mode) G_GNUC_CONST;
 const gchar * gimp_interpolation_to_gegl_filter  (GimpInterpolationType  interpolation) G_GNUC_CONST;
 
+GeglBuffer  * gimp_gegl_buffer_new               (const GeglRectangle   *rect,
+                                                  const Babl            *format);
 GeglBuffer  * gimp_tile_manager_create_buffer    (TileManager           *tm,
                                                   const Babl            *format,
                                                   gboolean               write);

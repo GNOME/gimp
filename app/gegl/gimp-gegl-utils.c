@@ -204,6 +204,24 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
 }
 
 GeglBuffer *
+gimp_gegl_buffer_new (const GeglRectangle *rect,
+                      const Babl          *format)
+{
+  TileManager *tiles;
+  GeglBuffer  *buffer;
+
+  g_return_val_if_fail (rect != NULL, NULL);
+  g_return_val_if_fail (format != NULL, NULL);
+
+  tiles = tile_manager_new (rect->width, rect->height,
+                            babl_format_get_bytes_per_pixel (format));
+  buffer = gimp_tile_manager_create_buffer (tiles, format, TRUE);
+  tile_manager_unref (tiles);
+
+  return buffer;
+}
+
+GeglBuffer *
 gimp_tile_manager_create_buffer (TileManager *tm,
                                  const Babl  *format,
                                  gboolean     write)
