@@ -23,13 +23,14 @@
 
 #include "core-types.h"
 
-#include "paint-funcs/paint-funcs.h"
-
-#include "base/pixel-region.h"
-#include "base/tile.h"
 #include "base/tile-manager.h"
 
+#include "gegl/gimp-gegl-nodes.h"
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimp.h"
+#include "gimp-edit.h"
+#include "gimp-apply-operation.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-private.h"
 #include "gimperror.h"
@@ -627,11 +628,10 @@ gimp_selection_extract (GimpSelection *selection,
 {
   GimpImage         *image;
   TileManager       *tiles;
-  PixelRegion        srcPR, destPR;
-  guchar             bg_color[MAX_CHANNELS];
-  const guchar      *colormap;
-  GimpImageBaseType  base_type = GIMP_RGB;
-  gint               bytes     = 0;
+  GeglBuffer        *src_buffer;
+  GeglBuffer        *dest_buffer;
+  GeglRectangle      src_rect;
+  GeglRectangle      dest_rect = { 0, };
   gint               x1, y1, x2, y2;
   gboolean           non_empty;
   gint               off_x, off_y;
@@ -677,21 +677,11 @@ gimp_selection_extract (GimpSelection *selection,
   switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_pickable_get_image_type (pickable)))
     {
     case GIMP_RGB:
-      if (add_alpha)
-        *format = gimp_pickable_get_format_with_alpha (pickable);
-      else
-        *format = gimp_pickable_get_format (pickable);
-
-      base_type = GIMP_RGB;
-      break;
-
     case GIMP_GRAY:
       if (add_alpha)
         *format = gimp_pickable_get_format_with_alpha (pickable);
       else
         *format = gimp_pickable_get_format (pickable);
-
-      base_type = GIMP_GRAY;
       break;
 
     case GIMP_INDEXED:
@@ -701,8 +691,6 @@ gimp_selection_extract (GimpSelection *selection,
             *format = gimp_pickable_get_format_with_alpha (pickable);
           else
             *format = gimp_pickable_get_format (pickable);
-
-          base_type = GIMP_GRAY;
         }
       else
         {
@@ -711,8 +699,6 @@ gimp_selection_extract (GimpSelection *selection,
             *format = babl_format ("RGBA u8");
           else
             *format = babl_format ("RGB u8");
-
-          base_type = GIMP_INDEXED;
         }
       break;
 
@@ -721,89 +707,63 @@ gimp_selection_extract (GimpSelection *selection,
       break;
     }
 
-  bytes = babl_format_get_bytes_per_pixel (*format);
-
-  gimp_image_get_background (image, context,
-                             gimp_pickable_get_image_type (pickable),
-                             bg_color);
-
-  /*  If a cut was specified, and the selection mask is not empty,
-   *  push an undo
-   */
   if (GIMP_IS_DRAWABLE (pickable))
     {
-      if (cut_image && non_empty)
-        gimp_drawable_push_undo (GIMP_DRAWABLE (pickable), NULL,
-                                 x1, y1,
-                                 x2 - x1, y2 - y1,
-                                 NULL, FALSE);
-
       gimp_item_get_offset (GIMP_ITEM (pickable), &off_x, &off_y);
-      colormap = gimp_drawable_get_colormap (GIMP_DRAWABLE (pickable));
     }
   else
     {
       off_x = off_y = 0;
-      colormap = NULL;
     }
 
   gimp_pickable_flush (pickable);
 
+  src_buffer = gimp_pickable_get_buffer (pickable);
+
+  src_rect.x      = x1;
+  src_rect.y      = y1;
+  src_rect.width  = x2 - x1;
+  src_rect.height = y2 - y1;
+
   /*  Allocate the temp buffer  */
-  tiles = tile_manager_new (x2 - x1, y2 - y1, bytes);
+  tiles = tile_manager_new (x2 - x1, y2 - y1,
+                            babl_format_get_bytes_per_pixel (*format));
+  dest_buffer = gimp_tile_manager_create_buffer (tiles, *format, TRUE);
 
-  /* configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_pickable_get_tiles (pickable),
-                     x1, y1,
-                     x2 - x1, y2 - y1,
-                     cut_image);
-  pixel_region_init (&destPR, tiles,
-                     0, 0,
-                     x2 - x1, y2 - y1,
-                     TRUE);
+  /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
+  gegl_buffer_copy (src_buffer, &src_rect,
+                    dest_buffer, &dest_rect);
 
-  if (non_empty) /*  If there is a selection, extract from it  */
+  if (non_empty)
     {
-      PixelRegion maskPR;
+      /*  If there is a selection, mask the dest_buffer with it  */
 
-      pixel_region_init (&maskPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (selection)),
-                         (x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1),
-                         FALSE);
+      GeglBuffer *mask_buffer;
+      GeglNode   *apply_opacity;
 
-      extract_from_region (&srcPR, &destPR, &maskPR,
-                           colormap, bg_color, base_type, cut_image);
+      mask_buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (selection));
 
-      if (GIMP_IS_DRAWABLE (pickable) && cut_image)
+      apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0,
+                                                           x1 + off_x,
+                                                           y1 + off_y);
+
+      gimp_apply_operation (dest_buffer, NULL, NULL,
+                            apply_opacity, TRUE,
+                            dest_buffer, NULL);
+
+      g_object_unref (apply_opacity);
+
+      if (cut_image && GIMP_IS_DRAWABLE (pickable))
         {
-          /*  Update the region  */
-          gimp_drawable_update (GIMP_DRAWABLE (pickable),
-                                x1, y1, (x2 - x1), (y2 - y1));
+          gimp_edit_clear (image, GIMP_DRAWABLE (pickable), context);
         }
     }
-  else /*  Otherwise, get the entire active layer  */
+  else if (cut_image && GIMP_IS_DRAWABLE (pickable))
     {
-      if (base_type == GIMP_INDEXED && !keep_indexed)
-        {
-          /*  If the layer is indexed...we need to extract pixels  */
-          extract_from_region (&srcPR, &destPR, NULL,
-                               colormap, bg_color, base_type, FALSE);
-        }
-      else if (bytes > srcPR.bytes)
-        {
-          /*  If the layer doesn't have an alpha channel, add one  */
-          add_alpha_region (&srcPR, &destPR);
-        }
-      else
-        {
-          /*  Otherwise, do a straight copy  */
-          copy_region (&srcPR, &destPR);
-        }
-
-      /*  If we're cutting, remove either the layer (or floating selection),
-       *  the layer mask, or the channel
+      /*  If we're cutting without selection, remove either the layer
+       *  (or floating selection), the layer mask, or the channel
        */
-      if (GIMP_IS_DRAWABLE (pickable) && cut_image)
+      if (cut_image && GIMP_IS_DRAWABLE (pickable))
         {
           if (GIMP_IS_LAYER (pickable))
             {
@@ -822,6 +782,8 @@ gimp_selection_extract (GimpSelection *selection,
             }
         }
     }
+
+  g_object_unref (dest_buffer);
 
   *offset_x = x1 + off_x;
   *offset_y = y1 + off_y;
