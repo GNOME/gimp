@@ -988,7 +988,7 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
       /*  Otherwise, determine if the alpha value at
        *  the given point is non-zero
        */
-      gegl_buffer_sample (gimp_drawable_get_read_buffer (GIMP_DRAWABLE (layer)),
+      gegl_buffer_sample (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                           x, y, NULL, &value, babl_format ("A u8"),
                           GEGL_SAMPLER_NEAREST);
 
@@ -1139,7 +1139,7 @@ gimp_layer_new_from_buffer (GeglBuffer           *buffer,
                           type, name,
                           opacity, mode);
 
-  dest = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (layer));
+  dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   gegl_buffer_copy (buffer, NULL, dest, NULL);
 
   return layer;
@@ -1397,7 +1397,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                                          babl_format ("A u8"),
                                                          TRUE);
 
-          gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+          gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                             dest_buffer, NULL);
 
           g_object_unref (dest_buffer);
@@ -1418,10 +1418,10 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                                "value",     1.0,
                                                NULL);
 
-              gimp_apply_operation (gimp_drawable_get_read_buffer (drawable),
+              gimp_apply_operation (gimp_drawable_get_buffer (drawable),
                                     NULL, NULL,
                                     set_alpha, TRUE,
-                                    gimp_drawable_get_write_buffer (drawable),
+                                    gimp_drawable_get_buffer (drawable),
                                     NULL);
 
               g_object_unref (set_alpha);
@@ -1465,8 +1465,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
             GeglRectangle  src_rect;
             GeglRectangle  dest_rect;
 
-            src  = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel));
-            dest = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask));
+            src  = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+            dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
             src_rect.x      = copy_x;
             src_rect.y      = copy_y;
@@ -1503,7 +1503,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
             dest_buffer = gimp_tile_manager_create_buffer (copy_tiles, NULL,
                                                            TRUE);
 
-            gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+            gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                               dest_buffer, NULL);
 
             g_object_unref (dest_buffer);
@@ -1513,11 +1513,11 @@ gimp_layer_create_mask (const GimpLayer *layer,
           }
         else
           {
-            src_buffer = gimp_drawable_get_read_buffer (drawable);
+            src_buffer = gimp_drawable_get_buffer (drawable);
             g_object_ref (src_buffer);
           }
 
-        dest_buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask));
+        dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
         if (gimp_drawable_has_alpha (drawable))
           {
@@ -1619,8 +1619,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
                                  NULL, FALSE);
 
       /*  Combine the current layer's alpha channel and the mask  */
-      mask_buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (mask));
-      dest_buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (layer));
+      mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+      dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
       apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0,
                                                            0, 0);
@@ -1830,7 +1830,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
                                                  gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layer)),
                                                  TRUE);
 
-  gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
   g_object_unref (dest_buffer);

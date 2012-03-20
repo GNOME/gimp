@@ -366,7 +366,7 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
   /*  calculate and allocate a new segment array which represents the
    *  boundary of the contiguous region
    */
-  buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (region_sel->region_mask));
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (region_sel->region_mask));
 
   segs = gimp_boundary_find (buffer, NULL,
                              GIMP_BOUNDARY_WITHIN_BOUNDS,

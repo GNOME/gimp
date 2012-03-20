@@ -212,7 +212,7 @@ floating_sel_boundary (GimpLayer *layer,
           gint        i;
 
           /*  find the segments  */
-          buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (layer));
+          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
           layer->fs.segs = gimp_boundary_find (buffer, NULL,
                                                GIMP_BOUNDARY_WITHIN_BOUNDS,

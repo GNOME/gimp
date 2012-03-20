@@ -178,8 +178,7 @@ void            gimp_drawable_init_src_region    (GimpDrawable       *drawable,
                                                   gint                height,
                                                   TileManager       **temp_tiles);
 
-GeglBuffer    * gimp_drawable_get_read_buffer    (GimpDrawable       *drawable);
-GeglBuffer    * gimp_drawable_get_write_buffer   (GimpDrawable       *drawable);
+GeglBuffer    * gimp_drawable_get_buffer         (GimpDrawable       *drawable);
 
 /* FIXME gegl migration hack */
 void            gimp_drawable_recreate_buffers   (GimpDrawable       *drawable);

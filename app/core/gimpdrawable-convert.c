@@ -57,7 +57,7 @@ gimp_drawable_convert_rgb (GimpDrawable *drawable,
 
   dest_buffer = gimp_tile_manager_create_buffer (tiles, NULL, TRUE);
 
-  gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
   g_object_unref (dest_buffer);
@@ -89,7 +89,7 @@ gimp_drawable_convert_grayscale (GimpDrawable *drawable,
 
   dest_buffer = gimp_tile_manager_create_buffer (tiles, NULL, TRUE);
 
-  gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
   g_object_unref (dest_buffer);
@@ -132,7 +132,7 @@ gimp_drawable_convert_indexed (GimpDrawable *drawable,
 
   dest_buffer = gimp_tile_manager_create_buffer (tiles, format, TRUE);
 
-  gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
   g_object_unref (dest_buffer);

@@ -66,7 +66,7 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                                      gimp_drawable_get_format (drawable),
                                      TRUE);
 
-  gimp_apply_operation (gimp_drawable_get_read_buffer (drawable),
+  gimp_apply_operation (gimp_drawable_get_buffer (drawable),
                         progress, undo_desc,
                         operation, linear,
                         dest_buffer, &rect);
@@ -128,7 +128,7 @@ gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
   g_return_if_fail (GEGL_IS_NODE (operation));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
-  gimp_apply_operation (gimp_drawable_get_read_buffer (drawable),
+  gimp_apply_operation (gimp_drawable_get_buffer (drawable),
                         progress, undo_desc,
                         operation, linear,
                         dest_buffer, NULL);

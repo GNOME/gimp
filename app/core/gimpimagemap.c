@@ -722,7 +722,7 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
         }
 
       /*  Copy from the image to the new tiles  */
-      src = gimp_drawable_get_read_buffer (image_map->drawable);
+      src = gimp_drawable_get_buffer (image_map->drawable);
       dest = gimp_tile_manager_create_buffer (image_map->undo_tiles,
                                               gimp_drawable_get_format (image_map->drawable),
                                               TRUE);
@@ -888,7 +888,7 @@ gimp_image_map_data_written (GObject             *operation,
       src = gimp_tile_manager_create_buffer (image_map->undo_tiles,
                                              gimp_drawable_get_format (image_map->drawable),
                                              FALSE);
-      dest = gimp_drawable_get_write_buffer (image_map->drawable);
+      dest = gimp_drawable_get_buffer (image_map->drawable);
 
       src_rect.x      = extent->x - image_map->undo_offset_x;
       src_rect.y      = extent->y - image_map->undo_offset_y;

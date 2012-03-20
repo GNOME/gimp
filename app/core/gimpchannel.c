@@ -546,7 +546,7 @@ gimp_channel_translate (GimpItem *item,
        */
       tmp_mask = gimp_channel_new_mask (gimp_item_get_image (item),
                                         width, height);
-      tmp_buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (tmp_mask));
+      tmp_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_mask));
 
       src_rect.x      = x1 - off_x;
       src_rect.y      = y1 - off_y;
@@ -556,14 +556,14 @@ gimp_channel_translate (GimpItem *item,
       dest_rect.x = 0;
       dest_rect.y = 0;
 
-      gegl_buffer_copy (gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel)),
+      gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                         &src_rect,
                         tmp_buffer,
                         &dest_rect);
     }
 
   /*  clear the mask  */
-  gegl_buffer_clear (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+  gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                      NULL);
 
   if (width != 0 && height != 0)
@@ -574,7 +574,7 @@ gimp_channel_translate (GimpItem *item,
 
       gegl_buffer_copy (tmp_buffer,
                         NULL,
-                        gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                         &dest_rect);
 
       /*  free the temporary mask  */
@@ -992,7 +992,7 @@ gimp_channel_get_opacity_at (GimpPickable *pickable,
         }
     }
 
-  gegl_buffer_sample (gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel)),
+  gegl_buffer_sample (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                       x, y, NULL, &value, babl_format ("Y u8"),
                       GEGL_SAMPLER_NEAREST);
 
@@ -1023,7 +1023,7 @@ gimp_channel_real_boundary (GimpChannel         *channel,
           GeglBuffer *buffer;
           GeglRectangle  rect = { x3, y3, x4 - x3, y4 - y3 };
 
-          buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel));
+          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
           channel->segs_out = gimp_boundary_find (buffer, &rect,
                                                   GIMP_BOUNDARY_IGNORE_BOUNDS,
@@ -1097,7 +1097,7 @@ gimp_channel_real_bounds (GimpChannel *channel,
   tx2 = 0;
   ty2 = 0;
 
-  buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel));
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
   iter = gegl_buffer_iterator_new (buffer, NULL, babl_format ("Y u8"),
                                    GEGL_BUFFER_READ);
@@ -1195,7 +1195,7 @@ gimp_channel_real_is_empty (GimpChannel *channel)
   if (channel->bounds_known)
     return channel->empty;
 
-  buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel));
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
   iter = gegl_buffer_iterator_new (buffer, NULL, babl_format ("Y u8"),
                                    GEGL_BUFFER_READ);
@@ -1263,7 +1263,7 @@ gimp_channel_real_feather (GimpChannel *channel,
 
   gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
                                            node, TRUE,
-                                           gimp_drawable_get_write_buffer (drawable));
+                                           gimp_drawable_get_buffer (drawable));
 
   g_object_unref (node);
 
@@ -1294,7 +1294,7 @@ gimp_channel_real_sharpen (GimpChannel *channel,
 
   gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
                                            node, TRUE,
-                                           gimp_drawable_get_write_buffer (drawable));
+                                           gimp_drawable_get_buffer (drawable));
 
   g_object_unref (node);
 
@@ -1329,12 +1329,12 @@ gimp_channel_real_clear (GimpChannel *channel,
                              channel->x2 - channel->x1,
                              channel->y2 - channel->y1 };
 
-      gegl_buffer_clear (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                          &rect);
     }
   else
     {
-      gegl_buffer_clear (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                          NULL);
     }
 
@@ -1365,7 +1365,7 @@ gimp_channel_real_all (GimpChannel *channel,
 
   /*  clear the channel  */
   color = gegl_color_new ("#fff");
-  gegl_buffer_set_color (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (channel)),
+  gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                          NULL, color);
   g_object_unref (color);
 
@@ -1406,7 +1406,7 @@ gimp_channel_real_invert (GimpChannel *channel,
 
       gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
                                                node, TRUE,
-                                               gimp_drawable_get_write_buffer (drawable));
+                                               gimp_drawable_get_buffer (drawable));
 
       g_object_unref (node);
 
@@ -1668,7 +1668,7 @@ gimp_channel_new_from_alpha (GimpImage     *image,
                                                  babl_format ("A u8"),
                                                  TRUE);
 
-  gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), NULL,
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
   g_object_unref (dest_buffer);

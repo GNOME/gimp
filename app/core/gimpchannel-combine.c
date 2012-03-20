@@ -60,7 +60,7 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   rect.width  = w;
   rect.height = h;
 
-  gegl_buffer_set_color (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask)),
+  gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                          &rect, color);
   g_object_unref (color);
 
@@ -244,7 +244,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
   rect.width  = width;
   rect.height = height;
 
-  buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask));
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
   iter = gegl_buffer_iterator_new (buffer, &rect, babl_format ("Y u8"),
                                    GEGL_BUFFER_READWRITE);
@@ -464,8 +464,8 @@ gimp_channel_combine_mask (GimpChannel    *mask,
                                   &x, &y, &w, &h))
     return;
 
-  mask_buffer = gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask));
-  add_on_buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (add_on));
+  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+  add_on_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (add_on));
 
   rect.x      = x;
   rect.y      = y;

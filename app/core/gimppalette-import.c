@@ -299,7 +299,7 @@ gimp_palette_import_extract (GimpImage     *image,
     {
       GimpDrawable *mask = GIMP_DRAWABLE (gimp_image_get_mask (image));
 
-      buffer = gimp_drawable_get_read_buffer (mask);
+      buffer = gimp_drawable_get_buffer (mask);
 
       rect.x = x + pickable_off_x;
       rect.y = y + pickable_off_y;

@@ -192,7 +192,7 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                                  -off_x, -off_y);
     }
 
-  mask_buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (mask));
+  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
   gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
 

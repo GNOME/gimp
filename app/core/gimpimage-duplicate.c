@@ -383,8 +383,8 @@ gimp_image_duplicate_mask (GimpImage *image,
   mask     = GIMP_DRAWABLE (gimp_image_get_mask (image));
   new_mask = GIMP_DRAWABLE (gimp_image_get_mask (new_image));
 
-  gegl_buffer_copy (gimp_drawable_get_read_buffer (mask), NULL,
-                    gimp_drawable_get_write_buffer (new_mask), NULL);
+  gegl_buffer_copy (gimp_drawable_get_buffer (mask), NULL,
+                    gimp_drawable_get_buffer (new_mask), NULL);
 
   GIMP_CHANNEL (new_mask)->bounds_known   = FALSE;
   GIMP_CHANNEL (new_mask)->boundary_known = FALSE;

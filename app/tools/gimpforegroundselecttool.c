@@ -633,7 +633,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                            "foreground-extraction", NULL);
 
   gimp_scan_convert_render_value (scan_convert,
-                                  gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask)),
+                                  gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                                   0, 0, 128);
   gimp_scan_convert_free (scan_convert);
 
@@ -789,7 +789,7 @@ gimp_foreground_select_tool_stroke (GimpChannel    *mask,
                             GIMP_JOIN_ROUND, GIMP_CAP_ROUND, 10.0,
                             0.0, NULL);
   gimp_scan_convert_compose_value (scan_convert,
-                             gimp_drawable_get_write_buffer (GIMP_DRAWABLE (mask)),
+                             gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                              0, 0, stroke->background ? 0 : 255);
   gimp_scan_convert_free (scan_convert);
 }

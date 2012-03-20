@@ -581,9 +581,9 @@ gimp_selection_load (GimpSelection *selection,
                           C_("undo-type", "Channel to Selection"));
 
   /*  copy the channel to the mask  */
-  gegl_buffer_copy (gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel)),
+  gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                     NULL,
-                    gimp_drawable_get_write_buffer (GIMP_DRAWABLE (selection)),
+                    gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)),
                     NULL);
 
   GIMP_CHANNEL (selection)->bounds_known = FALSE;
@@ -741,7 +741,7 @@ gimp_selection_extract (GimpSelection *selection,
       GeglBuffer *mask_buffer;
       GeglNode   *apply_opacity;
 
-      mask_buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (selection));
+      mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (selection));
 
       apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0,
                                                            x1 + off_x,

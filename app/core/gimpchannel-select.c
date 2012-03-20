@@ -238,7 +238,7 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
                                   gimp_item_get_height (item));
 
   gimp_scan_convert_render (scan_convert,
-                            gimp_drawable_get_write_buffer (GIMP_DRAWABLE (add_on)),
+                            gimp_drawable_get_buffer (GIMP_DRAWABLE (add_on)),
                             offset_x, offset_y, antialias);
 
   if (feather)

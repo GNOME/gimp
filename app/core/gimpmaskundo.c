@@ -88,7 +88,7 @@ gimp_mask_undo_constructed (GObject *object)
       mask_undo->x = x1;
       mask_undo->y = y1;
 
-      gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), &src_rect,
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
                         mask_undo->buffer, &dest_rect);
     }
 }
@@ -130,10 +130,10 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       new_buffer = gegl_buffer_new (&buffer_rect,
                                     babl_format ("Y float"));
 
-      gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), &src_rect,
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
                         new_buffer, &dest_rect);
 
-      gegl_buffer_clear (gimp_drawable_get_write_buffer (drawable), &src_rect);
+      gegl_buffer_clear (gimp_drawable_get_buffer (drawable), &src_rect);
     }
   else
     {
@@ -148,7 +148,7 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       height = gegl_buffer_get_height (mask_undo->buffer);
 
       gegl_buffer_copy (mask_undo->buffer, NULL,
-                        gimp_drawable_get_write_buffer (drawable), &dest_rect);
+                        gimp_drawable_get_buffer (drawable), &dest_rect);
 
       g_object_unref (mask_undo->buffer);
     }

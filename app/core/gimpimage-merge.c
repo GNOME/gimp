@@ -546,7 +546,7 @@ gimp_image_merge_layers (GimpImage     *image,
       rect.height = y2 - y1;
 
       color = gimp_gegl_color_new (&bg);
-      gegl_buffer_set_color (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (merge_layer)),
+      gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer)),
                              &rect, color);
       g_object_unref (color);
 
@@ -574,7 +574,7 @@ gimp_image_merge_layers (GimpImage     *image,
       gimp_item_set_offset (GIMP_ITEM (merge_layer), x1, y1);
 
       /*  clear the layer  */
-      gegl_buffer_clear (gimp_drawable_get_write_buffer (GIMP_DRAWABLE (merge_layer)),
+      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer)),
                          NULL);
 
       /*  Find the index in the layer list of the bottom layer--we need this

@@ -607,7 +607,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
       src_rect.height = height;
 
       /*  copy the mask to the temp mask  */
-      gegl_buffer_copy (gimp_drawable_get_read_buffer (GIMP_DRAWABLE (mask)),
+      gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                         &src_rect,
                         temp_buffer, &dest_rect);
     }
@@ -629,7 +629,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
           src_rect.height = PR->h;
 
           /*  extract the aplha into the temp mask  */
-          gegl_buffer_copy (gimp_drawable_get_read_buffer (drawable), &src_rect,
+          gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
                             temp_buffer, &dest_rect);
         }
       else
