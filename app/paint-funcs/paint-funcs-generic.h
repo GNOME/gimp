@@ -185,33 +185,6 @@ blend_pixels (const guchar *src1,
     }
 }
 
-inline void
-shade_pixels (const guchar *src,
-              guchar       *dest,
-              const guchar *col,
-              guchar        blend,
-              guint         w,
-              guint         bytes,
-              gboolean      has_alpha)
-{
-  const guchar blend2 = (255 - blend);
-  const guint  alpha = (has_alpha) ? bytes - 1 : bytes;
-
-  while (w--)
-    {
-      guint b;
-
-      for (b = 0; b < alpha; b++)
-        dest[b] = (src[b] * blend2 + col[b] * blend) / 255;
-
-      if (has_alpha)
-        dest[alpha] = src[alpha];  /* alpha channel */
-
-      src += bytes;
-      dest += bytes;
-    }
-}
-
 
 static inline void
 replace_pixels (const guchar   *src1,
