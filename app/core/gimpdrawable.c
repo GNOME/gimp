@@ -489,8 +489,7 @@ gimp_drawable_scale (GimpItem              *item,
                      NULL);
 
       buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                gimp_drawable_get_format (drawable),
-                                                TRUE);
+                                                gimp_drawable_get_format (drawable));
 
       gimp_drawable_apply_operation_to_buffer (drawable, progress,
                                                C_("undo-type", "Scale"),
@@ -577,8 +576,7 @@ gimp_drawable_resize (GimpItem    *item,
                                 gimp_drawable_bytes (drawable));
 
   dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_format (drawable),
-                                                 TRUE);
+                                                 gimp_drawable_get_format (drawable));
 
   if (copy_width  != new_width ||
       copy_height != new_height)
@@ -930,8 +928,7 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
       tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
 
       dest_buffer = gimp_tile_manager_create_buffer (tiles,
-                                                     gimp_drawable_get_format (drawable),
-                                                     TRUE);
+                                                     gimp_drawable_get_format (drawable));
 
       src_rect.x      = x;
       src_rect.y      = y;
@@ -1504,13 +1501,12 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
 }
 
 static GeglBuffer *
-gimp_drawable_create_buffer (GimpDrawable *drawable,
-                             gboolean      write)
+gimp_drawable_create_buffer (GimpDrawable *drawable)
 {
   TileManager *tiles  = gimp_drawable_get_tiles (drawable);
   const Babl  *format = gimp_drawable_get_format (drawable);
 
-  return gimp_tile_manager_create_buffer (tiles, format, write);
+  return gimp_tile_manager_create_buffer (tiles, format);
 }
 
 GeglBuffer *
@@ -1520,8 +1516,7 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
 
   if (! drawable->private->buffer)
     {
-      drawable->private->buffer = gimp_drawable_create_buffer (drawable,
-                                                               FALSE);
+      drawable->private->buffer = gimp_drawable_create_buffer (drawable);
     }
   else
     {

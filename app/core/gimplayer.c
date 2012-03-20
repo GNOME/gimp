@@ -1177,7 +1177,7 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
   g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
 
-  buffer = gimp_tile_manager_create_buffer (tiles, format, FALSE);
+  buffer = gimp_tile_manager_create_buffer (tiles, format);
 
   layer = gimp_layer_new_from_buffer (buffer, dest_image, type,
                                       name, opacity, mode);
@@ -1394,8 +1394,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
           dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (mask));
           dest_buffer = gimp_tile_manager_create_buffer (dest_tiles,
-                                                         babl_format ("A u8"),
-                                                         TRUE);
+                                                         babl_format ("A u8"));
 
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                             dest_buffer, NULL);
@@ -1500,16 +1499,14 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                            gimp_item_get_height (item),
                                            GIMP_IMAGE_TYPE_BYTES (copy_type));
 
-            dest_buffer = gimp_tile_manager_create_buffer (copy_tiles, NULL,
-                                                           TRUE);
+            dest_buffer = gimp_tile_manager_create_buffer (copy_tiles, NULL);
 
             gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                               dest_buffer, NULL);
 
             g_object_unref (dest_buffer);
 
-            src_buffer = gimp_tile_manager_create_buffer (copy_tiles, NULL,
-                                                          FALSE);
+            src_buffer = gimp_tile_manager_create_buffer (copy_tiles, NULL);
           }
         else
           {
@@ -1827,8 +1824,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
   dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layer)),
-                                                 TRUE);
+                                                 gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layer)));
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
@@ -1865,8 +1861,7 @@ gimp_layer_flatten (GimpLayer   *layer,
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
   dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)),
-                                                 TRUE);
+                                                 gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
 
   gimp_context_get_background (context, &background);
   flatten = gimp_gegl_create_flatten_node (&background);

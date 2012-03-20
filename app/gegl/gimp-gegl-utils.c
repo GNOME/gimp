@@ -215,7 +215,7 @@ gimp_gegl_buffer_new (const GeglRectangle *rect,
 
   tiles = tile_manager_new (rect->width, rect->height,
                             babl_format_get_bytes_per_pixel (format));
-  buffer = gimp_tile_manager_create_buffer (tiles, format, TRUE);
+  buffer = gimp_tile_manager_create_buffer (tiles, format);
   tile_manager_unref (tiles);
 
   return buffer;
@@ -223,13 +223,12 @@ gimp_gegl_buffer_new (const GeglRectangle *rect,
 
 GeglBuffer *
 gimp_tile_manager_create_buffer (TileManager *tm,
-                                 const Babl  *format,
-                                 gboolean     write)
+                                 const Babl  *format)
 {
   GeglTileBackend *backend;
   GeglBuffer      *buffer;
 
-  backend = gimp_tile_backend_tile_manager_new (tm, format, write);
+  backend = gimp_tile_backend_tile_manager_new (tm, format);
   buffer = gegl_buffer_new_for_backend (NULL, backend);
   g_object_unref (backend);
 

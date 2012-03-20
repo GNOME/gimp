@@ -43,39 +43,11 @@
 struct _GimpTileBackendTileManagerPrivate
 {
   TileManager *tile_manager;
-  int          write;
   int          mul;
 };
 
 static int gimp_gegl_tile_mul (void)
 {
-  // gegl projection
-  // 8 - 18.6
-  // 4 - 15.09
-  // 2 - 16.09
-  // 1 - 21.5   <---------
-  //------
-  // legacy projection
-  // 1 - 18.6   <---------
-  // 2 - 15.07
-  // 4 - 15.8
-  // 8 - 18.1
-  //
-  // ---------------------------------------- projection 0copy
-  // 1 - 21.15
-  // 2 - 17.6
-  // 4 - 14.9
-  // 8 - 17.036
-  // ---------------------------------------- 2d, with projection 0copy
-  //10 - 14.1
-  // 9 - 15.11
-  // 8 - 18.11  \ 15.2
-  // 7 - 16
-  // 6 - 14.11
-  // 4 - 16.8
-  // 3 - 17.8
-  // 2 - 16.1
-
   static int mul = 8;
   static gboolean inited = 0;
   if (G_LIKELY (inited))
@@ -87,7 +59,6 @@ static int gimp_gegl_tile_mul (void)
     mul = 1;
   return mul;
 }
-
 
 static void     gimp_tile_backend_tile_manager_finalize (GObject         *object);
 static void     gimp_tile_backend_tile_manager_dispose  (GObject         *object);
@@ -167,12 +138,6 @@ gimp_tile_backend_tile_manager_finalize (GObject *object)
 }
 
 static void
-tile_done (void *data)
-{
-  tile_release (data, FALSE);
-}
-
-static void
 tile_done_writing (void *data)
 {
   tile_release (data, TRUE);
@@ -197,11 +162,6 @@ gimp_tile_backend_tile_manager_command (GeglTileSource  *tile_store,
         return gimp_tile_read_mul (backend_tm, x, y);
       return gimp_tile_read (backend_tm, x, y);
     case GEGL_TILE_SET:
-      if (backend_tm->priv->write == FALSE)
-        {
-          g_warning ("writing to a read only geglbuffer");
-          return NULL;
-        }
       if (backend_tm->priv->mul > 1)
         gimp_tile_write_mul (backend_tm, x, y, gegl_tile_get_data (data));
       else
@@ -237,7 +197,7 @@ gimp_tile_read (GimpTileBackendTileManager *backend_tm,
 
   backend    = GEGL_TILE_BACKEND (backend_tm);
   gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
-                                   x, y, TRUE, backend_tm->priv->write);
+                                   x, y, TRUE, TRUE);
   if (!gimp_tile)
     return NULL;
   g_return_val_if_fail (gimp_tile != NULL, NULL);
@@ -252,10 +212,7 @@ gimp_tile_read (GimpTileBackendTileManager *backend_tm,
       /* use the GimpTile directly as GEGL tile */
       tile = gegl_tile_new_bare ();
       gegl_tile_set_data_full (tile, tile_data_pointer (gimp_tile, 0, 0),
-                               tile_size,
-                               backend_tm->priv->write?
-                                             tile_done_writing:tile_done,
-                               gimp_tile);
+                               tile_size, tile_done_writing, gimp_tile);
     }
   else
     {
@@ -267,7 +224,7 @@ gimp_tile_read (GimpTileBackendTileManager *backend_tm,
                   tile_data_pointer (gimp_tile, 0, row),
                   gimp_tile_stride);
         }
-      tile_release (gimp_tile, backend_tm->priv->write);
+      tile_release (gimp_tile, TRUE);
     }
   return tile;
 }
@@ -282,8 +239,6 @@ gimp_tile_write (GimpTileBackendTileManager *backend_tm,
   gint  tile_stride;
   gint  gimp_tile_stride;
   int   row;
-
-  g_assert (backend_tm->priv->write);
 
   gimp_tile = tile_manager_get_at (backend_tm->priv->tile_manager,
                                    x, y, TRUE, TRUE);
@@ -375,7 +330,6 @@ gimp_tile_write_mul (GimpTileBackendTileManager *backend_tm,
   int   mul = backend_tm->priv->mul;
   void *validate_proc;
 
-  g_assert (backend_tm->priv->write);
   x *= mul;
   y *= mul;
 
@@ -399,7 +353,8 @@ gimp_tile_write_mul (GimpTileBackendTileManager *backend_tm,
 
           for (row = 0; row < eheight; row++)
               memcpy (tile_data_pointer (gimp_tile, 0, row),
-                      source + (row + v * TILE_HEIGHT) * tile_stride + u * TILE_WIDTH * bpp,
+                      source + (row + v * TILE_HEIGHT) *
+                              tile_stride + u * TILE_WIDTH * bpp,
                       gimp_tile_stride);
 
           tile_release (gimp_tile, TRUE);
@@ -410,8 +365,7 @@ gimp_tile_write_mul (GimpTileBackendTileManager *backend_tm,
 
 GeglTileBackend *
 gimp_tile_backend_tile_manager_new (TileManager *tm,
-                                    const Babl  *format,
-                                    gboolean     write)
+                                    const Babl  *format)
 {
   GeglTileBackend            *ret;
   GimpTileBackendTileManager *backend_tm;
@@ -421,8 +375,6 @@ gimp_tile_backend_tile_manager_new (TileManager *tm,
   gint             bpp    = tile_manager_bpp (tm);
   gint             mul    = gimp_gegl_tile_mul ();
   GeglRectangle    rect   = { 0, 0, width, height };
-
-  write = TRUE;
 
   g_return_val_if_fail (format == NULL ||
                         babl_format_get_bytes_per_pixel (format) ==
@@ -442,7 +394,6 @@ gimp_tile_backend_tile_manager_new (TileManager *tm,
                       NULL);
 
   backend_tm = GIMP_TILE_BACKEND_TILE_MANAGER (ret);
-  backend_tm->priv->write = write;
   backend_tm->priv->mul = mul;
 
   backend_tm->priv->tile_manager = tile_manager_ref (tm);

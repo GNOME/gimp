@@ -228,8 +228,7 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
   tiles = tile_manager_new ((x2 - x1), (y2 - y1),
                             gimp_drawable_bytes_with_alpha (drawable));
   buffer = gimp_tile_manager_create_buffer (tiles,
-                                            gimp_drawable_get_format_with_alpha (drawable),
-                                            TRUE);
+                                            gimp_drawable_get_format_with_alpha (drawable));
 
   switch (fill_mode)
     {

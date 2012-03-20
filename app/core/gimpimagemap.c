@@ -309,8 +309,7 @@ gimp_image_map_get_buffer (GimpPickable *pickable)
       if (! image_map->undo_buffer)
         image_map->undo_buffer =
           gimp_tile_manager_create_buffer (image_map->undo_tiles,
-                                           gimp_drawable_get_format (image_map->drawable),
-                                           FALSE);
+                                           gimp_drawable_get_format (image_map->drawable));
 
       return image_map->undo_buffer;
     }
@@ -432,9 +431,9 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       GeglBuffer *output_buffer;
 
       input_buffer =
-        gimp_tile_manager_create_buffer (image_map->undo_tiles, format, FALSE);
+        gimp_tile_manager_create_buffer (image_map->undo_tiles, format);
       output_buffer =
-        gimp_tile_manager_create_buffer (gimp_drawable_get_shadow_tiles (image_map->drawable), format, TRUE);
+        gimp_tile_manager_create_buffer (gimp_drawable_get_shadow_tiles (image_map->drawable), format);
 
       if (! image_map->gegl)
         {
@@ -724,8 +723,7 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
       /*  Copy from the image to the new tiles  */
       src = gimp_drawable_get_buffer (image_map->drawable);
       dest = gimp_tile_manager_create_buffer (image_map->undo_tiles,
-                                              gimp_drawable_get_format (image_map->drawable),
-                                              TRUE);
+                                              gimp_drawable_get_format (image_map->drawable));
 
       gegl_buffer_copy (src, rect, dest, &dest_rect);
 
@@ -886,8 +884,7 @@ gimp_image_map_data_written (GObject             *operation,
       GeglRectangle  dest_rect;
 
       src = gimp_tile_manager_create_buffer (image_map->undo_tiles,
-                                             gimp_drawable_get_format (image_map->drawable),
-                                             FALSE);
+                                             gimp_drawable_get_format (image_map->drawable));
       dest = gimp_drawable_get_buffer (image_map->drawable);
 
       src_rect.x      = extent->x - image_map->undo_offset_x;

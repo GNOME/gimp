@@ -598,8 +598,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
       temp_buffer = gimp_tile_manager_create_buffer (temp_tiles,
-                                                     babl_format ("Y u8"),
-                                                     TRUE);
+                                                     babl_format ("Y u8"));
 
       src_rect.x      = x + off_x;
       src_rect.y      = y + off_y;
@@ -620,8 +619,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
           GeglRectangle  dest_rect = { 0, };
 
           temp_buffer = gimp_tile_manager_create_buffer (temp_tiles,
-                                                         babl_format ("A u8"),
-                                                         TRUE);
+                                                         babl_format ("A u8"));
 
           src_rect.x      = PR->x;
           src_rect.y      = PR->y;
@@ -637,8 +635,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
           GeglColor *white = gegl_color_new ("white");
 
           temp_buffer = gimp_tile_manager_create_buffer (temp_tiles,
-                                                         babl_format ("Y u8"),
-                                                         TRUE);
+                                                         babl_format ("Y u8"));
 
           /*  Otherwise, just fill the shapeburst to white  */
           gegl_buffer_set_color (temp_buffer, NULL, white);

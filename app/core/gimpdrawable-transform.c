@@ -140,10 +140,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       gchar       *matrix_string;
       GimpMatrix3  gegl_matrix;
 
-      src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format,
-                                                    FALSE);
-      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format,
-                                                     TRUE);
+      src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format);
+      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format);
 
       gimp_matrix3_identity (&gegl_matrix);
       gimp_matrix3_translate (&gegl_matrix, u1, v1);
@@ -254,7 +252,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
     }
 
   new_tiles = tile_manager_new (new_width, new_height, orig_bpp);
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format);
 
   if (clip_result && (new_x != orig_x || new_y != orig_y))
     {
@@ -305,7 +303,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
       return new_tiles;
     }
 
-  src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format, FALSE);
+  src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format);
 
   switch (flip_type)
     {
@@ -475,7 +473,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
       gint       clip_width, clip_height;
 
       new_tiles = tile_manager_new (orig_width, orig_height, orig_bpp);
-      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format, TRUE);
+      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format);
 
       *new_offset_x = orig_x;
       *new_offset_y = orig_y;
@@ -551,7 +549,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
   else
     {
       new_tiles = tile_manager_new (new_width, new_height, orig_bpp);
-      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format, TRUE);
+      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format);
 
       *new_offset_x = new_x;
       *new_offset_y = new_y;
@@ -568,7 +566,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
       return new_tiles;
     }
 
-  src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format, FALSE);
+  src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format);
 
   src_rect.x      = orig_x;
   src_rect.y      = orig_y;

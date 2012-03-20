@@ -356,7 +356,7 @@ gimp_projection_get_buffer (GimpPickable *pickable)
     {
       TileManager *tiles = gimp_projection_get_tiles (pickable);
 
-      proj->buffer = gimp_tile_manager_create_buffer (tiles, NULL, FALSE);
+      proj->buffer = gimp_tile_manager_create_buffer (tiles, NULL);
     }
 
   return proj->buffer;
@@ -445,7 +445,7 @@ gimp_projection_get_sink_node (GimpProjection *proj)
   gegl_node_add_child (proj->graph, graph);
 
   tiles  = gimp_projection_get_tiles (GIMP_PICKABLE (proj));
-  buffer = gimp_tile_manager_create_buffer (tiles, NULL, TRUE);
+  buffer = gimp_tile_manager_create_buffer (tiles, NULL);
 
   proj->sink_node =
     gegl_node_new_child (proj->graph,
@@ -488,7 +488,7 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
           GeglBuffer  *buffer;
 
           tiles = tile_pyramid_get_tiles (proj->pyramid, 0, NULL);
-          buffer = gimp_tile_manager_create_buffer (tiles, NULL, TRUE);
+          buffer = gimp_tile_manager_create_buffer (tiles, NULL);
 
           gegl_node_set (proj->sink_node,
                          "buffer", buffer,

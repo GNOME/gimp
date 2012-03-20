@@ -488,7 +488,7 @@ gimp_edit_fill_full (GimpImage            *image,
 
   buf_tiles = tile_manager_new (width, height, tiles_bytes);
 
-  dest_buffer = gimp_tile_manager_create_buffer (buf_tiles, format, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (buf_tiles, format);
 
   if (pattern)
     {
@@ -599,7 +599,7 @@ gimp_edit_extract (GimpImage     *image,
       GeglBuffer *temp;
       GimpBuffer *buffer;
 
-      temp = gimp_tile_manager_create_buffer (tiles, format, TRUE);
+      temp = gimp_tile_manager_create_buffer (tiles, format);
       tile_manager_unref (tiles);
 
       buffer = gimp_buffer_new (temp, _("Global Buffer"),

@@ -728,7 +728,7 @@ gimp_selection_extract (GimpSelection *selection,
   /*  Allocate the temp buffer  */
   tiles = tile_manager_new (x2 - x1, y2 - y1,
                             babl_format_get_bytes_per_pixel (*format));
-  dest_buffer = gimp_tile_manager_create_buffer (tiles, *format, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (tiles, *format);
 
   /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
   gegl_buffer_copy (src_buffer, &src_rect,

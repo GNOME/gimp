@@ -472,8 +472,7 @@ gimp_channel_convert (GimpItem  *item,
       flatten = gimp_gegl_create_flatten_node (&background);
 
       buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                gimp_drawable_get_format_without_alpha (drawable),
-                                                TRUE);
+                                                gimp_drawable_get_format_without_alpha (drawable));
 
       gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
                                                flatten, TRUE, buffer);
@@ -1665,8 +1664,7 @@ gimp_channel_new_from_alpha (GimpImage     *image,
 
   dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (channel));
   dest_buffer = gimp_tile_manager_create_buffer (dest_tiles,
-                                                 babl_format ("A u8"),
-                                                 TRUE);
+                                                 babl_format ("A u8"));
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
@@ -1710,7 +1708,7 @@ gimp_channel_new_from_component (GimpImage       *image,
   channel = gimp_channel_new (image, width, height, name, color);
 
   dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (channel));
-  dest_buffer = gimp_tile_manager_create_buffer (dest_tiles, format, TRUE);
+  dest_buffer = gimp_tile_manager_create_buffer (dest_tiles, format);
 
   gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
 

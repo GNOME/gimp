@@ -63,8 +63,7 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
 
   dest_buffer =
     gimp_tile_manager_create_buffer (gimp_drawable_get_shadow_tiles (drawable),
-                                     gimp_drawable_get_format (drawable),
-                                     TRUE);
+                                     gimp_drawable_get_format (drawable));
 
   gimp_apply_operation (gimp_drawable_get_buffer (drawable),
                         progress, undo_desc,

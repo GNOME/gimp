@@ -264,7 +264,7 @@ gimp_projection_initialize (GimpProjection *proj,
         {
           TileManager *tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (proj));
 
-          buffer = gimp_tile_manager_create_buffer (tiles, NULL, TRUE);
+          buffer = gimp_tile_manager_create_buffer (tiles, NULL);
         }
 
       gegl_buffer_clear (buffer, &rect);
