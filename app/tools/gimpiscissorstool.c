@@ -542,7 +542,7 @@ iscissors_convert (GimpIscissorsTool *iscissors,
                                            gimp_image_get_width  (image),
                                            gimp_image_get_height (image));
   gimp_scan_convert_render (sc,
-                            gimp_drawable_get_tiles (GIMP_DRAWABLE (iscissors->mask)),
+                            gimp_drawable_get_write_buffer (GIMP_DRAWABLE (iscissors->mask)),
                             0, 0, options->antialias);
   gimp_scan_convert_free (sc);
 }

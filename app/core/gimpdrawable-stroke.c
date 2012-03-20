@@ -284,18 +284,18 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
                                    gboolean         do_stroke,
                                    gboolean         push_undo)
 {
-  GimpContext *context = GIMP_CONTEXT (options);
-  GimpImage   *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-  TileManager *base;
-  TileManager *mask;
-  GeglBuffer  *base_buffer;
-  GeglBuffer  *mask_buffer;
-  GeglNode    *apply_opacity;
-  gint         x, y, w, h;
-  gint         bytes;
-  gint         off_x;
-  gint         off_y;
-  PixelRegion  basePR;
+  GimpContext   *context = GIMP_CONTEXT (options);
+  GimpImage     *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+  TileManager   *base;
+  GeglBuffer    *base_buffer;
+  GeglBuffer    *mask_buffer;
+  GeglNode      *apply_opacity;
+  GeglRectangle  rect = { 0, };
+  gint           x, y, w, h;
+  gint           bytes;
+  gint           off_x;
+  gint           off_y;
+  PixelRegion    basePR;
 
   /*  must call gimp_channel_is_empty() instead of relying on
    *  gimp_item_mask_intersect() because the selection pretends to
@@ -342,18 +342,19 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
                                 gimp_stroke_options_get_dash_info (stroke_options));
     }
 
-  /* fill a 1-bpp Tilemanager with black, this will describe the shape
+  /* fill a 1-bpp GeglBuffer with black, this will describe the shape
    * of the stroke.
    */
-  mask = tile_manager_new (w, h, 1);
-  mask_buffer = gimp_tile_manager_create_buffer (mask, NULL, TRUE);
+  rect.width  = w;
+  rect.height = h;
+  mask_buffer = gegl_buffer_new (&rect, babl_format ("Y u8"));
 
   gegl_buffer_clear (mask_buffer, NULL);
 
   /* render the stroke into it */
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-  gimp_scan_convert_render (scan_convert, mask,
+  gimp_scan_convert_render (scan_convert, mask_buffer,
                             x + off_x, y + off_y,
                             gimp_fill_options_get_antialias (options));
 
@@ -411,7 +412,6 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
                               gimp_context_get_paint_mode (context),
                               NULL, NULL, x, y);
 
-  tile_manager_unref (mask);
   tile_manager_unref (base);
 
   gimp_drawable_update (drawable, x, y, w, h);

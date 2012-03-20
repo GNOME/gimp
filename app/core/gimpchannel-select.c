@@ -236,8 +236,9 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
   add_on = gimp_channel_new_mask (gimp_item_get_image (item),
                                   gimp_item_get_width  (item),
                                   gimp_item_get_height (item));
+
   gimp_scan_convert_render (scan_convert,
-                            gimp_drawable_get_tiles (GIMP_DRAWABLE (add_on)),
+                            gimp_drawable_get_write_buffer (GIMP_DRAWABLE (add_on)),
                             offset_x, offset_y, antialias);
 
   if (feather)

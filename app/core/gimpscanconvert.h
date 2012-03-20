@@ -43,7 +43,7 @@ void      gimp_scan_convert_stroke             (GimpScanConvert   *sc,
                                                 gdouble            dash_offset,
                                                 GArray            *dash_info);
 void      gimp_scan_convert_render_full        (GimpScanConvert   *sc,
-                                                TileManager       *tile_manager,
+                                                GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
                                                 gboolean           replace,
@@ -51,21 +51,21 @@ void      gimp_scan_convert_render_full        (GimpScanConvert   *sc,
                                                 guchar             value);
 
 void      gimp_scan_convert_render             (GimpScanConvert   *sc,
-                                                TileManager       *tile_manager,
+                                                GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
                                                 gboolean           antialias);
 void      gimp_scan_convert_render_value       (GimpScanConvert   *sc,
-                                                TileManager       *tile_manager,
+                                                GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
                                                 guchar             value);
 void      gimp_scan_convert_compose            (GimpScanConvert   *sc,
-                                                TileManager       *tile_manager,
+                                                GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y);
 void      gimp_scan_convert_compose_value      (GimpScanConvert   *sc,
-                                                TileManager       *tile_manager,
+                                                GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
                                                 gint               value);

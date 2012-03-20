@@ -28,8 +28,6 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimpbezierdesc.h"
@@ -330,35 +328,35 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
 
 /**
  * gimp_scan_convert_render:
- * @sc:           a #GimpScanConvert context
- * @tile_manager: the #TileManager to render to
- * @off_x:        horizontal offset into the @tile_manager
- * @off_y:        vertical offset into the @tile_manager
- * @antialias:    whether to apply antialiasiing
+ * @sc:        a #GimpScanConvert context
+ * @bufferr:   the #GeglBuffer to render to
+ * @off_x:     horizontal offset into the @buffer
+ * @off_y:     vertical offset into the @buffer
+ * @antialias: whether to apply antialiasiing
  *
  * This is a wrapper around gimp_scan_convert_render_full() that replaces the
- * content of the @tile_manager with a rendered form of the path passed in.
+ * content of the @buffer with a rendered form of the path passed in.
  *
  * You cannot add additional polygons after this command.
  */
 void
 gimp_scan_convert_render (GimpScanConvert *sc,
-                          TileManager     *tile_manager,
+                          GeglBuffer      *buffer,
                           gint             off_x,
                           gint             off_y,
                           gboolean         antialias)
 {
-  gimp_scan_convert_render_full (sc, tile_manager, off_x, off_y,
+  gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  TRUE, antialias, 255);
 }
 
 /**
  * gimp_scan_convert_render_value:
- * @sc:           a #GimpScanConvert context
- * @tile_manager: the #TileManager to render to
- * @off_x:        horizontal offset into the @tile_manager
- * @off_y:        vertical offset into the @tile_manager
- * @value:        value to use for covered pixels
+ * @sc:     a #GimpScanConvert context
+ * @buffer: the #GeglBuffer to render to
+ * @off_x:  horizontal offset into the @buffer
+ * @off_y:  vertical offset into the @buffer
+ * @value:  value to use for covered pixels
  *
  * This is a wrapper around gimp_scan_convert_render_full() that
  * doesn't do antialiasing but gives control over the value that
@@ -369,93 +367,89 @@ gimp_scan_convert_render (GimpScanConvert *sc,
  */
 void
 gimp_scan_convert_render_value (GimpScanConvert *sc,
-                                TileManager     *tile_manager,
+                                GeglBuffer      *buffer,
                                 gint             off_x,
                                 gint             off_y,
                                 guchar           value)
 {
-  gimp_scan_convert_render_full (sc, tile_manager, off_x, off_y,
+  gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  TRUE, FALSE, value);
 }
 
 /**
  * gimp_scan_convert_compose:
- * @sc:           a #GimpScanConvert context
- * @tile_manager: the #TileManager to render to
- * @off_x:        horizontal offset into the @tile_manager
- * @off_y:        vertical offset into the @tile_manager
+ * @sc:     a #GimpScanConvert context
+ * @buffer: the #GeglBuffer to render to
+ * @off_x:  horizontal offset into the @buffer
+ * @off_y:  vertical offset into the @buffer
  *
  * This is a wrapper around of gimp_scan_convert_render_full() that composes
- * the (aliased) scan conversion on top of the content of the @tile_manager.
+ * the (aliased) scan conversion on top of the content of the @buffer.
  *
  * You cannot add additional polygons after this command.
  */
 void
 gimp_scan_convert_compose (GimpScanConvert *sc,
-                           TileManager     *tile_manager,
+                           GeglBuffer      *buffer,
                            gint             off_x,
                            gint             off_y)
 {
-  gimp_scan_convert_render_full (sc, tile_manager, off_x, off_y,
+  gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  FALSE, FALSE, 255);
 }
 
 /**
  * gimp_scan_convert_compose_value:
- * @sc:           a #GimpScanConvert context
- * @tile_manager: the #TileManager to render to
- * @off_x:        horizontal offset into the @tile_manager
- * @off_y:        vertical offset into the @tile_manager
- * @value:        value to use for covered pixels
+ * @sc:     a #GimpScanConvert context
+ * @buffer: the #GeglBuffer to render to
+ * @off_x:  horizontal offset into the @buffer
+ * @off_y:  vertical offset into the @buffer
+ * @value:  value to use for covered pixels
  *
  * This is a wrapper around gimp_scan_convert_render_full() that
  * composes the (aliased) scan conversion with value @value on top of the
- * content of the @tile_manager.
+ * content of the @buffer.
  *
  * You cannot add additional polygons after this command.
  */
 void
 gimp_scan_convert_compose_value (GimpScanConvert *sc,
-                                 TileManager     *tile_manager,
+                                 GeglBuffer      *buffer,
                                  gint             off_x,
                                  gint             off_y,
                                  gint             value)
 {
-  gimp_scan_convert_render_full (sc, tile_manager, off_x, off_y,
+  gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  FALSE, FALSE, value);
 }
 
 /**
  * gimp_scan_convert_render_full:
- * @sc:           a #GimpScanConvert context
- * @tiles:        the #TileManager to render to
- * @off_x:        horizontal offset into the @tiles
- * @off_y:        vertical offset into the @tiles
- * @replace:      if true the original content of the @tiles gets
- *                destroyed
- * @antialias:    if true the rendering happens antialiased
- * @value:        value to use for covered pixels
+ * @sc:        a #GimpScanConvert context
+ * @buffer:    the #GeglBuffer to render to
+ * @off_x:     horizontal offset into the @buffer
+ * @off_y:     vertical offset into the @buffer
+ * @replace:   if true the original content of the @buffer gets estroyed
+ * @antialias: if true the rendering happens antialiased
+ * @value:     value to use for covered pixels
  *
- * This function renders the area described by the path to the @tiles,
- * taking the offset @off_x and @off_y in the tilemanager into account.
- * The rendering can happen antialiased and be rendered on top of existing
- * content or replacing it completely. The @value specifies the opacity value
- * to be used for the objects in the @sc.
- *
- * This function expects a tile manager of depth 1.
+ * This function renders the area described by the path to the
+ * @buffer, taking the offset @off_x and @off_y in the buffer into
+ * account.  The rendering can happen antialiased and be rendered on
+ * top of existing content or replacing it completely. The @value
+ * specifies the opacity value to be used for the objects in the @sc.
  *
  * You cannot add additional polygons after this command.
  */
 void
 gimp_scan_convert_render_full (GimpScanConvert *sc,
-                               TileManager     *tiles,
+                               GeglBuffer      *buffer,
                                gint             off_x,
                                gint             off_y,
                                gboolean         replace,
                                gboolean         antialias,
                                guchar           value)
 {
-  GeglBuffer         *buffer;
   const Babl         *format;
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
@@ -467,13 +461,12 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   gint                width, height;
 
   g_return_if_fail (sc != NULL);
-  g_return_if_fail (tiles != NULL);
-  g_return_if_fail (tile_manager_bpp (tiles) == 1);
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
   x      = 0;
   y      = 0;
-  width  = tile_manager_width (tiles);
-  height = tile_manager_height (tiles);
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
 
   if (sc->clip && ! gimp_rectangle_intersect (x, y, width, height,
                                               sc->clip_x, sc->clip_y,
@@ -485,10 +478,8 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   path.data     = (cairo_path_data_t *) sc->path_data->data;
   path.num_data = sc->path_data->len;
 
-  buffer = gimp_tile_manager_create_buffer (tiles, NULL, TRUE);
-  format = gegl_buffer_get_format (buffer);
-
-  bpp = babl_format_get_bytes_per_pixel (format);
+  format = babl_format ("Y u8");
+  bpp    = babl_format_get_bytes_per_pixel (format);
 
   iter = gegl_buffer_iterator_new (buffer, NULL, format,
                                    GEGL_BUFFER_WRITE);
@@ -598,6 +589,4 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
             }
         }
     }
-
-  g_object_unref (buffer);
 }
