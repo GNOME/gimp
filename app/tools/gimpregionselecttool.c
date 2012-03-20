@@ -26,8 +26,6 @@
 
 #include "tools-types.h"
 
-#include "base/pixel-region.h"
-
 #include "core/gimpboundary.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
@@ -345,8 +343,8 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
                                    gint                 *n_segs)
 {
   GimpDisplayShell *shell = gimp_display_get_shell (display);
+  GeglBuffer       *buffer;
   GimpBoundSeg     *segs;
-  PixelRegion       maskPR;
 
   gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
 
@@ -368,14 +366,10 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
   /*  calculate and allocate a new segment array which represents the
    *  boundary of the contiguous region
    */
-  pixel_region_init (&maskPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (region_sel->region_mask)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (region_sel->region_mask)),
-                     gimp_item_get_height (GIMP_ITEM (region_sel->region_mask)),
-                     FALSE);
+  buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (region_sel->region_mask));
 
-  segs = gimp_boundary_find (&maskPR, GIMP_BOUNDARY_WITHIN_BOUNDS,
+  segs = gimp_boundary_find (buffer, NULL,
+                             GIMP_BOUNDARY_WITHIN_BOUNDS,
                              0, 0,
                              gimp_item_get_width  (GIMP_ITEM (region_sel->region_mask)),
                              gimp_item_get_height (GIMP_ITEM (region_sel->region_mask)),

@@ -17,12 +17,11 @@
 
 #include "config.h"
 
-#include <glib-object.h>
 #include <cairo.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
 #include "gimpbezierdesc.h"
@@ -45,17 +44,24 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
 
   if (mask)
     {
-      PixelRegion   maskPR;
-      GimpBoundSeg *bound_segs;
-      gint          n_bound_segs;
+      GeglBuffer    *buffer;
+      GeglRectangle  rect = { 0, 0, mask->width, mask->height };
+      GimpBoundSeg  *bound_segs;
+      gint           n_bound_segs;
 
-      pixel_region_init_temp_buf (&maskPR, (TempBuf *) mask,
-                                  0, 0, mask->width, mask->height);
+      buffer = gegl_buffer_linear_new_from_data (mask->data,
+                                                 babl_format ("Y u8"),
+                                                 &rect,
+                                                 GEGL_AUTO_ROWSTRIDE,
+                                                 NULL, NULL);
 
-      bound_segs = gimp_boundary_find (&maskPR, GIMP_BOUNDARY_WITHIN_BOUNDS,
-                                       0, 0, maskPR.w, maskPR.h,
+      bound_segs = gimp_boundary_find (buffer, NULL,
+                                       GIMP_BOUNDARY_WITHIN_BOUNDS,
+                                       0, 0, mask->width, mask->height,
                                        0,
                                        &n_bound_segs);
+
+      g_object_unref (buffer);
 
       if (bound_segs)
         {

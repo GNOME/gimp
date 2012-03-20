@@ -1010,22 +1010,23 @@ gimp_channel_real_boundary (GimpChannel         *channel,
                             gint                 x2,
                             gint                 y2)
 {
-  gint         x3, y3, x4, y4;
-  PixelRegion  bPR;
-
   if (! channel->boundary_known)
     {
+      gint x3, y3, x4, y4;
+
       /* free the out of date boundary segments */
       g_free (channel->segs_in);
       g_free (channel->segs_out);
 
       if (gimp_channel_bounds (channel, &x3, &y3, &x4, &y4))
         {
-          pixel_region_init (&bPR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                             x3, y3, x4 - x3, y4 - y3, FALSE);
+          GeglBuffer *buffer;
+          GeglRectangle  rect = { x3, y3, x4 - x3, y4 - y3 };
 
-          channel->segs_out = gimp_boundary_find (&bPR, GIMP_BOUNDARY_IGNORE_BOUNDS,
+          buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (channel));
+
+          channel->segs_out = gimp_boundary_find (buffer, &rect,
+                                                  GIMP_BOUNDARY_IGNORE_BOUNDS,
                                                   x1, y1, x2, y2,
                                                   GIMP_BOUNDARY_HALF_WAY,
                                                   &channel->num_segs_out);
@@ -1036,13 +1037,8 @@ gimp_channel_real_boundary (GimpChannel         *channel,
 
           if (x2 > x1 && y2 > y1)
             {
-              pixel_region_init (&bPR,
-                                 gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                                 0, 0,
-                                 gimp_item_get_width  (GIMP_ITEM (channel)),
-                                 gimp_item_get_height (GIMP_ITEM (channel)), FALSE);
-
-              channel->segs_in = gimp_boundary_find (&bPR, GIMP_BOUNDARY_WITHIN_BOUNDS,
+              channel->segs_in = gimp_boundary_find (buffer, NULL,
+                                                     GIMP_BOUNDARY_WITHIN_BOUNDS,
                                                      x1, y1, x2, y2,
                                                      GIMP_BOUNDARY_HALF_WAY,
                                                      &channel->num_segs_in);

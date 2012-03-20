@@ -190,9 +190,6 @@ const GimpBoundSeg *
 floating_sel_boundary (GimpLayer *layer,
                        gint      *n_segs)
 {
-  PixelRegion bPR;
-  gint        i;
-
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (gimp_layer_is_floating_sel (layer), NULL);
   g_return_val_if_fail (n_segs != NULL, NULL);
@@ -211,11 +208,14 @@ floating_sel_boundary (GimpLayer *layer,
 
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         {
+          GeglBuffer *buffer;
+          gint        i;
+
           /*  find the segments  */
-          pixel_region_init (&bPR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                             0, 0, width, height, FALSE);
-          layer->fs.segs = gimp_boundary_find (&bPR, GIMP_BOUNDARY_WITHIN_BOUNDS,
+          buffer = gimp_drawable_get_read_buffer (GIMP_DRAWABLE (layer));
+
+          layer->fs.segs = gimp_boundary_find (buffer, NULL,
+                                               GIMP_BOUNDARY_WITHIN_BOUNDS,
                                                0, 0, width, height,
                                                GIMP_BOUNDARY_HALF_WAY,
                                                &layer->fs.num_segs);

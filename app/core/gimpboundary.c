@@ -20,15 +20,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
-
-#include "base/pixel-region.h"
-#include "base/tile.h"
-#include "base/tile-manager.h"
 
 #include "gimpboundary.h"
 
@@ -59,48 +55,51 @@ struct _GimpBoundary
 
 /*  local function prototypes  */
 
-static GimpBoundary * gimp_boundary_new        (PixelRegion     *PR);
+static GimpBoundary * gimp_boundary_new        (const GeglRectangle *region);
 static GimpBoundSeg * gimp_boundary_free       (GimpBoundary    *boundary,
                                                 gboolean         free_segs);
 
-static void       gimp_boundary_add_seg    (GimpBoundary        *bounrady,
-                                            gint             x1,
-                                            gint             y1,
-                                            gint             x2,
-                                            gint             y2,
-                                            gboolean         open);
+static void           gimp_boundary_add_seg    (GimpBoundary        *bounrady,
+                                                gint             x1,
+                                                gint             y1,
+                                                gint             x2,
+                                                gint             y2,
+                                                gboolean         open);
 
-static void       find_empty_segs     (PixelRegion      *maskPR,
-                                       gint              scanline,
-                                       gint              empty_segs[],
-                                       gint              max_empty,
-                                       gint             *num_empty,
-                                       GimpBoundaryType  type,
-                                       gint              x1,
-                                       gint              y1,
-                                       gint              x2,
-                                       gint              y2,
-                                       guchar            threshold);
-static void       process_horiz_seg   (GimpBoundary     *boundary,
-                                       gint              x1,
-                                       gint              y1,
-                                       gint              x2,
-                                       gint              y2,
-                                       gboolean          open);
-static void       make_horiz_segs     (GimpBoundary     *boundary,
-                                       gint              start,
-                                       gint              end,
-                                       gint              scanline,
-                                       gint              empty[],
-                                       gint              num_empty,
-                                       gint              top);
-static GimpBoundary * generate_boundary   (PixelRegion     *PR,
+static void           find_empty_segs     (const GeglRectangle *region,
+                                           const guchar        *line_data,
+                                           gint                 bpp,
+                                           gint                 scanline,
+                                           gint                 empty_segs[],
+                                           gint                 max_empty,
+                                           gint                *num_empty,
                                            GimpBoundaryType     type,
-                                           gint             x1,
-                                           gint             y1,
-                                           gint             x2,
-                                           gint             y2,
-                                           guchar           threshold);
+                                           gint                 x1,
+                                           gint                 y1,
+                                           gint                 x2,
+                                           gint                 y2,
+                                           guchar               threshold);
+static void           process_horiz_seg   (GimpBoundary        *boundary,
+                                           gint                 x1,
+                                           gint                 y1,
+                                           gint                 x2,
+                                           gint                 y2,
+                                           gboolean             open);
+static void           make_horiz_segs     (GimpBoundary        *boundary,
+                                           gint                 start,
+                                           gint                 end,
+                                           gint                 scanline,
+                                           gint                 empty[],
+                                           gint                 num_empty,
+                                           gint                 top);
+static GimpBoundary * generate_boundary   (GeglBuffer          *buffer,
+                                           const GeglRectangle *region,
+                                           GimpBoundaryType     type,
+                                           gint                 x1,
+                                           gint                 y1,
+                                           gint                 x2,
+                                           gint                 y2,
+                                           guchar               threshold);
 
 static gint       cmp_segptr_xy1_addr (const GimpBoundSeg **seg_ptr_a,
                                        const GimpBoundSeg **seg_ptr_b);
@@ -153,21 +152,33 @@ static void       simplify_subdivide  (const GimpBoundSeg  *segs,
  * Return value: the boundary array.
  **/
 GimpBoundSeg *
-gimp_boundary_find (PixelRegion      *maskPR,
-                    GimpBoundaryType  type,
-                    int               x1,
-                    int               y1,
-                    int               x2,
-                    int               y2,
-                    guchar            threshold,
-                    int              *num_segs)
+gimp_boundary_find (GeglBuffer          *buffer,
+                    const GeglRectangle *region,
+                    GimpBoundaryType     type,
+                    int                  x1,
+                    int                  y1,
+                    int                  x2,
+                    int                  y2,
+                    guchar               threshold,
+                    int                 *num_segs)
 {
-  GimpBoundary *boundary;
+  GimpBoundary  *boundary;
+  GeglRectangle  rect = { 0, };
 
-  g_return_val_if_fail (maskPR != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (num_segs != NULL, NULL);
 
-  boundary = generate_boundary (maskPR, type, x1, y1, x2, y2, threshold);
+  if (region)
+    {
+      rect = *region;
+    }
+  else
+    {
+      rect.width  = gegl_buffer_get_width  (buffer);
+      rect.height = gegl_buffer_get_height (buffer);
+    }
+
+  boundary = generate_boundary (buffer, &rect, type, x1, y1, x2, y2, threshold);
 
   *num_segs = boundary->num_segs;
 
@@ -390,26 +401,26 @@ gimp_boundary_offset (GimpBoundSeg *segs,
 /*  private functions  */
 
 static GimpBoundary *
-gimp_boundary_new (PixelRegion *PR)
+gimp_boundary_new (const GeglRectangle *region)
 {
   GimpBoundary *boundary = g_slice_new0 (GimpBoundary);
 
-  if (PR)
+  if (region)
     {
       gint i;
 
       /*  array for determining the vertical line segments
        *  which must be drawn
        */
-      boundary->vert_segs = g_new (gint, PR->w + PR->x + 1);
+      boundary->vert_segs = g_new (gint, region->width + region->x + 1);
 
-      for (i = 0; i <= (PR->w + PR->x); i++)
+      for (i = 0; i <= (region->width + region->x); i++)
         boundary->vert_segs[i] = -1;
 
       /*  find the maximum possible number of empty segments
        *  given the current mask
        */
-      boundary->max_empty_segs = PR->w + 3;
+      boundary->max_empty_segs = region->width + 3;
 
       boundary->empty_segs_n = g_new (gint, boundary->max_empty_segs);
       boundary->empty_segs_c = g_new (gint, boundary->max_empty_segs);
@@ -465,32 +476,30 @@ gimp_boundary_add_seg (GimpBoundary *boundary,
 }
 
 static void
-find_empty_segs (PixelRegion      *maskPR,
-                 gint              scanline,
-                 gint              empty_segs[],
-                 gint              max_empty,
-                 gint             *num_empty,
-                 GimpBoundaryType  type,
-                 gint              x1,
-                 gint              y1,
-                 gint              x2,
-                 gint              y2,
-                 guchar            threshold)
+find_empty_segs (const GeglRectangle *region,
+                 const guchar        *line_data,
+                 gint                 bpp,
+                 gint                 scanline,
+                 gint                 empty_segs[],
+                 gint                 max_empty,
+                 gint                *num_empty,
+                 GimpBoundaryType     type,
+                 gint                 x1,
+                 gint                 y1,
+                 gint                 x2,
+                 gint                 y2,
+                 guchar               threshold)
 {
-  const guchar *data  = NULL;
-  Tile         *tile  = NULL;
-  gint          start = 0;
-  gint          end   = 0;
-  gint          endx  = 0;
-  gint          bpp   = 0;
-  gint          tilex = -1;
-  gint          last  = -1;
-  gint          l_num_empty;
-  gint          x;
+  gint start = 0;
+  gint end   = 0;
+  gint endx  = 0;
+  gint last  = -1;
+  gint l_num_empty;
+  gint x;
 
   *num_empty = 0;
 
-  if (scanline < maskPR->y || scanline >= (maskPR->y + maskPR->h))
+  if (scanline < region->y || scanline >= (region->y + region->height))
     {
       empty_segs[(*num_empty)++] = 0;
       empty_segs[(*num_empty)++] = G_MAXINT;
@@ -511,8 +520,8 @@ find_empty_segs (PixelRegion      *maskPR,
     }
   else if (type == GIMP_BOUNDARY_IGNORE_BOUNDS)
     {
-      start = maskPR->x;
-      end   = maskPR->x + maskPR->w;
+      start = region->x;
+      end   = region->x + region->width;
       if (scanline < y1 || scanline >= y2)
         x2 = -1;
     }
@@ -521,43 +530,20 @@ find_empty_segs (PixelRegion      *maskPR,
 
   l_num_empty = *num_empty;
 
-  bpp = maskPR->bytes;
+  endx = end;
 
-  if (! maskPR->tiles)
-    {
-      data  = maskPR->data + scanline * maskPR->rowstride;
-      endx = end;
-    }
+  line_data += bpp * start;
+  line_data += bpp - 1;
 
   for (x = start; x < end;)
     {
-      /*  Check to see if we must advance to next tile  */
-      if (maskPR->tiles)
-        {
-          if ((x / TILE_WIDTH) != tilex)
-            {
-              if (tile)
-                tile_release (tile, FALSE);
-
-              tile = tile_manager_get_tile (maskPR->tiles,
-                                            x, scanline, TRUE, FALSE);
-              data = ((const guchar *) tile_data_pointer (tile, x, scanline) +
-                      bpp - 1);
-
-              tilex = x / TILE_WIDTH;
-            }
-
-          endx = x + (TILE_WIDTH - (x % TILE_WIDTH));
-          endx = MIN (end, endx);
-        }
-
       if (type == GIMP_BOUNDARY_IGNORE_BOUNDS && (endx > x1 || x < x2))
         {
           for (; x < endx; x++)
             {
               gint val;
 
-              if (*data > threshold)
+              if (*line_data > threshold)
                 {
                   if (x >= x1 && x < x2)
                     val = -1;
@@ -569,7 +555,7 @@ find_empty_segs (PixelRegion      *maskPR,
                   val = -1;
                 }
 
-              data += bpp;
+              line_data += bpp;
 
               if (last != val)
                 empty_segs[l_num_empty++] = x;
@@ -583,12 +569,12 @@ find_empty_segs (PixelRegion      *maskPR,
             {
               gint val;
 
-              if (*data > threshold)
+              if (*line_data > threshold)
                 val = 1;
               else
                 val = -1;
 
-              data += bpp;
+              line_data += bpp;
 
               if (last != val)
                 empty_segs[l_num_empty++] = x;
@@ -604,9 +590,6 @@ find_empty_segs (PixelRegion      *maskPR,
     empty_segs[(*num_empty)++] = x;
 
   empty_segs[(*num_empty)++] = G_MAXINT;
-
-  if (tile)
-    tile_release (tile, FALSE);
 }
 
 static void
@@ -672,25 +655,38 @@ make_horiz_segs (GimpBoundary *boundary,
 }
 
 static GimpBoundary *
-generate_boundary (PixelRegion      *PR,
-                   GimpBoundaryType  type,
-                   gint              x1,
-                   gint              y1,
-                   gint              x2,
-                   gint              y2,
-                   guchar            threshold)
+generate_boundary (GeglBuffer          *buffer,
+                   const GeglRectangle *region,
+                   GimpBoundaryType     type,
+                   gint                 x1,
+                   gint                 y1,
+                   gint                 x2,
+                   gint                 y2,
+                   guchar               threshold)
 {
-  GimpBoundary *boundary;
-  gint          scanline;
-  gint          i;
-  gint          start, end;
-  gint         *tmp_segs;
+  GimpBoundary  *boundary;
+  const Babl    *format;
+  GeglRectangle  line_rect = { 0, };
+  guchar        *line_data;
+  gint           bpp;
+  gint           scanline;
+  gint           i;
+  gint           start, end;
+  gint          *tmp_segs;
 
   gint          num_empty_n = 0;
   gint          num_empty_c = 0;
   gint          num_empty_l = 0;
 
-  boundary = gimp_boundary_new (PR);
+  boundary = gimp_boundary_new (region);
+
+  format = gegl_buffer_get_format (buffer);
+  bpp = babl_format_get_bytes_per_pixel (format);
+
+  line_rect.width  = gegl_buffer_get_width (buffer);
+  line_rect.height = 1;
+
+  line_data = g_alloca (bpp * line_rect.width);
 
   start = 0;
   end   = 0;
@@ -702,16 +698,23 @@ generate_boundary (PixelRegion      *PR,
     }
   else if (type == GIMP_BOUNDARY_IGNORE_BOUNDS)
     {
-      start = PR->y;
-      end   = PR->y + PR->h;
+      start = region->y;
+      end   = region->y + region->height;
     }
 
   /*  Find the empty segments for the previous and current scanlines  */
-  find_empty_segs (PR, start - 1, boundary->empty_segs_l,
+  find_empty_segs (region, NULL, bpp,
+                   start - 1, boundary->empty_segs_l,
                    boundary->max_empty_segs, &num_empty_l,
                    type, x1, y1, x2, y2,
                    threshold);
-  find_empty_segs (PR, start, boundary->empty_segs_c,
+
+  line_rect.y = start;
+  gegl_buffer_get (buffer, 1.0, &line_rect, format,
+                   line_data, GEGL_AUTO_ROWSTRIDE);
+
+  find_empty_segs (region, line_data, bpp,
+                   start, boundary->empty_segs_c,
                    boundary->max_empty_segs, &num_empty_c,
                    type, x1, y1, x2, y2,
                    threshold);
@@ -719,7 +722,15 @@ generate_boundary (PixelRegion      *PR,
   for (scanline = start; scanline < end; scanline++)
     {
       /*  find the empty segment list for the next scanline  */
-      find_empty_segs (PR, scanline + 1, boundary->empty_segs_n,
+      line_rect.y = scanline + 1;
+      if (scanline + 1 == end)
+        line_data = NULL;
+      else
+        gegl_buffer_get (buffer, 1.0, &line_rect, format,
+                         line_data, GEGL_AUTO_ROWSTRIDE);
+
+      find_empty_segs (region, line_data, bpp,
+                       scanline + 1, boundary->empty_segs_n,
                        boundary->max_empty_segs, &num_empty_n,
                        type, x1, y1, x2, y2,
                        threshold);
