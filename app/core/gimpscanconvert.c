@@ -19,7 +19,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include <cairo.h>
 
@@ -28,8 +28,9 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
 #include "base/tile-manager.h"
+
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpbezierdesc.h"
 #include "gimpscanconvert.h"
@@ -454,13 +455,16 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
                                gboolean         antialias,
                                guchar           value)
 {
-  PixelRegion      maskPR;
-  gpointer         pr;
-  cairo_t         *cr;
-  cairo_surface_t *surface;
-  cairo_path_t     path;
-  gint             x, y;
-  gint             width, height;
+  GeglBuffer         *buffer;
+  const Babl         *format;
+  GeglBufferIterator *iter;
+  GeglRectangle      *roi;
+  cairo_t            *cr;
+  cairo_surface_t    *surface;
+  cairo_path_t        path;
+  gint                bpp;
+  gint                x, y;
+  gint                width, height;
 
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tiles != NULL);
@@ -477,55 +481,61 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
                                               &x, &y, &width, &height))
     return;
 
-  pixel_region_init (&maskPR, tiles, x, y, width, height, TRUE);
-
   path.status   = CAIRO_STATUS_SUCCESS;
   path.data     = (cairo_path_data_t *) sc->path_data->data;
   path.num_data = sc->path_data->len;
 
-  for (pr = pixel_regions_register (1, &maskPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  buffer = gimp_tile_manager_create_buffer (tiles, NULL, TRUE);
+  format = gegl_buffer_get_format (buffer);
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+
+  iter = gegl_buffer_iterator_new (buffer, NULL, format,
+                                   GEGL_BUFFER_WRITE);
+  roi = &iter->roi[0];
+
+  while (gegl_buffer_iterator_next (iter))
     {
+      guchar     *data  = iter->data[0];
       guchar     *tmp_buf = NULL;
-      const gint stride   = cairo_format_stride_for_width (CAIRO_FORMAT_A8,
-                                                           maskPR.w);
+      const gint  stride   = cairo_format_stride_for_width (CAIRO_FORMAT_A8,
+                                                            roi->width);
 
       /*  cairo rowstrides are always multiples of 4, whereas
        *  maskPR.rowstride can be anything, so to be able to create an
        *  image surface, we maybe have to create our own temporary
        *  buffer
        */
-      if (maskPR.rowstride != stride)
+      if (roi->width * bpp != stride)
         {
-          const guchar *src = maskPR.data;
+          const guchar *src = data;
           guchar       *dest;
 
-          dest = tmp_buf = g_alloca (stride * maskPR.h);
+          dest = tmp_buf = g_alloca (roi->width * roi->height * bpp);
 
           if (! replace)
             {
               gint i;
 
-              for (i = 0; i < maskPR.h; i++)
+              for (i = 0; i < roi->height; i++)
                 {
-                  memcpy (dest, src, maskPR.w);
+                  memcpy (dest, src, roi->width * bpp);
 
-                  src  += maskPR.rowstride;
+                  src  += roi->width * bpp;
                   dest += stride;
                 }
             }
         }
 
       surface = cairo_image_surface_create_for_data (tmp_buf ?
-                                                     tmp_buf : maskPR.data,
+                                                     tmp_buf : data,
                                                      CAIRO_FORMAT_A8,
-                                                     maskPR.w, maskPR.h,
+                                                     roi->width, roi->height,
                                                      stride);
 
       cairo_surface_set_device_offset (surface,
-                                       -off_x - maskPR.x,
-                                       -off_y - maskPR.y);
+                                       -off_x - roi->x,
+                                       -off_y - roi->y);
       cr = cairo_create (surface);
       cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
 
@@ -575,17 +585,19 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
 
       if (tmp_buf)
         {
-          guchar       *dest = maskPR.data;
+          guchar       *dest = data;
           const guchar *src  = tmp_buf;
           gint          i;
 
-          for (i = 0; i < maskPR.h; i++)
+          for (i = 0; i < roi->height; i++)
             {
-              memcpy (dest, src, maskPR.w);
+              memcpy (dest, src, roi->width * bpp);
 
               src  += stride;
-              dest += maskPR.rowstride;
+              dest += roi->width * bpp;
             }
         }
     }
+
+  g_object_unref (buffer);
 }
