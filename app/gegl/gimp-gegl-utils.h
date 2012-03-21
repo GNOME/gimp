@@ -44,5 +44,6 @@ void          gimp_gegl_buffer_refetch_tiles     (GeglBuffer            *buffer)
 
 GeglColor   * gimp_gegl_color_new                (const GimpRGB         *rgb);
 
+#define       GIMP_GEGL_RECT(x,y,w,h)            (&((GeglRectangle){(x), (y), (w), (h)}))
 
 #endif /* __GIMP_GEGL_UTILS_H__ */

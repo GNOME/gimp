@@ -140,15 +140,10 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   /*  Copy the center region  */
   if (width && height)
     {
-      src_rect.x      = src_x;
-      src_rect.y      = src_y;
-      src_rect.width  = width;
-      src_rect.height = height;
-
-      dest_rect.x = dest_x;
-      dest_rect.y = dest_y;
-
-      gegl_buffer_copy (src_buffer, &src_rect, dest_buffer, &dest_rect);
+      gegl_buffer_copy (src_buffer,
+                        GIMP_GEGL_RECT (src_x,  src_y,  width, height),
+                        dest_buffer,
+                        GIMP_GEGL_RECT (dest_x,dest_y,  width, height));
     }
 
   if (wrap_around)
