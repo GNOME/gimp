@@ -246,6 +246,8 @@ gimp_gegl_buffer_get_tiles (GeglBuffer *buffer)
 
   g_return_val_if_fail (GIMP_IS_TILE_BACKEND_TILE_MANAGER (backend), NULL);
 
+  gegl_buffer_flush (buffer);
+
   return gimp_tile_backend_tile_manager_get_tiles (backend);
 }
 
