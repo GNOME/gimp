@@ -25,8 +25,6 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimpdrawable.h"
@@ -37,13 +35,14 @@
 
 void
 gimp_drawable_convert_rgb (GimpDrawable *drawable,
+                           GimpImage    *dest_image,
                            gboolean      push_undo)
 {
   GimpImageType  type;
-  TileManager   *tiles;
   GeglBuffer    *dest_buffer;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (! gimp_drawable_is_rgb (drawable));
 
   type = GIMP_RGB_IMAGE;
@@ -51,31 +50,30 @@ gimp_drawable_convert_rgb (GimpDrawable *drawable,
   if (gimp_drawable_has_alpha (drawable))
     type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
 
-  tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (drawable)),
-                            gimp_item_get_height (GIMP_ITEM (drawable)),
-                            GIMP_IMAGE_TYPE_BYTES (type));
-
-  dest_buffer = gimp_tile_manager_create_buffer (tiles, NULL);
+  dest_buffer =
+    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                          gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                          gimp_item_get_height (GIMP_ITEM (drawable))),
+                          gimp_image_get_format (dest_image, type));
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
+  gimp_drawable_set_buffer (drawable, push_undo, NULL,
+                            dest_buffer, type);
   g_object_unref (dest_buffer);
-
-  gimp_drawable_set_tiles (drawable, push_undo, NULL,
-                           tiles, type);
-  tile_manager_unref (tiles);
 }
 
 void
 gimp_drawable_convert_grayscale (GimpDrawable *drawable,
+                                 GimpImage    *dest_image,
                                  gboolean      push_undo)
 {
   GimpImageType  type;
-  TileManager   *tiles;
   GeglBuffer    *dest_buffer;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (! gimp_drawable_is_gray (drawable));
 
   type = GIMP_GRAY_IMAGE;
@@ -83,20 +81,18 @@ gimp_drawable_convert_grayscale (GimpDrawable *drawable,
   if (gimp_drawable_has_alpha (drawable))
     type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
 
-  tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (drawable)),
-                            gimp_item_get_height (GIMP_ITEM (drawable)),
-                            GIMP_IMAGE_TYPE_BYTES (type));
-
-  dest_buffer = gimp_tile_manager_create_buffer (tiles, NULL);
+  dest_buffer =
+    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                          gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                          gimp_item_get_height (GIMP_ITEM (drawable))),
+                          gimp_image_get_format (dest_image, type));
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
+  gimp_drawable_set_buffer (drawable, push_undo, NULL,
+                            dest_buffer, type);
   g_object_unref (dest_buffer);
-
-  gimp_drawable_set_tiles (drawable, push_undo, NULL,
-                           tiles, type);
-  tile_manager_unref (tiles);
 }
 
 void
@@ -105,7 +101,6 @@ gimp_drawable_convert_indexed (GimpDrawable *drawable,
                                gboolean      push_undo)
 {
   GimpImageType  type;
-  TileManager   *tiles;
   GeglBuffer    *dest_buffer;
   const Babl    *format;
 
@@ -116,28 +111,20 @@ gimp_drawable_convert_indexed (GimpDrawable *drawable,
   type = GIMP_INDEXED_IMAGE;
 
   if (gimp_drawable_has_alpha (drawable))
-    {
-      type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
-
-      format = gimp_image_colormap_get_rgba_format (dest_image);
-    }
+    format = gimp_image_colormap_get_rgba_format (dest_image);
   else
-    {
-      format = gimp_image_colormap_get_rgb_format (dest_image);
-    }
+    format = gimp_image_colormap_get_rgb_format (dest_image);
 
-  tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (drawable)),
-                            gimp_item_get_height (GIMP_ITEM (drawable)),
-                            GIMP_IMAGE_TYPE_BYTES (type));
-
-  dest_buffer = gimp_tile_manager_create_buffer (tiles, format);
+  dest_buffer =
+    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                          gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                          gimp_item_get_height (GIMP_ITEM (drawable))),
+                          format);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
+  gimp_drawable_set_buffer (drawable, push_undo, NULL,
+                            dest_buffer, type);
   g_object_unref (dest_buffer);
-
-  gimp_drawable_set_tiles (drawable, push_undo, NULL,
-                           tiles, type);
-  tile_manager_unref (tiles);
 }

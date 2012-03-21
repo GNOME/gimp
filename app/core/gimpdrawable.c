@@ -759,11 +759,11 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
   switch (new_base_type)
     {
     case GIMP_RGB:
-      gimp_drawable_convert_rgb (drawable, push_undo);
+      gimp_drawable_convert_rgb (drawable, dest_image, push_undo);
       break;
 
     case GIMP_GRAY:
-      gimp_drawable_convert_grayscale (drawable, push_undo);
+      gimp_drawable_convert_grayscale (drawable, dest_image, push_undo);
       break;
 
     case GIMP_INDEXED:

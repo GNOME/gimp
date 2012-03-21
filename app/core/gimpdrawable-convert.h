@@ -20,8 +20,10 @@
 
 
 void   gimp_drawable_convert_rgb       (GimpDrawable *drawable,
+                                        GimpImage    *dest_image,
                                         gboolean      push_undo);
 void   gimp_drawable_convert_grayscale (GimpDrawable *drawable,
+                                        GimpImage    *dest_image,
                                         gboolean      push_undo);
 void   gimp_drawable_convert_indexed   (GimpDrawable *drawable,
                                         GimpImage    *dest_image,
