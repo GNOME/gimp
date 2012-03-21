@@ -1798,8 +1798,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
 {
   GimpItem      *item;
   GimpDrawable  *drawable;
-  TileManager   *new_tiles;
-  GeglBuffer    *dest_buffer;
+  GeglBuffer    *new_buffer;
   GimpImageType  new_type;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
@@ -1812,23 +1811,20 @@ gimp_layer_add_alpha (GimpLayer *layer)
 
   new_type = gimp_drawable_type_with_alpha (drawable);
 
-  new_tiles = tile_manager_new (gimp_item_get_width  (item),
-                                gimp_item_get_height (item),
-                                GIMP_IMAGE_TYPE_BYTES (new_type));
-
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layer)));
+  new_buffer =
+    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                          gimp_item_get_width  (item),
+                                          gimp_item_get_height (item)),
+                          gimp_drawable_get_format_with_alpha (drawable));
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                    dest_buffer, NULL);
+                    new_buffer, NULL);
 
-  g_object_unref (dest_buffer);
-
-  gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
-                           gimp_item_is_attached (GIMP_ITEM (layer)),
-                           C_("undo-type", "Add Alpha Channel"),
-                           new_tiles, new_type);
-  tile_manager_unref (new_tiles);
+  gimp_drawable_set_buffer (GIMP_DRAWABLE (layer),
+                            gimp_item_is_attached (GIMP_ITEM (layer)),
+                            C_("undo-type", "Add Alpha Channel"),
+                            new_buffer, new_type);
+  g_object_unref (new_buffer);
 }
 
 void
@@ -1836,8 +1832,7 @@ gimp_layer_flatten (GimpLayer   *layer,
                     GimpContext *context)
 {
   GeglNode      *flatten;
-  TileManager   *new_tiles;
-  GeglBuffer    *dest_buffer;
+  GeglBuffer    *new_buffer;
   GimpImageType  new_type;
   GimpRGB        background;
 
@@ -1849,27 +1844,25 @@ gimp_layer_flatten (GimpLayer   *layer,
 
   new_type = gimp_drawable_type_without_alpha (GIMP_DRAWABLE (layer));
 
-  new_tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (layer)),
-                                gimp_item_get_height (GIMP_ITEM (layer)),
-                                GIMP_IMAGE_TYPE_BYTES (new_type));
-
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
+  new_buffer =
+    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                          gimp_item_get_width  (GIMP_ITEM (layer)),
+                                          gimp_item_get_height (GIMP_ITEM (layer))),
+                          gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
 
   gimp_context_get_background (context, &background);
   flatten = gimp_gegl_create_flatten_node (&background);
 
   gimp_drawable_apply_operation_to_buffer (GIMP_DRAWABLE (layer), NULL, NULL,
-                                           flatten, TRUE, dest_buffer);
+                                           flatten, TRUE, new_buffer);
 
   g_object_unref (flatten);
-  g_object_unref (dest_buffer);
 
-  gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
-                           gimp_item_is_attached (GIMP_ITEM (layer)),
-                           C_("undo-type", "Remove Alpha Channel"),
-                           new_tiles, new_type);
-  tile_manager_unref (new_tiles);
+  gimp_drawable_set_buffer (GIMP_DRAWABLE (layer),
+                            gimp_item_is_attached (GIMP_ITEM (layer)),
+                            C_("undo-type", "Remove Alpha Channel"),
+                            new_buffer, new_type);
+  g_object_unref (new_buffer);
 }
 
 void

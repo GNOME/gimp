@@ -33,7 +33,7 @@
 
 #include "text-types.h"
 
-#include "base/tile-manager.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
@@ -590,13 +590,14 @@ gimp_text_layer_render (GimpTextLayer *layer)
       (width  != gimp_item_get_width  (item) ||
        height != gimp_item_get_height (item)))
     {
-      TileManager *new_tiles = tile_manager_new (width, height,
-                                                 gimp_drawable_bytes (drawable));
+      GeglBuffer *new_buffer =
+        gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+                              gimp_drawable_get_format (drawable));
 
-      gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles,
-                               gimp_drawable_type (drawable));
+      gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer,
+                                gimp_drawable_type (drawable));
 
-      tile_manager_unref (new_tiles);
+      g_object_unref (new_buffer);
 
       if (gimp_layer_get_mask (GIMP_LAYER (layer)))
         {

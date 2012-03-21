@@ -542,8 +542,7 @@ gimp_drawable_resize (GimpItem    *item,
                       gint         offset_y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GeglBuffer   *dest_buffer;
-  TileManager  *new_tiles;
+  GeglBuffer   *new_buffer;
   gint          new_offset_x;
   gint          new_offset_y;
   gint          copy_x, copy_y;
@@ -572,11 +571,9 @@ gimp_drawable_resize (GimpItem    *item,
                             &copy_width,
                             &copy_height);
 
-  new_tiles = tile_manager_new (new_width, new_height,
-                                gimp_drawable_bytes (drawable));
-
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_format (drawable));
+  new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                     new_width, new_height),
+                                     gimp_drawable_get_format (drawable));
 
   if (copy_width  != new_width ||
       copy_height != new_height)
@@ -593,7 +590,7 @@ gimp_drawable_resize (GimpItem    *item,
 
       col = gimp_gegl_color_new (&bg);
 
-      gegl_buffer_set_color (dest_buffer, NULL, col);
+      gegl_buffer_set_color (new_buffer, NULL, col);
       g_object_unref (col);
     }
 
@@ -605,17 +602,15 @@ gimp_drawable_resize (GimpItem    *item,
                                         copy_y - gimp_item_get_offset_y (item),
                                         copy_width,
                                         copy_height),
-                        dest_buffer,
+                        new_buffer,
                         GIMP_GEGL_RECT (copy_x - new_offset_x,
                                         copy_y - new_offset_y, 0, 0));
     }
 
-  g_object_unref (dest_buffer);
-
-  gimp_drawable_set_tiles_full (drawable, gimp_item_is_attached (item), NULL,
-                                new_tiles, gimp_drawable_type (drawable),
-                                new_offset_x, new_offset_y);
-  tile_manager_unref (new_tiles);
+  gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
+                                 new_buffer, gimp_drawable_type (drawable),
+                                 new_offset_x, new_offset_y);
+  g_object_unref (new_buffer);
 }
 
 static void
@@ -908,7 +903,7 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
 
   if (! tiles)
     {
-      GeglBuffer    *dest_buffer;
+      GeglBuffer *dest_buffer;
 
       tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
 

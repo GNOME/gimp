@@ -27,8 +27,6 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -49,9 +47,8 @@ gimp_drawable_offset (GimpDrawable   *drawable,
                       gint            offset_y)
 {
   GimpItem      *item;
-  TileManager   *new_tiles;
   GeglBuffer    *src_buffer;
-  GeglBuffer    *dest_buffer;
+  GeglBuffer    *new_buffer;
   GeglRectangle  src_rect;
   GeglRectangle  dest_rect;
   gint           width, height;
@@ -86,11 +83,10 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   if (offset_x == 0 && offset_y == 0)
     return;
 
-  new_tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
-  src_buffer  = gimp_drawable_get_buffer (drawable);
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                 gimp_drawable_get_format (drawable));
+  new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+                                     gimp_drawable_get_format (drawable));
 
   if (! wrap_around)
     {
@@ -102,12 +98,12 @@ gimp_drawable_offset (GimpDrawable   *drawable,
           gimp_context_get_background (context, &bg);
 
           color = gimp_gegl_color_new (&bg);
-          gegl_buffer_set_color (dest_buffer, NULL, color);
+          gegl_buffer_set_color (new_buffer, NULL, color);
           g_object_unref (color);
         }
       else
         {
-          gegl_buffer_clear (dest_buffer, NULL);
+          gegl_buffer_clear (new_buffer, NULL);
         }
     }
 
@@ -142,7 +138,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     {
       gegl_buffer_copy (src_buffer,
                         GIMP_GEGL_RECT (src_x,  src_y,  width, height),
-                        dest_buffer,
+                        new_buffer,
                         GIMP_GEGL_RECT (dest_x,dest_y,  width, height));
     }
 
@@ -183,9 +179,10 @@ gimp_drawable_offset (GimpDrawable   *drawable,
       if (offset_x != 0 && offset_y != 0)
         {
           gegl_buffer_copy (src_buffer,
-              GIMP_GEGL_RECT (src_x, src_y, ABS(offset_x), ABS(offset_y)),
-              dest_buffer,
-              GIMP_GEGL_RECT (dest_x, dest_y, 0, 0));
+                            GIMP_GEGL_RECT (src_x, src_y,
+                                            ABS (offset_x), ABS (offset_y)),
+                            new_buffer,
+                            GIMP_GEGL_RECT (dest_x, dest_y, 0, 0));
         }
 
       /*  X offset  */
@@ -212,7 +209,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
               dest_rect.y = 0;
             }
 
-          gegl_buffer_copy (src_buffer, &src_rect, dest_buffer, &dest_rect);
+          gegl_buffer_copy (src_buffer, &src_rect, new_buffer, &dest_rect);
         }
 
       /*  X offset  */
@@ -239,14 +236,12 @@ gimp_drawable_offset (GimpDrawable   *drawable,
               dest_rect.y = dest_y;
             }
 
-          gegl_buffer_copy (src_buffer, &src_rect, dest_buffer, &dest_rect);
+          gegl_buffer_copy (src_buffer, &src_rect, new_buffer, &dest_rect);
         }
     }
 
-  g_object_unref (dest_buffer);
-
-  gimp_drawable_set_tiles (drawable, gimp_item_is_attached (item),
-                           C_("undo-type", "Offset Drawable"), new_tiles,
-                           gimp_drawable_type (drawable));
-  tile_manager_unref (new_tiles);
+  gimp_drawable_set_buffer (drawable, gimp_item_is_attached (item),
+                            C_("undo-type", "Offset Drawable"), new_buffer,
+                            gimp_drawable_type (drawable));
+  g_object_unref (new_buffer);
 }

@@ -459,32 +459,32 @@ gimp_channel_convert (GimpItem  *item,
 
   if (gimp_drawable_has_alpha (drawable))
     {
-      GeglNode    *flatten;
-      TileManager *new_tiles;
-      GeglBuffer  *buffer;
-      GimpRGB      background;
+      GeglBuffer *new_buffer;
+      GeglNode   *flatten;
+      const Babl *format;
+      GimpRGB     background;
 
-      new_tiles = tile_manager_new (gimp_item_get_width (item),
-                                    gimp_item_get_height (item),
-                                    GIMP_IMAGE_TYPE_BYTES (GIMP_GRAY_IMAGE));
+      format = gimp_drawable_get_format_without_alpha (drawable);
+
+      new_buffer =
+        gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                              gimp_item_get_width (item),
+                                              gimp_item_get_height (item)),
+                              format);
 
       gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
       flatten = gimp_gegl_create_flatten_node (&background);
 
-      buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                gimp_drawable_get_format_without_alpha (drawable));
-
       gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                               flatten, TRUE, buffer);
+                                               flatten, TRUE, new_buffer);
 
       g_object_unref (flatten);
-      g_object_unref (buffer);
 
-      gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
-                                    new_tiles, GIMP_GRAY_IMAGE,
-                                    gimp_item_get_offset_x (item),
-                                    gimp_item_get_offset_y (item));
-      tile_manager_unref (new_tiles);
+      gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
+                                     new_buffer, GIMP_GRAY_IMAGE,
+                                     gimp_item_get_offset_x (item),
+                                     gimp_item_get_offset_y (item));
+      g_object_unref (new_buffer);
     }
 
   if (G_TYPE_FROM_INSTANCE (channel) == GIMP_TYPE_CHANNEL)
@@ -613,16 +613,17 @@ gimp_channel_scale (GimpItem              *item,
   if (channel->bounds_known && channel->empty)
     {
       GimpDrawable *drawable = GIMP_DRAWABLE (item);
-      TileManager  *new_tiles;
+      GeglBuffer   *new_buffer;
 
-      new_tiles = tile_manager_new (new_width, new_height,
-                                    gimp_drawable_bytes (drawable));
+      new_buffer =
+        gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, new_width, new_height),
+                              gimp_drawable_get_format (drawable));
 
-      gimp_drawable_set_tiles_full (drawable,
-                                    gimp_item_is_attached (item), NULL,
-                                    new_tiles, gimp_drawable_type (drawable),
-                                    new_offset_x, new_offset_y);
-      tile_manager_unref (new_tiles);
+      gimp_drawable_set_buffer_full (drawable,
+                                     gimp_item_is_attached (item), NULL,
+                                     new_buffer, gimp_drawable_type (drawable),
+                                     new_offset_x, new_offset_y);
+      g_object_unref (new_buffer);
 
       gimp_channel_clear (GIMP_CHANNEL (item), NULL, FALSE);
     }
