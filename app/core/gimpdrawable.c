@@ -1528,6 +1528,50 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
 }
 
 void
+gimp_drawable_set_buffer (GimpDrawable  *drawable,
+                          gboolean       push_undo,
+                          const gchar   *undo_desc,
+                          GeglBuffer    *buffer,
+                          GimpImageType  type)
+{
+  gint offset_x, offset_y;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
+    push_undo = FALSE;
+
+  gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
+
+  gimp_drawable_set_buffer_full (drawable, push_undo, undo_desc, buffer, type,
+                                 offset_x, offset_y);
+}
+
+void
+gimp_drawable_set_buffer_full (GimpDrawable  *drawable,
+                               gboolean       push_undo,
+                               const gchar   *undo_desc,
+                               GeglBuffer    *buffer,
+                               GimpImageType  type,
+                               gint           offset_x,
+                               gint           offset_y)
+{
+  TileManager *tiles;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
+    push_undo = FALSE;
+
+  tiles = gimp_gegl_buffer_get_tiles (buffer);
+
+  gimp_drawable_set_tiles_full (drawable, push_undo, undo_desc, tiles, type,
+                                offset_x, offset_y);
+}
+
+void
 gimp_drawable_recreate_buffers (GimpDrawable *drawable)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
