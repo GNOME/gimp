@@ -182,15 +182,10 @@ gimp_drawable_offset (GimpDrawable   *drawable,
       /*  intersecting region  */
       if (offset_x != 0 && offset_y != 0)
         {
-          src_rect.x      = src_x;
-          src_rect.y      = src_y;
-          src_rect.width  = ABS (offset_x);
-          src_rect.height = ABS (offset_y);
-
-          dest_rect.x = dest_x;
-          dest_rect.y = dest_y;
-
-          gegl_buffer_copy (src_buffer, &src_rect, dest_buffer, &dest_rect);
+          gegl_buffer_copy (src_buffer,
+              GIMP_GEGL_RECT (src_x, src_y, ABS(offset_x), ABS(offset_y)),
+              dest_buffer,
+              GIMP_GEGL_RECT (dest_x, dest_y, 0, 0));
         }
 
       /*  X offset  */

@@ -515,8 +515,6 @@ gimp_channel_translate (GimpItem *item,
   GimpChannel   *tmp_mask   = NULL;
   GeglBuffer    *tmp_buffer = NULL;
   gint           width, height;
-  GeglRectangle  src_rect;
-  GeglRectangle  dest_rect;
   gint           x1, y1, x2, y2;
 
   gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
@@ -547,18 +545,10 @@ gimp_channel_translate (GimpItem *item,
                                         width, height);
       tmp_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_mask));
 
-      src_rect.x      = x1 - off_x;
-      src_rect.y      = y1 - off_y;
-      src_rect.width  = width;
-      src_rect.height = height;
-
-      dest_rect.x = 0;
-      dest_rect.y = 0;
-
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        &src_rect,
+                        GIMP_GEGL_RECT (x1 - off_x, y1 - off_y, width, height),
                         tmp_buffer,
-                        &dest_rect);
+                        GIMP_GEGL_RECT (0,0,0,0));
     }
 
   /*  clear the mask  */
@@ -568,13 +558,11 @@ gimp_channel_translate (GimpItem *item,
   if (width != 0 && height != 0)
     {
       /*  copy the temp mask back to the mask  */
-      dest_rect.x = x1;
-      dest_rect.y = y1;
 
       gegl_buffer_copy (tmp_buffer,
                         NULL,
                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        &dest_rect);
+                        GIMP_GEGL_RECT (x1, y1, 0, 0));
 
       /*  free the temporary mask  */
       g_object_unref (tmp_mask);
@@ -1323,13 +1311,10 @@ gimp_channel_real_clear (GimpChannel *channel,
 
   if (channel->bounds_known && ! channel->empty)
     {
-      GeglRectangle rect = { channel->x1,
-                             channel->y1,
-                             channel->x2 - channel->x1,
-                             channel->y2 - channel->y1 };
-
       gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                         &rect);
+                         GIMP_GEGL_RECT (channel->x1, channel->y1,
+                                         channel->x2 - channel->x1,
+                                         channel->y2 - channel->y1));
     }
   else
     {

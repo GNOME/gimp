@@ -600,21 +600,14 @@ gimp_drawable_resize (GimpItem    *item,
   if (copy_width && copy_height)
     {
       /*  Copy the pixels in the intersection  */
-
-      GeglRectangle  src_rect;
-      GeglRectangle  dest_rect;
-
-      src_rect.x      = copy_x - gimp_item_get_offset_x (item);
-      src_rect.y      = copy_y - gimp_item_get_offset_y (item);
-      src_rect.width  = copy_width;
-      src_rect.height = copy_height;
-
-      dest_rect.x = copy_x - new_offset_x;
-      dest_rect.y = copy_y - new_offset_y;
-
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
-                        dest_buffer, &dest_rect);
-
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                        GIMP_GEGL_RECT (copy_x - gimp_item_get_offset_x (item),
+                                        copy_y - gimp_item_get_offset_y (item),
+                                        copy_width,
+                                        copy_height),
+                        dest_buffer,
+                        GIMP_GEGL_RECT (copy_x - new_offset_x,
+                                        copy_y - new_offset_y, 0, 0));
     }
 
   g_object_unref (dest_buffer);
@@ -763,14 +756,8 @@ gimp_drawable_real_update (GimpDrawable *drawable,
 
       if (operation)
         {
-          GeglRectangle rect;
-
-          rect.x      = x;
-          rect.y      = y;
-          rect.width  = width;
-          rect.height = height;
-
-          gegl_operation_invalidate (GEGL_OPERATION (operation), &rect, FALSE);
+          gegl_operation_invalidate (GEGL_OPERATION (operation),
+                                     GIMP_GEGL_RECT (x,y,width,height), FALSE);
           g_object_unref (operation);
         }
     }
@@ -922,21 +909,15 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
   if (! tiles)
     {
       GeglBuffer    *dest_buffer;
-      GeglRectangle  src_rect;
-      GeglRectangle  dest_rect = { 0, };
 
       tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
 
       dest_buffer = gimp_tile_manager_create_buffer (tiles,
                                                      gimp_drawable_get_format (drawable));
 
-      src_rect.x      = x;
-      src_rect.y      = y;
-      src_rect.width  = width;
-      src_rect.height = height;
-
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
-                        dest_buffer, &dest_rect);
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                        GIMP_GEGL_RECT (x,y,width,height),
+                        dest_buffer, GIMP_GEGL_RECT (0,0,0,0));
 
       g_object_unref (dest_buffer);
 

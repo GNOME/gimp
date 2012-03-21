@@ -1461,21 +1461,14 @@ gimp_layer_create_mask (const GimpLayer *layer,
           {
             GeglBuffer    *src;
             GeglBuffer    *dest;
-            GeglRectangle  src_rect;
-            GeglRectangle  dest_rect;
 
             src  = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
             dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-            src_rect.x      = copy_x;
-            src_rect.y      = copy_y;
-            src_rect.width  = copy_width;
-            src_rect.height = copy_height;
-
-            dest_rect.x = copy_x - offset_x;
-            dest_rect.y = copy_y - offset_y;
-
-            gegl_buffer_copy (src, &src_rect, dest, &dest_rect);
+            gegl_buffer_copy (src,
+                     GIMP_GEGL_RECT (copy_x, copy_y, copy_width, copy_height),
+                     dest,
+                     GIMP_GEGL_RECT (copy_x-offset_x, copy_y-offset_y, 0, 0));
 
             GIMP_CHANNEL (mask)->bounds_known = FALSE;
           }

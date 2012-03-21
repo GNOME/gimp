@@ -880,22 +880,17 @@ gimp_image_map_data_written (GObject             *operation,
 
       GeglBuffer    *src;
       GeglBuffer    *dest;
-      GeglRectangle  src_rect;
-      GeglRectangle  dest_rect;
 
       src = gimp_tile_manager_create_buffer (image_map->undo_tiles,
                                              gimp_drawable_get_format (image_map->drawable));
       dest = gimp_drawable_get_buffer (image_map->drawable);
 
-      src_rect.x      = extent->x - image_map->undo_offset_x;
-      src_rect.y      = extent->y - image_map->undo_offset_y;
-      src_rect.width  = extent->width;
-      src_rect.height = extent->height;
-
-      dest_rect.x = extent->x;
-      dest_rect.y = extent->y;
-
-      gegl_buffer_copy (src, &src_rect, dest, &dest_rect);
+      gegl_buffer_copy (src,
+            GIMP_GEGL_RECT (extent->x - image_map->undo_offset_x,
+                            extent->y - image_map->undo_offset_y,
+                            extent->width, extent->height),
+                        dest,
+            GIMP_GEGL_RECT (extent->x, extent->y, 0, 0));
 
       g_object_unref (src);
     }

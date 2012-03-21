@@ -24,6 +24,8 @@
 
 #include "base/temp-buf.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpbezierdesc.h"
 #include "gimpboundary.h"
 #include "gimpbrush.h"
@@ -45,13 +47,13 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
   if (mask)
     {
       GeglBuffer    *buffer;
-      GeglRectangle  rect = { 0, 0, mask->width, mask->height };
       GimpBoundSeg  *bound_segs;
       gint           n_bound_segs;
 
       buffer = gegl_buffer_linear_new_from_data (mask->data,
                                                  babl_format ("Y u8"),
-                                                 &rect,
+                                                 GIMP_GEGL_RECT (0,0,mask->width,
+                                                                     mask->height),
                                                  GEGL_AUTO_ROWSTRIDE,
                                                  NULL, NULL);
 

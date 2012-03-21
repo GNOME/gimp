@@ -21,6 +21,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpchannel.h"
 #include "gimpmaskundo.h"
 
@@ -79,17 +81,17 @@ gimp_mask_undo_constructed (GObject *object)
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
       GimpDrawable  *drawable    = GIMP_DRAWABLE (channel);
-      GeglRectangle  buffer_rect = { 0, 0, x2 - x1, y2 - y1 };
-      GeglRectangle  src_rect    = { x1, y1, x2 - x1, y2 - y1 };
-      GeglRectangle  dest_rect   = { 0, };
 
-      mask_undo->buffer = gegl_buffer_new (&buffer_rect,
+      mask_undo->buffer = gegl_buffer_new (GIMP_GEGL_RECT(0,0,x2-x1, y2-y1),
                                            babl_format ("Y float"));
+
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                        GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1),
+                        mask_undo->buffer, 
+                        GIMP_GEGL_RECT (0, 0, 0, 0));
+
       mask_undo->x = x1;
       mask_undo->y = y1;
-
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
-                        mask_undo->buffer, &dest_rect);
     }
 }
 
@@ -123,15 +125,13 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
-      GeglRectangle  buffer_rect = { 0, 0, x2 - x1, y2 - y1 };
       GeglRectangle  src_rect    = { x1, y1, x2 - x1, y2 - y1 };
-      GeglRectangle  dest_rect   = { 0, };
 
-      new_buffer = gegl_buffer_new (&buffer_rect,
+      new_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
                                     babl_format ("Y float"));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
-                        new_buffer, &dest_rect);
+                        new_buffer, GIMP_GEGL_RECT (0,0,0,0));
 
       gegl_buffer_clear (gimp_drawable_get_buffer (drawable), &src_rect);
     }

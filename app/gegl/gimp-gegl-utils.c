@@ -183,7 +183,6 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
   gint          height;
   gint          rowstride;
   gint          channels;
-  GeglRectangle rect = { 0, };
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
@@ -192,13 +191,11 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
   rowstride = gdk_pixbuf_get_rowstride (pixbuf);
   channels  = gdk_pixbuf_get_n_channels (pixbuf);
 
-  rect.width = width;
-  rect.height = height;
-
   return gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
                                            gimp_bpp_to_babl_format (channels,
                                                                     TRUE),
-                                           &rect, rowstride,
+                                           GIMP_GEGL_RECT (0,0,width,height),
+                                           rowstride,
                                            (GDestroyNotify) g_object_unref,
                                            g_object_ref (pixbuf));
 }

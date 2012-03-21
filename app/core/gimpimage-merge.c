@@ -521,7 +521,6 @@ gimp_image_merge_layers (GimpImage     *image,
       gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
     {
       GeglColor     *color;
-      GeglRectangle  rect = { 0, };
       GimpImageType  type;
       GimpRGB        bg;
 
@@ -542,12 +541,9 @@ gimp_image_merge_layers (GimpImage     *image,
       /*  get the background for compositing  */
       gimp_context_get_background (context, &bg);
 
-      rect.width  = x2 - x1;
-      rect.height = y2 - y1;
-
       color = gimp_gegl_color_new (&bg);
       gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer)),
-                             &rect, color);
+                             GIMP_GEGL_RECT(0,0,x2-x1,y2-y1), color);
       g_object_unref (color);
 
       position = 0;

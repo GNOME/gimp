@@ -630,8 +630,6 @@ gimp_selection_extract (GimpSelection *selection,
   TileManager       *tiles;
   GeglBuffer        *src_buffer;
   GeglBuffer        *dest_buffer;
-  GeglRectangle      src_rect;
-  GeglRectangle      dest_rect = { 0, };
   gint               x1, y1, x2, y2;
   gboolean           non_empty;
   gint               off_x, off_y;
@@ -720,19 +718,14 @@ gimp_selection_extract (GimpSelection *selection,
 
   src_buffer = gimp_pickable_get_buffer (pickable);
 
-  src_rect.x      = x1;
-  src_rect.y      = y1;
-  src_rect.width  = x2 - x1;
-  src_rect.height = y2 - y1;
-
   /*  Allocate the temp buffer  */
   tiles = tile_manager_new (x2 - x1, y2 - y1,
                             babl_format_get_bytes_per_pixel (*format));
   dest_buffer = gimp_tile_manager_create_buffer (tiles, *format);
 
   /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
-  gegl_buffer_copy (src_buffer, &src_rect,
-                    dest_buffer, &dest_rect);
+  gegl_buffer_copy (src_buffer, GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1),
+                    dest_buffer, GIMP_GEGL_RECT (0,0,0,0));
 
   if (non_empty)
     {

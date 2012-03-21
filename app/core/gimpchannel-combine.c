@@ -26,6 +26,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
 
@@ -39,7 +41,6 @@ gimp_channel_combine_rect (GimpChannel    *mask,
                            gint            h)
 {
   GeglColor     *color;
-  GeglRectangle  rect;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
@@ -55,13 +56,8 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   else
     color = gegl_color_new ("#000");
 
-  rect.x      = x;
-  rect.y      = y;
-  rect.width  = w;
-  rect.height = h;
-
   gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
-                         &rect, color);
+                         GIMP_GEGL_RECT (x, y, w, h), color);
   g_object_unref (color);
 
   /*  Determine new boundary  */
@@ -211,7 +207,6 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
   GeglBuffer         *buffer;
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
-  GeglRectangle       rect;
   gint                bpp;
   gdouble             a_sqr;
   gdouble             b_sqr;
@@ -239,15 +234,11 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
 
   ellipse_center_x = x + a;
 
-  rect.x      = x0;
-  rect.y      = y0;
-  rect.width  = width;
-  rect.height = height;
-
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-  iter = gegl_buffer_iterator_new (buffer, &rect, babl_format ("Y u8"),
-                                   GEGL_BUFFER_READWRITE);
+  iter = gegl_buffer_iterator_new (buffer,
+                                   GIMP_GEGL_RECT (x0, y0, width, height),
+                                   babl_format ("Y u8"), GEGL_BUFFER_READWRITE);
   roi = &iter->roi[0];
   bpp = 1;
 

@@ -189,7 +189,6 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
   if (gimp->global_buffer)
     {
       GimpBuffer    *buffer = gimp->global_buffer;
-      GeglRectangle  rect = { 0, };
       gint           width;
       gint           height;
       gint           bytes;
@@ -198,12 +197,10 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
       height = MIN (gimp_buffer_get_height (buffer), 512);
       bytes  = gimp_buffer_get_bytes (buffer);
 
-      rect.width  = width;
-      rect.height = height;
-
       pattern->mask = temp_buf_new (width, height, bytes, 0, 0, NULL);
 
-      gegl_buffer_get (gimp_buffer_get_buffer (buffer), 1.0, &rect,
+      gegl_buffer_get (gimp_buffer_get_buffer (buffer), 1.0,
+                       GIMP_GEGL_RECT (0,0,width,height),
                        gimp_bpp_to_babl_format (bytes, TRUE),
                        temp_buf_get_data (pattern->mask),
                        width * gimp_buffer_get_bytes (buffer));

@@ -589,8 +589,6 @@ gradient_precalc_shapeburst (GimpImage    *image,
   /*  If the image mask is not empty, use it as the shape burst source  */
   if (! gimp_channel_is_empty (mask))
     {
-      GeglRectangle  src_rect;
-      GeglRectangle  dest_rect = { 0, };
       gint           x, y, width, height;
       gint           off_x, off_y;
 
@@ -600,35 +598,25 @@ gradient_precalc_shapeburst (GimpImage    *image,
       temp_buffer = gimp_tile_manager_create_buffer (temp_tiles,
                                                      babl_format ("Y u8"));
 
-      src_rect.x      = x + off_x;
-      src_rect.y      = y + off_y;
-      src_rect.width  = width;
-      src_rect.height = height;
-
       /*  copy the mask to the temp mask  */
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
-                        &src_rect,
-                        temp_buffer, &dest_rect);
+                        GIMP_GEGL_RECT (x+off_x, y + off_y, width, height),
+                        temp_buffer,
+                        GIMP_GEGL_RECT (0,0,0,0));
     }
   else
     {
       /*  If the intended drawable has an alpha channel, use that  */
       if (gimp_drawable_has_alpha (drawable))
         {
-          GeglRectangle  src_rect;
-          GeglRectangle  dest_rect = { 0, };
-
           temp_buffer = gimp_tile_manager_create_buffer (temp_tiles,
                                                          babl_format ("A u8"));
 
-          src_rect.x      = PR->x;
-          src_rect.y      = PR->y;
-          src_rect.width  = PR->w;
-          src_rect.height = PR->h;
-
           /*  extract the aplha into the temp mask  */
-          gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
-                            temp_buffer, &dest_rect);
+          gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                            GIMP_GEGL_RECT (PR->x, PR->y, PR->w, PR->h),
+                            temp_buffer,
+                            GIMP_GEGL_RECT (0,0,0,0));
         }
       else
         {
