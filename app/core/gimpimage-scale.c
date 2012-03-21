@@ -21,8 +21,6 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpguide.h"

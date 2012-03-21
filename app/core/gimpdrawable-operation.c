@@ -26,8 +26,6 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-apply-operation.h"

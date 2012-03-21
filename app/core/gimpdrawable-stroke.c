@@ -362,8 +362,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
   base = tile_manager_new (w, h, bytes);
   base_buffer = gimp_tile_manager_create_buffer (base,
-                                                
-                                gimp_drawable_get_format_with_alpha (drawable));
+                                                 gimp_drawable_get_format_with_alpha (drawable));
 
   switch (gimp_fill_options_get_style (options))
     {
