@@ -1155,14 +1155,6 @@ gimp_image_get_description (GimpViewable  *viewable,
 static void
 gimp_image_real_mode_changed (GimpImage *image)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-  GList            *layers;
-
-  /* FIXME gegl migration hack */
-  layers = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (private->layers->container));
-  g_list_foreach (layers, (GFunc) gimp_drawable_recreate_buffers, NULL);
-  g_list_free (layers);
-
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
 }
 

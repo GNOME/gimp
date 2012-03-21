@@ -22,10 +22,8 @@ struct _GimpDrawablePrivate
 {
   const Babl    *format; /* format of drawable      */
 
-  TileManager   *tiles;  /* tiles for drawable data */
-  TileManager   *shadow; /* shadow buffer tiles     */
-
-  GeglBuffer    *buffer;
+  GeglBuffer    *buffer; /* buffer for drawable data */
+  TileManager   *shadow; /* shadow buffer tiles      */
 
   GeglNode      *source_node;
   GeglNode      *tile_source_node;

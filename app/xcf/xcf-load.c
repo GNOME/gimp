@@ -945,10 +945,10 @@ xcf_load_channel_props (XcfInfo      *info,
                                   gimp_item_get_height (GIMP_ITEM (*channel)));
             g_object_ref_sink (mask);
 
-            tile_manager_unref (GIMP_DRAWABLE (mask)->private->tiles);
-            GIMP_DRAWABLE (mask)->private->tiles =
-              GIMP_DRAWABLE (*channel)->private->tiles;
-            GIMP_DRAWABLE (*channel)->private->tiles = NULL;
+            g_object_unref (GIMP_DRAWABLE (mask)->private->buffer);
+            GIMP_DRAWABLE (mask)->private->buffer =
+              GIMP_DRAWABLE (*channel)->private->buffer;
+            GIMP_DRAWABLE (*channel)->private->buffer = NULL;
             g_object_unref (*channel);
             *channel = mask;
             (*channel)->boundary_known = FALSE;

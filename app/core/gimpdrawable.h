@@ -191,8 +191,6 @@ void            gimp_drawable_set_buffer_full    (GimpDrawable       *drawable,
                                                   GimpImageType       type,
                                                   gint                offset_x,
                                                   gint                offset_y);
-/* FIXME gegl migration hack */
-void            gimp_drawable_recreate_buffers   (GimpDrawable       *drawable);
 
 TileManager   * gimp_drawable_get_tiles          (GimpDrawable       *drawable);
 void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,
