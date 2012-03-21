@@ -144,6 +144,8 @@
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable.h"
@@ -973,6 +975,7 @@ gimp_image_convert (GimpImage               *image,
           {
             GimpImageType  new_layer_type;
             TileManager   *new_tiles;
+            GeglBuffer    *new_buffer;
 
             new_layer_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_type);
 
@@ -986,9 +989,12 @@ gimp_image_convert (GimpImage               *image,
             quantobj->nth_layer = nth_layer;
             (* quantobj->second_pass) (quantobj, layer, new_tiles);
 
-            gimp_drawable_set_tiles (GIMP_DRAWABLE (layer), TRUE, NULL,
-                                     new_tiles, new_layer_type);
+            new_buffer = gimp_tile_manager_create_buffer (new_tiles, NULL);
             tile_manager_unref (new_tiles);
+
+            gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), TRUE, NULL,
+                                      new_buffer, new_layer_type);
+            g_object_unref (new_buffer);
           }
           break;
 
