@@ -468,7 +468,7 @@ gimp_drawable_scale (GimpItem              *item,
                      "origin-x",   0.0,
                      "origin-y",   0.0,
                      "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
-                     "hard-edges", FALSE,
+                     "hard-edges", TRUE,
                      "x",          ((gdouble) new_width /
                                     gimp_item_get_width  (item)),
                      "y",          ((gdouble) new_height /
