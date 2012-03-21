@@ -58,22 +58,12 @@ void          gimp_selection_load          (GimpSelection *selection,
                                             GimpChannel   *channel);
 GimpChannel * gimp_selection_save          (GimpSelection *selection);
 
-GeglBuffer  * gimp_selection_extract_buffer(GimpSelection *selection,
+GeglBuffer  * gimp_selection_extract       (GimpSelection *selection,
                                             GimpPickable  *pickable,
                                             GimpContext   *context,
                                             gboolean       cut_image,
                                             gboolean       keep_indexed,
                                             gboolean       add_alpha,
-                                            gint          *offset_x,
-                                            gint          *offset_y,
-                                            GError       **error);
-TileManager * gimp_selection_extract       (GimpSelection *selection,
-                                            GimpPickable  *pickable,
-                                            GimpContext   *context,
-                                            gboolean       cut_image,
-                                            gboolean       keep_indexed,
-                                            gboolean       add_alpha,
-                                            const Babl   **format,
                                             gint          *offset_x,
                                             gint          *offset_y,
                                             GError       **error);

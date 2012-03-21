@@ -585,10 +585,10 @@ gimp_edit_extract (GimpImage     *image,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, C_("undo-type", "Cut"));
 
   /*  Cut/copy the mask portion from the image  */
-  buffer = gimp_selection_extract_buffer (GIMP_SELECTION (gimp_image_get_mask (image)),
-                                          pickable, context,
-                                          cut_pixels, FALSE, FALSE,
-                                          &offset_x, &offset_y, error);
+  buffer = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
+                                   pickable, context,
+                                   cut_pixels, FALSE, FALSE,
+                                   &offset_x, &offset_y, error);
 
   if (cut_pixels)
     gimp_image_undo_group_end (image);

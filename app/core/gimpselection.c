@@ -23,8 +23,6 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -615,63 +613,29 @@ gimp_selection_save (GimpSelection *selection)
 }
 
 GeglBuffer *
-gimp_selection_extract_buffer (GimpSelection *selection,
-                               GimpPickable  *pickable,
-                               GimpContext   *context,
-                               gboolean       cut_image,
-                               gboolean       keep_indexed,
-                               gboolean       add_alpha,
-                               gint          *offset_x,
-                               gint          *offset_y,
-                               GError       **error)
-{
-  TileManager *tiles;
-  const Babl  *format;
-
-  tiles = gimp_selection_extract (selection, pickable, context,
-                                  cut_image, keep_indexed, add_alpha,
-                                  &format,
-                                  offset_x, offset_y, error);
-
-  if (tiles)
-    {
-      GeglBuffer *buffer;
-
-      buffer = gimp_tile_manager_create_buffer (tiles, format);
-      tile_manager_unref (tiles);
-
-      return buffer;
-    }
-
-  return NULL;
-}
-
-TileManager *
 gimp_selection_extract (GimpSelection *selection,
                         GimpPickable  *pickable,
                         GimpContext   *context,
                         gboolean       cut_image,
                         gboolean       keep_indexed,
                         gboolean       add_alpha,
-                        const Babl   **format,
                         gint          *offset_x,
                         gint          *offset_y,
                         GError       **error)
 {
-  GimpImage         *image;
-  TileManager       *tiles;
-  GeglBuffer        *src_buffer;
-  GeglBuffer        *dest_buffer;
-  gint               x1, y1, x2, y2;
-  gboolean           non_empty;
-  gint               off_x, off_y;
+  GimpImage  *image;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+  gint        x1, y1, x2, y2;
+  gboolean    non_empty;
+  gint        off_x, off_y;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
   if (GIMP_IS_ITEM (pickable))
     g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (pickable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   image = gimp_pickable_get_image (pickable);
@@ -709,26 +673,26 @@ gimp_selection_extract (GimpSelection *selection,
     case GIMP_RGB:
     case GIMP_GRAY:
       if (add_alpha)
-        *format = gimp_pickable_get_format_with_alpha (pickable);
+        format = gimp_pickable_get_format_with_alpha (pickable);
       else
-        *format = gimp_pickable_get_format (pickable);
+        format = gimp_pickable_get_format (pickable);
       break;
 
     case GIMP_INDEXED:
       if (keep_indexed)
         {
           if (add_alpha)
-            *format = gimp_pickable_get_format_with_alpha (pickable);
+            format = gimp_pickable_get_format_with_alpha (pickable);
           else
-            *format = gimp_pickable_get_format (pickable);
+            format = gimp_pickable_get_format (pickable);
         }
       else
         {
           if (add_alpha ||
               GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_pickable_get_image_type (pickable)))
-            *format = babl_format ("RGBA u8");
+            format = babl_format ("RGBA u8");
           else
-            *format = babl_format ("RGB u8");
+            format = babl_format ("RGB u8");
         }
       break;
 
@@ -751,13 +715,12 @@ gimp_selection_extract (GimpSelection *selection,
   src_buffer = gimp_pickable_get_buffer (pickable);
 
   /*  Allocate the temp buffer  */
-  tiles = tile_manager_new (x2 - x1, y2 - y1,
-                            babl_format_get_bytes_per_pixel (*format));
-  dest_buffer = gimp_tile_manager_create_buffer (tiles, *format);
+  dest_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
+                                      format);
 
   /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
   gegl_buffer_copy (src_buffer, GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1),
-                    dest_buffer, GIMP_GEGL_RECT (0,0,0,0));
+                    dest_buffer, GIMP_GEGL_RECT (0, 0,0 ,0 ));
 
   if (non_empty)
     {
@@ -808,12 +771,10 @@ gimp_selection_extract (GimpSelection *selection,
         }
     }
 
-  g_object_unref (dest_buffer);
-
   *offset_x = x1 + off_x;
   *offset_y = y1 + off_y;
 
-  return tiles;
+  return dest_buffer;
 }
 
 GimpLayer *
@@ -854,9 +815,9 @@ gimp_selection_float (GimpSelection *selection,
                                C_("undo-type", "Float Selection"));
 
   /*  Cut or copy the selected region  */
-  buffer = gimp_selection_extract_buffer (selection, GIMP_PICKABLE (drawable), context,
-                                          cut_image, FALSE, TRUE,
-                                          &x1, &y1, NULL);
+  buffer = gimp_selection_extract (selection, GIMP_PICKABLE (drawable), context,
+                                   cut_image, FALSE, TRUE,
+                                   &x1, &y1, NULL);
 
   /*  Clear the selection  */
   gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);

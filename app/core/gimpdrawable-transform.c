@@ -956,12 +956,12 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
        */
       if (gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
         {
-          buffer = gimp_selection_extract_buffer (GIMP_SELECTION (gimp_image_get_mask (image)),
-                                                  GIMP_PICKABLE (drawable),
-                                                  context,
-                                                  TRUE, FALSE, TRUE,
-                                                  offset_x, offset_y,
-                                                  NULL);
+          buffer = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
+                                           GIMP_PICKABLE (drawable),
+                                           context,
+                                           TRUE, FALSE, TRUE,
+                                           offset_x, offset_y,
+                                           NULL);
           /*  clear the selection  */
           gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
 
@@ -975,12 +975,12 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
     }
   else  /*  otherwise, just copy the layer  */
     {
-      buffer = gimp_selection_extract_buffer (GIMP_SELECTION (gimp_image_get_mask (image)),
-                                              GIMP_PICKABLE (drawable),
-                                              context,
-                                              FALSE, TRUE, GIMP_IS_LAYER (drawable),
-                                              offset_x, offset_y,
-                                              NULL);
+      buffer = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
+                                       GIMP_PICKABLE (drawable),
+                                       context,
+                                       FALSE, TRUE, GIMP_IS_LAYER (drawable),
+                                       offset_x, offset_y,
+                                       NULL);
 
       *new_layer = FALSE;
     }
