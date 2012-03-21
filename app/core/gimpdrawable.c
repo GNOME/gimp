@@ -141,7 +141,7 @@ static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImageBaseType  new_base_type,
                                                     gboolean           push_undo);
 
-static TileManager * gimp_drawable_real_get_tiles  (GimpDrawable      *drawable);
+static GeglBuffer * gimp_drawable_real_get_buffer  (GimpDrawable      *drawable);
 static void       gimp_drawable_real_set_buffer    (GimpDrawable      *drawable,
                                                     gboolean           push_undo,
                                                     const gchar       *undo_desc,
@@ -245,7 +245,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->convert_type                = gimp_drawable_real_convert_type;
   klass->apply_region                = gimp_drawable_real_apply_region;
   klass->replace_region              = gimp_drawable_real_replace_region;
-  klass->get_tiles                   = gimp_drawable_real_get_tiles;
+  klass->get_buffer                  = gimp_drawable_real_get_buffer;
   klass->set_buffer                  = gimp_drawable_real_set_buffer;
   klass->push_undo                   = gimp_drawable_real_push_undo;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
@@ -319,8 +319,7 @@ gimp_drawable_get_memsize (GimpObject *object,
   GimpDrawable *drawable = GIMP_DRAWABLE (object);
   gint64        memsize  = 0;
 
-  memsize += tile_manager_get_memsize (gimp_drawable_get_tiles (drawable),
-                                       FALSE);
+  memsize += gimp_gegl_buffer_get_memsize (gimp_drawable_get_buffer (drawable));
   memsize += tile_manager_get_memsize (drawable->private->shadow, FALSE);
 
   *gui_size += gimp_preview_cache_get_memsize (drawable->private->preview_cache);
@@ -774,10 +773,13 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
     }
 }
 
-static TileManager *
-gimp_drawable_real_get_tiles (GimpDrawable *drawable)
+static GeglBuffer *
+gimp_drawable_real_get_buffer (GimpDrawable *drawable)
 {
-  return gimp_gegl_buffer_get_tiles (drawable->private->buffer);
+  gegl_buffer_flush (drawable->private->buffer);
+  gimp_gegl_buffer_refetch_tiles (drawable->private->buffer);
+
+  return drawable->private->buffer;
 }
 
 static void
@@ -1453,24 +1455,19 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  if (drawable->private->buffer)
-    {
-      gegl_buffer_flush (drawable->private->buffer);
-      gimp_gegl_buffer_refetch_tiles (drawable->private->buffer);
-    }
-
-  return drawable->private->buffer;
+  return GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable);
 }
 
 TileManager *
 gimp_drawable_get_tiles (GimpDrawable *drawable)
 {
+  GeglBuffer *buffer;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  if (drawable->private->buffer)
-    gegl_buffer_flush (drawable->private->buffer);
+  buffer = gimp_drawable_get_buffer (drawable);
 
-  return GIMP_DRAWABLE_GET_CLASS (drawable)->get_tiles (drawable);
+  return gimp_gegl_buffer_get_tiles (buffer);
 }
 
 void

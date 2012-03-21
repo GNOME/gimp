@@ -88,7 +88,7 @@ struct _GimpDrawableClass
                                            gint                  height,
                                            PixelRegion          *projPR,
                                            gboolean              combine);
-  TileManager * (* get_tiles)             (GimpDrawable         *drawable);
+  GeglBuffer  * (* get_buffer)            (GimpDrawable         *drawable);
   void          (* set_buffer)            (GimpDrawable         *drawable,
                                            gboolean              push_undo,
                                            const gchar          *undo_desc,
