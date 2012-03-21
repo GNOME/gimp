@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include <cairo.h>
+#include <gegl.h>
 #include <pango/pango.h>
 
 #include "libgimpbase/gimpbase.h"

@@ -27,7 +27,7 @@
 #endif
 
 #include <cairo.h>
-#include <glib-object.h>
+#include <gegl.h>
 #include <gobject/gvaluecollector.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -264,6 +264,22 @@ gimp_g_param_spec_get_memsize (GParamSpec *pspec)
     memsize += gimp_string_get_memsize (g_param_spec_get_blurb (pspec));
 
   return memsize + gimp_g_type_instance_get_memsize ((GTypeInstance *) pspec);
+}
+
+gint64
+gimp_gegl_buffer_get_memsize (GeglBuffer *buffer)
+{
+  if (buffer)
+    {
+      const Babl *format = gegl_buffer_get_format (buffer);
+
+      return (babl_format_get_bytes_per_pixel (format) *
+              gegl_buffer_get_width (buffer) *
+              gegl_buffer_get_height (buffer) +
+              gimp_g_object_get_memsize (G_OBJECT (buffer)));
+    }
+
+  return 0;
 }
 
 gint64

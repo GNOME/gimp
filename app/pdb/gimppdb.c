@@ -21,7 +21,7 @@
 #include <string.h>
 #include <sys/types.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <gobject/gvaluecollector.h>
 
 #include "libgimpbase/gimpbase.h"

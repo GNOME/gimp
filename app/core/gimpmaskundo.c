@@ -23,6 +23,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpmaskundo.h"
 
@@ -87,7 +88,7 @@ gimp_mask_undo_constructed (GObject *object)
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                         GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1),
-                        mask_undo->buffer, 
+                        mask_undo->buffer,
                         GIMP_GEGL_RECT (0, 0, 0, 0));
 
       mask_undo->x = x1;
@@ -102,7 +103,7 @@ gimp_mask_undo_get_memsize (GimpObject *object,
   GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
   gint64        memsize   = 0;
 
-  /* FIXME memsize += tile_manager_get_memsize (mask_undo->tiles, FALSE); */
+  memsize += gimp_gegl_buffer_get_memsize (mask_undo->buffer);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

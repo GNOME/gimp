@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"

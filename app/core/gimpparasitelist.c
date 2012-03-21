@@ -21,7 +21,7 @@
 #include <unistd.h>
 #endif
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>

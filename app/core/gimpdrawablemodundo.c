@@ -23,6 +23,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimp-utils.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablemodundo.h"
@@ -169,7 +170,7 @@ gimp_drawable_mod_undo_get_memsize (GimpObject *object,
   GimpDrawableModUndo *drawable_mod_undo = GIMP_DRAWABLE_MOD_UNDO (object);
   gint64               memsize           = 0;
 
-  /* FIXME memsize += gimp_gegl_buffer_get_memsize (drawable_mod_undo->buffer, FALSE); */
+  memsize += gimp_gegl_buffer_get_memsize (drawable_mod_undo->buffer);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
