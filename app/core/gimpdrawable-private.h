@@ -26,7 +26,7 @@ struct _GimpDrawablePrivate
   TileManager   *shadow; /* shadow buffer tiles      */
 
   GeglNode      *source_node;
-  GeglNode      *tile_source_node;
+  GeglNode      *buffer_source_node;
 
   GimpLayer     *floating_selection;
   GeglNode      *fs_crop_node;

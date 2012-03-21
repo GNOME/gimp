@@ -721,11 +721,11 @@ gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          width,
                            gint          height)
 {
-  if (drawable->private->tile_source_node)
+  if (drawable->private->buffer_source_node)
     {
       GObject *operation = NULL;
 
-      g_object_get (drawable->private->tile_source_node,
+      g_object_get (drawable->private->buffer_source_node,
                     "gegl-operation", &operation,
                     NULL);
 
@@ -818,8 +818,8 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
   if (old_has_alpha != gimp_drawable_has_alpha (drawable))
     gimp_drawable_alpha_changed (drawable);
 
-  if (drawable->private->tile_source_node)
-    gegl_node_set (drawable->private->tile_source_node,
+  if (drawable->private->buffer_source_node)
+    gegl_node_set (drawable->private->buffer_source_node,
                    "buffer", gimp_drawable_get_buffer (drawable),
                    NULL);
 }
@@ -1019,10 +1019,10 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
                                  "operation", "gimp:point-layer-mode",
                                  NULL);
 
-          gegl_node_connect_to (drawable->private->tile_source_node, "output",
-                                drawable->private->fs_mode_node,     "input");
-          gegl_node_connect_to (drawable->private->fs_offset_node,   "output",
-                                drawable->private->fs_mode_node,     "aux");
+          gegl_node_connect_to (drawable->private->buffer_source_node, "output",
+                                drawable->private->fs_mode_node,       "input");
+          gegl_node_connect_to (drawable->private->fs_offset_node,     "output",
+                                drawable->private->fs_mode_node,       "aux");
 
           gegl_node_connect_to (drawable->private->fs_mode_node, "output",
                                 output,                          "input");
@@ -1101,8 +1101,8 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
                                                 drawable);
         }
 
-      gegl_node_connect_to (drawable->private->tile_source_node, "output",
-                            output,                              "input");
+      gegl_node_connect_to (drawable->private->buffer_source_node, "output",
+                            output,                                "input");
     }
 }
 
@@ -1544,7 +1544,7 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
 
   drawable->private->source_node = gegl_node_new ();
 
-  drawable->private->tile_source_node =
+  drawable->private->buffer_source_node =
     gegl_node_new_child (drawable->private->source_node,
                          "operation", "gegl:buffer-source",
                          "buffer",    gimp_drawable_get_buffer (drawable),
