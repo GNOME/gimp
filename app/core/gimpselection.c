@@ -614,6 +614,38 @@ gimp_selection_save (GimpSelection *selection)
   return new_channel;
 }
 
+GeglBuffer *
+gimp_selection_extract_buffer (GimpSelection *selection,
+                               GimpPickable  *pickable,
+                               GimpContext   *context,
+                               gboolean       cut_image,
+                               gboolean       keep_indexed,
+                               gboolean       add_alpha,
+                               gint          *offset_x,
+                               gint          *offset_y,
+                               GError       **error)
+{
+  TileManager *tiles;
+  const Babl  *format;
+
+  tiles = gimp_selection_extract (selection, pickable, context,
+                                  cut_image, keep_indexed, add_alpha,
+                                  &format,
+                                  offset_x, offset_y, error);
+
+  if (tiles)
+    {
+      GeglBuffer *buffer;
+
+      buffer = gimp_tile_manager_create_buffer (tiles, format);
+      tile_manager_unref (tiles);
+
+      return buffer;
+    }
+
+  return NULL;
+}
+
 TileManager *
 gimp_selection_extract (GimpSelection *selection,
                         GimpPickable  *pickable,
