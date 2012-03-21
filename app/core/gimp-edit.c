@@ -577,37 +577,33 @@ gimp_edit_extract (GimpImage     *image,
                    gboolean       cut_pixels,
                    GError       **error)
 {
-  TileManager *tiles;
-  const Babl  *format;
-  gint         offset_x;
-  gint         offset_y;
+  GeglBuffer *buffer;
+  gint        offset_x;
+  gint        offset_y;
 
   if (cut_pixels)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, C_("undo-type", "Cut"));
 
   /*  Cut/copy the mask portion from the image  */
-  tiles = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
-                                  pickable, context,
-                                  cut_pixels, FALSE, FALSE,
-                                  &format, &offset_x, &offset_y, error);
+  buffer = gimp_selection_extract_buffer (GIMP_SELECTION (gimp_image_get_mask (image)),
+                                          pickable, context,
+                                          cut_pixels, FALSE, FALSE,
+                                          &offset_x, &offset_y, error);
 
   if (cut_pixels)
     gimp_image_undo_group_end (image);
 
-  if (tiles)
+  if (buffer)
     {
-      GeglBuffer *temp;
-      GimpBuffer *buffer;
+      GimpBuffer *gimp_buffer;
+      const Babl *format = gegl_buffer_get_format (buffer);
 
-      temp = gimp_tile_manager_create_buffer (tiles, format);
-      tile_manager_unref (tiles);
+      gimp_buffer = gimp_buffer_new (buffer, _("Global Buffer"),
+                                     GIMP_IMAGE_TYPE_FROM_BYTES (babl_format_get_bytes_per_pixel (format)),
+                                     offset_x, offset_y, FALSE);
+      g_object_unref (buffer);
 
-      buffer = gimp_buffer_new (temp, _("Global Buffer"),
-                                GIMP_IMAGE_TYPE_FROM_BYTES (tile_manager_bpp (tiles)),
-                                offset_x, offset_y, FALSE);
-      g_object_unref (temp);
-
-      return buffer;
+      return gimp_buffer;
     }
 
   return NULL;

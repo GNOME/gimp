@@ -825,12 +825,11 @@ gimp_selection_float (GimpSelection *selection,
                       gint           off_y,
                       GError       **error)
 {
-  GimpImage   *image;
-  GimpLayer   *layer;
-  TileManager *tiles;
-  const Babl  *format;
-  gint         x1, y1;
-  gint         x2, y2;
+  GimpImage  *image;
+  GimpLayer  *layer;
+  GeglBuffer *buffer;
+  gint        x1, y1;
+  gint        x2, y2;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -855,9 +854,9 @@ gimp_selection_float (GimpSelection *selection,
                                C_("undo-type", "Float Selection"));
 
   /*  Cut or copy the selected region  */
-  tiles = gimp_selection_extract (selection, GIMP_PICKABLE (drawable), context,
-                                  cut_image, FALSE, TRUE,
-                                  &format, &x1, &y1, NULL);
+  buffer = gimp_selection_extract_buffer (selection, GIMP_PICKABLE (drawable), context,
+                                          cut_image, FALSE, TRUE,
+                                          &x1, &y1, NULL);
 
   /*  Clear the selection  */
   gimp_channel_clear (GIMP_CHANNEL (selection), NULL, TRUE);
@@ -866,17 +865,16 @@ gimp_selection_float (GimpSelection *selection,
    *  because it may be different from the image's type if we cut from
    *  a channel or layer mask
    */
-  layer = gimp_layer_new_from_tiles (tiles, format,
-                                     image,
-                                     gimp_drawable_type_with_alpha (drawable),
-                                     _("Floated Layer"),
-                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  layer = gimp_layer_new_from_buffer (buffer, image,
+                                      gimp_drawable_type_with_alpha (drawable),
+                                      _("Floated Layer"),
+                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   /*  Set the offsets  */
   gimp_item_set_offset (GIMP_ITEM (layer), x1 + off_x, y1 + off_y);
 
   /*  Free the temp buffer  */
-  tile_manager_unref (tiles);
+  g_object_unref (buffer);
 
   /*  Add the floating layer to the image  */
   floating_sel_attach (layer, drawable);
