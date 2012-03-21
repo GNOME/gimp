@@ -973,7 +973,7 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
                            gint          y)
 {
   GimpLayer *layer = GIMP_LAYER (pickable);
-  guchar     value;
+  guchar     value = 0;
 
   if (x >= 0 && x < gimp_item_get_width  (GIMP_ITEM (layer)) &&
       y >= 0 && y < gimp_item_get_height (GIMP_ITEM (layer)) &&
