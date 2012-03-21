@@ -445,10 +445,11 @@ gimp_drawable_scale (GimpItem              *item,
                      GimpProgress          *progress)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  TileManager  *new_tiles;
+  GeglBuffer   *new_buffer;
 
-  new_tiles = tile_manager_new (new_width, new_height,
-                                gimp_drawable_bytes (drawable));
+  new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                     new_width, new_height),
+                                     gimp_drawable_get_format (drawable));
 
 #ifdef GIMP_UNSTABLE
   GIMP_TIMER_START ();
@@ -457,8 +458,7 @@ gimp_drawable_scale (GimpItem              *item,
   if (gimp_use_gegl (gimp_item_get_image (item)->gimp) &&
       interpolation_type != GIMP_INTERPOLATION_LANCZOS)
     {
-      GeglNode   *scale;
-      GeglBuffer *buffer;
+      GeglNode *scale;
 
       scale = g_object_new (GEGL_TYPE_NODE,
                             "operation", "gegl:scale",
@@ -475,18 +475,17 @@ gimp_drawable_scale (GimpItem              *item,
                                     gimp_item_get_height (item)),
                      NULL);
 
-      buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                gimp_drawable_get_format (drawable));
-
       gimp_drawable_apply_operation_to_buffer (drawable, progress,
                                                C_("undo-type", "Scale"),
-                                               scale, TRUE, buffer);
+                                               scale, TRUE, new_buffer);
       g_object_unref (scale);
-      g_object_unref (buffer);
     }
   else
     {
-      PixelRegion srcPR, destPR;
+      TileManager *new_tiles;
+      PixelRegion  srcPR, destPR;
+
+      new_tiles = gimp_gegl_buffer_get_tiles (new_buffer);
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          0, 0,
@@ -508,16 +507,18 @@ gimp_drawable_scale (GimpItem              *item,
                     GIMP_INTERPOLATION_NONE : interpolation_type,
                     progress ? gimp_progress_update_and_flush : NULL,
                     progress);
+
+      gimp_gegl_buffer_refetch_tiles (new_buffer);
     }
 
 #ifdef GIMP_UNSTABLE
   GIMP_TIMER_END ("scaling");
 #endif
 
-  gimp_drawable_set_tiles_full (drawable, gimp_item_is_attached (item), NULL,
-                                new_tiles, gimp_drawable_type (drawable),
-                                new_offset_x, new_offset_y);
-  tile_manager_unref (new_tiles);
+  gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
+                                 new_buffer, gimp_drawable_type (drawable),
+                                 new_offset_x, new_offset_y);
+  g_object_unref (new_buffer);
 }
 
 static void
