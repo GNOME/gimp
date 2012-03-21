@@ -1018,7 +1018,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
     {
       layer =
         gimp_layer_new_from_buffer (buffer, image,
-                                    gimp_drawable_type_with_alpha (drawable),
+                                    gimp_drawable_get_format_with_alpha (drawable),
                                     _("Transformation"),
                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

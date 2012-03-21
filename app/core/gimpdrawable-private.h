@@ -20,7 +20,7 @@
 
 struct _GimpDrawablePrivate
 {
-  GimpImageType  type;   /* type of drawable        */
+  const Babl    *format; /* format of drawable      */
 
   TileManager   *tiles;  /* tiles for drawable data */
   TileManager   *shadow; /* shadow buffer tiles     */

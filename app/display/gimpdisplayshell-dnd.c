@@ -677,7 +677,8 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
     }
 
   new_layer =
-    gimp_layer_new_from_pixbuf (pixbuf, image, image_type,
+    gimp_layer_new_from_pixbuf (pixbuf, image,
+                                gimp_image_get_format (image, image_type),
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

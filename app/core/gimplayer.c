@@ -1080,7 +1080,7 @@ GimpLayer *
 gimp_layer_new (GimpImage            *image,
                 gint                  width,
                 gint                  height,
-                GimpImageType         type,
+                const Babl           *format,
                 const gchar          *name,
                 gdouble               opacity,
                 GimpLayerModeEffects  mode)
@@ -1090,11 +1090,12 @@ gimp_layer_new (GimpImage            *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (format != NULL, NULL);
 
   layer = GIMP_LAYER (gimp_drawable_new (GIMP_TYPE_LAYER,
                                          image, name,
                                          0, 0, width, height,
-                                         type));
+                                         format));
 
   opacity = CLAMP (opacity, GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE);
 
@@ -1122,7 +1123,7 @@ gimp_layer_new (GimpImage            *image,
 GimpLayer *
 gimp_layer_new_from_buffer (GeglBuffer           *buffer,
                             GimpImage            *dest_image,
-                            GimpImageType         type,
+                            const Babl           *format,
                             const gchar          *name,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode)
@@ -1132,12 +1133,16 @@ gimp_layer_new_from_buffer (GeglBuffer           *buffer,
 
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (format != NULL, NULL);
 
+  /*  do *not* use the buffer's format because this function gets
+   *  buffers of any format passed, and converts them
+   */
   layer = gimp_layer_new (dest_image,
                           gegl_buffer_get_width  (buffer),
                           gegl_buffer_get_height (buffer),
-                          type, name,
-                          opacity, mode);
+                          format,
+                          name, opacity, mode);
 
   dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   gegl_buffer_copy (buffer, NULL, dest, NULL);
@@ -1163,7 +1168,7 @@ gimp_layer_new_from_buffer (GeglBuffer           *buffer,
 GimpLayer *
 gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
                             GimpImage            *dest_image,
-                            GimpImageType         type,
+                            const Babl           *format,
                             const gchar          *name,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode)
@@ -1173,12 +1178,11 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
-  g_return_val_if_fail (GIMP_IMAGE_TYPE_BASE_TYPE (type) ==
-                        gimp_image_base_type (dest_image), NULL);
+  g_return_val_if_fail (format != NULL, NULL);
 
   buffer = gimp_pixbuf_create_buffer (pixbuf);
 
-  layer = gimp_layer_new_from_buffer (buffer, dest_image, type,
+  layer = gimp_layer_new_from_buffer (buffer, dest_image, format,
                                       name, opacity, mode);
 
   g_object_unref (buffer);

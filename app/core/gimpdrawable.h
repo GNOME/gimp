@@ -123,7 +123,7 @@ GimpDrawable  * gimp_drawable_new                (GType               type,
                                                   gint                offset_y,
                                                   gint                width,
                                                   gint                height,
-                                                  GimpImageType       image_type);
+                                                  const Babl         *format);
 
 gint64          gimp_drawable_estimate_memsize   (const GimpDrawable *drawable,
                                                   gint                width,

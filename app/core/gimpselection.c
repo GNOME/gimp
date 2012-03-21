@@ -527,7 +527,8 @@ gimp_selection_new (GimpImage *image,
   channel = GIMP_CHANNEL (gimp_drawable_new (GIMP_TYPE_SELECTION,
                                              image, NULL,
                                              0, 0, width, height,
-                                             GIMP_GRAY_IMAGE));
+                                             gimp_image_get_format (image,
+                                                                    GIMP_GRAY_IMAGE)));
 
   gimp_channel_set_color (channel, &black, FALSE);
   gimp_channel_set_show_masked (channel, TRUE);
@@ -827,7 +828,7 @@ gimp_selection_float (GimpSelection *selection,
    *  a channel or layer mask
    */
   layer = gimp_layer_new_from_buffer (buffer, image,
-                                      gimp_drawable_type_with_alpha (drawable),
+                                      gimp_drawable_get_format_with_alpha (drawable),
                                       _("Floated Layer"),
                                       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

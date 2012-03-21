@@ -357,11 +357,12 @@ debug_show_image_graph (GimpImage *source_image)
                                  FALSE);
   gimp_image_set_uri (new_image, new_name);
   layer = gimp_layer_new_from_buffer (buffer,
-                                     new_image,
-                                     GIMP_RGBA_IMAGE,
-                                     new_name,
-                                     1.0,
-                                     GIMP_NORMAL_MODE);
+                                      new_image,
+                                      gimp_image_get_format (new_image,
+                                                             GIMP_RGBA_IMAGE),
+                                      new_name,
+                                      1.0,
+                                      GIMP_NORMAL_MODE);
   gimp_image_add_layer (new_image, layer, NULL, 0, FALSE);
   gimp_create_display (gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
 

@@ -865,8 +865,8 @@ xcf_load_layer_props (XcfInfo    *info,
             gimp_object_set_name (GIMP_OBJECT (group),
                                   gimp_object_get_name (*layer));
 
-            GIMP_DRAWABLE (group)->private->type =
-              gimp_drawable_type (GIMP_DRAWABLE (*layer));
+            GIMP_DRAWABLE (group)->private->format =
+              gimp_drawable_get_format (GIMP_DRAWABLE (*layer));
 
             g_object_ref_sink (*layer);
             g_object_unref (*layer);
@@ -1108,7 +1108,8 @@ xcf_load_layer (XcfInfo    *info,
 
   /* create a new layer */
   layer = gimp_layer_new (image, width, height,
-                          type, name, 255, GIMP_NORMAL_MODE);
+                          gimp_image_get_format (image, type),
+                          name, 255, GIMP_NORMAL_MODE);
   g_free (name);
   if (! layer)
     return NULL;

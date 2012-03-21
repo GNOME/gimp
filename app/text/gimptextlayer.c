@@ -393,7 +393,8 @@ gimp_text_layer_new (GimpImage *image,
   layer = GIMP_TEXT_LAYER (gimp_drawable_new (GIMP_TYPE_TEXT_LAYER,
                                               image, NULL,
                                               0, 0, 1, 1,
-                                              type));
+                                              gimp_image_get_format (image,
+                                                                     type)));
 
   gimp_text_layer_set_text (layer, text);
 

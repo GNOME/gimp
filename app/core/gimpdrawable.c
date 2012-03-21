@@ -260,8 +260,6 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->private = G_TYPE_INSTANCE_GET_PRIVATE (drawable,
                                                    GIMP_TYPE_DRAWABLE,
                                                    GimpDrawablePrivate);
-
-  drawable->private->type = -1;
 }
 
 /* sorry for the evil casts */
@@ -429,9 +427,9 @@ gimp_drawable_duplicate (GimpItem *item,
     {
       GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
-      GimpImageType  image_type   = gimp_drawable_type (drawable);
+      const Babl    *format       = gimp_drawable_get_format (drawable);
 
-      new_drawable->private->type = image_type;
+      new_drawable->private->format = format;
 
       if (new_drawable->private->tiles)
         tile_manager_unref (new_drawable->private->tiles);
@@ -823,8 +821,9 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   if (drawable->private->tiles)
     tile_manager_unref (drawable->private->tiles);
 
-  drawable->private->tiles = tiles;
-  drawable->private->type  = type;
+  drawable->private->tiles  = tiles;
+  drawable->private->format = gimp_image_get_format (gimp_item_get_image (item),
+                                                     type);
 
   if (drawable->private->buffer)
     {
@@ -1188,22 +1187,23 @@ gimp_drawable_new (GType          type,
                    gint           offset_y,
                    gint           width,
                    gint           height,
-                   GimpImageType  image_type)
+                   const Babl    *format)
 {
   GimpDrawable *drawable;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_DRAWABLE), NULL);
   g_return_val_if_fail (width > 0 && height > 0, NULL);
+  g_return_val_if_fail (format != NULL, NULL);
 
   drawable = GIMP_DRAWABLE (gimp_item_new (type,
                                            image, name,
                                            offset_x, offset_y,
                                            width, height));
 
-  drawable->private->type  = image_type;
-  drawable->private->tiles = tile_manager_new (width, height,
-                                               gimp_drawable_bytes (drawable));
+  drawable->private->format = format;
+  drawable->private->tiles  = tile_manager_new (width, height,
+                                                gimp_drawable_bytes (drawable));
 
   return drawable;
 }
@@ -1813,8 +1813,7 @@ gimp_drawable_get_format (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  return gimp_image_get_format (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                gimp_drawable_type (drawable));
+  return drawable->private->format;
 }
 
 const Babl *
@@ -1840,15 +1839,37 @@ gimp_drawable_has_alpha (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  return GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (drawable));
+  return babl_format_has_alpha (drawable->private->format);
 }
 
 GimpImageType
 gimp_drawable_type (const GimpDrawable *drawable)
 {
+  const Babl *format;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  return drawable->private->type;
+  format = drawable->private->format;
+
+  if (format == babl_format ("Y u8"))
+    return GIMP_GRAY_IMAGE;
+  else if (format == babl_format ("YA u8"))
+    return GIMP_GRAYA_IMAGE;
+  else if (format == babl_format ("RGB u8"))
+    return GIMP_RGB_IMAGE;
+  else if (format == babl_format ("RGBA u8"))
+    return GIMP_RGBA_IMAGE;
+  else
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      if (format == gimp_image_get_format (image, GIMP_INDEXED_IMAGE))
+        return GIMP_INDEXED_IMAGE;
+      if (format == gimp_image_get_format (image, GIMP_INDEXEDA_IMAGE))
+        return GIMP_INDEXEDA_IMAGE;
+    }
+
+  g_return_val_if_reached (-1);
 }
 
 GimpImageType
@@ -1896,31 +1917,33 @@ gimp_drawable_bytes (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  return GIMP_IMAGE_TYPE_BYTES (drawable->private->type);
+  return babl_format_get_bytes_per_pixel (drawable->private->format);
 }
 
 gint
 gimp_drawable_bytes_with_alpha (const GimpDrawable *drawable)
 {
-  GimpImageType type;
+  const Babl *format;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  type = GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
+  format = gimp_image_get_format_with_alpha (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                             gimp_drawable_type (drawable));
 
-  return GIMP_IMAGE_TYPE_BYTES (type);
+  return babl_format_get_bytes_per_pixel (format);
 }
 
 gint
 gimp_drawable_bytes_without_alpha (const GimpDrawable *drawable)
 {
-  GimpImageType type;
+  const Babl *format;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  type = GIMP_IMAGE_TYPE_WITHOUT_ALPHA (gimp_drawable_type (drawable));
+  format = gimp_image_get_format_without_alpha (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                                gimp_drawable_type (drawable));
 
-  return GIMP_IMAGE_TYPE_BYTES (type);
+  return babl_format_get_bytes_per_pixel (format);
 }
 
 const guchar *

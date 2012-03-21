@@ -136,7 +136,8 @@ gimp_image_new_from_template (Gimp         *gimp,
       break;
     }
 
-  layer = gimp_layer_new (image, width, height, type,
+  layer = gimp_layer_new (image, width, height,
+                          gimp_image_get_format (image, type),
                           _("Background"),
                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
@@ -297,7 +298,8 @@ gimp_image_new_from_buffer (Gimp       *gimp,
     }
 
   layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (paste),
-                                      image, type,
+                                      image,
+                                      gimp_image_get_format (image, type),
                                       _("Pasted Layer"),
                                       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
@@ -341,7 +343,9 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
 
   gimp_image_undo_disable (new_image);
 
-  layer = gimp_layer_new_from_pixbuf (pixbuf, new_image, image_type,
+  layer = gimp_layer_new_from_pixbuf (pixbuf, new_image,
+                                      gimp_image_get_format (new_image,
+                                                             image_type),
                                       layer_name,
                                       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

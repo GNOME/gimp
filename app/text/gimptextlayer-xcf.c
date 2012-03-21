@@ -194,8 +194,8 @@ gimp_text_layer_from_layer (GimpLayer *layer,
 
   drawable = GIMP_DRAWABLE (text_layer);
 
-  drawable->private->type  = gimp_drawable_type (GIMP_DRAWABLE (layer));
-  drawable->private->tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer));
+  drawable->private->format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  drawable->private->tiles  = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer));
   GIMP_DRAWABLE (layer)->private->tiles = NULL;
 
   gimp_layer_set_opacity    (GIMP_LAYER (text_layer),

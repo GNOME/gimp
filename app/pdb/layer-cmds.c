@@ -75,8 +75,9 @@ layer_new_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      layer = gimp_layer_new (image, width, height, type, name,
-                              opacity / 100.0, mode);
+      layer = gimp_layer_new (image, width, height,
+                              gimp_image_get_format (image, type),
+                              name, opacity / 100.0, mode);
 
       if (! layer)
         success = FALSE;
@@ -112,13 +113,16 @@ layer_new_from_visible_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPickable *pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+      GimpPickable  *pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+      GimpImageType  type;
 
       gimp_pickable_flush (pickable);
 
+      type = gimp_image_base_type_with_alpha (dest_image);
+
       layer = gimp_layer_new_from_buffer (gimp_pickable_get_buffer (pickable),
                                           dest_image,
-                                          gimp_image_base_type_with_alpha (dest_image),
+                                          gimp_image_get_format (dest_image, type),
                                           name,
                                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
     }

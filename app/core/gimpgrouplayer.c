@@ -846,10 +846,11 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
     new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
 
   /*  FIXME: find a better way to do this: need to set the drawable's
-   *  type to the new values so the projection will create its tiles
+   *  format to the new values so the projection will create its tiles
    *  with the right depth
    */
-  drawable->private->type = new_type;
+  drawable->private->format = gimp_image_get_format (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                                     new_type);
 
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
 
@@ -935,7 +936,8 @@ gimp_group_layer_new (GimpImage *image)
   group = GIMP_GROUP_LAYER (gimp_drawable_new (GIMP_TYPE_GROUP_LAYER,
                                                image, NULL,
                                                0, 0, 1, 1,
-                                               type));
+                                               gimp_image_get_format (image,
+                                                                      type)));
 
   if (gimp_image_get_projection (image)->use_gegl)
     GET_PRIVATE (group)->projection->use_gegl = TRUE;

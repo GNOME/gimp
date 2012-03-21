@@ -272,6 +272,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   GimpLayer            *new_layer;
   gint                  width, height;
   gint                  off_x, off_y;
+  GimpImageType         type;
   gdouble               opacity;
   GimpLayerModeEffects  mode;
   return_if_no_image (image, data);
@@ -319,8 +320,10 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Layer"));
 
+  type = gimp_image_base_type_with_alpha (image);
+
   new_layer = gimp_layer_new (image, width, height,
-                              gimp_image_base_type_with_alpha (image),
+                              gimp_image_get_format (image, type),
                               layer_name,
                               opacity, mode);
 
@@ -341,18 +344,21 @@ void
 layers_new_from_visible_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  GimpImage    *image;
-  GimpLayer    *layer;
-  GimpPickable *pickable;
+  GimpImage     *image;
+  GimpLayer     *layer;
+  GimpPickable  *pickable;
+  GimpImageType  type;
   return_if_no_image (image, data);
 
   pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
 
   gimp_pickable_flush (pickable);
 
+  type = gimp_image_base_type_with_alpha (image);
+
   layer = gimp_layer_new_from_buffer (gimp_pickable_get_buffer (pickable),
                                       image,
-                                      gimp_image_base_type_with_alpha (image),
+                                      gimp_image_get_format (image, type),
                                       _("Visible"),
                                       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
@@ -973,7 +979,8 @@ layers_new_layer_response (GtkWidget          *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpLayer *layer;
+      GimpLayer     *layer;
+      GimpImageType  type;
 
       if (layer_name)
         g_free (layer_name);
@@ -990,10 +997,12 @@ layers_new_layer_response (GtkWidget          *widget,
         RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->size_se),
                                           1));
 
+      type = gimp_image_base_type_with_alpha (dialog->image);
+
       layer = gimp_layer_new (dialog->image,
                               dialog->xsize,
                               dialog->ysize,
-                              gimp_image_base_type_with_alpha (dialog->image),
+                              gimp_image_get_format (dialog->image, type),
                               layer_name,
                               GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

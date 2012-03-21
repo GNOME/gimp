@@ -527,7 +527,7 @@ gimp_image_merge_layers (GimpImage     *image,
       type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (image));
 
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
-                                    type,
+                                    gimp_image_get_format (image, type),
                                     gimp_object_get_name (layer),
                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       if (! merge_layer)
@@ -557,7 +557,7 @@ gimp_image_merge_layers (GimpImage     *image,
 
       merge_layer =
         gimp_layer_new (image, (x2 - x1), (y2 - y1),
-                        gimp_drawable_type_with_alpha (GIMP_DRAWABLE (layer)),
+                        gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layer)),
                         "merged layer",
                         GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
