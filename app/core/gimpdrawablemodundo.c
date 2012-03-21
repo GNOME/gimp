@@ -21,7 +21,7 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpimage.h"
 #include "gimpdrawable.h"
@@ -31,7 +31,7 @@
 enum
 {
   PROP_0,
-  PROP_COPY_TILES
+  PROP_COPY_BUFFER
 };
 
 
@@ -76,8 +76,9 @@ gimp_drawable_mod_undo_class_init (GimpDrawableModUndoClass *klass)
   undo_class->pop                = gimp_drawable_mod_undo_pop;
   undo_class->free               = gimp_drawable_mod_undo_free;
 
-  g_object_class_install_property (object_class, PROP_COPY_TILES,
-                                   g_param_spec_boolean ("copy-tiles", NULL, NULL,
+  g_object_class_install_property (object_class, PROP_COPY_BUFFER,
+                                   g_param_spec_boolean ("copy-buffer",
+                                                         NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
@@ -103,15 +104,15 @@ gimp_drawable_mod_undo_constructed (GObject *object)
   item     = GIMP_ITEM_UNDO (object)->item;
   drawable = GIMP_DRAWABLE (item);
 
-  if (drawable_mod_undo->copy_tiles)
+  if (drawable_mod_undo->copy_buffer)
     {
-      drawable_mod_undo->tiles =
-        tile_manager_duplicate (gimp_drawable_get_tiles (drawable));
+      drawable_mod_undo->buffer =
+        gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
     }
   else
     {
-      drawable_mod_undo->tiles =
-        tile_manager_ref (gimp_drawable_get_tiles (drawable));
+      drawable_mod_undo->buffer =
+        g_object_ref (gimp_drawable_get_buffer (drawable));
     }
 
   drawable_mod_undo->type = gimp_drawable_type (drawable);
@@ -131,8 +132,8 @@ gimp_drawable_mod_undo_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_COPY_TILES:
-      drawable_mod_undo->copy_tiles = g_value_get_boolean (value);
+    case PROP_COPY_BUFFER:
+      drawable_mod_undo->copy_buffer = g_value_get_boolean (value);
       break;
 
     default:
@@ -151,8 +152,8 @@ gimp_drawable_mod_undo_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_COPY_TILES:
-      g_value_set_boolean (value, drawable_mod_undo->copy_tiles);
+    case PROP_COPY_BUFFER:
+      g_value_set_boolean (value, drawable_mod_undo->copy_buffer);
       break;
 
     default:
@@ -168,7 +169,7 @@ gimp_drawable_mod_undo_get_memsize (GimpObject *object,
   GimpDrawableModUndo *drawable_mod_undo = GIMP_DRAWABLE_MOD_UNDO (object);
   gint64               memsize           = 0;
 
-  memsize += tile_manager_get_memsize (drawable_mod_undo->tiles, FALSE);
+  /* FIXME memsize += gimp_gegl_buffer_get_memsize (drawable_mod_undo->buffer, FALSE); */
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -181,28 +182,28 @@ gimp_drawable_mod_undo_pop (GimpUndo            *undo,
 {
   GimpDrawableModUndo *drawable_mod_undo = GIMP_DRAWABLE_MOD_UNDO (undo);
   GimpDrawable        *drawable          = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
-  TileManager         *tiles;
+  GeglBuffer          *buffer;
   GimpImageType        type;
   gint                 offset_x;
   gint                 offset_y;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  tiles    = drawable_mod_undo->tiles;
+  buffer   = drawable_mod_undo->buffer;
   type     = drawable_mod_undo->type;
   offset_x = drawable_mod_undo->offset_x;
   offset_y = drawable_mod_undo->offset_y;
 
-  drawable_mod_undo->tiles = tile_manager_ref (gimp_drawable_get_tiles (drawable));
-  drawable_mod_undo->type  = gimp_drawable_type (drawable);
+  drawable_mod_undo->buffer = g_object_ref (gimp_drawable_get_buffer (drawable));
+  drawable_mod_undo->type   = gimp_drawable_type (drawable);
 
   gimp_item_get_offset (GIMP_ITEM (drawable),
                         &drawable_mod_undo->offset_x,
                         &drawable_mod_undo->offset_y);
 
-  gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
-                                tiles, type, offset_x, offset_y);
-  tile_manager_unref (tiles);
+  gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
+                                 buffer, type, offset_x, offset_y);
+  g_object_unref (buffer);
 }
 
 static void
@@ -211,10 +212,10 @@ gimp_drawable_mod_undo_free (GimpUndo     *undo,
 {
   GimpDrawableModUndo *drawable_mod_undo = GIMP_DRAWABLE_MOD_UNDO (undo);
 
-  if (drawable_mod_undo->tiles)
+  if (drawable_mod_undo->buffer)
     {
-      tile_manager_unref (drawable_mod_undo->tiles);
-      drawable_mod_undo->tiles = NULL;
+      g_object_unref (drawable_mod_undo->buffer);
+      drawable_mod_undo->buffer = NULL;
     }
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
