@@ -201,8 +201,9 @@ static void
 test_xmp_model_get_raw_property_value (GimpTestFixture *fixture,
                                        gconstpointer    data)
 {
-  const gchar **expected;
-  const gchar **result;
+  gchar *expected_alt[] = {"en_GB", "my title", NULL};
+  gchar *expected_seq[] = {"Wilber", NULL};
+  const gchar **result = NULL;
 
   // NULL is returned if no value is set by given schema and property
   // name
@@ -212,35 +213,27 @@ test_xmp_model_get_raw_property_value (GimpTestFixture *fixture,
   // XMP_TYPE_LANG_ALT
   // Note: XMP_TYPE_TEXT is tested with wrapper function
   // xmp_model_set_scalar_property
-  expected = g_new (const gchar *, 2);
-  expected[0] = g_strdup ("en_GB");
-  expected[1] = g_strdup ("my title");
-  expected[2] = NULL;
   xmp_model_set_property (fixture->xmp_model,
                           XMP_TYPE_LANG_ALT,
                           "dc",
                           "title",
-                          expected);
+                          (const gchar **) g_strdupv (expected_alt));
 
   result = xmp_model_get_raw_property_value (fixture->xmp_model,
                                              "dc", "title");
-  g_assert_cmpstr (result[0], ==, expected[0]);
-  g_assert_cmpstr (result[1], ==, expected[1]);
+  g_assert (result != NULL);
+  g_assert_cmpstr (result[0], ==, expected_alt[0]);
 
   // XMP_TYPE_TEXT_SEQ
-  expected = g_new (const gchar *, 1);
-  expected[0] = g_strdup ("Wilber");
-  expected[1] = NULL;
-  g_assert (xmp_model_set_property (fixture->xmp_model,
-                                    XMP_TYPE_TEXT_SEQ,
-                                    "dc",
-                                    "creator",
-                                    expected) == TRUE);
+  xmp_model_set_property (fixture->xmp_model,
+                          XMP_TYPE_TEXT_SEQ,
+                          "dc",
+                          "creator",
+                          (const gchar**) g_strdupv (expected_seq));
   result = xmp_model_get_raw_property_value (fixture->xmp_model,
                                              "dc", "creator");
   g_assert (result != NULL);
-  g_assert_cmpstr (result[0], ==, expected[0]);
-  g_assert_cmpstr (result[1], ==, expected[1]);
+  g_assert_cmpstr (result[0], ==, expected_seq[0]);
 }
 
 /**
