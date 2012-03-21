@@ -219,6 +219,25 @@ gimp_gegl_buffer_new (const GeglRectangle *rect,
 }
 
 GeglBuffer *
+gimp_gegl_buffer_dup (GeglBuffer *buffer)
+{
+  const Babl  *format = gegl_buffer_get_format (buffer);
+  TileManager *tiles;
+  GeglBuffer  *dup;
+
+  tiles = tile_manager_new (gegl_buffer_get_width (buffer),
+                            gegl_buffer_get_height (buffer),
+                            babl_format_get_bytes_per_pixel (format));
+
+  dup = gimp_tile_manager_create_buffer (tiles, format);
+  tile_manager_unref (tiles);
+
+  gegl_buffer_copy (buffer, NULL, dup, NULL);
+
+  return dup;
+}
+
+GeglBuffer *
 gimp_tile_manager_create_buffer (TileManager *tm,
                                  const Babl  *format)
 {

@@ -35,6 +35,8 @@ const gchar * gimp_interpolation_to_gegl_filter  (GimpInterpolationType  interpo
 
 GeglBuffer  * gimp_gegl_buffer_new               (const GeglRectangle   *rect,
                                                   const Babl            *format);
+GeglBuffer  * gimp_gegl_buffer_dup               (GeglBuffer            *buffer);
+
 GeglBuffer  * gimp_tile_manager_create_buffer    (TileManager           *tm,
                                                   const Babl            *format);
 TileManager * gimp_gegl_buffer_get_tiles         (GeglBuffer            *buffer);
