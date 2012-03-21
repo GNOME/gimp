@@ -47,25 +47,24 @@
 
 /*  local function prototypes  */
 
-static void          gimp_flip_tool_modifier_key  (GimpTool          *tool,
-                                                   GdkModifierType    key,
-                                                   gboolean           press,
-                                                   GdkModifierType    state,
-                                                   GimpDisplay       *display);
-static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
-                                                   const GimpCoords  *coords,
-                                                   GdkModifierType    state,
-                                                   GimpDisplay       *display);
+static void         gimp_flip_tool_modifier_key  (GimpTool          *tool,
+                                                  GdkModifierType    key,
+                                                  gboolean           press,
+                                                  GdkModifierType    state,
+                                                  GimpDisplay       *display);
+static void         gimp_flip_tool_cursor_update (GimpTool          *tool,
+                                                  const GimpCoords  *coords,
+                                                  GdkModifierType    state,
+                                                  GimpDisplay       *display);
 
-static gchar       * gimp_flip_tool_get_undo_desc (GimpTransformTool *tool);
-static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
-                                                   GimpItem          *item,
-                                                   TileManager       *orig_tiles,
-                                                   const Babl        *orig_format,
-                                                   gint               orig_offset_x,
-                                                   gint               orig_offset_y,
-                                                   gint              *new_offset_x,
-                                                   gint              *new_offset_y);
+static gchar      * gimp_flip_tool_get_undo_desc (GimpTransformTool *tool);
+static GeglBuffer * gimp_flip_tool_transform     (GimpTransformTool *tool,
+                                                  GimpItem          *item,
+                                                  GeglBuffer        *orig_buffer,
+                                                  gint               orig_offset_x,
+                                                  gint               orig_offset_y,
+                                                  gint              *new_offset_x,
+                                                  gint              *new_offset_y);
 
 
 G_DEFINE_TYPE (GimpFlipTool, gimp_flip_tool, GIMP_TYPE_TRANSFORM_TOOL)
@@ -198,11 +197,10 @@ gimp_flip_tool_get_undo_desc (GimpTransformTool *tr_tool)
     }
 }
 
-static TileManager *
+static GeglBuffer *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           GimpItem          *active_item,
-                          TileManager       *orig_tiles,
-                          const Babl        *orig_format,
+                          GeglBuffer        *orig_buffer,
                           gint               orig_offset_x,
                           gint               orig_offset_y,
                           gint              *new_offset_x,
@@ -211,7 +209,7 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
   GimpFlipOptions *options = GIMP_FLIP_TOOL_GET_OPTIONS (trans_tool);
   GimpContext     *context = GIMP_CONTEXT (options);
   gdouble          axis    = 0.0;
-  TileManager     *ret     = NULL;
+  GeglBuffer      *ret     = NULL;
 
   switch (options->flip_type)
     {
@@ -233,22 +231,21 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
     gimp_item_linked_flip (active_item, context, options->flip_type, axis,
                            FALSE);
 
-  if (orig_tiles)
+  if (orig_buffer)
     {
       /*  this happens when transforming a selection cut out of a
        *  normal drawable, or the selection
        */
 
-      ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
-                                                context,
-                                                orig_tiles,
-                                                orig_format,
-                                                orig_offset_x,
-                                                orig_offset_y,
-                                                options->flip_type, axis,
-                                                FALSE,
-                                                new_offset_x,
-                                                new_offset_y);
+      ret = gimp_drawable_transform_buffer_flip (GIMP_DRAWABLE (active_item),
+                                                 context,
+                                                 orig_buffer,
+                                                 orig_offset_x,
+                                                 orig_offset_y,
+                                                 options->flip_type, axis,
+                                                 FALSE,
+                                                 new_offset_x,
+                                                 new_offset_y);
     }
   else
     {

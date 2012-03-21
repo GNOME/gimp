@@ -621,26 +621,24 @@ gimp_drawable_flip (GimpItem            *item,
                     gboolean             clip_result)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  TileManager  *tiles;
+  GeglBuffer   *buffer;
   gint          off_x, off_y;
   gint          new_off_x, new_off_y;
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
-  tiles = gimp_drawable_transform_tiles_flip (drawable, context,
-                                              gimp_drawable_get_tiles (drawable),
-                                              gimp_drawable_get_format (drawable),
-                                              off_x, off_y,
-                                              flip_type, axis,
-                                              clip_result,
-                                              &new_off_x, &new_off_y);
+  buffer = gimp_drawable_transform_buffer_flip (drawable, context,
+                                                gimp_drawable_get_buffer (drawable),
+                                                off_x, off_y,
+                                                flip_type, axis,
+                                                clip_result,
+                                                &new_off_x, &new_off_y);
 
-  if (tiles)
+  if (buffer)
     {
-      gimp_drawable_transform_paste (drawable, tiles,
-                                     gimp_drawable_get_format (drawable),
+      gimp_drawable_transform_paste (drawable, buffer,
                                      new_off_x, new_off_y, FALSE);
-      tile_manager_unref (tiles);
+      g_object_unref (buffer);
     }
 }
 
@@ -653,26 +651,24 @@ gimp_drawable_rotate (GimpItem         *item,
                       gboolean          clip_result)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  TileManager  *tiles;
+  GeglBuffer   *buffer;
   gint          off_x, off_y;
   gint          new_off_x, new_off_y;
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
-  tiles = gimp_drawable_transform_tiles_rotate (drawable, context,
-                                                gimp_drawable_get_tiles (drawable),
-                                                gimp_drawable_get_format (drawable),
-                                                off_x, off_y,
-                                                rotate_type, center_x, center_y,
-                                                clip_result,
-                                                &new_off_x, &new_off_y);
+  buffer = gimp_drawable_transform_buffer_rotate (drawable, context,
+                                                  gimp_drawable_get_buffer (drawable),
+                                                  off_x, off_y,
+                                                  rotate_type, center_x, center_y,
+                                                  clip_result,
+                                                  &new_off_x, &new_off_y);
 
-  if (tiles)
+  if (buffer)
     {
-      gimp_drawable_transform_paste (drawable, tiles,
-                                     gimp_drawable_get_format (drawable),
+      gimp_drawable_transform_paste (drawable, buffer,
                                      new_off_x, new_off_y, FALSE);
-      tile_manager_unref (tiles);
+      g_object_unref (buffer);
     }
 }
 
@@ -687,29 +683,27 @@ gimp_drawable_transform (GimpItem               *item,
                          GimpProgress           *progress)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  TileManager  *tiles;
+  GeglBuffer   *buffer;
   gint          off_x, off_y;
   gint          new_off_x, new_off_y;
 
   gimp_item_get_offset (item, &off_x, &off_y);
 
-  tiles = gimp_drawable_transform_tiles_affine (drawable, context,
-                                                gimp_drawable_get_tiles (drawable),
-                                                gimp_drawable_get_format (drawable),
-                                                off_x, off_y,
-                                                matrix, direction,
-                                                interpolation_type,
-                                                recursion_level,
-                                                clip_result,
-                                                &new_off_x, &new_off_y,
-                                                progress);
+  buffer = gimp_drawable_transform_buffer_affine (drawable, context,
+                                                  gimp_drawable_get_buffer (drawable),
+                                                  off_x, off_y,
+                                                  matrix, direction,
+                                                  interpolation_type,
+                                                  recursion_level,
+                                                  clip_result,
+                                                  &new_off_x, &new_off_y,
+                                                  progress);
 
-  if (tiles)
+  if (buffer)
     {
-      gimp_drawable_transform_paste (drawable, tiles,
-                                     gimp_drawable_get_format (drawable),
+      gimp_drawable_transform_paste (drawable, buffer,
                                      new_off_x, new_off_y, FALSE);
-      tile_manager_unref (tiles);
+      g_object_unref (buffer);
     }
 }
 

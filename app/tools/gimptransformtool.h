@@ -99,20 +99,19 @@ struct _GimpTransformToolClass
   GimpDrawToolClass  parent_class;
 
   /*  virtual functions  */
-  void          (* dialog)        (GimpTransformTool *tool);
-  void          (* dialog_update) (GimpTransformTool *tool);
-  void          (* prepare)       (GimpTransformTool *tool);
-  void          (* motion)        (GimpTransformTool *tool);
-  void          (* recalc_matrix) (GimpTransformTool *tool);
-  gchar       * (* get_undo_desc) (GimpTransformTool *tool);
-  TileManager * (* transform)     (GimpTransformTool *tool,
-                                   GimpItem          *item,
-                                   TileManager       *orig_tiles,
-                                   const Babl        *orig_format,
-                                   gint               orig_offset_x,
-                                   gint               orig_offset_y,
-                                   gint              *new_offset_x,
-                                   gint              *new_offset_y);
+  void         (* dialog)        (GimpTransformTool *tool);
+  void         (* dialog_update) (GimpTransformTool *tool);
+  void         (* prepare)       (GimpTransformTool *tool);
+  void         (* motion)        (GimpTransformTool *tool);
+  void         (* recalc_matrix) (GimpTransformTool *tool);
+  gchar      * (* get_undo_desc) (GimpTransformTool *tool);
+  GeglBuffer * (* transform)     (GimpTransformTool *tool,
+                                  GimpItem          *item,
+                                  GeglBuffer        *orig_buffer,
+                                  gint               orig_offset_x,
+                                  gint               orig_offset_y,
+                                  gint              *new_offset_x,
+                                  gint              *new_offset_y);
 };
 
 

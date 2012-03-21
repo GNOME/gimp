@@ -66,23 +66,22 @@
 
 /*  public functions  */
 
-TileManager *
-gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
-                                      GimpContext            *context,
-                                      TileManager            *orig_tiles,
-                                      const Babl             *orig_format,
-                                      gint                    orig_offset_x,
-                                      gint                    orig_offset_y,
-                                      const GimpMatrix3      *matrix,
-                                      GimpTransformDirection  direction,
-                                      GimpInterpolationType   interpolation_type,
-                                      gint                    recursion_level,
-                                      GimpTransformResize     clip_result,
-                                      gint                   *new_offset_x,
-                                      gint                   *new_offset_y,
-                                      GimpProgress           *progress)
+GeglBuffer *
+gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
+                                       GimpContext            *context,
+                                       GeglBuffer             *orig_buffer,
+                                       gint                    orig_offset_x,
+                                       gint                    orig_offset_y,
+                                       const GimpMatrix3      *matrix,
+                                       GimpTransformDirection  direction,
+                                       GimpInterpolationType   interpolation_type,
+                                       gint                    recursion_level,
+                                       GimpTransformResize     clip_result,
+                                       gint                   *new_offset_x,
+                                       gint                   *new_offset_y,
+                                       GimpProgress           *progress)
 {
-  TileManager *new_tiles;
+  GeglBuffer  *new_buffer;
   GimpMatrix3  m;
   GimpMatrix3  inv;
   gint         u1, v1, u2, v2;  /* source bounding box */
@@ -91,7 +90,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (orig_tiles != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (orig_buffer), NULL);
   g_return_val_if_fail (matrix != NULL, NULL);
   g_return_val_if_fail (new_offset_x != NULL, NULL);
   g_return_val_if_fail (new_offset_y != NULL, NULL);
@@ -115,12 +114,12 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
   u1 = orig_offset_x;
   v1 = orig_offset_y;
-  u2 = u1 + tile_manager_width (orig_tiles);
-  v2 = v1 + tile_manager_height (orig_tiles);
+  u2 = u1 + gegl_buffer_get_width  (orig_buffer);
+  v2 = v1 + gegl_buffer_get_height (orig_buffer);
 
-  /*  Always clip unfloated tiles since they must keep their size  */
+  /*  Always clip unfloated buffers since they must keep their size  */
   if (G_TYPE_FROM_INSTANCE (drawable) == GIMP_TYPE_CHANNEL &&
-      tile_manager_bpp (orig_tiles)   == 1)
+      gegl_buffer_get_format (orig_buffer) == babl_format ("Y u8"))
     clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
   /*  Find the bounding coordinates of target */
@@ -129,19 +128,14 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                   &x1, &y1, &x2, &y2);
 
   /*  Get the new temporary buffer for the transformed result  */
-  new_tiles = tile_manager_new (x2 - x1, y2 - y1,
-                                tile_manager_bpp (orig_tiles));
+  new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
+                                     gegl_buffer_get_format (orig_buffer));
 
   if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (drawable))->gimp))
     {
-      GeglBuffer  *src_buffer;
-      GeglBuffer  *dest_buffer;
       GeglNode    *affine;
       gchar       *matrix_string;
       GimpMatrix3  gegl_matrix;
-
-      src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format);
-      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format);
 
       gimp_matrix3_identity (&gegl_matrix);
       gimp_matrix3_translate (&gegl_matrix, u1, v1);
@@ -155,18 +149,20 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                     NULL);
       g_free (matrix_string);
 
-      gimp_apply_operation (src_buffer, progress, NULL,
+      gimp_apply_operation (orig_buffer, progress, NULL,
                             affine, TRUE,
-                            dest_buffer, NULL);
+                            new_buffer, NULL);
 
       g_object_unref (affine);
-
-      g_object_unref (src_buffer);
-      g_object_unref (dest_buffer);
     }
   else
     {
-      PixelRegion destPR;
+      TileManager *orig_tiles;
+      TileManager *new_tiles;
+      PixelRegion  destPR;
+
+      orig_tiles = gimp_gegl_buffer_get_tiles (orig_buffer);
+      new_tiles = gimp_gegl_buffer_get_tiles (new_buffer);
 
       pixel_region_init (&destPR, new_tiles,
                          0, 0, x2 - x1, y2 - y1, TRUE);
@@ -185,35 +181,33 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                              interpolation_type,
                              recursion_level,
                              progress);
+
+      gimp_gegl_buffer_refetch_tiles (new_buffer);
     }
 
   *new_offset_x = x1;
   *new_offset_y = y1;
 
-  return new_tiles;
+  return new_buffer;
 }
 
-TileManager *
-gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
-                                    GimpContext         *context,
-                                    TileManager         *orig_tiles,
-                                    const Babl          *orig_format,
-                                    gint                 orig_offset_x,
-                                    gint                 orig_offset_y,
-                                    GimpOrientationType  flip_type,
-                                    gdouble              axis,
-                                    gboolean             clip_result,
-                                    gint                *new_offset_x,
-                                    gint                *new_offset_y)
+GeglBuffer *
+gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
+                                     GimpContext         *context,
+                                     GeglBuffer          *orig_buffer,
+                                     gint                 orig_offset_x,
+                                     gint                 orig_offset_y,
+                                     GimpOrientationType  flip_type,
+                                     gdouble              axis,
+                                     gboolean             clip_result,
+                                     gint                *new_offset_x,
+                                     gint                *new_offset_y)
 {
-  TileManager   *new_tiles;
-  GeglBuffer    *src_buffer;
-  GeglBuffer    *dest_buffer;
+  GeglBuffer    *new_buffer;
   GeglRectangle  src_rect;
   GeglRectangle  dest_rect;
   gint           orig_x, orig_y;
   gint           orig_width, orig_height;
-  gint           orig_bpp;
   gint           new_x, new_y;
   gint           new_width, new_height;
   gint           i;
@@ -221,13 +215,12 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (orig_tiles != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (orig_buffer), NULL);
 
   orig_x      = orig_offset_x;
   orig_y      = orig_offset_y;
-  orig_width  = tile_manager_width (orig_tiles);
-  orig_height = tile_manager_height (orig_tiles);
-  orig_bpp    = tile_manager_bpp (orig_tiles);
+  orig_width  = gegl_buffer_get_width (orig_buffer);
+  orig_height = gegl_buffer_get_height (orig_buffer);
 
   new_x      = orig_x;
   new_y      = orig_y;
@@ -251,8 +244,9 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
       break;
     }
 
-  new_tiles = tile_manager_new (new_width, new_height, orig_bpp);
-  dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format);
+  new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                     new_width, new_height),
+                                     gegl_buffer_get_format (orig_buffer));
 
   if (clip_result && (new_x != orig_x || new_y != orig_y))
     {
@@ -271,7 +265,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
         gimp_context_get_background (context, &bg);
 
       color = gimp_gegl_color_new (&bg);
-      gegl_buffer_set_color (dest_buffer, NULL, color);
+      gegl_buffer_set_color (new_buffer, NULL, color);
       g_object_unref (color);
 
       if (gimp_rectangle_intersect (orig_x, orig_y, orig_width, orig_height,
@@ -298,12 +292,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
     }
 
   if (new_width == 0 && new_height == 0)
-    {
-      g_object_unref (dest_buffer);
-      return new_tiles;
-    }
-
-  src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format);
+    return new_buffer;
 
   switch (flip_type)
     {
@@ -323,8 +312,8 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
           src_rect.x  = i + orig_x;
           dest_rect.x = new_x + new_width - i - 1;
 
-          gegl_buffer_copy (src_buffer, &src_rect,
-                            dest_buffer, &dest_rect);
+          gegl_buffer_copy (orig_buffer, &src_rect,
+                            new_buffer, &dest_rect);
         }
       break;
 
@@ -344,8 +333,8 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
           src_rect.y  = i + orig_y;
           dest_rect.y = new_y + new_height - i - 1;
 
-          gegl_buffer_copy (src_buffer, &src_rect,
-                            dest_buffer, &dest_rect);
+          gegl_buffer_copy (orig_buffer, &src_rect,
+                            new_buffer, &dest_rect);
         }
       break;
 
@@ -353,10 +342,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
       break;
     }
 
-  g_object_unref (src_buffer);
-  g_object_unref (dest_buffer);
-
-  return new_tiles;
+  return new_buffer;
 }
 
 static void
@@ -393,23 +379,20 @@ gimp_drawable_transform_rotate_point (gint              x,
     }
 }
 
-TileManager *
-gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
-                                      GimpContext      *context,
-                                      TileManager      *orig_tiles,
-                                      const Babl       *orig_format,
-                                      gint              orig_offset_x,
-                                      gint              orig_offset_y,
-                                      GimpRotationType  rotate_type,
-                                      gdouble           center_x,
-                                      gdouble           center_y,
-                                      gboolean          clip_result,
-                                      gint             *new_offset_x,
-                                      gint             *new_offset_y)
+GeglBuffer *
+gimp_drawable_transform_buffer_rotate (GimpDrawable     *drawable,
+                                       GimpContext      *context,
+                                       GeglBuffer       *orig_buffer,
+                                       gint              orig_offset_x,
+                                       gint              orig_offset_y,
+                                       GimpRotationType  rotate_type,
+                                       gdouble           center_x,
+                                       gdouble           center_y,
+                                       gboolean          clip_result,
+                                       gint             *new_offset_x,
+                                       gint             *new_offset_y)
 {
-  TileManager   *new_tiles;
-  GeglBuffer    *src_buffer;
-  GeglBuffer    *dest_buffer;
+  GeglBuffer    *new_buffer;
   GeglRectangle  src_rect;
   GeglRectangle  dest_rect;
   gint           orig_x, orig_y;
@@ -421,13 +404,13 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (orig_tiles != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (orig_buffer), NULL);
 
   orig_x      = orig_offset_x;
   orig_y      = orig_offset_y;
-  orig_width  = tile_manager_width (orig_tiles);
-  orig_height = tile_manager_height (orig_tiles);
-  orig_bpp    = tile_manager_bpp (orig_tiles);
+  orig_width  = gegl_buffer_get_width (orig_buffer);
+  orig_height = gegl_buffer_get_height (orig_buffer);
+  orig_bpp    = babl_format_get_bytes_per_pixel (gegl_buffer_get_format (orig_buffer));
 
   switch (rotate_type)
     {
@@ -472,8 +455,9 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
       gint       clip_x, clip_y;
       gint       clip_width, clip_height;
 
-      new_tiles = tile_manager_new (orig_width, orig_height, orig_bpp);
-      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format);
+      new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                         orig_width, orig_height),
+                                         gegl_buffer_get_format (orig_buffer));
 
       *new_offset_x = orig_x;
       *new_offset_y = orig_y;
@@ -485,7 +469,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
         gimp_context_get_background (context, &bg);
 
       color = gimp_gegl_color_new (&bg);
-      gegl_buffer_set_color (dest_buffer, NULL, color);
+      gegl_buffer_set_color (new_buffer, NULL, color);
       g_object_unref (color);
 
       if (gimp_rectangle_intersect (orig_x, orig_y, orig_width, orig_height,
@@ -548,8 +532,9 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
     }
   else
     {
-      new_tiles = tile_manager_new (new_width, new_height, orig_bpp);
-      dest_buffer = gimp_tile_manager_create_buffer (new_tiles, orig_format);
+      new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                         new_width, new_height),
+                                         gegl_buffer_get_format (orig_buffer));
 
       *new_offset_x = new_x;
       *new_offset_y = new_y;
@@ -561,12 +546,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
     }
 
   if (new_width < 1 || new_height < 1)
-    {
-      g_object_unref (dest_buffer);
-      return new_tiles;
-    }
-
-  src_buffer = gimp_tile_manager_create_buffer (orig_tiles, orig_format);
+    return new_buffer;
 
   src_rect.x      = orig_x;
   src_rect.y      = orig_y;
@@ -598,9 +578,9 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
             src_rect.y  = orig_y + orig_height - 1 - i;
             dest_rect.x = new_x + i;
 
-            gegl_buffer_get (src_buffer, 1.0, &src_rect, NULL, buf,
+            gegl_buffer_get (orig_buffer, 1.0, &src_rect, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
-            gegl_buffer_set (dest_buffer, &dest_rect, NULL, buf,
+            gegl_buffer_set (new_buffer, &dest_rect, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
           }
 
@@ -626,7 +606,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
             src_rect.y  = orig_y + orig_height - 1 - i;
             dest_rect.y = new_y + i;
 
-            gegl_buffer_get (src_buffer, 1.0, &src_rect, NULL, buf,
+            gegl_buffer_get (orig_buffer, 1.0, &src_rect, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
 
             for (j = 0; j < orig_width / 2; j++)
@@ -642,7 +622,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
                   }
               }
 
-            gegl_buffer_set (dest_buffer, &dest_rect, NULL, buf,
+            gegl_buffer_set (new_buffer, &dest_rect, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
           }
 
@@ -668,9 +648,9 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
             src_rect.x  = orig_x + orig_width - 1 - i;
             dest_rect.y = new_y + i;
 
-            gegl_buffer_get (src_buffer, 1.0, &src_rect, NULL, buf,
+            gegl_buffer_get (orig_buffer, 1.0, &src_rect, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
-            gegl_buffer_set (dest_buffer, &dest_rect, NULL, buf,
+            gegl_buffer_set (new_buffer, &dest_rect, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
           }
 
@@ -679,10 +659,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
       break;
     }
 
-  g_object_unref (src_buffer);
-  g_object_unref (dest_buffer);
-
-  return new_tiles;
+  return new_buffer;
 }
 
 GimpDrawable *
@@ -696,8 +673,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                 GimpProgress           *progress)
 {
   GimpImage    *image;
-  TileManager  *orig_tiles;
-  const Babl   *orig_format;
+  GeglBuffer   *orig_buffer;
   gint          orig_offset_x;
   gint          orig_offset_y;
   gboolean      new_layer;
@@ -717,19 +693,19 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                C_("undo-type", "Transform"));
 
   /* Cut/Copy from the specified drawable */
-  orig_tiles = gimp_drawable_transform_cut (drawable, context,
-                                            &orig_format,
-                                            &orig_offset_x, &orig_offset_y,
-                                            &new_layer);
+  orig_buffer = gimp_drawable_transform_cut (drawable, context,
+                                             &orig_offset_x, &orig_offset_y,
+                                             &new_layer);
 
-  if (orig_tiles)
+  if (orig_buffer)
     {
-      TileManager *new_tiles;
-      gint         new_offset_x;
-      gint         new_offset_y;
+      GeglBuffer *new_buffer;
+      gint        new_offset_x;
+      gint        new_offset_y;
 
-      /*  always clip unfloated tiles so they keep their size  */
-      if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
+      /*  always clip unfloated buffers so they keep their size  */
+      if (GIMP_IS_CHANNEL (drawable) &&
+          gegl_buffer_get_format (orig_buffer) == babl_format ("Y u8"))
         clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
       /*  also transform the mask if we are transforming an entire layer  */
@@ -749,30 +725,28 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
         }
 
       /* transform the buffer */
-      new_tiles = gimp_drawable_transform_tiles_affine (drawable, context,
-                                                        orig_tiles,
-                                                        orig_format,
-                                                        orig_offset_x,
-                                                        orig_offset_y,
-                                                        matrix,
-                                                        direction,
-                                                        interpolation_type,
-                                                        recursion_level,
-                                                        clip_result,
-                                                        &new_offset_x,
-                                                        &new_offset_y,
-                                                        progress);
+      new_buffer = gimp_drawable_transform_buffer_affine (drawable, context,
+                                                          orig_buffer,
+                                                          orig_offset_x,
+                                                          orig_offset_y,
+                                                          matrix,
+                                                          direction,
+                                                          interpolation_type,
+                                                          recursion_level,
+                                                          clip_result,
+                                                          &new_offset_x,
+                                                          &new_offset_y,
+                                                          progress);
 
       /* Free the cut/copied buffer */
-      tile_manager_unref (orig_tiles);
+      g_object_unref (orig_buffer);
 
-      if (new_tiles)
+      if (new_buffer)
         {
-          result = gimp_drawable_transform_paste (drawable, new_tiles,
-                                                  orig_format,
+          result = gimp_drawable_transform_paste (drawable, new_buffer,
                                                   new_offset_x, new_offset_y,
                                                   new_layer);
-          tile_manager_unref (new_tiles);
+          g_object_unref (new_buffer);
         }
     }
 
@@ -790,8 +764,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
                               gboolean             clip_result)
 {
   GimpImage    *image;
-  TileManager  *orig_tiles;
-  const Babl   *orig_format;
+  GeglBuffer   *orig_buffer;
   gint          orig_offset_x;
   gint          orig_offset_y;
   gboolean      new_layer;
@@ -809,19 +782,19 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
                                C_("undo-type", "Flip"));
 
   /* Cut/Copy from the specified drawable */
-  orig_tiles = gimp_drawable_transform_cut (drawable, context,
-                                            &orig_format,
-                                            &orig_offset_x, &orig_offset_y,
-                                            &new_layer);
+  orig_buffer = gimp_drawable_transform_cut (drawable, context,
+                                             &orig_offset_x, &orig_offset_y,
+                                             &new_layer);
 
-  if (orig_tiles)
+  if (orig_buffer)
     {
-      TileManager *new_tiles = NULL;
-      gint         new_offset_x;
-      gint         new_offset_y;
+      GeglBuffer *new_buffer = NULL;
+      gint        new_offset_x;
+      gint        new_offset_y;
 
       /*  always clip unfloated tiles so they keep their size  */
-      if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
+      if (GIMP_IS_CHANNEL (drawable) &&
+          gegl_buffer_get_format (orig_buffer) == babl_format ("Y u8"))
         clip_result = TRUE;
 
       /*  also transform the mask if we are transforming an entire layer  */
@@ -838,29 +811,27 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
         }
 
       /* transform the buffer */
-      if (orig_tiles)
+      if (orig_buffer)
         {
-          new_tiles = gimp_drawable_transform_tiles_flip (drawable, context,
-                                                          orig_tiles,
-                                                          orig_format,
-                                                          orig_offset_x,
-                                                          orig_offset_y,
-                                                          flip_type, axis,
-                                                          clip_result,
-                                                          &new_offset_x,
-                                                          &new_offset_y);
+          new_buffer = gimp_drawable_transform_buffer_flip (drawable, context,
+                                                            orig_buffer,
+                                                            orig_offset_x,
+                                                            orig_offset_y,
+                                                            flip_type, axis,
+                                                            clip_result,
+                                                            &new_offset_x,
+                                                            &new_offset_y);
 
           /* Free the cut/copied buffer */
-          tile_manager_unref (orig_tiles);
+          g_object_unref (orig_buffer);
         }
 
-      if (new_tiles)
+      if (new_buffer)
         {
-          result = gimp_drawable_transform_paste (drawable, new_tiles,
-                                                  orig_format,
+          result = gimp_drawable_transform_paste (drawable, new_buffer,
                                                   new_offset_x, new_offset_y,
                                                   new_layer);
-          tile_manager_unref (new_tiles);
+          g_object_unref (new_buffer);
         }
     }
 
@@ -879,8 +850,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
                                 gboolean          clip_result)
 {
   GimpImage    *image;
-  TileManager  *orig_tiles;
-  const Babl   *orig_format;
+  GeglBuffer   *orig_buffer;
   gint          orig_offset_x;
   gint          orig_offset_y;
   gboolean      new_layer;
@@ -898,19 +868,19 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
                                C_("undo-type", "Rotate"));
 
   /* Cut/Copy from the specified drawable */
-  orig_tiles = gimp_drawable_transform_cut (drawable, context,
-                                            &orig_format,
-                                            &orig_offset_x, &orig_offset_y,
-                                            &new_layer);
+  orig_buffer = gimp_drawable_transform_cut (drawable, context,
+                                             &orig_offset_x, &orig_offset_y,
+                                             &new_layer);
 
-  if (orig_tiles)
+  if (orig_buffer)
     {
-      TileManager *new_tiles;
-      gint         new_offset_x;
-      gint         new_offset_y;
+      GeglBuffer *new_buffer;
+      gint        new_offset_x;
+      gint        new_offset_y;
 
       /*  always clip unfloated tiles so they keep their size  */
-      if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
+      if (GIMP_IS_CHANNEL (drawable) &&
+          gegl_buffer_get_format (orig_buffer) == babl_format ("Y u8"))
         clip_result = TRUE;
 
       /*  also transform the mask if we are transforming an entire layer  */
@@ -928,27 +898,25 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
         }
 
       /* transform the buffer */
-      new_tiles = gimp_drawable_transform_tiles_rotate (drawable, context,
-                                                        orig_tiles,
-                                                        orig_format,
-                                                        orig_offset_x,
-                                                        orig_offset_y,
-                                                        rotate_type,
-                                                        center_x, center_y,
-                                                        clip_result,
-                                                        &new_offset_x,
-                                                        &new_offset_y);
+      new_buffer = gimp_drawable_transform_buffer_rotate (drawable, context,
+                                                          orig_buffer,
+                                                          orig_offset_x,
+                                                          orig_offset_y,
+                                                          rotate_type,
+                                                          center_x, center_y,
+                                                          clip_result,
+                                                          &new_offset_x,
+                                                          &new_offset_y);
 
       /* Free the cut/copied buffer */
-      tile_manager_unref (orig_tiles);
+      g_object_unref (orig_buffer);
 
-      if (new_tiles)
+      if (new_buffer)
         {
-          result = gimp_drawable_transform_paste (drawable, new_tiles,
-                                                  orig_format,
+          result = gimp_drawable_transform_paste (drawable, new_buffer,
                                                   new_offset_x, new_offset_y,
                                                   new_layer);
-          tile_manager_unref (new_tiles);
+          g_object_unref (new_buffer);
         }
     }
 
@@ -958,21 +926,19 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   return result;
 }
 
-TileManager *
+GeglBuffer *
 gimp_drawable_transform_cut (GimpDrawable *drawable,
                              GimpContext  *context,
-                             const Babl  **format,
                              gint         *offset_x,
                              gint         *offset_y,
                              gboolean     *new_layer)
 {
-  GimpImage   *image;
-  TileManager *tiles;
+  GimpImage  *image;
+  GeglBuffer *buffer;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (offset_x != NULL, NULL);
   g_return_val_if_fail (offset_y != NULL, NULL);
   g_return_val_if_fail (new_layer != NULL, NULL);
@@ -990,13 +956,12 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
        */
       if (gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
         {
-          tiles = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
-                                          GIMP_PICKABLE (drawable),
-                                          context,
-                                          TRUE, FALSE, TRUE,
-                                          format,
-                                          offset_x, offset_y,
-                                          NULL);
+          buffer = gimp_selection_extract_buffer (GIMP_SELECTION (gimp_image_get_mask (image)),
+                                                  GIMP_PICKABLE (drawable),
+                                                  context,
+                                                  TRUE, FALSE, TRUE,
+                                                  offset_x, offset_y,
+                                                  NULL);
           /*  clear the selection  */
           gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
 
@@ -1004,31 +969,28 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
         }
       else
         {
-          tiles = NULL;
-          *format = NULL;
+          buffer = NULL;
           *new_layer = FALSE;
         }
     }
   else  /*  otherwise, just copy the layer  */
     {
-      tiles = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
-                                      GIMP_PICKABLE (drawable),
-                                      context,
-                                      FALSE, TRUE, GIMP_IS_LAYER (drawable),
-                                      format,
-                                      offset_x, offset_y,
-                                      NULL);
+      buffer = gimp_selection_extract_buffer (GIMP_SELECTION (gimp_image_get_mask (image)),
+                                              GIMP_PICKABLE (drawable),
+                                              context,
+                                              FALSE, TRUE, GIMP_IS_LAYER (drawable),
+                                              offset_x, offset_y,
+                                              NULL);
 
       *new_layer = FALSE;
     }
 
-  return tiles;
+  return buffer;
 }
 
 GimpDrawable *
 gimp_drawable_transform_paste (GimpDrawable *drawable,
-                               TileManager  *tiles,
-                               const Babl   *format,
+                               GeglBuffer   *buffer,
                                gint          offset_x,
                                gint          offset_y,
                                gboolean      new_layer)
@@ -1039,8 +1001,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (tiles != NULL, NULL);
-  g_return_val_if_fail (format != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -1056,10 +1017,10 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
   if (new_layer)
     {
       layer =
-        gimp_layer_new_from_tiles (tiles, format, image,
-                                   gimp_drawable_type_with_alpha (drawable),
-                                   _("Transformation"),
-                                   GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+        gimp_layer_new_from_buffer (buffer, image,
+                                    gimp_drawable_type_with_alpha (drawable),
+                                    _("Transformation"),
+                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
       gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 
@@ -1071,7 +1032,8 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
     {
       GimpImageType drawable_type;
 
-      if (GIMP_IS_LAYER (drawable) && babl_format_has_alpha (format))
+      if (GIMP_IS_LAYER (drawable) &&
+          babl_format_has_alpha (gegl_buffer_get_format (buffer)))
         {
           drawable_type = gimp_drawable_type_with_alpha (drawable);
         }
@@ -1080,9 +1042,9 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
           drawable_type = gimp_drawable_type (drawable);
         }
 
-      gimp_drawable_set_tiles_full (drawable, TRUE, NULL,
-                                    tiles, drawable_type,
-                                    offset_x, offset_y);
+      gimp_drawable_set_buffer_full (drawable, TRUE, NULL,
+                                     buffer, drawable_type,
+                                     offset_x, offset_y);
     }
 
   gimp_image_undo_group_end (image);
