@@ -31,6 +31,8 @@
 
 #include "base/tile-manager.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
@@ -831,6 +833,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
   GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
   TileManager           *tiles;
+  GeglBuffer            *buffer;
   GimpImageType          new_type;
 
   if (push_undo)
@@ -857,11 +860,15 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
   tiles = gimp_projection_get_tiles_at_level (private->projection,
                                               0, NULL);
 
-  gimp_drawable_set_tiles_full (drawable,
-                                FALSE, NULL,
-                                tiles, new_type,
-                                gimp_item_get_offset_x (GIMP_ITEM (drawable)),
-                                gimp_item_get_offset_y (GIMP_ITEM (drawable)));
+  buffer = gimp_tile_manager_create_buffer (tiles, gimp_drawable_get_format (drawable));
+
+  gimp_drawable_set_buffer_full (drawable,
+                                 FALSE, NULL,
+                                 buffer, new_type,
+                                 gimp_item_get_offset_x (GIMP_ITEM (drawable)),
+                                 gimp_item_get_offset_y (GIMP_ITEM (drawable)));
+
+  g_object_unref (buffer);
 }
 
 static GeglNode *
@@ -1099,6 +1106,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           height != old_height)
         {
           TileManager *tiles;
+          GeglBuffer  *buffer;
 
           private->reallocate_projection = FALSE;
 
@@ -1116,11 +1124,15 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           private->reallocate_width  = 0;
           private->reallocate_height = 0;
 
-          gimp_drawable_set_tiles_full (GIMP_DRAWABLE (group),
-                                        FALSE, NULL,
-                                        tiles,
-                                        gimp_drawable_type (GIMP_DRAWABLE (group)),
-                                        x, y);
+          buffer = gimp_tile_manager_create_buffer (tiles, gimp_drawable_get_format (GIMP_DRAWABLE (group)));
+
+          gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
+                                         FALSE, NULL,
+                                         buffer,
+                                         gimp_drawable_type (GIMP_DRAWABLE (group)),
+                                         x, y);
+
+          g_object_unref (buffer);
         }
       else
         {
