@@ -89,13 +89,6 @@ GimpLayer     * gimp_layer_new_from_buffer     (GeglBuffer           *buffer,
                                                 const gchar          *name,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
-GimpLayer     * gimp_layer_new_from_tiles      (TileManager          *tiles,
-                                                const Babl           *format,
-                                                GimpImage            *dest_image,
-                                                GimpImageType         type,
-                                                const gchar          *name,
-                                                gdouble               opacity,
-                                                GimpLayerModeEffects  mode);
 GimpLayer     * gimp_layer_new_from_pixbuf     (GdkPixbuf            *pixbuf,
                                                 GimpImage            *dest_image,
                                                 GimpImageType         type,

@@ -1146,48 +1146,6 @@ gimp_layer_new_from_buffer (GeglBuffer           *buffer,
 }
 
 /**
- * gimp_layer_new_from_tiles:
- * @tiles:      The buffer to make the new layer from.
- * @format:     The tiles' pixel format
- * @dest_image: The image the new layer will be added to.
- * @type:       The #GimpImageType of the new layer.
- * @name:       The new layer's name.
- * @opacity:    The new layer's opacity.
- * @mode:       The new layer's mode.
- *
- * Copies %tiles to a layer taking into consideration the
- * possibility of transforming the contents to meet the requirements
- * of the target image type
- *
- * Return value: The new layer.
- **/
-GimpLayer *
-gimp_layer_new_from_tiles (TileManager          *tiles,
-                           const Babl           *format,
-                           GimpImage            *dest_image,
-                           GimpImageType         type,
-                           const gchar          *name,
-                           gdouble               opacity,
-                           GimpLayerModeEffects  mode)
-{
-  GeglBuffer *buffer;
-  GimpLayer  *layer;
-
-  g_return_val_if_fail (tiles != NULL, NULL);
-  g_return_val_if_fail (format != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
-
-  buffer = gimp_tile_manager_create_buffer (tiles, format);
-
-  layer = gimp_layer_new_from_buffer (buffer, dest_image, type,
-                                      name, opacity, mode);
-
-  g_object_unref (buffer);
-
-  return layer;
-}
-
-/**
  * gimp_layer_new_from_pixbuf:
  * @pixbuf:     The pixbuf to make the new layer from.
  * @dest_image: The image the new layer will be added to.
