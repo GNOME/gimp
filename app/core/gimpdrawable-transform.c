@@ -144,8 +144,10 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
 
       matrix_string = gegl_matrix3_to_string ((GeglMatrix3 *) &gegl_matrix);
       affine = gegl_node_new_child (NULL,
-                                    "operation", "gegl:transform",
-                                    "transform", matrix_string,
+                                    "operation",  "gegl:transform",
+                                    "transform",  matrix_string,
+                                    "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
+                                    "hard-edges", TRUE,
                                     NULL);
       g_free (matrix_string);
 
