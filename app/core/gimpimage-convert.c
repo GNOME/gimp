@@ -989,11 +989,13 @@ gimp_image_convert (GimpImage               *image,
             quantobj->nth_layer = nth_layer;
             (* quantobj->second_pass) (quantobj, layer, new_tiles);
 
-            new_buffer = gimp_tile_manager_create_buffer (new_tiles, NULL);
+            new_buffer = gimp_tile_manager_create_buffer (new_tiles,
+                                                          gimp_image_get_format (image,
+                                                                                 new_layer_type));
             tile_manager_unref (new_tiles);
 
             gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), TRUE, NULL,
-                                      new_buffer, new_layer_type);
+                                      new_buffer);
             g_object_unref (new_buffer);
           }
           break;

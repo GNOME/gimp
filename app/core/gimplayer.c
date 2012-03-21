@@ -1758,10 +1758,9 @@ gimp_layer_get_show_mask (const GimpLayer *layer)
 void
 gimp_layer_add_alpha (GimpLayer *layer)
 {
-  GimpItem      *item;
-  GimpDrawable  *drawable;
-  GeglBuffer    *new_buffer;
-  GimpImageType  new_type;
+  GimpItem     *item;
+  GimpDrawable *drawable;
+  GeglBuffer   *new_buffer;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
@@ -1770,8 +1769,6 @@ gimp_layer_add_alpha (GimpLayer *layer)
 
   item     = GIMP_ITEM (layer);
   drawable = GIMP_DRAWABLE (layer);
-
-  new_type = gimp_drawable_type_with_alpha (drawable);
 
   new_buffer =
     gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
@@ -1785,7 +1782,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
   gimp_drawable_set_buffer (GIMP_DRAWABLE (layer),
                             gimp_item_is_attached (GIMP_ITEM (layer)),
                             C_("undo-type", "Add Alpha Channel"),
-                            new_buffer, new_type);
+                            new_buffer);
   g_object_unref (new_buffer);
 }
 
@@ -1793,18 +1790,15 @@ void
 gimp_layer_flatten (GimpLayer   *layer,
                     GimpContext *context)
 {
-  GeglNode      *flatten;
-  GeglBuffer    *new_buffer;
-  GimpImageType  new_type;
-  GimpRGB        background;
+  GeglNode   *flatten;
+  GeglBuffer *new_buffer;
+  GimpRGB     background;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
-
-  new_type = gimp_drawable_type_without_alpha (GIMP_DRAWABLE (layer));
 
   new_buffer =
     gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
@@ -1823,7 +1817,7 @@ gimp_layer_flatten (GimpLayer   *layer,
   gimp_drawable_set_buffer (GIMP_DRAWABLE (layer),
                             gimp_item_is_attached (GIMP_ITEM (layer)),
                             C_("undo-type", "Remove Alpha Channel"),
-                            new_buffer, new_type);
+                            new_buffer);
   g_object_unref (new_buffer);
 }
 

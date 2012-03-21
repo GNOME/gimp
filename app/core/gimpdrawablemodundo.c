@@ -116,8 +116,6 @@ gimp_drawable_mod_undo_constructed (GObject *object)
         g_object_ref (gimp_drawable_get_buffer (drawable));
     }
 
-  drawable_mod_undo->type = gimp_drawable_type (drawable);
-
   gimp_item_get_offset (item,
                         &drawable_mod_undo->offset_x,
                         &drawable_mod_undo->offset_y);
@@ -184,26 +182,23 @@ gimp_drawable_mod_undo_pop (GimpUndo            *undo,
   GimpDrawableModUndo *drawable_mod_undo = GIMP_DRAWABLE_MOD_UNDO (undo);
   GimpDrawable        *drawable          = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
   GeglBuffer          *buffer;
-  GimpImageType        type;
   gint                 offset_x;
   gint                 offset_y;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   buffer   = drawable_mod_undo->buffer;
-  type     = drawable_mod_undo->type;
   offset_x = drawable_mod_undo->offset_x;
   offset_y = drawable_mod_undo->offset_y;
 
   drawable_mod_undo->buffer = g_object_ref (gimp_drawable_get_buffer (drawable));
-  drawable_mod_undo->type   = gimp_drawable_type (drawable);
 
   gimp_item_get_offset (GIMP_ITEM (drawable),
                         &drawable_mod_undo->offset_x,
                         &drawable_mod_undo->offset_y);
 
   gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
-                                 buffer, type, offset_x, offset_y);
+                                 buffer, offset_x, offset_y);
   g_object_unref (buffer);
 }
 

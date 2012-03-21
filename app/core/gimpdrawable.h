@@ -89,11 +89,10 @@ struct _GimpDrawableClass
                                            PixelRegion          *projPR,
                                            gboolean              combine);
   TileManager * (* get_tiles)             (GimpDrawable         *drawable);
-  void          (* set_tiles)             (GimpDrawable         *drawable,
+  void          (* set_buffer)            (GimpDrawable         *drawable,
                                            gboolean              push_undo,
                                            const gchar          *undo_desc,
-                                           TileManager          *tiles,
-                                           GimpImageType         type,
+                                           GeglBuffer           *buffer,
                                            gint                  offset_x,
                                            gint                  offset_y);
   void          (* push_undo)             (GimpDrawable         *drawable,
@@ -182,29 +181,15 @@ GeglBuffer    * gimp_drawable_get_buffer         (GimpDrawable       *drawable);
 void            gimp_drawable_set_buffer         (GimpDrawable       *drawable,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc,
-                                                  GeglBuffer         *buffer,
-                                                  GimpImageType       type);
+                                                  GeglBuffer         *buffer);
 void            gimp_drawable_set_buffer_full    (GimpDrawable       *drawable,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc,
                                                   GeglBuffer         *buffer,
-                                                  GimpImageType       type,
                                                   gint                offset_x,
                                                   gint                offset_y);
 
 TileManager   * gimp_drawable_get_tiles          (GimpDrawable       *drawable);
-void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,
-                                                  gboolean            push_undo,
-                                                  const gchar        *undo_desc,
-                                                  TileManager        *tiles,
-                                                  GimpImageType       type);
-void            gimp_drawable_set_tiles_full     (GimpDrawable       *drawable,
-                                                  gboolean            push_undo,
-                                                  const gchar        *undo_desc,
-                                                  TileManager        *tiles,
-                                                  GimpImageType       type,
-                                                  gint                offset_x,
-                                                  gint                offset_y);
 
 GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
 GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);

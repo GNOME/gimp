@@ -38,7 +38,6 @@ struct _GimpDrawableModUndo
 
   GeglBuffer    *buffer;
   gboolean       copy_buffer;
-  GimpImageType  type;
   gint           offset_x;
   gint           offset_y;
 };

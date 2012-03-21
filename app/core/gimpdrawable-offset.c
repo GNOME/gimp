@@ -240,8 +240,9 @@ gimp_drawable_offset (GimpDrawable   *drawable,
         }
     }
 
-  gimp_drawable_set_buffer (drawable, gimp_item_is_attached (item),
-                            C_("undo-type", "Offset Drawable"), new_buffer,
-                            gimp_drawable_type (drawable));
+  gimp_drawable_set_buffer (drawable,
+                            gimp_item_is_attached (item),
+                            C_("undo-type", "Offset Drawable"),
+                            new_buffer);
   g_object_unref (new_buffer);
 }

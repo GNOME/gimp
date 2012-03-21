@@ -1032,20 +1032,8 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
     }
   else
     {
-      GimpImageType drawable_type;
-
-      if (GIMP_IS_LAYER (drawable) &&
-          babl_format_has_alpha (gegl_buffer_get_format (buffer)))
-        {
-          drawable_type = gimp_drawable_type_with_alpha (drawable);
-        }
-      else
-        {
-          drawable_type = gimp_drawable_type (drawable);
-        }
-
       gimp_drawable_set_buffer_full (drawable, TRUE, NULL,
-                                     buffer, drawable_type,
+                                     buffer,
                                      offset_x, offset_y);
     }
 

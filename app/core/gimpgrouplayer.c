@@ -864,7 +864,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
 
   gimp_drawable_set_buffer_full (drawable,
                                  FALSE, NULL,
-                                 buffer, new_type,
+                                 buffer,
                                  gimp_item_get_offset_x (GIMP_ITEM (drawable)),
                                  gimp_item_get_offset_y (GIMP_ITEM (drawable)));
 
@@ -1129,7 +1129,6 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
                                          FALSE, NULL,
                                          buffer,
-                                         gimp_drawable_type (GIMP_DRAWABLE (group)),
                                          x, y);
 
           g_object_unref (buffer);

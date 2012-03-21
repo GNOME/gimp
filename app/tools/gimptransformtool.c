@@ -1165,8 +1165,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
           gimp_channel_push_undo (GIMP_CHANNEL (active_item), NULL);
 
           gimp_drawable_set_buffer (GIMP_DRAWABLE (active_item),
-                                    FALSE, NULL, new_buffer,
-                                    gimp_drawable_type (GIMP_DRAWABLE (active_item)));
+                                    FALSE, NULL, new_buffer);
           g_object_unref (new_buffer);
         }
       break;

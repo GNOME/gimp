@@ -83,11 +83,10 @@ static gboolean   gimp_text_layer_rename         (GimpItem        *item,
                                                   const gchar     *undo_desc,
                                                   GError         **error);
 
-static void       gimp_text_layer_set_tiles      (GimpDrawable    *drawable,
+static void       gimp_text_layer_set_buffer     (GimpDrawable    *drawable,
                                                   gboolean         push_undo,
                                                   const gchar     *undo_desc,
-                                                  TileManager     *tiles,
-                                                  GimpImageType    type,
+                                                  GeglBuffer      *buffer,
                                                   gint             offset_x,
                                                   gint             offset_y);
 static void       gimp_text_layer_push_undo      (GimpDrawable    *drawable,
@@ -146,7 +145,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   item_class->rotate_desc          = _("Rotate Text Layer");
   item_class->transform_desc       = _("Transform Text Layer");
 
-  drawable_class->set_tiles        = gimp_text_layer_set_tiles;
+  drawable_class->set_buffer       = gimp_text_layer_set_buffer;
   drawable_class->push_undo        = gimp_text_layer_push_undo;
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TEXT,
@@ -303,13 +302,12 @@ gimp_text_layer_rename (GimpItem     *item,
 }
 
 static void
-gimp_text_layer_set_tiles (GimpDrawable  *drawable,
-                           gboolean       push_undo,
-                           const gchar   *undo_desc,
-                           TileManager   *tiles,
-                           GimpImageType  type,
-                           gint           offset_x,
-                           gint           offset_y)
+gimp_text_layer_set_buffer (GimpDrawable *drawable,
+                            gboolean      push_undo,
+                            const gchar  *undo_desc,
+                            GeglBuffer   *buffer,
+                            gint          offset_x,
+                            gint          offset_y)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
   GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
@@ -318,10 +316,10 @@ gimp_text_layer_set_tiles (GimpDrawable  *drawable,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE_MOD,
                                  undo_desc);
 
-  GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
-                                                 push_undo, undo_desc,
-                                                 tiles, type,
-                                                 offset_x, offset_y);
+  GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
+                                                  push_undo, undo_desc,
+                                                  buffer,
+                                                  offset_x, offset_y);
 
   if (push_undo && ! layer->modified)
     {
@@ -591,13 +589,11 @@ gimp_text_layer_render (GimpTextLayer *layer)
       (width  != gimp_item_get_width  (item) ||
        height != gimp_item_get_height (item)))
     {
-      GeglBuffer *new_buffer =
-        gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
-                              gimp_drawable_get_format (drawable));
+      GeglBuffer *new_buffer;
 
-      gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer,
-                                gimp_drawable_type (drawable));
-
+      new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+                                         gimp_drawable_get_format (drawable));
+      gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
       g_object_unref (new_buffer);
 
       if (gimp_layer_get_mask (GIMP_LAYER (layer)))

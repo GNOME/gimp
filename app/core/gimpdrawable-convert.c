@@ -59,8 +59,7 @@ gimp_drawable_convert_rgb (GimpDrawable *drawable,
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
-  gimp_drawable_set_buffer (drawable, push_undo, NULL,
-                            dest_buffer, type);
+  gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
   g_object_unref (dest_buffer);
 }
 
@@ -90,8 +89,7 @@ gimp_drawable_convert_grayscale (GimpDrawable *drawable,
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
-  gimp_drawable_set_buffer (drawable, push_undo, NULL,
-                            dest_buffer, type);
+  gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
   g_object_unref (dest_buffer);
 }
 
@@ -100,15 +98,12 @@ gimp_drawable_convert_indexed (GimpDrawable *drawable,
                                GimpImage    *dest_image,
                                gboolean      push_undo)
 {
-  GimpImageType  type;
-  GeglBuffer    *dest_buffer;
-  const Babl    *format;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (! gimp_drawable_is_gray (drawable));
-
-  type = GIMP_INDEXED_IMAGE;
 
   if (gimp_drawable_has_alpha (drawable))
     format = gimp_image_colormap_get_rgba_format (dest_image);
@@ -124,7 +119,6 @@ gimp_drawable_convert_indexed (GimpDrawable *drawable,
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
 
-  gimp_drawable_set_buffer (drawable, push_undo, NULL,
-                            dest_buffer, type);
+  gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
   g_object_unref (dest_buffer);
 }
