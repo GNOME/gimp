@@ -3061,31 +3061,6 @@ border_region (PixelRegion *src,
   g_free (density);
 }
 
-void
-swap_region (PixelRegion *src,
-             PixelRegion *dest)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (2, src, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      guchar *s      = src->data;
-      guchar *d      = dest->data;
-      gint    pixels = src->w * src->bytes;
-      gint    h      = src->h;
-
-      while (h--)
-        {
-          swap_pixels (s, d, pixels);
-
-          s += src->rowstride;
-          d += dest->rowstride;
-        }
-    }
-}
-
 
 /* Computes whether pixels in `buf[1]' have neighbouring pixels that are
    unselected. Put result in `transition'. */

@@ -270,23 +270,6 @@ replace_pixels (const guchar   *src1,
 }
 
 inline void
-swap_pixels (guchar *src,
-             guchar *dest,
-             guint   length)
-{
-  while (length--)
-    {
-      guchar tmp = *dest;
-
-      *dest = *src;
-      *src = tmp;
-
-      src++;
-      dest++;
-    }
-}
-
-inline void
 scale_pixels (const guchar *src,
               guchar       *dest,
               guint         length,

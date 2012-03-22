@@ -33,10 +33,6 @@ void  blend_pixels          (const guchar *src1,
                              guint         w,
                              guint         bytes);
 
-void  swap_pixels           (guchar       *src,
-                             guchar       *dest,
-                             guint         length);
-
 void  scale_pixels          (const guchar *src,
                              guchar       *dest,
                              guint         length,
@@ -312,9 +308,6 @@ void  fatten_region                       (PixelRegion *region,
 void  smooth_region                       (PixelRegion *region);
 void  erode_region                        (PixelRegion *region);
 void  dilate_region                       (PixelRegion *region);
-
-void  swap_region                         (PixelRegion *src,
-                                           PixelRegion *dest);
 
 
 /*  Apply a mask to an image's alpha channel  */
