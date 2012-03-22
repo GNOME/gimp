@@ -337,10 +337,11 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
           if (x >= offset_x && x < offset_x + width &&
               y >= offset_y && y < offset_y + height)
             {
-              tile_manager_read_pixel_data_1 (gimp_gegl_buffer_get_tiles (image_map->undo_buffer),
-                                              x - offset_x,
-                                              y - offset_y,
-                                              pixel);
+              gegl_buffer_sample (image_map->undo_buffer,
+                                  x - offset_x, y - offset_y,
+                                  NULL, pixel,
+                                  gimp_drawable_get_format (image_map->drawable),
+                                  GEGL_SAMPLER_NEAREST);
 
               return TRUE;
             }
@@ -349,10 +350,8 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
       return gimp_pickable_get_pixel_at (GIMP_PICKABLE (image_map->drawable),
                                          x, y, pixel);
     }
-  else /* out of bounds error */
-    {
-      return FALSE;
-    }
+
+  return FALSE;
 }
 
 GimpImageMap *
