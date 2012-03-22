@@ -591,29 +591,22 @@ gimp_image_map_clear (GimpImageMap *image_map)
   /*  restore the original image  */
   if (image_map->undo_buffer)
     {
-      PixelRegion srcPR;
-      PixelRegion destPR;
-      gint        x      = image_map->undo_offset_x;
-      gint        y      = image_map->undo_offset_y;
-      gint        width  = gegl_buffer_get_width  (image_map->undo_buffer);
-      gint        height = gegl_buffer_get_height (image_map->undo_buffer);
-
-      /*  Copy from the drawable to the tiles  */
-      pixel_region_init (&srcPR, gimp_gegl_buffer_get_tiles (image_map->undo_buffer),
-                         0, 0, width, height,
-                         FALSE);
-      pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
-                         x, y, width, height,
-                         TRUE);
-
-      /* if the user has changed the image depth get out quickly */
-      if (destPR.bytes != srcPR.bytes)
+      if (gegl_buffer_get_format (image_map->undo_buffer) !=
+          gimp_drawable_get_format (image_map->drawable))
         {
           g_message ("image depth change, unable to restore original image");
         }
       else
         {
-          copy_region (&srcPR, &destPR);
+          gint x      = image_map->undo_offset_x;
+          gint y      = image_map->undo_offset_y;
+          gint width  = gegl_buffer_get_width  (image_map->undo_buffer);
+          gint height = gegl_buffer_get_height (image_map->undo_buffer);
+
+          gegl_buffer_copy (image_map->undo_buffer,
+                            GIMP_GEGL_RECT (0, 0, width, height),
+                            gimp_drawable_get_buffer (image_map->drawable),
+                            GIMP_GEGL_RECT (x, y, width, height));
 
           gimp_drawable_update (image_map->drawable, x, y, width, height);
         }
@@ -752,9 +745,8 @@ gimp_image_map_do (GimpImageMap *image_map)
        */
       for (i = 0; i < 16; i++)
         {
-          PixelRegion  srcPR;
-          PixelRegion  destPR;
-          gint         x, y, w, h;
+          PixelRegion srcPR;
+          gint        x, y, w, h;
 
           if (image_map->timer)
             g_timer_continue (image_map->timer);
@@ -765,15 +757,14 @@ gimp_image_map_do (GimpImageMap *image_map)
           h = image_map->destPR.h;
 
           /* Reset to initial drawable conditions. */
-          pixel_region_init (&srcPR,
-                             gimp_gegl_buffer_get_tiles (image_map->undo_buffer),
-                             x - image_map->undo_offset_x,
-                             y - image_map->undo_offset_y,
-                             w, h, FALSE);
-          pixel_region_init (&destPR,
-                             gimp_drawable_get_tiles (image_map->drawable),
-                             x, y, w, h, TRUE);
-          copy_region (&srcPR, &destPR);
+          gegl_buffer_copy (image_map->undo_buffer,
+                            GIMP_GEGL_RECT (x - image_map->undo_offset_x,
+                                            y - image_map->undo_offset_y,
+                                            w, h),
+                            gimp_drawable_get_buffer (image_map->drawable),
+                            GIMP_GEGL_RECT (x, y, w, h));
+
+          gegl_buffer_flush (gimp_drawable_get_buffer (image_map->drawable));
 
           image_map->apply_func (image_map->apply_data,
                                  &image_map->srcPR,
