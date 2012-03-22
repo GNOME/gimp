@@ -1367,7 +1367,6 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
         {
           PixelRegion tempPR;
           PixelRegion destPR;
-          PixelRegion fsPR;
           gboolean    lock_alpha = FALSE;
 
           /*  a temporary buffer for the compisition of the drawable and
@@ -1391,12 +1390,6 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
            *  we apply it onto the drawable when anchoring the floating
            *  selection
            */
-          pixel_region_init (&fsPR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (fs)),
-                             combine_x - fs_off_x,
-                             combine_y - fs_off_y,
-                             combine_width, combine_height,
-                             FALSE);
           pixel_region_init (&destPR, *temp_tiles,
                              combine_x - x - off_x,
                              combine_y - y - off_y,
@@ -1411,7 +1404,12 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
                 gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), FALSE, FALSE);
             }
 
-          gimp_drawable_apply_region (drawable, &fsPR,
+          gimp_drawable_apply_buffer (drawable,
+                                      gimp_drawable_get_buffer (GIMP_DRAWABLE (fs)),
+                                      GIMP_GEGL_RECT (combine_x - fs_off_x,
+                                                      combine_y - fs_off_y,
+                                                      combine_width,
+                                                      combine_height),
                                       FALSE, NULL,
                                       gimp_layer_get_opacity (fs),
                                       gimp_layer_get_mode (fs),
