@@ -744,9 +744,8 @@ gimp_image_map_do (GimpImageMap *image_map)
        */
       for (i = 0; i < 16; i++)
         {
-          GeglBuffer  *src_buffer;
-          PixelRegion  srcPR;
-          gint         x, y, w, h;
+          GeglBuffer *src_buffer;
+          gint        x, y, w, h;
 
           if (image_map->timer)
             g_timer_continue (image_map->timer);
@@ -772,11 +771,8 @@ gimp_image_map_do (GimpImageMap *image_map)
 
           src_buffer = gimp_drawable_get_shadow_buffer (image_map->drawable);
 
-          pixel_region_init (&srcPR,
-                             gimp_gegl_buffer_get_tiles (src_buffer),
-                             x, y, w, h, FALSE);
-
-          gimp_drawable_apply_region (image_map->drawable, &srcPR,
+          gimp_drawable_apply_buffer (image_map->drawable, src_buffer,
+                                      GIMP_GEGL_RECT (x, y, w, h),
                                       FALSE, NULL,
                                       GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
                                       NULL, NULL,

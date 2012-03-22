@@ -23,7 +23,7 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpboundary.h"
 #include "gimperror.h"
@@ -310,16 +310,8 @@ floating_sel_composite (GimpLayer *layer)
                                 &combine_x, &combine_y,
                                 &combine_width, &combine_height))
     {
-      PixelRegion fsPR;
+      GeglBuffer *fs_buffer;
       gboolean    lock_alpha = FALSE;
-
-      /*  composite the area from the layer to the drawable  */
-      pixel_region_init (&fsPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                         combine_x - off_x,
-                         combine_y - off_y,
-                         combine_width, combine_height,
-                         FALSE);
 
       /*  a kludge here to prevent the case of the drawable
        *  underneath having lock alpha on, and disallowing
@@ -333,7 +325,14 @@ floating_sel_composite (GimpLayer *layer)
             gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), FALSE, FALSE);
         }
 
-      gimp_drawable_apply_region (drawable, &fsPR,
+      /*  composite the area from the layer to the drawable  */
+      fs_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
+      gimp_drawable_apply_buffer (drawable, fs_buffer,
+                                  GIMP_GEGL_RECT (combine_x - off_x,
+                                                  combine_y - off_y,
+                                                  combine_width,
+                                                  combine_height),
                                   TRUE, NULL,
                                   gimp_layer_get_opacity (layer),
                                   gimp_layer_get_mode (layer),
