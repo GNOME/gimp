@@ -24,6 +24,7 @@
 
 #include "gimp-gegl-types.h"
 
+#include "base/temp-buf.h"
 #include "base/tile-manager.h"
 
 #include "gimp-gegl-utils.h"
@@ -268,6 +269,43 @@ gimp_gegl_buffer_get_tiles (GeglBuffer *buffer)
   gegl_buffer_flush (buffer);
 
   return gimp_tile_backend_tile_manager_get_tiles (backend);
+}
+
+GeglBuffer  *
+gimp_temp_buf_create_buffer (TempBuf    *temp_buf,
+                             const Babl *format)
+{
+  TempBuf    *new;
+  GeglBuffer *buffer;
+  gint        width, height;
+
+  g_return_val_if_fail (temp_buf != NULL, NULL);
+  g_return_val_if_fail (format != NULL, NULL);
+  g_return_val_if_fail (babl_format_get_bytes_per_pixel (format) ==
+                        temp_buf->bytes, NULL);
+
+  width  = temp_buf->width;
+  height = temp_buf->height;
+
+  new = temp_buf_copy (temp_buf, NULL);
+
+  buffer = gegl_buffer_linear_new_from_data (temp_buf_get_data (new),
+                                             format,
+                                             GIMP_GEGL_RECT (0, 0, width, height),
+                                             width * new->bytes,
+                                             (GDestroyNotify) temp_buf_free, new);
+
+  g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", new);
+
+  return buffer;
+}
+
+TempBuf *
+gimp_gegl_buffer_get_temp_buf (GeglBuffer *buffer)
+{
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+
+  return g_object_get_data (G_OBJECT (buffer), "gimp-temp-buf");
 }
 
 void
