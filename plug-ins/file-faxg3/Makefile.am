@@ -32,6 +32,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	$(CAIRO_CFLAGS)		\
 	$(GDK_PIXBUF_CFLAGS)	\
+	$(GEGL_CFLAGS) \
 	-I$(includedir)
 
 LDADD = \

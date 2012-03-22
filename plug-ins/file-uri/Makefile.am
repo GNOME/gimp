@@ -48,6 +48,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	$(backend_cflags)	\
 	$(GTK_CFLAGS)		\
+	$(GEGL_CFLAGS) \
 	-I$(includedir)
 
 LDADD = \

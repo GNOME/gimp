@@ -21,7 +21,7 @@ endif
 
 AM_CFLAGS = $(PYGIMP_EXTRA_CFLAGS)
 
-INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS) $(GTK_CFLAGS)
+INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS) $(GTK_CFLAGS) $(GEGL_CFLAGS)
 
 pygimpbase = python
 

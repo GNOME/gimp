@@ -29,6 +29,7 @@ AM_LDFLAGS = $(mwindows)
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
+	$(GEGL_CFLAGS) \
 	-I$(includedir)
 
 libexecdir = $(gimpplugindir)/plug-ins

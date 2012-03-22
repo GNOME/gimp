@@ -29,6 +29,7 @@ AM_CFLAGS = \
 	-DUSE_STRLWR=0     \
 	-I$(top_srcdir)    \
 	$(GTK_CFLAGS)      \
+	$(GEGL_CFLAGS)     \
 	-I$(includedir)
 
 AM_LDFLAGS = $(mwindows)

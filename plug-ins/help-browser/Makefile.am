@@ -28,6 +28,7 @@ libexec_PROGRAMS = help-browser
 INCLUDES = \
 	-I$(top_srcdir)		\
 	$(WEBKIT_CFLAGS)	\
+	$(GEGL_CFLAGS) \
 	-I$(includedir)
 
 LDADD = \

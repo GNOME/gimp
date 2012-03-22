@@ -46,6 +46,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	$(CAIRO_CFLAGS)		\
 	$(GIO_CFLAGS)		\
+	$(GEGL_CFLAGS) \
 	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
 
