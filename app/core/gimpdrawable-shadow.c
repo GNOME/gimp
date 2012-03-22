@@ -54,6 +54,9 @@ gimp_drawable_get_shadow_buffer (GimpDrawable *drawable)
         }
       else
         {
+          gegl_buffer_flush (drawable->private->shadow);
+          gimp_gegl_buffer_refetch_tiles (drawable->private->shadow);
+
           return drawable->private->shadow;
         }
     }
