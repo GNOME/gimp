@@ -19,7 +19,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "paint-types.h"
 

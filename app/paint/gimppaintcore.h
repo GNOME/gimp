@@ -55,7 +55,7 @@ struct _GimpPaintCore
 
   gboolean     use_saved_proj;   /*  keep the unmodified proj around     */
 
-  TileManager *undo_tiles;       /*  tiles which have been modified      */
+  GeglBuffer  *undo_buffer;      /*  pixels which have been modified     */
   TileManager *saved_proj_tiles; /*  proj tiles which have been modified */
   TileManager *canvas_tiles;     /*  the buffer to paint the mask to     */
 
@@ -184,12 +184,6 @@ void      gimp_paint_core_replace           (GimpPaintCore            *core,
                                              gdouble                   image_opacity,
                                              GimpPaintApplicationMode  mode);
 
-void      gimp_paint_core_validate_undo_tiles       (GimpPaintCore    *core,
-                                                     GimpDrawable     *drawable,
-                                                     gint              x,
-                                                     gint              y,
-                                                     gint              w,
-                                                     gint              h);
 void      gimp_paint_core_validate_saved_proj_tiles (GimpPaintCore    *core,
                                                      GimpPickable     *pickable,
                                                      gint              x,

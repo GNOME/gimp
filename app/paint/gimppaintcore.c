@@ -161,7 +161,7 @@ gimp_paint_core_init (GimpPaintCore *core)
 
   core->use_saved_proj   = FALSE;
 
-  core->undo_tiles       = NULL;
+  core->undo_buffer      = NULL;
   core->saved_proj_tiles = NULL;
   core->canvas_tiles     = NULL;
 
@@ -382,12 +382,10 @@ gimp_paint_core_start (GimpPaintCore     *core,
     }
 
   /*  Allocate the undo structure  */
-  if (core->undo_tiles)
-    tile_manager_unref (core->undo_tiles);
+  if (core->undo_buffer)
+    g_object_unref (core->undo_buffer);
 
-  core->undo_tiles = tile_manager_new (gimp_item_get_width  (item),
-                                       gimp_item_get_height (item),
-                                       gimp_drawable_bytes (drawable));
+  core->undo_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
   /*  Allocate the saved proj structure  */
   if (core->saved_proj_tiles)
@@ -458,7 +456,6 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
   if (push_undo)
     {
-      GeglBuffer *src;
       GeglBuffer *buffer;
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
@@ -466,21 +463,12 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
       GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
-      /*  set undo blocks  */
-      gimp_paint_core_validate_undo_tiles (core, drawable,
-                                           core->x1,
-                                           core->y1,
-                                           core->x2 - core->x1,
-                                           core->y2 - core->y1);
-
-      src = gimp_tile_manager_create_buffer (core->undo_tiles,
-                                             gimp_drawable_get_format (drawable));
       buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
                                                      core->x2 - core->x1,
                                                      core->y2 - core->y1),
                                      gimp_drawable_get_format (drawable));
 
-      gegl_buffer_copy (src,
+      gegl_buffer_copy (core->undo_buffer,
                         GIMP_GEGL_RECT (core->x1, core->y1,
                                         core->x2 - core->x1,
                                         core->y2 - core->y1),
@@ -492,14 +480,13 @@ gimp_paint_core_finish (GimpPaintCore *core,
                                core->x1, core->y1,
                                core->x2 - core->x1, core->y2 - core->y1);
 
-      g_object_unref (src);
       g_object_unref (buffer);
 
       gimp_image_undo_group_end (image);
     }
 
-  tile_manager_unref (core->undo_tiles);
-  core->undo_tiles = NULL;
+  g_object_unref (core->undo_buffer);
+  core->undo_buffer = NULL;
 
   if (core->saved_proj_tiles)
     {
@@ -508,37 +495,6 @@ gimp_paint_core_finish (GimpPaintCore *core,
     }
 
   gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
-}
-
-static void
-gimp_paint_core_copy_valid_tiles (TileManager *src_tiles,
-                                  TileManager *dest_tiles,
-                                  gint         x,
-                                  gint         y,
-                                  gint         w,
-                                  gint         h)
-{
-  Tile *src_tile;
-  gint  i, j;
-
-  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
-    {
-      for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-        {
-          src_tile = tile_manager_get_tile (src_tiles,
-                                            j, i, FALSE, FALSE);
-
-          if (tile_is_valid (src_tile))
-            {
-              src_tile = tile_manager_get_tile (src_tiles,
-                                                j, i, TRUE, FALSE);
-
-              tile_manager_map_tile (dest_tiles, j, i, src_tile);
-
-              tile_release (src_tile, FALSE);
-            }
-        }
-    }
 }
 
 void
@@ -566,13 +522,14 @@ gimp_paint_core_cancel (GimpPaintCore *core,
                                 gimp_item_get_height (GIMP_ITEM (drawable)),
                                 &x, &y, &width, &height))
     {
-      gimp_paint_core_copy_valid_tiles (core->undo_tiles,
-                                        gimp_drawable_get_tiles (drawable),
-                                        x, y, width, height);
+      gegl_buffer_copy (core->undo_buffer,
+                        GIMP_GEGL_RECT (x, y, width, height),
+                        gimp_drawable_get_buffer (drawable),
+                        GIMP_GEGL_RECT (x, y, width, height));
     }
 
-  tile_manager_unref (core->undo_tiles);
-  core->undo_tiles = NULL;
+  g_object_unref (core->undo_buffer);
+  core->undo_buffer = NULL;
 
   if (core->saved_proj_tiles)
     {
@@ -590,10 +547,10 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
 
-  if (core->undo_tiles)
+  if (core->undo_buffer)
     {
-      tile_manager_unref (core->undo_tiles);
-      core->undo_tiles = NULL;
+      g_object_unref (core->undo_buffer);
+      core->undo_buffer = NULL;
     }
 
   if (core->saved_proj_tiles)
@@ -751,21 +708,13 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
                                 gint           width,
                                 gint           height)
 {
-  PixelRegion   srcPR;
-  PixelRegion   destPR;
-  Tile         *undo_tile;
-  gboolean      release_tile;
-  gint          h;
-  gint          pixelwidth;
-  gint          drawable_width;
-  gint          drawable_height;
-  const guchar *s;
-  guchar       *d;
-  gpointer      pr;
+  GeglBuffer *orig_buffer;
+  gint        drawable_width;
+  gint        drawable_height;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (core->undo_tiles != NULL, NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (core->undo_buffer), NULL);
 
   core->orig_buf = temp_buf_resize (core->orig_buf,
                                     gimp_drawable_bytes (drawable),
@@ -781,57 +730,24 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
                             &x, &y,
                             &width, &height);
 
-  /*  configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     x, y, width, height,
-                     FALSE);
+  orig_buffer =
+    gegl_buffer_linear_new_from_data (core->orig_buf->data,
+                                      gimp_drawable_get_format (drawable),
+                                      GIMP_GEGL_RECT (x - core->orig_buf->x,
+                                                      y - core->orig_buf->y,
+                                                      width, height),
+                                      core->orig_buf->width *
+                                      core->orig_buf->bytes,
+                                      NULL, NULL);
 
-  pixel_region_init_temp_buf (&destPR, core->orig_buf,
-                              x - core->orig_buf->x,
-                              y - core->orig_buf->y,
-                              width, height);
+  gegl_buffer_copy (core->undo_buffer,
+                    GIMP_GEGL_RECT (x, y, width, height),
+                    orig_buffer,
+                    GIMP_GEGL_RECT (x - core->orig_buf->x,
+                                    y - core->orig_buf->y,
+                                    width, height));
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      /*  If the undo tile corresponding to this location is valid, use it  */
-      undo_tile = tile_manager_get_tile (core->undo_tiles,
-                                         srcPR.x, srcPR.y,
-                                         FALSE, FALSE);
-
-      if (tile_is_valid (undo_tile))
-        {
-          release_tile = TRUE;
-
-          undo_tile = tile_manager_get_tile (core->undo_tiles,
-                                             srcPR.x, srcPR.y,
-                                             TRUE, FALSE);
-          s = tile_data_pointer (undo_tile, srcPR.x, srcPR.y);
-        }
-      else
-        {
-          release_tile = FALSE;
-
-          s = srcPR.data;
-        }
-
-      d = destPR.data;
-
-      pixelwidth = srcPR.w * srcPR.bytes;
-
-      h = srcPR.h;
-      while (h --)
-        {
-          memcpy (d, s, pixelwidth);
-
-          s += srcPR.rowstride;
-          d += destPR.rowstride;
-        }
-
-      if (release_tile)
-        tile_release (undo_tile, FALSE);
-    }
+  g_object_unref (orig_buffer);
 
   return core->orig_buf;
 }
@@ -944,13 +860,6 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   TileManager *alt = NULL;
   PixelRegion  srcPR;
 
-  /*  set undo blocks  */
-  gimp_paint_core_validate_undo_tiles (core, drawable,
-                                       core->canvas_buf->x,
-                                       core->canvas_buf->y,
-                                       core->canvas_buf->width,
-                                       core->canvas_buf->height);
-
   if (core->use_saved_proj)
     {
       GimpImage      *image      = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -998,7 +907,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
         }
 
       canvas_tiles_to_canvas_buf (core);
-      alt = core->undo_tiles;
+      alt = gimp_gegl_buffer_get_tiles (core->undo_buffer);
     }
   /*  Otherwise:
    *   combine the canvas buf and the paint mask to the canvas buf
@@ -1063,13 +972,6 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                              mode);
       return;
     }
-
-  /*  set undo blocks  */
-  gimp_paint_core_validate_undo_tiles (core, drawable,
-                                       core->canvas_buf->x,
-                                       core->canvas_buf->y,
-                                       core->canvas_buf->width,
-                                       core->canvas_buf->height);
 
   if (mode == GIMP_PAINT_CONSTANT)
     {
@@ -1257,39 +1159,6 @@ paint_mask_to_canvas_buf (GimpPaintCore *core,
 
   /*  apply the mask  */
   apply_mask_to_region (&srcPR, paint_maskPR, paint_opacity * 255.999);
-}
-
-void
-gimp_paint_core_validate_undo_tiles (GimpPaintCore *core,
-                                     GimpDrawable  *drawable,
-                                     gint           x,
-                                     gint           y,
-                                     gint           w,
-                                     gint           h)
-{
-  gint i, j;
-
-  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (core->undo_tiles != NULL);
-
-  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
-    {
-      for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-        {
-          Tile *dest_tile = tile_manager_get_tile (core->undo_tiles,
-                                                   j, i, FALSE, FALSE);
-
-          if (! tile_is_valid (dest_tile))
-            {
-              Tile *src_tile =
-                tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
-                                       j, i, TRUE, FALSE);
-              tile_manager_map_tile (core->undo_tiles, j, i, src_tile);
-              tile_release (src_tile, FALSE);
-            }
-        }
-    }
 }
 
 void
