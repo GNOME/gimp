@@ -70,7 +70,6 @@ struct _GimpImageMap
   GimpDrawable          *drawable;
   gchar                 *undo_desc;
 
-  TileManager           *undo_tiles;
   GeglBuffer            *undo_buffer;
   gint                   undo_offset_x;
   gint                   undo_offset_y;
@@ -113,7 +112,7 @@ static gboolean        gimp_image_map_get_pixel_at    (GimpPickable        *pick
                                                        gint                 y,
                                                        guchar              *pixel);
 
-static void            gimp_image_map_update_undo_tiles
+static void            gimp_image_map_update_undo_buffer
                                                       (GimpImageMap        *image_map,
                                                        const GeglRectangle *rect);
 static gboolean        gimp_image_map_do              (GimpImageMap        *image_map);
@@ -171,7 +170,7 @@ gimp_image_map_init (GimpImageMap *image_map)
 {
   image_map->drawable      = NULL;
   image_map->undo_desc     = NULL;
-  image_map->undo_tiles    = NULL;
+  image_map->undo_buffer   = NULL;
   image_map->undo_offset_x = 0;
   image_map->undo_offset_y = 0;
   image_map->apply_func    = NULL;
@@ -211,12 +210,6 @@ gimp_image_map_finalize (GObject *object)
     {
       g_free (image_map->undo_desc);
       image_map->undo_desc = NULL;
-    }
-
-  if (image_map->undo_tiles)
-    {
-      tile_manager_unref (image_map->undo_tiles);
-      image_map->undo_tiles = NULL;
     }
 
   if (image_map->undo_buffer)
@@ -304,17 +297,10 @@ gimp_image_map_get_buffer (GimpPickable *pickable)
 {
   GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
 
-  if (image_map->undo_tiles)
-    {
-      if (! image_map->undo_buffer)
-        image_map->undo_buffer =
-          gimp_tile_manager_create_buffer (image_map->undo_tiles,
-                                           gimp_drawable_get_format (image_map->drawable));
+  if (image_map->undo_buffer)
+    return image_map->undo_buffer;
 
-      return image_map->undo_buffer;
-    }
-  else
-    return gimp_pickable_get_buffer (GIMP_PICKABLE (image_map->drawable));
+  return gimp_pickable_get_buffer (GIMP_PICKABLE (image_map->drawable));
 }
 
 static TileManager *
@@ -322,10 +308,10 @@ gimp_image_map_get_tiles (GimpPickable *pickable)
 {
   GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
 
-  if (image_map->undo_tiles)
-    return image_map->undo_tiles;
-  else
-    return gimp_pickable_get_tiles (GIMP_PICKABLE (image_map->drawable));
+  if (image_map->undo_buffer)
+    return gimp_gegl_buffer_get_tiles (image_map->undo_buffer);
+
+  return gimp_pickable_get_tiles (GIMP_PICKABLE (image_map->drawable));
 }
 
 static gboolean
@@ -341,17 +327,17 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
       y >= 0 && y < gimp_item_get_height (item))
     {
       /* Check if done damage to original image */
-      if (image_map->undo_tiles)
+      if (image_map->undo_buffer)
         {
           gint offset_x = image_map->undo_offset_x;
           gint offset_y = image_map->undo_offset_y;
-          gint width    = tile_manager_width (image_map->undo_tiles);
-          gint height   = tile_manager_height (image_map->undo_tiles);
+          gint width    = gegl_buffer_get_width (image_map->undo_buffer);
+          gint height   = gegl_buffer_get_height (image_map->undo_buffer);
 
           if (x >= offset_x && x < offset_x + width &&
               y >= offset_y && y < offset_y + height)
             {
-              tile_manager_read_pixel_data_1 (image_map->undo_tiles,
+              tile_manager_read_pixel_data_1 (gimp_gegl_buffer_get_tiles (image_map->undo_buffer),
                                               x - offset_x,
                                               y - offset_y,
                                               pixel);
@@ -421,8 +407,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
     return;
 
   /*  If undo tiles don't exist, or change size, (re)allocate  */
-  gimp_image_map_update_undo_tiles (image_map,
-                                    &rect);
+  gimp_image_map_update_undo_buffer (image_map, &rect);
 
   if (image_map->operation)
     {
@@ -430,8 +415,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       GeglBuffer *input_buffer;
       GeglBuffer *output_buffer;
 
-      input_buffer =
-        gimp_tile_manager_create_buffer (image_map->undo_tiles, format);
+      input_buffer = image_map->undo_buffer;
+
       output_buffer =
         gimp_tile_manager_create_buffer (gimp_drawable_get_shadow_tiles (image_map->drawable), format);
 
@@ -522,14 +507,13 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       image_map->processor = gegl_node_new_processor (image_map->output,
                                                       &rect);
 
-      g_object_unref (input_buffer);
       g_object_unref (output_buffer);
     }
   else
     {
       /*  Configure the src from the drawable data  */
       pixel_region_init (&image_map->srcPR,
-                         image_map->undo_tiles,
+                         gimp_gegl_buffer_get_tiles (image_map->undo_buffer),
                          0, 0,
                          rect.width, rect.height,
                          FALSE);
@@ -577,27 +561,20 @@ gimp_image_map_commit (GimpImageMap *image_map)
     return;
 
   /*  Register an undo step  */
-  if (image_map->undo_tiles)
+  if (image_map->undo_buffer)
     {
-      GeglBuffer *buffer = gimp_image_map_get_buffer (GIMP_PICKABLE (image_map));
-      gint        x      = image_map->undo_offset_x;
-      gint        y      = image_map->undo_offset_y;
-      gint        width  = gegl_buffer_get_width  (buffer);
-      gint        height = gegl_buffer_get_height (buffer);
+      gint x      = image_map->undo_offset_x;
+      gint y      = image_map->undo_offset_y;
+      gint width  = gegl_buffer_get_width  (image_map->undo_buffer);
+      gint height = gegl_buffer_get_height (image_map->undo_buffer);
 
       gimp_drawable_push_undo (image_map->drawable,
                                image_map->undo_desc,
-                               buffer,
+                               image_map->undo_buffer,
                                x, y, width, height);
 
-      tile_manager_unref (image_map->undo_tiles);
-      image_map->undo_tiles = NULL;
-
-      if (image_map->undo_buffer)
-        {
-          g_object_unref (image_map->undo_buffer);
-          image_map->undo_buffer = NULL;
-        }
+      g_object_unref (image_map->undo_buffer);
+      image_map->undo_buffer = NULL;
     }
 }
 
@@ -613,17 +590,17 @@ gimp_image_map_clear (GimpImageMap *image_map)
     return;
 
   /*  restore the original image  */
-  if (image_map->undo_tiles)
+  if (image_map->undo_buffer)
     {
       PixelRegion srcPR;
       PixelRegion destPR;
       gint        x      = image_map->undo_offset_x;
       gint        y      = image_map->undo_offset_y;
-      gint        width  = tile_manager_width  (image_map->undo_tiles);
-      gint        height = tile_manager_height (image_map->undo_tiles);
+      gint        width  = gegl_buffer_get_width  (image_map->undo_buffer);
+      gint        height = gegl_buffer_get_height (image_map->undo_buffer);
 
       /*  Copy from the drawable to the tiles  */
-      pixel_region_init (&srcPR, image_map->undo_tiles,
+      pixel_region_init (&srcPR, gimp_gegl_buffer_get_tiles (image_map->undo_buffer),
                          0, 0, width, height,
                          FALSE);
       pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
@@ -642,15 +619,8 @@ gimp_image_map_clear (GimpImageMap *image_map)
           gimp_drawable_update (image_map->drawable, x, y, width, height);
         }
 
-      /*  Free the undo_tiles tile manager  */
-      tile_manager_unref (image_map->undo_tiles);
-      image_map->undo_tiles = NULL;
-
-      if (image_map->undo_buffer)
-        {
-          g_object_unref (image_map->undo_buffer);
-          image_map->undo_buffer = NULL;
-        }
+      g_object_unref (image_map->undo_buffer);
+      image_map->undo_buffer = NULL;
     }
 }
 
@@ -671,20 +641,20 @@ gimp_image_map_abort (GimpImageMap *image_map)
 /*  private functions  */
 
 static void
-gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
-                                  const GeglRectangle *rect)
+gimp_image_map_update_undo_buffer (GimpImageMap        *image_map,
+                                   const GeglRectangle *rect)
 {
   gint undo_offset_x;
   gint undo_offset_y;
   gint undo_width;
   gint undo_height;
 
-  if (image_map->undo_tiles)
+  if (image_map->undo_buffer)
     {
       undo_offset_x = image_map->undo_offset_x;
       undo_offset_y = image_map->undo_offset_y;
-      undo_width    = tile_manager_width  (image_map->undo_tiles);
-      undo_height   = tile_manager_height (image_map->undo_tiles);
+      undo_width    = gegl_buffer_get_width  (image_map->undo_buffer);
+      undo_height   = gegl_buffer_get_height (image_map->undo_buffer);
     }
   else
     {
@@ -694,51 +664,39 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
       undo_height   = 0;
     }
 
-  if (! image_map->undo_tiles      ||
+  if (! image_map->undo_buffer     ||
       undo_offset_x != rect->x     ||
       undo_offset_y != rect->y     ||
       undo_width    != rect->width ||
       undo_height   != rect->height)
     {
-      GeglBuffer    *src;
-      GeglBuffer    *dest;
-      GeglRectangle  dest_rect = { 0, };
-
       /* If either the extents changed or the tiles don't exist,
        * allocate new
        */
-      if (! image_map->undo_tiles    ||
+      if (! image_map->undo_buffer   ||
           undo_width  != rect->width ||
           undo_height != rect->height)
         {
           /*  Destroy old tiles  */
-          if (image_map->undo_tiles)
-            tile_manager_unref (image_map->undo_tiles);
+          if (image_map->undo_buffer)
+            g_object_unref (image_map->undo_buffer);
 
           /*  Allocate new tiles  */
-          image_map->undo_tiles =
-            tile_manager_new (rect->width, rect->height,
-                              gimp_drawable_bytes (image_map->drawable));
+          image_map->undo_buffer =
+            gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                  rect->width, rect->height),
+                                  gimp_drawable_get_format (image_map->drawable));
         }
 
       /*  Copy from the image to the new tiles  */
-      src = gimp_drawable_get_buffer (image_map->drawable);
-      dest = gimp_tile_manager_create_buffer (image_map->undo_tiles,
-                                              gimp_drawable_get_format (image_map->drawable));
-
-      gegl_buffer_copy (src, rect, dest, &dest_rect);
-
-      g_object_unref (dest);
+      gegl_buffer_copy (gimp_drawable_get_buffer (image_map->drawable),
+                        rect,
+                        image_map->undo_buffer,
+                        GIMP_GEGL_RECT (0, 0, 0, 0));
 
       /*  Set the offsets  */
       image_map->undo_offset_x = rect->x;
       image_map->undo_offset_y = rect->y;
-    }
-
-  if (image_map->undo_buffer)
-    {
-      g_object_unref (image_map->undo_buffer);
-      image_map->undo_buffer = NULL;
     }
 }
 
@@ -808,7 +766,8 @@ gimp_image_map_do (GimpImageMap *image_map)
           h = image_map->destPR.h;
 
           /* Reset to initial drawable conditions. */
-          pixel_region_init (&srcPR, image_map->undo_tiles,
+          pixel_region_init (&srcPR,
+                             gimp_gegl_buffer_get_tiles (image_map->undo_buffer),
                              x - image_map->undo_offset_x,
                              y - image_map->undo_offset_y,
                              w, h, FALSE);
@@ -879,21 +838,12 @@ gimp_image_map_data_written (GObject             *operation,
     {
       /* Reset to initial drawable conditions. */
 
-      GeglBuffer    *src;
-      GeglBuffer    *dest;
-
-      src = gimp_tile_manager_create_buffer (image_map->undo_tiles,
-                                             gimp_drawable_get_format (image_map->drawable));
-      dest = gimp_drawable_get_buffer (image_map->drawable);
-
-      gegl_buffer_copy (src,
-            GIMP_GEGL_RECT (extent->x - image_map->undo_offset_x,
-                            extent->y - image_map->undo_offset_y,
-                            extent->width, extent->height),
-                        dest,
-            GIMP_GEGL_RECT (extent->x, extent->y, 0, 0));
-
-      g_object_unref (src);
+      gegl_buffer_copy (image_map->undo_buffer,
+                        GIMP_GEGL_RECT (extent->x - image_map->undo_offset_x,
+                                        extent->y - image_map->undo_offset_y,
+                                        extent->width, extent->height),
+                        gimp_drawable_get_buffer (image_map->drawable),
+                        GIMP_GEGL_RECT (extent->x, extent->y, 0, 0));
     }
 
   /* Apply the result of the gegl graph. */
