@@ -61,9 +61,7 @@ GimpUndo * gimp_image_undo_push_drawable            (GimpImage     *image,
                                                      GimpDrawable  *drawable,
                                                      GeglBuffer    *buffer,
                                                      gint           x,
-                                                     gint           y,
-                                                     gint           width,
-                                                     gint           height);
+                                                     gint           y);
 GimpUndo * gimp_image_undo_push_drawable_mod        (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpDrawable  *drawable,

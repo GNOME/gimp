@@ -160,9 +160,7 @@ static void       gimp_drawable_real_push_undo     (GimpDrawable      *drawable,
 static void       gimp_drawable_real_swap_pixels   (GimpDrawable      *drawable,
                                                     GeglBuffer        *buffer,
                                                     gint               x,
-                                                    gint               y,
-                                                    gint               width,
-                                                    gint               height);
+                                                    gint               y);
 
 static void       gimp_drawable_sync_source_node   (GimpDrawable      *drawable,
                                                     gboolean           detach_fs);
@@ -885,8 +883,7 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
 
   gimp_image_undo_push_drawable (gimp_item_get_image (GIMP_ITEM (drawable)),
                                  undo_desc, drawable,
-                                 buffer,
-                                 x, y, width, height);
+                                 buffer, x, y);
 
   g_object_unref (buffer);
 }
@@ -895,11 +892,11 @@ static void
 gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
                                 GeglBuffer   *buffer,
                                 gint          x,
-                                gint          y,
-                                gint          width,
-                                gint          height)
+                                gint          y)
 {
   GeglBuffer *tmp;
+  gint        width  = gegl_buffer_get_width (buffer);
+  gint        height = gegl_buffer_get_height (buffer);
 
   tmp = gimp_gegl_buffer_dup (buffer);
 
@@ -1530,15 +1527,12 @@ void
 gimp_drawable_swap_pixels (GimpDrawable *drawable,
                            GeglBuffer   *buffer,
                            gint          x,
-                           gint          y,
-                           gint          width,
-                           gint          height)
+                           gint          y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
-  GIMP_DRAWABLE_GET_CLASS (drawable)->swap_pixels (drawable, buffer,
-                                                   x, y, width, height);
+  GIMP_DRAWABLE_GET_CLASS (drawable)->swap_pixels (drawable, buffer, x, y);
 }
 
 void

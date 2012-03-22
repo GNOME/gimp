@@ -39,8 +39,6 @@ struct _GimpDrawableUndo
   GeglBuffer   *buffer;
   gint          x;
   gint          y;
-  gint          width;
-  gint          height;
 
   /* stuff for "Fade" */
   TileManager          *src2_tiles;

@@ -211,9 +211,7 @@ gimp_image_undo_push_drawable (GimpImage    *image,
                                GimpDrawable *drawable,
                                GeglBuffer   *buffer,
                                gint          x,
-                               gint          y,
-                               gint          width,
-                               gint          height)
+                               gint          y)
 {
   GimpItem *item;
 
@@ -232,8 +230,6 @@ gimp_image_undo_push_drawable (GimpImage    *image,
                                "buffer", buffer,
                                "x",      x,
                                "y",      y,
-                               "width",  width,
-                               "height", height,
                                NULL);
 }
 

@@ -547,7 +547,8 @@ gimp_edit_fade (GimpImage   *image,
 
       pixel_region_init (&src2PR, src2_tiles,
                          0, 0,
-                         undo->width, undo->height,
+                         gegl_buffer_get_width (undo->buffer),
+                         gegl_buffer_get_height (undo->buffer),
                          FALSE);
 
       gimp_drawable_apply_region (drawable, &src2PR,

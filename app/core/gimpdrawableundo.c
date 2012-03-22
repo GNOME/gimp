@@ -36,9 +36,7 @@ enum
   PROP_0,
   PROP_BUFFER,
   PROP_X,
-  PROP_Y,
-  PROP_WIDTH,
-  PROP_HEIGHT
+  PROP_Y
 };
 
 
@@ -100,18 +98,6 @@ gimp_drawable_undo_class_init (GimpDrawableUndoClass *klass)
                                                      0, GIMP_MAX_IMAGE_SIZE, 0,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
-
-  g_object_class_install_property (object_class, PROP_WIDTH,
-                                   g_param_spec_int ("width", NULL, NULL,
-                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT_ONLY));
-
-  g_object_class_install_property (object_class, PROP_HEIGHT,
-                                   g_param_spec_int ("height", NULL, NULL,
-                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -150,12 +136,6 @@ gimp_drawable_undo_set_property (GObject      *object,
     case PROP_Y:
       drawable_undo->y = g_value_get_int (value);
       break;
-    case PROP_WIDTH:
-      drawable_undo->width = g_value_get_int (value);
-      break;
-    case PROP_HEIGHT:
-      drawable_undo->height = g_value_get_int (value);
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -181,12 +161,6 @@ gimp_drawable_undo_get_property (GObject    *object,
       break;
     case PROP_Y:
       g_value_set_int (value, drawable_undo->y);
-      break;
-    case PROP_WIDTH:
-      g_value_set_int (value, drawable_undo->width);
-      break;
-    case PROP_HEIGHT:
-      g_value_set_int (value, drawable_undo->height);
       break;
 
     default:
@@ -220,9 +194,7 @@ gimp_drawable_undo_pop (GimpUndo            *undo,
   gimp_drawable_swap_pixels (GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item),
                              drawable_undo->buffer,
                              drawable_undo->x,
-                             drawable_undo->y,
-                             drawable_undo->width,
-                             drawable_undo->height);
+                             drawable_undo->y);
 }
 
 static void

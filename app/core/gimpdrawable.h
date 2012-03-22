@@ -105,9 +105,7 @@ struct _GimpDrawableClass
   void          (* swap_pixels)           (GimpDrawable         *drawable,
                                            GeglBuffer           *buffer,
                                            gint                  x,
-                                           gint                  y,
-                                           gint                  width,
-                                           gint                  height);
+                                           gint                  y);
 };
 
 
@@ -195,9 +193,7 @@ GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);
 void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
                                                   GeglBuffer         *buffer,
                                                   gint                x,
-                                                  gint                y,
-                                                  gint                width,
-                                                  gint                height);
+                                                  gint                y);
 
 void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,

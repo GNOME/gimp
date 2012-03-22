@@ -166,9 +166,7 @@ static GeglNode * gimp_channel_get_node      (GimpItem            *item);
 static void      gimp_channel_swap_pixels    (GimpDrawable        *drawable,
                                               GeglBuffer          *buffer,
                                               gint                 x,
-                                              gint                 y,
-                                              gint                 width,
-                                              gint                 height);
+                                              gint                 y);
 
 static gint      gimp_channel_get_opacity_at (GimpPickable        *pickable,
                                               gint                 x,
@@ -935,14 +933,11 @@ static void
 gimp_channel_swap_pixels (GimpDrawable *drawable,
                           GeglBuffer   *buffer,
                           gint          x,
-                          gint          y,
-                          gint          width,
-                          gint          height)
+                          gint          y)
 {
   gimp_drawable_invalidate_boundary (drawable);
 
-  GIMP_DRAWABLE_CLASS (parent_class)->swap_pixels (drawable, buffer,
-                                                   x, y, width, height);
+  GIMP_DRAWABLE_CLASS (parent_class)->swap_pixels (drawable, buffer, x, y);
 
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;
 }
