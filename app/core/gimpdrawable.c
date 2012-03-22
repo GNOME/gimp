@@ -294,7 +294,7 @@ gimp_drawable_finalize (GObject *object)
       drawable->private->buffer = NULL;
     }
 
-  gimp_drawable_free_shadow_tiles (drawable);
+  gimp_drawable_free_shadow_buffer (drawable);
 
   if (drawable->private->source_node)
     {
@@ -316,7 +316,7 @@ gimp_drawable_get_memsize (GimpObject *object,
   gint64        memsize  = 0;
 
   memsize += gimp_gegl_buffer_get_memsize (gimp_drawable_get_buffer (drawable));
-  memsize += tile_manager_get_memsize (drawable->private->shadow, FALSE);
+  memsize += gimp_gegl_buffer_get_memsize (drawable->private->shadow);
 
   *gui_size += gimp_preview_cache_get_memsize (drawable->private->preview_cache);
 
@@ -355,7 +355,7 @@ gimp_drawable_removed (GimpItem *item)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
 
-  gimp_drawable_free_shadow_tiles (drawable);
+  gimp_drawable_free_shadow_buffer (drawable);
 
   if (GIMP_ITEM_CLASS (parent_class)->removed)
     GIMP_ITEM_CLASS (parent_class)->removed (item);

@@ -476,7 +476,7 @@ drawable_merge_shadow_invoker (GimpProcedure      *procedure,
           if (gimp->plug_in_manager->current_plug_in)
             undo_desc = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
 
-          gimp_drawable_merge_shadow_tiles (drawable, undo, undo_desc);
+          gimp_drawable_merge_shadow_buffer (drawable, undo, undo_desc);
         }
       else
         success = FALSE;
@@ -505,7 +505,7 @@ drawable_free_shadow_invoker (GimpProcedure      *procedure,
         gimp_plug_in_cleanup_remove_shadow (gimp->plug_in_manager->current_plug_in,
                                             drawable);
 
-      gimp_drawable_free_shadow_tiles (drawable);
+      gimp_drawable_free_shadow_buffer (drawable);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

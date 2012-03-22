@@ -32,6 +32,8 @@
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-shadow.h"
@@ -190,6 +192,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
   GPTileData      *tile_info;
   GimpWireMessage  msg;
   GimpDrawable    *drawable;
+  GeglBuffer      *buffer;
   TileManager     *tm;
   Tile            *tile;
 
@@ -257,12 +260,13 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
 
   if (tile_info->shadow)
     {
+
       /*  don't check whether the drawable is a group or locked here,
        *  the plugin will get a proper error message when it tries to
        *  merge the shadow tiles, which is much better than just
        *  killing it.
        */
-      tm = gimp_drawable_get_shadow_tiles (drawable);
+      buffer = gimp_drawable_get_shadow_buffer (drawable);
 
       gimp_plug_in_cleanup_add_shadow (plug_in, drawable);
     }
@@ -291,8 +295,10 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
           return;
         }
 
-      tm = gimp_drawable_get_tiles (drawable);
+      buffer = gimp_drawable_get_buffer (drawable);
     }
+
+  tm = gimp_gegl_buffer_get_tiles (buffer);
 
   tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
 
@@ -335,6 +341,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
   GPTileData       tile_data;
   GimpWireMessage  msg;
   GimpDrawable    *drawable;
+  GeglBuffer      *buffer;
   TileManager     *tm;
   Tile            *tile;
 
@@ -367,14 +374,16 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
 
   if (request->shadow)
     {
-      tm = gimp_drawable_get_shadow_tiles (drawable);
+      buffer = gimp_drawable_get_shadow_buffer (drawable);
 
       gimp_plug_in_cleanup_add_shadow (plug_in, drawable);
     }
   else
     {
-      tm = gimp_drawable_get_tiles (drawable);
+      buffer = gimp_drawable_get_buffer (drawable);
     }
+
+  tm = gimp_gegl_buffer_get_tiles (buffer);
 
   tile = tile_manager_get (tm, request->tile_num, TRUE, FALSE);
 

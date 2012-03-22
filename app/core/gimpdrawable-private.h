@@ -23,7 +23,7 @@ struct _GimpDrawablePrivate
   const Babl    *format; /* format of drawable      */
 
   GeglBuffer    *buffer; /* buffer for drawable data */
-  TileManager   *shadow; /* shadow buffer tiles      */
+  GeglBuffer    *shadow; /* shadow buffer            */
 
   GeglNode      *source_node;
   GeglNode      *buffer_source_node;

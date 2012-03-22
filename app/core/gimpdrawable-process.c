@@ -25,6 +25,8 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpdrawable.h"
 #include "gimpdrawable-process.h"
 #include "gimpdrawable-shadow.h"
@@ -47,17 +49,20 @@ gimp_drawable_process (GimpDrawable       *drawable,
 
   if (gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
-      PixelRegion srcPR, destPR;
+      GeglBuffer  *dest_buffer;
+      PixelRegion  srcPR, destPR;
+
+      dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          x, y, width, height, FALSE);
-      pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
+      pixel_region_init (&destPR, gimp_gegl_buffer_get_tiles (dest_buffer),
                          x, y, width, height, TRUE);
 
       pixel_regions_process_parallel (func, data, 2, &srcPR, &destPR);
 
-      gimp_drawable_merge_shadow_tiles (drawable, TRUE, undo_desc);
-      gimp_drawable_free_shadow_tiles (drawable);
+      gimp_drawable_merge_shadow_buffer (drawable, TRUE, undo_desc);
+      gimp_drawable_free_shadow_buffer (drawable);
 
       gimp_drawable_update (drawable, x, y, width, height);
     }

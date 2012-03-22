@@ -21,10 +21,10 @@
 #define __GIMP_DRAWABLE_SHADOW_H__
 
 
-TileManager * gimp_drawable_get_shadow_tiles   (GimpDrawable *drawable);
-void          gimp_drawable_free_shadow_tiles  (GimpDrawable *drawable);
+GeglBuffer * gimp_drawable_get_shadow_buffer   (GimpDrawable *drawable);
+void         gimp_drawable_free_shadow_buffer  (GimpDrawable *drawable);
 
-void          gimp_drawable_merge_shadow_tiles (GimpDrawable *drawable,
+void         gimp_drawable_merge_shadow_buffer (GimpDrawable *drawable,
                                                 gboolean      push_undo,
                                                 const gchar  *undo_desc);
 

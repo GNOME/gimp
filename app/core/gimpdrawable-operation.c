@@ -59,19 +59,15 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                                   &rect.width, &rect.height))
     return;
 
-  dest_buffer =
-    gimp_tile_manager_create_buffer (gimp_drawable_get_shadow_tiles (drawable),
-                                     gimp_drawable_get_format (drawable));
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   gimp_apply_operation (gimp_drawable_get_buffer (drawable),
                         progress, undo_desc,
                         operation, linear,
                         dest_buffer, &rect);
 
-  g_object_unref (dest_buffer);
-
-  gimp_drawable_merge_shadow_tiles (drawable, TRUE, undo_desc);
-  gimp_drawable_free_shadow_tiles (drawable);
+  gimp_drawable_merge_shadow_buffer (drawable, TRUE, undo_desc);
+  gimp_drawable_free_shadow_buffer (drawable);
 
   gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
 

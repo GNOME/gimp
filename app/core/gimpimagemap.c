@@ -237,7 +237,7 @@ gimp_image_map_finalize (GObject *object)
 
   if (image_map->drawable)
     {
-      gimp_drawable_free_shadow_tiles (image_map->drawable);
+      gimp_drawable_free_shadow_buffer (image_map->drawable);
 
       g_object_unref (image_map->drawable);
       image_map->drawable = NULL;
@@ -410,14 +410,11 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
   if (image_map->operation)
     {
-      const Babl *format = gimp_drawable_get_format (image_map->drawable);
       GeglBuffer *input_buffer;
       GeglBuffer *output_buffer;
 
-      input_buffer = image_map->undo_buffer;
-
-      output_buffer =
-        gimp_tile_manager_create_buffer (gimp_drawable_get_shadow_tiles (image_map->drawable), format);
+      input_buffer  = image_map->undo_buffer;
+      output_buffer = gimp_drawable_get_shadow_buffer (image_map->drawable);
 
       if (! image_map->gegl)
         {
@@ -505,11 +502,13 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
       image_map->processor = gegl_node_new_processor (image_map->output,
                                                       &rect);
-
-      g_object_unref (output_buffer);
     }
   else
     {
+      GeglBuffer *output_buffer;
+
+      output_buffer = gimp_drawable_get_shadow_buffer (image_map->drawable);
+
       /*  Configure the src from the drawable data  */
       pixel_region_init (&image_map->srcPR,
                          gimp_gegl_buffer_get_tiles (image_map->undo_buffer),
@@ -519,7 +518,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
       /*  Configure the dest as the shadow buffer  */
       pixel_region_init (&image_map->destPR,
-                         gimp_drawable_get_shadow_tiles (image_map->drawable),
+                         gimp_gegl_buffer_get_tiles (output_buffer),
                          rect.x, rect.y,
                          rect.width, rect.height,
                          TRUE);
@@ -745,8 +744,9 @@ gimp_image_map_do (GimpImageMap *image_map)
        */
       for (i = 0; i < 16; i++)
         {
-          PixelRegion srcPR;
-          gint        x, y, w, h;
+          GeglBuffer  *src_buffer;
+          PixelRegion  srcPR;
+          gint         x, y, w, h;
 
           if (image_map->timer)
             g_timer_continue (image_map->timer);
@@ -770,9 +770,10 @@ gimp_image_map_do (GimpImageMap *image_map)
                                  &image_map->srcPR,
                                  &image_map->destPR);
 
+          src_buffer = gimp_drawable_get_shadow_buffer (image_map->drawable);
 
           pixel_region_init (&srcPR,
-                             gimp_drawable_get_shadow_tiles (image_map->drawable),
+                             gimp_gegl_buffer_get_tiles (src_buffer),
                              x, y, w, h, FALSE);
 
           gimp_drawable_apply_region (image_map->drawable, &srcPR,
@@ -819,10 +820,7 @@ gimp_image_map_data_written (GObject             *operation,
                              const GeglRectangle *extent,
                              GimpImageMap        *image_map)
 {
-  GimpImage   *image;
-  PixelRegion  srcPR;
-
-  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
   if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
@@ -837,19 +835,15 @@ gimp_image_map_data_written (GObject             *operation,
     }
 
   /* Apply the result of the gegl graph. */
-  pixel_region_init (&srcPR,
-                     gimp_drawable_get_shadow_tiles (image_map->drawable),
-                     extent->x,
-                     extent->y,
-                     extent->width,
-                     extent->height,
-                     FALSE);
-
-  gimp_drawable_apply_region (image_map->drawable, &srcPR,
+  gimp_drawable_apply_buffer (image_map->drawable,
+                              gimp_drawable_get_shadow_buffer (image_map->drawable),
+                              GIMP_GEGL_RECT (extent->x, extent->y,
+                                              extent->width, extent->height),
                               FALSE, NULL,
                               GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
                               NULL, NULL,
                               extent->x, extent->y);
+
   gimp_drawable_update (image_map->drawable,
                         extent->x, extent->y,
                         extent->width, extent->height);
