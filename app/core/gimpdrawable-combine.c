@@ -19,6 +19,8 @@
 
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "base/pixel-region.h"
@@ -45,16 +47,15 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                  GimpLayerModeEffects  mode,
                                  GeglBuffer           *base_buffer,
                                  PixelRegion          *destPR,
-                                 gint                  x,
-                                 gint                  y)
+                                 gint                  dest_x,
+                                 gint                  dest_y)
 {
   GimpItem        *item  = GIMP_ITEM (drawable);
   GimpImage       *image = gimp_item_get_image (item);
   GimpChannel     *mask  = gimp_image_get_mask (image);
   TempBuf         *temp_buf;
   PixelRegion      src2PR;
-  TileManager     *src1_tiles;
-  gint             x1, y1, x2, y2;
+  gint             x, y, width, height;
   gint             offset_x, offset_y;
   PixelRegion      src1PR, my_destPR;
   CombinationMode  operation;
@@ -76,10 +77,8 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                          FALSE);
     }
 
-  if (base_buffer)
-    src1_tiles = gimp_gegl_buffer_get_tiles (base_buffer);
-  else
-    src1_tiles = NULL;
+  if (! base_buffer)
+    base_buffer = gimp_drawable_get_buffer (drawable);
 
   /*  don't apply the mask to itself and don't apply an empty mask  */
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
@@ -103,10 +102,11 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within drawable bounds  */
-  x1 = CLAMP (x,            0, gimp_item_get_width  (item));
-  y1 = CLAMP (y,            0, gimp_item_get_height (item));
-  x2 = CLAMP (x + src2PR.w, 0, gimp_item_get_width  (item));
-  y2 = CLAMP (y + src2PR.h, 0, gimp_item_get_height (item));
+  gimp_rectangle_intersect (dest_x, dest_y, src2PR.w, src2PR.h,
+                            0, 0,
+                            gimp_item_get_width  (item),
+                            gimp_item_get_height (item),
+                            &x, &y, &width, &height);
 
   if (mask)
     {
@@ -116,10 +116,11 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, gimp_item_get_width  (mask_item) - offset_x);
-      y1 = CLAMP (y1, -offset_y, gimp_item_get_height (mask_item) - offset_y);
-      x2 = CLAMP (x2, -offset_x, gimp_item_get_width  (mask_item) - offset_x);
-      y2 = CLAMP (y2, -offset_y, gimp_item_get_height (mask_item) - offset_y);
+      gimp_rectangle_intersect (x, y, width, height,
+                                -offset_x, -offset_y,
+                                gimp_item_get_width  (mask_item),
+                                gimp_item_get_height (mask_item),
+                                &x, &y, &width, &height);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -128,9 +129,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
       GimpDrawableUndo *undo;
 
       gimp_drawable_push_undo (drawable, undo_desc,
-                               NULL,
-                               x1, y1,
-                               x2 - x1, y2 - y1);
+                               NULL, x, y, width, height);
 
       undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
 
@@ -140,36 +139,23 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
           undo->opacity    = opacity;
 
           undo->applied_buffer =
-            gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
+            gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
                                   gegl_buffer_get_format (buffer));
 
           gegl_buffer_copy (buffer,
-                            GIMP_GEGL_RECT (buffer_region->x + (x1 - x),
-                                            buffer_region->y + (y1 - y),
-                                            x2 - x1, y2 - y1),
+                            GIMP_GEGL_RECT (buffer_region->x + (x - dest_x),
+                                            buffer_region->y + (y - dest_y),
+                                            width, height),
                             undo->applied_buffer,
-                            GIMP_GEGL_RECT (0, 0,
-                                            x2 - x1, y2 - y1));
+                            GIMP_GEGL_RECT (0, 0, width, height));
         }
     }
 
   /* configure the pixel regions */
 
-  /* check if an alternative to using the drawable's data as src1 was
-   * provided...
-   */
-  if (src1_tiles)
-    {
-      pixel_region_init (&src1PR, src1_tiles,
-                         x1, y1, x2 - x1, y2 - y1,
-                         FALSE);
-    }
-  else
-    {
-      pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
-                         x1, y1, x2 - x1, y2 - y1,
-                         FALSE);
-    }
+  pixel_region_init (&src1PR, gimp_gegl_buffer_get_tiles (base_buffer),
+                     x, y, width, height,
+                     FALSE);
 
   /* check if an alternative to using the drawable's data as dest was
    * provided...
@@ -177,14 +163,14 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
   if (!destPR)
     {
       pixel_region_init (&my_destPR, gimp_drawable_get_tiles (drawable),
-                         x1, y1, x2 - x1, y2 - y1,
+                         x, y, width, height,
                          TRUE);
       destPR = &my_destPR;
     }
 
   pixel_region_resize (&src2PR,
-                       src2PR.x + (x1 - x), src2PR.y + (y1 - y),
-                       x2 - x1, y2 - y1);
+                       src2PR.x + (x - dest_x), src2PR.y + (y - dest_y),
+                       width, height);
 
   if (mask)
     {
@@ -192,9 +178,9 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
 
       pixel_region_init (&maskPR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                         x1 + offset_x,
-                         y1 + offset_y,
-                         x2 - x1, y2 - y1,
+                         x + offset_x,
+                         y + offset_y,
+                         width, height,
                          FALSE);
 
       combine_regions (&src1PR, &src2PR, destPR, &maskPR, NULL,
@@ -226,13 +212,13 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
                                    const gchar  *undo_desc,
                                    gdouble       opacity,
                                    PixelRegion  *maskPR,
-                                   gint          x,
-                                   gint          y)
+                                   gint          dest_x,
+                                   gint          dest_y)
 {
   GimpItem        *item  = GIMP_ITEM (drawable);
   GimpImage       *image = gimp_item_get_image (item);
   GimpChannel     *mask  = gimp_image_get_mask (image);
-  gint             x1, y1, x2, y2;
+  gint             x, y, width, height;
   gint             offset_x, offset_y;
   PixelRegion      src1PR, destPR;
   CombinationMode  operation;
@@ -260,10 +246,11 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within drawable bounds  */
-  x1 = CLAMP (x, 0,             gimp_item_get_width  (item));
-  y1 = CLAMP (y, 0,             gimp_item_get_height (item));
-  x2 = CLAMP (x + src2PR->w, 0, gimp_item_get_width  (item));
-  y2 = CLAMP (y + src2PR->h, 0, gimp_item_get_height (item));
+  gimp_rectangle_intersect (dest_x, dest_y, src2PR->w, src2PR->h,
+                            0, 0,
+                            gimp_item_get_width  (item),
+                            gimp_item_get_height (item),
+                            &x, &y, &width, &height);
 
   if (mask)
     {
@@ -273,29 +260,28 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, gimp_item_get_width  (mask_item) - offset_x);
-      y1 = CLAMP (y1, -offset_y, gimp_item_get_height (mask_item) - offset_y);
-      x2 = CLAMP (x2, -offset_x, gimp_item_get_width  (mask_item) - offset_x);
-      y2 = CLAMP (y2, -offset_y, gimp_item_get_height (mask_item) - offset_y);
+      gimp_rectangle_intersect (x, y, width, height,
+                                -offset_x, -offset_y,
+                                gimp_item_get_width  (mask_item),
+                                gimp_item_get_height (mask_item),
+                                &x, &y, &width, &height);
     }
 
   /*  If the calling procedure specified an undo step...  */
   if (push_undo)
     gimp_drawable_push_undo (drawable, undo_desc,
-                             NULL,
-                             x1, y1,
-                             x2 - x1, y2 - y1);
+                             NULL, x, y, width, height);
 
   /* configure the pixel regions */
   pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
-                     x1, y1, x2 - x1, y2 - y1,
+                     x, y, width, height,
                      FALSE);
   pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
-                     x1, y1, x2 - x1, y2 - y1,
+                     x, y, width, height,
                      TRUE);
   pixel_region_resize (src2PR,
-                       src2PR->x + (x1 - x), src2PR->y + (y1 - y),
-                       x2 - x1, y2 - y1);
+                       src2PR->x + (x - dest_x), src2PR->y + (y - dest_y),
+                       width, height);
 
   if (mask)
     {
@@ -304,25 +290,23 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
 
       pixel_region_init (&mask2PR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                         x1 + offset_x,
-                         y1 + offset_y,
-                         x2 - x1, y2 - y1,
+                         x + offset_x, y + offset_y, width, height,
                          FALSE);
 
-      temp_data = g_malloc ((y2 - y1) * (x2 - x1));
+      temp_data = g_malloc (width * height);
 
-      pixel_region_init_data (&tempPR, temp_data, 1, x2 - x1,
-                              0, 0, x2 - x1, y2 - y1);
+      pixel_region_init_data (&tempPR, temp_data, 1, width,
+                              0, 0, width, height);
 
       copy_region (&mask2PR, &tempPR);
 
-      pixel_region_init_data (&tempPR, temp_data, 1, x2 - x1,
-                              0, 0, x2 - x1, y2 - y1);
+      pixel_region_init_data (&tempPR, temp_data, 1, width,
+                              0, 0, width, height);
 
       apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
 
-      pixel_region_init_data (&tempPR, temp_data, 1, x2 - x1,
-                              0, 0, x2 - x1, y2 - y1);
+      pixel_region_init_data (&tempPR, temp_data, 1, width,
+                              0, 0, width, height);
 
       combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
                                opacity * 255.999,
