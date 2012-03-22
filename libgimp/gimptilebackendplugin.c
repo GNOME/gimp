@@ -150,7 +150,10 @@ gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
     case GEGL_TILE_SET:
       gimp_tile_write_mul (backend_plugin, x, y, gegl_tile_get_data (data));
       gegl_tile_mark_as_stored (data);
-      return NULL;
+      break;
+    case GEGL_TILE_FLUSH:
+      gimp_drawable_flush (backend_plugin->priv->drawable);
+      break;
     default:
       g_assert (command < GEGL_TILE_LAST_COMMAND && command >= 0);
     }
