@@ -138,8 +138,9 @@ static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
                                                 gboolean           *active);
 
-static void      gimp_channel_apply_region   (GimpDrawable        *drawable,
-                                              PixelRegion         *src2PR,
+static void      gimp_channel_apply_buffer   (GimpDrawable        *drawable,
+                                              GeglBuffer          *buffer,
+                                              const GeglRectangle *buffer_region,
                                               gboolean             push_undo,
                                               const gchar         *undo_desc,
                                               gdouble              opacity,
@@ -287,7 +288,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
-  drawable_class->apply_region          = gimp_channel_apply_region;
+  drawable_class->apply_buffer          = gimp_channel_apply_buffer;
   drawable_class->replace_region        = gimp_channel_replace_region;
   drawable_class->project_region        = gimp_channel_project_region;
   drawable_class->set_buffer            = gimp_channel_set_buffer;
@@ -804,8 +805,9 @@ gimp_channel_get_active_components (const GimpDrawable *drawable,
 }
 
 static void
-gimp_channel_apply_region (GimpDrawable         *drawable,
-                           PixelRegion          *src2PR,
+gimp_channel_apply_buffer (GimpDrawable         *drawable,
+                           GeglBuffer           *buffer,
+                           const GeglRectangle  *buffer_region,
                            gboolean              push_undo,
                            const gchar          *undo_desc,
                            gdouble               opacity,
@@ -817,7 +819,8 @@ gimp_channel_apply_region (GimpDrawable         *drawable,
 {
   gimp_drawable_invalidate_boundary (drawable);
 
-  GIMP_DRAWABLE_CLASS (parent_class)->apply_region (drawable, src2PR,
+  GIMP_DRAWABLE_CLASS (parent_class)->apply_buffer (drawable, buffer,
+                                                    buffer_region,
                                                     push_undo, undo_desc,
                                                     opacity, mode,
                                                     src1_tiles, destPR,

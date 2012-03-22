@@ -27,9 +27,7 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -524,26 +522,22 @@ gimp_edit_fade (GimpImage   *image,
 
   undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
 
-  if (undo && undo->src2_tiles)
+  if (undo && undo->applied_buffer)
     {
-      GimpDrawable     *drawable;
-      TileManager      *src2_tiles;
-      PixelRegion       src2PR;
+      GimpDrawable *drawable;
+      GeglBuffer   *buffer;
 
       drawable = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
 
       g_object_ref (undo);
-      src2_tiles = tile_manager_ref (undo->src2_tiles);
+      buffer = g_object_ref (undo->applied_buffer);
 
       gimp_image_undo (image);
 
-      pixel_region_init (&src2PR, src2_tiles,
-                         0, 0,
-                         gegl_buffer_get_width (undo->buffer),
-                         gegl_buffer_get_height (undo->buffer),
-                         FALSE);
-
-      gimp_drawable_apply_region (drawable, &src2PR,
+      gimp_drawable_apply_buffer (drawable, buffer,
+                                  GIMP_GEGL_RECT (0, 0,
+                                                  gegl_buffer_get_width (undo->buffer),
+                                                  gegl_buffer_get_height (undo->buffer)),
                                   TRUE,
                                   gimp_object_get_name (undo),
                                   gimp_context_get_opacity (context),
@@ -552,7 +546,7 @@ gimp_edit_fade (GimpImage   *image,
                                   undo->x,
                                   undo->y);
 
-      tile_manager_unref (src2_tiles);
+      g_object_unref (buffer);
       g_object_unref (undo);
 
       return TRUE;

@@ -85,7 +85,7 @@ fade_dialog_new (GimpImage *image,
 
   undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
 
-  if (! (undo && undo->src2_tiles))
+  if (! (undo && undo->applied_buffer))
     return NULL;
 
   item      = GIMP_ITEM_UNDO (undo)->item;

@@ -315,7 +315,7 @@ edit_actions_update (GimpActionGroup *group,
           undo = gimp_image_undo_get_fadeable (image);
 
           if (GIMP_IS_DRAWABLE_UNDO (undo) &&
-              GIMP_DRAWABLE_UNDO (undo)->src2_tiles)
+              GIMP_DRAWABLE_UNDO (undo)->applied_buffer)
             {
               fade_enabled = TRUE;
             }

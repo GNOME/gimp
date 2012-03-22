@@ -21,8 +21,9 @@
 
 /*  virtual functions of GimpDrawable, don't call directly  */
 
-void   gimp_drawable_real_apply_region   (GimpDrawable         *drawable,
-                                          PixelRegion          *src2PR,
+void   gimp_drawable_real_apply_buffer   (GimpDrawable         *drawable,
+                                          GeglBuffer           *buffer,
+                                          const GeglRectangle  *buffer_region,
                                           gboolean              push_undo,
                                           const gchar          *undo_desc,
                                           gdouble               opacity,

@@ -23,8 +23,6 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gimp-utils.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
@@ -209,10 +207,10 @@ gimp_drawable_undo_free (GimpUndo     *undo,
       drawable_undo->buffer = NULL;
     }
 
-  if (drawable_undo->src2_tiles)
+  if (drawable_undo->applied_buffer)
     {
-      tile_manager_unref (drawable_undo->src2_tiles);
-      drawable_undo->src2_tiles = NULL;
+      g_object_unref (drawable_undo->applied_buffer);
+      drawable_undo->applied_buffer = NULL;
     }
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);

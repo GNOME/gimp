@@ -41,7 +41,7 @@ struct _GimpDrawableUndo
   gint          y;
 
   /* stuff for "Fade" */
-  TileManager          *src2_tiles;
+  GeglBuffer           *applied_buffer;
   GimpLayerModeEffects  paint_mode;
   gdouble               opacity;
 };
