@@ -152,15 +152,13 @@ static GeglNode * gimp_drawable_get_node           (GimpItem          *item);
 
 static void       gimp_drawable_real_push_undo     (GimpDrawable      *drawable,
                                                     const gchar       *undo_desc,
-                                                    TileManager       *tiles,
-                                                    gboolean           sparse,
+                                                    GeglBuffer        *buffer,
                                                     gint               x,
                                                     gint               y,
                                                     gint               width,
                                                     gint               height);
 static void       gimp_drawable_real_swap_pixels   (GimpDrawable      *drawable,
-                                                    TileManager       *tiles,
-                                                    gboolean           sparse,
+                                                    GeglBuffer        *buffer,
                                                     gint               x,
                                                     gint               y,
                                                     gint               width,
@@ -864,95 +862,57 @@ gimp_drawable_get_node (GimpItem *item)
 static void
 gimp_drawable_real_push_undo (GimpDrawable *drawable,
                               const gchar  *undo_desc,
-                              TileManager  *tiles,
-                              gboolean      sparse,
+                              GeglBuffer   *buffer,
                               gint          x,
                               gint          y,
                               gint          width,
                               gint          height)
 {
-  gboolean new_tiles = FALSE;
-
-  if (! tiles)
+  if (! buffer)
     {
-      GeglBuffer *dest_buffer;
-
-      tiles = tile_manager_new (width, height, gimp_drawable_bytes (drawable));
-
-      dest_buffer = gimp_tile_manager_create_buffer (tiles,
-                                                     gimp_drawable_get_format (drawable));
+      buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+                                     gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GIMP_GEGL_RECT (x,y,width,height),
-                        dest_buffer, GIMP_GEGL_RECT (0,0,0,0));
-
-      g_object_unref (dest_buffer);
-
-      new_tiles = TRUE;
+                        GIMP_GEGL_RECT (x, y, width, height),
+                        buffer,
+                        GIMP_GEGL_RECT (0, 0, 0, 0));
+    }
+  else
+    {
+      g_object_ref (buffer);
     }
 
   gimp_image_undo_push_drawable (gimp_item_get_image (GIMP_ITEM (drawable)),
                                  undo_desc, drawable,
-                                 tiles, sparse,
+                                 buffer,
                                  x, y, width, height);
 
-  if (new_tiles)
-    tile_manager_unref (tiles);
+  g_object_unref (buffer);
 }
 
 static void
 gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
-                                TileManager  *tiles,
-                                gboolean      sparse,
+                                GeglBuffer   *buffer,
                                 gint          x,
                                 gint          y,
                                 gint          width,
                                 gint          height)
 {
-  if (sparse)
-    {
-      gint i, j;
+  GeglBuffer *tmp;
 
-      for (i = y; i < (y + height); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
-        {
-          for (j = x; j < (x + width); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-            {
-              Tile *src_tile;
-              Tile *dest_tile;
+  tmp = gimp_gegl_buffer_dup (buffer);
 
-              src_tile = tile_manager_get_tile (tiles, j, i, FALSE, FALSE);
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                    GIMP_GEGL_RECT (x, y, width, height),
+                    buffer,
+                    GIMP_GEGL_RECT (0, 0, 0, 0));
+  gegl_buffer_copy (tmp,
+                    GIMP_GEGL_RECT (0, 0, width, height),
+                    gimp_drawable_get_buffer (drawable),
+                    GIMP_GEGL_RECT (x, y, 0, 0));
 
-              if (tile_is_valid (src_tile))
-                {
-                  /* swap tiles, not pixels! */
-
-                  src_tile = tile_manager_get_tile (tiles,
-                                                    j, i, TRUE, FALSE /*TRUE*/);
-                  dest_tile = tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
-                                                     j, i, TRUE, FALSE /* TRUE */);
-
-                  tile_manager_map_tile (tiles,
-                                         j, i, dest_tile);
-                  tile_manager_map_tile (gimp_drawable_get_tiles (drawable),
-                                         j, i, src_tile);
-
-                  tile_release (dest_tile, FALSE);
-                  tile_release (src_tile, FALSE);
-                }
-            }
-        }
-    }
-  else
-    {
-      PixelRegion PR1, PR2;
-
-      pixel_region_init (&PR1, tiles,
-                         0, 0, width, height, TRUE);
-      pixel_region_init (&PR2, gimp_drawable_get_tiles (drawable),
-                         x, y, width, height, TRUE);
-
-      swap_region (&PR1, &PR2);
-    }
+  g_object_unref (tmp);
 
   gimp_drawable_update (drawable, x, y, width, height);
 }
@@ -1568,49 +1528,39 @@ gimp_drawable_get_mode_node (GimpDrawable *drawable)
 
 void
 gimp_drawable_swap_pixels (GimpDrawable *drawable,
-                           TileManager  *tiles,
-                           gboolean      sparse,
+                           GeglBuffer   *buffer,
                            gint          x,
                            gint          y,
                            gint          width,
                            gint          height)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (tiles != NULL);
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
-  GIMP_DRAWABLE_GET_CLASS (drawable)->swap_pixels (drawable, tiles, sparse,
+  GIMP_DRAWABLE_GET_CLASS (drawable)->swap_pixels (drawable, buffer,
                                                    x, y, width, height);
 }
 
 void
 gimp_drawable_push_undo (GimpDrawable *drawable,
                          const gchar  *undo_desc,
+                         GeglBuffer   *buffer,
                          gint          x,
                          gint          y,
                          gint          width,
-                         gint          height,
-                         TileManager  *tiles,
-                         gboolean      sparse)
+                         gint          height)
 {
   GimpItem *item;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (sparse == FALSE || tiles != NULL);
+  g_return_if_fail (buffer == NULL || GEGL_IS_BUFFER (buffer));
 
   item = GIMP_ITEM (drawable);
 
   g_return_if_fail (gimp_item_is_attached (item));
-  g_return_if_fail (sparse == FALSE ||
-                    tile_manager_width (tiles) == gimp_item_get_width (item));
-  g_return_if_fail (sparse == FALSE ||
-                    tile_manager_height (tiles) == gimp_item_get_height (item));
 
-#if 0
-  g_printerr ("gimp_drawable_push_undo (%s, %d, %d, %d, %d)\n",
-              sparse ? "TRUE" : "FALSE", x, y, width, height);
-#endif
-
-  if (! gimp_rectangle_intersect (x, y,
+  if (! buffer &&
+      ! gimp_rectangle_intersect (x, y,
                                   width, height,
                                   0, 0,
                                   gimp_item_get_width (item),
@@ -1622,7 +1572,7 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
     }
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->push_undo (drawable, undo_desc,
-                                                 tiles, sparse,
+                                                 buffer,
                                                  x, y, width, height);
 }
 

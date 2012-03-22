@@ -33,6 +33,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
@@ -456,16 +458,42 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
   if (push_undo)
     {
+      GeglBuffer *src;
+      GeglBuffer *buffer;
+
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                    core->undo_desc);
 
       GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
+      /*  set undo blocks  */
+      gimp_paint_core_validate_undo_tiles (core, drawable,
+                                           core->x1,
+                                           core->y1,
+                                           core->x2 - core->x1,
+                                           core->y2 - core->y1);
+
+      src = gimp_tile_manager_create_buffer (core->undo_tiles,
+                                             gimp_drawable_get_format (drawable));
+      buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                     core->x2 - core->x1,
+                                                     core->y2 - core->y1),
+                                     gimp_drawable_get_format (drawable));
+
+      gegl_buffer_copy (src,
+                        GIMP_GEGL_RECT (core->x1, core->y1,
+                                        core->x2 - core->x1,
+                                        core->y2 - core->y1),
+                        buffer,
+                        GIMP_GEGL_RECT (0, 0, 0, 0));
+
       gimp_drawable_push_undo (drawable, NULL,
+                               buffer,
                                core->x1, core->y1,
-                               core->x2 - core->x1, core->y2 - core->y1,
-                               core->undo_tiles,
-                               TRUE);
+                               core->x2 - core->x1, core->y2 - core->y1);
+
+      g_object_unref (src);
+      g_object_unref (buffer);
 
       gimp_image_undo_group_end (image);
     }

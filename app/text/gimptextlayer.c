@@ -91,8 +91,7 @@ static void       gimp_text_layer_set_buffer     (GimpDrawable    *drawable,
                                                   gint             offset_y);
 static void       gimp_text_layer_push_undo      (GimpDrawable    *drawable,
                                                   const gchar     *undo_desc,
-                                                  TileManager     *tiles,
-                                                  gboolean         sparse,
+                                                  GeglBuffer      *buffer,
                                                   gint             x,
                                                   gint             y,
                                                   gint             width,
@@ -334,8 +333,7 @@ gimp_text_layer_set_buffer (GimpDrawable *drawable,
 static void
 gimp_text_layer_push_undo (GimpDrawable *drawable,
                            const gchar  *undo_desc,
-                           TileManager  *tiles,
-                           gboolean      sparse,
+                           GeglBuffer   *buffer,
                            gint          x,
                            gint          y,
                            gint          width,
@@ -348,7 +346,7 @@ gimp_text_layer_push_undo (GimpDrawable *drawable,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE, undo_desc);
 
   GIMP_DRAWABLE_CLASS (parent_class)->push_undo (drawable, undo_desc,
-                                                 tiles, sparse,
+                                                 buffer,
                                                  x, y, width, height);
 
   if (! layer->modified)

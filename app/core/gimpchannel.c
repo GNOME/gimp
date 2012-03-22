@@ -164,8 +164,7 @@ static void      gimp_channel_set_buffer     (GimpDrawable        *drawable,
                                               gint                 offset_y);
 static GeglNode * gimp_channel_get_node      (GimpItem            *item);
 static void      gimp_channel_swap_pixels    (GimpDrawable        *drawable,
-                                              TileManager         *tiles,
-                                              gboolean             sparse,
+                                              GeglBuffer          *buffer,
                                               gint                 x,
                                               gint                 y,
                                               gint                 width,
@@ -934,8 +933,7 @@ gimp_channel_get_node (GimpItem *item)
 
 static void
 gimp_channel_swap_pixels (GimpDrawable *drawable,
-                          TileManager  *tiles,
-                          gboolean      sparse,
+                          GeglBuffer   *buffer,
                           gint          x,
                           gint          y,
                           gint          width,
@@ -943,7 +941,7 @@ gimp_channel_swap_pixels (GimpDrawable *drawable,
 {
   gimp_drawable_invalidate_boundary (drawable);
 
-  GIMP_DRAWABLE_CLASS (parent_class)->swap_pixels (drawable, tiles, sparse,
+  GIMP_DRAWABLE_CLASS (parent_class)->swap_pixels (drawable, buffer,
                                                    x, y, width, height);
 
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;

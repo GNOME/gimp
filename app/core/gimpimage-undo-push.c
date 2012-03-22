@@ -23,8 +23,6 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gimp.h"
 #include "gimpchannelpropundo.h"
 #include "gimpchannelundo.h"
@@ -211,8 +209,7 @@ GimpUndo *
 gimp_image_undo_push_drawable (GimpImage    *image,
                                const gchar  *undo_desc,
                                GimpDrawable *drawable,
-                               TileManager  *tiles,
-                               gboolean      sparse,
+                               GeglBuffer   *buffer,
                                gint          x,
                                gint          y,
                                gint          width,
@@ -222,28 +219,17 @@ gimp_image_undo_push_drawable (GimpImage    *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (tiles != NULL, NULL);
-  g_return_val_if_fail (sparse == TRUE ||
-                        tile_manager_width (tiles) == width, NULL);
-  g_return_val_if_fail (sparse == TRUE ||
-                        tile_manager_height (tiles) == height, NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
 
   item = GIMP_ITEM (drawable);
 
   g_return_val_if_fail (gimp_item_is_attached (item), NULL);
-  g_return_val_if_fail (sparse == FALSE ||
-                        tile_manager_width (tiles) == gimp_item_get_width (item),
-                        NULL);
-  g_return_val_if_fail (sparse == FALSE ||
-                        tile_manager_height (tiles) == gimp_item_get_height (item),
-                        NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_UNDO,
                                GIMP_UNDO_DRAWABLE, undo_desc,
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
                                "item",   item,
-                               "tiles",  tiles,
-                               "sparse", sparse,
+                               "buffer", buffer,
                                "x",      x,
                                "y",      y,
                                "width",  width,

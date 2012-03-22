@@ -579,15 +579,16 @@ gimp_image_map_commit (GimpImageMap *image_map)
   /*  Register an undo step  */
   if (image_map->undo_tiles)
     {
-      gint x      = image_map->undo_offset_x;
-      gint y      = image_map->undo_offset_y;
-      gint width  = tile_manager_width  (image_map->undo_tiles);
-      gint height = tile_manager_height (image_map->undo_tiles);
+      GeglBuffer *buffer = gimp_image_map_get_buffer (GIMP_PICKABLE (image_map));
+      gint        x      = image_map->undo_offset_x;
+      gint        y      = image_map->undo_offset_y;
+      gint        width  = gegl_buffer_get_width  (buffer);
+      gint        height = gegl_buffer_get_height (buffer);
 
       gimp_drawable_push_undo (image_map->drawable,
                                image_map->undo_desc,
-                               x, y, width, height,
-                               image_map->undo_tiles, FALSE);
+                               buffer,
+                               x, y, width, height);
 
       tile_manager_unref (image_map->undo_tiles);
       image_map->undo_tiles = NULL;

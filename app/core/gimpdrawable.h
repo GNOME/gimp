@@ -97,15 +97,13 @@ struct _GimpDrawableClass
                                            gint                  offset_y);
   void          (* push_undo)             (GimpDrawable         *drawable,
                                            const gchar          *undo_desc,
-                                           TileManager          *tiles,
-                                           gboolean              sparse,
+                                           GeglBuffer           *buffer,
                                            gint                  x,
                                            gint                  y,
                                            gint                  width,
                                            gint                  height);
   void          (* swap_pixels)           (GimpDrawable         *drawable,
-                                           TileManager          *tiles,
-                                           gboolean              sparse,
+                                           GeglBuffer           *buffer,
                                            gint                  x,
                                            gint                  y,
                                            gint                  width,
@@ -195,8 +193,7 @@ GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
 GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);
 
 void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
-                                                  TileManager        *tiles,
-                                                  gboolean            sparse,
+                                                  GeglBuffer         *buffer,
                                                   gint                x,
                                                   gint                y,
                                                   gint                width,
@@ -204,12 +201,11 @@ void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
 
 void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,
+                                                  GeglBuffer         *buffer,
                                                   gint                x,
                                                   gint                y,
                                                   gint                width,
-                                                  gint                height,
-                                                  TileManager        *tiles,
-                                                  gboolean            sparse);
+                                                  gint                height);
 
 void            gimp_drawable_fill               (GimpDrawable       *drawable,
                                                   const GimpRGB      *color,

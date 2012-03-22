@@ -36,8 +36,7 @@ struct _GimpDrawableUndo
 {
   GimpItemUndo  parent_instance;
 
-  TileManager  *tiles;
-  gboolean      sparse;
+  GeglBuffer   *buffer;
   gint          x;
   gint          y;
   gint          width;

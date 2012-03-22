@@ -1369,10 +1369,10 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
               gimp_drawable_push_undo (drawable,
                                        C_("undo-type", "Transfer Alpha to Mask"),
+                                       NULL,
                                        0, 0,
                                        gimp_item_get_width  (item),
-                                       gimp_item_get_height (item),
-                                       NULL, FALSE);
+                                       gimp_item_get_height (item));
 
               set_alpha = gegl_node_new_child (NULL,
                                                "operation", "gimp:set-alpha",
@@ -1565,10 +1565,10 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 
       if (push_undo)
         gimp_drawable_push_undo (GIMP_DRAWABLE (layer), NULL,
+                                 NULL,
                                  0, 0,
                                  gimp_item_get_width  (item),
-                                 gimp_item_get_height (item),
-                                 NULL, FALSE);
+                                 gimp_item_get_height (item));
 
       /*  Combine the current layer's alpha channel and the mask  */
       mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
