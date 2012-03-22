@@ -205,9 +205,8 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                      GimpProgress         *progress)
 {
   GimpImage   *image;
-  TileManager *buf_tiles;
+  GeglBuffer  *buffer;
   PixelRegion  bufPR;
-  gint         bytes;
   gint         x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -223,10 +222,11 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   gimp_set_busy (image->gimp);
 
   /*  Always create an alpha temp buf (for generality) */
-  bytes = gimp_drawable_bytes_with_alpha (drawable);
+  buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+                                 gimp_drawable_get_format_with_alpha (drawable));
 
-  buf_tiles = tile_manager_new (width, height, bytes);
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, TRUE);
+  pixel_region_init (&bufPR, gimp_gegl_buffer_get_tiles (buffer),
+                     0, 0, width, height, TRUE);
 
   gradient_fill_region (image, drawable, context,
                         &bufPR, width, height,
@@ -242,8 +242,10 @@ gimp_drawable_blend (GimpDrawable         *drawable,
       distR.tiles = NULL;
     }
 
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, FALSE);
-  gimp_drawable_apply_region (drawable, &bufPR,
+  gimp_gegl_buffer_refetch_tiles (buffer);
+
+  gimp_drawable_apply_buffer (drawable, buffer,
+                              GIMP_GEGL_RECT (0, 0, width, height),
                               TRUE, C_("undo-type", "Blend"),
                               opacity, paint_mode,
                               NULL, NULL, x, y);
@@ -252,7 +254,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   gimp_drawable_update (drawable, x, y, width, height);
 
   /*  free the temporary buffer  */
-  tile_manager_unref (buf_tiles);
+  g_object_unref (buffer);
 
   gimp_unset_busy (image->gimp);
 }
