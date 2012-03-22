@@ -2,7 +2,7 @@
  *  Goat exercise plug-in by Øyvind Kolås, pippin@gimp.org
  */
 
-/* 
+/*
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -18,10 +18,14 @@
  */
 
 #include "config.h"
+
 #include <libgimp/gimp.h>
+
 #include "libgimp/stdplugins-intl.h"
 
+
 #define PLUG_IN_PROC "plug-in-goat-exercise"
+
 
 /* Declare local functions.
  */
@@ -32,6 +36,7 @@ static void   run         (const gchar      *name,
                            gint             *nreturn_vals,
                            GimpParam       **return_vals);
 
+
 const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -41,6 +46,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 };
 
 MAIN ()
+
 
 static void
 query (void)
@@ -64,15 +70,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/");
-}
-
-static void commit_shadow (gint32 drawable_id)
-{
-  GimpDrawable *drawable = gimp_drawable_get (drawable_id);
-  gimp_drawable_merge_shadow (drawable_id, TRUE);
-  gimp_drawable_update (drawable_id, 0, 0, drawable->width, drawable->height);
-  gimp_drawable_detach (drawable);
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters");
 }
 
 static void
@@ -85,8 +83,7 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             drawable_id;
-  GeglBuffer        *buffer;
-  GeglBuffer        *shadow_buffer;
+  gint               x, y, width, height;
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -99,16 +96,25 @@ run (const gchar      *name,
   INIT_I18N();
 
   drawable_id = param[2].data.d_drawable;
-  buffer = gimp_drawable_get_buffer (drawable_id);
-  shadow_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
-  gegl_render_op (buffer, shadow_buffer, "gegl:unsharp-mask", NULL);
 
-  g_object_unref (shadow_buffer);
-  g_object_unref (buffer);
-  commit_shadow (drawable_id); /* the buffer first needs to be unreffed, so it is
-                                  in a detached state */
-  
-  gimp_displays_flush ();
+  if (gimp_drawable_mask_intersect (drawable_id, &x, &y, &width, &height))
+    {
+      GeglBuffer *buffer;
+      GeglBuffer *shadow_buffer;
+
+      buffer        = gimp_drawable_get_buffer (drawable_id);
+      shadow_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+
+      gegl_render_op (buffer, shadow_buffer, "gegl:invert", NULL);
+
+      g_object_unref (shadow_buffer); /* flushes the shadow tiles */
+      g_object_unref (buffer);
+
+      gimp_drawable_merge_shadow (drawable_id, TRUE);
+      gimp_drawable_update (drawable_id, x, y, width, height);
+      gimp_displays_flush ();
+    }
+
   values[0].data.d_status = status;
   gegl_exit ();
 }
