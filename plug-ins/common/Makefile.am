@@ -40,6 +40,7 @@ EXTRA_DIST = \
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
+	$(GEGL_CFLAGS)	\
 	-I$(includedir)
 
 libexec_PROGRAMS = \
@@ -127,6 +128,7 @@ libexec_PROGRAMS = \
 	film \
 	filter-pack \
 	fractal-trace \
+	goat-exercise \
 	gradient-map \
 	grid \
 	guillotine \
@@ -2262,6 +2264,22 @@ semi_flatten_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(semi_flatten_RC)
+
+
+goat_exercise_SOURCES = \
+	goat-exercise.c
+
+goat_exercise_LDADD = \
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(CAIRO_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(goat_excercise_RC)
 
 sharpen_SOURCES = \
 	sharpen.c

@@ -62,8 +62,9 @@ AM_CPPFLAGS = \
 	-DGIMP_COMPILATION
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GTK_CFLAGS)	\
+	-I$(top_srcdir)   \
+	$(GTK_CFLAGS)     \
+	$(GEGL_CFLAGS)    \
 	-I$(includedir)
 
 lib_LTLIBRARIES = libgimp-2.0.la libgimpui-2.0.la
@@ -229,6 +230,8 @@ libgimp_2_0_la_sources = \
 	gimpselection.h		\
 	gimptile.c		\
 	gimptile.h		\
+	gimptilebackendplugin.c \
+	gimptilebackendplugin.h \
 	gimpunitcache.c		\
 	gimpunitcache.h		\
 	gimpvectors.c		\
@@ -368,6 +371,7 @@ libgimp_2_0_la_LIBADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(CAIRO_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)
 

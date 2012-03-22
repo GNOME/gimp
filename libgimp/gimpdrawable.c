@@ -23,6 +23,7 @@
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimp.h"
 
+#include "gimptilebackendplugin.h"
 
 #define TILE_WIDTH  gimp_tile_width()
 #define TILE_HEIGHT gimp_tile_height()
@@ -644,4 +645,32 @@ gimp_drawable_attach_new_parasite (gint32          drawable_ID,
   gimp_parasite_free (parasite);
 
   return success;
+}
+
+
+GeglBuffer *
+gimp_drawable_get_buffer (gint32 drawable_ID)
+{
+  GeglBuffer      *buffer;
+  GimpDrawable    *drawable;
+  GeglTileBackend *backend;
+  drawable = gimp_drawable_get (drawable_ID);
+  backend = gimp_tile_backend_plugin_new (drawable, FALSE);
+  buffer = gegl_buffer_new_for_backend (NULL, backend);
+  g_object_unref (backend);
+  return buffer;
+}
+
+
+GeglBuffer *
+gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
+{
+  GeglBuffer      *buffer;
+  GimpDrawable    *drawable;
+  GeglTileBackend *backend;
+  drawable = gimp_drawable_get (drawable_ID);
+  backend = gimp_tile_backend_plugin_new (drawable, TRUE);
+  buffer = gegl_buffer_new_for_backend (NULL, backend);
+  g_object_unref (backend);
+  return buffer;
 }

@@ -29,7 +29,6 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-
 struct _GimpDrawable
 {
   gint32    drawable_id;   /* drawable ID */
@@ -41,6 +40,10 @@ struct _GimpDrawable
   GimpTile *tiles;         /* the normal tiles */
   GimpTile *shadow_tiles;  /* the shadow tiles */
 };
+
+
+GeglBuffer   * gimp_drawable_get_buffer             (gint32         drawable_ID);
+GeglBuffer   * gimp_drawable_get_shadow_buffer      (gint32         drawable_ID);
 
 
 GimpDrawable * gimp_drawable_get                    (gint32         drawable_ID);
