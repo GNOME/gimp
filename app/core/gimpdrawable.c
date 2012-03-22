@@ -1247,19 +1247,31 @@ gimp_drawable_apply_buffer (GimpDrawable         *drawable,
                             gint                  x,
                             gint                  y)
 {
-  PixelRegion src2PR;
+  TempBuf     *temp_buf;
+  PixelRegion  src2PR;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_rect != NULL);
 
-  pixel_region_init (&src2PR, gimp_gegl_buffer_get_tiles (buffer),
-                     buffer_rect->x, buffer_rect->y,
-                     buffer_rect->width, buffer_rect->height,
-                     FALSE);
+  temp_buf = gimp_gegl_buffer_get_temp_buf (buffer);
 
-  GIMP_DRAWABLE_GET_CLASS (drawable)->apply_region (drawable,& src2PR,
+  if (temp_buf)
+    {
+      pixel_region_init_temp_buf (&src2PR, temp_buf,
+                                  buffer_rect->x, buffer_rect->y,
+                                  buffer_rect->width, buffer_rect->height);
+    }
+  else
+    {
+      pixel_region_init (&src2PR, gimp_gegl_buffer_get_tiles (buffer),
+                         buffer_rect->x, buffer_rect->y,
+                         buffer_rect->width, buffer_rect->height,
+                         FALSE);
+    }
+
+  GIMP_DRAWABLE_GET_CLASS (drawable)->apply_region (drawable, &src2PR,
                                                     push_undo, undo_desc,
                                                     opacity, mode,
                                                     src1_tiles, destPR,
