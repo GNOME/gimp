@@ -1235,6 +1235,38 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
 }
 
 void
+gimp_drawable_apply_buffer (GimpDrawable         *drawable,
+                            GeglBuffer           *buffer,
+                            const GeglRectangle  *buffer_rect,
+                            gboolean              push_undo,
+                            const gchar          *undo_desc,
+                            gdouble               opacity,
+                            GimpLayerModeEffects  mode,
+                            TileManager          *src1_tiles,
+                            PixelRegion          *destPR,
+                            gint                  x,
+                            gint                  y)
+{
+  PixelRegion src2PR;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+  g_return_if_fail (buffer_rect != NULL);
+
+  pixel_region_init (&src2PR, gimp_gegl_buffer_get_tiles (buffer),
+                     buffer_rect->x, buffer_rect->y,
+                     buffer_rect->width, buffer_rect->height,
+                     FALSE);
+
+  GIMP_DRAWABLE_GET_CLASS (drawable)->apply_region (drawable,& src2PR,
+                                                    push_undo, undo_desc,
+                                                    opacity, mode,
+                                                    src1_tiles, destPR,
+                                                    x, y);
+}
+
+void
 gimp_drawable_apply_region (GimpDrawable         *drawable,
                             PixelRegion          *src2PR,
                             gboolean              push_undo,

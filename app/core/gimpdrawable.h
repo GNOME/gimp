@@ -140,6 +140,17 @@ void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpImageBaseType   new_base_type,
                                                   gboolean            push_undo);
 
+void            gimp_drawable_apply_buffer       (GimpDrawable       *drawable,
+                                                  GeglBuffer         *buffer,
+                                                  const GeglRectangle *buffer_rect,
+                                                  gboolean            push_undo,
+                                                  const gchar        *undo_desc,
+                                                  gdouble             opacity,
+                                                  GimpLayerModeEffects  mode,
+                                                  TileManager        *src1_tiles,
+                                                  PixelRegion        *destPR,
+                                                  gint                x,
+                                                  gint                y);
 void            gimp_drawable_apply_region       (GimpDrawable       *drawable,
                                                   PixelRegion        *src2PR,
                                                   gboolean            push_undo,

@@ -458,12 +458,9 @@ gimp_edit_fill_full (GimpImage            *image,
                      GimpLayerModeEffects  paint_mode,
                      const gchar          *undo_desc)
 {
-  TileManager *buf_tiles;
-  GeglBuffer  *dest_buffer;
-  PixelRegion  bufPR;
-  gint         x, y, width, height;
-  gint         tiles_bytes;
-  const Babl  *format;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+  gint        x, y, width, height;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -474,22 +471,19 @@ gimp_edit_fill_full (GimpImage            *image,
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
-  tiles_bytes = gimp_drawable_bytes (drawable);
-  format      = gimp_drawable_get_format (drawable);
+  format = gimp_drawable_get_format (drawable);
 
   if (pattern)
     {
       if (! gimp_drawable_has_alpha (drawable) &&
           (pattern->mask->bytes == 2 || pattern->mask->bytes == 4))
         {
-          tiles_bytes++;
           format = gimp_drawable_get_format_with_alpha (drawable);
         }
     }
 
-  buf_tiles = tile_manager_new (width, height, tiles_bytes);
-
-  dest_buffer = gimp_tile_manager_create_buffer (buf_tiles, format);
+  dest_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+                                      format);
 
   if (pattern)
     {
@@ -506,15 +500,13 @@ gimp_edit_fill_full (GimpImage            *image,
       g_object_unref (gegl_color);
     }
 
-  g_object_unref (dest_buffer);
-
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, FALSE);
-  gimp_drawable_apply_region (drawable, &bufPR,
+  gimp_drawable_apply_buffer (drawable, dest_buffer,
+                              GIMP_GEGL_RECT (0, 0, width, height),
                               TRUE, undo_desc,
                               opacity, paint_mode,
                               NULL, NULL, x, y);
 
-  tile_manager_unref (buf_tiles);
+  g_object_unref (dest_buffer);
 
   gimp_drawable_update (drawable, x, y, width, height);
 

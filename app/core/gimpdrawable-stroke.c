@@ -29,9 +29,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -284,18 +281,14 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
                                    gboolean         do_stroke,
                                    gboolean         push_undo)
 {
-  GimpContext   *context = GIMP_CONTEXT (options);
-  GimpImage     *image   = gimp_item_get_image (GIMP_ITEM (drawable));
-  TileManager   *base;
-  GeglBuffer    *base_buffer;
-  GeglBuffer    *mask_buffer;
-  GeglNode      *apply_opacity;
-  GeglRectangle  rect = { 0, };
-  gint           x, y, w, h;
-  gint           bytes;
-  gint           off_x;
-  gint           off_y;
-  PixelRegion    basePR;
+  GimpContext *context = GIMP_CONTEXT (options);
+  GimpImage   *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+  GeglBuffer  *base_buffer;
+  GeglBuffer  *mask_buffer;
+  GeglNode    *apply_opacity;
+  gint         x, y, w, h;
+  gint         off_x;
+  gint         off_y;
 
   /*  must call gimp_channel_is_empty() instead of relying on
    *  gimp_item_mask_intersect() because the selection pretends to
@@ -345,9 +338,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   /* fill a 1-bpp GeglBuffer with black, this will describe the shape
    * of the stroke.
    */
-  rect.width  = w;
-  rect.height = h;
-  mask_buffer = gegl_buffer_new (&rect, babl_format ("Y u8"));
+  mask_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, w, h),
+                                 babl_format ("Y u8"));
 
   gegl_buffer_clear (mask_buffer, NULL);
 
@@ -358,11 +350,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
                             x + off_x, y + off_y,
                             gimp_fill_options_get_antialias (options));
 
-  bytes = gimp_drawable_bytes_with_alpha (drawable);
-
-  base = tile_manager_new (w, h, bytes);
-  base_buffer = gimp_tile_manager_create_buffer (base,
-                                                 gimp_drawable_get_format_with_alpha (drawable));
+  base_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, w, h),
+                                      gimp_drawable_get_format_with_alpha (drawable));
 
   switch (gimp_fill_options_get_style (options))
     {
@@ -400,18 +389,17 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
   g_object_unref (apply_opacity);
 
-  g_object_unref (base_buffer);
   g_object_unref (mask_buffer);
 
   /* Apply to drawable */
-  pixel_region_init (&basePR, base, 0, 0, w, h, FALSE);
-  gimp_drawable_apply_region (drawable, &basePR,
+  gimp_drawable_apply_buffer (drawable, base_buffer,
+                              GIMP_GEGL_RECT (0, 0, w, h),
                               push_undo, C_("undo-type", "Render Stroke"),
                               gimp_context_get_opacity (context),
                               gimp_context_get_paint_mode (context),
                               NULL, NULL, x, y);
 
-  tile_manager_unref (base);
+  g_object_unref (base_buffer);
 
   gimp_drawable_update (drawable, x, y, w, h);
 }

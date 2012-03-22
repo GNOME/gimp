@@ -26,9 +26,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -140,11 +137,9 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
 {
   GimpImage   *image;
   GimpChannel *mask;
-  TileManager *tiles;
   GeglBuffer  *buffer;
   GeglBuffer  *mask_buffer;
   GeglNode    *apply_opacity;
-  PixelRegion  bufPR;
   gint         x1, y1, x2, y2;
   gint         mask_offset_x = 0;
   gint         mask_offset_y = 0;
@@ -225,10 +220,8 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
       mask_offset_y = y1;
     }
 
-  tiles = tile_manager_new ((x2 - x1), (y2 - y1),
-                            gimp_drawable_bytes_with_alpha (drawable));
-  buffer = gimp_tile_manager_create_buffer (tiles,
-                                            gimp_drawable_get_format_with_alpha (drawable));
+  buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
+                                 gimp_drawable_get_format_with_alpha (drawable));
 
   switch (fill_mode)
     {
@@ -261,18 +254,16 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                         buffer, NULL);
 
   g_object_unref (apply_opacity);
-
-  g_object_unref (buffer);
   g_object_unref (mask);
 
   /*  Apply it to the image  */
-  pixel_region_init (&bufPR, tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_drawable_apply_region (drawable, &bufPR,
+  gimp_drawable_apply_buffer (drawable, buffer,
+                              GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
                               TRUE, C_("undo-type", "Bucket Fill"),
                               opacity, paint_mode,
                               NULL, NULL, x1, y1);
 
-  tile_manager_unref (tiles);
+  g_object_unref (buffer);
 
   gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
 
