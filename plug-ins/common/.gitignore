@@ -100,8 +100,6 @@
 /file-aa.exe
 /file-cel
 /file-cel.exe
-/file-compressor
-/file-compressor.exe
 /file-csource
 /file-csource.exe
 /file-desktop-link
@@ -172,6 +170,8 @@
 /filter-pack.exe
 /fractal-trace
 /fractal-trace.exe
+/goat-exercise
+/goat-exercise.exe
 /gradient-map
 /gradient-map.exe
 /grid

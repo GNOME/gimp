@@ -1655,6 +1655,22 @@ fractal_trace_LDADD = \
 	$(INTLLIBS)		\
 	$(fractal_trace_RC)
 
+goat_exercise_SOURCES = \
+	goat-exercise.c
+
+goat_exercise_LDADD = \
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(CAIRO_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(goat_exercise_RC)
+
 gradient_map_SOURCES = \
 	gradient-map.c
 
@@ -2264,22 +2280,6 @@ semi_flatten_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(semi_flatten_RC)
-
-
-goat_exercise_SOURCES = \
-	goat-exercise.c
-
-goat_exercise_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(goat_excercise_RC)
 
 sharpen_SOURCES = \
 	sharpen.c

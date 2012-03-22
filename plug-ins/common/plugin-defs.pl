@@ -83,7 +83,7 @@
     'film' => { ui => 1 },
     'filter-pack' => { ui => 1 },
     'fractal-trace' => { ui => 1 },
-    'goat-exercise' => {},
+    'goat-exercise' => { gegl => 1 },
     'gradient-map' => {},
     'grid' => { ui => 1 },
     'guillotine' => {},

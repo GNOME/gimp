@@ -7,12 +7,15 @@ require 'util.pl';
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
+$destdir = ".";
+$builddir = ".";
+
 $ignorefile = ".gitignore";
 $rcfile     = "gimprc.common";
 
-$outmk = "Makefile.am$FILE_EXT";
-$outignore = "$ignorefile$FILE_EXT";
-$outrc = "$rcfile$FILE_EXT";
+$outmk = "$builddir/Makefile.am$FILE_EXT";
+$outignore = "$builddir/$ignorefile$FILE_EXT";
+$outrc = "$builddir/$rcfile$FILE_EXT";
 
 open MK, "> $outmk";
 open IGNORE, "> $outignore";
@@ -88,6 +91,7 @@ EXTRA_DIST = \\
 INCLUDES = \\
 	-I\$(top_srcdir)	\\
 	\$(GTK_CFLAGS)	\\
+	\$(GEGL_CFLAGS)	\\
 	-I\$(includedir)
 
 libexec_PROGRAMS = \\
@@ -142,6 +146,10 @@ foreach (sort keys %plugins) {
 	$glib = "\$(CAIRO_LIBS)\t\t\\\n\t\$(GDK_PIXBUF_LIBS)\t\\"
     }
 
+    if (exists $plugins{$_}->{gegl}) {
+	$glib .= "\n\t\$(GEGL_LIBS)\t\t\\";
+    }
+
     my $optlib = "";
 
     if (exists $plugins{$_}->{optional}) {
@@ -194,7 +202,7 @@ close RC;
 close MK;
 close IGNORE;
 
-&write_file($outmk);
-&write_file($outignore);
-&write_file($outrc);
+&write_file($outmk, $destdir);
+&write_file($outignore, $destdir);
+&write_file($outrc, $destdir);
 
