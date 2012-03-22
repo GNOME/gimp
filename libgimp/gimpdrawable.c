@@ -25,6 +25,7 @@
 
 #include "gimptilebackendplugin.h"
 
+
 #define TILE_WIDTH  gimp_tile_width()
 #define TILE_HEIGHT gimp_tile_height()
 
@@ -647,30 +648,76 @@ gimp_drawable_attach_new_parasite (gint32          drawable_ID,
   return success;
 }
 
-
+/**
+ * gimp_drawable_get_buffer:
+ * @drawable_ID: the ID of the #GimpDrawableto  get the buffer for.
+ *
+ * Returns a #GeglBuffer of a specified drawable. The buffer can be used
+ * like any other GEGL buffer. Its data will we synced back with the core
+ * drawable when the buffer gets destroyed, or when gegl_buffer_flush()
+ * is called.
+ *
+ * Return value: The #GeglBuffer.
+ *
+ * See Also: gimp_drawable_get_shadow_buffer()
+ *
+ * Since: GIMP 2.10
+ */
 GeglBuffer *
 gimp_drawable_get_buffer (gint32 drawable_ID)
 {
-  GeglBuffer      *buffer;
-  GimpDrawable    *drawable;
-  GeglTileBackend *backend;
+  GimpDrawable *drawable;
+
   drawable = gimp_drawable_get (drawable_ID);
-  backend = gimp_tile_backend_plugin_new (drawable, FALSE);
-  buffer = gegl_buffer_new_for_backend (NULL, backend);
-  g_object_unref (backend);
-  return buffer;
+
+  if (drawable)
+    {
+      GeglTileBackend *backend;
+      GeglBuffer      *buffer;
+
+      backend = _gimp_tile_backend_plugin_new (drawable, FALSE);
+      buffer = gegl_buffer_new_for_backend (NULL, backend);
+      g_object_unref (backend);
+
+      return buffer;
+    }
+
+  return NULL;
 }
 
-
+/**
+ * gimp_drawable_get_shadow_buffer:
+ * @drawable_ID: the ID of the #GimpDrawableto get the buffer for.
+ *
+ * Returns a #GeglBuffer of a specified drawable's shadow tiles. The
+ * buffer can be used like any other GEGL buffer. Its data will we
+ * synced back with the core drawable's shadow tiles when the buffer
+ * gets destroyed, or when gegl_buffer_flush() is called.
+ *
+ * Return value: The #GeglBuffer.
+ *
+ * See Also: gimp_drawable_get_shadow_buffer()
+ *
+ * Since: GIMP 2.10
+ */
 GeglBuffer *
 gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
 {
-  GeglBuffer      *buffer;
-  GimpDrawable    *drawable;
-  GeglTileBackend *backend;
+  GimpDrawable *drawable;
+
   drawable = gimp_drawable_get (drawable_ID);
-  backend = gimp_tile_backend_plugin_new (drawable, TRUE);
-  buffer = gegl_buffer_new_for_backend (NULL, backend);
-  g_object_unref (backend);
-  return buffer;
+
+  if (drawable)
+    {
+      GeglTileBackend *backend;
+      GeglBuffer      *buffer;
+
+      backend = _gimp_tile_backend_plugin_new (drawable, TRUE);
+      buffer = gegl_buffer_new_for_backend (NULL, backend);
+      g_object_unref (backend);
+
+      return buffer;
+    }
+
+  return NULL;
 }

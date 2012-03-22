@@ -28,15 +28,14 @@ G_BEGIN_DECLS
 /* For information look into the html documentation */
 
 
-typedef struct _GimpPlugInInfo        GimpPlugInInfo;
-typedef struct _GimpTile              GimpTile;
-typedef struct _GimpDrawable          GimpDrawable;
-typedef struct _GimpPixelRgn          GimpPixelRgn;
-typedef struct _GimpParamDef          GimpParamDef;
-typedef struct _GimpParamRegion       GimpParamRegion;
-typedef union  _GimpParamData         GimpParamData;
-typedef struct _GimpParam             GimpParam;
-typedef struct _GimpTileBackendPlugin GimpTileBackendPlugin;
+typedef struct _GimpPlugInInfo  GimpPlugInInfo;
+typedef struct _GimpTile        GimpTile;
+typedef struct _GimpDrawable    GimpDrawable;
+typedef struct _GimpPixelRgn    GimpPixelRgn;
+typedef struct _GimpParamDef    GimpParamDef;
+typedef struct _GimpParamRegion GimpParamRegion;
+typedef union  _GimpParamData   GimpParamData;
+typedef struct _GimpParam       GimpParam;
 
 G_END_DECLS
 

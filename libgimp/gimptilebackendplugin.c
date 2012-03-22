@@ -48,7 +48,6 @@ static int gimp_gegl_tile_mul (void)
 static const Babl *get_format (gint32 drawable_ID);
 static const Babl *get_format (gint32 drawable_ID)
 {
-  gint32 image_ID = gimp_item_get_image (drawable_ID);
   switch (gimp_drawable_type (drawable_ID))
     {
       case GIMP_RGB_IMAGE:  return babl_format ("RGB u8");
@@ -58,6 +57,7 @@ static const Babl *get_format (gint32 drawable_ID)
       case GIMP_INDEXED_IMAGE:
       case GIMP_INDEXEDA_IMAGE:
         {
+          gint32 image_ID = gimp_item_get_image (drawable_ID);
           const Babl *pala, *pal;
           gint    ncols;
           guchar *cmap = gimp_image_get_colormap (image_ID, &ncols);
@@ -82,22 +82,23 @@ static gpointer gimp_tile_backend_plugin_command  (GeglTileSource  *tile_store,
                                                    gpointer         data);
 
 static void       gimp_tile_write_mul (GimpTileBackendPlugin *backend_plugin,
-                                       gint                        x,
-                                       gint                        y,
-                                       guchar                     *source);
+                                       gint                   x,
+                                       gint                   y,
+                                       guchar                *source);
 
 static GeglTile * gimp_tile_read_mul (GimpTileBackendPlugin *backend_plugin,
-                                      gint                        x,
-                                      gint                        y);
+                                      gint                   x,
+                                      gint                   y);
 
-G_DEFINE_TYPE (GimpTileBackendPlugin, gimp_tile_backend_plugin,
+
+G_DEFINE_TYPE (GimpTileBackendPlugin, _gimp_tile_backend_plugin,
                GEGL_TYPE_TILE_BACKEND)
 
-#define parent_class gimp_tile_backend_plugin_parent_class
+#define parent_class _gimp_tile_backend_plugin_parent_class
 
 
 static void
-gimp_tile_backend_plugin_class_init (GimpTileBackendPluginClass *klass)
+_gimp_tile_backend_plugin_class_init (GimpTileBackendPluginClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -108,7 +109,7 @@ gimp_tile_backend_plugin_class_init (GimpTileBackendPluginClass *klass)
 }
 
 static void
-gimp_tile_backend_plugin_init (GimpTileBackendPlugin *backend)
+_gimp_tile_backend_plugin_init (GimpTileBackendPlugin *backend)
 {
   GeglTileSource *source = GEGL_TILE_SOURCE (backend);
 
@@ -125,18 +126,18 @@ gimp_tile_backend_plugin_finalize (GObject *object)
   GimpTileBackendPlugin *backend = GIMP_TILE_BACKEND_PLUGIN (object);
 
   if (backend->priv->drawable) /* This also causes a flush */
-     gimp_drawable_detach (backend->priv->drawable);
+    gimp_drawable_detach (backend->priv->drawable);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gpointer
 gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
-                                        GeglTileCommand  command,
-                                        gint             x,
-                                        gint             y,
-                                        gint             z,
-                                        gpointer         data)
+                                  GeglTileCommand  command,
+                                  gint             x,
+                                  gint             y,
+                                  gint             z,
+                                  gpointer         data)
 {
   GimpTileBackendPlugin *backend_plugin;
 
@@ -159,8 +160,8 @@ gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
 
 static GeglTile *
 gimp_tile_read_mul (GimpTileBackendPlugin *backend_plugin,
-                    gint                        x,
-                    gint                        y)
+                    gint                   x,
+                    gint                   y)
 {
   GimpTileBackendPluginPrivate *priv = backend_plugin->priv;
   GeglTileBackend            *backend;
@@ -186,7 +187,7 @@ gimp_tile_read_mul (GimpTileBackendPlugin *backend_plugin,
         if (x + u >= priv->drawable->ntile_cols ||
             y + v >= priv->drawable->ntile_rows)
           continue;
-        
+
         gimp_tile = gimp_drawable_get_tile (priv->drawable,
                                             priv->shadow,
                                             y+v, x+u);
@@ -261,8 +262,8 @@ gimp_tile_write_mul (GimpTileBackendPlugin *backend_plugin,
 }
 
 GeglTileBackend *
-gimp_tile_backend_plugin_new (GimpDrawable *drawable,
-                              gint          shadow)
+_gimp_tile_backend_plugin_new (GimpDrawable *drawable,
+                               gint          shadow)
 {
   const Babl                   *format;
   GeglTileBackend              *ret;
@@ -289,5 +290,6 @@ gimp_tile_backend_plugin_new (GimpDrawable *drawable,
   priv->shadow = shadow;
 
   gegl_tile_backend_set_extent (ret, &rect);
+
   return ret;
 }

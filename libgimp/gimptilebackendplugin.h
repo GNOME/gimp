@@ -25,7 +25,7 @@
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_TILE_BACKEND_PLUGIN            (gimp_tile_backend_plugin_get_type ())
+#define GIMP_TYPE_TILE_BACKEND_PLUGIN            (_gimp_tile_backend_plugin_get_type ())
 #define GIMP_TILE_BACKEND_PLUGIN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TILE_BACKEND_PLUGIN, GimpTileBackendPlugin))
 #define GIMP_TILE_BACKEND_PLUGIN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_TILE_BACKEND_PLUGIN, GimpTileBackendPluginClass))
 #define GIMP_IS_TILE_BACKEND_PLUGIN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TILE_BACKEND_PLUGIN))
@@ -33,6 +33,7 @@ G_BEGIN_DECLS
 #define GIMP_TILE_BACKEND_PLUGIN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_TILE_BACKEND_PLUGIN, GimpTileBackendPluginClass))
 
 
+typedef struct _GimpTileBackendPlugin        GimpTileBackendPlugin;
 typedef struct _GimpTileBackendPluginClass   GimpTileBackendPluginClass;
 typedef struct _GimpTileBackendPluginPrivate GimpTileBackendPluginPrivate;
 
@@ -48,10 +49,10 @@ struct _GimpTileBackendPluginClass
   GeglTileBackendClass parent_class;
 };
 
-GType             gimp_tile_backend_plugin_get_type (void) G_GNUC_CONST;
+GType             _gimp_tile_backend_plugin_get_type (void) G_GNUC_CONST;
 
-GeglTileBackend * gimp_tile_backend_plugin_new      (GimpDrawable *drawable,
-                                                     gint          shadow);
+GeglTileBackend * _gimp_tile_backend_plugin_new      (GimpDrawable *drawable,
+                                                      gint          shadow);
 
 G_END_DECLS
 
