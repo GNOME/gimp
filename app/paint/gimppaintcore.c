@@ -857,8 +857,8 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                        GimpLayerModeEffects      paint_mode,
                        GimpPaintApplicationMode  mode)
 {
-  TileManager *alt = NULL;
-  GeglBuffer  *canvas_buffer;
+  GeglBuffer *base_buffer = NULL;
+  GeglBuffer *canvas_buffer;
 
   if (core->use_saved_proj)
     {
@@ -907,7 +907,8 @@ gimp_paint_core_paste (GimpPaintCore            *core,
         }
 
       canvas_tiles_to_canvas_buf (core);
-      alt = gimp_gegl_buffer_get_tiles (core->undo_buffer);
+
+      base_buffer = core->undo_buffer;
     }
   /*  Otherwise:
    *   combine the canvas buf and the paint mask to the canvas buf
@@ -929,7 +930,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                               core->canvas_buf->height),
                               FALSE, NULL,
                               image_opacity, paint_mode,
-                              alt,  /*  specify an alternative src1  */
+                              base_buffer, /*  specify an alternative src1  */
                               NULL,
                               core->canvas_buf->x,
                               core->canvas_buf->y);

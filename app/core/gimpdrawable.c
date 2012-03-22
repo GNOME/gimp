@@ -1242,7 +1242,7 @@ gimp_drawable_apply_buffer (GimpDrawable         *drawable,
                             const gchar          *undo_desc,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode,
-                            TileManager          *src1_tiles,
+                            GeglBuffer           *base_buffer,
                             PixelRegion          *destPR,
                             gint                  x,
                             gint                  y)
@@ -1251,12 +1251,14 @@ gimp_drawable_apply_buffer (GimpDrawable         *drawable,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_region != NULL);
+  g_return_if_fail (base_buffer == NULL || GEGL_IS_BUFFER (base_buffer));
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->apply_buffer (drawable, buffer,
                                                     buffer_region,
                                                     push_undo, undo_desc,
                                                     opacity, mode,
-                                                    src1_tiles, destPR,
+                                                    base_buffer,
+                                                    destPR,
                                                     x, y);
 }
 

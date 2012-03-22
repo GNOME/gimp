@@ -70,7 +70,7 @@ struct _GimpDrawableClass
                                            const gchar          *undo_desc,
                                            gdouble               opacity,
                                            GimpLayerModeEffects  mode,
-                                           TileManager          *src1_tiles,
+                                           GeglBuffer           *base_buffer,
                                            PixelRegion          *destPR,
                                            gint                  x,
                                            gint                  y);
@@ -148,7 +148,7 @@ void            gimp_drawable_apply_buffer       (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,
                                                   gdouble             opacity,
                                                   GimpLayerModeEffects  mode,
-                                                  TileManager        *src1_tiles,
+                                                  GeglBuffer         *base_buffer,
                                                   PixelRegion        *destPR,
                                                   gint                x,
                                                   gint                y);

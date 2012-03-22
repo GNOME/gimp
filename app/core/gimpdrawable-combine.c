@@ -43,7 +43,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                  const gchar          *undo_desc,
                                  gdouble               opacity,
                                  GimpLayerModeEffects  mode,
-                                 TileManager          *src1_tiles,
+                                 GeglBuffer           *base_buffer,
                                  PixelRegion          *destPR,
                                  gint                  x,
                                  gint                  y)
@@ -53,6 +53,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
   GimpChannel     *mask  = gimp_image_get_mask (image);
   TempBuf         *temp_buf;
   PixelRegion      src2PR;
+  TileManager     *src1_tiles;
   gint             x1, y1, x2, y2;
   gint             offset_x, offset_y;
   PixelRegion      src1PR, my_destPR;
@@ -74,6 +75,11 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                          buffer_region->width, buffer_region->height,
                          FALSE);
     }
+
+  if (base_buffer)
+    src1_tiles = gimp_gegl_buffer_get_tiles (base_buffer);
+  else
+    src1_tiles = NULL;
 
   /*  don't apply the mask to itself and don't apply an empty mask  */
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))

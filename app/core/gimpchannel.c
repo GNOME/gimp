@@ -145,7 +145,7 @@ static void      gimp_channel_apply_buffer   (GimpDrawable        *drawable,
                                               const gchar         *undo_desc,
                                               gdouble              opacity,
                                               GimpLayerModeEffects  mode,
-                                              TileManager         *src1_tiles,
+                                              GeglBuffer          *base_buffer,
                                               PixelRegion         *destPR,
                                               gint                 x,
                                               gint                 y);
@@ -812,7 +812,7 @@ gimp_channel_apply_buffer (GimpDrawable         *drawable,
                            const gchar          *undo_desc,
                            gdouble               opacity,
                            GimpLayerModeEffects  mode,
-                           TileManager          *src1_tiles,
+                           GeglBuffer           *base_buffer,
                            PixelRegion          *destPR,
                            gint                  x,
                            gint                  y)
@@ -823,7 +823,8 @@ gimp_channel_apply_buffer (GimpDrawable         *drawable,
                                                     buffer_region,
                                                     push_undo, undo_desc,
                                                     opacity, mode,
-                                                    src1_tiles, destPR,
+                                                    base_buffer,
+                                                    destPR,
                                                     x, y);
 
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;
