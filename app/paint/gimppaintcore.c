@@ -858,7 +858,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                        GimpPaintApplicationMode  mode)
 {
   TileManager *alt = NULL;
-  PixelRegion  srcPR;
+  GeglBuffer  *canvas_buffer;
 
   if (core->use_saved_proj)
     {
@@ -918,19 +918,23 @@ gimp_paint_core_paste (GimpPaintCore            *core,
     }
 
   /*  intialize canvas buf source pixel regions  */
-  pixel_region_init_temp_buf (&srcPR, core->canvas_buf,
-                              0, 0,
-                              core->canvas_buf->width,
-                              core->canvas_buf->height);
+  canvas_buffer =
+    gimp_temp_buf_create_buffer (core->canvas_buf,
+                                 gimp_drawable_get_format_with_alpha (drawable));
 
   /*  apply the paint area to the image  */
-  gimp_drawable_apply_region (drawable, &srcPR,
+  gimp_drawable_apply_buffer (drawable, canvas_buffer,
+                              GIMP_GEGL_RECT (0, 0,
+                                              core->canvas_buf->width,
+                                              core->canvas_buf->height),
                               FALSE, NULL,
                               image_opacity, paint_mode,
                               alt,  /*  specify an alternative src1  */
                               NULL,
                               core->canvas_buf->x,
                               core->canvas_buf->y);
+
+  g_object_unref (canvas_buffer);
 
   /*  Update the undo extents  */
   core->x1 = MIN (core->x1, core->canvas_buf->x);
