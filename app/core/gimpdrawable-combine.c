@@ -206,23 +206,42 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
  * Takes an additional mask pixel region as well.
  */
 void
-gimp_drawable_real_replace_region (GimpDrawable *drawable,
-                                   PixelRegion  *src2PR,
-                                   gboolean      push_undo,
-                                   const gchar  *undo_desc,
-                                   gdouble       opacity,
-                                   PixelRegion  *maskPR,
-                                   gint          dest_x,
-                                   gint          dest_y)
+gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
+                                   GeglBuffer          *buffer,
+                                   const GeglRectangle *buffer_region,
+                                   gboolean             push_undo,
+                                   const gchar         *undo_desc,
+                                   gdouble              opacity,
+                                   PixelRegion         *maskPR,
+                                   gint                 dest_x,
+                                   gint                 dest_y)
 {
   GimpItem        *item  = GIMP_ITEM (drawable);
   GimpImage       *image = gimp_item_get_image (item);
   GimpChannel     *mask  = gimp_image_get_mask (image);
+  TempBuf         *temp_buf;
+  PixelRegion      src2PR;
   gint             x, y, width, height;
   gint             offset_x, offset_y;
   PixelRegion      src1PR, destPR;
   CombinationMode  operation;
   gboolean         active_components[MAX_CHANNELS];
+
+  temp_buf = gimp_gegl_buffer_get_temp_buf (buffer);
+
+  if (temp_buf)
+    {
+      pixel_region_init_temp_buf (&src2PR, temp_buf,
+                                  buffer_region->x, buffer_region->y,
+                                  buffer_region->width, buffer_region->height);
+    }
+  else
+    {
+      pixel_region_init (&src2PR, gimp_gegl_buffer_get_tiles (buffer),
+                         buffer_region->x, buffer_region->y,
+                         buffer_region->width, buffer_region->height,
+                         FALSE);
+    }
 
   /*  don't apply the mask to itself and don't apply an empty mask  */
   if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
@@ -235,7 +254,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
    *  if it's actually legal...
    */
   operation = gimp_image_get_combination_mode (gimp_drawable_type (drawable),
-                                               src2PR->bytes);
+                                               src2PR.bytes);
   if (operation == -1)
     {
       g_warning ("%s: illegal parameters.", G_STRFUNC);
@@ -246,7 +265,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within drawable bounds  */
-  gimp_rectangle_intersect (dest_x, dest_y, src2PR->w, src2PR->h,
+  gimp_rectangle_intersect (dest_x, dest_y, src2PR.w, src2PR.h,
                             0, 0,
                             gimp_item_get_width  (item),
                             gimp_item_get_height (item),
@@ -279,8 +298,8 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
   pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
                      x, y, width, height,
                      TRUE);
-  pixel_region_resize (src2PR,
-                       src2PR->x + (x - dest_x), src2PR->y + (y - dest_y),
+  pixel_region_resize (&src2PR,
+                       src2PR.x + (x - dest_x), src2PR.y + (y - dest_y),
                        width, height);
 
   if (mask)
@@ -308,7 +327,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
       pixel_region_init_data (&tempPR, temp_data, 1, width,
                               0, 0, width, height);
 
-      combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
+      combine_regions_replace (&src1PR, &src2PR, &destPR, &tempPR, NULL,
                                opacity * 255.999,
                                active_components,
                                operation);
@@ -317,7 +336,7 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
     }
   else
     {
-      combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
+      combine_regions_replace (&src1PR, &src2PR, &destPR, maskPR, NULL,
                                opacity * 255.999,
                                active_components,
                                operation);
