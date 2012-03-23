@@ -457,28 +457,30 @@ gimp_paint_core_finish (GimpPaintCore *core,
   if (push_undo)
     {
       GeglBuffer *buffer;
+      gint        x, y, width, height;
+
+      gimp_rectangle_intersect (core->x1, core->y1,
+                                core->x2 - core->x1, core->y2 - core->y1,
+                                0, 0,
+                                gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                gimp_item_get_height (GIMP_ITEM (drawable)),
+                                &x, &y, &width, &height);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                    core->undo_desc);
 
       GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
-      buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
-                                                     core->x2 - core->x1,
-                                                     core->y2 - core->y1),
+      buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
                                      gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (core->undo_buffer,
-                        GIMP_GEGL_RECT (core->x1, core->y1,
-                                        core->x2 - core->x1,
-                                        core->y2 - core->y1),
+                        GIMP_GEGL_RECT (x, y, width, height),
                         buffer,
                         GIMP_GEGL_RECT (0, 0, 0, 0));
 
       gimp_drawable_push_undo (drawable, NULL,
-                               buffer,
-                               core->x1, core->y1,
-                               core->x2 - core->x1, core->y2 - core->y1);
+                               buffer, x, y, width, height);
 
       g_object_unref (buffer);
 
