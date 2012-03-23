@@ -38,7 +38,6 @@ struct _GimpThresholdTool
   GimpImageMapTool     parent_instance;
 
   GimpThresholdConfig *config;
-  Threshold           *threshold;
 
   /*  dialog  */
   GimpHistogram       *histogram;
