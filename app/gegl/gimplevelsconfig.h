@@ -83,10 +83,4 @@ gboolean   gimp_levels_config_save_cruft       (GimpLevelsConfig      *config,
                                                 GError               **error);
 
 
-/*  temp cruft  */
-void       gimp_levels_config_to_cruft         (GimpLevelsConfig      *config,
-                                                Levels                *cruft,
-                                                gboolean               is_color);
-
-
 #endif /* __GIMP_LEVELS_CONFIG_H__ */

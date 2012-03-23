@@ -38,7 +38,6 @@ struct _GimpLevelsTool
   GimpImageMapTool      parent_instance;
 
   GimpLevelsConfig     *config;
-  GimpLut              *lut;
 
   /* dialog */
   GimpHistogram        *histogram;

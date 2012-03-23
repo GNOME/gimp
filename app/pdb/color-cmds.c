@@ -36,6 +36,7 @@
 #include "gegl/gimpcolorizeconfig.h"
 #include "gegl/gimpcurvesconfig.h"
 #include "gegl/gimpdesaturateconfig.h"
+#include "gegl/gimplevelsconfig.h"
 #include "gegl/gimpposterizeconfig.h"
 #include "gegl/gimpthresholdconfig.h"
 
@@ -116,21 +117,33 @@ levels_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable) ||
-          (! gimp_drawable_has_alpha (drawable) &&
-           channel == GIMP_HISTOGRAM_ALPHA) ||
-          (gimp_drawable_is_gray (drawable) &&
-           channel != GIMP_HISTOGRAM_VALUE && channel != GIMP_HISTOGRAM_ALPHA))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
+          (! gimp_drawable_is_gray (drawable) ||
+           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
+        {
+          GObject *config = g_object_new (GIMP_TYPE_LEVELS_CONFIG,
+                                          "channel", channel,
+                                          NULL);
 
-      if (success)
-        gimp_drawable_levels (drawable, progress,
-                              channel,
-                              low_input, high_input,
-                              gamma,
-                              low_output, high_output);
+          g_object_set (config,
+                        "low-input",   low_input   / 255.0,
+                        "high-input",  high_input  / 255.0,
+                        "gamma",       gamma,
+                        "low-output",  low_output  / 255.0,
+                        "high-output", high_output / 255.0,
+                        NULL);
+
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 C_("undo-type", "Levels"),
+                                                 "gimp:levels",
+                                                 config, TRUE);
+
+          g_object_unref (config);
+        }
+      else
+        success = TRUE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -152,13 +165,13 @@ levels_auto_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          gimp_drawable_levels_stretch (drawable, progress);
+        }
+      else
         success = FALSE;
-
-      if (success)
-        gimp_drawable_levels_stretch (drawable, progress);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -180,13 +193,13 @@ levels_stretch_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          gimp_drawable_levels_stretch (drawable, progress);
+        }
+      else
         success = FALSE;
-
-      if (success)
-        gimp_drawable_levels_stretch (drawable, progress);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -837,7 +850,7 @@ register_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels-stretch",
                                      "Automatically modifies intensity levels in the specified drawable.",
-                                     "This procedure allows intensity levels in the specified drawable to be remapped according to a set of guessed parameters. It is equivalent to clicking the \"Auto\" button in the Levels tool. This procedure is only valid on RGB color and grayscale images. It will not operate on indexed drawables.",
+                                     "This procedure allows intensity levels in the specified drawable to be remapped according to a set of guessed parameters. It is equivalent to clicking the \"Auto\" button in the Levels tool.",
                                      "Joao S.O. Bueno, Shawn Willden",
                                      "Joao S.O. Bueno, Shawn Willden",
                                      "2003",

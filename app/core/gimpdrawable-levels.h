@@ -19,15 +19,6 @@
 #define __GIMP_DRAWABLE_LEVELS_H__
 
 
-void   gimp_drawable_levels         (GimpDrawable *drawable,
-                                     GimpProgress *progress,
-                                     gint32        channel,
-                                     gint32        low_input,
-                                     gint32        high_input,
-                                     gdouble       gamma,
-                                     gint32        low_output,
-                                     gint32        high_output);
-
 void   gimp_drawable_levels_stretch (GimpDrawable *drawable,
                                      GimpProgress *progress);
 

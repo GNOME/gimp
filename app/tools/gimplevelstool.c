@@ -31,8 +31,6 @@
 #include "tools-types.h"
 
 #include "base/gimphistogram.h"
-#include "base/gimplut.h"
-#include "base/levels.h"
 
 #include "gegl/gimplevelsconfig.h"
 #include "gegl/gimpoperationlevels.h"
@@ -82,7 +80,6 @@ static void       gimp_levels_tool_color_picked   (GimpColorTool     *color_tool
 
 static GeglNode * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool,
                                                    GObject          **config);
-static void       gimp_levels_tool_map            (GimpImageMapTool  *im_tool);
 static void       gimp_levels_tool_dialog         (GimpImageMapTool  *im_tool);
 static void       gimp_levels_tool_dialog_unmap   (GtkWidget         *dialog,
                                                    GimpLevelsTool    *tool);
@@ -175,7 +172,6 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   im_tool_class->export_dialog_title = _("Export Levels");
 
   im_tool_class->get_operation       = gimp_levels_tool_get_operation;
-  im_tool_class->map                 = gimp_levels_tool_map;
   im_tool_class->dialog              = gimp_levels_tool_dialog;
   im_tool_class->reset               = gimp_levels_tool_reset;
   im_tool_class->settings_import     = gimp_levels_tool_settings_import;
@@ -185,22 +181,13 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 static void
 gimp_levels_tool_init (GimpLevelsTool *tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
-
-  tool->lut           = gimp_lut_new ();
-  tool->histogram     = gimp_histogram_new ();
-  tool->active_picker = NULL;
-
-  im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
-  im_tool->apply_data = tool->lut;
+  tool->histogram = gimp_histogram_new ();
 }
 
 static void
 gimp_levels_tool_finalize (GObject *object)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (object);
-
-  gimp_lut_free (tool->lut);
 
   if (tool->histogram)
     {
@@ -222,13 +209,6 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 
   if (! drawable)
     return FALSE;
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Levels does not operate on indexed layers."));
-      return FALSE;
-    }
 
   gimp_config_reset (GIMP_CONFIG (l_tool->config));
 
@@ -275,22 +255,6 @@ gimp_levels_tool_get_operation (GimpImageMapTool  *im_tool,
                  NULL);
 
   return node;
-}
-
-static void
-gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
-{
-  GimpLevelsTool *tool     = GIMP_LEVELS_TOOL (image_map_tool);
-  GimpDrawable   *drawable = image_map_tool->drawable;
-  Levels          levels;
-
-  gimp_levels_config_to_cruft (tool->config, &levels,
-                               gimp_drawable_is_rgb (drawable));
-
-  gimp_lut_setup (tool->lut,
-                  (GimpLutFunc) levels_lut_func,
-                  &levels,
-                  gimp_drawable_bytes (drawable));
 }
 
 
