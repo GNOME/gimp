@@ -887,7 +887,7 @@ gimp_layer_get_node (GimpItem *item)
           gegl_node_connect_to (mask,                "output",
                                 layer->opacity_node, "input");
         }
-      else
+      else if (gimp_layer_get_apply_mask (layer))
         {
           gegl_node_connect_to (mask,                "output",
                                 layer->opacity_node, "aux");
@@ -1650,6 +1650,23 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
 
       layer->apply_mask = apply ? TRUE : FALSE;
 
+      if (layer->opacity_node && ! gimp_layer_get_show_mask (layer))
+        {
+          GeglNode *mask;
+
+          mask = gimp_drawable_get_source_node (GIMP_DRAWABLE (layer->mask));
+
+          if (layer->apply_mask)
+            {
+              gegl_node_connect_to (mask,                "output",
+                                    layer->opacity_node, "aux");
+            }
+          else
+            {
+              gegl_node_disconnect (layer->opacity_node, "aux");
+            }
+        }
+
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
                             gimp_item_get_width  (GIMP_ITEM (layer)),
@@ -1732,8 +1749,12 @@ gimp_layer_set_show_mask (GimpLayer *layer,
 
               gegl_node_connect_to (source,              "output",
                                     layer->opacity_node, "input");
-              gegl_node_connect_to (mask,                "output",
-                                    layer->opacity_node, "aux");
+
+              if (gimp_layer_get_apply_mask (layer))
+                {
+                  gegl_node_connect_to (mask,                "output",
+                                        layer->opacity_node, "aux");
+                }
             }
         }
 
