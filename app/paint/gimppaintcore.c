@@ -933,6 +933,8 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                               FALSE, NULL,
                               image_opacity, paint_mode,
                               base_buffer, /*  specify an alternative src1  */
+                              core->canvas_buf->x,
+                              core->canvas_buf->y,
                               NULL,
                               core->canvas_buf->x,
                               core->canvas_buf->y);

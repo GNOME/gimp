@@ -51,16 +51,16 @@ gimp_layer_project_region (GimpDrawable *drawable,
       /*  If we're showing the layer mask instead of the layer...  */
 
       PixelRegion  srcPR;
-      TileManager *temp_tiles;
+      GeglBuffer  *temp_buffer;
 
       gimp_drawable_init_src_region (GIMP_DRAWABLE (mask), &srcPR,
                                      x, y, width, height,
-                                     &temp_tiles);
+                                     &temp_buffer);
 
       copy_gray_to_region (&srcPR, projPR);
 
-      if (temp_tiles)
-        tile_manager_unref (temp_tiles);
+      if (temp_buffer)
+        g_object_unref (temp_buffer);
     }
   else
     {
@@ -69,23 +69,23 @@ gimp_layer_project_region (GimpDrawable *drawable,
       GimpImage       *image = gimp_item_get_image (GIMP_ITEM (layer));
       PixelRegion      srcPR;
       PixelRegion      maskPR;
-      PixelRegion     *mask_pr          = NULL;
-      const guchar    *colormap         = NULL;
-      TileManager     *temp_mask_tiles  = NULL;
-      TileManager     *temp_layer_tiles = NULL;
+      PixelRegion     *mask_pr           = NULL;
+      const guchar    *colormap          = NULL;
+      GeglBuffer      *temp_mask_buffer  = NULL;
+      GeglBuffer      *temp_layer_buffer = NULL;
       InitialMode      initial_mode;
       CombinationMode  combination_mode;
       gboolean         visible[MAX_CHANNELS];
 
       gimp_drawable_init_src_region (drawable, &srcPR,
                                      x, y, width, height,
-                                     &temp_layer_tiles);
+                                     &temp_layer_buffer);
 
       if (mask && gimp_layer_get_apply_mask (layer))
         {
           gimp_drawable_init_src_region (GIMP_DRAWABLE (mask), &maskPR,
                                          x, y, width, height,
-                                         &temp_mask_tiles);
+                                         &temp_mask_buffer);
           mask_pr = &maskPR;
         }
 
@@ -144,10 +144,10 @@ gimp_layer_project_region (GimpDrawable *drawable,
                           initial_mode);
         }
 
-      if (temp_layer_tiles)
-        tile_manager_unref (temp_layer_tiles);
+      if (temp_layer_buffer)
+        g_object_unref (temp_layer_buffer);
 
-      if (temp_mask_tiles)
-        tile_manager_unref (temp_mask_tiles);
+      if (temp_mask_buffer)
+        g_object_unref (temp_mask_buffer);
     }
 }

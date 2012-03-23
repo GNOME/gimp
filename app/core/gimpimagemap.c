@@ -775,8 +775,8 @@ gimp_image_map_do (GimpImageMap *image_map)
                                       GIMP_GEGL_RECT (x, y, w, h),
                                       FALSE, NULL,
                                       GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                                      NULL, NULL,
-                                      x, y);
+                                      NULL, x, y,
+                                      NULL, x, y);
 
           gimp_drawable_update (image_map->drawable, x, y, w, h);
 
@@ -837,8 +837,8 @@ gimp_image_map_data_written (GObject             *operation,
                                               extent->width, extent->height),
                               FALSE, NULL,
                               GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                              NULL, NULL,
-                              extent->x, extent->y);
+                              NULL, extent->x, extent->y,
+                              NULL, extent->x, extent->y);
 
   gimp_drawable_update (image_map->drawable,
                         extent->x, extent->y,

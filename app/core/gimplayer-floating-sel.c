@@ -336,7 +336,10 @@ floating_sel_composite (GimpLayer *layer)
                                   TRUE, NULL,
                                   gimp_layer_get_opacity (layer),
                                   gimp_layer_get_mode (layer),
-                                  NULL, NULL,
+                                  NULL,
+                                  combine_x - dr_off_x,
+                                  combine_y - dr_off_y,
+                                  NULL,
                                   combine_x - dr_off_x,
                                   combine_y - dr_off_y);
 

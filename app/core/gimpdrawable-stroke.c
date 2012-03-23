@@ -397,7 +397,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
                               push_undo, C_("undo-type", "Render Stroke"),
                               gimp_context_get_opacity (context),
                               gimp_context_get_paint_mode (context),
-                              NULL, NULL, x, y);
+                              NULL, x, y,
+                              NULL, x, y);
 
   g_object_unref (base_buffer);
 

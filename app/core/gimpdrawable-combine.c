@@ -46,7 +46,9 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                  gdouble               opacity,
                                  GimpLayerModeEffects  mode,
                                  GeglBuffer           *base_buffer,
-                                 PixelRegion          *destPR,
+                                 gint                  base_x,
+                                 gint                  base_y,
+                                 GeglBuffer           *dest_buffer,
                                  gint                  dest_x,
                                  gint                  dest_y)
 {
@@ -54,10 +56,9 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
   GimpImage       *image = gimp_item_get_image (item);
   GimpChannel     *mask  = gimp_image_get_mask (image);
   TempBuf         *temp_buf;
-  PixelRegion      src2PR;
+  PixelRegion      src1PR, src2PR, destPR;
   gint             x, y, width, height;
   gint             offset_x, offset_y;
-  PixelRegion      src1PR, my_destPR;
   CombinationMode  operation;
   gboolean         active_components[MAX_CHANNELS];
 
@@ -102,7 +103,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within drawable bounds  */
-  gimp_rectangle_intersect (dest_x, dest_y, src2PR.w, src2PR.h,
+  gimp_rectangle_intersect (base_x, base_y, src2PR.w, src2PR.h,
                             0, 0,
                             gimp_item_get_width  (item),
                             gimp_item_get_height (item),
@@ -143,8 +144,8 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                                   gegl_buffer_get_format (buffer));
 
           gegl_buffer_copy (buffer,
-                            GIMP_GEGL_RECT (buffer_region->x + (x - dest_x),
-                                            buffer_region->y + (y - dest_y),
+                            GIMP_GEGL_RECT (buffer_region->x + (x - base_x),
+                                            buffer_region->y + (y - base_y),
                                             width, height),
                             undo->applied_buffer,
                             GIMP_GEGL_RECT (0, 0, width, height));
@@ -157,20 +158,23 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                      x, y, width, height,
                      FALSE);
 
-  /* check if an alternative to using the drawable's data as dest was
-   * provided...
-   */
-  if (!destPR)
+  pixel_region_resize (&src2PR,
+                       src2PR.x + (x - base_x), src2PR.y + (y - base_y),
+                       width, height);
+
+  if (dest_buffer)
     {
-      pixel_region_init (&my_destPR, gimp_drawable_get_tiles (drawable),
+      pixel_region_init (&destPR, gimp_gegl_buffer_get_tiles (dest_buffer),
+                         dest_x, dest_y,
+                         buffer_region->width, buffer_region->height,
+                         TRUE);
+    }
+  else
+    {
+      pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
                          x, y, width, height,
                          TRUE);
-      destPR = &my_destPR;
     }
-
-  pixel_region_resize (&src2PR,
-                       src2PR.x + (x - dest_x), src2PR.y + (y - dest_y),
-                       width, height);
 
   if (mask)
     {
@@ -183,7 +187,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                          width, height,
                          FALSE);
 
-      combine_regions (&src1PR, &src2PR, destPR, &maskPR, NULL,
+      combine_regions (&src1PR, &src2PR, &destPR, &maskPR, NULL,
                        opacity * 255.999,
                        mode,
                        active_components,
@@ -191,7 +195,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
     }
   else
     {
-      combine_regions (&src1PR, &src2PR, destPR, NULL, NULL,
+      combine_regions (&src1PR, &src2PR, &destPR, NULL, NULL,
                        opacity * 255.999,
                        mode,
                        active_components,

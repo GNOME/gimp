@@ -46,7 +46,7 @@ gimp_channel_project_region (GimpDrawable *drawable,
 {
   GimpChannel *channel = GIMP_CHANNEL (drawable);
   PixelRegion  srcPR;
-  TileManager *temp_tiles;
+  GeglBuffer  *temp_buffer;
   guchar       col[3];
   guchar       opacity;
 
@@ -55,7 +55,7 @@ gimp_channel_project_region (GimpDrawable *drawable,
 
   gimp_drawable_init_src_region (drawable, &srcPR,
                                  x, y, width, height,
-                                 &temp_tiles);
+                                 &temp_buffer);
 
   if (combine)
     {
@@ -78,6 +78,6 @@ gimp_channel_project_region (GimpDrawable *drawable,
                        INITIAL_CHANNEL_SELECTION));
     }
 
-  if (temp_tiles)
-    tile_manager_unref (temp_tiles);
+  if (temp_buffer)
+    g_object_unref (temp_buffer);
 }

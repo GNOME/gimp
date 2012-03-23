@@ -71,9 +71,11 @@ struct _GimpDrawableClass
                                            gdouble               opacity,
                                            GimpLayerModeEffects  mode,
                                            GeglBuffer           *base_buffer,
-                                           PixelRegion          *destPR,
-                                           gint                  x,
-                                           gint                  y);
+                                           gint                  base_x,
+                                           gint                  base_y,
+                                           GeglBuffer           *dest_buffer,
+                                           gint                  dest_x,
+                                           gint                  dest_y);
   void          (* replace_buffer)        (GimpDrawable         *drawable,
                                            GeglBuffer           *buffer,
                                            const GeglRectangle  *buffer_region,
@@ -150,9 +152,11 @@ void            gimp_drawable_apply_buffer       (GimpDrawable       *drawable,
                                                   gdouble             opacity,
                                                   GimpLayerModeEffects  mode,
                                                   GeglBuffer         *base_buffer,
-                                                  PixelRegion        *destPR,
-                                                  gint                x,
-                                                  gint                y);
+                                                  gint                base_x,
+                                                  gint                base_y,
+                                                  GeglBuffer         *dest_buffer,
+                                                  gint                dest_x,
+                                                  gint                dest_y);
 void            gimp_drawable_replace_buffer     (GimpDrawable       *drawable,
                                                   GeglBuffer         *buffer,
                                                   const GeglRectangle *buffer_region,
@@ -175,7 +179,7 @@ void            gimp_drawable_init_src_region    (GimpDrawable       *drawable,
                                                   gint                y,
                                                   gint                width,
                                                   gint                height,
-                                                  TileManager       **temp_tiles);
+                                                  GeglBuffer        **temp_buffer);
 
 GeglBuffer    * gimp_drawable_get_buffer         (GimpDrawable       *drawable);
 void            gimp_drawable_set_buffer         (GimpDrawable       *drawable,

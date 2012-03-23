@@ -1243,23 +1243,27 @@ gimp_drawable_apply_buffer (GimpDrawable         *drawable,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode,
                             GeglBuffer           *base_buffer,
-                            PixelRegion          *destPR,
-                            gint                  x,
-                            gint                  y)
+                            gint                  base_x,
+                            gint                  base_y,
+                            GeglBuffer           *dest_buffer,
+                            gint                  dest_x,
+                            gint                  dest_y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_region != NULL);
   g_return_if_fail (base_buffer == NULL || GEGL_IS_BUFFER (base_buffer));
+  g_return_if_fail (dest_buffer == NULL || GEGL_IS_BUFFER (dest_buffer));
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->apply_buffer (drawable, buffer,
                                                     buffer_region,
                                                     push_undo, undo_desc,
                                                     opacity, mode,
                                                     base_buffer,
-                                                    destPR,
-                                                    x, y);
+                                                    base_x, base_y,
+                                                    dest_buffer,
+                                                    dest_x, dest_y);
 }
 
 void
@@ -1310,14 +1314,14 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
                                gint           y,
                                gint           width,
                                gint           height,
-                               TileManager  **temp_tiles)
+                               GeglBuffer   **temp_buffer)
 {
   GimpLayer *fs;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (srcPR != NULL);
-  g_return_if_fail (temp_tiles != NULL);
+  g_return_if_fail (temp_buffer != NULL);
 
   fs = gimp_drawable_get_floating_sel (drawable);
 
@@ -1340,44 +1344,30 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
                                     &combine_x, &combine_y,
                                     &combine_width, &combine_height))
         {
-          PixelRegion tempPR;
-          PixelRegion destPR;
-          gboolean    lock_alpha = FALSE;
+          gboolean lock_alpha = FALSE;
 
           /*  a temporary buffer for the compisition of the drawable and
            *  its floating selection
            */
-          *temp_tiles = tile_manager_new (width, height,
-                                          gimp_drawable_bytes (drawable));
+          *temp_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                               width, height),
+                                               gimp_drawable_get_format (drawable));
 
-          /*  first, initialize the entire buffer with the drawable's
-           *  contents
-           */
-          pixel_region_init (&tempPR, gimp_drawable_get_tiles (drawable),
-                             x, y, width, height,
-                             FALSE);
-          pixel_region_init (&destPR, *temp_tiles,
-                             0, 0, width, height,
-                             TRUE);
-          copy_region (&tempPR, &destPR);
+          gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                            GIMP_GEGL_RECT (x, y, width, height),
+                            *temp_buffer,
+                            GIMP_GEGL_RECT (0, 0, 0, 0));
 
           /*  then, apply the floating selection onto the buffer just as
            *  we apply it onto the drawable when anchoring the floating
            *  selection
            */
-          pixel_region_init (&destPR, *temp_tiles,
-                             combine_x - x - off_x,
-                             combine_y - y - off_y,
-                             combine_width, combine_height,
-                             TRUE);
 
-          if (GIMP_IS_LAYER (drawable))
-            {
-              lock_alpha = gimp_layer_get_lock_alpha (GIMP_LAYER (drawable));
+          lock_alpha = (GIMP_IS_LAYER (drawable) &&
+                        gimp_layer_get_lock_alpha (GIMP_LAYER (drawable)));
 
-              if (lock_alpha)
-                gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), FALSE, FALSE);
-            }
+          if (lock_alpha)
+            gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), FALSE, FALSE);
 
           gimp_drawable_apply_buffer (drawable,
                                       gimp_drawable_get_buffer (GIMP_DRAWABLE (fs)),
@@ -1388,9 +1378,14 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
                                       FALSE, NULL,
                                       gimp_layer_get_opacity (fs),
                                       gimp_layer_get_mode (fs),
-                                      NULL, &destPR,
+                                      NULL,
                                       combine_x - off_x,
-                                      combine_y - off_y);
+                                      combine_y - off_y,
+                                      *temp_buffer,
+                                      combine_x - x - off_x,
+                                      combine_y - y - off_y);
+
+          gimp_gegl_buffer_refetch_tiles (*temp_buffer);
 
           if (lock_alpha)
             gimp_layer_set_lock_alpha (GIMP_LAYER (drawable), TRUE, FALSE);
@@ -1398,7 +1393,7 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
           /*  finally, return a PixelRegion on the composited buffer instead
            *  of the drawable's tiles
            */
-          pixel_region_init (srcPR, *temp_tiles,
+          pixel_region_init (srcPR, gimp_gegl_buffer_get_tiles (*temp_buffer),
                              0, 0, width, height,
                              FALSE);
 
@@ -1409,7 +1404,7 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
   pixel_region_init (srcPR, gimp_drawable_get_tiles (drawable),
                      x, y, width, height,
                      FALSE);
-  *temp_tiles = NULL;
+  *temp_buffer = NULL;
 }
 
 GeglBuffer *

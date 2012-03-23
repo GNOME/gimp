@@ -103,7 +103,8 @@ gimp_drawable_merge_shadow_buffer (GimpDrawable *drawable,
                                   GIMP_GEGL_RECT (x, y, width, height),
                                   push_undo, undo_desc,
                                   GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                                  NULL, NULL, x, y);
+                                  NULL, x, y,
+                                  NULL, x, y);
 
       g_object_unref (buffer);
     }
