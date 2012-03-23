@@ -25,7 +25,6 @@
 
 #include "base/gimphistogram.h"
 #include "core/gimpdrawable-color-balance.h"
-#include "core/gimpdrawable-curves.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpdrawable-hue-saturation.h"
@@ -35,6 +34,7 @@
 #include "core/gimpparamspecs.h"
 #include "gegl/gimpbrightnesscontrastconfig.h"
 #include "gegl/gimpcolorizeconfig.h"
+#include "gegl/gimpcurvesconfig.h"
 #include "gegl/gimpdesaturateconfig.h"
 #include "gegl/gimpposterizeconfig.h"
 #include "gegl/gimpthresholdconfig.h"
@@ -393,18 +393,26 @@ curves_spline_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
-          (! gimp_drawable_has_alpha (drawable) &&
-           channel == GIMP_HISTOGRAM_ALPHA) ||
-          (gimp_drawable_is_gray (drawable) &&
-           channel != GIMP_HISTOGRAM_VALUE && channel != GIMP_HISTOGRAM_ALPHA))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          ! (num_points & 1) &&
+          (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
+          (! gimp_drawable_is_gray (drawable) ||
+           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
+        {
+          GObject *config = gimp_curves_config_new_spline (channel,
+                                                           control_pts,
+                                                           num_points);
 
-      if (success)
-        gimp_drawable_curves_spline (drawable, progress,
-                                     channel, control_pts, num_points);
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 C_("undo-type", "Curves"),
+                                                 "gimp:curves",
+                                                 config, TRUE);
+
+          g_object_unref (config);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -432,18 +440,26 @@ curves_explicit_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
-          (! gimp_drawable_has_alpha (drawable) &&
-           channel == GIMP_HISTOGRAM_ALPHA) ||
-          (gimp_drawable_is_gray (drawable) &&
-           channel != GIMP_HISTOGRAM_VALUE && channel != GIMP_HISTOGRAM_ALPHA))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+          (num_bytes == 256) &&
+          (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
+          (! gimp_drawable_is_gray (drawable) ||
+           channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
+        {
+          GObject *config = gimp_curves_config_new_spline (channel,
+                                                           curve,
+                                                           num_bytes);
 
-      if (success)
-        gimp_drawable_curves_explicit (drawable, progress,
-                                       channel, curve, num_bytes);
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 C_("undo-type", "Curves"),
+                                                 "gimp:curves",
+                                                 config, TRUE);
+
+          g_object_unref (config);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,

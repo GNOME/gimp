@@ -30,9 +30,7 @@
 
 #include "tools-types.h"
 
-#include "base/curves.h"
 #include "base/gimphistogram.h"
-#include "base/gimplut.h"
 
 #include "gegl/gimpcurvesconfig.h"
 #include "gegl/gimpoperationcurves.h"
@@ -65,8 +63,6 @@
 
 /*  local function prototypes  */
 
-static void       gimp_curves_tool_finalize       (GObject              *object);
-
 static gboolean   gimp_curves_tool_initialize     (GimpTool             *tool,
                                                    GimpDisplay          *display,
                                                    GError              **error);
@@ -92,7 +88,6 @@ static void       gimp_curves_tool_color_picked   (GimpColorTool        *color_t
                                                    gint                  color_index);
 static GeglNode * gimp_curves_tool_get_operation  (GimpImageMapTool     *image_map_tool,
                                                    GObject             **config);
-static void       gimp_curves_tool_map            (GimpImageMapTool     *image_map_tool);
 static void       gimp_curves_tool_dialog         (GimpImageMapTool     *image_map_tool);
 static void       gimp_curves_tool_reset          (GimpImageMapTool     *image_map_tool);
 static gboolean   gimp_curves_tool_settings_import(GimpImageMapTool     *image_map_tool,
@@ -161,12 +156,9 @@ gimp_curves_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 {
-  GObjectClass          *object_class     = G_OBJECT_CLASS (klass);
   GimpToolClass         *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpColorToolClass    *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class    = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
-
-  object_class->finalize             = gimp_curves_tool_finalize;
 
   tool_class->initialize             = gimp_curves_tool_initialize;
   tool_class->button_release         = gimp_curves_tool_button_release;
@@ -181,7 +173,6 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
   im_tool_class->export_dialog_title = _("Export Curves");
 
   im_tool_class->get_operation       = gimp_curves_tool_get_operation;
-  im_tool_class->map                 = gimp_curves_tool_map;
   im_tool_class->dialog              = gimp_curves_tool_dialog;
   im_tool_class->reset               = gimp_curves_tool_reset;
   im_tool_class->settings_import     = gimp_curves_tool_settings_import;
@@ -191,26 +182,10 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 static void
 gimp_curves_tool_init (GimpCurvesTool *tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
-  gint              i;
-
-  tool->lut = gimp_lut_new ();
+  gint i;
 
   for (i = 0; i < G_N_ELEMENTS (tool->picked_color); i++)
     tool->picked_color[i] = -1.0;
-
-  im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
-  im_tool->apply_data = tool->lut;
-}
-
-static void
-gimp_curves_tool_finalize (GObject *object)
-{
-  GimpCurvesTool *tool = GIMP_CURVES_TOOL (object);
-
-  gimp_lut_free (tool->lut);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
@@ -225,13 +200,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
   if (! drawable)
     return FALSE;
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Curves does not operate on indexed layers."));
-      return FALSE;
-    }
 
   gimp_config_reset (GIMP_CONFIG (c_tool->config));
 
@@ -406,22 +374,6 @@ gimp_curves_tool_get_operation (GimpImageMapTool  *image_map_tool,
                  NULL);
 
   return node;
-}
-
-static void
-gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
-{
-  GimpCurvesTool *tool     = GIMP_CURVES_TOOL (image_map_tool);
-  GimpDrawable   *drawable = image_map_tool->drawable;
-  Curves          curves;
-
-  gimp_curves_config_to_cruft (tool->config, &curves,
-                               gimp_drawable_is_rgb (drawable));
-
-  gimp_lut_setup (tool->lut,
-                  (GimpLutFunc) curves_lut_func,
-                  &curves,
-                  gimp_drawable_bytes (drawable));
 }
 
 

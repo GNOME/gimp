@@ -52,6 +52,13 @@ struct _GimpCurvesConfigClass
 
 GType      gimp_curves_config_get_type      (void) G_GNUC_CONST;
 
+GObject  * gimp_curves_config_new_spline    (gint32             channel,
+                                             const guint8      *points,
+                                             gint               n_points);
+GObject *  gimp_curves_config_new_explicit  (gint32             channel,
+                                             const guint8      *points,
+                                             gint               n_points);
+
 void       gimp_curves_config_reset_channel (GimpCurvesConfig  *config);
 
 gboolean   gimp_curves_config_load_cruft    (GimpCurvesConfig  *config,
@@ -60,12 +67,6 @@ gboolean   gimp_curves_config_load_cruft    (GimpCurvesConfig  *config,
 gboolean   gimp_curves_config_save_cruft    (GimpCurvesConfig  *config,
                                              gpointer           fp,
                                              GError           **error);
-
-
-/*  temp cruft  */
-void       gimp_curves_config_to_cruft      (GimpCurvesConfig  *config,
-                                             Curves            *cruft,
-                                             gboolean           is_color);
 
 
 #endif /* __GIMP_CURVES_CONFIG_H__ */

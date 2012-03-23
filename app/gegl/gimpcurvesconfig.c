@@ -34,9 +34,6 @@
 
 #include "base/gimphistogram.h"
 
-/*  temp cruft  */
-#include "base/curves.h"
-
 #include "core/gimpcurve.h"
 
 #include "gimpcurvesconfig.h"
@@ -354,6 +351,70 @@ gimp_curves_config_curve_dirty (GimpCurve        *curve,
 
 /*  public functions  */
 
+GObject *
+gimp_curves_config_new_spline (gint32        channel,
+                               const guint8 *points,
+                               gint          n_points)
+{
+  GimpCurvesConfig *config;
+  GimpCurve        *curve;
+  gint              i;
+
+  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
+                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+
+  config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
+
+  curve = config->curve[channel];
+
+  gimp_data_freeze (GIMP_DATA (curve));
+
+  /* FIXME: create a curves object with the right number of points */
+  /*  unset the last point  */
+  gimp_curve_set_point (curve, curve->n_points - 1, -1, -1);
+
+  n_points = MIN (n_points / 2, curve->n_points);
+
+  for (i = 0; i < n_points; i++)
+    gimp_curve_set_point (curve, i,
+                          (gdouble) points[i * 2]     / 255.0,
+                          (gdouble) points[i * 2 + 1] / 255.0);
+
+  gimp_data_thaw (GIMP_DATA (curve));
+
+  return G_OBJECT (config);
+}
+
+GObject *
+gimp_curves_config_new_explicit (gint32        channel,
+                                 const guint8 *points,
+                                 gint          n_points)
+{
+  GimpCurvesConfig *config;
+  GimpCurve        *curve;
+  gint              i;
+
+  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
+                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+
+  config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
+
+  curve = config->curve[channel];
+
+  gimp_data_freeze (GIMP_DATA (curve));
+
+  gimp_curve_set_curve_type (curve, GIMP_CURVE_FREE);
+
+  for (i = 0; i < 256; i++)
+    gimp_curve_set_curve (curve,
+                          (gdouble) i         / 255.0,
+                          (gdouble) points[i] / 255.0);
+
+  gimp_data_thaw (GIMP_DATA (curve));
+
+  return G_OBJECT (config);
+}
+
 void
 gimp_curves_config_reset_channel (GimpCurvesConfig *config)
 {
@@ -505,34 +566,4 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
     }
 
   return TRUE;
-}
-
-
-/*  temp cruft  */
-
-void
-gimp_curves_config_to_cruft (GimpCurvesConfig *config,
-                             Curves           *cruft,
-                             gboolean          is_color)
-{
-  GimpHistogramChannel channel;
-
-  g_return_if_fail (GIMP_IS_CURVES_CONFIG (config));
-  g_return_if_fail (cruft != NULL);
-
-  for (channel = GIMP_HISTOGRAM_VALUE;
-       channel <= GIMP_HISTOGRAM_ALPHA;
-       channel++)
-    {
-      gimp_curve_get_uchar (config->curve[channel],
-                            sizeof (cruft->curve[channel]),
-                            cruft->curve[channel]);
-    }
-
-  if (! is_color)
-    {
-      gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_ALPHA],
-                            sizeof (cruft->curve[1]),
-                            cruft->curve[1]);
-    }
 }

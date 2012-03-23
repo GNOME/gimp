@@ -132,8 +132,6 @@ libappcore_a_sources = \
 	gimpdrawable-combine.h			\
 	gimpdrawable-convert.c			\
 	gimpdrawable-convert.h			\
-	gimpdrawable-curves.c			\
-	gimpdrawable-curves.h			\
 	gimpdrawable-equalize.c			\
 	gimpdrawable-equalize.h			\
 	gimpdrawable-foreground-extract.c	\

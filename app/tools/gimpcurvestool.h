@@ -37,7 +37,6 @@ struct _GimpCurvesTool
   GimpImageMapTool      parent_instance;
 
   GimpCurvesConfig     *config;
-  GimpLut              *lut;
 
   /* dialog */
   gdouble               picked_color[5];
