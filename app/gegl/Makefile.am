@@ -78,6 +78,8 @@ libappgegl_a_sources = \
 	\
 	gimpoperationpointlayermode.c		\
 	gimpoperationpointlayermode.h		\
+	gimpoperationnormalmode.c		\
+	gimpoperationnormalmode.h		\
 	gimpoperationdissolvemode.c     	\
 	gimpoperationdissolvemode.h     	\
 	gimpoperationbehindmode.c       	\

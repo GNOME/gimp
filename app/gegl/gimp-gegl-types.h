@@ -46,6 +46,7 @@ typedef struct _GimpOperationPosterize          GimpOperationPosterize;
 typedef struct _GimpOperationThreshold          GimpOperationThreshold;
 
 typedef struct _GimpOperationPointLayerMode     GimpOperationPointLayerMode;
+typedef struct _GimpOperationNormalMode         GimpOperationNormalMode;
 typedef struct _GimpOperationDissolveMode       GimpOperationDissolveMode;
 typedef struct _GimpOperationBehindMode         GimpOperationBehindMode;
 typedef struct _GimpOperationMultiplyMode       GimpOperationMultiplyMode;

@@ -127,7 +127,8 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
                                    g_param_spec_enum ("blend-mode", NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                       GIMP_NORMAL_MODE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PREMULTIPLIED,
                                    g_param_spec_boolean ("premultiplied",
@@ -162,7 +163,7 @@ gimp_operation_point_layer_mode_set_property (GObject      *object,
       break;
 
     case PROP_PREMULTIPLIED:
-      self->premultiplied = g_value_get_enum (value);
+      self->premultiplied = g_value_get_boolean (value);
       break;
 
     default:

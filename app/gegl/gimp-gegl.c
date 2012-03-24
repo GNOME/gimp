@@ -47,6 +47,7 @@
 #include "gimpoperationthreshold.h"
 
 #include "gimpoperationpointlayermode.h"
+#include "gimpoperationnormalmode.h"
 #include "gimpoperationdissolvemode.h"
 #include "gimpoperationbehindmode.h"
 #include "gimpoperationmultiplymode.h"
@@ -132,6 +133,7 @@ gimp_gegl_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_THRESHOLD);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_POINT_LAYER_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_NORMAL_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DISSOLVE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_BEHIND_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY_MODE);
