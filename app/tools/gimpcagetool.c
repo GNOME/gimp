@@ -1083,7 +1083,7 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct)
 {
   GimpCageConfig *config = ct->config;
   GimpProgress   *progress;
-  Babl           *format;
+  const Babl     *format;
   GeglNode       *gegl;
   GeglNode       *input;
   GeglNode       *output;

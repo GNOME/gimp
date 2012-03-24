@@ -179,7 +179,7 @@ gimp_operation_point_layer_mode_get_property (GObject    *object,
 static void
 gimp_operation_point_layer_mode_prepare (GeglOperation *operation)
 {
-  Babl *format = babl_format ("RaGaBaA float");
+  const Babl *format = babl_format ("RaGaBaA float");
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);
@@ -195,10 +195,10 @@ gimp_operation_point_layer_mode_get_new_color_lchab (GimpLayerModeEffects  blend
   float in_lchab[3];
   float lay_lchab[3];
   float new_lchab[3];
-  Babl *ragabaa_to_lchab = babl_fish (babl_format ("RaGaBaA float"),
-                                      babl_format ("CIE LCH(ab) float"));
-  Babl *lchab_to_ragabaa = babl_fish (babl_format ("CIE LCH(ab) float"),
-                                      babl_format ("RaGaBaA float"));
+  const Babl *ragabaa_to_lchab = babl_fish (babl_format ("RaGaBaA float"),
+                                            babl_format ("CIE LCH(ab) float"));
+  const Babl *lchab_to_ragabaa = babl_fish (babl_format ("CIE LCH(ab) float"),
+                                            babl_format ("RaGaBaA float"));
 
   babl_process (ragabaa_to_lchab, (void*)in,  (void*)in_lchab,  1);
   babl_process (ragabaa_to_lchab, (void*)lay, (void*)lay_lchab, 1);
