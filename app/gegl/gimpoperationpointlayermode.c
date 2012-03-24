@@ -70,7 +70,8 @@
 enum
 {
   PROP_0,
-  PROP_BLEND_MODE
+  PROP_BLEND_MODE,
+  PROP_PREMULTIPLIED
 };
 
 
@@ -128,6 +129,13 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
                                                       GIMP_NORMAL_MODE,
                                                       GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_PREMULTIPLIED,
+                                   g_param_spec_boolean ("premultiplied",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
   for (i = 0; i < DISSOLVE_REPEAT_WIDTH * DISSOLVE_REPEAT_HEIGHT; i++)
     dissolve_lut[i] = g_rand_int (rand);
 
@@ -153,6 +161,10 @@ gimp_operation_point_layer_mode_set_property (GObject      *object,
       self->blend_mode = g_value_get_enum (value);
       break;
 
+    case PROP_PREMULTIPLIED:
+      self->premultiplied = g_value_get_enum (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -173,6 +185,10 @@ gimp_operation_point_layer_mode_get_property (GObject    *object,
       g_value_set_enum (value, self->blend_mode);
       break;
 
+    case PROP_PREMULTIPLIED:
+      g_value_set_boolean (value, self->premultiplied);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -182,7 +198,13 @@ gimp_operation_point_layer_mode_get_property (GObject    *object,
 static void
 gimp_operation_point_layer_mode_prepare (GeglOperation *operation)
 {
-  const Babl *format = babl_format ("RaGaBaA float");
+  GimpOperationPointLayerMode *self = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  const Babl                  *format;
+
+  if (self->premultiplied)
+    format = babl_format ("RaGaBaA float");
+  else
+    format = babl_format ("RGBA float");
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);

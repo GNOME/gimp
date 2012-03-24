@@ -42,6 +42,7 @@ struct _GimpOperationPointLayerMode
   GeglOperationPointComposer  parent_instance;
 
   GimpLayerModeEffects        blend_mode;
+  gboolean                    premultiplied;
 };
 
 
