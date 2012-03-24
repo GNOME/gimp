@@ -40,9 +40,9 @@ SUBDIRS = \
 noinst_LIBRARIES = libapp.a
 
 if ENABLE_GIMP_CONSOLE
-bin_PROGRAMS = gimp-2.7 gimp-console-2.7
+bin_PROGRAMS = gimp-2.8 gimp-console-2.8
 else
-bin_PROGRAMS = gimp-2.7
+bin_PROGRAMS = gimp-2.8
 endif
 
 libapp_sources = \
@@ -86,7 +86,7 @@ $(srcdir)/version.c: git-version.h
 
 libapp_a_SOURCES = $(libapp_sources) $(libapp_generated_sources)
 
-gimp_2_7_SOURCES = $(libapp_sources) main.c
+gimp_2_8_SOURCES = $(libapp_sources) main.c
 
 
 if OS_WIN32
@@ -180,9 +180,9 @@ gimpconsoleldadd = \
 	$(INTLLIBS)			\
 	$(RT_LIBS)
 
-gimp_2_7_LDFLAGS = $(AM_LDFLAGS) $(win32_ldflags)
+gimp_2_8_LDFLAGS = $(AM_LDFLAGS) $(win32_ldflags)
 
-gimp_2_7_LDADD = \
+gimp_2_8_LDADD = \
 	gui/libappgui.a		\
 	menus/libappmenus.a	\
 	actions/libappactions.a	\
@@ -199,13 +199,13 @@ gimp_2_7_LDADD = \
 
 if ENABLE_GIMP_CONSOLE
 
-gimp_console_2_7_SOURCES = $(libapp_sources) main.c
+gimp_console_2_8_SOURCES = $(libapp_sources) main.c
 
-gimp_console_2_7_CPPFLAGS = \
+gimp_console_2_8_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
 	-DGIMP_CONSOLE_COMPILATION
 
-gimp_console_2_7_LDADD = \
+gimp_console_2_8_LDADD = \
 	$(gimpconsoleldadd) \
 	$(GIMPCONSOLERC)
 
