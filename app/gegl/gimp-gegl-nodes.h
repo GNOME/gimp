@@ -22,12 +22,29 @@
 #define __GIMP_GEGL_NODES_H__
 
 
-GeglNode * gimp_gegl_create_flatten_node       (const GimpRGB *background);
-GeglNode * gimp_gegl_create_apply_opacity_node (GeglBuffer    *mask,
-                                                gdouble        opacity,
+GeglNode * gimp_gegl_create_flatten_node       (const GimpRGB        *background);
+GeglNode * gimp_gegl_create_apply_opacity_node (GeglBuffer           *mask,
+                                                gdouble               opacity,
                                                 /* offsets *into* the mask */
-                                                gint           mask_offset_x,
-                                                gint           mask_offset_y);
+                                                gint                  mask_offset_x,
+                                                gint                  mask_offset_y);
+GeglNode * gimp_gegl_create_apply_buffer_node  (GeglBuffer           *buffer,
+                                                gint                  buffer_offset_x,
+                                                gint                  buffer_offset_y,
+                                                gint                  src_offset_x,
+                                                gint                  src_offset_y,
+                                                gint                  dest_offset_x,
+                                                gint                  dest_offset_y,
+                                                GeglBuffer           *mask,
+                                                gint                  mask_offset_x,
+                                                gint                  mask_offset_y,
+                                                gdouble               opacity,
+                                                GimpLayerModeEffects  mode);
+
+GeglNode * gimp_gegl_add_buffer_source         (GeglNode             *parent,
+                                                GeglBuffer           *buffer,
+                                                gint                  offset_x,
+                                                gint                  offset_y);
 
 
 #endif /* __GIMP_GEGL_NODES_H__ */
