@@ -177,8 +177,6 @@ static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  gint                height,
                                                  GimpLayer          *layer);
 
-static void       gimp_layer_sync_mode_node     (GimpLayer          *layer);
-
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
@@ -899,9 +897,11 @@ gimp_layer_get_node (GimpItem *item)
   gegl_node_connect_to (layer->opacity_node, "output",
                         offset_node,         "input");
 
-  gimp_layer_sync_mode_node (layer);
-
   mode_node = gimp_drawable_get_mode_node (drawable);
+
+  gimp_gegl_node_set_layer_mode (mode_node,
+                                 layer->mode,
+                                 TRUE);
 
   gegl_node_connect_to (offset_node, "output",
                         mode_node,   "aux");
@@ -1019,57 +1019,6 @@ gimp_layer_layer_mask_update (GimpDrawable *drawable,
     {
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             x, y, width, height);
-    }
-}
-
-static void
-gimp_layer_sync_mode_node (GimpLayer *layer)
-{
-  if (layer->opacity_node)
-    {
-      GeglNode *mode_node;
-
-      mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
-
-      switch (layer->mode)
-        {
-        case GIMP_BEHIND_MODE:
-        case GIMP_MULTIPLY_MODE:
-        case GIMP_SCREEN_MODE:
-        case GIMP_OVERLAY_MODE:
-        case GIMP_DIFFERENCE_MODE:
-        case GIMP_ADDITION_MODE:
-        case GIMP_SUBTRACT_MODE:
-        case GIMP_DARKEN_ONLY_MODE:
-        case GIMP_LIGHTEN_ONLY_MODE:
-        case GIMP_HUE_MODE:
-        case GIMP_SATURATION_MODE:
-        case GIMP_COLOR_MODE:
-        case GIMP_VALUE_MODE:
-        case GIMP_DIVIDE_MODE:
-        case GIMP_DODGE_MODE:
-        case GIMP_BURN_MODE:
-        case GIMP_HARDLIGHT_MODE:
-        case GIMP_SOFTLIGHT_MODE:
-        case GIMP_GRAIN_EXTRACT_MODE:
-        case GIMP_GRAIN_MERGE_MODE:
-        case GIMP_COLOR_ERASE_MODE:
-        case GIMP_ERASE_MODE:
-        case GIMP_REPLACE_MODE:
-        case GIMP_ANTI_ERASE_MODE:
-          gegl_node_set (mode_node,
-                         "operation",  "gimp:point-layer-mode",
-                         "blend-mode", layer->mode,
-                         NULL);
-          break;
-
-        default:
-          gegl_node_set (mode_node,
-                         "operation",
-                         gimp_layer_mode_to_gegl_operation (layer->mode),
-                         NULL);
-          break;
-        }
     }
 }
 
@@ -1974,7 +1923,14 @@ gimp_layer_set_mode (GimpLayer            *layer,
       g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "mode");
 
-      gimp_layer_sync_mode_node (layer);
+      if (layer->opacity_node)
+        {
+          GeglNode *mode_node;
+
+          mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
+
+          gimp_gegl_node_set_layer_mode (mode_node, layer->mode, TRUE);
+        }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,

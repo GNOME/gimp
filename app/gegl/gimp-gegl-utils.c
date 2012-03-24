@@ -124,44 +124,6 @@ gimp_bpp_to_babl_format_with_alpha (guint    bpp,
 }
 
 const gchar *
-gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode)
-{
-  switch (mode)
-    {
-    case GIMP_NORMAL_MODE:        return "gegl:over";
-    case GIMP_DISSOLVE_MODE:      return "gimp:dissolve-mode";
-    case GIMP_BEHIND_MODE:        return "gimp:behind-mode";
-    case GIMP_MULTIPLY_MODE:      return "gimp:multiply-mode";
-    case GIMP_SCREEN_MODE:        return "gimp:screen-mode";
-    case GIMP_OVERLAY_MODE:       return "gimp:overlay-mode";
-    case GIMP_DIFFERENCE_MODE:    return "gimp:difference-mode";
-    case GIMP_ADDITION_MODE:      return "gimp:addition-mode";
-    case GIMP_SUBTRACT_MODE:      return "gimp:subtract-mode";
-    case GIMP_DARKEN_ONLY_MODE:   return "gimp:darken-mode";
-    case GIMP_LIGHTEN_ONLY_MODE:  return "gimp:lighten-mode";
-    case GIMP_HUE_MODE:           return "gimp:hue-mode";
-    case GIMP_SATURATION_MODE:    return "gimp:saturation-mode";
-    case GIMP_COLOR_MODE:         return "gimp:color-mode";
-    case GIMP_VALUE_MODE:         return "gimp:value-mode";
-    case GIMP_DIVIDE_MODE:        return "gimp:divide-mode";
-    case GIMP_DODGE_MODE:         return "gimp:dodge-mode";
-    case GIMP_BURN_MODE:          return "gimp:burn-mode";
-    case GIMP_HARDLIGHT_MODE:     return "gimp:hardlight-mode";
-    case GIMP_SOFTLIGHT_MODE:     return "gimp:softlight-mode";
-    case GIMP_GRAIN_EXTRACT_MODE: return "gimp:grain-extract-mode";
-    case GIMP_GRAIN_MERGE_MODE:   return "gimp:grain-merge-mode";
-    case GIMP_COLOR_ERASE_MODE:   return "gimp:color-erase-mode";
-    case GIMP_ERASE_MODE:         return "gimp:erase-mode";
-    case GIMP_REPLACE_MODE:       return "gimp:replace-mode";
-    case GIMP_ANTI_ERASE_MODE:    return "gimp:anti-erase-mode";
-    default:
-      break;
-    }
-
-  return "gegl:over";
-}
-
-const gchar *
 gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
 {
   switch (interpolation)

@@ -189,10 +189,8 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
     gegl_node_connect_to (mask_source,   "output",
                           opacity_node,  "aux");
 
-  mode_node = gegl_node_new_child (node,
-                                   "operation",
-                                   gimp_layer_mode_to_gegl_operation (mode),
-                                   NULL);
+  mode_node = gegl_node_new_child (node, NULL);
+  gimp_gegl_node_set_layer_mode (node, mode, FALSE);
 
   gegl_node_connect_to (opacity_node, "output",
                         mode_node,    "aux");
@@ -236,4 +234,88 @@ gimp_gegl_add_buffer_source (GeglNode   *parent,
     }
 
   return buffer_source;
+}
+
+void
+gimp_gegl_node_set_layer_mode (GeglNode             *node,
+                               GimpLayerModeEffects  mode,
+                               gboolean              premultiplied)
+{
+  const gchar *operation = "gimp:normal-mode";
+
+  g_return_if_fail (GEGL_IS_NODE (node));
+
+  switch (mode)
+    {
+    case GIMP_BEHIND_MODE:
+    case GIMP_MULTIPLY_MODE:
+    case GIMP_SCREEN_MODE:
+    case GIMP_OVERLAY_MODE:
+    case GIMP_DIFFERENCE_MODE:
+    case GIMP_ADDITION_MODE:
+    case GIMP_SUBTRACT_MODE:
+    case GIMP_DARKEN_ONLY_MODE:
+    case GIMP_LIGHTEN_ONLY_MODE:
+    case GIMP_HUE_MODE:
+    case GIMP_SATURATION_MODE:
+    case GIMP_COLOR_MODE:
+    case GIMP_VALUE_MODE:
+    case GIMP_DIVIDE_MODE:
+    case GIMP_DODGE_MODE:
+    case GIMP_BURN_MODE:
+    case GIMP_HARDLIGHT_MODE:
+    case GIMP_SOFTLIGHT_MODE:
+    case GIMP_GRAIN_EXTRACT_MODE:
+    case GIMP_GRAIN_MERGE_MODE:
+    case GIMP_COLOR_ERASE_MODE:
+    case GIMP_ERASE_MODE:
+    case GIMP_REPLACE_MODE:
+    case GIMP_ANTI_ERASE_MODE:
+      gegl_node_set (node,
+                     "operation",     "gimp:point-layer-mode",
+                     "blend-mode",    mode,
+                     "premultiplied", premultiplied,
+                     NULL);
+      return;
+
+    default:
+      break;
+    }
+
+  switch (mode)
+    {
+    case GIMP_NORMAL_MODE:        operation = "gimp:normal-mode"; break;
+    case GIMP_DISSOLVE_MODE:      operation = "gimp:dissolve-mode"; break;
+    case GIMP_BEHIND_MODE:        operation = "gimp:behind-mode"; break;
+    case GIMP_MULTIPLY_MODE:      operation = "gimp:multiply-mode"; break;
+    case GIMP_SCREEN_MODE:        operation = "gimp:screen-mode"; break;
+    case GIMP_OVERLAY_MODE:       operation = "gimp:overlay-mode"; break;
+    case GIMP_DIFFERENCE_MODE:    operation = "gimp:difference-mode"; break;
+    case GIMP_ADDITION_MODE:      operation = "gimp:addition-mode"; break;
+    case GIMP_SUBTRACT_MODE:      operation = "gimp:subtract-mode"; break;
+    case GIMP_DARKEN_ONLY_MODE:   operation = "gimp:darken-mode"; break;
+    case GIMP_LIGHTEN_ONLY_MODE:  operation = "gimp:lighten-mode"; break;
+    case GIMP_HUE_MODE:           operation = "gimp:hue-mode"; break;
+    case GIMP_SATURATION_MODE:    operation = "gimp:saturation-mode"; break;
+    case GIMP_COLOR_MODE:         operation = "gimp:color-mode"; break;
+    case GIMP_VALUE_MODE:         operation = "gimp:value-mode"; break;
+    case GIMP_DIVIDE_MODE:        operation = "gimp:divide-mode"; break;
+    case GIMP_DODGE_MODE:         operation = "gimp:dodge-mode"; break;
+    case GIMP_BURN_MODE:          operation = "gimp:burn-mode"; break;
+    case GIMP_HARDLIGHT_MODE:     operation = "gimp:hardlight-mode"; break;
+    case GIMP_SOFTLIGHT_MODE:     operation = "gimp:softlight-mode"; break;
+    case GIMP_GRAIN_EXTRACT_MODE: operation = "gimp:grain-extract-mode"; break;
+    case GIMP_GRAIN_MERGE_MODE:   operation = "gimp:grain-merge-mode"; break;
+    case GIMP_COLOR_ERASE_MODE:   operation = "gimp:color-erase-mode"; break;
+    case GIMP_ERASE_MODE:         operation = "gimp:erase-mode"; break;
+    case GIMP_REPLACE_MODE:       operation = "gimp:replace-mode"; break;
+    case GIMP_ANTI_ERASE_MODE:    operation = "gimp:anti-erase-mode"; break;
+    default:
+      break;
+    }
+
+  gegl_node_set (node,
+                 "operation",     operation,
+                 "premultiplied", premultiplied,
+                 NULL);
 }

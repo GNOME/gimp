@@ -45,5 +45,9 @@ GeglNode * gimp_gegl_add_buffer_source         (GeglNode             *parent,
                                                 gint                  offset_x,
                                                 gint                  offset_y);
 
+void       gimp_gegl_node_set_layer_mode       (GeglNode             *node,
+                                                GimpLayerModeEffects  mode,
+                                                gboolean              premultiplied);
+
 
 #endif /* __GIMP_GEGL_NODES_H__ */
