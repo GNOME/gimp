@@ -67,6 +67,8 @@ libappgegl_a_sources = \
 	gimpoperationcurves.h			\
 	gimpoperationdesaturate.c		\
 	gimpoperationdesaturate.h		\
+	gimpoperationequalize.c			\
+	gimpoperationequalize.h			\
 	gimpoperationhuesaturation.c		\
 	gimpoperationhuesaturation.h		\
 	gimpoperationlevels.c			\

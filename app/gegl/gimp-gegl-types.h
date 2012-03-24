@@ -40,6 +40,7 @@ typedef struct _GimpOperationColorBalance       GimpOperationColorBalance;
 typedef struct _GimpOperationColorize           GimpOperationColorize;
 typedef struct _GimpOperationCurves             GimpOperationCurves;
 typedef struct _GimpOperationDesaturate         GimpOperationDesaturate;
+typedef struct _GimpOperationEqualize           GimpOperationEqualize;
 typedef struct _GimpOperationHueSaturation      GimpOperationHueSaturation;
 typedef struct _GimpOperationLevels             GimpOperationLevels;
 typedef struct _GimpOperationPosterize          GimpOperationPosterize;

@@ -21,13 +21,10 @@
 
 #include "core-types.h"
 
-#include "base/gimplut.h"
-#include "base/lut-funcs.h"
-
 #include "gimpdrawable.h"
 #include "gimpdrawable-equalize.h"
 #include "gimpdrawable-histogram.h"
-#include "gimpdrawable-process.h"
+#include "gimpdrawable-operation.h"
 #include "gimphistogram.h"
 
 #include "gimp-intl.h"
@@ -38,7 +35,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
                         gboolean      mask_only)
 {
   GimpHistogram *hist;
-  GimpLut       *lut;
+  GeglNode      *equalize;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -46,9 +43,16 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   hist = gimp_histogram_new ();
   gimp_drawable_calculate_histogram (drawable, hist);
 
-  lut = equalize_lut_new (hist, gimp_drawable_bytes (drawable));
-  gimp_histogram_unref (hist);
+  equalize = gegl_node_new_child (NULL,
+                                  "operation", "gimp:equalize",
+                                  "histogram", hist,
+                                  NULL);
 
-  gimp_drawable_process_lut (drawable, NULL, C_("undo-type", "Equalize"), lut);
-  gimp_lut_free (lut);
+  gimp_drawable_apply_operation (drawable, NULL,
+                                 C_("undo-type", "Equalize"),
+                                 equalize, TRUE);
+
+  g_object_unref (equalize);
+
+  gimp_histogram_unref (hist);
 }

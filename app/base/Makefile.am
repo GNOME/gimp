@@ -30,8 +30,6 @@ libappbase_a_SOURCES = \
 	gimplut.h		\
 	hue-saturation.c	\
 	hue-saturation.h	\
-	lut-funcs.c		\
-	lut-funcs.h		\
 	pixel-processor.c	\
 	pixel-processor.h	\
 	pixel-region.c		\
