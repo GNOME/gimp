@@ -68,10 +68,9 @@ gimp_gegl_create_flatten_node (const GimpRGB *background)
 
 GeglNode *
 gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
-                                     gdouble     opacity,
-                                     /* offsets *into* the mask */
                                      gint        mask_offset_x,
-                                     gint        mask_offset_y)
+                                     gint        mask_offset_y,
+                                     gdouble     opacity)
 {
   GeglNode  *node;
   GeglNode  *input;
@@ -92,8 +91,8 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
                                       NULL);
 
   mask_source = gimp_gegl_add_buffer_source (node, mask,
-                                             -mask_offset_x,
-                                             -mask_offset_y);
+                                             mask_offset_x,
+                                             mask_offset_y);
 
   gegl_node_connect_to (input,        "output",
                         opacity_node, "input");

@@ -732,9 +732,10 @@ gimp_selection_extract (GimpSelection *selection,
 
       mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (selection));
 
-      apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0,
-                                                           x1 + off_x,
-                                                           y1 + off_y);
+      apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer,
+                                                           - (off_x + x1),
+                                                           - (off_y + y1),
+                                                           1.0);
 
       gimp_apply_operation (dest_buffer, NULL, NULL,
                             apply_opacity, TRUE,

@@ -245,9 +245,10 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
       break;
     }
 
-  apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0,
-                                                       mask_offset_x,
-                                                       mask_offset_y);
+  apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer,
+                                                       -mask_offset_x,
+                                                       -mask_offset_y,
+                                                       1.0);
 
   gimp_apply_operation (buffer, NULL, NULL,
                         apply_opacity, 1.0,

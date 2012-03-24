@@ -380,8 +380,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
       break;
     }
 
-  apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 1.0,
-                                                       0, 0);
+  apply_opacity = gimp_gegl_create_apply_opacity_node (mask_buffer, 0, 0, 1.0);
 
   gimp_apply_operation (base_buffer, NULL, NULL,
                         apply_opacity, 1.0,
