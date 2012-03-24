@@ -26,8 +26,6 @@ libappbase_a_SOURCES = \
 	color-balance.h		\
 	cpercep.c		\
 	cpercep.h		\
-	gimphistogram.c		\
-	gimphistogram.h		\
 	gimplut.c		\
 	gimplut.h		\
 	hue-saturation.c	\

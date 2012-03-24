@@ -25,13 +25,12 @@
 
 #include "tools-types.h"
 
-#include "base/gimphistogram.h"
-
 #include "gegl/gimpthresholdconfig.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimperror.h"
+#include "core/gimphistogram.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimphelp-ids.h"

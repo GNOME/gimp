@@ -23,7 +23,6 @@
 
 #include "pdb-types.h"
 
-#include "base/gimphistogram.h"
 #include "core/gimpdrawable-color-balance.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
@@ -31,6 +30,7 @@
 #include "core/gimpdrawable-levels.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
+#include "core/gimphistogram.h"
 #include "core/gimpparamspecs.h"
 #include "gegl/gimpbrightnesscontrastconfig.h"
 #include "gegl/gimpcolorizeconfig.h"

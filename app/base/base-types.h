@@ -47,7 +47,6 @@
 
 /* types */
 
-typedef struct _GimpHistogram       GimpHistogram;
 typedef struct _GimpLut             GimpLut;
 
 typedef struct _ColorBalance        ColorBalance;

@@ -26,11 +26,12 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "base-types.h"
+#include "core-types.h"
+
+#include "base/pixel-processor.h"
+#include "base/pixel-region.h"
 
 #include "gimphistogram.h"
-#include "pixel-processor.h"
-#include "pixel-region.h"
 
 
 #ifdef ENABLE_MP

@@ -21,7 +21,6 @@
 
 #include "core-types.h"
 
-#include "base/gimphistogram.h"
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
 
@@ -29,6 +28,7 @@
 #include "gimpdrawable-equalize.h"
 #include "gimpdrawable-histogram.h"
 #include "gimpdrawable-process.h"
+#include "gimphistogram.h"
 
 #include "gimp-intl.h"
 

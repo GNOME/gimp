@@ -21,9 +21,9 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "base-types.h"
+#include "core/core-types.h"
 
-#include "gimphistogram.h"
+#include "core/gimphistogram.h"
 #include "gimplut.h"
 #include "lut-funcs.h"
 

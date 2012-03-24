@@ -30,14 +30,13 @@
 
 #include "tools-types.h"
 
-#include "base/gimphistogram.h"
-
 #include "gegl/gimplevelsconfig.h"
 #include "gegl/gimpoperationlevels.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimperror.h"
+#include "core/gimphistogram.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcolorbar.h"

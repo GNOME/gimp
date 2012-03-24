@@ -23,8 +23,7 @@
 
 #include "widgets-types.h"
 
-#include "base/gimphistogram.h"
-
+#include "core/gimphistogram.h"
 #include "core/gimpmarshal.h"
 
 #include "gimphistogramview.h"

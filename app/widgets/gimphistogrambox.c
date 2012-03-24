@@ -26,7 +26,7 @@
 
 #include "widgets-types.h"
 
-#include "base/gimphistogram.h"
+#include "core/gimphistogram.h"
 
 #include "gimpcolorbar.h"
 #include "gimphandlebar.h"

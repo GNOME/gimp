@@ -32,9 +32,8 @@
 
 #include "gimp-gegl-types.h"
 
-#include "base/gimphistogram.h"
-
 #include "core/gimpcurve.h"
+#include "core/gimphistogram.h"
 
 #include "gimpcurvesconfig.h"
 

@@ -30,8 +30,6 @@
 
 #include "tools-types.h"
 
-#include "base/gimphistogram.h"
-
 #include "gegl/gimpcurvesconfig.h"
 #include "gegl/gimpoperationcurves.h"
 
@@ -41,6 +39,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimperror.h"
+#include "core/gimphistogram.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcolorbar.h"

@@ -23,11 +23,11 @@
 
 #include "core-types.h"
 
-#include "base/gimphistogram.h"
 #include "base/pixel-region.h"
 
 #include "gimpchannel.h"
 #include "gimpdrawable-histogram.h"
+#include "gimphistogram.h"
 #include "gimpimage.h"
 
 

@@ -21,8 +21,6 @@
 
 #include "core-types.h"
 
-#include "base/gimphistogram.h"
-
 #include "gegl/gimplevelsconfig.h"
 
 #include "gimpdrawable.h"
@@ -30,6 +28,7 @@
 #include "gimpdrawable-levels.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-process.h"
+#include "gimphistogram.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"

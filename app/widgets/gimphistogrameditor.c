@@ -24,11 +24,10 @@
 
 #include "widgets-types.h"
 
-#include "base/gimphistogram.h"
-
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
+#include "core/gimphistogram.h"
 #include "core/gimpimage.h"
 
 #include "gimpdocked.h"

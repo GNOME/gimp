@@ -655,8 +655,8 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("base/gimphistogram.h"
-                        "core/gimpdrawable-histogram.h") ],
+	headers => [ qw("core/gimpdrawable-histogram.h"
+                        "core/gimphistogram.h") ],
 	code => <<'CODE'
 {
   if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error) ||
