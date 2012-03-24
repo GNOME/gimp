@@ -1,11 +1,11 @@
                    ------------------------------ 
                    GNU Image Manipulation Program
-                         Development Branch
+                         2.8 Stable Branch
                    ------------------------------
 
-GIMP 2.7 replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP 2.7. If you want to keep your
-older GIMP 2.x installation in parallel to GIMP 2.7, you have to
+GIMP 2.8 replaces earlier GIMP 2.x versions. It is advised that you
+uninstall them before installing GIMP 2.8. If you want to keep your
+older GIMP 2.x installation in parallel to GIMP 2.8, you have to
 choose a separate prefix which is not in your default library search
 path. Otherwise your prevoius GIMP installation will start to use the
 new libraries. You have been warned.
@@ -77,12 +77,12 @@ The look of GIMP's interface can be customized like any other GTK app
 by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
 customizations).  For downloadable themes and further details, see
 http://art.gnome.org/themes/gtk2 . Additionally, GIMP reads the file
-~/.gimp-2.7/gtkrc so you can have settings that only apply to GIMP.
+~/.gimp-2.8/gtkrc so you can have settings that only apply to GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop.
 You can find them in the ps-menurc file.  To use them, copy this file
-to ~/.gimp-2.7/menurc. You can also manually change the keybindings to
-any of your choice by editing ~/.gimp-2.7/menurc.
+to ~/.gimp-2.8/menurc. You can also manually change the keybindings to
+any of your choice by editing ~/.gimp-2.8/menurc.
 
 
 Have fun,

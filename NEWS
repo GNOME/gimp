@@ -1,10 +1,55 @@
                    ------------------------------
                    GNU Image Manipulation Program
-                          Development Branch
+                          2.8 Stable Branch
                    ------------------------------
 
-This is the unstable development branch of GIMP.  Here we are working
-towards the next stable release, which will be GIMP 2.8.
+This is the stable branch of GIMP. No new features are being added
+here, just bug-fixes.
+
+
+Changes in GIMP 2.8.0
+=====================
+
+
+UI:
+
+ - foo
+
+
+Core:
+
+ - Add our own GimpOperationBrightnessContrast because GEGL one is different
+
+
+Plug-ins:
+
+ - foo
+
+
+Libgimp:
+
+ - foo
+
+
+Data:
+
+ - foo
+
+
+Developer documentation:
+
+ - foo
+
+
+Source and build system:
+
+ - foo
+
+
+General:
+
+ - Bug fixes
+ - Translation updates
 
 
 Changes in GIMP 2.7.5
