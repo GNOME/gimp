@@ -26,8 +26,6 @@
 
 #include "core-types.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
 
