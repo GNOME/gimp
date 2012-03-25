@@ -22,8 +22,6 @@
 
 #include "tools-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gimptoolcontrol.h"
 #include "gimptransformtool.h"
 #include "gimptransformtoolundo.h"

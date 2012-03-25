@@ -21,8 +21,6 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gimpfloatingselundo.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
