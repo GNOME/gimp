@@ -36,7 +36,8 @@ static gboolean gimp_operation_hue_saturation_process (GeglOperation       *oper
                                                        void                *in_buf,
                                                        void                *out_buf,
                                                        glong                samples,
-                                                       const GeglRectangle *roi);
+                                                       const GeglRectangle *roi,
+                                                       gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationHueSaturation, gimp_operation_hue_saturation,
@@ -129,7 +130,8 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
                                        void                *in_buf,
                                        void                *out_buf,
                                        glong                samples,
-                                       const GeglRectangle *roi)
+                                       const GeglRectangle *roi,
+                                       gint                 level)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpHueSaturationConfig  *config = GIMP_HUE_SATURATION_CONFIG (point->config);

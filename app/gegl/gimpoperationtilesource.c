@@ -57,7 +57,8 @@ static GeglRectangle
             gimp_operation_tile_source_get_bounding_box (GeglOperation *operation);
 static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
                                                          GeglBuffer          *output,
-                                                         const GeglRectangle *result);
+                                                         const GeglRectangle *result,
+                                                         gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationTileSource, gimp_operation_tile_source,
@@ -209,7 +210,8 @@ gimp_operation_tile_source_get_bounding_box (GeglOperation *operation)
 static gboolean
 gimp_operation_tile_source_process (GeglOperation       *operation,
                                     GeglBuffer          *output,
-                                    const GeglRectangle *result)
+                                    const GeglRectangle *result,
+                                    gint                 level)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
   const Babl              *format;
@@ -233,7 +235,7 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
     {
       GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
 
-      gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
+      gegl_buffer_set (output, &rect, 0, format, srcPR.data, srcPR.rowstride);
     }
 
   return TRUE;

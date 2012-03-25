@@ -33,7 +33,8 @@ static gboolean gimp_operation_hue_mode_process (GeglOperation       *operation,
                                                  void                *aux_buf,
                                                  void                *out_buf,
                                                  glong                samples,
-                                                 const GeglRectangle *roi);
+                                                 const GeglRectangle *roi,
+                                                 gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationHueMode, gimp_operation_hue_mode,
@@ -66,7 +67,8 @@ gimp_operation_hue_mode_process (GeglOperation       *operation,
                                  void                *aux_buf,
                                  void                *out_buf,
                                  glong                samples,
-                                 const GeglRectangle *roi)
+                                 const GeglRectangle *roi,
+                                 gint                 level)
 {
   gfloat *in    = in_buf;
   gfloat *layer = aux_buf;

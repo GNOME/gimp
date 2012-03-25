@@ -36,7 +36,8 @@ static gboolean gimp_operation_brightness_contrast_process (GeglOperation       
                                                             void                *in_buf,
                                                             void                *out_buf,
                                                             glong                samples,
-                                                            const GeglRectangle *roi);
+                                                            const GeglRectangle *roi,
+                                                            gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationBrightnessContrast, gimp_operation_brightness_contrast,
@@ -100,7 +101,8 @@ gimp_operation_brightness_contrast_process (GeglOperation       *operation,
                                             void                *in_buf,
                                             void                *out_buf,
                                             glong                samples,
-                                            const GeglRectangle *roi)
+                                            const GeglRectangle *roi,
+                                            gint                 level)
 {
   GimpOperationPointFilter     *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpBrightnessContrastConfig *config = GIMP_BRIGHTNESS_CONTRAST_CONFIG (point->config);

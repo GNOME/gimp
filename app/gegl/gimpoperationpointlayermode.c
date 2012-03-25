@@ -89,7 +89,8 @@ static gboolean gimp_operation_point_layer_mode_process      (GeglOperation     
                                                               void                *aux_buf,
                                                               void                *out_buf,
                                                               glong                samples,
-                                                              const GeglRectangle *roi);
+                                                              const GeglRectangle *roi,
+                                                              gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationPointLayerMode, gimp_operation_point_layer_mode,
@@ -269,7 +270,8 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
                                          void                *aux_buf,
                                          void                *out_buf,
                                          glong                samples,
-                                         const GeglRectangle *roi)
+                                         const GeglRectangle *roi,
+                                         gint                 level)
 {
   GimpOperationPointLayerMode *self       = GIMP_OPERATION_POINT_LAYER_MODE (operation);
   GimpLayerModeEffects         blend_mode = self->blend_mode;

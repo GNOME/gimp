@@ -36,7 +36,8 @@ static gboolean gimp_operation_levels_process (GeglOperation       *operation,
                                                void                *in_buf,
                                                void                *out_buf,
                                                glong                samples,
-                                               const GeglRectangle *roi);
+                                               const GeglRectangle *roi,
+                                               gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationLevels, gimp_operation_levels,
@@ -112,7 +113,8 @@ gimp_operation_levels_process (GeglOperation       *operation,
                                void                *in_buf,
                                void                *out_buf,
                                glong                samples,
-                               const GeglRectangle *roi)
+                               const GeglRectangle *roi,
+                               gint                 level)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpLevelsConfig         *config = GIMP_LEVELS_CONFIG (point->config);

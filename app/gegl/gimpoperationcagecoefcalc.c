@@ -44,7 +44,8 @@ static void           gimp_operation_cage_coef_calc_set_property      (GObject  
 static GeglRectangle  gimp_operation_cage_coef_calc_get_bounding_box  (GeglOperation        *operation);
 static gboolean       gimp_operation_cage_coef_calc_process           (GeglOperation        *operation,
                                                                        GeglBuffer           *output,
-                                                                       const GeglRectangle  *roi);
+                                                                       const GeglRectangle  *roi,
+                                                                       gint                  level);
 
 
 G_DEFINE_TYPE (GimpOperationCageCoefCalc, gimp_operation_cage_coef_calc,
@@ -191,12 +192,13 @@ gimp_operation_cage_coef_calc_get_bounding_box (GeglOperation *operation)
 static gboolean
 gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
                                        GeglBuffer          *output,
-                                       const GeglRectangle *roi)
+                                       const GeglRectangle *roi,
+                                       gint                 level)
 {
   GimpOperationCageCoefCalc *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
   GimpCageConfig            *config = GIMP_CAGE_CONFIG (occc->config);
 
-  Babl *format = babl_format_n (babl_type ("float"), 2 * gimp_cage_config_get_n_points (config));
+  const Babl *format = babl_format_n (babl_type ("float"), 2 * gimp_cage_config_get_n_points (config));
 
   GeglBufferIterator *it;
   guint               n_cage_vertices;
@@ -207,7 +209,7 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
 
   n_cage_vertices   = gimp_cage_config_get_n_points (config);
 
-  it = gegl_buffer_iterator_new (output, roi, format, GEGL_BUFFER_READWRITE);
+  it = gegl_buffer_iterator_new (output, roi, format, GEGL_BUFFER_READWRITE, 0);
 
   while (gegl_buffer_iterator_next (it))
     {
