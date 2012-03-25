@@ -28,7 +28,6 @@ void   gimp_apply_operation (GeglBuffer          *src_buffer,
                              GimpProgress        *progress,
                              const gchar         *undo_desc,
                              GeglNode            *operation,
-                             gboolean             linear,
                              GeglBuffer          *dest_buffer,
                              const GeglRectangle *dest_rect);
 

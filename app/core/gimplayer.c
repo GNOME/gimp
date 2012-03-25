@@ -1330,7 +1330,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
               gimp_apply_operation (gimp_drawable_get_buffer (drawable),
                                     NULL, NULL,
-                                    set_alpha, TRUE,
+                                    set_alpha,
                                     gimp_drawable_get_buffer (drawable),
                                     NULL);
 
@@ -1428,9 +1428,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
             gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
             flatten = gimp_gegl_create_flatten_node (&background);
 
-            gimp_apply_operation (src_buffer,
-                                  NULL, NULL,
-                                  flatten, TRUE,
+            gimp_apply_operation (src_buffer, NULL, NULL,
+                                  flatten,
                                   dest_buffer, NULL);
 
             g_object_unref (flatten);
@@ -1527,7 +1526,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
                                                            1.0);
 
       gimp_drawable_apply_operation_to_buffer (GIMP_DRAWABLE (layer), NULL, NULL,
-                                               apply_opacity, TRUE, dest_buffer);
+                                               apply_opacity, dest_buffer);
 
       g_object_unref (apply_opacity);
     }
@@ -1780,7 +1779,7 @@ gimp_layer_flatten (GimpLayer   *layer,
   flatten = gimp_gegl_create_flatten_node (&background);
 
   gimp_drawable_apply_operation_to_buffer (GIMP_DRAWABLE (layer), NULL, NULL,
-                                           flatten, TRUE, new_buffer);
+                                           flatten, new_buffer);
 
   g_object_unref (flatten);
 

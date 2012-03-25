@@ -477,7 +477,7 @@ gimp_channel_convert (GimpItem  *item,
       flatten = gimp_gegl_create_flatten_node (&background);
 
       gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                               flatten, TRUE, new_buffer);
+                                               flatten, new_buffer);
 
       g_object_unref (flatten);
 
@@ -1254,7 +1254,7 @@ gimp_channel_real_feather (GimpChannel *channel,
                               NULL);
 
   gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                           node, TRUE,
+                                           node,
                                            gimp_drawable_get_buffer (drawable));
 
   g_object_unref (node);
@@ -1285,7 +1285,7 @@ gimp_channel_real_sharpen (GimpChannel *channel,
                               NULL);
 
   gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                           node, TRUE,
+                                           node,
                                            gimp_drawable_get_buffer (drawable));
 
   g_object_unref (node);
@@ -1394,7 +1394,7 @@ gimp_channel_real_invert (GimpChannel *channel,
                                      NULL);
 
       gimp_drawable_apply_operation_to_buffer (drawable, NULL, NULL,
-                                               node, TRUE,
+                                               node,
                                                gimp_drawable_get_buffer (drawable));
 
       g_object_unref (node);
@@ -1588,7 +1588,7 @@ gimp_channel_real_shrink (GimpChannel *channel,
 
       gimp_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                             NULL, NULL,
-                            shrink, TRUE,
+                            shrink,
                             gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                             NULL);
 

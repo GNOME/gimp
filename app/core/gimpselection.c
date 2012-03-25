@@ -738,7 +738,7 @@ gimp_selection_extract (GimpSelection *selection,
                                                            1.0);
 
       gimp_apply_operation (dest_buffer, NULL, NULL,
-                            apply_opacity, TRUE,
+                            apply_opacity,
                             dest_buffer, NULL);
 
       g_object_unref (apply_opacity);

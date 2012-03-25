@@ -89,7 +89,7 @@ drawable_invert_cmd_callback (GtkAction *action,
 
   gimp_drawable_apply_operation_by_name (drawable, GIMP_PROGRESS (display),
                                          _("Invert"), "gegl:invert",
-                                         NULL, TRUE);
+                                         NULL);
   gimp_image_flush (image);
 }
 

@@ -42,8 +42,7 @@ void
 gimp_drawable_apply_operation (GimpDrawable *drawable,
                                GimpProgress *progress,
                                const gchar  *undo_desc,
-                               GeglNode     *operation,
-                               gboolean      linear)
+                               GeglNode     *operation)
 {
   GeglBuffer    *dest_buffer;
   GeglRectangle  rect;
@@ -63,7 +62,7 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
 
   gimp_apply_operation (gimp_drawable_get_buffer (drawable),
                         progress, undo_desc,
-                        operation, linear,
+                        operation,
                         dest_buffer, &rect);
 
   gimp_drawable_merge_shadow_buffer (drawable, TRUE, undo_desc);
@@ -80,8 +79,7 @@ gimp_drawable_apply_operation_by_name (GimpDrawable *drawable,
                                        GimpProgress *progress,
                                        const gchar  *undo_desc,
                                        const gchar  *operation_type,
-                                       GObject      *config,
-                                       gboolean      linear)
+                                       GObject      *config)
 {
   GeglNode *node;
 
@@ -101,8 +99,7 @@ gimp_drawable_apply_operation_by_name (GimpDrawable *drawable,
                    "config", config,
                    NULL);
 
-  gimp_drawable_apply_operation (drawable, progress, undo_desc,
-                                 node, TRUE);
+  gimp_drawable_apply_operation (drawable, progress, undo_desc, node);
 
   g_object_unref (node);
 }
@@ -112,7 +109,6 @@ gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
                                          GimpProgress *progress,
                                          const gchar  *undo_desc,
                                          GeglNode     *operation,
-                                         gboolean      linear,
                                          GeglBuffer   *dest_buffer)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -123,6 +119,6 @@ gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
 
   gimp_apply_operation (gimp_drawable_get_buffer (drawable),
                         progress, undo_desc,
-                        operation, linear,
+                        operation,
                         dest_buffer, NULL);
 }

@@ -76,8 +76,9 @@ gimp_drawable_color_balance (GimpDrawable     *drawable,
                      "config", config,
                      NULL);
 
-      gimp_drawable_apply_operation (drawable, progress, C_("undo-type", "Color Balance"),
-                                     node, TRUE);
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Color Balance"),
+                                     node);
       g_object_unref (node);
     }
   else

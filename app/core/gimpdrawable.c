@@ -471,7 +471,7 @@ gimp_drawable_scale (GimpItem              *item,
 
       gimp_drawable_apply_operation_to_buffer (drawable, progress,
                                                C_("undo-type", "Scale"),
-                                               scale, TRUE, new_buffer);
+                                               scale, new_buffer);
       g_object_unref (scale);
     }
   else

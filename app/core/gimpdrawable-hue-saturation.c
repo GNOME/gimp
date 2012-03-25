@@ -75,7 +75,7 @@ gimp_drawable_hue_saturation (GimpDrawable *drawable,
                      NULL);
 
       gimp_drawable_apply_operation (drawable, progress, _("Hue-Saturation"),
-                                     node, TRUE);
+                                     node);
       g_object_unref (node);
     }
   else

@@ -50,7 +50,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
 
   gimp_drawable_apply_operation (drawable, NULL,
                                  C_("undo-type", "Equalize"),
-                                 equalize, TRUE);
+                                 equalize);
 
   g_object_unref (equalize);
 

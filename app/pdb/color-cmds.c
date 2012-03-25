@@ -78,7 +78,7 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Brightness-Contrast"),
                                                  "gimp:brightness-contrast",
-                                                 config, TRUE);
+                                                 config);
 
           g_object_unref (config);
         }
@@ -138,7 +138,7 @@ levels_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Levels"),
                                                  "gimp:levels",
-                                                 config, TRUE);
+                                                 config);
 
           g_object_unref (config);
         }
@@ -233,7 +233,7 @@ posterize_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  _("Posterize"),
                                                  "gimp:posterize",
-                                                 config, TRUE);
+                                                 config);
 
           g_object_unref (config);
         }
@@ -271,7 +271,7 @@ desaturate_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  _("Desaturate"),
                                                  "gimp:desaturate",
-                                                 config, TRUE);
+                                                 config);
 
           g_object_unref (config);
         }
@@ -311,7 +311,7 @@ desaturate_full_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  _("Desaturate"),
                                                  "gimp:desaturate",
-                                                 config, TRUE);
+                                                 config);
 
           g_object_unref (config);
         }
@@ -375,7 +375,7 @@ invert_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  _("Invert"),
                                                  "gegl:invert",
-                                                 NULL, TRUE);
+                                                 NULL);
         }
       else
         success = FALSE;
@@ -420,7 +420,7 @@ curves_spline_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Curves"),
                                                  "gimp:curves",
-                                                 config, TRUE);
+                                                 config);
 
           g_object_unref (config);
         }
@@ -467,7 +467,7 @@ curves_explicit_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Curves"),
                                                  "gimp:curves",
-                                                 config, TRUE);
+                                                 config);
 
           g_object_unref (config);
         }
@@ -554,7 +554,7 @@ colorize_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Colorize"),
                                                  "gimp:colorize",
-                                                 config, TRUE);
+                                                 config);
 
           g_object_unref (config);
         }
@@ -706,7 +706,7 @@ threshold_invoker (GimpProcedure      *procedure,
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  _("Threshold"),
                                                  "gimp:threshold",
-                                                 config, TRUE);
+                                                 config);
 
           g_object_unref (config);
         }

@@ -244,7 +244,9 @@ gimp_operation_shrink_process (GeglOperation       *operation,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  GimpOperationShrink *self = GIMP_OPERATION_SHRINK (operation);
+  GimpOperationShrink *self          = GIMP_OPERATION_SHRINK (operation);
+  const Babl          *input_format  = babl_format ("Y u8");
+  const Babl          *output_format = babl_format ("Y u8");
   /*
      pretty much the same as fatten_region only different
      blame all bugs in this function on jaycox@gimp.org
@@ -262,6 +264,8 @@ gimp_operation_shrink_process (GeglOperation       *operation,
 
   guchar   *buffer;
   gint      buffer_size;
+
+  g_printerr ("roi: %d %d %d %d\n", roi->x, roi->y, roi->width, roi->height);
 
   max = g_new (guchar *, roi->width + 2 * self->radius_x);
   buf = g_new (guchar *, self->radius_y + 1);
@@ -320,7 +324,8 @@ gimp_operation_shrink_process (GeglOperation       *operation,
     gegl_buffer_get (input,
                      GIMP_GEGL_RECT (roi->x, roi->y + i,
                                      roi->width, 1),
-                     1.0, NULL, buf[i + 1], GEGL_AUTO_ROWSTRIDE);
+                     1.0, input_format, buf[i + 1],
+                     GEGL_AUTO_ROWSTRIDE);
 
   if (self->edge_lock)
     memcpy (buf[0], buf[1], roi->width);
@@ -344,7 +349,8 @@ gimp_operation_shrink_process (GeglOperation       *operation,
         gegl_buffer_get (input,
                          GIMP_GEGL_RECT (roi->x,  roi->y + y + self->radius_y,
                                          roi->width, 1),
-                         1.0, NULL, buf[self->radius_y], GEGL_AUTO_ROWSTRIDE);
+                         1.0, input_format, buf[self->radius_y],
+                         GEGL_AUTO_ROWSTRIDE);
       else if (self->edge_lock)
         memcpy (buf[self->radius_y], buf[self->radius_y - 1], roi->width);
       else
@@ -404,7 +410,8 @@ gimp_operation_shrink_process (GeglOperation       *operation,
       gegl_buffer_set (output,
                        GIMP_GEGL_RECT (roi->x, roi->y + y,
                                        roi->width, 1),
-                       1.0, NULL, out, GEGL_AUTO_ROWSTRIDE);
+                       1.0, output_format, out,
+                       GEGL_AUTO_ROWSTRIDE);
     }
 
   /* undo the offsets to the pointers so we can free the malloced memmory */

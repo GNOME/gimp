@@ -70,7 +70,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
                  NULL);
 
   gimp_drawable_apply_operation (drawable, progress, _("Levels"),
-                                 levels, TRUE);
+                                 levels);
 
   g_object_unref (levels);
   g_object_unref (config);

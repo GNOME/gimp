@@ -27,20 +27,17 @@
 void   gimp_drawable_apply_operation           (GimpDrawable *drawable,
                                                 GimpProgress *progress,
                                                 const gchar  *undo_desc,
-                                                GeglNode     *operation,
-                                                gboolean      linear);
+                                                GeglNode     *operation);
 void   gimp_drawable_apply_operation_by_name   (GimpDrawable *drawable,
                                                 GimpProgress *progress,
                                                 const gchar  *undo_desc,
                                                 const gchar  *operation_type,
-                                                GObject      *config,
-                                                gboolean      linear);
+                                                GObject      *config);
 
 void   gimp_drawable_apply_operation_to_buffer (GimpDrawable *drawable,
                                                 GimpProgress *progress,
                                                 const gchar  *undo_desc,
                                                 GeglNode     *operation,
-                                                gboolean      linear,
                                                 GeglBuffer   *dest_buffer);
 
 

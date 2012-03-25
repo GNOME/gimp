@@ -152,7 +152,7 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
       g_free (matrix_string);
 
       gimp_apply_operation (orig_buffer, progress, NULL,
-                            affine, TRUE,
+                            affine,
                             new_buffer, NULL);
 
       g_object_unref (affine);
