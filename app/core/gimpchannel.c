@@ -1472,8 +1472,8 @@ gimp_channel_real_grow (GimpChannel *channel,
                         gint         radius_y,
                         gboolean     push_undo)
 {
-  PixelRegion bPR;
-  gint        x1, y1, x2, y2;
+  GeglNode *grow;
+  gint      x1, y1, x2, y2;
 
   if (radius_x == 0 && radius_y == 0)
     return;
@@ -1519,12 +1519,19 @@ gimp_channel_real_grow (GimpChannel *channel,
   else
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
-  /*  need full extents for grow, not! */
-  pixel_region_init (&bPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  grow = gegl_node_new_child (NULL,
+                              "operation", "gimp:grow",
+                              "radius-x",  radius_x,
+                              "radius-y",  radius_y,
+                              NULL);
 
-  fatten_region (&bPR, radius_x, radius_y);
+  gimp_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                        NULL, NULL,
+                        grow,
+                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                        GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1));
+
+  g_object_unref (grow);
 
   channel->bounds_known = FALSE;
 
@@ -1587,7 +1594,7 @@ gimp_channel_real_shrink (GimpChannel *channel,
                         NULL, NULL,
                         shrink,
                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        NULL);
+                        GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1));
 
   g_object_unref (shrink);
 

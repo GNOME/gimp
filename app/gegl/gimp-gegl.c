@@ -35,6 +35,7 @@
 #include "gimpoperationcagecoefcalc.h"
 #include "gimpoperationcagetransform.h"
 #include "gimpoperationequalize.h"
+#include "gimpoperationgrow.h"
 #include "gimpoperationsetalpha.h"
 #include "gimpoperationshrink.h"
 
@@ -123,6 +124,7 @@ gimp_gegl_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_GROW);
   g_type_class_ref (GIMP_TYPE_OPERATION_SET_ALPHA);
   g_type_class_ref (GIMP_TYPE_OPERATION_SHRINK);
 
