@@ -27,10 +27,9 @@
 
 #include "display-types.h"
 
-#include "base/tile-manager.h"
-
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 #include "core/gimpprojection.h"
 
 #include "widgets/gimpcairo.h"
@@ -87,7 +86,7 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 {
   GimpImage      *image;
   GimpProjection *proj;
-  TileManager    *tiles;
+  GeglBuffer     *buffer;
   gdouble         scale_x;
   gdouble         scale_y;
 
@@ -101,10 +100,10 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 
   gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
 
-  tiles = gimp_projection_get_tiles_at_level (proj, 0, NULL);
+  buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (proj));
 
-  if (w) *w = scale_x * tile_manager_width (tiles);
-  if (h) *h = scale_y * tile_manager_height (tiles);
+  if (w) *w = scale_x * gegl_buffer_get_width (buffer);
+  if (h) *h = scale_y * gegl_buffer_get_height (buffer);
 }
 
 void
