@@ -27,6 +27,7 @@
 
 /*  operations  */
 
+typedef struct _GimpOperationBorder             GimpOperationBorder;
 typedef struct _GimpOperationCageCoefCalc       GimpOperationCageCoefCalc;
 typedef struct _GimpOperationCageTransform      GimpOperationCageTransform;
 typedef struct _GimpOperationEqualize           GimpOperationEqualize;

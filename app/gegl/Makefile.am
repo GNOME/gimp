@@ -48,6 +48,8 @@ libappgegl_a_sources = \
 	gimpthresholdconfig.c			\
 	gimpthresholdconfig.h			\
 	\
+	gimpoperationborder.c			\
+	gimpoperationborder.h			\
 	gimpoperationcagecoefcalc.c		\
 	gimpoperationcagecoefcalc.h		\
 	gimpoperationcagetransform.c		\

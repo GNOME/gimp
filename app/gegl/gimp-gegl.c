@@ -32,6 +32,7 @@
 
 #include "gimp-gegl.h"
 
+#include "gimpoperationborder.h"
 #include "gimpoperationcagecoefcalc.h"
 #include "gimpoperationcagetransform.h"
 #include "gimpoperationequalize.h"
@@ -121,6 +122,7 @@ gimp_gegl_init (Gimp *gimp)
                    babl_component ("A"),
                    NULL);
 
+  g_type_class_ref (GIMP_TYPE_OPERATION_BORDER);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);

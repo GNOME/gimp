@@ -26,7 +26,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
@@ -1415,8 +1414,8 @@ gimp_channel_real_border (GimpChannel *channel,
                           gboolean     edge_lock,
                           gboolean     push_undo)
 {
-  PixelRegion bPR;
-  gint        x1, y1, x2, y2;
+  GeglNode *border;
+  gint      x1, y1, x2, y2;
 
   if (radius_x < 0 || radius_y < 0)
     return;
@@ -1453,11 +1452,21 @@ gimp_channel_real_border (GimpChannel *channel,
   else
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
-  pixel_region_init (&bPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     x1, y1, x2 - x1, y2 - y1, TRUE);
+  border = gegl_node_new_child (NULL,
+                                "operation", "gimp:border",
+                                "radius-x",  radius_x,
+                                "radius-y",  radius_y,
+                                "feather",   feather,
+                                "edge-lock", edge_lock,
+                                NULL);
 
-  border_region (&bPR, radius_x, radius_y, feather, edge_lock);
+  gimp_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                        NULL, NULL,
+                        border,
+                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                        GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1));
+
+  g_object_unref (border);
 
   channel->bounds_known = FALSE;
 

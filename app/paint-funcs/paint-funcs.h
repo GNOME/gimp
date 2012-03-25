@@ -285,12 +285,6 @@ void  convolve_region                     (PixelRegion         *srcR,
                                            GimpConvolutionType  mode,
                                            gboolean             alpha_weighting);
 
-void  border_region                       (PixelRegion *src,
-                                           gint16       xradius,
-                                           gint16       yradius,
-                                           gboolean     feather,
-                                           gboolean     edge_lock);
-
 gfloat shapeburst_region                  (PixelRegion      *srcPR,
                                            PixelRegion      *distPR,
                                            GimpProgressFunc  progress_callback,
