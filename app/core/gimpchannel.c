@@ -40,6 +40,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-apply-operation.h"
 #include "gimp-utils.h"
 #include "gimpboundary.h"
 #include "gimpcontainer.h"
@@ -1539,8 +1540,7 @@ gimp_channel_real_shrink (GimpChannel *channel,
                           gboolean     edge_lock,
                           gboolean     push_undo)
 {
-  PixelRegion bPR;
-  gint        x1, y1, x2, y2;
+  gint      x1, y1, x2, y2;
 
   if (radius_x == 0 && radius_y == 0)
     return;
@@ -1575,11 +1575,35 @@ gimp_channel_real_shrink (GimpChannel *channel,
   else
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
-  pixel_region_init (&bPR,
-                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (channel))->gimp))
+    {
+      GeglNode *shrink;
 
-  thin_region (&bPR, radius_x, radius_y, edge_lock);
+      shrink = gegl_node_new_child (NULL,
+                                    "operation", "gimp:shrink",
+                                    "radius-x",  radius_x,
+                                    "radius-y",  radius_y,
+                                    "edge-lock", edge_lock,
+                                    NULL);
+
+      gimp_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                            NULL, NULL,
+                            shrink, TRUE,
+                            gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                            NULL);
+
+      g_object_unref (shrink);
+    }
+  else
+    {
+      PixelRegion bPR;
+
+      pixel_region_init (&bPR,
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
+                         x1, y1, (x2 - x1), (y2 - y1), TRUE);
+
+      thin_region (&bPR, radius_x, radius_y, edge_lock);
+    }
 
   channel->bounds_known = FALSE;
 

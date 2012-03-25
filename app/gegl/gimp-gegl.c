@@ -34,14 +34,15 @@
 
 #include "gimpoperationcagecoefcalc.h"
 #include "gimpoperationcagetransform.h"
+#include "gimpoperationequalize.h"
 #include "gimpoperationsetalpha.h"
+#include "gimpoperationshrink.h"
 
 #include "gimpoperationbrightnesscontrast.h"
 #include "gimpoperationcolorbalance.h"
 #include "gimpoperationcolorize.h"
 #include "gimpoperationcurves.h"
 #include "gimpoperationdesaturate.h"
-#include "gimpoperationequalize.h"
 #include "gimpoperationhuesaturation.h"
 #include "gimpoperationlevels.h"
 #include "gimpoperationposterize.h"
@@ -121,14 +122,15 @@ gimp_gegl_init (Gimp *gimp)
 
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
+  g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_SET_ALPHA);
+  g_type_class_ref (GIMP_TYPE_OPERATION_SHRINK);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_BRIGHTNESS_CONTRAST);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_BALANCE);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLORIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_CURVES);
   g_type_class_ref (GIMP_TYPE_OPERATION_DESATURATE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_HUE_SATURATION);
   g_type_class_ref (GIMP_TYPE_OPERATION_LEVELS);
   g_type_class_ref (GIMP_TYPE_OPERATION_POSTERIZE);

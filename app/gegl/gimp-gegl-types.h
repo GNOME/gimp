@@ -27,12 +27,11 @@
 
 /*  operations  */
 
-typedef struct _GimpOperationTileSink           GimpOperationTileSink;
-typedef struct _GimpOperationTileSource         GimpOperationTileSource;
-
 typedef struct _GimpOperationCageCoefCalc       GimpOperationCageCoefCalc;
 typedef struct _GimpOperationCageTransform      GimpOperationCageTransform;
+typedef struct _GimpOperationEqualize           GimpOperationEqualize;
 typedef struct _GimpOperationSetAlpha           GimpOperationSetAlpha;
+typedef struct _GimpOperationShrink             GimpOperationShrink;
 
 typedef struct _GimpOperationPointFilter        GimpOperationPointFilter;
 typedef struct _GimpOperationBrightnessContrast GimpOperationBrightnessContrast;
@@ -40,7 +39,6 @@ typedef struct _GimpOperationColorBalance       GimpOperationColorBalance;
 typedef struct _GimpOperationColorize           GimpOperationColorize;
 typedef struct _GimpOperationCurves             GimpOperationCurves;
 typedef struct _GimpOperationDesaturate         GimpOperationDesaturate;
-typedef struct _GimpOperationEqualize           GimpOperationEqualize;
 typedef struct _GimpOperationHueSaturation      GimpOperationHueSaturation;
 typedef struct _GimpOperationLevels             GimpOperationLevels;
 typedef struct _GimpOperationPosterize          GimpOperationPosterize;

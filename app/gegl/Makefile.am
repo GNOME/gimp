@@ -52,8 +52,12 @@ libappgegl_a_sources = \
 	gimpoperationcagecoefcalc.h		\
 	gimpoperationcagetransform.c		\
 	gimpoperationcagetransform.h		\
+	gimpoperationequalize.c			\
+	gimpoperationequalize.h			\
 	gimpoperationsetalpha.c			\
 	gimpoperationsetalpha.h			\
+	gimpoperationshrink.c			\
+	gimpoperationshrink.h			\
 	\
 	gimpoperationpointfilter.c		\
 	gimpoperationpointfilter.h		\
@@ -67,8 +71,6 @@ libappgegl_a_sources = \
 	gimpoperationcurves.h			\
 	gimpoperationdesaturate.c		\
 	gimpoperationdesaturate.h		\
-	gimpoperationequalize.c			\
-	gimpoperationequalize.h			\
 	gimpoperationhuesaturation.c		\
 	gimpoperationhuesaturation.h		\
 	gimpoperationlevels.c			\
