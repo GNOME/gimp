@@ -1540,6 +1540,7 @@ gimp_channel_real_shrink (GimpChannel *channel,
                           gboolean     edge_lock,
                           gboolean     push_undo)
 {
+  GeglNode *shrink;
   gint      x1, y1, x2, y2;
 
   if (radius_x == 0 && radius_y == 0)
@@ -1575,35 +1576,20 @@ gimp_channel_real_shrink (GimpChannel *channel,
   else
     gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
 
-  if (gimp_use_gegl (gimp_item_get_image (GIMP_ITEM (channel))->gimp))
-    {
-      GeglNode *shrink;
+  shrink = gegl_node_new_child (NULL,
+                                "operation", "gimp:shrink",
+                                "radius-x",  radius_x,
+                                "radius-y",  radius_y,
+                                "edge-lock", edge_lock,
+                                NULL);
 
-      shrink = gegl_node_new_child (NULL,
-                                    "operation", "gimp:shrink",
-                                    "radius-x",  radius_x,
-                                    "radius-y",  radius_y,
-                                    "edge-lock", edge_lock,
-                                    NULL);
+  gimp_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                        NULL, NULL,
+                        shrink,
+                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                        NULL);
 
-      gimp_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                            NULL, NULL,
-                            shrink,
-                            gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                            NULL);
-
-      g_object_unref (shrink);
-    }
-  else
-    {
-      PixelRegion bPR;
-
-      pixel_region_init (&bPR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                         x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      thin_region (&bPR, radius_x, radius_y, edge_lock);
-    }
+  g_object_unref (shrink);
 
   channel->bounds_known = FALSE;
 

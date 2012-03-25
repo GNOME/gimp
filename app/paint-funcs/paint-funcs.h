@@ -296,11 +296,6 @@ gfloat shapeburst_region                  (PixelRegion      *srcPR,
                                            GimpProgressFunc  progress_callback,
                                            gpointer          progress_data);
 
-void  thin_region                         (PixelRegion *region,
-                                           gint16       xradius,
-                                           gint16       yradius,
-                                           gboolean     edge_lock);
-
 void  fatten_region                       (PixelRegion *region,
                                            gint16       xradius,
                                            gint16       yradius);
