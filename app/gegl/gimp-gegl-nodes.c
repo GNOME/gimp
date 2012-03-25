@@ -189,7 +189,7 @@ gimp_gegl_create_apply_buffer_node (GeglBuffer           *buffer,
     gegl_node_connect_to (mask_source,   "output",
                           opacity_node,  "aux");
 
-  mode_node = gegl_node_new_child (node, NULL);
+  mode_node = gegl_node_new_child (node, NULL, NULL);
   gimp_gegl_node_set_layer_mode (node, mode, FALSE);
 
   gegl_node_connect_to (opacity_node, "output",

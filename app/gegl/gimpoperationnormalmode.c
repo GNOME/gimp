@@ -31,13 +31,15 @@
 static gboolean gimp_operation_normal_parent_process (GeglOperation        *operation,
                                                       GeglOperationContext *context,
                                                       const gchar          *output_prop,
-                                                      const GeglRectangle  *result);
+                                                      const GeglRectangle  *result,
+                                                      gint                  level);
 static gboolean gimp_operation_normal_mode_process   (GeglOperation        *operation,
                                                       void                 *in_buf,
                                                       void                 *aux_buf,
                                                       void                 *out_buf,
                                                       glong                 samples,
-                                                      const GeglRectangle *roi);
+                                                      const GeglRectangle  *roi,
+                                                      gint                  level);
 
 
 G_DEFINE_TYPE (GimpOperationNormalMode, gimp_operation_normal_mode,
@@ -71,7 +73,8 @@ static gboolean
 gimp_operation_normal_parent_process (GeglOperation        *operation,
                                       GeglOperationContext *context,
                                       const gchar          *output_prop,
-                                      const GeglRectangle  *result)
+                                      const GeglRectangle  *result,
+                                      gint                  level)
 {
   const GeglRectangle *in_extent  = NULL;
   const GeglRectangle *aux_extent = NULL;
@@ -109,7 +112,8 @@ gimp_operation_normal_parent_process (GeglOperation        *operation,
    * process function
    */
   return GEGL_OPERATION_CLASS (parent_class)->process (operation, context,
-                                                       output_prop, result);
+                                                       output_prop, result,
+                                                       level);
 }
 
 static gboolean
@@ -118,7 +122,8 @@ gimp_operation_normal_mode_process (GeglOperation       *operation,
                                     void                *aux_buf,
                                     void                *out_buf,
                                     glong                samples,
-                                    const GeglRectangle *roi)
+                                    const GeglRectangle *roi,
+                                    gint                 level)
 {
   GimpOperationPointLayerMode *point = GIMP_OPERATION_POINT_LAYER_MODE (operation);
   gfloat                      *in    = in_buf;

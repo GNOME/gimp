@@ -290,7 +290,7 @@ gimp_palette_import_extract (GimpImage     *image,
   format = gimp_pickable_get_format (pickable);
 
   iter = gegl_buffer_iterator_new (buffer, &rect, format,
-                                   GEGL_BUFFER_READ);
+                                   GEGL_BUFFER_READ, 0);
   roi = &iter->roi[0];
   bpp = babl_format_get_bytes_per_pixel (format);
 

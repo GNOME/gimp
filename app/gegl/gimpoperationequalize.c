@@ -54,7 +54,8 @@ static gboolean gimp_operation_equalize_process (GeglOperation       *operation,
                                                  void                *in_buf,
                                                  void                *out_buf,
                                                  glong                samples,
-                                                 const GeglRectangle *roi);
+                                                 const GeglRectangle *roi,
+                                                 gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationEqualize, gimp_operation_equalize,
@@ -202,7 +203,8 @@ gimp_operation_equalize_process (GeglOperation       *operation,
                                  void                *in_buf,
                                  void                *out_buf,
                                  glong                samples,
-                                 const GeglRectangle *roi)
+                                 const GeglRectangle *roi,
+                                 gint                 level)
 {
   GimpOperationEqualize *self = GIMP_OPERATION_EQUALIZE (operation);
   gfloat                *src  = in_buf;

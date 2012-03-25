@@ -710,7 +710,7 @@ generate_boundary (GeglBuffer          *buffer,
                    threshold);
 
   line_rect.y = start;
-  gegl_buffer_get (buffer, 1.0, &line_rect, format,
+  gegl_buffer_get (buffer, &line_rect, 1.0, format,
                    line_data, GEGL_AUTO_ROWSTRIDE);
 
   find_empty_segs (region, line_data, bpp,
@@ -726,7 +726,7 @@ generate_boundary (GeglBuffer          *buffer,
       if (scanline + 1 == end)
         line_data = NULL;
       else
-        gegl_buffer_get (buffer, 1.0, &line_rect, format,
+        gegl_buffer_get (buffer, &line_rect, 1.0, format,
                          line_data, GEGL_AUTO_ROWSTRIDE);
 
       find_empty_segs (region, line_data, bpp,

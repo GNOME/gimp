@@ -202,9 +202,9 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                           0, 0, NULL);
 
   gegl_buffer_get (buffer->buffer,
+                   NULL,
                    MIN ((gdouble) width / (gdouble) gimp_buffer_get_width (buffer),
                         (gdouble) height / (gdouble) gimp_buffer_get_height (buffer)),
-                   NULL,
                    gimp_bpp_to_babl_format (gimp_buffer_get_bytes (buffer),
                                             TRUE),
                    temp_buf_get_data (preview),

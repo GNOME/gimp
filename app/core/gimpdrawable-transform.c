@@ -580,9 +580,9 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable     *drawable,
             src_rect.y  = orig_y + orig_height - 1 - i;
             dest_rect.x = new_x + i;
 
-            gegl_buffer_get (orig_buffer, 1.0, &src_rect, NULL, buf,
+            gegl_buffer_get (orig_buffer, &src_rect, 1.0, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
-            gegl_buffer_set (new_buffer, &dest_rect, NULL, buf,
+            gegl_buffer_set (new_buffer, &dest_rect, 0, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
           }
 
@@ -608,7 +608,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable     *drawable,
             src_rect.y  = orig_y + orig_height - 1 - i;
             dest_rect.y = new_y + i;
 
-            gegl_buffer_get (orig_buffer, 1.0, &src_rect, NULL, buf,
+            gegl_buffer_get (orig_buffer, &src_rect, 1.0, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
 
             for (j = 0; j < orig_width / 2; j++)
@@ -624,7 +624,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable     *drawable,
                   }
               }
 
-            gegl_buffer_set (new_buffer, &dest_rect, NULL, buf,
+            gegl_buffer_set (new_buffer, &dest_rect, 0, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
           }
 
@@ -650,9 +650,9 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable     *drawable,
             src_rect.x  = orig_x + orig_width - 1 - i;
             dest_rect.y = new_y + i;
 
-            gegl_buffer_get (orig_buffer, 1.0, &src_rect, NULL, buf,
+            gegl_buffer_get (orig_buffer, &src_rect, 1.0, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
-            gegl_buffer_set (new_buffer, &dest_rect, NULL, buf,
+            gegl_buffer_set (new_buffer, &dest_rect, 0, NULL, buf,
                              GEGL_AUTO_ROWSTRIDE);
           }
 

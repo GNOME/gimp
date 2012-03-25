@@ -1091,7 +1091,7 @@ gimp_channel_real_bounds (GimpChannel *channel,
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
   iter = gegl_buffer_iterator_new (buffer, NULL, babl_format ("Y u8"),
-                                   GEGL_BUFFER_READ);
+                                   GEGL_BUFFER_READ, 0);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))
@@ -1189,7 +1189,7 @@ gimp_channel_real_is_empty (GimpChannel *channel)
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
   iter = gegl_buffer_iterator_new (buffer, NULL, babl_format ("Y u8"),
-                                   GEGL_BUFFER_READ);
+                                   GEGL_BUFFER_READ, 0);
 
   while (gegl_buffer_iterator_next (iter))
     {

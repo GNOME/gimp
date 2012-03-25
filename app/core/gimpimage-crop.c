@@ -389,7 +389,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   for (y = y1; y < y2 && !abort; y++)
     {
       rect.y = y;
-      gegl_buffer_get (buffer, 1.0, &rect, NULL, buf, GEGL_AUTO_ROWSTRIDE);
+      gegl_buffer_get (buffer, &rect, 1.0, NULL, buf, GEGL_AUTO_ROWSTRIDE);
       for (x = 0; x < width && !abort; x++)
         abort = !(colors_equal_func) (bgcolor, buf + x * bytes, bytes);
     }
@@ -407,7 +407,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   for (y = y2; y > y1 && !abort; y--)
     {
       rect.y = y - 1;
-      gegl_buffer_get (buffer, 1.0, &rect, NULL, buf, GEGL_AUTO_ROWSTRIDE);
+      gegl_buffer_get (buffer, &rect, 1.0, NULL, buf, GEGL_AUTO_ROWSTRIDE);
       for (x = 0; x < width && !abort; x++)
         abort = !(colors_equal_func) (bgcolor, buf + x * bytes, bytes);
     }
@@ -426,7 +426,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   for (x = x1; x < x2 && !abort; x++)
     {
       rect.x = x;
-      gegl_buffer_get (buffer, 1.0, &rect, NULL, buf, GEGL_AUTO_ROWSTRIDE);
+      gegl_buffer_get (buffer, &rect, 1.0, NULL, buf, GEGL_AUTO_ROWSTRIDE);
       for (y = 0; y < height && !abort; y++)
         abort = !(colors_equal_func) (bgcolor, buf + y * bytes, bytes);
     }
@@ -442,7 +442,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   for (x = x2; x > x1 && !abort; x--)
     {
       rect.x = x - 1;
-      gegl_buffer_get (buffer, 1.0, &rect, NULL, buf, GEGL_AUTO_ROWSTRIDE);
+      gegl_buffer_get (buffer, &rect, 1.0, NULL, buf, GEGL_AUTO_ROWSTRIDE);
       for (y = 0; y < height && !abort; y++)
         abort = !(colors_equal_func) (bgcolor, buf + y * bytes, bytes);
     }

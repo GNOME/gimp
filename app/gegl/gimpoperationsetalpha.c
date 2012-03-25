@@ -49,7 +49,8 @@ static gboolean   gimp_operation_set_alpha_process  (GeglOperation       *operat
                                                      void                *aux_buf,
                                                      void                *out_buf,
                                                      glong                samples,
-                                                     const GeglRectangle *roi);
+                                                     const GeglRectangle *roi,
+                                                     gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationSetAlpha, gimp_operation_set_alpha,
@@ -143,7 +144,8 @@ gimp_operation_set_alpha_process (GeglOperation       *operation,
                                   void                *aux_buf,
                                   void                *out_buf,
                                   glong                samples,
-                                  const GeglRectangle *roi)
+                                  const GeglRectangle *roi,
+                                  gint                 level)
 {
   GimpOperationSetAlpha *self = GIMP_OPERATION_SET_ALPHA (operation);
   gfloat                *src  = in_buf;
