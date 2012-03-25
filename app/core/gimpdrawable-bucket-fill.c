@@ -251,7 +251,7 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                                                        1.0);
 
   gimp_apply_operation (buffer, NULL, NULL,
-                        apply_opacity, 1.0,
+                        apply_opacity, TRUE,
                         buffer, NULL);
 
   g_object_unref (apply_opacity);
