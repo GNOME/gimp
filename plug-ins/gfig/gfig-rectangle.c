@@ -126,9 +126,16 @@ d_paint_rectangle (GfigObject *obj)
   gimp_context_pop ();
 
   paint_layer_fill (dpnts[0], dpnts[1], dpnts[2], dpnts[3]);
+  gimp_selection_none (gfig_context->image_id);
 
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
-    gimp_edit_stroke (gfig_context->drawable_id);
+    {
+      gdouble line_pnts[] = { dpnts[0], dpnts[1], dpnts[2], dpnts[1],
+                              dpnts[2], dpnts[3], dpnts[0], dpnts[3],
+                              dpnts[0], dpnts[1] };
+
+      gfig_paint (selvals.brshtype, gfig_context->drawable_id, 10, line_pnts);
+    }
 }
 
 static GfigObject *

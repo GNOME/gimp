@@ -93,10 +93,6 @@ d_paint_circle (GfigObject *obj)
 
   g_assert (obj != NULL);
 
-  /* Drawing circles is hard .
-   * 1) select circle
-   * 2) stroke it
-   */
   center_pnt = obj->points;
 
   if (!center_pnt)
@@ -135,9 +131,30 @@ d_paint_circle (GfigObject *obj)
                     center_pnt->pnt.y - radius,
                     center_pnt->pnt.x + radius,
                     center_pnt->pnt.y + radius);
+  gimp_selection_none (gfig_context->image_id);
 
+  /* Drawing a circle may be harder than stroking a circular selection,
+   * but we have to do it or we will not be able to draw outside of the
+   * layer. */
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
-    gimp_edit_stroke (gfig_context->drawable_id);
+    {
+      const gdouble r = dpnts[2] / 2;
+      const gdouble cx = dpnts[0] + r, cy = dpnts[1] + r;
+      gdouble       line_pnts[362];
+      gdouble       angle = 0;
+      gint          i = 0;
+
+      while (i < 362)
+        {
+          static const gdouble step = 2 * G_PI / 180;
+
+          line_pnts[i++] = cx + r * cos (angle);
+          line_pnts[i++] = cy + r * sin (angle);
+          angle += step;
+        }
+
+      gfig_paint (selvals.brshtype, gfig_context->drawable_id, i, line_pnts);
+    }
 }
 
 static GfigObject *

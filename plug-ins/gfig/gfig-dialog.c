@@ -2009,8 +2009,6 @@ gfig_paint_callback (void)
           gfig_context_get_current_style ()->fill_type = object->style.fill_type;
           object->class->paintfunc (object);
           gfig_context_get_current_style ()->fill_type = saved_filltype;
-
-          gimp_selection_none (gfig_context->image_id);
         }
 
       objs = g_list_next (objs);

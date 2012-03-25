@@ -258,9 +258,10 @@ d_paint_poly (GfigObject *obj)
   gimp_context_pop ();
 
   paint_layer_fill (min_max[0], min_max[1], min_max[2], min_max[3]);
+  gimp_selection_none (gfig_context->image_id);
 
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
-    gimp_edit_stroke (gfig_context->drawable_id);
+    gfig_paint (selvals.brshtype, gfig_context->drawable_id, i, line_pnts);
 
   g_free (line_pnts);
   g_free (min_max);

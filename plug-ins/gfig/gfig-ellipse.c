@@ -86,11 +86,6 @@ d_paint_ellipse (GfigObject *obj)
   gint        top_y;
   gdouble     dpnts[4];
 
-  /* Drawing ellipse is hard .
-   * 1) select ellipse
-   * 2) stroke it
-   */
-
   g_assert (obj != NULL);
 
   center_pnt = obj->points;
@@ -140,9 +135,27 @@ d_paint_ellipse (GfigObject *obj)
   gimp_context_pop ();
 
   paint_layer_fill (top_x, top_y, top_x + bound_wx, top_y + bound_wy);
+  gimp_selection_none (gfig_context->image_id);
 
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
-    gimp_edit_stroke (gfig_context->drawable_id);
+    {
+      const gdouble rx = dpnts[2] / 2, ry = dpnts[3] / 2;
+      const gdouble cx = dpnts[0] + rx, cy = dpnts[1] + ry;
+      gdouble       line_pnts[362];
+      gdouble       angle = 0;
+      gint          i = 0;
+
+      while (i < 362)
+        {
+          static const gdouble step = 2 * G_PI / 180;
+
+          line_pnts[i++] = cx + rx * cos (angle);
+          line_pnts[i++] = cy + ry * sin (angle);
+          angle += step;
+        }
+
+      gfig_paint (selvals.brshtype, gfig_context->drawable_id, i, line_pnts);
+    }
 }
 
 static GfigObject *
