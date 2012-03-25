@@ -26,9 +26,6 @@
 
 #include "core-types.h"
 
-#include "base/tile.h"
-#include "base/tile-manager.h"
-
 #include "paint-funcs/paint-funcs.h"
 
 #include "paint/gimppaintcore-stroke.h"
@@ -219,9 +216,6 @@ static void       gimp_channel_real_shrink   (GimpChannel         *channel,
                                               gint                 radius_y,
                                               gboolean             edge_lock,
                                               gboolean             push_undo);
-
-static void       gimp_channel_validate_tile (TileManager         *tm,
-                                              Tile                *tile);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE,
@@ -1614,15 +1608,6 @@ gimp_channel_real_shrink (GimpChannel *channel,
                         gimp_item_get_height (GIMP_ITEM (channel)));
 }
 
-static void
-gimp_channel_validate_tile (TileManager *tm,
-                            Tile        *tile)
-{
-  /*  Set the contents of the tile to empty  */
-  memset (tile_data_pointer (tile, 0, 0),
-          TRANSPARENT_OPACITY, tile_size (tile));
-}
-
 
 /*  public functions  */
 
@@ -1932,9 +1917,8 @@ gimp_channel_new_mask (GimpImage *image,
   new_channel = gimp_channel_new (image, width, height,
                                   _("Selection Mask"), NULL);
 
-  tile_manager_set_validate_proc (gimp_drawable_get_tiles (GIMP_DRAWABLE (new_channel)),
-                                  (TileValidateProc) gimp_channel_validate_tile,
-                                  NULL);
+  gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (new_channel)),
+                     NULL);
 
   return new_channel;
 }
