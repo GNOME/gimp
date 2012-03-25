@@ -117,21 +117,24 @@ d_paint_circle (GfigObject *obj)
   else
     scale_to_xy (&dpnts[0], 2);
 
-  gimp_context_push ();
-  gimp_context_set_antialias (selopt.antia);
-  gimp_context_set_feather (selopt.feather);
-  gimp_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
-  gimp_image_select_ellipse (gfig_context->image_id,
-                             selopt.type,
-                             dpnts[0], dpnts[1],
-                             dpnts[2], dpnts[3]);
-  gimp_context_pop ();
+  if (gfig_context_get_current_style ()->fill_type != FILL_NONE)
+    {
+      gimp_context_push ();
+      gimp_context_set_antialias (selopt.antia);
+      gimp_context_set_feather (selopt.feather);
+      gimp_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
+      gimp_image_select_ellipse (gfig_context->image_id,
+                                 selopt.type,
+                                 dpnts[0], dpnts[1],
+                                 dpnts[2], dpnts[3]);
+      gimp_context_pop ();
 
-  paint_layer_fill (center_pnt->pnt.x - radius,
-                    center_pnt->pnt.y - radius,
-                    center_pnt->pnt.x + radius,
-                    center_pnt->pnt.y + radius);
-  gimp_selection_none (gfig_context->image_id);
+      paint_layer_fill (center_pnt->pnt.x - radius,
+                        center_pnt->pnt.y - radius,
+                        center_pnt->pnt.x + radius,
+                        center_pnt->pnt.y + radius);
+      gimp_selection_none (gfig_context->image_id);
+    }
 
   /* Drawing a circle may be harder than stroking a circular selection,
    * but we have to do it or we will not be able to draw outside of the

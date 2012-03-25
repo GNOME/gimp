@@ -115,18 +115,21 @@ d_paint_rectangle (GfigObject *obj)
   else
     scale_to_xy (&dpnts[0], 2);
 
-  gimp_context_push ();
-  gimp_context_set_feather (selopt.feather);
-  gimp_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
-  gimp_image_select_rectangle (gfig_context->image_id,
-                               selopt.type,
-                               dpnts[0], dpnts[1],
-                               dpnts[2] - dpnts[0],
-                               dpnts[3] - dpnts[1]);
-  gimp_context_pop ();
+  if (gfig_context_get_current_style ()->fill_type != FILL_NONE)
+    {
+      gimp_context_push ();
+      gimp_context_set_feather (selopt.feather);
+      gimp_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
+      gimp_image_select_rectangle (gfig_context->image_id,
+                                   selopt.type,
+                                   dpnts[0], dpnts[1],
+                                   dpnts[2] - dpnts[0],
+                                   dpnts[3] - dpnts[1]);
+      gimp_context_pop ();
 
-  paint_layer_fill (dpnts[0], dpnts[1], dpnts[2], dpnts[3]);
-  gimp_selection_none (gfig_context->image_id);
+      paint_layer_fill (dpnts[0], dpnts[1], dpnts[2], dpnts[3]);
+      gimp_selection_none (gfig_context->image_id);
+    }
 
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
     {
