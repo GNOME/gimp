@@ -24,10 +24,6 @@ void  gimp_drawable_process     (GimpDrawable       *drawable,
                                  const gchar        *undo_desc,
                                  PixelProcessorFunc  func,
                                  gpointer            data);
-void  gimp_drawable_process_lut (GimpDrawable       *drawable,
-                                 GimpProgress       *progress,
-                                 const gchar        *undo_desc,
-                                 GimpLut            *lut);
 
 
 #endif  /*  __GIMP_DRAWABLE_PROCESS_H__  */

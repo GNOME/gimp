@@ -21,7 +21,6 @@
 
 #include "core-types.h"
 
-#include "base/gimplut.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
@@ -66,13 +65,4 @@ gimp_drawable_process (GimpDrawable       *drawable,
 
       gimp_drawable_update (drawable, x, y, width, height);
     }
-}
-void
-gimp_drawable_process_lut (GimpDrawable *drawable,
-                           GimpProgress *progress,
-                           const gchar  *undo_desc,
-                           GimpLut      *lut)
-{
-  gimp_drawable_process (drawable, progress, undo_desc,
-                         (PixelProcessorFunc) gimp_lut_process, lut);
 }
