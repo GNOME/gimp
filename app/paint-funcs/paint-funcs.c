@@ -1644,39 +1644,6 @@ color_erase_inten_pixels (const guchar   *src1,
 /**************************************************/
 
 void
-color_region (PixelRegion  *dest,
-              const guchar *col)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (1, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      guchar *s = dest->data;
-      gint    h = dest->h;
-
-      if (dest->w * dest->bytes == dest->rowstride)
-        {
-          /* do it all in one function call if we can
-           * this hasn't been tested to see if it is a
-           * signifigant speed gain yet
-           */
-          color_pixels (s, col, dest->w * h, dest->bytes);
-        }
-      else
-        {
-          while (h--)
-            {
-              color_pixels (s, col, dest->w, dest->bytes);
-
-              s += dest->rowstride;
-            }
-        }
-    }
-}
-
-void
 blend_region (PixelRegion *src1,
               PixelRegion *src2,
               PixelRegion *dest,

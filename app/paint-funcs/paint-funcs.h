@@ -263,9 +263,6 @@ void  paint_funcs_color_erase_helper      (GimpRGB       *src,
 
 /*  Region functions  */
 
-void  color_region                        (PixelRegion  *dest,
-                                           const guchar *color);
-
 void  blend_region                        (PixelRegion *src1,
                                            PixelRegion *src2,
                                            PixelRegion *dest,
