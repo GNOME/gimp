@@ -64,12 +64,6 @@ gimp_apply_operation (GeglBuffer          *src_buffer,
 
   gegl = gegl_node_new ();
 
-  /* Disable caching on all children of the node unless explicitly re-enabled.
-   */
-  g_object_set (gegl,
-                "dont-cache", TRUE,
-                NULL);
-
   src_node = gegl_node_new_child (gegl,
                                   "operation", "gegl:buffer-source",
                                   "buffer",    src_buffer,
