@@ -19,7 +19,10 @@
 #define __GIMP_GEGL_CONFIG_PROXY_H__
 
 
-GimpObject * gimp_gegl_get_config_proxy (const gchar *operation);
+GimpObject * gimp_gegl_get_config_proxy  (const gchar *operation);
+
+void         gimp_gegl_config_proxy_sync (GimpObject  *proxy,
+                                          GeglNode    *node);
 
 
 #endif /* __GIMP_GEGL_CONFIG_PROXY_H__ */

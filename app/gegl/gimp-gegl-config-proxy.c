@@ -19,8 +19,10 @@
 
 #include <string.h>
 
+#include <cairo.h>
 #include <gegl.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "gimp-gegl-types.h"
@@ -196,4 +198,68 @@ gimp_gegl_get_config_proxy (const gchar *operation)
     }
 
   return g_object_new (config_type, NULL);
+}
+
+void
+gimp_gegl_config_proxy_sync (GimpObject  *proxy,
+                             GeglNode    *node)
+{
+  GParamSpec **pspecs;
+  gchar       *operation;
+  guint        n_pspecs;
+  gint         i;
+
+  g_return_if_fail (GIMP_IS_OBJECT (proxy));
+  g_return_if_fail (GEGL_IS_NODE (node));
+
+  gegl_node_get (node,
+                 "operation", &operation,
+                 NULL);
+
+  g_return_if_fail (operation != NULL);
+
+  pspecs = gegl_list_properties (operation, &n_pspecs);
+  g_free (operation);
+
+  for (i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec *gegl_pspec = pspecs[i];
+      GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (proxy),
+                                                             gegl_pspec->name);
+
+      if (gimp_pspec)
+        {
+          GValue value = { 0, };
+
+          g_value_init (&value, gimp_pspec->value_type);
+
+          g_object_get_property (G_OBJECT (proxy), gimp_pspec->name,
+                                 &value);
+
+          if (GIMP_IS_PARAM_SPEC_RGB (gimp_pspec))
+            {
+              GeglColor *gegl_color = gegl_color_new (NULL);
+              GimpRGB    gimp_color;
+
+              gimp_value_get_rgb (&value, &gimp_color);
+              g_value_unset (&value);
+
+              gegl_color_set_rgba (gegl_color,
+                                   gimp_color.r,
+                                   gimp_color.g,
+                                   gimp_color.b,
+                                   gimp_color.a);
+
+              g_value_init (&value, gegl_pspec->value_type);
+              g_value_take_object (&value, gegl_color);
+            }
+
+          gegl_node_set_property (node, gegl_pspec->name,
+                                  &value);
+
+          g_value_unset (&value);
+        }
+    }
+
+  g_free (pspecs);
 }
