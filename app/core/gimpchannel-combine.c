@@ -238,7 +238,8 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
 
   iter = gegl_buffer_iterator_new (buffer,
                                    GIMP_GEGL_RECT (x0, y0, width, height), 0,
-                                   babl_format ("Y u8"), GEGL_BUFFER_READWRITE);
+                                   babl_format ("Y u8"), GEGL_BUFFER_READWRITE,
+                                   GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
   bpp = 1;
 
@@ -464,13 +465,13 @@ gimp_channel_combine_mask (GimpChannel    *mask,
   rect.height = h;
 
   iter = gegl_buffer_iterator_new (mask_buffer, &rect, 0, babl_format ("Y u8"),
-                                   GEGL_BUFFER_READWRITE);
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
 
   rect.x -= off_x;
   rect.y -= off_y;
 
   gegl_buffer_iterator_add (iter, add_on_buffer, &rect, 0, babl_format ("Y u8"),
-                            GEGL_BUFFER_READ);
+                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
   switch (op)
     {
