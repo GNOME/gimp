@@ -386,7 +386,7 @@ gimp_projection_get_pixel_at (GimpPickable *pickable,
 
   gegl_buffer_sample (buffer, x, y, NULL, pixel,
                       gimp_projection_get_format (pickable),
-                      GEGL_SAMPLER_NEAREST);
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   return TRUE;
 }

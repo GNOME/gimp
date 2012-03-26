@@ -208,7 +208,8 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                    gimp_bpp_to_babl_format (gimp_buffer_get_bytes (buffer),
                                             TRUE),
                    temp_buf_get_data (preview),
-                   width * gimp_buffer_get_bytes (buffer));
+                   width * gimp_buffer_get_bytes (buffer),
+                   GEGL_ABYSS_NONE);
 
   return preview;
 }

@@ -323,7 +323,7 @@ gimp_operation_shrink_process (GeglOperation       *operation,
                      GIMP_GEGL_RECT (roi->x, roi->y + i,
                                      roi->width, 1),
                      1.0, input_format, buf[i + 1],
-                     GEGL_AUTO_ROWSTRIDE);
+                     GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   if (self->edge_lock)
     memcpy (buf[0], buf[1], roi->width);
@@ -348,7 +348,7 @@ gimp_operation_shrink_process (GeglOperation       *operation,
                          GIMP_GEGL_RECT (roi->x,  roi->y + y + self->radius_y,
                                          roi->width, 1),
                          1.0, input_format, buf[self->radius_y],
-                         GEGL_AUTO_ROWSTRIDE);
+                         GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
       else if (self->edge_lock)
         memcpy (buf[self->radius_y], buf[self->radius_y - 1], roi->width);
       else

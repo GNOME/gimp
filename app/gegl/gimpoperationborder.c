@@ -381,14 +381,14 @@ gimp_operation_border_process (GeglOperation       *operation,
                        GIMP_GEGL_RECT (roi->x, roi->y + 0,
                                        roi->width, 1),
                        1.0, input_format, source[1],
-                       GEGL_AUTO_ROWSTRIDE);
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       if (roi->height > 1)
         gegl_buffer_get (input,
                          GIMP_GEGL_RECT (roi->x, roi->y + 1,
                                          roi->width, 1),
                          1.0, input_format, source[2],
-                         GEGL_AUTO_ROWSTRIDE);
+                         GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
       else
         memcpy (source[2], source[1], roi->width);
 
@@ -409,7 +409,7 @@ gimp_operation_border_process (GeglOperation       *operation,
                                GIMP_GEGL_RECT (roi->x, roi->y + y + 1,
                                                roi->width, 1),
                                1.0, input_format, source[2],
-                               GEGL_AUTO_ROWSTRIDE);
+                               GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
             }
           else
             {
@@ -523,14 +523,14 @@ gimp_operation_border_process (GeglOperation       *operation,
                    GIMP_GEGL_RECT (roi->x, roi->y + 0,
                                    roi->width, 1),
                    1.0, input_format, buf[1],
-                   GEGL_AUTO_ROWSTRIDE);
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   if (roi->height > 1)
     gegl_buffer_get (input,
                      GIMP_GEGL_RECT (roi->x, roi->y + 1,
                                      roi->width, 1),
                      1.0, input_format, buf[2],
-                     GEGL_AUTO_ROWSTRIDE);
+                     GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
   else
     memcpy (buf[2], buf[1], roi->width);
 
@@ -544,7 +544,7 @@ gimp_operation_border_process (GeglOperation       *operation,
                        GIMP_GEGL_RECT (roi->x, roi->y + y + 1,
                                        roi->width, 1),
                        1.0, input_format, buf[2],
-                       GEGL_AUTO_ROWSTRIDE);
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
       compute_transition (transition[y + 1], buf, roi->width, self->edge_lock);
     }
 
@@ -574,7 +574,7 @@ gimp_operation_border_process (GeglOperation       *operation,
                                            roi->y + y + self->radius_y + 1,
                                            roi->width, 1),
                            1.0, input_format, buf[2],
-                           GEGL_AUTO_ROWSTRIDE);
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
           compute_transition (transition[self->radius_y], buf, roi->width, self->edge_lock);
         }
       else

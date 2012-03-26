@@ -990,7 +990,7 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
        */
       gegl_buffer_sample (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                           x, y, NULL, &value, babl_format ("A u8"),
-                          GEGL_SAMPLER_NEAREST);
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
       if (layer->mask)
         {

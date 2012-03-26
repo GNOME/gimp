@@ -977,7 +977,7 @@ gimp_channel_get_opacity_at (GimpPickable *pickable,
 
   gegl_buffer_sample (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                       x, y, NULL, &value, babl_format ("Y u8"),
-                      GEGL_SAMPLER_NEAREST);
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   return value;
 }

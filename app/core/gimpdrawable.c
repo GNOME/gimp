@@ -704,7 +704,7 @@ gimp_drawable_get_pixel_at (GimpPickable *pickable,
   gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
                       x, y, NULL, pixel,
                       gimp_drawable_get_format (drawable),
-                      GEGL_SAMPLER_NEAREST);
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   return TRUE;
 }

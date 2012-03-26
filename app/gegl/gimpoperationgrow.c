@@ -284,7 +284,7 @@ gimp_operation_grow_process (GeglOperation       *operation,
                      GIMP_GEGL_RECT (roi->x, roi->y + i,
                                      roi->width, 1),
                      1.0, input_format, buf[i + 1],
-                     GEGL_AUTO_ROWSTRIDE);
+                     GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   for (x = 0; x < roi->width; x++) /* set up max for top of image */
     {
@@ -304,7 +304,7 @@ gimp_operation_grow_process (GeglOperation       *operation,
                          GIMP_GEGL_RECT (roi->x,  roi->y + y + self->radius_y,
                                          roi->width, 1),
                          1.0, input_format, buf[self->radius_y],
-                         GEGL_AUTO_ROWSTRIDE);
+                         GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
       else
         memset (buf[self->radius_y], 0, roi->width);
 
