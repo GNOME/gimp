@@ -21,17 +21,14 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpdrawable.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimptooloptions.h"
 #include "core/gimptoolinfo.h"
 
-#include "tools/gimpimagemapoptions.h"
 #include "tools/gimpoperationtool.h"
 #include "tools/tool_manager.h"
 
