@@ -1646,7 +1646,6 @@ gimp_channel_new_from_alpha (GimpImage     *image,
                              const GimpRGB *color)
 {
   GimpChannel *channel;
-  TileManager *dest_tiles;
   GeglBuffer  *dest_buffer;
   gint         width;
   gint         height;
@@ -1662,14 +1661,12 @@ gimp_channel_new_from_alpha (GimpImage     *image,
 
   gimp_channel_clear (channel, NULL, FALSE);
 
-  dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (channel));
-  dest_buffer = gimp_tile_manager_create_buffer (dest_tiles,
-                                                 babl_format ("A u8"));
+  dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
+  gegl_buffer_set_format (dest_buffer, babl_format ("A u8"));
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
-
-  g_object_unref (dest_buffer);
+  gegl_buffer_set_format (dest_buffer, NULL);
 
   channel->bounds_known = FALSE;
 
@@ -1685,7 +1682,6 @@ gimp_channel_new_from_component (GimpImage       *image,
   GimpProjection *projection;
   GimpChannel    *channel;
   GeglBuffer     *src_buffer;
-  TileManager    *dest_tiles;
   GeglBuffer     *dest_buffer;
   gint            width;
   gint            height;
@@ -1707,12 +1703,11 @@ gimp_channel_new_from_component (GimpImage       *image,
 
   channel = gimp_channel_new (image, width, height, name, color);
 
-  dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (channel));
-  dest_buffer = gimp_tile_manager_create_buffer (dest_tiles, format);
+  dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
+  gegl_buffer_set_format (dest_buffer, format);
   gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
-
-  g_object_unref (dest_buffer);
+  gegl_buffer_set_format (dest_buffer, NULL);
 
   return channel;
 }
