@@ -19,7 +19,7 @@
 #define __GIMP_GEGL_TOOL_H__
 
 
-#include "gimpimagemaptool.h"
+#include "gimpoperationtool.h"
 
 
 #define GIMP_TYPE_GEGL_TOOL            (gimp_gegl_tool_get_type ())
@@ -35,20 +35,15 @@ typedef struct _GimpGeglToolClass GimpGeglToolClass;
 
 struct _GimpGeglTool
 {
-  GimpImageMapTool  parent_instance;
-
-  gchar            *operation;
-  GimpObject       *config;
+  GimpOperationTool  parent_instance;
 
   /* dialog */
-  GtkWidget        *operation_combo;
-  GtkWidget        *options_frame;
-  GtkWidget        *options_table;
+  GtkWidget         *operation_combo;
 };
 
 struct _GimpGeglToolClass
 {
-  GimpImageMapToolClass  parent_class;
+  GimpOperationToolClass  parent_class;
 };
 
 

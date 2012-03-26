@@ -118,6 +118,8 @@ libapptools_a_sources = \
 	gimpiscissorstool.h		\
 	gimplevelstool.c		\
 	gimplevelstool.h		\
+	gimpoperationtool.c		\
+	gimpoperationtool.h		\
 	gimpmagnifyoptions.c		\
 	gimpmagnifyoptions.h		\
 	gimpmagnifytool.c		\
