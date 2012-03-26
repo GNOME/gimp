@@ -357,6 +357,17 @@ gimp_projection_get_buffer (GimpPickable *pickable)
       TileManager *tiles = gimp_projection_get_tiles (pickable);
 
       proj->buffer = gimp_tile_manager_create_buffer (tiles, NULL);
+
+      if (proj->sink_node)
+        {
+          GeglBuffer *buffer;
+
+          buffer = gimp_projection_get_buffer (GIMP_PICKABLE (proj));
+
+          gegl_node_set (proj->sink_node,
+                         "buffer", buffer,
+                         NULL);
+        }
     }
 
   return proj->buffer;
@@ -426,9 +437,8 @@ gimp_projection_new (GimpProjectable *projectable)
 GeglNode *
 gimp_projection_get_sink_node (GimpProjection *proj)
 {
-  GeglNode *graph;
+  GeglNode   *graph;
   GeglBuffer *buffer;
-  TileManager *tiles;
 
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
 
@@ -444,15 +454,13 @@ gimp_projection_get_sink_node (GimpProjection *proj)
   graph = gimp_projectable_get_graph (proj->projectable);
   gegl_node_add_child (proj->graph, graph);
 
-  tiles  = gimp_projection_get_tiles (GIMP_PICKABLE (proj));
-  buffer = gimp_tile_manager_create_buffer (tiles, NULL);
+  buffer = gimp_projection_get_buffer (GIMP_PICKABLE (proj));
 
   proj->sink_node =
     gegl_node_new_child (proj->graph,
-                         "operation",    "gegl:write-buffer",
-                         "buffer", buffer,
+                         "operation", "gegl:write-buffer",
+                         "buffer",    buffer,
                          NULL);
-  g_object_unref (buffer);
 
   gegl_node_connect_to (graph,           "output",
                         proj->sink_node, "input");
@@ -481,21 +489,6 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
       tile_pyramid_set_validate_proc (proj->pyramid,
                                       (TileValidateProc) gimp_projection_validate_tile,
                                       proj);
-
-      if (proj->sink_node)
-        {
-          TileManager *tiles;
-          GeglBuffer  *buffer;
-
-          tiles = tile_pyramid_get_tiles (proj->pyramid, 0, NULL);
-          buffer = gimp_tile_manager_create_buffer (tiles, NULL);
-
-          gegl_node_set (proj->sink_node,
-                         "buffer", buffer,
-                         NULL);
-
-          g_object_unref (buffer);
-        }
     }
 
   return tile_pyramid_get_tiles (proj->pyramid, level, is_premult);
@@ -833,13 +826,10 @@ gimp_projection_invalidate (GimpProjection *proj,
         {
           GeglBuffer *buffer;
 
-          gegl_node_get (proj->sink_node,
-                         "buffer", &buffer,
-                         NULL);
+          buffer = gimp_projection_get_buffer (GIMP_PICKABLE (proj));
 
           /* makes the buffer drop all GimpTiles */
           gimp_gegl_buffer_refetch_tiles (buffer);
-          g_object_unref (buffer);
         }
 
       tile_pyramid_invalidate_area (proj->pyramid, x, y, w, h);
