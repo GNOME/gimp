@@ -1,6 +1,7 @@
 *.la
 *.lo
 *.o
+*~
 /*.config
 /*.creator
 /*.creator.user
@@ -16,7 +17,6 @@
 /config.guess
 /config.h
 /config.h.in
-/config.h.in~
 /config.log
 /config.status
 /config.status.lineno
