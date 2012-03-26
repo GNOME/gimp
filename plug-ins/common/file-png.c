@@ -2168,20 +2168,20 @@ find_unused_ia_color (GeglBuffer *buffer,
   if (trans_used == FALSE)
     return -1;
 
-  for (i = 0; i < *colors; i++)
-    {
-      if (ix_used[i] == FALSE)
-        return i;
-    }
-
-  /* Couldn't find an unused color index within the number of
-     bits per pixel we wanted.  Will have to increment the number
-     of colors in the image and assign a transparent pixel there. */
+  /* If there is still some room at the end of the palette, increment
+   * the number of colors in the image and assign a transparent pixel
+   * there. */
   if ((*colors) < 256)
     {
       (*colors)++;
 
       return (*colors) - 1;
+    }
+
+  for (i = 0; i < *colors; i++)
+    {
+      if (ix_used[i] == FALSE)
+        return i;
     }
 
   return -1;
