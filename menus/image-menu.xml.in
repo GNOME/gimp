@@ -586,7 +586,10 @@
       </menu>
       <menuitem action="plug-in-reset-all" />
       <separator />
-      <menu action="plug-in-blur-menu" name="Blur" />
+      <menu action="plug-in-blur-menu" name="Blur">
+	<menuitem action="filters-gaussian-blur" />
+	<menuitem action="filters-pixelize" />
+      </menu>
       <menu action="plug-in-enhance-menu" name="Enhance" />
       <menu action="plug-in-distorts-menu" name="Distorts" />
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">

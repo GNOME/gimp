@@ -73,7 +73,6 @@ G_DEFINE_TYPE (GimpOperationTool, gimp_operation_tool,
 #define parent_class gimp_operation_tool_parent_class
 
 
-#if 0
 void
 gimp_operation_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
@@ -85,11 +84,10 @@ gimp_operation_tool_register (GimpToolRegisterCallback  callback,
                 _("GEGL Operation"),
                 _("Operation Tool: Use an arbitrary GEGL operation"),
                 N_("_GEGL Operation..."), NULL,
-                NULL, GIMP_HELP_TOOL_OPERATION,
+                NULL, GIMP_HELP_TOOL_GEGL,
                 GIMP_STOCK_GEGL,
                 data);
 }
-#endif
 
 static void
 gimp_operation_tool_class_init (GimpOperationToolClass *klass)
@@ -140,9 +138,9 @@ gimp_operation_tool_initialize (GimpTool     *tool,
                                 GimpDisplay  *display,
                                 GError      **error)
 {
-  GimpOperationTool *o_tool = GIMP_OPERATION_TOOL (tool);
-  GimpImage    *image       = gimp_display_get_image (display);
-  GimpDrawable *drawable    = gimp_image_get_active_drawable (image);
+  GimpOperationTool *o_tool   = GIMP_OPERATION_TOOL (tool);
+  GimpImage         *image    = gimp_display_get_image (display);
+  GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return FALSE;
@@ -150,7 +148,14 @@ gimp_operation_tool_initialize (GimpTool     *tool,
   if (o_tool->config)
     gimp_config_reset (GIMP_CONFIG (o_tool->config));
 
-  return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
+  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
+    {
+      return FALSE;
+    }
+
+  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
+
+  return TRUE;
 }
 
 static GeglNode *
@@ -170,9 +175,9 @@ gimp_operation_tool_map (GimpImageMapTool *image_map_tool)
 }
 
 
-/*****************/
+/**********************/
 /*  Operation dialog  */
-/*****************/
+/**********************/
 
 static void
 gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
@@ -208,7 +213,8 @@ gimp_operation_tool_config_notify (GObject           *object,
 
 void
 gimp_operation_tool_set_operation (GimpOperationTool *tool,
-                                   const gchar       *operation)
+                                   const gchar       *operation,
+                                   const gchar       *label)
 {
   g_return_if_fail (GIMP_IS_OPERATION_TOOL (tool));
   g_return_if_fail (operation != NULL);
@@ -262,6 +268,11 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                          tool->options_table);
       gtk_widget_show (tool->options_table);
     }
+
+  if (label)
+    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
+                  "description", label,
+                  NULL);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }

@@ -51,15 +51,14 @@ struct _GimpOperationToolClass
 };
 
 
-#if 0
-void    gimp_operation_tool_register (GimpToolRegisterCallback  callback,
-                                      gpointer                  data);
-#endif
+void    gimp_operation_tool_register      (GimpToolRegisterCallback  callback,
+                                           gpointer                  data);
 
 GType   gimp_operation_tool_get_type      (void) G_GNUC_CONST;
 
-void    gimp_operation_tool_set_operation (GimpOperationTool *tool,
-                                           const gchar       *operation);
+void    gimp_operation_tool_set_operation (GimpOperationTool        *tool,
+                                           const gchar              *operation,
+                                           const gchar              *label);
 
 
 #endif  /*  __GIMP_OPERATION_TOOL_H__  */

@@ -69,6 +69,7 @@
 #include "edit-actions.h"
 #include "error-console-actions.h"
 #include "file-actions.h"
+#include "filters-actions.h"
 #include "fonts-actions.h"
 #include "gradient-editor-actions.h"
 #include "gradients-actions.h"
@@ -163,6 +164,9 @@ static const GimpActionFactoryEntry action_groups[] =
   { "file", N_("File"), GTK_STOCK_FILE,
     file_actions_setup,
     file_actions_update },
+  { "filters", N_("Filters"), GIMP_STOCK_GEGL,
+    filters_actions_setup,
+    filters_actions_update },
   { "fonts", N_("Fonts"), GIMP_STOCK_FONT,
     fonts_actions_setup,
     fonts_actions_update },

@@ -66,6 +66,7 @@
 #include "gimpinktool.h"
 #include "gimpiscissorstool.h"
 #include "gimplevelstool.h"
+#include "gimpoperationtool.h"
 #include "gimpmagnifytool.h"
 #include "gimpmeasuretool.h"
 #include "gimpmovetool.h"
@@ -118,6 +119,7 @@ gimp_tools_init (Gimp *gimp)
     /*  register tools in reverse order  */
 
     /*  color tools  */
+    gimp_operation_tool_register,
     gimp_gegl_tool_register,
     gimp_posterize_tool_register,
     gimp_curves_tool_register,
