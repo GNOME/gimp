@@ -282,11 +282,6 @@ void  convolve_region                     (PixelRegion         *srcR,
                                            GimpConvolutionType  mode,
                                            gboolean             alpha_weighting);
 
-gfloat shapeburst_region                  (PixelRegion      *srcPR,
-                                           PixelRegion      *distPR,
-                                           GimpProgressFunc  progress_callback,
-                                           gpointer          progress_data);
-
 void  smooth_region                       (PixelRegion *region);
 void  erode_region                        (PixelRegion *region);
 void  dilate_region                       (PixelRegion *region);

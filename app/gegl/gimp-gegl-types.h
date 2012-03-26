@@ -33,6 +33,7 @@ typedef struct _GimpOperationCageTransform      GimpOperationCageTransform;
 typedef struct _GimpOperationEqualize           GimpOperationEqualize;
 typedef struct _GimpOperationGrow               GimpOperationGrow;
 typedef struct _GimpOperationSetAlpha           GimpOperationSetAlpha;
+typedef struct _GimpOperationShapeburst         GimpOperationShapeburst;
 typedef struct _GimpOperationShrink             GimpOperationShrink;
 
 typedef struct _GimpOperationPointFilter        GimpOperationPointFilter;

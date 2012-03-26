@@ -39,6 +39,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-apply-operation.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-blend.h"
@@ -573,11 +574,8 @@ gradient_precalc_shapeburst (GimpImage    *image,
                              GimpProgress *progress)
 {
   GimpChannel *mask;
-  TileManager *temp_tiles;
   GeglBuffer  *temp_buffer;
-  PixelRegion  tempR;
   gfloat       max_iteration;
-  gfloat      *distp;
   gint         size;
   gpointer     pr;
 
@@ -585,7 +583,8 @@ gradient_precalc_shapeburst (GimpImage    *image,
   distR.tiles = tile_manager_new (PR->w, PR->h, sizeof (gfloat));
 
   /*  allocate the selection mask copy  */
-  temp_tiles = tile_manager_new (PR->w, PR->h, 1);
+  temp_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, PR->w, PR->h),
+                                      babl_format ("Y u8"));
 
   mask = gimp_image_get_mask (image);
 
@@ -598,9 +597,6 @@ gradient_precalc_shapeburst (GimpImage    *image,
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-      temp_buffer = gimp_tile_manager_create_buffer (temp_tiles,
-                                                     babl_format ("Y u8"));
-
       /*  copy the mask to the temp mask  */
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                         GIMP_GEGL_RECT (x+off_x, y + off_y, width, height),
@@ -612,21 +608,17 @@ gradient_precalc_shapeburst (GimpImage    *image,
       /*  If the intended drawable has an alpha channel, use that  */
       if (gimp_drawable_has_alpha (drawable))
         {
-          temp_buffer = gimp_tile_manager_create_buffer (temp_tiles,
-                                                         babl_format ("A u8"));
-
           /*  extract the aplha into the temp mask  */
+          gegl_buffer_set_format (temp_buffer, babl_format ("A u8"));
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                             GIMP_GEGL_RECT (PR->x, PR->y, PR->w, PR->h),
                             temp_buffer,
-                            GIMP_GEGL_RECT (0,0,0,0));
+                            GIMP_GEGL_RECT (0, 0, 0, 0));
+          gegl_buffer_set_format (temp_buffer, NULL);
         }
       else
         {
           GeglColor *white = gegl_color_new ("white");
-
-          temp_buffer = gimp_tile_manager_create_buffer (temp_tiles,
-                                                         babl_format ("Y u8"));
 
           /*  Otherwise, just fill the shapeburst to white  */
           gegl_buffer_set_color (temp_buffer, NULL, white);
@@ -634,15 +626,32 @@ gradient_precalc_shapeburst (GimpImage    *image,
         }
     }
 
-  gegl_buffer_flush (temp_buffer);
+  {
+    GeglBuffer *dist_buffer;
+    GeglNode   *shapeburst;
+    gdouble     max = 0.0;
 
-  pixel_region_init (&tempR, temp_tiles, 0, 0, PR->w, PR->h, TRUE);
-  pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, TRUE);
+    dist_buffer = gimp_tile_manager_create_buffer (distR.tiles,
+                                                   babl_format ("Y float"));
 
-  max_iteration = shapeburst_region (&tempR, &distR,
-                                     progress ?
-                                     gimp_progress_update_and_flush : NULL,
-                                     progress);
+    shapeburst = gegl_node_new_child (NULL,
+                                      "operation", "gimp:shapeburst",
+                                      NULL);
+
+    gimp_apply_operation (temp_buffer, NULL, NULL,
+                          shapeburst,
+                          dist_buffer, NULL);
+
+    gegl_node_get (shapeburst, "max-iterations", &max, NULL);
+
+    g_object_unref (shapeburst);
+
+    max_iteration = max;
+
+    g_object_unref (dist_buffer);
+  }
+
+  g_object_unref (temp_buffer);
 
   /*  normalize the shapeburst with the max iteration  */
   if (max_iteration > 0)
@@ -653,8 +662,9 @@ gradient_precalc_shapeburst (GimpImage    *image,
            pr != NULL;
            pr = pixel_regions_process (pr))
         {
-          distp = (gfloat *) distR.data;
-          size  = distR.w * distR.h;
+          gfloat *distp = (gfloat *) distR.data;
+
+          size = distR.w * distR.h;
 
           while (size--)
             *distp++ /= max_iteration;
@@ -662,9 +672,6 @@ gradient_precalc_shapeburst (GimpImage    *image,
 
       pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, FALSE);
     }
-
-  g_object_unref (temp_buffer);
-  tile_manager_unref (temp_tiles);
 }
 
 
