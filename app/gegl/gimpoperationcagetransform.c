@@ -564,7 +564,8 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
     rect.x      = coords.x;
     rect.y      = coords.y;
 
-    gegl_buffer_get (coef_buf, &rect, 1.0, format_coef, coef, GEGL_AUTO_ROWSTRIDE);
+    gegl_buffer_get (coef_buf, &rect, 1.0, format_coef, coef,
+                     GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
   #endif
 
   for (i = 0; i < n_cage_vertices; i++)

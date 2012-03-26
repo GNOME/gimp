@@ -220,7 +220,8 @@ gimp_operation_tile_sink_process (GeglOperation       *operation,
       GeglRectangle rect = { destPR.x, destPR.y, destPR.w, destPR.h };
 
       gegl_buffer_get (input, &rect, 1.0,
-                       format, destPR.data, destPR.rowstride);
+                       format, destPR.data, destPR.rowstride,
+                       GEGL_ABYSS_NONE);
     }
 
   g_static_mutex_lock (&mutex); 
