@@ -29,12 +29,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-#include "base/tile.h"
-
-#include "paint-funcs/paint-funcs.h"
-
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -1300,17 +1294,14 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case GIMP_ADD_ALPHA_TRANSFER_MASK:
       if (gimp_drawable_has_alpha (drawable))
         {
-          TileManager *dest_tiles;
-          GeglBuffer  *dest_buffer;
+          GeglBuffer *dest_buffer;
 
-          dest_tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (mask));
-          dest_buffer = gimp_tile_manager_create_buffer (dest_tiles,
-                                                         babl_format ("A u8"));
+          dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
+          gegl_buffer_set_format (dest_buffer, babl_format ("A u8"));
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                             dest_buffer, NULL);
-
-          g_object_unref (dest_buffer);
+          gegl_buffer_set_format (dest_buffer, NULL);
 
           if (add_mask_type == GIMP_ADD_ALPHA_TRANSFER_MASK)
             {
@@ -1377,9 +1368,11 @@ gimp_layer_create_mask (const GimpLayer *layer,
             dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
             gegl_buffer_copy (src,
-                     GIMP_GEGL_RECT (copy_x, copy_y, copy_width, copy_height),
-                     dest,
-                     GIMP_GEGL_RECT (copy_x-offset_x, copy_y-offset_y, 0, 0));
+                              GIMP_GEGL_RECT (copy_x, copy_y,
+                                              copy_width, copy_height),
+                              dest,
+                              GIMP_GEGL_RECT (copy_x - offset_x, copy_y - offset_y,
+                                              0, 0));
 
             GIMP_CHANNEL (mask)->bounds_known = FALSE;
           }
@@ -1388,29 +1381,24 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
     case GIMP_ADD_COPY_MASK:
       {
-        TileManager *copy_tiles = NULL;
-        GeglBuffer  *src_buffer;
-        GeglBuffer  *dest_buffer;
+        GeglBuffer *src_buffer;
+        GeglBuffer *dest_buffer;
 
         if (! gimp_drawable_is_gray (drawable))
           {
-            GimpImageType copy_type;
+            const Babl *copy_format =
+              gimp_image_get_format (image,
+                                     gimp_drawable_has_alpha (drawable) ?
+                                     GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
 
-            copy_type = (gimp_drawable_has_alpha (drawable) ?
-                         GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
-
-            copy_tiles = tile_manager_new (gimp_item_get_width  (item),
-                                           gimp_item_get_height (item),
-                                           GIMP_IMAGE_TYPE_BYTES (copy_type));
-
-            dest_buffer = gimp_tile_manager_create_buffer (copy_tiles, NULL);
+            src_buffer =
+              gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                    gimp_item_get_width  (item),
+                                                    gimp_item_get_height (item)),
+                                    copy_format);
 
             gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                              dest_buffer, NULL);
-
-            g_object_unref (dest_buffer);
-
-            src_buffer = gimp_tile_manager_create_buffer (copy_tiles, NULL);
+                              src_buffer, NULL);
           }
         else
           {
@@ -1440,9 +1428,6 @@ gimp_layer_create_mask (const GimpLayer *layer,
           }
 
         g_object_unref (src_buffer);
-
-        if (copy_tiles)
-          tile_manager_unref (copy_tiles);
       }
 
       GIMP_CHANNEL (mask)->bounds_known = FALSE;
