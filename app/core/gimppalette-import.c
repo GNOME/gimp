@@ -289,8 +289,8 @@ gimp_palette_import_extract (GimpImage     *image,
 
   format = gimp_pickable_get_format (pickable);
 
-  iter = gegl_buffer_iterator_new (buffer, &rect, format,
-                                   GEGL_BUFFER_READ, 0);
+  iter = gegl_buffer_iterator_new (buffer, &rect, 0, format,
+                                   GEGL_BUFFER_READ);
   roi = &iter->roi[0];
   bpp = babl_format_get_bytes_per_pixel (format);
 
@@ -306,7 +306,7 @@ gimp_palette_import_extract (GimpImage     *image,
 
       format = gimp_drawable_get_format (mask);
 
-      gegl_buffer_iterator_add (iter, buffer, &rect,
+      gegl_buffer_iterator_add (iter, buffer, &rect, 0,
                                 gimp_drawable_get_format (mask),
                                 GEGL_BUFFER_READ);
       mask_roi = &iter->roi[1];
