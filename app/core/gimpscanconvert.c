@@ -481,8 +481,8 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   format = babl_format ("Y u8");
   bpp    = babl_format_get_bytes_per_pixel (format);
 
-  iter = gegl_buffer_iterator_new (buffer, NULL, format,
-                                   GEGL_BUFFER_WRITE, 0);
+  iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
+                                   GEGL_BUFFER_WRITE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))

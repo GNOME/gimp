@@ -685,8 +685,8 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   fish   = babl_fish (babl_format ("RGBA u8"), format);
   bytes  = babl_format_get_bytes_per_pixel (format);
 
-  iter = gegl_buffer_iterator_new (buffer, NULL, format,
-                                   GEGL_BUFFER_WRITE, 0);
+  iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
+                                   GEGL_BUFFER_WRITE);
 
   while (gegl_buffer_iterator_next (iter))
     {
