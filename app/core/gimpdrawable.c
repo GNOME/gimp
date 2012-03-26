@@ -27,10 +27,7 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
-#include "base/temp-buf.h"
-#include "base/tile-manager.h"
 
-#include "paint-funcs/paint-funcs.h"
 #include "paint-funcs/scale-region.h"
 
 #include "gegl/gimp-gegl-utils.h"
