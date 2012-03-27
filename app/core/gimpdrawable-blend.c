@@ -555,6 +555,8 @@ gradient_precalc_shapeburst (GimpImage    *image,
   gdouble      max;
   gfloat       max_iteration;
 
+  gimp_progress_set_text (progress, _("Calculating distance map"));
+
   /*  allocate the distance map  */
   dist_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, PR->w, PR->h),
                                  babl_format ("Y float"));
@@ -606,6 +608,8 @@ gradient_precalc_shapeburst (GimpImage    *image,
   shapeburst = gegl_node_new_child (NULL,
                                     "operation", "gimp:shapeburst",
                                     NULL);
+
+  gimp_gegl_progress_connect (shapeburst, progress, NULL);
 
   gimp_apply_operation (temp_buffer, NULL, NULL,
                         shapeburst,
@@ -930,6 +934,7 @@ gradient_fill_region (GimpImage        *image,
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
       rbd.dist_buffer = gradient_precalc_shapeburst (image, drawable,
                                                      PR, rbd.dist, progress);
+      gimp_progress_set_text (progress, _("Blending"));
       break;
 
     default:

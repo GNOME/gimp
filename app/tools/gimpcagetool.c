@@ -43,6 +43,7 @@
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
+#include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimpcageconfig.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -1140,37 +1141,12 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct)
 }
 
 static void
-gimp_cage_tool_transform_progress (GObject          *object,
-                                   const GParamSpec *pspec,
-                                   GimpCageTool     *ct)
-{
-  GimpProgress *progress = GIMP_PROGRESS (ct);
-  gdouble       value;
-
-  g_object_get (object, "progress", &value, NULL);
-
-  if (value == 0.0)
-    {
-      gimp_progress_start (progress, _("Cage Transform"), FALSE);
-    }
-  else if (value == 1.0)
-    {
-      gimp_progress_end (progress);
-    }
-  else
-    {
-      gimp_progress_set_value (progress, value);
-    }
-}
-
-static void
 gimp_cage_tool_create_render_node (GimpCageTool *ct)
 {
   GimpCageOptions *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
   GeglNode        *coef, *cage, *render; /* Render nodes */
   GeglNode        *input, *output; /* Proxy nodes*/
   GeglNode        *node; /* wraper to be returned */
-  GObject         *transform;
 
   g_return_if_fail (ct->render_node == NULL);
   /* render_node is not supposed to be recreated */
@@ -1214,11 +1190,7 @@ gimp_cage_tool_create_render_node (GimpCageTool *ct)
   ct->cage_node = cage;
   ct->coef_node = coef;
 
-  g_object_get (cage, "gegl-operation", &transform, NULL);
-  g_signal_connect (transform, "notify::progress",
-                    G_CALLBACK (gimp_cage_tool_transform_progress),
-                    ct);
-  g_object_unref (transform);
+  gimp_gegl_progress_connect (cage, GIMP_PROGRESS (ct), _("Cage Transform"));
 }
 
 static void
