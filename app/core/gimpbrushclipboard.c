@@ -233,7 +233,7 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       /*  copy the color channels into the brush's pixmap  */
       dest_buffer =
         gegl_buffer_linear_new_from_data (temp_buf_get_data (brush->pixmap),
-                                          babl_format ("RGB u8"),
+                                          babl_format ("R'G'B' u8"),
                                           &rect,
                                           width * brush->pixmap->bytes,
                                           NULL, NULL);

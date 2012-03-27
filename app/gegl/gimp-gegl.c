@@ -102,23 +102,23 @@ gimp_gegl_init (Gimp *gimp)
                     G_CALLBACK (gimp_gegl_notify_tile_cache_size),
                     NULL);
 
-  babl_format_new ("name", "R u8",
-                   babl_model ("RGBA"),
+  babl_format_new ("name", "R' u8",
+                   babl_model ("R'G'B'A"),
                    babl_type ("u8"),
                    babl_component ("R"),
                    NULL);
-  babl_format_new ("name", "G u8",
-                   babl_model ("RGBA"),
+  babl_format_new ("name", "G' u8",
+                   babl_model ("R'G'B'A"),
                    babl_type ("u8"),
                    babl_component ("G"),
                    NULL);
-  babl_format_new ("name", "B u8",
-                   babl_model ("RGBA"),
+  babl_format_new ("name", "B' u8",
+                   babl_model ("R'G'B'A"),
                    babl_type ("u8"),
                    babl_component ("B"),
                    NULL);
-  babl_format_new ("name", "A u8",
-                   babl_model ("RGBA"),
+  babl_format_new ("name", "A' u8",
+                   babl_model ("R'G'B'A"),
                    babl_type ("u8"),
                    babl_component ("A"),
                    NULL);

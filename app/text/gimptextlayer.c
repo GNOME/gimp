@@ -682,7 +682,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   buffer = gimp_drawable_get_buffer (drawable);
   format = gimp_drawable_get_format (drawable);
-  fish   = babl_fish (babl_format ("RGBA u8"), format);
+  fish   = babl_fish (babl_format ("R'G'B'A u8"), format);
   bytes  = babl_format_get_bytes_per_pixel (format);
 
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,

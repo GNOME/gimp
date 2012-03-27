@@ -278,7 +278,7 @@ gimp_pattern_create_buffer (const GimpPattern *pattern)
   bytes = pattern->mask->bytes;
 
   return gegl_buffer_linear_new_from_data (temp_buf_get_data (pattern->mask),
-                                           gimp_bpp_to_babl_format (bytes, TRUE),
+                                           gimp_bpp_to_babl_format (bytes),
                                            GIMP_GEGL_RECT(0,0,width,height),
                                            width * bytes,
                                            NULL, NULL);

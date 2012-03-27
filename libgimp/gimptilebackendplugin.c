@@ -50,10 +50,10 @@ static const Babl *get_format (gint32 drawable_ID)
 {
   switch (gimp_drawable_type (drawable_ID))
     {
-      case GIMP_RGB_IMAGE:  return babl_format ("RGB u8");
-      case GIMP_RGBA_IMAGE: return babl_format ("RGBA u8");
-      case GIMP_GRAY_IMAGE:  return babl_format ("Y u8");
-      case GIMP_GRAYA_IMAGE: return babl_format ("YA u8");
+      case GIMP_RGB_IMAGE:  return babl_format ("R'G'B' u8");
+      case GIMP_RGBA_IMAGE: return babl_format ("R'G'B'A u8");
+      case GIMP_GRAY_IMAGE:  return babl_format ("Y' u8");
+      case GIMP_GRAYA_IMAGE: return babl_format ("Y'A u8");
       case GIMP_INDEXED_IMAGE:
       case GIMP_INDEXEDA_IMAGE:
         {
@@ -62,7 +62,7 @@ static const Babl *get_format (gint32 drawable_ID)
           gint    ncols;
           guchar *cmap = gimp_image_get_colormap (image_ID, &ncols);
           babl_new_palette (NULL, &pal, &pala);
-          babl_palette_set_palette (pal, babl_format ("RGB u8"),
+          babl_palette_set_palette (pal, babl_format ("R'G'B' u8"),
                                     cmap, ncols);
           g_free (cmap);
           if (gimp_drawable_type (drawable_ID) == GIMP_INDEXEDA_IMAGE)

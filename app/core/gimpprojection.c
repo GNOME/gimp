@@ -307,10 +307,10 @@ gimp_projection_get_format (GimpPickable *pickable)
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
-      return babl_format ("RGBA u8");
+      return babl_format ("R'G'B'A u8");
 
     case GIMP_GRAY:
-      return babl_format ("YA u8");
+      return babl_format ("Y'A u8");
     }
 
   g_assert_not_reached ();

@@ -25,10 +25,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h> /* temp hack */
 
 
-const Babl  * gimp_bpp_to_babl_format            (guint                  bpp,
-                                                  gboolean               linear) G_GNUC_CONST;
-const Babl  * gimp_bpp_to_babl_format_with_alpha (guint                  bpp,
-                                                  gboolean               linear) G_GNUC_CONST;
+const Babl  * gimp_bpp_to_babl_format            (guint                  bpp) G_GNUC_CONST;
+const Babl  * gimp_bpp_to_babl_format_with_alpha (guint                  bpp) G_GNUC_CONST;
 
 const gchar * gimp_interpolation_to_gegl_filter  (GimpInterpolationType  interpolation) G_GNUC_CONST;
 

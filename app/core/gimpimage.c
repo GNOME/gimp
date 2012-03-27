@@ -1181,11 +1181,11 @@ gimp_image_real_colormap_changed (GimpImage *image,
   if (private->colormap)
     {
       babl_palette_set_palette (private->babl_palette_rgb,
-                                babl_format ("RGB u8"),
+                                babl_format ("R'G'B' u8"),
                                 private->colormap,
                                 private->n_colors);
       babl_palette_set_palette (private->babl_palette_rgba,
-                                babl_format ("RGB u8"),
+                                babl_format ("R'G'B' u8"),
                                 private->colormap,
                                 private->n_colors);
     }
@@ -1492,10 +1492,10 @@ gimp_image_get_format (const GimpImage *image,
 
   switch (type)
     {
-    case GIMP_RGB_IMAGE:      return babl_format ("RGB u8");
-    case GIMP_RGBA_IMAGE:     return babl_format ("RGBA u8");
-    case GIMP_GRAY_IMAGE:     return babl_format ("Y u8");
-    case GIMP_GRAYA_IMAGE:    return babl_format ("YA u8");
+    case GIMP_RGB_IMAGE:      return babl_format ("R'G'B' u8");
+    case GIMP_RGBA_IMAGE:     return babl_format ("R'G'B'A u8");
+    case GIMP_GRAY_IMAGE:     return babl_format ("Y' u8");
+    case GIMP_GRAYA_IMAGE:    return babl_format ("Y'A u8");
     case GIMP_INDEXED_IMAGE:  return gimp_image_colormap_get_rgb_format (image);
     case GIMP_INDEXEDA_IMAGE: return gimp_image_colormap_get_rgba_format (image);
     }
@@ -1514,9 +1514,9 @@ gimp_image_get_format_with_alpha (const GimpImage *image,
   switch (type)
     {
     case GIMP_RGB_IMAGE:
-    case GIMP_RGBA_IMAGE:     return babl_format ("RGBA u8");
+    case GIMP_RGBA_IMAGE:     return babl_format ("R'G'B'A u8");
     case GIMP_GRAY_IMAGE:
-    case GIMP_GRAYA_IMAGE:    return babl_format ("YA u8");
+    case GIMP_GRAYA_IMAGE:    return babl_format ("Y'A u8");
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE: return gimp_image_colormap_get_rgba_format (image);
     }
@@ -1535,9 +1535,9 @@ gimp_image_get_format_without_alpha (const GimpImage *image,
   switch (type)
     {
     case GIMP_RGB_IMAGE:
-    case GIMP_RGBA_IMAGE:     return babl_format ("RGB u8");
+    case GIMP_RGBA_IMAGE:     return babl_format ("R'G'B' u8");
     case GIMP_GRAY_IMAGE:
-    case GIMP_GRAYA_IMAGE:    return babl_format ("Y u8");
+    case GIMP_GRAYA_IMAGE:    return babl_format ("Y' u8");
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE: return gimp_image_colormap_get_rgb_format (image);
     }
@@ -2054,11 +2054,11 @@ gimp_image_get_component_format (const GimpImage *image,
 
   switch (channel)
     {
-    case GIMP_RED_CHANNEL:     return babl_format ("R u8");
-    case GIMP_GREEN_CHANNEL:   return babl_format ("G u8");
-    case GIMP_BLUE_CHANNEL:    return babl_format ("B u8");
-    case GIMP_GRAY_CHANNEL:    return babl_format ("Y u8");
-    case GIMP_INDEXED_CHANNEL: return babl_format ("Y u8");
+    case GIMP_RED_CHANNEL:     return babl_format ("R' u8");
+    case GIMP_GREEN_CHANNEL:   return babl_format ("G' u8");
+    case GIMP_BLUE_CHANNEL:    return babl_format ("B' u8");
+    case GIMP_GRAY_CHANNEL:    return babl_format ("Y' u8");
+    case GIMP_INDEXED_CHANNEL: return babl_format ("Y' u8"); /* XXX: seems wrong */
     case GIMP_ALPHA_CHANNEL:   return babl_format ("A u8");
     }
 
@@ -2729,7 +2729,7 @@ gimp_image_transform_rgb (const GimpImage *dest_image,
 
   gimp_rgba_get_uchar (rgb, &col[0], &col[1], &col[2], &col[3]);
 
-  babl_process (babl_fish (babl_format ("RGBA u8"), dest_format),
+  babl_process (babl_fish (babl_format ("R'G'B'A u8"), dest_format),
                 col, color, 1);
 }
 
@@ -2747,7 +2747,7 @@ gimp_image_transform_temp_buf (const GimpImage *dest_image,
   g_return_val_if_fail (temp_buf != NULL, NULL);
   g_return_val_if_fail (new_buf != NULL, NULL);
 
-  buf_format = gimp_bpp_to_babl_format (temp_buf->bytes, TRUE);
+  buf_format = gimp_bpp_to_babl_format (temp_buf->bytes);
   ret_format = gimp_image_get_format (dest_image, dest_type);
 
   /*  If the pattern doesn't match the image in terms of color type,

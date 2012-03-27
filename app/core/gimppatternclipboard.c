@@ -201,7 +201,7 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
 
       gegl_buffer_get (gimp_buffer_get_buffer (buffer),
                        GIMP_GEGL_RECT (0,0,width,height), 1.0,
-                       gimp_bpp_to_babl_format (bytes, TRUE),
+                       gimp_bpp_to_babl_format (bytes),
                        temp_buf_get_data (pattern->mask),
                        width * gimp_buffer_get_bytes (buffer),
                        GEGL_ABYSS_NONE);

@@ -207,7 +207,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
         PixelRegion  destPR;
         gpointer     pr;
 
-        fish = babl_fish (gimp_bpp_to_babl_format (pattern->mask->bytes, TRUE),
+        fish = babl_fish (gimp_bpp_to_babl_format (pattern->mask->bytes),
                           gimp_drawable_get_format_with_alpha (drawable));
 
         pixel_region_init_temp_buf (&destPR, paint_area,

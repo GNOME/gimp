@@ -691,9 +691,9 @@ gimp_selection_extract (GimpSelection *selection,
         {
           if (add_alpha ||
               GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_pickable_get_image_type (pickable)))
-            format = babl_format ("RGBA u8");
+            format = babl_format ("R'G'B'A u8");
           else
-            format = babl_format ("RGB u8");
+            format = babl_format ("R'G'B' u8");
         }
       break;
 

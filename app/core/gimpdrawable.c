@@ -1689,13 +1689,13 @@ gimp_drawable_type (const GimpDrawable *drawable)
 
   format = drawable->private->format;
 
-  if (format == babl_format ("Y u8"))
+  if (format == babl_format ("Y' u8"))
     return GIMP_GRAY_IMAGE;
-  else if (format == babl_format ("YA u8"))
+  else if (format == babl_format ("Y'A u8"))
     return GIMP_GRAYA_IMAGE;
-  else if (format == babl_format ("RGB u8"))
+  else if (format == babl_format ("R'G'B' u8"))
     return GIMP_RGB_IMAGE;
-  else if (format == babl_format ("RGBA u8"))
+  else if (format == babl_format ("R'G'B'A u8"))
     return GIMP_RGBA_IMAGE;
   else
     {

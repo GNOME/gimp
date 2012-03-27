@@ -378,14 +378,14 @@ gimp_tile_backend_tile_manager_new (TileManager *tm,
 
   g_return_val_if_fail (format == NULL ||
                         babl_format_get_bytes_per_pixel (format) ==
-                        babl_format_get_bytes_per_pixel (gimp_bpp_to_babl_format (bpp, TRUE)),
+                        babl_format_get_bytes_per_pixel (gimp_bpp_to_babl_format (bpp)),
                         NULL);
 
   if (tm->validate_proc)
     mul = 1;
 
   if (! format)
-    format = gimp_bpp_to_babl_format (bpp, TRUE);
+    format = gimp_bpp_to_babl_format (bpp);
 
   ret = g_object_new (GIMP_TYPE_TILE_BACKEND_TILE_MANAGER,
                       "tile-width",  TILE_WIDTH  * mul,

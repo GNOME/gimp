@@ -36,7 +36,6 @@
 /**
  * gimp_bpp_to_babl_format:
  * @bpp: bytes per pixel
- * @linear: whether the pixels are linear or gamma-corrected.
  *
  * Return the Babl format to use for a given number of bytes per pixel.
  * This function assumes that the data is 8bit.
@@ -44,38 +43,20 @@
  * Return value: the Babl format to use
  **/
 const Babl *
-gimp_bpp_to_babl_format (guint    bpp,
-                         gboolean linear)
+gimp_bpp_to_babl_format (guint bpp)
 {
   g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
 
-  if (linear)
+  switch (bpp)
     {
-      switch (bpp)
-        {
-        case 1:
-          return babl_format ("Y u8");
-        case 2:
-          return babl_format ("YA u8");
-        case 3:
-          return babl_format ("RGB u8");
-        case 4:
-          return babl_format ("RGBA u8");
-        }
-    }
-  else
-    {
-      switch (bpp)
-        {
-        case 1:
-          return babl_format ("Y' u8");
-        case 2:
-          return babl_format ("Y'A u8");
-        case 3:
-          return babl_format ("R'G'B' u8");
-        case 4:
-          return babl_format ("R'G'B'A u8");
-        }
+    case 1:
+      return babl_format ("Y' u8");
+    case 2:
+      return babl_format ("Y'A u8");
+    case 3:
+      return babl_format ("R'G'B' u8");
+    case 4:
+      return babl_format ("R'G'B'A u8");
     }
 
   return NULL;
@@ -84,7 +65,6 @@ gimp_bpp_to_babl_format (guint    bpp,
 /**
  * gimp_bpp_to_babl_format_with_alpha:
  * @bpp: bytes per pixel
- * @linear: whether the pixels are linear or gamma-corrected.
  *
  * Return the Babl format to use for a given number of bytes per pixel.
  * This function assumes that the data is 8bit.
@@ -92,34 +72,18 @@ gimp_bpp_to_babl_format (guint    bpp,
  * Return value: the Babl format to use
  **/
 const Babl *
-gimp_bpp_to_babl_format_with_alpha (guint    bpp,
-                                    gboolean linear)
+gimp_bpp_to_babl_format_with_alpha (guint bpp)
 {
   g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
 
-  if (linear)
+  switch (bpp)
     {
-      switch (bpp)
-        {
-        case 1:
-        case 2:
-          return babl_format ("YA u8");
-        case 3:
-        case 4:
-          return babl_format ("RGBA u8");
-        }
-    }
-  else
-    {
-      switch (bpp)
-        {
-        case 1:
-        case 2:
-          return babl_format ("Y'A u8");
-        case 3:
-        case 4:
-          return babl_format ("R'G'B'A u8");
-        }
+      case 1:
+      case 2:
+        return babl_format ("Y'A u8");
+      case 3:
+      case 4:
+        return babl_format ("R'G'B'A u8");
     }
 
   return NULL;
@@ -157,8 +121,7 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
   channels  = gdk_pixbuf_get_n_channels (pixbuf);
 
   return gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
-                                           gimp_bpp_to_babl_format (channels,
-                                                                    TRUE),
+                                           gimp_bpp_to_babl_format (channels),
                                            GIMP_GEGL_RECT (0,0,width,height),
                                            rowstride,
                                            (GDestroyNotify) g_object_unref,
