@@ -31,7 +31,6 @@
 
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
-#include "base/tile.h"
 #include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
@@ -64,6 +63,7 @@ typedef struct
   gdouble           vec[2];
   GimpRepeatMode    repeat;
   GRand            *seed;
+  GeglBuffer       *dist_buffer;
 } RenderBlendData;
 
 typedef struct
@@ -123,11 +123,11 @@ static gdouble  gradient_calc_shapeburst_dimpled_factor   (GeglBuffer *dist_buff
                                                            gdouble     x,
                                                            gdouble     y);
 
-static void     gradient_precalc_shapeburst (GimpImage        *image,
-                                             GimpDrawable     *drawable,
-                                             PixelRegion      *PR,
-                                             gdouble           dist,
-                                             GimpProgress     *progress);
+static GeglBuffer * gradient_precalc_shapeburst (GimpImage        *image,
+                                                 GimpDrawable     *drawable,
+                                                 PixelRegion      *PR,
+                                                 gdouble           dist,
+                                                 GimpProgress     *progress);
 
 static void     gradient_render_pixel       (gdouble           x,
                                              gdouble           y,
@@ -167,11 +167,6 @@ static void     gradient_fill_single_region_gray        (RenderBlendData *rbd,
                                                          PixelRegion     *PR);
 static void     gradient_fill_single_region_gray_dither (RenderBlendData *rbd,
                                                          PixelRegion     *PR);
-
-
-/*  variables for the shapeburst algorithms  */
-
-static GeglBuffer *dist_buffer = NULL;
 
 
 /*  public functions  */
@@ -227,12 +222,6 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                         (startx - x), (starty - y),
                         (endx - x), (endy - y),
                         progress);
-
-  if (dist_buffer)
-    {
-      g_object_unref (dist_buffer);
-      dist_buffer = NULL;
-    }
 
   gimp_gegl_buffer_refetch_tiles (buffer);
 
@@ -555,7 +544,7 @@ gradient_calc_shapeburst_dimpled_factor (GeglBuffer *dist_buffer,
   return value;
 }
 
-static void
+static GeglBuffer *
 gradient_precalc_shapeburst (GimpImage    *image,
                              GimpDrawable *drawable,
                              PixelRegion  *PR,
@@ -563,6 +552,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
                              GimpProgress *progress)
 {
   GimpChannel *mask;
+  GeglBuffer  *dist_buffer;
   GeglBuffer  *temp_buffer;
   GeglNode    *shapeburst;
   gdouble      max;
@@ -648,6 +638,8 @@ gradient_precalc_shapeburst (GimpImage    *image,
             *data++ /= max_iteration;
         }
     }
+
+  return dist_buffer;
 }
 
 
@@ -700,15 +692,15 @@ gradient_render_pixel (gdouble   x,
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
-      factor = gradient_calc_shapeburst_angular_factor (dist_buffer, x, y);
+      factor = gradient_calc_shapeburst_angular_factor (rbd->dist_buffer, x, y);
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
-      factor = gradient_calc_shapeburst_spherical_factor (dist_buffer, x, y);
+      factor = gradient_calc_shapeburst_spherical_factor (rbd->dist_buffer, x, y);
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
-      factor = gradient_calc_shapeburst_dimpled_factor (dist_buffer, x, y);
+      factor = gradient_calc_shapeburst_dimpled_factor (rbd->dist_buffer, x, y);
       break;
 
     case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
@@ -859,7 +851,7 @@ gradient_fill_region (GimpImage        *image,
                       gdouble           ey,
                       GimpProgress     *progress)
 {
-  RenderBlendData rbd;
+  RenderBlendData rbd = { 0, };
 
   rbd.gradient = gimp_context_get_gradient (context);
   rbd.context  = context;
@@ -939,7 +931,8 @@ gradient_fill_region (GimpImage        *image,
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
-      gradient_precalc_shapeburst (image, drawable, PR, rbd.dist, progress);
+      rbd.dist_buffer = gradient_precalc_shapeburst (image, drawable,
+                                                     PR, rbd.dist, progress);
       break;
 
     default:
@@ -1013,6 +1006,9 @@ gradient_fill_region (GimpImage        *image,
     }
 
   g_object_unref (rbd.gradient);
+
+  if (rbd.dist_buffer)
+    g_object_unref (rbd.dist_buffer);
 }
 
 static void
