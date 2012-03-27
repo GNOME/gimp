@@ -50,6 +50,10 @@ void          gimp_gegl_buffer_refetch_tiles     (GeglBuffer            *buffer)
 
 GeglColor   * gimp_gegl_color_new                (const GimpRGB         *rgb);
 
+void          gimp_gegl_progress_connect         (GeglNode              *node,
+                                                  GimpProgress          *progress,
+                                                  const gchar           *text);
+
 #define       GIMP_GEGL_RECT(x,y,w,h)            (&((GeglRectangle){(x), (y), (w), (h)}))
 
 #endif /* __GIMP_GEGL_UTILS_H__ */

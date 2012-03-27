@@ -27,6 +27,8 @@
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
 
+#include "core/gimpprogress.h"
+
 #include "gimp-gegl-utils.h"
 #include "gimptilebackendtilemanager.h"
 
@@ -289,4 +291,59 @@ gimp_gegl_color_new (const GimpRGB *rgb)
   gegl_color_set_rgba (color, rgb->r, rgb->g, rgb->b, rgb->a);
 
   return color;
+}
+
+static void
+gimp_gegl_progress_notify (GObject          *object,
+                           const GParamSpec *pspec,
+                           GimpProgress     *progress)
+{
+  const gchar *text;
+  gdouble      value;
+
+  g_object_get (object, "progress", &value, NULL);
+
+  text = g_object_get_data (object, "gimp-progress-text");
+
+  if (text)
+    {
+      if (value == 0.0)
+        {
+          gimp_progress_start (progress, text, FALSE);
+          return;
+        }
+      else if (value == 1.0)
+        {
+          gimp_progress_end (progress);
+          return;
+        }
+    }
+
+  gimp_progress_set_value (progress, value);
+}
+
+void
+gimp_gegl_progress_connect (GeglNode     *node,
+                            GimpProgress *progress,
+                            const gchar  *text)
+{
+  GObject *operation = NULL;
+
+  g_return_if_fail (GEGL_IS_NODE (node));
+  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+
+  g_object_get (node, "gegl-operation", &operation, NULL);
+
+  g_return_if_fail (operation != NULL);
+
+  g_signal_connect (operation, "notify::progress",
+                    G_CALLBACK (gimp_gegl_progress_notify),
+                    progress);
+
+  if (text)
+    g_object_set_data_full (operation,
+                            "gimp-progress-text", g_strdup (text),
+                            (GDestroyNotify) g_free);
+
+  g_object_unref (operation);
 }
