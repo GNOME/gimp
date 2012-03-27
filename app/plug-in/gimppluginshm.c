@@ -63,8 +63,6 @@
 
 #include "plug-in-types.h"
 
-#include "base/base-utils.h"
-
 #include "gimppluginshm.h"
 
 #include "gimp-log.h"

@@ -29,8 +29,6 @@
 
 #include "plug-in-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-shadow.h"
