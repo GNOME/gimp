@@ -488,7 +488,7 @@ scale (TileManager           *srcTM,
       surround = pixel_surround_new (srcTM, 4, 4, PIXEL_SURROUND_SMEAR);
       break;
 
-    case GIMP_INTERPOLATION_LANCZOS:
+    case GIMP_INTERPOLATION_LOHALO:
       surround = pixel_surround_new (srcTM, 6, 6, PIXEL_SURROUND_SMEAR);
       kernel_lookup = create_lanczos3_lookup ();
       break;
@@ -537,7 +537,7 @@ scale (TileManager           *srcTM,
                                      sx, sy, xfrac, yfrac, bytes, pixel);
                   break;
 
-                case GIMP_INTERPOLATION_LANCZOS:
+                case GIMP_INTERPOLATION_LOHALO:
                   interpolate_lanczos3 (surround,
                                         sx, sy, xfrac, yfrac, bytes, pixel,
                                         kernel_lookup);

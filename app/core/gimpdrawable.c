@@ -446,7 +446,7 @@ gimp_drawable_scale (GimpItem              *item,
 #endif
 
   if (gimp_use_gegl (gimp_item_get_image (item)->gimp) &&
-      interpolation_type != GIMP_INTERPOLATION_LANCZOS)
+      interpolation_type != GIMP_INTERPOLATION_LOHALO)
     {
       GeglNode *scale;
 

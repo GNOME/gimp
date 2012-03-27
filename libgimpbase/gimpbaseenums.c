@@ -570,7 +570,7 @@ gimp_interpolation_type_get_type (void)
     { GIMP_INTERPOLATION_NONE, "GIMP_INTERPOLATION_NONE", "none" },
     { GIMP_INTERPOLATION_LINEAR, "GIMP_INTERPOLATION_LINEAR", "linear" },
     { GIMP_INTERPOLATION_CUBIC, "GIMP_INTERPOLATION_CUBIC", "cubic" },
-    { GIMP_INTERPOLATION_LANCZOS, "GIMP_INTERPOLATION_LANCZOS", "lanczos" },
+    { GIMP_INTERPOLATION_LOHALO, "GIMP_INTERPOLATION_LOHALO", "lohalo" },
     { 0, NULL, NULL }
   };
 
@@ -579,7 +579,7 @@ gimp_interpolation_type_get_type (void)
     { GIMP_INTERPOLATION_NONE, NC_("interpolation-type", "None"), NULL },
     { GIMP_INTERPOLATION_LINEAR, NC_("interpolation-type", "Linear"), NULL },
     { GIMP_INTERPOLATION_CUBIC, NC_("interpolation-type", "Cubic"), NULL },
-    { GIMP_INTERPOLATION_LANCZOS, NC_("interpolation-type", "Sinc (Lanczos3)"), NULL },
+    { GIMP_INTERPOLATION_LOHALO, NC_("interpolation-type", "LoHalo"), NULL },
     { 0, NULL, NULL }
   };
 

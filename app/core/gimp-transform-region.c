@@ -266,7 +266,7 @@ gimp_transform_region (GimpPickable          *pickable,
                                    bg_color, progress);
       break;
 
-    case GIMP_INTERPOLATION_LANCZOS:
+    case GIMP_INTERPOLATION_LOHALO:
       gimp_transform_region_lanczos (orig_tiles, destPR,
                                      dest_x1, dest_y1, dest_x2, dest_y2,
                                      u1, v1, u2, v2,

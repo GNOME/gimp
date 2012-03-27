@@ -97,7 +97,7 @@ gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
     case GIMP_INTERPOLATION_NONE:    return "nearest";
     case GIMP_INTERPOLATION_LINEAR:  return "linear";
     case GIMP_INTERPOLATION_CUBIC:   return "cubic";
-    case GIMP_INTERPOLATION_LANCZOS: return "lohalo";
+    case GIMP_INTERPOLATION_LOHALO:  return "lohalo";
     default:
       break;
     }

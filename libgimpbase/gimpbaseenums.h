@@ -253,10 +253,11 @@ GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_INTERPOLATION_NONE,   /*< desc="None"            >*/
-  GIMP_INTERPOLATION_LINEAR, /*< desc="Linear"          >*/
-  GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"           >*/
-  GIMP_INTERPOLATION_LANCZOS /*< desc="Sinc (Lanczos3)" >*/
+  GIMP_INTERPOLATION_NONE,   /*< desc="None"   >*/
+  GIMP_INTERPOLATION_LINEAR, /*< desc="Linear" >*/
+  GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"  >*/
+  GIMP_INTERPOLATION_LOHALO, /*< desc="LoHalo" >*/
+  GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_LOHALO /*< skip */
 } GimpInterpolationType;
 
 
