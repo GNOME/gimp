@@ -42,6 +42,7 @@ pdb_sources = \
 	pdb/pattern_select.pdb		\
 	pdb/patterns.pdb		\
 	pdb/plug_in.pdb			\
+	pdb/plug_in_compat.pdb		\
 	pdb/procedural_db.pdb		\
 	pdb/progress.pdb		\
 	pdb/selection.pdb		\

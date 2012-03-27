@@ -64,6 +64,7 @@ void   register_pattern_procs            (GimpPDB *pdb);
 void   register_pattern_select_procs     (GimpPDB *pdb);
 void   register_patterns_procs           (GimpPDB *pdb);
 void   register_plug_in_procs            (GimpPDB *pdb);
+void   register_plug_in_compat_procs     (GimpPDB *pdb);
 void   register_procedural_db_procs      (GimpPDB *pdb);
 void   register_progress_procs           (GimpPDB *pdb);
 void   register_selection_procs          (GimpPDB *pdb);

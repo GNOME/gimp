@@ -76,6 +76,7 @@ libappinternal_procs_a_SOURCES = \
 	pattern-select-cmds.c		\
 	patterns-cmds.c			\
 	plug-in-cmds.c			\
+	plug-in-compat-cmds.c		\
 	procedural-db-cmds.c		\
 	progress-cmds.c			\
 	selection-cmds.c		\

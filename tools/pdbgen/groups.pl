@@ -40,6 +40,7 @@
     pattern_select
     patterns
     plug_in
+    plug_in_compat
     procedural_db
     progress
     selection
