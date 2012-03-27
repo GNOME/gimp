@@ -1757,6 +1757,7 @@ newsprint (GimpDrawable *drawable,
   gint          has_alpha;
   gint          b;
   gint          tile_width;
+  gint          tile_height;
   gint          width;
   gint          row, col;
   gint          x, y, x_step, y_step;
@@ -1786,6 +1787,7 @@ newsprint (GimpDrawable *drawable,
   width *= oversample;
 
   tile_width = gimp_tile_width ();
+  tile_height = gimp_tile_height ();
 
   bpp        = gimp_drawable_bpp (drawable->drawable_id);
 
@@ -1878,13 +1880,13 @@ do {                                                            \
   progress     = 0;
   max_progress = (x2 - x1) * (y2 - y1);
 
-  for (y = y1; y < y2; y += tile_width - (y % tile_width))
+  for (y = y1; y < y2; y += tile_height - (y % tile_height))
     {
       for (x = x1; x < x2; x += tile_width - (x % tile_width))
         {
           /* snap to tile boundary */
           x_step = tile_width - (x % tile_width);
-          y_step = tile_width - (y % tile_width);
+          y_step = tile_height - (y % tile_height);
           /* don't step off the end of the image */
           x_step = MIN (x_step, x2 - x);
           y_step = MIN (y_step, y2 - y);
