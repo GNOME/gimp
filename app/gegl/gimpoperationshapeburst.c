@@ -195,8 +195,6 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
   gfloat     *memory;
   gint        length;
   gint        i;
-  gint        max_progress = roi->width * roi->height;
-  gint        progress     = 0;
 
   length = roi->width + 1;
   memory = g_new (gfloat, length * 2);
@@ -239,17 +237,18 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
                 {
                   guchar src_uchar;
 
-#if 0
+#if 1
                   /* FIXME: this should be much faster, it converts
                    * to 32 bit rgba intermediately, bah...
                    */
                   gegl_buffer_sample (input, x, y, NULL, &src_uchar,
                                       input_format,
                                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-#endif
+#else
                   gegl_buffer_get (input, GIMP_GEGL_RECT (x, y, 1, 1), 1.0,
                                    input_format, &src_uchar,
                                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+#endif
 
                   src = src_uchar;
 
@@ -304,9 +303,8 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
       distp_prev = distp_cur;
       distp_cur = tmp;
 
-      progress += roi->height;
       g_object_set (operation,
-                    "progress", (gdouble) progress / max_progress,
+                    "progress", (gdouble) i / roi->height,
                     NULL);
     }
 
