@@ -126,8 +126,6 @@ libappcore_a_sources = \
 	gimpdrawable-blend.h			\
 	gimpdrawable-bucket-fill.c		\
 	gimpdrawable-bucket-fill.h		\
-	gimpdrawable-color-balance.c		\
-	gimpdrawable-color-balance.h		\
 	gimpdrawable-combine.c			\
 	gimpdrawable-combine.h			\
 	gimpdrawable-convert.c			\

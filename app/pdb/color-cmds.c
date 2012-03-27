@@ -23,7 +23,6 @@
 
 #include "pdb-types.h"
 
-#include "core/gimpdrawable-color-balance.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpdrawable-hue-saturation.h"
@@ -33,6 +32,7 @@
 #include "core/gimphistogram.h"
 #include "core/gimpparamspecs.h"
 #include "gegl/gimpbrightnesscontrastconfig.h"
+#include "gegl/gimpcolorbalanceconfig.h"
 #include "gegl/gimpcolorizeconfig.h"
 #include "gegl/gimpcurvesconfig.h"
 #include "gegl/gimpdesaturateconfig.h"
@@ -504,16 +504,29 @@ color_balance_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error)  &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GObject *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG,
+                                          "range",               transfer_mode,
+                                          "preserve-luminosity", preserve_lum,
+                                          NULL);
 
-      if (success)
-        gimp_drawable_color_balance (drawable, progress,
-                                     transfer_mode,
-                                     cyan_red, magenta_green, yellow_blue,
-                                     preserve_lum);
+          g_object_set (config,
+                        "cyan-red",      cyan_red      / 100.0,
+                        "magenta-green", magenta_green / 100.0,
+                        "yellow-blue",   yellow_blue   / 100.0,
+                        NULL);
+
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 C_("undo-type", "Color Balance"),
+                                                 "gimp:color-balance",
+                                                 config);
+
+          g_object_unref (config);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,

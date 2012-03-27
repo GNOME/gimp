@@ -27,8 +27,6 @@
 
 #include "tools-types.h"
 
-#include "base/color-balance.h"
-
 #include "gegl/gimpcolorbalanceconfig.h"
 
 #include "core/gimpdrawable.h"
@@ -47,15 +45,12 @@
 
 /*  local function prototypes  */
 
-static void       gimp_color_balance_tool_finalize      (GObject          *object);
-
 static gboolean   gimp_color_balance_tool_initialize    (GimpTool         *tool,
                                                          GimpDisplay      *display,
                                                          GError          **error);
 
 static GeglNode * gimp_color_balance_tool_get_operation (GimpImageMapTool *im_tool,
                                                          GObject         **config);
-static void       gimp_color_balance_tool_map           (GimpImageMapTool *im_tool);
 static void       gimp_color_balance_tool_dialog        (GimpImageMapTool *im_tool);
 static void       gimp_color_balance_tool_reset         (GimpImageMapTool *im_tool);
 
@@ -102,11 +97,8 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 {
-  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
-
-  object_class->finalize             = gimp_color_balance_tool_finalize;
 
   tool_class->initialize             = gimp_color_balance_tool_initialize;
 
@@ -116,7 +108,6 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
   im_tool_class->export_dialog_title = _("Export Color Balance Settings");
 
   im_tool_class->get_operation       = gimp_color_balance_tool_get_operation;
-  im_tool_class->map                 = gimp_color_balance_tool_map;
   im_tool_class->dialog              = gimp_color_balance_tool_dialog;
   im_tool_class->reset               = gimp_color_balance_tool_reset;
 }
@@ -124,24 +115,6 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 static void
 gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (cb_tool);
-
-  cb_tool->color_balance = g_slice_new0 (ColorBalance);
-
-  color_balance_init (cb_tool->color_balance);
-
-  im_tool->apply_func = (GimpImageMapApplyFunc) color_balance;
-  im_tool->apply_data = cb_tool->color_balance;
-}
-
-static void
-gimp_color_balance_tool_finalize (GObject *object)
-{
-  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (object);
-
-  g_slice_free (ColorBalance, cb_tool->color_balance);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
@@ -192,14 +165,6 @@ gimp_color_balance_tool_get_operation (GimpImageMapTool  *im_tool,
                  NULL);
 
   return node;
-}
-
-static void
-gimp_color_balance_tool_map (GimpImageMapTool *image_map_tool)
-{
-  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
-
-  gimp_color_balance_config_to_cruft (cb_tool->config, cb_tool->color_balance);
 }
 
 

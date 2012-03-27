@@ -29,9 +29,6 @@
 
 #include "gimp-gegl-types.h"
 
-/*  temp cruft  */
-#include "base/color-balance.h"
-
 #include "gimpcolorbalanceconfig.h"
 
 
@@ -358,28 +355,4 @@ gimp_color_balance_config_reset_range (GimpColorBalanceConfig *config)
   gimp_config_reset_property (G_OBJECT (config), "yellow-blue");
 
   g_object_thaw_notify (G_OBJECT (config));
-}
-
-
-/*  temp cruft  */
-
-void
-gimp_color_balance_config_to_cruft (GimpColorBalanceConfig *config,
-                                    ColorBalance           *cruft)
-{
-  GimpTransferMode range;
-
-  g_return_if_fail (GIMP_IS_COLOR_BALANCE_CONFIG (config));
-  g_return_if_fail (cruft != NULL);
-
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
-    {
-      cruft->cyan_red[range]      = config->cyan_red[range]      * 100.0;
-      cruft->magenta_green[range] = config->magenta_green[range] * 100.0;
-      cruft->yellow_blue[range]   = config->yellow_blue[range]   * 100.0;
-    }
-
-  cruft->preserve_luminosity = config->preserve_luminosity;
-
-  color_balance_create_lookup_tables (cruft);
 }

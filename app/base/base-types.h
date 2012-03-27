@@ -49,7 +49,6 @@
 
 typedef struct _GimpLut             GimpLut;
 
-typedef struct _ColorBalance        ColorBalance;
 typedef struct _HueSaturation       HueSaturation;
 
 typedef struct _PixelRegionIterator PixelRegionIterator;

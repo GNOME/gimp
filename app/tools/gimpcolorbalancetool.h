@@ -39,7 +39,6 @@ struct _GimpColorBalanceTool
   GimpImageMapTool        parent_instance;
 
   GimpColorBalanceConfig *config;
-  ColorBalance           *color_balance;
 
   /*  dialog  */
   GtkWidget              *range_radio;
