@@ -14,6 +14,7 @@
 
   <resource identifier="${gimp_data_dir}/brushes/Round-Fuzzy.vbr" checksum="f8cb2466841104a55e42afce4568d103">
     <tag>
+      <!-- fuzzy as in a feathered, blurred, unfocused, soft brush -->
       <_thetag>fuzzy</_thetag>
       <_thetag>round</_thetag>
     </tag>
