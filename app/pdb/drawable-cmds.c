@@ -24,8 +24,6 @@
 #include "pdb-types.h"
 
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
-#include "base/tile.h"
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable-foreground-extract.h"
@@ -35,6 +33,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
+#include "gegl/gimp-gegl-utils.h"
 #include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
@@ -567,25 +566,10 @@ drawable_get_pixel_invoker (GimpProcedure      *procedure,
       if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
           y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
         {
-          Tile   *tile;
-          guint8 *p;
-          gint    b;
-
-          num_channels = gimp_drawable_bytes (drawable);
-          pixel = g_new (guint8, num_channels);
-
-          tile = tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
-                                        x_coord, y_coord,
-                                        TRUE, TRUE);
-
-          x_coord %= TILE_WIDTH;
-          y_coord %= TILE_HEIGHT;
-
-          p = tile_data_pointer (tile, x_coord, y_coord);
-          for (b = 0; b < num_channels; b++)
-            pixel[b] = p[b];
-
-          tile_release (tile, FALSE);
+          gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
+                              x_coord, y_coord, NULL, pixel,
+                              gimp_drawable_get_format (drawable),
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
         }
       else
         success = FALSE;
@@ -632,22 +616,10 @@ drawable_set_pixel_invoker (GimpProcedure      *procedure,
           y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
           num_channels == gimp_drawable_bytes (drawable))
         {
-          Tile   *tile;
-          guint8 *p;
-          gint    b;
-
-          tile = tile_manager_get_tile (gimp_drawable_get_tiles (drawable),
-                                        x_coord, y_coord,
-                                        TRUE, TRUE);
-
-          x_coord %= TILE_WIDTH;
-          y_coord %= TILE_HEIGHT;
-
-          p = tile_data_pointer (tile, x_coord, y_coord);
-          for (b = 0; b < num_channels; b++)
-            *p++ = *pixel++;
-
-          tile_release (tile, TRUE);
+          gegl_buffer_set (gimp_drawable_get_buffer (drawable),
+                           GIMP_GEGL_RECT (x_coord, y_coord, 1, 1),
+                           1.0, gimp_drawable_get_format (drawable),
+                           pixel, GEGL_AUTO_ROWSTRIDE);
         }
       else
         success = FALSE;
