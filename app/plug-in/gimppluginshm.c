@@ -64,14 +64,13 @@
 #include "plug-in-types.h"
 
 #include "base/base-utils.h"
-#include "base/tile.h"
 
 #include "gimppluginshm.h"
 
 #include "gimp-log.h"
 
 
-#define TILE_MAP_SIZE (TILE_WIDTH * TILE_HEIGHT * 4)
+#define TILE_MAP_SIZE (GIMP_PLUG_IN_TILE_WIDTH * GIMP_PLUG_IN_TILE_HEIGHT * 4)
 
 #define ERRMSG_SHM_DISABLE "Disabling shared memory tile transport"
 

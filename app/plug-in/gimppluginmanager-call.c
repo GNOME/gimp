@@ -29,8 +29,6 @@
 
 #include "config/gimpguiconfig.h"
 
-#include "base/tile.h"
-
 #include "composite/gimp-composite.h"
 
 #include "core/gimp.h"
@@ -185,8 +183,8 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       display_ID = display ? gimp_get_display_ID (manager->gimp, display) : -1;
 
       config.version          = GIMP_PROTOCOL_VERSION;
-      config.tile_width       = TILE_WIDTH;
-      config.tile_height      = TILE_HEIGHT;
+      config.tile_width       = GIMP_PLUG_IN_TILE_WIDTH;
+      config.tile_height      = GIMP_PLUG_IN_TILE_HEIGHT;
       config.shm_ID           = (manager->shm ?
                                  gimp_plug_in_shm_get_ID (manager->shm) : -1);
       config.check_size       = display_config->transparency_size;

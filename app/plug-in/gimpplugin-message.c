@@ -29,9 +29,6 @@
 
 #include "plug-in-types.h"
 
-#include "base/tile.h"
-#include "base/tile-manager.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
@@ -184,6 +181,46 @@ gimp_plug_in_handle_tile_request (GimpPlugIn *plug_in,
     gimp_plug_in_handle_tile_get (plug_in, request);
 }
 
+static gboolean
+gimp_plug_in_get_tile_rect (GeglBuffer    *buffer,
+                            gint           tile_num,
+                            GeglRectangle *rect)
+{
+  gint n_tile_rows;
+  gint n_tile_columns;
+  gint tile_row;
+  gint tile_column;
+
+  n_tile_rows =
+    (gegl_buffer_get_height (buffer) + GIMP_PLUG_IN_TILE_HEIGHT - 1) /
+    GIMP_PLUG_IN_TILE_HEIGHT;
+
+  n_tile_columns =
+    (gegl_buffer_get_width (buffer) + GIMP_PLUG_IN_TILE_WIDTH - 1) /
+    GIMP_PLUG_IN_TILE_WIDTH;
+
+  if (tile_num > n_tile_rows * n_tile_columns - 1)
+    return FALSE;
+
+  tile_row    = tile_num / n_tile_columns;
+  tile_column = tile_num % n_tile_columns;
+
+  rect->x = tile_column * GIMP_PLUG_IN_TILE_WIDTH;
+  rect->y = tile_row    * GIMP_PLUG_IN_TILE_HEIGHT;
+
+  if (tile_column == n_tile_columns - 1)
+    rect->width = gegl_buffer_get_width (buffer) - rect->x;
+  else
+    rect->width = GIMP_PLUG_IN_TILE_WIDTH;
+
+  if (tile_row == n_tile_rows - 1)
+    rect->height = gegl_buffer_get_height (buffer) - rect->y;
+  else
+    rect->height = GIMP_PLUG_IN_TILE_HEIGHT;
+
+  return TRUE;
+}
+
 static void
 gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
                               GPTileReq  *request)
@@ -193,8 +230,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
   GimpWireMessage  msg;
   GimpDrawable    *drawable;
   GeglBuffer      *buffer;
-  TileManager     *tm;
-  Tile            *tile;
+  GeglRectangle    tile_rect;
 
   tile_data.drawable_ID = -1;
   tile_data.tile_num    = 0;
@@ -298,11 +334,8 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
       buffer = gimp_drawable_get_buffer (drawable);
     }
 
-  tm = gimp_gegl_buffer_get_tiles (buffer);
-
-  tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
-
-  if (! tile)
+  if (! gimp_plug_in_get_tile_rect (buffer, tile_info->tile_num,
+                                    &tile_rect))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-In \"%s\"\n(%s)\n\n"
@@ -314,15 +347,18 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
     }
 
   if (tile_data.use_shm)
-    memcpy (tile_data_pointer (tile, 0, 0),
-            gimp_plug_in_shm_get_addr (plug_in->manager->shm),
-            tile_size (tile));
+    {
+      gegl_buffer_set (buffer, &tile_rect, 0, NULL,
+                       gimp_plug_in_shm_get_addr (plug_in->manager->shm),
+                       GEGL_AUTO_ROWSTRIDE);
+    }
   else
-    memcpy (tile_data_pointer (tile, 0, 0),
-            tile_info->data,
-            tile_size (tile));
+    {
+      gegl_buffer_set (buffer, &tile_rect, 0, NULL,
+                       tile_info->data,
+                       GEGL_AUTO_ROWSTRIDE);
+    }
 
-  tile_release (tile, TRUE);
   gimp_wire_destroy (&msg);
 
   if (! gp_tile_ack_write (plug_in->my_write, plug_in))
@@ -342,8 +378,9 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
   GimpWireMessage  msg;
   GimpDrawable    *drawable;
   GeglBuffer      *buffer;
-  TileManager     *tm;
-  Tile            *tile;
+  const Babl      *format;
+  GeglRectangle    tile_rect;
+  gint             tile_size;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
                                                    request->drawable_ID);
@@ -383,11 +420,8 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
       buffer = gimp_drawable_get_buffer (drawable);
     }
 
-  tm = gimp_gegl_buffer_get_tiles (buffer);
-
-  tile = tile_manager_get (tm, request->tile_num, TRUE, FALSE);
-
-  if (! tile)
+  if (! gimp_plug_in_get_tile_rect (buffer, request->tile_num,
+                                    &tile_rect))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-In \"%s\"\n(%s)\n\n"
@@ -398,20 +432,33 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
       return;
     }
 
+  format = gegl_buffer_get_format (buffer);
+
+  tile_size = (babl_format_get_bytes_per_pixel (format) *
+               tile_rect.width * tile_rect.height);
+
   tile_data.drawable_ID = request->drawable_ID;
   tile_data.tile_num    = request->tile_num;
   tile_data.shadow      = request->shadow;
-  tile_data.bpp         = tile_bpp (tile);
-  tile_data.width       = tile_ewidth (tile);
-  tile_data.height      = tile_eheight (tile);
+  tile_data.bpp         = babl_format_get_bytes_per_pixel (format);
+  tile_data.width       = tile_rect.width;
+  tile_data.height      = tile_rect.height;
   tile_data.use_shm     = (plug_in->manager->shm != NULL);
 
   if (tile_data.use_shm)
-    memcpy (gimp_plug_in_shm_get_addr (plug_in->manager->shm),
-            tile_data_pointer (tile, 0, 0),
-            tile_size (tile));
+    {
+      gegl_buffer_get (buffer, &tile_rect, 1.0, NULL,
+                       gimp_plug_in_shm_get_addr (plug_in->manager->shm),
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+    }
   else
-    tile_data.data = tile_data_pointer (tile, 0, 0);
+    {
+      tile_data.data = g_malloc (tile_size);
+
+      gegl_buffer_get (buffer, &tile_rect, 1.0, NULL,
+                       tile_data.data,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+    }
 
   if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
     {
@@ -420,8 +467,6 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
-
-  tile_release (tile, FALSE);
 
   if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
     {
