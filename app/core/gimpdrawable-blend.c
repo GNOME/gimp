@@ -113,12 +113,15 @@ static gdouble  gradient_calc_spiral_factor       (gdouble   dist,
                                                    gdouble   y,
                                                    gboolean  clockwise);
 
-static gdouble  gradient_calc_shapeburst_angular_factor   (gdouble x,
-                                                           gdouble y);
-static gdouble  gradient_calc_shapeburst_spherical_factor (gdouble x,
-                                                           gdouble y);
-static gdouble  gradient_calc_shapeburst_dimpled_factor   (gdouble x,
-                                                           gdouble y);
+static gdouble  gradient_calc_shapeburst_angular_factor   (GeglBuffer *dist_buffer,
+                                                           gdouble     x,
+                                                           gdouble     y);
+static gdouble  gradient_calc_shapeburst_spherical_factor (GeglBuffer *dist_buffer,
+                                                           gdouble     x,
+                                                           gdouble     y);
+static gdouble  gradient_calc_shapeburst_dimpled_factor   (GeglBuffer *dist_buffer,
+                                                           gdouble     x,
+                                                           gdouble     y);
 
 static void     gradient_precalc_shapeburst (GimpImage        *image,
                                              GimpDrawable     *drawable,
@@ -168,19 +171,7 @@ static void     gradient_fill_single_region_gray_dither (RenderBlendData *rbd,
 
 /*  variables for the shapeburst algorithms  */
 
-static PixelRegion distR =
-{
-  NULL,  /* data */
-  NULL,  /* tiles */
-  NULL,  /* curtile */
-  0, 0,  /* offx, offy */
-  0,     /* rowstride */
-  0, 0,  /* x, y */
-  0, 0,  /* w, h */
-  4,     /* bytes */
-  FALSE, /* dirty */
-  0      /* process count */
-};
+static GeglBuffer *dist_buffer = NULL;
 
 
 /*  public functions  */
@@ -237,10 +228,10 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                         (endx - x), (endy - y),
                         progress);
 
-  if (distR.tiles)
+  if (dist_buffer)
     {
-      tile_manager_unref (distR.tiles);
-      distR.tiles = NULL;
+      g_object_unref (dist_buffer);
+      dist_buffer = NULL;
     }
 
   gimp_gegl_buffer_refetch_tiles (buffer);
@@ -509,59 +500,57 @@ gradient_calc_spiral_factor (gdouble   dist,
 }
 
 static gdouble
-gradient_calc_shapeburst_angular_factor (gdouble x,
-                                         gdouble y)
+gradient_calc_shapeburst_angular_factor (GeglBuffer *dist_buffer,
+                                         gdouble     x,
+                                         gdouble     y)
 {
-  Tile   *tile;
-  gfloat  value;
-  gint    ix = CLAMP (x, 0.0, distR.w - 0.7);
-  gint    iy = CLAMP (y, 0.0, distR.h - 0.7);
+  gint   ix = CLAMP (x, 0.0, gegl_buffer_get_width  (dist_buffer) - 0.7);
+  gint   iy = CLAMP (y, 0.0, gegl_buffer_get_height (dist_buffer) - 0.7);
+  gfloat value;
 
-  tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
+  gegl_buffer_get (dist_buffer, GIMP_GEGL_RECT (ix, iy, 1, 1), 1.0,
+                   NULL, &value,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  value = 1.0 - *((gfloat *) tile_data_pointer (tile, ix, iy));
-
-  tile_release (tile, FALSE);
+  value = 1.0 - value;
 
   return value;
 }
 
 
 static gdouble
-gradient_calc_shapeburst_spherical_factor (gdouble x,
-                                           gdouble y)
+gradient_calc_shapeburst_spherical_factor (GeglBuffer *dist_buffer,
+                                           gdouble     x,
+                                           gdouble     y)
 {
-  Tile   *tile;
-  gfloat  value;
-  gint    ix = CLAMP (x, 0.0, distR.w - 0.7);
-  gint    iy = CLAMP (y, 0.0, distR.h - 0.7);
+  gint   ix = CLAMP (x, 0.0, gegl_buffer_get_width  (dist_buffer) - 0.7);
+  gint   iy = CLAMP (y, 0.0, gegl_buffer_get_height (dist_buffer) - 0.7);
+  gfloat value;
 
-  tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
+  gegl_buffer_get (dist_buffer, GIMP_GEGL_RECT (ix, iy, 1, 1), 1.0,
+                   NULL, &value,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  value = *((gfloat *) tile_data_pointer (tile, ix, iy));
   value = 1.0 - sin (0.5 * G_PI * value);
 
-  tile_release (tile, FALSE);
-
   return value;
 }
 
 
 static gdouble
-gradient_calc_shapeburst_dimpled_factor (gdouble x,
-                                         gdouble y)
+gradient_calc_shapeburst_dimpled_factor (GeglBuffer *dist_buffer,
+                                         gdouble     x,
+                                         gdouble     y)
 {
-  Tile   *tile;
-  gfloat  value;
-  gint    ix = CLAMP (x, 0.0, distR.w - 0.7);
-  gint    iy = CLAMP (y, 0.0, distR.h - 0.7);
+  gint   ix = CLAMP (x, 0.0, gegl_buffer_get_width  (dist_buffer) - 0.7);
+  gint   iy = CLAMP (y, 0.0, gegl_buffer_get_height (dist_buffer) - 0.7);
+  gfloat value;
 
-  tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
+  gegl_buffer_get (dist_buffer, GIMP_GEGL_RECT (ix, iy, 1, 1), 1.0,
+                   NULL, &value,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  value = *((gfloat *) tile_data_pointer (tile, ix, iy));
   value = cos (0.5 * G_PI * value);
-
-  tile_release (tile, FALSE);
 
   return value;
 }
@@ -575,12 +564,13 @@ gradient_precalc_shapeburst (GimpImage    *image,
 {
   GimpChannel *mask;
   GeglBuffer  *temp_buffer;
+  GeglNode    *shapeburst;
+  gdouble      max;
   gfloat       max_iteration;
-  gint         size;
-  gpointer     pr;
 
   /*  allocate the distance map  */
-  distR.tiles = tile_manager_new (PR->w, PR->h, sizeof (gfloat));
+  dist_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, PR->w, PR->h),
+                                 babl_format ("Y float"));
 
   /*  allocate the selection mask copy  */
   temp_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, PR->w, PR->h),
@@ -626,51 +616,37 @@ gradient_precalc_shapeburst (GimpImage    *image,
         }
     }
 
-  {
-    GeglBuffer *dist_buffer;
-    GeglNode   *shapeburst;
-    gdouble     max = 0.0;
+  shapeburst = gegl_node_new_child (NULL,
+                                    "operation", "gimp:shapeburst",
+                                    NULL);
 
-    dist_buffer = gimp_tile_manager_create_buffer (distR.tiles,
-                                                   babl_format ("Y float"));
+  gimp_apply_operation (temp_buffer, NULL, NULL,
+                        shapeburst,
+                        dist_buffer, NULL);
 
-    shapeburst = gegl_node_new_child (NULL,
-                                      "operation", "gimp:shapeburst",
-                                      NULL);
+  gegl_node_get (shapeburst, "max-iterations", &max, NULL);
 
-    gimp_apply_operation (temp_buffer, NULL, NULL,
-                          shapeburst,
-                          dist_buffer, NULL);
+  g_object_unref (shapeburst);
 
-    gegl_node_get (shapeburst, "max-iterations", &max, NULL);
-
-    g_object_unref (shapeburst);
-
-    max_iteration = max;
-
-    g_object_unref (dist_buffer);
-  }
+  max_iteration = max;
 
   g_object_unref (temp_buffer);
 
   /*  normalize the shapeburst with the max iteration  */
   if (max_iteration > 0)
     {
-      pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, TRUE);
+      GeglBufferIterator *iter;
 
-      for (pr = pixel_regions_register (1, &distR);
-           pr != NULL;
-           pr = pixel_regions_process (pr))
+      iter = gegl_buffer_iterator_new (dist_buffer, NULL, 0, NULL,
+                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *distp = (gfloat *) distR.data;
+          gfloat *data = iter->data[0];
 
-          size = distR.w * distR.h;
-
-          while (size--)
-            *distp++ /= max_iteration;
+          while (iter->length--)
+            *data++ /= max_iteration;
         }
-
-      pixel_region_init (&distR, distR.tiles, 0, 0, PR->w, PR->h, FALSE);
     }
 }
 
@@ -724,15 +700,15 @@ gradient_render_pixel (gdouble   x,
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
-      factor = gradient_calc_shapeburst_angular_factor (x, y);
+      factor = gradient_calc_shapeburst_angular_factor (dist_buffer, x, y);
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
-      factor = gradient_calc_shapeburst_spherical_factor (x, y);
+      factor = gradient_calc_shapeburst_spherical_factor (dist_buffer, x, y);
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
-      factor = gradient_calc_shapeburst_dimpled_factor (x, y);
+      factor = gradient_calc_shapeburst_dimpled_factor (dist_buffer, x, y);
       break;
 
     case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
