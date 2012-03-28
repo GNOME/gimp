@@ -61,7 +61,7 @@ static gboolean find_contiguous_segment   (GimpImage           *image,
                                            PixelRegion         *mask,
                                            gint                 width,
                                            gint                 bytes,
-                                           GimpImageType        src_type,
+                                           const Babl          *fish,
                                            gboolean             has_alpha,
                                            gboolean             select_transparent,
                                            GimpSelectCriterion  select_criterion,
@@ -73,7 +73,7 @@ static gboolean find_contiguous_segment   (GimpImage           *image,
 static void find_contiguous_region_helper (GimpImage           *image,
                                            PixelRegion         *mask,
                                            PixelRegion         *src,
-                                           GimpImageType        src_type,
+                                           const Babl          *fish,
                                            gboolean             has_alpha,
                                            gboolean             select_transparent,
                                            GimpSelectCriterion  select_criterion,
@@ -101,7 +101,8 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
   GimpPickable  *pickable;
   TileManager   *tiles;
   GimpChannel   *mask;
-  GimpImageType  src_type;
+  const Babl    *src_format;
+  const Babl    *fish = NULL;
   gboolean       has_alpha;
   gint           bytes;
   Tile          *tile;
@@ -116,9 +117,9 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
 
   gimp_pickable_flush (pickable);
 
-  src_type  = gimp_pickable_get_image_type (pickable);
-  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
-  bytes     = GIMP_IMAGE_TYPE_BYTES (src_type);
+  src_format = gimp_pickable_get_format (pickable);
+  has_alpha  = babl_format_has_alpha (src_format);
+  bytes      = babl_format_get_bytes_per_pixel (src_format);
 
   tiles = gimp_pickable_get_tiles (pickable);
   pixel_region_init (&srcPR, tiles,
@@ -158,9 +159,11 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
           select_transparent = FALSE;
         }
 
-      if (GIMP_IMAGE_TYPE_IS_INDEXED (src_type))
+      if (babl_format_is_palette (src_format))
         {
-          gimp_image_get_color (image, src_type, start, start_col);
+          fish = babl_fish (src_format, babl_format ("R'G'B'A u8"));
+
+          babl_process (fish, start, start_col, 1);
         }
       else
         {
@@ -171,7 +174,7 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
         }
 
       find_contiguous_region_helper (image, &maskPR, &srcPR,
-                                     src_type, has_alpha,
+                                     fish, has_alpha,
                                      select_transparent, select_criterion,
                                      antialias, threshold,
                                      x, y, start_col);
@@ -428,7 +431,7 @@ find_contiguous_segment (GimpImage           *image,
                          PixelRegion         *mask,
                          gint                 width,
                          gint                 bytes,
-                         GimpImageType        src_type,
+                         const Babl          *fish,
                          gboolean             has_alpha,
                          gboolean             select_transparent,
                          GimpSelectCriterion  select_criterion,
@@ -449,11 +452,11 @@ find_contiguous_segment (GimpImage           *image,
   ref_tiles (src->tiles, mask->tiles,
              &s_tile, &m_tile, src->x, src->y, &s, &m);
 
-  if (GIMP_IMAGE_TYPE_IS_INDEXED (src_type))
+  if (fish)
     {
       col_bytes = has_alpha ? 4 : 3;
 
-      gimp_image_get_color (image, src_type, s, s_color);
+      babl_process (fish, s, s_color, 1);
 
       diff = pixel_difference (col, s_color, antialias, threshold,
                                col_bytes, has_alpha, select_transparent,
@@ -484,9 +487,9 @@ find_contiguous_segment (GimpImage           *image,
         ref_tiles (src->tiles, mask->tiles,
                    &s_tile, &m_tile, *start, src->y, &s, &m);
 
-      if (GIMP_IMAGE_TYPE_IS_INDEXED (src_type))
+      if (fish)
         {
-          gimp_image_get_color (image, src_type, s, s_color);
+          babl_process (fish, s, s_color, 1);
 
           diff = pixel_difference (col, s_color, antialias, threshold,
                                    col_bytes, has_alpha, select_transparent,
@@ -519,9 +522,9 @@ find_contiguous_segment (GimpImage           *image,
         ref_tiles (src->tiles, mask->tiles,
                    &s_tile, &m_tile, *end, src->y, &s, &m);
 
-      if (GIMP_IMAGE_TYPE_IS_INDEXED (src_type))
+      if (fish)
         {
-          gimp_image_get_color (image, src_type, s, s_color);
+          babl_process (fish, s, s_color, 1);
 
           diff = pixel_difference (col, s_color, antialias, threshold,
                                    col_bytes, has_alpha, select_transparent,
@@ -551,7 +554,7 @@ static void
 find_contiguous_region_helper (GimpImage           *image,
                                PixelRegion         *mask,
                                PixelRegion         *src,
-                               GimpImageType        src_type,
+                               const Babl          *fish,
                                gboolean             has_alpha,
                                gboolean             select_transparent,
                                GimpSelectCriterion  select_criterion,
@@ -596,7 +599,7 @@ find_contiguous_region_helper (GimpImage           *image,
           src->y = y;
 
           if (! find_contiguous_segment (image, col, src, mask, src->w,
-                                         src->bytes, src_type, has_alpha,
+                                         src->bytes, fish, has_alpha,
                                          select_transparent, select_criterion,
                                          antialias, threshold, x,
                                          &new_start, &new_end))
