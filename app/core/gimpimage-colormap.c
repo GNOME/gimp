@@ -71,10 +71,14 @@ gimp_image_colormap_init (GimpImage *image)
   private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
   private->palette  = GIMP_PALETTE (gimp_palette_new (NULL, palette_name));
 
-  /* FIXME name palette */
-  babl_new_palette (NULL, &private->babl_palette_rgb, &private->babl_palette_rgba);
+  if (! private->babl_palette_rgb)
+    {
+      babl_new_palette (NULL,
+                        &private->babl_palette_rgb,
+                        &private->babl_palette_rgba);
+    }
 
-  gimp_palette_set_columns  (private->palette, 16);
+  gimp_palette_set_columns (private->palette, 16);
 
   gimp_data_make_internal (GIMP_DATA (private->palette), palette_id);
 
@@ -122,10 +126,10 @@ gimp_image_colormap_free (GimpImage *image)
   g_object_unref (private->palette);
   private->palette = NULL;
 
-  babl_palette_reset (private->babl_palette_rgb);
-  babl_palette_reset (private->babl_palette_rgba);
-  private->babl_palette_rgb = NULL;
-  private->babl_palette_rgba = NULL;
+  /* don't touch the image's babl_palettes because we might still have
+   * buffers with that palette on the undo stack, and on undoing the
+   * image back to indexed, we must have exactly these palettes around
+   */
 }
 
 const Babl *
