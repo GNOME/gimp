@@ -2625,60 +2625,6 @@ gimp_image_inc_instance_count (GimpImage *image)
 /*  color transforms / utilities  */
 
 void
-gimp_image_get_color (const GimpImage *src_image,
-                      GimpImageType    src_type,
-                      const guchar    *src,
-                      guchar          *rgba)
-{
-  gboolean has_alpha = FALSE;
-
-  g_return_if_fail (GIMP_IS_IMAGE (src_image));
-
-  switch (src_type)
-    {
-    case GIMP_RGBA_IMAGE:
-      has_alpha = TRUE;
-
-    case GIMP_RGB_IMAGE:
-      /*  Straight copy  */
-      *rgba++ = *src++;
-      *rgba++ = *src++;
-      *rgba++ = *src++;
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      has_alpha = TRUE;
-
-    case GIMP_GRAY_IMAGE:
-      /*  Gray to RG&B */
-      *rgba++ = *src;
-      *rgba++ = *src;
-      *rgba++ = *src++;
-      break;
-
-    case GIMP_INDEXEDA_IMAGE:
-      has_alpha = TRUE;
-
-    case GIMP_INDEXED_IMAGE:
-      /*  Indexed palette lookup  */
-      {
-        GimpImagePrivate *src_private = GIMP_IMAGE_GET_PRIVATE (src_image);
-        gint              index       = *src++ * 3;
-
-        *rgba++ = src_private->colormap[index++];
-        *rgba++ = src_private->colormap[index++];
-        *rgba++ = src_private->colormap[index++];
-      }
-      break;
-    }
-
-  if (has_alpha)
-    *rgba = *src;
-  else
-    *rgba = OPAQUE_OPACITY;
-}
-
-void
 gimp_image_get_foreground (const GimpImage *image,
                            GimpContext     *context,
                            GimpImageType    dest_type,
