@@ -105,17 +105,17 @@ gimp_gegl_init (Gimp *gimp)
   babl_format_new ("name", "R' u8",
                    babl_model ("R'G'B'A"),
                    babl_type ("u8"),
-                   babl_component ("R"),
+                   babl_component ("R'"),
                    NULL);
   babl_format_new ("name", "G' u8",
                    babl_model ("R'G'B'A"),
                    babl_type ("u8"),
-                   babl_component ("G"),
+                   babl_component ("G'"),
                    NULL);
   babl_format_new ("name", "B' u8",
                    babl_model ("R'G'B'A"),
                    babl_type ("u8"),
-                   babl_component ("B"),
+                   babl_component ("B'"),
                    NULL);
   babl_format_new ("name", "A u8",
                    babl_model ("R'G'B'A"),
