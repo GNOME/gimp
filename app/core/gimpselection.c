@@ -627,7 +627,8 @@ gimp_selection_extract (GimpSelection *selection,
   GimpImage  *image;
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
-  const Babl *format;
+  const Babl *src_format;
+  const Babl *dest_format;
   gint        x1, y1, x2, y2;
   gboolean    non_empty;
   gint        off_x, off_y;
@@ -668,38 +669,22 @@ gimp_selection_extract (GimpSelection *selection,
   if (non_empty)
     add_alpha = TRUE;
 
+  src_format = gimp_pickable_get_format (pickable);
+
   /*  How many bytes in the temp buffer?  */
-  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_pickable_get_image_type (pickable)))
+  if (babl_format_is_palette (src_format) && ! keep_indexed)
     {
-    case GIMP_RGB:
-    case GIMP_GRAY:
+      if (add_alpha || babl_format_has_alpha (src_format))
+        dest_format = babl_format ("R'G'B'A u8");
+      else
+        dest_format = babl_format ("R'G'B' u8");
+    }
+  else
+    {
       if (add_alpha)
-        format = gimp_pickable_get_format_with_alpha (pickable);
+        dest_format = gimp_pickable_get_format_with_alpha (pickable);
       else
-        format = gimp_pickable_get_format (pickable);
-      break;
-
-    case GIMP_INDEXED:
-      if (keep_indexed)
-        {
-          if (add_alpha)
-            format = gimp_pickable_get_format_with_alpha (pickable);
-          else
-            format = gimp_pickable_get_format (pickable);
-        }
-      else
-        {
-          if (add_alpha ||
-              GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_pickable_get_image_type (pickable)))
-            format = babl_format ("R'G'B'A u8");
-          else
-            format = babl_format ("R'G'B' u8");
-        }
-      break;
-
-    default:
-      g_assert_not_reached ();
-      break;
+        dest_format = src_format;
     }
 
   if (GIMP_IS_DRAWABLE (pickable))
@@ -717,7 +702,7 @@ gimp_selection_extract (GimpSelection *selection,
 
   /*  Allocate the temp buffer  */
   dest_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
-                                      format);
+                                      dest_format);
 
   /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
   gegl_buffer_copy (src_buffer, GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1),
