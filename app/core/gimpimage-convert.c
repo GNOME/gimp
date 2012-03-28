@@ -141,8 +141,6 @@
 #include "core-types.h"
 
 #include "base/cpercep.h"
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -191,10 +189,12 @@
 
 typedef struct _Color Color;
 typedef struct _QuantizeObj QuantizeObj;
-typedef void (* Pass1_Func) (QuantizeObj *);
-typedef void (* Pass2i_Func) (QuantizeObj *);
-typedef void (* Pass2_Func) (QuantizeObj *, GimpLayer *, TileManager *);
-typedef void (* Cleanup_Func) (QuantizeObj *);
+typedef void (* Pass1_Func)   (QuantizeObj *quantize_obj);
+typedef void (* Pass2i_Func)  (QuantizeObj *quantize_obj);
+typedef void (* Pass2_Func)   (QuantizeObj *quantize_obj,
+                               GimpLayer   *layer,
+                               GeglBuffer  *new_buffer);
+typedef void (* Cleanup_Func) (QuantizeObj *quantize_obj);
 typedef unsigned long ColorFreq;
 typedef ColorFreq *CFHistogram;
 
@@ -687,48 +687,41 @@ remap_indexed_layer (GimpLayer    *layer,
                      const guchar *remap_table,
                      gint          num_entries)
 {
-  PixelRegion  srcPR, destPR;
-  gpointer     pr;
-  gboolean     has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                bpp;
+  gboolean            has_alpha;
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
-  pixel_region_init (&destPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     TRUE);
+  format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  bpp       = babl_format_get_bytes_per_pixel (format);
+  has_alpha = babl_format_has_alpha (format);
+
+  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                   NULL, 0, NULL,
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src    = srcPR.data;
-      guchar       *dest   = destPR.data;
-      gint          pixels = srcPR.h * srcPR.w;
+      guchar *data = iter->data[0];
 
       if (has_alpha)
         {
-          while (pixels--)
+          while (iter->length--)
             {
-              if (src[ALPHA_I])
-                dest[INDEXED] = remap_table[src[INDEXED]];
+              if (data[ALPHA_I])
+                data[INDEXED] = remap_table[data[INDEXED]];
 
-              src += srcPR.bytes;
-              dest += destPR.bytes;
+              data += bpp;
             }
         }
       else
         {
-          while (pixels--)
+          while (iter->length--)
             {
-              dest[INDEXED] = remap_table[src[INDEXED]];
+              data[INDEXED] = remap_table[data[INDEXED]];
 
-              src += srcPR.bytes;
-              dest += destPR.bytes;
+              data += bpp;
             }
         }
     }
@@ -929,7 +922,7 @@ gimp_image_convert (GimpImage               *image,
         }
       else
         {
-          (* quantobj->first_pass) (quantobj);
+          quantobj->first_pass (quantobj);
         }
 
       if (palette_type == GIMP_MAKE_PALETTE)
@@ -947,9 +940,37 @@ gimp_image_convert (GimpImage               *image,
     {
     case GIMP_INDEXED:
       if (quantobj->second_pass_init)
-        (* quantobj->second_pass_init) (quantobj);
+        quantobj->second_pass_init (quantobj);
       break;
     default:
+      break;
+    }
+
+  /*  Set the generated palette on the image, we need it to convert
+   *  the layers. We optionally remove duplicate entries after the
+   *  layer conversion.
+   */
+  switch (new_type)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      break;
+
+    case GIMP_INDEXED:
+      {
+        guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
+        gint   i, j;
+
+        for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
+          {
+            colormap[j++] = quantobj->cmap[i].red;
+            colormap[j++] = quantobj->cmap[i].green;
+            colormap[j++] = quantobj->cmap[i].blue;
+          }
+
+        gimp_image_set_colormap (image, colormap,
+                                 quantobj->actual_number_of_colors, TRUE);
+      }
       break;
     }
 
@@ -973,26 +994,22 @@ gimp_image_convert (GimpImage               *image,
 
         case GIMP_INDEXED:
           {
-            GimpImageType  new_layer_type;
-            TileManager   *new_tiles;
-            GeglBuffer    *new_buffer;
-
-            new_layer_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_type);
+            GeglBuffer *new_buffer;
+            const Babl *new_format;
 
             if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-              new_layer_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_layer_type);
+              new_format = gimp_image_get_format (image, GIMP_INDEXEDA_IMAGE);
+            else
+              new_format = gimp_image_get_format (image, GIMP_INDEXED_IMAGE);
 
-            new_tiles = tile_manager_new (gimp_item_get_width  (GIMP_ITEM (layer)),
-                                          gimp_item_get_height (GIMP_ITEM (layer)),
-                                          GIMP_IMAGE_TYPE_BYTES (new_layer_type));
+            new_buffer =
+              gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                    gimp_item_get_width  (GIMP_ITEM (layer)),
+                                                    gimp_item_get_height (GIMP_ITEM (layer))),
+                                    new_format);
 
             quantobj->nth_layer = nth_layer;
-            (* quantobj->second_pass) (quantobj, layer, new_tiles);
-
-            new_buffer = gimp_tile_manager_create_buffer (new_tiles,
-                                                          gimp_image_get_format (image,
-                                                                                 new_layer_type));
-            tile_manager_unref (new_tiles);
+            quantobj->second_pass (quantobj, layer, new_buffer);
 
             gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), TRUE, NULL,
                                       new_buffer);
@@ -1005,6 +1022,7 @@ gimp_image_convert (GimpImage               *image,
         }
     }
 
+  /*  Set the final palette on the image  */
   switch (new_type)
     {
     case GIMP_RGB:
@@ -1032,7 +1050,6 @@ gimp_image_convert (GimpImage               *image,
 
           num_entries = quantobj->actual_number_of_colors;
 
-#if 1
           /* Generate a remapping table */
           make_remap_table (old_palette, new_palette,
                             quantobj->index_used_count,
@@ -1043,9 +1060,6 @@ gimp_image_convert (GimpImage               *image,
             {
               remap_indexed_layer (list->data, remap_table, num_entries);
             }
-#else
-          memcpy (new_palette, old_palette, 256 * 3);
-#endif
 
           for (i = 0, j = 0; i < num_entries; i++)
             {
@@ -1055,21 +1069,6 @@ gimp_image_convert (GimpImage               *image,
             }
 
           gimp_image_set_colormap (image, colormap, num_entries, TRUE);
-        }
-      else
-        {
-          guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
-          gint   i, j;
-
-          for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
-            {
-              colormap[j++] = quantobj->cmap[i].red;
-              colormap[j++] = quantobj->cmap[i].green;
-              colormap[j++] = quantobj->cmap[i].blue;
-            }
-
-          gimp_image_set_colormap (image, colormap,
-                                   quantobj->actual_number_of_colors, TRUE);
         }
       break;
     }
@@ -1113,7 +1112,7 @@ gimp_image_convert (GimpImage               *image,
 static void
 zero_histogram_gray (CFHistogram histogram)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < 256; i++)
     histogram[i] = 0;
@@ -1133,39 +1132,44 @@ generate_histogram_gray (CFHistogram  histogram,
                          GimpLayer   *layer,
                          gboolean     alpha_dither)
 {
-  PixelRegion  srcPR;
-  gpointer     pr;
-  gboolean     has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                bpp;
+  gboolean            has_alpha;
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
+  format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
 
-  for (pr = pixel_regions_register (1, &srcPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  g_return_if_fail (format == babl_format ("Y' u8") ||
+                    format == babl_format ("Y'A u8"));
+
+  bpp       = babl_format_get_bytes_per_pixel (format);
+  has_alpha = babl_format_has_alpha (format);
+
+  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                   NULL, 0, format,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data = srcPR.data;
-      gint          size = srcPR.w * srcPR.h;
+      const guchar *data = iter->data[0];
 
       if (has_alpha)
         {
-          while (size--)
+          while (iter->length--)
             {
               if (data[ALPHA_G] > 127)
                 histogram[*data]++;
 
-              data += srcPR.bytes;
+              data += bpp;
             }
         }
       else
         {
-          while (size--)
+          while (iter->length--)
             {
               histogram[*data]++;
-              data += srcPR.bytes;
+
+              data += bpp;
             }
         }
     }
@@ -1181,43 +1185,49 @@ generate_histogram_rgb (CFHistogram   histogram,
                         gint          nth_layer,
                         gint          n_layers)
 {
-  PixelRegion  srcPR;
-  gpointer     pr;
-  ColorFreq   *colfreq;
-  gint         nfc_iter;
-  gint         row, col, coledge;
-  gint         offsetx, offsety;
-  glong        layer_size;
-  glong        total_size = 0;
-  gint         count      = 0;
-  gboolean     has_alpha  = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  GeglRectangle      *roi;
+  ColorFreq          *colfreq;
+  gint                nfc_iter;
+  gint                row, col, coledge;
+  gint                offsetx, offsety;
+  glong               layer_size;
+  glong               total_size = 0;
+  gint                count      = 0;
+  gint                bpp;
+  gboolean            has_alpha;
+
+  format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+
+  g_return_if_fail (format == babl_format ("R'G'B' u8") ||
+                    format == babl_format ("R'G'B'A u8"));
+
+  bpp       = babl_format_get_bytes_per_pixel (format);
+  has_alpha = babl_format_has_alpha (format);
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
-
-  /*  g_printerr ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols); */
-
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
 
   layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
                 gimp_item_get_height (GIMP_ITEM (layer)));
 
+  /*  g_printerr ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols); */
+
+  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                   NULL, 0, format,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  roi = &iter->roi[0];
+
   if (progress)
     gimp_progress_set_value (progress, 0.0);
 
-  for (pr = pixel_regions_register (1, &srcPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr), count++)
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data = srcPR.data;
-      gint          size = srcPR.w * srcPR.h;
+      const guchar *data = iter->data[0];
 
-      total_size += size;
+      total_size += iter->length;
 
-      /* g_printerr (" [%d,%d - %d,%d]", srcPR.x, srcPR.y, offsetx, offsety); */
+      /* g_printerr (" [%d,%d - %d,%d]", srcPR.x, src_roi->y, offsetx, offsety); */
 
       if (needs_quantize)
         {
@@ -1226,11 +1236,11 @@ generate_histogram_rgb (CFHistogram   histogram,
               /* if alpha-dithering,
                  we need to be deterministic w.r.t. offsets */
 
-              col = srcPR.x + offsetx;
-              coledge = col + srcPR.w;
-              row = srcPR.y + offsety;
+              col = roi->x + offsetx;
+              coledge = col + roi->width;
+              row = roi->y + offsety;
 
-              while (size--)
+              while (iter->length--)
                 {
                   gboolean transparent = FALSE;
 
@@ -1251,16 +1261,16 @@ generate_histogram_rgb (CFHistogram   histogram,
                   col++;
                   if (col == coledge)
                     {
-                      col = srcPR.x + offsetx;
+                      col = roi->x + offsetx;
                       row++;
                     }
 
-                  data += srcPR.bytes;
+                  data += bpp;
                 }
             }
           else
             {
-              while (size--)
+              while (iter->length--)
                 {
                   if ((has_alpha && ((data[ALPHA] > 127)))
                       || (!has_alpha))
@@ -1271,18 +1281,19 @@ generate_histogram_rgb (CFHistogram   histogram,
                                           data[BLUE]);
                       (*colfreq)++;
                     }
-                  data += srcPR.bytes;
+
+                  data += bpp;
                 }
             }
         }
       else
         {
           /* if alpha-dithering, we need to be deterministic w.r.t. offsets */
-          col = srcPR.x + offsetx;
-          coledge = col + srcPR.w;
-          row = srcPR.y + offsety;
+          col = roi->x + offsetx;
+          coledge = col + roi->width;
+          row = roi->y + offsety;
 
-          while (size--)
+          while (iter->length--)
             {
 	      gboolean transparent = FALSE;
 
@@ -1300,6 +1311,7 @@ generate_histogram_rgb (CFHistogram   histogram,
 			transparent = TRUE;
 		    }
 		}
+
 	      if (! transparent)
                 {
                   colfreq = HIST_RGB (histogram,
@@ -1314,13 +1326,9 @@ generate_histogram_rgb (CFHistogram   histogram,
                            nfc_iter < num_found_cols;
                            nfc_iter++)
                         {
-                          if (
-                              (data[RED] == found_cols[nfc_iter][0])
-                              &&
-                              (data[GREEN] == found_cols[nfc_iter][1])
-                              &&
-                              (data[BLUE] == found_cols[nfc_iter][2])
-                              )
+                          if ((data[RED]   == found_cols[nfc_iter][0]) &&
+                              (data[GREEN] == found_cols[nfc_iter][1]) &&
+                              (data[BLUE]  == found_cols[nfc_iter][2]))
                             goto already_found;
                         }
 
@@ -1338,7 +1346,7 @@ generate_histogram_rgb (CFHistogram   histogram,
                            *  quantizing at a later stage.
                            */
                           needs_quantize = TRUE;
-                          /*                      g_print ("\nmax colours exceeded - needs quantize.\n");*/
+                          /* g_print ("\nmax colours exceeded - needs quantize.\n");*/
                           goto already_found;
                         }
                       else
@@ -1356,11 +1364,11 @@ generate_histogram_rgb (CFHistogram   histogram,
               col++;
               if (col == coledge)
                 {
-                  col = srcPR.x + offsetx;
+                  col = roi->x + offsetx;
                   row++;
                 }
 
-              data += srcPR.bytes;
+              data += bpp;
             }
         }
 
@@ -2770,47 +2778,54 @@ custompal_pass1 (QuantizeObj *quantobj)
 static void
 median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
                                  GimpLayer   *layer,
-                                 TileManager *new_tiles)
+                                 GeglBuffer  *new_buffer)
 {
-  PixelRegion   srcPR, destPR;
-  CFHistogram   histogram = quantobj->histogram;
-  ColorFreq    *cachep;
-  const guchar *src;
-  guchar       *dest;
-  gint          row, col;
-  gint          pixel;
-  gint          has_alpha;
-  gulong       *index_used_count = quantobj->index_used_count;
-  gboolean      alpha_dither     = quantobj->want_alpha_dither;
-  gint          offsetx, offsety;
-  gpointer      pr;
+  GeglBufferIterator *iter;
+  CFHistogram         histogram = quantobj->histogram;
+  ColorFreq          *cachep;
+  const Babl         *src_format;
+  const Babl         *dest_format;
+  GeglRectangle      *src_roi;
+  gint                src_bpp;
+  gint                dest_bpp;
+  gint                has_alpha;
+  gulong             *index_used_count = quantobj->index_used_count;
+  gboolean            alpha_dither     = quantobj->want_alpha_dither;
+  gint                offsetx, offsety;
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  dest_format = gegl_buffer_get_format (new_buffer);
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     TRUE);
+  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
+  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  has_alpha = babl_format_has_alpha (src_format);
+
+  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                   NULL, 0, NULL,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  src_roi = &iter->roi[0];
+
+  gegl_buffer_iterator_add (iter, new_buffer,
+                            NULL, 0, NULL,
+                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      src = srcPR.data;
-      dest = destPR.data;
+      const guchar *src  = iter->data[0];
+      guchar       *dest = iter->data[1];
+      gint          row;
 
-      for (row = 0; row < srcPR.h; row++)
+      for (row = 0; row < src_roi->height; row++)
         {
-          for (col = 0; col < srcPR.w; col++)
+          gint col;
+
+          for (col = 0; col < src_roi->width; col++)
             {
+              gint pixel;
+
               /* get pixel value and index into the cache */
               pixel = src[GRAY];
               cachep = &histogram[pixel];
@@ -2825,8 +2840,8 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
                   if (alpha_dither)
                     {
-                      gint dither_x = (col + offsetx + srcPR.x) & DM_WIDTHMASK;
-                      gint dither_y = (row + offsety + srcPR.y) & DM_HEIGHTMASK;
+                      gint dither_x = (col + offsetx + src_roi->x) & DM_WIDTHMASK;
+                      gint dither_y = (row + offsety + src_roi->y) & DM_HEIGHTMASK;
 
                       if ((src[ALPHA_G]) < DM[dither_x][dither_y])
                         transparent = TRUE;
@@ -2853,8 +2868,8 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
                   index_used_count[dest[INDEXED] = *cachep - 1]++;
                 }
 
-              src += srcPR.bytes;
-              dest += destPR.bytes;
+              src  += src_bpp;
+              dest += dest_bpp;
             }
         }
     }
@@ -2863,54 +2878,62 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 static void
 median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
                                     GimpLayer   *layer,
-                                    TileManager *new_tiles)
+                                    GeglBuffer  *new_buffer)
 {
-  PixelRegion   srcPR, destPR;
-  CFHistogram   histogram = quantobj->histogram;
-  ColorFreq    *cachep;
-  gint          pixval1=0, pixval2=0;
-  gint          err1,err2;
-  Color        *color1;
-  Color        *color2;
-  const guchar *src;
-  guchar       *dest;
-  gint          row, col;
-  gint          pixel;
-  gulong       *index_used_count = quantobj->index_used_count;
-  gboolean      has_alpha;
-  gboolean      alpha_dither     = quantobj->want_alpha_dither;
-  gint          offsetx, offsety;
-  gpointer      pr;
+  GeglBufferIterator *iter;
+  CFHistogram         histogram = quantobj->histogram;
+  ColorFreq          *cachep;
+  const Babl         *src_format;
+  const Babl         *dest_format;
+  GeglRectangle      *src_roi;
+  gint                src_bpp;
+  gint                dest_bpp;
+  gboolean            has_alpha;
+  gint                pixval1 = 0;
+  gint                pixval2 = 0;
+  gint                err1;
+  gint                err2;
+  Color              *color1;
+  Color              *color2;
+  gulong             *index_used_count = quantobj->index_used_count;
+  gboolean            alpha_dither     = quantobj->want_alpha_dither;
+  gint                offsetx, offsety;
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  dest_format = gegl_buffer_get_format (new_buffer);
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     TRUE);
+  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
+  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  has_alpha = babl_format_has_alpha (src_format);
+
+  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                   NULL, 0, NULL,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  src_roi = &iter->roi[0];
+
+  gegl_buffer_iterator_add (iter, new_buffer,
+                            NULL, 0, NULL,
+                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      src = srcPR.data;
-      dest = destPR.data;
+      const guchar *src  = iter->data[0];
+      guchar       *dest = iter->data[1];
+      gint          row;
 
-      for (row = 0; row < srcPR.h; row++)
+      for (row = 0; row < src_roi->height; row++)
         {
-          for (col = 0; col < srcPR.w; col++)
+          gint col;
+
+          for (col = 0; col < src_roi->width; col++)
             {
+              gint      pixel;
               const int dmval =
-                DM[(col + offsetx + srcPR.x) & DM_WIDTHMASK]
-                [(row + offsety + srcPR.y) & DM_HEIGHTMASK];
+                DM[(col + offsetx + src_roi->x) & DM_WIDTHMASK]
+                [(row + offsety + src_roi->y) & DM_HEIGHTMASK];
 
               /* get pixel value and index into the cache */
               pixel = src[GRAY];
@@ -2999,8 +3022,8 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
                   index_used_count[dest[INDEXED] = pixval1]++;
                 }
 
-              src += srcPR.bytes;
-              dest += destPR.bytes;
+              src  += src_bpp;
+              dest += dest_bpp;
             }
         }
     }
@@ -3009,31 +3032,40 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 static void
 median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
                                 GimpLayer   *layer,
-                                TileManager *new_tiles)
+                                GeglBuffer  *new_buffer)
 {
-  PixelRegion   srcPR, destPR;
-  CFHistogram   histogram = quantobj->histogram;
-  ColorFreq    *cachep;
-  const guchar *src;
-  guchar       *dest;
-  gint          R, G, B;
-  gint          row, col;
-  gboolean      has_alpha;
-  gpointer      pr;
-  gint          red_pix          = RED;
-  gint          green_pix        = GREEN;
-  gint          blue_pix         = BLUE;
-  gint          alpha_pix        = ALPHA;
-  gboolean      alpha_dither     = quantobj->want_alpha_dither;
-  gint          offsetx, offsety;
-  gulong       *index_used_count = quantobj->index_used_count;
-  glong         total_size       = 0;
-  glong         layer_size;
-  gint          count            = 0;
-  gint          nth_layer        = quantobj->nth_layer;
-  gint          n_layers         = quantobj->n_layers;
+  GeglBufferIterator *iter;
+  CFHistogram         histogram = quantobj->histogram;
+  ColorFreq          *cachep;
+  const Babl         *src_format;
+  const Babl         *dest_format;
+  GeglRectangle      *src_roi;
+  gint                src_bpp;
+  gint                dest_bpp;
+  gint                has_alpha;
+  gint                R, G, B;
+  gint                red_pix          = RED;
+  gint                green_pix        = GREEN;
+  gint                blue_pix         = BLUE;
+  gint                alpha_pix        = ALPHA;
+  gboolean            alpha_dither     = quantobj->want_alpha_dither;
+  gint                offsetx, offsety;
+  gulong             *index_used_count = quantobj->index_used_count;
+  glong               total_size       = 0;
+  glong               layer_size;
+  gint                count            = 0;
+  gint                nth_layer        = quantobj->nth_layer;
+  gint                n_layers         = quantobj->n_layers;
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+
+  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  dest_format = gegl_buffer_get_format (new_buffer);
+
+  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
+  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
+
+  has_alpha = babl_format_has_alpha (src_format);
 
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
@@ -3044,34 +3076,31 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
       alpha_pix = ALPHA_G;
     }
 
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                   NULL, 0, NULL,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  src_roi = &iter->roi[0];
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     TRUE);
+  gegl_buffer_iterator_add (iter, new_buffer,
+                            NULL, 0, NULL,
+                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
                 gimp_item_get_height (GIMP_ITEM (layer)));
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr), count++)
+  while (gegl_buffer_iterator_next (iter))
     {
-      src = srcPR.data;
-      dest = destPR.data;
+      const guchar *src  = iter->data[0];
+      guchar       *dest = iter->data[1];
+      gint          row;
 
-      total_size += srcPR.h * srcPR.w;
+      total_size += src_roi->height * src_roi->width;
 
-      for (row = 0; row < srcPR.h; row++)
+      for (row = 0; row < src_roi->height; row++)
         {
-          for (col = 0; col < srcPR.w; col++)
+          gint col;
+
+          for (col = 0; col < src_roi->width; col++)
             {
               if (has_alpha)
                 {
@@ -3079,8 +3108,8 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 
                   if (alpha_dither)
                     {
-                      gint dither_x = (col + offsetx + srcPR.x) & DM_WIDTHMASK;
-                      gint dither_y = (row + offsety + srcPR.y) & DM_HEIGHTMASK;
+                      gint dither_x = (col + offsetx + src_roi->x) & DM_WIDTHMASK;
+                      gint dither_y = (row + offsety + src_roi->y) & DM_HEIGHTMASK;
                       if ((src[alpha_pix]) < DM[dither_x][dither_y])
                         transparent = TRUE;
                     }
@@ -3115,8 +3144,8 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 
             next_pixel:
 
-              src += srcPR.bytes;
-              dest += destPR.bytes;
+              src  += src_bpp;
+              dest += dest_bpp;
             }
         }
 
@@ -3130,35 +3159,46 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 static void
 median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                                    GimpLayer   *layer,
-                                   TileManager *new_tiles)
+                                   GeglBuffer  *new_buffer)
 {
-  PixelRegion   srcPR, destPR;
-  CFHistogram   histogram = quantobj->histogram;
-  ColorFreq    *cachep;
-  gint          pixval1=0, pixval2=0;
-  Color*        color1;
-  Color*        color2;
-  const guchar *src;
-  guchar       *dest;
-  gint          R, G, B;
-  gint          err1,err2;
-  gint          row, col;
-  gboolean      has_alpha;
-  gpointer      pr;
-  gint          red_pix          = RED;
-  gint          green_pix        = GREEN;
-  gint          blue_pix         = BLUE;
-  gint          alpha_pix        = ALPHA;
-  gboolean      alpha_dither     = quantobj->want_alpha_dither;
-  gint          offsetx, offsety;
-  gulong       *index_used_count = quantobj->index_used_count;
-  glong         total_size       = 0;
-  glong         layer_size;
-  gint          count            = 0;
-  gint          nth_layer        = quantobj->nth_layer;
-  gint          n_layers         = quantobj->n_layers;
+  GeglBufferIterator *iter;
+  CFHistogram         histogram = quantobj->histogram;
+  ColorFreq          *cachep;
+  const Babl         *src_format;
+  const Babl         *dest_format;
+  GeglRectangle      *src_roi;
+  gint                src_bpp;
+  gint                dest_bpp;
+  gint                has_alpha;
+  gint                pixval1 = 0;
+  gint                pixval2 = 0;
+  Color              *color1;
+  Color              *color2;
+  gint                R, G, B;
+  gint                err1;
+  gint                err2;
+  gint                red_pix          = RED;
+  gint                green_pix        = GREEN;
+  gint                blue_pix         = BLUE;
+  gint                alpha_pix        = ALPHA;
+  gboolean            alpha_dither     = quantobj->want_alpha_dither;
+  gint                offsetx, offsety;
+  gulong             *index_used_count = quantobj->index_used_count;
+  glong               total_size       = 0;
+  glong               layer_size;
+  gint                count            = 0;
+  gint                nth_layer        = quantobj->nth_layer;
+  gint                n_layers         = quantobj->n_layers;
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
+
+  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  dest_format = gegl_buffer_get_format (new_buffer);
+
+  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
+  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
+
+  has_alpha = babl_format_has_alpha (src_format);
 
   /*  In the case of web/mono palettes, we actually force
    *   grayscale drawables through the rgb pass2 functions
@@ -3169,38 +3209,35 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
       alpha_pix = ALPHA_G;
     }
 
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                   NULL, 0, NULL,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  src_roi = &iter->roi[0];
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     TRUE);
+  gegl_buffer_iterator_add (iter, new_buffer,
+                            NULL, 0, NULL,
+                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
                 gimp_item_get_height (GIMP_ITEM (layer)));
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr), count++)
+  while (gegl_buffer_iterator_next (iter))
     {
-      src = srcPR.data;
-      dest = destPR.data;
+      const guchar *src  = iter->data[0];
+      guchar       *dest = iter->data[1];
+      gint          row;
 
-      total_size += srcPR.h * srcPR.w;
+      total_size += src_roi->height * src_roi->width;
 
-      for (row = 0; row < srcPR.h; row++)
+      for (row = 0; row < src_roi->height; row++)
         {
-          for (col = 0; col < srcPR.w; col++)
+          gint col;
+
+          for (col = 0; col < src_roi->width; col++)
             {
               const int dmval =
-                DM[(col + offsetx + srcPR.x) & DM_WIDTHMASK]
-                [(row + offsety + srcPR.y) & DM_HEIGHTMASK];
+                DM[(col + offsetx + src_roi->x) & DM_WIDTHMASK]
+                [(row + offsety + src_roi->y) & DM_HEIGHTMASK];
 
               if (has_alpha)
                 {
@@ -3326,8 +3363,8 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
             next_pixel:
 
-              src += srcPR.bytes;
-              dest += destPR.bytes;
+              src  += src_bpp;
+              dest += dest_bpp;
             }
         }
 
@@ -3341,50 +3378,56 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 static void
 median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
                                         GimpLayer   *layer,
-                                        TileManager *new_tiles)
+                                        GeglBuffer  *new_buffer)
 {
-  PixelRegion   srcPR, destPR;
-  const guchar *src;
-  guchar       *dest;
-  gint          row, col;
-  gboolean      has_alpha;
-  gboolean      alpha_dither = quantobj->want_alpha_dither;
-  gpointer      pr;
-  gint          red_pix = RED;
-  gint          green_pix = GREEN;
-  gint          blue_pix = BLUE;
-  gint          alpha_pix = ALPHA;
-  gint          i;
-  gint          lastindex = 0;
-  gint          lastred = -1;
-  gint          lastgreen = -1;
-  gint          lastblue = -1;
-  gint          offsetx, offsety;
+  GeglBufferIterator *iter;
+  const Babl         *src_format;
+  const Babl         *dest_format;
+  GeglRectangle      *src_roi;
+  gint                src_bpp;
+  gint                dest_bpp;
+  gint                has_alpha;
+  gboolean            alpha_dither = quantobj->want_alpha_dither;
+  gint                red_pix      = RED;
+  gint                green_pix    = GREEN;
+  gint                blue_pix     = BLUE;
+  gint                alpha_pix    = ALPHA;
+  gint                lastindex    = 0;
+  gint                lastred      = -1;
+  gint                lastgreen    = -1;
+  gint                lastblue     = -1;
+  gint                offsetx, offsety;
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  dest_format = gegl_buffer_get_format (new_buffer);
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     TRUE);
+  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
+  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  has_alpha = babl_format_has_alpha (src_format);
+
+  iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                   NULL, 0, NULL,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+  src_roi = &iter->roi[0];
+
+  gegl_buffer_iterator_add (iter, new_buffer,
+                            NULL, 0, NULL,
+                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      src = srcPR.data;
-      dest = destPR.data;
+      const guchar *src  = iter->data[0];
+      guchar       *dest = iter->data[1];
+      gint          row;
 
-      for (row = 0; row < srcPR.h; row++)
+      for (row = 0; row < src_roi->height; row++)
         {
-          for (col = 0; col < srcPR.w; col++)
+          gint col;
+
+          for (col = 0; col < src_roi->width; col++)
             {
               gboolean transparent = FALSE;
 
@@ -3392,8 +3435,8 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
                 {
                   if (alpha_dither)
                     {
-                      gint dither_x = (col + srcPR.x + offsetx) & DM_WIDTHMASK;
-                      gint dither_y = (row + srcPR.y + offsety) & DM_HEIGHTMASK;
+                      gint dither_x = (col + src_roi->x + offsetx) & DM_WIDTHMASK;
+                      gint dither_y = (row + src_roi->y + offsety) & DM_HEIGHTMASK;
 
                       if ((src[alpha_pix]) < DM[dither_x][dither_y])
                         transparent = TRUE;
@@ -3407,9 +3450,9 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
               if (! transparent)
                 {
-                  if ((lastred == src[red_pix]) &&
+                  if ((lastred   == src[red_pix]) &&
                       (lastgreen == src[green_pix]) &&
-                      (lastblue == src[blue_pix]))
+                      (lastblue  == src[blue_pix]))
                     {
                       /*  same pixel colour as last time  */
                       dest[INDEXED] = lastindex;
@@ -3418,20 +3461,21 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
                     }
                   else
                     {
+                      gint i;
+
                       for (i = 0 ;
                            i < quantobj->actual_number_of_colors;
                            i++)
                         {
-                          if (
-                              (quantobj->cmap[i].green == src[green_pix]) &&
-                              (quantobj->cmap[i].red == src[red_pix]) &&
-                              (quantobj->cmap[i].blue == src[blue_pix])
-                              )
+                          if ((quantobj->cmap[i].green == src[green_pix]) &&
+                              (quantobj->cmap[i].red   == src[red_pix]) &&
+                              (quantobj->cmap[i].blue  == src[blue_pix]))
                           {
-                            lastred = src[red_pix];
+                            lastred   = src[red_pix];
                             lastgreen = src[green_pix];
-                            lastblue = src[blue_pix];
+                            lastblue  = src[blue_pix];
                             lastindex = i;
+
                             goto got_colour;
                           }
                         }
@@ -3448,8 +3492,8 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
                   dest[ALPHA_I] = 0;
                 }
 
-              src += srcPR.bytes;
-              dest += destPR.bytes;
+              src  += src_bpp;
+              dest += dest_bpp;
             }
         }
     }
@@ -3546,9 +3590,9 @@ init_error_limit (const int error_freedom)
 static void
 median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
                                  GimpLayer   *layer,
-                                 TileManager *new_tiles)
+                                 GeglBuffer  *new_buffer)
 {
-  PixelRegion   srcPR, destPR;
+  GeglBuffer   *src_buffer;
   CFHistogram   histogram = quantobj->histogram;
   ColorFreq    *cachep;
   Color        *color;
@@ -3556,9 +3600,10 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   const gshort *fs_err1, *fs_err2;
   const gshort *fs_err3, *fs_err4;
   const guchar *range_limiter;
-  gint          src_bytes, dest_bytes;
-  const guchar *src;
-  guchar       *dest;
+  const Babl   *src_format;
+  const Babl   *dest_format;
+  gint          src_bpp;
+  gint          dest_bpp;
   guchar       *src_buf, *dest_buf;
   gint         *next_row, *prev_row;
   gint         *nr, *pr;
@@ -3575,30 +3620,26 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   gint          width, height;
   gulong       *index_used_count = quantobj->index_used_count;
 
+  src_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  dest_format = gegl_buffer_get_format (new_buffer);
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     TRUE);
+  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
+  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
 
-  src_bytes  = gimp_drawable_bytes (GIMP_DRAWABLE (layer));
-  dest_bytes = tile_manager_bpp (new_tiles);
-  width      = gimp_item_get_width  (GIMP_ITEM (layer));
-  height     = gimp_item_get_height (GIMP_ITEM (layer));
+  has_alpha = babl_format_has_alpha (src_format);
+
+  width  = gimp_item_get_width  (GIMP_ITEM (layer));
+  height = gimp_item_get_height (GIMP_ITEM (layer));
 
   error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;
 
-  src_buf  = g_malloc (width * src_bytes);
-  dest_buf = g_malloc (width * dest_bytes);
+  src_buf  = g_malloc (width * src_bpp);
+  dest_buf = g_malloc (width * dest_bpp);
 
   next_row = g_new (gint, width + 2);
   prev_row = g_new0 (gint, width + 2);
@@ -3612,9 +3653,14 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
   for (row = 0; row < height; row++)
     {
-      pixel_region_get_row (&srcPR, 0, row, width, src_buf, 1);
+      const guchar *src;
+      guchar       *dest;
 
-      src = src_buf;
+      gegl_buffer_get (src_buffer, GIMP_GEGL_RECT (0, row, width, 1),
+                       1.0, NULL, src_buf,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      src  = src_buf;
       dest = dest_buf;
 
       nr = next_row;
@@ -3622,11 +3668,11 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
       if (odd_row)
         {
-          step_dest = -dest_bytes;
-          step_src = -src_bytes;
+          step_dest = -dest_bpp;
+          step_src  = -src_bpp;
 
-          src += (width * src_bytes) - src_bytes;
-          dest += (width * dest_bytes) - dest_bytes;
+          src  += (width * src_bpp) - src_bpp;
+          dest += (width * dest_bpp) - dest_bpp;
 
           nr += width + 1;
           pr += width;
@@ -3635,8 +3681,8 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
         }
       else
         {
-          step_dest = dest_bytes;
-          step_src = src_bytes;
+          step_dest = dest_bpp;
+          step_src  = src_bpp;
 
           *(nr + 1) = 0;
         }
@@ -3750,7 +3796,9 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
       odd_row = !odd_row;
 
-      pixel_region_set_row (&destPR, 0, row, width, dest_buf);
+      gegl_buffer_set (new_buffer, GIMP_GEGL_RECT (0, row, width, 1),
+                       0, NULL, dest_buf,
+                       GEGL_AUTO_ROWSTRIDE);
     }
 
   g_free (error_limiter - 255); /* good lord. */
@@ -3794,9 +3842,9 @@ median_cut_pass2_gray_init (QuantizeObj *quantobj)
 static void
 median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
                                 GimpLayer   *layer,
-                                TileManager *new_tiles)
+                                GeglBuffer  *new_buffer)
 {
-  PixelRegion   srcPR, destPR;
+  GeglBuffer   *src_buffer;
   CFHistogram   histogram = quantobj->histogram;
   ColorFreq    *cachep;
   Color        *color;
@@ -3804,9 +3852,10 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   const gshort *fs_err1, *fs_err2;
   const gshort *fs_err3, *fs_err4;
   const guchar *range_limiter;
-  gint          src_bytes, dest_bytes;
-  const guchar *src;
-  guchar       *dest;
+  const Babl   *src_format;
+  const Babl   *dest_format;
+  gint          src_bpp;
+  gint          dest_bpp;
   guchar       *src_buf, *dest_buf;
   gint         *red_n_row, *red_p_row;
   gint         *grn_n_row, *grn_p_row;
@@ -3835,6 +3884,8 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   gint          nth_layer = quantobj->nth_layer;
   gint          n_layers  = quantobj->n_layers;
 
+  src_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
   gimp_item_get_offset (GIMP_ITEM (layer), &offsetx, &offsety);
 
   /*  In the case of web/mono palettes, we actually force
@@ -3843,22 +3894,16 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
     red_pix = green_pix = blue_pix = GRAY;
 
-  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+  src_format  = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  dest_format = gegl_buffer_get_format (new_buffer);
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     FALSE);
-  pixel_region_init (&destPR, new_tiles, 0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                     gimp_item_get_height (GIMP_ITEM (layer)),
-                     TRUE);
+  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
+  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
 
-  src_bytes  = gimp_drawable_bytes (GIMP_DRAWABLE (layer));
-  dest_bytes = tile_manager_bpp (new_tiles);
-  width      = gimp_item_get_width  (GIMP_ITEM (layer));
-  height     = gimp_item_get_height (GIMP_ITEM (layer));
+  has_alpha = babl_format_has_alpha (src_format);
+
+  width  = gimp_item_get_width  (GIMP_ITEM (layer));
+  height = gimp_item_get_height (GIMP_ITEM (layer));
 
   error_limiter = init_error_limit (quantobj->error_freedom);
   range_limiter = range_array + 256;
@@ -3877,8 +3922,8 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
       global_bmin = MIN(global_bmin, quantobj->clin[index].blue);
     }
 
-  src_buf  = g_malloc (width * src_bytes);
-  dest_buf = g_malloc (width * dest_bytes);
+  src_buf  = g_malloc (width * src_bpp);
+  dest_buf = g_malloc (width * dest_bpp);
 
   red_n_row = g_new (gint, width + 2);
   red_p_row = g_new0 (gint, width + 2);
@@ -3896,9 +3941,14 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 
   for (row = 0; row < height; row++)
     {
-      pixel_region_get_row (&srcPR, 0, row, width, src_buf, 1);
+      const guchar *src;
+      guchar       *dest;
 
-      src = src_buf;
+      gegl_buffer_get (src_buffer, GIMP_GEGL_RECT (0, row, width, 1),
+                       1.0, NULL, src_buf,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      src  = src_buf;
       dest = dest_buf;
 
       rnr = red_n_row;
@@ -3910,11 +3960,11 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 
       if (odd_row)
         {
-          step_dest = -dest_bytes;
-          step_src = -src_bytes;
+          step_dest = -dest_bpp;
+          step_src  = -src_bpp;
 
-          src += (width * src_bytes) - src_bytes;
-          dest += (width * dest_bytes) - dest_bytes;
+          src += (width * src_bpp) - src_bpp;
+          dest += (width * dest_bpp) - dest_bpp;
 
           rnr += width + 1;
           gnr += width + 1;
@@ -3927,8 +3977,8 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
         }
       else
         {
-          step_dest = dest_bytes;
-          step_src = src_bytes;
+          step_dest = dest_bpp;
+          step_src  = src_bpp;
 
           *(rnr + 1) = *(gnr + 1) = *(bnr + 1) = 0;
         }
@@ -4143,7 +4193,9 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 
       odd_row = !odd_row;
 
-      pixel_region_set_row (&destPR, 0, row, width, dest_buf);
+      gegl_buffer_set (new_buffer, GIMP_GEGL_RECT (0, row, width, 1),
+                       0, NULL, dest_buf,
+                       GEGL_AUTO_ROWSTRIDE);
 
       if (quantobj->progress && (row % 16 == 0))
         gimp_progress_set_value (quantobj->progress,
