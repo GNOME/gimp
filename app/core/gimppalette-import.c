@@ -278,16 +278,13 @@ gimp_palette_import_extract (GimpImage     *image,
   GeglRectangle      *roi;
   GeglRectangle      *mask_roi = NULL;
   GeglRectangle       rect     = { x, y, width, height };
-  GimpImageType       type;
   GHashTable         *colors   = NULL;
   const Babl         *format;
   gint                bpp;
   gint                mask_bpp = 0;
 
   buffer = gimp_pickable_get_buffer (pickable);
-  type = gimp_pickable_get_image_type (pickable);
-
-  format = gimp_pickable_get_format (pickable);
+  format = babl_format ("R'G'B'A u8");
 
   iter = gegl_buffer_iterator_new (buffer, &rect, 0, format,
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
@@ -329,27 +326,22 @@ gimp_palette_import_extract (GimpImage     *image,
 
           for (j = 0; j < roi->width; j++)
             {
-              if (! mdata || *mdata)
+              /*  ignore unselected, and completely transparent pixels  */
+              if ((! mdata || *mdata) && idata[ALPHA])
                 {
-                  guchar rgba[MAX_CHANNELS];
+                  guchar rgba[MAX_CHANNELS]     = { 0, };
+                  guchar rgb_real[MAX_CHANNELS] = { 0, };
 
-                  gimp_image_get_color (image, type, idata, rgba);
+                  memcpy (rgba, idata, 4);
+                  memcpy (rgb_real, rgba, 4);
 
-                  /*  ignore completely transparent pixels  */
-                  if (rgba[ALPHA])
-                    {
-                      guchar rgb_real[MAX_CHANNELS];
+                  rgba[0] = (rgba[0] / threshold) * threshold;
+                  rgba[1] = (rgba[1] / threshold) * threshold;
+                  rgba[2] = (rgba[2] / threshold) * threshold;
 
-                      memcpy (rgb_real, rgba, MAX_CHANNELS);
-
-                      rgba[0] = (rgba[0] / threshold) * threshold;
-                      rgba[1] = (rgba[1] / threshold) * threshold;
-                      rgba[2] = (rgba[2] / threshold) * threshold;
-
-                      colors = gimp_palette_import_store_colors (colors,
-                                                                 rgba, rgb_real,
-                                                                 n_colors);
-                    }
+                  colors = gimp_palette_import_store_colors (colors,
+                                                             rgba, rgb_real,
+                                                             n_colors);
                 }
 
               idata += bpp;
