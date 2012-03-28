@@ -104,7 +104,7 @@ static void   gimp_color_tool_draw           (GimpDrawTool          *draw_tool);
 static gboolean   gimp_color_tool_real_pick  (GimpColorTool         *color_tool,
                                               gint                   x,
                                               gint                   y,
-                                              GimpImageType         *sample_type,
+                                              const Babl           **sample_format,
                                               GimpRGB               *color,
                                               gint                  *color_index);
 static void   gimp_color_tool_pick           (GimpColorTool         *tool,
@@ -113,7 +113,7 @@ static void   gimp_color_tool_pick           (GimpColorTool         *tool,
                                               gint                   y);
 static void   gimp_color_tool_real_picked    (GimpColorTool         *color_tool,
                                               GimpColorPickState     pick_state,
-                                              GimpImageType          sample_type,
+                                              const Babl            *sample_format,
                                               const GimpRGB         *color,
                                               gint                   color_index);
 
@@ -138,7 +138,7 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorToolClass, picked),
                   NULL, NULL,
-                  gimp_marshal_VOID__ENUM_ENUM_BOXED_INT,
+                  gimp_marshal_VOID__ENUM_POINTER_BOXED_INT,
                   G_TYPE_NONE, 4,
                   GIMP_TYPE_COLOR_PICK_STATE,
                   GIMP_TYPE_IMAGE_TYPE,
@@ -570,12 +570,12 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static gboolean
-gimp_color_tool_real_pick (GimpColorTool *color_tool,
-                           gint           x,
-                           gint           y,
-                           GimpImageType *sample_type,
-                           GimpRGB       *color,
-                           gint          *color_index)
+gimp_color_tool_real_pick (GimpColorTool  *color_tool,
+                           gint            x,
+                           gint            y,
+                           const Babl    **sample_format,
+                           GimpRGB        *color,
+                           gint           *color_index)
 {
   GimpTool  *tool  = GIMP_TOOL (color_tool);
   GimpImage *image = gimp_display_get_image (tool->display);
@@ -587,7 +587,7 @@ gimp_color_tool_real_pick (GimpColorTool *color_tool,
                                 color_tool->options->sample_merged,
                                 color_tool->options->sample_average,
                                 color_tool->options->average_radius,
-                                sample_type,
+                                sample_format,
                                 color,
                                 color_index);
 }
@@ -595,7 +595,7 @@ gimp_color_tool_real_pick (GimpColorTool *color_tool,
 static void
 gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                              GimpColorPickState  pick_state,
-                             GimpImageType       sample_type,
+                             const Babl         *sample_format,
                              const GimpRGB      *color,
                              gint                color_index)
 {
@@ -610,7 +610,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
     {
       GtkWidget *widget;
 
-      if (GIMP_IMAGE_TYPE_IS_INDEXED (sample_type))
+      if (babl_format_is_palette (sample_format))
         {
           widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
                                                     "gimp-indexed-palette");
@@ -704,17 +704,17 @@ gimp_color_tool_pick (GimpColorTool      *tool,
                       gint                y)
 {
   GimpColorToolClass *klass;
-  GimpImageType       sample_type;
+  const Babl         *sample_format;
   GimpRGB             color;
   gint                color_index;
 
   klass = GIMP_COLOR_TOOL_GET_CLASS (tool);
 
   if (klass->pick &&
-      klass->pick (tool, x, y, &sample_type, &color, &color_index))
+      klass->pick (tool, x, y, &sample_format, &color, &color_index))
     {
       g_signal_emit (tool, gimp_color_tool_signals[PICKED], 0,
-                     pick_state, sample_type, &color, color_index);
+                     pick_state, sample_format, &color, color_index);
     }
 }
 

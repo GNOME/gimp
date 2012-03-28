@@ -59,14 +59,14 @@ struct _GimpColorToolClass
   gboolean (* pick)   (GimpColorTool      *tool,
                        gint                x,
                        gint                y,
-                       GimpImageType      *sample_type,
+                       const Babl        **sample_format,
                        GimpRGB            *color,
                        gint               *color_index);
 
   /*  signals  */
   void     (* picked) (GimpColorTool      *tool,
                        GimpColorPickState  pick_state,
-                       GimpImageType       sample_type,
+                       const Babl         *sample_format,
                        const GimpRGB      *color,
                        gint                color_index);
 };

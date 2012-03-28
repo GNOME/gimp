@@ -37,7 +37,7 @@ struct _GimpColorFrame
   GimpFrame           parent_instance;
 
   gboolean            sample_valid;
-  GimpImageType       sample_type;
+  const Babl         *sample_format;
   GimpRGB             color;
   gint                color_index;
 
@@ -78,7 +78,7 @@ void        gimp_color_frame_set_has_color_area (GimpColorFrame     *frame,
                                                  gboolean            has_color_area);
 
 void        gimp_color_frame_set_color          (GimpColorFrame     *frame,
-                                                 GimpImageType       sample_type,
+                                                 const Babl         *format,
                                                  const GimpRGB      *color,
                                                  gint                color_index);
 void        gimp_color_frame_set_invalid        (GimpColorFrame     *frame);

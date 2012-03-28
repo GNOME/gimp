@@ -725,7 +725,7 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
   GimpUnit      unit = shell_unit;
   gboolean      in_image;
   gchar         buf[32];
-  GimpImageType sample_type;
+  const Babl   *sample_format;
   GimpRGB       color;
   gint          color_index;
   gdouble       xres;
@@ -763,12 +763,12 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
                              (gint) floor (y),
                              view->priv->sample_merged,
                              FALSE, 0.0,
-                             &sample_type, &color, &color_index))
+                             &sample_format, &color, &color_index))
     {
       gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_1),
-                                  sample_type, &color, color_index);
+                                  sample_format, &color, color_index);
       gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_2),
-                                  sample_type, &color, color_index);
+                                  sample_format, &color, color_index);
     }
   else
     {

@@ -73,7 +73,7 @@ static gboolean   gimp_levels_tool_initialize     (GimpTool          *tool,
 
 static void       gimp_levels_tool_color_picked   (GimpColorTool     *color_tool,
                                                    GimpColorPickState pick_state,
-                                                   GimpImageType      sample_type,
+                                                   const Babl        *sample_format,
                                                    const GimpRGB     *color,
                                                    gint               color_index);
 
@@ -1159,7 +1159,7 @@ levels_input_adjust_by_color (GimpLevelsConfig     *config,
 static void
 gimp_levels_tool_color_picked (GimpColorTool      *color_tool,
                                GimpColorPickState  pick_state,
-                               GimpImageType       sample_type,
+                               const Babl         *sample_format,
                                const GimpRGB      *color,
                                gint                color_index)
 {
@@ -1169,7 +1169,9 @@ gimp_levels_tool_color_picked (GimpColorTool      *color_tool,
   value = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (tool->active_picker),
                                                "pick-value"));
 
-  if (value & PICK_ALL_CHANNELS && GIMP_IMAGE_TYPE_IS_RGB (sample_type))
+  if (value & PICK_ALL_CHANNELS &&
+      (sample_format == babl_format ("R'G'B' u8") ||
+       sample_format == babl_format ("R'G'B'A u8")))
     {
       GimpHistogramChannel  channel;
 

@@ -35,7 +35,7 @@ gimp_image_pick_color (GimpImage     *image,
                        gboolean       sample_merged,
                        gboolean       sample_average,
                        gdouble        average_radius,
-                       GimpImageType *sample_type,
+                       const Babl   **sample_format,
                        GimpRGB       *color,
                        gint          *color_index)
 {
@@ -76,8 +76,8 @@ gimp_image_pick_color (GimpImage     *image,
    * Instead, call gimp_pickable_flush() in the callers if needed.
    */
 
-  if (sample_type)
-    *sample_type = gimp_pickable_get_image_type (pickable);
+  if (sample_format)
+    *sample_format = gimp_pickable_get_format (pickable);
 
   return gimp_pickable_pick_color (pickable, x, y,
                                    sample_average, average_radius,

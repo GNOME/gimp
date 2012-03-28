@@ -116,8 +116,8 @@ gimp_color_frame_init (GimpColorFrame *frame)
   GtkWidget *vbox2;
   gint       i;
 
-  frame->sample_valid = FALSE;
-  frame->sample_type  = GIMP_RGB_IMAGE;
+  frame->sample_valid  = FALSE;
+  frame->sample_format = babl_format ("R'G'B' u8");
 
   gimp_rgba_set (&frame->color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
@@ -407,38 +407,37 @@ gimp_color_frame_set_has_color_area (GimpColorFrame *frame,
 
 /**
  * gimp_color_frame_set_color:
- * @frame:       The #GimpColorFrame.
- * @sample_type: The type of the #GimpDrawable or #GimpImage the @color
- *               was picked from.
- * @color:       The @color to set.
- * @color_index: The @color's index. This value is ignored unless
- *               @sample_type equals to #GIMP_INDEXED_IMAGE or
- *               #GIMP_INDEXEDA_IMAGE.
+ * @frame:         The #GimpColorFrame.
+ * @sample_format: The format of the #GimpDrawable or #GimpImage the @color
+ *                 was picked from.
+ * @color:         The @color to set.
+ * @color_index:   The @color's index. This value is ignored unless
+ *                 @sample_format is an indexed format.
  *
  * Sets the color sample to display in the #GimpColorFrame.
  **/
 void
 gimp_color_frame_set_color (GimpColorFrame *frame,
-                            GimpImageType   sample_type,
+                            const Babl     *sample_format,
                             const GimpRGB  *color,
                             gint            color_index)
 {
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
   g_return_if_fail (color != NULL);
 
-  if (frame->sample_valid               &&
-      frame->sample_type == sample_type &&
-      frame->color_index == color_index &&
+  if (frame->sample_valid                   &&
+      frame->sample_format == sample_format &&
+      frame->color_index == color_index     &&
       gimp_rgba_distance (&frame->color, color) < 0.0001)
     {
       frame->color = *color;
       return;
     }
 
-  frame->sample_valid = TRUE;
-  frame->sample_type  = sample_type;
-  frame->color        = *color;
-  frame->color_index  = color_index;
+  frame->sample_valid  = TRUE;
+  frame->sample_format = sample_format;
+  frame->color         = *color;
+  frame->color_index   = color_index;
 
   gimp_color_frame_update (frame);
 }
@@ -492,7 +491,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
   guchar       r, g, b, a;
   gint         i;
 
-  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (frame->sample_type);
+  has_alpha = babl_format_has_alpha (frame->sample_format);
 
   if (frame->sample_valid)
     {
@@ -505,22 +504,18 @@ gimp_color_frame_update (GimpColorFrame *frame)
   switch (frame->frame_mode)
     {
     case GIMP_COLOR_FRAME_MODE_PIXEL:
-      switch (GIMP_IMAGE_TYPE_BASE_TYPE (frame->sample_type))
+      if (frame->sample_format == babl_format ("Y' u8") ||
+          frame->sample_format == babl_format ("Y'A u8"))
         {
-        case GIMP_INDEXED:
-          names[4] = _("Index:");
+          names[0]  = _("Value:");
 
           if (frame->sample_valid)
-            {
-              /* color_index will be -1 for an averaged sample */
-              if (frame->color_index < 0)
-                names[4] = NULL;
-              else
-                values[4] = g_strdup_printf ("%d", frame->color_index);
-            }
-          /* fallthrough */
+            values[0] = g_strdup_printf ("%d", r);
 
-        case GIMP_RGB:
+          alpha_row = 1;
+        }
+      else
+        {
           names[0] = _("Red:");
           names[1] = _("Green:");
           names[2] = _("Blue:");
@@ -533,16 +528,20 @@ gimp_color_frame_update (GimpColorFrame *frame)
             }
 
           alpha_row = 3;
-          break;
 
-        case GIMP_GRAY:
-          names[0]  = _("Value:");
+          if (babl_format_is_palette (frame->sample_format))
+            {
+              names[4] = _("Index:");
 
-          if (frame->sample_valid)
-            values[0] = g_strdup_printf ("%d", r);
-
-          alpha_row = 1;
-          break;
+              if (frame->sample_valid)
+                {
+                  /* color_index will be -1 for an averaged sample */
+                  if (frame->color_index < 0)
+                    names[4] = NULL;
+                  else
+                    values[4] = g_strdup_printf ("%d", frame->color_index);
+                }
+            }
         }
       break;
 

@@ -61,7 +61,7 @@ static void   gimp_color_picker_tool_oper_update   (GimpTool            *tool,
 
 static void   gimp_color_picker_tool_picked        (GimpColorTool       *color_tool,
                                                     GimpColorPickState   pick_state,
-                                                    GimpImageType        sample_type,
+                                                    const Babl          *sample_format,
                                                     const GimpRGB       *color,
                                                     gint                 color_index);
 
@@ -70,7 +70,7 @@ static void   gimp_color_picker_tool_info_response (GtkWidget           *widget,
                                                     gint                 response_id,
                                                     GimpColorPickerTool *picker_tool);
 static void   gimp_color_picker_tool_info_update   (GimpColorPickerTool *picker_tool,
-                                                    GimpImageType        sample_type,
+                                                    const Babl          *sample_format,
                                                     const GimpRGB       *color,
                                                     gint                 color_index);
 
@@ -272,7 +272,7 @@ gimp_color_picker_tool_oper_update (GimpTool         *tool,
 static void
 gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
                                GimpColorPickState  pick_state,
-                               GimpImageType       sample_type,
+                               const Babl         *sample_format,
                                const GimpRGB      *color,
                                gint                color_index)
 {
@@ -285,11 +285,11 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
     gimp_color_picker_tool_info_create (picker_tool);
 
   if (picker_tool->dialog)
-    gimp_color_picker_tool_info_update (picker_tool, sample_type,
+    gimp_color_picker_tool_info_update (picker_tool, sample_format,
                                         color, color_index);
 
   GIMP_COLOR_TOOL_CLASS (parent_class)->picked (color_tool, pick_state,
-                                                sample_type, color,
+                                                sample_format, color,
                                                 color_index);
 }
 
@@ -374,7 +374,7 @@ gimp_color_picker_tool_info_response (GtkWidget           *widget,
 
 static void
 gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
-                                    GimpImageType        sample_type,
+                                    const Babl          *sample_format,
                                     const GimpRGB       *color,
                                     gint                 color_index)
 {
@@ -390,9 +390,9 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
                              color);
 
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame1),
-                              sample_type, color, color_index);
+                              sample_format, color, color_index);
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame2),
-                              sample_type, color, color_index);
+                              sample_format, color, color_index);
 
   /*  don't use gtk_window_present() because it would focus the dialog  */
   if (gtk_widget_get_visible (picker_tool->dialog))
