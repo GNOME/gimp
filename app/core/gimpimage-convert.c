@@ -423,7 +423,7 @@ ColorFreq* HIST_RGB(ColorFreq *hist_ptr,
 }
 
 
-static inline
+static inline 
 void lin_to_rgb(const double hr, const double hg, const double hb,
                 unsigned char *r,
                 unsigned char *g,
@@ -472,9 +472,9 @@ struct _Color
 
 struct _QuantizeObj
 {
-  Pass1_Func first_pass;            /* first pass over image data creates colormap  */
-  Pass2i_Func second_pass_init;     /* Initialize data which persists over invocations */
-  Pass2_Func second_pass;           /* second pass maps from image data to colormap */
+  Pass1_Func   first_pass;          /* first pass over image data creates colormap  */
+  Pass2i_Func  second_pass_init;    /* Initialize data which persists over invocations */
+  Pass2_Func   second_pass;         /* second pass maps from image data to colormap */
   Cleanup_Func delete_func;         /* function to clean up data associated with private */
 
   int desired_number_of_colors;     /* Number of colors we will allow    */
@@ -554,12 +554,13 @@ static GimpPalette *theCustomPalette = NULL;
 /**********************************************************/
 typedef struct
 {
-  signed long used_count;
+  signed long   used_count;
   unsigned char initial_index;
 } palentryStruct;
 
 static int
-mapping_compare (const void *a, const void *b)
+mapping_compare (const void *a,
+                 const void *b)
 {
   palentryStruct *m1 = (palentryStruct *) a;
   palentryStruct *m2 = (palentryStruct *) b;
@@ -568,8 +569,9 @@ mapping_compare (const void *a, const void *b)
 }
 
 /* FWIW, the make_remap_table() and mapping_compare() function source
-   and palentryStruct may be re-used under the XFree86-style license.
-   <adam@gimp.org> */
+ * and palentryStruct may be re-used under the XFree86-style license.
+ * <adam@gimp.org>
+ */
 static void
 make_remap_table (const unsigned char  old_palette[],
                   unsigned char        new_palette[],
@@ -584,9 +586,9 @@ make_remap_table (const unsigned char  old_palette[],
   palentryStruct *palentries;
   int used = 0;
 
-  memset(temppal, 0, 256 * 3);
-  memset(tempuse, 0, 256 * sizeof (unsigned long));
-  memset(transmap, 255, 256 * sizeof (unsigned long));
+  memset (temppal, 0, 256 * 3);
+  memset (tempuse, 0, 256 * sizeof (unsigned long));
+  memset (transmap, 255, 256 * sizeof (unsigned long));
 
   /* First pass - only collect entries which are marked as
      being used at all in index_used_count. */
@@ -878,8 +880,8 @@ gimp_image_convert (GimpImage               *image,
                 generate_histogram_rgb (quantobj->histogram,
                                         layer, num_cols, alpha_dither,
                                         progress, nth_layer, n_layers);
-              /*
-               * Note: generate_histogram_rgb may set needs_quantize if
+
+              /* Note: generate_histogram_rgb may set needs_quantize if
                *  the image contains more colours than the limit specified
                *  by the user.
                */
@@ -1390,8 +1392,8 @@ find_split_candidate (const boxptr  boxlist,
                       const int     desired_colors)
 {
   boxptr boxp;
-  int i;
-  etype maxc = 0;
+  int    i;
+  etype  maxc = 0;
   boxptr which = NULL;
   double Lbias;
 
@@ -1470,16 +1472,16 @@ find_split_candidate (const boxptr  boxlist,
 }
 
 
-
+/* Find the splittable box with the largest (scaled) volume Returns
+ * NULL if no splittable boxes remain
+ */
 static boxptr
 find_biggest_volume (const boxptr boxlist,
                      const int    numboxes)
-/* Find the splittable box with the largest (scaled) volume */
-/* Returns NULL if no splittable boxes remain */
 {
   boxptr boxp;
-  int i;
-  int maxv = 0;
+  int    i;
+  int    maxv = 0;
   boxptr which = NULL;
 
   for (i = 0, boxp = boxlist; i < numboxes; i++, boxp++)
@@ -1495,13 +1497,14 @@ find_biggest_volume (const boxptr boxlist,
 }
 
 
+/* Shrink the min/max bounds of a box to enclose only nonzero
+ * elements, and recompute its volume and population
+ */
 static void
 update_box_gray (const CFHistogram histogram,
                  boxptr            boxp)
-/* Shrink the min/max bounds of a box to enclose only nonzero elements, */
-/* and recompute its volume and population */
 {
-  int i, min, max, dist;
+  int       i, min, max, dist;
   ColorFreq ccount;
 
   min = boxp->Rmin;
@@ -1555,9 +1558,9 @@ update_box_rgb (const CFHistogram histogram,
 /* Shrink the min/max bounds of a box to enclose only nonzero elements, */
 /* and recompute its volume, population and error */
 {
-  int R,G,B;
-  int Rmin,Rmax,Gmin,Gmax,Bmin,Bmax;
-  int dist0,dist1,dist2;
+  int       R, G, B;
+  int       Rmin, Rmax, Gmin, Gmax, Bmin, Bmax;
+  int       dist0, dist1, dist2;
   ColorFreq ccount;
   /*
   guint64 tempRerror;
@@ -1565,7 +1568,7 @@ update_box_rgb (const CFHistogram histogram,
   guint64 tempBerror;
   */
   QuantizeObj dummyqo;
-  box dummybox;
+  box         dummybox;
 
   /* fprintf(stderr, "U"); */
 
@@ -1579,7 +1582,7 @@ update_box_rgb (const CFHistogram histogram,
         {
           for (B = Bmin; B <= Bmax; B++)
             {
-              if (*HIST_LIN(histogram, R, G, B) != 0)
+              if (*HIST_LIN (histogram, R, G, B) != 0)
                 {
                   boxp->Rmin = Rmin = R;
                   goto have_Rmin;
@@ -1593,7 +1596,7 @@ update_box_rgb (const CFHistogram histogram,
         {
           for (B = Bmin; B <= Bmax; B++)
             {
-              if (*HIST_LIN(histogram, R, G, B) != 0)
+              if (*HIST_LIN (histogram, R, G, B) != 0)
                 {
                   boxp->Rmax = Rmax = R;
                   goto have_Rmax;
@@ -1607,7 +1610,7 @@ update_box_rgb (const CFHistogram histogram,
         {
           for (B = Bmin; B <= Bmax; B++)
             {
-              if (*HIST_LIN(histogram, R, G, B) != 0)
+              if (*HIST_LIN (histogram, R, G, B) != 0)
                 {
                   boxp->Gmin = Gmin = G;
                   goto have_Gmin;
@@ -1621,7 +1624,7 @@ update_box_rgb (const CFHistogram histogram,
         {
           for (B = Bmin; B <= Bmax; B++)
             {
-              if (*HIST_LIN(histogram, R, G, B) != 0)
+              if (*HIST_LIN (histogram, R, G, B) != 0)
                 {
                   boxp->Gmax = Gmax = G;
                   goto have_Gmax;
@@ -1635,7 +1638,7 @@ update_box_rgb (const CFHistogram histogram,
         {
           for (G = Gmin; G <= Gmax; G++)
             {
-              if (*HIST_LIN(histogram, R, G, B) != 0)
+              if (*HIST_LIN (histogram, R, G, B) != 0)
                 {
                   boxp->Bmin = Bmin = B;
                   goto have_Bmin;
@@ -1649,7 +1652,7 @@ update_box_rgb (const CFHistogram histogram,
         {
           for (G = Gmin; G <= Gmax; G++)
             {
-              if (*HIST_LIN(histogram, R, G, B) != 0)
+              if (*HIST_LIN (histogram, R, G, B) != 0)
                 {
                   boxp->Bmax = Bmax = B;
                   goto have_Bmax;
@@ -1690,7 +1693,9 @@ update_box_rgb (const CFHistogram histogram,
           for (B = Bmin; B <= Bmax; B++)
             {
               ColorFreq freq_here;
-              freq_here = *HIST_LIN(histogram, R, G, B);
+
+              freq_here = *HIST_LIN (histogram, R, G, B);
+
               if (freq_here != 0)
                 {
                   int ge, be, re;
@@ -1824,94 +1829,95 @@ update_box_rgb (const CFHistogram histogram,
  finished_axesscan:
 #else
 
-  boxp->Rhalferror = Rmin + (Rmax-Rmin+1)/2;
-  boxp->Ghalferror = Gmin + (Gmax-Gmin+1)/2;
-  boxp->Bhalferror = Bmin + (Bmax-Bmin+1)/2;
+  boxp->Rhalferror = Rmin + (Rmax - Rmin + 1) / 2;
+  boxp->Ghalferror = Gmin + (Gmax - Gmin + 1) / 2;
+  boxp->Bhalferror = Bmin + (Bmax - Bmin + 1) / 2;
 
   if (dist0 && dist1 && dist2)
-  {
-    axisType longest_ax=AXIS_UNDEF;
-    int longest_length=0, longest_length2=0;
-    int ratio;
+    {
+      axisType longest_ax=AXIS_UNDEF;
+      int      longest_length=0, longest_length2=0;
+      int      ratio;
 
-    /*
-    fprintf(stderr, "[%d,%d,%d=%d,%d,%d] ",
-            (Rmax - Rmin), (Gmax - Gmin), (Bmax - Bmin),
-            dist0, dist1, dist2);
-    */
+      /*
+        fprintf(stderr, "[%d,%d,%d=%d,%d,%d] ",
+        (Rmax - Rmin), (Gmax - Gmin), (Bmax - Bmin),
+        dist0, dist1, dist2);
+      */
 
-    if ( dist0 >= longest_length)
-      {
-        longest_length2 = longest_length;
-        longest_length = dist0;
-        longest_ax = AXIS_RED;
-      }
-    else if ( dist0 >= longest_length2)
-      {
-        longest_length2 = dist0;
-      }
-
-    if ( dist1 >= longest_length)
-      {
-        longest_length2 = longest_length;
-        longest_length = dist1;
-        longest_ax = AXIS_GREEN;
-      }
-    else if ( dist1 >= longest_length2)
-      {
-        longest_length2 = dist1;
-      }
-
-    if ( dist2 >= longest_length)
-      {
-        longest_length2 = longest_length;
-        longest_length = dist2;
-        longest_ax = AXIS_BLUE;
-      }
-    else if ( dist2 >= longest_length2)
-      {
-        longest_length2 = dist2;
-      }
-
-    if (longest_length2 == 0)
-      longest_length2 = 1;
-
-    ratio = (longest_length + longest_length2/2) / longest_length2;
-    /* fprintf(stderr, " ratio:(%d/%d)=%d ", longest_length, longest_length2, ratio);
-       fprintf(stderr, "C%d ", cells_remaining); */
-
-    if (ratio > cells_remaining+1)
-      ratio = cells_remaining+1;
-
-    if (ratio > 2)
-      {
-        switch (longest_ax) {
-        case AXIS_RED:
-          if (Rmin + (Rmax-Rmin+ratio/2)/ratio < Rmax)
-            {
-              /* fprintf(stderr, "FR%d \007\n",ratio);*/
-              boxp->Rhalferror = Rmin +  (Rmax-Rmin+ratio/2)/ratio;
-            }
-          break;
-        case AXIS_GREEN:
-          if (Gmin + (Gmax-Gmin+ratio/2)/ratio < Gmax)
-            {
-              /* fprintf(stderr, "FG%d \007\n",ratio);*/
-              boxp->Ghalferror = Gmin +  (Gmax-Gmin+ratio/2)/ratio;
-            }
-          break;
-        case AXIS_BLUE:
-          if (Bmin + (Bmax-Bmin+ratio/2)/ratio < Bmax)
-            {
-              /* fprintf(stderr, "FB%d \007\n",ratio);*/
-              boxp->Bhalferror = Bmin +  (Bmax-Bmin+ratio/2)/ratio;
-            }
-          break;
-        default:
-          g_warning("GRR, UNDEF LONGEST AXIS\007\n");
+      if (dist0 >= longest_length)
+        {
+          longest_length2 = longest_length;
+          longest_length = dist0;
+          longest_ax = AXIS_RED;
         }
-      }
-  }
+      else if (dist0 >= longest_length2)
+        {
+          longest_length2 = dist0;
+        }
+
+      if (dist1 >= longest_length)
+        {
+          longest_length2 = longest_length;
+          longest_length = dist1;
+          longest_ax = AXIS_GREEN;
+        }
+      else if (dist1 >= longest_length2)
+        {
+          longest_length2 = dist1;
+        }
+
+      if (dist2 >= longest_length)
+        {
+          longest_length2 = longest_length;
+          longest_length = dist2;
+          longest_ax = AXIS_BLUE;
+        }
+      else if (dist2 >= longest_length2)
+        {
+          longest_length2 = dist2;
+        }
+
+      if (longest_length2 == 0)
+        longest_length2 = 1;
+
+      ratio = (longest_length + longest_length2/2) / longest_length2;
+      /* fprintf(stderr, " ratio:(%d/%d)=%d ", longest_length, longest_length2, ratio);
+         fprintf(stderr, "C%d ", cells_remaining); */
+
+      if (ratio > cells_remaining + 1)
+        ratio = cells_remaining + 1;
+
+      if (ratio > 2)
+        {
+          switch (longest_ax)
+            {
+            case AXIS_RED:
+              if (Rmin + (Rmax - Rmin + ratio / 2) / ratio < Rmax)
+                {
+                  /* fprintf(stderr, "FR%d \007\n",ratio);*/
+                  boxp->Rhalferror = Rmin +  (Rmax - Rmin + ratio / 2) / ratio;
+                }
+              break;
+            case AXIS_GREEN:
+              if (Gmin + (Gmax - Gmin + ratio / 2) / ratio < Gmax)
+                {
+                  /* fprintf(stderr, "FG%d \007\n",ratio);*/
+                  boxp->Ghalferror = Gmin + (Gmax - Gmin + ratio / 2) / ratio;
+                }
+              break;
+            case AXIS_BLUE:
+              if (Bmin + (Bmax - Bmin + ratio / 2) / ratio < Bmax)
+                {
+                  /* fprintf(stderr, "FB%d \007\n",ratio);*/
+                  boxp->Bhalferror = Bmin + (Bmax - Bmin + ratio / 2) / ratio;
+                }
+              break;
+            default:
+              g_warning ("GRR, UNDEF LONGEST AXIS\007\n");
+            }
+        }
+    }
 
   if (boxp->Rhalferror == Rmax)
     boxp->Rhalferror = Rmin;
@@ -1967,7 +1973,7 @@ median_cut_gray (CFHistogram histogram,
                  int         desired_colors)
 /* Repeatedly select and split the largest box until we have enough boxes */
 {
-  int lb;
+  int    lb;
   boxptr b1, b2;
 
   while (numboxes < desired_colors)
@@ -2038,25 +2044,25 @@ median_cut_rgb (CFHistogram   histogram,
           lb = b1->Rhalferror;/* *0 + (b1->Rmax + b1->Rmin) / 2; */
           b1->Rmax = lb;
           b2->Rmin = lb+1;
-          g_assert(b1->Rmax >= b1->Rmin);
-          g_assert(b2->Rmax >= b2->Rmin);
+          g_assert (b1->Rmax >= b1->Rmin);
+          g_assert (b2->Rmax >= b2->Rmin);
           break;
         case AXIS_GREEN:
           lb = b1->Ghalferror;/* *0 + (b1->Gmax + b1->Gmin) / 2; */
           b1->Gmax = lb;
           b2->Gmin = lb+1;
-          g_assert(b1->Gmax >= b1->Gmin);
-          g_assert(b2->Gmax >= b2->Gmin);
+          g_assert (b1->Gmax >= b1->Gmin);
+          g_assert (b2->Gmax >= b2->Gmin);
           break;
         case AXIS_BLUE:
           lb = b1->Bhalferror;/* *0 + (b1->Bmax + b1->Bmin) / 2; */
           b1->Bmax = lb;
           b2->Bmin = lb+1;
-          g_assert(b1->Bmax >= b1->Bmin);
-          g_assert(b2->Bmax >= b2->Bmin);
+          g_assert (b1->Bmax >= b1->Bmin);
+          g_assert (b2->Bmax >= b2->Bmin);
           break;
         default:
-          g_error("Uh-oh.");
+          g_error ("Uh-oh.");
         }
       /* Update stats for boxes */
       numboxes++;
@@ -2079,7 +2085,7 @@ compute_color_gray (QuantizeObj *quantobj,
                     int          icolor)
 /* Compute representative color for a box, put it in colormap[icolor] */
 {
-  int i, min, max;
+  int     i, min, max;
   guint64 count;
   guint64 total;
   guint64 gtotal;
@@ -2127,10 +2133,10 @@ compute_color_rgb (QuantizeObj *quantobj,
 {
   /* Current algorithm: mean weighted by pixels (not colors) */
   /* Note it is important to get the rounding correct! */
-  int R, G, B;
-  int Rmin, Rmax;
-  int Gmin, Gmax;
-  int Bmin, Bmax;
+  int       R, G, B;
+  int       Rmin, Rmax;
+  int       Gmin, Gmax;
+  int       Bmin, Bmax;
   ColorFreq total = 0;
   ColorFreq Rtotal = 0;
   ColorFreq Gtotal = 0;
@@ -2145,7 +2151,8 @@ compute_color_rgb (QuantizeObj *quantobj,
       {
         for (B = Bmin; B <= Bmax; B++)
           {
-            ColorFreq this_freq = *HIST_LIN(histogram, R, G, B);
+            ColorFreq this_freq = *HIST_LIN (histogram, R, G, B);
+
             if (this_freq != 0)
               {
                 total += this_freq;
@@ -2159,13 +2166,15 @@ compute_color_rgb (QuantizeObj *quantobj,
   if (total > 0)
     {
       unsigned char red, green, blue;
-      lin_to_rgb(/*(Rtotal + (total>>1)) / total,
-                 (Gtotal + (total>>1)) / total,
-                 (Btotal + (total>>1)) / total,*/
-                 (double)Rtotal / (double)total,
-                 (double)Gtotal / (double)total,
-                 (double)Btotal / (double)total,
-                 &red, &green, &blue);
+
+      lin_to_rgb (/*(Rtotal + (total>>1)) / total,
+                    (Gtotal + (total>>1)) / total,
+                    (Btotal + (total>>1)) / total,*/
+                  (double)Rtotal / (double)total,
+                  (double)Gtotal / (double)total,
+                  (double)Btotal / (double)total,
+                  &red, &green, &blue);
+
       quantobj->cmap[icolor].red   = red;
       quantobj->cmap[icolor].green = green;
       quantobj->cmap[icolor].blue  = blue;
@@ -2175,9 +2184,9 @@ compute_color_rgb (QuantizeObj *quantobj,
         *  the colourmap.
         */
     {
-      quantobj->cmap[icolor].red =
-        quantobj->cmap[icolor].green =
-        quantobj->cmap[icolor].blue = 0;
+      quantobj->cmap[icolor].red   = 0;
+      quantobj->cmap[icolor].green = 0;
+      quantobj->cmap[icolor].blue  = 0;
     }
 }
 
@@ -2191,10 +2200,10 @@ compute_color_lin8 (QuantizeObj *quantobj,
 {
   /* Current algorithm: mean weighted by pixels (not colors) */
   /* Note it is important to get the rounding correct! */
-  int R, G, B;
-  int Rmin, Rmax;
-  int Gmin, Gmax;
-  int Bmin, Bmax;
+  int       R, G, B;
+  int       Rmin, Rmax;
+  int       Gmin, Gmax;
+  int       Bmin, Bmax;
   ColorFreq total = 0;
   ColorFreq Rtotal = 0;
   ColorFreq Gtotal = 0;
@@ -2209,7 +2218,8 @@ compute_color_lin8 (QuantizeObj *quantobj,
       {
         for (B = Bmin; B <= Bmax; B++)
           {
-            ColorFreq this_freq = *HIST_LIN(histogram, R, G, B);
+            ColorFreq this_freq = *HIST_LIN (histogram, R, G, B);
+
             if (this_freq != 0)
               {
                 Rtotal += R * this_freq;
@@ -2232,9 +2242,9 @@ compute_color_lin8 (QuantizeObj *quantobj,
         */
     {
       g_warning("eep.");
-      quantobj->cmap[icolor].red = 0;
+      quantobj->cmap[icolor].red   = 0;
       quantobj->cmap[icolor].green = 128;
-      quantobj->cmap[icolor].blue = 128;
+      quantobj->cmap[icolor].blue  = 128;
     }
 }
 
@@ -2245,9 +2255,9 @@ select_colors_gray (QuantizeObj *quantobj,
 /* Master routine for color selection */
 {
   boxptr boxlist;
-  int numboxes;
-  int desired = quantobj->desired_number_of_colors;
-  int i;
+  int    numboxes;
+  int    desired = quantobj->desired_number_of_colors;
+  int    i;
 
   /* Allocate workspace for box list */
   boxlist = g_new (box, desired);
@@ -2274,9 +2284,9 @@ select_colors_rgb (QuantizeObj *quantobj,
 /* Master routine for color selection */
 {
   boxptr boxlist;
-  int numboxes;
-  int desired = quantobj->desired_number_of_colors;
-  int i;
+  int    numboxes;
+  int    desired = quantobj->desired_number_of_colors;
+  int   i;
 
   /* Allocate workspace for box list */
   boxlist = g_new (box, desired);
@@ -2432,89 +2442,116 @@ find_nearby_colors (QuantizeObj *quantobj,
    */
   minmaxdist = 0x7FFFFFFFL;
 
-  for (i = 0; i < numcolors; i++) {
-    /* We compute the squared-R-distance term, then add in the other two. */
-    x = quantobj->clin[i].red;
-    if (x < minR) {
-      tdist = (x - minR) * R_SCALE;
-      min_dist = tdist*tdist;
-      tdist = (x - maxR) * R_SCALE;
-      max_dist = tdist*tdist;
-    } else if (x > maxR) {
-      tdist = (x - maxR) * R_SCALE;
-      min_dist = tdist*tdist;
-      tdist = (x - minR) * R_SCALE;
-      max_dist = tdist*tdist;
-    } else {
-      /* within cell range so no contribution to min_dist */
-      min_dist = 0;
-      if (x <= centerR) {
-        tdist = (x - maxR) * R_SCALE;
-        max_dist = tdist*tdist;
-      } else {
-        tdist = (x - minR) * R_SCALE;
-        max_dist = tdist*tdist;
-      }
-    }
+  for (i = 0; i < numcolors; i++)
+    {
+      /* We compute the squared-R-distance term, then add in the other two. */
+      x = quantobj->clin[i].red;
+      if (x < minR)
+        {
+          tdist = (x - minR) * R_SCALE;
+          min_dist = tdist*tdist;
+          tdist = (x - maxR) * R_SCALE;
+          max_dist = tdist*tdist;
+        }
+      else if (x > maxR)
+        {
+          tdist = (x - maxR) * R_SCALE;
+          min_dist = tdist*tdist;
+          tdist = (x - minR) * R_SCALE;
+          max_dist = tdist*tdist;
+        }
+      else
+        {
+          /* within cell range so no contribution to min_dist */
+          min_dist = 0;
+          if (x <= centerR)
+            {
+              tdist = (x - maxR) * R_SCALE;
+              max_dist = tdist*tdist;
+            }
+          else
+            {
+              tdist = (x - minR) * R_SCALE;
+              max_dist = tdist*tdist;
+            }
+        }
 
-    x = quantobj->clin[i].green;
-    if (x < minG) {
-      tdist = (x - minG) * G_SCALE;
-      min_dist += tdist*tdist;
-      tdist = (x - maxG) * G_SCALE;
-      max_dist += tdist*tdist;
-    } else if (x > maxG) {
-      tdist = (x - maxG) * G_SCALE;
-      min_dist += tdist*tdist;
-      tdist = (x - minG) * G_SCALE;
-      max_dist += tdist*tdist;
-    } else {
-      /* within cell range so no contribution to min_dist */
-      if (x <= centerG) {
-        tdist = (x - maxG) * G_SCALE;
-        max_dist += tdist*tdist;
-      } else {
-        tdist = (x - minG) * G_SCALE;
-        max_dist += tdist*tdist;
-      }
-    }
+      x = quantobj->clin[i].green;
+      if (x < minG)
+        {
+          tdist = (x - minG) * G_SCALE;
+          min_dist += tdist*tdist;
+          tdist = (x - maxG) * G_SCALE;
+          max_dist += tdist*tdist;
+        }
+      else if (x > maxG)
+        {
+          tdist = (x - maxG) * G_SCALE;
+          min_dist += tdist*tdist;
+          tdist = (x - minG) * G_SCALE;
+          max_dist += tdist*tdist;
+        }
+      else
+        {
+          /* within cell range so no contribution to min_dist */
+          if (x <= centerG)
+            {
+              tdist = (x - maxG) * G_SCALE;
+              max_dist += tdist*tdist;
+            }
+          else
+            {
+              tdist = (x - minG) * G_SCALE;
+              max_dist += tdist*tdist;
+            }
+        }
 
-    x = quantobj->clin[i].blue;
-    if (x < minB) {
-      tdist = (x - minB) * B_SCALE;
-      min_dist += tdist*tdist;
-      tdist = (x - maxB) * B_SCALE;
-      max_dist += tdist*tdist;
-    } else if (x > maxB) {
-      tdist = (x - maxB) * B_SCALE;
-      min_dist += tdist*tdist;
-      tdist = (x - minB) * B_SCALE;
-      max_dist += tdist*tdist;
-    } else {
-      /* within cell range so no contribution to min_dist */
-      if (x <= centerB) {
-        tdist = (x - maxB) * B_SCALE;
-        max_dist += tdist*tdist;
-      } else {
-        tdist = (x - minB) * B_SCALE;
-        max_dist += tdist*tdist;
-      }
-    }
+      x = quantobj->clin[i].blue;
+      if (x < minB)
+        {
+          tdist = (x - minB) * B_SCALE;
+          min_dist += tdist*tdist;
+          tdist = (x - maxB) * B_SCALE;
+          max_dist += tdist*tdist;
+        }
+      else if (x > maxB)
+        {
+          tdist = (x - maxB) * B_SCALE;
+          min_dist += tdist*tdist;
+          tdist = (x - minB) * B_SCALE;
+          max_dist += tdist*tdist;
+        }
+      else
+        {
+          /* within cell range so no contribution to min_dist */
+          if (x <= centerB)
+            {
+              tdist = (x - maxB) * B_SCALE;
+              max_dist += tdist*tdist;
+            }
+          else
+            {
+              tdist = (x - minB) * B_SCALE;
+              max_dist += tdist*tdist;
+            }
+        }
 
-    mindist[i] = min_dist;      /* save away the results */
-    if (max_dist < minmaxdist)
-      minmaxdist = max_dist;
-  }
+      mindist[i] = min_dist;      /* save away the results */
+      if (max_dist < minmaxdist)
+        minmaxdist = max_dist;
+    }
 
   /* Now we know that no cell in the update box is more than minmaxdist
    * away from some colormap entry.  Therefore, only colors that are
    * within minmaxdist of some part of the box need be considered.
    */
   ncolors = 0;
-  for (i = 0; i < numcolors; i++) {
-    if (mindist[i] <= minmaxdist)
-      colorlist[ncolors++] = i;
-  }
+  for (i = 0; i < numcolors; i++)
+    {
+      if (mindist[i] <= minmaxdist)
+        colorlist[ncolors++] = i;
+    }
+
   return ncolors;
 }
 
@@ -2534,18 +2571,18 @@ find_best_colors (QuantizeObj *quantobj,
  * find the distance from a colormap entry to successive cells in the box.
  */
 {
-  int iR, iG, iB;
-  int i, icolor;
-  int * bptr;           /* pointer into bestdist[] array */
-  int * cptr;           /* pointer into bestcolor[] array */
-  int dist0, dist1;     /* initial distance values */
-  int dist2;            /* current distance in inner loop */
-  int xx0, xx1;         /* distance increments */
-  int xx2;
-  int inR, inG, inB;    /* initial values for increments */
+  int  iR, iG, iB;
+  int  i, icolor;
+  int *bptr;           /* pointer into bestdist[] array */
+  int *cptr;           /* pointer into bestcolor[] array */
+  int  dist0, dist1;     /* initial distance values */
+  int  dist2;            /* current distance in inner loop */
+  int  xx0, xx1;         /* distance increments */
+  int  xx2;
+  int  inR, inG, inB;    /* initial values for increments */
 
   /* This array holds the distance to the nearest-so-far color for each cell */
-  int bestdist[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
+  int  bestdist[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
 
   /* Initialize best-distance for each cell of the update box */
   bptr = bestdist;
@@ -2562,13 +2599,14 @@ find_best_colors (QuantizeObj *quantobj,
 #define STEP_G  ((1 << G_SHIFT) * G_SCALE)
 #define STEP_B  ((1 << B_SHIFT) * B_SCALE)
 
-  for (i = 0; i < numcolors; i++) {
-    icolor = colorlist[i];
-    /* Compute (square of) distance from minR/G/B to this color */
-    inR = (minR - quantobj->clin[icolor].red) * R_SCALE;
-    dist0 = inR*inR;
-    /* special-case for L*==0: chroma diffs irrelevant */
-    /*    if (minR > 0 || quantobj->clin[icolor].red > 0) */
+  for (i = 0; i < numcolors; i++)
+    {
+      icolor = colorlist[i];
+      /* Compute (square of) distance from minR/G/B to this color */
+      inR = (minR - quantobj->clin[icolor].red) * R_SCALE;
+      dist0 = inR*inR;
+      /* special-case for L*==0: chroma diffs irrelevant */
+      /*    if (minR > 0 || quantobj->clin[icolor].red > 0) */
       {
         inG = (minG - quantobj->clin[icolor].green) * G_SCALE;
         dist0 += inG*inG;
@@ -2577,40 +2615,44 @@ find_best_colors (QuantizeObj *quantobj,
       }
       /*    else
             {
-                inG = 0;
-                inB = 0;
-                } */
-    /* Form the initial difference increments */
-    inR = inR * (2 * STEP_R) + STEP_R * STEP_R;
-    inG = inG * (2 * STEP_G) + STEP_G * STEP_G;
-    inB = inB * (2 * STEP_B) + STEP_B * STEP_B;
-    /* Now loop over all cells in box, updating distance per Thomas method */
-    bptr = bestdist;
-    cptr = bestcolor;
-    xx0 = inR;
-    for (iR = BOX_R_ELEMS-1; iR >= 0; iR--) {
-      dist1 = dist0;
-      xx1 = inG;
-      for (iG = BOX_G_ELEMS-1; iG >= 0; iG--) {
-        dist2 = dist1;
-        xx2 = inB;
-        for (iB = BOX_B_ELEMS-1; iB >= 0; iB--) {
-          if (dist2 < *bptr) {
-            *bptr = dist2;
-            *cptr = icolor;
-          }
-          dist2 += xx2;
-          xx2 += 2 * STEP_B * STEP_B;
-          bptr++;
-          cptr++;
+            inG = 0;
+            inB = 0;
+            } */
+      /* Form the initial difference increments */
+      inR = inR * (2 * STEP_R) + STEP_R * STEP_R;
+      inG = inG * (2 * STEP_G) + STEP_G * STEP_G;
+      inB = inB * (2 * STEP_B) + STEP_B * STEP_B;
+      /* Now loop over all cells in box, updating distance per Thomas method */
+      bptr = bestdist;
+      cptr = bestcolor;
+      xx0 = inR;
+      for (iR = BOX_R_ELEMS-1; iR >= 0; iR--)
+        {
+          dist1 = dist0;
+          xx1 = inG;
+          for (iG = BOX_G_ELEMS-1; iG >= 0; iG--)
+            {
+              dist2 = dist1;
+              xx2 = inB;
+              for (iB = BOX_B_ELEMS-1; iB >= 0; iB--)
+                {
+                  if (dist2 < *bptr)
+                    {
+                      *bptr = dist2;
+                      *cptr = icolor;
+                    }
+                  dist2 += xx2;
+                  xx2 += 2 * STEP_B * STEP_B;
+                  bptr++;
+                  cptr++;
+                }
+              dist1 += xx1;
+              xx1 += 2 * STEP_G * STEP_G;
+            }
+          dist0 += xx0;
+          xx0 += 2 * STEP_R * STEP_R;
         }
-        dist1 += xx1;
-        xx1 += 2 * STEP_G * STEP_G;
-      }
-      dist0 += xx0;
-      xx0 += 2 * STEP_R * STEP_R;
     }
-  }
 }
 
 
@@ -2623,10 +2665,10 @@ fill_inverse_cmap_gray (QuantizeObj *quantobj,
 /* we can fill as many others as we wish.) */
 {
   Color *cmap;
-  long dist;
-  long mindist;
-  int mindisti;
-  int i;
+  long   dist;
+  long   mindist;
+  int    mindisti;
+  int   i;
 
   cmap = quantobj->cmap;
 
@@ -2659,14 +2701,14 @@ fill_inverse_cmap_rgb (QuantizeObj *quantobj,
 /* histogram cell R/G/B.  (Only that one cell MUST be filled, but */
 /* we can fill as many others as we wish.) */
 {
-  int minR, minG, minB; /* lower left corner of update box */
-  int iR, iG, iB;
-  int * cptr;           /* pointer into bestcolor[] array */
+  int  minR, minG, minB; /* lower left corner of update box */
+  int  iR, iG, iB;
+  int *cptr;           /* pointer into bestcolor[] array */
   /* This array lists the candidate colormap indexes. */
-  int colorlist[MAXNUMCOLORS];
-  int numcolors;                /* number of candidate colors */
+  int  colorlist[MAXNUMCOLORS];
+  int  numcolors;                /* number of candidate colors */
   /* This array holds the actually closest colormap index for each cell. */
-  int bestcolor[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
+  int  bestcolor[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
 
   /* Convert cell coordinates to update box id */
   R >>= BOX_R_LOG;
@@ -2695,13 +2737,16 @@ fill_inverse_cmap_rgb (QuantizeObj *quantobj,
   G <<= BOX_G_LOG;
   B <<= BOX_B_LOG;
   cptr = bestcolor;
-  for (iR = 0; iR < BOX_R_ELEMS; iR++) {
-    for (iG = 0; iG < BOX_G_ELEMS; iG++) {
-      for (iB = 0; iB < BOX_B_ELEMS; iB++) {
-        *HIST_LIN(histogram, R+iR, G+iG, B+iB) = (*cptr++) + 1;
-      }
+  for (iR = 0; iR < BOX_R_ELEMS; iR++)
+    {
+      for (iG = 0; iG < BOX_G_ELEMS; iG++)
+        {
+          for (iB = 0; iB < BOX_B_ELEMS; iB++)
+            {
+              *HIST_LIN (histogram, R + iR, G + iG, B + iB) = (*cptr++) + 1;
+            }
+        }
     }
-  }
 }
 
 
@@ -2724,26 +2769,31 @@ median_cut_pass1_rgb (QuantizeObj *quantobj)
 static void
 monopal_pass1 (QuantizeObj *quantobj)
 {
-  quantobj -> actual_number_of_colors = 2;
-  quantobj -> cmap[0].red = 0;
-  quantobj -> cmap[0].green = 0;
-  quantobj -> cmap[0].blue = 0;
-  quantobj -> cmap[1].red = 255;
-  quantobj -> cmap[1].green = 255;
-  quantobj -> cmap[1].blue = 255;
+  quantobj->actual_number_of_colors = 2;
+
+  quantobj->cmap[0].red   = 0;
+  quantobj->cmap[0].green = 0;
+  quantobj->cmap[0].blue  = 0;
+  quantobj->cmap[1].red   = 255;
+  quantobj->cmap[1].green = 255;
+  quantobj->cmap[1].blue  = 255;
 }
+
 static void
 webpal_pass1 (QuantizeObj *quantobj)
 {
   int i;
-  quantobj -> actual_number_of_colors = 216;
-  for (i=0;i<216;i++)
+
+  quantobj->actual_number_of_colors = 216;
+
+  for (i=0; i < 216; i++)
     {
-      quantobj->cmap[i].red = webpal[i*3];
-      quantobj->cmap[i].green = webpal[i*3 +1];
-      quantobj->cmap[i].blue = webpal[i*3 +2];
+      quantobj->cmap[i].red   = webpal[i * 3];
+      quantobj->cmap[i].green = webpal[i * 3 +1];
+      quantobj->cmap[i].blue  = webpal[i * 3 +2];
     }
 }
+
 static void
 custompal_pass1 (QuantizeObj *quantobj)
 {
@@ -2946,50 +2996,60 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
               pixval1 = *cachep - 1;
               color1 = &quantobj->cmap[pixval1];
 
-              if (quantobj->actual_number_of_colors > 2) {
-                const int re = src[GRAY] - (int)color1->red;
-                int RV = src[GRAY] + re;
-                do {
-                  const gint R = CLAMP0255(RV);
-                  cachep = &histogram[R];
-                  /* If we have not seen this color before, find nearest
-                     colormap entry and update the cache */
-                  if (*cachep == 0) {
-                    fill_inverse_cmap_gray (quantobj, histogram, R);
-                  }
-                  pixval2 = *cachep - 1;
-                  RV += re;
-                } while((pixval1 == pixval2) &&
-                        (! (RV>255 || RV<0) ) &&
-                        re);
-              } else {
-                /* not enough colours to bother looking for an 'alternative'
-                   colour (we may fail to do so anyway), so decide that
-                   the alternative colour is simply the other cmap entry. */
-                pixval2 = (pixval1 + 1) %
-                  (quantobj->actual_number_of_colors);
-              }
+              if (quantobj->actual_number_of_colors > 2)
+                {
+                  const int re = src[GRAY] - (int)color1->red;
+                  int RV = src[GRAY] + re;
+
+                  do
+                    {
+                      const gint R = CLAMP0255(RV);
+                      cachep = &histogram[R];
+                      /* If we have not seen this color before, find nearest
+                         colormap entry and update the cache */
+                      if (*cachep == 0)
+                        {
+                          fill_inverse_cmap_gray (quantobj, histogram, R);
+                        }
+                      pixval2 = *cachep - 1;
+                      RV += re;
+                    }
+                  while ((pixval1 == pixval2) &&
+                         (! (RV>255 || RV<0) ) &&
+                         re);
+                }
+              else
+                {
+                  /* not enough colours to bother looking for an 'alternative'
+                     colour (we may fail to do so anyway), so decide that
+                     the alternative colour is simply the other cmap entry. */
+                  pixval2 = (pixval1 + 1) %
+                    (quantobj->actual_number_of_colors);
+                }
 
               /* always deterministically sort pixval1 and pixval2, to
                  avoid artifacts in the dither range due to inverting our
                  relative colour viewpoint -- most obvious in 1-bit dither. */
-              if (pixval1 > pixval2) {
-                gint tmpval = pixval1;
-                pixval1 = pixval2;
-                pixval2 = tmpval;
-                color1 = &quantobj->cmap[pixval1];
-              }
+              if (pixval1 > pixval2)
+                {
+                  gint tmpval = pixval1;
+                  pixval1 = pixval2;
+                  pixval2 = tmpval;
+                  color1 = &quantobj->cmap[pixval1];
+                }
 
               color2 = &quantobj->cmap[pixval2];
 
               err1 = ABS(color1->red - src[GRAY]);
               err2 = ABS(color2->red - src[GRAY]);
-              if (err1 || err2) {
-                const int proportion2 = (256 * 255 * err2) / (err1 + err2);
-                if ((dmval * 256) > proportion2) {
-                  pixval1 = pixval2; /* use color2 instead of color1*/
+              if (err1 || err2)
+                {
+                  const int proportion2 = (256 * 255 * err2) / (err1 + err2);
+                  if ((dmval * 256) > proportion2)
+                    {
+                      pixval1 = pixval2; /* use color2 instead of color1*/
+                    }
                 }
-              }
 
               if (has_alpha)
                 {
@@ -3131,8 +3191,8 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
                 }
 
               /* get pixel value and index into the cache */
-              rgb_to_lin(src[red_pix], src[green_pix], src[blue_pix],
-                         &R, &G, &B);
+              rgb_to_lin (src[red_pix], src[green_pix], src[blue_pix],
+                          &R, &G, &B);
               cachep = HIST_LIN(histogram,R,G,B);
               /* If we have not seen this color before, find nearest
                  colormap entry and update the cache */
@@ -3284,30 +3344,37 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
               pixval1 = *cachep - 1;
               color1 = &quantobj->cmap[pixval1];
 
-              if (quantobj->actual_number_of_colors > 2) {
-                const int re = src[red_pix] - (int)color1->red;
-                const int ge = src[green_pix] - (int)color1->green;
-                const int be = src[blue_pix] - (int)color1->blue;
-                int RV = src[red_pix] + re;
-                int GV = src[green_pix] + ge;
-                int BV = src[blue_pix] + be;
-                do {
-                   rgb_to_lin((CLAMP0255(RV)),
-                              (CLAMP0255(GV)),
-                              (CLAMP0255(BV)),
-                              &R, &G, &B);
-                  cachep = HIST_LIN(histogram,R,G,B);
-                  /* If we have not seen this color before, find nearest
-                     colormap entry and update the cache */
-                  if (*cachep == 0) {
-                    fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
-                  }
-                  pixval2 = *cachep - 1;
-                  RV += re;  GV += ge;  BV += be;
-                } while((pixval1 == pixval2) &&
-                        (!( (RV>255 || RV<0) || (GV>255 || GV<0) || (BV>255 || BV<0) )) &&
-                        (re || ge || be));
-              }
+              if (quantobj->actual_number_of_colors > 2)
+                {
+                  const int re = src[red_pix] - (int)color1->red;
+                  const int ge = src[green_pix] - (int)color1->green;
+                  const int be = src[blue_pix] - (int)color1->blue;
+                  int RV = src[red_pix] + re;
+                  int GV = src[green_pix] + ge;
+                  int BV = src[blue_pix] + be;
+
+                  do
+                    {
+                      rgb_to_lin ((CLAMP0255(RV)),
+                                  (CLAMP0255(GV)),
+                                  (CLAMP0255(BV)),
+                                  &R, &G, &B);
+                      cachep = HIST_LIN(histogram,R,G,B);
+
+                      /* If we have not seen this color before, find nearest
+                         colormap entry and update the cache */
+                      if (*cachep == 0)
+                        {
+                          fill_inverse_cmap_rgb (quantobj, histogram, R, G, B);
+                        }
+                      pixval2 = *cachep - 1;
+                      RV += re;  GV += ge;  BV += be;
+                    }
+                  while ((pixval1 == pixval2) &&
+                         (!( (RV>255 || RV<0) || (GV>255 || GV<0) || (BV>255 || BV<0) )) &&
+                         (re || ge || be));
+                }
+
               if (quantobj->actual_number_of_colors <= 2
                   /* || pixval1 == pixval2 */) {
                 /* not enough colours to bother looking for an 'alternative'
@@ -3320,12 +3387,13 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
               /* always deterministically sort pixval1 and pixval2, to
                  avoid artifacts in the dither range due to inverting our
                  relative colour viewpoint -- most obvious in 1-bit dither. */
-              if (pixval1 > pixval2) {
-                gint tmpval = pixval1;
-                pixval1 = pixval2;
-                pixval2 = tmpval;
-                color1 = &quantobj->cmap[pixval1];
-              }
+              if (pixval1 > pixval2)
+                {
+                  gint tmpval = pixval1;
+                  pixval1 = pixval2;
+                  pixval2 = tmpval;
+                  color1 = &quantobj->cmap[pixval1];
+                }
 
               color2 = &quantobj->cmap[pixval2];
 
@@ -3339,24 +3407,28 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                 int spacer2, spaceg2, spaceb2; \
                 rgb_to_unshifted_lin(R1,G1,B1, &spacer1, &spaceg1, &spaceb1); \
                 rgb_to_unshifted_lin(R2,G2,B2, &spacer2, &spaceg2, &spaceb2); \
-                D = sqrt(R_SCALE * SQR((spacer1)-(spacer2)) + \
+                D = sqrt(R_SCALE * SQR((spacer1)-(spacer2)) +           \
                          G_SCALE * SQR((spaceg1)-(spaceg2)) + \
                          B_SCALE * SQR((spaceb1)-(spaceb2))); \
               } while(0)
+
               /* although LIN_DISTP is more correct, DISTP is much faster and
                  barely distinguishable. */
-              DISTP(color1->red, color1->green, color1->blue,
-                    src[red_pix], src[green_pix], src[blue_pix],
-                    err1);
-              DISTP(color2->red, color2->green, color2->blue,
-                    src[red_pix], src[green_pix], src[blue_pix],
-                    err2);
-              if (err1 || err2) {
-                const int proportion2 = (255 * err2) / (err1 + err2);
-                if (dmval > proportion2) {
-                  pixval1 = pixval2; /* use color2 instead of color1*/
+              DISTP (color1->red, color1->green, color1->blue,
+                     src[red_pix], src[green_pix], src[blue_pix],
+                     err1);
+              DISTP (color2->red, color2->green, color2->blue,
+                     src[red_pix], src[green_pix], src[blue_pix],
+                     err2);
+
+              if (err1 || err2)
+                {
+                  const int proportion2 = (255 * err2) / (err1 + err2);
+                  if (dmval > proportion2)
+                    {
+                      pixval1 = pixval2; /* use color2 instead of color1*/
+                    }
                 }
-              }
 
               /* Now emit the colormap index for this cell, barfbarf */
               index_used_count[dest[INDEXED] = pixval1]++;
@@ -3541,6 +3613,7 @@ init_error_limit (const int error_freedom)
           table[in] = in;
           table[-in] = -in;
         }
+
       for (; in <= 255; in++)
         {
           table[in] = STEPSIZE;
@@ -3819,14 +3892,14 @@ median_cut_pass2_rgb_init (QuantizeObj *quantobj)
   memset (quantobj->index_used_count, 0, 256 * sizeof (unsigned long));
 
   /* Make a version of our discovered colourmap in linear space */
-  for (i=0; i<quantobj->actual_number_of_colors; i++)
+  for (i = 0; i < quantobj->actual_number_of_colors; i++)
     {
-      rgb_to_unshifted_lin(quantobj->cmap[i].red,
-                           quantobj->cmap[i].green,
-                           quantobj->cmap[i].blue,
-                           &quantobj->clin[i].red,
-                           &quantobj->clin[i].green,
-                           &quantobj->clin[i].blue);
+      rgb_to_unshifted_lin (quantobj->cmap[i].red,
+                            quantobj->cmap[i].green,
+                            quantobj->cmap[i].blue,
+                            &quantobj->clin[i].red,
+                            &quantobj->clin[i].green,
+                            &quantobj->clin[i].blue);
     }
 }
 
@@ -3836,7 +3909,7 @@ median_cut_pass2_gray_init (QuantizeObj *quantobj)
   zero_histogram_gray (quantobj->histogram);
 
   /* Mark all indices as currently unused */
-  memset (quantobj->index_used_count, 0, 256 * sizeof(unsigned long));
+  memset (quantobj->index_used_count, 0, 256 * sizeof (unsigned long));
 }
 
 static void
