@@ -207,7 +207,6 @@ gimp_pickable_get_color_at (GimpPickable *pickable,
                             GimpRGB      *color)
 {
   guchar pixel[4];
-  guchar col[4];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
   g_return_val_if_fail (color != NULL, FALSE);
@@ -215,11 +214,9 @@ gimp_pickable_get_color_at (GimpPickable *pickable,
   if (! gimp_pickable_get_pixel_at (pickable, x, y, pixel))
     return FALSE;
 
-  gimp_image_get_color (gimp_pickable_get_image (pickable),
-                        gimp_pickable_get_image_type (pickable),
-                        pixel, col);
-
-  gimp_rgba_set_uchar (color, col[0], col[1], col[2], col[3]);
+  babl_process (babl_fish (gimp_pickable_get_format (pickable),
+                           babl_format ("R'G'B'A double")),
+                pixel, color, 1);
 
   return TRUE;
 }
@@ -250,18 +247,18 @@ gimp_pickable_pick_color (GimpPickable *pickable,
                           GimpRGB      *color,
                           gint         *color_index)
 {
-  GimpImage     *image;
-  GimpImageType  type;
-  guchar         pixel[4];
-  guchar         col[4];
+  const Babl *format;
+  const Babl *fish;
+  guchar      pixel[4];
+  guchar      col[4];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
 
   if (! gimp_pickable_get_pixel_at (pickable, x, y, pixel))
     return FALSE;
 
-  image = gimp_pickable_get_image (pickable);
-  type  = gimp_pickable_get_image_type (pickable);
+  format = gimp_pickable_get_format (pickable);
+  fish   = babl_fish (format, babl_format ("R'G'B'A u8"));
 
   if (sample_average)
     {
@@ -276,7 +273,7 @@ gimp_pickable_pick_color (GimpPickable *pickable,
             {
               count++;
 
-              gimp_image_get_color (image, type, pixel, col);
+              babl_process (fish, pixel, col, 1);
 
               color_avg[RED]   += col[RED];
               color_avg[GREEN] += col[GREEN];
@@ -291,7 +288,7 @@ gimp_pickable_pick_color (GimpPickable *pickable,
     }
   else
     {
-      gimp_image_get_color (image, type, pixel, col);
+      babl_process (fish, pixel, col, 1);
     }
 
 
@@ -303,7 +300,7 @@ gimp_pickable_pick_color (GimpPickable *pickable,
 
   if (color_index)
     {
-      if (GIMP_IMAGE_TYPE_IS_INDEXED (type) && ! sample_average)
+      if (babl_format_is_palette (format) && ! sample_average)
         *color_index = pixel[0];
       else
         *color_index = -1;
