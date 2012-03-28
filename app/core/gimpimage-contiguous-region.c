@@ -37,25 +37,7 @@
 #include "gimppickable.h"
 
 
-typedef struct
-{
-  GimpImage           *image;
-  GimpImageType        type;
-  gboolean             sample_merged;
-  gboolean             antialias;
-  gint                 threshold;
-  gboolean             select_transparent;
-  GimpSelectCriterion  select_criterion;
-  gboolean             has_alpha;
-  guchar               color[MAX_CHANNELS];
-} ContinuousRegionData;
-
-
 /*  local function prototypes  */
-
-static void contiguous_region_by_color    (ContinuousRegionData *cont,
-                                           PixelRegion          *imagePR,
-                                           PixelRegion          *maskPR);
 
 static gint pixel_difference              (const guchar        *col1,
                                            const guchar        *col2,
@@ -216,23 +198,20 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
    *  fuzzy_select.  Modify the image's mask to reflect the
    *  additional selection
    */
-  GimpPickable *pickable;
-  TileManager  *tiles;
-  GimpChannel  *mask;
-  PixelRegion   imagePR, maskPR;
-  gint          width, height;
-
-  ContinuousRegionData  cont;
+  GeglBufferIterator *iter;
+  GimpPickable       *pickable;
+  GimpChannel        *mask;
+  GeglBuffer         *src_buffer;
+  GeglBuffer         *mask_buffer;
+  gint                width, height;
+  gboolean            has_alpha;
+  guchar              col[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  gimp_rgba_get_uchar (color,
-                       cont.color + 0,
-                       cont.color + 1,
-                       cont.color + 2,
-                       cont.color + 3);
+  gimp_rgba_get_uchar (color, &col[0], &col[1], &col[2], &col[3]);
 
   if (sample_merged)
     pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
@@ -241,22 +220,23 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
 
   gimp_pickable_flush (pickable);
 
-  cont.type      = gimp_pickable_get_image_type (pickable);
-  cont.has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (cont.type);
+  has_alpha = babl_format_has_alpha (gimp_pickable_get_format (pickable));
 
-  tiles  = gimp_pickable_get_tiles (pickable);
-  width  = tile_manager_width (tiles);
-  height = tile_manager_height (tiles);
+  src_buffer = gimp_pickable_get_buffer (pickable);
+  width  = gegl_buffer_get_width (src_buffer);
+  height = gegl_buffer_get_height (src_buffer);
 
-  pixel_region_init (&imagePR, tiles, 0, 0, width, height, FALSE);
+  iter = gegl_buffer_iterator_new (src_buffer,
+                                   NULL, 0, babl_format ("R'G'B'A u8"),
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-  if (cont.has_alpha)
+  if (has_alpha)
     {
       if (select_transparent)
         {
           /*  don't select transparancy if "color" isn't fully transparent
            */
-          if (cont.color[3] > 0)
+          if (col[3] > 0)
             select_transparent = FALSE;
         }
     }
@@ -265,65 +245,40 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
       select_transparent = FALSE;
     }
 
-  cont.image              = image;
-  cont.antialias          = antialias;
-  cont.threshold          = threshold;
-  cont.select_transparent = select_transparent;
-  cont.select_criterion   = select_criterion;
-
   mask = gimp_channel_new_mask (image, width, height);
 
-  pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                     0, 0, width, height,
-                     TRUE);
+  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-  pixel_regions_process_parallel ((PixelProcessorFunc)
-                                  contiguous_region_by_color, &cont,
-                                  2, &imagePR, &maskPR);
+  gegl_buffer_iterator_add (iter, mask_buffer,
+                            NULL, 0, babl_format ("Y' u8"),
+                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const guchar *src  = iter->data[0];
+      guchar       *dest = iter->data[1];
+
+      while (iter->length--)
+        {
+          /*  Find how closely the colors match  */
+          *dest = pixel_difference (col, src,
+                                    antialias,
+                                    threshold,
+                                    has_alpha ? 4 : 3,
+                                    has_alpha,
+                                    select_transparent,
+                                    select_criterion);
+
+          src  += 4;
+          dest += 1;
+        }
+    }
 
   return mask;
 }
 
 
 /*  private functions  */
-
-static void
-contiguous_region_by_color (ContinuousRegionData *cont,
-                            PixelRegion          *imagePR,
-                            PixelRegion          *maskPR)
-{
-  const guchar *image = imagePR->data;
-  guchar       *mask  = maskPR->data;
-  gint          x, y;
-
-  for (y = 0; y < imagePR->h; y++)
-    {
-      const guchar *i = image;
-      guchar       *m = mask;
-
-      for (x = 0; x < imagePR->w; x++)
-        {
-          guchar  rgb[MAX_CHANNELS];
-
-          /*  Get the rgb values for the color  */
-          gimp_image_get_color (cont->image, cont->type, i, rgb);
-
-          /*  Find how closely the colors match  */
-          *m++ = pixel_difference (cont->color, rgb,
-                                   cont->antialias,
-                                   cont->threshold,
-                                   cont->has_alpha ? 4 : 3,
-                                   cont->has_alpha,
-                                   cont->select_transparent,
-                                   cont->select_criterion);
-
-          i += imagePR->bytes;
-        }
-
-      image += imagePR->rowstride;
-      mask += maskPR->rowstride;
-    }
-}
 
 static gint
 pixel_difference (const guchar        *col1,
