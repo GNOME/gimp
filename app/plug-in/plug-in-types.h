@@ -24,8 +24,8 @@
 #include "plug-in/plug-in-enums.h"
 
 
-#define GIMP_PLUG_IN_TILE_WIDTH  64
-#define GIMP_PLUG_IN_TILE_HEIGHT 64
+#define GIMP_PLUG_IN_TILE_WIDTH  128
+#define GIMP_PLUG_IN_TILE_HEIGHT 128
 
 
 typedef struct _GimpPlugIn           GimpPlugIn;
