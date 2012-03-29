@@ -27,7 +27,6 @@
 #include "gimpdrawable-histogram.h"
 #include "gimpdrawable-levels.h"
 #include "gimpdrawable-operation.h"
-#include "gimpdrawable-process.h"
 #include "gimphistogram.h"
 #include "gimpprogress.h"
 
