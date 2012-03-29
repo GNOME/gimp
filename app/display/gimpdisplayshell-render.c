@@ -134,7 +134,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   GimpImage      *image;
   TileManager    *tiles;
   RenderInfo      info;
-  GimpImageType   type;
+  const Babl     *format;
   gint            level;
   gboolean        premult;
 
@@ -157,18 +157,20 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                        tiles, level, premult);
 
   /* Currently, only RGBA and GRAYA projection types are used. */
-  type = gimp_pickable_get_image_type (GIMP_PICKABLE (projection));
+  format = gimp_pickable_get_format (GIMP_PICKABLE (projection));
 
-  switch (type)
+  if (format == babl_format ("R'G'B'A u8"))
     {
-    case GIMP_RGBA_IMAGE:
       render_image_rgb_a (&info);
-      break;
-    case GIMP_GRAYA_IMAGE:
+    }
+  else if (format == babl_format ("Y'A u8"))
+    {
       render_image_gray_a (&info);
-      break;
-    default:
-      g_warning ("%s: unsupported projection type (%d)", G_STRFUNC, type);
+    }
+  else
+    {
+      g_warning ("%s: unsupported projection type (%s)", G_STRFUNC,
+                 babl_get_name (format));
       g_assert_not_reached ();
     }
 
