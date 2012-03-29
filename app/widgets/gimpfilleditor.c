@@ -25,6 +25,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
+#include <gegl.h>
 #include "widgets-types.h"
 
 #include "core/gimpfilloptions.h"

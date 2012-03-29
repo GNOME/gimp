@@ -23,8 +23,8 @@
 #include <unistd.h>
 #endif
 
+#include <gegl.h>
 #include <glib/gstdio.h>
-#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 #ifdef G_OS_WIN32

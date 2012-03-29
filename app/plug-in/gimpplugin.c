@@ -45,7 +45,7 @@
 #include <sys/param.h>
 #endif
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 

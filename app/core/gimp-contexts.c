@@ -25,8 +25,8 @@
 #include <unistd.h>
 #endif
 
+#include <gegl.h>
 #include <glib/gstdio.h>
-#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"

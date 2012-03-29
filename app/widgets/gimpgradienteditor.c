@@ -47,6 +47,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"

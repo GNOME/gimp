@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
@@ -44,7 +45,7 @@
 #include "gimpsessioninfo-dock.h"
 #include "gimpsessioninfo-private.h"
 #include "gimpsessionmanaged.h"
- 
+
 #include "gimp-log.h"
 
 

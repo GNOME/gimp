@@ -21,6 +21,7 @@
 
 #undef GSEAL_ENABLE
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"

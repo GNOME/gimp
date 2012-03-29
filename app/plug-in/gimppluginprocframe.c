@@ -21,7 +21,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "plug-in-types.h"
 
