@@ -62,7 +62,6 @@ static gint64      gimp_projection_get_memsize           (GimpObject      *objec
 static void        gimp_projection_pickable_flush        (GimpPickable    *pickable);
 static GimpImage * gimp_projection_get_image             (GimpPickable    *pickable);
 static const Babl * gimp_projection_get_format           (GimpPickable    *pickable);
-static gint        gimp_projection_get_bytes             (GimpPickable    *pickable);
 static GeglBuffer  * gimp_projection_get_buffer          (GimpPickable    *pickable);
 static TileManager * gimp_projection_get_tiles           (GimpPickable    *pickable);
 static gboolean    gimp_projection_get_pixel_at          (GimpPickable    *pickable,
@@ -165,7 +164,6 @@ gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image             = gimp_projection_get_image;
   iface->get_format            = gimp_projection_get_format;
   iface->get_format_with_alpha = gimp_projection_get_format; /* sic */
-  iface->get_bytes             = gimp_projection_get_bytes;
   iface->get_buffer            = gimp_projection_get_buffer;
   iface->get_tiles             = gimp_projection_get_tiles;
   iface->get_pixel_at          = gimp_projection_get_pixel_at;
@@ -316,14 +314,6 @@ gimp_projection_get_format (GimpPickable *pickable)
   return NULL;
 }
 
-static gint
-gimp_projection_get_bytes (GimpPickable *pickable)
-{
-  const Babl *format = gimp_projection_get_format (pickable);
-
-  return babl_format_get_bytes_per_pixel (format);
-}
-
 static GeglBuffer *
 gimp_projection_get_buffer (GimpPickable *pickable)
 {
@@ -454,11 +444,14 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
 
   if (! proj->pyramid)
     {
-      gint bytes;
-      gint width;
-      gint height;
+      const Babl *format;
+      gint        bytes;
+      gint        width;
+      gint        height;
 
-      bytes = gimp_projection_get_bytes (GIMP_PICKABLE (proj));
+      format = gimp_projection_get_format (GIMP_PICKABLE (proj));
+
+      bytes = babl_format_get_bytes_per_pixel (format);
       gimp_projectable_get_size (proj->projectable, &width, &height);
 
       proj->pyramid = tile_pyramid_new (bytes, width, height);

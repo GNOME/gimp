@@ -1647,6 +1647,7 @@ gradmap_tile_validate (TileManager *tm,
   static gboolean first_gradient = TRUE;
 
   GimpPickable *pickable;
+  const Babl   *pickable_format;
   Tile         *srctile;
   PixelRegion   srcPR;
   PixelRegion   destPR;
@@ -1690,10 +1691,12 @@ gradmap_tile_validate (TileManager *tm,
   sw = tile_ewidth (srctile);
   sh = tile_eheight (srctile);
 
+  pickable_format = gimp_pickable_get_format (pickable);
+
   pixel_region_init_data (&srcPR,
                           tile_data_pointer (srctile, 0, 0),
-                          gimp_pickable_get_bytes (pickable),
-                          gimp_pickable_get_bytes (pickable) *
+                          babl_format_get_bytes_per_pixel (pickable_format),
+                          babl_format_get_bytes_per_pixel (pickable_format) *
                           MIN (dw, sw),
                           0, 0, MIN (dw, sw), MIN (dh, sh));
 

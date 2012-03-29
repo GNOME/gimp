@@ -769,6 +769,7 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
   gboolean      release_tile;
   gint          h;
   gint          pixelwidth;
+  const Babl   *pickable_format;
   gint          pickable_width;
   gint          pickable_height;
   const guchar *s;
@@ -779,8 +780,10 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
   g_return_val_if_fail (core->saved_proj_tiles != NULL, NULL);
 
+  pickable_format = gimp_pickable_get_format (pickable);
+
   core->orig_proj_buf = temp_buf_resize (core->orig_proj_buf,
-                                         gimp_pickable_get_bytes (pickable),
+                                         babl_format_get_bytes_per_pixel (pickable_format),
                                          x, y, width, height);
 
   src_tiles = gimp_pickable_get_tiles (pickable);

@@ -121,21 +121,6 @@ gimp_pickable_get_format_with_alpha (GimpPickable *pickable)
   return NULL;
 }
 
-gint
-gimp_pickable_get_bytes (GimpPickable *pickable)
-{
-  GimpPickableInterface *pickable_iface;
-
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), 0);
-
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
-
-  if (pickable_iface->get_bytes)
-    return pickable_iface->get_bytes (pickable);
-
-  return 0;
-}
-
 GeglBuffer *
 gimp_pickable_get_buffer (GimpPickable *pickable)
 {
