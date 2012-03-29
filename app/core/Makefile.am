@@ -39,8 +39,6 @@ libappcore_a_sources = \
 	gimp-tags.h				\
 	gimp-templates.c			\
 	gimp-templates.h			\
-	gimp-transform-region.c			\
-	gimp-transform-region.h			\
 	gimp-transform-resize.c			\
 	gimp-transform-resize.h			\
 	gimp-transform-utils.c			\

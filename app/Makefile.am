@@ -148,8 +148,7 @@ AM_LDFLAGS = \
 	$(workaround_that_core_depends_on_pdb)		\
 	$(workaround_that_plug_in_depends_on_pdb)	\
 	$(workaround_that_file_depends_on_plug_in)	\
-	-u $(SYMPREFIX)gimp_param_spec_duplicate	\
-	-u $(SYMPREFIX)gimp_transform_region
+	-u $(SYMPREFIX)gimp_param_spec_duplicate
 
 gimpconsoleldadd = \
 	xcf/libappxcf.a			\
