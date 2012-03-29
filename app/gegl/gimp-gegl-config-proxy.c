@@ -144,10 +144,14 @@ gimp_gegl_config_class_init (GObjectClass *klass,
 }
 
 GimpObject *
-gimp_gegl_get_config_proxy (const gchar *operation)
+gimp_gegl_get_config_proxy (const gchar *operation,
+                            GType        parent_type)
 {
   static GHashTable *config_types = NULL;
   GType              config_type;
+
+  g_return_val_if_fail (operation != NULL, NULL);
+  g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), NULL);
 
   if (! config_types)
     config_types = g_hash_table_new_full (g_str_hash,
@@ -159,42 +163,49 @@ gimp_gegl_get_config_proxy (const gchar *operation)
 
   if (! config_type)
     {
-      GTypeInfo info =
+      GTypeQuery query;
+
+      g_type_query (parent_type, &query);
+
       {
-        sizeof (GimpObjectClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_gegl_config_class_init,
-        NULL,           /* class_finalize */
-        operation,
-        sizeof (GimpObject),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) NULL,
-      };
+        GTypeInfo info =
+          {
+            query.class_size,
+            (GBaseInitFunc) NULL,
+            (GBaseFinalizeFunc) NULL,
+            (GClassInitFunc) gimp_gegl_config_class_init,
+            NULL,           /* class_finalize */
+            operation,
+            query.instance_size,
+            0,              /* n_preallocs */
+            (GInstanceInitFunc) NULL,
+          };
 
-      const GInterfaceInfo config_info =
-      {
-        NULL, /* interface_init     */
-        NULL, /* interface_finalize */
-        NULL  /* interface_data     */
-      };
+        const GInterfaceInfo config_info =
+          {
+            NULL, /* interface_init     */
+            NULL, /* interface_finalize */
+            NULL  /* interface_data     */
+          };
 
-      gchar *type_name = g_strdup_printf ("GimpGegl-%s-config",
-                                          operation);
+        gchar *type_name = g_strdup_printf ("GimpGegl-%s-config",
+                                            operation);
 
-      g_strcanon (type_name, G_CSET_DIGITS "-" G_CSET_a_2_z G_CSET_A_2_Z, '-');
+        g_strcanon (type_name,
+                    G_CSET_DIGITS "-" G_CSET_a_2_z G_CSET_A_2_Z, '-');
 
-      config_type = g_type_register_static (GIMP_TYPE_OBJECT, type_name,
-                                            &info, 0);
+        config_type = g_type_register_static (GIMP_TYPE_OBJECT, type_name,
+                                              &info, 0);
 
-      g_free (type_name);
+        g_free (type_name);
 
-      g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
-                                   &config_info);
+        g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
+                                     &config_info);
 
-      g_hash_table_insert (config_types,
-                           g_strdup (operation),
-                           (gpointer) config_type);
+        g_hash_table_insert (config_types,
+                             g_strdup (operation),
+                             (gpointer) config_type);
+      }
     }
 
   return g_object_new (config_type, NULL);
