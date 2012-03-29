@@ -140,6 +140,7 @@ static void            gimp_group_layer_convert_type (GimpDrawable      *drawabl
                                                       GimpImageBaseType  new_base_type,
                                                       gboolean           push_undo);
 
+static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
 static GList         * gimp_group_layer_get_layers   (GimpProjectable *projectable);
 static gint            gimp_group_layer_get_opacity_at
@@ -237,7 +238,7 @@ static void
 gimp_projectable_iface_init (GimpProjectableInterface *iface)
 {
   iface->get_image          = (GimpImage * (*) (GimpProjectable *)) gimp_item_get_image;
-  iface->get_image_type     = (GimpImageType (*) (GimpProjectable *)) gimp_drawable_type;
+  iface->get_format         = gimp_group_layer_get_format;
   iface->get_offset         = (void (*) (GimpProjectable*, gint*, gint*)) gimp_item_get_offset;
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_viewable_get_size;
   iface->get_graph          = gimp_group_layer_get_graph;
@@ -869,6 +870,26 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                  gimp_item_get_offset_y (GIMP_ITEM (drawable)));
 
   g_object_unref (buffer);
+}
+
+static const Babl *
+gimp_group_layer_get_format (GimpProjectable *projectable)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (projectable);
+
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
+    {
+    case GIMP_RGB:
+    case GIMP_INDEXED:
+      return babl_format ("R'G'B'A u8");
+
+    case GIMP_GRAY:
+      return babl_format ("Y'A u8");
+    }
+
+  g_assert_not_reached ();
+
+  return NULL;
 }
 
 static GeglNode *

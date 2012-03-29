@@ -164,17 +164,17 @@ gimp_projectable_get_image (GimpProjectable *projectable)
   return NULL;
 }
 
-GimpImageType
-gimp_projectable_get_image_type (GimpProjectable *projectable)
+const Babl *
+gimp_projectable_get_format (GimpProjectable *projectable)
 {
   GimpProjectableInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), 0);
+  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
 
   iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
 
-  if (iface->get_image_type)
-    return iface->get_image_type (projectable);
+  if (iface->get_format)
+    return iface->get_format (projectable);
 
   return 0;
 }

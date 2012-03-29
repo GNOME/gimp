@@ -175,9 +175,9 @@ static const guint8 * gimp_image_get_icc_profile (GimpColorManaged  *managed,
 
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
                                                   gboolean           invalidate_preview);
-static GeglNode     * gimp_image_get_graph       (GimpProjectable   *projectable);
-static GimpImage    * gimp_image_get_image       (GimpProjectable   *projectable);
-static GimpImageType  gimp_image_get_image_type  (GimpProjectable   *projectable);
+static GeglNode   * gimp_image_get_graph         (GimpProjectable   *projectable);
+static GimpImage  * gimp_image_get_image         (GimpProjectable   *projectable);
+static const Babl * gimp_image_get_proj_format   (GimpProjectable   *projectable);
 
 static void     gimp_image_mask_update           (GimpDrawable      *drawable,
                                                   gint               x,
@@ -609,7 +609,7 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
 {
   iface->flush              = gimp_image_projectable_flush;
   iface->get_image          = gimp_image_get_image;
-  iface->get_image_type     = gimp_image_get_image_type;
+  iface->get_format         = gimp_image_get_proj_format;
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_image_get_size;
   iface->get_graph          = gimp_image_get_graph;
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
@@ -1265,15 +1265,24 @@ gimp_image_get_image (GimpProjectable *projectable)
   return GIMP_IMAGE (projectable);
 }
 
-static GimpImageType
-gimp_image_get_image_type (GimpProjectable *projectable)
+static const Babl *
+gimp_image_get_proj_format (GimpProjectable *projectable)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (projectable);
-  GimpImageType     type;
 
-  type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (private->base_type);
+  switch (private->base_type)
+    {
+    case GIMP_RGB:
+    case GIMP_INDEXED:
+      return babl_format ("R'G'B'A u8");
 
-  return GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+    case GIMP_GRAY:
+      return babl_format ("Y'A u8");
+    }
+
+  g_assert_not_reached ();
+
+  return NULL;
 }
 
 static GeglNode *

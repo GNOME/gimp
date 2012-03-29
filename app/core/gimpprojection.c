@@ -295,23 +295,8 @@ static const Babl *
 gimp_projection_get_format (GimpPickable *pickable)
 {
   GimpProjection *proj = GIMP_PROJECTION (pickable);
-  GimpImageType   type;
 
-  type = gimp_projectable_get_image_type (proj->projectable);
-
-  switch (GIMP_IMAGE_TYPE_BASE_TYPE (type))
-    {
-    case GIMP_RGB:
-    case GIMP_INDEXED:
-      return babl_format ("R'G'B'A u8");
-
-    case GIMP_GRAY:
-      return babl_format ("Y'A u8");
-    }
-
-  g_assert_not_reached ();
-
-  return NULL;
+  return gimp_projectable_get_format (proj->projectable);
 }
 
 static GeglBuffer *
