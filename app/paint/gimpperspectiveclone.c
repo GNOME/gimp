@@ -29,16 +29,15 @@
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimp-apply-operation.h"
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
-#include "core/gimp-transform-region.h"
 #include "core/gimp-utils.h"
 
 #include "gimpperspectiveclone.h"
@@ -295,18 +294,19 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   gint                  x1d, y1d, x2d, y2d;
   gdouble               x1s, y1s, x2s, y2s, x3s, y3s, x4s, y4s;
   gint                  xmin, ymin, xmax, ymax;
-  TileManager          *src_tiles;
-  TileManager          *orig_tiles;
-  PixelRegion           origPR;
-  PixelRegion           destPR;
+  GeglBuffer           *src_buffer;
+  GeglBuffer           *orig_buffer;
+  GeglBuffer           *dest_buffer;
   GimpMatrix3           matrix;
-  gint                  bytes;
+  GeglNode             *affine;
+  gchar                *matrix_string;
+  GimpMatrix3           gegl_matrix;
 
   src_image = gimp_pickable_get_image (src_pickable);
   image     = gimp_item_get_image (GIMP_ITEM (drawable));
 
   src_format_alpha = gimp_pickable_get_format_with_alpha (src_pickable);
-  src_tiles        = gimp_pickable_get_tiles (src_pickable);
+  src_buffer       = gimp_pickable_get_buffer (src_pickable);
 
   /* Destination coordinates that will be painted */
   x1d = paint_area->x;
@@ -328,14 +328,20 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   xmax = ceil  (MAX4 (x1s, x2s, x3s, x4s));
   ymax = ceil  (MAX4 (y1s, y2s, y3s, y4s));
 
-  xmin = CLAMP (xmin - 1, 0, tile_manager_width  (src_tiles));
-  ymin = CLAMP (ymin - 1, 0, tile_manager_height (src_tiles));
-  xmax = CLAMP (xmax + 1, 0, tile_manager_width  (src_tiles));
-  ymax = CLAMP (ymax + 1, 0, tile_manager_height (src_tiles));
+  xmin = CLAMP (xmin - 1, 0, gegl_buffer_get_width  (src_buffer));
+  ymin = CLAMP (ymin - 1, 0, gegl_buffer_get_height (src_buffer));
+  xmax = CLAMP (xmax + 1, 0, gegl_buffer_get_width  (src_buffer));
+  ymax = CLAMP (ymax + 1, 0, gegl_buffer_get_height (src_buffer));
 
   /* if the source area is completely out of the image */
   if (!(xmax - xmin) || !(ymax - ymin))
     return FALSE;
+
+  /*  copy the original image to a buffer, adding alpha if needed  */
+
+  orig_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                 xmax - xmin, ymax - ymin),
+                                 src_format_alpha);
 
   /*  If the source image is different from the destination,
    *  then we should copy straight from the source image
@@ -346,12 +352,16 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   if ((  options->sample_merged && (src_image                 != image)) ||
       (! options->sample_merged && (source_core->src_drawable != drawable)))
     {
-      pixel_region_init (&origPR, src_tiles,
-                         xmin, ymin, xmax - xmin, ymax - ymin, FALSE);
+      gegl_buffer_copy (src_buffer,
+                        GIMP_GEGL_RECT (xmin, ymin,
+                                        xmax - xmin, ymax - ymin),
+                        orig_buffer,
+                        GIMP_GEGL_RECT (0, 0, 0, 0));
     }
   else
     {
-      TempBuf *orig;
+      TempBuf    *orig;
+      GeglBuffer *temp_buffer;
 
       /*  get the original image  */
       if (options->sample_merged)
@@ -367,46 +377,61 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                                                xmax - xmin,
                                                ymax - ymin);
 
-      pixel_region_init_temp_buf (&origPR, orig,
-                                  0, 0, xmax - xmin, ymax - ymin);
+      temp_buffer =
+        gegl_buffer_linear_new_from_data (temp_buf_get_data (orig),
+                                          gimp_bpp_to_babl_format (orig->bytes),
+                                          GIMP_GEGL_RECT (0, 0,
+                                                          orig->width,
+                                                          orig->height),
+                                          orig->width * orig->bytes,
+                                          NULL, NULL);
+
+      gegl_buffer_copy (temp_buffer,
+                        GIMP_GEGL_RECT (0, 0, xmax - xmin, ymax - ymin),
+                        orig_buffer,
+                        NULL);
+
+      g_object_unref (temp_buffer);
     }
 
-  /*  copy the original image to a tile manager, adding alpha if needed  */
-
-  bytes = babl_format_get_bytes_per_pixel (src_format_alpha);
-
-  orig_tiles = tile_manager_new (xmax - xmin, ymax - ymin, bytes);
-
-  pixel_region_init (&destPR, orig_tiles,
-                     0, 0, xmax - xmin, ymax - ymin,
-                     TRUE);
-
-  if (bytes > origPR.bytes)
-    add_alpha_region (&origPR, &destPR);
-  else
-    copy_region (&origPR, &destPR);
-
   clone->src_area = temp_buf_resize (clone->src_area,
-                                     tile_manager_bpp (orig_tiles),
+                                     babl_format_get_bytes_per_pixel (src_format_alpha),
                                      0, 0,
                                      x2d - x1d, y2d - y1d);
 
-  pixel_region_init_temp_buf (&destPR, clone->src_area,
-                              0, 0,
-                              x2d - x1d, y2d - y1d);
+  dest_buffer =
+    gegl_buffer_linear_new_from_data (temp_buf_get_data (clone->src_area),
+                                      gimp_bpp_to_babl_format (clone->src_area->bytes),
+                                      GIMP_GEGL_RECT (0, 0,
+                                                      clone->src_area->width,
+                                                      clone->src_area->height),
+                                      clone->src_area->width * clone->src_area->bytes,
+                                      NULL, NULL);
 
   gimp_perspective_clone_get_matrix (clone, &matrix);
 
-  gimp_transform_region (src_pickable,
-                         GIMP_CONTEXT (paint_options),
-                         orig_tiles,
-                         xmin, ymin,
-                         &destPR,
-                         x1d, y1d, x2d, y2d,
-                         &matrix,
-                         GIMP_INTERPOLATION_LINEAR, 0, NULL);
+  gimp_matrix3_identity (&gegl_matrix);
+  gimp_matrix3_translate (&gegl_matrix, xmin, ymin);
+  gimp_matrix3_mult (&matrix, &gegl_matrix);
+  gimp_matrix3_translate (&gegl_matrix, -x1d, -y1d);
 
-  tile_manager_unref (orig_tiles);
+  matrix_string = gegl_matrix3_to_string ((GeglMatrix3 *) &gegl_matrix);
+  affine = gegl_node_new_child (NULL,
+                                "operation",  "gegl:transform",
+                                "transform",  matrix_string,
+                                "filter",     gimp_interpolation_to_gegl_filter (GIMP_INTERPOLATION_LINEAR),
+                                "hard-edges", TRUE,
+                                NULL);
+  g_free (matrix_string);
+
+  gimp_apply_operation (orig_buffer, NULL, NULL,
+                        affine,
+                        dest_buffer, NULL);
+
+  g_object_unref (affine);
+
+  g_object_unref (orig_buffer);
+  g_object_unref (dest_buffer);
 
   pixel_region_init_temp_buf (srcPR, clone->src_area,
                               0, 0, x2d - x1d, y2d - y1d);
