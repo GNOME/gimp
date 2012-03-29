@@ -96,7 +96,7 @@ static void      gimp_image_map_tool_options_notify (GimpTool         *tool,
 static gboolean  gimp_image_map_tool_pick_color     (GimpColorTool    *color_tool,
                                                      gint              x,
                                                      gint              y,
-                                                     GimpImageType    *sample_type,
+                                                     const Babl      **sample_format,
                                                      GimpRGB          *color,
                                                      gint             *color_index);
 static void      gimp_image_map_tool_map            (GimpImageMapTool *im_tool);
@@ -508,19 +508,19 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
 }
 
 static gboolean
-gimp_image_map_tool_pick_color (GimpColorTool *color_tool,
-                                gint           x,
-                                gint           y,
-                                GimpImageType *sample_type,
-                                GimpRGB       *color,
-                                gint          *color_index)
+gimp_image_map_tool_pick_color (GimpColorTool  *color_tool,
+                                gint            x,
+                                gint            y,
+                                const Babl    **sample_format,
+                                GimpRGB        *color,
+                                gint           *color_index)
 {
   GimpImageMapTool *tool = GIMP_IMAGE_MAP_TOOL (color_tool);
   gint              off_x, off_y;
 
   gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
-  *sample_type = gimp_drawable_type (tool->drawable);
+  *sample_format = gimp_drawable_get_format (tool->drawable);
 
   return gimp_pickable_pick_color (GIMP_PICKABLE (tool->image_map),
                                    x - off_x,
