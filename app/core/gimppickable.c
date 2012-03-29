@@ -91,21 +91,6 @@ gimp_pickable_get_image (GimpPickable *pickable)
   return NULL;
 }
 
-GimpImageType
-gimp_pickable_get_image_type (GimpPickable *pickable)
-{
-  GimpPickableInterface *pickable_iface;
-
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), -1);
-
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
-
-  if (pickable_iface->get_image_type)
-    return pickable_iface->get_image_type (pickable);
-
-  return -1;
-}
-
 const Babl *
 gimp_pickable_get_format (GimpPickable *pickable)
 {

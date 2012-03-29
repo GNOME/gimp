@@ -91,7 +91,6 @@ static GimpImage     * gimp_image_map_get_image       (GimpPickable        *pick
 static const Babl    * gimp_image_map_get_format      (GimpPickable        *pickable);
 static const Babl    * gimp_image_map_get_format_with_alpha
                                                       (GimpPickable        *pickable);
-static GimpImageType   gimp_image_map_get_image_type  (GimpPickable        *pickable);
 static gint            gimp_image_map_get_bytes       (GimpPickable        *pickable);
 static GeglBuffer    * gimp_image_map_get_buffer      (GimpPickable        *pickable);
 static TileManager   * gimp_image_map_get_tiles       (GimpPickable        *pickable);
@@ -143,7 +142,6 @@ gimp_image_map_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image             = gimp_image_map_get_image;
   iface->get_format            = gimp_image_map_get_format;
   iface->get_format_with_alpha = gimp_image_map_get_format_with_alpha;
-  iface->get_image_type        = gimp_image_map_get_image_type;
   iface->get_bytes             = gimp_image_map_get_bytes;
   iface->get_buffer            = gimp_image_map_get_buffer;
   iface->get_tiles             = gimp_image_map_get_tiles;
@@ -256,14 +254,6 @@ gimp_image_map_get_format_with_alpha (GimpPickable *pickable)
   GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
 
   return gimp_pickable_get_format_with_alpha (GIMP_PICKABLE (image_map->drawable));
-}
-
-static GimpImageType
-gimp_image_map_get_image_type (GimpPickable *pickable)
-{
-  GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
-
-  return gimp_pickable_get_image_type (GIMP_PICKABLE (image_map->drawable));
 }
 
 static gint

@@ -62,7 +62,6 @@ static gint64      gimp_projection_get_memsize           (GimpObject      *objec
 static void        gimp_projection_pickable_flush        (GimpPickable    *pickable);
 static GimpImage * gimp_projection_get_image             (GimpPickable    *pickable);
 static const Babl * gimp_projection_get_format           (GimpPickable    *pickable);
-static GimpImageType gimp_projection_get_image_type      (GimpPickable    *pickable);
 static gint        gimp_projection_get_bytes             (GimpPickable    *pickable);
 static GeglBuffer  * gimp_projection_get_buffer          (GimpPickable    *pickable);
 static TileManager * gimp_projection_get_tiles           (GimpPickable    *pickable);
@@ -166,7 +165,6 @@ gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image             = gimp_projection_get_image;
   iface->get_format            = gimp_projection_get_format;
   iface->get_format_with_alpha = gimp_projection_get_format; /* sic */
-  iface->get_image_type        = gimp_projection_get_image_type;
   iface->get_bytes             = gimp_projection_get_bytes;
   iface->get_buffer            = gimp_projection_get_buffer;
   iface->get_tiles             = gimp_projection_get_tiles;
@@ -318,33 +316,12 @@ gimp_projection_get_format (GimpPickable *pickable)
   return NULL;
 }
 
-static GimpImageType
-gimp_projection_get_image_type (GimpPickable *pickable)
-{
-  GimpProjection *proj = GIMP_PROJECTION (pickable);
-  GimpImageType   type;
-
-  type = gimp_projectable_get_image_type (proj->projectable);
-
-  switch (GIMP_IMAGE_TYPE_BASE_TYPE (type))
-    {
-    case GIMP_RGB:
-    case GIMP_INDEXED:
-      return GIMP_RGBA_IMAGE;
-
-    case GIMP_GRAY:
-      return GIMP_GRAYA_IMAGE;
-    }
-
-  g_assert_not_reached ();
-
-  return 0;
-}
-
 static gint
 gimp_projection_get_bytes (GimpPickable *pickable)
 {
-  return GIMP_IMAGE_TYPE_BYTES (gimp_projection_get_image_type (pickable));
+  const Babl *format = gimp_projection_get_format (pickable);
+
+  return babl_format_get_bytes_per_pixel (format);
 }
 
 static GeglBuffer *
