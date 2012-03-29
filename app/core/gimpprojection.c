@@ -477,14 +477,14 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
 
   if (! proj->pyramid)
     {
-      GimpImageType type;
-      gint          width;
-      gint          height;
+      gint bytes;
+      gint width;
+      gint height;
 
-      type = gimp_projection_get_image_type (GIMP_PICKABLE (proj));
+      bytes = gimp_projection_get_bytes (GIMP_PICKABLE (proj));
       gimp_projectable_get_size (proj->projectable, &width, &height);
 
-      proj->pyramid = tile_pyramid_new (type, width, height);
+      proj->pyramid = tile_pyramid_new (bytes, width, height);
 
       tile_pyramid_set_validate_proc (proj->pyramid,
                                       (TileValidateProc) gimp_projection_validate_tile,

@@ -31,7 +31,6 @@
 
 struct _TilePyramid
 {
-  GimpImageType  type;
   guint          width;
   guint          height;
   gint           bytes;
@@ -60,7 +59,7 @@ static void  tile_pyramid_write_upper_quarter (Tile        *dest,
 
 /**
  * tile_pyramid_new:
- * @type:   type of pixel data stored in the pyramid
+ * @bytes:  foo
  * @width:  bottom level width
  * @height: bottom level height
  *
@@ -78,9 +77,9 @@ static void  tile_pyramid_write_upper_quarter (Tile        *dest,
  * Return value: a newly allocate #TilePyramid
  **/
 TilePyramid *
-tile_pyramid_new (GimpImageType  type,
-                  gint           width,
-                  gint           height)
+tile_pyramid_new (gint bytes,
+                  gint width,
+                  gint height)
 {
   TilePyramid *pyramid;
 
@@ -89,35 +88,11 @@ tile_pyramid_new (GimpImageType  type,
 
   pyramid = g_slice_new0 (TilePyramid);
 
-  pyramid->type   = type;
+  pyramid->bytes  = bytes;
   pyramid->width  = width;
   pyramid->height = height;
 
-  switch (type)
-    {
-    case GIMP_GRAY_IMAGE:
-      pyramid->bytes = 1;
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      pyramid->bytes = 2;
-      break;
-
-    case GIMP_RGB_IMAGE:
-      pyramid->bytes = 3;
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      pyramid->bytes = 4;
-      break;
-
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      g_assert_not_reached ();
-      break;
-    }
-
-  pyramid->tiles[0] = tile_manager_new (width, height, pyramid->bytes);
+  pyramid->tiles[0] = tile_manager_new (width, height, bytes);
 
   return pyramid;
 }
