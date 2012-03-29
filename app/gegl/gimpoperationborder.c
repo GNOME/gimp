@@ -82,9 +82,11 @@ gimp_operation_border_class_init (GimpOperationBorderClass *klass)
   object_class->set_property   = gimp_operation_border_set_property;
   object_class->get_property   = gimp_operation_border_get_property;
 
-  operation_class->name        = "gimp:border";
-  operation_class->categories  = "gimp";
-  operation_class->description = "GIMP Border operation";
+  gegl_operation_class_set_keys (operation_class,
+      "name"        , "gimp:border",
+      "categories"  , "gimp",
+      "description" , "GIMP Border operation",
+      NULL);
 
   operation_class->prepare                 = gimp_operation_border_prepare;
   operation_class->get_required_for_output = gimp_operation_border_get_required_for_output;

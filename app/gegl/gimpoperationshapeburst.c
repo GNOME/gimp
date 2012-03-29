@@ -80,9 +80,11 @@ gimp_operation_shapeburst_class_init (GimpOperationShapeburstClass *klass)
   object_class->set_property   = gimp_operation_shapeburst_set_property;
   object_class->get_property   = gimp_operation_shapeburst_get_property;
 
-  operation_class->name        = "gimp:shapeburst";
-  operation_class->categories  = "gimp";
-  operation_class->description = "GIMP Shapeburst operation";
+  gegl_operation_class_set_keys (operation_class,
+    "name"        , "gimp:shapeburst",
+    "categories"  , "gimp",
+    "description" , "GIMP Shapeburst operation",
+    NULL);
 
   operation_class->prepare                 = gimp_operation_shapeburst_prepare;
   operation_class->get_required_for_output = gimp_operation_shapeburst_get_required_for_output;

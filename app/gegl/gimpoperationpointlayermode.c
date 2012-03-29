@@ -114,10 +114,10 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
   object_class->get_property   = gimp_operation_point_layer_mode_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:point-layer-mode",
-           "description", "GIMP point layer mode operation",
-           "categories" , "compositors",
-           NULL);
+                                 "name",        "gimp:point-layer-mode",
+                                 "description", "GIMP point layer mode operation",
+                                 "categories",  "compositors",
+                                 NULL);
 
   operation_class->prepare     = gimp_operation_point_layer_mode_prepare;
 
@@ -312,6 +312,7 @@ gimp_operation_point_layer_mode_process (GeglOperation       *operation,
 
   while (sample--)
     {
+      /* XXX: having such a switch in an innerloop is a horrible idea */
       switch (blend_mode)
         {
         case GIMP_ERASE_MODE:

@@ -57,8 +57,12 @@ gimp_operation_normal_mode_class_init (GimpOperationNormalModeClass *klass)
   operation_class = GEGL_OPERATION_CLASS (klass);
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  operation_class->name        = "gimp:normal-mode";
-  operation_class->description = "GIMP normal mode operation";
+  gegl_operation_class_set_keys (operation_class,
+        "name"        , "gimp:normal-mode",
+        "description" , "GIMP normal mode operation",
+        NULL);
+
+
   operation_class->process     = gimp_operation_normal_parent_process;
 
   point_class->process         = gimp_operation_normal_mode_process;

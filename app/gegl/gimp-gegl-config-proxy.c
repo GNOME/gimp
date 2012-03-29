@@ -120,7 +120,7 @@ gimp_gegl_config_class_init (GObjectClass *klass,
   klass->set_property = gimp_gegl_config_set_property;
   klass->get_property = gimp_gegl_config_get_property;
 
-  pspecs = gegl_list_properties (operation, &n_pspecs);
+  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
 
   for (i = 0; i < n_pspecs; i++)
     {
@@ -218,7 +218,7 @@ gimp_gegl_config_proxy_sync (GimpObject  *proxy,
 
   g_return_if_fail (operation != NULL);
 
-  pspecs = gegl_list_properties (operation, &n_pspecs);
+  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
   g_free (operation);
 
   for (i = 0; i < n_pspecs; i++)

@@ -80,9 +80,11 @@ gimp_operation_grow_class_init (GimpOperationGrowClass *klass)
   object_class->set_property   = gimp_operation_grow_set_property;
   object_class->get_property   = gimp_operation_grow_get_property;
 
-  operation_class->name        = "gimp:grow";
-  operation_class->categories  = "gimp";
-  operation_class->description = "GIMP Grow operation";
+  gegl_operation_class_set_keys (operation_class,
+        "name"        , "gimp:grow",
+        "categories"  , "gimp",
+        "description" , "GIMP Grow operation",
+        NULL);
 
   operation_class->prepare                 = gimp_operation_grow_prepare;
   operation_class->get_required_for_output = gimp_operation_grow_get_required_for_output;

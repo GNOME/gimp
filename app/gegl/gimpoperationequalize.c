@@ -75,9 +75,11 @@ gimp_operation_equalize_class_init (GimpOperationEqualizeClass *klass)
   object_class->set_property   = gimp_operation_equalize_set_property;
   object_class->get_property   = gimp_operation_equalize_get_property;
 
-  operation_class->name        = "gimp:equalize";
-  operation_class->categories  = "color";
-  operation_class->description = "GIMP Equalize operation";
+  gegl_operation_class_set_keys (operation_class,
+          "name"        , "gimp:equalize",
+          "categories"  , "color",
+          "description" , "GIMP Equalize operation",
+          NULL);
 
   point_class->process         = gimp_operation_equalize_process;
 

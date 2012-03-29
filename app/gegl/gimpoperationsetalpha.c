@@ -69,9 +69,12 @@ gimp_operation_set_alpha_class_init (GimpOperationSetAlphaClass *klass)
   object_class->set_property = gimp_operation_set_alpha_set_property;
   object_class->get_property = gimp_operation_set_alpha_get_property;
 
-  operation_class->name        = "gimp:set-alpha";
-  operation_class->categories  = "color";
-  operation_class->description = "Set a buffer's alpha channel to a value";
+  gegl_operation_class_set_keys (operation_class,
+            "name"        , "gimp:set-alpha",
+            "categories"  , "color",
+            "description" , "Set a buffer's alpha channel to a value",
+            NULL);
+
   operation_class->prepare     = gimp_operation_set_alpha_prepare;
 
   point_class->process         = gimp_operation_set_alpha_process;

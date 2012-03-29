@@ -81,9 +81,11 @@ gimp_operation_shrink_class_init (GimpOperationShrinkClass *klass)
   object_class->set_property   = gimp_operation_shrink_set_property;
   object_class->get_property   = gimp_operation_shrink_get_property;
 
-  operation_class->name        = "gimp:shrink";
-  operation_class->categories  = "gimp";
-  operation_class->description = "GIMP Shrink operation";
+  gegl_operation_class_set_keys (operation_class,
+          "name"        , "gimp:shrink",
+          "categories"  , "gimp",
+          "description" , "GIMP Shrink operation",
+          NULL);
 
   operation_class->prepare                 = gimp_operation_shrink_prepare;
   operation_class->get_required_for_output = gimp_operation_shrink_get_required_for_output;

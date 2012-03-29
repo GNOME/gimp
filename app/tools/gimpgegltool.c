@@ -167,6 +167,7 @@ gimp_get_subtype_classes (GType  type,
 {
   GeglOperationClass *klass;
   GType              *ops;
+  const gchar        *categories;
   guint               n_ops;
   gint                i;
 
@@ -176,9 +177,9 @@ gimp_get_subtype_classes (GType  type,
   klass = GEGL_OPERATION_CLASS (g_type_class_ref (type));
   ops = g_type_children (type, &n_ops);
 
-  if (! gimp_gegl_tool_operation_blacklisted (klass->name,
-                                              gegl_operation_class_get_key (klass,
-                                                "categories")))
+  categories = gegl_operation_class_get_key (klass, "categories");
+
+  if (! gimp_gegl_tool_operation_blacklisted (klass->name, categories))
     classes = g_list_prepend (classes, klass);
 
   for (i = 0; i < n_ops; i++)
