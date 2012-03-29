@@ -594,12 +594,7 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
 void
 gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 {
-  Gimp     *gimp;
-  gboolean  use_gegl;
-
   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool));
-
-  gimp = GIMP_TOOL (tool)->tool_info->gimp;
 
   if (tool->image_map)
     {
@@ -607,15 +602,12 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
       g_object_unref (tool->image_map);
     }
 
-  g_assert (tool->operation || tool->apply_func);
-
-  use_gegl = gimp_use_gegl (gimp) || ! tool->apply_func;
+  g_assert (tool->operation);
 
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         GIMP_TOOL (tool)->tool_info->blurb,
-                                        use_gegl ? tool->operation : NULL,
-                                        tool->apply_func,
-                                        tool->apply_data);
+                                        tool->operation,
+                                        NULL, NULL);
 
   g_signal_connect (tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),

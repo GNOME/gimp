@@ -43,8 +43,6 @@ struct _GimpImageMapTool
   GeglNode              *operation;
   GObject               *config;
   GObject               *default_config;
-  GimpImageMapApplyFunc  apply_func;
-  gpointer               apply_data;
 
   GimpImageMap          *image_map;
 
