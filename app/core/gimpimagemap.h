@@ -47,19 +47,17 @@ struct _GimpImageMapClass
  *  The image map is no longer valid after a call to commit or abort.
  */
 
-GType          gimp_image_map_get_type     (void) G_GNUC_CONST;
+GType          gimp_image_map_get_type (void) G_GNUC_CONST;
 
-GimpImageMap * gimp_image_map_new          (GimpDrawable          *drawable,
-                                            const gchar           *undo_desc,
-                                            GeglNode              *operation,
-                                            GimpImageMapApplyFunc  apply_func,
-                                            gpointer               apply_data);
+GimpImageMap * gimp_image_map_new      (GimpDrawable        *drawable,
+                                        const gchar         *undo_desc,
+                                        GeglNode            *operation);
 
-void           gimp_image_map_apply        (GimpImageMap          *image_map,
-                                            const GeglRectangle   *visible);
-void           gimp_image_map_commit       (GimpImageMap          *image_map);
-void           gimp_image_map_clear        (GimpImageMap          *image_map);
-void           gimp_image_map_abort        (GimpImageMap          *image_map);
+void           gimp_image_map_apply    (GimpImageMap        *image_map,
+                                        const GeglRectangle *visible);
+void           gimp_image_map_commit   (GimpImageMap        *image_map);
+void           gimp_image_map_clear    (GimpImageMap        *image_map);
+void           gimp_image_map_abort    (GimpImageMap        *image_map);
 
 
 #endif /* __GIMP_IMAGE_MAP_H__ */

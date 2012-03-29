@@ -216,10 +216,6 @@ typedef gboolean (* GimpObjectFilterFunc)  (const GimpObject *object,
 typedef gint64   (* GimpMemsizeFunc)       (gpointer          instance,
                                             gint64           *gui_size);
 
-typedef void     (* GimpImageMapApplyFunc) (gpointer          apply_data,
-                                            PixelRegion      *srcPR,
-                                            PixelRegion      *destPR);
-
 
 /*  structs  */
 

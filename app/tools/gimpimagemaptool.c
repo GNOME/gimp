@@ -606,8 +606,7 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         GIMP_TOOL (tool)->tool_info->blurb,
-                                        tool->operation,
-                                        NULL, NULL);
+                                        tool->operation);
 
   g_signal_connect (tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
