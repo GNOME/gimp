@@ -194,7 +194,6 @@ gimp_text_layer_from_layer (GimpLayer *layer,
 
   drawable = GIMP_DRAWABLE (text_layer);
 
-  drawable->private->format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
   drawable->private->buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   GIMP_DRAWABLE (layer)->private->buffer = NULL;
 

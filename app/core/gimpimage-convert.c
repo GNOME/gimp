@@ -1004,6 +1004,12 @@ gimp_image_convert (GimpImage               *image,
             else
               new_format = gimp_image_get_format (image, GIMP_INDEXED_IMAGE);
 
+            g_printerr ("old: %s %d   new: %s %d\n",
+                        babl_get_name (gimp_drawable_get_format (GIMP_DRAWABLE (layer))),
+                        babl_format_has_alpha (gimp_drawable_get_format (GIMP_DRAWABLE (layer))),
+                        babl_get_name (new_format),
+                        babl_format_has_alpha (new_format));
+
             new_buffer =
               gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
                                                     gimp_item_get_width  (GIMP_ITEM (layer)),

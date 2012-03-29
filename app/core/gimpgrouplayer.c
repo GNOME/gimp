@@ -29,14 +29,11 @@
 
 #include "core-types.h"
 
-#include "base/tile-manager.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
-#include "gimpdrawable-private.h" /* eek */
 #include "gimpdrawablestack.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
@@ -57,6 +54,7 @@ struct _GimpGroupLayerPrivate
   gboolean        expanded;
 
   /*  hackish temp states to make the projection/tiles stuff work  */
+  const Babl     *convert_format;
   gboolean        reallocate_projection;
   gint            reallocate_width;
   gint            reallocate_height;
@@ -825,59 +823,11 @@ gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
                                                                          height);
 }
 
-static void
-gimp_group_layer_convert_type (GimpDrawable      *drawable,
-                               GimpImage         *dest_image,
-                               GimpImageBaseType  new_base_type,
-                               gboolean           push_undo)
-{
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
-  TileManager           *tiles;
-  GeglBuffer            *buffer;
-  GimpImageType          new_type;
-
-  if (push_undo)
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (group));
-
-      gimp_image_undo_push_group_layer_convert (image, NULL, group);
-    }
-
-  new_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_base_type);
-
-  if (gimp_drawable_has_alpha (drawable))
-    new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
-
-  /*  FIXME: find a better way to do this: need to set the drawable's
-   *  format to the new values so the projection will create its tiles
-   *  with the right depth
-   */
-  drawable->private->format = gimp_image_get_format (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                                     new_type);
-
-  gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
-
-  tiles = gimp_projection_get_tiles_at_level (private->projection,
-                                              0, NULL);
-
-  buffer = gimp_tile_manager_create_buffer (tiles, gimp_drawable_get_format (drawable));
-
-  gimp_drawable_set_buffer_full (drawable,
-                                 FALSE, NULL,
-                                 buffer,
-                                 gimp_item_get_offset_x (GIMP_ITEM (drawable)),
-                                 gimp_item_get_offset_y (GIMP_ITEM (drawable)));
-
-  g_object_unref (buffer);
-}
-
 static const Babl *
-gimp_group_layer_get_format (GimpProjectable *projectable)
+get_projection_format (GimpProjectable   *projectable,
+                       GimpImageBaseType  base_type)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (projectable);
-
-  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
+  switch (base_type)
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
@@ -890,6 +840,57 @@ gimp_group_layer_get_format (GimpProjectable *projectable)
   g_assert_not_reached ();
 
   return NULL;
+}
+
+static void
+gimp_group_layer_convert_type (GimpDrawable      *drawable,
+                               GimpImage         *dest_image,
+                               GimpImageBaseType  new_base_type,
+                               gboolean           push_undo)
+{
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
+  GeglBuffer            *buffer;
+
+  if (push_undo)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (group));
+
+      gimp_image_undo_push_group_layer_convert (image, NULL, group);
+    }
+
+  /*  Need to temporarily set the projectable's format to the new
+   *  values so the projection will create its tiles with the right
+   *  depth
+   */
+  private->convert_format = get_projection_format (GIMP_PROJECTABLE (drawable),
+                                                   new_base_type);
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
+
+  buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
+
+  gimp_drawable_set_buffer_full (drawable,
+                                 FALSE, NULL,
+                                 buffer,
+                                 gimp_item_get_offset_x (GIMP_ITEM (drawable)),
+                                 gimp_item_get_offset_y (GIMP_ITEM (drawable)));
+
+  /*  reset, the actual format is right now  */
+  private->convert_format = NULL;
+}
+
+static const Babl *
+gimp_group_layer_get_format (GimpProjectable *projectable)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
+  GimpImageBaseType      base_type;
+
+  if (private->convert_format)
+    return private->convert_format;
+
+  base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (projectable)));
+
+  return get_projection_format (projectable, base_type);
 }
 
 static GeglNode *
@@ -1126,8 +1127,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           width  != old_width            ||
           height != old_height)
         {
-          TileManager *tiles;
-          GeglBuffer  *buffer;
+          GeglBuffer *buffer;
 
           private->reallocate_projection = FALSE;
 
@@ -1139,20 +1139,16 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
 
           gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
 
-          tiles = gimp_projection_get_tiles_at_level (private->projection,
-                                                      0, NULL);
-
-          private->reallocate_width  = 0;
-          private->reallocate_height = 0;
-
-          buffer = gimp_tile_manager_create_buffer (tiles, gimp_drawable_get_format (GIMP_DRAWABLE (group)));
+          buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
 
           gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
                                          FALSE, NULL,
                                          buffer,
                                          x, y);
 
-          g_object_unref (buffer);
+          /*  reset, the actual size is correct now  */
+          private->reallocate_width  = 0;
+          private->reallocate_height = 0;
         }
       else
         {

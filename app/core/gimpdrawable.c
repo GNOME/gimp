@@ -409,9 +409,6 @@ gimp_drawable_duplicate (GimpItem *item,
     {
       GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
-      const Babl    *format       = gimp_drawable_get_format (drawable);
-
-      new_drawable->private->format = format;
 
       if (new_drawable->private->buffer)
         g_object_unref (new_drawable->private->buffer);
@@ -797,7 +794,6 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
   if (drawable->private->buffer)
     g_object_unref (drawable->private->buffer);
 
-  drawable->private->format = gegl_buffer_get_format (buffer);
   drawable->private->buffer = buffer;
 
   gimp_item_set_offset (item, offset_x, offset_y);
@@ -1131,7 +1127,6 @@ gimp_drawable_new (GType          type,
                                            offset_x, offset_y,
                                            width, height));
 
-  drawable->private->format = format;
   drawable->private->buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
                                                                     width, height),
                                                     format);
@@ -1649,7 +1644,7 @@ gimp_drawable_get_format (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  return drawable->private->format;
+  return gegl_buffer_get_format (drawable->private->buffer);
 }
 
 const Babl *
@@ -1673,9 +1668,13 @@ gimp_drawable_get_format_without_alpha (const GimpDrawable *drawable)
 gboolean
 gimp_drawable_has_alpha (const GimpDrawable *drawable)
 {
+  const Babl *format;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  return babl_format_has_alpha (drawable->private->format);
+  format = gegl_buffer_get_format (drawable->private->buffer);
+
+  return babl_format_has_alpha (format);
 }
 
 GimpImageType
@@ -1685,7 +1684,7 @@ gimp_drawable_type (const GimpDrawable *drawable)
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  format = drawable->private->format;
+  format = gegl_buffer_get_format (drawable->private->buffer);
 
   if (format == babl_format ("Y' u8"))
     return GIMP_GRAY_IMAGE;
@@ -1751,9 +1750,13 @@ gimp_drawable_is_indexed (const GimpDrawable *drawable)
 gint
 gimp_drawable_bytes (const GimpDrawable *drawable)
 {
+  const Babl *format;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  return babl_format_get_bytes_per_pixel (drawable->private->format);
+  format = gegl_buffer_get_format (drawable->private->buffer);
+
+  return babl_format_get_bytes_per_pixel (format);
 }
 
 gint

@@ -20,8 +20,6 @@
 
 struct _GimpDrawablePrivate
 {
-  const Babl    *format; /* format of drawable      */
-
   GeglBuffer    *buffer; /* buffer for drawable data */
   GeglBuffer    *shadow; /* shadow buffer            */
 
