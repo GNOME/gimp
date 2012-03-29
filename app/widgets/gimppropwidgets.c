@@ -1480,18 +1480,12 @@ gimp_prop_table_new (GObject     *config,
                G_IS_PARAM_SPEC_FLOAT (pspec) ||
                G_IS_PARAM_SPEC_DOUBLE (pspec))
         {
-          GtkObject *adj;
-          gint       digits = (G_IS_PARAM_SPEC_FLOAT (pspec) ||
-                               G_IS_PARAM_SPEC_DOUBLE (pspec)) ? 2 : 0;
+          gint digits = (G_IS_PARAM_SPEC_FLOAT (pspec) ||
+                         G_IS_PARAM_SPEC_DOUBLE (pspec)) ? 2 : 0;
 
-          adj = gimp_prop_scale_entry_new (config, pspec->name,
-                                           GTK_TABLE (table), 0, row++,
-                                           g_param_spec_get_nick (pspec),
-                                           1.0, 1.0, digits,
-                                           FALSE, 0.0, 0.0);
-
-          gtk_size_group_add_widget (size_group,
-                                     GIMP_SCALE_ENTRY_SPINBUTTON (adj));
+          widget = gimp_prop_spin_scale_new (config, pspec->name,
+                                             g_param_spec_get_nick (pspec),
+                                             1.0, 1.0, digits);
         }
       else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
         {
@@ -1509,9 +1503,22 @@ gimp_prop_table_new (GObject     *config,
         }
 
       if (widget)
-        gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                   label, 0.0, 0.5,
-                                   widget, 2, FALSE);
+        {
+          if (label)
+            {
+              gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
+                                         label, 0.0, 0.5,
+                                         widget, 2, FALSE);
+            }
+          else
+            {
+              gtk_table_attach_defaults (GTK_TABLE (table), widget,
+                                         0, 3, row, row + 1);
+              gtk_widget_show (widget);
+            }
+
+          row++;
+        }
     }
 
   g_object_unref (size_group);
