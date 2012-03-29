@@ -27,7 +27,8 @@
 #include "gimpoperationpointfilter.h"
 
 
-static void   gimp_operation_point_filter_finalize (GObject *object);
+static void   gimp_operation_point_filter_finalize (GObject       *object);
+static void   gimp_operation_point_filter_prepare  (GeglOperation *operation);
 
 
 G_DEFINE_ABSTRACT_TYPE (GimpOperationPointFilter, gimp_operation_point_filter,
@@ -39,9 +40,12 @@ G_DEFINE_ABSTRACT_TYPE (GimpOperationPointFilter, gimp_operation_point_filter,
 static void
 gimp_operation_point_filter_class_init (GimpOperationPointFilterClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
+  GeglOperationClass  *operation_class = GEGL_OPERATION_CLASS (klass);
 
   object_class->finalize = gimp_operation_point_filter_finalize;
+
+  operation_class->prepare = gimp_operation_point_filter_prepare;
 }
 
 static void
@@ -103,4 +107,15 @@ gimp_operation_point_filter_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_operation_point_filter_prepare (GeglOperation *operation)
+{
+  const Babl *format;
+
+  format = babl_format ("R'G'B'A float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "output", format);
 }
