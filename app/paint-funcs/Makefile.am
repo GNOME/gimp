@@ -27,7 +27,5 @@ libapppaint_funcs_a_SOURCES = \
 	paint-funcs-utils.h	\
 	reduce-region.c		\
 	reduce-region.h		\
-	scale-region.c		\
-	scale-region.h		\
 	subsample-region.c	\
 	subsample-region.h
