@@ -313,7 +313,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   gboolean         has_alpha;
   guchar          *buf = NULL;
   gint             width, height;
-  GimpImageType    type;
+  const Babl      *format;
   gint             bytes;
   gint             x, y, abort;
   gboolean         retval = FALSE;
@@ -349,9 +349,9 @@ gimp_image_crop_auto_shrink (GimpImage *image,
 
   gimp_pickable_flush (pickable);
 
-  type      = gimp_pickable_get_image_type (pickable);
-  bytes     = GIMP_IMAGE_TYPE_BYTES (type);
-  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
+  format    = gimp_pickable_get_format (pickable);
+  bytes     = babl_format_get_bytes_per_pixel (format);
+  has_alpha = babl_format_has_alpha (format);
 
   switch (gimp_image_crop_guess_bgcolor (pickable,
                                          bytes, has_alpha, bgcolor,

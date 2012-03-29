@@ -291,7 +291,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   GimpSourceOptions    *options    = GIMP_SOURCE_OPTIONS (paint_options);
   GimpImage            *src_image;
   GimpImage            *image;
-  GimpImageType         src_type;
+  const Babl           *src_format_alpha;
   gint                  x1d, y1d, x2d, y2d;
   gdouble               x1s, y1s, x2s, y2s, x3s, y3s, x4s, y4s;
   gint                  xmin, ymin, xmax, ymax;
@@ -305,8 +305,8 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   src_image = gimp_pickable_get_image (src_pickable);
   image     = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  src_type  = gimp_pickable_get_image_type (src_pickable);
-  src_tiles = gimp_pickable_get_tiles (src_pickable);
+  src_format_alpha = gimp_pickable_get_format_with_alpha (src_pickable);
+  src_tiles        = gimp_pickable_get_tiles (src_pickable);
 
   /* Destination coordinates that will be painted */
   x1d = paint_area->x;
@@ -373,7 +373,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
 
   /*  copy the original image to a tile manager, adding alpha if needed  */
 
-  bytes = GIMP_IMAGE_TYPE_BYTES (GIMP_IMAGE_TYPE_WITH_ALPHA (src_type));
+  bytes = babl_format_get_bytes_per_pixel (src_format_alpha);
 
   orig_tiles = tile_manager_new (xmax - xmin, ymax - ymin, bytes);
 

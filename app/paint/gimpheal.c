@@ -459,7 +459,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   PixelRegion         origPR;
   PixelRegion         tempPR;
   PixelRegion         destPR;
-  GimpImageType       src_type;
+  const Babl         *format;
+  const Babl         *format_alpha;
   const TempBuf      *mask_buf;
   gdouble             fade_point;
   gdouble             hardness;
@@ -480,11 +481,12 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                              GIMP_BRUSH_HARD,
                                              hardness);
 
-  src_type = gimp_pickable_get_image_type (src_pickable);
+  format       = gimp_pickable_get_format (src_pickable);
+  format_alpha = gimp_pickable_get_format_with_alpha (src_pickable);
 
   /* we need the source area with alpha and we modify it, so make a copy */
   src = temp_buf_new (srcPR->w, srcPR->h,
-                      GIMP_IMAGE_TYPE_BYTES (GIMP_IMAGE_TYPE_WITH_ALPHA (src_type)),
+                      babl_format_get_bytes_per_pixel (format_alpha),
                       0, 0, NULL);
 
   pixel_region_init_temp_buf (&tempPR, src, 0, 0, src->width, src->height);
@@ -493,7 +495,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
    * the effect of the following is to copy the contents of the source
    * region to the "src" temp-buf, adding an alpha channel if necessary
    */
-  if (GIMP_IMAGE_TYPE_HAS_ALPHA (src_type))
+  if (babl_format_has_alpha (format))
     copy_region (srcPR, &tempPR);
   else
     add_alpha_region (srcPR, &tempPR);
@@ -501,8 +503,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   /* reinitialize srcPR */
   pixel_region_init_temp_buf (srcPR, src, 0, 0, src->width, src->height);
 
-  if (GIMP_IMAGE_TYPE_WITH_ALPHA (src_type) !=
-      gimp_drawable_type_with_alpha (drawable))
+  if (format_alpha != gimp_drawable_get_format_with_alpha (drawable))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
       TempBuf   *temp2;
