@@ -56,9 +56,11 @@ gimp_operation_posterize_class_init (GimpOperationPosterizeClass *klass)
   object_class->set_property   = gimp_operation_point_filter_set_property;
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
-  operation_class->name        = "gimp:posterize";
-  operation_class->categories  = "color";
-  operation_class->description = "GIMP Posterize operation";
+  gegl_operation_class_set_keys (operation_class,
+           "name"       , "gimp:posterize",
+           "categories" , "color",
+           "description", "GIMP Posterize operation",
+           NULL);
 
   point_class->process         = gimp_operation_posterize_process;
 

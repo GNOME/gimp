@@ -61,9 +61,11 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
   GeglOperationSourceClass *source_class    = GEGL_OPERATION_SOURCE_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
 
-  operation_class->name               = "gimp:cage-coef-calc";
-  operation_class->categories         = "transform";
-  operation_class->description        = _("Compute a set of coefficient buffer for the GIMP cage tool");
+  gegl_operation_class_set_keys (operation_class,
+                  "name"              , "gimp:cage-coef-calc",
+                  "categories"        , "transform",
+                  "description"       , _("Compute a set of coefficient buffer for the GIMP cage tool"),
+                  NULL);
 
   operation_class->prepare            = gimp_operation_cage_coef_calc_prepare;
   operation_class->get_bounding_box   = gimp_operation_cage_coef_calc_get_bounding_box;

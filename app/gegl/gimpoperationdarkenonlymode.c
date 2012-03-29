@@ -50,8 +50,10 @@ gimp_operation_darken_only_mode_class_init (GimpOperationDarkenOnlyModeClass *kl
   operation_class = GEGL_OPERATION_CLASS (klass);
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  operation_class->name        = "gimp:darken-only-mode";
-  operation_class->description = "GIMP darken only mode operation";
+  gegl_operation_class_set_keys (operation_class,
+           "name"       , "gimp:darken-only-mode",
+           "description", "GIMP darken only mode operation",
+           NULL);
 
   point_class->process         = gimp_operation_darken_only_mode_process;
 }

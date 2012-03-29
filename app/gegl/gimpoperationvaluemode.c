@@ -50,8 +50,10 @@ gimp_operation_value_mode_class_init (GimpOperationValueModeClass *klass)
   operation_class = GEGL_OPERATION_CLASS (klass);
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  operation_class->name        = "gimp:value-mode";
-  operation_class->description = "GIMP value mode operation";
+  gegl_operation_class_set_keys (operation_class,
+           "name"       , "gimp:value-mode",
+           "description", "GIMP value mode operation",
+           NULL);
 
   point_class->process         = gimp_operation_value_mode_process;
 }

@@ -185,7 +185,7 @@ gimp_gegl_tool_map (GimpImageMapTool *image_map_tool)
   if (! tool->config)
     return;
 
-  pspecs = gegl_list_properties (tool->operation, &n_pspecs);
+  pspecs = gegl_operation_list_properties (tool->operation, &n_pspecs);
 
   for (i = 0; i < n_pspecs; i++)
     {
@@ -316,7 +316,8 @@ gimp_get_subtype_classes (GType  type,
   ops = g_type_children (type, &n_ops);
 
   if (! gimp_gegl_tool_operation_blacklisted (klass->name,
-                                              klass->categories))
+                                              gegl_operation_class_get_key (klass,
+                                                "categories")))
     classes = g_list_prepend (classes, klass);
 
   for (i = 0; i < n_ops; i++)
@@ -551,7 +552,7 @@ gimp_gegl_tool_config_class_init (GObjectClass *klass,
   klass->set_property = gimp_gegl_tool_config_set_property;
   klass->get_property = gimp_gegl_tool_config_get_property;
 
-  pspecs = gegl_list_properties (operation, &n_pspecs);
+  pspecs = gegl_operation_list_properties (operation, &n_pspecs);
 
   for (i = 0; i < n_pspecs; i++)
     {

@@ -50,8 +50,10 @@ gimp_operation_burn_mode_class_init (GimpOperationBurnModeClass *klass)
   operation_class = GEGL_OPERATION_CLASS (klass);
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  operation_class->name        = "gimp:burn-mode";
-  operation_class->description = "GIMP burn mode operation";
+  gegl_operation_class_set_keys (operation_class,
+           "name"       , "gimp:burn-mode",
+           "description", "GIMP burn mode operation",
+           NULL);
 
   point_class->process         = gimp_operation_burn_mode_process;
 }

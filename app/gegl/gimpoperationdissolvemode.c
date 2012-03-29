@@ -50,8 +50,10 @@ gimp_operation_dissolve_mode_class_init (GimpOperationDissolveModeClass *klass)
   operation_class = GEGL_OPERATION_CLASS (klass);
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  operation_class->name        = "gimp:dissolve-mode";
-  operation_class->description = "GIMP dissolve mode operation";
+  gegl_operation_class_set_keys (operation_class,
+           "name"       , "gimp:dissolve-mode",
+           "description", "GIMP dissolve mode operation",
+           NULL);
 
   point_class->process         = gimp_operation_dissolve_mode_process;
 }

@@ -50,8 +50,10 @@ gimp_operation_screen_mode_class_init (GimpOperationScreenModeClass *klass)
   operation_class = GEGL_OPERATION_CLASS (klass);
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  operation_class->name        = "gimp:screen-mode";
-  operation_class->description = "GIMP screen mode operation";
+  gegl_operation_class_set_keys (operation_class,
+           "name"       , "gimp:screen-mode",
+           "description", "GIMP screen mode operation",
+           NULL);
 
   point_class->process         = gimp_operation_screen_mode_process;
 }

@@ -55,9 +55,11 @@ gimp_operation_threshold_class_init (GimpOperationThresholdClass *klass)
   object_class->set_property   = gimp_operation_point_filter_set_property;
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
-  operation_class->name        = "gimp:threshold";
-  operation_class->categories  = "color";
-  operation_class->description = "GIMP Threshold operation";
+  gegl_operation_class_set_keys (operation_class,
+           "name"       , "gimp:threshold",
+           "categories" , "color",
+           "description", "GIMP Threshold operation",
+           NULL);
 
   point_class->process         = gimp_operation_threshold_process;
 
