@@ -38,7 +38,6 @@ struct _GimpHueSaturationTool
   GimpImageMapTool         parent_instance;
 
   GimpHueSaturationConfig *config;
-  HueSaturation           *hue_saturation;
 
   /*  dialog  */
   GtkWidget               *range_radio;

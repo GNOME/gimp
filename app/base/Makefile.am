@@ -26,8 +26,6 @@ libappbase_a_SOURCES = \
 	cpercep.h		\
 	gimplut.c		\
 	gimplut.h		\
-	hue-saturation.c	\
-	hue-saturation.h	\
 	pixel-processor.c	\
 	pixel-processor.h	\
 	pixel-region.c		\

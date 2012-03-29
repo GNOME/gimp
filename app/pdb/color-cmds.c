@@ -25,7 +25,6 @@
 
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
-#include "core/gimpdrawable-hue-saturation.h"
 #include "core/gimpdrawable-levels.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
@@ -36,6 +35,7 @@
 #include "gegl/gimpcolorizeconfig.h"
 #include "gegl/gimpcurvesconfig.h"
 #include "gegl/gimpdesaturateconfig.h"
+#include "gegl/gimphuesaturationconfig.h"
 #include "gegl/gimplevelsconfig.h"
 #include "gegl/gimpposterizeconfig.h"
 #include "gegl/gimpthresholdconfig.h"
@@ -79,7 +79,6 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
                                                  C_("undo-type", "Brightness-Contrast"),
                                                  "gimp:brightness-contrast",
                                                  config);
-
           g_object_unref (config);
         }
       else
@@ -139,7 +138,6 @@ levels_invoker (GimpProcedure      *procedure,
                                                  C_("undo-type", "Levels"),
                                                  "gimp:levels",
                                                  config);
-
           g_object_unref (config);
         }
       else
@@ -234,7 +232,6 @@ posterize_invoker (GimpProcedure      *procedure,
                                                  _("Posterize"),
                                                  "gimp:posterize",
                                                  config);
-
           g_object_unref (config);
         }
       else
@@ -272,7 +269,6 @@ desaturate_invoker (GimpProcedure      *procedure,
                                                  _("Desaturate"),
                                                  "gimp:desaturate",
                                                  config);
-
           g_object_unref (config);
         }
       else
@@ -312,7 +308,6 @@ desaturate_full_invoker (GimpProcedure      *procedure,
                                                  _("Desaturate"),
                                                  "gimp:desaturate",
                                                  config);
-
           g_object_unref (config);
         }
       else
@@ -421,7 +416,6 @@ curves_spline_invoker (GimpProcedure      *procedure,
                                                  C_("undo-type", "Curves"),
                                                  "gimp:curves",
                                                  config);
-
           g_object_unref (config);
         }
       else
@@ -468,7 +462,6 @@ curves_explicit_invoker (GimpProcedure      *procedure,
                                                  C_("undo-type", "Curves"),
                                                  "gimp:curves",
                                                  config);
-
           g_object_unref (config);
         }
       else
@@ -522,7 +515,6 @@ color_balance_invoker (GimpProcedure      *procedure,
                                                  C_("undo-type", "Color Balance"),
                                                  "gimp:color-balance",
                                                  config);
-
           g_object_unref (config);
         }
       else
@@ -568,7 +560,6 @@ colorize_invoker (GimpProcedure      *procedure,
                                                  C_("undo-type", "Colorize"),
                                                  "gimp:colorize",
                                                  config);
-
           g_object_unref (config);
         }
       else
@@ -675,14 +666,27 @@ hue_saturation_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
-          ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
-          gimp_drawable_is_indexed (drawable))
-        success = FALSE;
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GObject *config = g_object_new (GIMP_TYPE_HUE_SATURATION_CONFIG,
+                                          "range", hue_range,
+                                          NULL);
 
-      if (success)
-        gimp_drawable_hue_saturation (drawable, progress,
-                                      hue_range, hue_offset, saturation, lightness);
+           g_object_set (config,
+                         "hue",        hue_offset / 180.0,
+                         "saturation", saturation / 100.0,
+                         "lightness",  lightness  / 100.0,
+                         NULL);
+
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 _("Hue-Saturation"),
+                                                 "gimp:hue-saturation",
+                                                 config);
+          g_object_unref (config);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -720,7 +724,6 @@ threshold_invoker (GimpProcedure      *procedure,
                                                  _("Threshold"),
                                                  "gimp:threshold",
                                                  config);
-
           g_object_unref (config);
         }
       else

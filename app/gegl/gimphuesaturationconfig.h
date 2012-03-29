@@ -58,9 +58,5 @@ GType   gimp_hue_saturation_config_get_type    (void) G_GNUC_CONST;
 
 void    gimp_hue_saturation_config_reset_range (GimpHueSaturationConfig *config);
 
-/*  temp cruft  */
-void    gimp_hue_saturation_config_to_cruft    (GimpHueSaturationConfig *config,
-                                                HueSaturation           *cruft);
-
 
 #endif /* __GIMP_HUE_SATURATION_CONFIG_H__ */

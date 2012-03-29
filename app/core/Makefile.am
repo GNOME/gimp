@@ -136,8 +136,6 @@ libappcore_a_sources = \
 	gimpdrawable-foreground-extract.h	\
 	gimpdrawable-histogram.c		\
 	gimpdrawable-histogram.h		\
-	gimpdrawable-hue-saturation.c		\
-	gimpdrawable-hue-saturation.h		\
 	gimpdrawable-levels.c			\
 	gimpdrawable-levels.h			\
 	gimpdrawable-offset.c			\

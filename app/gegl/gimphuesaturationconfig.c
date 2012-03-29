@@ -27,9 +27,6 @@
 
 #include "gimp-gegl-types.h"
 
-/*  temp cruft  */
-#include "base/hue-saturation.h"
-
 #include "gimphuesaturationconfig.h"
 
 
@@ -351,28 +348,4 @@ gimp_hue_saturation_config_reset_range (GimpHueSaturationConfig *config)
   gimp_config_reset_property (G_OBJECT (config), "lightness");
 
   g_object_thaw_notify (G_OBJECT (config));
-}
-
-
-/*  temp cruft  */
-
-void
-gimp_hue_saturation_config_to_cruft (GimpHueSaturationConfig *config,
-                                     HueSaturation           *cruft)
-{
-  GimpHueRange range;
-
-  g_return_if_fail (GIMP_IS_HUE_SATURATION_CONFIG (config));
-  g_return_if_fail (cruft != NULL);
-
-  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
-    {
-      cruft->hue[range]        = config->hue[range]        * 180;
-      cruft->saturation[range] = config->saturation[range] * 100;
-      cruft->lightness[range]  = config->lightness[range]  * 100;
-    }
-
-  cruft->overlap = config->overlap * 100;
-
-  hue_saturation_calculate_transfers (cruft);
 }

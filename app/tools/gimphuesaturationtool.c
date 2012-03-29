@@ -27,8 +27,6 @@
 
 #include "tools-types.h"
 
-#include "base/hue-saturation.h"
-
 #include "gegl/gimphuesaturationconfig.h"
 #include "gegl/gimpoperationhuesaturation.h"
 
@@ -53,15 +51,12 @@
 
 /*  local function prototypes  */
 
-static void       gimp_hue_saturation_tool_finalize      (GObject          *object);
-
 static gboolean   gimp_hue_saturation_tool_initialize    (GimpTool         *tool,
                                                           GimpDisplay      *display,
                                                           GError          **error);
 
 static GeglNode * gimp_hue_saturation_tool_get_operation (GimpImageMapTool *im_tool,
                                                           GObject         **config);
-static void       gimp_hue_saturation_tool_map           (GimpImageMapTool *im_tool);
 static void       gimp_hue_saturation_tool_dialog        (GimpImageMapTool *im_tool);
 static void       gimp_hue_saturation_tool_reset         (GimpImageMapTool *im_tool);
 
@@ -110,11 +105,8 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 {
-  GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
-
-  object_class->finalize             = gimp_hue_saturation_tool_finalize;
 
   tool_class->initialize             = gimp_hue_saturation_tool_initialize;
 
@@ -124,7 +116,6 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
   im_tool_class->export_dialog_title = _("Export Hue-Saturation Settings");
 
   im_tool_class->get_operation       = gimp_hue_saturation_tool_get_operation;
-  im_tool_class->map                 = gimp_hue_saturation_tool_map;
   im_tool_class->dialog              = gimp_hue_saturation_tool_dialog;
   im_tool_class->reset               = gimp_hue_saturation_tool_reset;
 }
@@ -132,24 +123,6 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 static void
 gimp_hue_saturation_tool_init (GimpHueSaturationTool *hs_tool)
 {
-  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (hs_tool);
-
-  hs_tool->hue_saturation = g_slice_new0 (HueSaturation);
-
-  hue_saturation_init (hs_tool->hue_saturation);
-
-  im_tool->apply_func = (GimpImageMapApplyFunc) hue_saturation;
-  im_tool->apply_data = hs_tool->hue_saturation;
-}
-
-static void
-gimp_hue_saturation_tool_finalize (GObject *object)
-{
-  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (object);
-
-  g_slice_free (HueSaturation, hs_tool->hue_saturation);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
@@ -200,14 +173,6 @@ gimp_hue_saturation_tool_get_operation (GimpImageMapTool  *im_tool,
                  NULL);
 
   return node;
-}
-
-static void
-gimp_hue_saturation_tool_map (GimpImageMapTool *image_map_tool)
-{
-  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
-
-  gimp_hue_saturation_config_to_cruft (hs_tool->config, hs_tool->hue_saturation);
 }
 
 
