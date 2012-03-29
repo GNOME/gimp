@@ -28,11 +28,8 @@
 
 #include "base/pixel-region.h"
 
-#include "paint-funcs/scale-region.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
-#include "gimp.h" /* temp for gimp_use_gegl() */
 #include "gimp-utils.h" /* temp for GIMP_TIMER */
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -431,6 +428,7 @@ gimp_drawable_scale (GimpItem              *item,
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   GeglBuffer   *new_buffer;
+  GeglNode     *scale;
 
   new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
                                                      new_width, new_height),
@@ -440,61 +438,25 @@ gimp_drawable_scale (GimpItem              *item,
   GIMP_TIMER_START ();
 #endif
 
-  if (gimp_use_gegl (gimp_item_get_image (item)->gimp) &&
-      interpolation_type != GIMP_INTERPOLATION_LOHALO)
-    {
-      GeglNode *scale;
+  scale = g_object_new (GEGL_TYPE_NODE,
+                        "operation", "gegl:scale",
+                        NULL);
 
-      scale = g_object_new (GEGL_TYPE_NODE,
-                            "operation", "gegl:scale",
-                            NULL);
+  gegl_node_set (scale,
+                 "origin-x",   0.0,
+                 "origin-y",   0.0,
+                 "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
+                 "hard-edges", TRUE,
+                 "x",          ((gdouble) new_width /
+                                gimp_item_get_width  (item)),
+                 "y",          ((gdouble) new_height /
+                                gimp_item_get_height (item)),
+                 NULL);
 
-      gegl_node_set (scale,
-                     "origin-x",   0.0,
-                     "origin-y",   0.0,
-                     "filter",     gimp_interpolation_to_gegl_filter (interpolation_type),
-                     "hard-edges", TRUE,
-                     "x",          ((gdouble) new_width /
-                                    gimp_item_get_width  (item)),
-                     "y",          ((gdouble) new_height /
-                                    gimp_item_get_height (item)),
-                     NULL);
-
-      gimp_drawable_apply_operation_to_buffer (drawable, progress,
-                                               C_("undo-type", "Scale"),
-                                               scale, new_buffer);
-      g_object_unref (scale);
-    }
-  else
-    {
-      TileManager *new_tiles;
-      PixelRegion  srcPR, destPR;
-
-      new_tiles = gimp_gegl_buffer_get_tiles (new_buffer);
-
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         0, 0,
-                         gimp_item_get_width  (item),
-                         gimp_item_get_height (item),
-                         FALSE);
-      pixel_region_init (&destPR, new_tiles,
-                         0, 0,
-                         new_width, new_height,
-                         TRUE);
-
-      /*  Scale the drawable -
-       *   If the drawable is indexed, then we don't use pixel-value
-       *   resampling because that doesn't necessarily make sense for indexed
-       *   images.
-       */
-      scale_region (&srcPR, &destPR,
-                    gimp_drawable_is_indexed (drawable) ?
-                    GIMP_INTERPOLATION_NONE : interpolation_type,
-                    progress ? gimp_progress_update_and_flush : NULL,
-                    progress);
-
-      gimp_gegl_buffer_refetch_tiles (new_buffer);
-    }
+  gimp_drawable_apply_operation_to_buffer (drawable, progress,
+                                           C_("undo-type", "Scale"),
+                                           scale, new_buffer);
+  g_object_unref (scale);
 
 #ifdef GIMP_UNSTABLE
   GIMP_TIMER_END ("scaling");
