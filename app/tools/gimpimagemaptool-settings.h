@@ -21,14 +21,14 @@
 #define __GIMP_IMAGE_MAP_TOOL_SETTINGS_H__
 
 
-gboolean gimp_image_map_tool_add_settings_gui     (GimpImageMapTool *image_map_tool);
-
-gboolean gimp_image_map_tool_real_settings_import (GimpImageMapTool *tool,
-                                                   const gchar      *filename,
-                                                   GError          **error);
-gboolean gimp_image_map_tool_real_settings_export (GimpImageMapTool *tool,
-                                                   const gchar      *filename,
-                                                   GError          **error);
+GtkWidget * gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool *tool,
+                                                      GtkWidget       **settings_box);
+gboolean    gimp_image_map_tool_real_settings_import (GimpImageMapTool *tool,
+                                                      const gchar      *filename,
+                                                      GError          **error);
+gboolean    gimp_image_map_tool_real_settings_export (GimpImageMapTool *tool,
+                                                      const gchar      *filename,
+                                                      GError          **error);
 
 
 #endif /* __GIMP_IMAGE_MAP_TOOL_SETTINGS_H__ */

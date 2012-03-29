@@ -178,6 +178,7 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
   klass->map                 = NULL;
   klass->dialog              = NULL;
   klass->reset               = NULL;
+  klass->get_settings_ui     = gimp_image_map_tool_real_get_settings_ui;
   klass->settings_import     = gimp_image_map_tool_real_settings_import;
   klass->settings_export     = gimp_image_map_tool_real_settings_export;
 }
@@ -296,6 +297,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       GtkWidget             *dialog;
       GtkWidget             *vbox;
       GtkWidget             *toggle;
+      GtkWidget             *settings_ui;
 
       klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
 
@@ -353,8 +355,15 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                G_CALLBACK (gimp_image_map_tool_response),
                                G_OBJECT (image_map_tool), 0);
 
-      if (klass->settings_name)
-        gimp_image_map_tool_add_settings_gui (image_map_tool);
+      settings_ui = klass->get_settings_ui (image_map_tool,
+                                            &image_map_tool->settings_box);
+
+      if (settings_ui)
+        {
+          gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), settings_ui,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (settings_ui);
+        }
 
       /*  The preview toggle  */
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
@@ -693,6 +702,12 @@ gimp_image_map_tool_dialog_hide (GimpImageMapTool *image_map_tool)
 static void
 gimp_image_map_tool_dialog_destroy (GimpImageMapTool *image_map_tool)
 {
+  if (image_map_tool->label_group)
+    {
+      g_object_unref (image_map_tool->label_group);
+      image_map_tool->label_group = NULL;
+    }
+
   if (GTK_IS_DIALOG (image_map_tool->dialog) ||
       gtk_widget_get_parent (image_map_tool->dialog))
     gtk_widget_destroy (image_map_tool->dialog);
@@ -702,7 +717,6 @@ gimp_image_map_tool_dialog_destroy (GimpImageMapTool *image_map_tool)
   image_map_tool->dialog       = NULL;
   image_map_tool->main_vbox    = NULL;
   image_map_tool->settings_box = NULL;
-  image_map_tool->label_group  = NULL;
 }
 
 void
@@ -788,6 +802,9 @@ GtkSizeGroup *
 gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *tool)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
+
+  if (! tool->label_group)
+    tool->label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   return tool->label_group;
 }

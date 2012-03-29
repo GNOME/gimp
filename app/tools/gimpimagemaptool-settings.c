@@ -58,11 +58,13 @@ static gboolean gimp_image_map_tool_settings_export (GimpSettingsBox  *box,
 
 /*  public functions  */
 
-gboolean
-gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
+GtkWidget *
+gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool  *image_map_tool,
+                                          GtkWidget        **settings_box)
 {
   GimpImageMapToolClass *klass;
   GimpToolInfo          *tool_info;
+  GtkSizeGroup          *label_group;
   GtkWidget             *hbox;
   GtkWidget             *label;
   GtkWidget             *settings_combo;
@@ -71,41 +73,39 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
 
   klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
 
+  if (! klass->settings_name)
+    return NULL;
+
   tool_info = GIMP_TOOL (image_map_tool)->tool_info;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+
+  label_group = gimp_image_map_tool_dialog_get_label_group (image_map_tool);
 
   label = gtk_label_new_with_mnemonic (_("Pre_sets:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
-
-  image_map_tool->label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  gtk_size_group_add_widget (image_map_tool->label_group, label);
-  g_object_unref (image_map_tool->label_group);
 
   filename = gimp_tool_info_build_options_filename (tool_info, ".settings");
   folder   = g_build_filename (gimp_directory (), klass->settings_name, NULL);
 
-  image_map_tool->settings_box = gimp_settings_box_new (tool_info->gimp,
-                                                        image_map_tool->config,
-                                                        klass->recent_settings,
-                                                        filename,
-                                                        klass->import_dialog_title,
-                                                        klass->export_dialog_title,
-                                                        tool_info->help_id,
-                                                        folder,
-                                                        NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), image_map_tool->settings_box,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (image_map_tool->settings_box);
+  *settings_box = gimp_settings_box_new (tool_info->gimp,
+                                         image_map_tool->config,
+                                         klass->recent_settings,
+                                         filename,
+                                         klass->import_dialog_title,
+                                         klass->export_dialog_title,
+                                         tool_info->help_id,
+                                         folder,
+                                         NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), *settings_box, TRUE, TRUE, 0);
+  gtk_widget_show (*settings_box);
 
   g_free (filename);
   g_free (folder);
 
-  settings_combo = gimp_settings_box_get_combo (GIMP_SETTINGS_BOX (image_map_tool->settings_box));
+  settings_combo = gimp_settings_box_get_combo (GIMP_SETTINGS_BOX (*settings_box));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), settings_combo);
 
   g_signal_connect (image_map_tool->settings_box, "import",
@@ -116,7 +116,7 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (gimp_image_map_tool_settings_export),
                     image_map_tool);
 
-  return TRUE;
+  return hbox;
 }
 
 gboolean

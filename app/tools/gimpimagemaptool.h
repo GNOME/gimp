@@ -66,18 +66,21 @@ struct _GimpImageMapToolClass
   GimpContainer      *recent_settings;
 
   /* virtual functions */
-  GeglNode * (* get_operation)   (GimpImageMapTool  *image_map_tool,
-                                  GObject          **config);
-  void       (* map)             (GimpImageMapTool  *image_map_tool);
-  void       (* dialog)          (GimpImageMapTool  *image_map_tool);
-  void       (* reset)           (GimpImageMapTool  *image_map_tool);
+  GeglNode  * (* get_operation)   (GimpImageMapTool  *image_map_tool,
+                                   GObject          **config);
+  void        (* map)             (GimpImageMapTool  *image_map_tool);
+  void        (* dialog)          (GimpImageMapTool  *image_map_tool);
+  void        (* reset)           (GimpImageMapTool  *image_map_tool);
 
-  gboolean   (* settings_import) (GimpImageMapTool  *image_map_tool,
-                                  const gchar       *filename,
-                                  GError           **error);
-  gboolean   (* settings_export) (GimpImageMapTool  *image_map_tool,
-                                  const gchar       *filename,
-                                  GError           **error);
+  GtkWidget * (* get_settings_ui) (GimpImageMapTool  *image_map_tool,
+                                   GtkWidget        **settings_box);
+
+  gboolean    (* settings_import) (GimpImageMapTool  *image_map_tool,
+                                   const gchar       *filename,
+                                   GError           **error);
+  gboolean    (* settings_export) (GimpImageMapTool  *image_map_tool,
+                                   const gchar       *filename,
+                                   GError           **error);
 };
 
 
