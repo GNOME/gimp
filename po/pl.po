@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-03 21:13+0100\n"
-"PO-Revision-Date: 2012-03-03 21:14+0100\n"
+"POT-Creation-Date: 2012-03-31 01:38+0200\n"
+"PO-Revision-Date: 2012-03-31 01:39+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -43,7 +43,7 @@ msgstr ""
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../app/about.h:26 ../desktop/gimp.desktop.in.in.h:2
+#: ../app/about.h:26 ../desktop/gimp.desktop.in.in.h:1
 msgid "GNU Image Manipulation Program"
 msgstr "Edytor obrazów GIMP"
 
@@ -1414,7 +1414,7 @@ msgstr "Łączy z innym ekranem"
 #: ../app/actions/dock-actions.c:63
 msgctxt "dock-action"
 msgid "_Show Image Selection"
-msgstr "_Wyświetl elementy wyboru obrazu"
+msgstr "_Wyświetlanie elementów wyboru obrazu"
 
 #: ../app/actions/dock-actions.c:69
 msgctxt "dock-action"
@@ -1529,7 +1529,7 @@ msgstr "Automatycznie"
 #: ../app/actions/dockable-actions.c:126
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
-msgstr "Przyłącz _kartę do doku"
+msgstr "Przyłączanie _karty do doku"
 
 #: ../app/actions/dockable-actions.c:128
 msgctxt "dockable-action"
@@ -1539,17 +1539,17 @@ msgstr "Uniemożliwia przesuwanie karty za pomocą myszy"
 #: ../app/actions/dockable-actions.c:134
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
-msgstr "Wyświetl p_asek przycisków"
+msgstr "Wyświetlanie p_aska przycisków"
 
 #: ../app/actions/dockable-actions.c:143
 msgctxt "dockable-action"
 msgid "View as _List"
-msgstr "Wyświetl jako _listę"
+msgstr "Wyświetlanie jako _lista"
 
 #: ../app/actions/dockable-actions.c:148
 msgctxt "dockable-action"
 msgid "View as _Grid"
-msgstr "Wyświetl jako _siatkę"
+msgstr "Wyświetlanie jako _siatka"
 
 #: ../app/actions/documents-actions.c:41
 msgctxt "documents-action"
@@ -2429,7 +2429,7 @@ msgstr "_Zastąp %s"
 
 #: ../app/actions/file-actions.c:306
 msgid "Export to"
-msgstr "Eksportowanie do"
+msgstr "Wyeksportuj do"
 
 #: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:492
 #: ../app/dialogs/file-open-dialog.c:77
@@ -6552,7 +6552,7 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Powoduje uruchomienie przeglądarki pomocy po naciśnięciu klawisza F1."
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:133
-#: ../app/core/gimp-units.c:167 ../app/gui/session.c:279
+#: ../app/core/gimp-units.c:167 ../app/gui/session.c:286
 #: ../app/plug-in/plug-in-rc.c:212
 msgid "fatal parse error"
 msgstr "krytyczny błąd podczas przetwarzania"
@@ -7340,7 +7340,7 @@ msgid "Jitter"
 msgstr "Drganie"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:375
-#: ../app/gui/session.c:392 ../app/menus/menus.c:464
+#: ../app/gui/session.c:399 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:206
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7819,7 +7819,7 @@ msgstr "Ustawienie krycia kanału"
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
-#: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:113
+#: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:111
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity"
 msgstr "Krycie"
@@ -7899,11 +7899,7 @@ msgid "Blend"
 msgstr "Gradient"
 
 #: ../app/core/gimpdrawable-brightness-contrast.c:70
-msgctxt "undo-type"
-msgid "Brightness_Contrast"
-msgstr "Jasność_kontrast"
-
-#: ../app/core/gimpdrawable-brightness-contrast.c:81
+#: ../app/core/gimpdrawable-brightness-contrast.c:83
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Jasność-kontrast"
@@ -7994,7 +7990,7 @@ msgstr "Rysowanie pociągnięcia"
 #: ../app/core/gimpdrawable-threshold.c:70
 #: ../app/core/gimpdrawable-threshold.c:81 ../app/tools/gimpblendoptions.c:275
 #: ../app/tools/gimpbucketfilloptions.c:285
-#: ../app/tools/gimpregionselectoptions.c:215
+#: ../app/tools/gimpregionselectoptions.c:216
 #: ../app/tools/gimpthresholdtool.c:90
 msgid "Threshold"
 msgstr "Progowanie"
@@ -8980,7 +8976,7 @@ msgstr "D_ithering przezroczystości"
 msgid "Converting to indexed colors"
 msgstr "Konwertowanie na kolory indeksowane"
 
-#: ../app/dialogs/convert-dialog.c:416 ../app/pdb/convert-cmds.c:152
+#: ../app/dialogs/convert-dialog.c:416 ../app/pdb/convert-cmds.c:153
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Nie można przekonwertować na paletę z więcej niż 256 kolorami."
 
@@ -9212,26 +9208,26 @@ msgstr "Łączenie tylko w o_brębie aktywnej grupy"
 msgid "_Discard invisible layers"
 msgstr "_Pomijanie niewidocznych warstw"
 
-#: ../app/dialogs/image-new-dialog.c:96
+#: ../app/dialogs/image-new-dialog.c:97
 msgid "Create a New Image"
 msgstr "Utworzenie nowego obrazu"
 
-#: ../app/dialogs/image-new-dialog.c:144
+#: ../app/dialogs/image-new-dialog.c:135
 #: ../app/dialogs/preferences-dialog.c:2009
 msgid "_Template:"
 msgstr "Sza_blon:"
 
-#: ../app/dialogs/image-new-dialog.c:303
+#: ../app/dialogs/image-new-dialog.c:308
 msgid "Confirm Image Size"
 msgstr "Potwierdzenie rozmiaru obrazu"
 
-#: ../app/dialogs/image-new-dialog.c:325
+#: ../app/dialogs/image-new-dialog.c:330
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "Wystąpiła próba utworzenia obrazu o rozmiarze %s."
 
-#: ../app/dialogs/image-new-dialog.c:332
+#: ../app/dialogs/image-new-dialog.c:337
 #, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
@@ -10415,7 +10411,7 @@ msgstr "Pio_nowo:"
 msgid "Image Size"
 msgstr "Wymiary obrazu"
 
-#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:386
+#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:393
 msgid "Quality"
 msgstr "Jakość"
 
@@ -10889,11 +10885,11 @@ msgstr "błąd podczas przetwarzania"
 msgid "not a GIMP Levels file"
 msgstr "nie jest plikiem poziomów programu GIMP"
 
-#: ../app/gegl/gimpoperationcagecoefcalc.c:65
+#: ../app/gegl/gimpoperationcagecoefcalc.c:67
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
 msgstr "Oblicza zestaw współczynnika bufora dla narzędzia klatki programu GIMP"
 
-#: ../app/gegl/gimpoperationcagetransform.c:104
+#: ../app/gegl/gimpoperationcagetransform.c:106
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
@@ -10901,11 +10897,11 @@ msgstr ""
 "Konwertuje zestaw współczynnika bufora na współczynnik bufora dla narzędzia "
 "klatki programu GIMP"
 
-#: ../app/gegl/gimpoperationcagetransform.c:125
+#: ../app/gegl/gimpoperationcagetransform.c:128
 msgid "Fill with plain color"
 msgstr "Wypełnij zwykłym kolorem"
 
-#: ../app/gegl/gimpoperationcagetransform.c:126
+#: ../app/gegl/gimpoperationcagetransform.c:129
 #: ../app/tools/gimpcageoptions.c:144
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Wypełnia pierwotne położenie klatki prostym kolorem"
@@ -11141,17 +11137,17 @@ msgstr "Przekształcanie 2D"
 msgid "Blending"
 msgstr "Mieszanie"
 
-#: ../app/pdb/floating-sel-cmds.c:64
+#: ../app/pdb/floating-sel-cmds.c:65
 msgid "Cannot remove this layer because it is not a floating selection."
 msgstr ""
 "Nie można usunąć warstwy, ponieważ nie jest ona oderwanym zaznaczeniem."
 
-#: ../app/pdb/floating-sel-cmds.c:96
+#: ../app/pdb/floating-sel-cmds.c:98
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr ""
 "Nie można zakotwiczyć warstwy, ponieważ nie jest ona oderwanym zaznaczeniem."
 
-#: ../app/pdb/floating-sel-cmds.c:128
+#: ../app/pdb/floating-sel-cmds.c:131
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
@@ -11352,7 +11348,7 @@ msgstr "Obraz \"%s\" (%d) jest już typu \"%s\""
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Obiekt wektorowy %d nie zawiera krzywej o identyfikatorze %d"
 
-#: ../app/pdb/gimppdb.c:409
+#: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected "
@@ -11367,12 +11363,12 @@ msgstr ""
 msgid "Smooth edges"
 msgstr "Wygładza brzegi"
 
-#: ../app/pdb/gimpprocedure.c:370 ../app/plug-in/gimppluginprocframe.c:208
+#: ../app/pdb/gimpprocedure.c:372 ../app/plug-in/gimppluginprocframe.c:208
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedura \"%s\" nie zwróciła wartości"
 
-#: ../app/pdb/gimpprocedure.c:639
+#: ../app/pdb/gimpprocedure.c:642
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -11381,7 +11377,7 @@ msgstr ""
 "Procedura \"%s\" zwróciła błędny typ wartości \"%s\" (#%d). Oczekiwano %s, "
 "otrzymano %s."
 
-#: ../app/pdb/gimpprocedure.c:651
+#: ../app/pdb/gimpprocedure.c:654
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -11390,7 +11386,7 @@ msgstr ""
 "Procedura \"%s\" została wywołana z błędnym parametrem \"%s\" (#%d). "
 "Oczekiwano %s, otrzymano %s."
 
-#: ../app/pdb/gimpprocedure.c:683
+#: ../app/pdb/gimpprocedure.c:687
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -11399,7 +11395,7 @@ msgstr ""
 "Procedura \"%s\" zwróciła błędny identyfikator dla parametru \"%s\". "
 "Prawdopodobnie wtyczka próbuje pracować na warstwie, która nie istnieje."
 
-#: ../app/pdb/gimpprocedure.c:695
+#: ../app/pdb/gimpprocedure.c:700
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11408,7 +11404,7 @@ msgstr ""
 "Procedura \"%s\" wywołała błędny identyfikator dla parametru \"%s\". "
 "Prawdopodobnie wtyczka próbuje pracować na warstwie, która nie istnieje."
 
-#: ../app/pdb/gimpprocedure.c:711
+#: ../app/pdb/gimpprocedure.c:717
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -11417,7 +11413,7 @@ msgstr ""
 "Procedura \"%s\" zwróciła błędny identyfikator dla parametru \"%s\". "
 "Prawdopodobnie wtyczka próbuje pracować na obrazie, który nie istnieje."
 
-#: ../app/pdb/gimpprocedure.c:723
+#: ../app/pdb/gimpprocedure.c:730
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11426,7 +11422,7 @@ msgstr ""
 "Procedura \"%s\" wywołała błędny identyfikator dla parametru \"%s\". "
 "Prawdopodobnie wtyczka próbuje pracować na obrazie, który nie istnieje."
 
-#: ../app/pdb/gimpprocedure.c:743
+#: ../app/pdb/gimpprocedure.c:751
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -11435,7 +11431,7 @@ msgstr ""
 "Procedura \"%s\" zwróciła \"%s\" jako wartość \"%s\" (#%d, typ %s). Ta "
 "wartość jest poza zakresem."
 
-#: ../app/pdb/gimpprocedure.c:756
+#: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -11444,7 +11440,7 @@ msgstr ""
 "Procedura \"%s\" została wywołana z wartością \"%s\", jako parametr \"%s\" (#"
 "%d, typ %s). Ta wartość jest poza zakresem."
 
-#: ../app/pdb/image-cmds.c:2359
+#: ../app/pdb/image-cmds.c:2360
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -11661,7 +11657,7 @@ msgstr ""
 "pchnąć w tę łódź jeża\n"
 "lub ośm skrzyń fig."
 
-#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1397
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1401
 msgid "Add Text Layer"
 msgstr "Dodanie warstwy tekstowej"
 
@@ -11878,7 +11874,7 @@ msgstr "Kliknięcie wybierze pierwszą ścieżkę"
 msgid "Click to add this path to the list"
 msgstr "Kliknięcie doda tę ścieżkę do listy"
 
-#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:339
+#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:346
 msgid "Gradient"
 msgstr "Gradient"
 
@@ -11886,7 +11882,7 @@ msgstr "Gradient"
 msgid "Shape:"
 msgstr "Kształt:"
 
-#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:323
+#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:325
 msgid "Repeat:"
 msgstr "Okresowość:"
 
@@ -11960,15 +11956,15 @@ msgstr "Eksportowanie ustawień jasności i kontrastu"
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Nie można modyfikować jasności i kontrastu na warstwach indeksowanych."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:314
+#: ../app/tools/gimpbrightnesscontrasttool.c:318
 msgid "_Brightness:"
 msgstr "_Jasność:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:327
+#: ../app/tools/gimpbrightnesscontrasttool.c:331
 msgid "Con_trast:"
 msgstr "_Kontrast:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:339
+#: ../app/tools/gimpbrightnesscontrasttool.c:343
 msgid "Edit these Settings as Levels"
 msgstr "Modyfikuje te ustawienia jako poziomy"
 
@@ -12024,9 +12020,9 @@ msgid "Fill transparent areas"
 msgstr "Z obszarami przezroczystymi"
 
 #: ../app/tools/gimpbucketfilloptions.c:279 ../app/tools/gimpclonetool.c:114
-#: ../app/tools/gimpcolorpickeroptions.c:158 ../app/tools/gimphealtool.c:99
+#: ../app/tools/gimpcolorpickeroptions.c:158 ../app/tools/gimphealtool.c:100
 #: ../app/tools/gimpperspectiveclonetool.c:904
-#: ../app/tools/gimpregionselectoptions.c:209
+#: ../app/tools/gimpregionselectoptions.c:210
 msgid "Sample merged"
 msgstr "Próbkowanie wszystkich warstw"
 
@@ -12114,8 +12110,8 @@ msgstr "Kliknięcie ustawia nowe źródło klonowania"
 msgid "Source"
 msgstr "Źródło"
 
-#: ../app/tools/gimpclonetool.c:131 ../app/tools/gimphealtool.c:111
-#: ../app/tools/gimpperspectiveclonetool.c:921
+#: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:109
+#: ../app/tools/gimpperspectiveclonetool.c:918
 msgid "Alignment:"
 msgstr "Wyrównanie:"
 
@@ -12834,16 +12830,16 @@ msgstr "Działanie biblioteki _GEGL..."
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "Działania biblioteki GEGL nie pracują na warstwach indeksowanych."
 
-#: ../app/tools/gimpgegltool.c:377
+#: ../app/tools/gimpgegltool.c:378
 msgid "_Operation:"
 msgstr "_Działanie:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:436
+#: ../app/tools/gimpgegltool.c:437
 msgid "Operation Settings"
 msgstr "Ustawienia działania"
 
-#: ../app/tools/gimpgegltool.c:441
+#: ../app/tools/gimpgegltool.c:442
 msgid "Select an operation from the list above"
 msgstr "Proszę wybrać działanie z powyższej listy"
 
@@ -13285,7 +13281,7 @@ msgstr "Pędzel: maluje płynnymi pociągnięciami pędzla"
 msgid "_Paintbrush"
 msgstr "_Pędzel"
 
-#: ../app/tools/gimppaintoptions-gui.c:99
+#: ../app/tools/gimppaintoptions-gui.c:92
 #: ../app/tools/gimpselectionoptions.c:217
 #: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
@@ -13311,48 +13307,48 @@ msgstr "Przywraca proporcje do natywnej wartości pędzla"
 msgid "Reset angle to zero"
 msgstr "Przywraca kąt na zero"
 
-#: ../app/tools/gimppaintoptions-gui.c:235
+#: ../app/tools/gimppaintoptions-gui.c:238
 msgid "Incremental"
 msgstr "Przyrostowe"
 
-#: ../app/tools/gimppaintoptions-gui.c:251
+#: ../app/tools/gimppaintoptions-gui.c:256
 msgid "Hard edge"
 msgstr "Twarda krawędź"
 
-#: ../app/tools/gimppaintoptions-gui.c:280
+#: ../app/tools/gimppaintoptions-gui.c:285
 msgid "Dynamics Options"
 msgstr "Opcje dynamiki"
 
-#: ../app/tools/gimppaintoptions-gui.c:286
+#: ../app/tools/gimppaintoptions-gui.c:291
 msgid "Fade Options"
 msgstr "Opcje zanikania"
 
-#: ../app/tools/gimppaintoptions-gui.c:300
+#: ../app/tools/gimppaintoptions-gui.c:305
 msgid "Fade length"
 msgstr "Długość zanikania"
 
-#: ../app/tools/gimppaintoptions-gui.c:327
+#: ../app/tools/gimppaintoptions-gui.c:334
 #: ../app/widgets/gimpviewablebox.c:311
 msgid "Reverse"
 msgstr "Odwróć"
 
-#: ../app/tools/gimppaintoptions-gui.c:334
+#: ../app/tools/gimppaintoptions-gui.c:341
 msgid "Color Options"
 msgstr "Opcje kolorów"
 
-#: ../app/tools/gimppaintoptions-gui.c:360
+#: ../app/tools/gimppaintoptions-gui.c:367
 msgid "Amount"
 msgstr "Ilość"
 
-#: ../app/tools/gimppaintoptions-gui.c:364
+#: ../app/tools/gimppaintoptions-gui.c:371
 msgid "Apply Jitter"
 msgstr "Drganie"
 
-#: ../app/tools/gimppaintoptions-gui.c:382
+#: ../app/tools/gimppaintoptions-gui.c:389
 msgid "Smooth stroke"
 msgstr "Płynne rysowanie"
 
-#: ../app/tools/gimppaintoptions-gui.c:392
+#: ../app/tools/gimppaintoptions-gui.c:399
 msgid "Weight"
 msgstr "Waga"
 
@@ -13578,11 +13574,11 @@ msgstr "Bazowe zaznaczenie na wszystkich widocznych warstwach"
 msgid "Selection criterion"
 msgstr "Kryterium zaznaczenia"
 
-#: ../app/tools/gimpregionselectoptions.c:203
+#: ../app/tools/gimpregionselectoptions.c:204
 msgid "Select transparent areas"
 msgstr "Z obszarami przezroczystymi"
 
-#: ../app/tools/gimpregionselectoptions.c:229
+#: ../app/tools/gimpregionselectoptions.c:226
 msgid "Select by:"
 msgstr "Zaznaczenie:"
 
@@ -13840,15 +13836,15 @@ msgstr "_Tekst"
 msgid "Reshape Text Layer"
 msgstr "Zmiana kształtu warstwy tekstowej"
 
-#: ../app/tools/gimptexttool.c:1508 ../app/tools/gimptexttool.c:1511
+#: ../app/tools/gimptexttool.c:1512 ../app/tools/gimptexttool.c:1515
 msgid "Confirm Text Editing"
 msgstr "Potwierdzenie modyfikacji tekstu"
 
-#: ../app/tools/gimptexttool.c:1515
+#: ../app/tools/gimptexttool.c:1519
 msgid "Create _New Layer"
 msgstr "Utwórz _nową warstwę"
 
-#: ../app/tools/gimptexttool.c:1539
+#: ../app/tools/gimptexttool.c:1543
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -16027,17 +16023,18 @@ msgid "Error saving XCF file: %s"
 msgstr "Błąd podczas zapisywania XCF: %s"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
-msgid "fuzzy"
-msgstr "rozmyty"
-
-#: ../data/tags/gimp-tags-default.xml.in.h:2
 msgid "round"
 msgstr "zaokrąglony"
 
-#: ../desktop/gimp.desktop.in.in.h:1
-msgid "Create images and edit photographs"
-msgstr "Tworzenie oraz obróbka obrazów i fotografii"
+#. fuzzy as in a feathered, blurred, unfocused, soft brush
+#: ../data/tags/gimp-tags-default.xml.in.h:3
+msgid "fuzzy"
+msgstr "rozmyty"
 
-#: ../desktop/gimp.desktop.in.in.h:3
+#: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Edytor obrazów"
+
+#: ../desktop/gimp.desktop.in.in.h:3
+msgid "Create images and edit photographs"
+msgstr "Tworzenie oraz obróbka obrazów i fotografii"
