@@ -27,6 +27,7 @@
 #include <unistd.h>
 #endif
 
+#include <babl/babl.h>
 #include <cairo.h>
 #include <glib-object.h>
 

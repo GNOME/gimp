@@ -27,6 +27,7 @@
 
 #include <lcms.h>
 
+#include <babl/babl.h>
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_QUARTZ

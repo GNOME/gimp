@@ -18,8 +18,9 @@
 
 #include "config.h"
 
-#include <gdk/gdkkeysyms.h>
+#include <babl/babl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
 

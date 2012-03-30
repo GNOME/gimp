@@ -24,7 +24,7 @@
 #include <stdlib.h>
 
 #include <cairo.h>
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"

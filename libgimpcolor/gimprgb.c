@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <babl/babl.h>
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -128,6 +129,58 @@ gimp_rgb_set_alpha (GimpRGB *rgb,
   g_return_if_fail (rgb != NULL);
 
   rgb->a = a;
+}
+
+/**
+ * gimp_rgb_set:
+ * @rgb:    a #GimpRGB struct
+ * @format: a Babl format
+ * @pixel:  pointer to the source pixel
+ *
+ * Sets the red, green and blue components of @rgb from the color
+ * stored in @pixel. The pixel format of @pixel is determined by
+ * @format.
+ *
+ * Since: GIMP 2.10
+ **/
+void
+gimp_rgb_set_pixel (GimpRGB       *rgb,
+                    const Babl    *format,
+                    gconstpointer  pixel)
+{
+  g_return_if_fail (rgb != NULL);
+  g_return_if_fail (format != NULL);
+  g_return_if_fail (pixel != NULL);
+
+  babl_process (babl_fish (format,
+                           babl_format ("R'G'B' double")),
+                pixel, rgb, 1);
+}
+
+/**
+ * gimp_rgb_get:
+ * @rgb:    a #GimpRGB struct
+ * @format: a Babl format
+ * @pixel:  pointer to the destination pixel
+ *
+ * Writes the red, green, blue and alpha components of @rgb to the
+ * color stored in @pixel. The pixel format of @pixel is determined by
+ * @format.
+ *
+ * Since: GIMP 2.10
+ **/
+void
+gimp_rgb_get_pixel (const GimpRGB *rgb,
+                    const Babl    *format,
+                    gpointer       pixel)
+{
+  g_return_if_fail (rgb != NULL);
+  g_return_if_fail (format != NULL);
+  g_return_if_fail (pixel != NULL);
+
+  babl_process (babl_fish (babl_format ("R'G'B' double"),
+                           format),
+                rgb, pixel, 1);
 }
 
 /**
@@ -382,6 +435,58 @@ gimp_rgb_composite (GimpRGB              *color1,
 }
 
 /*  RGBA functions  */
+
+/**
+ * gimp_rgba_set:
+ * @rgba:   a #GimpRGB struct
+ * @format: a Babl format
+ * @pixel:  pointer to the source pixel
+ *
+ * Sets the red, green, blue and alpha components of @rgba from the
+ * color stored in @pixel. The pixel format of @pixel is determined
+ * by @format.
+ *
+ * Since: GIMP 2.10
+ **/
+void
+gimp_rgba_set_pixel (GimpRGB       *rgba,
+                     const Babl    *format,
+                     gconstpointer  pixel)
+{
+  g_return_if_fail (rgba != NULL);
+  g_return_if_fail (format != NULL);
+  g_return_if_fail (pixel != NULL);
+
+  babl_process (babl_fish (format,
+                           babl_format ("R'G'B'A double")),
+                pixel, rgba, 1);
+}
+
+/**
+ * gimp_rgba_get:
+ * @rgba:   a #GimpRGB struct
+ * @format: a Babl format
+ * @pixel:  pointer to the destination pixel
+ *
+ * Writes the red, green, blue and alpha components of @rgba to the
+ * color stored in @pixel. The pixel format of @pixel is determined by
+ * @format.
+ *
+ * Since: GIMP 2.10
+ **/
+void
+gimp_rgba_get_pixel (const GimpRGB *rgba,
+                     const Babl    *format,
+                     gpointer       pixel)
+{
+  g_return_if_fail (rgba != NULL);
+  g_return_if_fail (format != NULL);
+  g_return_if_fail (pixel != NULL);
+
+  babl_process (babl_fish (babl_format ("R'G'B'A double"),
+                           format),
+                rgba, pixel, 1);
+}
 
 /**
  * gimp_rgba_set:

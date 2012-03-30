@@ -24,6 +24,7 @@
 
 #include <string.h>
 
+#include <babl/babl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"

@@ -22,7 +22,7 @@
 #include <errno.h>
 
 #include <cairo.h>
-#include <glib-object.h>
+#include <gegl.h>
 #include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"

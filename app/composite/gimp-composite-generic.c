@@ -26,6 +26,7 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <babl/babl.h>
 #include <cairo.h>
 #include <glib-object.h>
 

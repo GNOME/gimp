@@ -80,6 +80,13 @@ void      gimp_rgb_set             (GimpRGB       *rgb,
 void      gimp_rgb_set_alpha       (GimpRGB       *rgb,
                                     gdouble        alpha);
 
+void      gimp_rgb_set_pixel       (GimpRGB       *rgb,
+                                    const Babl    *format,
+                                    gconstpointer  pixel);
+void      gimp_rgb_get_pixel       (const GimpRGB *rgb,
+                                    const Babl    *format,
+                                    gpointer       pixel);
+
 void      gimp_rgb_set_uchar       (GimpRGB       *rgb,
                                     guchar         red,
                                     guchar         green,
@@ -137,6 +144,13 @@ void      gimp_rgba_set            (GimpRGB       *rgba,
                                     gdouble        green,
                                     gdouble        blue,
                                     gdouble        alpha);
+
+void      gimp_rgba_set_pixel      (GimpRGB       *rgba,
+                                    const Babl    *format,
+                                    gconstpointer  pixel);
+void      gimp_rgba_get_pixel      (const GimpRGB *rgba,
+                                    const Babl    *format,
+                                    gpointer       pixel);
 
 void      gimp_rgba_set_uchar      (GimpRGB       *rgba,
                                     guchar         red,

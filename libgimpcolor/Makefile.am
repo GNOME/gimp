@@ -52,6 +52,7 @@ AM_CPPFLAGS = \
 
 INCLUDES = \
 	-I$(top_srcdir)	\
+	$(BABL_CFLAGS)	\
 	$(CAIRO_CFLAGS)	\
 	$(GLIB_CFLAGS)	\
 	-I$(includedir)
@@ -107,6 +108,7 @@ libgimpcolor_2_0_la_DEPENDENCIES = \
 	$(libgimpbase)
 
 libgimpcolor_2_0_la_LIBADD = \
+	$(BABL_LIBS)	\
 	$(CAIRO_LIBS)	\
 	$(GLIB_LIBS)	\
 	$(libm)

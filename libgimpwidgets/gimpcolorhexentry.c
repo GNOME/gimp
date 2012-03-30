@@ -23,6 +23,7 @@
 
 #include <string.h>
 
+#include <babl/babl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 

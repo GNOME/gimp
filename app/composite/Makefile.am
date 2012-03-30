@@ -11,6 +11,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
+	$(BABL_CFLAGS)		\
 	$(CAIRO_CFLAGS)		\
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)

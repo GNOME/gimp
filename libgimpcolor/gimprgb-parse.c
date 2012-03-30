@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <babl/babl.h>
 #include <glib-object.h>
 
 #include "gimpcolortypes.h"
