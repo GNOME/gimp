@@ -54,17 +54,20 @@ filters_filter_cmd_callback (GtkAction   *action,
 
   active_tool = tool_manager_get_active (image->gimp);
 
-  if (! GIMP_IS_OPERATION_TOOL (active_tool))
+  if (G_TYPE_FROM_INSTANCE (active_tool) != GIMP_TYPE_OPERATION_TOOL)
     {
       GimpToolInfo *tool_info = gimp_get_tool_info (image->gimp,
                                                     "gimp-operation-tool");
 
       if (GIMP_IS_TOOL_INFO (tool_info))
-        {
-          gimp_context_set_tool (action_data_get_context (data), tool_info);
-          active_tool = tool_manager_get_active (image->gimp);
-        }
+        gimp_context_set_tool (action_data_get_context (data), tool_info);
     }
+  else
+    {
+      gimp_context_tool_changed (action_data_get_context (data));
+    }
+
+  active_tool = tool_manager_get_active (image->gimp);
 
   if (GIMP_IS_OPERATION_TOOL (active_tool))
     {
