@@ -27,6 +27,8 @@
 #include "base/tile-manager.h"
 #include "base/pixel-region.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
@@ -78,7 +80,8 @@ static void     gimp_source_core_motion          (GimpSourceCore   *source_core,
                                                   const GimpCoords *coords);
 #endif
 
-static gboolean gimp_source_core_real_get_source (GimpSourceCore   *source_core,
+static GeglBuffer *
+                gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
                                                   GimpPaintOptions *paint_options,
                                                   GimpPickable     *src_pickable,
@@ -88,8 +91,7 @@ static gboolean gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                                   gint             *paint_area_offset_x,
                                                   gint             *paint_area_offset_y,
                                                   gint             *paint_area_width,
-                                                  gint             *paint_area_height,
-                                                  PixelRegion      *srcPR);
+                                                  gint             *paint_area_height);
 
 static void    gimp_source_core_set_src_drawable (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable);
@@ -351,7 +353,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   GimpDynamicsOutput *opacity_output;
   GimpImage          *image        = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpPickable       *src_pickable = NULL;
-  PixelRegion         srcPR;
+  GeglBuffer         *src_buffer   = NULL;
   gint                src_offset_x;
   gint                src_offset_y;
   TempBuf            *paint_area;
@@ -409,8 +411,10 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   paint_area_width    = paint_area->width;
   paint_area_height   = paint_area->height;
 
-  if (options->use_source &&
-      ! GIMP_SOURCE_CORE_GET_CLASS (source_core)->get_source (source_core,
+  if (options->use_source)
+    {
+      src_buffer =
+        GIMP_SOURCE_CORE_GET_CLASS (source_core)->get_source (source_core,
                                                               drawable,
                                                               paint_options,
                                                               src_pickable,
@@ -420,10 +424,9 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                               &paint_area_offset_x,
                                                               &paint_area_offset_y,
                                                               &paint_area_width,
-                                                              &paint_area_height,
-                                                              &srcPR))
-    {
-      return;
+                                                              &paint_area_height);
+      if (! src_buffer)
+        return;
     }
 
   /*  Set the paint area to transparent  */
@@ -435,7 +438,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                     coords,
                                                     opacity,
                                                     src_pickable,
-                                                    &srcPR,
+                                                    src_buffer,
                                                     src_offset_x,
                                                     src_offset_y,
                                                     paint_area,
@@ -443,9 +446,12 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                     paint_area_offset_y,
                                                     paint_area_width,
                                                     paint_area_height);
+
+  if (src_buffer)
+    g_object_unref (src_buffer);
 }
 
-static gboolean
+static GeglBuffer *
 gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                   GimpDrawable     *drawable,
                                   GimpPaintOptions *paint_options,
@@ -456,13 +462,13 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                   gint             *paint_area_offset_x,
                                   gint             *paint_area_offset_y,
                                   gint             *paint_area_width,
-                                  gint             *paint_area_height,
-                                  PixelRegion      *srcPR)
+                                  gint             *paint_area_height)
 {
-  GimpSourceOptions *options   = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpImage         *image     = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpImage         *src_image = gimp_pickable_get_image (src_pickable);
-  TileManager       *src_tiles = gimp_pickable_get_tiles (src_pickable);
+  GimpSourceOptions *options    = GIMP_SOURCE_OPTIONS (paint_options);
+  GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpImage         *src_image  = gimp_pickable_get_image (src_pickable);
+  GeglBuffer        *src_buffer = gimp_pickable_get_buffer (src_pickable);
+  GeglBuffer        *dest_buffer;
   gint               x, y;
   gint               width, height;
 
@@ -471,8 +477,8 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                   paint_area->width,
                                   paint_area->height,
                                   0, 0,
-                                  tile_manager_width  (src_tiles),
-                                  tile_manager_height (src_tiles),
+                                  gegl_buffer_get_width  (src_buffer),
+                                  gegl_buffer_get_height (src_buffer),
                                   &x, &y,
                                   &width, &height))
     {
@@ -488,9 +494,13 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
   if ((  options->sample_merged && (src_image                 != image)) ||
       (! options->sample_merged && (source_core->src_drawable != drawable)))
     {
-      pixel_region_init (srcPR, src_tiles,
-                         x, y, width, height,
-                         FALSE);
+      dest_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+                                     gimp_pickable_get_format (src_pickable));
+
+      gegl_buffer_copy (src_buffer,
+                        GIMP_GEGL_RECT (x, y, width, height),
+                        dest_buffer,
+                        GIMP_GEGL_RECT (0, 0, 0, 0));
     }
   else
     {
@@ -506,8 +516,12 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                                GIMP_DRAWABLE (src_pickable),
                                                x, y, width, height);
 
-      pixel_region_init_temp_buf (srcPR, orig,
-                                  0, 0, width, height);
+      dest_buffer =
+        gegl_buffer_linear_new_from_data (temp_buf_get_data (orig),
+                                          gimp_pickable_get_format (src_pickable),
+                                          GIMP_GEGL_RECT (0, 0, width, height),
+                                          orig->width * orig->bytes,
+                                          NULL, NULL);
     }
 
   *paint_area_offset_x = x - (paint_area->x + src_offset_x);
@@ -515,7 +529,7 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
   *paint_area_width    = width;
   *paint_area_height   = height;
 
-  return TRUE;
+  return dest_buffer;
 }
 
 static void

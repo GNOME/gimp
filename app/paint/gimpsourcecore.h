@@ -54,33 +54,32 @@ struct _GimpSourceCoreClass
 {
   GimpBrushCoreClass  parent_class;
 
-  gboolean (* get_source) (GimpSourceCore   *source_core,
-                           GimpDrawable     *drawable,
-                           GimpPaintOptions *paint_options,
-                           GimpPickable     *src_pickable,
-                           gint              src_offset_x,
-                           gint              src_offset_y,
-                           TempBuf          *paint_area,
-                           gint             *paint_area_offset_x,
-                           gint             *paint_area_offset_y,
-                           gint             *paint_area_width,
-                           gint             *paint_area_height,
-                           PixelRegion      *srcPR);
+  GeglBuffer * (* get_source) (GimpSourceCore   *source_core,
+                               GimpDrawable     *drawable,
+                               GimpPaintOptions *paint_options,
+                               GimpPickable     *src_pickable,
+                               gint              src_offset_x,
+                               gint              src_offset_y,
+                               TempBuf          *paint_area,
+                               gint             *paint_area_offset_x,
+                               gint             *paint_area_offset_y,
+                               gint             *paint_area_width,
+                               gint             *paint_area_height);
 
-  void     (*  motion)    (GimpSourceCore   *source_core,
-                           GimpDrawable     *drawable,
-                           GimpPaintOptions *paint_options,
-                           const GimpCoords *coords,
-                           gdouble           opacity,
-                           GimpPickable     *src_pickable,
-                           PixelRegion      *srcPR,
-                           gint              src_offset_x,
-                           gint              src_offset_y,
-                           TempBuf          *paint_area,
-                           gint              paint_area_offset_x,
-                           gint              paint_area_offset_y,
-                           gint              paint_area_width,
-                           gint              paint_area_height);
+  void         (*  motion)    (GimpSourceCore   *source_core,
+                               GimpDrawable     *drawable,
+                               GimpPaintOptions *paint_options,
+                               const GimpCoords *coords,
+                               gdouble           opacity,
+                               GimpPickable     *src_pickable,
+                               GeglBuffer       *src_buffer,
+                               gint              src_offset_x,
+                               gint              src_offset_y,
+                               TempBuf          *paint_area,
+                               gint              paint_area_offset_x,
+                               gint              paint_area_offset_y,
+                               gint              paint_area_width,
+                               gint              paint_area_height);
 };
 
 

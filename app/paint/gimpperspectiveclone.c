@@ -46,35 +46,32 @@
 #include "gimp-intl.h"
 
 
-static void     gimp_perspective_clone_finalize   (GObject          *object);
+static gboolean     gimp_perspective_clone_start      (GimpPaintCore    *paint_core,
+                                                       GimpDrawable     *drawable,
+                                                       GimpPaintOptions *paint_options,
+                                                       const GimpCoords *coords,
+                                                       GError          **error);
+static void         gimp_perspective_clone_paint      (GimpPaintCore    *paint_core,
+                                                       GimpDrawable     *drawable,
+                                                       GimpPaintOptions *paint_options,
+                                                       const GimpCoords *coords,
+                                                       GimpPaintState    paint_state,
+                                                       guint32           time);
 
-static gboolean gimp_perspective_clone_start      (GimpPaintCore    *paint_core,
-                                                   GimpDrawable     *drawable,
-                                                   GimpPaintOptions *paint_options,
-                                                   const GimpCoords *coords,
-                                                   GError          **error);
-static void     gimp_perspective_clone_paint      (GimpPaintCore    *paint_core,
-                                                   GimpDrawable     *drawable,
-                                                   GimpPaintOptions *paint_options,
-                                                   const GimpCoords *coords,
-                                                   GimpPaintState    paint_state,
-                                                   guint32           time);
+static GeglBuffer * gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
+                                                       GimpDrawable     *drawable,
+                                                       GimpPaintOptions *paint_options,
+                                                       GimpPickable     *src_pickable,
+                                                       gint              src_offset_x,
+                                                       gint              src_offset_y,
+                                                       TempBuf          *paint_area,
+                                                       gint             *paint_area_offset_x,
+                                                       gint             *paint_area_offset_y,
+                                                       gint             *paint_area_width,
+                                                       gint             *paint_area_height);
 
-static gboolean gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
-                                                   GimpDrawable     *drawable,
-                                                   GimpPaintOptions *paint_options,
-                                                   GimpPickable     *src_pickable,
-                                                   gint              src_offset_x,
-                                                   gint              src_offset_y,
-                                                   TempBuf          *paint_area,
-                                                   gint             *paint_area_offset_x,
-                                                   gint             *paint_area_offset_y,
-                                                   gint             *paint_area_width,
-                                                   gint             *paint_area_height,
-                                                   PixelRegion      *srcPR);
-
-static void     gimp_perspective_clone_get_matrix (GimpPerspectiveClone *clone,
-                                                   GimpMatrix3          *matrix);
+static void         gimp_perspective_clone_get_matrix (GimpPerspectiveClone *clone,
+                                                       GimpMatrix3          *matrix);
 
 
 G_DEFINE_TYPE (GimpPerspectiveClone, gimp_perspective_clone,
@@ -98,11 +95,8 @@ gimp_perspective_clone_register (Gimp                      *gimp,
 static void
 gimp_perspective_clone_class_init (GimpPerspectiveCloneClass *klass)
 {
-  GObjectClass        *object_class      = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass  *paint_core_class  = GIMP_PAINT_CORE_CLASS (klass);
   GimpSourceCoreClass *source_core_class = GIMP_SOURCE_CORE_CLASS (klass);
-
-  object_class->finalize        = gimp_perspective_clone_finalize;
 
   paint_core_class->start       = gimp_perspective_clone_start;
   paint_core_class->paint       = gimp_perspective_clone_paint;
@@ -121,20 +115,6 @@ gimp_perspective_clone_init (GimpPerspectiveClone *clone)
 
   gimp_matrix3_identity (&clone->transform);
   gimp_matrix3_identity (&clone->transform_inv);
-}
-
-static void
-gimp_perspective_clone_finalize (GObject *object)
-{
-  GimpPerspectiveClone *clone = GIMP_PERSPECTIVE_CLONE (object);
-
-  if (clone->src_area)
-    {
-      temp_buf_free (clone->src_area);
-      clone->src_area = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
@@ -271,7 +251,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
   g_object_notify (G_OBJECT (clone), "src-y");
 }
 
-static gboolean
+static GeglBuffer *
 gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                                    GimpDrawable     *drawable,
                                    GimpPaintOptions *paint_options,
@@ -282,8 +262,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                                    gint             *paint_area_offset_x,
                                    gint             *paint_area_offset_y,
                                    gint             *paint_area_width,
-                                   gint             *paint_area_height,
-                                   PixelRegion      *srcPR)
+                                   gint             *paint_area_height)
 {
   GimpPerspectiveClone *clone      = GIMP_PERSPECTIVE_CLONE (source_core);
   GimpPaintCore        *paint_core = GIMP_PAINT_CORE (source_core);
@@ -394,19 +373,8 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
       g_object_unref (temp_buffer);
     }
 
-  clone->src_area = temp_buf_resize (clone->src_area,
-                                     babl_format_get_bytes_per_pixel (src_format_alpha),
-                                     0, 0,
-                                     x2d - x1d, y2d - y1d);
-
-  dest_buffer =
-    gegl_buffer_linear_new_from_data (temp_buf_get_data (clone->src_area),
-                                      gimp_bpp_to_babl_format (clone->src_area->bytes),
-                                      GIMP_GEGL_RECT (0, 0,
-                                                      clone->src_area->width,
-                                                      clone->src_area->height),
-                                      clone->src_area->width * clone->src_area->bytes,
-                                      NULL, NULL);
+  dest_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2d - x1d, y2d - y1d),
+                                 src_format_alpha);
 
   gimp_perspective_clone_get_matrix (clone, &matrix);
 
@@ -431,12 +399,8 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   g_object_unref (affine);
 
   g_object_unref (orig_buffer);
-  g_object_unref (dest_buffer);
 
-  pixel_region_init_temp_buf (srcPR, clone->src_area,
-                              0, 0, x2d - x1d, y2d - y1d);
-
-  return TRUE;
+  return dest_buffer;
 }
 
 

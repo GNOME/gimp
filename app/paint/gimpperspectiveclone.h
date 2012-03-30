@@ -44,8 +44,6 @@ struct _GimpPerspectiveClone
 
   GimpMatrix3  transform;
   GimpMatrix3  transform_inv;
-
-  TempBuf     *src_area;
 };
 
 struct _GimpPerspectiveCloneClass

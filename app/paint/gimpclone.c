@@ -60,7 +60,7 @@ static void     gimp_clone_motion       (GimpSourceCore   *source_core,
                                          const GimpCoords *coords,
                                          gdouble           opacity,
                                          GimpPickable     *src_pickable,
-                                         PixelRegion      *srcPR,
+                                         GeglBuffer       *src_buffer,
                                          gint              src_offset_x,
                                          gint              src_offset_y,
                                          TempBuf          *paint_area,
@@ -148,7 +148,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                    const GimpCoords *coords,
                    gdouble           opacity,
                    GimpPickable     *src_pickable,
-                   PixelRegion      *srcPR,
+                   GeglBuffer       *src_buffer,
                    gint              src_offset_x,
                    gint              src_offset_y,
                    TempBuf          *paint_area,
@@ -170,33 +170,24 @@ gimp_clone_motion (GimpSourceCore   *source_core,
     {
     case GIMP_IMAGE_CLONE:
       {
-        const Babl  *fish;
-        PixelRegion  destPR;
-        gpointer     pr;
+        GeglBuffer *dest_buffer;
 
-        fish = babl_fish (gimp_pickable_get_format_with_alpha (src_pickable),
-                          gimp_drawable_get_format_with_alpha (drawable));
+        dest_buffer =
+          gegl_buffer_linear_new_from_data (temp_buf_get_data (paint_area),
+                                            gimp_drawable_get_format_with_alpha (drawable),
+                                            GIMP_GEGL_RECT (paint_area_offset_x, paint_area_offset_y,
+                                                            paint_area_width, paint_area_height),
+                                            paint_area->width *
+                                            paint_area->bytes,
+                                            NULL, NULL);
 
-        pixel_region_init_temp_buf (&destPR, paint_area,
-                                    paint_area_offset_x, paint_area_offset_y,
-                                    paint_area_width, paint_area_height);
+        gegl_buffer_copy (src_buffer,
+                          GIMP_GEGL_RECT (0, 0,
+                                          paint_area_width, paint_area_height),
+                          dest_buffer,
+                          NULL);
 
-        pr = pixel_regions_register (2, srcPR, &destPR);
-
-        for (; pr != NULL; pr = pixel_regions_process (pr))
-          {
-            guchar *s = srcPR->data;
-            guchar *d = destPR.data;
-            gint    y;
-
-            for (y = 0; y < destPR.h; y++)
-              {
-                babl_process (fish, s, d, destPR.w);
-
-                s += srcPR->rowstride;
-                d += destPR.rowstride;
-              }
-          }
+        g_object_unref (dest_buffer);
       }
       break;
 

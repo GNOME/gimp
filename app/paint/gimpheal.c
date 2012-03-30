@@ -31,6 +31,8 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
@@ -102,7 +104,7 @@ static void         gimp_heal_motion             (GimpSourceCore   *source_core,
                                                   const GimpCoords *coords,
                                                   gdouble           opacity,
                                                   GimpPickable     *src_pickable,
-                                                  PixelRegion      *srcPR,
+                                                  GeglBuffer       *src_buffer,
                                                   gint              src_offset_x,
                                                   gint              src_offset_y,
                                                   TempBuf          *paint_area,
@@ -440,7 +442,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   const GimpCoords *coords,
                   gdouble           opacity,
                   GimpPickable     *src_pickable,
-                  PixelRegion      *srcPR,
+                  GeglBuffer       *src_buffer,
                   gint              src_offset_x,
                   gint              src_offset_y,
                   TempBuf          *paint_area,
@@ -454,13 +456,10 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   GimpDynamics       *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
   GimpDynamicsOutput *hardness_output;
   GimpImage          *image      = gimp_item_get_image (GIMP_ITEM (drawable));
-  TempBuf            *src;
-  TempBuf            *temp;
-  PixelRegion         origPR;
-  PixelRegion         tempPR;
+  TempBuf            *src_temp_buf;
+  TempBuf            *dest_temp_buf;
+  PixelRegion         srcPR;
   PixelRegion         destPR;
-  const Babl         *format;
-  const Babl         *format_alpha;
   const TempBuf      *mask_buf;
   gdouble             fade_point;
   gdouble             hardness;
@@ -481,106 +480,89 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                              GIMP_BRUSH_HARD,
                                              hardness);
 
-  format       = gimp_pickable_get_format (src_pickable);
-  format_alpha = gimp_pickable_get_format_with_alpha (src_pickable);
+  /* copy the source buffer because we are going to modify it */
+  {
+    GeglBuffer *tmp;
 
-  /* we need the source area with alpha and we modify it, so make a copy */
-  src = temp_buf_new (srcPR->w, srcPR->h,
-                      babl_format_get_bytes_per_pixel (format_alpha),
-                      0, 0, NULL);
+    src_temp_buf = temp_buf_new (gegl_buffer_get_width (src_buffer),
+                                 gegl_buffer_get_height (src_buffer),
+                                 gimp_drawable_bytes_with_alpha (drawable),
+                                 0, 0, NULL);
 
-  pixel_region_init_temp_buf (&tempPR, src, 0, 0, src->width, src->height);
+    tmp =
+      gegl_buffer_linear_new_from_data (temp_buf_get_data (src_temp_buf),
+                                        gimp_drawable_get_format_with_alpha (drawable),
+                                        GIMP_GEGL_RECT (0, 0,
+                                                        src_temp_buf->width,
+                                                        src_temp_buf->height),
+                                        src_temp_buf->width *
+                                        src_temp_buf->bytes,
+                                        NULL, NULL);
 
-  /*
-   * the effect of the following is to copy the contents of the source
-   * region to the "src" temp-buf, adding an alpha channel if necessary
-   */
-  if (babl_format_has_alpha (format))
-    copy_region (srcPR, &tempPR);
-  else
-    add_alpha_region (srcPR, &tempPR);
+    gegl_buffer_copy (src_buffer, NULL, tmp, NULL);
+    g_object_unref (tmp);
+  }
 
-  /* reinitialize srcPR */
-  pixel_region_init_temp_buf (srcPR, src, 0, 0, src->width, src->height);
+  {
+    GeglBuffer *tmp;
 
-  if (format_alpha != gimp_drawable_get_format_with_alpha (drawable))
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      TempBuf   *temp2;
-      gboolean   new_buf;
+    dest_temp_buf = temp_buf_new (paint_area->width,
+                                  paint_area->height,
+                                  gimp_drawable_bytes_with_alpha (drawable),
+                                  0, 0, NULL);
 
-      temp2 = gimp_image_transform_temp_buf (image,
-                                             gimp_drawable_type_with_alpha (drawable),
-                                             src, &new_buf);
+    tmp =
+      gegl_buffer_linear_new_from_data (temp_buf_get_data (dest_temp_buf),
+                                        gimp_drawable_get_format_with_alpha (drawable),
+                                        GIMP_GEGL_RECT (0, 0,
+                                                        dest_temp_buf->width,
+                                                        dest_temp_buf->height),
+                                        dest_temp_buf->width *
+                                        dest_temp_buf->bytes,
+                                        NULL, NULL);
 
-      if (new_buf)
-        temp_buf_free (src);
+    gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                      GIMP_GEGL_RECT (paint_area->x, paint_area->y,
+                                      paint_area->width, paint_area->height),
+                      tmp,
+                      GIMP_GEGL_RECT (0, 0, 0, 0));
+    g_object_unref (tmp);
+  }
 
-      src = temp2;
-    }
-
-  /* reinitialize srcPR */
-  pixel_region_init_temp_buf (srcPR, src, 0, 0, src->width, src->height);
-
-  /* FIXME: the area under the cursor and the source area should be x% larger
-   * than the brush size.  Otherwise the brush must be a lot bigger than the
-   * area to heal to get good results.  Having the user pick such a large brush
-   * is perhaps counter-intutitive?
-   */
-
-  pixel_region_init (&origPR, gimp_drawable_get_tiles (drawable),
-                     paint_area->x, paint_area->y,
-                     paint_area->width, paint_area->height, FALSE);
-
-  temp = temp_buf_new (origPR.w, origPR.h,
-                       gimp_drawable_bytes_with_alpha (drawable),
-                       0, 0, NULL);
-  pixel_region_init_temp_buf (&tempPR, temp, 0, 0, temp->width, temp->height);
-
-  if (gimp_drawable_has_alpha (drawable))
-    copy_region (&origPR, &tempPR);
-  else
-    add_alpha_region (&origPR, &tempPR);
-
-  /* reinitialize tempPR */
-  pixel_region_init_temp_buf (&tempPR, temp, 0, 0, temp->width, temp->height);
-
-  /* now tempPR holds the data under the cursor and
-   * srcPR holds the area to sample from
-   */
-
-  /* get the destination to paint to */
-  pixel_region_init_temp_buf (&destPR, paint_area,
-                              paint_area_offset_x, paint_area_offset_y,
-                              paint_area_width, paint_area_height);
-
-  /* check that srcPR, tempPR and destPR are the same size and tempPR is inside of layer */
-  if ((srcPR->w != tempPR.w) || (srcPR->w != destPR.w) ||
-      (srcPR->h != tempPR.h) || (srcPR->h != destPR.h) ||
-      (tempPR.w <= 0) ||
-      (tempPR.h <= 0))
+  /* check that srcPR, tempPR, destPR, and mask_buf are the same size */
+  if (src_temp_buf->width  != dest_temp_buf->width ||
+      src_temp_buf->height != dest_temp_buf->height)
     {
       /* this generally means that the source point has hit the edge of the
          layer, so it is not an error and we should not complain, just
          don't do anything */
 
-      temp_buf_free (src);
-      temp_buf_free (temp);
+      temp_buf_free (src_temp_buf);
+      temp_buf_free (dest_temp_buf);
 
       return;
     }
 
-  /* heal tempPR using srcPR */
-  gimp_heal_region (&tempPR, srcPR, mask_buf);
+  pixel_region_init_temp_buf (&srcPR, src_temp_buf,
+                              0, 0,
+                              mask_buf->width, mask_buf->height);
+  pixel_region_init_temp_buf (&destPR, dest_temp_buf,
+                              0, 0,
+                              mask_buf->width, mask_buf->height);
 
-  temp_buf_free (src);
+  /* heal destPR using srcPR */
+  gimp_heal_region (&destPR, &srcPR, mask_buf);
 
-  /* reinitialize tempPR */
-  pixel_region_init_temp_buf (&tempPR, temp, 0, 0, temp->width, temp->height);
+  pixel_region_init_temp_buf (&srcPR, dest_temp_buf,
+                              0, 0,
+                              mask_buf->width, mask_buf->height);
+  pixel_region_init_temp_buf (&destPR, paint_area,
+                              paint_area_offset_x,
+                              paint_area_offset_y,
+                              paint_area_width,
+                              paint_area_height);
 
-  copy_region (&tempPR, &destPR);
-
-  temp_buf_free (temp);
+  copy_region (&srcPR, &destPR);
 
   /* replace the canvas with our healed data */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
