@@ -464,7 +464,8 @@ gimp_spin_scale_change_value (GtkWidget *widget,
       gdouble fraction;
 
       fraction = x / (gdouble) width;
-      fraction = pow (fraction, private->gamma);
+      if (fraction > 0.0)
+        fraction = pow (fraction, private->gamma);
 
       value = fraction * (upper - lower) + lower;
     }
