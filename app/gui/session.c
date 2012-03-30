@@ -218,7 +218,12 @@ session_init (Gimp *gimp)
               else
                 {
                   g_object_unref (info);
-                  break;
+
+                  /* set token to left paren to we won't set another
+                   * error below, gimp_config_deserialize() already did
+                   */
+                  token = G_TOKEN_LEFT_PAREN;
+                  goto error;
                 }
             }
           else if (scanner->value.v_symbol == GINT_TO_POINTER (HIDE_DOCKS))
@@ -271,6 +276,8 @@ session_init (Gimp *gimp)
           break;
         }
     }
+
+ error:
 
   if (token != G_TOKEN_LEFT_PAREN)
     {
