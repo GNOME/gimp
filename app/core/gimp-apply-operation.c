@@ -28,6 +28,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimp-utils.h"
 #include "gimp-apply-operation.h"
 #include "gimpprogress.h"
 
@@ -92,9 +93,17 @@ gimp_apply_operation (GeglBuffer          *src_buffer,
         }
     }
 
+#ifdef GIMP_UNSTABLE
+  GIMP_TIMER_START ();
+#endif
+
   while (gegl_processor_work (processor, &value))
     if (progress)
       gimp_progress_set_value (progress, value);
+
+#ifdef GIMP_UNSTABLE
+  GIMP_TIMER_END (undo_desc ? undo_desc : "operation");
+#endif
 
   g_object_unref (processor);
 

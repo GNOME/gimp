@@ -30,7 +30,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
-#include "gimp-utils.h" /* temp for GIMP_TIMER */
+#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
@@ -434,10 +434,6 @@ gimp_drawable_scale (GimpItem              *item,
                                                      new_width, new_height),
                                      gimp_drawable_get_format (drawable));
 
-#ifdef GIMP_UNSTABLE
-  GIMP_TIMER_START ();
-#endif
-
   scale = g_object_new (GEGL_TYPE_NODE,
                         "operation", "gegl:scale",
                         NULL);
@@ -457,10 +453,6 @@ gimp_drawable_scale (GimpItem              *item,
                                            C_("undo-type", "Scale"),
                                            scale, new_buffer);
   g_object_unref (scale);
-
-#ifdef GIMP_UNSTABLE
-  GIMP_TIMER_END ("scaling");
-#endif
 
   gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
                                  new_buffer,
