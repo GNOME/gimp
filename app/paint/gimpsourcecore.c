@@ -24,8 +24,6 @@
 #include "paint-types.h"
 
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
-#include "base/pixel-region.h"
 
 #include "gegl/gimp-gegl-utils.h"
 

@@ -27,7 +27,6 @@
 
 #include "paint-types.h"
 
-#include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
 #include "gegl/gimp-gegl-utils.h"
