@@ -359,7 +359,8 @@ gimp_session_info_deserialize (GimpConfig *config,
                 if (GPOINTER_TO_INT (scanner->value.v_symbol) == SESSION_INFO_DOCK &&
                     info->p->factory_entry &&
                     info->p->factory_entry->identifier &&
-                    strcmp ("gimp-toolbox-window", info->p->factory_entry->identifier) == 0)
+                    strcmp ("gimp-toolbox-window",
+                            info->p->factory_entry->identifier) == 0)
                   {
                     dock_type = "gimp-toolbox";
                   }
@@ -407,6 +408,7 @@ gimp_session_info_deserialize (GimpConfig *config,
    * sessionrc file from GIMP <= 2.6 and add a toolbox dock manually
    */
   if (! info->p->docks &&
+      info->p->factory_entry &&
       strcmp ("gimp-toolbox-window",
               info->p->factory_entry->identifier) == 0)
     {
