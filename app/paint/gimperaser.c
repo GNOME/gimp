@@ -110,14 +110,11 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   GimpDynamics       *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
   GimpDynamicsOutput *opacity_output;
   GimpDynamicsOutput *force_output;
-  GimpImage          *image;
   gdouble             fade_point;
   gdouble             opacity;
   TempBuf            *area;
   guchar              col[MAX_CHANNELS];
   gdouble             force;
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   opacity_output = gimp_dynamics_get_output (dynamics,
                                              GIMP_DYNAMICS_OUTPUT_OPACITY);
@@ -138,8 +135,9 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   if (! area)
     return;
 
-  gimp_image_get_background (image, context, gimp_drawable_type (drawable),
-                             col);
+  gimp_context_get_background_pixel (context,
+                                     gimp_drawable_get_format_with_alpha (drawable),
+                                     col);
 
   /*  color the pixels  */
   color_pixels (temp_buf_get_data (area), col,

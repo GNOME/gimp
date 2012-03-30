@@ -332,14 +332,6 @@ void            gimp_image_inc_instance_count    (GimpImage          *image);
 
 /*  color transforms / utilities  */
 
-void            gimp_image_get_foreground        (const GimpImage    *image,
-                                                  GimpContext        *context,
-                                                  GimpImageType       dest_type,
-                                                  guchar             *fg);
-void            gimp_image_get_background        (const GimpImage    *image,
-                                                  GimpContext        *context,
-                                                  GimpImageType       dest_type,
-                                                  guchar             *bg);
 void            gimp_image_transform_rgb         (const GimpImage    *dest_image,
                                                   GimpImageType       dest_type,
                                                   const GimpRGB      *rgb,

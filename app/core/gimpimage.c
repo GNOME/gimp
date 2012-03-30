@@ -2634,40 +2634,6 @@ gimp_image_inc_instance_count (GimpImage *image)
 /*  color transforms / utilities  */
 
 void
-gimp_image_get_foreground (const GimpImage *image,
-                           GimpContext     *context,
-                           GimpImageType    dest_type,
-                           guchar          *fg)
-{
-  GimpRGB color;
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (fg != NULL);
-
-  gimp_context_get_foreground (context, &color);
-
-  gimp_image_transform_rgb (image, dest_type, &color, fg);
-}
-
-void
-gimp_image_get_background (const GimpImage *image,
-                           GimpContext     *context,
-                           GimpImageType    dest_type,
-                           guchar          *bg)
-{
-  GimpRGB color;
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (bg != NULL);
-
-  gimp_context_get_background (context, &color);
-
-  gimp_image_transform_rgb (image, dest_type, &color, bg);
-}
-
-void
 gimp_image_transform_rgb (const GimpImage *dest_image,
                           GimpImageType    dest_type,
                           const GimpRGB   *rgb,

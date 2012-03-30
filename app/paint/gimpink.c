@@ -246,17 +246,14 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                  const GimpCoords *coords,
                  guint32           time)
 {
-  GimpInk        *ink     = GIMP_INK (paint_core);
-  GimpInkOptions *options = GIMP_INK_OPTIONS (paint_options);
-  GimpContext    *context = GIMP_CONTEXT (paint_options);
-  GimpImage      *image;
+  GimpInk        *ink        = GIMP_INK (paint_core);
+  GimpInkOptions *options    = GIMP_INK_OPTIONS (paint_options);
+  GimpContext    *context    = GIMP_CONTEXT (paint_options);
   GimpBlob       *blob_union = NULL;
   GimpBlob       *blob_to_render;
   TempBuf        *area;
   guchar          col[MAX_CHANNELS];
   PixelRegion     blob_maskPR;
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (! ink->last_blob)
     {
@@ -302,8 +299,9 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   if (! area)
     return;
 
-  gimp_image_get_foreground (image, context, gimp_drawable_type (drawable),
-                             col);
+  gimp_context_get_foreground_pixel (context,
+                                     gimp_drawable_get_format_with_alpha (drawable),
+                                     col);
 
   /*  color the pixels  */
   color_pixels (temp_buf_get_data (paint_core->canvas_buf), col,

@@ -191,8 +191,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
     {
       /* otherwise fill the area with the foreground color */
 
-      gimp_image_get_foreground (image, context, gimp_drawable_type (drawable),
-                                 pixel);
+      gimp_context_get_foreground_pixel (context,
+                                         gimp_drawable_get_format_with_alpha (drawable),
+                                         pixel);
 
       color_pixels (temp_buf_get_data (area), pixel,
                     area->width * area->height,
