@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "widgets-types.h"
 
@@ -54,6 +55,7 @@ struct _GimpSpinScalePrivate
   gboolean     scale_limits_set;
   gdouble      scale_lower;
   gdouble      scale_upper;
+  gdouble      gamma;
 
   PangoLayout *layout;
   gboolean     changing_value;
@@ -459,6 +461,7 @@ gimp_spin_scale_change_value (GtkWidget *widget,
       gdouble fraction;
 
       fraction = x / (gdouble) width;
+      fraction = pow (fraction, private->gamma);
 
       value = fraction * (upper - lower) + lower;
     }
@@ -582,6 +585,7 @@ static void
 gimp_spin_scale_value_changed (GtkSpinButton *spin_button)
 {
   GtkAdjustment *adjustment = gtk_spin_button_get_adjustment (spin_button);
+  GimpSpinScalePrivate *private = GET_PRIVATE (spin_button);
   gdouble        lower;
   gdouble        upper;
   gdouble        value;
@@ -590,8 +594,9 @@ gimp_spin_scale_value_changed (GtkSpinButton *spin_button)
 
   value = CLAMP (gtk_adjustment_get_value (adjustment), lower, upper);
 
+
   gtk_entry_set_progress_fraction (GTK_ENTRY (spin_button),
-                                   (value - lower) / (upper - lower));
+                  pow((value - lower) / (upper - lower), 1.0/private->gamma));
 }
 
 
@@ -632,8 +637,34 @@ gimp_spin_scale_set_scale_limits (GimpSpinScale *scale,
   private->scale_limits_set = TRUE;
   private->scale_lower      = lower;
   private->scale_upper      = upper;
+  private->gamma            = 1.0;
 
   gimp_spin_scale_value_changed (spin_button);
+}
+
+void
+gimp_spin_scale_set_gamma (GimpSpinScale *scale,
+                           gdouble        gamma)
+{
+  GimpSpinScalePrivate *private;
+
+  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
+
+  private = GET_PRIVATE (scale);
+
+  private->gamma = gamma;
+}
+
+gdouble
+gimp_spin_scale_get_gamma (GimpSpinScale *scale)
+{
+  GimpSpinScalePrivate *private;
+
+  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
+
+  private = GET_PRIVATE (scale);
+
+  return private->gamma;
 }
 
 void
@@ -671,4 +702,3 @@ gimp_spin_scale_get_scale_limits (GimpSpinScale *scale,
 
   return private->scale_limits_set;
 }
-
