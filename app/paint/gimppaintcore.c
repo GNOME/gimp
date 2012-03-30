@@ -148,26 +148,7 @@ gimp_paint_core_class_init (GimpPaintCoreClass *klass)
 static void
 gimp_paint_core_init (GimpPaintCore *core)
 {
-  core->ID               = global_core_ID++;
-
-  core->undo_desc        = NULL;
-
-  core->distance         = 0.0;
-  core->pixel_dist       = 0.0;
-  core->x1               = 0;
-  core->y1               = 0;
-  core->x2               = 0;
-  core->y2               = 0;
-
-  core->use_saved_proj   = FALSE;
-
-  core->undo_buffer      = NULL;
-  core->saved_proj_tiles = NULL;
-  core->canvas_tiles     = NULL;
-
-  core->orig_buf         = NULL;
-  core->orig_proj_buf    = NULL;
-  core->canvas_buf       = NULL;
+  core->ID = global_core_ID++;
 }
 
 static void
@@ -388,20 +369,19 @@ gimp_paint_core_start (GimpPaintCore     *core,
   core->undo_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
   /*  Allocate the saved proj structure  */
-  if (core->saved_proj_tiles)
-    tile_manager_unref (core->saved_proj_tiles);
-
-  core->saved_proj_tiles = NULL;
+  if (core->saved_proj_buffer)
+    {
+      g_object_unref (core->saved_proj_buffer);
+      core->saved_proj_buffer = NULL;
+    }
 
   if (core->use_saved_proj)
     {
       GimpImage    *image    = gimp_item_get_image (item);
       GimpPickable *pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
-      TileManager  *tiles    = gimp_pickable_get_tiles (pickable);
+      GeglBuffer   *buffer   = gimp_pickable_get_buffer (pickable);
 
-      core->saved_proj_tiles = tile_manager_new (tile_manager_width (tiles),
-                                                 tile_manager_height (tiles),
-                                                 tile_manager_bpp (tiles));
+      core->saved_proj_buffer = gimp_gegl_buffer_dup (buffer);
     }
 
   /*  Allocate the canvas blocks structure  */
@@ -490,10 +470,10 @@ gimp_paint_core_finish (GimpPaintCore *core,
   g_object_unref (core->undo_buffer);
   core->undo_buffer = NULL;
 
-  if (core->saved_proj_tiles)
+  if (core->saved_proj_buffer)
     {
-      tile_manager_unref (core->saved_proj_tiles);
-      core->saved_proj_tiles = NULL;
+      g_object_unref (core->saved_proj_buffer);
+      core->saved_proj_buffer = NULL;
     }
 
   gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
@@ -533,10 +513,10 @@ gimp_paint_core_cancel (GimpPaintCore *core,
   g_object_unref (core->undo_buffer);
   core->undo_buffer = NULL;
 
-  if (core->saved_proj_tiles)
+  if (core->saved_proj_buffer)
     {
-      tile_manager_unref (core->saved_proj_tiles);
-      core->saved_proj_tiles = NULL;
+      g_object_unref (core->saved_proj_buffer);
+      core->saved_proj_buffer = NULL;
     }
 
   gimp_drawable_update (drawable, x, y, width, height);
@@ -555,10 +535,10 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
       core->undo_buffer = NULL;
     }
 
-  if (core->saved_proj_tiles)
+  if (core->saved_proj_buffer)
     {
-      tile_manager_unref (core->saved_proj_tiles);
-      core->saved_proj_tiles = NULL;
+      g_object_unref (core->saved_proj_buffer);
+      core->saved_proj_buffer = NULL;
     }
 
   if (core->canvas_tiles)
@@ -762,23 +742,15 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
                                gint           width,
                                gint           height)
 {
-  TileManager  *src_tiles;
-  PixelRegion   srcPR;
-  PixelRegion   destPR;
-  Tile         *saved_tile;
-  gboolean      release_tile;
-  gint          h;
-  gint          pixelwidth;
+  GeglBuffer   *pickable_buffer;
+  GeglBuffer   *orig_buffer;
   const Babl   *pickable_format;
   gint          pickable_width;
   gint          pickable_height;
-  const guchar *s;
-  guchar       *d;
-  gpointer      pr;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
-  g_return_val_if_fail (core->saved_proj_tiles != NULL, NULL);
+  g_return_val_if_fail (core->saved_proj_buffer != NULL, NULL);
 
   pickable_format = gimp_pickable_get_format (pickable);
 
@@ -786,10 +758,10 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
                                          babl_format_get_bytes_per_pixel (pickable_format),
                                          x, y, width, height);
 
-  src_tiles = gimp_pickable_get_tiles (pickable);
+  pickable_buffer = gimp_pickable_get_buffer (pickable);
 
-  pickable_width  = tile_manager_width  (src_tiles);
-  pickable_height = tile_manager_height (src_tiles);
+  pickable_width  = gegl_buffer_get_width  (pickable_buffer);
+  pickable_height = gegl_buffer_get_height (pickable_buffer);
 
   gimp_rectangle_intersect (x, y,
                             width, height,
@@ -798,57 +770,24 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
                             &x, &y,
                             &width, &height);
 
-  /*  configure the pixel regions  */
-  pixel_region_init (&srcPR, src_tiles,
-                     x, y, width, height,
-                     FALSE);
+  orig_buffer =
+    gegl_buffer_linear_new_from_data (core->orig_proj_buf->data,
+                                      gimp_pickable_get_format (pickable),
+                                      GIMP_GEGL_RECT (x - core->orig_proj_buf->x,
+                                                      y - core->orig_proj_buf->y,
+                                                      width, height),
+                                      core->orig_proj_buf->width *
+                                      core->orig_proj_buf->bytes,
+                                      NULL, NULL);
 
-  pixel_region_init_temp_buf (&destPR, core->orig_proj_buf,
-                              x - core->orig_proj_buf->x,
-                              y - core->orig_proj_buf->y,
-                              width, height);
+  gegl_buffer_copy (core->saved_proj_buffer,
+                    GIMP_GEGL_RECT (x, y, width, height),
+                    orig_buffer,
+                    GIMP_GEGL_RECT (x - core->orig_proj_buf->x,
+                                    y - core->orig_proj_buf->y,
+                                    width, height));
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      /*  If the saved tile corresponding to this location is valid, use it  */
-      saved_tile = tile_manager_get_tile (core->saved_proj_tiles,
-                                          srcPR.x, srcPR.y,
-                                          FALSE, FALSE);
-
-      if (tile_is_valid (saved_tile))
-        {
-          release_tile = TRUE;
-
-          saved_tile = tile_manager_get_tile (core->saved_proj_tiles,
-                                              srcPR.x, srcPR.y,
-                                              TRUE, FALSE);
-          s = tile_data_pointer (saved_tile, srcPR.x, srcPR.y);
-        }
-      else
-        {
-          release_tile = FALSE;
-
-          s = srcPR.data;
-        }
-
-      d = destPR.data;
-
-      pixelwidth = srcPR.w * srcPR.bytes;
-
-      h = srcPR.h;
-      while (h --)
-        {
-          memcpy (d, s, pixelwidth);
-
-          s += srcPR.rowstride;
-          d += destPR.rowstride;
-        }
-
-      if (release_tile)
-        tile_release (saved_tile, FALSE);
-    }
+  g_object_unref (orig_buffer);
 
   return core->orig_proj_buf;
 }
@@ -864,32 +803,6 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 {
   GeglBuffer *base_buffer = NULL;
   GeglBuffer *canvas_buffer;
-
-  if (core->use_saved_proj)
-    {
-      GimpImage      *image      = gimp_item_get_image (GIMP_ITEM (drawable));
-      GimpProjection *projection = gimp_image_get_projection (image);
-      gint            off_x;
-      gint            off_y;
-      gint            x, y;
-      gint            w, h;
-
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-      if (gimp_rectangle_intersect (core->canvas_buf->x + off_x,
-                                    core->canvas_buf->y + off_y,
-                                    core->canvas_buf->width,
-                                    core->canvas_buf->height,
-                                    0, 0,
-                                    tile_manager_width (core->saved_proj_tiles),
-                                    tile_manager_height (core->saved_proj_tiles),
-                                    &x, &y, &w, &h))
-        {
-          gimp_paint_core_validate_saved_proj_tiles (core,
-                                                     GIMP_PICKABLE (projection),
-                                                     x, y, w, h);
-        }
-    }
 
   /*  If the mode is CONSTANT:
    *   combine the canvas buf, the paint mask to the canvas tiles
@@ -1175,40 +1088,6 @@ paint_mask_to_canvas_buf (GimpPaintCore *core,
 
   /*  apply the mask  */
   apply_mask_to_region (&srcPR, paint_maskPR, paint_opacity * 255.999);
-}
-
-void
-gimp_paint_core_validate_saved_proj_tiles (GimpPaintCore *core,
-                                           GimpPickable  *pickable,
-                                           gint           x,
-                                           gint           y,
-                                           gint           w,
-                                           gint           h)
-{
-  gint i, j;
-
-  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
-  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
-  g_return_if_fail (core->saved_proj_tiles != NULL);
-
-  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
-    {
-      for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-        {
-          Tile *dest_tile = tile_manager_get_tile (core->saved_proj_tiles,
-                                                   j, i, FALSE, FALSE);
-
-          if (! tile_is_valid (dest_tile))
-            {
-              Tile *src_tile =
-                tile_manager_get_tile (gimp_pickable_get_tiles (pickable),
-                                       j, i, TRUE, FALSE);
-
-              tile_manager_map_tile (core->saved_proj_tiles, j, i, src_tile);
-              tile_release (src_tile, FALSE);
-            }
-        }
-    }
 }
 
 void

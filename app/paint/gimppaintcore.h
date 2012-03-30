@@ -36,32 +36,32 @@ struct _GimpPaintCore
 {
   GimpObject   parent_instance;
 
-  gint         ID;               /*  unique instance ID                  */
+  gint         ID;                /*  unique instance ID                  */
 
-  gchar       *undo_desc;        /*  undo description                    */
+  gchar       *undo_desc;         /*  undo description                    */
 
-  GimpCoords   start_coords;     /*  starting coords (for undo only)     */
+  GimpCoords   start_coords;      /*  starting coords (for undo only)     */
 
-  GimpCoords   cur_coords;       /*  current coords                      */
-  GimpCoords   last_coords;      /*  last coords                         */
+  GimpCoords   cur_coords;        /*  current coords                      */
+  GimpCoords   last_coords;       /*  last coords                         */
 
-  GimpVector2  last_paint;       /*  last point that was painted         */
+  GimpVector2  last_paint;        /*  last point that was painted         */
 
-  gdouble      distance;         /*  distance traveled by brush          */
-  gdouble      pixel_dist;       /*  distance in pixels                  */
+  gdouble      distance;          /*  distance traveled by brush          */
+  gdouble      pixel_dist;        /*  distance in pixels                  */
 
-  gint         x1, y1;           /*  undo extents in image coords        */
-  gint         x2, y2;           /*  undo extents in image coords        */
+  gint         x1, y1;            /*  undo extents in image coords        */
+  gint         x2, y2;            /*  undo extents in image coords        */
 
-  gboolean     use_saved_proj;   /*  keep the unmodified proj around     */
+  gboolean     use_saved_proj;    /*  keep the unmodified proj around     */
 
-  GeglBuffer  *undo_buffer;      /*  pixels which have been modified     */
-  TileManager *saved_proj_tiles; /*  proj tiles which have been modified */
-  TileManager *canvas_tiles;     /*  the buffer to paint the mask to     */
+  GeglBuffer  *undo_buffer;       /*  pixels which have been modified     */
+  GeglBuffer  *saved_proj_buffer; /*  proj tiles which have been modified */
+  TileManager *canvas_tiles;      /*  the buffer to paint the mask to     */
 
-  TempBuf     *orig_buf;         /*  the unmodified drawable pixels      */
-  TempBuf     *orig_proj_buf;    /*  the unmodified projection pixels    */
-  TempBuf     *canvas_buf;       /*  the buffer to paint pixels to       */
+  TempBuf     *orig_buf;          /*  the unmodified drawable pixels      */
+  TempBuf     *orig_proj_buf;     /*  the unmodified projection pixels    */
+  TempBuf     *canvas_buf;        /*  the buffer to paint pixels to       */
 
   GArray      *stroke_buffer;
 };
@@ -184,12 +184,6 @@ void      gimp_paint_core_replace           (GimpPaintCore            *core,
                                              gdouble                   image_opacity,
                                              GimpPaintApplicationMode  mode);
 
-void      gimp_paint_core_validate_saved_proj_tiles (GimpPaintCore    *core,
-                                                     GimpPickable     *pickable,
-                                                     gint              x,
-                                                     gint              y,
-                                                     gint              w,
-                                                     gint              h);
 void      gimp_paint_core_validate_canvas_tiles     (GimpPaintCore    *core,
                                                      gint              x,
                                                      gint              y,
