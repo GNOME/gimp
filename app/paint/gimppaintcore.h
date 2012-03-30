@@ -57,7 +57,7 @@ struct _GimpPaintCore
 
   GeglBuffer  *undo_buffer;       /*  pixels which have been modified     */
   GeglBuffer  *saved_proj_buffer; /*  proj tiles which have been modified */
-  TileManager *canvas_tiles;      /*  the buffer to paint the mask to     */
+  GeglBuffer  *canvas_buffer;     /*  the buffer to paint the mask to     */
 
   TempBuf     *orig_buf;          /*  the unmodified drawable pixels      */
   TempBuf     *orig_proj_buf;     /*  the unmodified projection pixels    */
@@ -183,12 +183,6 @@ void      gimp_paint_core_replace           (GimpPaintCore            *core,
                                              gdouble                   paint_opacity,
                                              gdouble                   image_opacity,
                                              GimpPaintApplicationMode  mode);
-
-void      gimp_paint_core_validate_canvas_tiles     (GimpPaintCore    *core,
-                                                     gint              x,
-                                                     gint              y,
-                                                     gint              w,
-                                                     gint              h);
 
 void      gimp_paint_core_smooth_coords             (GimpPaintCore    *core,
                                                      GimpPaintOptions *paint_options,

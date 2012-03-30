@@ -28,8 +28,6 @@
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
-#include "base/tile.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -385,12 +383,15 @@ gimp_paint_core_start (GimpPaintCore     *core,
     }
 
   /*  Allocate the canvas blocks structure  */
-  if (core->canvas_tiles)
-    tile_manager_unref (core->canvas_tiles);
+  if (core->canvas_buffer)
+    g_object_unref (core->canvas_buffer);
 
-  core->canvas_tiles = tile_manager_new (gimp_item_get_width  (item),
-                                         gimp_item_get_height (item),
-                                         1);
+  core->canvas_buffer =
+    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                          gimp_item_get_width  (item),
+                                          gimp_item_get_height (item)),
+                          babl_format ("Y u8"));
+  gegl_buffer_clear (core->canvas_buffer, NULL);
 
   /*  Get the initial undo extents  */
 
@@ -541,10 +542,10 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
       core->saved_proj_buffer = NULL;
     }
 
-  if (core->canvas_tiles)
+  if (core->canvas_buffer)
     {
-      tile_manager_unref (core->canvas_tiles);
-      core->canvas_tiles = NULL;
+      g_object_unref (core->canvas_buffer);
+      core->canvas_buffer = NULL;
     }
 
   if (core->orig_buf)
@@ -812,15 +813,9 @@ gimp_paint_core_paste (GimpPaintCore            *core,
       /* Some tools (ink) paint the mask to paint_core->canvas_tiles
        * directly. Don't need to copy it in this case.
        */
-      if (paint_maskPR->tiles != core->canvas_tiles)
+      if (paint_maskPR->tiles !=
+          gimp_gegl_buffer_get_tiles (core->canvas_buffer))
         {
-          /*  initialize any invalid canvas tiles  */
-          gimp_paint_core_validate_canvas_tiles (core,
-                                                 core->canvas_buf->x,
-                                                 core->canvas_buf->y,
-                                                 core->canvas_buf->width,
-                                                 core->canvas_buf->height);
-
           paint_mask_to_canvas_tiles (core, paint_maskPR, paint_opacity);
         }
 
@@ -900,23 +895,18 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 
   if (mode == GIMP_PAINT_CONSTANT)
     {
-      /* Some tools (ink) paint the mask to paint_core->canvas_tiles
+      /* Some tools (ink) paint the mask to paint_core->canvas_buffer
        * directly. Don't need to copy it in this case.
        */
-      if (paint_maskPR->tiles != core->canvas_tiles)
+      if (paint_maskPR->tiles !=
+          gimp_gegl_buffer_get_tiles (core->canvas_buffer))
         {
-          /*  initialize any invalid canvas tiles  */
-          gimp_paint_core_validate_canvas_tiles (core,
-                                                 core->canvas_buf->x,
-                                                 core->canvas_buf->y,
-                                                 core->canvas_buf->width,
-                                                 core->canvas_buf->height);
-
           /* combine the paint mask and the canvas tiles */
           paint_mask_to_canvas_tiles (core, paint_maskPR, paint_opacity);
 
           /* initialize the maskPR from the canvas tiles */
-          pixel_region_init (paint_maskPR, core->canvas_tiles,
+          pixel_region_init (paint_maskPR,
+                             gimp_gegl_buffer_get_tiles (core->canvas_buffer),
                              core->canvas_buf->x,
                              core->canvas_buf->y,
                              core->canvas_buf->width,
@@ -1042,7 +1032,8 @@ canvas_tiles_to_canvas_buf (GimpPaintCore *core)
                               core->canvas_buf->width,
                               core->canvas_buf->height);
 
-  pixel_region_init (&maskPR, core->canvas_tiles,
+  pixel_region_init (&maskPR,
+                     gimp_gegl_buffer_get_tiles (core->canvas_buffer),
                      core->canvas_buf->x,
                      core->canvas_buf->y,
                      core->canvas_buf->width,
@@ -1061,7 +1052,8 @@ paint_mask_to_canvas_tiles (GimpPaintCore *core,
   PixelRegion srcPR;
 
   /*   combine the paint mask and the canvas tiles  */
-  pixel_region_init (&srcPR, core->canvas_tiles,
+  pixel_region_init (&srcPR,
+                     gimp_gegl_buffer_get_tiles (core->canvas_buffer),
                      core->canvas_buf->x,
                      core->canvas_buf->y,
                      core->canvas_buf->width,
@@ -1089,34 +1081,3 @@ paint_mask_to_canvas_buf (GimpPaintCore *core,
   /*  apply the mask  */
   apply_mask_to_region (&srcPR, paint_maskPR, paint_opacity * 255.999);
 }
-
-void
-gimp_paint_core_validate_canvas_tiles (GimpPaintCore *core,
-                                       gint           x,
-                                       gint           y,
-                                       gint           w,
-                                       gint           h)
-{
-  gint i, j;
-
-  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
-  g_return_if_fail (core->canvas_tiles != NULL);
-
-  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
-    {
-      for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-        {
-          Tile *tile = tile_manager_get_tile (core->canvas_tiles, j, i,
-                                              FALSE, FALSE);
-
-          if (! tile_is_valid (tile))
-            {
-              tile = tile_manager_get_tile (core->canvas_tiles, j, i,
-                                            TRUE, TRUE);
-              memset (tile_data_pointer (tile, 0, 0), 0, tile_size (tile));
-              tile_release (tile, TRUE);
-            }
-        }
-    }
-}
-

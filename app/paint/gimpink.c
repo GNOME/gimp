@@ -30,6 +30,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -307,14 +309,9 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   color_pixels (temp_buf_get_data (paint_core->canvas_buf), col,
                 area->width * area->height, area->bytes);
 
-  gimp_paint_core_validate_canvas_tiles (paint_core,
-                                         paint_core->canvas_buf->x,
-                                         paint_core->canvas_buf->y,
-                                         paint_core->canvas_buf->width,
-                                         paint_core->canvas_buf->height);
-
   /*  draw the blob directly to the canvas_tiles  */
-  pixel_region_init (&blob_maskPR, paint_core->canvas_tiles,
+  pixel_region_init (&blob_maskPR,
+                     gimp_gegl_buffer_get_tiles (paint_core->canvas_buffer),
                      paint_core->canvas_buf->x,
                      paint_core->canvas_buf->y,
                      paint_core->canvas_buf->width,
@@ -324,7 +321,8 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   render_blob (blob_to_render, &blob_maskPR);
 
   /*  draw the canvas_buf using the just rendered canvas_tiles as mask */
-  pixel_region_init (&blob_maskPR, paint_core->canvas_tiles,
+  pixel_region_init (&blob_maskPR,
+                     gimp_gegl_buffer_get_tiles (paint_core->canvas_buffer),
                      paint_core->canvas_buf->x,
                      paint_core->canvas_buf->y,
                      paint_core->canvas_buf->width,
