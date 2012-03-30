@@ -140,6 +140,7 @@ gimp_spin_scale_init (GimpSpinScale *scale)
   gtk_entry_set_alignment (GTK_ENTRY (scale), 1.0);
   gtk_entry_set_has_frame (GTK_ENTRY (scale), FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (scale), TRUE);
+  gimp_spin_scale_set_gamma (scale, 1.0);
 }
 
 static void
