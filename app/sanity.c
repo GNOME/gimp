@@ -351,7 +351,7 @@ sanity_check_babl (void)
 
 #define BABL_REQUIRED_MAJOR 0
 #define BABL_REQUIRED_MINOR 1
-#define BABL_REQUIRED_MICRO 6
+#define BABL_REQUIRED_MICRO 8
 
   babl_get_version (&babl_major_version,
                     &babl_minor_version,
