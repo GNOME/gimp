@@ -3,6 +3,7 @@
  *
  * gimpspinscale.c
  * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ *               2012 Øyvind Kolås    <pippin@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -660,7 +661,7 @@ gimp_spin_scale_get_gamma (GimpSpinScale *scale)
 {
   GimpSpinScalePrivate *private;
 
-  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
+  g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
 
   private = GET_PRIVATE (scale);
 
