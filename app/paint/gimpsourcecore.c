@@ -504,24 +504,19 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
     }
   else
     {
-      TempBuf *orig;
-
       /*  get the original image  */
       if (options->sample_merged)
-        orig = gimp_paint_core_get_orig_proj (GIMP_PAINT_CORE (source_core),
-                                              src_pickable,
-                                              x, y, width, height);
+        dest_buffer =
+          gimp_paint_core_get_orig_proj (GIMP_PAINT_CORE (source_core),
+                                         src_pickable,
+                                         x, y, width, height);
       else
-        orig = gimp_paint_core_get_orig_image (GIMP_PAINT_CORE (source_core),
-                                               GIMP_DRAWABLE (src_pickable),
-                                               x, y, width, height);
+        dest_buffer =
+          gimp_paint_core_get_orig_image (GIMP_PAINT_CORE (source_core),
+                                          GIMP_DRAWABLE (src_pickable),
+                                          x, y, width, height);
 
-      dest_buffer =
-        gegl_buffer_linear_new_from_data (temp_buf_get_data (orig),
-                                          gimp_pickable_get_format (src_pickable),
-                                          GIMP_GEGL_RECT (0, 0, width, height),
-                                          orig->width * orig->bytes,
-                                          NULL, NULL);
+      g_object_ref (dest_buffer);
     }
 
   *paint_area_offset_x = x - (paint_area->x + src_offset_x);

@@ -59,8 +59,8 @@ struct _GimpPaintCore
   GeglBuffer  *saved_proj_buffer; /*  proj tiles which have been modified */
   GeglBuffer  *canvas_buffer;     /*  the buffer to paint the mask to     */
 
-  TempBuf     *orig_buf;          /*  the unmodified drawable pixels      */
-  TempBuf     *orig_proj_buf;     /*  the unmodified projection pixels    */
+  GeglBuffer  *orig_buf;          /*  the unmodified drawable pixels      */
+  GeglBuffer  *orig_proj_buf;     /*  the unmodified projection pixels    */
   TempBuf     *canvas_buf;        /*  the buffer to paint pixels to       */
 
   GArray      *stroke_buffer;
@@ -153,17 +153,17 @@ void      gimp_paint_core_round_line                (GimpPaintCore    *core,
 
 /*  protected functions  */
 
-TempBuf * gimp_paint_core_get_paint_area            (GimpPaintCore    *core,
+TempBuf    * gimp_paint_core_get_paint_area         (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *options,
                                                      const GimpCoords *coords);
-TempBuf * gimp_paint_core_get_orig_image            (GimpPaintCore    *core,
+GeglBuffer * gimp_paint_core_get_orig_image         (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      gint              x,
                                                      gint              y,
                                                      gint              width,
                                                      gint              height);
-TempBuf * gimp_paint_core_get_orig_proj             (GimpPaintCore    *core,
+GeglBuffer * gimp_paint_core_get_orig_proj          (GimpPaintCore    *core,
                                                      GimpPickable     *pickable,
                                                      gint              x,
                                                      gint              y,

@@ -316,12 +316,6 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   if (!(xmax - xmin) || !(ymax - ymin))
     return FALSE;
 
-  /*  copy the original image to a buffer, adding alpha if needed  */
-
-  orig_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
-                                                 xmax - xmin, ymax - ymin),
-                                 src_format_alpha);
-
   /*  If the source image is different from the destination,
    *  then we should copy straight from the source image
    *  to the canvas.
@@ -331,6 +325,10 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   if ((  options->sample_merged && (src_image                 != image)) ||
       (! options->sample_merged && (source_core->src_drawable != drawable)))
     {
+      orig_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+                                                     xmax - xmin, ymax - ymin),
+                                     src_format_alpha);
+
       gegl_buffer_copy (src_buffer,
                         GIMP_GEGL_RECT (xmin, ymin,
                                         xmax - xmin, ymax - ymin),
@@ -339,42 +337,26 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
     }
   else
     {
-      TempBuf    *orig;
-      GeglBuffer *temp_buffer;
-
       /*  get the original image  */
       if (options->sample_merged)
-        orig = gimp_paint_core_get_orig_proj (paint_core,
-                                              src_pickable,
-                                              xmin, ymin,
-                                              xmax - xmin,
-                                              ymax - ymin);
+        orig_buffer = gimp_paint_core_get_orig_proj (paint_core,
+                                                     src_pickable,
+                                                     xmin, ymin,
+                                                     xmax - xmin,
+                                                     ymax - ymin);
       else
-        orig = gimp_paint_core_get_orig_image (paint_core,
-                                               GIMP_DRAWABLE (src_pickable),
-                                               xmin, ymin,
-                                               xmax - xmin,
-                                               ymax - ymin);
+        orig_buffer = gimp_paint_core_get_orig_image (paint_core,
+                                                      GIMP_DRAWABLE (src_pickable),
+                                                      xmin, ymin,
+                                                      xmax - xmin,
+                                                      ymax - ymin);
 
-      temp_buffer =
-        gegl_buffer_linear_new_from_data (temp_buf_get_data (orig),
-                                          gimp_bpp_to_babl_format (orig->bytes),
-                                          GIMP_GEGL_RECT (0, 0,
-                                                          orig->width,
-                                                          orig->height),
-                                          orig->width * orig->bytes,
-                                          NULL, NULL);
-
-      gegl_buffer_copy (temp_buffer,
-                        GIMP_GEGL_RECT (0, 0, xmax - xmin, ymax - ymin),
-                        orig_buffer,
-                        NULL);
-
-      g_object_unref (temp_buffer);
+      g_object_ref (orig_buffer);
     }
 
   dest_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2d - x1d, y2d - y1d),
                                  src_format_alpha);
+  gegl_buffer_clear (dest_buffer, NULL);
 
   gimp_perspective_clone_get_matrix (clone, &matrix);
 
