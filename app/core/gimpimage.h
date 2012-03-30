@@ -332,10 +332,6 @@ void            gimp_image_inc_instance_count    (GimpImage          *image);
 
 /*  color transforms / utilities  */
 
-void            gimp_image_transform_rgb         (const GimpImage    *dest_image,
-                                                  GimpImageType       dest_type,
-                                                  const GimpRGB      *rgb,
-                                                  guchar             *color);
 TempBuf       * gimp_image_transform_temp_buf    (const GimpImage    *dest_image,
                                                   GimpImageType       dest_type,
                                                   TempBuf            *temp_buf,

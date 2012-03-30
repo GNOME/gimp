@@ -2633,27 +2633,6 @@ gimp_image_inc_instance_count (GimpImage *image)
 
 /*  color transforms / utilities  */
 
-void
-gimp_image_transform_rgb (const GimpImage *dest_image,
-                          GimpImageType    dest_type,
-                          const GimpRGB   *rgb,
-                          guchar          *color)
-{
-  const Babl *dest_format;
-  guchar      col[4];
-
-  g_return_if_fail (GIMP_IS_IMAGE (dest_image));
-  g_return_if_fail (rgb != NULL);
-  g_return_if_fail (color != NULL);
-
-  dest_format = gimp_image_get_format_with_alpha (dest_image, dest_type);
-
-  gimp_rgba_get_uchar (rgb, &col[0], &col[1], &col[2], &col[3]);
-
-  babl_process (babl_fish (babl_format ("R'G'B'A u8"), dest_format),
-                col, color, 1);
-}
-
 TempBuf *
 gimp_image_transform_temp_buf (const GimpImage *dest_image,
                                GimpImageType    dest_type,

@@ -165,8 +165,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       opacity *= gradient_color.a;
       gimp_rgb_set_alpha (&gradient_color, GIMP_OPACITY_OPAQUE);
 
-      gimp_image_transform_rgb (image, gimp_drawable_type (drawable),
-                                &gradient_color, pixel);
+      gimp_rgba_get_pixel (&gradient_color,
+                           gimp_drawable_get_format_with_alpha (drawable),
+                           pixel);
 
       color_pixels (temp_buf_get_data (area), pixel,
                     area->width * area->height,
