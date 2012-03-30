@@ -97,6 +97,22 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                 spec->default_value,
                                 pspec->flags);
     }
+  else if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
+    {
+      GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (pspec);
+      GParamSpecDouble    *spec = G_PARAM_SPEC_DOUBLE (pspec);
+
+      return gegl_param_spec_double (pspec->name,
+                                     g_param_spec_get_nick (pspec),
+                                     g_param_spec_get_blurb (pspec),
+                                     spec->minimum,
+                                     spec->maximum,
+                                     spec->default_value,
+                                     gspec->ui_minimum,
+                                     gspec->ui_maximum,
+                                     gspec->ui_gamma,
+                                     pspec->flags);
+    }
   else if (G_IS_PARAM_SPEC_DOUBLE (pspec))
     {
       GParamSpecDouble *spec = G_PARAM_SPEC_DOUBLE (pspec);
@@ -120,6 +136,21 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                  spec->maximum,
                                  spec->default_value,
                                  pspec->flags);
+    }
+  else if (GEGL_IS_PARAM_SPEC_INT (pspec))
+    {
+      GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (pspec);
+      GParamSpecInt *spec = G_PARAM_SPEC_INT (pspec);
+
+      return gegl_param_spec_int (pspec->name,
+                                  g_param_spec_get_nick (pspec),
+                                  g_param_spec_get_blurb (pspec),
+                                  spec->minimum,
+                                  spec->maximum,
+                                  spec->default_value,
+                                  gspec->ui_minimum,
+                                  gspec->ui_maximum,
+                                  pspec->flags);
     }
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {

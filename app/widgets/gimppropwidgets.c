@@ -25,6 +25,7 @@
 #include <stdlib.h>
 
 #include <gegl.h>
+#include <gegl-paramspecs.h>
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -506,6 +507,19 @@ gimp_prop_spin_scale_new (GObject     *config,
   scale = gimp_spin_scale_new (GTK_ADJUSTMENT (adjustment), label, digits);
 
   set_param_spec (G_OBJECT (adjustment), scale, param_spec);
+
+  if (GEGL_IS_PARAM_SPEC_DOUBLE (param_spec))
+    {
+      GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (param_spec);
+      gimp_spin_scale_set_scale_limits (scale, gspec->ui_minimum, gspec->ui_maximum);
+    }
+
+  if (GEGL_IS_PARAM_SPEC_INT (param_spec))
+    {
+      GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (param_spec);
+      gimp_spin_scale_set_scale_limits (scale, gspec->ui_minimum, gspec->ui_maximum);
+    }
+
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_prop_adjustment_callback),
