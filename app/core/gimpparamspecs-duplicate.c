@@ -150,6 +150,7 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                   spec->default_value,
                                   gspec->ui_minimum,
                                   gspec->ui_maximum,
+                                  gspec->ui_gamma,
                                   pspec->flags);
     }
   else if (G_IS_PARAM_SPEC_INT (pspec))
