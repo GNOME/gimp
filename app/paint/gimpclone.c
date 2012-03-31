@@ -48,35 +48,26 @@
 #include "gimp-intl.h"
 
 
-static gboolean gimp_clone_start        (GimpPaintCore    *paint_core,
-                                         GimpDrawable     *drawable,
-                                         GimpPaintOptions *paint_options,
-                                         const GimpCoords *coords,
-                                         GError          **error);
+static gboolean   gimp_clone_start  (GimpPaintCore    *paint_core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     const GimpCoords *coords,
+                                     GError          **error);
 
-static void     gimp_clone_motion       (GimpSourceCore   *source_core,
-                                         GimpDrawable     *drawable,
-                                         GimpPaintOptions *paint_options,
-                                         const GimpCoords *coords,
-                                         gdouble           opacity,
-                                         GimpPickable     *src_pickable,
-                                         GeglBuffer       *src_buffer,
-                                         gint              src_offset_x,
-                                         gint              src_offset_y,
-                                         TempBuf          *paint_area,
-                                         gint              paint_area_offset_x,
-                                         gint              paint_area_offset_y,
-                                         gint              paint_area_width,
-                                         gint              paint_area_height);
-
-static void     gimp_clone_line_pattern (GimpImage        *dest_image,
-                                         const Babl       *fish,
-                                         GimpPattern      *pattern,
-                                         guchar           *d,
-                                         gint              x,
-                                         gint              y,
-                                         gint              dest_bytes,
-                                         gint              width);
+static void       gimp_clone_motion (GimpSourceCore   *source_core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     const GimpCoords *coords,
+                                     gdouble           opacity,
+                                     GimpPickable     *src_pickable,
+                                     GeglBuffer       *src_buffer,
+                                     gint              src_offset_x,
+                                     gint              src_offset_y,
+                                     TempBuf          *paint_area,
+                                     gint              paint_area_offset_x,
+                                     gint              paint_area_offset_y,
+                                     gint              paint_area_width,
+                                     gint              paint_area_height);
 
 
 G_DEFINE_TYPE (GimpClone, gimp_clone, GIMP_TYPE_SOURCE_CORE)
@@ -163,25 +154,24 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   GimpContext        *context        = GIMP_CONTEXT (paint_options);
   GimpImage          *image          = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpDynamicsOutput *force_output;
+  GeglBuffer         *dest_buffer;
   gdouble             fade_point;
   gdouble             force;
+
+  dest_buffer =
+    gegl_buffer_linear_new_from_data (temp_buf_get_data (paint_area),
+                                      gimp_drawable_get_format_with_alpha (drawable),
+                                      GIMP_GEGL_RECT (0, 0,
+                                                      paint_area->width,
+                                                      paint_area->height),
+                                      paint_area->width *
+                                      paint_area->bytes,
+                                      NULL, NULL);
 
   switch (options->clone_type)
     {
     case GIMP_IMAGE_CLONE:
       {
-        GeglBuffer *dest_buffer;
-
-        dest_buffer =
-          gegl_buffer_linear_new_from_data (temp_buf_get_data (paint_area),
-                                            gimp_drawable_get_format_with_alpha (drawable),
-                                            GIMP_GEGL_RECT (0, 0,
-                                                            paint_area->width,
-                                                            paint_area->height),
-                                            paint_area->width *
-                                            paint_area->bytes,
-                                            NULL, NULL);
-
         gegl_buffer_copy (src_buffer,
                           GIMP_GEGL_RECT (0, 0,
                                           paint_area_width,
@@ -190,46 +180,31 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                           GIMP_GEGL_RECT (paint_area_offset_x,
                                           paint_area_offset_y,
                                           0, 0));
-
-        g_object_unref (dest_buffer);
       }
       break;
 
     case GIMP_PATTERN_CLONE:
       {
-        GimpPattern *pattern = gimp_context_get_pattern (context);
-        const Babl  *fish;
-        PixelRegion  destPR;
-        gpointer     pr;
+        /* XXX: move this to INIT */
+        GimpPattern *pattern    = gimp_context_get_pattern (context);
+        GeglBuffer  *src_buffer = gimp_pattern_create_buffer (pattern);
 
-        fish = babl_fish (gimp_bpp_to_babl_format (pattern->mask->bytes),
-                          gimp_drawable_get_format_with_alpha (drawable));
+        gegl_buffer_set_pattern (dest_buffer,
+                                 GIMP_GEGL_RECT (paint_area_offset_x,
+                                                 paint_area_offset_y,
+                                                 paint_area_width,
+                                                 paint_area_height),
+                                 src_buffer,
+                                 - paint_area->x - src_offset_x,
+                                 - paint_area->y - src_offset_y);
 
-        pixel_region_init_temp_buf (&destPR, paint_area,
-                                    0, 0,
-                                    paint_area->width, paint_area->height);
-
-        pr = pixel_regions_register (1, &destPR);
-
-        for (; pr != NULL; pr = pixel_regions_process (pr))
-          {
-            guchar *d = destPR.data;
-            gint    y;
-
-            for (y = 0; y < destPR.h; y++)
-              {
-                gimp_clone_line_pattern (image, fish,
-                                         pattern, d,
-                                         paint_area->x     + src_offset_x,
-                                         paint_area->y + y + src_offset_y,
-                                         destPR.bytes, destPR.w);
-
-                d += destPR.rowstride;
-              }
-          }
+        /* XXX: move this to FINISH */
+        g_object_unref (src_buffer);
       }
       break;
     }
+
+  g_object_unref (dest_buffer);
 
   force_output = gimp_dynamics_get_output (GIMP_BRUSH_CORE (paint_core)->dynamics,
                                            GIMP_DYNAMICS_OUTPUT_FORCE);
@@ -259,38 +234,4 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                                 source_options->align_mode ==
                                 GIMP_SOURCE_ALIGN_FIXED ?
                                 GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
-}
-
-static void
-gimp_clone_line_pattern (GimpImage     *dest_image,
-                         const Babl    *fish,
-                         GimpPattern   *pattern,
-                         guchar        *d,
-                         gint           x,
-                         gint           y,
-                         gint           dest_bytes,
-                         gint           width)
-{
-  guchar *pat, *p;
-  gint    pat_bytes = pattern->mask->bytes;
-  gint    i;
-
-  /*  Make sure x, y are positive  */
-  while (x < 0)
-    x += pattern->mask->width;
-  while (y < 0)
-    y += pattern->mask->height;
-
-  /*  Get a pointer to the appropriate scanline of the pattern buffer  */
-  pat = temp_buf_get_data (pattern->mask) +
-    (y % pattern->mask->height) * pattern->mask->width * pat_bytes;
-
-  for (i = 0; i < width; i++)
-    {
-      p = pat + ((i + x) % pattern->mask->width) * pat_bytes;
-
-      babl_process (fish, p, d, 1);
-
-      d += dest_bytes;
-    }
 }
