@@ -220,13 +220,13 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
-    paint_core->canvas_buf = temp_buf_resize (paint_core->canvas_buf, bytes,
+    paint_core->paint_area = temp_buf_resize (paint_core->paint_area, bytes,
                                               x1, y1,
                                               (x2 - x1), (y2 - y1));
   else
     return NULL;
 
-  return paint_core->canvas_buf;
+  return paint_core->paint_area;
 }
 
 static GimpUndo *
@@ -306,27 +306,27 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                                      col);
 
   /*  color the pixels  */
-  color_pixels (temp_buf_get_data (paint_core->canvas_buf), col,
+  color_pixels (temp_buf_get_data (paint_core->paint_area), col,
                 area->width * area->height, area->bytes);
 
-  /*  draw the blob directly to the canvas_tiles  */
+  /*  draw the blob directly to the canvas_buffer  */
   pixel_region_init (&blob_maskPR,
                      gimp_gegl_buffer_get_tiles (paint_core->canvas_buffer),
-                     paint_core->canvas_buf->x,
-                     paint_core->canvas_buf->y,
-                     paint_core->canvas_buf->width,
-                     paint_core->canvas_buf->height,
+                     paint_core->paint_area->x,
+                     paint_core->paint_area->y,
+                     paint_core->paint_area->width,
+                     paint_core->paint_area->height,
                      TRUE);
 
   render_blob (blob_to_render, &blob_maskPR);
 
-  /*  draw the canvas_buf using the just rendered canvas_tiles as mask */
+  /*  draw the paint_area using the just rendered canvas_buffer as mask */
   pixel_region_init (&blob_maskPR,
                      gimp_gegl_buffer_get_tiles (paint_core->canvas_buffer),
-                     paint_core->canvas_buf->x,
-                     paint_core->canvas_buf->y,
-                     paint_core->canvas_buf->width,
-                     paint_core->canvas_buf->height,
+                     paint_core->paint_area->x,
+                     paint_core->paint_area->y,
+                     paint_core->paint_area->width,
+                     paint_core->paint_area->height,
                      FALSE);
 
   gimp_paint_core_paste (paint_core, &blob_maskPR, drawable,

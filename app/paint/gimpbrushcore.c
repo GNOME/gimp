@@ -829,11 +829,11 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
       bytes = gimp_drawable_bytes_with_alpha (drawable);
 
-      paint_core->canvas_buf = temp_buf_resize (paint_core->canvas_buf, bytes,
+      paint_core->paint_area = temp_buf_resize (paint_core->paint_area, bytes,
                                                 x1, y1,
                                                 (x2 - x1), (y2 - y1));
 
-      return paint_core->canvas_buf;
+      return paint_core->paint_area;
     }
 
   return NULL;
@@ -939,8 +939,8 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
 
       pixel_region_init_temp_buf (&brush_maskPR, (TempBuf *) brush_mask,
                                   off_x, off_y,
-                                  paint_core->canvas_buf->width,
-                                  paint_core->canvas_buf->height);
+                                  paint_core->paint_area->width,
+                                  paint_core->paint_area->height);
 
       gimp_paint_core_paste (paint_core, &brush_maskPR, drawable,
                              brush_opacity,
@@ -985,8 +985,8 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
 
       pixel_region_init_temp_buf (&brush_maskPR, (TempBuf *) brush_mask,
                                   off_x, off_y,
-                                  paint_core->canvas_buf->width,
-                                  paint_core->canvas_buf->height);
+                                  paint_core->paint_area->width,
+                                  paint_core->paint_area->height);
 
       gimp_paint_core_replace (paint_core, &brush_maskPR, drawable,
                                brush_opacity,

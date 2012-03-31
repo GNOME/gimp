@@ -247,12 +247,12 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   /*  DodgeBurn the region  */
   gimp_lut_process (dodgeburn->lut, &srcPR, &tempPR);
 
-  /* The dest is the paint area we got above (= canvas_buf) */
+  /* The dest is the paint area we got above (= paint_area) */
   pixel_region_init_temp_buf (&destPR, area,
                               0, 0, area->width, area->height);
 
   /* Now add an alpha to the dodgeburned region
-   * and put this in area = canvas_buf
+   * and put this in area = paint_area
    */
   if (! gimp_drawable_has_alpha (drawable))
     add_alpha_region (&tempPR, &destPR);
@@ -269,7 +269,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                                                     paint_options,
                                                     fade_point);
 
-  /* Replace the newly dodgedburned area (canvas_buf) to the image */
+  /* Replace the newly dodgedburned area (paint_area) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                   coords,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),

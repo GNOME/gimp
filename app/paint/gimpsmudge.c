@@ -325,7 +325,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                           area->width,
                           area->height);
 
-  /* The dest will be the paint area we got above (= canvas_buf) */
+  /* The dest will be the paint area we got above (= paint_area) */
   pixel_region_init_temp_buf (&destPR, area,
                               0, 0, area->width, area->height);
 
@@ -333,7 +333,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
    *  For each successive painthit Accum is built like this
    *    Accum =  rate*Accum  + (1-rate)*I.
    *  where I is the pixels under the current painthit.
-   *  Then the paint area (canvas_buf) is built as
+   *  Then the paint area (paint_area) is built as
    *    (Accum,1) (if no alpha),
    */
 
