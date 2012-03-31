@@ -202,27 +202,28 @@ GeglBuffer  *
 gimp_temp_buf_create_buffer (TempBuf    *temp_buf,
                              const Babl *format)
 {
-  TempBuf    *new;
   GeglBuffer *buffer;
-  gint        width, height;
+  gint        width, height, bytes;
 
   g_return_val_if_fail (temp_buf != NULL, NULL);
-  g_return_val_if_fail (format != NULL, NULL);
-  g_return_val_if_fail (babl_format_get_bytes_per_pixel (format) ==
+  g_return_val_if_fail (format == NULL ||
+                        babl_format_get_bytes_per_pixel (format) ==
                         temp_buf->bytes, NULL);
 
   width  = temp_buf->width;
   height = temp_buf->height;
+  bytes  = temp_buf->bytes;
 
-  new = temp_buf_copy (temp_buf, NULL);
+  if (! format)
+    format = gimp_bpp_to_babl_format (bytes);
 
-  buffer = gegl_buffer_linear_new_from_data (temp_buf_get_data (new),
+  buffer = gegl_buffer_linear_new_from_data (temp_buf_get_data (temp_buf),
                                              format,
                                              GIMP_GEGL_RECT (0, 0, width, height),
-                                             width * new->bytes,
-                                             (GDestroyNotify) temp_buf_free, new);
+                                             width * bytes,
+                                             NULL, NULL);
 
-  g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", new);
+  g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", temp_buf);
 
   return buffer;
 }
