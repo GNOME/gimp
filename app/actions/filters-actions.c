@@ -42,7 +42,7 @@ static const GimpStringActionEntry filters_actions[] =
   { "filters-pixelize", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Pixelize"), NULL,
     NC_("filters-action", "Simplify image into an array of solid-colored squares"),
-    "gegl:pixelise",
+    "gegl:pixelize",
     NULL /* FIXME GIMP_HELP_FILTER_PIXELIZE */ },
 
   { "filters-gaussian-blur", GIMP_STOCK_GEGL,
@@ -95,7 +95,8 @@ filters_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("filters-pixelize", writable && !children);
+  SET_SENSITIVE ("filters-pixelize",      writable && !children);
+  SET_SENSITIVE ("filters-gaussian-blur", writable && !children);
 
 #undef SET_SENSITIVE
 }
