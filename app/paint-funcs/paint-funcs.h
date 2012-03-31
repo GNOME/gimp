@@ -21,11 +21,6 @@
 
 /*  Paint functions  */
 
-void  color_pixels          (guchar       *dest,
-                             const guchar *color,
-                             guint         w,
-                             guint         bytes);
-
 void  blend_pixels          (const guchar *src1,
                              const guchar *src2,
                              guchar       *dest,
