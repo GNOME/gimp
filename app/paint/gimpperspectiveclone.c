@@ -29,6 +29,7 @@
 
 #include "base/temp-buf.h"
 
+#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
@@ -351,7 +352,6 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   gdouble               x1s, y1s, x2s, y2s, x3s, y3s, x4s, y4s;
   gint                  xmin, ymin, xmax, ymax;
   GimpMatrix3           matrix;
-  gchar                *matrix_string;
   GimpMatrix3           gegl_matrix;
 
   src_buffer       = gimp_pickable_get_buffer (src_pickable);
@@ -398,11 +398,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   gimp_matrix3_mult (&matrix, &gegl_matrix);
   gimp_matrix3_translate (&gegl_matrix, -x1d, -y1d);
 
-  matrix_string = gegl_matrix3_to_string ((GeglMatrix3 *) &gegl_matrix);
-  gegl_node_set (clone->transform_node,
-                 "transform", matrix_string,
-                 NULL);
-  g_free (matrix_string);
+  gimp_gegl_node_set_matrix (clone->transform_node, &gegl_matrix);
 
   gegl_node_set (clone->dest_node,
                  "buffer", dest_buffer,

@@ -319,3 +319,21 @@ gimp_gegl_node_set_layer_mode (GeglNode             *node,
                  "premultiplied", premultiplied,
                  NULL);
 }
+
+void
+gimp_gegl_node_set_matrix (GeglNode          *node,
+                           const GimpMatrix3 *matrix)
+{
+  gchar *matrix_string;
+
+  g_return_if_fail (GEGL_IS_NODE (node));
+  g_return_if_fail (matrix != NULL);
+
+  matrix_string = gegl_matrix3_to_string ((GeglMatrix3 *) matrix);
+
+  gegl_node_set (node,
+                 "transform", matrix_string,
+                 NULL);
+
+  g_free (matrix_string);
+}

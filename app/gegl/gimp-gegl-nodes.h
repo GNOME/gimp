@@ -48,6 +48,8 @@ GeglNode * gimp_gegl_add_buffer_source         (GeglNode             *parent,
 void       gimp_gegl_node_set_layer_mode       (GeglNode             *node,
                                                 GimpLayerModeEffects  mode,
                                                 gboolean              premultiplied);
+void       gimp_gegl_node_set_matrix           (GeglNode             *node,
+                                                const GimpMatrix3    *matrix);
 
 
 #endif /* __GIMP_GEGL_NODES_H__ */
