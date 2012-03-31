@@ -107,7 +107,6 @@ noise_spread_RC = noise-spread.rc.o
 nova_RC = nova.rc.o
 oilify_RC = oilify.rc.o
 photocopy_RC = photocopy.rc.o
-pixelize_RC = pixelize.rc.o
 plasma_RC = plasma.rc.o
 plugin_browser_RC = plugin-browser.rc.o
 polar_coords_RC = polar-coords.rc.o

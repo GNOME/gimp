@@ -153,7 +153,6 @@ libexec_PROGRAMS = \
 	nova \
 	oilify \
 	photocopy \
-	pixelize \
 	plasma \
 	plugin-browser \
 	polar-coords \
@@ -2077,23 +2076,6 @@ photocopy_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(photocopy_RC)
-
-pixelize_SOURCES = \
-	pixelize.c
-
-pixelize_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(pixelize_RC)
 
 plasma_SOURCES = \
 	plasma.c

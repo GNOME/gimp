@@ -108,7 +108,6 @@
     'nova' => { ui => 1 },
     'oilify' => { ui => 1 },
     'photocopy' => { ui => 1 },
-    'pixelize' => { ui => 1 },
     'plasma' => { ui => 1 },
     'plugin-browser' => { ui => 1 },
     'polar-coords' => { ui => 1 },
