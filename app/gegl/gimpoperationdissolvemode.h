@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpoperationdissolvemode.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@
 #ifndef __GIMP_OPERATION_DISSOLVE_MODE_H__
 #define __GIMP_OPERATION_DISSOLVE_MODE_H__
 
-
-#include "gimpoperationpointlayermode.h"
-
-
 #define GIMP_TYPE_OPERATION_DISSOLVE_MODE            (gimp_operation_dissolve_mode_get_type ())
 #define GIMP_OPERATION_DISSOLVE_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_DISSOLVE_MODE, GimpOperationDissolveMode))
 #define GIMP_OPERATION_DISSOLVE_MODE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_DISSOLVE_MODE, GimpOperationDissolveModeClass))
@@ -36,14 +32,16 @@
 
 typedef struct _GimpOperationDissolveModeClass GimpOperationDissolveModeClass;
 
-struct _GimpOperationDissolveMode
-{
-  GimpOperationPointLayerMode  parent_instance;
-};
-
 struct _GimpOperationDissolveModeClass
 {
-  GimpOperationPointLayerModeClass  parent_class;
+  GeglOperationComposerClass parent_class;
+};
+
+struct _GimpOperationDissolveMode
+{
+  GeglOperationComposer parent_instance;
+
+  gboolean              premultiplied;
 };
 
 
