@@ -138,10 +138,12 @@ static void
 gimp_spin_scale_init (GimpSpinScale *scale)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (scale);
-  private->gamma = 1.0;
+
   gtk_entry_set_alignment (GTK_ENTRY (scale), 1.0);
   gtk_entry_set_has_frame (GTK_ENTRY (scale), FALSE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (scale), TRUE);
+
+  private->gamma = 1.0;
 }
 
 static void
@@ -600,7 +602,8 @@ gimp_spin_scale_value_changed (GtkSpinButton *spin_button)
 
 
   gtk_entry_set_progress_fraction (GTK_ENTRY (spin_button),
-                  pow((value - lower) / (upper - lower), 1.0/private->gamma));
+                                   pow ((value - lower) / (upper - lower),
+                                        1.0 / private->gamma));
 }
 
 

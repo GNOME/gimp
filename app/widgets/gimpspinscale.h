@@ -60,7 +60,7 @@ gboolean    gimp_spin_scale_get_scale_limits   (GimpSpinScale *scale,
 
 void        gimp_spin_scale_set_gamma          (GimpSpinScale *scale,
                                                 gdouble        gamma);
-
 gdouble     gimp_spin_scale_get_gamma          (GimpSpinScale *scale);
+
 
 #endif  /*  __GIMP_SPIN_SCALE_H__  */
