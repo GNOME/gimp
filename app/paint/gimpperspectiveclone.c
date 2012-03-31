@@ -174,12 +174,43 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
 
           source_core->first_stroke = TRUE;
         }
-      else if (options->align_mode == GIMP_SOURCE_ALIGN_NO)
+      else
         {
-          source_core->orig_src_x = source_core->src_x;
-          source_core->orig_src_y = source_core->src_y;
+          if (options->align_mode == GIMP_SOURCE_ALIGN_NO)
+            {
+              source_core->orig_src_x = source_core->src_x;
+              source_core->orig_src_y = source_core->src_y;
 
-          source_core->first_stroke = TRUE;
+              source_core->first_stroke = TRUE;
+            }
+
+          clone->node = gegl_node_new ();
+
+          g_object_set (clone->node,
+                        "dont-cache", TRUE,
+                        NULL);
+
+          clone->src_node =
+            gegl_node_new_child (clone->node,
+                                 "operation", "gegl:buffer-source",
+                                  NULL);
+
+          clone->transform_node =
+            gegl_node_new_child (clone->node,
+                                 "operation",  "gegl:transform",
+                                 "filter",     gimp_interpolation_to_gegl_filter (GIMP_INTERPOLATION_NONE),
+                                 "hard-edges", TRUE,
+                                 NULL);
+
+          clone->dest_node =
+            gegl_node_new_child (clone->node,
+                                 "operation", "gegl:write-buffer",
+                                 NULL);
+
+          gegl_node_link_many (clone->src_node,
+                               clone->transform_node,
+                               clone->dest_node,
+                               NULL);
         }
       break;
 
@@ -240,6 +271,14 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
+      if (clone->node)
+        {
+          g_object_unref (clone->node);
+          clone->node = NULL;
+          clone->src_node = NULL;
+          clone->transform_node = NULL;
+          clone->dest_node = NULL;
+        }
       break;
 
     default:
@@ -276,7 +315,6 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   GeglBuffer           *orig_buffer;
   GeglBuffer           *dest_buffer;
   GimpMatrix3           matrix;
-  GeglNode             *affine;
   gchar                *matrix_string;
   GimpMatrix3           gegl_matrix;
 
@@ -365,19 +403,19 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   gimp_matrix3_translate (&gegl_matrix, -x1d, -y1d);
 
   matrix_string = gegl_matrix3_to_string ((GeglMatrix3 *) &gegl_matrix);
-  affine = gegl_node_new_child (NULL,
-                                "operation",  "gegl:transform",
-                                "transform",  matrix_string,
-                                "filter",     gimp_interpolation_to_gegl_filter (GIMP_INTERPOLATION_LINEAR),
-                                "hard-edges", TRUE,
-                                NULL);
+  gegl_node_set (clone->transform_node,
+                 "transform", matrix_string,
+                 NULL);
   g_free (matrix_string);
 
-  gimp_apply_operation (orig_buffer, NULL, NULL,
-                        affine,
-                        dest_buffer, NULL);
+  gegl_node_set (clone->src_node,
+                 "buffer", orig_buffer,
+                 NULL);
+  gegl_node_set (clone->dest_node,
+                 "buffer", dest_buffer,
+                 NULL);
 
-  g_object_unref (affine);
+  gegl_node_process (clone->dest_node);
 
   g_object_unref (orig_buffer);
 
