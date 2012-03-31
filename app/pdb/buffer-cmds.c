@@ -225,7 +225,11 @@ buffer_get_bytes_invoker (GimpProcedure      *procedure,
       GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer)
-        bytes = gimp_buffer_get_bytes (buffer);
+        {
+          const Babl *format = gimp_buffer_get_format (buffer);
+
+          bytes = babl_format_get_bytes_per_pixel (format);
+        }
       else
         success = FALSE;
     }

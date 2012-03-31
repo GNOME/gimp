@@ -63,8 +63,8 @@ GimpBuffer    * gimp_buffer_new_from_pixbuf (GdkPixbuf        *pixbuf,
 
 gint            gimp_buffer_get_width       (const GimpBuffer *buffer);
 gint            gimp_buffer_get_height      (const GimpBuffer *buffer);
+const Babl    * gimp_buffer_get_format      (const GimpBuffer *buffer);
 
-gint            gimp_buffer_get_bytes       (const GimpBuffer *buffer);
 GimpImageType   gimp_buffer_get_image_type  (const GimpBuffer *buffer);
 GeglBuffer    * gimp_buffer_get_buffer      (const GimpBuffer *buffer);
 

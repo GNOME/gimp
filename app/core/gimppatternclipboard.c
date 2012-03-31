@@ -188,23 +188,23 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
 
   if (gimp->global_buffer)
     {
-      GimpBuffer    *buffer = gimp->global_buffer;
-      gint           width;
-      gint           height;
-      gint           bytes;
+      GimpBuffer *buffer = gimp->global_buffer;
+      const Babl *format = gimp_buffer_get_format (buffer);
+      gint        width;
+      gint        height;
+      gint        bytes;
 
       width  = MIN (gimp_buffer_get_width  (buffer), 512);
       height = MIN (gimp_buffer_get_height (buffer), 512);
-      bytes  = gimp_buffer_get_bytes (buffer);
+      bytes  = babl_format_get_bytes_per_pixel (format);
 
       pattern->mask = temp_buf_new (width, height, bytes, 0, 0, NULL);
 
       gegl_buffer_get (gimp_buffer_get_buffer (buffer),
-                       GIMP_GEGL_RECT (0,0,width,height), 1.0,
-                       gimp_bpp_to_babl_format (bytes),
+                       GIMP_GEGL_RECT (0, 0, width, height), 1.0,
+                       NULL,
                        temp_buf_get_data (pattern->mask),
-                       width * gimp_buffer_get_bytes (buffer),
-                       GEGL_ABYSS_NONE);
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
     }
   else
     {

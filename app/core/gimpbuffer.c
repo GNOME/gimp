@@ -196,19 +196,19 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                              gint          height)
 {
   GimpBuffer *buffer = GIMP_BUFFER (viewable);
+  const Babl *format = gimp_buffer_get_format (buffer);
   TempBuf    *preview;
 
-  preview = temp_buf_new (width, height, gimp_buffer_get_bytes (buffer),
+  preview = temp_buf_new (width, height,
+                          babl_format_get_bytes_per_pixel (format),
                           0, 0, NULL);
 
-  gegl_buffer_get (buffer->buffer,
-                   NULL,
-                   MIN ((gdouble) width / (gdouble) gimp_buffer_get_width (buffer),
+  gegl_buffer_get (buffer->buffer, NULL,
+                   MIN ((gdouble) width  / (gdouble) gimp_buffer_get_width (buffer),
                         (gdouble) height / (gdouble) gimp_buffer_get_height (buffer)),
-                   gimp_bpp_to_babl_format (gimp_buffer_get_bytes (buffer)),
+                   NULL,
                    temp_buf_get_data (preview),
-                   width * gimp_buffer_get_bytes (buffer),
-                   GEGL_ABYSS_NONE);
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   return preview;
 }
@@ -296,12 +296,12 @@ gimp_buffer_get_height (const GimpBuffer *buffer)
   return gegl_buffer_get_height (buffer->buffer);
 }
 
-gint
-gimp_buffer_get_bytes (const GimpBuffer *buffer)
+const Babl *
+gimp_buffer_get_format (const GimpBuffer *buffer)
 {
-  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
 
-  return GIMP_IMAGE_TYPE_BYTES (buffer->image_type);
+  return gegl_buffer_get_format (buffer->buffer);
 }
 
 GimpImageType
