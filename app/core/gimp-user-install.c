@@ -102,6 +102,7 @@ gimp_user_install_items[] =
   { "tmp",             USER_INSTALL_MKDIR },
   { "curves",          USER_INSTALL_MKDIR },
   { "levels",          USER_INSTALL_MKDIR },
+  { "filters",         USER_INSTALL_MKDIR },
   { "fractalexplorer", USER_INSTALL_MKDIR },
   { "gfig",            USER_INSTALL_MKDIR },
   { "gflare",          USER_INSTALL_MKDIR },
