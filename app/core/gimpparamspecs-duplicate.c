@@ -51,7 +51,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                               g_param_spec_get_blurb (pspec),
                                               GIMP_CONFIG_PATH_FILE,
                                               spec->default_value,
-                                              pspec->flags);
+                                              pspec->flags |
+                                              GIMP_CONFIG_PARAM_SERIALIZE);
         }
       else
         {
@@ -65,7 +66,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                      g_param_spec_get_nick (pspec),
                                      g_param_spec_get_blurb (pspec),
                                      spec->default_value,
-                                     pspec->flags);
+                                     pspec->flags |
+                                     GIMP_CONFIG_PARAM_SERIALIZE);
 
           if (GEGL_IS_PARAM_SPEC_MULTILINE (pspec))
             {
@@ -84,7 +86,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                    g_param_spec_get_nick (pspec),
                                    g_param_spec_get_blurb (pspec),
                                    spec->default_value,
-                                   pspec->flags);
+                                   pspec->flags |
+                                   GIMP_CONFIG_PARAM_SERIALIZE);
     }
   else if (G_IS_PARAM_SPEC_ENUM (pspec))
     {
@@ -95,7 +98,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                 g_param_spec_get_blurb (pspec),
                                 G_TYPE_FROM_CLASS (spec->enum_class),
                                 spec->default_value,
-                                pspec->flags);
+                                pspec->flags |
+                                GIMP_CONFIG_PARAM_SERIALIZE);
     }
   else if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
     {
@@ -111,7 +115,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                      gspec->ui_minimum,
                                      gspec->ui_maximum,
                                      gspec->ui_gamma,
-                                     pspec->flags);
+                                     pspec->flags |
+                                     GIMP_CONFIG_PARAM_SERIALIZE);
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (pspec))
     {
@@ -123,7 +128,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                   spec->minimum,
                                   spec->maximum,
                                   spec->default_value,
-                                  pspec->flags);
+                                  pspec->flags |
+                                  GIMP_CONFIG_PARAM_SERIALIZE);
     }
   else if (G_IS_PARAM_SPEC_FLOAT (pspec))
     {
@@ -135,7 +141,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                  spec->minimum,
                                  spec->maximum,
                                  spec->default_value,
-                                 pspec->flags);
+                                 pspec->flags |
+                                 GIMP_CONFIG_PARAM_SERIALIZE);
     }
   else if (GEGL_IS_PARAM_SPEC_INT (pspec))
     {
@@ -151,7 +158,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                   gspec->ui_minimum,
                                   gspec->ui_maximum,
                                   gspec->ui_gamma,
-                                  pspec->flags);
+                                  pspec->flags |
+                                  GIMP_CONFIG_PARAM_SERIALIZE);
     }
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {
@@ -163,7 +171,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                spec->minimum,
                                spec->maximum,
                                spec->default_value,
-                               pspec->flags);
+                               pspec->flags |
+                               GIMP_CONFIG_PARAM_SERIALIZE);
     }
   else if (G_IS_PARAM_SPEC_UINT (pspec))
     {
@@ -175,7 +184,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                 spec->minimum,
                                 spec->maximum,
                                 spec->default_value,
-                                pspec->flags);
+                                pspec->flags |
+                                GIMP_CONFIG_PARAM_SERIALIZE);
     }
   else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
     {
@@ -203,7 +213,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                   g_param_spec_get_blurb (pspec),
                                   TRUE,
                                   &gimp_color,
-                                  pspec->flags);
+                                  pspec->flags |
+                                  GIMP_CONFIG_PARAM_SERIALIZE);
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) ||
            G_IS_PARAM_SPEC_POINTER (pspec))
