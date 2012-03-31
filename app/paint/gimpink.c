@@ -204,9 +204,6 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
   gint     width, height;
   gint     dwidth, dheight;
   gint     x1, y1, x2, y2;
-  gint     bytes;
-
-  bytes = gimp_drawable_bytes_with_alpha (drawable);
 
   gimp_blob_bounds (ink->cur_blob, &x, &y, &width, &height);
 
@@ -220,13 +217,27 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
-    paint_core->paint_area = temp_buf_resize (paint_core->paint_area, bytes,
-                                              x1, y1,
-                                              (x2 - x1), (y2 - y1));
-  else
-    return NULL;
+    {
+      const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
+      gint        bytes  = babl_format_get_bytes_per_pixel (format);
 
-  return paint_core->paint_area;
+      paint_core->paint_area = temp_buf_resize (paint_core->paint_area, bytes,
+                                                x1, y1,
+                                                (x2 - x1), (y2 - y1));
+
+      paint_core->paint_buffer_x = x1;
+      paint_core->paint_buffer_y = y1;
+
+      if (paint_core->paint_buffer)
+        g_object_unref (paint_core->paint_buffer);
+
+      paint_core->paint_buffer =
+        gimp_temp_buf_create_buffer (paint_core->paint_area, format);
+
+      return paint_core->paint_area;
+    }
+
+  return NULL;
 }
 
 static GimpUndo *

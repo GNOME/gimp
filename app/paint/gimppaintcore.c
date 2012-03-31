@@ -553,6 +553,12 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
       temp_buf_free (core->paint_area);
       core->paint_area = NULL;
     }
+
+  if (core->paint_buffer)
+    {
+      g_object_unref (core->paint_buffer);
+      core->paint_buffer = NULL;
+    }
 }
 
 void
@@ -672,6 +678,30 @@ gimp_paint_core_get_paint_area (GimpPaintCore    *core,
 }
 
 GeglBuffer *
+gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
+                                  GimpDrawable     *drawable,
+                                  GimpPaintOptions *paint_options,
+                                  const GimpCoords *coords,
+                                  gint             *paint_buffer_x,
+                                  gint             *paint_buffer_y)
+{
+  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), NULL);
+  g_return_val_if_fail (coords != NULL, NULL);
+  g_return_val_if_fail (paint_buffer_x != NULL, NULL);
+  g_return_val_if_fail (paint_buffer_y != NULL, NULL);
+
+  gimp_paint_core_get_paint_area (core, drawable, paint_options, coords);
+
+  *paint_buffer_x = core->paint_buffer_x;
+  *paint_buffer_y = core->paint_buffer_y;
+
+  return core->paint_buffer;
+}
+
+GeglBuffer *
 gimp_paint_core_get_orig_image (GimpPaintCore *core)
 {
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
@@ -699,7 +729,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                        GimpPaintApplicationMode  mode)
 {
   GeglBuffer *base_buffer = NULL;
-  GeglBuffer *canvas_buffer;
+  gint        width, height;
 
   /*  If the mode is CONSTANT:
    *   combine the canvas buf, the paint mask to the canvas buffer
@@ -727,39 +757,33 @@ gimp_paint_core_paste (GimpPaintCore            *core,
       paint_mask_to_paint_area (core, paint_maskPR, paint_opacity);
     }
 
-  /*  intialize canvas buf source pixel regions  */
-  canvas_buffer =
-    gimp_temp_buf_create_buffer (core->paint_area,
-                                 gimp_drawable_get_format_with_alpha (drawable));
+  width  = gegl_buffer_get_width  (core->paint_buffer);
+  height = gegl_buffer_get_height (core->paint_buffer);
 
   /*  apply the paint area to the image  */
-  gimp_drawable_apply_buffer (drawable, canvas_buffer,
-                              GIMP_GEGL_RECT (0, 0,
-                                              core->paint_area->width,
-                                              core->paint_area->height),
+  gimp_drawable_apply_buffer (drawable,
+                              core->paint_buffer,
+                              GIMP_GEGL_RECT (0, 0, width, height),
                               FALSE, NULL,
                               image_opacity, paint_mode,
                               base_buffer, /*  specify an alternative src1  */
-                              core->paint_area->x,
-                              core->paint_area->y,
+                              core->paint_buffer_x,
+                              core->paint_buffer_y,
                               NULL,
-                              core->paint_area->x,
-                              core->paint_area->y);
-
-  g_object_unref (canvas_buffer);
+                              core->paint_buffer_x,
+                              core->paint_buffer_y);
 
   /*  Update the undo extents  */
-  core->x1 = MIN (core->x1, core->paint_area->x);
-  core->y1 = MIN (core->y1, core->paint_area->y);
-  core->x2 = MAX (core->x2, core->paint_area->x + core->paint_area->width);
-  core->y2 = MAX (core->y2, core->paint_area->y + core->paint_area->height);
+  core->x1 = MIN (core->x1, core->paint_buffer_x);
+  core->y1 = MIN (core->y1, core->paint_buffer_y);
+  core->x2 = MAX (core->x2, core->paint_buffer_x + width);
+  core->y2 = MAX (core->y2, core->paint_buffer_y + height);
 
   /*  Update the drawable  */
   gimp_drawable_update (drawable,
-                        core->paint_area->x,
-                        core->paint_area->y,
-                        core->paint_area->width,
-                        core->paint_area->height);
+                        core->paint_buffer_x,
+                        core->paint_buffer_y,
+                        width, height);
 }
 
 /* This works similarly to gimp_paint_core_paste. However, instead of
@@ -778,7 +802,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                          gdouble                   image_opacity,
                          GimpPaintApplicationMode  mode)
 {
-  GeglBuffer *canvas_buffer;
+  gint width, height;
 
   if (! gimp_drawable_has_alpha (drawable))
     {
@@ -788,6 +812,9 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                              mode);
       return;
     }
+
+  width  = gegl_buffer_get_width  (core->paint_buffer);
+  height = gegl_buffer_get_height (core->paint_buffer);
 
   if (mode == GIMP_PAINT_CONSTANT)
     {
@@ -803,10 +830,9 @@ gimp_paint_core_replace (GimpPaintCore            *core,
           /* initialize the maskPR from the canvas buffer */
           pixel_region_init (paint_maskPR,
                              gimp_gegl_buffer_get_tiles (core->canvas_buffer),
-                             core->paint_area->x,
-                             core->paint_area->y,
-                             core->paint_area->width,
-                             core->paint_area->height,
+                             core->paint_buffer_x,
+                             core->paint_buffer_y,
+                             width, height,
                              FALSE);
         }
     }
@@ -815,36 +841,26 @@ gimp_paint_core_replace (GimpPaintCore            *core,
       /* The mask is just the paint_maskPR */
     }
 
-  /*  intialize canvas buf source pixel regions  */
-  canvas_buffer =
-    gimp_temp_buf_create_buffer (core->paint_area,
-                                 gimp_drawable_get_format_with_alpha (drawable));
-
   /*  apply the paint area to the image  */
-  gimp_drawable_replace_buffer (drawable, canvas_buffer,
-                                GIMP_GEGL_RECT (0, 0,
-                                                core->paint_area->width,
-                                                core->paint_area->height),
+  gimp_drawable_replace_buffer (drawable, core->paint_buffer,
+                                GIMP_GEGL_RECT (0, 0, width, height),
                                 FALSE, NULL,
                                 image_opacity,
                                 paint_maskPR,
-                                core->paint_area->x,
-                                core->paint_area->y);
-
-  g_object_unref (canvas_buffer);
+                                core->paint_buffer_x,
+                                core->paint_buffer_y);
 
   /*  Update the undo extents  */
-  core->x1 = MIN (core->x1, core->paint_area->x);
-  core->y1 = MIN (core->y1, core->paint_area->y);
-  core->x2 = MAX (core->x2, core->paint_area->x + core->paint_area->width) ;
-  core->y2 = MAX (core->y2, core->paint_area->y + core->paint_area->height) ;
+  core->x1 = MIN (core->x1, core->paint_buffer_x);
+  core->y1 = MIN (core->y1, core->paint_buffer_y);
+  core->x2 = MAX (core->x2, core->paint_buffer_x + width);
+  core->y2 = MAX (core->y2, core->paint_buffer_y + height);
 
   /*  Update the drawable  */
   gimp_drawable_update (drawable,
-                        core->paint_area->x,
-                        core->paint_area->y,
-                        core->paint_area->width,
-                        core->paint_area->height);
+                        core->paint_buffer_x,
+                        core->paint_buffer_y,
+                        width, height);
 }
 
 /**

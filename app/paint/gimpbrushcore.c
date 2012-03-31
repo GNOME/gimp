@@ -825,13 +825,21 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
     {
-      gint bytes;
-
-      bytes = gimp_drawable_bytes_with_alpha (drawable);
+      const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
+      gint        bytes  = babl_format_get_bytes_per_pixel (format);
 
       paint_core->paint_area = temp_buf_resize (paint_core->paint_area, bytes,
                                                 x1, y1,
                                                 (x2 - x1), (y2 - y1));
+
+      paint_core->paint_buffer_x = x1;
+      paint_core->paint_buffer_y = y1;
+
+      if (paint_core->paint_buffer)
+        g_object_unref (paint_core->paint_buffer);
+
+      paint_core->paint_buffer =
+        gimp_temp_buf_create_buffer (paint_core->paint_area, format);
 
       return paint_core->paint_area;
     }

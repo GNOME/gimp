@@ -60,6 +60,9 @@ struct _GimpPaintCore
   GeglBuffer  *canvas_buffer;     /*  the buffer to paint the mask to     */
 
   TempBuf     *paint_area;        /*  the buffer to paint pixels to       */
+  GeglBuffer  *paint_buffer;      /*  for now proxies paint_area          */
+  gint         paint_buffer_x;
+  gint         paint_buffer_y;
 
   GArray      *stroke_buffer;
 };
@@ -155,6 +158,13 @@ TempBuf    * gimp_paint_core_get_paint_area         (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *options,
                                                      const GimpCoords *coords);
+GeglBuffer * gimp_paint_core_get_paint_buffer       (GimpPaintCore    *core,
+                                                     GimpDrawable     *drawable,
+                                                     GimpPaintOptions *options,
+                                                     const GimpCoords *coords,
+                                                     gint             *paint_buffer_x,
+                                                     gint             *paint_buffer_y);
+
 GeglBuffer * gimp_paint_core_get_orig_image         (GimpPaintCore    *core);
 GeglBuffer * gimp_paint_core_get_orig_proj          (GimpPaintCore    *core);
 
