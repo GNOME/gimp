@@ -157,15 +157,8 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   gdouble             fade_point;
   gdouble             force;
 
-  dest_buffer =
-    gegl_buffer_linear_new_from_data (temp_buf_get_data (paint_area),
-                                      gimp_drawable_get_format_with_alpha (drawable),
-                                      GIMP_GEGL_RECT (0, 0,
-                                                      paint_area->width,
-                                                      paint_area->height),
-                                      paint_area->width *
-                                      paint_area->bytes,
-                                      NULL, NULL);
+  dest_buffer = gimp_temp_buf_create_buffer (paint_area,
+                                             gimp_drawable_get_format_with_alpha (drawable));
 
   switch (options->clone_type)
     {

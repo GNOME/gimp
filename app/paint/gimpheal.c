@@ -490,15 +490,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                  gimp_drawable_bytes_with_alpha (drawable),
                                  0, 0, NULL);
 
-    tmp =
-      gegl_buffer_linear_new_from_data (temp_buf_get_data (src_temp_buf),
-                                        gimp_drawable_get_format_with_alpha (drawable),
-                                        GIMP_GEGL_RECT (0, 0,
-                                                        src_temp_buf->width,
-                                                        src_temp_buf->height),
-                                        src_temp_buf->width *
-                                        src_temp_buf->bytes,
-                                        NULL, NULL);
+    tmp = gimp_temp_buf_create_buffer (src_temp_buf,
+                                       gimp_drawable_get_format_with_alpha (drawable));
 
     gegl_buffer_copy (src_buffer, src_rect,
                       tmp, GIMP_GEGL_RECT (0, 0, 0, 0));
@@ -513,15 +506,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                   gimp_drawable_bytes_with_alpha (drawable),
                                   0, 0, NULL);
 
-    tmp =
-      gegl_buffer_linear_new_from_data (temp_buf_get_data (dest_temp_buf),
-                                        gimp_drawable_get_format_with_alpha (drawable),
-                                        GIMP_GEGL_RECT (0, 0,
-                                                        dest_temp_buf->width,
-                                                        dest_temp_buf->height),
-                                        dest_temp_buf->width *
-                                        dest_temp_buf->bytes,
-                                        NULL, NULL);
+    tmp = gimp_temp_buf_create_buffer (dest_temp_buf,
+                                       gimp_drawable_get_format_with_alpha (drawable));
 
     gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                       GIMP_GEGL_RECT (paint_area->x, paint_area->y,
