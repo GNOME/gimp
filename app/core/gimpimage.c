@@ -2631,51 +2631,6 @@ gimp_image_inc_instance_count (GimpImage *image)
 }
 
 
-/*  color transforms / utilities  */
-
-TempBuf *
-gimp_image_transform_temp_buf (const GimpImage *dest_image,
-                               GimpImageType    dest_type,
-                               TempBuf         *temp_buf,
-                               gboolean        *new_buf)
-{
-  TempBuf    *ret_buf;
-  const Babl *buf_format;
-  const Babl *ret_format;
-
-  g_return_val_if_fail (GIMP_IMAGE (dest_image), NULL);
-  g_return_val_if_fail (temp_buf != NULL, NULL);
-  g_return_val_if_fail (new_buf != NULL, NULL);
-
-  buf_format = gimp_bpp_to_babl_format (temp_buf->bytes);
-  ret_format = gimp_image_get_format (dest_image, dest_type);
-
-  /*  If the pattern doesn't match the image in terms of color type,
-   *  transform it.  (ie  pattern is RGB, image is indexed)
-   */
-  if (buf_format != ret_format)
-    {
-      ret_buf = temp_buf_new (temp_buf->width, temp_buf->height,
-                              babl_format_get_bytes_per_pixel (ret_format),
-                              0, 0, NULL);
-
-      babl_process (babl_fish (buf_format, ret_format),
-                    temp_buf_get_data (temp_buf),
-                    temp_buf_get_data (ret_buf),
-                    temp_buf->width * temp_buf->height);
-
-      *new_buf = TRUE;
-    }
-  else
-    {
-      ret_buf = temp_buf;
-      *new_buf = FALSE;
-    }
-
-  return ret_buf;
-}
-
-
 /*  parasites  */
 
 const GimpParasite *

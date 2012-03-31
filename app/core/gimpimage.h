@@ -330,14 +330,6 @@ gint            gimp_image_get_instance_count    (const GimpImage    *image);
 void            gimp_image_inc_instance_count    (GimpImage          *image);
 
 
-/*  color transforms / utilities  */
-
-TempBuf       * gimp_image_transform_temp_buf    (const GimpImage    *dest_image,
-                                                  GimpImageType       dest_type,
-                                                  TempBuf            *temp_buf,
-                                                  gboolean           *new_buf);
-
-
 /*  parasites  */
 
 const GimpParasite * gimp_image_parasite_find    (const GimpImage    *image,
