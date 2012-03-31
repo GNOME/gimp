@@ -28,8 +28,6 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpdrawable.h"
@@ -264,8 +262,11 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   GimpContext    *context    = GIMP_CONTEXT (paint_options);
   GimpBlob       *blob_union = NULL;
   GimpBlob       *blob_to_render;
-  TempBuf        *area;
-  guchar          col[MAX_CHANNELS];
+  GeglBuffer     *paint_buffer;
+  gint            paint_buffer_x;
+  gint            paint_buffer_y;
+  GimpRGB         foreground;
+  GeglColor      *color;
   PixelRegion     blob_maskPR;
 
   if (! ink->last_blob)
@@ -305,20 +306,20 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
 
   /* Get the buffer */
   ink->cur_blob = blob_to_render;
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
-                                         coords);
+  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                   paint_options, coords,
+                                                   &paint_buffer_x,
+                                                   &paint_buffer_y);
   ink->cur_blob = NULL;
 
-  if (! area)
+  if (! paint_buffer)
     return;
 
-  gimp_context_get_foreground_pixel (context,
-                                     gimp_drawable_get_format_with_alpha (drawable),
-                                     col);
+  gimp_context_get_foreground (context, &foreground);
+  color = gimp_gegl_color_new (&foreground);
 
-  /*  color the pixels  */
-  color_pixels (temp_buf_get_data (paint_core->paint_area), col,
-                area->width * area->height, area->bytes);
+  gegl_buffer_set_color (paint_buffer, NULL, color);
+  g_object_unref (color);
 
   /*  draw the blob directly to the canvas_buffer  */
   pixel_region_init (&blob_maskPR,
