@@ -422,6 +422,7 @@
         <placeholder name="Modify">
           <menuitem action="layers-alpha-add" />
           <menuitem action="layers-alpha-remove" />
+          <menuitem action="filters-color-to-alpha" />
         </placeholder>
         <separator />
         <placeholder name="Selection">
@@ -516,6 +517,7 @@
         <menuitem action="dialogs-histogram" />
       </menu>
       <separator />
+      <menuitem action="filters-color-to-alpha" />
       <placeholder name="Modify" />
     </menu>
 

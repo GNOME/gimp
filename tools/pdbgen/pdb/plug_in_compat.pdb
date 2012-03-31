@@ -16,6 +16,57 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub plug_in_colortoalpha {
+    $blurb = 'Convert a specified color to transparency';
+
+    $help = <<'HELP';
+This replaces as much of a given color as possible in each pixel with
+a corresponding amount of alpha, then readjusts the color accordingly.
+HELP
+
+    &std_pdb_misc;
+    $date = '1999';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'color', type => 'color',
+	  desc => 'Color to remove' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      /* XXX: fixme disable for gray, and add alpha when needed */
+
+      GeglColor *gegl_color = gimp_gegl_color_new (&color);
+      GeglNode  *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:color-to-alpha",
+                             "color",     gegl_color,
+                             NULL);
+      g_object_unref (gegl_color);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Color to Alpha"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_pixelize {
     $blurb = 'Simplify image into an array of solid-colored squares';
 
@@ -116,12 +167,14 @@ CODE
 
 
 @headers = qw("libgimpbase/gimpbase.h"
+              "gegl/gimp-gegl-utils.h"
               "core/gimpdrawable.h"
               "core/gimpdrawable-operation.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(plug_in_pixelize
+@procs = qw(plug_in_colortoalpha
+            plug_in_pixelize
             plug_in_pixelize2);
 
 %exports = (app => [@procs], lib => []);

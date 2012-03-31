@@ -64,7 +64,6 @@ libexec_PROGRAMS = \
 	color-cube-analyze \
 	color-enhance \
 	color-exchange \
-	color-to-alpha \
 	colorify \
 	colormap-remap \
 	compose \
@@ -557,23 +556,6 @@ color_exchange_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(color_exchange_RC)
-
-color_to_alpha_SOURCES = \
-	color-to-alpha.c
-
-color_to_alpha_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(color_to_alpha_RC)
 
 colorify_SOURCES = \
 	colorify.c

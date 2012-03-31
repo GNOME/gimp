@@ -18,7 +18,6 @@ cml_explorer_RC = cml-explorer.rc.o
 color_cube_analyze_RC = color-cube-analyze.rc.o
 color_enhance_RC = color-enhance.rc.o
 color_exchange_RC = color-exchange.rc.o
-color_to_alpha_RC = color-to-alpha.rc.o
 colorify_RC = colorify.rc.o
 colormap_remap_RC = colormap-remap.rc.o
 compose_RC = compose.rc.o

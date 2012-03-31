@@ -39,14 +39,20 @@
 
 static const GimpStringActionEntry filters_actions[] =
 {
+  { "filters-color-to-alpha", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Color to _Alpha..."), NULL,
+    NC_("filters-action", "Convert a specified color to transparency"),
+    "gegl:color-to-alpha",
+    NULL /* FIXME GIMP_HELP_FILTER_PIXELIZE */ },
+
   { "filters-pixelize", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Pixelize"), NULL,
+    NC_("filters-action", "_Pixelize..."), NULL,
     NC_("filters-action", "Simplify image into an array of solid-colored squares"),
     "gegl:pixelize",
     NULL /* FIXME GIMP_HELP_FILTER_PIXELIZE */ },
 
   { "filters-gaussian-blur", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Gaussian Blur"), NULL,
+    NC_("filters-action", "_Gaussian Blur..."), NULL,
     NC_("filters-action", "Apply a gaussian blur"),
     "gegl:gaussian-blur",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_BLUR */ },
@@ -68,7 +74,8 @@ filters_actions_update (GimpActionGroup *group,
   GimpImage    *image;
   GimpDrawable *drawable = NULL;
   gboolean      writable = FALSE;
-  gboolean      children = FALSE;
+  gboolean      gray     = FALSE;
+  gboolean      alpha    = FALSE;
 
   image = action_data_get_image (data);
 
@@ -80,6 +87,9 @@ filters_actions_update (GimpActionGroup *group,
         {
           GimpItem *item;
 
+          alpha = gimp_drawable_has_alpha (drawable);
+          gray  = gimp_drawable_is_gray (drawable);
+
           if (GIMP_IS_LAYER_MASK (drawable))
             item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
           else
@@ -88,15 +98,16 @@ filters_actions_update (GimpActionGroup *group,
           writable = ! gimp_item_is_content_locked (item);
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-            children = TRUE;
+            writable = FALSE;
         }
     }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("filters-pixelize",      writable && !children);
-  SET_SENSITIVE ("filters-gaussian-blur", writable && !children);
+  SET_SENSITIVE ("filters-color-to-alpha", writable && !gray && alpha);
+  SET_SENSITIVE ("filters-pixelize",       writable);
+  SET_SENSITIVE ("filters-gaussian-blur",  writable);
 
 #undef SET_SENSITIVE
 }
