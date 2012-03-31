@@ -29,19 +29,18 @@
 #define GIMP_IS_OPERATION_DISSOLVE_MODE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_DISSOLVE_MODE))
 #define GIMP_OPERATION_DISSOLVE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DISSOLVE_MODE, GimpOperationDissolveModeClass))
 
+#include "gimpoperationpointlayermode.h"
 
 typedef struct _GimpOperationDissolveModeClass GimpOperationDissolveModeClass;
 
 struct _GimpOperationDissolveModeClass
 {
-  GeglOperationComposerClass parent_class;
+  GimpOperationPointLayerModeClass parent_class;
 };
 
 struct _GimpOperationDissolveMode
 {
-  GeglOperationComposer parent_instance;
-
-  gboolean              premultiplied;
+  GimpOperationPointLayerMode parent_instance;
 };
 
 
