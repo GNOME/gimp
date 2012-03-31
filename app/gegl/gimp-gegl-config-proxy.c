@@ -27,10 +27,14 @@
 
 #include "gimp-gegl-types.h"
 
-#include "core/gimpobject.h"
+#include "core/gimplist.h"
 #include "core/gimpparamspecs-duplicate.h"
 
 #include "gimp-gegl-config-proxy.h"
+
+
+static GHashTable *config_types      = NULL;
+static GHashTable *config_containers = NULL;
 
 
 static GValue *
@@ -147,8 +151,7 @@ GimpObject *
 gimp_gegl_get_config_proxy (const gchar *operation,
                             GType        parent_type)
 {
-  static GHashTable *config_types = NULL;
-  GType              config_type;
+  GType config_type;
 
   g_return_val_if_fail (operation != NULL, NULL);
   g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), NULL);
@@ -194,7 +197,7 @@ gimp_gegl_get_config_proxy (const gchar *operation,
         g_strcanon (type_name,
                     G_CSET_DIGITS "-" G_CSET_a_2_z G_CSET_A_2_Z, '-');
 
-        config_type = g_type_register_static (GIMP_TYPE_OBJECT, type_name,
+        config_type = g_type_register_static (parent_type, type_name,
                                               &info, 0);
 
         g_free (type_name);
@@ -209,6 +212,32 @@ gimp_gegl_get_config_proxy (const gchar *operation,
     }
 
   return g_object_new (config_type, NULL);
+}
+
+GimpContainer *
+gimp_gegl_get_config_container (GType config_type)
+{
+  GimpContainer *container;
+
+  g_return_val_if_fail (g_type_is_a (config_type, GIMP_TYPE_OBJECT), NULL);
+
+  if (! config_containers)
+    config_containers = g_hash_table_new_full (g_direct_hash,
+                                               g_direct_equal,
+                                               (GDestroyNotify) g_free,
+                                               NULL);
+
+  container = g_hash_table_lookup (config_containers, (gpointer) config_type);
+
+  if (! container)
+    {
+      container = gimp_list_new (config_type, TRUE);
+
+      g_hash_table_insert (config_containers,
+                           (gpointer) config_type, container);
+    }
+
+  return container;
 }
 
 void

@@ -19,11 +19,12 @@
 #define __GIMP_GEGL_CONFIG_PROXY_H__
 
 
-GimpObject * gimp_gegl_get_config_proxy  (const gchar *operation,
-                                          GType        parent_type);
+GimpObject    * gimp_gegl_get_config_proxy     (const gchar *operation,
+                                                GType        parent_type);
+GimpContainer * gimp_gegl_get_config_container (GType        config_type);
 
-void         gimp_gegl_config_proxy_sync (GimpObject  *proxy,
-                                          GeglNode    *node);
+void            gimp_gegl_config_proxy_sync    (GimpObject  *proxy,
+                                                GeglNode    *node);
 
 
 #endif /* __GIMP_GEGL_CONFIG_PROXY_H__ */
