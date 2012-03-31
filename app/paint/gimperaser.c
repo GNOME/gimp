@@ -21,9 +21,7 @@
 
 #include "paint-types.h"
 
-#include "base/temp-buf.h"
-
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
@@ -112,8 +110,11 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   GimpDynamicsOutput *force_output;
   gdouble             fade_point;
   gdouble             opacity;
-  TempBuf            *area;
-  guchar              col[MAX_CHANNELS];
+  GeglBuffer         *paint_buffer;
+  gint                paint_buffer_x;
+  gint                paint_buffer_y;
+  GimpRGB             background;
+  GeglColor          *color;
   gdouble             force;
 
   opacity_output = gimp_dynamics_get_output (dynamics,
@@ -130,18 +131,18 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
-                                         coords);
-  if (! area)
+  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                   paint_options, coords,
+                                                   &paint_buffer_x,
+                                                   &paint_buffer_y);
+  if (! paint_buffer)
     return;
 
-  gimp_context_get_background_pixel (context,
-                                     gimp_drawable_get_format_with_alpha (drawable),
-                                     col);
+  gimp_context_get_background (context, &background);
+  color = gimp_gegl_color_new (&background);
 
-  /*  color the pixels  */
-  color_pixels (temp_buf_get_data (area), col,
-                area->width * area->height, area->bytes);
+  gegl_buffer_set_color (paint_buffer, NULL, color);
+  g_object_unref (color);
 
   force_output = gimp_dynamics_get_output (dynamics,
                                            GIMP_DYNAMICS_OUTPUT_FORCE);

@@ -26,9 +26,7 @@
 
 #include "paint-types.h"
 
-#include "base/temp-buf.h"
-
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
@@ -118,12 +116,13 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpDynamicsOutput       *force_output;
   GimpImage                *image;
   GimpRGB                   gradient_color;
-  TempBuf                  *area;
+  GeglBuffer               *paint_buffer;
+  gint                      paint_buffer_x;
+  gint                      paint_buffer_y;
   GimpPaintApplicationMode  paint_appl_mode;
   gdouble                   fade_point;
   gdouble                   grad_point;
   gdouble                   force;
-  guchar                    pixel[MAX_CHANNELS];
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -140,9 +139,11 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
-                                         coords);
-  if (! area)
+  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                   paint_options, coords,
+                                                   &paint_buffer_x,
+                                                   &paint_buffer_y);
+  if (! paint_buffer)
     return;
 
   paint_appl_mode = paint_options->application_mode;
@@ -162,16 +163,15 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
     {
       /* optionally take the color from the current gradient */
 
+      GeglColor *color;
+
       opacity *= gradient_color.a;
       gimp_rgb_set_alpha (&gradient_color, GIMP_OPACITY_OPAQUE);
 
-      gimp_rgba_get_pixel (&gradient_color,
-                           gimp_drawable_get_format_with_alpha (drawable),
-                           pixel);
+      color = gimp_gegl_color_new (&gradient_color);
 
-      color_pixels (temp_buf_get_data (area), pixel,
-                    area->width * area->height,
-                    area->bytes);
+      gegl_buffer_set_color (paint_buffer, NULL, color);
+      g_object_unref (color);
 
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
@@ -180,6 +180,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       /* otherwise check if the brush has a pixmap and use that to
        * color the area
        */
+      TempBuf *area = gimp_gegl_buffer_get_temp_buf (paint_buffer);
 
       gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
                                               coords,
@@ -192,13 +193,14 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
     {
       /* otherwise fill the area with the foreground color */
 
-      gimp_context_get_foreground_pixel (context,
-                                         gimp_drawable_get_format_with_alpha (drawable),
-                                         pixel);
+      GimpRGB    foreground;
+      GeglColor *color;
 
-      color_pixels (temp_buf_get_data (area), pixel,
-                    area->width * area->height,
-                    area->bytes);
+      gimp_context_get_foreground (context, &foreground);
+      color = gimp_gegl_color_new (&foreground);
+
+      gegl_buffer_set_color (paint_buffer, NULL, color);
+      g_object_unref (color);
     }
 
   force_output = gimp_dynamics_get_output (dynamics,
