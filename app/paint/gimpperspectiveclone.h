@@ -34,21 +34,22 @@ typedef struct _GimpPerspectiveCloneClass GimpPerspectiveCloneClass;
 
 struct _GimpPerspectiveClone
 {
-  GimpClone    parent_instance;
+  GimpClone      parent_instance;
 
-  gdouble      src_x_fv;     /* source coords in front_view perspective */
-  gdouble      src_y_fv;
+  gdouble        src_x_fv;     /* source coords in front_view perspective */
+  gdouble        src_y_fv;
 
-  gdouble      dest_x_fv;    /* destination coords in front_view perspective */
-  gdouble      dest_y_fv;
+  gdouble        dest_x_fv;    /* destination coords in front_view perspective */
+  gdouble        dest_y_fv;
 
-  GimpMatrix3  transform;
-  GimpMatrix3  transform_inv;
+  GimpMatrix3    transform;
+  GimpMatrix3    transform_inv;
 
-  GeglNode    *node;
-  GeglNode    *src_node;
-  GeglNode    *transform_node;
-  GeglNode    *dest_node;
+  GeglNode      *node;
+  GeglNode      *src_node;
+  GeglNode      *transform_node;
+  GeglNode      *dest_node;
+  GeglProcessor *processor;
 };
 
 struct _GimpPerspectiveCloneClass

@@ -64,7 +64,8 @@ struct _GimpSourceCoreClass
                                gint             *paint_area_offset_x,
                                gint             *paint_area_offset_y,
                                gint             *paint_area_width,
-                               gint             *paint_area_height);
+                               gint             *paint_area_height,
+                               GeglRectangle    *src_rect);
 
   void         (*  motion)    (GimpSourceCore   *source_core,
                                GimpDrawable     *drawable,
@@ -73,6 +74,7 @@ struct _GimpSourceCoreClass
                                gdouble           opacity,
                                GimpPickable     *src_pickable,
                                GeglBuffer       *src_buffer,
+                               GeglRectangle    *src_rect,
                                gint              src_offset_x,
                                gint              src_offset_y,
                                TempBuf          *paint_area,

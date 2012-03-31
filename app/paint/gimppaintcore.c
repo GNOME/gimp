@@ -548,18 +548,6 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
       core->canvas_buffer = NULL;
     }
 
-  if (core->orig_buf)
-    {
-      g_object_unref (core->orig_buf);
-      core->orig_buf = NULL;
-    }
-
-  if (core->orig_proj_buf)
-    {
-      g_object_unref (core->orig_proj_buf);
-      core->orig_proj_buf = NULL;
-    }
-
   if (core->canvas_buf)
     {
       temp_buf_free (core->canvas_buf);
@@ -684,94 +672,21 @@ gimp_paint_core_get_paint_area (GimpPaintCore    *core,
 }
 
 GeglBuffer *
-gimp_paint_core_get_orig_image (GimpPaintCore *core,
-                                GimpDrawable  *drawable,
-                                gint           x,
-                                gint           y,
-                                gint           width,
-                                gint           height)
+gimp_paint_core_get_orig_image (GimpPaintCore *core)
 {
-  gint orig_x = x;
-  gint orig_y = y;
-
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (core->undo_buffer != NULL, NULL);
 
-  if (core->orig_buf &&
-      (gegl_buffer_get_width  (core->orig_buf) != width ||
-       gegl_buffer_get_height (core->orig_buf) != height))
-    {
-      g_object_unref (core->orig_buf);
-      core->orig_buf = NULL;
-    }
-
-  if (! core->orig_buf)
-    core->orig_buf = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
-                                      gimp_drawable_get_format (drawable));
-
-  gimp_rectangle_intersect (x, y,
-                            width, height,
-                            0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (drawable)),
-                            gimp_item_get_height (GIMP_ITEM (drawable)),
-                            &x, &y,
-                            &width, &height);
-
-  gegl_buffer_copy (core->undo_buffer,
-                    GIMP_GEGL_RECT (x, y, width, height),
-                    core->orig_buf,
-                    GIMP_GEGL_RECT (x - orig_x, y - orig_y,
-                                    width, height));
-
-  return core->orig_buf;
+  return core->undo_buffer;
 }
 
 GeglBuffer *
-gimp_paint_core_get_orig_proj (GimpPaintCore *core,
-                               GimpPickable  *pickable,
-                               gint           x,
-                               gint           y,
-                               gint           width,
-                               gint           height)
+gimp_paint_core_get_orig_proj (GimpPaintCore *core)
 {
-  GeglBuffer *pickable_buffer;
-  gint        orig_x = x;
-  gint        orig_y = y;
-
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
   g_return_val_if_fail (core->saved_proj_buffer != NULL, NULL);
 
-  if (core->orig_proj_buf &&
-      (gegl_buffer_get_width  (core->orig_proj_buf) != width ||
-       gegl_buffer_get_height (core->orig_proj_buf) != height))
-    {
-      g_object_unref (core->orig_proj_buf);
-      core->orig_proj_buf = NULL;
-    }
-
-  if (! core->orig_proj_buf)
-    core->orig_proj_buf = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
-                                           gimp_pickable_get_format (pickable));
-
-  pickable_buffer = gimp_pickable_get_buffer (pickable);
-
-  gimp_rectangle_intersect (x, y,
-                            width, height,
-                            0, 0,
-                            gegl_buffer_get_width  (pickable_buffer),
-                            gegl_buffer_get_height (pickable_buffer),
-                            &x, &y,
-                            &width, &height);
-
-  gegl_buffer_copy (core->saved_proj_buffer,
-                    GIMP_GEGL_RECT (x, y, width, height),
-                    core->orig_proj_buf,
-                    GIMP_GEGL_RECT (x - orig_x, y - orig_y,
-                                    width, height));
-
-  return core->orig_proj_buf;
+  return core->saved_proj_buffer;
 }
 
 void

@@ -89,7 +89,8 @@ static GeglBuffer *
                                                   gint             *paint_area_offset_x,
                                                   gint             *paint_area_offset_y,
                                                   gint             *paint_area_width,
-                                                  gint             *paint_area_height);
+                                                  gint             *paint_area_height,
+                                                  GeglRectangle    *src_rect);
 
 static void    gimp_source_core_set_src_drawable (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable);
@@ -352,6 +353,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   GimpImage          *image        = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpPickable       *src_pickable = NULL;
   GeglBuffer         *src_buffer   = NULL;
+  GeglRectangle       src_rect;
   gint                src_offset_x;
   gint                src_offset_y;
   TempBuf            *paint_area;
@@ -422,7 +424,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                               &paint_area_offset_x,
                                                               &paint_area_offset_y,
                                                               &paint_area_width,
-                                                              &paint_area_height);
+                                                              &paint_area_height,
+                                                              &src_rect);
       if (! src_buffer)
         return;
     }
@@ -437,6 +440,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                     opacity,
                                                     src_pickable,
                                                     src_buffer,
+                                                    &src_rect,
                                                     src_offset_x,
                                                     src_offset_y,
                                                     paint_area,
@@ -460,7 +464,8 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                   gint             *paint_area_offset_x,
                                   gint             *paint_area_offset_y,
                                   gint             *paint_area_width,
-                                  gint             *paint_area_height)
+                                  gint             *paint_area_height,
+                                  GeglRectangle    *src_rect)
 {
   GimpSourceOptions *options    = GIMP_SOURCE_OPTIONS (paint_options);
   GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -492,29 +497,15 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
   if ((  options->sample_merged && (src_image                 != image)) ||
       (! options->sample_merged && (source_core->src_drawable != drawable)))
     {
-      dest_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
-                                     gimp_pickable_get_format (src_pickable));
-
-      gegl_buffer_copy (src_buffer,
-                        GIMP_GEGL_RECT (x, y, width, height),
-                        dest_buffer,
-                        GIMP_GEGL_RECT (0, 0, 0, 0));
+      dest_buffer = src_buffer;
     }
   else
     {
       /*  get the original image  */
       if (options->sample_merged)
-        dest_buffer =
-          gimp_paint_core_get_orig_proj (GIMP_PAINT_CORE (source_core),
-                                         src_pickable,
-                                         x, y, width, height);
+        dest_buffer = gimp_paint_core_get_orig_proj (GIMP_PAINT_CORE (source_core));
       else
-        dest_buffer =
-          gimp_paint_core_get_orig_image (GIMP_PAINT_CORE (source_core),
-                                          GIMP_DRAWABLE (src_pickable),
-                                          x, y, width, height);
-
-      g_object_ref (dest_buffer);
+        dest_buffer = gimp_paint_core_get_orig_image (GIMP_PAINT_CORE (source_core));
     }
 
   *paint_area_offset_x = x - (paint_area->x + src_offset_x);
@@ -522,7 +513,9 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
   *paint_area_width    = width;
   *paint_area_height   = height;
 
-  return dest_buffer;
+  *src_rect = *GIMP_GEGL_RECT (x, y, width, height);
+
+  return g_object_ref (dest_buffer);
 }
 
 static void

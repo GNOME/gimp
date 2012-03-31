@@ -105,6 +105,7 @@ static void         gimp_heal_motion             (GimpSourceCore   *source_core,
                                                   gdouble           opacity,
                                                   GimpPickable     *src_pickable,
                                                   GeglBuffer       *src_buffer,
+                                                  GeglRectangle    *src_rect,
                                                   gint              src_offset_x,
                                                   gint              src_offset_y,
                                                   TempBuf          *paint_area,
@@ -443,6 +444,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   gdouble           opacity,
                   GimpPickable     *src_pickable,
                   GeglBuffer       *src_buffer,
+                  GeglRectangle    *src_rect,
                   gint              src_offset_x,
                   gint              src_offset_y,
                   TempBuf          *paint_area,
@@ -484,8 +486,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   {
     GeglBuffer *tmp;
 
-    src_temp_buf = temp_buf_new (gegl_buffer_get_width (src_buffer),
-                                 gegl_buffer_get_height (src_buffer),
+    src_temp_buf = temp_buf_new (src_rect->width, src_rect->height,
                                  gimp_drawable_bytes_with_alpha (drawable),
                                  0, 0, NULL);
 
@@ -499,7 +500,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                         src_temp_buf->bytes,
                                         NULL, NULL);
 
-    gegl_buffer_copy (src_buffer, NULL, tmp, NULL);
+    gegl_buffer_copy (src_buffer, src_rect,
+                      tmp, GIMP_GEGL_RECT (0, 0, 0, 0));
     g_object_unref (tmp);
   }
 

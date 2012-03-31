@@ -26,10 +26,7 @@
 
 #include "paint-types.h"
 
-#include "base/pixel-region.h"
 #include "base/temp-buf.h"
-
-#include "paint-funcs/paint-funcs.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -61,6 +58,7 @@ static void       gimp_clone_motion (GimpSourceCore   *source_core,
                                      gdouble           opacity,
                                      GimpPickable     *src_pickable,
                                      GeglBuffer       *src_buffer,
+                                     GeglRectangle    *src_rect,
                                      gint              src_offset_x,
                                      gint              src_offset_y,
                                      TempBuf          *paint_area,
@@ -140,6 +138,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                    gdouble           opacity,
                    GimpPickable     *src_pickable,
                    GeglBuffer       *src_buffer,
+                   GeglRectangle    *src_rect,
                    gint              src_offset_x,
                    gint              src_offset_y,
                    TempBuf          *paint_area,
@@ -173,7 +172,8 @@ gimp_clone_motion (GimpSourceCore   *source_core,
     case GIMP_IMAGE_CLONE:
       {
         gegl_buffer_copy (src_buffer,
-                          GIMP_GEGL_RECT (0, 0,
+                          GIMP_GEGL_RECT (src_rect->x,
+                                          src_rect->y,
                                           paint_area_width,
                                           paint_area_height),
                           dest_buffer,

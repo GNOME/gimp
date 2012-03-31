@@ -223,13 +223,14 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
       {
         return;
       }
-
+#if 0
     /*  get the original untouched image  */
     orig = gimp_paint_core_get_orig_image (paint_core, drawable,
                                            x, y, width, height);
 
     pixel_region_init_temp_buf (&srcPR, orig,
                                 0, 0, width, height);
+#endif
   }
 
   /* tempPR will hold the dodgeburned region */
