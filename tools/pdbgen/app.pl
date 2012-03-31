@@ -574,9 +574,17 @@ sub generate {
 
 	my $help = $proc->{help};
 
+	my $procedure_name;
+
 	local $success = 0;
 
 	$help =~ s/gimp(\w+)\(\s*\)/"'gimp".canonicalize($1)."'"/ge;
+
+	if ($proc->{group} eq "plug_in_compat") {
+	    $procedure_name = "$proc->{canonical_name}";
+	} else {
+	    $procedure_name = "gimp-$proc->{canonical_name}";
+	}
 
 	$out->{pcount}++; $total++;
 
@@ -587,9 +595,9 @@ sub generate {
    */
   procedure = gimp_procedure_new (${name}_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-$proc->{canonical_name}");
+                               "$procedure_name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-$proc->{canonical_name}",
+                                     "$procedure_name",
                                      @{[ &quotewrap($proc->{blurb}, 2) ]},
                                      @{[ &quotewrap($help,  2) ]},
                                      "$proc->{author}",
