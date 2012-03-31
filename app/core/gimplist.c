@@ -448,6 +448,22 @@ gimp_list_set_sort_func (GimpList     *list,
 }
 
 /**
+ * gimp_list_get_sort_func:
+ * @list: a #GimpList
+ *
+ * Returns the @list's sort function, see gimp_list_set_sort_func().
+ *
+ * Return Value: The @list's sort function.
+ **/
+GCompareFunc
+gimp_list_get_sort_func (GimpList*list)
+{
+  g_return_val_if_fail (GIMP_IS_LIST (list), NULL);
+
+  return list->sort_func;
+}
+
+/**
  * gimp_list_sort:
  * @list: a #GimpList
  * @sort_func: a #GCompareFunc

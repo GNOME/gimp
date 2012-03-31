@@ -61,6 +61,7 @@ GimpContainer * gimp_list_new_weak      (GType         children_type,
 void            gimp_list_reverse       (GimpList     *list);
 void            gimp_list_set_sort_func (GimpList     *list,
                                          GCompareFunc  sort_func);
+GCompareFunc    gimp_list_get_sort_func (GimpList     *list);
 void            gimp_list_sort          (GimpList     *list,
                                          GCompareFunc  sort_func);
 void            gimp_list_sort_by_name  (GimpList     *list);
