@@ -226,7 +226,6 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkCellRenderer   *cell;
   GtkWidget         *main_vbox;
   GtkWidget         *hbox;
-  GtkWidget         *label;
   GtkWidget         *combo;
   GList             *opclasses;
   GList             *iter;
@@ -240,10 +239,6 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (main_vbox), hbox, 0);
   gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Operation:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
 
   store = gtk_list_store_new (N_COLUMNS,
                               G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
@@ -297,8 +292,6 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->operation_combo = combo;
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-
   /*  The options vbox  */
   o_tool->options_table =
     gtk_label_new (_("Select an operation from the list above"));
@@ -306,7 +299,7 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_misc_set_padding (GTK_MISC (o_tool->options_table), 0, 4);
-  gtk_container_add (GTK_CONTAINER (o_tool->options_frame),
+  gtk_container_add (GTK_CONTAINER (o_tool->options_box),
                      o_tool->options_table);
   gtk_widget_show (o_tool->options_table);
 }

@@ -189,10 +189,10 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
   /*  The options vbox  */
-  tool->options_frame = gimp_frame_new (_("Operation Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), tool->options_frame,
+  tool->options_box = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), tool->options_box,
                       FALSE, FALSE, 0);
-  gtk_widget_show (tool->options_frame);
+  gtk_widget_show (tool->options_box);
 }
 
 static void
@@ -266,7 +266,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
         gimp_prop_table_new (G_OBJECT (tool->config),
                              G_TYPE_FROM_INSTANCE (tool->config),
                              GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)));
-      gtk_container_add (GTK_CONTAINER (tool->options_frame),
+      gtk_container_add (GTK_CONTAINER (tool->options_box),
                          tool->options_table);
       gtk_widget_show (tool->options_table);
     }

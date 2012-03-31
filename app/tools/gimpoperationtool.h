@@ -41,7 +41,7 @@ struct _GimpOperationTool
   GimpObject       *config;
 
   /* dialog */
-  GtkWidget        *options_frame;
+  GtkWidget        *options_box;
   GtkWidget        *options_table;
 };
 
