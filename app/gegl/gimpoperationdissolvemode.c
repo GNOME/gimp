@@ -125,23 +125,23 @@ gimp_operation_dissolve_mode_process (GeglOperation       *operation,
 
       for (x = result->x; x < result->x + result->width; x++, i++)
         {
-          gdouble  rand_val;
+          int rand_val;
           /* dissolve if random value is >= opacity */
           rand_val = g_rand_int_range (gr, 0, 255);
 
-          if (aux[3] * 255 >= rand_val)
-            {
-              out[0] = aux[0];
-              out[1] = aux[1];
-              out[2] = aux[2];
-              out[3] = 1.0;
-            }
-          else
+          if (rand_val >= aux[3] * 255)
             {
               out[0] = in[0];
               out[1] = in[1];
               out[2] = in[2];
               out[3] = in[3];
+            }
+          else
+            {
+              out[0] = aux[0];
+              out[1] = aux[1];
+              out[2] = aux[2];
+              out[3] = 1.0;
             }
 
           in+=4;
