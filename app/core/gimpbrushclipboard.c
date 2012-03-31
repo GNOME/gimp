@@ -196,22 +196,18 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
 
   if (gimp->global_buffer)
     {
-      GeglBuffer    *buffer = gimp_buffer_get_buffer (gimp->global_buffer);
-      GeglBuffer    *dest_buffer;
-      GeglRectangle  rect   = { 0, };
-      GimpImageType  type   = gimp_buffer_get_image_type (gimp->global_buffer);
+      GeglBuffer *buffer = gimp_buffer_get_buffer (gimp->global_buffer);
+      const Babl *format = gegl_buffer_get_format (buffer);
+      GeglBuffer *dest_buffer;
 
       width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 512);
       height = MIN (gimp_buffer_get_height (gimp->global_buffer), 512);
-
-      rect.width  = width;
-      rect.height = height;
 
       brush->mask   = temp_buf_new (width, height, 1, 0, 0, NULL);
       brush->pixmap = temp_buf_new (width, height, 3, 0, 0, NULL);
 
       /*  copy the alpha channel into the brush's mask  */
-      if (GIMP_IMAGE_TYPE_HAS_ALPHA (type))
+      if (babl_format_has_alpha (format))
         {
           dest_buffer = gimp_temp_buf_create_buffer (brush->mask,
                                                      babl_format ("A u8"));
