@@ -60,21 +60,19 @@ static gboolean gimp_image_map_tool_settings_export (GimpSettingsBox  *box,
 
 GtkWidget *
 gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool  *image_map_tool,
+                                          GimpContainer     *settings,
+                                          const gchar       *settings_filename,
+                                          const gchar       *import_dialog_title,
+                                          const gchar       *export_dialog_title,
+                                          const gchar       *file_dialog_help_id,
+                                          const gchar       *default_folder,
                                           GtkWidget        **settings_box)
 {
-  GimpImageMapToolClass *klass;
-  GimpToolInfo          *tool_info;
-  GtkSizeGroup          *label_group;
-  GtkWidget             *hbox;
-  GtkWidget             *label;
-  GtkWidget             *settings_combo;
-  gchar                 *filename;
-  gchar                 *folder;
-
-  klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
-
-  if (! klass->settings_name)
-    return NULL;
+  GimpToolInfo *tool_info;
+  GtkSizeGroup *label_group;
+  GtkWidget    *hbox;
+  GtkWidget    *label;
+  GtkWidget    *settings_combo;
 
   tool_info = GIMP_TOOL (image_map_tool)->tool_info;
 
@@ -87,23 +85,17 @@ gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool  *image_map_tool,
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
 
-  filename = gimp_tool_info_build_options_filename (tool_info, ".settings");
-  folder   = g_build_filename (gimp_directory (), klass->settings_name, NULL);
-
   *settings_box = gimp_settings_box_new (tool_info->gimp,
                                          image_map_tool->config,
-                                         klass->recent_settings,
-                                         filename,
-                                         klass->import_dialog_title,
-                                         klass->export_dialog_title,
-                                         tool_info->help_id,
-                                         folder,
+                                         settings,
+                                         settings_filename,
+                                         import_dialog_title,
+                                         export_dialog_title,
+                                         file_dialog_help_id,
+                                         default_folder,
                                          NULL);
   gtk_box_pack_start (GTK_BOX (hbox), *settings_box, TRUE, TRUE, 0);
   gtk_widget_show (*settings_box);
-
-  g_free (filename);
-  g_free (folder);
 
   settings_combo = gimp_settings_box_get_combo (GIMP_SETTINGS_BOX (*settings_box));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), settings_combo);

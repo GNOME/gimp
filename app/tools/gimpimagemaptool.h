@@ -73,6 +73,12 @@ struct _GimpImageMapToolClass
   void        (* reset)           (GimpImageMapTool  *image_map_tool);
 
   GtkWidget * (* get_settings_ui) (GimpImageMapTool  *image_map_tool,
+                                   GimpContainer     *settings,
+                                   const gchar       *settings_filename,
+                                   const gchar       *import_dialog_title,
+                                   const gchar       *export_dialog_title,
+                                   const gchar       *file_dialog_help_id,
+                                   const gchar       *default_folder,
                                    GtkWidget        **settings_box);
 
   gboolean    (* settings_import) (GimpImageMapTool  *image_map_tool,
