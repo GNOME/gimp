@@ -73,11 +73,9 @@ filters_filter_cmd_callback (GtkAction   *action,
     {
       gchar *label = gimp_strip_uline (gtk_action_get_label (action));
 
-      tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,
-                                   display);
-      tool_manager_initialize_active (image->gimp, display);
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
                                          operation, label);
+      tool_manager_initialize_active (image->gimp, display);
 
       g_free (label);
     }

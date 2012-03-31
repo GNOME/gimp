@@ -23,6 +23,7 @@
 #include <gegl-plugin.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -36,6 +37,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 #include "core/gimpimagemapconfig.h"
+#include "core/gimplist.h"
 #include "core/gimpparamspecs-duplicate.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -51,21 +53,29 @@
 
 /*  local function prototypes  */
 
-static void       gimp_operation_tool_finalize      (GObject           *object);
+static void        gimp_operation_tool_finalize        (GObject           *object);
 
-static gboolean   gimp_operation_tool_initialize    (GimpTool          *tool,
-                                                     GimpDisplay       *display,
-                                                     GError           **error);
+static gboolean    gimp_operation_tool_initialize      (GimpTool          *tool,
+                                                        GimpDisplay       *display,
+                                                        GError           **error);
 
-static GeglNode * gimp_operation_tool_get_operation (GimpImageMapTool  *im_tool,
-                                                     GObject          **config);
-static void       gimp_operation_tool_map           (GimpImageMapTool  *im_tool);
-static void       gimp_operation_tool_dialog        (GimpImageMapTool  *im_tool);
-static void       gimp_operation_tool_reset         (GimpImageMapTool  *im_tool);
+static GeglNode  * gimp_operation_tool_get_operation   (GimpImageMapTool  *im_tool,
+                                                        GObject          **config);
+static void        gimp_operation_tool_map             (GimpImageMapTool  *im_tool);
+static void        gimp_operation_tool_dialog          (GimpImageMapTool  *im_tool);
+static void        gimp_operation_tool_reset           (GimpImageMapTool  *im_tool);
+static GtkWidget * gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
+                                                        GimpContainer     *settings,
+                                                        const gchar       *settings_filename,
+                                                        const gchar       *import_dialog_title,
+                                                        const gchar       *export_dialog_title,
+                                                        const gchar       *file_dialog_help_id,
+                                                        const gchar       *default_folder,
+                                                        GtkWidget        **settings_box);
 
-static void       gimp_operation_tool_config_notify (GObject           *object,
-                                                     GParamSpec        *pspec,
-                                                     GimpOperationTool *tool);
+static void        gimp_operation_tool_config_notify   (GObject           *object,
+                                                        GParamSpec        *pspec,
+                                                        GimpOperationTool *tool);
 
 
 G_DEFINE_TYPE (GimpOperationTool, gimp_operation_tool,
@@ -97,16 +107,17 @@ gimp_operation_tool_class_init (GimpOperationToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize       = gimp_operation_tool_finalize;
+  object_class->finalize         = gimp_operation_tool_finalize;
 
-  tool_class->initialize       = gimp_operation_tool_initialize;
+  tool_class->initialize         = gimp_operation_tool_initialize;
 
-  im_tool_class->dialog_desc   = _("GEGL Operation");
+  im_tool_class->dialog_desc     = _("GEGL Operation");
 
-  im_tool_class->get_operation = gimp_operation_tool_get_operation;
-  im_tool_class->map           = gimp_operation_tool_map;
-  im_tool_class->dialog        = gimp_operation_tool_dialog;
-  im_tool_class->reset         = gimp_operation_tool_reset;
+  im_tool_class->get_operation   = gimp_operation_tool_get_operation;
+  im_tool_class->map             = gimp_operation_tool_map;
+  im_tool_class->dialog          = gimp_operation_tool_dialog;
+  im_tool_class->reset           = gimp_operation_tool_reset;
+  im_tool_class->get_settings_ui = gimp_operation_tool_get_settings_ui;
 }
 
 static void
@@ -175,11 +186,6 @@ gimp_operation_tool_map (GimpImageMapTool *image_map_tool)
     gimp_gegl_config_proxy_sync (tool->config, image_map_tool->operation);
 }
 
-
-/**********************/
-/*  Operation dialog  */
-/**********************/
-
 static void
 gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
 {
@@ -193,6 +199,13 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (main_vbox), tool->options_box,
                       FALSE, FALSE, 0);
   gtk_widget_show (tool->options_box);
+
+  if (tool->options_table)
+    {
+      gtk_container_add (GTK_CONTAINER (tool->options_box),
+                         tool->options_table);
+      gtk_widget_show (tool->options_table);
+    }
 }
 
 static void
@@ -202,6 +215,46 @@ gimp_operation_tool_reset (GimpImageMapTool *image_map_tool)
 
   if (tool->config)
     gimp_config_reset (GIMP_CONFIG (tool->config));
+}
+
+static GtkWidget *
+gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
+                                     GimpContainer     *settings,
+                                     const gchar       *settings_filename,
+                                     const gchar       *import_dialog_title,
+                                     const gchar       *export_dialog_title,
+                                     const gchar       *file_dialog_help_id,
+                                     const gchar       *default_folder,
+                                     GtkWidget        **settings_box)
+{
+  GimpOperationTool *tool = GIMP_OPERATION_TOOL (image_map_tool);
+  GType              type = G_TYPE_FROM_INSTANCE (tool->config);
+  GtkWidget         *widget;
+  gchar             *basename;
+  gchar             *filename;
+
+  settings = gimp_gegl_get_config_container (type);
+  if (! gimp_list_get_sort_func (GIMP_LIST (settings)))
+    gimp_list_set_sort_func (GIMP_LIST (settings),
+                             (GCompareFunc) gimp_image_map_config_compare);
+
+  basename = g_strconcat (G_OBJECT_TYPE_NAME (tool->config), ".settings", NULL);
+  filename = g_build_filename (gimp_directory (), "filters", basename, NULL);
+  g_free (basename);
+
+  widget =
+    GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->get_settings_ui (image_map_tool,
+                                                               settings,
+                                                               filename,
+                                                               "Import foo",
+                                                               "Export foo",
+                                                               "help-foo",
+                                                               g_get_home_dir (),
+                                                               settings_box);
+
+  g_free (filename);
+
+  return widget;
 }
 
 static void
@@ -232,6 +285,12 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       tool->config = NULL;
     }
 
+  if (GIMP_IMAGE_MAP_TOOL (tool)->config)
+    {
+      g_object_unref (GIMP_IMAGE_MAP_TOOL (tool)->config);
+      GIMP_IMAGE_MAP_TOOL (tool)->config = NULL;
+    }
+
   tool->operation = g_strdup (operation);
 
   if (GIMP_IMAGE_MAP_TOOL (tool)->image_map)
@@ -245,10 +304,15 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                  "operation", tool->operation,
                  NULL);
 
-  gimp_image_map_tool_create_map (GIMP_IMAGE_MAP_TOOL (tool));
+  if (GIMP_TOOL (tool)->drawable)
+    gimp_image_map_tool_create_map (GIMP_IMAGE_MAP_TOOL (tool));
 
   tool->config = gimp_gegl_get_config_proxy (tool->operation,
                                              GIMP_TYPE_IMAGE_MAP_CONFIG);
+  GIMP_IMAGE_MAP_TOOL (tool)->config = g_object_ref (tool->config);
+
+  GIMP_VIEWABLE_GET_CLASS (tool->config)->default_stock_id = GIMP_STOCK_GEGL;
+  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = label; /* XXX hack */
 
   if (tool->options_table)
     {
@@ -266,15 +330,20 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
         gimp_prop_table_new (G_OBJECT (tool->config),
                              G_TYPE_FROM_INSTANCE (tool->config),
                              GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)));
-      gtk_container_add (GTK_CONTAINER (tool->options_box),
-                         tool->options_table);
-      gtk_widget_show (tool->options_table);
+
+      if (tool->options_box)
+        {
+          gtk_container_add (GTK_CONTAINER (tool->options_box),
+                             tool->options_table);
+          gtk_widget_show (tool->options_table);
+        }
     }
 
-  if (label)
+  if (label && GIMP_IMAGE_MAP_TOOL (tool)->dialog)
     g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
                   "description", label,
                   NULL);
 
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
+  if (GIMP_TOOL (tool)->drawable)
+    gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }
