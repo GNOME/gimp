@@ -56,13 +56,16 @@ endif
 
 SUFFIXES = .xml.in .xml
 
-.xml.in.xml: $(top_srcdir)/configure.ac $(srcdir)/menus.xsl dialogs-menuitems.xml
+.xml.in.xml:
 if HAVE_XSLTPROC
 	$(XSLTPROC) --xinclude $(UNSTABLE_MENU_PARAMS) $(srcdir)/menus.xsl $< > $(@) || rm -f $(@)
 else
 	@echo "*** xsltproc is required to build the menus XML files ***"; exit 1;
 endif
 
+# Specifying dependencies in the implicit rule above does not work, so
+# specify them here instead
+dockable-menu.xml image-menu.xml: $(top_srcdir)/configure.ac $(srcdir)/menus.xsl dialogs-menuitems.xml
 
 validate: $(menudata_DATA)
 if HAVE_XMLLINT
