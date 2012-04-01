@@ -21,11 +21,9 @@
 
 #include "paint-types.h"
 
-#include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
-#include "paint-funcs/paint-funcs.h"
-
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
@@ -139,8 +137,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   gint                 paint_buffer_x;
   gint                 paint_buffer_y;
   const Babl          *format;
-  PixelRegion          destPR;
-  PixelRegion          tempPR;
   TempBuf             *convolve_temp;
   GeglBuffer          *convolve_buffer;
   gdouble              fade_point;
@@ -203,23 +199,16 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                     convolve_buffer,
                     GIMP_GEGL_RECT (0, 0, 0, 0));
 
-  /*  Convolve the region  */
-  pixel_region_init_temp_buf (&tempPR, convolve_temp,
-                              0, 0,
-                              convolve_temp->width,
-                              convolve_temp->height);
-
-  pixel_region_init_temp_buf (&destPR,
-                              gimp_gegl_buffer_get_temp_buf (paint_buffer),
-                              0, 0,
-                              gegl_buffer_get_width  (paint_buffer),
-                              gegl_buffer_get_height (paint_buffer));
-
-  convolve_region (&tempPR, &destPR,
-                   convolve->matrix, 3, convolve->matrix_divisor,
-                   GIMP_NORMAL_CONVOL, TRUE);
-
-  g_object_unref (convolve_buffer);
+  gimp_gegl_convolve (convolve_buffer,
+                      GIMP_GEGL_RECT (0, 0,
+                                      convolve_temp->width,
+                                      convolve_temp->height),
+                      paint_buffer,
+                      GIMP_GEGL_RECT (0, 0,
+                                      gegl_buffer_get_width  (paint_buffer),
+                                      gegl_buffer_get_height (paint_buffer)),
+                      convolve->matrix, 3, convolve->matrix_divisor,
+                      GIMP_NORMAL_CONVOL, TRUE);
 
   gimp_brush_core_replace_canvas (brush_core, drawable,
                                   coords,
