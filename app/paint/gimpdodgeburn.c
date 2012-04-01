@@ -28,7 +28,7 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
@@ -174,10 +174,16 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   GimpDynamicsOutput *opacity_output;
   GimpDynamicsOutput *hardness_output;
   GimpImage          *image;
-  TempBuf            *area;
-  TempBuf            *orig;
-  PixelRegion         srcPR, destPR, tempPR;
-  guchar             *temp_data;
+  GeglBuffer         *paint_buffer;
+  gint                paint_buffer_x;
+  gint                paint_buffer_y;
+  const Babl         *orig_format;
+  TempBuf            *orig_temp;
+  GeglBuffer         *orig_buffer;
+  GeglRectangle       orig_rect;
+  PixelRegion         srcPR, tempPR;
+  TempBuf            *db_temp;
+  GeglBuffer         *db_buffer;
   gdouble             fade_point;
   gdouble             opacity;
   gdouble             hardness;
@@ -200,66 +206,64 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
-                                         coords);
-  if (! area)
+  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                   paint_options, coords,
+                                                   &paint_buffer_x,
+                                                   &paint_buffer_y);
+  if (! paint_buffer)
     return;
 
   /* Constant painting --get a copy of the orig drawable (with no
    * paint from this stroke yet)
    */
-  {
-    GimpItem *item = GIMP_ITEM (drawable);
-    gint      x, y;
-    gint      width, height;
+  if (! gimp_rectangle_intersect (paint_buffer_x,
+                                  paint_buffer_y,
+                                  gegl_buffer_get_width  (paint_buffer),
+                                  gegl_buffer_get_height (paint_buffer),
+                                  0, 0,
+                                  gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                  gimp_item_get_height (GIMP_ITEM (drawable)),
+                                  &orig_rect.x,
+                                  &orig_rect.y,
+                                  &orig_rect.width,
+                                  &orig_rect.height))
+    {
+      return;
+    }
 
-    if (! gimp_rectangle_intersect (area->x, area->y,
-                                    area->width, area->height,
-                                    0, 0,
-                                    gimp_item_get_width  (item),
-                                    gimp_item_get_height (item),
-                                    &x, &y,
-                                    &width, &height))
-      {
-        return;
-      }
-#if 0
-    /*  get the original untouched image  */
-    orig = gimp_paint_core_get_orig_image (paint_core, drawable,
-                                           x, y, width, height);
+  /*  get the original untouched image  */
+  orig_format = gimp_drawable_get_format (drawable);
 
-    pixel_region_init_temp_buf (&srcPR, orig,
-                                0, 0, width, height);
-#endif
-  }
+  orig_temp = temp_buf_new (orig_rect.width, orig_rect.height,
+                            babl_format_get_bytes_per_pixel (orig_format),
+                            0, 0, NULL);
+
+  orig_buffer = gimp_temp_buf_create_buffer (orig_temp, orig_format);
+  gegl_buffer_copy (gimp_paint_core_get_orig_image (paint_core),
+                    &orig_rect,
+                    orig_buffer,
+                    GIMP_GEGL_RECT (0, 0, 0, 0));
+  g_object_unref (orig_buffer);
+
+  pixel_region_init_temp_buf (&srcPR, orig_temp,
+                              0, 0, orig_rect.width, orig_rect.height);
 
   /* tempPR will hold the dodgeburned region */
-  temp_data = g_malloc (srcPR.h * srcPR.bytes * srcPR.w);
+  db_temp = temp_buf_new (orig_rect.width, orig_rect.height,
+                          babl_format_get_bytes_per_pixel (orig_format),
+                          0, 0, NULL);
 
-  pixel_region_init_data (&tempPR, temp_data,
-                          srcPR.bytes,
-                          srcPR.bytes * srcPR.w,
-                          srcPR.x,
-                          srcPR.y,
-                          srcPR.w,
-                          srcPR.h);
+  pixel_region_init_temp_buf (&tempPR, db_temp,
+                              0, 0, db_temp->width, db_temp->height);
 
   /*  DodgeBurn the region  */
   gimp_lut_process (dodgeburn->lut, &srcPR, &tempPR);
 
-  /* The dest is the paint area we got above (= paint_area) */
-  pixel_region_init_temp_buf (&destPR, area,
-                              0, 0, area->width, area->height);
+  db_buffer = gimp_temp_buf_create_buffer (db_temp, orig_format);
+  gegl_buffer_copy (db_buffer, NULL, paint_buffer, NULL);
+  g_object_unref (db_buffer);
 
-  /* Now add an alpha to the dodgeburned region
-   * and put this in area = paint_area
-   */
-  if (! gimp_drawable_has_alpha (drawable))
-    add_alpha_region (&tempPR, &destPR);
-  else
-    copy_region (&tempPR, &destPR);
-
-  g_free (temp_data);
+  temp_buf_free (db_temp);
 
   hardness_output = gimp_dynamics_get_output (dynamics,
                                               GIMP_DYNAMICS_OUTPUT_HARDNESS);
