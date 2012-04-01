@@ -26,6 +26,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
@@ -133,15 +135,17 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GimpDynamicsOutput  *opacity_output;
   GimpDynamicsOutput  *rate_output;
   GimpImage           *image;
-  TempBuf             *area;
-  PixelRegion          srcPR;
+  GeglBuffer          *paint_buffer;
+  gint                 paint_buffer_x;
+  gint                 paint_buffer_y;
+  const Babl          *format;
   PixelRegion          destPR;
   PixelRegion          tempPR;
-  guchar              *buffer;
+  TempBuf             *convolve_temp;
+  GeglBuffer          *convolve_buffer;
   gdouble              fade_point;
   gdouble              opacity;
   gdouble              rate;
-  gint                 bytes;
 
   if (gimp_drawable_is_indexed (drawable))
     return;
@@ -161,9 +165,11 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
-                                         coords);
-  if (! area)
+  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                   paint_options, coords,
+                                                   &paint_buffer_x,
+                                                   &paint_buffer_y);
+  if (! paint_buffer)
     return;
 
   rate_output = gimp_dynamics_get_output (dynamics,
@@ -180,53 +186,42 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                   brush_core->brush->mask->height / 2,
                                   rate);
 
-  /*  configure the source pixel region  */
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     area->x, area->y, area->width, area->height, FALSE);
+  format = gegl_buffer_get_format (paint_buffer);
 
-  if (gimp_drawable_has_alpha (drawable))
-    {
-      bytes = srcPR.bytes;
+  convolve_temp = temp_buf_new (gegl_buffer_get_width  (paint_buffer),
+                                gegl_buffer_get_height (paint_buffer),
+                                babl_format_get_bytes_per_pixel (format),
+                                0, 0, NULL);
 
-      buffer = g_malloc (area->height * bytes * area->width);
+  convolve_buffer = gimp_temp_buf_create_buffer (convolve_temp, format);
 
-      pixel_region_init_data (&tempPR, buffer,
-                              bytes, bytes * area->width,
-                              0, 0, area->width, area->height);
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                    GIMP_GEGL_RECT (paint_buffer_x,
+                                    paint_buffer_y,
+                                    gegl_buffer_get_width  (paint_buffer),
+                                    gegl_buffer_get_height (paint_buffer)),
+                    convolve_buffer,
+                    GIMP_GEGL_RECT (0, 0, 0, 0));
 
-      copy_region (&srcPR, &tempPR);
-    }
-  else
-    {
-      /* note: this particular approach needlessly convolves the totally-
-         opaque alpha channel. A faster approach would be to keep
-         tempPR the same number of bytes as srcPR, and extend the
-         paint_core_replace_canvas API to handle non-alpha images. */
-
-      bytes = srcPR.bytes + 1;
-
-      buffer = g_malloc (area->height * bytes * area->width);
-
-      pixel_region_init_data (&tempPR, buffer,
-                              bytes, bytes * area->width,
-                              0, 0, area->width, area->height);
-
-      add_alpha_region (&srcPR, &tempPR);
-    }
+  g_object_unref (convolve_buffer);
 
   /*  Convolve the region  */
-  pixel_region_init_data (&tempPR, buffer,
-                          bytes, bytes * area->width,
-                          0, 0, area->width, area->height);
+  pixel_region_init_temp_buf (&tempPR, convolve_temp,
+                              0, 0,
+                              convolve_temp->width,
+                              convolve_temp->height);
 
-  pixel_region_init_temp_buf (&destPR, area,
-                              0, 0, area->width, area->height);
+  pixel_region_init_temp_buf (&destPR,
+                              gimp_gegl_buffer_get_temp_buf (paint_buffer),
+                              0, 0,
+                              gegl_buffer_get_width  (paint_buffer),
+                              gegl_buffer_get_height (paint_buffer));
 
   convolve_region (&tempPR, &destPR,
                    convolve->matrix, 3, convolve->matrix_divisor,
                    GIMP_NORMAL_CONVOL, TRUE);
 
-  g_free (buffer);
+  temp_buf_free (convolve_temp);
 
   gimp_brush_core_replace_canvas (brush_core, drawable,
                                   coords,
