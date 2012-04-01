@@ -693,12 +693,15 @@ gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
   g_return_val_if_fail (paint_buffer_x != NULL, NULL);
   g_return_val_if_fail (paint_buffer_y != NULL, NULL);
 
-  gimp_paint_core_get_paint_area (core, drawable, paint_options, coords);
+  if (gimp_paint_core_get_paint_area (core, drawable, paint_options, coords))
+    {
+      *paint_buffer_x = core->paint_buffer_x;
+      *paint_buffer_y = core->paint_buffer_y;
 
-  *paint_buffer_x = core->paint_buffer_x;
-  *paint_buffer_y = core->paint_buffer_y;
+      return core->paint_buffer;
+    }
 
-  return core->paint_buffer;
+  return NULL;
 }
 
 GeglBuffer *
