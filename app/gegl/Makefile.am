@@ -22,6 +22,8 @@ libappgegl_a_sources = \
 	gimp-gegl.h				\
 	gimp-gegl-config-proxy.c		\
 	gimp-gegl-config-proxy.h		\
+	gimp-gegl-loops.c			\
+	gimp-gegl-loops.h			\
 	gimp-gegl-nodes.c			\
 	gimp-gegl-nodes.h			\
 	gimp-gegl-utils.c			\
