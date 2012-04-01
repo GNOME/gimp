@@ -1511,6 +1511,7 @@ gimp_prop_table_new (GObject     *config,
                                                g_param_spec_get_nick (pspec),
                                                128, 24,
                                                GIMP_COLOR_AREA_SMALL_CHECKS);
+          gimp_color_button_set_update (GIMP_COLOR_BUTTON (widget), TRUE);
           gimp_color_panel_set_context (GIMP_COLOR_PANEL (widget), context);
           label = g_param_spec_get_nick (pspec);
         }
