@@ -166,8 +166,8 @@ gimp_color_panel_clicked (GtkButton *button)
                                NULL, NULL,
                                GTK_WIDGET (button),
                                NULL, NULL,
-                               (const GimpRGB *) &color,
-                               FALSE,
+                               &color,
+                               gimp_color_button_get_update (GIMP_COLOR_BUTTON (button)),
                                gimp_color_button_has_alpha (GIMP_COLOR_BUTTON (button)));
 
       g_signal_connect (panel->color_dialog, "destroy",
@@ -220,9 +220,18 @@ gimp_color_panel_color_changed (GimpColorButton *button)
 
   if (panel->color_dialog)
     {
+      GimpRGB dialog_color;
+
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &color);
-      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
-                                   &color);
+      gimp_color_dialog_get_color (GIMP_COLOR_DIALOG (panel->color_dialog),
+                                   &dialog_color);
+
+      if (gimp_rgba_distance (&color, &dialog_color) > 0.00001 ||
+          color.a != dialog_color.a)
+        {
+          gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
+                                       &color);
+        }
     }
 }
 
@@ -248,13 +257,20 @@ gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
   switch (state)
     {
     case GIMP_COLOR_DIALOG_UPDATE:
+      if (gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
+        gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
       break;
 
     case GIMP_COLOR_DIALOG_OK:
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
-      /* Fallthrough */
+      if (! gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
+        gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
+      gtk_widget_hide (panel->color_dialog);
+      break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
+      if (gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
+        gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
       gtk_widget_hide (panel->color_dialog);
+      break;
     }
 }
