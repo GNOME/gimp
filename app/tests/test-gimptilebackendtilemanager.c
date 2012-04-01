@@ -72,7 +72,10 @@ basic_usage (void)
    */
   backend = gimp_tile_backend_tile_manager_new (tm, FALSE);
   buffer  = gegl_buffer_new_for_backend (NULL, backend);
-  gegl_buffer_get (buffer, 1.0 /*scale*/, &pixel_rect, babl_format ("RGBA u16"), actual_data, GEGL_AUTO_ROWSTRIDE);
+  gegl_buffer_get (buffer,
+                   &pixel_rect, 1.0 /*scale*/,
+                   babl_format ("RGBA u16"), actual_data,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
   g_assert_cmpint (0, ==, memcmp (opaque_magenta16, actual_data, sizeof (actual_data)));
 }
 
