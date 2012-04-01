@@ -209,7 +209,6 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
       GimpRGB    pixel;
       GeglColor *color;
 
-
       gimp_pickable_get_color_at (GIMP_PICKABLE (drawable),
                                   CLAMP ((gint) coords->x,
                                          0,
@@ -254,8 +253,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   GimpDynamicsOutput *rate_output;
   GimpDynamicsOutput *hardness_output;
   GimpImage          *image;
-  TempBuf            *area;
-  PixelRegion         srcPR, destPR, tempPR;
+  GeglBuffer         *paint_buffer;
+  gint                paint_buffer_x;
+  gint                paint_buffer_y;
+  GeglBuffer         *accum_buffer;
+  PixelRegion         srcPR, tempPR;
   gdouble             fade_point;
   gdouble             opacity;
   gdouble             rate;
@@ -281,9 +283,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
-                                         coords);
-  if (! area)
+  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                   paint_options, coords,
+                                                   &paint_buffer_x,
+                                                   &paint_buffer_y);
+  if (! paint_buffer)
     return;
 
   /*  Get the unclipped acumulator coordinates  */
@@ -291,7 +295,10 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   /* srcPR will be the pixels under the current painthit from the drawable */
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     area->x, area->y, area->width, area->height, FALSE);
+                     paint_buffer_x,
+                     paint_buffer_y,
+                     gegl_buffer_get_width  (paint_buffer),
+                     gegl_buffer_get_height (paint_buffer), FALSE);
 
   /* Enable dynamic rate */
   rate_output = gimp_dynamics_get_output (dynamics,
@@ -306,14 +313,10 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   /* The tempPR will be the built up buffer (for smudge) */
   pixel_region_init_temp_buf (&tempPR, smudge->accum_temp,
-                              area->x - x,
-                              area->y - y,
-                              area->width,
-                              area->height);
-
-  /* The dest will be the paint area we got above (= paint_area) */
-  pixel_region_init_temp_buf (&destPR, area,
-                              0, 0, area->width, area->height);
+                              paint_buffer_x - x,
+                              paint_buffer_y - y,
+                              gegl_buffer_get_width  (paint_buffer),
+                              gegl_buffer_get_height (paint_buffer));
 
   /*  Smudge uses the buffer Accum.
    *  For each successive painthit Accum is built like this
@@ -325,17 +328,19 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   blend_region (&srcPR, &tempPR, &tempPR, ROUND (rate * 255.0));
 
-  /* re-init the tempPR */
-  pixel_region_init_temp_buf (&tempPR, smudge->accum_temp,
-                              area->x - x,
-                              area->y - y,
-                              area->width,
-                              area->height);
+  accum_buffer =
+    gimp_temp_buf_create_buffer (smudge->accum_temp,
+                                 gimp_drawable_get_format (drawable));
 
-  if (! gimp_drawable_has_alpha (drawable))
-    add_alpha_region (&tempPR, &destPR);
-  else
-    copy_region (&tempPR, &destPR);
+  gegl_buffer_copy (accum_buffer,
+                    GIMP_GEGL_RECT (paint_buffer_x - x,
+                                    paint_buffer_y - y,
+                                    gegl_buffer_get_width  (paint_buffer),
+                                    gegl_buffer_get_height (paint_buffer)),
+                    paint_buffer,
+                    GIMP_GEGL_RECT (0, 0, 0, 0));
+
+  g_object_unref (accum_buffer);
 
   hardness_output = gimp_dynamics_get_output (dynamics,
                                               GIMP_DYNAMICS_OUTPUT_HARDNESS);
