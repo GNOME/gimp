@@ -79,8 +79,9 @@ static GimpBlob   * ink_pen_ellipse           (GimpInkOptions   *options,
                                                gdouble           ytilt,
                                                gdouble           velocity);
 
-static void         render_blob               (GimpBlob         *blob,
-                                               PixelRegion      *dest);
+static void         render_blob               (GeglBuffer       *buffer,
+                                               GeglRectangle    *rect,
+                                               GimpBlob         *blob);
 
 
 G_DEFINE_TYPE (GimpInk, gimp_ink, GIMP_TYPE_PAINT_CORE)
@@ -326,15 +327,12 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   g_object_unref (color);
 
   /*  draw the blob directly to the canvas_buffer  */
-  pixel_region_init (&blob_maskPR,
-                     gimp_gegl_buffer_get_tiles (paint_core->canvas_buffer),
-                     paint_core->paint_buffer_x,
-                     paint_core->paint_buffer_y,
-                     gegl_buffer_get_width  (paint_core->paint_buffer),
-                     gegl_buffer_get_height (paint_core->paint_buffer),
-                     TRUE);
-
-  render_blob (blob_to_render, &blob_maskPR);
+  render_blob (paint_core->canvas_buffer,
+               GIMP_GEGL_RECT (paint_core->paint_buffer_x,
+                               paint_core->paint_buffer_y,
+                               gegl_buffer_get_width  (paint_core->paint_buffer),
+                               gegl_buffer_get_height (paint_core->paint_buffer)),
+               blob_to_render);
 
   /*  draw the paint_area using the just rendered canvas_buffer as mask */
   pixel_region_init (&blob_maskPR,
@@ -650,22 +648,26 @@ render_blob_line (GimpBlob *blob,
 }
 
 static void
-render_blob (GimpBlob    *blob,
-             PixelRegion *dest)
+render_blob (GeglBuffer    *buffer,
+             GeglRectangle *rect,
+             GimpBlob      *blob)
 {
-  gpointer  pr;
+  GeglBufferIterator *iter;
+  GeglRectangle      *roi;
 
-  for (pr = pixel_regions_register (1, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  iter = gegl_buffer_iterator_new (buffer, rect, 0, babl_format ("Y u8"),
+                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+  roi = &iter->roi[0];
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      guchar *d = dest->data;
-      gint    h = dest->h;
+      guchar *d = iter->data[0];
+      gint    h = roi->height;
       gint    y;
 
-      for (y = 0; y < h; y++, d += dest->rowstride)
+      for (y = 0; y < h; y++, d += roi->width * 1)
         {
-          render_blob_line (blob, d, dest->x, dest->y + y, dest->w);
+          render_blob_line (blob, d, roi->x, roi->y + y, roi->width);
         }
     }
 }
