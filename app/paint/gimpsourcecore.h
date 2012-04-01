@@ -60,7 +60,10 @@ struct _GimpSourceCoreClass
                                GimpPickable     *src_pickable,
                                gint              src_offset_x,
                                gint              src_offset_y,
-                               TempBuf          *paint_area,
+                               GeglBuffer       *paint_buffer,
+                               gint              paint_buffer_x,
+                               gint              paint_buffer_y,
+                               /* offsets *into* the paint_buffer: */
                                gint             *paint_area_offset_x,
                                gint             *paint_area_offset_y,
                                gint             *paint_area_width,
@@ -77,7 +80,10 @@ struct _GimpSourceCoreClass
                                GeglRectangle    *src_rect,
                                gint              src_offset_x,
                                gint              src_offset_y,
-                               TempBuf          *paint_area,
+                               GeglBuffer       *paint_buffer,
+                               gint              paint_buffer_x,
+                               gint              paint_buffer_y,
+                               /* offsets *into* the paint_buffer: */
                                gint              paint_area_offset_x,
                                gint              paint_area_offset_y,
                                gint              paint_area_width,

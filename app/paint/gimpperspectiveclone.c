@@ -64,7 +64,9 @@ static GeglBuffer * gimp_perspective_clone_get_source (GimpSourceCore   *source_
                                                        GimpPickable     *src_pickable,
                                                        gint              src_offset_x,
                                                        gint              src_offset_y,
-                                                       TempBuf          *paint_area,
+                                                       GeglBuffer       *paint_buffer,
+                                                       gint              paint_buffer_x,
+                                                       gint              paint_buffer_y,
                                                        gint             *paint_area_offset_x,
                                                        gint             *paint_area_offset_y,
                                                        gint             *paint_area_width,
@@ -337,7 +339,9 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                                    GimpPickable     *src_pickable,
                                    gint              src_offset_x,
                                    gint              src_offset_y,
-                                   TempBuf          *paint_area,
+                                   GeglBuffer       *paint_buffer,
+                                   gint              paint_buffer_x,
+                                   gint              paint_buffer_y,
                                    gint             *paint_area_offset_x,
                                    gint             *paint_area_offset_y,
                                    gint             *paint_area_width,
@@ -358,10 +362,10 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   src_format_alpha = gimp_pickable_get_format_with_alpha (src_pickable);
 
   /* Destination coordinates that will be painted */
-  x1d = paint_area->x;
-  y1d = paint_area->y;
-  x2d = paint_area->x + paint_area->width;
-  y2d = paint_area->y + paint_area->height;
+  x1d = paint_buffer_x;
+  y1d = paint_buffer_y;
+  x2d = paint_buffer_x + gegl_buffer_get_width  (paint_buffer);
+  y2d = paint_buffer_y + gegl_buffer_get_height (paint_buffer);
 
   /* Boundary box for source pixels to copy: Convert all the vertex of
    * the box to paint in destination area to its correspondent in

@@ -61,7 +61,9 @@ static void       gimp_clone_motion (GimpSourceCore   *source_core,
                                      GeglRectangle    *src_rect,
                                      gint              src_offset_x,
                                      gint              src_offset_y,
-                                     TempBuf          *paint_area,
+                                     GeglBuffer       *paint_buffer,
+                                     gint              paint_buffer_x,
+                                     gint              paint_buffer_y,
                                      gint              paint_area_offset_x,
                                      gint              paint_area_offset_y,
                                      gint              paint_area_width,
@@ -141,7 +143,9 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                    GeglRectangle    *src_rect,
                    gint              src_offset_x,
                    gint              src_offset_y,
-                   TempBuf          *paint_area,
+                   GeglBuffer       *paint_buffer,
+                   gint              paint_buffer_x,
+                   gint              paint_buffer_y,
                    gint              paint_area_offset_x,
                    gint              paint_area_offset_y,
                    gint              paint_area_width,
@@ -153,12 +157,8 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   GimpContext        *context        = GIMP_CONTEXT (paint_options);
   GimpImage          *image          = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpDynamicsOutput *force_output;
-  GeglBuffer         *dest_buffer;
   gdouble             fade_point;
   gdouble             force;
-
-  dest_buffer = gimp_temp_buf_create_buffer (paint_area,
-                                             gimp_drawable_get_format_with_alpha (drawable));
 
   switch (options->clone_type)
     {
@@ -169,7 +169,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                                           src_rect->y,
                                           paint_area_width,
                                           paint_area_height),
-                          dest_buffer,
+                          paint_buffer,
                           GIMP_GEGL_RECT (paint_area_offset_x,
                                           paint_area_offset_y,
                                           0, 0));
@@ -182,22 +182,20 @@ gimp_clone_motion (GimpSourceCore   *source_core,
         GimpPattern *pattern    = gimp_context_get_pattern (context);
         GeglBuffer  *src_buffer = gimp_pattern_create_buffer (pattern);
 
-        gegl_buffer_set_pattern (dest_buffer,
+        gegl_buffer_set_pattern (paint_buffer,
                                  GIMP_GEGL_RECT (paint_area_offset_x,
                                                  paint_area_offset_y,
                                                  paint_area_width,
                                                  paint_area_height),
                                  src_buffer,
-                                 - paint_area->x - src_offset_x,
-                                 - paint_area->y - src_offset_y);
+                                 - paint_buffer_x - src_offset_x,
+                                 - paint_buffer_y - src_offset_y);
 
         /* XXX: move this to FINISH */
         g_object_unref (src_buffer);
       }
       break;
     }
-
-  g_object_unref (dest_buffer);
 
   force_output = gimp_dynamics_get_output (GIMP_BRUSH_CORE (paint_core)->dynamics,
                                            GIMP_DYNAMICS_OUTPUT_FORCE);

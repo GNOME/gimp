@@ -85,7 +85,9 @@ static GeglBuffer *
                                                   GimpPickable     *src_pickable,
                                                   gint              src_offset_x,
                                                   gint              src_offset_y,
-                                                  TempBuf          *paint_area,
+                                                  GeglBuffer       *paint_buffer,
+                                                  gint              paint_buffer_x,
+                                                  gint              paint_buffer_y,
                                                   gint             *paint_area_offset_x,
                                                   gint             *paint_area_offset_y,
                                                   gint             *paint_area_width,
@@ -356,7 +358,9 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   GeglRectangle       src_rect;
   gint                src_offset_x;
   gint                src_offset_y;
-  TempBuf            *paint_area;
+  GeglBuffer         *paint_buffer;
+  gint                paint_buffer_x;
+  gint                paint_buffer_y;
   gint                paint_area_offset_x;
   gint                paint_area_offset_y;
   gint                paint_area_width;
@@ -401,15 +405,17 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
       gimp_pickable_flush (src_pickable);
     }
 
-  paint_area = gimp_paint_core_get_paint_area (paint_core, drawable,
-                                               paint_options, coords);
-  if (! paint_area)
+  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                   paint_options, coords,
+                                                   &paint_buffer_x,
+                                                   &paint_buffer_y);
+  if (! paint_buffer)
     return;
 
   paint_area_offset_x = 0;
   paint_area_offset_y = 0;
-  paint_area_width    = paint_area->width;
-  paint_area_height   = paint_area->height;
+  paint_area_width    = gegl_buffer_get_width  (paint_buffer);
+  paint_area_height   = gegl_buffer_get_height (paint_buffer);
 
   if (options->use_source)
     {
@@ -420,7 +426,9 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                               src_pickable,
                                                               src_offset_x,
                                                               src_offset_y,
-                                                              paint_area,
+                                                              paint_buffer,
+                                                              paint_buffer_x,
+                                                              paint_buffer_y,
                                                               &paint_area_offset_x,
                                                               &paint_area_offset_y,
                                                               &paint_area_width,
@@ -430,8 +438,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
         return;
     }
 
-  /*  Set the paint area to transparent  */
-  temp_buf_data_clear (paint_area);
+  /*  Set the paint buffer to transparent  */
+  gegl_buffer_clear (paint_buffer, NULL);
 
   GIMP_SOURCE_CORE_GET_CLASS (source_core)->motion (source_core,
                                                     drawable,
@@ -443,7 +451,9 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                                     &src_rect,
                                                     src_offset_x,
                                                     src_offset_y,
-                                                    paint_area,
+                                                    paint_buffer,
+                                                    paint_buffer_x,
+                                                    paint_buffer_y,
                                                     paint_area_offset_x,
                                                     paint_area_offset_y,
                                                     paint_area_width,
@@ -460,7 +470,9 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                   GimpPickable     *src_pickable,
                                   gint              src_offset_x,
                                   gint              src_offset_y,
-                                  TempBuf          *paint_area,
+                                  GeglBuffer       *paint_buffer,
+                                  gint              paint_buffer_x,
+                                  gint              paint_buffer_y,
                                   gint             *paint_area_offset_x,
                                   gint             *paint_area_offset_y,
                                   gint             *paint_area_width,
@@ -475,10 +487,10 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
   gint               x, y;
   gint               width, height;
 
-  if (! gimp_rectangle_intersect (paint_area->x + src_offset_x,
-                                  paint_area->y + src_offset_y,
-                                  paint_area->width,
-                                  paint_area->height,
+  if (! gimp_rectangle_intersect (paint_buffer_x + src_offset_x,
+                                  paint_buffer_y + src_offset_y,
+                                  gegl_buffer_get_width  (paint_buffer),
+                                  gegl_buffer_get_height (paint_buffer),
                                   0, 0,
                                   gegl_buffer_get_width  (src_buffer),
                                   gegl_buffer_get_height (src_buffer),
@@ -508,8 +520,8 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
         dest_buffer = gimp_paint_core_get_orig_image (GIMP_PAINT_CORE (source_core));
     }
 
-  *paint_area_offset_x = x - (paint_area->x + src_offset_x);
-  *paint_area_offset_y = y - (paint_area->y + src_offset_y);
+  *paint_area_offset_x = x - (paint_buffer_x + src_offset_x);
+  *paint_area_offset_y = y - (paint_buffer_y + src_offset_y);
   *paint_area_width    = width;
   *paint_area_height   = height;
 
