@@ -103,7 +103,7 @@ gimp_gegl_init (Gimp *gimp)
    * and 16bit operation
    */
   g_object_set (gegl_config (),
-                "babl-tolerance", 0.00001,
+                "babl-tolerance", 0.00015,
                 NULL);
 
   g_signal_connect (config, "notify::tile-cache-size",
