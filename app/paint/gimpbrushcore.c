@@ -28,8 +28,6 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpbrush.h"
