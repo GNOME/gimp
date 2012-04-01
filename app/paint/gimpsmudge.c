@@ -170,20 +170,24 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                    const GimpCoords *coords)
 {
   GimpSmudge  *smudge = GIMP_SMUDGE (paint_core);
-  TempBuf     *area;
-  PixelRegion  srcPR;
+  GeglBuffer  *paint_buffer;
+  gint         paint_buffer_x;
+  gint         paint_buffer_y;
+  GeglBuffer  *accum_buffer;
   gint         bytes;
   gint         x, y;
 
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;
 
-  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options,
-                                         coords);
-  if (! area)
+  paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                   paint_options, coords,
+                                                   &paint_buffer_x,
+                                                   &paint_buffer_y);
+  if (! paint_buffer)
     return FALSE;
 
-  gimp_smudge_accumulator_size(paint_options, &smudge->accum_size);
+  gimp_smudge_accumulator_size (paint_options, &smudge->accum_size);
 
   /*  adjust the x and y coordinates to the upper left corner of the
    *  accumulator
@@ -194,24 +198,26 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   bytes = gimp_drawable_bytes (drawable);
   smudge->accum_data = g_malloc (SQR (smudge->accum_size) * bytes);
 
+  accum_buffer =
+    gegl_buffer_linear_new_from_data (smudge->accum_data,
+                                      gimp_drawable_get_format (drawable),
+                                      GIMP_GEGL_RECT (0, 0,
+                                                      smudge->accum_size,
+                                                      smudge->accum_size),
+                                      GEGL_AUTO_ROWSTRIDE,
+                                      NULL, NULL);
+
   /*  If clipped, prefill the smudge buffer with the color at the
    *  brush position.
    */
-  if (x != area->x ||
-      y != area->y ||
-      smudge->accum_size != area->width ||
-      smudge->accum_size != area->height)
+  if (x != paint_buffer_x ||
+      y != paint_buffer_y ||
+      smudge->accum_size != gegl_buffer_get_width  (paint_buffer) ||
+      smudge->accum_size != gegl_buffer_get_height (paint_buffer))
     {
-      GeglBuffer    *buffer;
-      GeglRectangle  rect = { 0, 0, smudge->accum_size, smudge->accum_size };
-      GimpRGB        pixel;
-      GeglColor     *color;
+      GimpRGB    pixel;
+      GeglColor *color;
 
-      buffer = gegl_buffer_linear_new_from_data (smudge->accum_data,
-                                                 gimp_drawable_get_format (drawable),
-                                                 &rect,
-                                                 smudge->accum_size * bytes,
-                                                 NULL, NULL);
 
       gimp_pickable_get_color_at (GIMP_PICKABLE (drawable),
                                   CLAMP ((gint) coords->x,
@@ -223,24 +229,22 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                   &pixel);
 
       color = gimp_gegl_color_new (&pixel);
-      gegl_buffer_set_color (buffer, &rect, color);
+      gegl_buffer_set_color (accum_buffer, NULL, color);
       g_object_unref (color);
-
-      g_object_unref (buffer);
     }
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     area->x, area->y, area->width, area->height, FALSE);
-
-  pixel_region_init_data (&smudge->accumPR, smudge->accum_data,
-                          bytes, bytes * smudge->accum_size,
-                          area->x - x,
-                          area->y - y,
-                          area->width,
-                          area->height);
-
   /* copy the region under the original painthit. */
-  copy_region (&srcPR, &smudge->accumPR);
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                    GIMP_GEGL_RECT (paint_buffer_x,
+                                    paint_buffer_y,
+                                    gegl_buffer_get_width  (paint_buffer),
+                                    gegl_buffer_get_height (paint_buffer)),
+                    accum_buffer,
+                    GIMP_GEGL_RECT (paint_buffer_x - x,
+                                    paint_buffer_y - y,
+                                    0, 0));
+
+  g_object_unref (accum_buffer);
 
   pixel_region_init_data (&smudge->accumPR, smudge->accum_data,
                           bytes, bytes * smudge->accum_size,
