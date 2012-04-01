@@ -72,42 +72,44 @@ struct _GimpPaintCoreClass
   GimpObjectClass  parent_class;
 
   /*  virtual functions  */
-  gboolean   (* start)          (GimpPaintCore    *core,
-                                 GimpDrawable     *drawable,
-                                 GimpPaintOptions *paint_options,
-                                 const GimpCoords *coords,
-                                 GError          **error);
+  gboolean     (* start)            (GimpPaintCore    *core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     const GimpCoords *coords,
+                                     GError          **error);
 
-  gboolean   (* pre_paint)      (GimpPaintCore    *core,
-                                 GimpDrawable     *drawable,
-                                 GimpPaintOptions *paint_options,
-                                 GimpPaintState    paint_state,
-                                 guint32           time);
-  void       (* paint)          (GimpPaintCore    *core,
-                                 GimpDrawable     *drawable,
-                                 GimpPaintOptions *paint_options,
-                                 const GimpCoords *coords,
-                                 GimpPaintState    paint_state,
-                                 guint32           time);
-  void       (* post_paint)     (GimpPaintCore    *core,
-                                 GimpDrawable     *drawable,
-                                 GimpPaintOptions *paint_options,
-                                 GimpPaintState    paint_state,
-                                 guint32           time);
+  gboolean     (* pre_paint)        (GimpPaintCore    *core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     GimpPaintState    paint_state,
+                                     guint32           time);
+  void         (* paint)            (GimpPaintCore    *core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     const GimpCoords *coords,
+                                     GimpPaintState    paint_state,
+                                     guint32           time);
+  void         (* post_paint)       (GimpPaintCore    *core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     GimpPaintState    paint_state,
+                                     guint32           time);
 
-  void       (* interpolate)    (GimpPaintCore    *core,
-                                 GimpDrawable     *drawable,
-                                 GimpPaintOptions *paint_options,
-                                 guint32           time);
+  void         (* interpolate)      (GimpPaintCore    *core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     guint32           time);
 
-  TempBuf  * (* get_paint_area) (GimpPaintCore    *core,
-                                 GimpDrawable     *drawable,
-                                 GimpPaintOptions *paint_options,
-                                 const GimpCoords *coords);
+  GeglBuffer * (* get_paint_buffer) (GimpPaintCore    *core,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     const GimpCoords *coords,
+                                     gint             *paint_buffer_x,
+                                     gint             *paint_buffer_y);
 
-  GimpUndo * (* push_undo)      (GimpPaintCore    *core,
-                                 GimpImage        *image,
-                                 const gchar      *undo_desc);
+  GimpUndo   * (* push_undo)        (GimpPaintCore    *core,
+                                     GimpImage        *image,
+                                     const gchar      *undo_desc);
 };
 
 
@@ -154,10 +156,6 @@ void      gimp_paint_core_round_line                (GimpPaintCore    *core,
 
 /*  protected functions  */
 
-TempBuf    * gimp_paint_core_get_paint_area         (GimpPaintCore    *core,
-                                                     GimpDrawable     *drawable,
-                                                     GimpPaintOptions *options,
-                                                     const GimpCoords *coords);
 GeglBuffer * gimp_paint_core_get_paint_buffer       (GimpPaintCore    *core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *options,

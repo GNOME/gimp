@@ -95,10 +95,13 @@ static void      gimp_paint_core_real_interpolate    (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
                                                       guint32           time);
-static TempBuf * gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
+static GeglBuffer *
+               gimp_paint_core_real_get_paint_buffer (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
-                                                      const GimpCoords *coords);
+                                                      const GimpCoords *coords,
+                                                      gint             *paint_buffer_x,
+                                                      gint             *paint_buffer_y);
 static GimpUndo* gimp_paint_core_real_push_undo      (GimpPaintCore    *core,
                                                       GimpImage        *image,
                                                       const gchar      *undo_desc);
@@ -133,7 +136,7 @@ gimp_paint_core_class_init (GimpPaintCoreClass *klass)
   klass->paint               = gimp_paint_core_real_paint;
   klass->post_paint          = gimp_paint_core_real_post_paint;
   klass->interpolate         = gimp_paint_core_real_interpolate;
-  klass->get_paint_area      = gimp_paint_core_real_get_paint_area;
+  klass->get_paint_buffer    = gimp_paint_core_real_get_paint_buffer;
   klass->push_undo           = gimp_paint_core_real_push_undo;
 
   g_object_class_install_property (object_class, PROP_UNDO_DESC,
@@ -260,11 +263,13 @@ gimp_paint_core_real_interpolate (GimpPaintCore    *core,
   core->last_coords = core->cur_coords;
 }
 
-static TempBuf *
-gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
-                                     GimpDrawable     *drawable,
-                                     GimpPaintOptions *paint_options,
-                                     const GimpCoords *coords)
+static GeglBuffer *
+gimp_paint_core_real_get_paint_buffer (GimpPaintCore    *core,
+                                       GimpDrawable     *drawable,
+                                       GimpPaintOptions *paint_options,
+                                       const GimpCoords *coords,
+                                       gint             *paint_buffer_x,
+                                       gint             *paint_buffer_y)
 {
   return NULL;
 }
@@ -660,23 +665,6 @@ gimp_paint_core_round_line (GimpPaintCore    *core,
 
 /*  protected functions  */
 
-TempBuf *
-gimp_paint_core_get_paint_area (GimpPaintCore    *core,
-                                GimpDrawable     *drawable,
-                                GimpPaintOptions *paint_options,
-                                const GimpCoords *coords)
-{
-  g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), NULL);
-  g_return_val_if_fail (coords != NULL, NULL);
-
-  return GIMP_PAINT_CORE_GET_CLASS (core)->get_paint_area (core, drawable,
-                                                           paint_options,
-                                                           coords);
-}
-
 GeglBuffer *
 gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
                                   GimpDrawable     *drawable,
@@ -685,6 +673,8 @@ gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
                                   gint             *paint_buffer_x,
                                   gint             *paint_buffer_y)
 {
+  GeglBuffer *paint_buffer;
+
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
@@ -693,15 +683,17 @@ gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
   g_return_val_if_fail (paint_buffer_x != NULL, NULL);
   g_return_val_if_fail (paint_buffer_y != NULL, NULL);
 
-  if (gimp_paint_core_get_paint_area (core, drawable, paint_options, coords))
-    {
-      *paint_buffer_x = core->paint_buffer_x;
-      *paint_buffer_y = core->paint_buffer_y;
+  paint_buffer =
+    GIMP_PAINT_CORE_GET_CLASS (core)->get_paint_buffer (core, drawable,
+                                                        paint_options,
+                                                        coords,
+                                                        paint_buffer_x,
+                                                        paint_buffer_y);
 
-      return core->paint_buffer;
-    }
+  core->paint_buffer_x = *paint_buffer_x;
+  core->paint_buffer_y = *paint_buffer_y;
 
-  return NULL;
+  return paint_buffer;
 }
 
 GeglBuffer *

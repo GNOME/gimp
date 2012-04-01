@@ -82,10 +82,12 @@ static void      gimp_brush_core_interpolate        (GimpPaintCore    *core,
                                                      GimpPaintOptions *paint_options,
                                                      guint32           time);
 
-static TempBuf * gimp_brush_core_get_paint_area     (GimpPaintCore    *paint_core,
+static GeglBuffer * gimp_brush_core_get_paint_buffer(GimpPaintCore    *paint_core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *paint_options,
-                                                     const GimpCoords *coords);
+                                                     const GimpCoords *coords,
+                                                     gint             *paint_buffer_x,
+                                                     gint             *paint_buffer_y);
 
 static void      gimp_brush_core_real_set_brush     (GimpBrushCore    *core,
                                                      GimpBrush        *brush);
@@ -165,7 +167,7 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
   paint_core_class->pre_paint               = gimp_brush_core_pre_paint;
   paint_core_class->post_paint              = gimp_brush_core_post_paint;
   paint_core_class->interpolate             = gimp_brush_core_interpolate;
-  paint_core_class->get_paint_area          = gimp_brush_core_get_paint_area;
+  paint_core_class->get_paint_buffer        = gimp_brush_core_get_paint_buffer;
 
   klass->handles_changing_brush             = FALSE;
   klass->handles_transforming_brush         = TRUE;
@@ -786,11 +788,13 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   paint_core->pixel_dist = pixel_initial + pixel_dist;
 }
 
-static TempBuf *
-gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
-                                GimpDrawable     *drawable,
-                                GimpPaintOptions *paint_options,
-                                const GimpCoords *coords)
+static GeglBuffer *
+gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
+                                  GimpDrawable     *drawable,
+                                  GimpPaintOptions *paint_options,
+                                  const GimpCoords *coords,
+                                  gint             *paint_buffer_x,
+                                  gint             *paint_buffer_y)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   gint           x, y;
@@ -832,8 +836,8 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
                                                 x1, y1,
                                                 (x2 - x1), (y2 - y1));
 
-      paint_core->paint_buffer_x = x1;
-      paint_core->paint_buffer_y = y1;
+      *paint_buffer_x = x1;
+      *paint_buffer_y = y1;
 
       if (paint_core->paint_buffer)
         g_object_unref (paint_core->paint_buffer);
@@ -841,7 +845,7 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
       paint_core->paint_buffer =
         gimp_temp_buf_create_buffer (paint_core->paint_area, format);
 
-      return paint_core->paint_area;
+      return paint_core->paint_buffer;
     }
 
   return NULL;

@@ -47,38 +47,40 @@
 
 /*  local function prototypes  */
 
-static void       gimp_ink_finalize       (GObject          *object);
+static void         gimp_ink_finalize         (GObject          *object);
 
-static void       gimp_ink_paint          (GimpPaintCore    *paint_core,
-                                           GimpDrawable     *drawable,
-                                           GimpPaintOptions *paint_options,
-                                           const GimpCoords *coords,
-                                           GimpPaintState    paint_state,
-                                           guint32           time);
-static TempBuf  * gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
-                                           GimpDrawable     *drawable,
-                                           GimpPaintOptions *paint_options,
-                                           const GimpCoords *coords);
-static GimpUndo * gimp_ink_push_undo      (GimpPaintCore    *core,
-                                           GimpImage        *image,
-                                           const gchar      *undo_desc);
+static void         gimp_ink_paint            (GimpPaintCore    *paint_core,
+                                               GimpDrawable     *drawable,
+                                               GimpPaintOptions *paint_options,
+                                               const GimpCoords *coords,
+                                               GimpPaintState    paint_state,
+                                               guint32           time);
+static GeglBuffer * gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
+                                               GimpDrawable     *drawable,
+                                               GimpPaintOptions *paint_options,
+                                               const GimpCoords *coords,
+                                               gint             *paint_buffer_x,
+                                               gint             *paint_buffer_y);
+static GimpUndo   * gimp_ink_push_undo        (GimpPaintCore    *core,
+                                               GimpImage        *image,
+                                               const gchar      *undo_desc);
 
-static void       gimp_ink_motion         (GimpPaintCore    *paint_core,
-                                           GimpDrawable     *drawable,
-                                           GimpPaintOptions *paint_options,
-                                           const GimpCoords *coords,
-                                           guint32           time);
+static void         gimp_ink_motion           (GimpPaintCore    *paint_core,
+                                               GimpDrawable     *drawable,
+                                               GimpPaintOptions *paint_options,
+                                               const GimpCoords *coords,
+                                               guint32           time);
 
-static GimpBlob * ink_pen_ellipse         (GimpInkOptions   *options,
-                                           gdouble           x_center,
-                                           gdouble           y_center,
-                                           gdouble           pressure,
-                                           gdouble           xtilt,
-                                           gdouble           ytilt,
-                                           gdouble           velocity);
+static GimpBlob   * ink_pen_ellipse           (GimpInkOptions   *options,
+                                               gdouble           x_center,
+                                               gdouble           y_center,
+                                               gdouble           pressure,
+                                               gdouble           xtilt,
+                                               gdouble           ytilt,
+                                               gdouble           velocity);
 
-static void      render_blob              (GimpBlob         *blob,
-                                           PixelRegion      *dest);
+static void         render_blob               (GimpBlob         *blob,
+                                               PixelRegion      *dest);
 
 
 G_DEFINE_TYPE (GimpInk, gimp_ink, GIMP_TYPE_PAINT_CORE)
@@ -104,11 +106,11 @@ gimp_ink_class_init (GimpInkClass *klass)
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
 
-  object_class->finalize           = gimp_ink_finalize;
+  object_class->finalize             = gimp_ink_finalize;
 
-  paint_core_class->paint          = gimp_ink_paint;
-  paint_core_class->get_paint_area = gimp_ink_get_paint_area;
-  paint_core_class->push_undo      = gimp_ink_push_undo;
+  paint_core_class->paint            = gimp_ink_paint;
+  paint_core_class->get_paint_buffer = gimp_ink_get_paint_buffer;
+  paint_core_class->push_undo        = gimp_ink_push_undo;
 }
 
 static void
@@ -191,11 +193,13 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
     }
 }
 
-static TempBuf *
-gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
-                         GimpDrawable     *drawable,
-                         GimpPaintOptions *paint_options,
-                         const GimpCoords *coords)
+static GeglBuffer *
+gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
+                           GimpDrawable     *drawable,
+                           GimpPaintOptions *paint_options,
+                           const GimpCoords *coords,
+                           gint             *paint_buffer_x,
+                           gint             *paint_buffer_y)
 {
   GimpInk *ink = GIMP_INK (paint_core);
   gint     x, y;
@@ -223,8 +227,8 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
                                                 x1, y1,
                                                 (x2 - x1), (y2 - y1));
 
-      paint_core->paint_buffer_x = x1;
-      paint_core->paint_buffer_y = y1;
+      *paint_buffer_x = x1;
+      *paint_buffer_y = y1;
 
       if (paint_core->paint_buffer)
         g_object_unref (paint_core->paint_buffer);
@@ -232,7 +236,7 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
       paint_core->paint_buffer =
         gimp_temp_buf_create_buffer (paint_core->paint_area, format);
 
-      return paint_core->paint_area;
+      return paint_core->paint_buffer;
     }
 
   return NULL;
