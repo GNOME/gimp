@@ -106,9 +106,6 @@ gimp_smudge_class_init (GimpSmudgeClass *klass)
 static void
 gimp_smudge_init (GimpSmudge *smudge)
 {
-  smudge->initialized = FALSE;
-  smudge->accum_data  = NULL;
-  smudge->accum_size  = 0;
 }
 
 static void
@@ -116,13 +113,11 @@ gimp_smudge_finalize (GObject *object)
 {
   GimpSmudge *smudge = GIMP_SMUDGE (object);
 
-  if (smudge->accum_data)
+  if (smudge->accum_temp)
     {
-      g_free (smudge->accum_data);
-      smudge->accum_data = NULL;
+      temp_buf_free (smudge->accum_temp);
+      smudge->accum_temp = NULL;
     }
-
-  smudge->accum_size = 0;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -150,10 +145,10 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
-      if (smudge->accum_data)
+      if (smudge->accum_temp)
         {
-          g_free (smudge->accum_data);
-          smudge->accum_data = NULL;
+          temp_buf_free (smudge->accum_temp);
+          smudge->accum_temp = NULL;
         }
       smudge->initialized = FALSE;
       break;
@@ -174,7 +169,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   gint         paint_buffer_x;
   gint         paint_buffer_y;
   GeglBuffer  *accum_buffer;
-  gint         bytes;
+  gint         accum_size;
   gint         x, y;
 
   if (gimp_drawable_is_indexed (drawable))
@@ -187,33 +182,29 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   if (! paint_buffer)
     return FALSE;
 
-  gimp_smudge_accumulator_size (paint_options, &smudge->accum_size);
+  gimp_smudge_accumulator_size (paint_options, &accum_size);
+
+  /*  Allocate the accumulation buffer */
+  smudge->accum_temp = temp_buf_new (accum_size, accum_size,
+                                     gimp_drawable_bytes (drawable),
+                                     0, 0, NULL);
+
+  accum_buffer =
+    gimp_temp_buf_create_buffer (smudge->accum_temp,
+                                 gimp_drawable_get_format (drawable));
 
   /*  adjust the x and y coordinates to the upper left corner of the
    *  accumulator
    */
   gimp_smudge_accumulator_coords (paint_core, coords, &x, &y);
 
-  /*  Allocate the accumulation buffer */
-  bytes = gimp_drawable_bytes (drawable);
-  smudge->accum_data = g_malloc (SQR (smudge->accum_size) * bytes);
-
-  accum_buffer =
-    gegl_buffer_linear_new_from_data (smudge->accum_data,
-                                      gimp_drawable_get_format (drawable),
-                                      GIMP_GEGL_RECT (0, 0,
-                                                      smudge->accum_size,
-                                                      smudge->accum_size),
-                                      GEGL_AUTO_ROWSTRIDE,
-                                      NULL, NULL);
-
   /*  If clipped, prefill the smudge buffer with the color at the
    *  brush position.
    */
   if (x != paint_buffer_x ||
       y != paint_buffer_y ||
-      smudge->accum_size != gegl_buffer_get_width  (paint_buffer) ||
-      smudge->accum_size != gegl_buffer_get_height (paint_buffer))
+      accum_size != gegl_buffer_get_width  (paint_buffer) ||
+      accum_size != gegl_buffer_get_height (paint_buffer))
     {
       GimpRGB    pixel;
       GeglColor *color;
@@ -245,13 +236,6 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                     0, 0));
 
   g_object_unref (accum_buffer);
-
-  pixel_region_init_data (&smudge->accumPR, smudge->accum_data,
-                          bytes, bytes * smudge->accum_size,
-                          0,
-                          0,
-                          smudge->accum_size,
-                          smudge->accum_size);
 
   return TRUE;
 }
@@ -321,13 +305,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   rate = (options->rate / 100.0) * dynamic_rate;
 
   /* The tempPR will be the built up buffer (for smudge) */
-  pixel_region_init_data (&tempPR, smudge->accum_data,
-                          smudge->accumPR.bytes,
-                          smudge->accumPR.rowstride,
-                          area->x - x,
-                          area->y - y,
-                          area->width,
-                          area->height);
+  pixel_region_init_temp_buf (&tempPR, smudge->accum_temp,
+                              area->x - x,
+                              area->y - y,
+                              area->width,
+                              area->height);
 
   /* The dest will be the paint area we got above (= paint_area) */
   pixel_region_init_temp_buf (&destPR, area,
@@ -344,13 +326,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   blend_region (&srcPR, &tempPR, &tempPR, ROUND (rate * 255.0));
 
   /* re-init the tempPR */
-  pixel_region_init_data (&tempPR, smudge->accum_data,
-                          smudge->accumPR.bytes,
-                          smudge->accumPR.rowstride,
-                          area->x - x,
-                          area->y - y,
-                          area->width,
-                          area->height);
+  pixel_region_init_temp_buf (&tempPR, smudge->accum_temp,
+                              area->x - x,
+                              area->y - y,
+                              area->width,
+                              area->height);
 
   if (! gimp_drawable_has_alpha (drawable))
     add_alpha_region (&tempPR, &destPR);
@@ -382,16 +362,16 @@ gimp_smudge_accumulator_coords (GimpPaintCore    *paint_core,
 {
   GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
 
-  *x = (gint) coords->x - smudge->accum_size / 2;
-  *y = (gint) coords->y - smudge->accum_size / 2;
+  *x = (gint) coords->x - smudge->accum_temp->width  / 2;
+  *y = (gint) coords->y - smudge->accum_temp->height / 2;
 }
 
 static void
 gimp_smudge_accumulator_size (GimpPaintOptions *paint_options,
                               gint             *accumulator_size)
 {
-
-  /* Note: the max brush mask size plus a border of 1 pixel and a little
-   * headroom */
+  /* Note: the max brush mask size plus a border of 1 pixel and a
+   * little headroom
+   */
   *accumulator_size = ceil (sqrt (2 * SQR (paint_options->brush_size + 1)) + 2);
 }

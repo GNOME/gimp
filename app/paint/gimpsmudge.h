@@ -39,9 +39,7 @@ struct _GimpSmudge
   GimpBrushCore  parent_instance;
 
   gboolean       initialized;
-  PixelRegion    accumPR;
-  guchar        *accum_data;
-  gint           accum_size;
+  TempBuf       *accum_temp;
 };
 
 struct _GimpSmudgeClass
