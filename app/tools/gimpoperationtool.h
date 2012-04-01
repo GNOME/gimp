@@ -41,6 +41,7 @@ struct _GimpOperationTool
   GimpObject       *config;
 
   /* dialog */
+  gchar            *dialog_desc;
   GtkWidget        *options_box;
   GtkWidget        *options_table;
 };
@@ -58,7 +59,7 @@ GType   gimp_operation_tool_get_type      (void) G_GNUC_CONST;
 
 void    gimp_operation_tool_set_operation (GimpOperationTool        *tool,
                                            const gchar              *operation,
-                                           const gchar              *label);
+                                           const gchar              *dialog_desc);
 
 
 #endif  /*  __GIMP_OPERATION_TOOL_H__  */

@@ -142,6 +142,12 @@ gimp_operation_tool_finalize (GObject *object)
       tool->config = NULL;
     }
 
+  if (tool->dialog_desc)
+    {
+      g_free (tool->dialog_desc);
+      tool->dialog_desc = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -206,6 +212,11 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
                          tool->options_table);
       gtk_widget_show (tool->options_table);
     }
+
+  if (tool->dialog_desc)
+    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
+                  "description", tool->dialog_desc,
+                  NULL);
 }
 
 static void
@@ -268,7 +279,7 @@ gimp_operation_tool_config_notify (GObject           *object,
 void
 gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *operation,
-                                   const gchar       *label)
+                                   const gchar       *dialog_desc)
 {
   g_return_if_fail (GIMP_IS_OPERATION_TOOL (tool));
   g_return_if_fail (operation != NULL);
@@ -312,7 +323,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   GIMP_IMAGE_MAP_TOOL (tool)->config = g_object_ref (tool->config);
 
   GIMP_VIEWABLE_GET_CLASS (tool->config)->default_stock_id = GIMP_STOCK_GEGL;
-  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = label; /* XXX hack */
+  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->settings_name = dialog_desc; /* XXX hack */
 
   if (tool->options_table)
     {
@@ -339,10 +350,21 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
         }
     }
 
-  if (label && GIMP_IMAGE_MAP_TOOL (tool)->dialog)
-    g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
-                  "description", label,
-                  NULL);
+  if (tool->dialog_desc)
+    {
+      g_free (tool->dialog_desc);
+      tool->dialog_desc = NULL;
+    }
+
+  if (dialog_desc)
+    {
+      tool->dialog_desc = g_strdup (dialog_desc);
+
+      if (GIMP_IMAGE_MAP_TOOL (tool)->dialog)
+        g_object_set (GIMP_IMAGE_MAP_TOOL (tool)->dialog,
+                      "description", dialog_desc,
+                      NULL);
+    }
 
   if (GIMP_TOOL (tool)->drawable)
     gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
