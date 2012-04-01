@@ -651,19 +651,13 @@ static void
 gimp_text_layer_render_layout (GimpTextLayer  *layer,
                                GimpTextLayout *layout)
 {
-  GimpDrawable       *drawable = GIMP_DRAWABLE (layer);
-  GimpItem           *item     = GIMP_ITEM (layer);
-  GeglBuffer         *buffer;
-  const Babl         *format;
-  const Babl         *fish;
-  GeglBufferIterator *iter;
-  cairo_t            *cr;
-  cairo_surface_t    *surface;
-  const guchar       *data;
-  gint                bytes;
-  gint                rowstride;
-  gint                width;
-  gint                height;
+  GimpDrawable    *drawable = GIMP_DRAWABLE (layer);
+  GimpItem        *item     = GIMP_ITEM (layer);
+  GeglBuffer      *buffer;
+  cairo_t         *cr;
+  cairo_surface_t *surface;
+  gint             width;
+  gint             height;
 
   g_return_if_fail (gimp_drawable_has_alpha (drawable));
 
@@ -677,51 +671,19 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   cairo_destroy (cr);
 
   cairo_surface_flush (surface);
-  data      = cairo_image_surface_get_data (surface);
-  rowstride = cairo_image_surface_get_stride (surface);
 
-  buffer = gimp_drawable_get_buffer (drawable);
-  format = gimp_drawable_get_format (drawable);
-  fish   = babl_fish (babl_format ("R'G'B'A u8"), format);
-  bytes  = babl_format_get_bytes_per_pixel (format);
+  buffer =
+    gegl_buffer_linear_new_from_data (cairo_image_surface_get_data (surface),
+                                      babl_format ("cairo-ARGB32"),
+                                      GIMP_GEGL_RECT (0, 0, width, height),
+                                      cairo_image_surface_get_stride (surface),
+                                      (GDestroyNotify) cairo_surface_destroy,
+                                      surface);
 
-  iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+  gegl_buffer_copy (buffer, NULL,
+                    gimp_drawable_get_buffer (drawable), NULL);
 
-  while (gegl_buffer_iterator_next (iter))
-    {
-      const guchar *src  = data + iter->roi[0].y * rowstride + iter->roi[0].x * 4;
-      guchar       *dest = iter->data[0];
-      gint          rows = iter->roi[0].height;
-
-      while (rows--)
-        {
-          const guchar *s = src;
-          guchar       *d = dest;
-          gint          w = iter->roi[0].width;
-
-          while (w--)
-            {
-              guchar color[4];
-
-              GIMP_CAIRO_ARGB32_GET_PIXEL (s,
-                                           color[0],
-                                           color[1],
-                                           color[2],
-                                           color[3]);
-
-              babl_process (fish, color, d, 1);
-
-              s += 4;
-              d += bytes;
-            }
-
-          src  += rowstride;
-          dest += iter->roi[0].width * bytes;
-        }
-    }
-
-  cairo_surface_destroy (surface);
+  g_object_unref (buffer);
 
   gimp_drawable_update (drawable, 0, 0, width, height);
 }
