@@ -4,6 +4,7 @@
  * gimpoperationdissolvemode.c
  * Copyright (C) 2012 Ville Sokk <ville.sokk@gmail.com>
  *               2012 Øyvind Kolås <pippin@gimp.org>
+ *               2003 Helvetix Victorinox
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
