@@ -494,7 +494,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                  0, 0, NULL);
 
     tmp = gimp_temp_buf_create_buffer (src_temp_buf,
-                                       gimp_drawable_get_format_with_alpha (drawable));
+                                       gimp_drawable_get_format_with_alpha (drawable),
+                                       FALSE);
 
     gegl_buffer_copy (src_buffer, src_rect,
                       tmp, GIMP_GEGL_RECT (0, 0, 0, 0));
@@ -508,7 +509,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   dest_buffer =
     gimp_temp_buf_create_buffer (dest_temp_buf,
-                                 gimp_drawable_get_format_with_alpha (drawable));
+                                 gimp_drawable_get_format_with_alpha (drawable),
+                                 TRUE);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                     GIMP_GEGL_RECT (paint_buffer_x, paint_buffer_y,
@@ -526,7 +528,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
          don't do anything */
 
       temp_buf_free (src_temp_buf);
-      temp_buf_free (dest_temp_buf);
+      g_object_unref (dest_buffer);
 
       return;
     }
@@ -548,6 +550,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                     paint_area_offset_y,
                                     paint_area_width,
                                     paint_area_height));
+
+  g_object_unref (dest_buffer);
 
   /* replace the canvas with our healed data */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,

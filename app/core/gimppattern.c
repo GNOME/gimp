@@ -271,5 +271,5 @@ gimp_pattern_create_buffer (const GimpPattern *pattern)
 {
   g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
 
-  return gimp_temp_buf_create_buffer (pattern->mask, NULL);
+  return gimp_temp_buf_create_buffer (pattern->mask, NULL, FALSE);
 }

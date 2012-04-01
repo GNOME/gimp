@@ -193,7 +193,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                 babl_format_get_bytes_per_pixel (format),
                                 0, 0, NULL);
 
-  convolve_buffer = gimp_temp_buf_create_buffer (convolve_temp, format);
+  convolve_buffer = gimp_temp_buf_create_buffer (convolve_temp, format, TRUE);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                     GIMP_GEGL_RECT (paint_buffer_x,
@@ -202,8 +202,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                     gegl_buffer_get_height (paint_buffer)),
                     convolve_buffer,
                     GIMP_GEGL_RECT (0, 0, 0, 0));
-
-  g_object_unref (convolve_buffer);
 
   /*  Convolve the region  */
   pixel_region_init_temp_buf (&tempPR, convolve_temp,
@@ -221,7 +219,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                    convolve->matrix, 3, convolve->matrix_divisor,
                    GIMP_NORMAL_CONVOL, TRUE);
 
-  temp_buf_free (convolve_temp);
+  g_object_unref (convolve_buffer);
 
   gimp_brush_core_replace_canvas (brush_core, drawable,
                                   coords,

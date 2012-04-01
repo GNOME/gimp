@@ -113,10 +113,10 @@ gimp_smudge_finalize (GObject *object)
 {
   GimpSmudge *smudge = GIMP_SMUDGE (object);
 
-  if (smudge->accum_temp)
+  if (smudge->accum_buffer)
     {
-      temp_buf_free (smudge->accum_temp);
-      smudge->accum_temp = NULL;
+      g_object_unref (smudge->accum_buffer);
+      smudge->accum_buffer = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -145,10 +145,10 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
-      if (smudge->accum_temp)
+      if (smudge->accum_buffer)
         {
-          temp_buf_free (smudge->accum_temp);
-          smudge->accum_temp = NULL;
+          g_object_unref (smudge->accum_buffer);
+          smudge->accum_buffer = NULL;
         }
       smudge->initialized = FALSE;
       break;
@@ -164,13 +164,13 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                    GimpPaintOptions *paint_options,
                    const GimpCoords *coords)
 {
-  GimpSmudge  *smudge = GIMP_SMUDGE (paint_core);
-  GeglBuffer  *paint_buffer;
-  gint         paint_buffer_x;
-  gint         paint_buffer_y;
-  GeglBuffer  *accum_buffer;
-  gint         accum_size;
-  gint         x, y;
+  GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
+  GeglBuffer *paint_buffer;
+  gint        paint_buffer_x;
+  gint        paint_buffer_y;
+  TempBuf    *accum_temp;
+  gint        accum_size;
+  gint        x, y;
 
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;
@@ -185,13 +185,14 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   gimp_smudge_accumulator_size (paint_options, &accum_size);
 
   /*  Allocate the accumulation buffer */
-  smudge->accum_temp = temp_buf_new (accum_size, accum_size,
-                                     gimp_drawable_bytes (drawable),
-                                     0, 0, NULL);
+  accum_temp = temp_buf_new (accum_size, accum_size,
+                             gimp_drawable_bytes (drawable),
+                             0, 0, NULL);
 
-  accum_buffer =
-    gimp_temp_buf_create_buffer (smudge->accum_temp,
-                                 gimp_drawable_get_format (drawable));
+  smudge->accum_buffer =
+    gimp_temp_buf_create_buffer (accum_temp,
+                                 gimp_drawable_get_format (drawable),
+                                 TRUE);
 
   /*  adjust the x and y coordinates to the upper left corner of the
    *  accumulator
@@ -219,7 +220,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                   &pixel);
 
       color = gimp_gegl_color_new (&pixel);
-      gegl_buffer_set_color (accum_buffer, NULL, color);
+      gegl_buffer_set_color (smudge->accum_buffer, NULL, color);
       g_object_unref (color);
     }
 
@@ -229,12 +230,10 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                     paint_buffer_y,
                                     gegl_buffer_get_width  (paint_buffer),
                                     gegl_buffer_get_height (paint_buffer)),
-                    accum_buffer,
+                    smudge->accum_buffer,
                     GIMP_GEGL_RECT (paint_buffer_x - x,
                                     paint_buffer_y - y,
                                     0, 0));
-
-  g_object_unref (accum_buffer);
 
   return TRUE;
 }
@@ -256,7 +255,6 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   GeglBuffer         *paint_buffer;
   gint                paint_buffer_x;
   gint                paint_buffer_y;
-  GeglBuffer         *accum_buffer;
   PixelRegion         srcPR, tempPR;
   gdouble             fade_point;
   gdouble             opacity;
@@ -312,7 +310,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   rate = (options->rate / 100.0) * dynamic_rate;
 
   /* The tempPR will be the built up buffer (for smudge) */
-  pixel_region_init_temp_buf (&tempPR, smudge->accum_temp,
+  pixel_region_init_temp_buf (&tempPR,
+                              gimp_gegl_buffer_get_temp_buf (smudge->accum_buffer),
                               paint_buffer_x - x,
                               paint_buffer_y - y,
                               gegl_buffer_get_width  (paint_buffer),
@@ -328,19 +327,13 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   blend_region (&srcPR, &tempPR, &tempPR, ROUND (rate * 255.0));
 
-  accum_buffer =
-    gimp_temp_buf_create_buffer (smudge->accum_temp,
-                                 gimp_drawable_get_format (drawable));
-
-  gegl_buffer_copy (accum_buffer,
+  gegl_buffer_copy (smudge->accum_buffer,
                     GIMP_GEGL_RECT (paint_buffer_x - x,
                                     paint_buffer_y - y,
                                     gegl_buffer_get_width  (paint_buffer),
                                     gegl_buffer_get_height (paint_buffer)),
                     paint_buffer,
                     GIMP_GEGL_RECT (0, 0, 0, 0));
-
-  g_object_unref (accum_buffer);
 
   hardness_output = gimp_dynamics_get_output (dynamics,
                                               GIMP_DYNAMICS_OUTPUT_HARDNESS);
@@ -367,8 +360,8 @@ gimp_smudge_accumulator_coords (GimpPaintCore    *paint_core,
 {
   GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
 
-  *x = (gint) coords->x - smudge->accum_temp->width  / 2;
-  *y = (gint) coords->y - smudge->accum_temp->height / 2;
+  *x = (gint) coords->x - gegl_buffer_get_width  (smudge->accum_buffer) / 2;
+  *y = (gint) coords->y - gegl_buffer_get_height (smudge->accum_buffer) / 2;
 }
 
 static void

@@ -553,12 +553,6 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
       core->canvas_buffer = NULL;
     }
 
-  if (core->paint_area)
-    {
-      temp_buf_free (core->paint_area);
-      core->paint_area = NULL;
-    }
-
   if (core->paint_buffer)
     {
       g_object_unref (core->paint_buffer);
@@ -934,17 +928,18 @@ canvas_buffer_to_paint_area (GimpPaintCore *core)
   PixelRegion maskPR;
 
   /*  combine the canvas buffer and the paint area  */
-  pixel_region_init_temp_buf (&srcPR, core->paint_area,
+  pixel_region_init_temp_buf (&srcPR,
+                              gimp_gegl_buffer_get_temp_buf (core->paint_buffer),
                               0, 0,
-                              core->paint_area->width,
-                              core->paint_area->height);
+                              gegl_buffer_get_width  (core->paint_buffer),
+                              gegl_buffer_get_height (core->paint_buffer));
 
   pixel_region_init (&maskPR,
                      gimp_gegl_buffer_get_tiles (core->canvas_buffer),
-                     core->paint_area->x,
-                     core->paint_area->y,
-                     core->paint_area->width,
-                     core->paint_area->height,
+                     core->paint_buffer_x,
+                     core->paint_buffer_y,
+                     gegl_buffer_get_width  (core->paint_buffer),
+                     gegl_buffer_get_height (core->paint_buffer),
                      FALSE);
 
   /*  apply the canvas buffer to the paint area  */
@@ -961,10 +956,10 @@ paint_mask_to_canvas_buffer (GimpPaintCore *core,
   /*   combine the paint mask and the canvas buffer  */
   pixel_region_init (&srcPR,
                      gimp_gegl_buffer_get_tiles (core->canvas_buffer),
-                     core->paint_area->x,
-                     core->paint_area->y,
-                     core->paint_area->width,
-                     core->paint_area->height,
+                     core->paint_buffer_x,
+                     core->paint_buffer_y,
+                     gegl_buffer_get_width  (core->paint_buffer),
+                     gegl_buffer_get_height (core->paint_buffer),
                      TRUE);
 
   /*  combine the mask to the canvas tiles  */
@@ -980,10 +975,11 @@ paint_mask_to_paint_area (GimpPaintCore *core,
   PixelRegion srcPR;
 
   /*  combine the canvas buf and the paint mask to the canvas buf  */
-  pixel_region_init_temp_buf (&srcPR, core->paint_area,
+  pixel_region_init_temp_buf (&srcPR,
+                              gimp_gegl_buffer_get_temp_buf (core->paint_buffer),
                               0, 0,
-                              core->paint_area->width,
-                              core->paint_area->height);
+                              gegl_buffer_get_width  (core->paint_buffer),
+                              gegl_buffer_get_height (core->paint_buffer));
 
   /*  apply the mask  */
   apply_mask_to_region (&srcPR, paint_maskPR, paint_opacity * 255.999);

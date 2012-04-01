@@ -200,7 +200,8 @@ gimp_gegl_buffer_get_tiles (GeglBuffer *buffer)
 
 GeglBuffer  *
 gimp_temp_buf_create_buffer (TempBuf    *temp_buf,
-                             const Babl *format)
+                             const Babl *format,
+                             gboolean    take_ownership)
 {
   GeglBuffer *buffer;
   gint        width, height, bytes;
@@ -217,11 +218,15 @@ gimp_temp_buf_create_buffer (TempBuf    *temp_buf,
   if (! format)
     format = gimp_bpp_to_babl_format (bytes);
 
-  buffer = gegl_buffer_linear_new_from_data (temp_buf_get_data (temp_buf),
-                                             format,
-                                             GIMP_GEGL_RECT (0, 0, width, height),
-                                             width * bytes,
-                                             NULL, NULL);
+  buffer =
+    gegl_buffer_linear_new_from_data (temp_buf_get_data (temp_buf),
+                                      format,
+                                      GIMP_GEGL_RECT (0, 0, width, height),
+                                      width * bytes,
+                                      take_ownership ?
+                                      (GDestroyNotify) temp_buf_free : NULL,
+                                      take_ownership ?
+                                      temp_buf : NULL);
 
   g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", temp_buf);
 

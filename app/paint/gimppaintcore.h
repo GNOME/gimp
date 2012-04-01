@@ -59,8 +59,7 @@ struct _GimpPaintCore
   GeglBuffer  *saved_proj_buffer; /*  proj tiles which have been modified */
   GeglBuffer  *canvas_buffer;     /*  the buffer to paint the mask to     */
 
-  TempBuf     *paint_area;        /*  the buffer to paint pixels to       */
-  GeglBuffer  *paint_buffer;      /*  for now proxies paint_area          */
+  GeglBuffer  *paint_buffer;      /*  the buffer to paint pixels to       */
   gint         paint_buffer_x;
   gint         paint_buffer_y;
 

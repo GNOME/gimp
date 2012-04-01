@@ -831,10 +831,10 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
     {
       const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
       gint        bytes  = babl_format_get_bytes_per_pixel (format);
+      TempBuf    *temp_buf;
 
-      paint_core->paint_area = temp_buf_resize (paint_core->paint_area, bytes,
-                                                x1, y1,
-                                                (x2 - x1), (y2 - y1));
+      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), bytes,
+                               0, 0, NULL);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
@@ -842,8 +842,8 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
       if (paint_core->paint_buffer)
         g_object_unref (paint_core->paint_buffer);
 
-      paint_core->paint_buffer =
-        gimp_temp_buf_create_buffer (paint_core->paint_area, format);
+      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf, format,
+                                                              TRUE);
 
       return paint_core->paint_buffer;
     }
@@ -951,8 +951,8 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
 
       pixel_region_init_temp_buf (&brush_maskPR, (TempBuf *) brush_mask,
                                   off_x, off_y,
-                                  paint_core->paint_area->width,
-                                  paint_core->paint_area->height);
+                                  gegl_buffer_get_width  (paint_core->paint_buffer),
+                                  gegl_buffer_get_height (paint_core->paint_buffer));
 
       gimp_paint_core_paste (paint_core, &brush_maskPR, drawable,
                              brush_opacity,
@@ -997,8 +997,8 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
 
       pixel_region_init_temp_buf (&brush_maskPR, (TempBuf *) brush_mask,
                                   off_x, off_y,
-                                  paint_core->paint_area->width,
-                                  paint_core->paint_area->height);
+                                  gegl_buffer_get_width  (paint_core->paint_buffer),
+                                  gegl_buffer_get_height (paint_core->paint_buffer));
 
       gimp_paint_core_replace (paint_core, &brush_maskPR, drawable,
                                brush_opacity,

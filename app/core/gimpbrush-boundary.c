@@ -49,7 +49,8 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
       gint           n_bound_segs;
 
       buffer = gimp_temp_buf_create_buffer ((TempBuf *) mask,
-                                            babl_format ("Y u8"));
+                                            babl_format ("Y u8"),
+                                            FALSE);
 
       bound_segs = gimp_boundary_find (buffer, NULL,
                                        GIMP_BOUNDARY_WITHIN_BOUNDS,

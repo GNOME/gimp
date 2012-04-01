@@ -222,10 +222,10 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
     {
       const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
       gint        bytes  = babl_format_get_bytes_per_pixel (format);
+      TempBuf    *temp_buf;
 
-      paint_core->paint_area = temp_buf_resize (paint_core->paint_area, bytes,
-                                                x1, y1,
-                                                (x2 - x1), (y2 - y1));
+      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), bytes,
+                               0, 0, NULL);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
@@ -233,8 +233,8 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
       if (paint_core->paint_buffer)
         g_object_unref (paint_core->paint_buffer);
 
-      paint_core->paint_buffer =
-        gimp_temp_buf_create_buffer (paint_core->paint_area, format);
+      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf, format,
+                                                              TRUE);
 
       return paint_core->paint_buffer;
     }
@@ -328,10 +328,10 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   /*  draw the blob directly to the canvas_buffer  */
   pixel_region_init (&blob_maskPR,
                      gimp_gegl_buffer_get_tiles (paint_core->canvas_buffer),
-                     paint_core->paint_area->x,
-                     paint_core->paint_area->y,
-                     paint_core->paint_area->width,
-                     paint_core->paint_area->height,
+                     paint_core->paint_buffer_x,
+                     paint_core->paint_buffer_y,
+                     gegl_buffer_get_width  (paint_core->paint_buffer),
+                     gegl_buffer_get_height (paint_core->paint_buffer),
                      TRUE);
 
   render_blob (blob_to_render, &blob_maskPR);
@@ -339,10 +339,10 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   /*  draw the paint_area using the just rendered canvas_buffer as mask */
   pixel_region_init (&blob_maskPR,
                      gimp_gegl_buffer_get_tiles (paint_core->canvas_buffer),
-                     paint_core->paint_area->x,
-                     paint_core->paint_area->y,
-                     paint_core->paint_area->width,
-                     paint_core->paint_area->height,
+                     paint_core->paint_buffer_x,
+                     paint_core->paint_buffer_y,
+                     gegl_buffer_get_width  (paint_core->paint_buffer),
+                     gegl_buffer_get_height (paint_core->paint_buffer),
                      FALSE);
 
   gimp_paint_core_paste (paint_core, &blob_maskPR, drawable,

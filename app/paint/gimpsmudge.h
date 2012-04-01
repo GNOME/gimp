@@ -39,7 +39,7 @@ struct _GimpSmudge
   GimpBrushCore  parent_instance;
 
   gboolean       initialized;
-  TempBuf       *accum_temp;
+  GeglBuffer    *accum_buffer;
 };
 
 struct _GimpSmudgeClass

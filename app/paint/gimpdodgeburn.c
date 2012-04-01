@@ -238,12 +238,12 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                             babl_format_get_bytes_per_pixel (orig_format),
                             0, 0, NULL);
 
-  orig_buffer = gimp_temp_buf_create_buffer (orig_temp, orig_format);
+  orig_buffer = gimp_temp_buf_create_buffer (orig_temp, orig_format, TRUE);
+
   gegl_buffer_copy (gimp_paint_core_get_orig_image (paint_core),
                     &orig_rect,
                     orig_buffer,
                     GIMP_GEGL_RECT (0, 0, 0, 0));
-  g_object_unref (orig_buffer);
 
   pixel_region_init_temp_buf (&srcPR, orig_temp,
                               0, 0, orig_rect.width, orig_rect.height);
@@ -252,6 +252,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   db_temp = temp_buf_new (orig_rect.width, orig_rect.height,
                           babl_format_get_bytes_per_pixel (orig_format),
                           0, 0, NULL);
+  db_buffer = gimp_temp_buf_create_buffer (db_temp, orig_format, TRUE);
 
   pixel_region_init_temp_buf (&tempPR, db_temp,
                               0, 0, db_temp->width, db_temp->height);
@@ -259,11 +260,10 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   /*  DodgeBurn the region  */
   gimp_lut_process (dodgeburn->lut, &srcPR, &tempPR);
 
-  db_buffer = gimp_temp_buf_create_buffer (db_temp, orig_format);
+  g_object_unref (orig_buffer);
+
   gegl_buffer_copy (db_buffer, NULL, paint_buffer, NULL);
   g_object_unref (db_buffer);
-
-  temp_buf_free (db_temp);
 
   hardness_output = gimp_dynamics_get_output (dynamics,
                                               GIMP_DYNAMICS_OUTPUT_HARDNESS);
