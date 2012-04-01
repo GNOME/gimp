@@ -32,8 +32,6 @@
 
 #include "tools-types.h"
 
-#include "base/tile-manager.h"
-
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-shadow.h"
