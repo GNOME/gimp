@@ -28,11 +28,6 @@ void  blend_pixels          (const guchar *src1,
                              guint         w,
                              guint         bytes);
 
-void  scale_pixels          (const guchar *src,
-                             guchar       *dest,
-                             guint         length,
-                             gint          scale);
-
 /*  apply the mask data to the alpha channel of the pixel data  */
 void  apply_mask_to_alpha_channel         (guchar       *src,
                                            const guchar *mask,

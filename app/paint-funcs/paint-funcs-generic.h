@@ -174,20 +174,6 @@ replace_pixels (const guchar   *src1,
     }
 }
 
-inline void
-scale_pixels (const guchar *src,
-              guchar       *dest,
-              guint         length,
-              gint          scale)
-{
-  gint tmp;
-
-  while (length --)
-    {
-      *dest++ = (guchar) INT_MULT (*src, scale, tmp);
-      src++;
-    }
-}
 
 inline void
 apply_mask_to_alpha_channel (guchar       *src,
