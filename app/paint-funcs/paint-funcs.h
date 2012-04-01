@@ -33,11 +33,6 @@ void  scale_pixels          (const guchar *src,
                              guint         length,
                              gint          scale);
 
-void  gray_to_rgb_pixels    (const guchar *src,
-                             guchar       *dest,
-                             guint         length,
-                             guint         bytes);
-
 /*  apply the mask data to the alpha channel of the pixel data  */
 void  apply_mask_to_alpha_channel         (guchar       *src,
                                            const guchar *mask,

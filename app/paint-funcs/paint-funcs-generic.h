@@ -190,31 +190,6 @@ scale_pixels (const guchar *src,
 }
 
 inline void
-gray_to_rgb_pixels (const guchar *src,
-                    guchar       *dest,
-                    guint         length,
-                    guint         bytes)
-{
-  const gboolean has_alpha  = (bytes == 2) ? TRUE : FALSE;
-  const gint     dest_bytes = (has_alpha) ? 4 : 3;
-
-  while (length --)
-    {
-      guint b;
-
-      for (b = 0; b < bytes; b++)
-        dest[b] = src[0];
-
-      if (has_alpha)
-        dest[3] = src[1];
-
-      src += bytes;
-      dest += dest_bytes;
-    }
-}
-
-
-inline void
 apply_mask_to_alpha_channel (guchar       *src,
                              const guchar *mask,
                              guint         opacity,
