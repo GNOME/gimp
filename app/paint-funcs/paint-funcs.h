@@ -33,11 +33,6 @@ void  scale_pixels          (const guchar *src,
                              guint         length,
                              gint          scale);
 
-void  add_alpha_pixels      (const guchar *src,
-                             guchar       *dest,
-                             guint         length,
-                             guint         bytes);
-
 void  gray_to_rgb_pixels    (const guchar *src,
                              guchar       *dest,
                              guint         length,
@@ -264,9 +259,6 @@ void  blend_region                        (PixelRegion *src1,
                                            guchar       blend);
 
 void  copy_region                         (PixelRegion *src,
-                                           PixelRegion *dest);
-
-void  add_alpha_region                    (PixelRegion *src,
                                            PixelRegion *dest);
 
 void  convolve_region                     (PixelRegion         *srcR,

@@ -1715,31 +1715,6 @@ copy_region (PixelRegion *src,
 
 
 void
-add_alpha_region (PixelRegion *src,
-                  PixelRegion *dest)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (2, src, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      const guchar *s = src->data;
-      guchar       *d = dest->data;
-      gint          h = src->h;
-
-      while (h --)
-        {
-          add_alpha_pixels (s, d, src->w, src->bytes);
-
-          s += src->rowstride;
-          d += dest->rowstride;
-        }
-    }
-}
-
-
-void
 convolve_region (PixelRegion         *srcR,
                  PixelRegion         *destR,
                  const gfloat        *matrix,

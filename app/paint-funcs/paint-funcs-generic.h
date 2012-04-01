@@ -190,29 +190,6 @@ scale_pixels (const guchar *src,
 }
 
 inline void
-add_alpha_pixels (const guchar *src,
-                  guchar       *dest,
-                  guint         length,
-                  guint         bytes)
-{
-  const guint alpha = bytes + 1;
-
-  while (length --)
-    {
-      guint b;
-
-      for (b = 0; b < bytes; b++)
-        dest[b] = src[b];
-
-      dest[b] = OPAQUE_OPACITY;
-
-      src += bytes;
-      dest += alpha;
-    }
-}
-
-
-inline void
 gray_to_rgb_pixels (const guchar *src,
                     guchar       *dest,
                     guint         length,
