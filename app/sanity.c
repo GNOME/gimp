@@ -317,7 +317,7 @@ sanity_check_gdk_pixbuf (void)
 {
 #define GDK_PIXBUF_REQUIRED_MAJOR 2
 #define GDK_PIXBUF_REQUIRED_MINOR 24
-#define GDK_PIXBUF_REQUIRED_MICRO 0
+#define GDK_PIXBUF_REQUIRED_MICRO 1
 
   if (! sanity_check_version (gdk_pixbuf_major_version, GDK_PIXBUF_REQUIRED_MAJOR,
                               gdk_pixbuf_minor_version, GDK_PIXBUF_REQUIRED_MINOR,

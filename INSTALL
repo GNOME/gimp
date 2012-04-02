@@ -36,16 +36,16 @@ header files installed.
      Intltool can be downloaded from
      http://ftp.gnome.org/pub/gnome/sources/intltool/
 
-  3. You need to have GEGL version 0.1.8 or newer and babl version
-     0.1.8 or newer. You can get them from http://gegl.org/ or clone
+  3. You need to have GEGL version 0.2.0 or newer and babl version
+     0.1.10 or newer. You can get them from http://gegl.org/ or clone
      them from the GNOME git repository:
 
        git://git.gnome.org/babl
        git://git.gnome.org/gegl
 
-  4. You need to have installed GTK+ version 2.24.7 or newer.
-     GIMP also need a recent versions of GLib (>= 2.28.8), GDK-PixBuf
-     (>= 2.24.0), and Pango (>= 1.29.4). Sources for these can be grabbed
+  4. You need to have installed GTK+ version 2.24.10 or newer.
+     GIMP also need a recent versions of GLib (>= 2.30.2), GDK-Pixbuf
+     (>= 2.24.1), and Pango (>= 1.29.4). Sources for these can be grabbed
      from ftp://ftp.gtk.org/.
 
   5. We use cairo >= 1.10.2, which is hosted at

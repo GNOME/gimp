@@ -11,11 +11,6 @@ Changes in GIMP 2.8.0
 =====================
 
 
-UI:
-
- - foo
-
-
 Core:
 
  - Add our own GimpOperationBrightnessContrast because GEGL one is different
@@ -23,27 +18,12 @@ Core:
 
 Plug-ins:
 
- - foo
-
-
-Libgimp:
-
- - foo
-
-
-Data:
-
- - foo
-
-
-Developer documentation:
-
- - foo
+ - Fix some GFig rendering issues
 
 
 Source and build system:
 
- - foo
+ - Depend on Babl 0.1.10, GEGL 0.2.0 and some other new library versions
 
 
 General:
