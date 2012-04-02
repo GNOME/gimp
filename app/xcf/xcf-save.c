@@ -28,9 +28,7 @@
 
 #include "core/core-types.h"
 
-#include "base/tile.h"
-#include "base/tile-manager.h"
-#include "base/tile-manager-private.h"
+#include "gegl/gimp-gegl-tile-compat.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -92,17 +90,19 @@ static gboolean xcf_save_channel       (XcfInfo           *info,
                                         GimpImage         *image,
                                         GimpChannel       *channel,
                                         GError           **error);
-static gboolean xcf_save_hierarchy     (XcfInfo           *info,
-                                        TileManager       *tiles,
+static gboolean xcf_save_buffer        (XcfInfo           *info,
+                                        GeglBuffer        *buffer,
                                         GError           **error);
 static gboolean xcf_save_level         (XcfInfo           *info,
-                                        TileManager       *tiles,
+                                        GeglBuffer        *buffer,
                                         GError           **error);
 static gboolean xcf_save_tile          (XcfInfo           *info,
-                                        Tile              *tile,
+                                        GeglBuffer        *buffer,
+                                        GeglRectangle     *tile_rect,
                                         GError           **error);
 static gboolean xcf_save_tile_rle      (XcfInfo           *info,
-                                        Tile              *tile,
+                                        GeglBuffer        *buffer,
+                                        GeglRectangle     *tile_rect,
                                         guchar            *rlebuf,
                                         GError           **error);
 static gboolean xcf_save_parasite      (XcfInfo           *info,
@@ -1192,9 +1192,9 @@ xcf_save_layer (XcfInfo    *info,
   xcf_check_error (xcf_seek_pos (info, info->cp + 8, error));
   offset = info->cp;
 
-  xcf_check_error (xcf_save_hierarchy (info,
-                                       gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                                       error));
+  xcf_check_error (xcf_save_buffer (info,
+                                    gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                    error));
 
   xcf_check_error (xcf_seek_pos (info, saved_pos, error));
   xcf_write_int32_check_error (info, &offset, 1);
@@ -1270,9 +1270,9 @@ xcf_save_channel (XcfInfo      *info,
   xcf_check_error (xcf_seek_pos (info, info->cp + 4, error));
   offset = info->cp;
 
-  xcf_check_error (xcf_save_hierarchy (info,
-                                       gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
-                                       error));
+  xcf_check_error (xcf_save_buffer (info,
+                                    gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                                    error));
 
   xcf_check_error (xcf_seek_pos (info, saved_pos, error));
   xcf_write_int32_check_error (info, &offset, 1);
@@ -1299,24 +1299,26 @@ xcf_calc_levels (gint size,
 
 
 static gboolean
-xcf_save_hierarchy (XcfInfo      *info,
-                    TileManager  *tiles,
-                    GError      **error)
+xcf_save_buffer (XcfInfo     *info,
+                 GeglBuffer  *buffer,
+                 GError     **error)
 {
-  guint32 saved_pos;
-  guint32 offset;
-  guint32 width;
-  guint32 height;
-  guint32 bpp;
-  gint    i;
-  gint    nlevels;
-  gint    tmp1, tmp2;
+  const Babl *format;
+  guint32     saved_pos;
+  guint32     offset;
+  guint32     width;
+  guint32     height;
+  guint32     bpp;
+  gint        i;
+  gint        nlevels;
+  gint        tmp1, tmp2;
+  GError     *tmp_error = NULL;
 
-  GError *tmp_error = NULL;
+  format = gegl_buffer_get_format (buffer);
 
-  width  = tile_manager_width (tiles);
-  height = tile_manager_height (tiles);
-  bpp    = tile_manager_bpp (tiles);
+  width  = gegl_buffer_get_width (buffer);
+  height = gegl_buffer_get_height (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
 
   xcf_write_int32_check_error (info, (guint32 *) &width, 1);
   xcf_write_int32_check_error (info, (guint32 *) &height, 1);
@@ -1324,8 +1326,8 @@ xcf_save_hierarchy (XcfInfo      *info,
 
   saved_pos = info->cp;
 
-  tmp1 = xcf_calc_levels (width, TILE_WIDTH);
-  tmp2 = xcf_calc_levels (height, TILE_HEIGHT);
+  tmp1 = xcf_calc_levels (width,  XCF_TILE_WIDTH);
+  tmp2 = xcf_calc_levels (height, XCF_TILE_HEIGHT);
   nlevels = MAX (tmp1, tmp2);
 
   xcf_check_error (xcf_seek_pos (info, info->cp + (1 + nlevels) * 4, error));
@@ -1337,7 +1339,7 @@ xcf_save_hierarchy (XcfInfo      *info,
       if (i == 0)
         {
           /* write out the level. */
-          xcf_check_error (xcf_save_level (info, tiles, error));
+          xcf_check_error (xcf_save_level (info, buffer, error));
         }
       else
         {
@@ -1378,22 +1380,28 @@ xcf_save_hierarchy (XcfInfo      *info,
 }
 
 static gboolean
-xcf_save_level (XcfInfo      *info,
-                TileManager  *level,
-                GError      **error)
+xcf_save_level (XcfInfo     *info,
+                GeglBuffer  *buffer,
+                GError     **error)
 {
-  guint32  saved_pos;
-  guint32  offset;
-  guint32  width;
-  guint32  height;
-  guint    ntiles;
-  gint     i;
-  guchar  *rlebuf;
+  const Babl *format;
+  guint32     saved_pos;
+  guint32     offset;
+  guint32     width;
+  guint32     height;
+  gint        bpp;
+  gint        n_tile_rows;
+  gint        n_tile_cols;
+  guint       ntiles;
+  gint        i;
+  guchar     *rlebuf;
+  GError     *tmp_error = NULL;
 
-  GError *tmp_error = NULL;
+  format = gegl_buffer_get_format (buffer);
 
-  width  = tile_manager_width (level);
-  height = tile_manager_height (level);
+  width  = gegl_buffer_get_width (buffer);
+  height = gegl_buffer_get_height (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
 
   xcf_write_int32_check_error (info, (guint32 *) &width, 1);
   xcf_write_int32_check_error (info, (guint32 *) &height, 1);
@@ -1401,59 +1409,63 @@ xcf_save_level (XcfInfo      *info,
   saved_pos = info->cp;
 
   /* allocate a temporary buffer to store the rle data before it is
-     written to disk */
-  rlebuf =
-    g_malloc (TILE_WIDTH * TILE_HEIGHT * tile_manager_bpp (level) * 1.5);
+   * written to disk
+   */
+  rlebuf = g_alloca (XCF_TILE_WIDTH * XCF_TILE_HEIGHT * bpp * 1.5);
 
-  if (level->tiles)
+  n_tile_rows = gimp_gegl_buffer_get_n_tile_rows (buffer, XCF_TILE_HEIGHT);
+  n_tile_cols = gimp_gegl_buffer_get_n_tile_cols (buffer, XCF_TILE_WIDTH);
+
+  ntiles = n_tile_rows * n_tile_cols;
+  xcf_check_error (xcf_seek_pos (info, info->cp + (ntiles + 1) * 4, error));
+
+  for (i = 0; i < ntiles; i++)
     {
-      ntiles = level->ntile_rows * level->ntile_cols;
-      xcf_check_error (xcf_seek_pos (info, info->cp + (ntiles + 1) * 4, error));
+      GeglRectangle rect;
 
-      for (i = 0; i < ntiles; i++)
+      /* save the start offset of where we are writing
+       *  out the next tile.
+       */
+      offset = info->cp;
+
+      gimp_gegl_buffer_get_tile_rect (buffer,
+                                      XCF_TILE_WIDTH, XCF_TILE_HEIGHT,
+                                      i, &rect);
+
+      /* write out the tile. */
+      switch (info->compression)
         {
-          /* save the start offset of where we are writing
-           *  out the next tile.
-           */
-          offset = info->cp;
-
-          /* write out the tile. */
-          switch (info->compression)
-            {
-            case COMPRESS_NONE:
-              xcf_check_error (xcf_save_tile (info, level->tiles[i], error));
-              break;
-            case COMPRESS_RLE:
-              xcf_check_error (xcf_save_tile_rle (info, level->tiles[i],
-                               rlebuf, error));
-              break;
-            case COMPRESS_ZLIB:
-              g_error ("xcf: zlib compression unimplemented");
-              break;
-            case COMPRESS_FRACTAL:
-              g_error ("xcf: fractal compression unimplemented");
-              break;
-            }
-
-          /* seek back to where we are to write out the next
-           *  tile offset and write it out.
-           */
-          xcf_check_error (xcf_seek_pos (info, saved_pos, error));
-          xcf_write_int32_check_error (info, &offset, 1);
-
-          /* increment the location we are to write out the
-           *  next offset.
-           */
-          saved_pos = info->cp;
-
-          /* seek to the end of the file which is where
-           *  we will write out the next tile.
-           */
-          xcf_check_error (xcf_seek_end (info, error));
+        case COMPRESS_NONE:
+          xcf_check_error (xcf_save_tile (info, buffer, &rect, error));
+          break;
+        case COMPRESS_RLE:
+          xcf_check_error (xcf_save_tile_rle (info, buffer, &rect,
+                                              rlebuf, error));
+          break;
+        case COMPRESS_ZLIB:
+          g_error ("xcf: zlib compression unimplemented");
+          break;
+        case COMPRESS_FRACTAL:
+          g_error ("xcf: fractal compression unimplemented");
+          break;
         }
-    }
 
-  g_free (rlebuf);
+      /* seek back to where we are to write out the next
+       *  tile offset and write it out.
+       */
+      xcf_check_error (xcf_seek_pos (info, saved_pos, error));
+      xcf_write_int32_check_error (info, &offset, 1);
+
+      /* increment the location we are to write out the
+       *  next offset.
+       */
+      saved_pos = info->cp;
+
+      /* seek to the end of the file which is where
+       *  we will write out the next tile.
+       */
+      xcf_check_error (xcf_seek_end (info, error));
+    }
 
   /* write out a '0' offset position to indicate the end
    *  of the level offsets.
@@ -1467,44 +1479,51 @@ xcf_save_level (XcfInfo      *info,
 }
 
 static gboolean
-xcf_save_tile (XcfInfo  *info,
-               Tile     *tile,
-               GError  **error)
+xcf_save_tile (XcfInfo        *info,
+               GeglBuffer     *buffer,
+               GeglRectangle  *tile_rect,
+               GError        **error)
 {
-  GError *tmp_error = NULL;
+  const Babl *format    = gegl_buffer_get_format (buffer);
+  gint        bpp       = babl_format_get_bytes_per_pixel (format);
+  gint        tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar     *tile_data = g_alloca (tile_size);
+  GError     *tmp_error = NULL;
 
-  tile_lock (tile);
-  xcf_write_int8_check_error (info, tile_data_pointer (tile, 0, 0),
-                              tile_size (tile));
-  tile_release (tile, FALSE);
+  gegl_buffer_get (buffer, tile_rect, 1.0, NULL, tile_data,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  xcf_write_int8_check_error (info, tile_data, tile_size);
 
   return TRUE;
 }
 
 static gboolean
-xcf_save_tile_rle (XcfInfo  *info,
-                   Tile     *tile,
-                   guchar   *rlebuf,
-                   GError  **error)
+xcf_save_tile_rle (XcfInfo        *info,
+                   GeglBuffer     *buffer,
+                   GeglRectangle  *tile_rect,
+                   guchar         *rlebuf,
+                   GError        **error)
 {
-  GError *tmp_error = NULL;
-  gint    len       = 0;
-  gint    bpp;
-  gint    i, j;
+  const Babl *format    = gegl_buffer_get_format (buffer);
+  gint        bpp       = babl_format_get_bytes_per_pixel (format);
+  gint        tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar     *tile_data = g_alloca (tile_size);
+  gint        len       = 0;
+  gint        i, j;
+  GError     *tmp_error  = NULL;
 
-  tile_lock (tile);
-
-  bpp = tile_bpp (tile);
+  gegl_buffer_get (buffer, tile_rect, 1.0, NULL, tile_data,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   for (i = 0; i < bpp; i++)
     {
-      const guchar *data = (const guchar *) tile_data_pointer (tile, 0, 0) + i;
-
-      gint  state  = 0;
-      gint  length = 0;
-      gint  count  = 0;
-      gint  size   = tile_ewidth (tile) * tile_eheight (tile);
-      guint last   = -1;
+      const guchar *data   = tile_data + i;
+      gint          state  = 0;
+      gint          length = 0;
+      gint          count  = 0;
+      gint          size   = tile_rect->width * tile_rect->height;
+      guint         last   = -1;
 
       while (size > 0)
         {
@@ -1589,12 +1608,11 @@ xcf_save_tile_rle (XcfInfo  *info,
             }
         }
 
-      if (count != (tile_ewidth (tile) * tile_eheight (tile)))
+      if (count != (tile_rect->width * tile_rect->height))
         g_message ("xcf: uh oh! xcf rle tile saving error: %d", count);
     }
 
   xcf_write_int8_check_error (info, rlebuf, len);
-  tile_release (tile, FALSE);
 
   return TRUE;
 }
