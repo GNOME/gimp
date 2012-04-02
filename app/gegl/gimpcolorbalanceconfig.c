@@ -219,6 +219,9 @@ gimp_color_balance_config_serialize (GimpConfig       *config,
   GimpTransferMode        old_range;
   gboolean                success = TRUE;
 
+  if (! gimp_config_serialize_property_by_name (config, "time", writer))
+    return FALSE;
+
   old_range = bc_config->range;
 
   for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)

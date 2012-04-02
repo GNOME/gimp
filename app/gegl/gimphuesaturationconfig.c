@@ -217,6 +217,9 @@ gimp_hue_saturation_config_serialize (GimpConfig       *config,
   GimpHueRange             old_range;
   gboolean                 success = TRUE;
 
+  if (! gimp_config_serialize_property_by_name (config, "time", writer))
+    return FALSE;
+
   old_range = hs_config->range;
 
   for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)

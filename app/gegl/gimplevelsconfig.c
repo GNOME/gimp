@@ -247,6 +247,9 @@ gimp_levels_config_serialize (GimpConfig       *config,
   GimpHistogramChannel  old_channel;
   gboolean              success = TRUE;
 
+  if (! gimp_config_serialize_property_by_name (config, "time", writer))
+    return FALSE;
+
   old_channel = l_config->channel;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
