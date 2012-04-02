@@ -351,7 +351,7 @@ sanity_check_babl (void)
 
 #define BABL_REQUIRED_MAJOR 0
 #define BABL_REQUIRED_MINOR 1
-#define BABL_REQUIRED_MICRO 8
+#define BABL_REQUIRED_MICRO 10
 
   babl_get_version (&babl_major_version,
                     &babl_minor_version,
@@ -388,8 +388,8 @@ sanity_check_gegl (void)
   gint gegl_micro_version;
 
 #define GEGL_REQUIRED_MAJOR 0
-#define GEGL_REQUIRED_MINOR 1
-#define GEGL_REQUIRED_MICRO 9
+#define GEGL_REQUIRED_MINOR 2
+#define GEGL_REQUIRED_MICRO 0
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
