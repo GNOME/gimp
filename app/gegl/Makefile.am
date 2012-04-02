@@ -26,6 +26,8 @@ libappgegl_a_sources = \
 	gimp-gegl-loops.h			\
 	gimp-gegl-nodes.c			\
 	gimp-gegl-nodes.h			\
+	gimp-gegl-tile-compat.c			\
+	gimp-gegl-tile-compat.h			\
 	gimp-gegl-utils.c			\
 	gimp-gegl-utils.h			\
 	gimptilebackendtilemanager.c		\

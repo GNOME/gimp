@@ -29,6 +29,8 @@
 
 #include "plug-in-types.h"
 
+#include "gegl/gimp-gegl-tile-compat.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-shadow.h"
@@ -179,46 +181,6 @@ gimp_plug_in_handle_tile_request (GimpPlugIn *plug_in,
     gimp_plug_in_handle_tile_get (plug_in, request);
 }
 
-static gboolean
-gimp_plug_in_get_tile_rect (GeglBuffer    *buffer,
-                            gint           tile_num,
-                            GeglRectangle *rect)
-{
-  gint n_tile_rows;
-  gint n_tile_columns;
-  gint tile_row;
-  gint tile_column;
-
-  n_tile_rows =
-    (gegl_buffer_get_height (buffer) + GIMP_PLUG_IN_TILE_HEIGHT - 1) /
-    GIMP_PLUG_IN_TILE_HEIGHT;
-
-  n_tile_columns =
-    (gegl_buffer_get_width (buffer) + GIMP_PLUG_IN_TILE_WIDTH - 1) /
-    GIMP_PLUG_IN_TILE_WIDTH;
-
-  if (tile_num > n_tile_rows * n_tile_columns - 1)
-    return FALSE;
-
-  tile_row    = tile_num / n_tile_columns;
-  tile_column = tile_num % n_tile_columns;
-
-  rect->x = tile_column * GIMP_PLUG_IN_TILE_WIDTH;
-  rect->y = tile_row    * GIMP_PLUG_IN_TILE_HEIGHT;
-
-  if (tile_column == n_tile_columns - 1)
-    rect->width = gegl_buffer_get_width (buffer) - rect->x;
-  else
-    rect->width = GIMP_PLUG_IN_TILE_WIDTH;
-
-  if (tile_row == n_tile_rows - 1)
-    rect->height = gegl_buffer_get_height (buffer) - rect->y;
-  else
-    rect->height = GIMP_PLUG_IN_TILE_HEIGHT;
-
-  return TRUE;
-}
-
 static void
 gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
                               GPTileReq  *request)
@@ -332,8 +294,11 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
       buffer = gimp_drawable_get_buffer (drawable);
     }
 
-  if (! gimp_plug_in_get_tile_rect (buffer, tile_info->tile_num,
-                                    &tile_rect))
+  if (! gimp_gegl_buffer_get_tile_rect (buffer,
+                                        GIMP_PLUG_IN_TILE_WIDTH,
+                                        GIMP_PLUG_IN_TILE_HEIGHT,
+                                        tile_info->tile_num,
+                                        &tile_rect))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-In \"%s\"\n(%s)\n\n"
@@ -418,8 +383,11 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
       buffer = gimp_drawable_get_buffer (drawable);
     }
 
-  if (! gimp_plug_in_get_tile_rect (buffer, request->tile_num,
-                                    &tile_rect))
+  if (! gimp_gegl_buffer_get_tile_rect (buffer,
+                                        GIMP_PLUG_IN_TILE_WIDTH,
+                                        GIMP_PLUG_IN_TILE_HEIGHT,
+                                        request->tile_num,
+                                        &tile_rect))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-In \"%s\"\n(%s)\n\n"
