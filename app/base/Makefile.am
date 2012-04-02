@@ -29,8 +29,6 @@ libappbase_a_SOURCES = \
 	pixel-processor.h	\
 	pixel-region.c		\
 	pixel-region.h		\
-	pixel-surround.c	\
-	pixel-surround.h	\
 	siox.c			\
 	siox.h			\
 	temp-buf.c		\
