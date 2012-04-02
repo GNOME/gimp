@@ -133,7 +133,6 @@
     'tile-small' => { ui => 1 },
     'unit-editor' => { ui => 1 },
     'unsharp-mask' => { ui => 1 },
-    'value-invert' => {},
     'value-propagate' => { ui => 1 },
     'van-gogh-lic' => { ui => 1 },
     'video' => { ui => 1 },

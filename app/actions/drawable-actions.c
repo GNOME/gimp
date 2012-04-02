@@ -53,6 +53,12 @@ static const GimpActionEntry drawable_actions[] =
     G_CALLBACK (drawable_invert_cmd_callback),
     GIMP_HELP_LAYER_INVERT },
 
+  { "drawable-value-invert", GIMP_STOCK_GEGL,
+    NC_("drawable-action", "_Value Invert"), NULL,
+    NC_("drawable-action", "Invert the brightness of each pixel"),
+    G_CALLBACK (drawable_value_invert_cmd_callback),
+    GIMP_HELP_LAYER_INVERT },
+
   { "drawable-levels-stretch", NULL,
     NC_("drawable-action", "_White Balance"), NULL,
     NC_("drawable-action", "Automatic white balance correction"),
@@ -212,6 +218,7 @@ drawable_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("drawable-equalize",       writable && !children && !is_indexed);
   SET_SENSITIVE ("drawable-invert",         writable && !children);
+  SET_SENSITIVE ("drawable-value-invert",   writable && !children);
   SET_SENSITIVE ("drawable-levels-stretch", writable && !children &&  is_rgb);
   SET_SENSITIVE ("drawable-offset",         writable && !children);
 

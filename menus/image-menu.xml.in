@@ -500,6 +500,7 @@
       <separator />
       <placeholder name="Invert">
         <menuitem action="drawable-invert" />
+        <menuitem action="drawable-value-invert" />
       </placeholder>
       <separator />
       <menuitem action="config-use-gegl" />

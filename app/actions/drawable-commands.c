@@ -74,21 +74,27 @@ drawable_invert_cmd_callback (GtkAction *action,
   GimpImage    *image;
   GimpDrawable *drawable;
   GimpDisplay  *display;
-  GtkWidget    *widget;
   return_if_no_drawable (image, drawable, data);
   return_if_no_display (display, data);
-  return_if_no_widget (widget, data);
-
-  if (gimp_drawable_is_indexed (drawable))
-    {
-      gimp_message_literal (image->gimp,
-			    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-			    _("Invert does not operate on indexed layers."));
-      return;
-    }
 
   gimp_drawable_apply_operation_by_name (drawable, GIMP_PROGRESS (display),
                                          _("Invert"), "gegl:invert",
+                                         NULL);
+  gimp_image_flush (image);
+}
+
+void
+drawable_value_invert_cmd_callback (GtkAction *action,
+                                    gpointer   data)
+{
+  GimpImage    *image;
+  GimpDrawable *drawable;
+  GimpDisplay  *display;
+  return_if_no_drawable (image, drawable, data);
+  return_if_no_display (display, data);
+
+  gimp_drawable_apply_operation_by_name (drawable, GIMP_PROGRESS (display),
+                                         _("Invert"), "gegl:value-invert",
                                          NULL);
   gimp_image_flush (image);
 }

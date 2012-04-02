@@ -165,6 +165,53 @@ CODE
     );
 }
 
+sub plug_in_vinvert {
+    $blurb = 'Invert the brightness of each pixel';
+
+    $help = <<'HELP';
+This function takes an indexed/RGB image and inverts its 'value' in
+HSV space.  The upshot of this is that the color and saturation at any
+given point remains the same, but its brightness is effectively
+inverted.  Quite strange.  Sometimes produces unpleasant color
+artifacts on images from lossy sources (ie. JPEG).
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:value-invert",
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Value Invert"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 
 @headers = qw("libgimpbase/gimpbase.h"
               "gegl/gimp-gegl-utils.h"
@@ -175,7 +222,8 @@ CODE
 
 @procs = qw(plug_in_colortoalpha
             plug_in_pixelize
-            plug_in_pixelize2);
+            plug_in_pixelize2
+            plug_in_vinvert);
 
 %exports = (app => [@procs], lib => []);
 

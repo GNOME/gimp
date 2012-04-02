@@ -169,6 +169,43 @@ plug_in_pixelize2_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
+static GValueArray *
+plug_in_vinvert_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = gimp_value_get_drawable (&args->values[2], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gegl:value-invert",
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Value Invert"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_plug_in_compat_procs (GimpPDB *pdb)
 {
@@ -304,6 +341,42 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Pixel height (the decrease in vertical resolution)",
                                                       1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-vinvert
+   */
+  procedure = gimp_procedure_new (plug_in_vinvert_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-vinvert");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-vinvert",
+                                     "Invert the brightness of each pixel",
+                                     "This function takes an indexed/RGB image and inverts its 'value' in HSV space. The upshot of this is that the color and saturation at any given point remains the same, but its brightness is effectively inverted. Quite strange. Sometimes produces unpleasant color artifacts on images from lossy sources (ie. JPEG).",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1997",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

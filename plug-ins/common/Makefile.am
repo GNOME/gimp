@@ -178,7 +178,6 @@ libexec_PROGRAMS = \
 	tile-small \
 	unit-editor \
 	unsharp-mask \
-	value-invert \
 	value-propagate \
 	van-gogh-lic \
 	video \
@@ -2497,21 +2496,6 @@ unsharp_mask_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(unsharp_mask_RC)
-
-value_invert_SOURCES = \
-	value-invert.c
-
-value_invert_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(value_invert_RC)
 
 value_propagate_SOURCES = \
 	value-propagate.c

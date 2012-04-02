@@ -132,7 +132,6 @@ tile_seamless_RC = tile-seamless.rc.o
 tile_small_RC = tile-small.rc.o
 unit_editor_RC = unit-editor.rc.o
 unsharp_mask_RC = unsharp-mask.rc.o
-value_invert_RC = value-invert.rc.o
 value_propagate_RC = value-propagate.rc.o
 van_gogh_lic_RC = van-gogh-lic.rc.o
 video_RC = video.rc.o
