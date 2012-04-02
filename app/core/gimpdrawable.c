@@ -430,7 +430,7 @@ gimp_drawable_scale (GimpItem              *item,
   GeglBuffer   *new_buffer;
   GeglNode     *scale;
 
-  new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                      new_width, new_height),
                                      gimp_drawable_get_format (drawable));
 
@@ -498,7 +498,7 @@ gimp_drawable_resize (GimpItem    *item,
                             &copy_width,
                             &copy_height);
 
-  new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                      new_width, new_height),
                                      gimp_drawable_get_format (drawable));
 
@@ -525,12 +525,12 @@ gimp_drawable_resize (GimpItem    *item,
     {
       /*  Copy the pixels in the intersection  */
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GIMP_GEGL_RECT (copy_x - gimp_item_get_offset_x (item),
+                        GEGL_RECTANGLE (copy_x - gimp_item_get_offset_x (item),
                                         copy_y - gimp_item_get_offset_y (item),
                                         copy_width,
                                         copy_height),
                         new_buffer,
-                        GIMP_GEGL_RECT (copy_x - new_offset_x,
+                        GEGL_RECTANGLE (copy_x - new_offset_x,
                                         copy_y - new_offset_y, 0, 0));
     }
 
@@ -673,7 +673,7 @@ gimp_drawable_real_update (GimpDrawable *drawable,
       if (operation)
         {
           gegl_operation_invalidate (GEGL_OPERATION (operation),
-                                     GIMP_GEGL_RECT (x,y,width,height), FALSE);
+                                     GEGL_RECTANGLE (x,y,width,height), FALSE);
           g_object_unref (operation);
         }
     }
@@ -812,13 +812,13 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
 {
   if (! buffer)
     {
-      buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+      buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                      gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GIMP_GEGL_RECT (x, y, width, height),
+                        GEGL_RECTANGLE (x, y, width, height),
                         buffer,
-                        GIMP_GEGL_RECT (0, 0, 0, 0));
+                        GEGL_RECTANGLE (0, 0, 0, 0));
     }
   else
     {
@@ -845,13 +845,13 @@ gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
   tmp = gimp_gegl_buffer_dup (buffer);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                    GIMP_GEGL_RECT (x, y, width, height),
+                    GEGL_RECTANGLE (x, y, width, height),
                     buffer,
-                    GIMP_GEGL_RECT (0, 0, 0, 0));
+                    GEGL_RECTANGLE (0, 0, 0, 0));
   gegl_buffer_copy (tmp,
-                    GIMP_GEGL_RECT (0, 0, width, height),
+                    GEGL_RECTANGLE (0, 0, width, height),
                     gimp_drawable_get_buffer (drawable),
-                    GIMP_GEGL_RECT (x, y, 0, 0));
+                    GEGL_RECTANGLE (x, y, 0, 0));
 
   g_object_unref (tmp);
 
@@ -1081,7 +1081,7 @@ gimp_drawable_new (GType          type,
                                            offset_x, offset_y,
                                            width, height));
 
-  drawable->private->buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+  drawable->private->buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                                     width, height),
                                                     format);
 
@@ -1292,14 +1292,14 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
           /*  a temporary buffer for the compisition of the drawable and
            *  its floating selection
            */
-          *temp_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+          *temp_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                                width, height),
                                                gimp_drawable_get_format (drawable));
 
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                            GIMP_GEGL_RECT (x, y, width, height),
+                            GEGL_RECTANGLE (x, y, width, height),
                             *temp_buffer,
-                            GIMP_GEGL_RECT (0, 0, 0, 0));
+                            GEGL_RECTANGLE (0, 0, 0, 0));
 
           /*  then, apply the floating selection onto the buffer just as
            *  we apply it onto the drawable when anchoring the floating
@@ -1314,7 +1314,7 @@ gimp_drawable_init_src_region (GimpDrawable  *drawable,
 
           gimp_drawable_apply_buffer (drawable,
                                       gimp_drawable_get_buffer (GIMP_DRAWABLE (fs)),
-                                      GIMP_GEGL_RECT (combine_x - fs_off_x,
+                                      GEGL_RECTANGLE (combine_x - fs_off_x,
                                                       combine_y - fs_off_y,
                                                       combine_width,
                                                       combine_height),

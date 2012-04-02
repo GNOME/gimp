@@ -328,7 +328,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
 
   /*  draw the blob directly to the canvas_buffer  */
   render_blob (paint_core->canvas_buffer,
-               GIMP_GEGL_RECT (paint_core->paint_buffer_x,
+               GEGL_RECTANGLE (paint_core->paint_buffer_x,
                                paint_core->paint_buffer_y,
                                gegl_buffer_get_width  (paint_core->paint_buffer),
                                gegl_buffer_get_height (paint_core->paint_buffer)),

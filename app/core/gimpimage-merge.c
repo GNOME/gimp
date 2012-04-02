@@ -543,7 +543,7 @@ gimp_image_merge_layers (GimpImage     *image,
 
       color = gimp_gegl_color_new (&bg);
       gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer)),
-                             GIMP_GEGL_RECT(0,0,x2-x1,y2-y1), color);
+                             GEGL_RECTANGLE(0,0,x2-x1,y2-y1), color);
       g_object_unref (color);
 
       position = 0;

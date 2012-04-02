@@ -247,7 +247,7 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
                                       input_format,
                                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 #else
-                  gegl_buffer_get (input, GIMP_GEGL_RECT (x, y, 1, 1), 1.0,
+                  gegl_buffer_get (input, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
                                    input_format, &src_uchar,
                                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 #endif
@@ -295,7 +295,7 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
 
       /*  set the dist row  */
       gegl_buffer_set (output,
-                       GIMP_GEGL_RECT (roi->x, roi->y + i,
+                       GEGL_RECTANGLE (roi->x, roi->y + i,
                                        roi->width, 1),
                        1.0, output_format, distp_cur,
                        GEGL_AUTO_ROWSTRIDE);

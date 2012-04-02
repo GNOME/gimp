@@ -525,7 +525,7 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
   *paint_area_width    = width;
   *paint_area_height   = height;
 
-  *src_rect = *GIMP_GEGL_RECT (x, y, width, height);
+  *src_rect = *GEGL_RECTANGLE (x, y, width, height);
 
   return g_object_ref (dest_buffer);
 }

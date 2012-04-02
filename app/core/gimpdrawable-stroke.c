@@ -338,7 +338,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   /* fill a 1-bpp GeglBuffer with black, this will describe the shape
    * of the stroke.
    */
-  mask_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, w, h),
+  mask_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
                                  babl_format ("Y u8"));
 
   gegl_buffer_clear (mask_buffer, NULL);
@@ -350,7 +350,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
                             x + off_x, y + off_y,
                             gimp_fill_options_get_antialias (options));
 
-  base_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, w, h),
+  base_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
                                       gimp_drawable_get_format_with_alpha (drawable));
 
   switch (gimp_fill_options_get_style (options))
@@ -392,7 +392,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
   /* Apply to drawable */
   gimp_drawable_apply_buffer (drawable, base_buffer,
-                              GIMP_GEGL_RECT (0, 0, w, h),
+                              GEGL_RECTANGLE (0, 0, w, h),
                               push_undo, C_("undo-type", "Render Stroke"),
                               gimp_context_get_opacity (context),
                               gimp_context_get_paint_mode (context),

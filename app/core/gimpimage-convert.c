@@ -1011,7 +1011,7 @@ gimp_image_convert (GimpImage               *image,
                         babl_format_has_alpha (new_format));
 
             new_buffer =
-              gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+              gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                     gimp_item_get_width  (GIMP_ITEM (layer)),
                                                     gimp_item_get_height (GIMP_ITEM (layer))),
                                     new_format);
@@ -3735,7 +3735,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
       const guchar *src;
       guchar       *dest;
 
-      gegl_buffer_get (src_buffer, GIMP_GEGL_RECT (0, row, width, 1),
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, row, width, 1),
                        1.0, NULL, src_buf,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -3875,7 +3875,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
       odd_row = !odd_row;
 
-      gegl_buffer_set (new_buffer, GIMP_GEGL_RECT (0, row, width, 1),
+      gegl_buffer_set (new_buffer, GEGL_RECTANGLE (0, row, width, 1),
                        0, NULL, dest_buf,
                        GEGL_AUTO_ROWSTRIDE);
     }
@@ -4023,7 +4023,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
       const guchar *src;
       guchar       *dest;
 
-      gegl_buffer_get (src_buffer, GIMP_GEGL_RECT (0, row, width, 1),
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, row, width, 1),
                        1.0, NULL, src_buf,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -4272,7 +4272,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 
       odd_row = !odd_row;
 
-      gegl_buffer_set (new_buffer, GIMP_GEGL_RECT (0, row, width, 1),
+      gegl_buffer_set (new_buffer, GEGL_RECTANGLE (0, row, width, 1),
                        0, NULL, dest_buf,
                        GEGL_AUTO_ROWSTRIDE);
 

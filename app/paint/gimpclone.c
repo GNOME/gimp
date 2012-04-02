@@ -165,12 +165,12 @@ gimp_clone_motion (GimpSourceCore   *source_core,
     case GIMP_IMAGE_CLONE:
       {
         gegl_buffer_copy (src_buffer,
-                          GIMP_GEGL_RECT (src_rect->x,
+                          GEGL_RECTANGLE (src_rect->x,
                                           src_rect->y,
                                           paint_area_width,
                                           paint_area_height),
                           paint_buffer,
-                          GIMP_GEGL_RECT (paint_area_offset_x,
+                          GEGL_RECTANGLE (paint_area_offset_x,
                                           paint_area_offset_y,
                                           0, 0));
       }
@@ -183,7 +183,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
         GeglBuffer  *src_buffer = gimp_pattern_create_buffer (pattern);
 
         gegl_buffer_set_pattern (paint_buffer,
-                                 GIMP_GEGL_RECT (paint_area_offset_x,
+                                 GEGL_RECTANGLE (paint_area_offset_x,
                                                  paint_area_offset_y,
                                                  paint_area_width,
                                                  paint_area_height),

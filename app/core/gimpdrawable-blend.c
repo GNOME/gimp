@@ -206,7 +206,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   gimp_set_busy (image->gimp);
 
   /*  Always create an alpha temp buf (for generality) */
-  buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+  buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                  gimp_drawable_get_format_with_alpha (drawable));
 
   pixel_region_init (&bufPR, gimp_gegl_buffer_get_tiles (buffer),
@@ -223,7 +223,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   gimp_gegl_buffer_refetch_tiles (buffer);
 
   gimp_drawable_apply_buffer (drawable, buffer,
-                              GIMP_GEGL_RECT (0, 0, width, height),
+                              GEGL_RECTANGLE (0, 0, width, height),
                               TRUE, C_("undo-type", "Blend"),
                               opacity, paint_mode,
                               NULL, x, y,
@@ -494,7 +494,7 @@ gradient_calc_shapeburst_angular_factor (GeglBuffer *dist_buffer,
   gint   iy = CLAMP (y, 0.0, gegl_buffer_get_height (dist_buffer) - 0.7);
   gfloat value;
 
-  gegl_buffer_get (dist_buffer, GIMP_GEGL_RECT (ix, iy, 1, 1), 1.0,
+  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (ix, iy, 1, 1), 1.0,
                    NULL, &value,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -513,7 +513,7 @@ gradient_calc_shapeburst_spherical_factor (GeglBuffer *dist_buffer,
   gint   iy = CLAMP (y, 0.0, gegl_buffer_get_height (dist_buffer) - 0.7);
   gfloat value;
 
-  gegl_buffer_get (dist_buffer, GIMP_GEGL_RECT (ix, iy, 1, 1), 1.0,
+  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (ix, iy, 1, 1), 1.0,
                    NULL, &value,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -532,7 +532,7 @@ gradient_calc_shapeburst_dimpled_factor (GeglBuffer *dist_buffer,
   gint   iy = CLAMP (y, 0.0, gegl_buffer_get_height (dist_buffer) - 0.7);
   gfloat value;
 
-  gegl_buffer_get (dist_buffer, GIMP_GEGL_RECT (ix, iy, 1, 1), 1.0,
+  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (ix, iy, 1, 1), 1.0,
                    NULL, &value,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -558,11 +558,11 @@ gradient_precalc_shapeburst (GimpImage    *image,
   gimp_progress_set_text (progress, _("Calculating distance map"));
 
   /*  allocate the distance map  */
-  dist_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, PR->w, PR->h),
+  dist_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, PR->w, PR->h),
                                  babl_format ("Y float"));
 
   /*  allocate the selection mask copy  */
-  temp_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, PR->w, PR->h),
+  temp_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, PR->w, PR->h),
                                       babl_format ("Y u8"));
 
   mask = gimp_image_get_mask (image);
@@ -578,9 +578,9 @@ gradient_precalc_shapeburst (GimpImage    *image,
 
       /*  copy the mask to the temp mask  */
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
-                        GIMP_GEGL_RECT (x+off_x, y + off_y, width, height),
+                        GEGL_RECTANGLE (x+off_x, y + off_y, width, height),
                         temp_buffer,
-                        GIMP_GEGL_RECT (0,0,0,0));
+                        GEGL_RECTANGLE (0,0,0,0));
     }
   else
     {
@@ -590,9 +590,9 @@ gradient_precalc_shapeburst (GimpImage    *image,
           /*  extract the aplha into the temp mask  */
           gegl_buffer_set_format (temp_buffer, babl_format ("A u8"));
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                            GIMP_GEGL_RECT (PR->x, PR->y, PR->w, PR->h),
+                            GEGL_RECTANGLE (PR->x, PR->y, PR->w, PR->h),
                             temp_buffer,
-                            GIMP_GEGL_RECT (0, 0, 0, 0));
+                            GEGL_RECTANGLE (0, 0, 0, 0));
           gegl_buffer_set_format (temp_buffer, NULL);
         }
       else

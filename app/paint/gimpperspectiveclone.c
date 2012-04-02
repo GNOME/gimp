@@ -392,7 +392,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
       return FALSE;
     }
 
-  dest_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2d - x1d, y2d - y1d),
+  dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2d - x1d, y2d - y1d),
                                  src_format_alpha);
   gegl_buffer_clear (dest_buffer, NULL);
 
@@ -409,11 +409,11 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                  NULL);
 
   gegl_processor_set_rectangle (clone->processor,
-                                GIMP_GEGL_RECT (0, 0,
+                                GEGL_RECTANGLE (0, 0,
                                                 x2d - x1d, y2d - y1d));
   while (gegl_processor_work (clone->processor, NULL));
 
-  *src_rect = *GIMP_GEGL_RECT (0, 0, x2d - x1d, y2d - y1d);
+  *src_rect = *GEGL_RECTANGLE (0, 0, x2d - x1d, y2d - y1d);
 
   return dest_buffer;
 }

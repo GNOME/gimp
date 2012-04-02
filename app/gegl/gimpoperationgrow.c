@@ -283,7 +283,7 @@ gimp_operation_grow_process (GeglOperation       *operation,
 
   for (i = 0; i < self->radius_y && i < roi->height; i++) /* load top of image */
     gegl_buffer_get (input,
-                     GIMP_GEGL_RECT (roi->x, roi->y + i,
+                     GEGL_RECTANGLE (roi->x, roi->y + i,
                                      roi->width, 1),
                      1.0, input_format, buf[i + 1],
                      GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
@@ -303,7 +303,7 @@ gimp_operation_grow_process (GeglOperation       *operation,
 
       if (y < roi->height - (self->radius_y))
         gegl_buffer_get (input,
-                         GIMP_GEGL_RECT (roi->x,  roi->y + y + self->radius_y,
+                         GEGL_RECTANGLE (roi->x,  roi->y + y + self->radius_y,
                                          roi->width, 1),
                          1.0, input_format, buf[self->radius_y],
                          GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
@@ -362,7 +362,7 @@ gimp_operation_grow_process (GeglOperation       *operation,
         }
 
       gegl_buffer_set (output,
-                       GIMP_GEGL_RECT (roi->x, roi->y + y,
+                       GEGL_RECTANGLE (roi->x, roi->y + y,
                                        roi->width, 1),
                        1.0, output_format, out,
                        GEGL_AUTO_ROWSTRIDE);

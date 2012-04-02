@@ -380,14 +380,14 @@ gimp_operation_border_process (GeglOperation       *operation,
       memset (source[0], self->edge_lock ? 255 : 0, roi->width);
 
       gegl_buffer_get (input,
-                       GIMP_GEGL_RECT (roi->x, roi->y + 0,
+                       GEGL_RECTANGLE (roi->x, roi->y + 0,
                                        roi->width, 1),
                        1.0, input_format, source[1],
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       if (roi->height > 1)
         gegl_buffer_get (input,
-                         GIMP_GEGL_RECT (roi->x, roi->y + 1,
+                         GEGL_RECTANGLE (roi->x, roi->y + 1,
                                          roi->width, 1),
                          1.0, input_format, source[2],
                          GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
@@ -396,7 +396,7 @@ gimp_operation_border_process (GeglOperation       *operation,
 
       compute_transition (transition, source, roi->width, self->edge_lock);
       gegl_buffer_set (output,
-                       GIMP_GEGL_RECT (roi->x, roi->y,
+                       GEGL_RECTANGLE (roi->x, roi->y,
                                        roi->width, 1),
                        1.0, output_format, transition,
                        GEGL_AUTO_ROWSTRIDE);
@@ -408,7 +408,7 @@ gimp_operation_border_process (GeglOperation       *operation,
           if (y + 1 < roi->height)
             {
               gegl_buffer_get (input,
-                               GIMP_GEGL_RECT (roi->x, roi->y + y + 1,
+                               GEGL_RECTANGLE (roi->x, roi->y + y + 1,
                                                roi->width, 1),
                                1.0, input_format, source[2],
                                GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
@@ -423,7 +423,7 @@ gimp_operation_border_process (GeglOperation       *operation,
 
           compute_transition (transition, source, roi->width, self->edge_lock);
           gegl_buffer_set (output,
-                           GIMP_GEGL_RECT (roi->x, roi->y + y,
+                           GEGL_RECTANGLE (roi->x, roi->y + y,
                                            roi->width, 1),
                            1.0, output_format, transition,
                            GEGL_AUTO_ROWSTRIDE);
@@ -522,14 +522,14 @@ gimp_operation_border_process (GeglOperation       *operation,
    */
   memset (buf[0], self->edge_lock ? 255 : 0, roi->width);
   gegl_buffer_get (input,
-                   GIMP_GEGL_RECT (roi->x, roi->y + 0,
+                   GEGL_RECTANGLE (roi->x, roi->y + 0,
                                    roi->width, 1),
                    1.0, input_format, buf[1],
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   if (roi->height > 1)
     gegl_buffer_get (input,
-                     GIMP_GEGL_RECT (roi->x, roi->y + 1,
+                     GEGL_RECTANGLE (roi->x, roi->y + 1,
                                      roi->width, 1),
                      1.0, input_format, buf[2],
                      GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
@@ -543,7 +543,7 @@ gimp_operation_border_process (GeglOperation       *operation,
     {
       rotate_pointers (buf, 3);
       gegl_buffer_get (input,
-                       GIMP_GEGL_RECT (roi->x, roi->y + y + 1,
+                       GEGL_RECTANGLE (roi->x, roi->y + y + 1,
                                        roi->width, 1),
                        1.0, input_format, buf[2],
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
@@ -572,7 +572,7 @@ gimp_operation_border_process (GeglOperation       *operation,
       if (y < roi->height - (self->radius_y + 1))
         {
           gegl_buffer_get (input,
-                           GIMP_GEGL_RECT (roi->x,
+                           GEGL_RECTANGLE (roi->x,
                                            roi->y + y + self->radius_y + 1,
                                            roi->width, 1),
                            1.0, input_format, buf[2],
@@ -685,7 +685,7 @@ gimp_operation_border_process (GeglOperation       *operation,
         }
 
       gegl_buffer_set (output,
-                       GIMP_GEGL_RECT (roi->x, roi->y + y,
+                       GEGL_RECTANGLE (roi->x, roi->y + y,
                                        roi->width, 1),
                        1.0, output_format, out,
                        GEGL_AUTO_ROWSTRIDE);

@@ -62,7 +62,7 @@ gimp_drawable_get_shadow_buffer (GimpDrawable *drawable)
     }
 
   drawable->private->shadow =
-    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height), format);
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height), format);
 
   return drawable->private->shadow;
 }
@@ -100,7 +100,7 @@ gimp_drawable_merge_shadow_buffer (GimpDrawable *drawable,
       GeglBuffer *buffer = g_object_ref (drawable->private->shadow);
 
       gimp_drawable_apply_buffer (drawable, buffer,
-                                  GIMP_GEGL_RECT (x, y, width, height),
+                                  GEGL_RECTANGLE (x, y, width, height),
                                   push_undo, undo_desc,
                                   GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
                                   NULL, x, y,

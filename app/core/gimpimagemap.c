@@ -530,9 +530,9 @@ gimp_image_map_clear (GimpImageMap *image_map)
           gint height = gegl_buffer_get_height (image_map->undo_buffer);
 
           gegl_buffer_copy (image_map->undo_buffer,
-                            GIMP_GEGL_RECT (0, 0, width, height),
+                            GEGL_RECTANGLE (0, 0, width, height),
                             gimp_drawable_get_buffer (image_map->drawable),
-                            GIMP_GEGL_RECT (x, y, width, height));
+                            GEGL_RECTANGLE (x, y, width, height));
 
           gimp_drawable_update (image_map->drawable, x, y, width, height);
         }
@@ -601,7 +601,7 @@ gimp_image_map_update_undo_buffer (GimpImageMap        *image_map,
 
           /*  Allocate new tiles  */
           image_map->undo_buffer =
-            gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+            gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                   rect->width, rect->height),
                                   gimp_drawable_get_format (image_map->drawable));
         }
@@ -610,7 +610,7 @@ gimp_image_map_update_undo_buffer (GimpImageMap        *image_map,
       gegl_buffer_copy (gimp_drawable_get_buffer (image_map->drawable),
                         rect,
                         image_map->undo_buffer,
-                        GIMP_GEGL_RECT (0, 0, 0, 0));
+                        GEGL_RECTANGLE (0, 0, 0, 0));
 
       /*  Set the offsets  */
       image_map->undo_offset_x = rect->x;
@@ -680,17 +680,17 @@ gimp_image_map_data_written (GObject             *operation,
       /* Reset to initial drawable conditions. */
 
       gegl_buffer_copy (image_map->undo_buffer,
-                        GIMP_GEGL_RECT (extent->x - image_map->undo_offset_x,
+                        GEGL_RECTANGLE (extent->x - image_map->undo_offset_x,
                                         extent->y - image_map->undo_offset_y,
                                         extent->width, extent->height),
                         gimp_drawable_get_buffer (image_map->drawable),
-                        GIMP_GEGL_RECT (extent->x, extent->y, 0, 0));
+                        GEGL_RECTANGLE (extent->x, extent->y, 0, 0));
     }
 
   /* Apply the result of the gegl graph. */
   gimp_drawable_apply_buffer (image_map->drawable,
                               gimp_drawable_get_shadow_buffer (image_map->drawable),
-                              GIMP_GEGL_RECT (extent->x, extent->y,
+                              GEGL_RECTANGLE (extent->x, extent->y,
                                               extent->width, extent->height),
                               FALSE, NULL,
                               GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,

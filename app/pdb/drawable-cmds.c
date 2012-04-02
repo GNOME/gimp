@@ -617,7 +617,7 @@ drawable_set_pixel_invoker (GimpProcedure      *procedure,
           num_channels == gimp_drawable_bytes (drawable))
         {
           gegl_buffer_set (gimp_drawable_get_buffer (drawable),
-                           GIMP_GEGL_RECT (x_coord, y_coord, 1, 1),
+                           GEGL_RECTANGLE (x_coord, y_coord, 1, 1),
                            1.0, gimp_drawable_get_format (drawable),
                            pixel, GEGL_AUTO_ROWSTRIDE);
         }

@@ -122,7 +122,7 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
 
   return gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
                                            gimp_bpp_to_babl_format (channels),
-                                           GIMP_GEGL_RECT (0,0,width,height),
+                                           GEGL_RECTANGLE (0,0,width,height),
                                            rowstride,
                                            (GDestroyNotify) g_object_unref,
                                            g_object_ref (pixbuf));
@@ -221,7 +221,7 @@ gimp_temp_buf_create_buffer (TempBuf    *temp_buf,
   buffer =
     gegl_buffer_linear_new_from_data (temp_buf_get_data (temp_buf),
                                       format,
-                                      GIMP_GEGL_RECT (0, 0, width, height),
+                                      GEGL_RECTANGLE (0, 0, width, height),
                                       width * bytes,
                                       take_ownership ?
                                       (GDestroyNotify) temp_buf_free : NULL,

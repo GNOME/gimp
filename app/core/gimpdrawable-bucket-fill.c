@@ -220,7 +220,7 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
       mask_offset_y = y1;
     }
 
-  buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
+  buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                                  gimp_drawable_get_format_with_alpha (drawable));
 
   switch (fill_mode)
@@ -259,7 +259,7 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
 
   /*  Apply it to the image  */
   gimp_drawable_apply_buffer (drawable, buffer,
-                              GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
+                              GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                               TRUE, C_("undo-type", "Bucket Fill"),
                               opacity, paint_mode,
                               NULL, x1, y1,

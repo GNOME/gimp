@@ -701,12 +701,12 @@ gimp_selection_extract (GimpSelection *selection,
   src_buffer = gimp_pickable_get_buffer (pickable);
 
   /*  Allocate the temp buffer  */
-  dest_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
+  dest_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                                       dest_format);
 
   /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
-  gegl_buffer_copy (src_buffer, GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1),
-                    dest_buffer, GIMP_GEGL_RECT (0, 0,0 ,0 ));
+  gegl_buffer_copy (src_buffer, GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
+                    dest_buffer, GEGL_RECTANGLE (0, 0,0 ,0 ));
 
   if (non_empty)
     {

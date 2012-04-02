@@ -83,13 +83,13 @@ gimp_mask_undo_constructed (GObject *object)
     {
       GimpDrawable  *drawable    = GIMP_DRAWABLE (channel);
 
-      mask_undo->buffer = gegl_buffer_new (GIMP_GEGL_RECT(0,0,x2-x1, y2-y1),
+      mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE(0,0,x2-x1, y2-y1),
                                            babl_format ("Y float"));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1),
+                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                         mask_undo->buffer,
-                        GIMP_GEGL_RECT (0, 0, 0, 0));
+                        GEGL_RECTANGLE (0, 0, 0, 0));
 
       mask_undo->x = x1;
       mask_undo->y = y1;
@@ -128,11 +128,11 @@ gimp_mask_undo_pop (GimpUndo            *undo,
     {
       GeglRectangle  src_rect    = { x1, y1, x2 - x1, y2 - y1 };
 
-      new_buffer = gegl_buffer_new (GIMP_GEGL_RECT (0, 0, x2 - x1, y2 - y1),
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                                     babl_format ("Y float"));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
-                        new_buffer, GIMP_GEGL_RECT (0,0,0,0));
+                        new_buffer, GEGL_RECTANGLE (0,0,0,0));
 
       gegl_buffer_clear (gimp_drawable_get_buffer (drawable), &src_rect);
     }

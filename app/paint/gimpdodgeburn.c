@@ -243,7 +243,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gegl_buffer_copy (gimp_paint_core_get_orig_image (paint_core),
                     &orig_rect,
                     orig_buffer,
-                    GIMP_GEGL_RECT (0, 0, 0, 0));
+                    GEGL_RECTANGLE (0, 0, 0, 0));
 
   pixel_region_init_temp_buf (&srcPR, orig_temp,
                               0, 0, orig_rect.width, orig_rect.height);

@@ -392,7 +392,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
     g_object_unref (core->canvas_buffer);
 
   core->canvas_buffer =
-    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                           gimp_item_get_width  (item),
                                           gimp_item_get_height (item)),
                           babl_format ("Y u8"));
@@ -457,13 +457,13 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
       GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
-      buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+      buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                      gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (core->undo_buffer,
-                        GIMP_GEGL_RECT (x, y, width, height),
+                        GEGL_RECTANGLE (x, y, width, height),
                         buffer,
-                        GIMP_GEGL_RECT (0, 0, 0, 0));
+                        GEGL_RECTANGLE (0, 0, 0, 0));
 
       gimp_drawable_push_undo (drawable, NULL,
                                buffer, x, y, width, height);
@@ -511,9 +511,9 @@ gimp_paint_core_cancel (GimpPaintCore *core,
                                 &x, &y, &width, &height))
     {
       gegl_buffer_copy (core->undo_buffer,
-                        GIMP_GEGL_RECT (x, y, width, height),
+                        GEGL_RECTANGLE (x, y, width, height),
                         gimp_drawable_get_buffer (drawable),
-                        GIMP_GEGL_RECT (x, y, width, height));
+                        GEGL_RECTANGLE (x, y, width, height));
     }
 
   g_object_unref (core->undo_buffer);
@@ -752,7 +752,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   /*  apply the paint area to the image  */
   gimp_drawable_apply_buffer (drawable,
                               core->paint_buffer,
-                              GIMP_GEGL_RECT (0, 0, width, height),
+                              GEGL_RECTANGLE (0, 0, width, height),
                               FALSE, NULL,
                               image_opacity, paint_mode,
                               base_buffer, /*  specify an alternative src1  */
@@ -832,7 +832,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 
   /*  apply the paint area to the image  */
   gimp_drawable_replace_buffer (drawable, core->paint_buffer,
-                                GIMP_GEGL_RECT (0, 0, width, height),
+                                GEGL_RECTANGLE (0, 0, width, height),
                                 FALSE, NULL,
                                 image_opacity,
                                 paint_maskPR,

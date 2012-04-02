@@ -459,7 +459,7 @@ gimp_channel_convert (GimpItem  *item,
       format = gimp_drawable_get_format_without_alpha (drawable);
 
       new_buffer =
-        gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+        gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                               gimp_item_get_width (item),
                                               gimp_item_get_height (item)),
                               format);
@@ -538,9 +538,9 @@ gimp_channel_translate (GimpItem *item,
       tmp_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_mask));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GIMP_GEGL_RECT (x1 - off_x, y1 - off_y, width, height),
+                        GEGL_RECTANGLE (x1 - off_x, y1 - off_y, width, height),
                         tmp_buffer,
-                        GIMP_GEGL_RECT (0,0,0,0));
+                        GEGL_RECTANGLE (0,0,0,0));
     }
 
   /*  clear the mask  */
@@ -554,7 +554,7 @@ gimp_channel_translate (GimpItem *item,
       gegl_buffer_copy (tmp_buffer,
                         NULL,
                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GIMP_GEGL_RECT (x1, y1, 0, 0));
+                        GEGL_RECTANGLE (x1, y1, 0, 0));
 
       /*  free the temporary mask  */
       g_object_unref (tmp_mask);
@@ -608,7 +608,7 @@ gimp_channel_scale (GimpItem              *item,
       GeglBuffer   *new_buffer;
 
       new_buffer =
-        gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, new_width, new_height),
+        gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
                               gimp_drawable_get_format (drawable));
 
       gimp_drawable_set_buffer_full (drawable,
@@ -1308,7 +1308,7 @@ gimp_channel_real_clear (GimpChannel *channel,
   if (channel->bounds_known && ! channel->empty)
     {
       gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                         GIMP_GEGL_RECT (channel->x1, channel->y1,
+                         GEGL_RECTANGLE (channel->x1, channel->y1,
                                          channel->x2 - channel->x1,
                                          channel->y2 - channel->y1));
     }
@@ -1456,7 +1456,7 @@ gimp_channel_real_border (GimpChannel *channel,
                         NULL, NULL,
                         border,
                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1));
+                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
 
   g_object_unref (border);
 
@@ -1530,7 +1530,7 @@ gimp_channel_real_grow (GimpChannel *channel,
                         NULL, NULL,
                         grow,
                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1));
+                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
 
   g_object_unref (grow);
 
@@ -1595,7 +1595,7 @@ gimp_channel_real_shrink (GimpChannel *channel,
                         NULL, NULL,
                         shrink,
                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GIMP_GEGL_RECT (x1, y1, x2 - x1, y2 - y1));
+                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
 
   g_object_unref (shrink);
 

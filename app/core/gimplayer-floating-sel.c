@@ -329,7 +329,7 @@ floating_sel_composite (GimpLayer *layer)
       fs_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
       gimp_drawable_apply_buffer (drawable, fs_buffer,
-                                  GIMP_GEGL_RECT (combine_x - off_x,
+                                  GEGL_RECTANGLE (combine_x - off_x,
                                                   combine_y - off_y,
                                                   combine_width,
                                                   combine_height),

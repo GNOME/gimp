@@ -589,7 +589,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
     {
       GeglBuffer *new_buffer;
 
-      new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+      new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                          gimp_drawable_get_format (drawable));
       gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
       g_object_unref (new_buffer);
@@ -675,7 +675,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   buffer =
     gegl_buffer_linear_new_from_data (cairo_image_surface_get_data (surface),
                                       babl_format ("cairo-ARGB32"),
-                                      GIMP_GEGL_RECT (0, 0, width, height),
+                                      GEGL_RECTANGLE (0, 0, width, height),
                                       cairo_image_surface_get_stride (surface),
                                       (GDestroyNotify) cairo_surface_destroy,
                                       surface);

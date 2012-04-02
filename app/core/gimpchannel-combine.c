@@ -57,7 +57,7 @@ gimp_channel_combine_rect (GimpChannel    *mask,
     color = gegl_color_new ("#000");
 
   gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
-                         GIMP_GEGL_RECT (x, y, w, h), color);
+                         GEGL_RECTANGLE (x, y, w, h), color);
   g_object_unref (color);
 
   /*  Determine new boundary  */
@@ -237,7 +237,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
   iter = gegl_buffer_iterator_new (buffer,
-                                   GIMP_GEGL_RECT (x0, y0, width, height), 0,
+                                   GEGL_RECTANGLE (x0, y0, width, height), 0,
                                    babl_format ("Y u8"), GEGL_BUFFER_READWRITE,
                                    GEGL_ABYSS_NONE);
   roi = &iter->roi[0];

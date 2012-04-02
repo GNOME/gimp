@@ -85,7 +85,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
 
   src_buffer = gimp_drawable_get_buffer (drawable);
 
-  new_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                      gimp_drawable_get_format (drawable));
 
   if (! wrap_around)
@@ -137,9 +137,9 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   if (width && height)
     {
       gegl_buffer_copy (src_buffer,
-                        GIMP_GEGL_RECT (src_x,  src_y,  width, height),
+                        GEGL_RECTANGLE (src_x,  src_y,  width, height),
                         new_buffer,
-                        GIMP_GEGL_RECT (dest_x,dest_y,  width, height));
+                        GEGL_RECTANGLE (dest_x,dest_y,  width, height));
     }
 
   if (wrap_around)
@@ -179,10 +179,10 @@ gimp_drawable_offset (GimpDrawable   *drawable,
       if (offset_x != 0 && offset_y != 0)
         {
           gegl_buffer_copy (src_buffer,
-                            GIMP_GEGL_RECT (src_x, src_y,
+                            GEGL_RECTANGLE (src_x, src_y,
                                             ABS (offset_x), ABS (offset_y)),
                             new_buffer,
-                            GIMP_GEGL_RECT (dest_x, dest_y, 0, 0));
+                            GEGL_RECTANGLE (dest_x, dest_y, 0, 0));
         }
 
       /*  X offset  */

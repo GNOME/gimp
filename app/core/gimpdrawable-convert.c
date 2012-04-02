@@ -51,7 +51,7 @@ gimp_drawable_convert_rgb (GimpDrawable *drawable,
     type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
 
   dest_buffer =
-    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                           gimp_item_get_width  (GIMP_ITEM (drawable)),
                                           gimp_item_get_height (GIMP_ITEM (drawable))),
                           gimp_image_get_format (dest_image, type));
@@ -81,7 +81,7 @@ gimp_drawable_convert_grayscale (GimpDrawable *drawable,
     type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
 
   dest_buffer =
-    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                           gimp_item_get_width  (GIMP_ITEM (drawable)),
                                           gimp_item_get_height (GIMP_ITEM (drawable))),
                           gimp_image_get_format (dest_image, type));
@@ -111,7 +111,7 @@ gimp_drawable_convert_indexed (GimpDrawable *drawable,
     format = gimp_image_colormap_get_rgb_format (dest_image);
 
   dest_buffer =
-    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                           gimp_item_get_width  (GIMP_ITEM (drawable)),
                                           gimp_item_get_height (GIMP_ITEM (drawable))),
                           format);

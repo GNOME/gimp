@@ -1368,10 +1368,10 @@ gimp_layer_create_mask (const GimpLayer *layer,
             dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
             gegl_buffer_copy (src,
-                              GIMP_GEGL_RECT (copy_x, copy_y,
+                              GEGL_RECTANGLE (copy_x, copy_y,
                                               copy_width, copy_height),
                               dest,
-                              GIMP_GEGL_RECT (copy_x - offset_x, copy_y - offset_y,
+                              GEGL_RECTANGLE (copy_x - offset_x, copy_y - offset_y,
                                               0, 0));
 
             GIMP_CHANNEL (mask)->bounds_known = FALSE;
@@ -1392,7 +1392,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                      GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
 
             src_buffer =
-              gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+              gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                     gimp_item_get_width  (item),
                                                     gimp_item_get_height (item)),
                                     copy_format);
@@ -1725,7 +1725,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
   drawable = GIMP_DRAWABLE (layer);
 
   new_buffer =
-    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                           gimp_item_get_width  (item),
                                           gimp_item_get_height (item)),
                           gimp_drawable_get_format_with_alpha (drawable));
@@ -1755,7 +1755,7 @@ gimp_layer_flatten (GimpLayer   *layer,
     return;
 
   new_buffer =
-    gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0,
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                           gimp_item_get_width  (GIMP_ITEM (layer)),
                                           gimp_item_get_height (GIMP_ITEM (layer))),
                           gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));

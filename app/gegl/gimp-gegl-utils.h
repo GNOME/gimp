@@ -53,6 +53,4 @@ void          gimp_gegl_progress_connect         (GeglNode              *node,
                                                   GimpProgress          *progress,
                                                   const gchar           *text);
 
-#define       GIMP_GEGL_RECT(x,y,w,h)            (&((GeglRectangle){(x), (y), (w), (h)}))
-
 #endif /* __GIMP_GEGL_UTILS_H__ */

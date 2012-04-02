@@ -498,7 +498,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                        FALSE);
 
     gegl_buffer_copy (src_buffer, src_rect,
-                      tmp, GIMP_GEGL_RECT (0, 0, 0, 0));
+                      tmp, GEGL_RECTANGLE (0, 0, 0, 0));
     g_object_unref (tmp);
   }
 
@@ -513,11 +513,11 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                  TRUE);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                    GIMP_GEGL_RECT (paint_buffer_x, paint_buffer_y,
+                    GEGL_RECTANGLE (paint_buffer_x, paint_buffer_y,
                                     gegl_buffer_get_width  (paint_buffer),
                                     gegl_buffer_get_height (paint_buffer)),
                     dest_buffer,
-                    GIMP_GEGL_RECT (0, 0, 0, 0));
+                    GEGL_RECTANGLE (0, 0, 0, 0));
 
   /* check that srcPR, tempPR, destPR, and mask_buf are the same size */
   if (src_temp_buf->width  != dest_temp_buf->width ||
@@ -544,9 +544,9 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   gimp_heal_region (&destPR, &srcPR, mask_buf);
 
   gegl_buffer_copy (dest_buffer,
-                    GIMP_GEGL_RECT (0, 0, mask_buf->width, mask_buf->height),
+                    GEGL_RECTANGLE (0, 0, mask_buf->width, mask_buf->height),
                     paint_buffer,
-                    GIMP_GEGL_RECT (paint_area_offset_x,
+                    GEGL_RECTANGLE (paint_area_offset_x,
                                     paint_area_offset_y,
                                     paint_area_width,
                                     paint_area_height));

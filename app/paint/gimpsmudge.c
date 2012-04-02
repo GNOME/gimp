@@ -226,12 +226,12 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
 
   /* copy the region under the original painthit. */
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                    GIMP_GEGL_RECT (paint_buffer_x,
+                    GEGL_RECTANGLE (paint_buffer_x,
                                     paint_buffer_y,
                                     gegl_buffer_get_width  (paint_buffer),
                                     gegl_buffer_get_height (paint_buffer)),
                     smudge->accum_buffer,
-                    GIMP_GEGL_RECT (paint_buffer_x - x,
+                    GEGL_RECTANGLE (paint_buffer_x - x,
                                     paint_buffer_y - y,
                                     0, 0));
 
@@ -328,12 +328,12 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   blend_region (&srcPR, &tempPR, &tempPR, ROUND (rate * 255.0));
 
   gegl_buffer_copy (smudge->accum_buffer,
-                    GIMP_GEGL_RECT (paint_buffer_x - x,
+                    GEGL_RECTANGLE (paint_buffer_x - x,
                                     paint_buffer_y - y,
                                     gegl_buffer_get_width  (paint_buffer),
                                     gegl_buffer_get_height (paint_buffer)),
                     paint_buffer,
-                    GIMP_GEGL_RECT (0, 0, 0, 0));
+                    GEGL_RECTANGLE (0, 0, 0, 0));
 
   hardness_output = gimp_dynamics_get_output (dynamics,
                                               GIMP_DYNAMICS_OUTPUT_HARDNESS);

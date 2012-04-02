@@ -480,7 +480,7 @@ gimp_edit_fill_full (GimpImage            *image,
         }
     }
 
-  dest_buffer = gimp_gegl_buffer_new (GIMP_GEGL_RECT (0, 0, width, height),
+  dest_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                       format);
 
   if (pattern)
@@ -499,7 +499,7 @@ gimp_edit_fill_full (GimpImage            *image,
     }
 
   gimp_drawable_apply_buffer (drawable, dest_buffer,
-                              GIMP_GEGL_RECT (0, 0, width, height),
+                              GEGL_RECTANGLE (0, 0, width, height),
                               TRUE, undo_desc,
                               opacity, paint_mode,
                               NULL, x, y,
@@ -536,7 +536,7 @@ gimp_edit_fade (GimpImage   *image,
       gimp_image_undo (image);
 
       gimp_drawable_apply_buffer (drawable, buffer,
-                                  GIMP_GEGL_RECT (0, 0,
+                                  GEGL_RECTANGLE (0, 0,
                                                   gegl_buffer_get_width (undo->buffer),
                                                   gegl_buffer_get_height (undo->buffer)),
                                   TRUE,

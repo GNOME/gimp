@@ -59,7 +59,7 @@ gimp_apply_operation (GeglBuffer          *src_buffer,
     }
   else
     {
-      rect = *GIMP_GEGL_RECT (0, 0, gegl_buffer_get_width  (dest_buffer),
+      rect = *GEGL_RECTANGLE (0, 0, gegl_buffer_get_width  (dest_buffer),
                                     gegl_buffer_get_height (dest_buffer));
     }
 

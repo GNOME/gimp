@@ -266,7 +266,7 @@ gimp_projection_initialize (GimpProjection *proj,
           buffer = gimp_tile_manager_create_buffer (tiles, NULL);
         }
 
-      gegl_buffer_clear (buffer, GIMP_GEGL_RECT (x, y, w, h));
+      gegl_buffer_clear (buffer, GEGL_RECTANGLE (x, y, w, h));
       g_object_unref (buffer);
     }
 }
