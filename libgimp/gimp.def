@@ -177,12 +177,13 @@ EXPORTS
 	gimp_drawable_free_shadow
 	gimp_drawable_get
 	gimp_drawable_get_buffer
-	gimp_drawable_get_shadow_buffer
 	gimp_drawable_get_color_uchar
+	gimp_drawable_get_format
 	gimp_drawable_get_image
 	gimp_drawable_get_linked
 	gimp_drawable_get_name
 	gimp_drawable_get_pixel
+	gimp_drawable_get_shadow_buffer
 	gimp_drawable_get_sub_thumbnail
 	gimp_drawable_get_sub_thumbnail_data
 	gimp_drawable_get_tattoo

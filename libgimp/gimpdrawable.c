@@ -650,7 +650,7 @@ gimp_drawable_attach_new_parasite (gint32          drawable_ID,
 
 /**
  * gimp_drawable_get_buffer:
- * @drawable_ID: the ID of the #GimpDrawableto  get the buffer for.
+ * @drawable_ID: the ID of the #GimpDrawable to get the buffer for.
  *
  * Returns a #GeglBuffer of a specified drawable. The buffer can be used
  * like any other GEGL buffer. Its data will we synced back with the core
@@ -687,7 +687,7 @@ gimp_drawable_get_buffer (gint32 drawable_ID)
 
 /**
  * gimp_drawable_get_shadow_buffer:
- * @drawable_ID: the ID of the #GimpDrawableto get the buffer for.
+ * @drawable_ID: the ID of the #GimpDrawable to get the buffer for.
  *
  * Returns a #GeglBuffer of a specified drawable's shadow tiles. The
  * buffer can be used like any other GEGL buffer. Its data will we
@@ -717,6 +717,55 @@ gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
       g_object_unref (backend);
 
       return buffer;
+    }
+
+  return NULL;
+}
+
+/**
+ * gimp_drawable_get_format:
+ * @drawable_ID: the ID of the #GimpDrawable to get the format for.
+ *
+ * Returns the #Babl format of the drawable.
+ *
+ * Return value: The #Babl format.
+ *
+ * Since: GIMP 2.10
+ */
+const Babl *
+gimp_drawable_get_format (gint32 drawable_ID)
+{
+  switch (gimp_drawable_type (drawable_ID))
+    {
+    case GIMP_RGB_IMAGE:   return babl_format ("R'G'B' u8");
+    case GIMP_RGBA_IMAGE:  return babl_format ("R'G'B'A u8");
+    case GIMP_GRAY_IMAGE:  return babl_format ("Y' u8");
+    case GIMP_GRAYA_IMAGE: return babl_format ("Y'A u8");
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      {
+        gint32      image_ID = gimp_item_get_image (drawable_ID);
+        const Babl *pala;
+        const Babl *pal;
+        guchar     *cmap;
+        gint        n_cols;
+
+        cmap = gimp_image_get_colormap (image_ID, &n_cols);
+
+        babl_new_palette (NULL, &pal, &pala);
+        babl_palette_set_palette (pal, babl_format ("R'G'B' u8"),
+                                  cmap, n_cols);
+
+        g_free (cmap);
+
+        if (gimp_drawable_type (drawable_ID) == GIMP_INDEXEDA_IMAGE)
+          return pala;
+
+        return pal;
+      }
+
+    default:
+      g_warn_if_reached ();
     }
 
   return NULL;

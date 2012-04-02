@@ -45,6 +45,8 @@ struct _GimpDrawable
 GeglBuffer   * gimp_drawable_get_buffer             (gint32         drawable_ID);
 GeglBuffer   * gimp_drawable_get_shadow_buffer      (gint32         drawable_ID);
 
+const Babl   * gimp_drawable_get_format             (gint32         drawable_ID);
+
 GimpDrawable * gimp_drawable_get                    (gint32         drawable_ID);
 void           gimp_drawable_detach                 (GimpDrawable  *drawable);
 void           gimp_drawable_flush                  (GimpDrawable  *drawable);
