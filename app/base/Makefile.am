@@ -25,8 +25,6 @@ libappbase_a_SOURCES = \
 	base-utils.h		\
 	cpercep.c		\
 	cpercep.h		\
-	gimplut.c		\
-	gimplut.h		\
 	pixel-processor.c	\
 	pixel-processor.h	\
 	pixel-region.c		\

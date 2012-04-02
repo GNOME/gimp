@@ -47,8 +47,6 @@
 
 /* types */
 
-typedef struct _GimpLut             GimpLut;
-
 typedef struct _PixelRegionIterator PixelRegionIterator;
 typedef struct _PixelRegion         PixelRegion;
 typedef struct _PixelRegionHolder   PixelRegionHolder;
