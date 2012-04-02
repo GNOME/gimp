@@ -375,6 +375,13 @@ Keep a permanent record of all opened and saved files in the Recent Documents
 list.  Possible values are yes and no.
 
 .TP
+(quick-mask-color (color-rgba 1.000000 0.000000 0.000000 0.500000))
+
+Sets the default quick mask color.  The color is specified in the form
+(color-rgba red green blue alpha) with channel values as floats in the range
+of 0.0 to 1.0.
+
+.TP
 (transparency-size medium-checks)
 
 Sets the size of the checkerboard used to display transparency.  Possible

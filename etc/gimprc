@@ -304,6 +304,12 @@
 # 
 # (save-document-history yes)
 
+# Sets the default quick mask color.  The color is specified in the form
+# (color-rgba red green blue alpha) with channel values as floats in the
+# range of 0.0 to 1.0.
+# 
+# (quick-mask-color (color-rgba 1.000000 0.000000 0.000000 0.500000))
+
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.
 # 
