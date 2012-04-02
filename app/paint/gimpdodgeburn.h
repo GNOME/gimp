@@ -34,8 +34,6 @@ typedef struct _GimpDodgeBurnClass GimpDodgeBurnClass;
 struct _GimpDodgeBurn
 {
   GimpBrushCore  parent_instance;
-
-  GimpLut       *lut;
 };
 
 struct _GimpDodgeBurnClass
