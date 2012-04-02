@@ -132,6 +132,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:rotate", /* in gimp */
     "gegl:transform", /* in gimp */
     "gegl:value-invert", /* in gimp */
+    "gegl:threshold", /* in gimp */
     "gimp-",
     "gimp:"
   };
