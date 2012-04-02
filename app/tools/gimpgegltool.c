@@ -119,6 +119,19 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:vector-stroke",
     "gegl:lens-correct",
     "gegl:hstack",
+    "gegl:display",
+    "gegl:opacity", /* pointless */
+    "gegl:colorize", /* in gimp */
+    "gegl:color-to-alpha", /* in gimp */
+    "gegl:invert", /* in gimp */
+    "gegl:grey", /* in gimp */
+    "gegl:posterize", /* in gimp */
+    "gegl:scale", /* in gimp */
+    "gegl:translate", /* pointless */
+    "gegl:shear", /* in gimp */
+    "gegl:rotate", /* in gimp */
+    "gegl:transform", /* in gimp */
+    "gegl:value-invert", /* in gimp */
     "gimp-",
     "gimp:"
   };
