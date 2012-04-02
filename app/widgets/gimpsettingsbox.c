@@ -583,6 +583,17 @@ gimp_settings_box_setting_selected (GimpContainerView *view,
       gimp_config_copy (GIMP_CONFIG (object),
                         GIMP_CONFIG (private->config), 0);
 
+      /*  reset the "time" property, otherwise explicitly storing the
+       *  config as setting will also copy the time, and the stored
+       *  object will be considered to be among the automatically
+       *  stored recently used settings
+       */
+      if (g_object_class_find_property (G_OBJECT_GET_CLASS (private->config),
+                                        "time"))
+        {
+          g_object_set (private->config, "time", 0, NULL);
+        }
+
       gimp_container_view_select_item (view, NULL);
     }
 }
