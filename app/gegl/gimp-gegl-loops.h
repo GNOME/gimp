@@ -25,15 +25,23 @@
 /*  this is a pretty stupid port of concolve_region() that only works
  *  on a linear source buffer
  */
-void   gimp_gegl_convolve (GeglBuffer          *src_buffer,
-                           const GeglRectangle *src_rect,
-                           GeglBuffer          *dest_buffer,
-                           const GeglRectangle *dest_rect,
-                           const gfloat        *matrix,
-                           gint                 size,
-                           gdouble              divisor,
-                           GimpConvolutionType  mode,
-                           gboolean             alpha_weighting);
+void   gimp_gegl_convolve  (GeglBuffer          *src_buffer,
+                            const GeglRectangle *src_rect,
+                            GeglBuffer          *dest_buffer,
+                            const GeglRectangle *dest_rect,
+                            const gfloat        *matrix,
+                            gint                 size,
+                            gdouble              divisor,
+                            GimpConvolutionType  mode,
+                            gboolean             alpha_weighting);
+
+void   gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
+                            const GeglRectangle *src_rect,
+                            GeglBuffer          *dest_buffer,
+                            const GeglRectangle *dest_rect,
+                            gdouble              exposure,
+                            GimpDodgeBurnType    type,
+                            GimpTransferMode     mode);
 
 
 #endif /* __GIMP_GEGL_LOOPS_H__ */

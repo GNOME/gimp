@@ -189,3 +189,121 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
         }
     }
 }
+
+void
+gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
+                     const GeglRectangle *src_rect,
+                     GeglBuffer          *dest_buffer,
+                     const GeglRectangle *dest_rect,
+                     gdouble              exposure,
+                     GimpDodgeBurnType    type,
+                     GimpTransferMode     mode)
+{
+  GeglBufferIterator *iter;
+
+  if (type == GIMP_BURN)
+    exposure = -exposure;
+
+  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
+                                   babl_format ("R'G'B'A float"),
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
+                            babl_format ("R'G'B'A float"),
+                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
+  switch (mode)
+    {
+      gfloat factor;
+
+    case GIMP_HIGHLIGHTS:
+      factor = 1.0 + exposure * (0.333333);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          gfloat *src  = iter->data[0];
+          gfloat *dest = iter->data[1];
+
+          while (iter->length--)
+            {
+              *dest++ = *src++ * factor;
+              *dest++ = *src++ * factor;
+              *dest++ = *src++ * factor;
+
+              *dest++ = *src++;
+            }
+        }
+      break;
+
+    case GIMP_MIDTONES:
+      if (exposure < 0)
+        factor = 1.0 - exposure * (0.333333);
+      else
+        factor = 1.0 / (1.0 + exposure);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          gfloat *src  = iter->data[0];
+          gfloat *dest = iter->data[1];
+
+          while (iter->length--)
+            {
+              *dest++ = pow (*src++, factor);
+              *dest++ = pow (*src++, factor);
+              *dest++ = pow (*src++, factor);
+
+              *dest++ = *src++;
+            }
+        }
+      break;
+
+    case GIMP_SHADOWS:
+      if (exposure >= 0)
+        factor = 0.333333 * exposure;
+      else
+        factor = -0.333333 * exposure;
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          gfloat *src  = iter->data[0];
+          gfloat *dest = iter->data[1];
+
+          while (iter->length--)
+            {
+              if (exposure >= 0)
+                {
+                  gfloat s;
+
+                  s = *src++; *dest++ = factor + s - factor * s;
+                  s = *src++; *dest++ = factor + s - factor * s;
+                  s = *src++; *dest++ = factor + s - factor * s;
+                }
+              else
+                {
+                  gfloat s;
+
+                  s = *src++;
+                  if (s < factor)
+                    *dest++ = 0;
+                  else /* factor <= value <=1 */
+                    *dest++ = (s - factor) / (1.0 - factor);
+
+                  s = *src++;
+                  if (s < factor)
+                    *dest++ = 0;
+                  else /* factor <= value <=1 */
+                    *dest++ = (s - factor) / (1.0 - factor);
+
+                  s = *src++;
+                  if (s < factor)
+                    *dest++ = 0;
+                  else /* factor <= value <=1 */
+                    *dest++ = (s - factor) / (1.0 - factor);
+                }
+
+              *dest++ = *src++;
+           }
+        }
+      break;
+    }
+}
