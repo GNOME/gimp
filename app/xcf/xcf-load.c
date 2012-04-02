@@ -28,11 +28,9 @@
 
 #include "core/core-types.h"
 
-#include "base/tile.h"
-#include "base/tile-manager.h"
-#include "base/tile-manager-private.h"
-
 #include "config/gimpcoreconfig.h"
+
+#include "gegl/gimp-gegl-tile-compat.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -73,52 +71,54 @@
 
 /* #define GIMP_XCF_PATH_DEBUG */
 
-static void            xcf_load_add_masks     (GimpImage    *image);
-static gboolean        xcf_load_image_props   (XcfInfo      *info,
-                                               GimpImage    *image);
-static gboolean        xcf_load_layer_props   (XcfInfo      *info,
-                                               GimpImage    *image,
-                                               GimpLayer   **layer,
-                                               GList       **item_path,
-                                               gboolean     *apply_mask,
-                                               gboolean     *edit_mask,
-                                               gboolean     *show_mask,
-                                               guint32      *text_layer_flags,
-                                               guint32      *group_layer_flags);
-static gboolean        xcf_load_channel_props (XcfInfo      *info,
-                                               GimpImage    *image,
-                                               GimpChannel **channel);
-static gboolean        xcf_load_prop          (XcfInfo      *info,
-                                               PropType     *prop_type,
-                                               guint32      *prop_size);
-static GimpLayer     * xcf_load_layer         (XcfInfo      *info,
-                                               GimpImage    *image,
-                                               GList       **item_path);
-static GimpChannel   * xcf_load_channel       (XcfInfo      *info,
-                                               GimpImage    *image);
-static GimpLayerMask * xcf_load_layer_mask    (XcfInfo      *info,
-                                               GimpImage    *image);
-static gboolean        xcf_load_hierarchy     (XcfInfo      *info,
-                                               TileManager  *tiles);
-static gboolean        xcf_load_level         (XcfInfo      *info,
-                                               TileManager  *tiles);
-static gboolean        xcf_load_tile          (XcfInfo      *info,
-                                               Tile         *tile);
-static gboolean        xcf_load_tile_rle      (XcfInfo      *info,
-                                               Tile         *tile,
-                                               gint          data_length);
-static GimpParasite  * xcf_load_parasite      (XcfInfo      *info);
-static gboolean        xcf_load_old_paths     (XcfInfo      *info,
-                                               GimpImage    *image);
-static gboolean        xcf_load_old_path      (XcfInfo      *info,
-                                               GimpImage    *image);
-static gboolean        xcf_load_vectors       (XcfInfo      *info,
-                                               GimpImage    *image);
-static gboolean        xcf_load_vector        (XcfInfo      *info,
-                                               GimpImage    *image);
+static void            xcf_load_add_masks     (GimpImage     *image);
+static gboolean        xcf_load_image_props   (XcfInfo       *info,
+                                               GimpImage     *image);
+static gboolean        xcf_load_layer_props   (XcfInfo       *info,
+                                               GimpImage     *image,
+                                               GimpLayer    **layer,
+                                               GList        **item_path,
+                                               gboolean      *apply_mask,
+                                               gboolean      *edit_mask,
+                                               gboolean      *show_mask,
+                                               guint32       *text_layer_flags,
+                                               guint32       *group_layer_flags);
+static gboolean        xcf_load_channel_props (XcfInfo       *info,
+                                               GimpImage     *image,
+                                               GimpChannel  **channel);
+static gboolean        xcf_load_prop          (XcfInfo       *info,
+                                               PropType      *prop_type,
+                                               guint32       *prop_size);
+static GimpLayer     * xcf_load_layer         (XcfInfo       *info,
+                                               GimpImage     *image,
+                                               GList        **item_path);
+static GimpChannel   * xcf_load_channel       (XcfInfo       *info,
+                                               GimpImage     *image);
+static GimpLayerMask * xcf_load_layer_mask    (XcfInfo       *info,
+                                               GimpImage     *image);
+static gboolean        xcf_load_buffer        (XcfInfo       *info,
+                                               GeglBuffer    *buffer);
+static gboolean        xcf_load_level         (XcfInfo       *info,
+                                               GeglBuffer    *buffer);
+static gboolean        xcf_load_tile          (XcfInfo       *info,
+                                               GeglBuffer    *buffer,
+                                               GeglRectangle *tile_rect);
+static gboolean        xcf_load_tile_rle      (XcfInfo       *info,
+                                               GeglBuffer    *buffer,
+                                               GeglRectangle *tile_rect,
+                                               gint           data_length);
+static GimpParasite  * xcf_load_parasite      (XcfInfo       *info);
+static gboolean        xcf_load_old_paths     (XcfInfo       *info,
+                                               GimpImage     *image);
+static gboolean        xcf_load_old_path      (XcfInfo       *info,
+                                               GimpImage     *image);
+static gboolean        xcf_load_vectors       (XcfInfo       *info,
+                                               GimpImage     *image);
+static gboolean        xcf_load_vector        (XcfInfo       *info,
+                                               GimpImage     *image);
 
-static gboolean        xcf_skip_unknown_prop  (XcfInfo      *info,
-                                               gsize         size);
+static gboolean        xcf_skip_unknown_prop  (XcfInfo       *info,
+                                               gsize          size);
 
 
 #define xcf_progress_update(info) G_STMT_START  \
@@ -1147,8 +1147,8 @@ xcf_load_layer (XcfInfo    *info,
       if (! xcf_seek_pos (info, hierarchy_offset, NULL))
         goto error;
 
-      if (! xcf_load_hierarchy (info,
-                                gimp_drawable_get_tiles (GIMP_DRAWABLE (layer))))
+      if (! xcf_load_buffer (info,
+                             gimp_drawable_get_buffer (GIMP_DRAWABLE (layer))))
         goto error;
 
       xcf_progress_update (info);
@@ -1239,8 +1239,8 @@ xcf_load_channel (XcfInfo   *info,
   if (!xcf_seek_pos (info, hierarchy_offset, NULL))
     goto error;
 
-  if (!xcf_load_hierarchy (info,
-                           gimp_drawable_get_tiles (GIMP_DRAWABLE (channel))))
+  if (!xcf_load_buffer (info,
+                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel))))
     goto error;
 
   xcf_progress_update (info);
@@ -1298,8 +1298,8 @@ xcf_load_layer_mask (XcfInfo   *info,
   if (! xcf_seek_pos (info, hierarchy_offset, NULL))
     goto error;
 
-  if (!xcf_load_hierarchy (info,
-                           gimp_drawable_get_tiles (GIMP_DRAWABLE (layer_mask))))
+  if (!xcf_load_buffer (info,
+                        gimp_drawable_get_buffer (GIMP_DRAWABLE (layer_mask))))
     goto error;
 
   xcf_progress_update (info);
@@ -1316,15 +1316,18 @@ xcf_load_layer_mask (XcfInfo   *info,
 }
 
 static gboolean
-xcf_load_hierarchy (XcfInfo     *info,
-                    TileManager *tiles)
+xcf_load_buffer (XcfInfo    *info,
+                 GeglBuffer *buffer)
 {
-  guint32 saved_pos;
-  guint32 offset;
-  guint32 junk;
-  gint    width;
-  gint    height;
-  gint    bpp;
+  const Babl *format;
+  guint32     saved_pos;
+  guint32     offset;
+  guint32     junk;
+  gint        width;
+  gint        height;
+  gint        bpp;
+
+  format = gegl_buffer_get_format (buffer);
 
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
@@ -1333,9 +1336,9 @@ xcf_load_hierarchy (XcfInfo     *info,
   /* make sure the values in the file correspond to the values
    *  calculated when the TileManager was created.
    */
-  if (width  != tile_manager_width (tiles)  ||
-      height != tile_manager_height (tiles) ||
-      bpp    != tile_manager_bpp (tiles))
+  if (width  != gegl_buffer_get_width (buffer)  ||
+      height != gegl_buffer_get_height (buffer) ||
+      bpp    != babl_format_get_bytes_per_pixel (format))
     return FALSE;
 
   /* load in the levels...we make sure that the number of levels
@@ -1363,7 +1366,7 @@ xcf_load_hierarchy (XcfInfo     *info,
     return FALSE;
 
   /* read in the level */
-  if (!xcf_load_level (info, tiles))
+  if (!xcf_load_level (info, buffer))
     return FALSE;
 
   /* restore the saved position so we'll be ready to
@@ -1377,24 +1380,24 @@ xcf_load_hierarchy (XcfInfo     *info,
 
 
 static gboolean
-xcf_load_level (XcfInfo     *info,
-                TileManager *tiles)
+xcf_load_level (XcfInfo    *info,
+                GeglBuffer *buffer)
 {
   guint32 saved_pos;
   guint32 offset, offset2;
-  guint ntiles;
-  gint  width;
-  gint  height;
-  gint  i;
-  gint  fail;
-  Tile *previous;
-  Tile *tile;
+  gint    n_tile_rows;
+  gint    n_tile_cols;
+  guint   ntiles;
+  gint    width;
+  gint    height;
+  gint    i;
+  gint    fail;
 
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
 
-  if (width  != tile_manager_width  (tiles) ||
-      height != tile_manager_height (tiles))
+  if (width  != gegl_buffer_get_width (buffer) ||
+      height != gegl_buffer_get_height (buffer))
     return FALSE;
 
   /* read in the first tile offset.
@@ -1405,13 +1408,14 @@ xcf_load_level (XcfInfo     *info,
   if (offset == 0)
     return TRUE;
 
-  /* Initialise the reference for the in-memory tile-compression
-   */
-  previous = NULL;
+  n_tile_rows = gimp_gegl_buffer_get_n_tile_rows (buffer, XCF_TILE_HEIGHT);
+  n_tile_cols = gimp_gegl_buffer_get_n_tile_cols (buffer, XCF_TILE_WIDTH);
 
-  ntiles = tiles->ntile_rows * tiles->ntile_cols;
+  ntiles = n_tile_rows * n_tile_cols;
   for (i = 0; i < ntiles; i++)
     {
+      GeglRectangle rect;
+
       fail = FALSE;
 
       if (offset == 0)
@@ -1434,7 +1438,7 @@ xcf_load_level (XcfInfo     *info,
       /* if the offset is 0 then we need to read in the maximum possible
          allowing for negative compression */
       if (offset2 == 0)
-        offset2 = offset + TILE_WIDTH * TILE_WIDTH * 4 * 1.5;
+        offset2 = offset + XCF_TILE_WIDTH * XCF_TILE_WIDTH * 4 * 1.5;
                                         /* 1.5 is probably more
                                            than we need to allow */
 
@@ -1443,17 +1447,19 @@ xcf_load_level (XcfInfo     *info,
         return FALSE;
 
       /* get the tile from the tile manager */
-      tile = tile_manager_get (tiles, i, TRUE, TRUE);
+      gimp_gegl_buffer_get_tile_rect (buffer,
+                                      XCF_TILE_WIDTH, XCF_TILE_HEIGHT,
+                                      i, &rect);
 
       /* read in the tile */
       switch (info->compression)
         {
         case COMPRESS_NONE:
-          if (!xcf_load_tile (info, tile))
+          if (!xcf_load_tile (info, buffer, &rect))
             fail = TRUE;
           break;
         case COMPRESS_RLE:
-          if (!xcf_load_tile_rle (info, tile, offset2 - offset))
+          if (!xcf_load_tile_rle (info, buffer, &rect, offset2 - offset))
             fail = TRUE;
           break;
         case COMPRESS_ZLIB:
@@ -1467,30 +1473,7 @@ xcf_load_level (XcfInfo     *info,
         }
 
       if (fail)
-        {
-          tile_release (tile, TRUE);
-          return FALSE;
-        }
-
-      /* To potentially save memory, we compare the
-       *  newly-fetched tile against the last one, and
-       *  if they're the same we copy-on-write mirror one against
-       *  the other.
-       */
-      if (previous != NULL)
-        {
-          tile_lock (previous);
-          if (tile_ewidth (tile) == tile_ewidth (previous) &&
-              tile_eheight (tile) == tile_eheight (previous) &&
-              tile_bpp (tile) == tile_bpp (previous) &&
-              memcmp (tile_data_pointer (tile, 0, 0),
-                      tile_data_pointer (previous, 0, 0),
-                      tile_size (tile)) == 0)
-            tile_manager_map (tiles, i, previous);
-          tile_release (previous, FALSE);
-        }
-      tile_release (tile, TRUE);
-      previous = tile_manager_get (tiles, i, FALSE, FALSE);
+        return FALSE;
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -1513,29 +1496,38 @@ xcf_load_level (XcfInfo     *info,
 }
 
 static gboolean
-xcf_load_tile (XcfInfo *info,
-               Tile    *tile)
+xcf_load_tile (XcfInfo       *info,
+               GeglBuffer    *buffer,
+               GeglRectangle *tile_rect)
 {
-  info->cp += xcf_read_int8 (info->fp, tile_data_pointer (tile, 0, 0),
-                             tile_size (tile));
+  const Babl *format    = gegl_buffer_get_format (buffer);
+  gint        bpp       = babl_format_get_bytes_per_pixel (format);
+  gint        tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar     *tile_data = g_alloca (tile_size);
+
+  info->cp += xcf_read_int8 (info->fp, tile_data, tile_size);
+
+  gegl_buffer_set (buffer, tile_rect, 0, NULL, tile_data,
+                   GEGL_AUTO_ROWSTRIDE);
 
   return TRUE;
 }
 
 static gboolean
-xcf_load_tile_rle (XcfInfo *info,
-                   Tile    *tile,
-                   int     data_length)
+xcf_load_tile_rle (XcfInfo       *info,
+                   GeglBuffer    *buffer,
+                   GeglRectangle *tile_rect,
+                   gint           data_length)
 {
-  guchar *data;
-  guchar val;
-  gint size;
-  gint count;
-  gint length;
-  gint bpp;
-  gint i, j;
-  gint nmemb_read_successfully;
-  guchar *xcfdata, *xcfodata, *xcfdatalimit;
+  const Babl *format    = gegl_buffer_get_format (buffer);
+  gint        bpp       = babl_format_get_bytes_per_pixel (format);
+  gint        tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar     *tile_data = g_alloca (tile_size);
+  gint        i;
+  gint        nmemb_read_successfully;
+  guchar     *xcfdata;
+  guchar     *xcfodata;
+  guchar     *xcfdatalimit;
 
   /* Workaround for bug #357809: avoid crashing on g_malloc() and skip
    * this tile (return TRUE without storing data) as if it did not
@@ -1546,12 +1538,11 @@ xcf_load_tile_rle (XcfInfo *info,
   if (data_length <= 0)
     return TRUE;
 
-  bpp = tile_bpp (tile);
-
-  xcfdata = xcfodata = g_malloc (data_length);
+  xcfdata = xcfodata = g_alloca (data_length);
 
   /* we have to use fread instead of xcf_read_* because we may be
-     reading past the end of the file here */
+   * reading past the end of the file here
+   */
   nmemb_read_successfully = fread ((gchar *) xcfdata, sizeof (gchar),
                                    data_length, info->fp);
   info->cp += nmemb_read_successfully;
@@ -1560,9 +1551,12 @@ xcf_load_tile_rle (XcfInfo *info,
 
   for (i = 0; i < bpp; i++)
     {
-      data = (guchar *) tile_data_pointer (tile, 0, 0) + i;
-      size = tile_ewidth (tile) * tile_eheight (tile);
-      count = 0;
+      guchar *data  = tile_data + i;
+      gint    size  = tile_rect->width * tile_rect->height;
+      gint    count = 0;
+      guchar  val;
+      gint    length;
+      gint    j;
 
       while (size > 0)
         {
@@ -1644,12 +1638,13 @@ xcf_load_tile_rle (XcfInfo *info,
             }
         }
     }
-  g_free (xcfodata);
+
+  gegl_buffer_set (buffer, tile_rect, 0, NULL, tile_data,
+                   GEGL_AUTO_ROWSTRIDE);
+
   return TRUE;
 
  bogus_rle:
-  if (xcfodata)
-    g_free (xcfodata);
   return FALSE;
 }
 

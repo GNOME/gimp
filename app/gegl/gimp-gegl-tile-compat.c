@@ -27,6 +27,20 @@
 #include "gimp-gegl-tile-compat.h"
 
 
+gint
+gimp_gegl_buffer_get_n_tile_rows (GeglBuffer *buffer,
+                                  gint        tile_height)
+{
+  return (gegl_buffer_get_height (buffer) + tile_height - 1) / tile_height;
+}
+
+gint
+gimp_gegl_buffer_get_n_tile_cols (GeglBuffer *buffer,
+                                  gint        tile_width)
+{
+  return (gegl_buffer_get_width (buffer) + tile_width - 1) / tile_width;
+}
+
 gboolean
 gimp_gegl_buffer_get_tile_rect (GeglBuffer    *buffer,
                                 gint           tile_width,
@@ -39,13 +53,8 @@ gimp_gegl_buffer_get_tile_rect (GeglBuffer    *buffer,
   gint tile_row;
   gint tile_column;
 
-  n_tile_rows =
-    (gegl_buffer_get_height (buffer) + tile_height - 1) /
-    tile_height;
-
-  n_tile_columns =
-    (gegl_buffer_get_width (buffer) + tile_width - 1) /
-    tile_width;
+  n_tile_rows    = gimp_gegl_buffer_get_n_tile_rows (buffer, tile_height);
+  n_tile_columns = gimp_gegl_buffer_get_n_tile_cols (buffer, tile_width);
 
   if (tile_num > n_tile_rows * n_tile_columns - 1)
     return FALSE;

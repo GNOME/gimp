@@ -22,11 +22,15 @@
 #define __GIMP_GEGL_TILE_COMPAT_H__
 
 
-gboolean   gimp_gegl_buffer_get_tile_rect (GeglBuffer    *buffer,
-                                           gint           tile_width,
-                                           gint           tile_height,
-                                           gint           tile_num,
-                                           GeglRectangle *rect);
+gint       gimp_gegl_buffer_get_n_tile_rows (GeglBuffer    *buffer,
+                                             gint           tile_height);
+gint       gimp_gegl_buffer_get_n_tile_cols (GeglBuffer    *buffer,
+                                             gint           tile_width);
+gboolean   gimp_gegl_buffer_get_tile_rect   (GeglBuffer    *buffer,
+                                             gint           tile_width,
+                                             gint           tile_height,
+                                             gint           tile_num,
+                                             GeglRectangle *rect);
 
 
 #endif /* __GIMP_GEGL_TILE_COMPAT_H__ */
