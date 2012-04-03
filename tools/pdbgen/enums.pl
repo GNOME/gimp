@@ -411,18 +411,6 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_VECTORS_STROKE_TYPE_BEZIER) ],
 	  mapping => { GIMP_VECTORS_STROKE_TYPE_BEZIER => '0' }
 	},
-    GimpHistogramChannel =>
-	{ contig => 1,
-	  header => 'base/base-enums.h',
-	  symbols => [ qw(GIMP_HISTOGRAM_VALUE GIMP_HISTOGRAM_RED
-			  GIMP_HISTOGRAM_GREEN GIMP_HISTOGRAM_BLUE
-			  GIMP_HISTOGRAM_ALPHA) ],
-	  mapping => { GIMP_HISTOGRAM_VALUE => '0',
-		       GIMP_HISTOGRAM_RED => '1',
-		       GIMP_HISTOGRAM_GREEN => '2',
-		       GIMP_HISTOGRAM_BLUE => '3',
-		       GIMP_HISTOGRAM_ALPHA => '4' }
-	},
     GimpLayerModeEffects =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',
@@ -461,20 +449,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRAIN_MERGE_MODE => '21',
 		       GIMP_COLOR_ERASE_MODE => '22' }
 	},
-    GimpHueRange =>
-	{ contig => 1,
-	  header => 'base/base-enums.h',
-	  symbols => [ qw(GIMP_ALL_HUES GIMP_RED_HUES GIMP_YELLOW_HUES
-			  GIMP_GREEN_HUES GIMP_CYAN_HUES GIMP_BLUE_HUES
-			  GIMP_MAGENTA_HUES) ],
-	  mapping => { GIMP_ALL_HUES => '0',
-		       GIMP_RED_HUES => '1',
-		       GIMP_YELLOW_HUES => '2',
-		       GIMP_GREEN_HUES => '3',
-		       GIMP_CYAN_HUES => '4',
-		       GIMP_BLUE_HUES => '5',
-		       GIMP_MAGENTA_HUES => '6' }
-	},
     GimpConvolutionType =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',
@@ -505,6 +479,32 @@ package Gimp::CodeGen::enums;
 		       GIMP_WEB_PALETTE => '2',
 		       GIMP_MONO_PALETTE => '3',
 		       GIMP_CUSTOM_PALETTE => '4' }
+	},
+    GimpHistogramChannel =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_HISTOGRAM_VALUE GIMP_HISTOGRAM_RED
+			  GIMP_HISTOGRAM_GREEN GIMP_HISTOGRAM_BLUE
+			  GIMP_HISTOGRAM_ALPHA) ],
+	  mapping => { GIMP_HISTOGRAM_VALUE => '0',
+		       GIMP_HISTOGRAM_RED => '1',
+		       GIMP_HISTOGRAM_GREEN => '2',
+		       GIMP_HISTOGRAM_BLUE => '3',
+		       GIMP_HISTOGRAM_ALPHA => '4' }
+	},
+    GimpHueRange =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_ALL_HUES GIMP_RED_HUES GIMP_YELLOW_HUES
+			  GIMP_GREEN_HUES GIMP_CYAN_HUES GIMP_BLUE_HUES
+			  GIMP_MAGENTA_HUES) ],
+	  mapping => { GIMP_ALL_HUES => '0',
+		       GIMP_RED_HUES => '1',
+		       GIMP_YELLOW_HUES => '2',
+		       GIMP_GREEN_HUES => '3',
+		       GIMP_CYAN_HUES => '4',
+		       GIMP_BLUE_HUES => '5',
+		       GIMP_MAGENTA_HUES => '6' }
 	},
     GimpFillType =>
 	{ contig => 1,

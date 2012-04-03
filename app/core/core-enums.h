@@ -75,6 +75,17 @@ typedef enum
 } GimpConvertPaletteType;
 
 
+#define GIMP_TYPE_CURVE_TYPE (gimp_curve_type_get_type ())
+
+GType gimp_curve_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_CURVE_SMOOTH,   /*< desc="Smooth"   >*/
+  GIMP_CURVE_FREE      /*< desc="Freehand" >*/
+} GimpCurveType;
+
+
 #define GIMP_TYPE_GRAVITY_TYPE (gimp_gravity_type_get_type ())
 
 GType gimp_gravity_type_get_type (void) G_GNUC_CONST;
@@ -92,6 +103,37 @@ typedef enum  /*< pdb-skip >*/
   GIMP_GRAVITY_SOUTH,
   GIMP_GRAVITY_SOUTH_EAST
 } GimpGravityType;
+
+
+#define GIMP_TYPE_HISTOGRAM_CHANNEL (gimp_histogram_channel_get_type ())
+
+GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_HISTOGRAM_VALUE = 0,  /*< desc="Value" >*/
+  GIMP_HISTOGRAM_RED   = 1,  /*< desc="Red"   >*/
+  GIMP_HISTOGRAM_GREEN = 2,  /*< desc="Green" >*/
+  GIMP_HISTOGRAM_BLUE  = 3,  /*< desc="Blue"  >*/
+  GIMP_HISTOGRAM_ALPHA = 4,  /*< desc="Alpha" >*/
+  GIMP_HISTOGRAM_RGB   = 5   /*< desc="RGB", pdb-skip >*/
+} GimpHistogramChannel;
+
+
+#define GIMP_TYPE_HUE_RANGE (gimp_hue_range_get_type ())
+
+GType gimp_hue_range_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ALL_HUES,
+  GIMP_RED_HUES,
+  GIMP_YELLOW_HUES,
+  GIMP_GREEN_HUES,
+  GIMP_CYAN_HUES,
+  GIMP_BLUE_HUES,
+  GIMP_MAGENTA_HUES
+} GimpHueRange;
 
 
 #define GIMP_TYPE_ALIGNMENT_TYPE (gimp_alignment_type_get_type ())
