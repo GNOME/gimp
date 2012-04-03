@@ -482,7 +482,6 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   GimpDynamicsOutput *hardness_output;
   GimpImage          *image      = gimp_item_get_image (GIMP_ITEM (drawable));
   GeglBuffer         *src_copy;
-  GeglBuffer         *dest_buffer;
   GeglBuffer         *mask_buffer;
   const TempBuf      *mask_buf;
   gdouble             fade_point;
@@ -528,18 +527,15 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                     src_rect->width,
                                     src_rect->height));
 
-  dest_buffer =
-    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     gegl_buffer_get_width  (paint_buffer),
-                                     gegl_buffer_get_height (paint_buffer)),
-                     gimp_drawable_get_format_with_alpha (drawable));
-
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                     GEGL_RECTANGLE (paint_buffer_x, paint_buffer_y,
                                     gegl_buffer_get_width  (paint_buffer),
                                     gegl_buffer_get_height (paint_buffer)),
-                    dest_buffer,
-                    GEGL_RECTANGLE (0, 0, 0, 0));
+                    paint_buffer,
+                    GEGL_RECTANGLE (paint_area_offset_x,
+                                    paint_area_offset_y,
+                                    paint_area_width,
+                                    paint_area_height));
 
   mask_buffer = gimp_temp_buf_create_buffer ((TempBuf *) mask_buf,
                                              NULL, FALSE);
@@ -548,25 +544,17 @@ gimp_heal_motion (GimpSourceCore   *source_core,
              GEGL_RECTANGLE (0, 0,
                              gegl_buffer_get_width  (src_copy),
                              gegl_buffer_get_height (src_copy)),
-             dest_buffer,
-             GEGL_RECTANGLE (0, 0,
-                             gegl_buffer_get_width  (dest_buffer),
-                             gegl_buffer_get_height (dest_buffer)),
+             paint_buffer,
+             GEGL_RECTANGLE (paint_area_offset_x,
+                             paint_area_offset_y,
+                             paint_area_width,
+                             paint_area_height),
              mask_buffer,
              GEGL_RECTANGLE (0, 0,
                              gegl_buffer_get_width  (mask_buffer),
                              gegl_buffer_get_height (mask_buffer)));
 
-  gegl_buffer_copy (dest_buffer,
-                    GEGL_RECTANGLE (0, 0, mask_buf->width, mask_buf->height),
-                    paint_buffer,
-                    GEGL_RECTANGLE (paint_area_offset_x,
-                                    paint_area_offset_y,
-                                    paint_area_width,
-                                    paint_area_height));
-
   g_object_unref (src_copy);
-  g_object_unref (dest_buffer);
   g_object_unref (mask_buffer);
 
   /* replace the canvas with our healed data */
