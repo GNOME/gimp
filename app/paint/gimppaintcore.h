@@ -166,14 +166,16 @@ GeglBuffer * gimp_paint_core_get_orig_image         (GimpPaintCore    *core);
 GeglBuffer * gimp_paint_core_get_orig_proj          (GimpPaintCore    *core);
 
 void      gimp_paint_core_paste             (GimpPaintCore            *core,
-                                             PixelRegion              *paint_maskPR,
+                                             GeglBuffer               *paint_mask,
+                                             const GeglRectangle      *paint_mask_rect,
                                              GimpDrawable             *drawable,
                                              gdouble                   paint_opacity,
                                              gdouble                   image_opacity,
                                              GimpLayerModeEffects      paint_mode,
                                              GimpPaintApplicationMode  mode);
 void      gimp_paint_core_replace           (GimpPaintCore            *core,
-                                             PixelRegion              *paint_maskPR,
+                                             GeglBuffer               *paint_mask,
+                                             const GeglRectangle      *paint_mask_rect,
                                              GimpDrawable             *drawable,
                                              gdouble                   paint_opacity,
                                              gdouble                   image_opacity,

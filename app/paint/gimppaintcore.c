@@ -106,13 +106,15 @@ static GimpUndo* gimp_paint_core_real_push_undo      (GimpPaintCore    *core,
                                                       GimpImage        *image,
                                                       const gchar      *undo_desc);
 
-static void      paint_mask_to_canvas_buffer         (GimpPaintCore    *core,
-                                                      PixelRegion      *paint_maskPR,
-                                                      gdouble           paint_opacity);
-static void      paint_mask_to_paint_area            (GimpPaintCore    *core,
-                                                      PixelRegion      *paint_maskPR,
-                                                      gdouble           paint_opacity);
-static void      canvas_buffer_to_paint_area         (GimpPaintCore    *core);
+static void      paint_mask_to_canvas_buffer         (GimpPaintCore       *core,
+                                                      GeglBuffer          *paint_mask,
+                                                      const GeglRectangle *paint_mask_rect,
+                                                      gdouble              paint_opacity);
+static void      paint_mask_to_paint_area            (GimpPaintCore       *core,
+                                                      GeglBuffer          *paint_mask,
+                                                      const GeglRectangle *paint_mask_rect,
+                                                      gdouble              paint_opacity);
+static void      canvas_buffer_to_paint_area         (GimpPaintCore       *core);
 
 
 G_DEFINE_TYPE (GimpPaintCore, gimp_paint_core, GIMP_TYPE_OBJECT)
@@ -710,7 +712,8 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core)
 
 void
 gimp_paint_core_paste (GimpPaintCore            *core,
-                       PixelRegion              *paint_maskPR,
+                       GeglBuffer               *paint_mask,
+                       const GeglRectangle      *paint_mask_rect,
                        GimpDrawable             *drawable,
                        gdouble                   paint_opacity,
                        gdouble                   image_opacity,
@@ -728,10 +731,10 @@ gimp_paint_core_paste (GimpPaintCore            *core,
       /* Some tools (ink) paint the mask to paint_core->canvas_buffer
        * directly. Don't need to copy it in this case.
        */
-      if (paint_maskPR->tiles !=
-          gimp_gegl_buffer_get_tiles (core->canvas_buffer))
+      if (paint_mask != core->canvas_buffer)
         {
-          paint_mask_to_canvas_buffer (core, paint_maskPR, paint_opacity);
+          paint_mask_to_canvas_buffer (core, paint_mask, paint_mask_rect,
+                                       paint_opacity);
         }
 
       canvas_buffer_to_paint_area (core);
@@ -743,7 +746,8 @@ gimp_paint_core_paste (GimpPaintCore            *core,
    */
   else
     {
-      paint_mask_to_paint_area (core, paint_maskPR, paint_opacity);
+      paint_mask_to_paint_area (core, paint_mask, paint_mask_rect,
+                                paint_opacity);
     }
 
   width  = gegl_buffer_get_width  (core->paint_buffer);
@@ -785,17 +789,20 @@ gimp_paint_core_paste (GimpPaintCore            *core,
  */
 void
 gimp_paint_core_replace (GimpPaintCore            *core,
-                         PixelRegion              *paint_maskPR,
+                         GeglBuffer               *paint_mask,
+                         const GeglRectangle      *paint_mask_rect,
                          GimpDrawable             *drawable,
                          gdouble                   paint_opacity,
                          gdouble                   image_opacity,
                          GimpPaintApplicationMode  mode)
 {
-  gint width, height;
+  PixelRegion paint_maskPR;
+  gint        width, height;
 
   if (! gimp_drawable_has_alpha (drawable))
     {
-      gimp_paint_core_paste (core, paint_maskPR, drawable,
+      gimp_paint_core_paste (core, paint_mask, paint_mask_rect,
+                             drawable,
                              paint_opacity,
                              image_opacity, GIMP_NORMAL_MODE,
                              mode);
@@ -805,29 +812,35 @@ gimp_paint_core_replace (GimpPaintCore            *core,
   width  = gegl_buffer_get_width  (core->paint_buffer);
   height = gegl_buffer_get_height (core->paint_buffer);
 
-  if (mode == GIMP_PAINT_CONSTANT)
-    {
+  if (mode == GIMP_PAINT_CONSTANT &&
+
       /* Some tools (ink) paint the mask to paint_core->canvas_buffer
        * directly. Don't need to copy it in this case.
        */
-      if (paint_maskPR->tiles !=
-          gimp_gegl_buffer_get_tiles (core->canvas_buffer))
-        {
-          /* combine the paint mask and the canvas buffer */
-          paint_mask_to_canvas_buffer (core, paint_maskPR, paint_opacity);
+      paint_mask != core->canvas_buffer)
+    {
+      /* combine the paint mask and the canvas buffer */
+      paint_mask_to_canvas_buffer (core, paint_mask, paint_mask_rect,
+                                   paint_opacity);
 
-          /* initialize the maskPR from the canvas buffer */
-          pixel_region_init (paint_maskPR,
-                             gimp_gegl_buffer_get_tiles (core->canvas_buffer),
-                             core->paint_buffer_x,
-                             core->paint_buffer_y,
-                             width, height,
-                             FALSE);
-        }
+      /* initialize the maskPR from the canvas buffer */
+      pixel_region_init (&paint_maskPR,
+                         gimp_gegl_buffer_get_tiles (core->canvas_buffer),
+                         core->paint_buffer_x,
+                         core->paint_buffer_y,
+                         width, height,
+                         FALSE);
     }
   else
     {
-      /* The mask is just the paint_maskPR */
+      /* The mask is just the paint_mask */
+      pixel_region_init (&paint_maskPR,
+                         gimp_gegl_buffer_get_tiles (paint_mask),
+                         paint_mask_rect->x,
+                         paint_mask_rect->y,
+                         paint_mask_rect->width,
+                         paint_mask_rect->height,
+                         FALSE);
     }
 
   /*  apply the paint area to the image  */
@@ -835,7 +848,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                 GEGL_RECTANGLE (0, 0, width, height),
                                 FALSE, NULL,
                                 image_opacity,
-                                paint_maskPR,
+                                &paint_maskPR,
                                 core->paint_buffer_x,
                                 core->paint_buffer_y);
 
@@ -947,11 +960,13 @@ canvas_buffer_to_paint_area (GimpPaintCore *core)
 }
 
 static void
-paint_mask_to_canvas_buffer (GimpPaintCore *core,
-                             PixelRegion   *paint_maskPR,
-                             gdouble        paint_opacity)
+paint_mask_to_canvas_buffer (GimpPaintCore       *core,
+                             GeglBuffer          *paint_mask,
+                             const GeglRectangle *paint_mask_rect,
+                             gdouble              paint_opacity)
 {
   PixelRegion srcPR;
+  PixelRegion paint_maskPR;
 
   /*   combine the paint mask and the canvas buffer  */
   pixel_region_init (&srcPR,
@@ -962,17 +977,39 @@ paint_mask_to_canvas_buffer (GimpPaintCore *core,
                      gegl_buffer_get_height (core->paint_buffer),
                      TRUE);
 
+  if (gimp_gegl_buffer_get_temp_buf (paint_mask))
+    {
+      pixel_region_init_temp_buf (&paint_maskPR,
+                                  gimp_gegl_buffer_get_temp_buf (paint_mask),
+                                  paint_mask_rect->x,
+                                  paint_mask_rect->y,
+                                  paint_mask_rect->width,
+                                  paint_mask_rect->height);
+    }
+  else
+    {
+      pixel_region_init (&paint_maskPR,
+                         gimp_gegl_buffer_get_tiles (paint_mask),
+                         paint_mask_rect->x,
+                         paint_mask_rect->y,
+                         paint_mask_rect->width,
+                         paint_mask_rect->height,
+                         FALSE);
+    }
+
   /*  combine the mask to the canvas tiles  */
-  combine_mask_and_region (&srcPR, paint_maskPR,
+  combine_mask_and_region (&srcPR, &paint_maskPR,
                            paint_opacity * 255.999, GIMP_IS_AIRBRUSH (core));
 }
 
 static void
-paint_mask_to_paint_area (GimpPaintCore *core,
-                          PixelRegion   *paint_maskPR,
-                          gdouble        paint_opacity)
+paint_mask_to_paint_area (GimpPaintCore       *core,
+                          GeglBuffer          *paint_mask,
+                          const GeglRectangle *paint_mask_rect,
+                          gdouble              paint_opacity)
 {
   PixelRegion srcPR;
+  PixelRegion paint_maskPR;
 
   /*  combine the canvas buf and the paint mask to the canvas buf  */
   pixel_region_init_temp_buf (&srcPR,
@@ -981,6 +1018,26 @@ paint_mask_to_paint_area (GimpPaintCore *core,
                               gegl_buffer_get_width  (core->paint_buffer),
                               gegl_buffer_get_height (core->paint_buffer));
 
+  if (gimp_gegl_buffer_get_temp_buf (paint_mask))
+    {
+      pixel_region_init_temp_buf (&paint_maskPR,
+                                  gimp_gegl_buffer_get_temp_buf (paint_mask),
+                                  paint_mask_rect->x,
+                                  paint_mask_rect->y,
+                                  paint_mask_rect->width,
+                                  paint_mask_rect->height);
+    }
+  else
+    {
+      pixel_region_init (&paint_maskPR,
+                         gimp_gegl_buffer_get_tiles (paint_mask),
+                         paint_mask_rect->x,
+                         paint_mask_rect->y,
+                         paint_mask_rect->width,
+                         paint_mask_rect->height,
+                         FALSE);
+    }
+
   /*  apply the mask  */
-  apply_mask_to_region (&srcPR, paint_maskPR, paint_opacity * 255.999);
+  apply_mask_to_region (&srcPR, &paint_maskPR, paint_opacity * 255.999);
 }

@@ -25,7 +25,6 @@
 
 #include "paint-types.h"
 
-#include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
 #include "gegl/gimp-gegl-utils.h"
@@ -272,7 +271,6 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   gint            paint_buffer_y;
   GimpRGB         foreground;
   GeglColor      *color;
-  PixelRegion     blob_maskPR;
 
   if (! ink->last_blob)
     {
@@ -335,15 +333,13 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                blob_to_render);
 
   /*  draw the paint_area using the just rendered canvas_buffer as mask */
-  pixel_region_init (&blob_maskPR,
-                     gimp_gegl_buffer_get_tiles (paint_core->canvas_buffer),
-                     paint_core->paint_buffer_x,
-                     paint_core->paint_buffer_y,
-                     gegl_buffer_get_width  (paint_core->paint_buffer),
-                     gegl_buffer_get_height (paint_core->paint_buffer),
-                     FALSE);
-
-  gimp_paint_core_paste (paint_core, &blob_maskPR, drawable,
+  gimp_paint_core_paste (paint_core,
+                         paint_core->canvas_buffer,
+                         GEGL_RECTANGLE (paint_core->paint_buffer_x,
+                                         paint_core->paint_buffer_y,
+                                         gegl_buffer_get_width  (paint_core->paint_buffer),
+                                         gegl_buffer_get_height (paint_core->paint_buffer)),
+                         drawable,
                          GIMP_OPACITY_OPAQUE,
                          gimp_context_get_opacity (context),
                          gimp_context_get_paint_mode (context),

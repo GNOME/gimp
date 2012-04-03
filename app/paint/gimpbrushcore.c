@@ -935,7 +935,7 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
   if (brush_mask)
     {
       GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
-      PixelRegion    brush_maskPR;
+      GeglBuffer    *paint_mask;
       gint           x;
       gint           y;
       gint           off_x;
@@ -947,15 +947,20 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
 
-      pixel_region_init_temp_buf (&brush_maskPR, (TempBuf *) brush_mask,
-                                  off_x, off_y,
-                                  gegl_buffer_get_width  (paint_core->paint_buffer),
-                                  gegl_buffer_get_height (paint_core->paint_buffer));
+      paint_mask = gimp_temp_buf_create_buffer ((TempBuf *) brush_mask,
+                                                babl_format ("Y u8"),
+                                                FALSE);
 
-      gimp_paint_core_paste (paint_core, &brush_maskPR, drawable,
+      gimp_paint_core_paste (paint_core, paint_mask,
+                             GEGL_RECTANGLE (off_x, off_y,
+                                             gegl_buffer_get_width  (paint_core->paint_buffer),
+                                             gegl_buffer_get_height (paint_core->paint_buffer)),
+                             drawable,
                              brush_opacity,
                              image_opacity, paint_mode,
                              mode);
+
+      g_object_unref (paint_mask);
     }
 }
 
@@ -981,7 +986,7 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
   if (brush_mask)
     {
       GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
-      PixelRegion    brush_maskPR;
+      GeglBuffer    *paint_mask;
       gint           x;
       gint           y;
       gint           off_x;
@@ -993,12 +998,15 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
 
-      pixel_region_init_temp_buf (&brush_maskPR, (TempBuf *) brush_mask,
-                                  off_x, off_y,
-                                  gegl_buffer_get_width  (paint_core->paint_buffer),
-                                  gegl_buffer_get_height (paint_core->paint_buffer));
+      paint_mask = gimp_temp_buf_create_buffer ((TempBuf *) brush_mask,
+                                                babl_format ("Y u8"),
+                                                FALSE);
 
-      gimp_paint_core_replace (paint_core, &brush_maskPR, drawable,
+      gimp_paint_core_replace (paint_core, paint_mask,
+                               GEGL_RECTANGLE (off_x, off_y,
+                                               gegl_buffer_get_width  (paint_core->paint_buffer),
+                                               gegl_buffer_get_height (paint_core->paint_buffer)),
+                               drawable,
                                brush_opacity,
                                image_opacity,
                                mode);
