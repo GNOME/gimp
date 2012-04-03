@@ -2223,9 +2223,7 @@ gimp_context_get_foreground_pixel (GimpContext *context,
   g_return_if_fail (pixel_format != NULL);
   g_return_if_fail (pixel != NULL);
 
-  babl_process (babl_fish (babl_format ("R'G'B'A double"),
-                           pixel_format),
-                &context->foreground, pixel, 1);
+  gimp_rgba_get_pixel (&context->foreground, pixel_format, pixel);
 }
 
 void
@@ -2250,9 +2248,7 @@ gimp_context_set_foreground_pixel (GimpContext   *context,
   g_return_if_fail (pixel_format != NULL);
   g_return_if_fail (pixel != NULL);
 
-  babl_process (babl_fish (pixel_format,
-                           babl_format ("R'G'B'A double")),
-                pixel, &color, 1);
+  gimp_rgba_set_pixel (&color, pixel_format, pixel);
 
   gimp_context_set_foreground (context, &color);
 }
@@ -2305,9 +2301,7 @@ gimp_context_get_background_pixel (GimpContext *context,
   g_return_if_fail (pixel_format != NULL);
   g_return_if_fail (pixel != NULL);
 
-  babl_process (babl_fish (babl_format ("R'G'B'A double"),
-                           pixel_format),
-                &context->background, pixel, 1);
+  gimp_rgba_get_pixel (&context->background, pixel_format, pixel);
 }
 
 void
@@ -2332,9 +2326,7 @@ gimp_context_set_background_pixel (GimpContext   *context,
   g_return_if_fail (pixel_format != NULL);
   g_return_if_fail (pixel != NULL);
 
-  babl_process (babl_fish (pixel_format,
-                           babl_format ("R'G'B'A double")),
-                pixel, &color, 1);
+  gimp_rgba_set_pixel (&color, pixel_format, pixel);
 
   gimp_context_set_background (context, &color);
 }

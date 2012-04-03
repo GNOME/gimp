@@ -184,9 +184,7 @@ gimp_pickable_get_color_at (GimpPickable *pickable,
   if (! gimp_pickable_get_pixel_at (pickable, x, y, pixel))
     return FALSE;
 
-  babl_process (babl_fish (gimp_pickable_get_format (pickable),
-                           babl_format ("R'G'B'A double")),
-                pixel, color, 1);
+  gimp_rgba_set_pixel (color, gimp_pickable_get_format (pickable), pixel);
 
   return TRUE;
 }
