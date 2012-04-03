@@ -205,8 +205,8 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 610)
-#     (height 377)
+#     (width 640)
+#     (height 400)
 #     (unit pixels)
 #     (xresolution 72.000000)
 #     (yresolution 72.000000)
@@ -681,7 +681,7 @@
 # The location of the online user manual. This is used if
 # 'user-manual-online' is enabled.  This is a string value.
 # 
-# (user-manual-online-uri "http://docs.gimp.org/2.7")
+# (user-manual-online-uri "http://docs.gimp.org/2.8")
 
 # The window type hint that is set on dock windows and the toolbox window.
 # This may affect the way your window manager decorates and handles these

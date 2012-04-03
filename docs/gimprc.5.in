@@ -261,8 +261,8 @@ are yes and no.
 
 .TP
 (default-image
-    (width 610)
-    (height 377)
+    (width 640)
+    (height 400)
     (unit pixels)
     (xresolution 72.000000)
     (yresolution 72.000000)
@@ -858,7 +858,7 @@ When enabled, the online user manual will be used by the help system.
 Otherwise the locally installed copy is used.  Possible values are yes and no.
 
 .TP
-(user-manual-online-uri "http://docs.gimp.org/2.7")
+(user-manual-online-uri "http://docs.gimp.org/2.8")
 
 The location of the online user manual. This is used if 'user-manual-online'
 is enabled.  This is a string value.
