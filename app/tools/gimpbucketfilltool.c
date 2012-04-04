@@ -187,9 +187,15 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
 
           switch (options->fill_mode)
             {
-            case GIMP_FG_BUCKET_FILL:      fill_type = GIMP_FOREGROUND_FILL;
-            case GIMP_BG_BUCKET_FILL:      fill_type = GIMP_BACKGROUND_FILL;
-            case GIMP_PATTERN_BUCKET_FILL: fill_type = GIMP_PATTERN_FILL;
+            case GIMP_FG_BUCKET_FILL:
+              fill_type = GIMP_FOREGROUND_FILL;
+              break;
+            case GIMP_BG_BUCKET_FILL:
+              fill_type = GIMP_BACKGROUND_FILL;
+              break;
+            case GIMP_PATTERN_BUCKET_FILL:
+              fill_type = GIMP_PATTERN_FILL;
+              break;
             }
 
           gimp_edit_fill (image, drawable, context, fill_type,
