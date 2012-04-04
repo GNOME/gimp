@@ -328,16 +328,17 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
   if (hardness < 1.0)
     {
-      TempBuf      *blur_src;
+      TempBuf     *blur_src;
       PixelRegion  srcPR;
       PixelRegion  destPR;
-      gint kernel_size = gimp_brush_transform_blur_kernel_size (result->height,
-                                                                result->width,
-                                                                hardness);
-      gint kernel_len  = kernel_size * kernel_size;
-      gfloat blur_kernel [kernel_len];
+      gint         kernel_size =
+                     gimp_brush_transform_blur_kernel_size (result->height,
+                                                            result->width,
+                                                            hardness);
+      gint         kernel_len  = kernel_size * kernel_size;
+      gfloat       blur_kernel[kernel_len];
 
-      gimp_brush_transform_fill_blur_kernel ( blur_kernel, kernel_len);
+      gimp_brush_transform_fill_blur_kernel (blur_kernel, kernel_len);
 
       blur_src = temp_buf_copy (result, NULL);
 
@@ -348,9 +349,12 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
                                   result->x, result->y,
                                   result->width, result->height);
 
-      convolve_region (&srcPR, &destPR, blur_kernel, kernel_size,
+      convolve_region (&srcPR, &destPR,
+                       blur_kernel, kernel_size,
                        gimp_brush_transform_array_sum (blur_kernel, kernel_len),
                        GIMP_NORMAL_CONVOL, FALSE);
+
+      temp_buf_free (blur_src);
     }
 
   return result;
@@ -619,26 +623,33 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
   if (hardness < 1.0)
     {
-      TempBuf      *blur_src;
+      TempBuf     *blur_src;
       PixelRegion  srcPR;
       PixelRegion  destPR;
-      gint kernel_size = gimp_brush_transform_blur_kernel_size ( result->height,
-                                                                 result->width,
-                                                                 hardness);
-      gint kernel_len  = kernel_size * kernel_size;
-      gfloat blur_kernel [kernel_len];
+      gint         kernel_size =
+                     gimp_brush_transform_blur_kernel_size (result->height,
+                                                            result->width,
+                                                            hardness);
+      gint         kernel_len  = kernel_size * kernel_size;
+      gfloat       blur_kernel[kernel_len];
 
-      gimp_brush_transform_fill_blur_kernel ( blur_kernel, kernel_len);
+      gimp_brush_transform_fill_blur_kernel (blur_kernel, kernel_len);
 
       blur_src = temp_buf_copy (result, NULL);
 
-      pixel_region_init_temp_buf (&srcPR, blur_src, blur_src->x, blur_src->y, blur_src->width, blur_src->height);
-      pixel_region_init_temp_buf (&destPR, result, result->x, result->y, result->width, result->height);
+      pixel_region_init_temp_buf (&srcPR, blur_src,
+                                  blur_src->x, blur_src->y,
+                                  blur_src->width, blur_src->height);
+      pixel_region_init_temp_buf (&destPR, result,
+                                  result->x, result->y,
+                                  result->width, result->height);
 
-      convolve_region (&srcPR, &destPR, blur_kernel, kernel_size,
-                       gimp_brush_transform_array_sum(blur_kernel, kernel_len),
+      convolve_region (&srcPR, &destPR,
+                       blur_kernel, kernel_size,
+                       gimp_brush_transform_array_sum (blur_kernel, kernel_len),
                        GIMP_NORMAL_CONVOL, FALSE);
 
+      temp_buf_free (blur_src);
     }
 
   return result;
