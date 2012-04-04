@@ -34,8 +34,8 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                     const GeglRectangle *src_rect,
                     GeglBuffer          *dest_buffer,
                     const GeglRectangle *dest_rect,
-                    const gfloat        *matrix,
-                    gint                 size,
+                    const gfloat        *kernel,
+                    gint                 kernel_size,
                     gdouble              divisor,
                     GimpConvolutionType  mode,
                     gboolean             alpha_weighting)
@@ -64,7 +64,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      /*  Convolve the src image using the convolution matrix, writing
+      /*  Convolve the src image using the convolution kernel, writing
        *  to dest Convolve is not tile-enabled--use accordingly
        */
       const guchar *src       = iter->data[0];
@@ -72,7 +72,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
       const gint    bytes     = src_bpp;
       const gint    a_byte    = bytes - 1;
       const gint    rowstride = src_bpp * src_roi->width;
-      const gint    margin    = size / 2;
+      const gint    margin    = kernel_size / 2;
       const gint    x1        = src_roi->x;
       const gint    y1        = src_roi->y;
       const gint    x2        = src_roi->x + src_roi->width  - 1;
@@ -99,7 +99,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
             {
               for (x = 0; x < dest_roi->width; x++)
                 {
-                  const gfloat *m                = matrix;
+                  const gfloat *m                = kernel;
                   gdouble       total[4]         = { 0.0, 0.0, 0.0, 0.0 };
                   gdouble       weighted_divisor = 0.0;
                   gint          i, j, b;
@@ -153,7 +153,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
             {
               for (x = 0; x < dest_roi->width; x++)
                 {
-                  const gfloat *m        = matrix;
+                  const gfloat *m        = kernel;
                   gdouble       total[4] = { 0.0, 0.0, 0.0, 0.0 };
                   gint          i, j, b;
 
