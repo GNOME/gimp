@@ -19,16 +19,16 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
 #include "base/temp-buf.h"
-#include "base/pixel-region.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpbrush.h"
 #include "gimpbrush-transform.h"
@@ -329,8 +329,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   if (hardness < 1.0)
     {
       TempBuf     *blur_src;
-      PixelRegion  srcPR;
-      PixelRegion  destPR;
+      GeglBuffer  *src_buffer;
+      GeglBuffer  *dest_buffer;
       gint         kernel_size =
                      gimp_brush_transform_blur_kernel_size (result->height,
                                                             result->width,
@@ -342,19 +342,25 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
       blur_src = temp_buf_copy (result, NULL);
 
-      pixel_region_init_temp_buf (&srcPR, blur_src,
-                                  blur_src->x, blur_src->y,
-                                  blur_src->width, blur_src->height);
-      pixel_region_init_temp_buf (&destPR, result,
-                                  result->x, result->y,
-                                  result->width, result->height);
+      src_buffer  = gimp_temp_buf_create_buffer (blur_src, babl_format ("Y u8"),
+                                                 TRUE);
+      dest_buffer = gimp_temp_buf_create_buffer (blur_src, babl_format ("Y u8"),
+                                                 FALSE);
+      gimp_gegl_convolve (src_buffer,
+                          GEGL_RECTANGLE (0, 0,
+                                          blur_src->width,
+                                          blur_src->height),
+                          dest_buffer,
+                          GEGL_RECTANGLE (0, 0,
+                                          result->width,
+                                          result->height),
+                          blur_kernel, kernel_size,
+                          gimp_brush_transform_array_sum (blur_kernel,
+                                                          kernel_len),
+                          GIMP_NORMAL_CONVOL, FALSE);
 
-      convolve_region (&srcPR, &destPR,
-                       blur_kernel, kernel_size,
-                       gimp_brush_transform_array_sum (blur_kernel, kernel_len),
-                       GIMP_NORMAL_CONVOL, FALSE);
-
-      temp_buf_free (blur_src);
+      g_object_unref (src_buffer);
+      g_object_unref (dest_buffer);
     }
 
   return result;
@@ -624,8 +630,8 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   if (hardness < 1.0)
     {
       TempBuf     *blur_src;
-      PixelRegion  srcPR;
-      PixelRegion  destPR;
+      GeglBuffer  *src_buffer;
+      GeglBuffer  *dest_buffer;
       gint         kernel_size =
                      gimp_brush_transform_blur_kernel_size (result->height,
                                                             result->width,
@@ -637,19 +643,24 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
       blur_src = temp_buf_copy (result, NULL);
 
-      pixel_region_init_temp_buf (&srcPR, blur_src,
-                                  blur_src->x, blur_src->y,
-                                  blur_src->width, blur_src->height);
-      pixel_region_init_temp_buf (&destPR, result,
-                                  result->x, result->y,
-                                  result->width, result->height);
+      src_buffer  = gimp_temp_buf_create_buffer (blur_src, NULL, TRUE);
+      dest_buffer = gimp_temp_buf_create_buffer (blur_src, NULL, FALSE);
 
-      convolve_region (&srcPR, &destPR,
-                       blur_kernel, kernel_size,
-                       gimp_brush_transform_array_sum (blur_kernel, kernel_len),
-                       GIMP_NORMAL_CONVOL, FALSE);
+      gimp_gegl_convolve (src_buffer,
+                          GEGL_RECTANGLE (0, 0,
+                                          blur_src->width,
+                                          blur_src->height),
+                          dest_buffer,
+                          GEGL_RECTANGLE (0, 0,
+                                          result->width,
+                                          result->height),
+                          blur_kernel, kernel_size,
+                          gimp_brush_transform_array_sum (blur_kernel,
+                                                          kernel_len),
+                          GIMP_NORMAL_CONVOL, FALSE);
 
-      temp_buf_free (blur_src);
+      g_object_unref (src_buffer);
+      g_object_unref (dest_buffer);
     }
 
   return result;
