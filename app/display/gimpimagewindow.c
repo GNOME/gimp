@@ -74,6 +74,9 @@
 /* GtkPaned position of the right docks area */
 #define GIMP_IMAGE_WINDOW_RIGHT_DOCKS_POS  "right-docks-position"
 
+/* Whether the window's maximized or not */
+#define GIMP_IMAGE_WINDOW_MAXIMIZED        "maximized"
+
 
 enum
 {
@@ -805,8 +808,8 @@ gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
   if (config->single_window_mode)
     {
       GimpSessionInfoAux *aux;
-      char                widthbuf[128];
-  
+      gchar               widthbuf[128];
+
       g_snprintf (widthbuf, sizeof (widthbuf), "%d",
                   gtk_paned_get_position (GTK_PANED (private->left_hpane)));
       aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_LEFT_DOCKS_WIDTH, widthbuf);
@@ -815,6 +818,11 @@ gimp_image_window_get_aux_info (GimpSessionManaged *session_managed)
       g_snprintf (widthbuf, sizeof (widthbuf), "%d",
                   gtk_paned_get_position (GTK_PANED (private->right_hpane)));
       aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_RIGHT_DOCKS_POS, widthbuf);
+      aux_info = g_list_append (aux_info, aux);
+
+      aux = gimp_session_info_aux_new (GIMP_IMAGE_WINDOW_MAXIMIZED,
+                                       gimp_image_window_is_maximized (GIMP_IMAGE_WINDOW (session_managed)) ?
+                                       "yes" : "no");
       aux_info = g_list_append (aux_info, aux);
     }
 
@@ -846,6 +854,7 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
   gint                    left_docks_width      = -1;
   gint                    right_docks_pos       = -1;
   gboolean                wait_with_right_docks = FALSE;
+  gboolean                maximized             = FALSE;
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (session_managed));
 
@@ -860,6 +869,9 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
         width = &left_docks_width;
       else if (! strcmp (aux->name, GIMP_IMAGE_WINDOW_RIGHT_DOCKS_POS))
         width = &right_docks_pos;
+      else if (! strcmp (aux->name, GIMP_IMAGE_WINDOW_MAXIMIZED))
+        if (! g_ascii_strcasecmp (aux->value, "yes"))
+          maximized = TRUE;
 
       if (width)
         sscanf (aux->value, "%d", width);
@@ -899,6 +911,11 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
                                   right_docks_pos);
         }
     }
+
+  if (maximized)
+    gtk_window_maximize (GTK_WINDOW (session_managed));
+  else
+    gtk_window_unmaximize (GTK_WINDOW (session_managed));
 }
 
 
@@ -1163,6 +1180,18 @@ gimp_image_window_is_iconified (GimpImageWindow *window)
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   return (private->window_state & GDK_WINDOW_STATE_ICONIFIED) != 0;
+}
+
+gboolean
+gimp_image_window_is_maximized (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (window), FALSE);
+
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  return (private->window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0;
 }
 
 /**

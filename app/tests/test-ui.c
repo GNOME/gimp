@@ -43,6 +43,8 @@
 #include "widgets/gimpdockwindow.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimpsessioninfo-aux.h"
+#include "widgets/gimpsessionmanaged.h"
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptooloptionseditor.h"
 #include "widgets/gimpuimanager.h"
@@ -89,6 +91,8 @@ static GtkWidget     * gimp_ui_find_window                      (GimpDialogFacto
 static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
 static gboolean        gimp_ui_multicolumn_not_toolbox_window   (GObject           *object);
 static gboolean        gimp_ui_is_gimp_layer_list               (GObject           *object);
+static int             gimp_ui_aux_data_eqiuvalent              (gconstpointer      _a,
+                                                                 gconstpointer      _b);
 static void            gimp_ui_switch_window_mode               (Gimp              *gimp);
 
 
@@ -571,6 +575,55 @@ show_docks_in_single_window_mode (gconstpointer data)
 }
 
 static void
+maximize_state_in_aux_data (gconstpointer data)
+{
+  Gimp               *gimp    = GIMP (data);
+  GimpDisplay        *display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
+  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
+  GimpImageWindow    *window  = gimp_display_shell_get_window (shell);
+  gint                i;
+
+  for (i = 0; i < 2; i++)
+    {
+      GList              *aux_info = NULL;
+      GimpSessionInfoAux *target_info;
+      gboolean            target_max_state;
+
+      if (i == 0)
+        {
+          target_info = gimp_session_info_aux_new ("maximized" , "yes");
+          target_max_state = TRUE;
+        }
+      else
+        {
+          target_info = gimp_session_info_aux_new ("maximized", "no");
+          target_max_state = FALSE;
+        }
+
+      /* Set the aux info to out target data */
+      aux_info = g_list_append (aux_info, target_info);
+      gimp_session_managed_set_aux_info (GIMP_SESSION_MANAGED (window), aux_info);
+      g_list_free (aux_info);
+
+      /* Give the WM a chance to maximize/unmaximize us */
+      gimp_test_run_mainloop_until_idle ();
+      g_usleep (500 * 1000);
+      gimp_test_run_mainloop_until_idle ();
+
+      /* Make sure the maximize/unmaximize happened */
+      g_assert (gimp_image_window_is_maximized (window) == target_max_state);
+
+      /* Make sure we can read out the window state again */
+      aux_info = gimp_session_managed_get_aux_info (GIMP_SESSION_MANAGED (window));
+      g_assert (g_list_find_custom (aux_info, target_info, gimp_ui_aux_data_eqiuvalent));
+      g_list_free_full (aux_info,
+                        (GDestroyNotify) gimp_session_info_aux_free);
+
+      gimp_session_info_aux_free (target_info);
+    }
+}
+
+static void
 switch_back_to_multi_window_mode (gconstpointer data)
 {
   Gimp *gimp = GIMP (data);
@@ -831,6 +884,14 @@ gimp_ui_is_gimp_layer_list (GObject *object)
   return strcmp (entry->identifier, "gimp-layer-list") == 0;
 }
 
+static int
+gimp_ui_aux_data_eqiuvalent (gconstpointer _a, gconstpointer _b)
+{
+  GimpSessionInfoAux *a = (GimpSessionInfoAux*) _a;
+  GimpSessionInfoAux *b = (GimpSessionInfoAux*) _b;
+  return (strcmp (a->name, b->name) || strcmp (a->value, b->value));
+}
+
 static void
 gimp_ui_switch_window_mode (Gimp *gimp)
 {
@@ -875,6 +936,7 @@ int main(int argc, char **argv)
   ADD_TEST (switch_to_single_window_mode);
   ADD_TEST (hide_docks_in_single_window_mode);
   ADD_TEST (show_docks_in_single_window_mode);
+  ADD_TEST (maximize_state_in_aux_data);
   ADD_TEST (switch_back_to_multi_window_mode);
   ADD_TEST (close_image);
   ADD_TEST (repeatedly_switch_window_mode);
