@@ -81,6 +81,7 @@ void               gimp_image_window_set_show_statusbar   (GimpImageWindow  *win
 gboolean           gimp_image_window_get_show_statusbar   (GimpImageWindow  *window);
 
 gboolean           gimp_image_window_is_iconified         (GimpImageWindow  *window);
+gboolean           gimp_image_window_is_maximized         (GimpImageWindow  *window);
 
 gboolean           gimp_image_window_has_toolbox          (GimpImageWindow  *window);
 
