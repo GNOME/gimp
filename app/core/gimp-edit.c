@@ -465,19 +465,18 @@ gimp_edit_fill_full (GimpImage            *image,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (color != NULL || pattern != NULL, FALSE);
 
-
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
-  format = gimp_drawable_get_format (drawable);
-
-  if (pattern)
+  if (pattern &&
+      (pattern->mask->bytes == 2 || pattern->mask->bytes == 4) &&
+      ! gimp_drawable_has_alpha (drawable))
     {
-      if (! gimp_drawable_has_alpha (drawable) &&
-          (pattern->mask->bytes == 2 || pattern->mask->bytes == 4))
-        {
-          format = gimp_drawable_get_format_with_alpha (drawable);
-        }
+      format = gimp_drawable_get_format_with_alpha (drawable);
+    }
+  else
+    {
+      format = gimp_drawable_get_format (drawable);
     }
 
   dest_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
