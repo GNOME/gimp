@@ -28,6 +28,7 @@
 
 #include "base/pixel-region.h"
 
+#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
@@ -917,7 +918,7 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
 
           drawable->private->fs_mode_node =
             gegl_node_new_child (drawable->private->source_node,
-                                 "operation", "gimp:point-layer-mode",
+                                 "operation", "gegl:over",
                                  NULL);
 
           gegl_node_connect_to (drawable->private->buffer_source_node, "output",
@@ -952,9 +953,8 @@ gimp_drawable_sync_source_node (GimpDrawable *drawable,
                      "y", (gdouble) (fs_off_y - off_y),
                      NULL);
 
-      gegl_node_set (drawable->private->fs_mode_node,
-                     "blend-mode", gimp_layer_get_mode (fs),
-                     NULL);
+      gimp_gegl_node_set_layer_mode (drawable->private->fs_mode_node,
+                                     gimp_layer_get_mode (fs), TRUE);
     }
   else
     {
