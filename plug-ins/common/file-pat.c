@@ -174,6 +174,8 @@ run (const gchar      *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
+  gegl_init (NULL, NULL);
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -319,13 +321,13 @@ load_image (const gchar  *filename,
   PatternHeader     ph;
   gchar            *name;
   gchar            *temp;
-  guchar           *buffer;
+  guchar           *buf;
   gint32            image_ID;
   gint32            layer_ID;
   GimpParasite     *parasite;
-  GimpDrawable     *drawable;
+  GeglBuffer       *buffer;
+  const Babl       *file_format;
   gint              line;
-  GimpPixelRgn      pixel_rgn;
   GimpImageBaseType base_type;
   GimpImageType     image_type;
 
@@ -390,18 +392,22 @@ load_image (const gchar  *filename,
     case 1:
       base_type = GIMP_GRAY;
       image_type = GIMP_GRAY_IMAGE;
+      file_format = babl_format ("Y' u8");
       break;
     case 2:
       base_type = GIMP_GRAY;
       image_type = GIMP_GRAYA_IMAGE;
+      file_format = babl_format ("Y'A u8");
       break;
     case 3:
       base_type = GIMP_RGB;
       image_type = GIMP_RGB_IMAGE;
+      file_format = babl_format ("R'G'B' u8");
       break;
     case 4:
       base_type = GIMP_RGB;
       image_type = GIMP_RGBA_IMAGE;
+      file_format = babl_format ("R'G'B'A u8");
       break;
     default:
       g_message ("Unsupported pattern depth: %d\n"
@@ -437,30 +443,31 @@ load_image (const gchar  *filename,
 
   g_free (name);
 
-  drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                       0, 0, drawable->width, drawable->height,
-                       TRUE, FALSE);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
   /* this can't overflow because ph.width is <= GIMP_MAX_IMAGE_SIZE */
-  buffer = g_malloc (ph.width * ph.bytes);
+  buf = g_malloc (ph.width * ph.bytes);
 
   for (line = 0; line < ph.height; line++)
     {
-      if (read (fd, buffer, ph.width * ph.bytes) != ph.width * ph.bytes)
+      if (read (fd, buf, ph.width * ph.bytes) != ph.width * ph.bytes)
         {
           close (fd);
-          g_free (buffer);
+          g_free (buf);
+          g_object_unref (buffer);
           return -1;
         }
 
-      gimp_pixel_rgn_set_row (&pixel_rgn, buffer, 0, line, ph.width);
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, line, ph.width, 1), 0,
+                       file_format, buf, GEGL_AUTO_ROWSTRIDE);
 
       gimp_progress_update ((gdouble) line / (gdouble) ph.height);
     }
+
   gimp_progress_update (1.0);
 
-  gimp_drawable_flush (drawable);
+  g_free (buf);
+  g_object_unref (buffer);
 
   return image_ID;
 }
@@ -471,12 +478,15 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  gint          fd;
-  PatternHeader ph;
-  guchar       *buffer;
-  GimpDrawable *drawable;
-  gint          line;
-  GimpPixelRgn  pixel_rgn;
+  gint           fd;
+  PatternHeader  ph;
+  GeglBuffer    *buffer;
+  const Babl    *file_format;
+  guchar        *buf;
+  gint           width;
+  gint           height;
+  gint           line_size;
+  gint           line;
 
   fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
 
@@ -488,18 +498,40 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
+  switch (gimp_drawable_type (drawable_ID))
+    {
+    case GIMP_GRAY_IMAGE:
+      file_format = babl_format ("Y' u8");
+      break;
+    case GIMP_GRAYA_IMAGE:
+      file_format = babl_format ("Y'A u8");
+      break;
+    case GIMP_RGB_IMAGE:
+      file_format = babl_format ("R'G'B' u8");
+      break;
+    case GIMP_RGBA_IMAGE:
+      file_format = babl_format ("R'G'B'A u8");
+      break;
+    default:
+      g_message ("Unsupported image type: %d\n"
+                 "GIMP Patterns must be GRAY or RGB",
+                 gimp_drawable_type (drawable_ID));
+      return FALSE;
+    }
+
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  drawable = gimp_drawable_get (drawable_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-                       drawable->height, FALSE, FALSE);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
+
+  width  = gegl_buffer_get_width (buffer);
+  height = gegl_buffer_get_height (buffer);
 
   ph.header_size  = g_htonl (sizeof (PatternHeader) + strlen (description) + 1);
   ph.version      = g_htonl (1);
-  ph.width        = g_htonl (drawable->width);
-  ph.height       = g_htonl (drawable->height);
-  ph.bytes        = g_htonl (drawable->bpp);
+  ph.width        = g_htonl (width);
+  ph.height       = g_htonl (height);
+  ph.bytes        = g_htonl (babl_format_get_bytes_per_pixel (file_format));
   ph.magic_number = g_htonl (GPATTERN_MAGIC);
 
   if (write (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader))
@@ -514,29 +546,26 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
+  line_size = width * babl_format_get_bytes_per_pixel (file_format);
+
   /* this can't overflow because drawable->width is <= GIMP_MAX_IMAGE_SIZE */
-  buffer = g_malloc (drawable->width * drawable->bpp);
-  if (buffer == NULL)
-    {
-      close (fd);
-      return FALSE;
-    }
+  buf = g_alloca (line_size);
 
-  for (line = 0; line < drawable->height; line++)
+  for (line = 0; line < height; line++)
     {
-      gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, line, drawable->width);
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, line, width, 1), 1.0,
+                       file_format, buf,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      if (write (fd, buffer, drawable->width * drawable->bpp) !=
-          drawable->width * drawable->bpp)
+      if (write (fd, buf, line_size) != line_size)
         {
           close (fd);
           return FALSE;
         }
 
-      gimp_progress_update ((gdouble) line / (gdouble) drawable->height);
+      gimp_progress_update ((gdouble) line / (gdouble) ph.height);
     }
 
-  g_free (buffer);
   close (fd);
 
   return TRUE;
