@@ -369,9 +369,7 @@ gimp_drawable_visibility_changed (GimpItem *item)
       GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
       GeglNode *output = gegl_node_get_output_proxy (node, "output");
 
-      if (gimp_item_get_visible (item) &&
-          ! (GIMP_IS_LAYER (item) &&
-             gimp_layer_is_floating_sel (GIMP_LAYER (item))))
+      if (gimp_item_get_visible (item))
         {
           gegl_node_connect_to (input,                        "output",
                                 drawable->private->mode_node, "input");
@@ -784,9 +782,7 @@ gimp_drawable_get_node (GimpItem *item)
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  if (gimp_item_get_visible (GIMP_ITEM (drawable)) &&
-      ! (GIMP_IS_LAYER (drawable) &&
-         gimp_layer_is_floating_sel (GIMP_LAYER (drawable))))
+  if (gimp_item_get_visible (GIMP_ITEM (drawable)))
     {
       gegl_node_connect_to (input,                        "output",
                             drawable->private->mode_node, "input");
