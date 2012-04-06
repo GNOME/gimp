@@ -1556,6 +1556,36 @@ gimp_image_get_format_without_alpha (const GimpImage *image,
   return NULL;
 }
 
+const Babl *
+gimp_image_get_layer_format (const GimpImage *image,
+                             gboolean         with_alpha)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  switch (GIMP_IMAGE_GET_PRIVATE (image)->base_type)
+    {
+    case GIMP_RGB:
+      if (with_alpha)
+        return babl_format ("R'G'B'A u8");
+      else
+        return babl_format ("R'G'B' u8");
+
+    case GIMP_GRAY:
+      if (with_alpha)
+        return babl_format ("Y'A u8");
+      else
+        return babl_format ("Y' u8");
+
+    case GIMP_INDEXED:
+      if (with_alpha)
+        return gimp_image_colormap_get_rgba_format (image);
+      else
+        return gimp_image_colormap_get_rgb_format (image);
+    }
+
+  g_return_val_if_reached (NULL);
+}
+
 gint
 gimp_image_get_ID (const GimpImage *image)
 {
