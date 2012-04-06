@@ -1,32 +1,112 @@
 # Esperanto translation for GIMP Script-Fu.
-# Copyright (C) 2006 - 2011 Free Software Foundation, Inc.
+# Copyright (C) 2006 - 2012 Free Software Foundation, Inc.
 #
 # bullet = laŭvorte "kuglo", tamen estas bli bone traduki kiel la itala versio: "nito"
 #
 # Antonio C. CODAZZI "la Filozofo" < >, 2006.
-# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011.
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-05-06 11:05+0000\n"
-"PO-Revision-Date: 2011-05-06 15:41+0200\n"
+"POT-Creation-Date: 2012-03-10 17:32+0000\n"
+"PO-Revision-Date: 2012-04-06 21:24+0200\n"
 "Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
-"Language-Team: Esperanto <ubuntu-l10n-eo@lists.launchpad.net>\n"
-"Language: \n"
+"Language-Team: Esperanto <gnome-l10n-eo@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Launchpad-Export-Date: 2011-05-05 20:24+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
+#: ../plug-ins/script-fu/script-fu.c:110
+msgid "Interactive console for Script-Fu development"
+msgstr "Interaktiva konzolo por Skripto-Fu-programado "
+
+#: ../plug-ins/script-fu/script-fu.c:116
+msgid "_Console"
+msgstr "_Konsolo"
+
+#: ../plug-ins/script-fu/script-fu.c:140
+msgid "Server for remote Script-Fu operation"
+msgstr "Servilo por malproksima Skripto-Fu-agado"
+
+#: ../plug-ins/script-fu/script-fu.c:145
+msgid "_Start Server..."
+msgstr "_Starti servilon..."
+
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "_GIMP Online"
+msgstr "_GIMPo interrete"
+
+#: ../plug-ins/script-fu/script-fu.c:302
+msgid "_User Manual"
+msgstr "Manlibro por _uzantoj"
+
+#: ../plug-ins/script-fu/script-fu.c:305
+msgid "_Script-Fu"
+msgstr "_Skripto-Fu"
+
+#: ../plug-ins/script-fu/script-fu.c:307
+msgid "_Test"
+msgstr "_Testo"
+
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "_Butonoj"
+
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "Emb_lemoj"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "_Modeloj"
+
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Web Page Themes"
+msgstr "Etosoj por _retpaĝo"
+
+#: ../plug-ins/script-fu/script-fu.c:319
+msgid "_Alien Glow"
+msgstr "_Alimonda brilo"
+
+#: ../plug-ins/script-fu/script-fu.c:321
+msgid "_Beveled Pattern"
+msgstr "_Bareliefa modelo"
+
+#: ../plug-ins/script-fu/script-fu.c:323
+msgid "_Classic.Gimp.Org"
+msgstr "_Klasika gimp.org"
+
+#: ../plug-ins/script-fu/script-fu.c:326
+msgid "Alpha to _Logo"
+msgstr "Alfa laŭ emb_lemo"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Rilegi ĉiujn disponeblajn Skripto-Fu-skriptojn"
+
+#: ../plug-ins/script-fu/script-fu.c:334
+msgid "_Refresh Scripts"
+msgstr "_Aktualigi skriptojn"
+
+#: ../plug-ins/script-fu/script-fu.c:357
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"Vi ne povas uzi \"Aktualigi skriptojn\" Dum Script-Fu-dialog-fenestro estas "
+"malfermita. Fermu ĉiujn Script-Fu-fenestrojn kaj reprovu."
+
 #: ../plug-ins/script-fu/script-fu-console.c:130
 #: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
-msgstr "Konzolo 'Skripto-Fu'"
+msgstr "Konzolo de 'Skripto-Fu'"
 
 #: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
@@ -55,7 +135,7 @@ msgstr "Navigilo de Skripto-Fu Proceduro"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "Skripto-Fu juĝadmoduso ebligas nur ne-interaktivajn vokojn"
+msgstr "Skripto-Fu-juĝadreĝimo ebligas nur ne-interaktivajn vokojn"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:194
 msgid "Script-Fu cannot process two scripts at the same time."
@@ -141,2688 +221,1726 @@ msgstr "Servila pordo:"
 msgid "Server logfile:"
 msgstr "Servila ĵurnalo:"
 
-#: ../plug-ins/script-fu/script-fu.c:110
-msgid "Interactive console for Script-Fu development"
-msgstr "Interaktiva konzolo por Skripto-Fu-programado"
-
-#: ../plug-ins/script-fu/script-fu.c:116
-msgid "_Console"
-msgstr "_Konsolo"
-
-#: ../plug-ins/script-fu/script-fu.c:140
-msgid "Server for remote Script-Fu operation"
-msgstr "Servilo por malproksima Skripto-Fu-agado"
-
-#: ../plug-ins/script-fu/script-fu.c:145
-msgid "_Start Server..."
-msgstr "_Starti servilon..."
-
-#: ../plug-ins/script-fu/script-fu.c:301
-msgid "_GIMP Online"
-msgstr "_GIMPo interrete"
-
-#: ../plug-ins/script-fu/script-fu.c:302
-msgid "_User Manual"
-msgstr "Manlibro por _uzantoj"
-
-#: ../plug-ins/script-fu/script-fu.c:305
-msgid "_Script-Fu"
-msgstr "_Skripto-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:307
-msgid "_Test"
-msgstr "_Testo"
-
-#: ../plug-ins/script-fu/script-fu.c:310
-msgid "_Buttons"
-msgstr "_Butonoj"
-
-#: ../plug-ins/script-fu/script-fu.c:312
-msgid "_Logos"
-msgstr "Emb_lemoj"
-
-#: ../plug-ins/script-fu/script-fu.c:314
-msgid "_Patterns"
-msgstr "_Modeloj"
-
-#: ../plug-ins/script-fu/script-fu.c:317
-msgid "_Web Page Themes"
-msgstr "Etosoj por _retpaĝo"
-
-#: ../plug-ins/script-fu/script-fu.c:319
-msgid "_Alien Glow"
-msgstr "_Alimonda brilo"
-
-#: ../plug-ins/script-fu/script-fu.c:321
-msgid "_Beveled Pattern"
-msgstr "_Bareliefa modelo"
-
-#: ../plug-ins/script-fu/script-fu.c:323
-msgid "_Classic.Gimp.Org"
-msgstr "_Klasika gimp.org"
-
-#: ../plug-ins/script-fu/script-fu.c:326
-msgid "Alpha to _Logo"
-msgstr "Alfa laŭ emb_lemo"
-
-#: ../plug-ins/script-fu/script-fu.c:329
-msgid "Re-read all available Script-Fu scripts"
-msgstr "Rilegi ĉiujn disponeblajn Skripto-Fu-skriptojn"
-
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "_Refresh Scripts"
-msgstr "_Aktualigi skriptojn"
-
-#: ../plug-ins/script-fu/script-fu.c:357
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"Vi ne povas uzi \"Aktualigi skriptojn\" Dum Script-Fu-dialog-fenestro estas "
-"malfermita. Fermu ĉiujn Script-Fu-fenestrojn kaj reprovu."
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
-msgid "3D _Outline..."
-msgstr "3D-k_onturo..."
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
-msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Malfokusa radio de bosadomapo (alfa-tavolo)"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
-msgid "Create a logo with outlined text and a drop shadow"
-msgstr "Krei emblemon per konturita teksto kaj ombro"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
-msgid "Default bumpmap settings"
-msgstr "Defaŭltaj agordoj de bosadomapo"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:5
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:7
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/slide.scm.h:2
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:2
-msgid "Font"
-msgstr "Tiparo"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:6
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:8
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:3
-msgid "Font size (pixels)"
-msgstr "Tipargrando (bilderoj)"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
-msgid "Outline blur radius"
-msgstr "Kontura malfokusa radiuso"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-msgid ""
-"Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr "Konturi elektitan areon (aŭ alfa) per modelo kaj aldoni ombron"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
-msgid "Pattern"
-msgstr "Modelo"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
-msgid "Shadow X offset"
-msgstr "Delokado X de ombro"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
-msgid "Shadow Y offset"
-msgstr "Delokado Y de ombro"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
-msgid "Shadow blur radius"
-msgstr "Ombra malfokusa radiuso"
-
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:13
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:8
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:13
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:7
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:10
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:13
-#: ../plug-ins/script-fu/scripts/slide.scm.h:5
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:5
-msgid "Text"
-msgstr "Teksto"
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:1
-msgid "3_D Truchet..."
-msgstr "Truchet 3_D..."
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:2
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:1
-msgid "Background color"
-msgstr "Fonkoloro"
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:3
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:2
-msgid "Block size"
-msgstr "Grando de bloko"
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
-msgid "Create an image filled with a 3D Truchet pattern"
-msgstr "Krei bildon plenigitan per 3D-Truchet-modelo"
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
-msgid "End blend"
-msgstr "Stompfino"
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:5
-msgid "Number of X tiles"
-msgstr "Nombro da X-kaheloj"
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:6
-msgid "Number of Y tiles"
-msgstr "Nombro da Y-kaheloj"
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
-msgid "Start blend"
-msgstr "Stompstarto"
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
-msgid "Supersample"
-msgstr "Supersamplado"
-
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:8
-msgid "Thickness"
-msgstr "Diko"
-
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
-msgid "Add B_evel..."
-msgstr "Aldoni reli_efon..."
-
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
-msgid "Add a beveled border to an image"
-msgstr "Aldoni reliefan randon al bildo"
-
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-msgid "Bumpmap"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
-msgid "Keep bump layer"
-msgstr "Teni bosadan tavolon"
-
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:6
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
-#: ../plug-ins/script-fu/scripts/slide.scm.h:6
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
-msgid "Work on copy"
-msgstr "Labor pri kopio"
-
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:1
-msgid "Add _Border..."
-msgstr "Aldoni _randon..."
-
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:2
-msgid "Add a border around an image"
-msgstr "Aldoni ĉirkaŭan randon al bildo"
-
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
-msgid "Border Layer"
-msgstr "Randotavolo"
-
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
-msgid "Border X size"
-msgstr "X-randgrando"
-
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
-msgid "Border Y size"
-msgstr "Y-randgrando"
-
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
-msgid "Border color"
-msgstr "Randa koloro"
-
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:7
-msgid "Delta value on color"
-msgstr "Delta valoro laŭ koloro"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-msgid "Alien Glow"
-msgstr "Alimonda brilo"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-msgid "Arrow"
-msgstr "Sago"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
-msgid "Background"
-msgstr "Fonkoloro"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
-msgid "Create an arrow graphic with an eerie glow for web pages"
-msgstr "Krei grafikan sagon per luma-malluma temo por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
-msgid "Down"
-msgstr "Suben"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:8
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
-#: ../plug-ins/script-fu/scripts/camo.scm.h:5
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
-msgid "Flatten image"
-msgstr "Plata bildo"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:9
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:7
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
-msgid "Glow color"
-msgstr "Koloro de brilo"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
-msgid "Left"
-msgstr "Maldeksten"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
-msgid "Orientation"
-msgstr "Orientado"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
 msgid "Right"
 msgstr "Dekstren"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:12
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
-#: ../plug-ins/script-fu/scripts/lava.scm.h:7
-msgid "Size"
-msgstr "Grando"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:13
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:10
-msgid "Up"
-msgstr "Supren"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:14
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:11
-msgid "_Arrow..."
-msgstr "S_ago..."
-
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
-msgid "Bar"
-msgstr "Breto"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
-msgid "Bar height"
-msgstr "Breta alto"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
-msgid "Bar length"
-msgstr "Breta longo"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
-msgid "Create an Hrule graphic with an eerie glow for web pages"
-msgstr "Krei grafikan H-rektilon per luma-malluma temo por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:7
-msgid "_Hrule..."
-msgstr "_H-rektilo..."
-
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-msgid "Bullet"
-msgstr "Nito"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
-msgid "Create a bullet graphic with an eerie glow for web pages"
-msgstr "Krei grafikan niton per luma-malluma temo por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:8
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
-msgid "Radius"
-msgstr "Radiuso"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:7
-msgid "_Bullet..."
-msgstr "_Nito..."
-
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
-msgid "B_utton..."
-msgstr "B_utono..."
-
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
-msgid "Button"
-msgstr "Butono"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
-msgid "Create a button graphic with an eerie glow for web pages"
-msgstr "Krei grafikan butonon per luma-malluma temo por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
-msgid "Glow"
-msgstr "Brilo"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-msgid "Glow radius"
-msgstr "Radiuso de brilo"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:12
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
-msgid "Padding"
-msgstr "Ŝtopado"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:14
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:12
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:10
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:11
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:9
-msgid "Text color"
-msgstr "Tekstkoloro"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
-msgid "Add an eerie glow around the selected region (or alpha)"
-msgstr "Aldoni lumon-mallumon al elektita areo (aŭ al alfa)"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
-msgid "Alien _Glow..."
-msgstr "Ali_monda brilo..."
-
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
-msgid "Create a logo with an alien glow around the text"
-msgstr "Krei emblemon per alimonda brilo ĉirkaŭ teksto"
-
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
-msgid "Glow size (pixels * 4)"
-msgstr "Grando de brilo (bilderoj * 4)"
-
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
-msgid "Add psychedelic outlines to the selected region (or alpha)"
-msgstr "Aldoni psikedelan konturon al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
-msgid "Alien _Neon..."
-msgstr "Alimonda _neono..."
-
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-msgid "Create a logo with psychedelic outlines around the text"
-msgstr "Krei emblemon per psikedela konturo ĉirkaŭ teksto"
-
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
-msgid "Fade away"
-msgstr "Dissolvi for"
-
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
-msgid "Number of bands"
-msgstr "Nombro da bendoj"
-
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
-msgid "Width of bands"
-msgstr "Larĝo de bendoj"
-
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
-msgid "Width of gaps"
-msgstr "Larĝo de breĉoj"
-
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-msgid ""
-"Add a gradient effect, a drop shadow, and a background to the selected "
-"region (or alpha)"
-msgstr "Aldoni gradientan efekton, ombron kaj fonon al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-msgid ""
-"Create a plain text logo with a gradient effect, a drop shadow, and a "
-"background"
-msgstr "Krei tekstan emblemon per gradientan efekto, ombro kaj fono"
-
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
-msgid "_Basic I..."
-msgstr "_Bazo I..."
-
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
-msgid "Add a shadow and a highlight to the selected region (or alpha)"
-msgstr "Aldoni ombron kaj lumakcenton al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
-msgid "B_asic II..."
-msgstr "B_azo II..."
-
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
-msgid "Create a simple logo with a shadow and a highlight"
-msgstr "Krei simplan emblemon per ombro kaj lumakcento"
-
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
-msgid "Bevel width"
-msgstr "Larĝo de reliefo"
-
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
-msgid "Create a simple, beveled button graphic for webpages"
-msgstr "Krei simplan reliefan butonon por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/land.scm.h:3
-#: ../plug-ins/script-fu/scripts/lava.scm.h:2
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
-msgid "Gradient"
-msgstr "Gradiento"
-
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
-msgid "Lower-right color"
-msgstr "Suba-dekstra koloro"
-
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
-msgid "Pressed"
-msgstr "Premite"
-
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
-msgid "Simple _Beveled Button..."
-msgstr "Simpla reliefa _butono..."
-
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:13
-msgid "Upper-left color"
-msgstr "Supra-maldekstra koloro"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
-msgid "Create a beveled pattern arrow for webpages"
-msgstr "Krei sagon per reliefa modelo por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
-msgid "Create a beveled pattern bullet for webpages"
-msgstr "Krei reliefan grafik-niton por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-msgid "Diameter"
-msgstr "Diametro"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:9
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-msgid "Transparent background"
-msgstr "Travidebla fono"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
-msgid "Create a beveled pattern button for webpages"
-msgstr "Krei butonon per reliefa modelo por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
-msgid "Create a beveled pattern heading for webpages"
-msgstr "Krei titoladon per relifa modelo por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-msgid "H_eading..."
-msgstr "Titol_ado..."
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-msgid "Create a beveled pattern hrule for webpages"
-msgstr "Krei H-rektilon per reliefa modelo por retpaĝoj"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
-msgid "Height"
-msgstr "Alto"
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
-msgid "Rule"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:6
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
-msgid "Width"
-msgstr "Larĝo"
-
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
-msgid "Blend Animation needs at least three source layers"
-msgstr "Animacia stompado necesas almenaŭ tri tavolojn"
-
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
-msgid ""
-"Create intermediate layers to blend two or more layers over a background as "
-"an animation"
-msgstr ""
-"Krei mezajn tavolojn por stompi du aŭ pli tavoloj super fono kiel animacio"
-
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
-msgid "Frame"
-msgstr "Filmero"
-
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
-msgid "Intermediate frames"
-msgstr "Mezaj filmeroj"
-
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
-msgid "Looped"
-msgstr "Cikla"
-
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
-msgid "Max. blur radius"
-msgstr "Radiuso de maksimuma malfokuso"
-
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:7
-msgid "_Blend..."
-msgstr "_Stompi..."
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
-msgid ""
-"Add blended backgrounds, highlights, and shadows to the selected region (or "
-"alpha)"
-msgstr ""
-"Aldoni stompitajn fonojn, lumakcentojn kaj ombrojn al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
-msgid "Blen_ded..."
-msgstr "Stompaĵ_o..."
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
-msgid "Blend mode"
-msgstr "Maniero de stompo"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
-msgid "Create a logo with blended backgrounds, highlights, and shadows"
-msgstr "Krei emblemon per stompitajn fonoj, lumakcentoj kaj ombroj"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
-msgid "Custom Gradient"
-msgstr "Personigita gradiento"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
-msgid "FG-BG-HSV"
-msgstr "MF-FN-HSV"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/blended-logo.scm:136
+#: ../plug-ins/script-fu/scripts/blended-logo.scm:195
 msgid "FG-BG-RGB"
 msgstr "MF-FN-RVB"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
-msgid "FG-Transparent"
-msgstr "MF-travidebleco"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:4
-msgid "Gradient reverse"
-msgstr "Inversa gradiento"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
-msgid "Offset (pixels)"
-msgstr "Delokado (bilderoj)"
-
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-msgid "Add 'cow spots' to the selected region (or alpha)"
-msgstr "Aldoni \"bovinmakulojn\" al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-msgid "Background Color"
-msgstr "Fonkoloro"
-
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
-msgid "Bo_vination..."
-msgstr "Bo_vinigo..."
-
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
-msgid "Create a logo with text in the style of 'cow spots'"
-msgstr "Krei emblemon per \"bovinmakulaj\" teksto"
-
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
-msgid "Spots density X"
-msgstr "Makuldenso X"
-
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
-msgid "Spots density Y"
-msgstr "Makuldenso Y"
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
-msgid "Add glowing"
-msgstr "Aldoni brilon"
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
-msgid "After glow"
-msgstr "Post brilo"
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-msgid "B_urn-In..."
-msgstr "En-Br_uligo..."
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
-msgid "Corona width"
-msgstr "Larĝo de krono"
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
-msgid ""
-"Create intermediate layers to produce an animated 'burn-in' transition "
-"between two layers"
-msgstr ""
-"Krei mezajn tavolojn por igi movigantan 'en-bruligan' transiron tra du "
-"tavoloj"
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
-msgid "Fadeout"
-msgstr "Elir-stompado"
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
-msgid "Fadeout width"
-msgstr "Larĝo de elir-stompado"
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
-msgid "Prepare for GIF"
-msgstr "Prepari por GIF"
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
-msgid "Speed (pixels/frame)"
-msgstr "Rapideco (bilderoj/filmero)"
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
-msgid ""
-"The Burn-In script needs two layers in total. A foreground layer with "
-"transparency and a background layer."
-msgstr ""
-"Enbruligskripto necesas du tavolojn, entute. Travidebla tekstotavolo kaj "
-"fona tavolo."
-
-#: ../plug-ins/script-fu/scripts/camo.scm.h:1
-msgid "Color 1"
-msgstr "Koloro 1"
-
-#: ../plug-ins/script-fu/scripts/camo.scm.h:2
-msgid "Color 2"
-msgstr "Koloro 2"
-
-#: ../plug-ins/script-fu/scripts/camo.scm.h:3
-msgid "Color 3"
-msgstr "Koloro 3"
-
-#: ../plug-ins/script-fu/scripts/camo.scm.h:4
-msgid "Create an image filled with a camouflage pattern"
-msgstr "Krei bildon plenigitan per kamuflaj modeloj"
-
-#: ../plug-ins/script-fu/scripts/camo.scm.h:6
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
-msgid "Granularity"
-msgstr "Grajneco"
-
-#: ../plug-ins/script-fu/scripts/camo.scm.h:7
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
-msgid "Image size"
-msgstr "Bildgrando"
-
-#: ../plug-ins/script-fu/scripts/camo.scm.h:8
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
-msgid "Smooth"
-msgstr "Glatigi"
-
-#: ../plug-ins/script-fu/scripts/camo.scm.h:9
-msgid "_Camouflage..."
-msgstr "_Kamuflado..."
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
-#, fuzzy
-msgid "Bevel Highlight"
-msgstr "Larĝo de reliefo"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
-msgid "Bevel Shadow"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
-msgid "Carve white areas"
-msgstr "Skulpi blankajn areojn"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
-msgid "Carved Surface"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-msgid "Cast Shadow"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:6
-msgid "Image to carve"
-msgstr "Bildo por skulpi"
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
-msgid "Inset"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
-msgid "Stencil C_arve..."
-msgstr "Ĉizoŝablono..."
-
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
-msgid "Background Image"
-msgstr "Fonbildo"
-
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
-msgid "Carve raised text"
-msgstr "Reliefe skulpita teksto"
-
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
-msgid "Carved..."
-msgstr "Skulpita..."
-
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
-msgid ""
-"Create a logo with text raised above or carved in to the specified "
-"background image"
-msgstr ""
-"Krei emblemon per bareliefa aŭ altreliefa teksto en specifita fona bildo"
-
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:12
-msgid "Padding around text"
-msgstr "Ŝtopado ĉirkaŭ teksto"
-
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:2
-msgid "Chalk color"
-msgstr "Koloro de kreto"
-
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:3
-msgid "Create a chalk drawing effect for the selected region (or alpha)"
-msgstr "Krei \"desegno sur nigra tabulo\" efekton por elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:4
-msgid "Create a logo resembling chalk scribbled on a blackboard"
-msgstr "Krei emblemon per \"desegno sur nigra tabulo\" efekto"
-
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:8
-msgid "_Chalk..."
-msgstr "_Kreto..."
-
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
-msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
-msgstr "Aldoni \"splitita ligno\" efekton al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
-msgid "Blur amount"
-msgstr "Malfokusa kvanto"
-
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
-msgid "Chip Awa_y..."
-msgstr "_Lignopliti..."
-
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
-msgid "Chip amount"
-msgstr "Lignera kvanto"
-
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
-msgid "Create a logo resembling a chipped wood carving"
-msgstr "Krei emblemon per \"splitita ligno\" efekto"
-
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
-msgid "Drop shadow"
-msgstr "Demeti ombron"
-
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
-msgid "Fill BG with pattern"
-msgstr "Plenigi fonon per modelo"
-
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
-msgid "Invert"
-msgstr "Inversigi"
-
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
-msgid "Keep background"
-msgstr "Teni fonon"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
-msgid ""
-"Add a chrome effect to the selected region (or alpha) using a specified "
-"(grayscale) stencil"
-msgstr ""
-"Aldoni kromoefekton al elektita areo (aŭ alfa) per specifita (grizgama) "
-"stencilo"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
-#, fuzzy
-msgid "Chrome"
-msgstr "Kromado"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
-msgid "Chrome balance"
-msgstr "Kromada ekvilibrigo"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
-msgid "Chrome factor"
-msgstr "Kromada grado"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
-msgid "Chrome lightness"
-msgstr "Kromada lumeco"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
-msgid "Chrome saturation"
-msgstr "Kromada satureco"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
-msgid "Chrome white areas"
-msgstr "Kromi blankajn areojn"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
-#, fuzzy
-msgid "Drop Shadow"
-msgstr "Demeti ombron"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:10
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
-msgid "Environment map"
-msgstr "Media mapo"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
-msgid "Highlight"
-msgstr "Emfazi"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:12
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
-msgid "Highlight balance"
-msgstr "Lumakcenta ekvilibrigo"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
-msgid "Layer 2"
-msgstr "Tavolo 2"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
-msgid "Layer 3"
-msgstr "Tavolo 3"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
-msgid "Layer1"
-msgstr "Tavolo1"
-
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
-msgid "Stencil C_hrome..."
-msgstr "Kromanta stencilo..."
-
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-msgid "Add a simple chrome effect to the selected region (or alpha)"
-msgstr "Aldoni simplan kromoefekton al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
-msgid "C_hrome..."
-msgstr "_Kromado..."
-
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
-msgid "Create a simplistic, but cool, chromed logo"
-msgstr "Krei simplan emblemon per simpla sed efika kromoefekto"
-
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
-msgid "Offsets (pixels * 2)"
-msgstr "Delokado (bilderoj * 2)"
-
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:1
-msgid "Circuit seed"
-msgstr "Cirkvita semo"
-
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid "Effect layer"
-msgstr "Efekta tavolo"
-
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
-msgid ""
-"Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr "Plenigi elektita areon (aŭ alfa) per ŝpuroj kiel sur presita cirkvito"
-
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
-#: ../plug-ins/script-fu/scripts/lava.scm.h:3
-#: ../plug-ins/script-fu/scripts/predator.scm.h:3
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
-msgid "Keep selection"
-msgstr "Teni elekton"
-
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
-msgid "No background (only for separate layer)"
-msgstr "Sen fono (nur por aparta tavolo)"
-
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
-msgid "Oilify mask size"
-msgstr "Oleigi maskgrandon"
-
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
-#: ../plug-ins/script-fu/scripts/lava.scm.h:6
-#: ../plug-ins/script-fu/scripts/predator.scm.h:6
-msgid "Separate layer"
-msgstr "Aparta tavolo"
-
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:8
-msgid "_Circuit..."
-msgstr "_Cirkvito..."
-
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:1
-msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr "Aldoni teksoteksaĵon al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:2
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
-msgid "Azimuth"
-msgstr "Azimuto"
-
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:3
-msgid "Blur X"
-msgstr "Malfokuso X"
-
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:4
-msgid "Blur Y"
-msgstr "Malfokuso Y"
-
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:5
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
-msgid "Depth"
-msgstr "Profundeco"
-
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:6
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
-msgid "Elevation"
-msgstr "Levado"
-
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:7
-msgid "_Clothify..."
-msgstr "_Drapiri..."
-
-#: ../plug-ins/script-fu/scripts/coffee.scm.h:1
-msgid "Add realistic looking coffee stains to the image"
-msgstr "Aldoni al la bildo tre realajn kafmakulojn"
-
-#: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid "Darken only"
-msgstr "Nur malhelnuanco"
-
-#: ../plug-ins/script-fu/scripts/coffee.scm.h:3
-#, fuzzy
-msgid "Stain"
-msgstr "Makuloj"
-
-#: ../plug-ins/script-fu/scripts/coffee.scm.h:4
-msgid "Stains"
-msgstr "Makuloj"
-
-#: ../plug-ins/script-fu/scripts/coffee.scm.h:5
-msgid "_Coffee Stain..."
-msgstr "_Kafomakulo..."
-
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
-msgid ""
-"Add a comic-book effect to the selected region (or alpha) by outlining and "
-"filling with a gradient"
-msgstr ""
-"Aldoni bildstrian efekton al elektita areo (aŭ alfa) konturante kaj "
-"plenigante per gradiento"
-
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
-msgid "Comic Boo_k..."
-msgstr "_Bildstrio..."
-
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
-msgid "Create a comic-book style logo by outlining and filling with a gradient"
-msgstr "Krei bildstrian emblemon konturante kaj plenigante per gradiento"
-
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
-msgid "Outline color"
-msgstr "Randa koloro"
-
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
-msgid "Outline size"
-msgstr "Randogrando"
-
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-msgid ""
-"Add a metallic effect to the selected region (or alpha) with reflections and "
-"perspective shadows"
-msgstr ""
-"Aldoni metaloefekton al elektita areo (aŭ alfa) per reflektoj kaj "
-"perspektivaj ombroj"
-
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
-msgid "Cool _Metal..."
-msgstr "_Frida metalo..."
-
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
-msgid "Create a metallic logo with reflections and perspective shadows"
-msgstr "Krei metalan emblemon per reflektoj kaj perspektivaj ombroj"
-
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
-msgid "Effect size (pixels)"
-msgstr "Efektgrando (bilderoj)"
-
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
-msgid "Background image"
-msgstr "Fona bildo"
-
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
-msgid "Create a logo with a crystal/gel effect displacing the image underneath"
-msgstr ""
-"Krei emblemon per ĝela/kristala efekto kiu travidigas subestantan bildon"
-
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
-msgid "Crystal..."
-msgstr "Kristalo..."
-
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
-msgid "Difference Clouds..."
-msgstr "Diferencaj nuboj..."
-
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
-msgid "Solid noise applied with Difference layer mode"
-msgstr "Solida perturbo kiu estas aplikita kun tavol-reĝimo de diferenco"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
-msgid "Distress the selection"
-msgstr "Distordi la elekton"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
-msgid "Granularity (1 is low)"
-msgstr "Grajneco (1 estas basa)"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
-msgid "Smooth horizontally"
-msgstr "Glatigi horizontale"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
-msgid "Smooth vertically"
-msgstr "Glatigi vertikale"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
-msgid "Spread"
-msgstr "Difuza"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
-msgid "Threshold (bigger 1<-->255 smaller)"
-msgstr "Sojlo (granda 1<-->255 eta)"
-
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
-msgid "_Distort..."
-msgstr "_Distordi..."
-
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr "Aldoni ombron al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
-msgid "Allow resizing"
-msgstr "Permesi aligrandigon"
-
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:3
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:2
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:3
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:3
-msgid "Blur radius"
-msgstr "Radiuso de malfokuso"
-
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:5
-msgid "Color"
-msgstr "Koloro"
-
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-msgid "Offset X"
-msgstr "Delokado X"
-
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-msgid "Offset Y"
-msgstr "Delokado Y"
-
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
-msgid "Opacity"
-msgstr "Opakeco"
-
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-#, fuzzy
-msgid "_Drop Shadow..."
-msgstr "_Demeti ombron..."
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
-msgid "Columns"
-msgstr "Kolumnoj"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:2
-msgid "Erase"
-msgstr "Viŝi"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
-msgid "Erase every other row or column"
-msgstr "Viŝi ĉiujn aliajn vicojn aŭ kolumnojn"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
-msgid "Erase/fill"
-msgstr "Viŝi/plenigi"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
-msgid "Even"
-msgstr "Para"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
-msgid "Even/odd"
-msgstr "Para/nepara"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
-msgid "Fill with BG"
-msgstr "Plenigu per fono"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
-msgid "Odd"
-msgstr "Nepara"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:9
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
 msgstr "Vicoj"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
-msgid "Rows/cols"
-msgstr "Vicoj/kolumnoj"
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Even"
+msgstr "Para"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
-msgid "_Erase Every Other Row..."
-msgstr "_Viŝi ĉiujn aliajn vicojn..."
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Erase"
+msgstr "Viŝi"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:1
-msgid "Create an image filled with a Land Pattern"
-msgstr "Krei bildon plenigitan per modelon de pejzaĝo"
-
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:2
-#: ../plug-ins/script-fu/scripts/land.scm.h:2
-msgid "Detail level"
-msgstr "Detalnivelo"
-
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:3
-#: ../plug-ins/script-fu/scripts/land.scm.h:4
-msgid "Image height"
-msgstr "Bilda alto"
-
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:4
-#: ../plug-ins/script-fu/scripts/land.scm.h:5
-msgid "Image width"
-msgstr "Bilda larĝo"
-
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:5
-#: ../plug-ins/script-fu/scripts/land.scm.h:7
-msgid "Random seed"
-msgstr "Hazardsemo"
-
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:6
-#: ../plug-ins/script-fu/scripts/land.scm.h:8
-msgid "Scale X"
-msgstr "Skali na X"
-
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:7
-#: ../plug-ins/script-fu/scripts/land.scm.h:9
-msgid "Scale Y"
-msgstr "Skali na Y"
-
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:8
-msgid "_Flatland..."
-msgstr "_Plata pejzaĝo..."
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:1
-msgid "Active colors"
-msgstr "Aktivaj koloroj"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:2
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
 msgstr "Nigro sur blanko"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid ""
-"Create an image filled with previews of fonts matching a fontname filter"
-msgstr ""
-"Krei bildon plenigitan per antaŭmontroj de tiparoj kiuj kongruas kun "
-"filtrilo laŭ tiparnomo"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:4
-msgid "Font _size (pixels)"
-msgstr "Tipar_grando (bilderoj)"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
-msgid "Render _Font Map..."
-msgstr "Transdono de _tiparmapo..."
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
-msgid "Use font _name as text"
-msgstr "Uzi tipar_nomon kiel teksto"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
-msgid "_Border (pixels)"
-msgstr "_Rando (bilderoj)"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
-msgid "_Color scheme"
-msgstr "Kolor_skemo"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:9
-msgid "_Filter (regexp)"
-msgstr "_Filtrilo (reg.espr.)"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:10
-msgid "_Labels"
-msgstr "S_lipoj"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:11
-msgid "_Text"
-msgstr "_Teksto"
-
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-msgid ""
-"Add a frost effect to the selected region (or alpha) with an added drop "
-"shadow"
-msgstr "Aldoni frostan efekton al eletkita areo (aŭ alfa) kaj aldonitan ombron"
-
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
-msgid "Create frozen logo with an added drop shadow"
-msgstr "Krei frostigitan emblemon kaj aldonitan ombron"
-
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
-msgid "_Frosty..."
-msgstr "_Frostigita..."
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
-msgid "Add a jagged, fuzzy border to an image"
-msgstr "Aldoni \"jagged\", svagan randon al bildo"
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
-msgid "Add shadow"
-msgstr "Aldoni ombron"
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
-msgid "Blur border"
-msgstr "Malfokusi randon"
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "Randogrando"
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
-msgid "Granularity (1 is Low)"
-msgstr "Grajneco (1 estas Basa)"
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
-#, no-c-format
-msgid "Shadow weight (%)"
-msgstr "Ombropezo (%)"
-
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
-msgid "_Fuzzy Border..."
-msgstr "_Svaga rando..."
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "Ligilo al la retpaĝaro de GIMPo"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "Ligilo al la manlibro de la uzanto"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "Krei kaj uzi _elektojn"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "Krei, malfermi kaj konservi _dosierojn"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "Desegno de _simplaj bbjektoj"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "Kiel oni uzas _dialogojn"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "Ĵiu_rnalo de kromprogramoj"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
-msgid "Using _Paths"
-msgstr "Uzo de _vojoj"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
-msgid "_Basic Concepts"
-msgstr "_Bazaj konceptoj"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
-msgid "_Developer Web Site"
-msgstr "Retpaĝaro de la _programistoj"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
-msgid "_Main Web Site"
-msgstr "Ĉefa _retpaĝaro"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "_Preparado de viaj bildoj por la interreto"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "Retpaĝaro de la _uzanta manlibro"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "La_borado pri diĝitaj fotaĵoj"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:1
-msgid ""
-"Add gradients, patterns, shadows, and bump maps to the selected region (or "
-"alpha)"
-msgstr ""
-"Aldoni gradientojn, motivojn, ombrojn kaj bosadomapojn al la areo (aŭ al "
-"alfa)"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
-msgid "Blend gradient (outline)"
-msgstr "Stompi gradienton (konturo)"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
-msgid "Blend gradient (text)"
-msgstr "Stompi gradienton (teksto)"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
-msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr "Krei emblemon per gradientoj, modeloj, ombroj kaj bosadomapoj"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
-msgid "Glo_ssy..."
-msgstr "Pol_urita..."
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
-msgid "Outline gradient reverse"
-msgstr "Inversigo de kontura gradiento"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
-msgid "Pattern (outline)"
-msgstr "Modelo (konturo)"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
-msgid "Pattern (overlay)"
-msgstr "Modelo (surmetite)"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
-msgid "Pattern (text)"
-msgstr "Modelo (teksto)"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:13
-msgid "Shadow"
-msgstr "Ombro"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
-msgid "Text gradient reverse"
-msgstr "Inversigo de teksta gradiento"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
-msgid "Use pattern for outline instead of gradient"
-msgstr "Uzi modelon anstataŭ gradiento por konturo"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:21
-msgid "Use pattern for text instead of gradient"
-msgstr "Uzi modelon anstataŭ gradiento por teksto"
-
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:22
-msgid "Use pattern overlay"
-msgstr "Uzi surmeton de modelo"
-
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
-msgid "Add a glowing hot metal effect to the selected region (or alpha)"
-msgstr "Aldoni varmegobrilan metalefekton al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
-msgid "Create a logo that looks like glowing hot metal"
-msgstr "Krei emblemon per varmegobrila metalo"
-
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
-msgid "Glo_wing Hot..."
-msgstr "_Varmega brilo..."
-
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
-msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
-msgstr "Aldoni brilan kaj reliefan efekton al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
-msgid "Bevel height (sharpness)"
-msgstr "Alto de reliefo (netece)"
-
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
-msgid "Border size (pixels)"
-msgstr "Randogrando (bilderoj)"
-
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
-msgid "Create a logo with a shiny look and beveled edges"
-msgstr "Krei emblemeon per brila efekto kaj reliefaj randoj"
-
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
-msgid "Gradient Beve_l..."
-msgstr "Gradienta re_liefo..."
-
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
-msgid "Create an image filled with an example of the current gradient"
-msgstr "Krei bildon plenigitan per specimeno de nuna gradiento"
-
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
-msgid "Custom _Gradient..."
-msgstr "Personigita _gradiento..."
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr ""
-"Desegni per nuna peniko kradon kiel ĝi estas specifita en listo de X kaj Y "
-"lokadoj"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
-msgid "X divisions"
-msgstr "Dividoj X"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "Y divisions"
-msgstr "Dividoj Y"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm.h:4
-msgid "_Grid..."
-msgstr "_Krado..."
-
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
-msgid "New Guides from _Selection"
-msgstr "Novaj gvidilojn el _elekto"
-
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
-msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr "Aldoni gvidilon al specifita lokado kiel elcento de bildgrando"
-
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
-msgid "Direction"
-msgstr "Direkto"
-
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
 msgstr "Horizontale"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
-msgid "New Guide (by _Percent)..."
-msgstr "Nova gvidilo (laŭ _elcento)..."
-
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#, no-c-format
-msgid "Position (in %)"
-msgstr "Lokado (en %)"
-
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:7
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:6
-msgid "Vertical"
-msgstr "Vertikale"
-
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
-msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "Aldoni gvidilon laŭ specifita (bildere) orientado kaj lokado"
-
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
-msgid "New _Guide..."
-msgstr "Nova _gvidilo..."
-
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
-msgid "Position"
-msgstr "Lokado"
-
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
-msgid "Remove all horizontal and vertical guides"
-msgstr "Forigi ĉiujn gvidilojn (horizontalajn kaj vertikalajn)"
-
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
-msgid "_Remove all Guides"
-msgstr "Fo_rigi ĉiujn gvidilojn"
-
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
-msgid "Create a logo in a two-color, scribbled text style"
-msgstr "Krei emblemon per duakolora, skribaĉita tekstostilo"
-
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
-msgid "Frame color"
-msgstr "Koloro de kadraĵo"
-
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
-msgid "Frame size"
-msgstr "Grando de kadraĵo"
-
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
-msgid "Imigre-_26..."
-msgstr "Imigre-_26..."
-
-#: ../plug-ins/script-fu/scripts/land.scm.h:1
-msgid "Create an image filled with a topographic map pattern"
-msgstr "Krei bildon per topografiomapa modelo"
-
-#: ../plug-ins/script-fu/scripts/land.scm.h:6
-msgid "Land height"
-msgstr "Pejzaĝalto"
-
-#: ../plug-ins/script-fu/scripts/land.scm.h:10
-msgid "Sea depth"
-msgstr "Marprofundo"
-
-#: ../plug-ins/script-fu/scripts/land.scm.h:11
-msgid "_Land..."
-msgstr "_Pejzaĝo..."
-
-#: ../plug-ins/script-fu/scripts/lava.scm.h:1
-msgid "Fill the current selection with lava"
-msgstr "Plenigi nunan elekton peri lafo"
-
-#: ../plug-ins/script-fu/scripts/lava.scm.h:4
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
-msgid "Roughness"
-msgstr "Raspeco"
-
-#: ../plug-ins/script-fu/scripts/lava.scm.h:5
-msgid "Seed"
-msgstr "Semo"
-
-#: ../plug-ins/script-fu/scripts/lava.scm.h:8
-msgid "Use current gradient"
-msgstr "Uzi nunan gradienton"
-
-#: ../plug-ins/script-fu/scripts/lava.scm.h:9
-msgid "_Lava..."
-msgstr "_Lafo..."
-
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
-msgstr "Plenigi tavolon per eksteren ĵetitaj radioj kaj malfona koloro"
-
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
-msgid "Line _Nova..."
-msgstr "Linio de _Novao..."
-
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
-msgid "Number of lines"
-msgstr "Nombro da linioj"
-
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
-msgid "Offset radius"
-msgstr "Radiusa delokado"
-
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
-msgid "Randomness"
-msgstr "Hazardo"
-
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
-msgid "Sharpness (degrees)"
-msgstr "Neteco (gradoj)"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid "Create a rectangular brush"
-msgstr "Krei rektangulan penikon"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
-msgid "Create a rectangular brush with feathered edges"
-msgstr "Krei rektangulan penikon kun stompitaj randoj"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
-msgid "Create an elliptical brush"
-msgstr "Krei elipsan penikon"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
-msgid "Create an elliptical brush with feathered edges"
-msgstr "Krei elipsan penikon kun stompitaj randoj"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
-msgid "Elli_ptical, Feathered..."
-msgstr "Eli_psa, stompiĝita..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
-msgid "Feathering"
-msgstr "Stompaĵo"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
-msgid "Name"
-msgstr "Nomo"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
-msgid "Re_ctangular, Feathered..."
-msgstr "Rektan_gule, stompiĝite..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
-msgid "Spacing"
-msgstr "Interspaco"
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
-msgid "_Elliptical..."
-msgstr "_Elipse..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
-msgid "_Rectangular..."
-msgstr "_Rektangule..."
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
-msgid "Convert the selected region (or alpha) into a neon-sign like object"
-msgstr "Konverti elektitan areon (aŭ alfan) en neona ŝildo kiel objekto"
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
-msgid "Create a logo in the style of a neon sign"
-msgstr "Krei emblemon per stilo de neona ŝildo"
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
-msgid "Create shadow"
-msgstr "Krei ombron"
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
-msgid "N_eon..."
-msgstr "N_eono..."
-
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:3
-msgid "Cell size (pixels)"
-msgstr "Ĉela grando (bilderoj)"
-
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:4
-#, fuzzy
-msgid "Create a logo in the style of newspaper printing"
-msgstr "Krei emblemon per stilo de ĵurnala preso"
-
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
-#, no-c-format
-msgid "Density (%)"
-msgstr "Denseco (%)"
-
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:9
-msgid "Newsprint Te_xt..."
-msgstr "Ŝajno de ĵurnala _preso..."
-
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
-msgid "Defocus"
-msgstr "Eksterfokuso"
-
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
-msgid "Make an image look like an old photo"
-msgstr "Igi bildon kvazaŭ malnova fotaĵo"
-
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
-msgid "Mottle"
-msgstr "Makulaĵo"
-
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
-msgid "Sepia"
-msgstr "Sepiaĵo"
-
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
-msgid "_Old Photo..."
-msgstr "_Malnova fotaĵo..."
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
-msgid ""
-"All characters in the name are either white-spaces or characters which can "
-"not appear in filenames."
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
-msgid ""
-"Export the active palette as a CSS stylesheet with the color entry name as "
-"their class name, and the color itself as the color attribute"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
-msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
-msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
-msgid "Folder for the output file"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
-msgid "The filename you entered is not a suitable name for a file."
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm.h:8
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
-msgid ""
-"Write all the colors in a palette to a text file, one hexadecimal value per "
-"line (no names)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid "Brush name"
-msgstr "Peniknomo"
-
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "File name"
-msgstr "Dosiernomo"
-
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
-msgid "New _Brush..."
-msgstr "Nova _peniko..."
-
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
-msgid "Paste the clipboard contents into a new brush"
-msgstr "Enmetu entenon de la tondujo en nova peniko"
-
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
-msgid "There is no image data in the clipboard to paste."
-msgstr "Ne estas bildo en la tondujo por enmeti."
-
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
-msgid "New _Pattern..."
-msgstr "Nova _modelo..."
-
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
-msgid "Paste the clipboard contents into a new pattern"
-msgstr "Enmetu entenon de la tondujo en nova modelo"
-
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
-msgid "Pattern name"
-msgstr "Modelnomo"
-
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
-msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr "Aldoni perpesktivan ombron al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
-msgid "Angle"
-msgstr "Angulo"
-
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
-msgid "Interpolation"
-msgstr "Interpolado"
-
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
-msgid "Relative distance of horizon"
-msgstr "Distanco laŭhorizonte"
-
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
-msgid "Relative length of shadow"
-msgstr "Longeco laŭombre"
-
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
-msgid "_Perspective..."
-msgstr "_Perspektivo..."
-
-#: ../plug-ins/script-fu/scripts/predator.scm.h:1
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Aldoni \"Predisto\"-efekton al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/predator.scm.h:2
-msgid "Edge amount"
-msgstr "Randa kvanto"
-
-#: ../plug-ins/script-fu/scripts/predator.scm.h:4
-msgid "Pixel amount"
-msgstr "Bildera kvanto"
-
-#: ../plug-ins/script-fu/scripts/predator.scm.h:5
-msgid "Pixelize"
-msgstr "Bilderigo"
-
-#: ../plug-ins/script-fu/scripts/predator.scm.h:7
-msgid "_Predator..."
-msgstr "_Predisto..."
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
-msgid "Create images, each containing an oval button graphic"
-msgstr "Krei bilderojn kiuj entenas ovalan grafikan butonon"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
-msgid "Lower color"
-msgstr "Malpliigi koloron"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
-msgid "Lower color (active)"
-msgstr "Malpliigi koloron (aktive)"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
-msgid "Not pressed"
-msgstr "Nepremiti"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
-msgid "Not pressed (active)"
-msgstr "Nepremite (aktive)"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
-msgid "Padding X"
-msgstr "Remburado X"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
-msgid "Padding Y"
-msgstr "Remburado Y"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
-msgid "Round ratio"
-msgstr "Rondiga grado"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
-msgid "Text color (active)"
-msgstr "Tekstkoloro (aktive)"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:16
-msgid "Upper color"
-msgstr "Pliigi koloron"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:17
-msgid "Upper color (active)"
-msgstr "Pliigi koloron (aktive)"
-
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
-msgid "_Round Button..."
-msgstr "_Ronda butono..."
-
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:1
-msgid "Behavior"
-msgstr "Konduto"
-
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
-msgid "Create an image filled with an Earth-like map pattern"
-msgstr "Krei bildon plenigitan per tergloba modelo"
-
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
-msgid "Detail in Middle"
-msgstr "Detaloj meze"
-
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
-msgid "Render _Map..."
-msgstr "Bildiga _mapo..."
-
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
+#: ../plug-ins/script-fu/scripts/rendermap.scm:90
 msgid "Tile"
 msgstr "Kahelo"
 
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
-msgid "Reverse Layer Order"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
-msgid "Reverse the order of layers in the image"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
-msgid "Black"
-msgstr "Nigro"
-
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
-msgstr "Krei plur-tavolan bildon per aldono de krispiĝa efekto al nuna bildo"
-
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-msgid "Edge behavior"
-msgstr "Randa konduto"
-
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
-msgid "Number of frames"
-msgstr "Nombro da filmeroj"
-
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
-msgid "Rippling strength"
-msgstr "Krispiĝa grado"
-
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
-msgid "Smear"
-msgstr "Makulo"
-
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
 msgid "Wrap"
 msgstr "Ĉirkaŭfluo"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
-msgid "_Rippling..."
-msgstr "_Krispiĝo..."
-
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
-msgid "Add background"
-msgstr "Aldoni fonon"
-
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:2
-#, fuzzy
-msgid "Add drop-shadow"
-msgstr "Aldoni ombron"
-
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
-msgid "Edge radius"
-msgstr "Radiuso de rando"
-
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid ""
-"Round the corners of an image and optionally add a drop-shadow and background"
-msgstr "Rondigi bildajn angulrandojn, poste aldoni, laŭvole, ombron kaj fonon"
-
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
-msgid "_Round Corners..."
-msgstr "_Rondaj angulrandoj..."
-
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
-msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
-msgid "Palette"
-msgstr "Paletro"
-
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
-msgid "Se_t Colormap..."
-msgstr "_Agordi kolormapon..."
-
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
-msgid "Convert a selection to a brush"
-msgstr "Konverti elekton al peniko"
-
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
-msgid "To _Brush..."
-msgstr "Al _peniko..."
-
-#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
-msgid "Convert a selection to an image"
-msgstr "Konverti elekton al bildo"
-
-#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
-msgid "To _Image"
-msgstr "Al _bildo"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid "Convert a selection to a pattern"
-msgstr "Konverti elekton al modelo"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-msgid "To _Pattern..."
-msgstr "Al _modelo..."
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
-msgid "Concave"
-msgstr "Konkava"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
-#, no-c-format
-msgid "Radius (%)"
-msgstr "Radiuso (%)"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
-msgid "Round the corners of the current selection"
-msgstr "Rondigi angulrandojn de nuna elekto"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid "Rounded R_ectangle..."
-msgstr "Ronda r_ektangulo..."
-
-#: ../plug-ins/script-fu/scripts/slide.scm.h:1
-msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
-"Aldoni filmospecan randon, inkluzive de truetaro kaj de skribaĵoj al bildo"
-
-#: ../plug-ins/script-fu/scripts/slide.scm.h:3
-msgid "Font color"
-msgstr "Tiparkoloro"
-
-#: ../plug-ins/script-fu/scripts/slide.scm.h:4
-msgid "Number"
-msgstr "Nombro"
-
-#: ../plug-ins/script-fu/scripts/slide.scm.h:7
-msgid "_Slide..."
-msgstr "_Lumbildo..."
-
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
-msgid "Create a State Of The Art chromed logo"
-msgstr "Krei 'State Of The Art' (SOTA) kromitan emblemon"
-
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
-msgid "SOTA Chrome..."
-msgstr "SOTA-kromado..."
-
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
-msgid "Create a logo with a speedy text effect"
-msgstr "Krei emblemon per rapidteksta efekto"
-
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
-msgid "Speed Text..."
-msgstr "Rapida teksto..."
-
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
-msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr "Krei animacion per bildigo de la nuna bildo sur rotacianta sfero"
-
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
-msgid "Frames"
-msgstr "Filmeroj"
-
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
-msgid "Index to n colors (0 = remain RGB)"
-msgstr "Indici laŭ n koloroj (0 = RVB)"
-
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
-msgid "Turn from left to right"
-msgstr "Turni de maldekstre dekstren"
-
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
-msgid "_Spinning Globe..."
-msgstr "Rotacianta _globo..."
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"Aldoni spiralilojn, epitrokoidojn kaj kurboj de Lissajous al nuna tavolo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
-msgid "Airbrush"
-msgstr "Ŝprucpistolo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
-msgid "Brush"
-msgstr "Peniko"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
-msgid "Circle"
-msgstr "Cirklo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-msgid "Color method"
-msgstr "Kolormaniero"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-msgid "Epitrochoid"
-msgstr "Epitrokoidoj"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-msgid "Gradient: Loop Sawtooth"
-msgstr "Gradiento: Cikla segildento"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-msgid "Gradient: Loop Triangle"
-msgstr "Gradiento: Cikla triangulo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
-msgid "Hexagon"
-msgstr "Heksagono"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
-msgid "Hole ratio"
-msgstr "Proporcio de truo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
-msgid "Inner teeth"
-msgstr "Internaj dentoj"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
-msgid "Lissajous"
-msgstr "Kurbo de Lissajous"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
-msgid "Margin (pixels)"
-msgstr "Marĝeno (bilderoj)"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
-msgid "Outer teeth"
-msgstr "Eksteraj dentoj"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
-msgid "Pencil"
-msgstr "Krajono"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:19
-msgid "Pentagon"
-msgstr "Kvinlatero"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:20
-msgid "Polygon: 10 sides"
-msgstr "Plurlatero: 10 lateroj"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:21
-msgid "Polygon: 7 sides"
-msgstr "Plurlatero: 7 lateroj"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:22
-msgid "Polygon: 8 sides"
-msgstr "Plurlatero: 8 lateroj"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:23
-msgid "Polygon: 9 sides"
-msgstr "Plurlatero: 9 lateroj"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
-msgid "Rendering Spyro"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
-msgid "Shape"
-msgstr "Formo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
-msgid "Solid Color"
-msgstr "Solida koloro"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
 msgstr "Spiralilo"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
-msgid "Square"
-msgstr "Kvadrato"
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Circle"
+msgstr "Cirklo"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
-msgid "Start angle"
-msgstr "Startangulo"
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Pencil"
+msgstr "Krajono"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
-msgid "Tool"
-msgstr "Ilo"
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Solid Color"
+msgstr "Solida koloro"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
-msgid "Triangle"
-msgstr "Triangulo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
-msgid "Type"
-msgstr "Tipo"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
-msgid "_Spyrogimp..."
-msgstr "_SpiralGIMPo..."
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-msgstr "Krei emblemon per rok-stila teksturo, nova brilo kaj ombro"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
-msgid "Sta_rscape..."
-msgstr "S_telplena ĉielo..."
-
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
-msgid "Create an image filled with a swirled tile effect"
-msgstr "Krei bildon plenigitan per efekto de spiralforma kahelo"
-
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
-msgid "Swirl-_Tile..."
-msgstr "Spiralforma _kahelo.."
-
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
-msgid "Whirl amount"
-msgstr "Kvanto de spiralo"
-
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-msgid "Create an image filled with a swirly pattern"
-msgstr "Krei bildon plenigitan per spiralfoma modelo"
-
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
-msgid "Number of times to whirl"
-msgstr "Nombro da spiralturnoj"
-
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
-msgid "Quarter size"
-msgstr "Kvarono"
-
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
-msgid "Whirl angle"
-msgstr "Spiralforma angulo"
-
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
-msgid "_Swirly..."
-msgstr "_Spiralo..."
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
-msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr "Aldoni \"korpusklosignon\" al elektita areo (aŭ alfa)"
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
-msgid "Base color"
-msgstr "Baza koloro"
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
-msgid "Create a logo using a Trace Of Particles effect"
-msgstr "Krei emblemon per efekto de \"korpusklosigno\""
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
-msgid "Edge only"
-msgstr "Nur rando"
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
-msgid "Edge width"
-msgstr "Randolarĝo"
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
-msgid "Hit rate"
-msgstr "Ofteco"
-
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
-msgid "_Particle Trace..."
-msgstr "Kor_pusklosigno..."
-
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
-msgid "Antialias"
-msgstr "Glatigo"
-
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
-msgid ""
-"Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr "Krei emblemon per desegno de teksto sur ĉirkaŭcirklo"
-
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
-msgid "Fill angle"
-msgstr "Angulo de plenigo"
-
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
-msgid "Text C_ircle..."
-msgstr "Tekstc_irklo..."
-
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-msgid ""
-"Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr "Krei emblemon per lumakcentoj, ombroj kaj mozaika fono"
-
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
-msgid "Ending blend"
-msgstr "Finiĝanta stompo"
-
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
-msgid ""
-"Fill the selected region (or alpha) with a texture and add highlights, "
-"shadows, and a mosaic background"
-msgstr ""
-"Plenigi elektitan areon (aŭ alfa) per teksaĵo kaj aldoni lumakcentojn, "
-"ombrojn kaj mozaika fono"
-
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
-msgid "Hexagons"
-msgstr "Seslateroj"
-
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
-msgid "Mosaic tile type"
-msgstr "Mozaika kaheltipo"
-
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
-msgid "Octagons"
-msgstr "Oklateroj"
-
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
+#: ../plug-ins/script-fu/scripts/textured-logo.scm:129
+#: ../plug-ins/script-fu/scripts/textured-logo.scm:171
 msgid "Squares"
 msgstr "Kvadratoj"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
-msgid "Starting blend"
-msgstr "Stompstarto"
-
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:15
-msgid "Text pattern"
-msgstr "Tekstmodeloj"
-
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
-msgid "_Textured..."
-msgstr "_Teksigite..."
-
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
-msgid "Blur horizontally"
-msgstr "Malfokusi horizontale"
-
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
-msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr "Malfokusi bildajn randojn maniere ke ĝi estigas neapartajn kahelojn"
-
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
-msgid "Blur type"
-msgstr "Malfokusa speco"
-
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
-msgid "Blur vertically"
-msgstr "Malfokusi vertikale"
-
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
 msgstr "IIR"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
-msgid "RLE"
-msgstr "RLE"
+#~ msgid "3D _Outline..."
+#~ msgstr "3D-k_onturo..."
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
-msgid "_Tileable Blur..."
-msgstr "_Kahelebla malfokuso..."
+#~ msgid "Bumpmap (alpha layer) blur radius"
+#~ msgstr "Malfokusa radio de bosadomapo (alfa-tavolo)"
 
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:1
-msgid "Create a decorative web title header"
-msgstr "Krei ornaman titoladon por interreto"
+#~ msgid "Create a logo with outlined text and a drop shadow"
+#~ msgstr "Krei emblemon per konturita teksto kaj ombro"
 
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:6
-msgid "Web Title Header..."
-msgstr "Titolado por interreto..."
+#~ msgid "Default bumpmap settings"
+#~ msgstr "Defaŭltaj agordoj de bosadomapo"
 
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:3
-msgid "Create an image filled with a Truchet pattern"
-msgstr "Krei bildon plenigitan per 'Truchet'-modelo"
+#~ msgid "Font"
+#~ msgstr "Tiparo"
 
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:4
-msgid "Foreground color"
-msgstr "Malfona koloro"
+#~ msgid "Font size (pixels)"
+#~ msgstr "Tipargrando (bilderoj)"
 
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:7
-msgid "T_ruchet..."
-msgstr ""
+#~ msgid "Outline blur radius"
+#~ msgstr "Kontura malfokusa radiuso"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-msgid "Mask opacity"
-msgstr "Opakeco de masko"
+#~ msgid ""
+#~ "Outline the selected region (or alpha) with a pattern and add a drop "
+#~ "shadow"
+#~ msgstr "Konturi elektitan areon (aŭ alfa) per modelo kaj aldoni ombron"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
-msgid "Mask size"
-msgstr "Maskgrando"
+#~ msgid "Pattern"
+#~ msgstr "Modelo"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
-msgid "Amplitude"
-msgstr "Amplitudo"
+#~ msgid "Shadow X offset"
+#~ msgstr "Delokado X de ombro"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
-msgid ""
-"Create a multi-layer image with an effect like a stone was thrown into the "
-"current image"
-msgstr "Krei plurtavolan bildon per efekto de \"ĵetita roko tra nuna bildo\""
+#~ msgid "Shadow Y offset"
+#~ msgstr "Delokado Y de ombro"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
-msgid "Invert direction"
-msgstr "Inversigi direkton"
+#~ msgid "Shadow blur radius"
+#~ msgstr "Ombra malfokusa radiuso"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
-msgid "Wavelength"
-msgstr "Ondolongo"
+#~ msgid "Text"
+#~ msgstr "Teksto"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
-msgid "_Waves..."
-msgstr "_Ondoj..."
+#~ msgid "3_D Truchet..."
+#~ msgstr "Truchet 3_D..."
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:1
-msgid ""
-"Create a new layer filled with a weave effect to be used as an overlay or "
-"bump map"
-msgstr ""
-"Krei novan tavolon plenigitan per onda efekto kiu estas uzebla kiel surmeto "
-"aŭ bosadomapo"
+#~ msgid "Background color"
+#~ msgstr "Fonkoloro"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:2
-msgid "Ribbon spacing"
-msgstr "Rubanda interspaco"
+#~ msgid "Block size"
+#~ msgstr "Grando de bloko"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:3
-msgid "Ribbon width"
-msgstr "Larĝo de rubando"
+#~ msgid "Create an image filled with a 3D Truchet pattern"
+#~ msgstr "Krei bildon plenigitan per 3D-Truchet-modelo"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:4
-msgid "Shadow darkness"
-msgstr "Ombra malhelo"
+#~ msgid "End blend"
+#~ msgstr "Stompfino"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:5
-msgid "Shadow depth"
-msgstr "Profundeco de ombro"
+#~ msgid "Number of X tiles"
+#~ msgstr "Nombro da X-kaheloj"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:6
-msgid "Thread density"
-msgstr "Denso de fadeno"
+#~ msgid "Number of Y tiles"
+#~ msgstr "Nombro da Y-kaheloj"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:7
-msgid "Thread intensity"
-msgstr "Intenso de fadeno"
+#~ msgid "Start blend"
+#~ msgstr "Stompstarto"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:8
-msgid "Thread length"
-msgstr "Lungo de fadeno"
+#~ msgid "Supersample"
+#~ msgstr "Supersamplado"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:9
-msgid "_Weave..."
-msgstr "_Teksi..."
+#~ msgid "Thickness"
+#~ msgstr "Diko"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
-msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "Aldoni diafanan 3D-efekton al la elektita areo (aŭ alfa)"
+#~ msgid "Add B_evel..."
+#~ msgstr "Aldoni reli_efon..."
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
-msgid "Drop shadow X offset"
-msgstr "Ombra delokado de X"
+#~ msgid "Add a beveled border to an image"
+#~ msgstr "Aldoni reliefan randon al bildo"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
-msgid "Drop shadow Y offset"
-msgstr "Ombra delokado de Y"
+#~ msgid "Keep bump layer"
+#~ msgstr "Teni bosadan tavolon"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
-msgid "Drop shadow blur radius"
-msgstr "Malfokusa radiuso de ombro"
+#~ msgid "Work on copy"
+#~ msgstr "Labor pri kopio"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
-msgid "Drop shadow color"
-msgstr "Koloro de ombro"
+#~ msgid "Add _Border..."
+#~ msgstr "Aldoni _randon..."
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
-msgid "Drop shadow opacity"
-msgstr "Opakeco de ombro"
+#~ msgid "Add a border around an image"
+#~ msgstr "Aldoni ĉirkaŭan randon al bildo"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
-msgid "Highlight X offset"
-msgstr "Lumakcenta delokado de X"
+#~ msgid "Border Layer"
+#~ msgstr "Randotavolo"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight Y offset"
-msgstr "Lumakcenta delokado de Y"
+#~ msgid "Border X size"
+#~ msgstr "X-randgrando"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
-msgid "Highlight color"
-msgstr "Hela koloro"
+#~ msgid "Border Y size"
+#~ msgstr "Y-randgrando"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
-msgid "Highlight opacity"
-msgstr "Lumakcenta opakeco"
+#~ msgid "Border color"
+#~ msgstr "Randa koloro"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
-msgid "_Xach-Effect..."
-msgstr "'_Xach'-Efekto..."
+#~ msgid "Delta value on color"
+#~ msgstr "Delta valoro laŭ koloro"
+
+#~ msgid "Alien Glow"
+#~ msgstr "Alimonda brilo"
+
+#~ msgid "Arrow"
+#~ msgstr "Sago"
+
+#~ msgid "Background"
+#~ msgstr "Fonkoloro"
+
+#~ msgid "Create an arrow graphic with an eerie glow for web pages"
+#~ msgstr "Krei grafikan sagon per luma-malluma temo por retpaĝoj"
+
+#~ msgid "Down"
+#~ msgstr "Suben"
+
+#~ msgid "Flatten image"
+#~ msgstr "Plata bildo"
+
+#~ msgid "Glow color"
+#~ msgstr "Koloro de brilo"
+
+#~ msgid "Left"
+#~ msgstr "Maldekstren"
+
+#~ msgid "Orientation"
+#~ msgstr "Orientado"
+
+#~ msgid "Size"
+#~ msgstr "Grando"
+
+#~ msgid "Up"
+#~ msgstr "Supren"
+
+#~ msgid "_Arrow..."
+#~ msgstr "S_ago..."
+
+#~ msgid "Bar"
+#~ msgstr "Breto"
+
+#~ msgid "Bar height"
+#~ msgstr "Breta alto"
+
+#~ msgid "Bar length"
+#~ msgstr "Breta longo"
+
+#~ msgid "Create an Hrule graphic with an eerie glow for web pages"
+#~ msgstr "Krei grafikan H-rektilon per luma-malluma temo por retpaĝoj"
+
+#~ msgid "_Hrule..."
+#~ msgstr "_H-rektilo..."
+
+#~ msgid "Bullet"
+#~ msgstr "Nito"
+
+#~ msgid "Create a bullet graphic with an eerie glow for web pages"
+#~ msgstr "Krei grafikan niton per luma-malluma temo por retpaĝoj"
+
+#~ msgid "Radius"
+#~ msgstr "Radiuso"
+
+#~ msgid "_Bullet..."
+#~ msgstr "_Nito..."
+
+#~ msgid "B_utton..."
+#~ msgstr "B_utono..."
+
+#~ msgid "Button"
+#~ msgstr "Butono"
+
+#~ msgid "Create a button graphic with an eerie glow for web pages"
+#~ msgstr "Krei grafikan butonon per luma-malluma temo por retpaĝoj"
+
+#~ msgid "Glow"
+#~ msgstr "Brilo"
+
+#~ msgid "Glow radius"
+#~ msgstr "Radiuso de brilo"
+
+#~ msgid "Padding"
+#~ msgstr "Ŝtopado"
+
+#~ msgid "Text color"
+#~ msgstr "Tekstkoloro"
+
+#~ msgid "Add an eerie glow around the selected region (or alpha)"
+#~ msgstr "Aldoni lumon-mallumon al elektita areo (aŭ al alfa)"
+
+#~ msgid "Alien _Glow..."
+#~ msgstr "Ali_monda brilo..."
+
+#~ msgid "Create a logo with an alien glow around the text"
+#~ msgstr "Krei emblemon per alimonda brilo ĉirkaŭ teksto"
+
+#~ msgid "Glow size (pixels * 4)"
+#~ msgstr "Grando de brilo (bilderoj * 4)"
+
+#~ msgid "Add psychedelic outlines to the selected region (or alpha)"
+#~ msgstr "Aldoni psikedelan konturon al elektita areo (aŭ alfa)"
+
+#~ msgid "Alien _Neon..."
+#~ msgstr "Alimonda _neono..."
+
+#~ msgid "Create a logo with psychedelic outlines around the text"
+#~ msgstr "Krei emblemon per psikedela konturo ĉirkaŭ teksto"
+
+#~ msgid "Fade away"
+#~ msgstr "Dissolvi for"
+
+#~ msgid "Number of bands"
+#~ msgstr "Nombro da bendoj"
+
+#~ msgid "Width of bands"
+#~ msgstr "Larĝo de bendoj"
+
+#~ msgid "Width of gaps"
+#~ msgstr "Larĝo de breĉoj"
+
+#~ msgid ""
+#~ "Add a gradient effect, a drop shadow, and a background to the selected "
+#~ "region (or alpha)"
+#~ msgstr ""
+#~ "Aldoni gradientan efekton, ombron kaj fonon al elektita areo (aŭ alfa)"
+
+#~ msgid ""
+#~ "Create a plain text logo with a gradient effect, a drop shadow, and a "
+#~ "background"
+#~ msgstr "Krei tekstan emblemon per gradientan efekto, ombro kaj fono"
+
+#~ msgid "_Basic I..."
+#~ msgstr "_Bazo I..."
+
+#~ msgid "Add a shadow and a highlight to the selected region (or alpha)"
+#~ msgstr "Aldoni ombron kaj lumakcenton al elektita areo (aŭ alfa)"
+
+#~ msgid "B_asic II..."
+#~ msgstr "B_azo II..."
+
+#~ msgid "Create a simple logo with a shadow and a highlight"
+#~ msgstr "Krei simplan emblemon per ombro kaj lumakcento"
+
+#~ msgid "Bevel width"
+#~ msgstr "Larĝo de reliefo"
+
+#~ msgid "Create a simple, beveled button graphic for webpages"
+#~ msgstr "Krei simplan reliefan butonon por retpaĝoj"
+
+#~ msgid "Gradient"
+#~ msgstr "Gradiento"
+
+#~ msgid "Lower-right color"
+#~ msgstr "Suba-dekstra koloro"
+
+#~ msgid "Pressed"
+#~ msgstr "Premite"
+
+#~ msgid "Simple _Beveled Button..."
+#~ msgstr "Simpla reliefa _butono..."
+
+#~ msgid "Upper-left color"
+#~ msgstr "Supra-maldekstra koloro"
+
+#~ msgid "Create a beveled pattern arrow for webpages"
+#~ msgstr "Krei sagon per reliefa modelo por retpaĝoj"
+
+#~ msgid "Create a beveled pattern bullet for webpages"
+#~ msgstr "Krei reliefan grafik-niton por retpaĝoj"
+
+#~ msgid "Diameter"
+#~ msgstr "Diametro"
+
+#~ msgid "Transparent background"
+#~ msgstr "Travidebla fono"
+
+#~ msgid "Create a beveled pattern button for webpages"
+#~ msgstr "Krei butonon per reliefa modelo por retpaĝoj"
+
+#~ msgid "Create a beveled pattern heading for webpages"
+#~ msgstr "Krei titoladon per relifa modelo por retpaĝoj"
+
+#~ msgid "H_eading..."
+#~ msgstr "Titol_ado..."
+
+#~ msgid "Create a beveled pattern hrule for webpages"
+#~ msgstr "Krei H-rektilon per reliefa modelo por retpaĝoj"
+
+#~ msgid "Height"
+#~ msgstr "Alto"
+
+#~ msgid "Width"
+#~ msgstr "Larĝo"
+
+#~ msgid "Blend Animation needs at least three source layers"
+#~ msgstr "Animacia stompado necesas almenaŭ tri tavolojn"
+
+#~ msgid ""
+#~ "Create intermediate layers to blend two or more layers over a background "
+#~ "as an animation"
+#~ msgstr ""
+#~ "Krei mezajn tavolojn por stompi du aŭ pli tavoloj super fono kiel animacio"
+
+#~ msgid "Frame"
+#~ msgstr "Filmero"
+
+#~ msgid "Intermediate frames"
+#~ msgstr "Mezaj filmeroj"
+
+#~ msgid "Looped"
+#~ msgstr "Cikla"
+
+#~ msgid "Max. blur radius"
+#~ msgstr "Radiuso de maksimuma malfokuso"
+
+#~ msgid "_Blend..."
+#~ msgstr "_Stompi..."
+
+#~ msgid ""
+#~ "Add blended backgrounds, highlights, and shadows to the selected region "
+#~ "(or alpha)"
+#~ msgstr ""
+#~ "Aldoni stompitajn fonojn, lumakcentojn kaj ombrojn al elektita areo (aŭ "
+#~ "alfa)"
+
+#~ msgid "Blen_ded..."
+#~ msgstr "Stompaĵ_o..."
+
+#~ msgid "Blend mode"
+#~ msgstr "Maniero de stompo"
+
+#~ msgid "Create a logo with blended backgrounds, highlights, and shadows"
+#~ msgstr "Krei emblemon per stompitajn fonoj, lumakcentoj kaj ombroj"
+
+#~ msgid "Custom Gradient"
+#~ msgstr "Personigita gradiento"
+
+#~ msgid "FG-BG-HSV"
+#~ msgstr "MF-FN-HSV"
+
+#~ msgid "FG-Transparent"
+#~ msgstr "MF-travidebleco"
+
+#~ msgid "Gradient reverse"
+#~ msgstr "Inversa gradiento"
+
+#~ msgid "Offset (pixels)"
+#~ msgstr "Delokado (bilderoj)"
+
+#~ msgid "Add 'cow spots' to the selected region (or alpha)"
+#~ msgstr "Aldoni \"bovinmakulojn\" al elektita areo (aŭ alfa)"
+
+#~ msgid "Background Color"
+#~ msgstr "Fonkoloro"
+
+#~ msgid "Bo_vination..."
+#~ msgstr "Bo_vinigo..."
+
+#~ msgid "Create a logo with text in the style of 'cow spots'"
+#~ msgstr "Krei emblemon per \"bovinmakulaj\" teksto"
+
+#~ msgid "Spots density X"
+#~ msgstr "Makuldenso X"
+
+#~ msgid "Spots density Y"
+#~ msgstr "Makuldenso Y"
+
+#~ msgid "Add glowing"
+#~ msgstr "Aldoni brilon"
+
+#~ msgid "After glow"
+#~ msgstr "Post brilo"
+
+#~ msgid "B_urn-In..."
+#~ msgstr "En-Br_uligo..."
+
+#~ msgid "Corona width"
+#~ msgstr "Larĝo de krono"
+
+#~ msgid ""
+#~ "Create intermediate layers to produce an animated 'burn-in' transition "
+#~ "between two layers"
+#~ msgstr ""
+#~ "Krei mezajn tavolojn por igi movigantan 'en-bruligan' transiron tra du "
+#~ "tavoloj"
+
+#~ msgid "Fadeout"
+#~ msgstr "Elir-stompado"
+
+#~ msgid "Fadeout width"
+#~ msgstr "Larĝo de elir-stompado"
+
+#~ msgid "Prepare for GIF"
+#~ msgstr "Prepari por GIF"
+
+#~ msgid "Speed (pixels/frame)"
+#~ msgstr "Rapideco (bilderoj/filmero)"
+
+#~ msgid ""
+#~ "The Burn-In script needs two layers in total. A foreground layer with "
+#~ "transparency and a background layer."
+#~ msgstr ""
+#~ "Enbruligskripto necesas du tavolojn, entute. Travidebla tekstotavolo kaj "
+#~ "fona tavolo."
+
+#~ msgid "Color 1"
+#~ msgstr "Koloro 1"
+
+#~ msgid "Color 2"
+#~ msgstr "Koloro 2"
+
+#~ msgid "Color 3"
+#~ msgstr "Koloro 3"
+
+#~ msgid "Create an image filled with a camouflage pattern"
+#~ msgstr "Krei bildon plenigitan per kamuflaj modeloj"
+
+#~ msgid "Granularity"
+#~ msgstr "Grajneco"
+
+#~ msgid "Image size"
+#~ msgstr "Bildgrando"
+
+#~ msgid "Smooth"
+#~ msgstr "Glatigi"
+
+#~ msgid "_Camouflage..."
+#~ msgstr "_Kamuflado..."
+
+#, fuzzy
+#~ msgid "Bevel Highlight"
+#~ msgstr "Larĝo de reliefo"
+
+#~ msgid "Carve white areas"
+#~ msgstr "Skulpi blankajn areojn"
+
+#~ msgid "Image to carve"
+#~ msgstr "Bildo por skulpi"
+
+#~ msgid "Stencil C_arve..."
+#~ msgstr "Ĉizoŝablono..."
+
+#~ msgid "Background Image"
+#~ msgstr "Fonbildo"
+
+#~ msgid "Carve raised text"
+#~ msgstr "Reliefe skulpita teksto"
+
+#~ msgid "Carved..."
+#~ msgstr "Skulpita..."
+
+#~ msgid ""
+#~ "Create a logo with text raised above or carved in to the specified "
+#~ "background image"
+#~ msgstr ""
+#~ "Krei emblemon per bareliefa aŭ altreliefa teksto en specifita fona bildo"
+
+#~ msgid "Padding around text"
+#~ msgstr "Ŝtopado ĉirkaŭ teksto"
+
+#~ msgid "Chalk color"
+#~ msgstr "Koloro de kreto"
+
+#~ msgid "Create a chalk drawing effect for the selected region (or alpha)"
+#~ msgstr ""
+#~ "Krei \"desegno sur nigra tabulo\" efekton por elektita areo (aŭ alfa)"
+
+#~ msgid "Create a logo resembling chalk scribbled on a blackboard"
+#~ msgstr "Krei emblemon per \"desegno sur nigra tabulo\" efekto"
+
+#~ msgid "_Chalk..."
+#~ msgstr "_Kreto..."
+
+#~ msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
+#~ msgstr "Aldoni \"splitita ligno\" efekton al elektita areo (aŭ alfa)"
+
+#~ msgid "Blur amount"
+#~ msgstr "Malfokusa kvanto"
+
+#~ msgid "Chip Awa_y..."
+#~ msgstr "_Lignopliti..."
+
+#~ msgid "Chip amount"
+#~ msgstr "Lignera kvanto"
+
+#~ msgid "Create a logo resembling a chipped wood carving"
+#~ msgstr "Krei emblemon per \"splitita ligno\" efekto"
+
+#~ msgid "Drop shadow"
+#~ msgstr "Demeti ombron"
+
+#~ msgid "Fill BG with pattern"
+#~ msgstr "Plenigi fonon per modelo"
+
+#~ msgid "Invert"
+#~ msgstr "Inversigi"
+
+#~ msgid "Keep background"
+#~ msgstr "Teni fonon"
+
+#~ msgid ""
+#~ "Add a chrome effect to the selected region (or alpha) using a specified "
+#~ "(grayscale) stencil"
+#~ msgstr ""
+#~ "Aldoni kromoefekton al elektita areo (aŭ alfa) per specifita (grizgama) "
+#~ "stencilo"
+
+#, fuzzy
+#~ msgid "Chrome"
+#~ msgstr "Kromado"
+
+#~ msgid "Chrome balance"
+#~ msgstr "Kromada ekvilibrigo"
+
+#~ msgid "Chrome factor"
+#~ msgstr "Kromada grado"
+
+#~ msgid "Chrome lightness"
+#~ msgstr "Kromada lumeco"
+
+#~ msgid "Chrome saturation"
+#~ msgstr "Kromada satureco"
+
+#~ msgid "Chrome white areas"
+#~ msgstr "Kromi blankajn areojn"
+
+#, fuzzy
+#~ msgid "Drop Shadow"
+#~ msgstr "Demeti ombron"
+
+#~ msgid "Environment map"
+#~ msgstr "Media mapo"
+
+#~ msgid "Highlight"
+#~ msgstr "Emfazi"
+
+#~ msgid "Highlight balance"
+#~ msgstr "Lumakcenta ekvilibrigo"
+
+#~ msgid "Layer 2"
+#~ msgstr "Tavolo 2"
+
+#~ msgid "Layer 3"
+#~ msgstr "Tavolo 3"
+
+#~ msgid "Layer1"
+#~ msgstr "Tavolo1"
+
+#~ msgid "Stencil C_hrome..."
+#~ msgstr "Kromanta stencilo..."
+
+#~ msgid "Add a simple chrome effect to the selected region (or alpha)"
+#~ msgstr "Aldoni simplan kromoefekton al elektita areo (aŭ alfa)"
+
+#~ msgid "C_hrome..."
+#~ msgstr "_Kromado..."
+
+#~ msgid "Create a simplistic, but cool, chromed logo"
+#~ msgstr "Krei simplan emblemon per simpla sed efika kromoefekto"
+
+#~ msgid "Offsets (pixels * 2)"
+#~ msgstr "Delokado (bilderoj * 2)"
+
+#~ msgid "Circuit seed"
+#~ msgstr "Cirkvita semo"
+
+#~ msgid "Effect layer"
+#~ msgstr "Efekta tavolo"
+
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with traces like those on a circuit "
+#~ "board"
+#~ msgstr ""
+#~ "Plenigi elektita areon (aŭ alfa) per ŝpuroj kiel sur presita cirkvito"
+
+#~ msgid "Keep selection"
+#~ msgstr "Teni elekton"
+
+#~ msgid "No background (only for separate layer)"
+#~ msgstr "Sen fono (nur por aparta tavolo)"
+
+#~ msgid "Oilify mask size"
+#~ msgstr "Oleigi maskgrandon"
+
+#~ msgid "Separate layer"
+#~ msgstr "Aparta tavolo"
+
+#~ msgid "_Circuit..."
+#~ msgstr "_Cirkvito..."
+
+#~ msgid "Add a cloth-like texture to the selected region (or alpha)"
+#~ msgstr "Aldoni teksoteksaĵon al elektita areo (aŭ alfa)"
+
+#~ msgid "Azimuth"
+#~ msgstr "Azimuto"
+
+#~ msgid "Blur X"
+#~ msgstr "Malfokuso X"
+
+#~ msgid "Blur Y"
+#~ msgstr "Malfokuso Y"
+
+#~ msgid "Depth"
+#~ msgstr "Profundeco"
+
+#~ msgid "Elevation"
+#~ msgstr "Levado"
+
+#~ msgid "_Clothify..."
+#~ msgstr "_Drapiri..."
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr "Aldoni al la bildo tre realajn kafmakulojn"
+
+#~ msgid "Darken only"
+#~ msgstr "Nur malhelnuanco"
+
+#, fuzzy
+#~ msgid "Stain"
+#~ msgstr "Makuloj"
+
+#~ msgid "Stains"
+#~ msgstr "Makuloj"
+
+#~ msgid "_Coffee Stain..."
+#~ msgstr "_Kafomakulo..."
+
+#~ msgid ""
+#~ "Add a comic-book effect to the selected region (or alpha) by outlining "
+#~ "and filling with a gradient"
+#~ msgstr ""
+#~ "Aldoni bildstrian efekton al elektita areo (aŭ alfa) konturante kaj "
+#~ "plenigante per gradiento"
+
+#~ msgid "Comic Boo_k..."
+#~ msgstr "_Bildstrio..."
+
+#~ msgid ""
+#~ "Create a comic-book style logo by outlining and filling with a gradient"
+#~ msgstr "Krei bildstrian emblemon konturante kaj plenigante per gradiento"
+
+#~ msgid "Outline color"
+#~ msgstr "Randa koloro"
+
+#~ msgid "Outline size"
+#~ msgstr "Randogrando"
+
+#~ msgid ""
+#~ "Add a metallic effect to the selected region (or alpha) with reflections "
+#~ "and perspective shadows"
+#~ msgstr ""
+#~ "Aldoni metaloefekton al elektita areo (aŭ alfa) per reflektoj kaj "
+#~ "perspektivaj ombroj"
+
+#~ msgid "Cool _Metal..."
+#~ msgstr "_Frida metalo..."
+
+#~ msgid "Create a metallic logo with reflections and perspective shadows"
+#~ msgstr "Krei metalan emblemon per reflektoj kaj perspektivaj ombroj"
+
+#~ msgid "Effect size (pixels)"
+#~ msgstr "Efektgrando (bilderoj)"
+
+#~ msgid "Background image"
+#~ msgstr "Fona bildo"
+
+#~ msgid ""
+#~ "Create a logo with a crystal/gel effect displacing the image underneath"
+#~ msgstr ""
+#~ "Krei emblemon per ĝela/kristala efekto kiu travidigas subestantan bildon"
+
+#~ msgid "Crystal..."
+#~ msgstr "Kristalo..."
+
+#~ msgid "Difference Clouds..."
+#~ msgstr "Diferencaj nuboj..."
+
+#~ msgid "Solid noise applied with Difference layer mode"
+#~ msgstr "Solida perturbo kiu estas aplikita kun tavol-reĝimo de diferenco"
+
+#~ msgid "Distress the selection"
+#~ msgstr "Distordi la elekton"
+
+#~ msgid "Granularity (1 is low)"
+#~ msgstr "Grajneco (1 estas basa)"
+
+#~ msgid "Smooth horizontally"
+#~ msgstr "Glatigi horizontale"
+
+#~ msgid "Smooth vertically"
+#~ msgstr "Glatigi vertikale"
+
+#~ msgid "Spread"
+#~ msgstr "Difuza"
+
+#~ msgid "Threshold (bigger 1<-->255 smaller)"
+#~ msgstr "Sojlo (granda 1<-->255 eta)"
+
+#~ msgid "_Distort..."
+#~ msgstr "_Distordi..."
+
+#~ msgid "Add a drop shadow to the selected region (or alpha)"
+#~ msgstr "Aldoni ombron al elektita areo (aŭ alfa)"
+
+#~ msgid "Allow resizing"
+#~ msgstr "Permesi aligrandigon"
+
+#~ msgid "Blur radius"
+#~ msgstr "Radiuso de malfokuso"
+
+#~ msgid "Color"
+#~ msgstr "Koloro"
+
+#~ msgid "Offset X"
+#~ msgstr "Delokado X"
+
+#~ msgid "Offset Y"
+#~ msgstr "Delokado Y"
+
+#~ msgid "Opacity"
+#~ msgstr "Opakeco"
+
+#, fuzzy
+#~ msgid "_Drop Shadow..."
+#~ msgstr "_Demeti ombron..."
+
+#~ msgid "Columns"
+#~ msgstr "Kolumnoj"
+
+#~ msgid "Erase every other row or column"
+#~ msgstr "Viŝi ĉiujn aliajn vicojn aŭ kolumnojn"
+
+#~ msgid "Erase/fill"
+#~ msgstr "Viŝi/plenigi"
+
+#~ msgid "Even/odd"
+#~ msgstr "Para/nepara"
+
+#~ msgid "Fill with BG"
+#~ msgstr "Plenigu per fono"
+
+#~ msgid "Odd"
+#~ msgstr "Nepara"
+
+#~ msgid "Rows/cols"
+#~ msgstr "Vicoj/kolumnoj"
+
+#~ msgid "_Erase Every Other Row..."
+#~ msgstr "_Viŝi ĉiujn aliajn vicojn..."
+
+#~ msgid "Create an image filled with a Land Pattern"
+#~ msgstr "Krei bildon plenigitan per modelon de pejzaĝo"
+
+#~ msgid "Detail level"
+#~ msgstr "Detalnivelo"
+
+#~ msgid "Image height"
+#~ msgstr "Bilda alto"
+
+#~ msgid "Image width"
+#~ msgstr "Bilda larĝo"
+
+#~ msgid "Random seed"
+#~ msgstr "Hazardsemo"
+
+#~ msgid "Scale X"
+#~ msgstr "Skali na X"
+
+#~ msgid "Scale Y"
+#~ msgstr "Skali na Y"
+
+#~ msgid "_Flatland..."
+#~ msgstr "_Plata pejzaĝo..."
+
+#~ msgid "Active colors"
+#~ msgstr "Aktivaj koloroj"
+
+#~ msgid ""
+#~ "Create an image filled with previews of fonts matching a fontname filter"
+#~ msgstr ""
+#~ "Krei bildon plenigitan per antaŭmontroj de tiparoj kiuj kongruas kun "
+#~ "filtrilo laŭ tiparnomo"
+
+#~ msgid "Font _size (pixels)"
+#~ msgstr "Tipar_grando (bilderoj)"
+
+#~ msgid "Render _Font Map..."
+#~ msgstr "Transdono de _tiparmapo..."
+
+#~ msgid "Use font _name as text"
+#~ msgstr "Uzi tipar_nomon kiel teksto"
+
+#~ msgid "_Border (pixels)"
+#~ msgstr "_Rando (bilderoj)"
+
+#~ msgid "_Color scheme"
+#~ msgstr "Kolor_skemo"
+
+#~ msgid "_Filter (regexp)"
+#~ msgstr "_Filtrilo (reg.espr.)"
+
+#~ msgid "_Labels"
+#~ msgstr "S_lipoj"
+
+#~ msgid "_Text"
+#~ msgstr "_Teksto"
+
+#~ msgid ""
+#~ "Add a frost effect to the selected region (or alpha) with an added drop "
+#~ "shadow"
+#~ msgstr ""
+#~ "Aldoni frostan efekton al eletkita areo (aŭ alfa) kaj aldonitan ombron"
+
+#~ msgid "Create frozen logo with an added drop shadow"
+#~ msgstr "Krei frostigitan emblemon kaj aldonitan ombron"
+
+#~ msgid "_Frosty..."
+#~ msgstr "_Frostigita..."
+
+#~ msgid "Add a jagged, fuzzy border to an image"
+#~ msgstr "Aldoni \"jagged\", svagan randon al bildo"
+
+#~ msgid "Add shadow"
+#~ msgstr "Aldoni ombron"
+
+#~ msgid "Blur border"
+#~ msgstr "Malfokusi randon"
+
+#~ msgid "Border size"
+#~ msgstr "Randogrando"
+
+#~ msgid "Granularity (1 is Low)"
+#~ msgstr "Grajneco (1 estas Basa)"
+
+#~ msgid "Shadow weight (%)"
+#~ msgstr "Ombropezo (%)"
+
+#~ msgid "_Fuzzy Border..."
+#~ msgstr "_Svaga rando..."
+
+#~ msgid "Bookmark to the GIMP web site"
+#~ msgstr "Ligilo al la retpaĝaro de GIMPo"
+
+#~ msgid "Bookmark to the user manual"
+#~ msgstr "Ligilo al la manlibro de la uzanto"
+
+#~ msgid "Create and Use _Selections"
+#~ msgstr "Krei kaj uzi _elektojn"
+
+#~ msgid "Create, Open and Save _Files"
+#~ msgstr "Krei, malfermi kaj konservi _dosierojn"
+
+#~ msgid "Drawing _Simple Objects"
+#~ msgstr "Desegno de _simplaj bbjektoj"
+
+#~ msgid "How to Use _Dialogs"
+#~ msgstr "Kiel oni uzas _dialogojn"
+
+#~ msgid "Plug-in _Registry"
+#~ msgstr "Ĵiu_rnalo de kromprogramoj"
+
+#~ msgid "Using _Paths"
+#~ msgstr "Uzo de _vojoj"
+
+#~ msgid "_Basic Concepts"
+#~ msgstr "_Bazaj konceptoj"
+
+#~ msgid "_Developer Web Site"
+#~ msgstr "Retpaĝaro de la _programistoj"
+
+#~ msgid "_Main Web Site"
+#~ msgstr "Ĉefa _retpaĝaro"
+
+#~ msgid "_Preparing your Images for the Web"
+#~ msgstr "_Preparado de viaj bildoj por la interreto"
+
+#~ msgid "_User Manual Web Site"
+#~ msgstr "Retpaĝaro de la _uzanta manlibro"
+
+#~ msgid "_Working with Digital Camera Photos"
+#~ msgstr "La_borado pri diĝitaj fotaĵoj"
+
+#~ msgid ""
+#~ "Add gradients, patterns, shadows, and bump maps to the selected region "
+#~ "(or alpha)"
+#~ msgstr ""
+#~ "Aldoni gradientojn, motivojn, ombrojn kaj bosadomapojn al la areo (aŭ al "
+#~ "alfa)"
+
+#~ msgid "Blend gradient (outline)"
+#~ msgstr "Stompi gradienton (konturo)"
+
+#~ msgid "Blend gradient (text)"
+#~ msgstr "Stompi gradienton (teksto)"
+
+#~ msgid "Create a logo with gradients, patterns, shadows, and bump maps"
+#~ msgstr "Krei emblemon per gradientoj, modeloj, ombroj kaj bosadomapoj"
+
+#~ msgid "Glo_ssy..."
+#~ msgstr "Pol_urita..."
+
+#~ msgid "Outline gradient reverse"
+#~ msgstr "Inversigo de kontura gradiento"
+
+#~ msgid "Pattern (outline)"
+#~ msgstr "Modelo (konturo)"
+
+#~ msgid "Pattern (overlay)"
+#~ msgstr "Modelo (surmetite)"
+
+#~ msgid "Pattern (text)"
+#~ msgstr "Modelo (teksto)"
+
+#~ msgid "Shadow"
+#~ msgstr "Ombro"
+
+#~ msgid "Text gradient reverse"
+#~ msgstr "Inversigo de teksta gradiento"
+
+#~ msgid "Use pattern for outline instead of gradient"
+#~ msgstr "Uzi modelon anstataŭ gradiento por konturo"
+
+#~ msgid "Use pattern for text instead of gradient"
+#~ msgstr "Uzi modelon anstataŭ gradiento por teksto"
+
+#~ msgid "Use pattern overlay"
+#~ msgstr "Uzi surmeton de modelo"
+
+#~ msgid "Add a glowing hot metal effect to the selected region (or alpha)"
+#~ msgstr "Aldoni varmegobrilan metalefekton al elektita areo (aŭ alfa)"
+
+#~ msgid "Create a logo that looks like glowing hot metal"
+#~ msgstr "Krei emblemon per varmegobrila metalo"
+
+#~ msgid "Glo_wing Hot..."
+#~ msgstr "_Varmega brilo..."
+
+#~ msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
+#~ msgstr "Aldoni brilan kaj reliefan efekton al elektita areo (aŭ alfa)"
+
+#~ msgid "Bevel height (sharpness)"
+#~ msgstr "Alto de reliefo (netece)"
+
+#~ msgid "Border size (pixels)"
+#~ msgstr "Randogrando (bilderoj)"
+
+#~ msgid "Create a logo with a shiny look and beveled edges"
+#~ msgstr "Krei emblemeon per brila efekto kaj reliefaj randoj"
+
+#~ msgid "Gradient Beve_l..."
+#~ msgstr "Gradienta re_liefo..."
+
+#~ msgid "Create an image filled with an example of the current gradient"
+#~ msgstr "Krei bildon plenigitan per specimeno de nuna gradiento"
+
+#~ msgid "Custom _Gradient..."
+#~ msgstr "Personigita _gradiento..."
+
+#~ msgid ""
+#~ "Draw a grid as specified by the lists of X and Y locations using the "
+#~ "current brush"
+#~ msgstr ""
+#~ "Desegni per nuna peniko kradon kiel ĝi estas specifita en listo de X kaj "
+#~ "Y lokadoj"
+
+#~ msgid "X divisions"
+#~ msgstr "Dividoj X"
+
+#~ msgid "Y divisions"
+#~ msgstr "Dividoj Y"
+
+#~ msgid "_Grid..."
+#~ msgstr "_Krado..."
+
+#~ msgid "New Guides from _Selection"
+#~ msgstr "Novaj gvidilojn el _elekto"
+
+#~ msgid ""
+#~ "Add a guide at the position specified as a percentage of the image size"
+#~ msgstr "Aldoni gvidilon al specifita lokado kiel elcento de bildgrando"
+
+#~ msgid "Direction"
+#~ msgstr "Direkto"
+
+#~ msgid "New Guide (by _Percent)..."
+#~ msgstr "Nova gvidilo (laŭ _elcento)..."
+
+#~ msgid "Position (in %)"
+#~ msgstr "Lokado (en %)"
+
+#~ msgid "Vertical"
+#~ msgstr "Vertikale"
+
+#~ msgid "Add a guide at the orientation and position specified (in pixels)"
+#~ msgstr "Aldoni gvidilon laŭ specifita (bildere) orientado kaj lokado"
+
+#~ msgid "New _Guide..."
+#~ msgstr "Nova _gvidilo..."
+
+#~ msgid "Position"
+#~ msgstr "Lokado"
+
+#~ msgid "Remove all horizontal and vertical guides"
+#~ msgstr "Forigi ĉiujn gvidilojn (horizontalajn kaj vertikalajn)"
+
+#~ msgid "_Remove all Guides"
+#~ msgstr "Fo_rigi ĉiujn gvidilojn"
+
+#~ msgid "Create a logo in a two-color, scribbled text style"
+#~ msgstr "Krei emblemon per duakolora, skribaĉita tekstostilo"
+
+#~ msgid "Frame color"
+#~ msgstr "Koloro de kadraĵo"
+
+#~ msgid "Frame size"
+#~ msgstr "Grando de kadraĵo"
+
+#~ msgid "Imigre-_26..."
+#~ msgstr "Imigre-_26..."
+
+#~ msgid "Create an image filled with a topographic map pattern"
+#~ msgstr "Krei bildon per topografiomapa modelo"
+
+#~ msgid "Land height"
+#~ msgstr "Pejzaĝalto"
+
+#~ msgid "Sea depth"
+#~ msgstr "Marprofundo"
+
+#~ msgid "_Land..."
+#~ msgstr "_Pejzaĝo..."
+
+#~ msgid "Fill the current selection with lava"
+#~ msgstr "Plenigi nunan elekton peri lafo"
+
+#~ msgid "Roughness"
+#~ msgstr "Raspeco"
+
+#~ msgid "Seed"
+#~ msgstr "Semo"
+
+#~ msgid "Use current gradient"
+#~ msgstr "Uzi nunan gradienton"
+
+#~ msgid "_Lava..."
+#~ msgstr "_Lafo..."
+
+#~ msgid ""
+#~ "Fill a layer with rays emanating outward from its center using the FG "
+#~ "color"
+#~ msgstr "Plenigi tavolon per eksteren ĵetitaj radioj kaj malfona koloro"
+
+#~ msgid "Line _Nova..."
+#~ msgstr "Linio de _Novao..."
+
+#~ msgid "Number of lines"
+#~ msgstr "Nombro da linioj"
+
+#~ msgid "Offset radius"
+#~ msgstr "Radiusa delokado"
+
+#~ msgid "Randomness"
+#~ msgstr "Hazardo"
+
+#~ msgid "Sharpness (degrees)"
+#~ msgstr "Neteco (gradoj)"
+
+#~ msgid "Create a rectangular brush"
+#~ msgstr "Krei rektangulan penikon"
+
+#~ msgid "Create a rectangular brush with feathered edges"
+#~ msgstr "Krei rektangulan penikon kun stompitaj randoj"
+
+#~ msgid "Create an elliptical brush"
+#~ msgstr "Krei elipsan penikon"
+
+#~ msgid "Create an elliptical brush with feathered edges"
+#~ msgstr "Krei elipsan penikon kun stompitaj randoj"
+
+#~ msgid "Elli_ptical, Feathered..."
+#~ msgstr "Eli_psa, stompiĝita..."
+
+#~ msgid "Feathering"
+#~ msgstr "Stompaĵo"
+
+#~ msgid "Name"
+#~ msgstr "Nomo"
+
+#~ msgid "Re_ctangular, Feathered..."
+#~ msgstr "Rektan_gule, stompiĝite..."
+
+#~ msgid "Spacing"
+#~ msgstr "Interspaco"
+
+#~ msgid "_Elliptical..."
+#~ msgstr "_Elipse..."
+
+#~ msgid "_Rectangular..."
+#~ msgstr "_Rektangule..."
+
+#~ msgid "Convert the selected region (or alpha) into a neon-sign like object"
+#~ msgstr "Konverti elektitan areon (aŭ alfan) en neona ŝildo kiel objekto"
+
+#~ msgid "Create a logo in the style of a neon sign"
+#~ msgstr "Krei emblemon per stilo de neona ŝildo"
+
+#~ msgid "Create shadow"
+#~ msgstr "Krei ombron"
+
+#~ msgid "N_eon..."
+#~ msgstr "N_eono..."
+
+#~ msgid "Cell size (pixels)"
+#~ msgstr "Ĉela grando (bilderoj)"
+
+#, fuzzy
+#~ msgid "Create a logo in the style of newspaper printing"
+#~ msgstr "Krei emblemon per stilo de ĵurnala preso"
+
+#~ msgid "Density (%)"
+#~ msgstr "Denseco (%)"
+
+#~ msgid "Newsprint Te_xt..."
+#~ msgstr "Ŝajno de ĵurnala _preso..."
+
+#~ msgid "Defocus"
+#~ msgstr "Eksterfokuso"
+
+#~ msgid "Make an image look like an old photo"
+#~ msgstr "Igi bildon kvazaŭ malnova fotaĵo"
+
+#~ msgid "Mottle"
+#~ msgstr "Makulaĵo"
+
+#~ msgid "Sepia"
+#~ msgstr "Sepiaĵo"
+
+#~ msgid "_Old Photo..."
+#~ msgstr "_Malnova fotaĵo..."
+
+#~ msgid "Brush name"
+#~ msgstr "Peniknomo"
+
+#~ msgid "File name"
+#~ msgstr "Dosiernomo"
+
+#~ msgid "New _Brush..."
+#~ msgstr "Nova _peniko..."
+
+#~ msgid "Paste the clipboard contents into a new brush"
+#~ msgstr "Enmetu entenon de la tondujo en nova peniko"
+
+#~ msgid "There is no image data in the clipboard to paste."
+#~ msgstr "Ne estas bildo en la tondujo por enmeti."
+
+#~ msgid "New _Pattern..."
+#~ msgstr "Nova _modelo..."
+
+#~ msgid "Paste the clipboard contents into a new pattern"
+#~ msgstr "Enmetu entenon de la tondujo en nova modelo"
+
+#~ msgid "Pattern name"
+#~ msgstr "Modelnomo"
+
+#~ msgid "Add a perspective shadow to the selected region (or alpha)"
+#~ msgstr "Aldoni perpesktivan ombron al elektita areo (aŭ alfa)"
+
+#~ msgid "Angle"
+#~ msgstr "Angulo"
+
+#~ msgid "Interpolation"
+#~ msgstr "Interpolado"
+
+#~ msgid "Relative distance of horizon"
+#~ msgstr "Distanco laŭhorizonte"
+
+#~ msgid "Relative length of shadow"
+#~ msgstr "Longeco laŭombre"
+
+#~ msgid "_Perspective..."
+#~ msgstr "_Perspektivo..."
+
+#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
+#~ msgstr "Aldoni \"Predisto\"-efekton al elektita areo (aŭ alfa)"
+
+#~ msgid "Edge amount"
+#~ msgstr "Randa kvanto"
+
+#~ msgid "Pixel amount"
+#~ msgstr "Bildera kvanto"
+
+#~ msgid "Pixelize"
+#~ msgstr "Bilderigo"
+
+#~ msgid "_Predator..."
+#~ msgstr "_Predisto..."
+
+#~ msgid "Create images, each containing an oval button graphic"
+#~ msgstr "Krei bilderojn kiuj entenas ovalan grafikan butonon"
+
+#~ msgid "Lower color"
+#~ msgstr "Malpliigi koloron"
+
+#~ msgid "Lower color (active)"
+#~ msgstr "Malpliigi koloron (aktive)"
+
+#~ msgid "Not pressed"
+#~ msgstr "Nepremiti"
+
+#~ msgid "Not pressed (active)"
+#~ msgstr "Nepremite (aktive)"
+
+#~ msgid "Padding X"
+#~ msgstr "Remburado X"
+
+#~ msgid "Padding Y"
+#~ msgstr "Remburado Y"
+
+#~ msgid "Round ratio"
+#~ msgstr "Rondiga grado"
+
+#~ msgid "Text color (active)"
+#~ msgstr "Tekstkoloro (aktive)"
+
+#~ msgid "Upper color"
+#~ msgstr "Pliigi koloron"
+
+#~ msgid "Upper color (active)"
+#~ msgstr "Pliigi koloron (aktive)"
+
+#~ msgid "_Round Button..."
+#~ msgstr "_Ronda butono..."
+
+#~ msgid "Behavior"
+#~ msgstr "Konduto"
+
+#~ msgid "Create an image filled with an Earth-like map pattern"
+#~ msgstr "Krei bildon plenigitan per tergloba modelo"
+
+#~ msgid "Detail in Middle"
+#~ msgstr "Detaloj meze"
+
+#~ msgid "Render _Map..."
+#~ msgstr "Bildiga _mapo..."
+
+#~ msgid "Black"
+#~ msgstr "Nigro"
+
+#~ msgid ""
+#~ "Create a multi-layer image by adding a ripple effect to the current image"
+#~ msgstr ""
+#~ "Krei plur-tavolan bildon per aldono de krispiĝa efekto al nuna bildo"
+
+#~ msgid "Edge behavior"
+#~ msgstr "Randa konduto"
+
+#~ msgid "Number of frames"
+#~ msgstr "Nombro da filmeroj"
+
+#~ msgid "Rippling strength"
+#~ msgstr "Krispiĝa grado"
+
+#~ msgid "Smear"
+#~ msgstr "Makulo"
+
+#~ msgid "_Rippling..."
+#~ msgstr "_Krispiĝo..."
+
+#~ msgid "Add background"
+#~ msgstr "Aldoni fonon"
+
+#, fuzzy
+#~ msgid "Add drop-shadow"
+#~ msgstr "Aldoni ombron"
+
+#~ msgid "Edge radius"
+#~ msgstr "Radiuso de rando"
+
+#~ msgid ""
+#~ "Round the corners of an image and optionally add a drop-shadow and "
+#~ "background"
+#~ msgstr ""
+#~ "Rondigi bildajn angulrandojn, poste aldoni, laŭvole, ombron kaj fonon"
+
+#~ msgid "_Round Corners..."
+#~ msgstr "_Rondaj angulrandoj..."
+
+#~ msgid "Palette"
+#~ msgstr "Paletro"
+
+#~ msgid "Se_t Colormap..."
+#~ msgstr "_Agordi kolormapon..."
+
+#~ msgid "Convert a selection to a brush"
+#~ msgstr "Konverti elekton al peniko"
+
+#~ msgid "To _Brush..."
+#~ msgstr "Al _peniko..."
+
+#~ msgid "Convert a selection to an image"
+#~ msgstr "Konverti elekton al bildo"
+
+#~ msgid "To _Image"
+#~ msgstr "Al _bildo"
+
+#~ msgid "Convert a selection to a pattern"
+#~ msgstr "Konverti elekton al modelo"
+
+#~ msgid "To _Pattern..."
+#~ msgstr "Al _modelo..."
+
+#~ msgid "Concave"
+#~ msgstr "Konkava"
+
+#~ msgid "Radius (%)"
+#~ msgstr "Radiuso (%)"
+
+#~ msgid "Round the corners of the current selection"
+#~ msgstr "Rondigi angulrandojn de nuna elekto"
+
+#~ msgid "Rounded R_ectangle..."
+#~ msgstr "Ronda r_ektangulo..."
+
+#~ msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+#~ msgstr ""
+#~ "Aldoni filmospecan randon, inkluzive de truetaro kaj de skribaĵoj al bildo"
+
+#~ msgid "Font color"
+#~ msgstr "Tiparkoloro"
+
+#~ msgid "Number"
+#~ msgstr "Nombro"
+
+#~ msgid "_Slide..."
+#~ msgstr "_Lumbildo..."
+
+#~ msgid "Create a State Of The Art chromed logo"
+#~ msgstr "Krei 'State Of The Art' (SOTA) kromitan emblemon"
+
+#~ msgid "SOTA Chrome..."
+#~ msgstr "SOTA-kromado..."
+
+#~ msgid "Create a logo with a speedy text effect"
+#~ msgstr "Krei emblemon per rapidteksta efekto"
+
+#~ msgid "Speed Text..."
+#~ msgstr "Rapida teksto..."
+
+#~ msgid ""
+#~ "Create an animation by mapping the current image onto a spinning sphere"
+#~ msgstr "Krei animacion per bildigo de la nuna bildo sur rotacianta sfero"
+
+#~ msgid "Frames"
+#~ msgstr "Filmeroj"
+
+#~ msgid "Index to n colors (0 = remain RGB)"
+#~ msgstr "Indici laŭ n koloroj (0 = RVB)"
+
+#~ msgid "Turn from left to right"
+#~ msgstr "Turni de maldekstre dekstren"
+
+#~ msgid "_Spinning Globe..."
+#~ msgstr "Rotacianta _globo..."
+
+#~ msgid ""
+#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+#~ msgstr ""
+#~ "Aldoni spiralilojn, epitrokoidojn kaj kurboj de Lissajous al nuna tavolo"
+
+#~ msgid "Airbrush"
+#~ msgstr "Ŝprucpistolo"
+
+#~ msgid "Brush"
+#~ msgstr "Peniko"
+
+#~ msgid "Color method"
+#~ msgstr "Kolormaniero"
+
+#~ msgid "Epitrochoid"
+#~ msgstr "Epitrokoidoj"
+
+#~ msgid "Gradient: Loop Sawtooth"
+#~ msgstr "Gradiento: Cikla segildento"
+
+#~ msgid "Gradient: Loop Triangle"
+#~ msgstr "Gradiento: Cikla triangulo"
+
+#~ msgid "Hexagon"
+#~ msgstr "Heksagono"
+
+#~ msgid "Hole ratio"
+#~ msgstr "Proporcio de truo"
+
+#~ msgid "Inner teeth"
+#~ msgstr "Internaj dentoj"
+
+#~ msgid "Lissajous"
+#~ msgstr "Kurbo de Lissajous"
+
+#~ msgid "Margin (pixels)"
+#~ msgstr "Marĝeno (bilderoj)"
+
+#~ msgid "Outer teeth"
+#~ msgstr "Eksteraj dentoj"
+
+#~ msgid "Pentagon"
+#~ msgstr "Kvinlatero"
+
+#~ msgid "Polygon: 10 sides"
+#~ msgstr "Plurlatero: 10 lateroj"
+
+#~ msgid "Polygon: 7 sides"
+#~ msgstr "Plurlatero: 7 lateroj"
+
+#~ msgid "Polygon: 8 sides"
+#~ msgstr "Plurlatero: 8 lateroj"
+
+#~ msgid "Polygon: 9 sides"
+#~ msgstr "Plurlatero: 9 lateroj"
+
+#~ msgid "Shape"
+#~ msgstr "Formo"
+
+#~ msgid "Square"
+#~ msgstr "Kvadrato"
+
+#~ msgid "Start angle"
+#~ msgstr "Startangulo"
+
+#~ msgid "Tool"
+#~ msgstr "Ilo"
+
+#~ msgid "Triangle"
+#~ msgstr "Triangulo"
+
+#~ msgid "Type"
+#~ msgstr "Tipo"
+
+#~ msgid "_Spyrogimp..."
+#~ msgstr "_SpiralGIMPo..."
+
+#~ msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
+#~ msgstr "Krei emblemon per rok-stila teksturo, nova brilo kaj ombro"
+
+#~ msgid "Sta_rscape..."
+#~ msgstr "S_telplena ĉielo..."
+
+#~ msgid "Create an image filled with a swirled tile effect"
+#~ msgstr "Krei bildon plenigitan per efekto de spiralforma kahelo"
+
+#~ msgid "Swirl-_Tile..."
+#~ msgstr "Spiralforma _kahelo.."
+
+#~ msgid "Whirl amount"
+#~ msgstr "Kvanto de spiralo"
+
+#~ msgid "Create an image filled with a swirly pattern"
+#~ msgstr "Krei bildon plenigitan per spiralfoma modelo"
+
+#~ msgid "Number of times to whirl"
+#~ msgstr "Nombro da spiralturnoj"
+
+#~ msgid "Quarter size"
+#~ msgstr "Kvarono"
+
+#~ msgid "Whirl angle"
+#~ msgstr "Spiralforma angulo"
+
+#~ msgid "_Swirly..."
+#~ msgstr "_Spiralo..."
+
+#~ msgid "Add a Trace of Particles effect to the selected region (or alpha)"
+#~ msgstr "Aldoni \"korpusklosignon\" al elektita areo (aŭ alfa)"
+
+#~ msgid "Base color"
+#~ msgstr "Baza koloro"
+
+#~ msgid "Create a logo using a Trace Of Particles effect"
+#~ msgstr "Krei emblemon per efekto de \"korpusklosigno\""
+
+#~ msgid "Edge only"
+#~ msgstr "Nur rando"
+
+#~ msgid "Edge width"
+#~ msgstr "Randolarĝo"
+
+#~ msgid "Hit rate"
+#~ msgstr "Ofteco"
+
+#~ msgid "_Particle Trace..."
+#~ msgstr "Kor_pusklosigno..."
+
+#~ msgid "Antialias"
+#~ msgstr "Glatigo"
+
+#~ msgid ""
+#~ "Create a logo by rendering the specified text along the perimeter of a "
+#~ "circle"
+#~ msgstr "Krei emblemon per desegno de teksto sur ĉirkaŭcirklo"
+
+#~ msgid "Fill angle"
+#~ msgstr "Angulo de plenigo"
+
+#~ msgid "Text C_ircle..."
+#~ msgstr "Tekstc_irklo..."
+
+#~ msgid ""
+#~ "Create a textured logo with highlights, shadows, and a mosaic background"
+#~ msgstr "Krei emblemon per lumakcentoj, ombroj kaj mozaika fono"
+
+#~ msgid "Ending blend"
+#~ msgstr "Finiĝanta stompo"
+
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a texture and add highlights, "
+#~ "shadows, and a mosaic background"
+#~ msgstr ""
+#~ "Plenigi elektitan areon (aŭ alfa) per teksaĵo kaj aldoni lumakcentojn, "
+#~ "ombrojn kaj mozaika fono"
+
+#~ msgid "Hexagons"
+#~ msgstr "Seslateroj"
+
+#~ msgid "Mosaic tile type"
+#~ msgstr "Mozaika kaheltipo"
+
+#~ msgid "Octagons"
+#~ msgstr "Oklateroj"
+
+#~ msgid "Starting blend"
+#~ msgstr "Stompstarto"
+
+#~ msgid "Text pattern"
+#~ msgstr "Tekstmodeloj"
+
+#~ msgid "_Textured..."
+#~ msgstr "_Teksigite..."
+
+#~ msgid "Blur horizontally"
+#~ msgstr "Malfokusi horizontale"
+
+#~ msgid "Blur the edges of an image so the result tiles seamlessly"
+#~ msgstr "Malfokusi bildajn randojn maniere ke ĝi estigas neapartajn kahelojn"
+
+#~ msgid "Blur type"
+#~ msgstr "Malfokusa speco"
+
+#~ msgid "Blur vertically"
+#~ msgstr "Malfokusi vertikale"
+
+#~ msgid "RLE"
+#~ msgstr "RLE"
+
+#~ msgid "_Tileable Blur..."
+#~ msgstr "_Kahelebla malfokuso..."
+
+#~ msgid "Create a decorative web title header"
+#~ msgstr "Krei ornaman titoladon por interreto"
+
+#~ msgid "Web Title Header..."
+#~ msgstr "Titolado por interreto..."
+
+#~ msgid "Create an image filled with a Truchet pattern"
+#~ msgstr "Krei bildon plenigitan per 'Truchet'-modelo"
+
+#~ msgid "Foreground color"
+#~ msgstr "Malfona koloro"
+
+#~ msgid "Mask opacity"
+#~ msgstr "Opakeco de masko"
+
+#~ msgid "Mask size"
+#~ msgstr "Maskgrando"
+
+#~ msgid "Amplitude"
+#~ msgstr "Amplitudo"
+
+#~ msgid ""
+#~ "Create a multi-layer image with an effect like a stone was thrown into "
+#~ "the current image"
+#~ msgstr ""
+#~ "Krei plurtavolan bildon per efekto de \"ĵetita roko tra nuna bildo\""
+
+#~ msgid "Invert direction"
+#~ msgstr "Inversigi direkton"
+
+#~ msgid "Wavelength"
+#~ msgstr "Ondolongo"
+
+#~ msgid "_Waves..."
+#~ msgstr "_Ondoj..."
+
+#~ msgid ""
+#~ "Create a new layer filled with a weave effect to be used as an overlay or "
+#~ "bump map"
+#~ msgstr ""
+#~ "Krei novan tavolon plenigitan per onda efekto kiu estas uzebla kiel "
+#~ "surmeto aŭ bosadomapo"
+
+#~ msgid "Ribbon spacing"
+#~ msgstr "Rubanda interspaco"
+
+#~ msgid "Ribbon width"
+#~ msgstr "Larĝo de rubando"
+
+#~ msgid "Shadow darkness"
+#~ msgstr "Ombra malhelo"
+
+#~ msgid "Shadow depth"
+#~ msgstr "Profundeco de ombro"
+
+#~ msgid "Thread density"
+#~ msgstr "Denso de fadeno"
+
+#~ msgid "Thread intensity"
+#~ msgstr "Intenso de fadeno"
+
+#~ msgid "Thread length"
+#~ msgstr "Lungo de fadeno"
+
+#~ msgid "_Weave..."
+#~ msgstr "_Teksi..."
+
+#~ msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+#~ msgstr "Aldoni diafanan 3D-efekton al la elektita areo (aŭ alfa)"
+
+#~ msgid "Drop shadow X offset"
+#~ msgstr "Ombra delokado de X"
+
+#~ msgid "Drop shadow Y offset"
+#~ msgstr "Ombra delokado de Y"
+
+#~ msgid "Drop shadow blur radius"
+#~ msgstr "Malfokusa radiuso de ombro"
+
+#~ msgid "Drop shadow color"
+#~ msgstr "Koloro de ombro"
+
+#~ msgid "Drop shadow opacity"
+#~ msgstr "Opakeco de ombro"
+
+#~ msgid "Highlight X offset"
+#~ msgstr "Lumakcenta delokado de X"
+
+#~ msgid "Highlight Y offset"
+#~ msgstr "Lumakcenta delokado de Y"
+
+#~ msgid "Highlight color"
+#~ msgstr "Hela koloro"
+
+#~ msgid "Highlight opacity"
+#~ msgstr "Lumakcenta opakeco"
+
+#~ msgid "_Xach-Effect..."
+#~ msgstr "'_Xach'-Efekto..."
 
 #~ msgid "Autocrop"
 #~ msgstr "Aŭtomate stuci"
