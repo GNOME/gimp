@@ -1468,24 +1468,6 @@ gimp_image_base_type (const GimpImage *image)
   return GIMP_IMAGE_GET_PRIVATE (image)->base_type;
 }
 
-GimpImageType
-gimp_image_base_type_with_alpha (const GimpImage *image)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
-
-  switch (GIMP_IMAGE_GET_PRIVATE (image)->base_type)
-    {
-    case GIMP_RGB:
-      return GIMP_RGBA_IMAGE;
-    case GIMP_GRAY:
-      return GIMP_GRAYA_IMAGE;
-    case GIMP_INDEXED:
-      return GIMP_INDEXEDA_IMAGE;
-    }
-
-  return GIMP_RGB_IMAGE;
-}
-
 CombinationMode
 gimp_image_get_combination_mode (GimpImageType dest_type,
                                  gint          src_bytes)

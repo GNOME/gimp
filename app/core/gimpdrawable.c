@@ -1665,36 +1665,43 @@ gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
   return GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 }
 
-GimpImageType
-gimp_drawable_type_without_alpha (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  return GIMP_IMAGE_TYPE_WITHOUT_ALPHA (gimp_drawable_type (drawable));
-}
-
 gboolean
 gimp_drawable_is_rgb (const GimpDrawable *drawable)
 {
+  GimpImageType type;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  return GIMP_IMAGE_TYPE_IS_RGB (gimp_drawable_type (drawable));
+  type = gimp_drawable_type (drawable);
+
+  return (type == GIMP_RGB_IMAGE ||
+          type == GIMP_RGBA_IMAGE);
 }
 
 gboolean
 gimp_drawable_is_gray (const GimpDrawable *drawable)
 {
+  GimpImageType type;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  return GIMP_IMAGE_TYPE_IS_GRAY (gimp_drawable_type (drawable));
+  type = gimp_drawable_type (drawable);
+
+  return (type == GIMP_GRAY_IMAGE ||
+          type == GIMP_GRAYA_IMAGE);
 }
 
 gboolean
 gimp_drawable_is_indexed (const GimpDrawable *drawable)
 {
+  GimpImageType type;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  return GIMP_IMAGE_TYPE_IS_INDEXED (gimp_drawable_type (drawable));
+  type = gimp_drawable_type (drawable);
+
+  return (type == GIMP_INDEXED_IMAGE ||
+          type == GIMP_INDEXEDA_IMAGE);
 }
 
 gint
@@ -1705,32 +1712,6 @@ gimp_drawable_bytes (const GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
   format = gegl_buffer_get_format (drawable->private->buffer);
-
-  return babl_format_get_bytes_per_pixel (format);
-}
-
-gint
-gimp_drawable_bytes_with_alpha (const GimpDrawable *drawable)
-{
-  const Babl *format;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  format = gimp_image_get_format_with_alpha (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                             gimp_drawable_type (drawable));
-
-  return babl_format_get_bytes_per_pixel (format);
-}
-
-gint
-gimp_drawable_bytes_without_alpha (const GimpDrawable *drawable)
-{
-  const Babl *format;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  format = gimp_image_get_format_without_alpha (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                                gimp_drawable_type (drawable));
 
   return babl_format_get_bytes_per_pixel (format);
 }

@@ -22,17 +22,6 @@
 #include "gimpviewable.h"
 
 
-#define GIMP_IMAGE_TYPE_IS_RGB(t)          ((t) == GIMP_RGB_IMAGE ||         \
-                                            (t) == GIMP_RGBA_IMAGE)
-#define GIMP_IMAGE_TYPE_IS_GRAY(t)         ((t) == GIMP_GRAY_IMAGE ||        \
-                                            (t) == GIMP_GRAYA_IMAGE)
-#define GIMP_IMAGE_TYPE_IS_INDEXED(t)      ((t) == GIMP_INDEXED_IMAGE ||     \
-                                            (t) == GIMP_INDEXEDA_IMAGE)
-
-#define GIMP_IMAGE_TYPE_HAS_ALPHA(t)       ((t) == GIMP_RGBA_IMAGE  ||       \
-                                            (t) == GIMP_GRAYA_IMAGE ||       \
-                                            (t) == GIMP_INDEXEDA_IMAGE)
-
 #define GIMP_IMAGE_TYPE_WITH_ALPHA(t)     (((t) == GIMP_RGB_IMAGE ||         \
                                             (t) == GIMP_RGBA_IMAGE) ?        \
                                            GIMP_RGBA_IMAGE :                 \
@@ -42,21 +31,6 @@
                                            ((t) == GIMP_INDEXED_IMAGE ||     \
                                             (t) == GIMP_INDEXEDA_IMAGE) ?    \
                                            GIMP_INDEXEDA_IMAGE : -1)
-#define GIMP_IMAGE_TYPE_WITHOUT_ALPHA(t)  (((t) == GIMP_RGB_IMAGE ||         \
-                                            (t) == GIMP_RGBA_IMAGE) ?        \
-                                           GIMP_RGB_IMAGE :                  \
-                                           ((t) == GIMP_GRAY_IMAGE ||        \
-                                            (t) == GIMP_GRAYA_IMAGE) ?       \
-                                           GIMP_GRAY_IMAGE :                 \
-                                           ((t) == GIMP_INDEXED_IMAGE ||     \
-                                            (t) == GIMP_INDEXEDA_IMAGE) ?    \
-                                           GIMP_INDEXED_IMAGE : -1)
-#define GIMP_IMAGE_TYPE_BYTES(t)           ((t) == GIMP_RGBA_IMAGE     ? 4 : \
-                                            (t) == GIMP_RGB_IMAGE      ? 3 : \
-                                            (t) == GIMP_GRAYA_IMAGE    ? 2 : \
-                                            (t) == GIMP_GRAY_IMAGE     ? 1 : \
-                                            (t) == GIMP_INDEXEDA_IMAGE ? 2 : \
-                                            (t) == GIMP_INDEXED_IMAGE  ? 1 : -1)
 #define GIMP_IMAGE_TYPE_FROM_BYTES(b)      ((b) == 4 ? GIMP_RGBA_IMAGE  :    \
                                             (b) == 3 ? GIMP_RGB_IMAGE   :    \
                                             (b) == 2 ? GIMP_GRAYA_IMAGE :    \
@@ -166,7 +140,6 @@ GimpImage     * gimp_image_new                   (Gimp               *gimp,
                                                   GimpImageBaseType   base_type);
 
 GimpImageBaseType  gimp_image_base_type            (const GimpImage  *image);
-GimpImageType      gimp_image_base_type_with_alpha (const GimpImage  *image);
 CombinationMode    gimp_image_get_combination_mode (GimpImageType     dest_type,
                                                     gint              src_bytes);
 
