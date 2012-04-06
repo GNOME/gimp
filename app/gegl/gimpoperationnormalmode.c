@@ -152,10 +152,10 @@ gimp_operation_normal_mode_process (GeglOperation       *operation,
     {
       while (samples--)
         {
-          out[RED]   = in[RED]   * (1.0 - aux[ALPHA]) + aux[RED]   * aux[ALPHA];
-          out[GREEN] = in[GREEN] * (1.0 - aux[ALPHA]) + aux[GREEN] * aux[ALPHA];
-          out[BLUE]  = in[BLUE]  * (1.0 - aux[ALPHA]) + aux[BLUE]  * aux[ALPHA];
-          out[ALPHA] = in[ALPHA] + aux[ALPHA] * (1.0 - in[ALPHA]);
+          out[0] = aux[0] * aux[3] + in[0] * in[3] * (1.0 - aux[3]);
+          out[1] = aux[1] * aux[3] + in[1] * in[3] * (1.0 - aux[3]);
+          out[2] = aux[2] * aux[3] + in[2] * in[3] * (1.0 - aux[3]);
+          out[3] = aux[3] + in[3] - aux[3] * in[3];
 
           in  += 4;
           aux += 4;
