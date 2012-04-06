@@ -1665,6 +1665,39 @@ gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
   return GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 }
 
+GimpImageType
+gimp_drawable_get_base_type (const GimpDrawable *drawable)
+{
+  const Babl *format;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  format = gegl_buffer_get_format (drawable->private->buffer);
+
+  if (format == babl_format ("Y' u8") ||
+      format == babl_format ("Y'A u8"))
+    {
+      return GIMP_GRAY;
+    }
+  else if (format == babl_format ("R'G'B' u8") ||
+           format == babl_format ("R'G'B'A u8"))
+    {
+      return GIMP_RGB;
+    }
+  else
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      if (format == gimp_image_get_format (image, GIMP_INDEXED_IMAGE) ||
+          format == gimp_image_get_format (image, GIMP_INDEXEDA_IMAGE))
+        {
+          return GIMP_INDEXED;
+        }
+    }
+
+  g_return_val_if_reached (-1);
+}
+
 gboolean
 gimp_drawable_is_rgb (const GimpDrawable *drawable)
 {
