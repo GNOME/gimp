@@ -1156,8 +1156,6 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpImageBaseType  new_base_type,
                             gboolean           push_undo)
 {
-  GimpImageType type;
-
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (dest_image == NULL || GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (new_base_type != GIMP_INDEXED || GIMP_IS_IMAGE (dest_image));
@@ -1165,9 +1163,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
-  type = gimp_drawable_type (drawable);
-
-  g_return_if_fail (new_base_type != GIMP_IMAGE_TYPE_BASE_TYPE (type));
+  g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable));
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
                                                     new_base_type, push_undo);
@@ -1665,7 +1661,7 @@ gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
   return GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 }
 
-GimpImageType
+GimpImageBaseType
 gimp_drawable_get_base_type (const GimpDrawable *drawable)
 {
   const Babl *format;

@@ -814,7 +814,7 @@ gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
                                                  child_height);
     }
 
-  base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+  base_type = gimp_drawable_get_base_type (drawable);
 
   memsize += gimp_projection_estimate_memsize (base_type, width, height);
 
@@ -888,7 +888,7 @@ gimp_group_layer_get_format (GimpProjectable *projectable)
   if (private->convert_format)
     return private->convert_format;
 
-  base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (projectable)));
+  base_type = gimp_drawable_get_base_type (GIMP_DRAWABLE (projectable));
 
   return get_projection_format (projectable, base_type);
 }

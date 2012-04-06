@@ -226,7 +226,7 @@ const Babl    * gimp_drawable_get_format_without_alpha
 gboolean        gimp_drawable_has_alpha          (const GimpDrawable *drawable);
 GimpImageType   gimp_drawable_type               (const GimpDrawable *drawable);
 GimpImageType   gimp_drawable_type_with_alpha    (const GimpDrawable *drawable);
-GimpImageType   gimp_drawable_get_base_type      (const GimpDrawable *drawable);
+GimpImageBaseType gimp_drawable_get_base_type    (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_rgb             (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_gray            (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_indexed         (const GimpDrawable *drawable);

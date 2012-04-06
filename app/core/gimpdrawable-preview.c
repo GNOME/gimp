@@ -99,14 +99,11 @@ gimp_drawable_get_preview (GimpViewable *viewable,
 gint
 gimp_drawable_preview_bytes (GimpDrawable *drawable)
 {
-  GimpImageBaseType base_type;
-  gint              bytes = 0;
+  gint bytes = 0;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
 
-  base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
-
-  switch (base_type)
+  switch (gimp_drawable_get_base_type (drawable))
     {
     case GIMP_RGB:
     case GIMP_GRAY:
@@ -151,7 +148,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   if (! image->gimp->config->layer_previews)
     return NULL;
 
-  if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)) == GIMP_INDEXED)
+  if (gimp_drawable_is_indexed (drawable))
     return gimp_drawable_indexed_preview (drawable,
                                           gimp_drawable_get_colormap (drawable),
                                           src_x, src_y, src_width, src_height,

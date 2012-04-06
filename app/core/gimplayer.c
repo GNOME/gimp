@@ -611,7 +611,7 @@ gimp_layer_convert (GimpItem  *item,
   GimpImageBaseType  old_base_type;
   GimpImageBaseType  new_base_type;
 
-  old_base_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+  old_base_type = gimp_drawable_get_base_type (drawable);
   new_base_type = gimp_image_base_type (dest_image);
 
   if (old_base_type != new_base_type)

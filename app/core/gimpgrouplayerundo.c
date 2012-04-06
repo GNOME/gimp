@@ -74,7 +74,7 @@ gimp_group_layer_undo_constructed (GObject *object)
       break;
 
     case GIMP_UNDO_GROUP_LAYER_CONVERT:
-      group_layer_undo->prev_type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (group)));
+      group_layer_undo->prev_type = gimp_drawable_get_base_type (GIMP_DRAWABLE (group));
       break;
 
     default:
@@ -119,7 +119,7 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
       {
         GimpImageBaseType type;
 
-        type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (group)));
+        type = gimp_drawable_get_base_type (GIMP_DRAWABLE (group));
         gimp_drawable_convert_type (GIMP_DRAWABLE (group), NULL,
                                     group_layer_undo->prev_type, FALSE);
         group_layer_undo->prev_type = type;

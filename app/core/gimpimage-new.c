@@ -174,7 +174,7 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   item  = GIMP_ITEM (drawable);
   image = gimp_item_get_image (item);
 
-  type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+  type = gimp_drawable_get_base_type (drawable);
 
   new_image = gimp_create_image (gimp,
                                  gimp_item_get_width  (item),
@@ -313,37 +313,39 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
                             GdkPixbuf   *pixbuf,
                             const gchar *layer_name)
 {
-  GimpImageType  image_type;
-  GimpImage     *new_image;
-  GimpLayer     *layer;
+  GimpImage         *new_image;
+  GimpLayer         *layer;
+  GimpImageBaseType  base_type;
+  gboolean           has_alpha = FALSE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
   switch (gdk_pixbuf_get_n_channels (pixbuf))
     {
-    case 1: image_type = GIMP_GRAY_IMAGE;  break;
-    case 2: image_type = GIMP_GRAYA_IMAGE; break;
-    case 3: image_type = GIMP_RGB_IMAGE;   break;
-    case 4: image_type = GIMP_RGBA_IMAGE;  break;
+    case 2: has_alpha = TRUE;
+    case 1: base_type = GIMP_GRAY;
+      break;
+
+    case 4: has_alpha = TRUE;
+    case 3: base_type = GIMP_RGB;
       break;
 
     default:
       g_return_val_if_reached (NULL);
-      break;
     }
 
   new_image = gimp_create_image (gimp,
                                  gdk_pixbuf_get_width  (pixbuf),
                                  gdk_pixbuf_get_height (pixbuf),
-                                 GIMP_IMAGE_TYPE_BASE_TYPE (image_type),
+                                 base_type,
                                  FALSE);
 
   gimp_image_undo_disable (new_image);
 
   layer = gimp_layer_new_from_pixbuf (pixbuf, new_image,
-                                      gimp_image_get_format (new_image,
-                                                             image_type),
+                                      gimp_image_get_layer_format (new_image,
+                                                                   has_alpha),
                                       layer_name,
                                       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

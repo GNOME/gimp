@@ -912,7 +912,7 @@ image_add_layer_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
           gimp_pdb_image_is_base_type (image,
-                                       GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
+                                       gimp_drawable_get_base_type (GIMP_DRAWABLE (layer)),
                                        error))
         {
           success = gimp_image_add_layer (image, layer,
@@ -951,7 +951,7 @@ image_insert_layer_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
           gimp_pdb_image_is_base_type (image,
-                                       GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
+                                       gimp_drawable_get_base_type (GIMP_DRAWABLE (layer)),
                                        error) &&
           (parent == NULL ||
            (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
