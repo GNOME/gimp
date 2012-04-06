@@ -189,11 +189,10 @@ drawable_actions_update (GimpActionGroup *group,
 
       if (drawable)
         {
-          GimpImageType  drawable_type = gimp_drawable_type (drawable);
-          GimpItem      *item;
+          GimpItem *item;
 
-          is_rgb     = GIMP_IMAGE_TYPE_IS_RGB     (drawable_type);
-          is_indexed = GIMP_IMAGE_TYPE_IS_INDEXED (drawable_type);
+          is_rgb     = gimp_drawable_is_rgb (drawable);
+          is_indexed = gimp_drawable_is_indexed (drawable);
 
           if (GIMP_IS_LAYER_MASK (drawable))
             item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
