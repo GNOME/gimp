@@ -154,14 +154,14 @@ gimp_edit_paste (GimpImage    *image,
                  gint          viewport_width,
                  gint          viewport_height)
 {
-  GimpLayer     *layer;
-  GimpImageType  type;
-  gint           center_x;
-  gint           center_y;
-  gint           offset_x;
-  gint           offset_y;
-  gint           width;
-  gint           height;
+  GimpLayer  *layer;
+  const Babl *format;
+  gint        center_x;
+  gint        center_y;
+  gint        offset_x;
+  gint        offset_y;
+  gint        width;
+  gint        height;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
@@ -174,13 +174,21 @@ gimp_edit_paste (GimpImage    *image,
    */
 
   if (drawable)
-    type = gimp_drawable_type_with_alpha (drawable);
+    {
+      format = gimp_drawable_get_format_with_alpha (drawable);
+    }
   else
-    type = gimp_image_base_type_with_alpha (image);
+    {
+      GimpImageType  type;
+
+      type = gimp_image_base_type_with_alpha (image);
+
+      format = gimp_image_get_format (image, type);
+    }
 
   layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (paste),
                                       image,
-                                      gimp_image_get_format (image, type),
+                                      format,
                                       _("Pasted Layer"),
                                       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
