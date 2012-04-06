@@ -1,19 +1,19 @@
 # This is the Esperanto catalog for the libgimp.
-# Copyright (C) 1999-2011 Free Software Foundation, Inc.
+# Copyright (C) 1999-2012 Free Software Foundation, Inc.
 #
 # Antonio C. CODAZZI "la Filozofo" <f_sophia@libero.it>, 2006.
 # Michael MORONI < >, 2011.
-# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011.
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-05-03 20:04+0000\n"
-"PO-Revision-Date: 2011-05-04 19:17+0200\n"
+"POT-Creation-Date: 2012-04-06 16:33+0000\n"
+"PO-Revision-Date: 2012-04-06 20:49+0200\n"
 "Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
-"Language-Team: Esperanto <ubuntu-l10n-eo@lists.launchpad.net>\n"
+"Language-Team: Esperanto <gnome-l10n-eo@lists.launchpad.net>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,7 +55,7 @@ msgstr "_Foliumi..."
 #: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "%s ne povas trakti tavolojn"
+msgstr "%s kromprogramo ne povas trakti tavolojn"
 
 #: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
 #: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
@@ -65,7 +65,8 @@ msgstr "Kunfandi videblajn tavolojn"
 #: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "%s ne povas trakti deŝovon, grandon aŭ opakecon de tavoloj"
+msgstr ""
+"%s kromprogramo ne povas trakti deŝovon, grandon aŭ opakecon de tavoloj"
 
 #: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
@@ -84,12 +85,12 @@ msgstr "Plata bildo"
 #: ../libgimp/gimpexport.c:288
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "%s ne povas trakti travideblecon"
+msgstr "%s kromprogramo ne povas trakti travideblecon"
 
 #: ../libgimp/gimpexport.c:297
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "%s ne povas trakti tavolmaskojn"
+msgstr "%s kromprogramo ne povas trakti tavolmaskojn"
 
 #: ../libgimp/gimpexport.c:298
 msgid "Apply Layer Masks"
@@ -183,7 +184,7 @@ msgstr "Elporti dosieron"
 msgid "_Ignore"
 msgstr "_Ignori"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:989
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:988
 msgid "_Export"
 msgstr "_Elporti"
 
@@ -220,7 +221,7 @@ msgstr ""
 "Oni konservos kanalon (konservita elekto) kiel %s.\n"
 "Ĉi tiu ne konservos videblajn tavolojn."
 
-#: ../libgimp/gimpexport.c:980
+#: ../libgimp/gimpexport.c:979
 msgid "Export Image as "
 msgstr "Elporti bildon kiel "
 
@@ -236,7 +237,10 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "Elekto de gradiento"
 
-#: ../libgimp/gimpmenu.c:459 ../libgimpwidgets/gimpintstore.c:238
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
+#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:241
 msgid "(Empty)"
 msgstr "(Malplene)"
 
@@ -585,31 +589,26 @@ msgid "Square"
 msgstr "Kvadrate"
 
 #: ../libgimpbase/gimpbaseenums.c:404
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Konusa (sim.)"
 
 #: ../libgimpbase/gimpbaseenums.c:405
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Konusa (nesim.)"
 
 #: ../libgimpbase/gimpbaseenums.c:406
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Konturita (angula)"
 
 #: ../libgimpbase/gimpbaseenums.c:407
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Konturita (sfera)"
 
 #: ../libgimpbase/gimpbaseenums.c:408
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Konturita (kurbita)"
@@ -627,13 +626,11 @@ msgid "Spiral (ccw)"
 msgstr "Spirala (kontraŭmontrila)"
 
 #: ../libgimpbase/gimpbaseenums.c:442
-#, fuzzy
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Intersekcoj (punktoj)"
 
 #: ../libgimpbase/gimpbaseenums.c:443
-#, fuzzy
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Intersekcoj (kruce)"
@@ -654,7 +651,6 @@ msgid "Solid"
 msgstr "Solide"
 
 #: ../libgimpbase/gimpbaseenums.c:476
-#, fuzzy
 msgctxt "icon-type"
 msgid "Stock ID"
 msgstr "Stok-ID"
@@ -726,16 +722,14 @@ msgid "Linear"
 msgstr "Lineara"
 
 #: ../libgimpbase/gimpbaseenums.c:581
-#, fuzzy
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Kuba"
 
 #: ../libgimpbase/gimpbaseenums.c:582
-#, fuzzy
 msgctxt "interpolation-type"
 msgid "Sinc (Lanczos3)"
-msgstr "Lanczos3"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:611
 msgctxt "paint-application-mode"
@@ -820,10 +814,9 @@ msgid "Adjust"
 msgstr "Ĝustigi"
 
 #: ../libgimpbase/gimpbaseenums.c:800
-#, fuzzy
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr "Eltondi"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:801
 msgctxt "transform-resize"
@@ -1014,29 +1007,29 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "la valoro de %s peco ne estas valida UTF-8-ĉeno"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:445
+#: ../libgimpconfig/gimpconfig-deserialize.c:444
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "por boolea peco %s estas necese \"yes\" aŭ \"no\" dume \"%s\" alvenis"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:519
+#: ../libgimpconfig/gimpconfig-deserialize.c:518
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "la valoro \"%s\" estas nevalida por %s peco"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:534
+#: ../libgimpconfig/gimpconfig-deserialize.c:533
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "la valoro \"%ld\" estas nevalida por %s peco"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:603
+#: ../libgimpconfig/gimpconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "dum analizo de peco \"%s\": %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:507
-#: ../libgimpconfig/gimpscanner.c:588
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
+#: ../libgimpconfig/gimpscanner.c:641
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "fatala analizeraro"
@@ -1086,12 +1079,18 @@ msgstr ""
 msgid "Could not create '%s': %s"
 msgstr "Esras neeble krei \"%s\": %s"
 
-#: ../libgimpconfig/gimpscanner.c:264
+#: ../libgimpconfig/gimpscanner.c:268
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "nevalida UTF-8-ĉeno"
 
-#: ../libgimpconfig/gimpscanner.c:615
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpscanner.c:431
+#, fuzzy, c-format
+msgid "expected 'yes' or 'no' for boolean token, got '%s'"
+msgstr "por boolea peco %s estas necese \"yes\" aŭ \"no\" dume \"%s\" alvenis"
+
+#: ../libgimpconfig/gimpscanner.c:668
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Eraro dum procezo de \"%s\" en linio %d: %s"
@@ -1148,19 +1147,19 @@ msgstr "Estas neeble krei miniaturon de %s: %s"
 msgid "_Search:"
 msgstr "_Serĉi:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:134
+#: ../libgimpwidgets/gimpcolorbutton.c:135
 msgid "_Foreground Color"
 msgstr "_Malfona koloro"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:138
+#: ../libgimpwidgets/gimpcolorbutton.c:139
 msgid "_Background Color"
 msgstr "_Fona koloro"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:142
+#: ../libgimpwidgets/gimpcolorbutton.c:143
 msgid "Blac_k"
 msgstr "_Nigro"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:146
+#: ../libgimpwidgets/gimpcolorbutton.c:147
 msgid "_White"
 msgstr "_Blanko"
 
@@ -1177,15 +1176,15 @@ msgstr "Neniu"
 msgid "Scales"
 msgstr "Skalo"
 
-#: ../libgimpwidgets/gimpcolorselection.c:217
+#: ../libgimpwidgets/gimpcolorselection.c:220
 msgid "Current:"
 msgstr "Nuna:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:226
+#: ../libgimpwidgets/gimpcolorselection.c:229
 msgid "Old:"
 msgstr "Malnova:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:311
+#: ../libgimpwidgets/gimpcolorselection.c:314
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1193,23 +1192,23 @@ msgstr ""
 "Deksesuma kolornotaro kiel tiu kiu estas uzita por HTML kaj por CSS. Tiu ero "
 "konsentas ankaŭ CSS-kolornomojn."
 
-#: ../libgimpwidgets/gimpcolorselection.c:317
+#: ../libgimpwidgets/gimpcolorselection.c:320
 msgid "HTML _notation:"
 msgstr "HTML-_notaro:"
 
-#: ../libgimpwidgets/gimpfileentry.c:197
+#: ../libgimpwidgets/gimpfileentry.c:200
 msgid "Open a file selector to browse your folders"
 msgstr "Malfermi dosierelektilon por foliumi sian dosierujojn"
 
-#: ../libgimpwidgets/gimpfileentry.c:198
+#: ../libgimpwidgets/gimpfileentry.c:201
 msgid "Open a file selector to browse your files"
 msgstr "Malfermi dosierelektilon por foliumi sian dosierojn"
 
-#: ../libgimpwidgets/gimpfileentry.c:358
+#: ../libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
 msgstr "Elekti dosierujon"
 
-#: ../libgimpwidgets/gimpfileentry.c:360
+#: ../libgimpwidgets/gimpfileentry.c:363
 msgid "Select File"
 msgstr "Elekti dosieron"
 
@@ -1217,63 +1216,63 @@ msgstr "Elekti dosieron"
 msgid "Press F1 for more help"
 msgstr ""
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:217
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
 msgid "Kilobytes"
 msgstr "Kilobajtoj"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:218
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
 msgid "Megabytes"
 msgstr "Megabajtoj"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:219
+#: ../libgimpwidgets/gimpmemsizeentry.c:222
 msgid "Gigabytes"
 msgstr "Gigabajtoj"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:278
-#: ../libgimpwidgets/gimppageselector.c:1174
+#: ../libgimpwidgets/gimppageselector.c:282
+#: ../libgimpwidgets/gimppageselector.c:1178
 msgid "Nothing selected"
 msgstr "Nenio estas elektita"
 
-#: ../libgimpwidgets/gimppageselector.c:296
+#: ../libgimpwidgets/gimppageselector.c:300
 msgid "Select _All"
 msgstr "_Elekti ĉiujn"
 
-#: ../libgimpwidgets/gimppageselector.c:316
+#: ../libgimpwidgets/gimppageselector.c:320
 msgid "Select _range:"
 msgstr "Elekti ample_kson:"
 
-#: ../libgimpwidgets/gimppageselector.c:328
+#: ../libgimpwidgets/gimppageselector.c:332
 msgid "Open _pages as"
 msgstr "Malfermi _paĝojn kiel"
 
-#: ../libgimpwidgets/gimppageselector.c:429
+#: ../libgimpwidgets/gimppageselector.c:433
 msgid "Page 000"
 msgstr "Paĝo 000"
 
-#: ../libgimpwidgets/gimppageselector.c:517
-#: ../libgimpwidgets/gimppageselector.c:754
+#: ../libgimpwidgets/gimppageselector.c:521
+#: ../libgimpwidgets/gimppageselector.c:758
 #, c-format
 msgid "Page %d"
 msgstr "Paĝo %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1179
+#: ../libgimpwidgets/gimppageselector.c:1183
 msgid "One page selected"
 msgstr "Unu elektita paĝo"
 
-#: ../libgimpwidgets/gimppageselector.c:1186
 #: ../libgimpwidgets/gimppageselector.c:1190
+#: ../libgimpwidgets/gimppageselector.c:1194
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d elektita paĝo"
 msgstr[1] "%d elektitaj paĝoj"
 
-#: ../libgimpwidgets/gimppatheditor.c:234
+#: ../libgimpwidgets/gimppatheditor.c:239
 msgid "Writable"
 msgstr "Skribeble"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#: ../libgimpwidgets/gimppatheditor.c:248
 msgid "Folder"
 msgstr "Dosierujo"
 
@@ -1286,7 +1285,7 @@ msgstr ""
 "tiun koloron."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:287
+#: ../libgimpwidgets/gimppreview.c:290
 msgid "_Preview"
 msgstr "_Antaŭmontro"
 
@@ -1393,7 +1392,7 @@ msgstr "Unito"
 msgid "Factor"
 msgstr "Faktoro"
 
-#: ../libgimpwidgets/gimpwidgets.c:512
+#: ../libgimpwidgets/gimpwidgets.c:516
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1401,22 +1400,22 @@ msgstr ""
 "Uzu ĉi valoron por la semo de generilo de hazarda nombro - ĉi tiu eblas \n"
 "ripeti estabilitan \"hazardan\" operacion"
 
-#: ../libgimpwidgets/gimpwidgets.c:516
+#: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
 msgstr "_Nova semo"
 
-#: ../libgimpwidgets/gimpwidgets.c:529
+#: ../libgimpwidgets/gimpwidgets.c:533
 msgid "Seed random number generator with a generated random number"
 msgstr "Generilo de hazarda semo per nombro kiu estas hazarde akirita"
 
-#: ../libgimpwidgets/gimpwidgets.c:533
+#: ../libgimpwidgets/gimpwidgets.c:537
 msgid "_Randomize"
 msgstr "_Hazardigi"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:49
 msgctxt "input-mode"
 msgid "Disabled"
-msgstr "Elŝaltite"
+msgstr "Elŝaltite"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:50
 msgctxt "input-mode"
@@ -1637,112 +1636,112 @@ msgstr ""
 msgid "DirectX DirectInput"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:419
+#: ../modules/controller-dx-dinput.c:418
 #, c-format
 msgid "Button %d"
 msgstr "Butono %d"
 
-#: ../modules/controller-dx-dinput.c:422
+#: ../modules/controller-dx-dinput.c:421
 #, c-format
 msgid "Button %d Press"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:425
+#: ../modules/controller-dx-dinput.c:424
 #, c-format
 msgid "Button %d Release"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:442
+#: ../modules/controller-dx-dinput.c:441
 #: ../modules/controller-linux-input.c:89
 msgid "X Move Left"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:445
+#: ../modules/controller-dx-dinput.c:444
 #: ../modules/controller-linux-input.c:90
 msgid "X Move Right"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:451
+#: ../modules/controller-dx-dinput.c:450
 msgid "Y Move Away"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:454
+#: ../modules/controller-dx-dinput.c:453
 msgid "Y Move Near"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:460
+#: ../modules/controller-dx-dinput.c:459
 #: ../modules/controller-linux-input.c:93
 msgid "Z Move Up"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:463
+#: ../modules/controller-dx-dinput.c:462
 #: ../modules/controller-linux-input.c:94
 msgid "Z Move Down"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:469
+#: ../modules/controller-dx-dinput.c:468
 msgid "X Axis Tilt Away"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:472
+#: ../modules/controller-dx-dinput.c:471
 msgid "X Axis Tilt Near"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:478
+#: ../modules/controller-dx-dinput.c:477
 #: ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-dx-dinput.c:480
 #: ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-dx-dinput.c:486
 #: ../modules/controller-linux-input.c:100
 msgid "Z Axis Turn Left"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-dx-dinput.c:489
 #: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Right"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:501
+#: ../modules/controller-dx-dinput.c:500
 #, c-format
 msgid "Slider %d Increase"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:504
+#: ../modules/controller-dx-dinput.c:503
 #, c-format
 msgid "Slider %d Decrease"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:514
+#: ../modules/controller-dx-dinput.c:513
 #, c-format
 msgid "POV %d X View"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:517
+#: ../modules/controller-dx-dinput.c:516
 #, c-format
 msgid "POV %d Y View"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:520
+#: ../modules/controller-dx-dinput.c:519
 #, c-format
 msgid "POV %d Return"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:1082
+#: ../modules/controller-dx-dinput.c:1081
 msgid "DirectInput Events"
 msgstr ""
 
-#: ../modules/controller-dx-dinput.c:1093
+#: ../modules/controller-dx-dinput.c:1092
 #: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "Neniu agordita aparato"
 
-#: ../modules/controller-dx-dinput.c:1118
+#: ../modules/controller-dx-dinput.c:1117
 #: ../modules/controller-linux-input.c:587
 msgid "Device not available"
 msgstr "Aparato ne disponeblas"
