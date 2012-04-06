@@ -2,7 +2,7 @@
 # Copyright (C) 2006-2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the GIMP package.
 # Antonio C. CODAZZI "la Filozofo" <f_sophia@libero.it>, 2006.
-# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011.
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
@@ -10,9 +10,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-03-10 17:33+0000\n"
-"PO-Revision-Date: 2011-06-05 18:11+0200\n"
+"PO-Revision-Date: 2012-04-06 22:26+0200\n"
 "Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
-"Language-Team: Esperanto <ubuntu-l10n-eo@lists.launchpad.net>\n"
+"Language-Team: Esperanto <gnome-l10n-eo@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -45,7 +45,6 @@ msgstr ""
 "tavolo en la fenestro pri Tavoloj."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
-#, fuzzy
 #| msgid ""
 #| "When you save an image to work on it again later, try using XCF, GIMP's "
 #| "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -57,10 +56,10 @@ msgid ""
 "the layers and many aspects of your work-in-progress. Once a project is "
 "completed, you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Kiam vi konservas bildon por labori super ĝi poste, provu uzi XCF, t.e. GIMP-"
-"origina dosierformato, (uzu <tt>.xcf</tt> finaĵon). Tio konservas tavolojn "
-"kaj iun ajn proprecon de via evoluanta laboraĵo. Kiam la projekto estas "
-"finita, vi povas konservi ĝin kiel JPEG, PNG, GIF, ..."
+"Kiam vi konservas bildon por labori super ĝi poste, provu uzi na XCF, GIMP-"
+"origina dosierformo (uzu la dosier-finaĵon <tt>.xcf</tt>). Tio konservas "
+"tavolojn kaj iun ajn proprecon de via evoluanta laboraĵo. Kiam la projekto "
+"estas finita, vi povas konservi ĝin kiel JPEG, PNG, GIF, ktp."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
@@ -117,7 +116,6 @@ msgstr ""
 "plenigos la bildon mem aŭ la elekton per ĉi tiu koloro."
 
 #: ../data/tips/gimp-tips.xml.in.h:10
-#, fuzzy
 #| msgid ""
 #| "You can use the middle mouse button to pan around the image (or "
 #| "optionally hold <tt>Spacebar</tt> while you move the mouse.)"
@@ -125,8 +123,8 @@ msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
-"Vi povas uzi la mezan mus-butonon (aŭ laŭvole <tt>Spacoklavo</tt>  dum la "
-"movo de muso) por ĉirkaŭiri en la bildo mem."
+"Vi povas uzi la mezan mus-butonon por ĉirkaŭiri la bildon (aŭ laŭvole "
+"<tt>Spacoklavo</tt>  dum la movo de muso)."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -264,8 +262,8 @@ msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
-"<tt>Shift</tt>-alklako sur okuloforma piktogramo en TAVOLOJ dialogofenestro kaŝos "
-"ĉiujn tavolojn krom tiu kiu estas rilata la okulon. Per <tt>Shift</tt>-"
+"<tt>Shift</tt>-alklako sur okuloforma piktogramo en TAVOLOJ dialogofenestro "
+"kaŝos ĉiujn tavolojn krom tiu kiu estas rilata la okulon. Per <tt>Shift</tt>-"
 "alklako, ĉiuj tavoloj re-aperos."
 
 #: ../data/tips/gimp-tips.xml.in.h:24
