@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-04 19:01+0000\n"
-"PO-Revision-Date: 2012-02-03 23:13+0900\n"
+"POT-Creation-Date: 2012-04-04 09:37+0000\n"
+"PO-Revision-Date: 2012-04-05 22:16+0900\n"
 "Last-Translator: Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -596,12 +596,12 @@ msgid "Orientation"
 msgstr "向き"
 
 #: ../plug-ins/common/blinds.c:262 ../plug-ins/common/ripple.c:561
-#: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:535
+#: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:537
 msgid "_Horizontal"
 msgstr "水平(_H)"
 
 #: ../plug-ins/common/blinds.c:265 ../plug-ins/common/ripple.c:564
-#: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:534
+#: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:536
 msgid "_Vertical"
 msgstr "垂直(_V)"
 
@@ -614,7 +614,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:887 ../plug-ins/common/file-pnm.c:583
+#: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
 #: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
@@ -624,7 +624,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
-#: ../plug-ins/gfig/gfig-dialog.c:1306
+#: ../plug-ins/gfig/gfig-dialog.c:1321
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
@@ -1030,7 +1030,7 @@ msgstr "チャンネルミキサー設定読み込み"
 #: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
-#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:752
+#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:756
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1014
 #: ../plug-ins/common/file-ps.c:2910 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
@@ -1049,8 +1049,8 @@ msgstr "チャンネルミキサー設定読み込み"
 #: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:926
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:923
+#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:222
 #: ../plug-ins/help/gimphelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
@@ -1071,7 +1071,7 @@ msgstr "チャンネルミキサー設定保存"
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
 #: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:486
 #: ../plug-ins/common/file-pcx.c:712 ../plug-ins/common/file-pix.c:526
-#: ../plug-ins/common/file-png.c:1285 ../plug-ins/common/file-pnm.c:1010
+#: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
 #: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
@@ -1084,7 +1084,7 @@ msgstr "チャンネルミキサー設定保存"
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
 #: ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
-#: ../plug-ins/gfig/gfig.c:798 ../plug-ins/ifs-compose/ifs-compose.c:2408
+#: ../plug-ins/gfig/gfig.c:797 ../plug-ins/ifs-compose/ifs-compose.c:2408
 #: ../plug-ins/lighting/lighting-ui.c:1223
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -2258,7 +2258,7 @@ msgstr "カーブに沿って曲げる"
 #: ../plug-ins/common/curve-bend.c:1262
 #: ../plug-ins/gimpressionist/orientmap.c:590
 #: ../plug-ins/gimpressionist/sizemap.c:459
-#: ../plug-ins/print/print-page-layout.c:171
+#: ../plug-ins/print/print-page-layout.c:175
 msgid "Preview"
 msgstr "プレビュー"
 
@@ -2275,7 +2275,7 @@ msgstr "プレビュー自動更新(_V)"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve-bend.c:1310 ../plug-ins/common/ripple.c:523
-#: ../plug-ins/gfig/gfig-dialog.c:1228
+#: ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "オプション"
 
@@ -2699,7 +2699,7 @@ msgstr "ストライプ除去"
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
-#: ../plug-ins/print/print-page-layout.c:264
+#: ../plug-ins/print/print-page-layout.c:280
 msgid "_Width:"
 msgstr "幅(_W):"
 
@@ -2913,7 +2913,7 @@ msgstr "垂直方向ソーベル(_V)"
 msgid "_Keep sign of result (one direction only)"
 msgstr "結果の符号を保存する (一方向のみ)(_K)"
 
-#: ../plug-ins/common/edge-sobel.c:371
+#: ../plug-ins/common/edge-sobel.c:372
 msgid "Sobel edge detecting"
 msgstr "ソーベル輪郭を抽出しています"
 
@@ -3011,7 +3011,7 @@ msgstr "彫金"
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
-#: ../plug-ins/print/print-page-layout.c:266
+#: ../plug-ins/print/print-page-layout.c:282
 msgid "_Height:"
 msgstr "高さ(_H):"
 
@@ -3049,7 +3049,7 @@ msgstr "KISS パレットの読み込み"
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:759 ../plug-ins/common/file-pnm.c:499
+#: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
 #: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
@@ -3078,7 +3078,7 @@ msgstr "利用できない色数 (%d)!"
 #: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1292 ../plug-ins/common/file-pnm.c:1015
+#: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
@@ -3627,7 +3627,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1829
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1902
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "透明度を劣化させずに保存できませんでした。不透明で保存します。"
 
@@ -3647,7 +3647,7 @@ msgstr "インターレース"
 msgid "Save background color"
 msgstr "背景色を保存"
 
-#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:9
+#: ../plug-ins/common/file-mng.c:1371 ../plug-ins/ui/plug-in-file-png.ui.h:3
 msgid "Save gamma"
 msgstr "ガンマ値を保存"
 
@@ -3660,7 +3660,7 @@ msgid "Save creation time"
 msgstr "作成日時を保存"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1878
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1951
 msgid "PNG"
 msgstr "PNG"
 
@@ -3704,7 +3704,7 @@ msgstr "デフォルトのフレーム配置:"
 msgid "PNG compression level:"
 msgstr "PNG 圧縮レベル:"
 
-#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:1
+#: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:10
 msgid "Choose a high compression level for small file size"
 msgstr "ファイルサイズを小さくするには高圧縮レベルを選択してください"
 
@@ -3728,7 +3728,7 @@ msgstr "ループ"
 msgid "Default frame delay:"
 msgstr "デフォルトのフレームディレイ:"
 
-#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:11
+#: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "milliseconds"
 msgstr "ミリ秒"
 
@@ -3880,7 +3880,7 @@ msgstr "なめらかに(_A)"
 
 #: ../plug-ins/common/file-pdf-load.c:1460
 #: ../plug-ins/common/file-pdf-load.c:1461 ../plug-ins/common/file-svg.c:917
-#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
+#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:301
 #, c-format
 msgid "pixels/%a"
 msgstr "ピクセル/%a"
@@ -3956,37 +3956,37 @@ msgstr "エラー発生! ファイルを保存するには画像を追加する�
 msgid "Alias Pix image"
 msgstr "Alias Pix 画像"
 
-#: ../plug-ins/common/file-png.c:275 ../plug-ins/common/file-png.c:296
-#: ../plug-ins/common/file-png.c:316 ../plug-ins/common/file-png.c:333
+#: ../plug-ins/common/file-png.c:279 ../plug-ins/common/file-png.c:300
+#: ../plug-ins/common/file-png.c:320 ../plug-ins/common/file-png.c:337
 msgid "PNG image"
 msgstr "PNG 画像"
 
-#: ../plug-ins/common/file-png.c:640
+#: ../plug-ins/common/file-png.c:644
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "PNG形式ファイル読み込み時にエラーが発生しました。 %s"
 
-#: ../plug-ins/common/file-png.c:728
+#: ../plug-ins/common/file-png.c:732
 #, c-format
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr "'%s' 保存中に PNG read struct 作成でエラーが発生しました。"
 
-#: ../plug-ins/common/file-png.c:738
+#: ../plug-ins/common/file-png.c:742
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "'%s' の読み込み中にエラー。ファイルが壊れている?"
 
-#: ../plug-ins/common/file-png.c:867
+#: ../plug-ins/common/file-png.c:871
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "PNG ファイル '%s' で未知のカラーモデル。"
 
-#: ../plug-ins/common/file-png.c:878
+#: ../plug-ins/common/file-png.c:882
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "新しい画像 '%s' が生成できませんでした。%s"
 
-#: ../plug-ins/common/file-png.c:927
+#: ../plug-ins/common/file-png.c:936
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3994,24 +3994,48 @@ msgstr ""
 "この PNG ファイルでは、レイヤーが画像の外に配置されるようなオフセットが指定さ"
 "れています。"
 
-#: ../plug-ins/common/file-png.c:1262
+# # ダイアログのタイトル
+#: ../plug-ins/common/file-png.c:1238
+msgid "Apply PNG Offset"
+msgstr "オフセットの適用"
+
+# # ボタンのラベル
+#: ../plug-ins/common/file-png.c:1242
+msgid "Ignore PNG offset"
+msgstr "無視"
+
+# # ボタンのラベル
+#: ../plug-ins/common/file-png.c:1243
+msgid "Apply PNG offset to layer"
+msgstr "適用"
+
+#: ../plug-ins/common/file-png.c:1267
+#, c-format
+msgid ""
+"The PNG image you are importing specifies an offset of %d, %d. Do you want "
+"to apply this offset to the layer?"
+msgstr ""
+"インポートする PNG 画像にはオフセット (%d, %d) が設定されています。オフセット"
+"をレイヤーに適用しますか?"
+
+#: ../plug-ins/common/file-png.c:1335
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "'%s' 保存中に PNG Write struct 作成でエラーが発生しました。"
 
-#: ../plug-ins/common/file-png.c:1272
+#: ../plug-ins/common/file-png.c:1345
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "'%s' の保存中にエラー。画像が保存できませんでした。"
 
-#: ../plug-ins/common/file-png.c:1895
+#: ../plug-ins/common/file-png.c:1968
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr ""
 "UI ファイル '%s' 読み込み時にエラーが発生しました。\n"
 "%s"
 
-#: ../plug-ins/common/file-png.c:1896
+#: ../plug-ins/common/file-png.c:1969
 msgid "Unknown error"
 msgstr "不明なエラーです"
 
@@ -5454,7 +5478,7 @@ msgstr "グリッド(_G)..."
 msgid "Drawing grid"
 msgstr "グリッドを描いています"
 
-#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1376
+#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1391
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Grid"
 msgstr "グリッド"
@@ -6264,7 +6288,7 @@ msgid "_Factory Defaults"
 msgstr "初期値に戻す(_F)"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1278
+#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1293
 msgid "Antialiasing"
 msgstr "アンチエイリアス"
 
@@ -6361,24 +6385,24 @@ msgstr "つまむ(_P)..."
 msgid "_Slur..."
 msgstr "ごまかす(_S)..."
 
-#: ../plug-ins/common/noise-randomize.c:769
+#: ../plug-ins/common/noise-randomize.c:767
 #: ../plug-ins/common/noise-solid.c:603
 msgid "_Random seed:"
 msgstr "乱数種(_R):"
 
-#: ../plug-ins/common/noise-randomize.c:778
+#: ../plug-ins/common/noise-randomize.c:776
 msgid "R_andomization (%):"
 msgstr "乱数度 (%)(_A):"
 
-#: ../plug-ins/common/noise-randomize.c:781
+#: ../plug-ins/common/noise-randomize.c:779
 msgid "Percentage of pixels to be filtered"
 msgstr "フィルターを通すピクセルの割合"
 
-#: ../plug-ins/common/noise-randomize.c:793
+#: ../plug-ins/common/noise-randomize.c:791
 msgid "R_epeat:"
 msgstr "繰り返し(_E):"
 
-#: ../plug-ins/common/noise-randomize.c:796
+#: ../plug-ins/common/noise-randomize.c:794
 msgid "Number of times to apply filter"
 msgstr "フィルターを適用する回数を指定します"
 
@@ -8248,7 +8272,7 @@ msgid "Smear"
 msgstr "ぼかす"
 
 #: ../plug-ins/common/warp.c:502 ../plug-ins/file-fits/fits.c:1020
-#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1482
+#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1497
 msgid "Black"
 msgstr "黒"
 
@@ -8733,8 +8757,8 @@ msgstr "FITS ファイル読込"
 msgid "Replacement for undefined pixels"
 msgstr "未定義のピクセルを置き換える色"
 
-#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1308
-#: ../plug-ins/gfig/gfig-dialog.c:1483
+#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1323
+#: ../plug-ins/gfig/gfig-dialog.c:1498
 msgid "White"
 msgstr "白"
 
@@ -8987,7 +9011,7 @@ msgid "Comment"
 msgstr "コメント"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1189
-#: ../plug-ins/ui/plug-in-file-png.ui.h:12
+#: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
 msgstr "既定値の読み込み(_L)"
 
@@ -9401,7 +9425,7 @@ msgstr "渦巻"
 msgid "Horseshoe"
 msgstr "蹄鉄"
 
-#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1464
+#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1479
 msgid "Polar"
 msgstr "極座標"
 
@@ -9538,7 +9562,7 @@ msgid "C_amera"
 msgstr "ビューオプション(_A)"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:277 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/gimpressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
@@ -9824,34 +9848,34 @@ msgstr "'%s' はフラクタルエクスプローラーの設定ファイルで�
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' は壊れています。オプションの %d行目が不正です。"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:238
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:236
 msgid "Render fractal art"
 msgstr "パラメーターを設定して、さまざまな種類のフラクタルアートを描画します"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:243
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:241
 msgid "_Fractal Explorer..."
 msgstr "フラクタルエクスプローラー(_F)..."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:371
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:368
 msgid "Rendering fractal"
 msgstr "フラクタルを描いています"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:754
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:751
 #: ../plug-ins/gradient-flare/gradient-flare.c:3201
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "\"%s\" を一覧とディスクから削除してもよいですか?"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:758
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:755
 msgid "Delete Fractal"
 msgstr "フラクタル削除"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:947
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:944
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "'%s' はフラクタルエクスプローラーの形式ではありません"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:957
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:954
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -9860,359 +9884,359 @@ msgstr ""
 "'%s' は壊れています。\n"
 "オプションの %d行目が不正です。"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1002
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:999
 msgid "My first fractal"
 msgstr "My first fractal"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1066
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1063
 msgid "Select folder and rescan collection"
 msgstr "フォルダーを指定してプリセットを再読み込みします"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1078
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1075
 msgid "Apply currently selected fractal"
 msgstr "選択している中のプリセットデータを適用します"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1090
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1087
 msgid "Delete currently selected fractal"
 msgstr "選択しているプリセットデータを削除します"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1113
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1110
 msgid "Rescan for Fractals"
 msgstr "フラクタルプリセットの再読み込み"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1132
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1129
 msgid "Add FractalExplorer Path"
 msgstr "フラクタルプリセットへのパスの追加"
 
-#: ../plug-ins/gfig/gfig-bezier.c:442
+#: ../plug-ins/gfig/gfig-bezier.c:401
 msgid "Closed"
 msgstr "閉じる"
 
-#: ../plug-ins/gfig/gfig-bezier.c:447
+#: ../plug-ins/gfig/gfig-bezier.c:406
 msgid "Close curve on completion"
 msgstr "カーブを閉じて完了"
 
-#: ../plug-ins/gfig/gfig-bezier.c:452
+#: ../plug-ins/gfig/gfig-bezier.c:411
 msgid "Show Line Frame"
 msgstr "漸近線の表示"
 
-#: ../plug-ins/gfig/gfig-bezier.c:457
+#: ../plug-ins/gfig/gfig-bezier.c:416
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr "端点間に直線を引く。カーブが作られている時だけ"
 
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:289
+#: ../plug-ins/gfig/gfig-dialog.c:287
 msgid "Gfig"
 msgstr "シェイプエディター (Gfig)"
 
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:337
+#: ../plug-ins/gfig/gfig-dialog.c:335
 msgid "Tool Options"
 msgstr "ツールオプション"
 
-#: ../plug-ins/gfig/gfig-dialog.c:354
+#: ../plug-ins/gfig/gfig-dialog.c:352
 msgid "_Stroke"
 msgstr "輪郭を描画する(_S)"
 
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:401
+#: ../plug-ins/gfig/gfig-dialog.c:399
 msgid "Fill"
 msgstr "塗りつぶし"
 
-#: ../plug-ins/gfig/gfig-dialog.c:415
+#: ../plug-ins/gfig/gfig-dialog.c:413
 msgid "No fill"
 msgstr "塗りつぶさない"
 
-#: ../plug-ins/gfig/gfig-dialog.c:416
+#: ../plug-ins/gfig/gfig-dialog.c:414
 msgid "Color fill"
 msgstr "色で塗りつぶす"
 
-#: ../plug-ins/gfig/gfig-dialog.c:417
+#: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "Pattern fill"
 msgstr "パターンで塗りつぶす"
 
-#: ../plug-ins/gfig/gfig-dialog.c:418
+#: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Shape gradient"
 msgstr "形状対応グラデーション"
 
-#: ../plug-ins/gfig/gfig-dialog.c:419
+#: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Vertical gradient"
 msgstr "垂直方向のグラデーション"
 
-#: ../plug-ins/gfig/gfig-dialog.c:420
+#: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Horizontal gradient"
 msgstr "水平方向のグラデーション"
 
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:480
+#: ../plug-ins/gfig/gfig-dialog.c:478
 msgid "Show image"
 msgstr "画像の表示"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:493
+#: ../plug-ins/gfig/gfig-dialog.c:491
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "グリッドにスナップ"
 
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:502
+#: ../plug-ins/gfig/gfig-dialog.c:500
 msgid "Show grid"
 msgstr "グリッドの表示"
 
-#: ../plug-ins/gfig/gfig-dialog.c:639
+#: ../plug-ins/gfig/gfig-dialog.c:635
 msgid "Load Gfig Object Collection"
 msgstr "シェイプオブジェクトの読み込み"
 
-#: ../plug-ins/gfig/gfig-dialog.c:688
+#: ../plug-ins/gfig/gfig-dialog.c:684
 msgid "Save Gfig Drawing"
 msgstr "シェイプオブジェクトの保存"
 
-#: ../plug-ins/gfig/gfig-dialog.c:833
+#: ../plug-ins/gfig/gfig-dialog.c:848
 msgid "First Gfig"
 msgstr "First Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:871
+#: ../plug-ins/gfig/gfig-dialog.c:886
 msgid "_Undo"
 msgstr "1 段階戻る(_U)"
 
-#: ../plug-ins/gfig/gfig-dialog.c:875
+#: ../plug-ins/gfig/gfig-dialog.c:890
 msgid "_Clear"
 msgstr "消去(_C)"
 
-#: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/imagemap/imap_menu.c:208
+#: ../plug-ins/gfig/gfig-dialog.c:894 ../plug-ins/imagemap/imap_menu.c:208
 msgid "_Grid"
 msgstr "グリッド(_G)"
 
-#: ../plug-ins/gfig/gfig-dialog.c:887
+#: ../plug-ins/gfig/gfig-dialog.c:902
 msgid "Raise selected object"
 msgstr "選択オブジェクトを前面に"
 
-#: ../plug-ins/gfig/gfig-dialog.c:891
+#: ../plug-ins/gfig/gfig-dialog.c:906
 msgid "Lower selected object"
 msgstr "選択オブジェクトを背面に"
 
-#: ../plug-ins/gfig/gfig-dialog.c:895
+#: ../plug-ins/gfig/gfig-dialog.c:910
 msgid "Raise selected object to top"
 msgstr "選択オブジェクトを最前面に"
 
-#: ../plug-ins/gfig/gfig-dialog.c:899
+#: ../plug-ins/gfig/gfig-dialog.c:914
 msgid "Lower selected object to bottom"
 msgstr "選択オブジェクトを最背面に"
 
-#: ../plug-ins/gfig/gfig-dialog.c:903
+#: ../plug-ins/gfig/gfig-dialog.c:918
 msgid "Show previous object"
 msgstr "前のオブジェクトを表示"
 
-#: ../plug-ins/gfig/gfig-dialog.c:907
+#: ../plug-ins/gfig/gfig-dialog.c:922
 msgid "Show next object"
 msgstr "次のオブジェクトを表示"
 
-#: ../plug-ins/gfig/gfig-dialog.c:911 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "すべてのオブジェクトを表示"
 
-#: ../plug-ins/gfig/gfig-dialog.c:917 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create line"
 msgstr "直線の作成"
 
-#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create rectangle"
 msgstr "矩形の作成"
 
-#: ../plug-ins/gfig/gfig-dialog.c:923 ../plug-ins/gfig/gfig-stock.c:41
+#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:41
 msgid "Create circle"
 msgstr "円の作成"
 
-#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:941 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Create ellipse"
 msgstr "楕円の作成"
 
-#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:944 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Create arc"
 msgstr "円弧の作成"
 
-#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:947 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Create reg polygon"
 msgstr "正多角形の作成"
 
-#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:950 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "星の作成"
 
-#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:953 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "螺旋の作成"
 
-#: ../plug-ins/gfig/gfig-dialog.c:941
+#: ../plug-ins/gfig/gfig-dialog.c:956
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "ベジエ曲線の作成。Shift + ボタン でオブジェクト作成の終了"
 
-#: ../plug-ins/gfig/gfig-dialog.c:945 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:960 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
 msgstr "オブジェクトを移動"
 
-#: ../plug-ins/gfig/gfig-dialog.c:948 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:963 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move a single point"
 msgstr "1 つのポイントを移動"
 
-#: ../plug-ins/gfig/gfig-dialog.c:951 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:966 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Copy an object"
 msgstr "オブジェクトのコピー"
 
-#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:969 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Delete an object"
 msgstr "オブジェクトの削除"
 
-#: ../plug-ins/gfig/gfig-dialog.c:957 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:972 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "オブジェクトの選択"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1039
+#: ../plug-ins/gfig/gfig-dialog.c:1054
 msgid "This tool has no options"
 msgstr "このツールにはオプションはありません"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1250
+#: ../plug-ins/gfig/gfig-dialog.c:1265
 msgid "Show position"
 msgstr "位置を表示"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1262
+#: ../plug-ins/gfig/gfig-dialog.c:1277
 msgid "Show control points"
 msgstr "制御点を表示"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1296
+#: ../plug-ins/gfig/gfig-dialog.c:1311
 msgid "Max undo:"
 msgstr "元に戻せる段階:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1305
+#: ../plug-ins/gfig/gfig-dialog.c:1320
 #: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "透明"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1307
+#: ../plug-ins/gfig/gfig-dialog.c:1322
 msgid "Foreground"
 msgstr "前景"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1309 ../plug-ins/imagemap/imap_cmd_copy.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: ../plug-ins/imagemap/imap_menu.c:159
 msgid "Copy"
 msgstr "コピー"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1318
+#: ../plug-ins/gfig/gfig-dialog.c:1333
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 msgstr "レイヤー背景種。コピーは描かれる前にその前のレイヤーを複製します"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1324
+#: ../plug-ins/gfig/gfig-dialog.c:1339
 msgid "Background:"
 msgstr "背景:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1327
+#: ../plug-ins/gfig/gfig-dialog.c:1342
 msgid "Feather"
 msgstr "ぼかす"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1350
+#: ../plug-ins/gfig/gfig-dialog.c:1365
 msgid "Radius:"
 msgstr "半径:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1408
+#: ../plug-ins/gfig/gfig-dialog.c:1423
 msgid "Grid spacing:"
 msgstr "グリッド間隔:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1425
+#: ../plug-ins/gfig/gfig-dialog.c:1440
 msgid "Polar grid sectors desired:"
 msgstr "極座標グリッドの分割数:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1447
+#: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Polar grid radius interval:"
 msgstr "極座標グリッドの半径間隔:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1463 ../plug-ins/imagemap/imap_menu.c:219
+#: ../plug-ins/gfig/gfig-dialog.c:1478 ../plug-ins/imagemap/imap_menu.c:219
 msgid "Rectangle"
 msgstr "矩形"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1465
+#: ../plug-ins/gfig/gfig-dialog.c:1480
 msgid "Isometric"
 msgstr "正三角形"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1474
+#: ../plug-ins/gfig/gfig-dialog.c:1489
 msgid "Grid type:"
 msgstr "グリッドの種類:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1481
+#: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
 msgid "Normal"
 msgstr "標準"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1484
+#: ../plug-ins/gfig/gfig-dialog.c:1499
 msgid "Grey"
 msgstr "グレー"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1485
+#: ../plug-ins/gfig/gfig-dialog.c:1500
 msgid "Darker"
 msgstr "暗く"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1486
+#: ../plug-ins/gfig/gfig-dialog.c:1501
 msgid "Lighter"
 msgstr "明るく"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1487
+#: ../plug-ins/gfig/gfig-dialog.c:1502
 msgid "Very dark"
 msgstr "とても暗い"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1496
+#: ../plug-ins/gfig/gfig-dialog.c:1511
 msgid "Grid color:"
 msgstr "グリッドの色:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1717
+#: ../plug-ins/gfig/gfig-dialog.c:1732
 msgid "Sides:"
 msgstr "サイズ:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1727
+#: ../plug-ins/gfig/gfig-dialog.c:1742
 msgid "Right"
 msgstr "右"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1728
+#: ../plug-ins/gfig/gfig-dialog.c:1743
 msgid "Left"
 msgstr "左"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1738
+#: ../plug-ins/gfig/gfig-dialog.c:1753
 #: ../plug-ins/gimpressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "向き:"
 
-#: ../plug-ins/gfig/gfig-dobject.c:584
+#: ../plug-ins/gfig/gfig-dobject.c:580
 msgid "Hey where has the object gone ?"
 msgstr "オブジェクトはどこに行ってしまったのでしょう?"
 
-#: ../plug-ins/gfig/gfig-dobject.c:953
+#: ../plug-ins/gfig/gfig-dobject.c:922
 msgid "Error reading file"
 msgstr "ファイル読み込みエラー"
 
-#: ../plug-ins/gfig/gfig-dobject.c:1042
+#: ../plug-ins/gfig/gfig-dobject.c:1011
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "読み取り専用のオブジェクトを編集しています - 保存できません"
 
-#: ../plug-ins/gfig/gfig-poly.c:50
+#: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
 msgstr "正多角形の辺の数"
 
-#: ../plug-ins/gfig/gfig-preview.c:328
+#: ../plug-ins/gfig/gfig-preview.c:337
 msgid "Object Details"
 msgstr "オブジェクト詳細"
 
 #. Position labels
-#: ../plug-ins/gfig/gfig-preview.c:379
+#: ../plug-ins/gfig/gfig-preview.c:388
 msgid "XY position:"
 msgstr "XY 位置:"
 
-#: ../plug-ins/gfig/gfig-spiral.c:54
+#: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
 msgstr "螺旋の巻き数"
 
-#: ../plug-ins/gfig/gfig-star.c:51
+#: ../plug-ins/gfig/gfig-star.c:52
 msgid "Star Number of Points"
 msgstr "星型のポイント数"
 
@@ -10220,20 +10244,20 @@ msgstr "星型のポイント数"
 msgid "Create bezier curve"
 msgstr "ベジエ曲線の作成"
 
-#: ../plug-ins/gfig/gfig.c:123
+#: ../plug-ins/gfig/gfig.c:122
 msgid "Create geometric shapes"
 msgstr "幾何学的なオブジェクトを作成します"
 
-#: ../plug-ins/gfig/gfig.c:134
+#: ../plug-ins/gfig/gfig.c:133
 msgid "_Gfig..."
 msgstr "シェイプ (Gfig)(_G)..."
 
-#: ../plug-ins/gfig/gfig.c:735
+#: ../plug-ins/gfig/gfig.c:734
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr "図を付属物として保存中にエラー: 描画対象に付属物を付け加えられません。"
 
-#: ../plug-ins/gfig/gfig.c:762
+#: ../plug-ins/gfig/gfig.c:761
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "付属物読み込み用の一時ファイル '%s' オープン中にエラー: %s"
@@ -10875,80 +10899,80 @@ msgstr ""
 "各サイズマップベクトルが影響を受けます"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:1
-msgid "Animated GIF Options"
-msgstr "アニメーション GIF のオプション"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
-msgid "As _animation"
-msgstr "アニメーションとしてエクスポート(_A)"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
-msgid "GIF Options"
-msgstr "GIF のオプション"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
 msgid "I_nterlace"
 msgstr "インターレース(_N)"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:2
+msgid "_GIF comment:"
+msgstr "GIF コメント(_G): "
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:3
+msgid "As _animation"
+msgstr "アニメーションとしてエクスポート(_A)"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:4
+msgid "GIF Options"
+msgstr "GIF のオプション"
+
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
-msgid "U_se disposal entered above for all frames"
-msgstr "全フレームのフレーム処理にこの値を使用(_S)"
+msgid "_Loop forever"
+msgstr "無限ループ(_L)"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
 msgid "_Delay between frames where unspecified:"
 msgstr "指定しない場合のディレイ(_D): "
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "_Frame disposal where unspecified:"
 msgstr "指定しない場合のフレーム処理(_F): "
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
-msgid "_GIF comment:"
-msgstr "GIF コメント(_G): "
-
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
-msgid "_Loop forever"
-msgstr "無限ループ(_L)"
-
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
 msgid "_Use delay entered above for all frames"
 msgstr "全フレームのディレイにこの値を使用(_U)"
 
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
+msgid "U_se disposal entered above for all frames"
+msgstr "全フレームのフレーム処理にこの値を使用(_S)"
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:11
+msgid "Animated GIF Options"
+msgstr "アニメーション GIF のオプション"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:1
+msgid "_Interlacing (Adam7)"
+msgstr "インターレース (Adam7)(_I)"
+
 #: ../plug-ins/ui/plug-in-file-png.ui.h:2
-msgid "Co_mpression level:"
-msgstr "圧縮レベル(_M): "
-
-#: ../plug-ins/ui/plug-in-file-png.ui.h:3
-msgid "S_ave Defaults"
-msgstr "既定値として保存(_A)"
-
-#: ../plug-ins/ui/plug-in-file-png.ui.h:4
 msgid "Save _background color"
 msgstr "背景色を保存(_B)"
+
+#: ../plug-ins/ui/plug-in-file-png.ui.h:4
+msgid "Save layer o_ffset"
+msgstr "レイヤーオフセットを保存(_F)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
 msgid "Save _resolution"
 msgstr "解像度を保存(_R)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:6
-msgid "Save color _values from transparent pixels"
-msgstr "透明ピクセルの色の値を保存(_V)"
+msgid "Save creation _time"
+msgstr "作成日時を保存(_T)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 msgid "Save comme_nt"
 msgstr "コメントを保存(_N)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-msgid "Save creation _time"
-msgstr "作成日時を保存(_T)"
+msgid "Save color _values from transparent pixels"
+msgstr "透明ピクセルの色の値を保存(_V)"
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:10
-msgid "Save layer o_ffset"
-msgstr "レイヤーオフセットを保存(_F)"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:9
+msgid "Co_mpression level:"
+msgstr "圧縮レベル(_M): "
 
-#: ../plug-ins/ui/plug-in-file-png.ui.h:11
-msgid "_Interlacing (Adam7)"
-msgstr "インターレース (Adam7)(_I)"
+#: ../plug-ins/ui/plug-in-file-png.ui.h:12
+msgid "S_ave Defaults"
+msgstr "既定値として保存(_A)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -12392,7 +12416,7 @@ msgstr "光源強度"
 #: ../plug-ins/lighting/lighting-ui.c:469
 #: ../plug-ins/map-object/map-object-ui.c:613
 #: ../plug-ins/map-object/map-object-ui.c:940
-#: ../plug-ins/print/print-page-layout.c:355
+#: ../plug-ins/print/print-page-layout.c:371
 msgid "Position"
 msgstr "位置"
 
@@ -12789,12 +12813,12 @@ msgid "Z scale (size)"
 msgstr "Z 拡大縮小 (サイズ)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:414
+#: ../plug-ins/print/print-page-layout.c:430
 msgid "_Top:"
 msgstr "上(_T):"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:433
+#: ../plug-ins/print/print-page-layout.c:449
 msgid "_Bottom:"
 msgstr "下(_B):"
 
@@ -12803,7 +12827,7 @@ msgid "Images for the Cap Faces"
 msgstr "表面に被せる画像"
 
 #: ../plug-ins/map-object/map-object-ui.c:1181
-#: ../plug-ins/print/print-page-layout.c:231
+#: ../plug-ins/print/print-page-layout.c:247
 msgid "Size"
 msgstr "サイズ"
 
@@ -12893,7 +12917,7 @@ msgstr "迷路を描きます"
 msgid "_Maze..."
 msgstr "迷路(_M)..."
 
-#: ../plug-ins/maze/maze.c:425
+#: ../plug-ins/maze/maze.c:427
 msgid "Drawing maze"
 msgstr "迷路を描いています"
 
@@ -12975,134 +12999,126 @@ msgstr "めくりかけのページのような効果を与えます"
 msgid "_Pagecurl..."
 msgstr "ページめくり(_P)..."
 
-#: ../plug-ins/pagecurl/pagecurl.c:440
+#: ../plug-ins/pagecurl/pagecurl.c:442
 msgid "Pagecurl Effect"
 msgstr "ページめくり効果"
 
-#: ../plug-ins/pagecurl/pagecurl.c:462
+#: ../plug-ins/pagecurl/pagecurl.c:464
 msgid "Curl Location"
 msgstr "めくる位置"
 
-#: ../plug-ins/pagecurl/pagecurl.c:481
+#: ../plug-ins/pagecurl/pagecurl.c:483
 msgid "Lower right"
 msgstr "右下"
 
-#: ../plug-ins/pagecurl/pagecurl.c:482
+#: ../plug-ins/pagecurl/pagecurl.c:484
 msgid "Lower left"
 msgstr "左下"
 
-#: ../plug-ins/pagecurl/pagecurl.c:483
+#: ../plug-ins/pagecurl/pagecurl.c:485
 msgid "Upper left"
 msgstr "左上"
 
-#: ../plug-ins/pagecurl/pagecurl.c:484
+#: ../plug-ins/pagecurl/pagecurl.c:486
 msgid "Upper right"
 msgstr "右上"
 
-#: ../plug-ins/pagecurl/pagecurl.c:524
+#: ../plug-ins/pagecurl/pagecurl.c:526
 msgid "Curl Orientation"
 msgstr "めくる向き"
 
-#: ../plug-ins/pagecurl/pagecurl.c:569
+#: ../plug-ins/pagecurl/pagecurl.c:571
 msgid "_Shade under curl"
 msgstr "めくった下に影をつける(_S)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:582
+#: ../plug-ins/pagecurl/pagecurl.c:584
 msgid "Current gradient (reversed)"
 msgstr "現在のグラデーション (逆向き)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:587
+#: ../plug-ins/pagecurl/pagecurl.c:589
 msgid "Current gradient"
 msgstr "現在のグラデーション"
 
-#: ../plug-ins/pagecurl/pagecurl.c:592
+#: ../plug-ins/pagecurl/pagecurl.c:594
 msgid "Foreground / background colors"
 msgstr "描画色と背景色"
 
-#: ../plug-ins/pagecurl/pagecurl.c:612
+#: ../plug-ins/pagecurl/pagecurl.c:614
 msgid "_Opacity:"
 msgstr "不透明度(_O):"
 
-#: ../plug-ins/pagecurl/pagecurl.c:735
+#: ../plug-ins/pagecurl/pagecurl.c:730
 msgid "Curl Layer"
 msgstr "めくり部分レイヤー"
 
-#: ../plug-ins/pagecurl/pagecurl.c:1026
+#: ../plug-ins/pagecurl/pagecurl.c:1022
 msgid "Page Curl"
 msgstr "ページをめくっています"
 
-#: ../plug-ins/print/print-page-layout.c:149
+#: ../plug-ins/print/print-page-layout.c:153
 msgid "Ignore Page _Margins"
 msgstr "ページ余白を無視する(_M)"
 
 #. crop marks toggle
-#: ../plug-ins/print/print-page-layout.c:160
+#: ../plug-ins/print/print-page-layout.c:164
 msgid "_Draw Crop Marks"
 msgstr "トンボを付ける(_D)"
 
-#: ../plug-ins/print/print-page-layout.c:306
+#: ../plug-ins/print/print-page-layout.c:322
 msgid "_X resolution:"
 msgstr "水平解像度(_X):"
 
-#: ../plug-ins/print/print-page-layout.c:310
+#: ../plug-ins/print/print-page-layout.c:326
 msgid "_Y resolution:"
 msgstr "垂直解像度(_Y):"
 
-#: ../plug-ins/print/print-page-layout.c:381
+#: ../plug-ins/print/print-page-layout.c:397
 msgid "_Left:"
 msgstr "左(_L):"
 
-#: ../plug-ins/print/print-page-layout.c:400
+#: ../plug-ins/print/print-page-layout.c:416
 msgid "_Right:"
 msgstr "右(_R):"
 
-#: ../plug-ins/print/print-page-layout.c:454
+#: ../plug-ins/print/print-page-layout.c:470
 msgid "C_enter:"
 msgstr "中央揃え(_E):"
 
 #. if and how to center the image on the page
-#: ../plug-ins/print/print-page-layout.c:461
+#: ../plug-ins/print/print-page-layout.c:477
 msgctxt "center-mode"
 msgid "None"
 msgstr "しない"
 
-#: ../plug-ins/print/print-page-layout.c:462
+#: ../plug-ins/print/print-page-layout.c:478
 msgid "Horizontally"
 msgstr "水平"
 
-#: ../plug-ins/print/print-page-layout.c:463
+#: ../plug-ins/print/print-page-layout.c:479
 msgid "Vertically"
 msgstr "垂直"
 
-#: ../plug-ins/print/print-page-layout.c:464
+#: ../plug-ins/print/print-page-layout.c:480
 msgid "Both"
 msgstr "両方"
 
-#: ../plug-ins/print/print.c:102
+#: ../plug-ins/print/print.c:89
 msgid "Print the image"
 msgstr "画像を印刷します"
 
-#: ../plug-ins/print/print.c:107
+#: ../plug-ins/print/print.c:94
 msgid "_Print..."
 msgstr "印刷(_P)..."
 
-#: ../plug-ins/print/print.c:118
-msgid "Adjust page size and orientation for printing"
-msgstr "印刷用紙のサイズと向きを設定します"
-
-#: ../plug-ins/print/print.c:124
-msgid "Page Set_up"
-msgstr "ページ設定(_U)"
-
-#: ../plug-ins/print/print.c:263
+#: ../plug-ins/print/print.c:216
 msgid "Image Settings"
 msgstr "画像の設定"
 
-#: ../plug-ins/print/print.c:347
+#: ../plug-ins/print/print.c:267
 msgid "An error occurred while trying to print:"
 msgstr "印刷準備中にエラーが発生しました。"
 
-#: ../plug-ins/print/print.c:374
+#: ../plug-ins/print/print.c:294
 msgid "Printing"
 msgstr "印刷しています"
 
@@ -13167,6 +13183,12 @@ msgstr "スクリーンショット(_S)..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "何も取り込まれませんでした"
+
+#~ msgid "Adjust page size and orientation for printing"
+#~ msgstr "印刷用紙のサイズと向きを設定します"
+
+#~ msgid "Page Set_up"
+#~ msgstr "ページ設定(_U)"
 
 #~ msgid ""
 #~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
@@ -18266,9 +18288,6 @@ msgstr "何も取り込まれませんでした"
 
 #~ msgid "Merge Layer(s) clipped to bg-layer"
 #~ msgstr "背景に切り取られたレイヤーを結合"
-
-#~ msgid "Apply filter on Layer(s)"
-#~ msgstr "レイヤーにフィルターを適用"
 
 #~ msgid "Duplicate Layer(s)"
 #~ msgstr "レイヤーを複製する"
