@@ -306,9 +306,10 @@ gimp_projection_get_buffer (GimpPickable *pickable)
 
   if (! proj->buffer)
     {
-      TileManager *tiles = gimp_projection_get_tiles (pickable);
+      TileManager *tiles  = gimp_projection_get_tiles (pickable);
+      const Babl  *format = gimp_projection_get_format (pickable);
 
-      proj->buffer = gimp_tile_manager_create_buffer (tiles, NULL);
+      proj->buffer = gimp_tile_manager_create_buffer (tiles, format);
 
       if (proj->sink_node)
         {

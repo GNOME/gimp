@@ -60,12 +60,13 @@ basic_usage (void)
   GeglTileBackend *backend;
   GeglBuffer      *buffer;
   guint16          actual_data[4];
+  const Babl      *format = babl_format ("R'G'B'A u8");
 
   /* Write some pixels to the tile manager */
   tm = tile_manager_new (rect.width, rect.height, 4);
   pixel_region_init (&pr, tm, rect.x, rect.y, rect.width, rect.height, TRUE);
 
-  buffer = gimp_tile_manager_create_buffer (tm, NULL, TRUE);
+  buffer = gimp_tile_manager_create_buffer (tm, format, TRUE);
   gegl_color_set_rgba (magenta, 1.0, 0.0, 1.0, 1.0);
   gegl_buffer_set_color (buffer, NULL, magenta);
   g_object_unref (magenta);
@@ -74,7 +75,7 @@ basic_usage (void)
    * TileManager backend. Use u16 to complicate code paths, decreasing
    * risk of the test accidentally passing
    */
-  backend = gimp_tile_backend_tile_manager_new (tm, NULL, FALSE);
+  backend = gimp_tile_backend_tile_manager_new (tm, format, FALSE);
   buffer  = gegl_buffer_new_for_backend (NULL, backend);
   gegl_buffer_get (buffer,
                    &pixel_rect, 1.0 /*scale*/,

@@ -261,9 +261,10 @@ gimp_projection_initialize (GimpProjection *proj,
         }
       else
         {
-          TileManager *tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (proj));
+          TileManager *tiles  = gimp_pickable_get_tiles (GIMP_PICKABLE (proj));
+          const Babl  *format = gimp_pickable_get_format (GIMP_PICKABLE (proj));
 
-          buffer = gimp_tile_manager_create_buffer (tiles, NULL);
+          buffer = gimp_tile_manager_create_buffer (tiles, format);
         }
 
       gegl_buffer_clear (buffer, GEGL_RECTANGLE (x, y, w, h));
