@@ -14968,7 +14968,7 @@ msgstr "Fona koloro estas agordita per:"
 #: ../app/widgets/gimpgradienteditor.c:1296
 #, c-format
 msgid "%s-Drag: move & compress"
-msgstr "%s%sTreno: movi kaj kunpremi"
+msgstr "%s-Treno: movi kaj kunpremi"
 
 #: ../app/widgets/gimpgradienteditor.c:1240
 msgid "Drag: move"
@@ -15453,7 +15453,7 @@ msgid ""
 "%s-Click to force update even if preview is up-to-date"
 msgstr ""
 "Klaku por ĝisdatigi antaŭmontron\n"
-"%s%sKlaku por devigi la ĝisdatigon ankaŭ se antaŭmontro estas jam ĝisdata"
+"%s-Klaku por devigi la ĝisdatigon ankaŭ se antaŭmontro estas jam ĝisdata"
 
 #: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
