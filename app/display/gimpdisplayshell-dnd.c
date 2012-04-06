@@ -651,7 +651,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
   GimpImage        *image = gimp_display_get_image (shell->display);
   GimpLayer        *new_layer;
-  GimpImageType     image_type;
+  gboolean          has_alpha = FALSE;
 
   GIMP_LOG (DND, NULL);
 
@@ -668,17 +668,15 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
       return;
     }
 
-  image_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (image));
-
   if (gdk_pixbuf_get_n_channels (pixbuf) == 2 ||
       gdk_pixbuf_get_n_channels (pixbuf) == 4)
     {
-      image_type = GIMP_IMAGE_TYPE_WITH_ALPHA (image_type);
+      has_alpha = TRUE;
     }
 
   new_layer =
     gimp_layer_new_from_pixbuf (pixbuf, image,
-                                gimp_image_get_format (image, image_type),
+                                gimp_image_get_layer_format (image, has_alpha),
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

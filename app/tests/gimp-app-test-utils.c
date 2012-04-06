@@ -126,7 +126,7 @@ gimp_test_utils_create_image (Gimp *gimp,
   layer = gimp_layer_new (image,
                           width,
                           height,
-                          gimp_image_get_format (image, GIMP_RGBA_IMAGE),
+                          gimp_image_get_layer_format (image, TRUE),
                           "layer1",
                           1.0,
                           GIMP_NORMAL_MODE);

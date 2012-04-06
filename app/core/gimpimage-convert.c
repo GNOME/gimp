@@ -997,24 +997,16 @@ gimp_image_convert (GimpImage               *image,
         case GIMP_INDEXED:
           {
             GeglBuffer *new_buffer;
-            const Babl *new_format;
+            gboolean    has_alpha;
 
-            if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-              new_format = gimp_image_get_format (image, GIMP_INDEXEDA_IMAGE);
-            else
-              new_format = gimp_image_get_format (image, GIMP_INDEXED_IMAGE);
-
-            g_printerr ("old: %s %d   new: %s %d\n",
-                        babl_get_name (gimp_drawable_get_format (GIMP_DRAWABLE (layer))),
-                        babl_format_has_alpha (gimp_drawable_get_format (GIMP_DRAWABLE (layer))),
-                        babl_get_name (new_format),
-                        babl_format_has_alpha (new_format));
+            has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
             new_buffer =
               gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                     gimp_item_get_width  (GIMP_ITEM (layer)),
                                                     gimp_item_get_height (GIMP_ITEM (layer))),
-                                    new_format);
+                                    gimp_image_get_layer_format (image,
+                                                                 has_alpha));
 
             quantobj->nth_layer = nth_layer;
             quantobj->second_pass (quantobj, layer, new_buffer);

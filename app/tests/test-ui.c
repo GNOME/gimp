@@ -229,7 +229,7 @@ create_new_image_via_dialog (gconstpointer data)
   layer = gimp_layer_new (image,
                           gimp_image_get_width (image),
                           gimp_image_get_height (image),
-                          gimp_image_base_type_with_alpha (image),
+                          gimp_image_get_layer_format (image, TRUE),
                           "Layer for testing",
                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

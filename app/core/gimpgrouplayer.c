@@ -956,17 +956,16 @@ GimpLayer *
 gimp_group_layer_new (GimpImage *image)
 {
   GimpGroupLayer *group;
-  GimpImageType   type;
+  const Babl     *format;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  type = gimp_image_base_type_with_alpha (image);
+  format = gimp_image_get_layer_format (image, TRUE);
 
   group = GIMP_GROUP_LAYER (gimp_drawable_new (GIMP_TYPE_GROUP_LAYER,
                                                image, NULL,
                                                0, 0, 1, 1,
-                                               gimp_image_get_format (image,
-                                                                      type)));
+                                               format));
 
   if (gimp_image_get_projection (image)->use_gegl)
     GET_PRIVATE (group)->projection->use_gegl = TRUE;

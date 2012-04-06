@@ -520,14 +520,11 @@ gimp_image_merge_layers (GimpImage     *image,
   if (merge_type == GIMP_FLATTEN_IMAGE ||
       gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
     {
-      GeglColor     *color;
-      GimpImageType  type;
-      GimpRGB        bg;
-
-      type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (image));
+      GeglColor *color;
+      GimpRGB    bg;
 
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
-                                    gimp_image_get_format (image, type),
+                                    gimp_image_get_layer_format (image, FALSE),
                                     gimp_object_get_name (layer),
                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       if (! merge_layer)

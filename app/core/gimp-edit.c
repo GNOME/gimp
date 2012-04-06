@@ -174,17 +174,9 @@ gimp_edit_paste (GimpImage    *image,
    */
 
   if (drawable)
-    {
-      format = gimp_drawable_get_format_with_alpha (drawable);
-    }
+    format = gimp_drawable_get_format_with_alpha (drawable);
   else
-    {
-      GimpImageType  type;
-
-      type = gimp_image_base_type_with_alpha (image);
-
-      format = gimp_image_get_format (image, type);
-    }
+    format = gimp_image_get_layer_format (image, TRUE);
 
   layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (paste),
                                       image,

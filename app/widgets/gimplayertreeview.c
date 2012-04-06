@@ -790,10 +790,7 @@ gimp_layer_tree_view_drop_pixbuf (GimpContainerTreeView   *tree_view,
   GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
   GimpLayer        *new_layer;
   GimpLayer        *parent;
-  GimpImageType     type;
   gint              index;
-
-  type = gimp_image_base_type_with_alpha (image);
 
   index = gimp_item_tree_view_get_drop_index (item_view, dest_viewable,
                                               drop_pos,
@@ -801,7 +798,7 @@ gimp_layer_tree_view_drop_pixbuf (GimpContainerTreeView   *tree_view,
 
   new_layer =
     gimp_layer_new_from_pixbuf (pixbuf, image,
-                                gimp_image_get_format (image, type),
+                                gimp_image_get_layer_format (image, TRUE),
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
@@ -834,18 +831,15 @@ gimp_layer_tree_view_set_image (GimpItemTreeView *view,
 static GimpItem *
 gimp_layer_tree_view_item_new (GimpImage *image)
 {
-  GimpLayer     *new_layer;
-  GimpImageType  type;
+  GimpLayer *new_layer;
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                _("New Layer"));
 
-  type = gimp_image_base_type_with_alpha (image);
-
   new_layer = gimp_layer_new (image,
                               gimp_image_get_width (image),
                               gimp_image_get_height (image),
-                              gimp_image_get_format (image, type),
+                              gimp_image_get_layer_format (image, TRUE),
                               NULL, 1.0, GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (image, new_layer,

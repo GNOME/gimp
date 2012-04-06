@@ -358,8 +358,8 @@ debug_show_image_graph (GimpImage *source_image)
   gimp_image_set_uri (new_image, new_name);
   layer = gimp_layer_new_from_buffer (buffer,
                                       new_image,
-                                      gimp_image_get_format (new_image,
-                                                             GIMP_RGBA_IMAGE),
+                                      gimp_image_get_layer_format (new_image,
+                                                                   TRUE),
                                       new_name,
                                       1.0,
                                       GIMP_NORMAL_MODE);

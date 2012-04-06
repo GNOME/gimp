@@ -340,12 +340,12 @@ edit_paste_as_new_layer_cmd_callback (GtkAction *action,
 
   if (buffer)
     {
-      GimpLayer     *layer;
-      GimpImageType  type = gimp_image_base_type_with_alpha (image);
+      GimpLayer *layer;
 
       layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (buffer),
                                           image,
-                                          gimp_image_get_format (image, type),
+                                          gimp_image_get_layer_format (image,
+                                                                       TRUE),
                                           _("Clipboard"),
                                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       g_object_unref (buffer);
