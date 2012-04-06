@@ -100,7 +100,7 @@ gimp_drawable_convert_indexed (GimpDrawable *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
-  g_return_if_fail (! gimp_drawable_is_gray (drawable));
+  g_return_if_fail (! gimp_drawable_is_indexed (drawable));
 
   if (gimp_drawable_has_alpha (drawable))
     format = gimp_image_get_format (dest_image, GIMP_INDEXEDA_IMAGE);
