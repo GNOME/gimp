@@ -21,8 +21,6 @@
 #include <cairo.h>
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
-
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-utils.h"
@@ -30,7 +28,6 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-convert.h"
 #include "gimpimage.h"
-#include "gimpimage-colormap.h"
 
 
 void
@@ -38,23 +35,23 @@ gimp_drawable_convert_rgb (GimpDrawable *drawable,
                            GimpImage    *dest_image,
                            gboolean      push_undo)
 {
-  GimpImageType  type;
-  GeglBuffer    *dest_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (! gimp_drawable_is_rgb (drawable));
 
-  type = GIMP_RGB_IMAGE;
-
   if (gimp_drawable_has_alpha (drawable))
-    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+    format = gimp_image_get_format (dest_image, GIMP_RGBA_IMAGE);
+  else
+    format = gimp_image_get_format (dest_image, GIMP_RGB_IMAGE);
 
   dest_buffer =
     gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                           gimp_item_get_width  (GIMP_ITEM (drawable)),
                                           gimp_item_get_height (GIMP_ITEM (drawable))),
-                          gimp_image_get_format (dest_image, type));
+                          format);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
@@ -68,23 +65,23 @@ gimp_drawable_convert_grayscale (GimpDrawable *drawable,
                                  GimpImage    *dest_image,
                                  gboolean      push_undo)
 {
-  GimpImageType  type;
-  GeglBuffer    *dest_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (! gimp_drawable_is_gray (drawable));
 
-  type = GIMP_GRAY_IMAGE;
-
   if (gimp_drawable_has_alpha (drawable))
-    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+    format = gimp_image_get_format (dest_image, GIMP_GRAYA_IMAGE);
+  else
+    format = gimp_image_get_format (dest_image, GIMP_GRAY_IMAGE);
 
   dest_buffer =
     gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                           gimp_item_get_width  (GIMP_ITEM (drawable)),
                                           gimp_item_get_height (GIMP_ITEM (drawable))),
-                          gimp_image_get_format (dest_image, type));
+                          format);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     dest_buffer, NULL);
@@ -106,9 +103,9 @@ gimp_drawable_convert_indexed (GimpDrawable *drawable,
   g_return_if_fail (! gimp_drawable_is_gray (drawable));
 
   if (gimp_drawable_has_alpha (drawable))
-    format = gimp_image_colormap_get_rgba_format (dest_image);
+    format = gimp_image_get_format (dest_image, GIMP_INDEXEDA_IMAGE);
   else
-    format = gimp_image_colormap_get_rgb_format (dest_image);
+    format = gimp_image_get_format (dest_image, GIMP_INDEXED_IMAGE);
 
   dest_buffer =
     gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
