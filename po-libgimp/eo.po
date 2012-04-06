@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-04-06 16:33+0000\n"
-"PO-Revision-Date: 2012-04-06 20:49+0200\n"
+"PO-Revision-Date: 2012-04-06 20:58+0200\n"
 "Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
 "Language-Team: Esperanto <gnome-l10n-eo@lists.launchpad.net>\n"
 "Language: \n"
@@ -19,8 +19,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Launchpad-Export-Date: 2011-05-04 16:28+0000\n"
-"X-Generator: Launchpad (build 12959)\n"
+"X-Launchpad-Export-Date: 2012-04-06 18:41+0000\n"
+"X-Generator: Launchpad (build 15060)\n"
 "Date: dom feb  6 16:47:39 CET 2000\n"
 
 #. procedure executed successfully
@@ -331,7 +331,7 @@ msgstr[1] "%d proceduroj"
 
 #: ../libgimp/gimpprocbrowserdialog.c:492
 msgid "No matches for your query"
-msgstr "Neniu kongruaĵo laŭ informpeto"
+msgstr "Neniuj kongruoj je via informpeto"
 
 #: ../libgimp/gimpprocbrowserdialog.c:496
 #, c-format
@@ -614,16 +614,14 @@ msgid "Shaped (dimpled)"
 msgstr "Konturita (kurbita)"
 
 #: ../libgimpbase/gimpbaseenums.c:409
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
-msgstr "Spirala (dekstroĝira)"
+msgstr "Spirala (dekstroĝire)"
 
 #: ../libgimpbase/gimpbaseenums.c:410
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
-msgstr "Spirala (kontraŭmontrila)"
+msgstr "Spirala (maldekstroĝire)"
 
 #: ../libgimpbase/gimpbaseenums.c:442
 msgctxt "grid-style"
@@ -656,10 +654,9 @@ msgid "Stock ID"
 msgstr "Stok-ID"
 
 #: ../libgimpbase/gimpbaseenums.c:477
-#, fuzzy
 msgctxt "icon-type"
 msgid "Inline pixbuf"
-msgstr "Surlinea Pixbuf"
+msgstr "Enteksta Pixbuf"
 
 #: ../libgimpbase/gimpbaseenums.c:478
 msgctxt "icon-type"
@@ -753,7 +750,6 @@ msgid "Sawtooth wave"
 msgstr "Segildenta ondo"
 
 #: ../libgimpbase/gimpbaseenums.c:644
-#, fuzzy
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Triangula ondo"
@@ -816,7 +812,7 @@ msgstr "Ĝustigi"
 #: ../libgimpbase/gimpbaseenums.c:800
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr ""
+msgstr "Eltondi"
 
 #: ../libgimpbase/gimpbaseenums.c:801
 msgctxt "transform-resize"
@@ -986,7 +982,6 @@ msgid "Perceptual"
 msgstr "Perceptive"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#, fuzzy
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Relative kolorometrie"
