@@ -84,11 +84,11 @@ gimp_image_new_from_template (Gimp         *gimp,
                               GimpTemplate *template,
                               GimpContext  *context)
 {
-  GimpImage     *image;
-  GimpLayer     *layer;
-  GimpImageType  type;
-  gint           width, height;
-  const gchar   *comment;
+  GimpImage   *image;
+  GimpLayer   *layer;
+  gint         width, height;
+  gboolean     has_alpha;
+  const gchar *comment;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
@@ -124,20 +124,13 @@ gimp_image_new_from_template (Gimp         *gimp,
   width  = gimp_image_get_width (image);
   height = gimp_image_get_height (image);
 
-  switch (gimp_template_get_fill_type (template))
-    {
-    case GIMP_TRANSPARENT_FILL:
-      type = ((gimp_template_get_image_type (template) == GIMP_RGB) ?
-              GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE);
-      break;
-    default:
-      type = ((gimp_template_get_image_type (template) == GIMP_RGB) ?
-              GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE);
-      break;
-    }
+  if (gimp_template_get_fill_type (template) == GIMP_TRANSPARENT_FILL)
+    has_alpha = TRUE;
+  else
+    has_alpha = FALSE;
 
   layer = gimp_layer_new (image, width, height,
-                          gimp_image_get_format (image, type),
+                          gimp_image_get_layer_format (image, has_alpha),
                           _("Background"),
                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
