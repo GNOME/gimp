@@ -56,6 +56,8 @@ from the Author.
 
 #include "config.h"
 
+#include <babl/babl.h>
+
 #include <glib-object.h>
 
 #include <libgimpmath/gimpmath.h>
@@ -458,6 +460,7 @@ cpercep_rgb_to_space (double  inr,
                       double *outg,
                       double *outb)
 {
+  float input[3] = {inr/255.0f, ing/255.0f, inb/255.0f};
 #ifdef APPROX
 #ifdef SANITY
   /* ADM extra sanity */
@@ -528,6 +531,19 @@ cpercep_rgb_to_space (double  inr,
   *outr = inr;
   *outg = ing;
   *outb = inb;
+
+  {
+    float output[3];
+    babl_process (babl_fish (babl_format ("R'G'B' float"),
+                             babl_format ("CIE Lab float")),
+                  input, output, 1);
+    if (fabs (output[0]-inr) > 0.1)
+      g_warning ("eeek2 component 0 %f", output[0]-inr);
+    if (fabs (output[1]-ing) > 0.1)
+      g_warning ("eeek2 component 1 %f", output[1]-inb);
+    if (fabs (output[2]-inb) > 0.1)
+      g_warning ("eeek2 component 2 %f", output[2]-inb);
+  }
 }
 
 
@@ -539,6 +555,7 @@ cpercep_space_to_rgb (double  inr,
                       double *outg,
                       double *outb)
 {
+  float input[3] = {inr, ing, inb};
   lab_to_xyz(&inr, &ing, &inb);
 
 #ifdef SANITY
@@ -576,6 +593,22 @@ cpercep_space_to_rgb (double  inr,
   ing = 255.0F * pow(ing, REV_GAMMA);
   inb = 255.0F * pow(inb, REV_GAMMA);
 #endif
+
+  {
+    float output[3];
+    babl_process (babl_fish (babl_format ("CIE Lab float"),
+                             babl_format ("R'G'B' float")),
+                  input, output, 1);
+    output[0] *= 255;
+    output[1] *= 255;
+    output[2] *= 255;
+    if (fabs (output[0]-inr) > 0.01)
+      g_warning ("eeek component 0");
+    if (fabs (output[1]-ing) > 0.01)
+      g_warning ("eeek component 1");
+    if (fabs (output[2]-inb) > 0.01)
+      g_warning ("eeek component 2");
+  }
 
   *outr = inr;
   *outg = ing;
