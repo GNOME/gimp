@@ -31,6 +31,8 @@
 
 #include "base/temp-buf.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpmarshal.h"
@@ -353,41 +355,22 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
 
   if (temp_buf)
     {
-      TempBuf *color_buf = NULL;
-      gint     width;
-      gint     height;
-      gint     bytes;
+      GeglBuffer *src_buffer;
+      GeglBuffer *dest_buffer;
 
-      bytes  = temp_buf->bytes;
-      width  = temp_buf->width;
-      height = temp_buf->height;
+      pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                               temp_buf->bytes == 4 || temp_buf->bytes == 2,
+                               8,
+                               temp_buf->width,
+                               temp_buf->height);
 
-      if (bytes == 1 || bytes == 2)
-        {
-          gint color_bytes;
+      src_buffer  = gimp_temp_buf_create_buffer (temp_buf, NULL, FALSE);
+      dest_buffer = gimp_pixbuf_create_buffer (pixbuf);
 
-          color_bytes = (bytes == 2) ? 4 : 3;
+      gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
 
-          color_buf = temp_buf_new (width, height, color_bytes);
-          temp_buf_copy (temp_buf, color_buf);
-
-          temp_buf = color_buf;
-          bytes    = color_bytes;
-        }
-
-      pixbuf = gdk_pixbuf_new_from_data (g_memdup (temp_buf_get_data (temp_buf),
-                                                   width * height * bytes),
-                                         GDK_COLORSPACE_RGB,
-                                         (bytes == 4),
-                                         8,
-                                         width,
-                                         height,
-                                         width * bytes,
-                                         (GdkPixbufDestroyNotify) g_free,
-                                         NULL);
-
-      if (color_buf)
-        temp_buf_free (color_buf);
+      g_object_unref (src_buffer);
+      g_object_unref (dest_buffer);
     }
 
   return pixbuf;
