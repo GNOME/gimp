@@ -146,6 +146,8 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
 {
   GimpPattern *pattern = GIMP_PATTERN (viewable);
   TempBuf     *temp_buf;
+  GeglBuffer  *src_buffer;
+  GeglBuffer  *dest_buffer;
   gint         copy_width;
   gint         copy_height;
 
@@ -155,8 +157,14 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
   temp_buf = temp_buf_new (copy_width, copy_height,
                            pattern->mask->bytes);
 
-  temp_buf_copy_area (pattern->mask, temp_buf,
-                      0, 0, copy_width, copy_height, 0, 0);
+  src_buffer  = gimp_temp_buf_create_buffer (pattern->mask, NULL, FALSE);
+  dest_buffer = gimp_temp_buf_create_buffer (temp_buf, NULL, FALSE);
+
+  gegl_buffer_copy (src_buffer,  GEGL_RECTANGLE (0, 0, copy_width, copy_height),
+                    dest_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
+
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
 
   return temp_buf;
 }
