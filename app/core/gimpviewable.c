@@ -775,7 +775,7 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
                                             width, height);
 
   if (temp_buf)
-    return temp_buf_copy (temp_buf, NULL);
+    return temp_buf_copy (temp_buf);
 
   return NULL;
 }

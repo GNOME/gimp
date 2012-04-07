@@ -28,20 +28,12 @@
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
-#include "libgimpcolor/gimpcolor.h"
-
 #include "base-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 
 #include "pixel-region.h"
 #include "temp-buf.h"
-
-
-static void  temp_buf_to_color (TempBuf *src_buf,
-                                TempBuf *dest_buf);
-static void  temp_buf_to_gray  (TempBuf *src_buf,
-                                TempBuf *dest_buf);
 
 
 TempBuf *
@@ -68,38 +60,20 @@ temp_buf_new (gint          width,
 }
 
 TempBuf *
-temp_buf_copy (TempBuf *src,
-               TempBuf *dest)
+temp_buf_copy (TempBuf *src)
 {
-  g_return_val_if_fail (src != NULL, NULL);
-  g_return_val_if_fail (! dest || (dest->width  == src->width &&
-                                   dest->height == src->height), NULL);
+  TempBuf *dest;
 
-  if (! dest)
-    dest = temp_buf_new (src->width, src->height, src->bytes);
+  g_return_val_if_fail (src != NULL, NULL);
+
+  dest = temp_buf_new (src->width, src->height, src->bytes);
 
   if (! dest)
     return NULL;
 
-  if (src->bytes != dest->bytes)
-    {
-      if (src->bytes == 4 && dest->bytes == 2)       /* RGBA  -> GRAYA */
-        temp_buf_to_gray (src, dest);
-      else if (src->bytes == 3 && dest->bytes == 1)  /* RGB   -> GRAY  */
-        temp_buf_to_gray (src, dest);
-      else if (src->bytes == 2 && dest->bytes == 4)  /* GRAYA -> RGBA  */
-        temp_buf_to_color (src, dest);
-      else if (src->bytes == 1 && dest->bytes == 3)  /* GRAY  -> RGB   */
-        temp_buf_to_color (src, dest);
-      else
-        g_warning ("temp_buf_copy(): unimplemented color conversion");
-    }
-  else
-    {
-      memcpy (temp_buf_get_data (dest),
-              temp_buf_get_data (src),
-              temp_buf_get_data_size (src));
-    }
+  memcpy (temp_buf_get_data (dest),
+          temp_buf_get_data (src),
+          temp_buf_get_data_size (src));
 
   return dest;
 }
@@ -324,100 +298,4 @@ temp_buf_dump (TempBuf     *buf,
   write (fd, temp_buf_get_data (buf), temp_buf_get_data_size (buf));
 
   close (fd);
-}
-
-
-/*  The conversion routines  */
-
-static void
-temp_buf_to_color (TempBuf *src_buf,
-                   TempBuf *dest_buf)
-{
-  guchar *src;
-  guchar *dest;
-  glong   num_pixels;
-
-  src  = temp_buf_get_data (src_buf);
-  dest = temp_buf_get_data (dest_buf);
-
-  num_pixels = src_buf->width * src_buf->height;
-
-  switch (dest_buf->bytes)
-    {
-    case 3:
-      g_return_if_fail (src_buf->bytes == 1);
-      while (num_pixels--)
-        {
-          guchar tmp;
-
-          *dest++ = tmp = *src++;
-          *dest++ = tmp;
-          *dest++ = tmp;
-        }
-      break;
-
-    case 4:
-      g_return_if_fail (src_buf->bytes == 2);
-      while (num_pixels--)
-        {
-          guchar tmp;
-
-          *dest++ = tmp = *src++;
-          *dest++ = tmp;
-          *dest++ = tmp;
-
-          *dest++ = *src++;  /* alpha channel */
-        }
-      break;
-
-    default:
-      g_return_if_reached ();
-      break;
-    }
-}
-
-static void
-temp_buf_to_gray (TempBuf *src_buf,
-                  TempBuf *dest_buf)
-{
-  const guchar *src;
-  guchar       *dest;
-  glong         num_pixels;
-
-  src  = temp_buf_get_data (src_buf);
-  dest = temp_buf_get_data (dest_buf);
-
-  num_pixels = src_buf->width * src_buf->height;
-
-  switch (dest_buf->bytes)
-    {
-    case 1:
-      g_return_if_fail (src_buf->bytes == 3);
-      while (num_pixels--)
-        {
-          gint lum = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]) + 0.5;
-
-          *dest++ = (guchar) lum;
-
-          src += 3;
-        }
-      break;
-
-    case 2:
-      g_return_if_fail (src_buf->bytes == 4);
-      while (num_pixels--)
-        {
-          gint lum = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]) + 0.5;
-
-          *dest++ = (guchar) lum;
-          *dest++ = src[3];  /* alpha channel */
-
-          src += 4;
-        }
-      break;
-
-    default:
-      g_return_if_reached ();
-      break;
-    }
 }

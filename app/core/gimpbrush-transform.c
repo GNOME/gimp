@@ -178,7 +178,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
                                scale, aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
-    return temp_buf_copy (source, NULL);
+    return temp_buf_copy (source);
 
   src_width  = source->width;
   src_height = source->height;
@@ -340,7 +340,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
       gimp_brush_transform_fill_blur_kernel (blur_kernel, kernel_len);
 
-      blur_src = temp_buf_copy (result, NULL);
+      blur_src = temp_buf_copy (result);
 
       src_buffer  = gimp_temp_buf_create_buffer (blur_src, babl_format ("Y u8"),
                                                  TRUE);
@@ -474,7 +474,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
                                scale, aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
-    return temp_buf_copy (source, NULL);
+    return temp_buf_copy (source);
 
   src_width  = source->width;
   src_height = source->height;
@@ -641,7 +641,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
       gimp_brush_transform_fill_blur_kernel (blur_kernel, kernel_len);
 
-      blur_src = temp_buf_copy (result, NULL);
+      blur_src = temp_buf_copy (result);
 
       src_buffer  = gimp_temp_buf_create_buffer (blur_src, NULL, TRUE);
       dest_buffer = gimp_temp_buf_create_buffer (blur_src, NULL, FALSE);

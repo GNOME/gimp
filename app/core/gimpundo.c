@@ -328,7 +328,7 @@ gimp_undo_get_new_preview (GimpViewable *viewable,
           return temp_buf_scale (undo->preview, preview_width, preview_height);
         }
 
-      return temp_buf_copy (undo->preview, NULL);
+      return temp_buf_copy (undo->preview);
     }
 
   return NULL;

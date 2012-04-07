@@ -618,7 +618,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
           angle        == 0.0 &&
           hardness     == 1.0)
         {
-          mask = temp_buf_copy (brush->mask, NULL);
+          mask = temp_buf_copy (brush->mask);
         }
       else
         {
@@ -668,7 +668,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
           angle        == 0.0 &&
           hardness     == 1.0)
         {
-          pixmap = temp_buf_copy (brush->pixmap, NULL);
+          pixmap = temp_buf_copy (brush->pixmap);
         }
       else
         {

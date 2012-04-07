@@ -184,7 +184,7 @@ gimp_pattern_duplicate (GimpData *data)
 {
   GimpPattern *pattern = g_object_new (GIMP_TYPE_PATTERN, NULL);
 
-  pattern->mask = temp_buf_copy (GIMP_PATTERN (data)->mask, NULL);
+  pattern->mask = temp_buf_copy (GIMP_PATTERN (data)->mask);
 
   return GIMP_DATA (pattern);
 }

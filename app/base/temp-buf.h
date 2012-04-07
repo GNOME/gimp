@@ -35,8 +35,7 @@ struct _TempBuf
 TempBuf * temp_buf_new           (gint           width,
                                   gint           height,
                                   gint           bytes);
-TempBuf * temp_buf_copy          (TempBuf       *src,
-                                  TempBuf       *dest);
+TempBuf * temp_buf_copy          (TempBuf       *src);
 TempBuf * temp_buf_scale         (TempBuf       *buf,
                                   gint           width,
                                   gint           height) G_GNUC_WARN_UNUSED_RESULT;
