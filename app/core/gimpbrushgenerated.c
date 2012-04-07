@@ -484,8 +484,6 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
 
   mask = temp_buf_new (half_width  * 2 + 1,
                        half_height * 2 + 1, 1);
-  mask->x = half_width;
-  mask->y = half_height;
 
   centerp = temp_buf_get_data (mask) + half_height * mask->width + half_width;
 
