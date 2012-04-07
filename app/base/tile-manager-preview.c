@@ -97,7 +97,7 @@ tile_manager_create_preview (TileManager *tiles,
   gint         subsample = 1;
 
   preview = temp_buf_new (dest_width, dest_height,
-                          tile_manager_bpp (tiles), 0, 0, NULL);
+                          tile_manager_bpp (tiles));
 
   pixel_region_init (&srcPR, tiles, src_x, src_y, src_width, src_height, FALSE);
 

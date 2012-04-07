@@ -206,13 +206,13 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   guchar      *buf;
   guchar      *b;
   GList       *list;
-  guchar       white[3] = { 255, 255, 255 };
   gint         columns;
   gint         rows;
   gint         cell_size;
   gint         x, y;
 
-  temp_buf = temp_buf_new (width, height, 3, 0, 0, white);
+  temp_buf = temp_buf_new (width, height, 3);
+  memset (temp_buf_get_data (temp_buf), 255, width * height * 3);
 
   if (palette->n_columns > 1)
     cell_size = MAX (4, width / palette->n_columns);

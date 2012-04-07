@@ -164,10 +164,10 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             }
           else
             {
-              gint   bytes    = gimp_drawable_preview_bytes (drawable);
-              guchar empty[4] = { 0, 0, 0, 0 };
+              gint bytes = gimp_drawable_preview_bytes (drawable);
 
-              render_buf = temp_buf_new (1, 1, bytes, 0, 0, empty);
+              render_buf = temp_buf_new (1, 1, bytes);
+              temp_buf_data_clear (render_buf);
             }
         }
       else

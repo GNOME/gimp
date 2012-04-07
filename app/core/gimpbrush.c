@@ -288,7 +288,6 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   TempBuf       *return_buf  = NULL;
   gint           mask_width;
   gint           mask_height;
-  guchar         transp[4]   = { 0, 0, 0, 0 };
   guchar        *mask;
   guchar        *buf;
   gint           x, y;
@@ -315,7 +314,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
           if (! mask_buf)
             {
-              mask_buf = temp_buf_new (1, 1, 1, 0, 0, transp);
+              mask_buf = temp_buf_new (1, 1, 1);
+              temp_buf_data_clear ((TempBuf *) mask_buf);
               free_mask = TRUE;
             }
 
@@ -330,7 +330,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
         }
     }
 
-  return_buf = temp_buf_new (mask_width, mask_height, 4, 0, 0, transp);
+  return_buf = temp_buf_new (mask_width, mask_height, 4);
+  temp_buf_data_clear (return_buf);
 
   mask = temp_buf_get_data (mask_buf);
   buf  = temp_buf_get_data (return_buf);

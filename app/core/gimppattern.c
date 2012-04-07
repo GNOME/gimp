@@ -153,8 +153,7 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
   copy_height = MIN (height, pattern->mask->height);
 
   temp_buf = temp_buf_new (copy_width, copy_height,
-                           pattern->mask->bytes,
-                           0, 0, NULL);
+                           pattern->mask->bytes);
 
   temp_buf_copy_area (pattern->mask, temp_buf,
                       0, 0, copy_width, copy_height, 0, 0);
@@ -225,7 +224,7 @@ gimp_pattern_new (GimpContext *context,
                           "name", name,
                           NULL);
 
-  pattern->mask = temp_buf_new (32, 32, 3, 0, 0, NULL);
+  pattern->mask = temp_buf_new (32, 32, 3);
 
   data = temp_buf_get_data (pattern->mask);
 

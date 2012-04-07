@@ -190,7 +190,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
-  result = temp_buf_new (dest_width, dest_height, 1, 0, 0, NULL);
+  result = temp_buf_new (dest_width, dest_height, 1);
 
   dest = temp_buf_get_data (result);
   src  = temp_buf_get_data (source);
@@ -486,7 +486,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
-  result = temp_buf_new (dest_width, dest_height, 3, 0, 0, NULL);
+  result = temp_buf_new (dest_width, dest_height, 3);
 
   dest = temp_buf_get_data (result);
   src  = temp_buf_get_data (source);

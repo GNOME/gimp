@@ -34,10 +34,7 @@ struct _TempBuf
 
 TempBuf * temp_buf_new           (gint           width,
                                   gint           height,
-                                  gint           bytes,
-                                  gint           x,
-                                  gint           y,
-                                  const guchar  *color);
+                                  gint           bytes);
 TempBuf * temp_buf_copy          (TempBuf       *src,
                                   TempBuf       *dest);
 TempBuf * temp_buf_resize        (TempBuf       *buf,

@@ -47,10 +47,7 @@ static void  temp_buf_to_gray  (TempBuf *src_buf,
 TempBuf *
 temp_buf_new (gint          width,
               gint          height,
-              gint          bytes,
-              gint          x,
-              gint          y,
-              const guchar *color)
+              gint          bytes)
 {
   TempBuf *temp;
 
@@ -62,51 +59,10 @@ temp_buf_new (gint          width,
   temp->bytes   = bytes;
   temp->width   = width;
   temp->height  = height;
-  temp->x       = x;
-  temp->y       = y;
+  temp->x       = 0;
+  temp->y       = 0;
 
   temp->data = g_new (guchar, width * height * bytes);
-
-  /*  initialize the data  */
-  if (color)
-    {
-      glong i;
-
-      /* First check if we can save a lot of work */
-      for (i = 1; i < bytes; i++)
-        {
-          if (color[0] != color[i])
-            break;
-        }
-
-      if (i == bytes)
-        {
-          memset (temp->data, *color, width * height * bytes);
-        }
-      else /* No, we cannot */
-        {
-          guchar *dptr = temp->data;
-
-          /* Fill the first row */
-          for (i = width - 1; i >= 0; --i)
-            {
-              const guchar *c = color;
-              gint          j = bytes;
-
-              while (j--)
-                *dptr++ = *c++;
-            }
-
-          /* Now copy from it (we set bytes to bytes-per-row now) */
-          bytes *= width;
-
-          while (--height)
-            {
-              memcpy (dptr, temp->data, bytes);
-              dptr += bytes;
-            }
-        }
-    }
 
   return temp;
 }
@@ -120,7 +76,7 @@ temp_buf_copy (TempBuf *src,
                                    dest->height == src->height), NULL);
 
   if (! dest)
-    dest = temp_buf_new (src->width, src->height, src->bytes, 0, 0, NULL);
+    dest = temp_buf_new (src->width, src->height, src->bytes);
 
   if (! dest)
     return NULL;
@@ -160,7 +116,9 @@ temp_buf_resize (TempBuf *buf,
 
   if (! buf)
     {
-      buf = temp_buf_new (width, height, bytes, x, y, NULL);
+      buf = temp_buf_new (width, height, bytes);
+      buf->x = x;
+      buf->y = y;
     }
   else
     {
@@ -199,8 +157,7 @@ temp_buf_scale (TempBuf *src,
 
   dest = temp_buf_new (new_width,
                        new_height,
-                       src->bytes,
-                       0, 0, NULL);
+                       src->bytes);
 
   src_data  = temp_buf_get_data (src);
   dest_data = temp_buf_get_data (dest);
@@ -244,7 +201,6 @@ temp_buf_copy_area (TempBuf *src,
   TempBuf     *new;
   PixelRegion  srcPR  = { 0, };
   PixelRegion  destPR = { 0, };
-  guchar       empty[MAX_CHANNELS] = { 0, 0, 0, 0 };
   gint         x1, y1, x2, y2;
 
   g_return_val_if_fail (src != NULL, dest);
@@ -272,9 +228,8 @@ temp_buf_copy_area (TempBuf *src,
     {
       new = temp_buf_new (width  + dest_x,
                           height + dest_y,
-                          src->bytes,
-                          0, 0,
-                          empty);
+                          src->bytes);
+      temp_buf_data_clear (new);
     }
   else
     {

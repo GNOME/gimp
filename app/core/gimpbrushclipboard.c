@@ -203,8 +203,8 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 512);
       height = MIN (gimp_buffer_get_height (gimp->global_buffer), 512);
 
-      brush->mask   = temp_buf_new (width, height, 1, 0, 0, NULL);
-      brush->pixmap = temp_buf_new (width, height, 3, 0, 0, NULL);
+      brush->mask   = temp_buf_new (width, height, 1);
+      brush->pixmap = temp_buf_new (width, height, 3);
 
       /*  copy the alpha channel into the brush's mask  */
       if (babl_format_has_alpha (format))
@@ -232,12 +232,11 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
     }
   else
     {
-      guchar color = 0;
-
       width  = 17;
       height = 17;
 
-      brush->mask = temp_buf_new (width, height, 1, 0, 0, &color);
+      brush->mask = temp_buf_new (width, height, 1);
+      temp_buf_data_clear (brush->mask);
     }
 
   brush->x_axis.x = width / 2;

@@ -831,8 +831,7 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
       gint        bytes  = babl_format_get_bytes_per_pixel (format);
       TempBuf    *temp_buf;
 
-      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), bytes,
-                               0, 0, NULL);
+      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), bytes);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
@@ -1067,7 +1066,6 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
   gint          i, j;
   gint          r, s;
   gulong       *accum[KERNEL_HEIGHT];
-  const guchar  empty = TRANSPARENT_OPACITY;
   gint          offs;
 
   while (x < 0)
@@ -1129,8 +1127,8 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
     }
 
   dest = temp_buf_new (mask->width  + 2,
-                       mask->height + 2,
-                       1, 0, 0, &empty);
+                       mask->height + 2, 1);
+  temp_buf_data_clear (dest);
 
   /* Allocate and initialize the accum buffer */
   for (i = 0; i < KERNEL_HEIGHT ; i++)
@@ -1194,7 +1192,6 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
   const guchar  *source;
   guchar        *dest;
   const TempBuf *subsample_mask;
-  const guchar   empty = TRANSPARENT_OPACITY;
   gint           i;
 
   /* Get the raw subsampled mask */
@@ -1210,8 +1207,8 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
     temp_buf_free (core->pressure_brush);
 
   core->pressure_brush = temp_buf_new (brush_mask->width  + 2,
-                                       brush_mask->height + 2,
-                                       1, 0, 0, &empty);
+                                       brush_mask->height + 2, 1);
+  temp_buf_data_clear (core->pressure_brush);
 
 #ifdef FANCY_PRESSURE
 
@@ -1310,7 +1307,6 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
   gint          dest_offset_x = 0;
   gint          dest_offset_y = 0;
   gint          i, j;
-  const guchar  empty         = TRANSPARENT_OPACITY;
 
   if ((brush_mask->width % 2) == 0)
     {
@@ -1351,8 +1347,8 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
     }
 
   dest = temp_buf_new (brush_mask->width  + 2,
-                       brush_mask->height + 2,
-                       1, 0, 0, &empty);
+                       brush_mask->height + 2, 1);
+  temp_buf_data_clear (dest);
 
   core->solid_brushes[dest_offset_y][dest_offset_x] = dest;
 

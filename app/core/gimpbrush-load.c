@@ -291,7 +291,7 @@ gimp_brush_load_brush (GimpContext  *context,
                         NULL);
   g_free (name);
 
-  brush->mask = temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
+  brush->mask = temp_buf_new (header.width, header.height, 1);
 
   mask = temp_buf_get_data (brush->mask);
   size = header.width * header.height * header.bytes;
@@ -345,8 +345,7 @@ gimp_brush_load_brush (GimpContext  *context,
       {
         guchar buf[8 * 1024];
 
-        brush->pixmap = temp_buf_new (header.width, header.height,
-                                      3, 0, 0, NULL);
+        brush->pixmap = temp_buf_new (header.width, header.height, 3);
         pixmap = temp_buf_get_data (brush->pixmap);
 
         for (i = 0; success && i < size;)
@@ -649,7 +648,7 @@ gimp_brush_load_abr_brush_v12 (FILE         *file,
         brush->x_axis.y = 0.0;
         brush->y_axis.x = 0.0;
         brush->y_axis.y = height / 2.0;
-        brush->mask     = temp_buf_new (width, height, 1, 0, 0, NULL);
+        brush->mask     = temp_buf_new (width, height, 1);
 
         mask = temp_buf_get_data (brush->mask);
         size = width * height * bytes;
@@ -756,7 +755,7 @@ gimp_brush_load_abr_brush_v6 (FILE         *file,
   brush->x_axis.y = 0.0;
   brush->y_axis.x = 0.0;
   brush->y_axis.y = height / 2.0;
-  brush->mask     = temp_buf_new (width, height, 1, 0, 0, NULL);
+  brush->mask     = temp_buf_new (width, height, 1);
 
   mask = temp_buf_get_data (brush->mask);
 

@@ -228,7 +228,7 @@ gimp_preview_cache_get (GSList **plist,
       pheight = pn.buf->height;
 
       /* Now get the real one and add to cache */
-      preview = temp_buf_new (width, height, pn.buf->bytes, 0, 0, NULL);
+      preview = temp_buf_new (width, height, pn.buf->bytes);
 
       /* preview from nearest bigger one */
       if (width)

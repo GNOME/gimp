@@ -154,8 +154,7 @@ gimp_pattern_load (GimpContext  *context,
 
   g_free (name);
 
-  pattern->mask = temp_buf_new (header.width, header.height, header.bytes,
-                                0, 0, NULL);
+  pattern->mask = temp_buf_new (header.width, header.height, header.bytes);
   if (read (fd, temp_buf_get_data (pattern->mask),
             header.width * header.height * header.bytes) <
       header.width * header.height * header.bytes)
@@ -224,7 +223,7 @@ gimp_pattern_load_pixbuf (GimpContext  *context,
   bytes     = gdk_pixbuf_get_n_channels (pixbuf);
   rowstride = gdk_pixbuf_get_rowstride (pixbuf);
 
-  pattern->mask = temp_buf_new (width, height, bytes, 0, 0, NULL);
+  pattern->mask = temp_buf_new (width, height, bytes);
 
   pat_data = gdk_pixbuf_get_pixels (pixbuf);
   buf_data = temp_buf_get_data (pattern->mask);

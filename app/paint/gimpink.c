@@ -224,8 +224,7 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
       gint        bytes  = babl_format_get_bytes_per_pixel (format);
       TempBuf    *temp_buf;
 
-      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), bytes,
-                               0, 0, NULL);
+      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), bytes);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;

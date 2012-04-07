@@ -198,7 +198,7 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
       height = MIN (gimp_buffer_get_height (buffer), 512);
       bytes  = babl_format_get_bytes_per_pixel (format);
 
-      pattern->mask = temp_buf_new (width, height, bytes, 0, 0, NULL);
+      pattern->mask = temp_buf_new (width, height, bytes);
 
       gegl_buffer_get (gimp_buffer_get_buffer (buffer),
                        GEGL_RECTANGLE (0, 0, width, height), 1.0,
@@ -208,9 +208,8 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
     }
   else
     {
-      guchar color[3] = { 255, 255, 255 };
-
-      pattern->mask = temp_buf_new (16, 16, 3, 0, 0, color);
+      pattern->mask = temp_buf_new (16, 16, 3);
+      memset (temp_buf_get_data (pattern->mask), 255, 16 * 16 * 3);
     }
 
   gimp_data_dirty (GIMP_DATA (pattern));
