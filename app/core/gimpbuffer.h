@@ -37,7 +37,6 @@ struct _GimpBuffer
   GimpViewable   parent_instance;
 
   GeglBuffer    *buffer;
-  GimpImageType  image_type;
   gint           offset_x;
   gint           offset_y;
 };
@@ -52,7 +51,6 @@ GType           gimp_buffer_get_type        (void) G_GNUC_CONST;
 
 GimpBuffer    * gimp_buffer_new             (GeglBuffer       *buffer,
                                              const gchar      *name,
-                                             GimpImageType     image_type,
                                              gint              offset_x,
                                              gint              offset_y,
                                              gboolean          copy_pixels);
@@ -65,7 +63,6 @@ gint            gimp_buffer_get_width       (const GimpBuffer *buffer);
 gint            gimp_buffer_get_height      (const GimpBuffer *buffer);
 const Babl    * gimp_buffer_get_format      (const GimpBuffer *buffer);
 
-GimpImageType   gimp_buffer_get_image_type  (const GimpBuffer *buffer);
 GeglBuffer    * gimp_buffer_get_buffer      (const GimpBuffer *buffer);
 
 

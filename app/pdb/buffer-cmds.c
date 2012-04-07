@@ -30,6 +30,7 @@
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpparamspecs.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -263,7 +264,7 @@ buffer_get_image_type_invoker (GimpProcedure      *procedure,
       GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer)
-        image_type = gimp_buffer_get_image_type (buffer);
+        image_type = gimp_babl_format_get_image_type (gimp_buffer_get_format (buffer));
       else
         success = FALSE;
     }

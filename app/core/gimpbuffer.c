@@ -228,7 +228,6 @@ gimp_buffer_get_description (GimpViewable  *viewable,
 GimpBuffer *
 gimp_buffer_new (GeglBuffer    *buffer,
                  const gchar   *name,
-                 GimpImageType  image_type,
                  gint           offset_x,
                  gint           offset_y,
                  gboolean       copy_pixels)
@@ -247,9 +246,8 @@ gimp_buffer_new (GeglBuffer    *buffer,
   else
     gimp_buffer->buffer = g_object_ref (buffer);
 
-  gimp_buffer->image_type = image_type;
-  gimp_buffer->offset_x   = offset_x;
-  gimp_buffer->offset_y   = offset_y;
+  gimp_buffer->offset_x = offset_x;
+  gimp_buffer->offset_y = offset_y;
 
   return gimp_buffer;
 }
@@ -262,17 +260,13 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
 {
   GimpBuffer *gimp_buffer;
   GeglBuffer *buffer;
-  gint        channels;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  channels = gdk_pixbuf_get_n_channels (pixbuf);
-
   buffer = gimp_pixbuf_create_buffer (pixbuf);
 
   gimp_buffer = gimp_buffer_new (buffer, name,
-                                 GIMP_IMAGE_TYPE_FROM_BYTES (channels),
                                  offset_x, offset_y, FALSE);
 
   g_object_unref (buffer);
@@ -302,14 +296,6 @@ gimp_buffer_get_format (const GimpBuffer *buffer)
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
 
   return gegl_buffer_get_format (buffer->buffer);
-}
-
-GimpImageType
-gimp_buffer_get_image_type (const GimpBuffer *buffer)
-{
-  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
-
-  return buffer->image_type;
 }
 
 GeglBuffer *

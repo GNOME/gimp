@@ -26,6 +26,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimp.h"
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
@@ -267,21 +269,23 @@ gimp_image_new_from_buffer (Gimp       *gimp,
                             GimpImage  *invoke,
                             GimpBuffer *paste)
 {
-  GimpImage     *image;
-  GimpLayer     *layer;
-  GimpImageType  type;
+  GimpImage  *image;
+  GimpLayer  *layer;
+  const Babl *format;
+  gboolean    has_alpha;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (invoke == NULL || GIMP_IS_IMAGE (invoke), NULL);
   g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
 
-  type = gimp_buffer_get_image_type (paste);
+  format    = gimp_buffer_get_format (paste);
+  has_alpha = babl_format_has_alpha (format);
 
   /*  create a new image  (always of type GIMP_RGB)  */
   image = gimp_create_image (gimp,
                              gimp_buffer_get_width  (paste),
                              gimp_buffer_get_height (paste),
-                             GIMP_IMAGE_TYPE_BASE_TYPE (type),
+                             gimp_babl_format_get_base_type (format),
                              TRUE);
   gimp_image_undo_disable (image);
 
@@ -297,7 +301,8 @@ gimp_image_new_from_buffer (Gimp       *gimp,
 
   layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (paste),
                                       image,
-                                      gimp_image_get_format (image, type),
+                                      gimp_image_get_layer_format (image,
+                                                                   has_alpha),
                                       _("Pasted Layer"),
                                       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

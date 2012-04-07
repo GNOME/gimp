@@ -225,7 +225,7 @@ sub buffer_get_image_type {
   GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
   if (buffer)
-    image_type = gimp_buffer_get_image_type (buffer);
+    image_type = gimp_babl_format_get_image_type (gimp_buffer_get_format (buffer));
   else
     success = FALSE;
 }
@@ -235,6 +235,7 @@ CODE
 
 
 @headers = qw(<string.h>
+              "gegl/gimp-gegl-utils.h"
               "core/gimp.h"
               "core/gimpbuffer.h"
               "core/gimpcontainer.h"

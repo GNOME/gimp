@@ -582,12 +582,8 @@ gimp_edit_extract (GimpImage     *image,
 
   if (buffer)
     {
-      GimpBuffer *gimp_buffer;
-      const Babl *format = gegl_buffer_get_format (buffer);
-
-      gimp_buffer = gimp_buffer_new (buffer, _("Global Buffer"),
-                                     GIMP_IMAGE_TYPE_FROM_BYTES (babl_format_get_bytes_per_pixel (format)),
-                                     offset_x, offset_y, FALSE);
+      GimpBuffer *gimp_buffer = gimp_buffer_new (buffer, _("Global Buffer"),
+                                                 offset_x, offset_y, FALSE);
       g_object_unref (buffer);
 
       return gimp_buffer;
