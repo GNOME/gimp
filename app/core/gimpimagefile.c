@@ -34,6 +34,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
@@ -972,15 +974,16 @@ gimp_thumbnail_set_info_from_image (GimpThumbnail *thumbnail,
                                     GimpImage     *image)
 {
   GimpEnumDesc  *desc;
+  const Babl    *format;
   GimpImageType  type;
 
   /*  peek the thumbnail to make sure that mtime and filesize are set  */
   gimp_thumbnail_peek_image (thumbnail);
 
-  type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (image));
+  format = gimp_image_get_layer_format (image,
+                                        gimp_image_has_alpha (image));
 
-  if (gimp_image_has_alpha (image))
-    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+  type = gimp_babl_format_get_image_type (format);
 
   desc = gimp_enum_get_desc (g_type_class_peek (GIMP_TYPE_IMAGE_TYPE), type);
 
