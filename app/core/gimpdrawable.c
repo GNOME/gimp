@@ -1632,25 +1632,7 @@ gimp_drawable_type (const GimpDrawable *drawable)
 
   format = gegl_buffer_get_format (drawable->private->buffer);
 
-  if (format == babl_format ("Y' u8"))
-    return GIMP_GRAY_IMAGE;
-  else if (format == babl_format ("Y'A u8"))
-    return GIMP_GRAYA_IMAGE;
-  else if (format == babl_format ("R'G'B' u8"))
-    return GIMP_RGB_IMAGE;
-  else if (format == babl_format ("R'G'B'A u8"))
-    return GIMP_RGBA_IMAGE;
-  else
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-      if (format == gimp_image_get_format (image, GIMP_INDEXED_IMAGE))
-        return GIMP_INDEXED_IMAGE;
-      if (format == gimp_image_get_format (image, GIMP_INDEXEDA_IMAGE))
-        return GIMP_INDEXEDA_IMAGE;
-    }
-
-  g_return_val_if_reached (-1);
+  return gimp_babl_format_get_image_type (format);
 }
 
 GimpImageType
@@ -1670,67 +1652,31 @@ gimp_drawable_get_base_type (const GimpDrawable *drawable)
 
   format = gegl_buffer_get_format (drawable->private->buffer);
 
-  if (format == babl_format ("Y' u8") ||
-      format == babl_format ("Y'A u8"))
-    {
-      return GIMP_GRAY;
-    }
-  else if (format == babl_format ("R'G'B' u8") ||
-           format == babl_format ("R'G'B'A u8"))
-    {
-      return GIMP_RGB;
-    }
-  else
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-      if (format == gimp_image_get_format (image, GIMP_INDEXED_IMAGE) ||
-          format == gimp_image_get_format (image, GIMP_INDEXEDA_IMAGE))
-        {
-          return GIMP_INDEXED;
-        }
-    }
-
-  g_return_val_if_reached (-1);
+  return gimp_babl_format_get_base_type (format);
 }
 
 gboolean
 gimp_drawable_is_rgb (const GimpDrawable *drawable)
 {
-  GimpImageType type;
-
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  type = gimp_drawable_type (drawable);
-
-  return (type == GIMP_RGB_IMAGE ||
-          type == GIMP_RGBA_IMAGE);
+  return (gimp_drawable_get_base_type (drawable) == GIMP_RGB);
 }
 
 gboolean
 gimp_drawable_is_gray (const GimpDrawable *drawable)
 {
-  GimpImageType type;
-
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  type = gimp_drawable_type (drawable);
-
-  return (type == GIMP_GRAY_IMAGE ||
-          type == GIMP_GRAYA_IMAGE);
+  return (gimp_drawable_get_base_type (drawable) == GIMP_GRAY);
 }
 
 gboolean
 gimp_drawable_is_indexed (const GimpDrawable *drawable)
 {
-  GimpImageType type;
-
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  type = gimp_drawable_type (drawable);
-
-  return (type == GIMP_INDEXED_IMAGE ||
-          type == GIMP_INDEXEDA_IMAGE);
+  return (gimp_drawable_get_base_type (drawable) == GIMP_INDEXED);
 }
 
 gint

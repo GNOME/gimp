@@ -347,7 +347,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  type_with_alpha = gimp_drawable_type_with_alpha (drawable);
+  const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
+
+  type_with_alpha = gimp_babl_format_get_image_type (format);
 }
 CODE
     );

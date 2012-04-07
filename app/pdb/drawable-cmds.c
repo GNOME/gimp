@@ -92,7 +92,9 @@ drawable_type_with_alpha_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      type_with_alpha = gimp_drawable_type_with_alpha (drawable);
+      const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
+
+      type_with_alpha = gimp_babl_format_get_image_type (format);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
