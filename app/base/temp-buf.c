@@ -105,41 +105,6 @@ temp_buf_copy (TempBuf *src,
 }
 
 TempBuf *
-temp_buf_resize (TempBuf *buf,
-                 gint     bytes,
-                 gint     x,
-                 gint     y,
-                 gint     width,
-                 gint     height)
-{
-  g_return_val_if_fail (width > 0 && height > 0, NULL);
-
-  if (! buf)
-    {
-      buf = temp_buf_new (width, height, bytes);
-      buf->x = x;
-      buf->y = y;
-    }
-  else
-    {
-      gsize size = width * height * bytes;
-
-      if (size != (buf->width * buf->height * buf->bytes))
-        {
-          buf->data = g_renew (guchar, buf->data, size);
-        }
-
-      buf->x      = x;
-      buf->y      = y;
-      buf->width  = width;
-      buf->height = height;
-      buf->bytes  = bytes;
-    }
-
-  return buf;
-}
-
-TempBuf *
 temp_buf_scale (TempBuf *src,
                 gint     new_width,
                 gint     new_height)
