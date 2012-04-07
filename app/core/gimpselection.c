@@ -527,8 +527,7 @@ gimp_selection_new (GimpImage *image,
   channel = GIMP_CHANNEL (gimp_drawable_new (GIMP_TYPE_SELECTION,
                                              image, NULL,
                                              0, 0, width, height,
-                                             gimp_image_get_format (image,
-                                                                    GIMP_GRAY_IMAGE)));
+                                             gimp_image_get_mask_format (image)));
 
   gimp_channel_set_color (channel, &black, FALSE);
   gimp_channel_set_show_masked (channel, TRUE);

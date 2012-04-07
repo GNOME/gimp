@@ -1624,8 +1624,7 @@ gimp_channel_new (GimpImage     *image,
     GIMP_CHANNEL (gimp_drawable_new (GIMP_TYPE_CHANNEL,
                                      image, name,
                                      0, 0, width, height,
-                                     gimp_image_get_format (image,
-                                                            GIMP_GRAY_IMAGE)));
+                                     gimp_image_get_channel_format (image)));
 
   if (color)
     channel->color = *color;
@@ -1903,17 +1902,24 @@ gimp_channel_new_mask (GimpImage *image,
                        gint       width,
                        gint       height)
 {
-  GimpChannel *new_channel;
+  GimpChannel *channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  new_channel = gimp_channel_new (image, width, height,
-                                  _("Selection Mask"), NULL);
+  channel =
+    GIMP_CHANNEL (gimp_drawable_new (GIMP_TYPE_CHANNEL,
+                                     image, _("Selection Mask"),
+                                     0, 0, width, height,
+                                     gimp_image_get_mask_format (image)));
 
-  gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (new_channel)),
+  channel->show_masked = TRUE;
+  channel->x2          = width;
+  channel->y2          = height;
+
+  gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                      NULL);
 
-  return new_channel;
+  return channel;
 }
 
 gboolean

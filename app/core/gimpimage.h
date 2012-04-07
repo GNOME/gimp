@@ -121,6 +121,8 @@ const Babl * gimp_image_get_format_without_alpha (const GimpImage    *image,
 
 const Babl * gimp_image_get_layer_format         (const GimpImage    *image,
                                                   gboolean            with_alpha);
+const Babl * gimp_image_get_channel_format       (const GimpImage    *image);
+const Babl * gimp_image_get_mask_format          (const GimpImage    *image);
 
 gint            gimp_image_get_ID                (const GimpImage    *image);
 GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,

@@ -1568,6 +1568,22 @@ gimp_image_get_layer_format (const GimpImage *image,
   g_return_val_if_reached (NULL);
 }
 
+const Babl *
+gimp_image_get_channel_format (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return babl_format ("Y' u8");
+}
+
+const Babl *
+gimp_image_get_mask_format (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return babl_format ("Y' u8");
+}
+
 gint
 gimp_image_get_ID (const GimpImage *image)
 {

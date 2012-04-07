@@ -145,11 +145,11 @@ gimp_layer_mask_new (GimpImage     *image,
   g_return_val_if_fail (height > 0, NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  layer_mask = GIMP_LAYER_MASK (gimp_drawable_new (GIMP_TYPE_LAYER_MASK,
-                                                   image, name,
-                                                   0, 0, width, height,
-                                                   gimp_image_get_format (image,
-                                                                          GIMP_GRAY_IMAGE)));
+  layer_mask =
+    GIMP_LAYER_MASK (gimp_drawable_new (GIMP_TYPE_LAYER_MASK,
+                                        image, name,
+                                        0, 0, width, height,
+                                        gimp_image_get_mask_format (image)));
 
   /*  set the layer_mask color and opacity  */
   gimp_channel_set_color (GIMP_CHANNEL (layer_mask), color, FALSE);
