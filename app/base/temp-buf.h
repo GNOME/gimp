@@ -39,14 +39,6 @@ TempBuf * temp_buf_copy          (TempBuf       *src);
 TempBuf * temp_buf_scale         (TempBuf       *buf,
                                   gint           width,
                                   gint           height) G_GNUC_WARN_UNUSED_RESULT;
-TempBuf * temp_buf_copy_area     (TempBuf       *src,
-                                  TempBuf       *dest,
-                                  gint           x,
-                                  gint           y,
-                                  gint           width,
-                                  gint           height,
-                                  gint           dest_x,
-                                  gint           dest_y);
 
 void      temp_buf_demultiply    (TempBuf       *buf);
 

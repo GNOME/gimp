@@ -30,9 +30,6 @@
 
 #include "base-types.h"
 
-#include "paint-funcs/paint-funcs.h"
-
-#include "pixel-region.h"
 #include "temp-buf.h"
 
 
@@ -125,63 +122,6 @@ temp_buf_scale (TempBuf *src,
     }
 
   return dest;
-}
-
-TempBuf *
-temp_buf_copy_area (TempBuf *src,
-                    TempBuf *dest,
-                    gint     x,
-                    gint     y,
-                    gint     width,
-                    gint     height,
-                    gint     dest_x,
-                    gint     dest_y)
-{
-  TempBuf     *new;
-  PixelRegion  srcPR  = { 0, };
-  PixelRegion  destPR = { 0, };
-  gint         x1, y1, x2, y2;
-
-  g_return_val_if_fail (src != NULL, dest);
-  g_return_val_if_fail (!dest || dest->bytes == src->bytes, dest);
-
-  g_return_val_if_fail (width  + dest_x > 0, dest);
-  g_return_val_if_fail (height + dest_y > 0, dest);
-
-  g_return_val_if_fail (!dest || dest->width  >= width  + dest_x, dest);
-  g_return_val_if_fail (!dest || dest->height >= height + dest_y, dest);
-
-  /*  some bounds checking  */
-  x1 = CLAMP (x, 0, src->width  - 1);
-  y1 = CLAMP (y, 0, src->height - 1);
-  x2 = CLAMP (x + width  - 1, 0, src->width  - 1);
-  y2 = CLAMP (y + height - 1, 0, src->height - 1);
-
-  if (!(x2 - x1) || !(y2 - y1))
-    return dest;
-
-  width  = x2 - x1 + 1;
-  height = y2 - y1 + 1;
-
-  if (! dest)
-    {
-      new = temp_buf_new (width  + dest_x,
-                          height + dest_y,
-                          src->bytes);
-      temp_buf_data_clear (new);
-    }
-  else
-    {
-      new = dest;
-    }
-
-  /*  Copy the region  */
-  pixel_region_init_temp_buf (&srcPR,  src, x1, y1, width, height);
-  pixel_region_init_temp_buf (&destPR, new, dest_x, dest_y, width, height);
-
-  copy_region (&srcPR, &destPR);
-
-  return new;
 }
 
 /**
