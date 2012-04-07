@@ -25,6 +25,9 @@
 #include <gdk-pixbuf/gdk-pixbuf.h> /* temp hack */
 
 
+GimpImageType     gimp_babl_format_get_image_type (const Babl           *format);
+GimpImageBaseType gimp_babl_format_get_base_type  (const Babl           *format);
+
 const Babl  * gimp_bpp_to_babl_format            (guint                  bpp) G_GNUC_CONST;
 const Babl  * gimp_bpp_to_babl_format_with_alpha (guint                  bpp) G_GNUC_CONST;
 

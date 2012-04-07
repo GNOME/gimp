@@ -33,6 +33,53 @@
 #include "gimptilebackendtilemanager.h"
 
 
+GimpImageType
+gimp_babl_format_get_image_type (const Babl *format)
+{
+  g_return_val_if_fail (format != NULL, -1);
+
+  if (format == babl_format ("Y' u8"))
+    return GIMP_GRAY_IMAGE;
+  else if (format == babl_format ("Y'A u8"))
+    return GIMP_GRAYA_IMAGE;
+  else if (format == babl_format ("R'G'B' u8"))
+    return GIMP_RGB_IMAGE;
+  else if (format == babl_format ("R'G'B'A u8"))
+    return GIMP_RGBA_IMAGE;
+  else if (babl_format_is_palette (format))
+    {
+      if (babl_format_has_alpha (format))
+        return GIMP_INDEXEDA_IMAGE;
+      else
+        return GIMP_INDEXED_IMAGE;
+    }
+
+  g_return_val_if_reached (-1);
+}
+
+GimpImageBaseType
+gimp_babl_format_get_base_type (const Babl *format)
+{
+  g_return_val_if_fail (format != NULL, -1);
+
+  if (format == babl_format ("Y' u8") ||
+      format == babl_format ("Y'A u8"))
+    {
+      return GIMP_GRAY;
+    }
+  else if (format == babl_format ("R'G'B' u8") ||
+           format == babl_format ("R'G'B'A u8"))
+    {
+      return GIMP_RGB;
+    }
+  else if (babl_format_is_palette (format))
+    {
+      return GIMP_INDEXED;
+    }
+
+  g_return_val_if_reached (-1);
+}
+
 /**
  * gimp_bpp_to_babl_format:
  * @bpp: bytes per pixel
