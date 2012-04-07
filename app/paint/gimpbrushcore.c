@@ -1545,6 +1545,8 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
                                         const GimpCoords         *coords,
                                         TempBuf                  *area,
+                                        gint                      area_x,
+                                        gint                      area_y,
                                         GimpBrushApplicationMode  mode)
 {
   GimpImage     *image;
@@ -1594,8 +1596,8 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   if (pixmap_mask->height %2 == 0)
     uly += ROUND (coords->y) - floor (coords->y);
 
-  offsetx = area->x - ulx;
-  offsety = area->y - uly;
+  offsetx = area_x - ulx;
+  offsety = area_y - uly;
 
   for (; pr != NULL; pr = pixel_regions_process (pr))
     {

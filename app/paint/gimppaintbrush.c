@@ -185,6 +185,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
                                               coords,
                                               area,
+                                              paint_buffer_x,
+                                              paint_buffer_y,
                                               gimp_paint_options_get_brush_mode (paint_options));
 
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
