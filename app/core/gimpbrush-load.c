@@ -34,7 +34,7 @@
 #define _O_BINARY 0
 #endif
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -291,7 +291,8 @@ gimp_brush_load_brush (GimpContext  *context,
                         NULL);
   g_free (name);
 
-  brush->mask = temp_buf_new (header.width, header.height, 1);
+  brush->mask = temp_buf_new (header.width, header.height,
+                              babl_format ("Y u8"));
 
   mask = temp_buf_get_data (brush->mask);
   size = header.width * header.height * header.bytes;
@@ -345,7 +346,8 @@ gimp_brush_load_brush (GimpContext  *context,
       {
         guchar buf[8 * 1024];
 
-        brush->pixmap = temp_buf_new (header.width, header.height, 3);
+        brush->pixmap = temp_buf_new (header.width, header.height,
+                                      babl_format ("R'G'B' u8"));
         pixmap = temp_buf_get_data (brush->pixmap);
 
         for (i = 0; success && i < size;)
@@ -648,7 +650,7 @@ gimp_brush_load_abr_brush_v12 (FILE         *file,
         brush->x_axis.y = 0.0;
         brush->y_axis.x = 0.0;
         brush->y_axis.y = height / 2.0;
-        brush->mask     = temp_buf_new (width, height, 1);
+        brush->mask     = temp_buf_new (width, height, babl_format ("Y u8"));
 
         mask = temp_buf_get_data (brush->mask);
         size = width * height * bytes;
@@ -755,7 +757,7 @@ gimp_brush_load_abr_brush_v6 (FILE         *file,
   brush->x_axis.y = 0.0;
   brush->y_axis.x = 0.0;
   brush->y_axis.y = height / 2.0;
-  brush->mask     = temp_buf_new (width, height, 1);
+  brush->mask     = temp_buf_new (width, height, babl_format ("Y u8"));
 
   mask = temp_buf_get_data (brush->mask);
 

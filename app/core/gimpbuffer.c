@@ -196,11 +196,9 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                              gint          height)
 {
   GimpBuffer *buffer = GIMP_BUFFER (viewable);
-  const Babl *format = gimp_buffer_get_format (buffer);
   TempBuf    *preview;
 
-  preview = temp_buf_new (width, height,
-                          babl_format_get_bytes_per_pixel (format));
+  preview = temp_buf_new (width, height, gimp_buffer_get_format (buffer));
 
   gegl_buffer_get (buffer->buffer, NULL,
                    MIN ((gdouble) width  / (gdouble) gimp_buffer_get_width (buffer),

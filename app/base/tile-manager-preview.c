@@ -17,11 +17,13 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
-#include "base-types.h"
+#include "core/core-types.h" /* eek, but this file is cruft anyway */
 
 #include "paint-funcs/subsample-region.h"
+
+#include "gegl/gimp-gegl-utils.h"
 
 #include "pixel-region.h"
 #include "temp-buf.h"
@@ -97,7 +99,7 @@ tile_manager_create_preview (TileManager *tiles,
   gint         subsample = 1;
 
   preview = temp_buf_new (dest_width, dest_height,
-                          tile_manager_bpp (tiles));
+                          gimp_bpp_to_babl_format (tile_manager_bpp (tiles)));
 
   pixel_region_init (&srcPR, tiles, src_x, src_y, src_width, src_height, FALSE);
 

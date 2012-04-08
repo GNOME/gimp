@@ -21,7 +21,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include <pango/pangocairo.h>
 
@@ -283,7 +283,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
 
   width = cairo_format_stride_for_width (CAIRO_FORMAT_A8, width);
 
-  temp_buf = temp_buf_new (width, height, 1);
+  temp_buf = temp_buf_new (width, height, babl_format ("Y' u8"));
   memset (temp_buf_get_data (temp_buf), 255, width * height);
 
   surface = cairo_image_surface_create_for_data (temp_buf_get_data (temp_buf),

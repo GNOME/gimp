@@ -190,7 +190,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
-  result = temp_buf_new (dest_width, dest_height, 1);
+  result = temp_buf_new (dest_width, dest_height, babl_format ("Y u8"));
 
   dest = temp_buf_get_data (result);
   src  = temp_buf_get_data (source);
@@ -342,10 +342,9 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
       blur_src = temp_buf_copy (result);
 
-      src_buffer  = gimp_temp_buf_create_buffer (blur_src, babl_format ("Y u8"),
-                                                 TRUE);
-      dest_buffer = gimp_temp_buf_create_buffer (blur_src, babl_format ("Y u8"),
-                                                 FALSE);
+      src_buffer  = gimp_temp_buf_create_buffer (blur_src, TRUE);
+      dest_buffer = gimp_temp_buf_create_buffer (blur_src, FALSE);
+
       gimp_gegl_convolve (src_buffer,
                           GEGL_RECTANGLE (0, 0,
                                           blur_src->width,
@@ -486,7 +485,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
-  result = temp_buf_new (dest_width, dest_height, 3);
+  result = temp_buf_new (dest_width, dest_height, babl_format ("R'G'B' u8"));
 
   dest = temp_buf_get_data (result);
   src  = temp_buf_get_data (source);
@@ -643,8 +642,8 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
       blur_src = temp_buf_copy (result);
 
-      src_buffer  = gimp_temp_buf_create_buffer (blur_src, NULL, TRUE);
-      dest_buffer = gimp_temp_buf_create_buffer (blur_src, NULL, FALSE);
+      src_buffer  = gimp_temp_buf_create_buffer (blur_src, TRUE);
+      dest_buffer = gimp_temp_buf_create_buffer (blur_src, FALSE);
 
       gimp_gegl_convolve (src_buffer,
                           GEGL_RECTANGLE (0, 0,

@@ -21,12 +21,12 @@
 
 struct _TempBuf
 {
-  gint      bytes;      /*  number of bytes per pixel (1,2,3 or 4)         */
-  gint      width;
-  gint      height;
-  gint      x, y;       /*  origin of data source                          */
-  guchar   *data;       /*  The data buffer. Do never access this field
-                            directly, use temp_buf_get_data() instead !!   */
+  const Babl *format;  /*  pixel format  */
+  gint        width;
+  gint        height;
+  gint        x, y;      /*  origin of data source                          */
+  guchar     *data;      /*  The data buffer. Do never access this field
+                           directly, use temp_buf_get_data() instead !!   */
 };
 
 
@@ -34,7 +34,7 @@ struct _TempBuf
 
 TempBuf * temp_buf_new           (gint           width,
                                   gint           height,
-                                  gint           bytes);
+                                  const Babl    *fomat);
 TempBuf * temp_buf_copy          (TempBuf       *src);
 TempBuf * temp_buf_scale         (TempBuf       *buf,
                                   gint           width,

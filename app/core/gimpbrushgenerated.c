@@ -19,7 +19,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -483,7 +483,8 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                                       &s, &c, &x_axis, &y_axis);
 
   mask = temp_buf_new (half_width  * 2 + 1,
-                       half_height * 2 + 1, 1);
+                       half_height * 2 + 1,
+                       babl_format ("Y u8"));
 
   centerp = temp_buf_get_data (mask) + half_height * mask->width + half_width;
 

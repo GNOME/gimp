@@ -30,7 +30,7 @@
 
 #include <fcntl.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
@@ -48,6 +48,8 @@
 #include "core-types.h"
 
 #include "base/temp-buf.h"
+
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimppattern.h"
 #include "gimppattern-header.h"
@@ -154,7 +156,9 @@ gimp_pattern_load (GimpContext  *context,
 
   g_free (name);
 
-  pattern->mask = temp_buf_new (header.width, header.height, header.bytes);
+  pattern->mask = temp_buf_new (header.width, header.height,
+                                gimp_bpp_to_babl_format (header.bytes));
+
   if (read (fd, temp_buf_get_data (pattern->mask),
             header.width * header.height * header.bytes) <
       header.width * header.height * header.bytes)
@@ -186,14 +190,9 @@ gimp_pattern_load_pixbuf (GimpContext  *context,
 {
   GimpPattern *pattern;
   GdkPixbuf   *pixbuf;
-  guchar      *pat_data;
-  guchar      *buf_data;
+  GeglBuffer  *src_buffer;
+  GeglBuffer  *dest_buffer;
   gchar       *name;
-  gint         width;
-  gint         height;
-  gint         bytes;
-  gint         rowstride;
-  gint         i;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
@@ -218,21 +217,18 @@ gimp_pattern_load_pixbuf (GimpContext  *context,
                           NULL);
   g_free (name);
 
-  width     = gdk_pixbuf_get_width (pixbuf);
-  height    = gdk_pixbuf_get_height (pixbuf);
-  bytes     = gdk_pixbuf_get_n_channels (pixbuf);
-  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  pattern->mask =
+    temp_buf_new (gdk_pixbuf_get_width (pixbuf),
+                  gdk_pixbuf_get_height (pixbuf),
+                  gimp_bpp_to_babl_format (gdk_pixbuf_get_n_channels (pixbuf)));
 
-  pattern->mask = temp_buf_new (width, height, bytes);
+  src_buffer  = gimp_pixbuf_create_buffer (pixbuf);
+  dest_buffer = gimp_temp_buf_create_buffer (pattern->mask, FALSE);
 
-  pat_data = gdk_pixbuf_get_pixels (pixbuf);
-  buf_data = temp_buf_get_data (pattern->mask);
+  gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
 
-  for (i = 0; i < height; i++)
-    {
-      memcpy (buf_data + i * width * bytes, pat_data, width * bytes);
-      pat_data += rowstride;
-    }
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
 
   g_object_unref (pixbuf);
 

@@ -17,7 +17,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
@@ -215,6 +215,7 @@ gimp_preview_cache_get (GSList **plist,
       gdouble  y_ratio;
       guchar  *src_data;
       guchar  *dest_data;
+      gint     bytes;
       gint     loop1;
       gint     loop2;
 
@@ -228,7 +229,7 @@ gimp_preview_cache_get (GSList **plist,
       pheight = pn.buf->height;
 
       /* Now get the real one and add to cache */
-      preview = temp_buf_new (width, height, pn.buf->bytes);
+      preview = temp_buf_new (width, height, pn.buf->format);
 
       /* preview from nearest bigger one */
       if (width)
@@ -244,6 +245,8 @@ gimp_preview_cache_get (GSList **plist,
       src_data  = temp_buf_get_data (pn.buf);
       dest_data = temp_buf_get_data (preview);
 
+      bytes = babl_format_get_bytes_per_pixel (preview->format);
+
       for (loop1 = 0 ; loop1 < height ; loop1++)
         for (loop2 = 0 ; loop2 < width ; loop2++)
           {
@@ -252,13 +255,13 @@ gimp_preview_cache_get (GSList **plist,
             guchar *dest_pixel;
 
             src_pixel = src_data +
-              ((gint) (loop2 * x_ratio)) * preview->bytes +
-              ((gint) (loop1 * y_ratio)) * pwidth * preview->bytes;
+              ((gint) (loop2 * x_ratio)) * bytes +
+              ((gint) (loop1 * y_ratio)) * pwidth * bytes;
 
             dest_pixel = dest_data +
-              (loop2 + loop1 * width) * preview->bytes;
+              (loop2 + loop1 * width) * bytes;
 
-            for (i = 0; i < preview->bytes; i++)
+            for (i = 0; i < bytes; i++)
               *dest_pixel++ = *src_pixel++;
           }
 

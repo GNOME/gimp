@@ -359,12 +359,12 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
       GeglBuffer *dest_buffer;
 
       pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-                               temp_buf->bytes == 4 || temp_buf->bytes == 2,
+                               babl_format_has_alpha (temp_buf->format),
                                8,
                                temp_buf->width,
                                temp_buf->height);
 
-      src_buffer  = gimp_temp_buf_create_buffer (temp_buf, NULL, FALSE);
+      src_buffer  = gimp_temp_buf_create_buffer (temp_buf, FALSE);
       dest_buffer = gimp_pixbuf_create_buffer (pixbuf);
 
       gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
@@ -812,7 +812,7 @@ gimp_viewable_get_dummy_preview (GimpViewable  *viewable,
 
   pixbuf = gimp_viewable_get_dummy_pixbuf (viewable, width, height, bpp);
 
-  buf = temp_buf_new (width, height, bpp);
+  buf = temp_buf_new (width, height, gimp_bpp_to_babl_format (bpp));
 
   src  = gdk_pixbuf_get_pixels (pixbuf);
   dest = temp_buf_get_data (buf);

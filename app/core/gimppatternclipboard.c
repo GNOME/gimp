@@ -189,16 +189,14 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
   if (gimp->global_buffer)
     {
       GimpBuffer *buffer = gimp->global_buffer;
-      const Babl *format = gimp_buffer_get_format (buffer);
       gint        width;
       gint        height;
-      gint        bytes;
 
       width  = MIN (gimp_buffer_get_width  (buffer), 512);
       height = MIN (gimp_buffer_get_height (buffer), 512);
-      bytes  = babl_format_get_bytes_per_pixel (format);
 
-      pattern->mask = temp_buf_new (width, height, bytes);
+      pattern->mask = temp_buf_new (width, height,
+                                    gimp_buffer_get_format (buffer));
 
       gegl_buffer_get (gimp_buffer_get_buffer (buffer),
                        GEGL_RECTANGLE (0, 0, width, height), 1.0,
@@ -208,7 +206,7 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
     }
   else
     {
-      pattern->mask = temp_buf_new (16, 16, 3);
+      pattern->mask = temp_buf_new (16, 16, babl_format ("R'G'B' u8"));
       memset (temp_buf_get_data (pattern->mask), 255, 16 * 16 * 3);
     }
 

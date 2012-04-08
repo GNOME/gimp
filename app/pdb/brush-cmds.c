@@ -279,8 +279,8 @@ brush_get_info_invoker (GimpProcedure      *procedure,
         {
           width     = brush->mask->width;
           height    = brush->mask->height;
-          mask_bpp  = brush->mask->bytes;
-          color_bpp = brush->pixmap ? brush->pixmap->bytes : 0;
+          mask_bpp  = babl_format_get_bytes_per_pixel (brush->mask->format);
+          color_bpp = brush->pixmap ? babl_format_get_bytes_per_pixel (brush->pixmap->format) : 0;
         }
       else
         success = FALSE;
@@ -330,16 +330,15 @@ brush_get_pixels_invoker (GimpProcedure      *procedure,
         {
           width          = brush->mask->width;
           height         = brush->mask->height;
-          mask_bpp       = brush->mask->bytes;
-          num_mask_bytes = brush->mask->height * brush->mask->width *
-                           brush->mask->bytes;
+          mask_bpp       = babl_format_get_bytes_per_pixel (brush->mask->format);
+          num_mask_bytes = brush->mask->height * brush->mask->width * mask_bpp;
           mask_bytes     = g_memdup (temp_buf_get_data (brush->mask), num_mask_bytes);
 
           if (brush->pixmap)
             {
-              color_bpp       = brush->pixmap->bytes;
+              color_bpp       = babl_format_get_bytes_per_pixel (brush->pixmap->format);
               num_color_bytes = brush->pixmap->height * brush->pixmap->width *
-                                brush->pixmap->bytes;
+                                color_bpp;
               color_bytes     = g_memdup (temp_buf_get_data (brush->pixmap),
                                           num_color_bytes);
             }

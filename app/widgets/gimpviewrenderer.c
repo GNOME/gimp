@@ -931,6 +931,7 @@ gimp_view_render_temp_buf_to_surface (TempBuf         *temp_buf,
   gint          i, j;
   gint          x1, y1;
   gint          x2, y2;
+  gint          bytes;
   gint          rowstride;
   gint          dest_stride;
   gboolean      color;
@@ -969,10 +970,11 @@ gimp_view_render_temp_buf_to_surface (TempBuf         *temp_buf,
    *  3)  If image is gray, then temp_buf should have bytes == {1, 2}
    */
 
-  color            = (temp_buf->bytes == 3 || temp_buf->bytes == 4);
-  has_alpha        = (temp_buf->bytes == 2 || temp_buf->bytes == 4);
+  bytes            = babl_format_get_bytes_per_pixel (temp_buf->format);
+  color            = (bytes == 3 || bytes == 4);
+  has_alpha        = babl_format_has_alpha (temp_buf->format);
   render_composite = (channel == -1);
-  rowstride        = temp_buf->width * temp_buf->bytes;
+  rowstride        = temp_buf->width * bytes;
 
   /*  render the checkerboard only if the temp_buf has alpha *and*
    *  we render a composite view
@@ -1015,7 +1017,7 @@ gimp_view_render_temp_buf_to_surface (TempBuf         *temp_buf,
   y2 = CLAMP (temp_buf->y + temp_buf->height, 0, dest_height);
 
   src = temp_buf_get_data (temp_buf) + ((y1 - temp_buf->y) * rowstride +
-                                    (x1 - temp_buf->x) * temp_buf->bytes);
+                                        (x1 - temp_buf->x) * bytes);
 
   for (i = 0; i < dest_height; i++)
     {
@@ -1048,7 +1050,7 @@ gimp_view_render_temp_buf_to_surface (TempBuf         *temp_buf,
             }
 
           /*  The stuff in the middle  */
-          for (j = x1; j < x2; j++, d += 4, s += temp_buf->bytes)
+          for (j = x1; j < x2; j++, d += 4, s += bytes)
             {
               if (has_alpha && render_composite)
                 {

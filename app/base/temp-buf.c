@@ -34,24 +34,26 @@
 
 
 TempBuf *
-temp_buf_new (gint          width,
-              gint          height,
-              gint          bytes)
+temp_buf_new (gint        width,
+              gint        height,
+              const Babl *format)
 {
   TempBuf *temp;
 
   g_return_val_if_fail (width > 0 && height > 0, NULL);
-  g_return_val_if_fail (bytes > 0, NULL);
+  g_return_val_if_fail (format != NULL, NULL);
 
   temp = g_slice_new (TempBuf);
 
-  temp->bytes   = bytes;
+  temp->format  = format;
   temp->width   = width;
   temp->height  = height;
   temp->x       = 0;
   temp->y       = 0;
 
-  temp->data = g_new (guchar, width * height * bytes);
+  temp->data = g_new (guchar,
+                      width * height *
+                      babl_format_get_bytes_per_pixel (format));
 
   return temp;
 }
@@ -63,7 +65,7 @@ temp_buf_copy (TempBuf *src)
 
   g_return_val_if_fail (src != NULL, NULL);
 
-  dest = temp_buf_new (src->width, src->height, src->bytes);
+  dest = temp_buf_new (src->width, src->height, src->format);
 
   if (! dest)
     return NULL;
@@ -85,6 +87,7 @@ temp_buf_scale (TempBuf *src,
   guchar       *dest_data;
   gdouble       x_ratio;
   gdouble       y_ratio;
+  gint          bytes;
   gint          loop1;
   gint          loop2;
 
@@ -93,13 +96,15 @@ temp_buf_scale (TempBuf *src,
 
   dest = temp_buf_new (new_width,
                        new_height,
-                       src->bytes);
+                       src->format);
 
   src_data  = temp_buf_get_data (src);
   dest_data = temp_buf_get_data (dest);
 
   x_ratio = (gdouble) src->width  / (gdouble) new_width;
   y_ratio = (gdouble) src->height / (gdouble) new_height;
+
+  bytes = babl_format_get_bytes_per_pixel (src->format);
 
   for (loop1 = 0 ; loop1 < new_height ; loop1++)
     {
@@ -110,13 +115,13 @@ temp_buf_scale (TempBuf *src,
           gint          i;
 
           src_pixel = src_data +
-            (gint) (loop2 * x_ratio) * src->bytes +
-            (gint) (loop1 * y_ratio) * src->bytes * src->width;
+            (gint) (loop2 * x_ratio) * bytes +
+            (gint) (loop1 * y_ratio) * bytes * src->width;
 
           dest_pixel = dest_data +
-            (loop2 + loop1 * new_width) * src->bytes;
+            (loop2 + loop1 * new_width) * bytes;
 
-          for (i = 0 ; i < src->bytes; i++)
+          for (i = 0 ; i < bytes; i++)
             *dest_pixel++ = *src_pixel++;
         }
     }
@@ -138,7 +143,7 @@ temp_buf_demultiply (TempBuf *buf)
 
   g_return_if_fail (buf != NULL);
 
-  switch (buf->bytes)
+  switch (babl_format_get_bytes_per_pixel (buf->format))
     {
     case 1:
       break;
@@ -196,13 +201,13 @@ temp_buf_get_data (const TempBuf *buf)
 gsize
 temp_buf_get_data_size (TempBuf *buf)
 {
-  return buf->bytes * buf->width * buf->height;
+  return babl_format_get_bytes_per_pixel (buf->format) * buf->width * buf->height;
 }
 
 guchar *
 temp_buf_data_clear (TempBuf *buf)
 {
-  memset (buf->data, 0, buf->height * buf->width * buf->bytes);
+  memset (buf->data, 0, temp_buf_get_data_size (buf));
 
   return buf->data;
 }

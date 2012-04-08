@@ -42,7 +42,6 @@ GeglBuffer  * gimp_tile_manager_create_buffer    (TileManager           *tm,
 TileManager * gimp_gegl_buffer_get_tiles         (GeglBuffer            *buffer);
 
 GeglBuffer  * gimp_temp_buf_create_buffer        (TempBuf               *temp_buf,
-                                                  const Babl            *format,
                                                   gboolean               take_ownership);
 TempBuf     * gimp_gegl_buffer_get_temp_buf      (GeglBuffer            *buffer);
 

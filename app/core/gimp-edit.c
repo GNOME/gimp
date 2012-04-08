@@ -469,7 +469,7 @@ gimp_edit_fill_full (GimpImage            *image,
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
   if (pattern &&
-      (pattern->mask->bytes == 2 || pattern->mask->bytes == 4) &&
+      babl_format_has_alpha (pattern->mask->format) &&
       ! gimp_drawable_has_alpha (drawable))
     {
       format = gimp_drawable_get_format_with_alpha (drawable);

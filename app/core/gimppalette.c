@@ -211,7 +211,7 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   gint         cell_size;
   gint         x, y;
 
-  temp_buf = temp_buf_new (width, height, 3);
+  temp_buf = temp_buf_new (width, height, babl_format ("R'G'B' u8"));
   memset (temp_buf_get_data (temp_buf), 255, width * height * 3);
 
   if (palette->n_columns > 1)

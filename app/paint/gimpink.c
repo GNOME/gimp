@@ -221,10 +221,9 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
   if ((x2 - x1) && (y2 - y1))
     {
       const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
-      gint        bytes  = babl_format_get_bytes_per_pixel (format);
       TempBuf    *temp_buf;
 
-      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), bytes);
+      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), format);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
@@ -232,8 +231,7 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
       if (paint_core->paint_buffer)
         g_object_unref (paint_core->paint_buffer);
 
-      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf, format,
-                                                              TRUE);
+      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf, TRUE);
 
       return paint_core->paint_buffer;
     }

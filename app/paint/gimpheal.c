@@ -537,8 +537,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                     paint_area_width,
                                     paint_area_height));
 
-  mask_buffer = gimp_temp_buf_create_buffer ((TempBuf *) mask_buf,
-                                             NULL, FALSE);
+  mask_buffer = gimp_temp_buf_create_buffer ((TempBuf *) mask_buf, FALSE);
 
   gimp_heal (src_copy,
              GEGL_RECTANGLE (0, 0,

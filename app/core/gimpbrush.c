@@ -17,8 +17,8 @@
 
 #include "config.h"
 
-#include <glib-object.h>
 #include <cairo.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -314,7 +314,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
           if (! mask_buf)
             {
-              mask_buf = temp_buf_new (1, 1, 1);
+              mask_buf = temp_buf_new (1, 1, babl_format ("Y u8"));
               temp_buf_data_clear ((TempBuf *) mask_buf);
               free_mask = TRUE;
             }
@@ -330,7 +330,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
         }
     }
 
-  return_buf = temp_buf_new (mask_width, mask_height, 4);
+  return_buf = temp_buf_new (mask_width, mask_height,
+                             babl_format ("R'G'B'A u8"));
   temp_buf_data_clear (return_buf);
 
   mask = temp_buf_get_data (mask_buf);

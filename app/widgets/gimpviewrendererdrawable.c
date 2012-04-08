@@ -30,6 +30,8 @@
 
 #include "base/temp-buf.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-preview.h"
 #include "core/gimpimage.h"
@@ -166,7 +168,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             {
               gint bytes = gimp_drawable_preview_bytes (drawable);
 
-              render_buf = temp_buf_new (1, 1, bytes);
+              render_buf = temp_buf_new (1, 1,
+                                         gimp_bpp_to_babl_format (bytes));
               temp_buf_data_clear (render_buf);
             }
         }

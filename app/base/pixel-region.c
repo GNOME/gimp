@@ -20,6 +20,7 @@
 #include <stdarg.h>
 #include <string.h>
 
+#include <babl/babl.h>
 #include <glib-object.h>
 
 #include "base-types.h"
@@ -95,8 +96,8 @@ pixel_region_init_temp_buf (PixelRegion *PR,
   PR->curtile       = NULL;
   PR->offx          = 0;
   PR->offy          = 0;
-  PR->bytes         = temp_buf->bytes;
-  PR->rowstride     = temp_buf->width * temp_buf->bytes;
+  PR->bytes         = babl_format_get_bytes_per_pixel (temp_buf->format);
+  PR->rowstride     = temp_buf->width * PR->bytes;
   PR->x             = x;
   PR->y             = y;
   PR->w             = w;

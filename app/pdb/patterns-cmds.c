@@ -158,9 +158,8 @@ patterns_get_pattern_data_invoker (GimpProcedure      *procedure,
           actual_name = g_strdup (gimp_object_get_name (pattern));
           width       = pattern->mask->width;
           height      = pattern->mask->height;
-          mask_bpp    = pattern->mask->bytes;
-          length      = pattern->mask->height * pattern->mask->width *
-                        pattern->mask->bytes;
+          mask_bpp    = babl_format_get_bytes_per_pixel (pattern->mask->format);
+          length      = temp_buf_get_data_size (pattern->mask);
           mask_data   = g_memdup (temp_buf_get_data (pattern->mask), length);
         }
       else

@@ -828,10 +828,9 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   if ((x2 - x1) && (y2 - y1))
     {
       const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
-      gint        bytes  = babl_format_get_bytes_per_pixel (format);
       TempBuf    *temp_buf;
 
-      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), bytes);
+      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), format);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
@@ -839,8 +838,7 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
       if (paint_core->paint_buffer)
         g_object_unref (paint_core->paint_buffer);
 
-      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf, format,
-                                                              TRUE);
+      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf, TRUE);
 
       return paint_core->paint_buffer;
     }
@@ -946,9 +944,7 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
 
-      paint_mask = gimp_temp_buf_create_buffer ((TempBuf *) brush_mask,
-                                                babl_format ("Y u8"),
-                                                FALSE);
+      paint_mask = gimp_temp_buf_create_buffer ((TempBuf *) brush_mask, FALSE);
 
       gimp_paint_core_paste (paint_core, paint_mask,
                              GEGL_RECTANGLE (off_x, off_y,
@@ -997,9 +993,7 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
 
-      paint_mask = gimp_temp_buf_create_buffer ((TempBuf *) brush_mask,
-                                                babl_format ("Y u8"),
-                                                FALSE);
+      paint_mask = gimp_temp_buf_create_buffer ((TempBuf *) brush_mask, FALSE);
 
       gimp_paint_core_replace (paint_core, paint_mask,
                                GEGL_RECTANGLE (off_x, off_y,
@@ -1127,7 +1121,8 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
     }
 
   dest = temp_buf_new (mask->width  + 2,
-                       mask->height + 2, 1);
+                       mask->height + 2,
+                       babl_format ("Y u8"));
   temp_buf_data_clear (dest);
 
   /* Allocate and initialize the accum buffer */
@@ -1207,7 +1202,8 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
     temp_buf_free (core->pressure_brush);
 
   core->pressure_brush = temp_buf_new (brush_mask->width  + 2,
-                                       brush_mask->height + 2, 1);
+                                       brush_mask->height + 2,
+                                       babl_format ("Y u8"));
   temp_buf_data_clear (core->pressure_brush);
 
 #ifdef FANCY_PRESSURE
@@ -1347,7 +1343,8 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
     }
 
   dest = temp_buf_new (brush_mask->width  + 2,
-                       brush_mask->height + 2, 1);
+                       brush_mask->height + 2,
+                       babl_format ("Y u8"));
   temp_buf_data_clear (dest);
 
   core->solid_brushes[dest_offset_y][dest_offset_x] = dest;
@@ -1622,6 +1619,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
                                         gint                      width,
                                         GimpBrushApplicationMode  mode)
 {
+  gint    pixmap_bytes;
   guchar *b;
 
   /*  Make sure x, y are positive  */
@@ -1630,20 +1628,22 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
   while (y < 0)
     y += pixmap_mask->height;
 
+  pixmap_bytes = babl_format_get_bytes_per_pixel (pixmap_mask->format);
+
   /* Point to the approriate scanline */
   b = (temp_buf_get_data (pixmap_mask) +
-       (y % pixmap_mask->height) * pixmap_mask->width * pixmap_mask->bytes);
+       (y % pixmap_mask->height) * pixmap_mask->width * pixmap_bytes);
 
   if (mode == GIMP_BRUSH_SOFT && brush_mask)
     {
       const Babl   *fish;
       const guchar *mask     = (temp_buf_get_data (brush_mask) +
                                 (y % brush_mask->height) * brush_mask->width);
-      guchar       *line_buf = g_alloca (width * (pixmap_mask->bytes + 1));
+      guchar       *line_buf = g_alloca (width * (pixmap_bytes + 1));
       guchar       *l        = line_buf;
       gint          i;
 
-      fish = babl_fish (gimp_bpp_to_babl_format_with_alpha (pixmap_mask->bytes),
+      fish = babl_fish (gimp_bpp_to_babl_format_with_alpha (pixmap_bytes),
                         gimp_drawable_get_format_with_alpha (drawable));
 
       /* put the source pixmap's pixels, plus the mask's alpha, into
@@ -1653,7 +1653,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
       for (i = 0; i < width; i++)
         {
           gint    x_index = ((i + x) % pixmap_mask->width);
-          gint    p_bytes = pixmap_mask->bytes;
+          gint    p_bytes = pixmap_bytes;
           guchar *p       = b + x_index * p_bytes;
 
           while (p_bytes--)
@@ -1667,11 +1667,11 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
   else
     {
       const Babl *fish;
-      guchar     *line_buf = g_alloca (width * (pixmap_mask->bytes));
+      guchar     *line_buf = g_alloca (width * (pixmap_bytes));
       guchar     *l        = line_buf;
       gint        i;
 
-      fish = babl_fish (gimp_bpp_to_babl_format (pixmap_mask->bytes),
+      fish = babl_fish (gimp_bpp_to_babl_format (pixmap_bytes),
                         gimp_drawable_get_format_with_alpha (drawable));
 
       /* put the source pixmap's pixels, into one line, so we can use
@@ -1680,7 +1680,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
       for (i = 0; i < width; i++)
         {
           gint    x_index = ((i + x) % pixmap_mask->width);
-          gint    p_bytes = pixmap_mask->bytes;
+          gint    p_bytes = pixmap_bytes;
           guchar *p       = b + x_index * p_bytes;
 
           while (p_bytes--)

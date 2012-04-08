@@ -1338,7 +1338,7 @@ calculate_curve (GimpIscissorsTool *iscissors,
       if (iscissors->dp_buf)
         temp_buf_free (iscissors->dp_buf);
 
-      iscissors->dp_buf = temp_buf_new (width, height, 4);
+      iscissors->dp_buf = temp_buf_new (width, height, babl_format ("Y u32"));
 
       /*  find the optimal path of pixels from (x1, y1) to (x2, y2)  */
       find_optimal_path (iscissors->gradient_map, iscissors->dp_buf,
