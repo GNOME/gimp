@@ -401,7 +401,7 @@ gimp_iscissors_tool_control (GimpTool       *tool,
       /*  Reset the dp buffers  */
       if (iscissors->dp_buf)
         {
-          gimp_temp_buf_free (iscissors->dp_buf);
+          gimp_temp_buf_unref (iscissors->dp_buf);
           iscissors->dp_buf = NULL;
         }
       break;
@@ -1336,7 +1336,7 @@ calculate_curve (GimpIscissorsTool *iscissors,
 
       /*  allocate the dynamic programming array  */
       if (iscissors->dp_buf)
-        gimp_temp_buf_free (iscissors->dp_buf);
+        gimp_temp_buf_unref (iscissors->dp_buf);
 
       iscissors->dp_buf = gimp_temp_buf_new (width, height,
                                              babl_format ("Y u32"));

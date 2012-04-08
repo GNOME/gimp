@@ -105,7 +105,7 @@ gimp_pattern_finalize (GObject *object)
 
   if (pattern->mask)
     {
-      gimp_temp_buf_free (pattern->mask);
+      gimp_temp_buf_unref (pattern->mask);
       pattern->mask = NULL;
     }
 
@@ -157,8 +157,8 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
   temp_buf = gimp_temp_buf_new (copy_width, copy_height,
                                 pattern->mask->format);
 
-  src_buffer  = gimp_temp_buf_create_buffer (pattern->mask, FALSE);
-  dest_buffer = gimp_temp_buf_create_buffer (temp_buf, FALSE);
+  src_buffer  = gimp_temp_buf_create_buffer (pattern->mask);
+  dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
 
   gegl_buffer_copy (src_buffer,  GEGL_RECTANGLE (0, 0, copy_width, copy_height),
                     dest_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
@@ -279,5 +279,5 @@ gimp_pattern_create_buffer (const GimpPattern *pattern)
 {
   g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
 
-  return gimp_temp_buf_create_buffer (pattern->mask, FALSE);
+  return gimp_temp_buf_create_buffer (pattern->mask);
 }

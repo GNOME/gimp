@@ -223,7 +223,7 @@ gimp_pattern_load_pixbuf (GimpContext  *context,
                        gimp_bpp_to_babl_format (gdk_pixbuf_get_n_channels (pixbuf)));
 
   src_buffer  = gimp_pixbuf_create_buffer (pixbuf);
-  dest_buffer = gimp_temp_buf_create_buffer (pattern->mask, FALSE);
+  dest_buffer = gimp_temp_buf_create_buffer (pattern->mask);
 
   gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
 

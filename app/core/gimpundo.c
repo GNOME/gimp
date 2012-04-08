@@ -199,7 +199,7 @@ gimp_undo_finalize (GObject *object)
 
   if (undo->preview)
     {
-      gimp_temp_buf_free (undo->preview);
+      gimp_temp_buf_unref (undo->preview);
       undo->preview = NULL;
     }
 
@@ -511,7 +511,7 @@ gimp_undo_refresh_preview (GimpUndo    *undo,
 
   if (undo->preview)
     {
-      gimp_temp_buf_free (undo->preview);
+      gimp_temp_buf_unref (undo->preview);
       undo->preview = NULL;
       gimp_undo_create_preview (undo, context, FALSE);
     }

@@ -182,7 +182,7 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
 {
   if (pattern->mask)
     {
-      gimp_temp_buf_free (pattern->mask);
+      gimp_temp_buf_unref (pattern->mask);
       pattern->mask = NULL;
     }
 

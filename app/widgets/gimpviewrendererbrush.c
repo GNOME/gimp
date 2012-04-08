@@ -114,7 +114,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                                           GIMP_VIEW_BG_WHITE,
                                           GIMP_VIEW_BG_WHITE);
 
-      gimp_temp_buf_free (temp_buf);
+      gimp_temp_buf_unref (temp_buf);
 
       if (GIMP_IS_BRUSH_PIPE (renderer->viewable))
         {
@@ -131,7 +131,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                                       GIMP_VIEW_BG_WHITE,
                                       GIMP_VIEW_BG_WHITE);
 
-  gimp_temp_buf_free (temp_buf);
+  gimp_temp_buf_unref (temp_buf);
 }
 
 static gboolean
@@ -176,7 +176,7 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
                                       GIMP_VIEW_BG_WHITE,
                                       GIMP_VIEW_BG_WHITE);
 
-  gimp_temp_buf_free (temp_buf);
+  gimp_temp_buf_unref (temp_buf);
 
   gimp_view_renderer_update (renderer);
 

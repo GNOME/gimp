@@ -184,8 +184,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   convolve_temp = gimp_temp_buf_new (gegl_buffer_get_width  (paint_buffer),
                                      gegl_buffer_get_height (paint_buffer),
                                      gegl_buffer_get_format (paint_buffer));
-
-  convolve_buffer = gimp_temp_buf_create_buffer (convolve_temp, TRUE);
+  convolve_buffer = gimp_temp_buf_create_buffer (convolve_temp);
+  gimp_temp_buf_unref (convolve_temp);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                     GEGL_RECTANGLE (paint_buffer_x,

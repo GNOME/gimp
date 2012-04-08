@@ -91,7 +91,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
         {
           render_buf = gimp_temp_buf_scale (temp_buf, view_width, view_height);
 
-          gimp_temp_buf_free (temp_buf);
+          gimp_temp_buf_unref (temp_buf);
         }
     }
   else
@@ -105,7 +105,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
     {
       gimp_view_renderer_render_temp_buf_simple (renderer, render_buf);
 
-      gimp_temp_buf_free (render_buf);
+      gimp_temp_buf_unref (render_buf);
     }
   else /* no preview available */
     {

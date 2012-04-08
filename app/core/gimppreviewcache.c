@@ -126,7 +126,7 @@ preview_cache_remove_smallest (GSList **plist)
                smallest->width, smallest->height);
 #endif
 
-      gimp_temp_buf_free (smallest);
+      gimp_temp_buf_unref (smallest);
     }
 }
 
@@ -155,7 +155,7 @@ gimp_preview_cache_invalidate (GSList **plist)
   preview_cache_print (*plist);
 #endif
 
-  g_slist_free_full (*plist, (GDestroyNotify) gimp_temp_buf_free);
+  g_slist_free_full (*plist, (GDestroyNotify) gimp_temp_buf_unref);
   *plist = NULL;
 }
 

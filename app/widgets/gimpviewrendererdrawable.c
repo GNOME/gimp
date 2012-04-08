@@ -186,7 +186,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             {
               render_buf = gimp_temp_buf_scale (temp_buf,
                                                 view_width, view_height);
-              gimp_temp_buf_free (temp_buf);
+              gimp_temp_buf_unref (temp_buf);
             }
         }
     }
@@ -232,7 +232,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       gimp_view_renderer_render_temp_buf (renderer, render_buf, -1,
                                           GIMP_VIEW_BG_CHECKS,
                                           GIMP_VIEW_BG_CHECKS);
-      gimp_temp_buf_free (render_buf);
+      gimp_temp_buf_unref (render_buf);
     }
   else
     {

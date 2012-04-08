@@ -243,7 +243,7 @@ gimp_brush_core_finalize (GObject *object)
 
   if (core->pressure_brush)
     {
-      gimp_temp_buf_free (core->pressure_brush);
+      gimp_temp_buf_unref (core->pressure_brush);
       core->pressure_brush = NULL;
     }
 
@@ -251,7 +251,7 @@ gimp_brush_core_finalize (GObject *object)
     for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
       if (core->solid_brushes[i][j])
         {
-          gimp_temp_buf_free (core->solid_brushes[i][j]);
+          gimp_temp_buf_unref (core->solid_brushes[i][j]);
           core->solid_brushes[i][j] = NULL;
         }
 
@@ -265,7 +265,7 @@ gimp_brush_core_finalize (GObject *object)
     for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
       if (core->subsample_brushes[i][j])
         {
-          gimp_temp_buf_free (core->subsample_brushes[i][j]);
+          gimp_temp_buf_unref (core->subsample_brushes[i][j]);
           core->subsample_brushes[i][j] = NULL;
         }
 
@@ -843,7 +843,9 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
       if (paint_core->paint_buffer)
         g_object_unref (paint_core->paint_buffer);
 
-      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf, TRUE);
+      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf);
+
+      gimp_temp_buf_unref (temp_buf);
 
       return paint_core->paint_buffer;
     }
@@ -950,7 +952,7 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
 
-      paint_mask = gimp_temp_buf_create_buffer ((GimpTempBuf *) brush_mask, FALSE);
+      paint_mask = gimp_temp_buf_create_buffer ((GimpTempBuf *) brush_mask);
 
       gimp_paint_core_paste (paint_core, paint_mask,
                              GEGL_RECTANGLE (off_x, off_y,
@@ -1000,7 +1002,7 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
       off_x = (x < 0) ? -x : 0;
       off_y = (y < 0) ? -y : 0;
 
-      paint_mask = gimp_temp_buf_create_buffer ((GimpTempBuf *) brush_mask, FALSE);
+      paint_mask = gimp_temp_buf_create_buffer ((GimpTempBuf *) brush_mask);
 
       gimp_paint_core_replace (paint_core, paint_mask,
                                GEGL_RECTANGLE (off_x, off_y,
@@ -1119,7 +1121,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
         for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
           if (core->subsample_brushes[i][j])
             {
-              gimp_temp_buf_free (core->subsample_brushes[i][j]);
+              gimp_temp_buf_unref (core->subsample_brushes[i][j]);
               core->subsample_brushes[i][j] = NULL;
             }
 
@@ -1206,7 +1208,7 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
     return subsample_mask;
 
   if (core->pressure_brush)
-    gimp_temp_buf_free (core->pressure_brush);
+    gimp_temp_buf_unref (core->pressure_brush);
 
   core->pressure_brush = gimp_temp_buf_new (brush_mask->width  + 2,
                                             brush_mask->height + 2,
@@ -1341,7 +1343,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
         for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
           if (core->solid_brushes[i][j])
             {
-              gimp_temp_buf_free (core->solid_brushes[i][j]);
+              gimp_temp_buf_unref (core->solid_brushes[i][j]);
               core->solid_brushes[i][j] = NULL;
             }
 

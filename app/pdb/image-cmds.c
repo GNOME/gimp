@@ -1719,7 +1719,7 @@ image_thumbnail_invoker (GimpProcedure      *procedure,
           thumbnail_data       = g_memdup (gimp_temp_buf_get_data (buf),
                                            thumbnail_data_count);
 
-          gimp_temp_buf_free (buf);
+          gimp_temp_buf_unref (buf);
         }
       else
         success = FALSE;

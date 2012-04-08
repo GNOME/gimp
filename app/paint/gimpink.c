@@ -231,7 +231,9 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
       if (paint_core->paint_buffer)
         g_object_unref (paint_core->paint_buffer);
 
-      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf, TRUE);
+      paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf);
+
+      gimp_temp_buf_unref (temp_buf);
 
       return paint_core->paint_buffer;
     }

@@ -187,8 +187,8 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   /*  Allocate the accumulation buffer */
   accum_temp = gimp_temp_buf_new (accum_size, accum_size,
                                   gimp_drawable_get_format (drawable));
-
-  smudge->accum_buffer = gimp_temp_buf_create_buffer (accum_temp, TRUE);
+  smudge->accum_buffer = gimp_temp_buf_create_buffer (accum_temp);
+  gimp_temp_buf_unref (accum_temp);
 
   /*  adjust the x and y coordinates to the upper left corner of the
    *  accumulator

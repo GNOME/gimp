@@ -211,7 +211,7 @@ gimp_viewable_finalize (GObject *object)
 
   if (private->preview_temp_buf)
     {
-      gimp_temp_buf_free (private->preview_temp_buf);
+      gimp_temp_buf_unref (private->preview_temp_buf);
       private->preview_temp_buf = NULL;
     }
 
@@ -295,7 +295,7 @@ gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
 
   if (private->preview_temp_buf)
     {
-      gimp_temp_buf_free (private->preview_temp_buf);
+      gimp_temp_buf_unref (private->preview_temp_buf);
       private->preview_temp_buf = NULL;
     }
 
@@ -364,7 +364,7 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
                                temp_buf->width,
                                temp_buf->height);
 
-      src_buffer  = gimp_temp_buf_create_buffer (temp_buf, FALSE);
+      src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
       dest_buffer = gimp_pixbuf_create_buffer (pixbuf);
 
       gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
@@ -716,7 +716,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
           return private->preview_temp_buf;
         }
 
-      gimp_temp_buf_free (private->preview_temp_buf);
+      gimp_temp_buf_unref (private->preview_temp_buf);
       private->preview_temp_buf = NULL;
     }
 

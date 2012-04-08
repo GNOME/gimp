@@ -342,8 +342,10 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
       blur_src = gimp_temp_buf_copy (result);
 
-      src_buffer  = gimp_temp_buf_create_buffer (blur_src, TRUE);
-      dest_buffer = gimp_temp_buf_create_buffer (blur_src, FALSE);
+      src_buffer  = gimp_temp_buf_create_buffer (blur_src);
+      dest_buffer = gimp_temp_buf_create_buffer (result);
+
+      gimp_temp_buf_unref (blur_src);
 
       gimp_gegl_convolve (src_buffer,
                           GEGL_RECTANGLE (0, 0,
@@ -643,8 +645,10 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
       blur_src = gimp_temp_buf_copy (result);
 
-      src_buffer  = gimp_temp_buf_create_buffer (blur_src, TRUE);
-      dest_buffer = gimp_temp_buf_create_buffer (blur_src, FALSE);
+      src_buffer  = gimp_temp_buf_create_buffer (blur_src);
+      dest_buffer = gimp_temp_buf_create_buffer (result);
+
+      gimp_temp_buf_unref (blur_src);
 
       gimp_gegl_convolve (src_buffer,
                           GEGL_RECTANGLE (0, 0,

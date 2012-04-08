@@ -184,13 +184,13 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
 
   if (brush->mask)
     {
-      gimp_temp_buf_free (brush->mask);
+      gimp_temp_buf_unref (brush->mask);
       brush->mask = NULL;
     }
 
   if (brush->pixmap)
     {
-      gimp_temp_buf_free (brush->pixmap);
+      gimp_temp_buf_unref (brush->pixmap);
       brush->pixmap = NULL;
     }
 
@@ -211,7 +211,7 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       /*  copy the alpha channel into the brush's mask  */
       if (babl_format_has_alpha (format))
         {
-          dest_buffer = gimp_temp_buf_create_buffer (brush->mask, FALSE);
+          dest_buffer = gimp_temp_buf_create_buffer (brush->mask);
 
           gegl_buffer_set_format (dest_buffer, babl_format ("A u8"));
           gegl_buffer_copy (buffer, NULL, dest_buffer, NULL);
@@ -225,7 +225,7 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
         }
 
       /*  copy the color channels into the brush's pixmap  */
-      dest_buffer = gimp_temp_buf_create_buffer (brush->pixmap, FALSE);
+      dest_buffer = gimp_temp_buf_create_buffer (brush->pixmap);
 
       gegl_buffer_copy (buffer, NULL, dest_buffer, NULL);
 

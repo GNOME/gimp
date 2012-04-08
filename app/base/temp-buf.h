@@ -21,6 +21,7 @@
 
 struct _GimpTempBuf
 {
+  gint        ref_count;
   const Babl *format;  /*  pixel format  */
   gint        width;
   gint        height;
@@ -36,7 +37,9 @@ GimpTempBuf * gimp_temp_buf_new           (gint               width,
                                            gint               height,
                                            const Babl        *fomat) G_GNUC_WARN_UNUSED_RESULT;
 GimpTempBuf * gimp_temp_buf_copy          (GimpTempBuf       *src) G_GNUC_WARN_UNUSED_RESULT;
-void          gimp_temp_buf_free          (GimpTempBuf       *buf);
+
+GimpTempBuf * gimp_temp_buf_ref           (GimpTempBuf       *buf);
+void          gimp_temp_buf_unref         (GimpTempBuf       *buf);
 
 GimpTempBuf * gimp_temp_buf_scale         (GimpTempBuf       *buf,
                                            gint               width,
@@ -50,8 +53,7 @@ guchar      * gimp_temp_buf_data_clear    (GimpTempBuf       *buf);
 
 gsize         gimp_temp_buf_get_memsize   (GimpTempBuf       *buf);
 
-GeglBuffer  * gimp_temp_buf_create_buffer (GimpTempBuf       *temp_buf,
-                                           gboolean           take_ownership) G_GNUC_WARN_UNUSED_RESULT;
+GeglBuffer  * gimp_temp_buf_create_buffer (GimpTempBuf       *temp_buf) G_GNUC_WARN_UNUSED_RESULT;
 
 
 #endif  /*  __GIMP_TEMP_BUF_H__  */

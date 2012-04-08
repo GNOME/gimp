@@ -44,11 +44,12 @@ gimp_temp_buf_new (gint        width,
 
   temp = g_slice_new (GimpTempBuf);
 
-  temp->format  = format;
-  temp->width   = width;
-  temp->height  = height;
-  temp->x       = 0;
-  temp->y       = 0;
+  temp->ref_count = 1;
+  temp->format    = format;
+  temp->width     = width;
+  temp->height    = height;
+  temp->x         = 0;
+  temp->y         = 0;
 
   temp->data = g_new (guchar,
                       width * height *
@@ -73,15 +74,31 @@ gimp_temp_buf_copy (GimpTempBuf *src)
   return dest;
 }
 
+GimpTempBuf *
+gimp_temp_buf_ref (GimpTempBuf *buf)
+{
+  g_return_val_if_fail (buf != NULL, NULL);
+
+  buf->ref_count++;
+
+  return buf;
+}
+
 void
-gimp_temp_buf_free (GimpTempBuf *buf)
+gimp_temp_buf_unref (GimpTempBuf *buf)
 {
   g_return_if_fail (buf != NULL);
+  g_return_if_fail (buf->ref_count > 0);
 
-  if (buf->data)
-    g_free (buf->data);
+  buf->ref_count--;
 
-  g_slice_free (GimpTempBuf, buf);
+  if (buf->ref_count < 1)
+    {
+      if (buf->data)
+        g_free (buf->data);
+
+      g_slice_free (GimpTempBuf, buf);
+    }
 }
 
 GimpTempBuf *
@@ -218,8 +235,7 @@ gimp_temp_buf_get_memsize (GimpTempBuf *buf)
 }
 
 GeglBuffer  *
-gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf,
-                             gboolean     take_ownership)
+gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf)
 {
   GeglBuffer *buffer;
 
@@ -232,10 +248,8 @@ gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf,
                                                       temp_buf->width,
                                                       temp_buf->height),
                                       GEGL_AUTO_ROWSTRIDE,
-                                      take_ownership ?
-                                      (GDestroyNotify) gimp_temp_buf_free : NULL,
-                                      take_ownership ?
-                                      temp_buf : NULL);
+                                      (GDestroyNotify) gimp_temp_buf_unref,
+                                      gimp_temp_buf_ref (temp_buf));
 
   g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", temp_buf);
 

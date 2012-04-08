@@ -177,13 +177,13 @@ gimp_brush_finalize (GObject *object)
 
   if (brush->mask)
     {
-      gimp_temp_buf_free (brush->mask);
+      gimp_temp_buf_unref (brush->mask);
       brush->mask = NULL;
     }
 
   if (brush->pixmap)
     {
-      gimp_temp_buf_free (brush->pixmap);
+      gimp_temp_buf_unref (brush->pixmap);
       brush->pixmap = NULL;
     }
 
@@ -283,7 +283,6 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 {
   GimpBrush         *brush       = GIMP_BRUSH (viewable);
   const GimpTempBuf *mask_buf    = NULL;
-  gboolean           free_mask   = FALSE;
   const GimpTempBuf *pixmap_buf  = NULL;
   GimpTempBuf       *return_buf  = NULL;
   gint               mask_width;
@@ -316,7 +315,10 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
             {
               mask_buf = gimp_temp_buf_new (1, 1, babl_format ("Y u8"));
               gimp_temp_buf_data_clear ((GimpTempBuf *) mask_buf);
-              free_mask = TRUE;
+            }
+          else
+            {
+              gimp_temp_buf_ref ((GimpTempBuf *) mask_buf);
             }
 
           if (pixmap_buf)
@@ -368,8 +370,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
   if (scaled)
     {
-      if (free_mask)
-        gimp_temp_buf_free ((GimpTempBuf *) mask_buf);
+      gimp_temp_buf_unref ((GimpTempBuf *) mask_buf);
 
       gimp_brush_end_use (brush);
     }
@@ -416,10 +417,10 @@ static void
 gimp_brush_real_begin_use (GimpBrush *brush)
 {
   brush->mask_cache =
-    gimp_brush_cache_new ((GDestroyNotify) gimp_temp_buf_free, 'M', 'm');
+    gimp_brush_cache_new ((GDestroyNotify) gimp_temp_buf_unref, 'M', 'm');
 
   brush->pixmap_cache =
-    gimp_brush_cache_new ((GDestroyNotify) gimp_temp_buf_free, 'P', 'p');
+    gimp_brush_cache_new ((GDestroyNotify) gimp_temp_buf_unref, 'P', 'p');
 
   brush->boundary_cache =
     gimp_brush_cache_new ((GDestroyNotify) gimp_bezier_desc_free, 'B', 'b');

@@ -945,7 +945,7 @@ gimp_image_finalize (GObject *object)
 
   if (private->preview)
     {
-      gimp_temp_buf_free (private->preview);
+      gimp_temp_buf_unref (private->preview);
       private->preview = NULL;
     }
 
@@ -1098,7 +1098,7 @@ gimp_image_invalidate_preview (GimpViewable *viewable)
 
   if (private->preview)
     {
-      gimp_temp_buf_free (private->preview);
+      gimp_temp_buf_unref (private->preview);
       private->preview = NULL;
     }
 }
