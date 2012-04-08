@@ -38,6 +38,7 @@
 #include "gimpdrawableundo.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
+#include "gimptempbuf.h"
 
 
 void
@@ -343,35 +344,38 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
 
   if (mask)
     {
-      PixelRegion  mask2PR, tempPR;
-      guchar      *temp_data;
+      PixelRegion  tempPR;
+      GimpTempBuf *temp_buf;
+      GeglBuffer  *src_buffer;
+      GeglBuffer  *dest_buffer;
 
-      pixel_region_init (&mask2PR,
-                         gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                         x + offset_x, y + offset_y, width, height,
-                         FALSE);
+      src_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-      temp_data = g_malloc (width * height);
+      temp_buf = gimp_temp_buf_new (width, height,
+                                    gegl_buffer_get_format (src_buffer));
 
-      pixel_region_init_data (&tempPR, temp_data, 1, width,
-                              0, 0, width, height);
+      dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
 
-      copy_region (&mask2PR, &tempPR);
+      gegl_buffer_copy (src_buffer,
+                        GEGL_RECTANGLE (x + offset_x, y + offset_y,
+                                        width, height),
+                        dest_buffer,
+                        GEGL_RECTANGLE (0, 0, 0, 0));
 
-      pixel_region_init_data (&tempPR, temp_data, 1, width,
-                              0, 0, width, height);
+      g_object_unref (dest_buffer);
+
+      pixel_region_init_temp_buf (&tempPR, temp_buf, 0, 0, width, height);
 
       apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
 
-      pixel_region_init_data (&tempPR, temp_data, 1, width,
-                              0, 0, width, height);
+      pixel_region_init_temp_buf (&tempPR, temp_buf, 0, 0, width, height);
 
       combine_regions_replace (&src1PR, &src2PR, &destPR, &tempPR, NULL,
                                opacity * 255.999,
                                active_components,
                                operation);
 
-      g_free (temp_data);
+      gimp_temp_buf_unref (temp_buf);
     }
   else
     {
