@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __TEMP_BUF_H__
-#define __TEMP_BUF_H__
+#ifndef __GIMP_TEMP_BUF_H__
+#define __GIMP_TEMP_BUF_H__
 
 
 struct _GimpTempBuf
@@ -32,27 +32,26 @@ struct _GimpTempBuf
 
 /*  The temp buffer functions  */
 
-GimpTempBuf * temp_buf_new           (gint               width,
-                                      gint               height,
-                                      const Babl        *fomat);
-GimpTempBuf * temp_buf_copy          (GimpTempBuf       *src);
-GimpTempBuf * temp_buf_scale         (GimpTempBuf       *buf,
-                                      gint               width,
-                                      gint               height) G_GNUC_WARN_UNUSED_RESULT;
+GimpTempBuf * gimp_temp_buf_new           (gint               width,
+                                           gint               height,
+                                           const Babl        *fomat) G_GNUC_WARN_UNUSED_RESULT;
+GimpTempBuf * gimp_temp_buf_copy          (GimpTempBuf       *src) G_GNUC_WARN_UNUSED_RESULT;
+void          gimp_temp_buf_free          (GimpTempBuf       *buf);
 
-void          temp_buf_demultiply    (GimpTempBuf       *buf);
+GimpTempBuf * gimp_temp_buf_scale         (GimpTempBuf       *buf,
+                                           gint               width,
+                                           gint               height) G_GNUC_WARN_UNUSED_RESULT;
 
-void          temp_buf_free          (GimpTempBuf       *buf);
-guchar      * temp_buf_get_data      (const GimpTempBuf *buf);
-gsize         temp_buf_get_data_size (GimpTempBuf       *buf);
-guchar      * temp_buf_data_clear    (GimpTempBuf       *buf);
+void          gimp_temp_buf_demultiply    (GimpTempBuf       *buf);
 
-gsize         temp_buf_get_memsize   (GimpTempBuf       *buf);
-void          temp_buf_dump          (GimpTempBuf       *buf,
-                                      const gchar       *filename);
+guchar      * gimp_temp_buf_get_data      (const GimpTempBuf *buf);
+gsize         gimp_temp_buf_get_data_size (GimpTempBuf       *buf);
+guchar      * gimp_temp_buf_data_clear    (GimpTempBuf       *buf);
 
-GeglBuffer  * gimp_temp_buf_create_buffer (GimpTempBuf  *temp_buf,
-                                          gboolean       take_ownership);
+gsize         gimp_temp_buf_get_memsize   (GimpTempBuf       *buf);
+
+GeglBuffer  * gimp_temp_buf_create_buffer (GimpTempBuf       *temp_buf,
+                                           gboolean           take_ownership) G_GNUC_WARN_UNUSED_RESULT;
 
 
-#endif  /*  __TEMP_BUF_H__  */
+#endif  /*  __GIMP_TEMP_BUF_H__  */

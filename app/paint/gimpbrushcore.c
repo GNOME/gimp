@@ -243,7 +243,7 @@ gimp_brush_core_finalize (GObject *object)
 
   if (core->pressure_brush)
     {
-      temp_buf_free (core->pressure_brush);
+      gimp_temp_buf_free (core->pressure_brush);
       core->pressure_brush = NULL;
     }
 
@@ -251,7 +251,7 @@ gimp_brush_core_finalize (GObject *object)
     for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
       if (core->solid_brushes[i][j])
         {
-          temp_buf_free (core->solid_brushes[i][j]);
+          gimp_temp_buf_free (core->solid_brushes[i][j]);
           core->solid_brushes[i][j] = NULL;
         }
 
@@ -265,7 +265,7 @@ gimp_brush_core_finalize (GObject *object)
     for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
       if (core->subsample_brushes[i][j])
         {
-          temp_buf_free (core->subsample_brushes[i][j]);
+          gimp_temp_buf_free (core->subsample_brushes[i][j]);
           core->subsample_brushes[i][j] = NULL;
         }
 
@@ -835,7 +835,7 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
       const Babl  *format = gimp_drawable_get_format_with_alpha (drawable);
       GimpTempBuf *temp_buf;
 
-      temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), format);
+      temp_buf = gimp_temp_buf_new ((x2 - x1), (y2 - y1), format);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
@@ -1119,7 +1119,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
         for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
           if (core->subsample_brushes[i][j])
             {
-              temp_buf_free (core->subsample_brushes[i][j]);
+              gimp_temp_buf_free (core->subsample_brushes[i][j]);
               core->subsample_brushes[i][j] = NULL;
             }
 
@@ -1127,10 +1127,10 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
       core->subsample_cache_invalid   = FALSE;
     }
 
-  dest = temp_buf_new (mask->width  + 2,
-                       mask->height + 2,
-                       babl_format ("Y u8"));
-  temp_buf_data_clear (dest);
+  dest = gimp_temp_buf_new (mask->width  + 2,
+                            mask->height + 2,
+                            babl_format ("Y u8"));
+  gimp_temp_buf_data_clear (dest);
 
   /* Allocate and initialize the accum buffer */
   for (i = 0; i < KERNEL_HEIGHT ; i++)
@@ -1138,7 +1138,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
 
   core->subsample_brushes[index2][index1] = dest;
 
-  m = temp_buf_get_data (mask);
+  m = gimp_temp_buf_get_data (mask);
   for (i = 0; i < mask->height; i++)
     {
       for (j = 0; j < mask->width; j++)
@@ -1155,7 +1155,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
         }
 
       /* store the accum buffer into the destination mask */
-      d = temp_buf_get_data (dest) + (i + dest_offset_y) * dest->width;
+      d = gimp_temp_buf_get_data (dest) + (i + dest_offset_y) * dest->width;
       for (j = 0; j < dest->width; j++)
         *d++ = (accum[0][j] + 127) / KERNEL_SUM;
 
@@ -1167,7 +1167,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
   /* store the rest of the accum buffer into the dest mask */
   while (i + dest_offset_y < dest->height)
     {
-      d = temp_buf_get_data (dest) + (i + dest_offset_y) * dest->width;
+      d = gimp_temp_buf_get_data (dest) + (i + dest_offset_y) * dest->width;
       for (j = 0; j < dest->width; j++)
         *d++ = (accum[0][j] + (KERNEL_SUM / 2)) / KERNEL_SUM;
 
@@ -1206,12 +1206,12 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
     return subsample_mask;
 
   if (core->pressure_brush)
-    temp_buf_free (core->pressure_brush);
+    gimp_temp_buf_free (core->pressure_brush);
 
-  core->pressure_brush = temp_buf_new (brush_mask->width  + 2,
-                                       brush_mask->height + 2,
-                                       babl_format ("Y u8"));
-  temp_buf_data_clear (core->pressure_brush);
+  core->pressure_brush = gimp_temp_buf_new (brush_mask->width  + 2,
+                                            brush_mask->height + 2,
+                                            babl_format ("Y u8"));
+  gimp_temp_buf_data_clear (core->pressure_brush);
 
 #ifdef FANCY_PRESSURE
 
@@ -1288,8 +1288,8 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
 
   /* Now convert the brush */
 
-  source = temp_buf_get_data (subsample_mask);
-  dest   = temp_buf_get_data (core->pressure_brush);
+  source = gimp_temp_buf_get_data (subsample_mask);
+  dest   = gimp_temp_buf_get_data (core->pressure_brush);
 
   i = subsample_mask->width * subsample_mask->height;
   while (i--)
@@ -1341,7 +1341,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
         for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
           if (core->solid_brushes[i][j])
             {
-              temp_buf_free (core->solid_brushes[i][j]);
+              gimp_temp_buf_free (core->solid_brushes[i][j]);
               core->solid_brushes[i][j] = NULL;
             }
 
@@ -1349,15 +1349,15 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
       core->solid_cache_invalid   = FALSE;
     }
 
-  dest = temp_buf_new (brush_mask->width  + 2,
-                       brush_mask->height + 2,
-                       babl_format ("Y u8"));
-  temp_buf_data_clear (dest);
+  dest = gimp_temp_buf_new (brush_mask->width  + 2,
+                            brush_mask->height + 2,
+                            babl_format ("Y u8"));
+  gimp_temp_buf_data_clear (dest);
 
   core->solid_brushes[dest_offset_y][dest_offset_x] = dest;
 
-  m = temp_buf_get_data (brush_mask);
-  d = (temp_buf_get_data (dest) +
+  m = gimp_temp_buf_get_data (brush_mask);
+  d = (gimp_temp_buf_get_data (dest) +
        (dest_offset_y + 1) * dest->width +
        (dest_offset_x + 1));
 
@@ -1638,13 +1638,13 @@ gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
   pixmap_bytes = babl_format_get_bytes_per_pixel (pixmap_mask->format);
 
   /* Point to the approriate scanline */
-  b = (temp_buf_get_data (pixmap_mask) +
+  b = (gimp_temp_buf_get_data (pixmap_mask) +
        (y % pixmap_mask->height) * pixmap_mask->width * pixmap_bytes);
 
   if (mode == GIMP_BRUSH_SOFT && brush_mask)
     {
       const Babl   *fish;
-      const guchar *mask     = (temp_buf_get_data (brush_mask) +
+      const guchar *mask     = (gimp_temp_buf_get_data (brush_mask) +
                                 (y % brush_mask->height) * brush_mask->width);
       guchar       *line_buf = g_alloca (width * (pixmap_bytes + 1));
       guchar       *l        = line_buf;

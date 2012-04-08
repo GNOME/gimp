@@ -33,9 +33,9 @@
 
 
 GimpTempBuf *
-temp_buf_new (gint        width,
-              gint        height,
-              const Babl *format)
+gimp_temp_buf_new (gint        width,
+                   gint        height,
+                   const Babl *format)
 {
   GimpTempBuf *temp;
 
@@ -58,28 +58,36 @@ temp_buf_new (gint        width,
 }
 
 GimpTempBuf *
-temp_buf_copy (GimpTempBuf *src)
+gimp_temp_buf_copy (GimpTempBuf *src)
 {
   GimpTempBuf *dest;
 
   g_return_val_if_fail (src != NULL, NULL);
 
-  dest = temp_buf_new (src->width, src->height, src->format);
+  dest = gimp_temp_buf_new (src->width, src->height, src->format);
 
-  if (! dest)
-    return NULL;
-
-  memcpy (temp_buf_get_data (dest),
-          temp_buf_get_data (src),
-          temp_buf_get_data_size (src));
+  memcpy (gimp_temp_buf_get_data (dest),
+          gimp_temp_buf_get_data (src),
+          gimp_temp_buf_get_data_size (src));
 
   return dest;
 }
 
+void
+gimp_temp_buf_free (GimpTempBuf *buf)
+{
+  g_return_if_fail (buf != NULL);
+
+  if (buf->data)
+    g_free (buf->data);
+
+  g_slice_free (GimpTempBuf, buf);
+}
+
 GimpTempBuf *
-temp_buf_scale (GimpTempBuf *src,
-                gint         new_width,
-                gint         new_height)
+gimp_temp_buf_scale (GimpTempBuf *src,
+                     gint         new_width,
+                     gint         new_height)
 {
   GimpTempBuf  *dest;
   const guchar *src_data;
@@ -93,12 +101,12 @@ temp_buf_scale (GimpTempBuf *src,
   g_return_val_if_fail (src != NULL, NULL);
   g_return_val_if_fail (new_width > 0 && new_height > 0, NULL);
 
-  dest = temp_buf_new (new_width,
-                       new_height,
-                       src->format);
+  dest = gimp_temp_buf_new (new_width,
+                            new_height,
+                            src->format);
 
-  src_data  = temp_buf_get_data (src);
-  dest_data = temp_buf_get_data (dest);
+  src_data  = gimp_temp_buf_get_data (src);
+  dest_data = gimp_temp_buf_get_data (dest);
 
   x_ratio = (gdouble) src->width  / (gdouble) new_width;
   y_ratio = (gdouble) src->height / (gdouble) new_height;
@@ -129,13 +137,13 @@ temp_buf_scale (GimpTempBuf *src,
 }
 
 /**
- * temp_buf_demultiply:
+ * gimp_temp_buf_demultiply:
  * @buf:
  *
  * Converts a GimpTempBuf with pre-multiplied alpha to a 'normal' GimpTempBuf.
  */
 void
-temp_buf_demultiply (GimpTempBuf *buf)
+gimp_temp_buf_demultiply (GimpTempBuf *buf)
 {
   guchar *data;
   gint    pixels;
@@ -148,7 +156,7 @@ temp_buf_demultiply (GimpTempBuf *buf)
       break;
 
     case 2:
-      data = temp_buf_get_data (buf);
+      data = gimp_temp_buf_get_data (buf);
       pixels = buf->width * buf->height;
       while (pixels--)
         {
@@ -162,7 +170,7 @@ temp_buf_demultiply (GimpTempBuf *buf)
       break;
 
     case 4:
-      data = temp_buf_get_data (buf);
+      data = gimp_temp_buf_get_data (buf);
       pixels = buf->width * buf->height;
       while (pixels--)
         {
@@ -180,68 +188,33 @@ temp_buf_demultiply (GimpTempBuf *buf)
     }
 }
 
-void
-temp_buf_free (GimpTempBuf *buf)
-{
-  g_return_if_fail (buf != NULL);
-
-  if (buf->data)
-    g_free (buf->data);
-
-  g_slice_free (GimpTempBuf, buf);
-}
-
 guchar *
-temp_buf_get_data (const GimpTempBuf *buf)
+gimp_temp_buf_get_data (const GimpTempBuf *buf)
 {
   return buf->data;
 }
 
 gsize
-temp_buf_get_data_size (GimpTempBuf *buf)
+gimp_temp_buf_get_data_size (GimpTempBuf *buf)
 {
   return babl_format_get_bytes_per_pixel (buf->format) * buf->width * buf->height;
 }
 
 guchar *
-temp_buf_data_clear (GimpTempBuf *buf)
+gimp_temp_buf_data_clear (GimpTempBuf *buf)
 {
-  memset (buf->data, 0, temp_buf_get_data_size (buf));
+  memset (buf->data, 0, gimp_temp_buf_get_data_size (buf));
 
   return buf->data;
 }
 
 gsize
-temp_buf_get_memsize (GimpTempBuf *buf)
+gimp_temp_buf_get_memsize (GimpTempBuf *buf)
 {
   if (buf)
-    return (sizeof (GimpTempBuf) + temp_buf_get_data_size (buf));
+    return (sizeof (GimpTempBuf) + gimp_temp_buf_get_data_size (buf));
 
   return 0;
-}
-
-
-/**
- * temp_buf_dump:
- * @buf:
- * @file:
- *
- * Dumps a GimpTempBuf to a raw RGB image that is easy to analyze, for
- * example with GIMP.
- **/
-void
-temp_buf_dump (GimpTempBuf *buf,
-               const gchar *filename)
-{
-  gint fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY, 0666);
-
-  g_return_if_fail (fd != -1);
-  g_return_if_fail (buf != NULL);
-  g_return_if_fail (temp_buf_get_data (buf) != NULL);
-
-  write (fd, temp_buf_get_data (buf), temp_buf_get_data_size (buf));
-
-  close (fd);
 }
 
 GeglBuffer  *
@@ -253,14 +226,14 @@ gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf,
   g_return_val_if_fail (temp_buf != NULL, NULL);
 
   buffer =
-    gegl_buffer_linear_new_from_data (temp_buf_get_data (temp_buf),
+    gegl_buffer_linear_new_from_data (gimp_temp_buf_get_data (temp_buf),
                                       temp_buf->format,
                                       GEGL_RECTANGLE (0, 0,
                                                       temp_buf->width,
                                                       temp_buf->height),
                                       GEGL_AUTO_ROWSTRIDE,
                                       take_ownership ?
-                                      (GDestroyNotify) temp_buf_free : NULL,
+                                      (GDestroyNotify) gimp_temp_buf_free : NULL,
                                       take_ownership ?
                                       temp_buf : NULL);
 

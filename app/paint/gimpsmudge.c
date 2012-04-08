@@ -185,8 +185,8 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   gimp_smudge_accumulator_size (paint_options, &accum_size);
 
   /*  Allocate the accumulation buffer */
-  accum_temp = temp_buf_new (accum_size, accum_size,
-                             gimp_drawable_get_format (drawable));
+  accum_temp = gimp_temp_buf_new (accum_size, accum_size,
+                                  gimp_drawable_get_format (drawable));
 
   smudge->accum_buffer = gimp_temp_buf_create_buffer (accum_temp, TRUE);
 

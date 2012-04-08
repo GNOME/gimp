@@ -181,9 +181,9 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                   brush_core->brush->mask->height / 2,
                                   rate);
 
-  convolve_temp = temp_buf_new (gegl_buffer_get_width  (paint_buffer),
-                                gegl_buffer_get_height (paint_buffer),
-                                gegl_buffer_get_format (paint_buffer));
+  convolve_temp = gimp_temp_buf_new (gegl_buffer_get_width  (paint_buffer),
+                                     gegl_buffer_get_height (paint_buffer),
+                                     gegl_buffer_get_format (paint_buffer));
 
   convolve_buffer = gimp_temp_buf_create_buffer (convolve_temp, TRUE);
 

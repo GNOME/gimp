@@ -178,7 +178,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
                                scale, aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
-    return temp_buf_copy (source);
+    return gimp_temp_buf_copy (source);
 
   src_width  = source->width;
   src_height = source->height;
@@ -190,10 +190,10 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
-  result = temp_buf_new (dest_width, dest_height, babl_format ("Y u8"));
+  result = gimp_temp_buf_new (dest_width, dest_height, babl_format ("Y u8"));
 
-  dest = temp_buf_get_data (result);
-  src  = temp_buf_get_data (source);
+  dest = gimp_temp_buf_get_data (result);
+  src  = gimp_temp_buf_get_data (source);
 
   /* prevent disappearance of 1x1 pixel brush at some rotations when
      scaling < 1 */
@@ -340,7 +340,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
       gimp_brush_transform_fill_blur_kernel (blur_kernel, kernel_len);
 
-      blur_src = temp_buf_copy (result);
+      blur_src = gimp_temp_buf_copy (result);
 
       src_buffer  = gimp_temp_buf_create_buffer (blur_src, TRUE);
       dest_buffer = gimp_temp_buf_create_buffer (blur_src, FALSE);
@@ -473,7 +473,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
                                scale, aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
-    return temp_buf_copy (source);
+    return gimp_temp_buf_copy (source);
 
   src_width  = source->width;
   src_height = source->height;
@@ -485,10 +485,11 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
-  result = temp_buf_new (dest_width, dest_height, babl_format ("R'G'B' u8"));
+  result = gimp_temp_buf_new (dest_width, dest_height,
+                              babl_format ("R'G'B' u8"));
 
-  dest = temp_buf_get_data (result);
-  src  = temp_buf_get_data (source);
+  dest = gimp_temp_buf_get_data (result);
+  src  = gimp_temp_buf_get_data (source);
 
   gimp_matrix3_transform_point (&matrix, 0,          0,           &tlx, &tly);
   gimp_matrix3_transform_point (&matrix, dest_width, 0,           &trx, &try);
@@ -640,7 +641,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
       gimp_brush_transform_fill_blur_kernel (blur_kernel, kernel_len);
 
-      blur_src = temp_buf_copy (result);
+      blur_src = gimp_temp_buf_copy (result);
 
       src_buffer  = gimp_temp_buf_create_buffer (blur_src, TRUE);
       dest_buffer = gimp_temp_buf_create_buffer (blur_src, FALSE);

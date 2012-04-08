@@ -98,8 +98,8 @@ HELP
       width           = pattern->mask->width;
       height          = pattern->mask->height;
       bpp             = babl_format_get_bytes_per_pixel (pattern->mask->format);
-      num_color_bytes = temp_buf_get_data_size (pattern->mask);
-      color_bytes     = g_memdup (temp_buf_get_data (pattern->mask),
+      num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
+      color_bytes     = g_memdup (gimp_temp_buf_get_data (pattern->mask),
                                   num_color_bytes);
     }
   else

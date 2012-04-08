@@ -177,13 +177,13 @@ gimp_brush_finalize (GObject *object)
 
   if (brush->mask)
     {
-      temp_buf_free (brush->mask);
+      gimp_temp_buf_free (brush->mask);
       brush->mask = NULL;
     }
 
   if (brush->pixmap)
     {
-      temp_buf_free (brush->pixmap);
+      gimp_temp_buf_free (brush->pixmap);
       brush->pixmap = NULL;
     }
 
@@ -255,8 +255,8 @@ gimp_brush_get_memsize (GimpObject *object,
   GimpBrush *brush   = GIMP_BRUSH (object);
   gint64     memsize = 0;
 
-  memsize += temp_buf_get_memsize (brush->mask);
-  memsize += temp_buf_get_memsize (brush->pixmap);
+  memsize += gimp_temp_buf_get_memsize (brush->mask);
+  memsize += gimp_temp_buf_get_memsize (brush->pixmap);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -314,8 +314,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
           if (! mask_buf)
             {
-              mask_buf = temp_buf_new (1, 1, babl_format ("Y u8"));
-              temp_buf_data_clear ((GimpTempBuf *) mask_buf);
+              mask_buf = gimp_temp_buf_new (1, 1, babl_format ("Y u8"));
+              gimp_temp_buf_data_clear ((GimpTempBuf *) mask_buf);
               free_mask = TRUE;
             }
 
@@ -330,16 +330,16 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
         }
     }
 
-  return_buf = temp_buf_new (mask_width, mask_height,
-                             babl_format ("R'G'B'A u8"));
-  temp_buf_data_clear (return_buf);
+  return_buf = gimp_temp_buf_new (mask_width, mask_height,
+                                  babl_format ("R'G'B'A u8"));
+  gimp_temp_buf_data_clear (return_buf);
 
-  mask = temp_buf_get_data (mask_buf);
-  buf  = temp_buf_get_data (return_buf);
+  mask = gimp_temp_buf_get_data (mask_buf);
+  buf  = gimp_temp_buf_get_data (return_buf);
 
   if (pixmap_buf)
     {
-      guchar *pixmap = temp_buf_get_data (pixmap_buf);
+      guchar *pixmap = gimp_temp_buf_get_data (pixmap_buf);
 
       for (y = 0; y < mask_height; y++)
         {
@@ -369,7 +369,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   if (scaled)
     {
       if (free_mask)
-        temp_buf_free ((GimpTempBuf *) mask_buf);
+        gimp_temp_buf_free ((GimpTempBuf *) mask_buf);
 
       gimp_brush_end_use (brush);
     }
@@ -416,10 +416,10 @@ static void
 gimp_brush_real_begin_use (GimpBrush *brush)
 {
   brush->mask_cache =
-    gimp_brush_cache_new ((GDestroyNotify) temp_buf_free, 'M', 'm');
+    gimp_brush_cache_new ((GDestroyNotify) gimp_temp_buf_free, 'M', 'm');
 
   brush->pixmap_cache =
-    gimp_brush_cache_new ((GDestroyNotify) temp_buf_free, 'P', 'p');
+    gimp_brush_cache_new ((GDestroyNotify) gimp_temp_buf_free, 'P', 'p');
 
   brush->boundary_cache =
     gimp_brush_cache_new ((GDestroyNotify) gimp_bezier_desc_free, 'B', 'b');
@@ -464,9 +464,11 @@ gimp_brush_get_checksum (GimpTagged *tagged)
     {
       GChecksum *checksum = g_checksum_new (G_CHECKSUM_MD5);
 
-      g_checksum_update (checksum, temp_buf_get_data (brush->mask), temp_buf_get_data_size (brush->mask));
+      g_checksum_update (checksum, gimp_temp_buf_get_data (brush->mask),
+                         gimp_temp_buf_get_data_size (brush->mask));
       if (brush->pixmap)
-        g_checksum_update (checksum, temp_buf_get_data (brush->pixmap), temp_buf_get_data_size (brush->pixmap));
+        g_checksum_update (checksum, gimp_temp_buf_get_data (brush->pixmap),
+                           gimp_temp_buf_get_data_size (brush->pixmap));
       g_checksum_update (checksum, (const guchar *) &brush->spacing, sizeof (brush->spacing));
       g_checksum_update (checksum, (const guchar *) &brush->x_axis, sizeof (brush->x_axis));
       g_checksum_update (checksum, (const guchar *) &brush->y_axis, sizeof (brush->y_axis));
@@ -619,7 +621,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
           angle        == 0.0 &&
           hardness     == 1.0)
         {
-          mask = temp_buf_copy (brush->mask);
+          mask = gimp_temp_buf_copy (brush->mask);
         }
       else
         {
@@ -669,7 +671,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
           angle        == 0.0 &&
           hardness     == 1.0)
         {
-          pixmap = temp_buf_copy (brush->pixmap);
+          pixmap = gimp_temp_buf_copy (brush->pixmap);
         }
       else
         {

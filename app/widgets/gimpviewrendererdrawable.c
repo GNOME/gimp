@@ -168,9 +168,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             {
               gint bytes = gimp_drawable_preview_bytes (drawable);
 
-              render_buf = temp_buf_new (1, 1,
-                                         gimp_bpp_to_babl_format (bytes));
-              temp_buf_data_clear (render_buf);
+              render_buf = gimp_temp_buf_new (1, 1,
+                                              gimp_bpp_to_babl_format (bytes));
+              gimp_temp_buf_data_clear (render_buf);
             }
         }
       else
@@ -184,9 +184,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
           if (temp_buf)
             {
-              render_buf = temp_buf_scale (temp_buf, view_width, view_height);
-
-              temp_buf_free (temp_buf);
+              render_buf = gimp_temp_buf_scale (temp_buf,
+                                                view_width, view_height);
+              gimp_temp_buf_free (temp_buf);
             }
         }
     }
@@ -232,8 +232,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       gimp_view_renderer_render_temp_buf (renderer, render_buf, -1,
                                           GIMP_VIEW_BG_CHECKS,
                                           GIMP_VIEW_BG_CHECKS);
-
-      temp_buf_free (render_buf);
+      gimp_temp_buf_free (render_buf);
     }
   else
     {

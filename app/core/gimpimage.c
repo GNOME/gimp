@@ -945,7 +945,7 @@ gimp_image_finalize (GObject *object)
 
   if (private->preview)
     {
-      temp_buf_free (private->preview);
+      gimp_temp_buf_free (private->preview);
       private->preview = NULL;
     }
 
@@ -1070,7 +1070,7 @@ gimp_image_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (private->redo_stack),
                                       gui_size);
 
-  *gui_size += temp_buf_get_memsize (private->preview);
+  *gui_size += gimp_temp_buf_get_memsize (private->preview);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -1098,7 +1098,7 @@ gimp_image_invalidate_preview (GimpViewable *viewable)
 
   if (private->preview)
     {
-      temp_buf_free (private->preview);
+      gimp_temp_buf_free (private->preview);
       private->preview = NULL;
     }
 }

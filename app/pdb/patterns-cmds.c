@@ -159,8 +159,8 @@ patterns_get_pattern_data_invoker (GimpProcedure      *procedure,
           width       = pattern->mask->width;
           height      = pattern->mask->height;
           mask_bpp    = babl_format_get_bytes_per_pixel (pattern->mask->format);
-          length      = temp_buf_get_data_size (pattern->mask);
-          mask_data   = g_memdup (temp_buf_get_data (pattern->mask), length);
+          length      = gimp_temp_buf_get_data_size (pattern->mask);
+          mask_data   = g_memdup (gimp_temp_buf_get_data (pattern->mask), length);
         }
       else
         success = FALSE;

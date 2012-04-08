@@ -220,8 +220,8 @@ gimp_drawable_indexed_preview (GimpDrawable *drawable,
                      src_x, src_y, src_width, src_height,
                      FALSE);
 
-  preview_buf = temp_buf_new (dest_width, dest_height,
-                              gimp_bpp_to_babl_format (bytes));
+  preview_buf = gimp_temp_buf_new (dest_width, dest_height,
+                                   gimp_bpp_to_babl_format (bytes));
 
   pixel_region_init_temp_buf (&destPR, preview_buf,
                               0, 0, dest_width, dest_height);

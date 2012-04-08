@@ -182,7 +182,7 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
 {
   if (pattern->mask)
     {
-      temp_buf_free (pattern->mask);
+      gimp_temp_buf_free (pattern->mask);
       pattern->mask = NULL;
     }
 
@@ -195,19 +195,19 @@ gimp_pattern_clipboard_buffer_changed (Gimp        *gimp,
       width  = MIN (gimp_buffer_get_width  (buffer), 512);
       height = MIN (gimp_buffer_get_height (buffer), 512);
 
-      pattern->mask = temp_buf_new (width, height,
-                                    gimp_buffer_get_format (buffer));
+      pattern->mask = gimp_temp_buf_new (width, height,
+                                         gimp_buffer_get_format (buffer));
 
       gegl_buffer_get (gimp_buffer_get_buffer (buffer),
                        GEGL_RECTANGLE (0, 0, width, height), 1.0,
                        NULL,
-                       temp_buf_get_data (pattern->mask),
+                       gimp_temp_buf_get_data (pattern->mask),
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
     }
   else
     {
-      pattern->mask = temp_buf_new (16, 16, babl_format ("R'G'B' u8"));
-      memset (temp_buf_get_data (pattern->mask), 255, 16 * 16 * 3);
+      pattern->mask = gimp_temp_buf_new (16, 16, babl_format ("R'G'B' u8"));
+      memset (gimp_temp_buf_get_data (pattern->mask), 255, 16 * 16 * 3);
     }
 
   gimp_data_dirty (GIMP_DATA (pattern));

@@ -105,7 +105,7 @@ gimp_pattern_finalize (GObject *object)
 
   if (pattern->mask)
     {
-      temp_buf_free (pattern->mask);
+      gimp_temp_buf_free (pattern->mask);
       pattern->mask = NULL;
     }
 
@@ -119,7 +119,7 @@ gimp_pattern_get_memsize (GimpObject *object,
   GimpPattern *pattern = GIMP_PATTERN (object);
   gint64       memsize = 0;
 
-  memsize += temp_buf_get_memsize (pattern->mask);
+  memsize += gimp_temp_buf_get_memsize (pattern->mask);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -154,8 +154,8 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
   copy_width  = MIN (width,  pattern->mask->width);
   copy_height = MIN (height, pattern->mask->height);
 
-  temp_buf = temp_buf_new (copy_width, copy_height,
-                           pattern->mask->format);
+  temp_buf = gimp_temp_buf_new (copy_width, copy_height,
+                                pattern->mask->format);
 
   src_buffer  = gimp_temp_buf_create_buffer (pattern->mask, FALSE);
   dest_buffer = gimp_temp_buf_create_buffer (temp_buf, FALSE);
@@ -192,7 +192,7 @@ gimp_pattern_duplicate (GimpData *data)
 {
   GimpPattern *pattern = g_object_new (GIMP_TYPE_PATTERN, NULL);
 
-  pattern->mask = temp_buf_copy (GIMP_PATTERN (data)->mask);
+  pattern->mask = gimp_temp_buf_copy (GIMP_PATTERN (data)->mask);
 
   return GIMP_DATA (pattern);
 }
@@ -207,7 +207,8 @@ gimp_pattern_get_checksum (GimpTagged *tagged)
     {
       GChecksum *checksum = g_checksum_new (G_CHECKSUM_MD5);
 
-      g_checksum_update (checksum, temp_buf_get_data (pattern->mask), temp_buf_get_data_size (pattern->mask));
+      g_checksum_update (checksum, gimp_temp_buf_get_data (pattern->mask),
+                         gimp_temp_buf_get_data_size (pattern->mask));
 
       checksum_string = g_strdup (g_checksum_get_string (checksum));
 
@@ -232,9 +233,9 @@ gimp_pattern_new (GimpContext *context,
                           "name", name,
                           NULL);
 
-  pattern->mask = temp_buf_new (32, 32, babl_format ("R'G'B' u8"));
+  pattern->mask = gimp_temp_buf_new (32, 32, babl_format ("R'G'B' u8"));
 
-  data = temp_buf_get_data (pattern->mask);
+  data = gimp_temp_buf_get_data (pattern->mask);
 
   for (row = 0; row < pattern->mask->height; row++)
     for (col = 0; col < pattern->mask->width; col++)

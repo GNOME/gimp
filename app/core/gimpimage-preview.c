@@ -111,7 +111,7 @@ gimp_image_get_preview (GimpViewable *viewable,
     {
       /*  The hard way  */
       if (private->preview)
-        temp_buf_free (private->preview);
+        gimp_temp_buf_free (private->preview);
 
       private->preview = gimp_image_get_new_preview (viewable, context,
                                                      width, height);
@@ -147,7 +147,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
    *        preview code would know how to deal with pre-multiply alpha.
    */
   if (is_premult)
-    temp_buf_demultiply (buf);
+    gimp_temp_buf_demultiply (buf);
 
   return buf;
 }

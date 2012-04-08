@@ -401,7 +401,7 @@ gimp_iscissors_tool_control (GimpTool       *tool,
       /*  Reset the dp buffers  */
       if (iscissors->dp_buf)
         {
-          temp_buf_free (iscissors->dp_buf);
+          gimp_temp_buf_free (iscissors->dp_buf);
           iscissors->dp_buf = NULL;
         }
       break;
@@ -1336,9 +1336,10 @@ calculate_curve (GimpIscissorsTool *iscissors,
 
       /*  allocate the dynamic programming array  */
       if (iscissors->dp_buf)
-        temp_buf_free (iscissors->dp_buf);
+        gimp_temp_buf_free (iscissors->dp_buf);
 
-      iscissors->dp_buf = temp_buf_new (width, height, babl_format ("Y u32"));
+      iscissors->dp_buf = gimp_temp_buf_new (width, height,
+                                             babl_format ("Y u32"));
 
       /*  find the optimal path of pixels from (x1, y1) to (x2, y2)  */
       find_optimal_path (iscissors->gradient_map, iscissors->dp_buf,
@@ -1476,7 +1477,7 @@ plot_pixels (GimpIscissorsTool *iscissors,
   width = dp_buf->width;
 
   /*  Start the data pointer at the correct location  */
-  data = (guint *) temp_buf_get_data (dp_buf) + (ye - y1) * width + (xe - x1);
+  data = (guint *) gimp_temp_buf_get_data (dp_buf) + (ye - y1) * width + (xe - x1);
 
   x = xe;
   y = ye;
@@ -1533,7 +1534,7 @@ find_optimal_path (TileManager *gradient_map,
   guint32 *d;
 
   /*  initialize the dynamic programming buffer  */
-  data = (guint32 *) temp_buf_data_clear (dp_buf);
+  data = (guint32 *) gimp_temp_buf_data_clear (dp_buf);
 
   /*  what directions are we filling the array in according to?  */
   dirx = (xs - x1 == 0) ? 1 : -1;

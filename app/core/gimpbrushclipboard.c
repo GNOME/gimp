@@ -184,13 +184,13 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
 
   if (brush->mask)
     {
-      temp_buf_free (brush->mask);
+      gimp_temp_buf_free (brush->mask);
       brush->mask = NULL;
     }
 
   if (brush->pixmap)
     {
-      temp_buf_free (brush->pixmap);
+      gimp_temp_buf_free (brush->pixmap);
       brush->pixmap = NULL;
     }
 
@@ -203,8 +203,10 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       width  = MIN (gimp_buffer_get_width  (gimp->global_buffer), 512);
       height = MIN (gimp_buffer_get_height (gimp->global_buffer), 512);
 
-      brush->mask   = temp_buf_new (width, height, babl_format ("Y u8"));
-      brush->pixmap = temp_buf_new (width, height, babl_format ("R'G'B' u8"));
+      brush->mask   = gimp_temp_buf_new (width, height,
+                                         babl_format ("Y u8"));
+      brush->pixmap = gimp_temp_buf_new (width, height,
+                                         babl_format ("R'G'B' u8"));
 
       /*  copy the alpha channel into the brush's mask  */
       if (babl_format_has_alpha (format))
@@ -218,7 +220,7 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
         }
       else
         {
-          memset (temp_buf_get_data (brush->mask), OPAQUE_OPACITY,
+          memset (gimp_temp_buf_get_data (brush->mask), OPAQUE_OPACITY,
                   width * height);
         }
 
@@ -234,8 +236,8 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       width  = 17;
       height = 17;
 
-      brush->mask = temp_buf_new (width, height, babl_format ("Y u8"));
-      temp_buf_data_clear (brush->mask);
+      brush->mask = gimp_temp_buf_new (width, height, babl_format ("Y u8"));
+      gimp_temp_buf_data_clear (brush->mask);
     }
 
   brush->x_axis.x = width / 2;

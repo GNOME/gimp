@@ -211,7 +211,7 @@ gimp_viewable_finalize (GObject *object)
 
   if (private->preview_temp_buf)
     {
-      temp_buf_free (private->preview_temp_buf);
+      gimp_temp_buf_free (private->preview_temp_buf);
       private->preview_temp_buf = NULL;
     }
 
@@ -275,7 +275,7 @@ gimp_viewable_get_memsize (GimpObject *object,
 {
   GimpViewablePrivate *private = GET_PRIVATE (object);
 
-  *gui_size += temp_buf_get_memsize (private->preview_temp_buf);
+  *gui_size += gimp_temp_buf_get_memsize (private->preview_temp_buf);
 
   if (private->preview_pixbuf)
     {
@@ -295,7 +295,7 @@ gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
 
   if (private->preview_temp_buf)
     {
-      temp_buf_free (private->preview_temp_buf);
+      gimp_temp_buf_free (private->preview_temp_buf);
       private->preview_temp_buf = NULL;
     }
 
@@ -716,7 +716,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
           return private->preview_temp_buf;
         }
 
-      temp_buf_free (private->preview_temp_buf);
+      gimp_temp_buf_free (private->preview_temp_buf);
       private->preview_temp_buf = NULL;
     }
 
@@ -775,7 +775,7 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
                                             width, height);
 
   if (temp_buf)
-    return temp_buf_copy (temp_buf);
+    return gimp_temp_buf_copy (temp_buf);
 
   return NULL;
 }
@@ -812,10 +812,10 @@ gimp_viewable_get_dummy_preview (GimpViewable  *viewable,
 
   pixbuf = gimp_viewable_get_dummy_pixbuf (viewable, width, height, bpp);
 
-  buf = temp_buf_new (width, height, gimp_bpp_to_babl_format (bpp));
+  buf = gimp_temp_buf_new (width, height, gimp_bpp_to_babl_format (bpp));
 
   src  = gdk_pixbuf_get_pixels (pixbuf);
-  dest = temp_buf_get_data (buf);
+  dest = gimp_temp_buf_get_data (buf);
 
   while (height--)
     {

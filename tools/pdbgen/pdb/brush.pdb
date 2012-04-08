@@ -296,14 +296,15 @@ HELP
       height         = brush->mask->height;
       mask_bpp       = babl_format_get_bytes_per_pixel (brush->mask->format);
       num_mask_bytes = brush->mask->height * brush->mask->width * mask_bpp;
-      mask_bytes     = g_memdup (temp_buf_get_data (brush->mask), num_mask_bytes);
+      mask_bytes     = g_memdup (gimp_temp_buf_get_data (brush->mask),
+                                 num_mask_bytes);
 
       if (brush->pixmap)
         {
           color_bpp       = babl_format_get_bytes_per_pixel (brush->pixmap->format);
           num_color_bytes = brush->pixmap->height * brush->pixmap->width *
                             color_bpp;
-          color_bytes     = g_memdup (temp_buf_get_data (brush->pixmap),
+          color_bytes     = g_memdup (gimp_temp_buf_get_data (brush->pixmap),
                                       num_color_bytes);
         }
     }

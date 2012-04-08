@@ -254,7 +254,7 @@ gimp_brush_generated_dirty (GimpData *data)
   GimpBrush          *gbrush = GIMP_BRUSH (brush);
 
   if (gbrush->mask)
-    temp_buf_free (gbrush->mask);
+    gimp_temp_buf_free (gbrush->mask);
 
   gbrush->mask = gimp_brush_generated_calc (brush,
                                             brush->shape,
@@ -482,11 +482,12 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                                       &half_width, &half_height,
                                       &s, &c, &x_axis, &y_axis);
 
-  mask = temp_buf_new (half_width  * 2 + 1,
-                       half_height * 2 + 1,
-                       babl_format ("Y u8"));
+  mask = gimp_temp_buf_new (half_width  * 2 + 1,
+                            half_height * 2 + 1,
+                            babl_format ("Y u8"));
 
-  centerp = temp_buf_get_data (mask) + half_height * mask->width + half_width;
+  centerp = gimp_temp_buf_get_data (mask) +
+            half_height * mask->width + half_width;
 
   lookup = gimp_brush_generated_calc_lut (radius, hardness);
 

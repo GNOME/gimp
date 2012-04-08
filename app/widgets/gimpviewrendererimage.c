@@ -106,9 +106,9 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
           if (temp_buf)
             {
-              render_buf = temp_buf_scale (temp_buf, view_width, view_height);
-
-              temp_buf_free (temp_buf);
+              render_buf = gimp_temp_buf_scale (temp_buf,
+                                                view_width, view_height);
+              gimp_temp_buf_free (temp_buf);
             }
         }
       else
@@ -128,10 +128,9 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
             {
               GimpTempBuf *temp_buf;
 
-              temp_buf = temp_buf_scale (render_buf,
-                                         renderer->width, renderer->height);
-
-              temp_buf_free (render_buf);
+              temp_buf = gimp_temp_buf_scale (render_buf,
+                                              renderer->width, renderer->height);
+              gimp_temp_buf_free (render_buf);
               render_buf = temp_buf;
             }
 
@@ -149,8 +148,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
                                               component_index,
                                               GIMP_VIEW_BG_CHECKS,
                                               GIMP_VIEW_BG_WHITE);
-
-          temp_buf_free (render_buf);
+          gimp_temp_buf_free (render_buf);
 
           return;
         }

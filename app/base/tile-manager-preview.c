@@ -98,8 +98,8 @@ tile_manager_create_preview (TileManager *tiles,
   PixelRegion  destPR;
   gint         subsample = 1;
 
-  preview = temp_buf_new (dest_width, dest_height,
-                          gimp_bpp_to_babl_format (tile_manager_bpp (tiles)));
+  preview = gimp_temp_buf_new (dest_width, dest_height,
+                               gimp_bpp_to_babl_format (tile_manager_bpp (tiles)));
 
   pixel_region_init (&srcPR, tiles, src_x, src_y, src_width, src_height, FALSE);
 

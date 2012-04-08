@@ -55,8 +55,8 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
   xscale = ((gdouble) width)  / gimp_image_get_width  (gimp_item_get_image (item));
   yscale = ((gdouble) height) / gimp_image_get_height (gimp_item_get_image (item));
 
-  temp_buf = temp_buf_new (width, height, babl_format ("Y' u8"));
-  data = temp_buf_get_data (temp_buf);
+  temp_buf = gimp_temp_buf_new (width, height, babl_format ("Y' u8"));
+  data = gimp_temp_buf_get_data (temp_buf);
   memset (data, 255, width * height);
 
   for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);

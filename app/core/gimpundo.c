@@ -199,7 +199,7 @@ gimp_undo_finalize (GObject *object)
 
   if (undo->preview)
     {
-      temp_buf_free (undo->preview);
+      gimp_temp_buf_free (undo->preview);
       undo->preview = NULL;
     }
 
@@ -272,7 +272,7 @@ gimp_undo_get_memsize (GimpObject *object,
   GimpUndo *undo    = GIMP_UNDO (object);
   gint64    memsize = 0;
 
-  *gui_size += temp_buf_get_memsize (undo->preview);
+  *gui_size += gimp_temp_buf_get_memsize (undo->preview);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -325,10 +325,11 @@ gimp_undo_get_new_preview (GimpViewable *viewable,
       if (preview_width  < undo->preview->width &&
           preview_height < undo->preview->height)
         {
-          return temp_buf_scale (undo->preview, preview_width, preview_height);
+          return gimp_temp_buf_scale (undo->preview,
+                                      preview_width, preview_height);
         }
 
-      return temp_buf_copy (undo->preview);
+      return gimp_temp_buf_copy (undo->preview);
     }
 
   return NULL;
@@ -510,7 +511,7 @@ gimp_undo_refresh_preview (GimpUndo    *undo,
 
   if (undo->preview)
     {
-      temp_buf_free (undo->preview);
+      gimp_temp_buf_free (undo->preview);
       undo->preview = NULL;
       gimp_undo_create_preview (undo, context, FALSE);
     }

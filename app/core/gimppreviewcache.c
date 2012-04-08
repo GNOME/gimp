@@ -126,7 +126,7 @@ preview_cache_remove_smallest (GSList **plist)
                smallest->width, smallest->height);
 #endif
 
-      temp_buf_free (smallest);
+      gimp_temp_buf_free (smallest);
     }
 }
 
@@ -155,7 +155,7 @@ gimp_preview_cache_invalidate (GSList **plist)
   preview_cache_print (*plist);
 #endif
 
-  g_slist_free_full (*plist, (GDestroyNotify) temp_buf_free);
+  g_slist_free_full (*plist, (GDestroyNotify) gimp_temp_buf_free);
   *plist = NULL;
 }
 
@@ -229,7 +229,7 @@ gimp_preview_cache_get (GSList **plist,
       pheight = pn.buf->height;
 
       /* Now get the real one and add to cache */
-      preview = temp_buf_new (width, height, pn.buf->format);
+      preview = gimp_temp_buf_new (width, height, pn.buf->format);
 
       /* preview from nearest bigger one */
       if (width)
@@ -242,8 +242,8 @@ gimp_preview_cache_get (GSList **plist,
       else
         y_ratio = 0.0;
 
-      src_data  = temp_buf_get_data (pn.buf);
-      dest_data = temp_buf_get_data (preview);
+      src_data  = gimp_temp_buf_get_data (pn.buf);
+      dest_data = gimp_temp_buf_get_data (preview);
 
       bytes = babl_format_get_bytes_per_pixel (preview->format);
 
@@ -287,7 +287,7 @@ gimp_preview_cache_get_memsize (GSList *cache)
     return 0;
 
   for (list = cache; list; list = list->next)
-    memsize += sizeof (GSList) + temp_buf_get_memsize (list->data);
+    memsize += sizeof (GSList) + gimp_temp_buf_get_memsize (list->data);
 
   return memsize;
 }

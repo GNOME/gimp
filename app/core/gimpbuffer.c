@@ -198,13 +198,14 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
   GimpBuffer  *buffer = GIMP_BUFFER (viewable);
   GimpTempBuf *preview;
 
-  preview = temp_buf_new (width, height, gimp_buffer_get_format (buffer));
+  preview = gimp_temp_buf_new (width, height,
+                               gimp_buffer_get_format (buffer));
 
   gegl_buffer_get (buffer->buffer, NULL,
                    MIN ((gdouble) width  / (gdouble) gimp_buffer_get_width (buffer),
                         (gdouble) height / (gdouble) gimp_buffer_get_height (buffer)),
                    NULL,
-                   temp_buf_get_data (preview),
+                   gimp_temp_buf_get_data (preview),
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   return preview;

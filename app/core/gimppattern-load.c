@@ -156,10 +156,10 @@ gimp_pattern_load (GimpContext  *context,
 
   g_free (name);
 
-  pattern->mask = temp_buf_new (header.width, header.height,
-                                gimp_bpp_to_babl_format (header.bytes));
+  pattern->mask = gimp_temp_buf_new (header.width, header.height,
+                                     gimp_bpp_to_babl_format (header.bytes));
 
-  if (read (fd, temp_buf_get_data (pattern->mask),
+  if (read (fd, gimp_temp_buf_get_data (pattern->mask),
             header.width * header.height * header.bytes) <
       header.width * header.height * header.bytes)
     {
@@ -218,9 +218,9 @@ gimp_pattern_load_pixbuf (GimpContext  *context,
   g_free (name);
 
   pattern->mask =
-    temp_buf_new (gdk_pixbuf_get_width (pixbuf),
-                  gdk_pixbuf_get_height (pixbuf),
-                  gimp_bpp_to_babl_format (gdk_pixbuf_get_n_channels (pixbuf)));
+    gimp_temp_buf_new (gdk_pixbuf_get_width (pixbuf),
+                       gdk_pixbuf_get_height (pixbuf),
+                       gimp_bpp_to_babl_format (gdk_pixbuf_get_n_channels (pixbuf)));
 
   src_buffer  = gimp_pixbuf_create_buffer (pixbuf);
   dest_buffer = gimp_temp_buf_create_buffer (pattern->mask, FALSE);
