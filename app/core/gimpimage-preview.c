@@ -147,7 +147,49 @@ gimp_image_get_new_preview (GimpViewable *viewable,
    *        preview code would know how to deal with pre-multiply alpha.
    */
   if (is_premult)
-    gimp_temp_buf_demultiply (buf);
+    {
+      guchar *data;
+      gint    pixels;
+
+      g_return_if_fail (buf != NULL);
+
+      switch (babl_format_get_bytes_per_pixel (buf->format))
+        {
+        case 1:
+          break;
+
+        case 2:
+          data = gimp_temp_buf_get_data (buf);
+          pixels = buf->width * buf->height;
+          while (pixels--)
+            {
+              data[0] = (data[0] << 8) / (data[1] + 1);
+
+              data += 2;
+            }
+          break;
+
+        case 3:
+          break;
+
+        case 4:
+          data = gimp_temp_buf_get_data (buf);
+          pixels = buf->width * buf->height;
+          while (pixels--)
+            {
+              data[0] = (data[0] << 8) / (data[3] + 1);
+              data[1] = (data[1] << 8) / (data[3] + 1);
+              data[2] = (data[2] << 8) / (data[3] + 1);
+
+              data += 4;
+            }
+          break;
+
+        default:
+          g_warn_if_reached ();
+          break;
+        }
+    }
 
   return buf;
 }

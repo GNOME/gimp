@@ -45,8 +45,6 @@ GimpTempBuf * gimp_temp_buf_scale         (GimpTempBuf       *buf,
                                            gint               width,
                                            gint               height) G_GNUC_WARN_UNUSED_RESULT;
 
-void          gimp_temp_buf_demultiply    (GimpTempBuf       *buf);
-
 guchar      * gimp_temp_buf_get_data      (const GimpTempBuf *buf);
 gsize         gimp_temp_buf_get_data_size (GimpTempBuf       *buf);
 guchar      * gimp_temp_buf_data_clear    (GimpTempBuf       *buf);
