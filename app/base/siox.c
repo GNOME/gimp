@@ -44,7 +44,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "cpercep.h"
+#include <babl/babl.h>
 #include "pixel-region.h"
 #include "tile.h"
 #include "tile-manager.h"
@@ -135,41 +135,45 @@ calc_lab (const guchar *src,
           const guchar *colormap,
           lab          *pixel)
 {
-  gdouble l, a, b;
+  float rgb[3];
+  float lab[3];
 
   switch (bpp)
     {
     case 3:  /* RGB  */
     case 4:  /* RGBA */
-      cpercep_rgb_to_space (src[RED],
-                            src[GREEN],
-                            src[BLUE], &l, &a, &b);
+      rgb[0] = src[RED];
+      rgb[1] = src[GREEN];
+      rgb[2] = src[BLUE];
       break;
-
     case 2:
     case 1:
       if (colormap) /* INDEXED(A) */
         {
           gint i = *src * 3;
 
-          cpercep_rgb_to_space (colormap[i + RED],
-                                colormap[i + GREEN],
-                                colormap[i + BLUE], &l, &a, &b);
+          rgb[0] = colormap[i + RED];
+          rgb[1] = colormap[i + GREEN];
+          rgb[2] = colormap[i + BLUE];
         }
       else /* GRAY(A) */
         {
-          /*  FIXME: there should be cpercep_gray_to_space  */
-          cpercep_rgb_to_space (*src, *src, *src, &l, &a, &b);
+          rgb[0] = *src;
+          rgb[1] = *src;
+          rgb[2] = *src;
         }
       break;
 
     default:
       g_return_if_reached ();
     }
+  babl_process (babl_fish (babl_format ("R'G'B' float"),
+                           babl_format ("CIE Lab float")),
+                rgb, lab, 1);
 
-  pixel->l = l;
-  pixel->a = a;
-  pixel->b = b;
+  pixel->l = lab[0];
+  pixel->a = lab[1];
+  pixel->b = lab[2];
 }
 
 
