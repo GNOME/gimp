@@ -142,9 +142,9 @@ calc_lab (const guchar *src,
     {
     case 3:  /* RGB  */
     case 4:  /* RGBA */
-      rgb[0] = src[RED];
-      rgb[1] = src[GREEN];
-      rgb[2] = src[BLUE];
+      rgb[0] = src[RED]/255.0;
+      rgb[1] = src[GREEN]/255.0;
+      rgb[2] = src[BLUE]/255.0;
       break;
     case 2:
     case 1:
@@ -152,15 +152,15 @@ calc_lab (const guchar *src,
         {
           gint i = *src * 3;
 
-          rgb[0] = colormap[i + RED];
-          rgb[1] = colormap[i + GREEN];
-          rgb[2] = colormap[i + BLUE];
+          rgb[0] = colormap[i + RED] / 255.0;
+          rgb[1] = colormap[i + GREEN] / 255.0;
+          rgb[2] = colormap[i + BLUE] / 255.0;
         }
       else /* GRAY(A) */
         {
-          rgb[0] = *src;
-          rgb[1] = *src;
-          rgb[2] = *src;
+          rgb[0] = *src / 255.0;
+          rgb[1] = *src / 255.0;
+          rgb[2] = *src / 255.0;
         }
       break;
 

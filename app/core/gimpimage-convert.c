@@ -140,8 +140,6 @@
 
 #include "core-types.h"
 
-#include "base/cpercep.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -312,27 +310,19 @@ void rgb_to_unshifted_lin(const unsigned char r,
                           const unsigned char b,
                           int *hr, int *hg, int *hb)
 {
-  double sL, sa, sb;
   int or, og, ob;
+  float rgb[3] = {r/255.0, g/255.0, b/255.0};
+  float lab[3];
 
-  cpercep_rgb_to_space(r,g,b, &sL, &sa, &sb);
+  babl_process (babl_fish (babl_format ("R'G'B' float"),
+                           babl_format ("CIE Lab float")),
+                rgb, lab, 1);
 
   /* fprintf(stderr, " %d-%d-%d -> %0.3f,%0.3f,%0.3f ", r, g, b, sL, sa, sb);*/
 
-  or = RINT(sL * LRAT);
-  og = RINT((sa - LOWA) * ARAT);
-  ob = RINT((sb - LOWB) * BRAT);
-
-  /*  fprintf(stderr, " %d-%d-%d ", or, og, ob); */
-
-#if 0
-  if (or < 0 || or > 255)
-    fprintf(stderr, " \007R%d ", or);
-  if (og < 0 || og > 255)
-    fprintf(stderr, " \007G%d ", og);
-  if (ob < 0 || ob > 255)
-    fprintf(stderr, " \007B%d ", ob);
-#endif
+  or = RINT(lab[0] * LRAT);
+  og = RINT((lab[1] - LOWA) * ARAT);
+  ob = RINT((lab[2] - LOWB) * BRAT);
 
   *hr = CLAMP(or, 0, 255);
   *hg = CLAMP(og, 0, 255);
@@ -429,36 +419,29 @@ void lin_to_rgb(const double hr, const double hg, const double hb,
                 unsigned char *g,
                 unsigned char *b)
 {
-  double sr,sg,sb;
+  float rgb[3];
+  float lab[3];
   double ir,ig,ib;
 
-  /*  fprintf(stderr, "%d.%d.%d ", hr,hg,hb); */
-
-#if 0
-  ir = (hr * ((double) (1 << R_SHIFT))) + (((double)(1<<R_SHIFT))*0.5);
-  ig = (hg * ((double) (1 << G_SHIFT))) + (((double)(1<<G_SHIFT))*0.5);
-  ib = (hb * ((double) (1 << B_SHIFT))) + (((double)(1<<B_SHIFT))*0.5);
-#else
-  /* w/ artificial widening of dynamic range */
   ir = ((double)(hr)) * 255.0F / (double)(HIST_R_ELEMS-1);
   ig = ((double)(hg)) * 255.0F / (double)(HIST_G_ELEMS-1);
   ib = ((double)(hb)) * 255.0F / (double)(HIST_B_ELEMS-1);
-#endif
 
   ir = ir / LRAT;
   ig = (ig / ARAT) + LOWA;
   ib = (ib / BRAT) + LOWB;
 
-  /*  fprintf(stderr, "%0.1f,%0.1f,%0.1f ", ir,ig,ib); */
+  lab[0] = ir;
+  lab[1] = ig;
+  lab[2] = ib;
 
-  cpercep_space_to_rgb(ir, ig, ib,
-                       &sr, &sg, &sb);
+  babl_process (babl_fish (babl_format ("CIE Lab float"),
+                           babl_format ("R'G'B' float")),
+                lab, rgb, 1);
 
-  *r = RINT(CLAMP(sr, 0.0F, 255.0F));
-  *g = RINT(CLAMP(sg, 0.0F, 255.0F));
-  *b = RINT(CLAMP(sb, 0.0F, 255.0F));
-
-  /*  fprintf(stderr, "%d,%d,%d ", *r, *g, *b); */
+  *r = RINT(CLAMP(rgb[0]*255, 0.0F, 255.0F));
+  *g = RINT(CLAMP(rgb[1]*255, 0.0F, 255.0F));
+  *b = RINT(CLAMP(rgb[2]*255, 0.0F, 255.0F));
 }
 
 

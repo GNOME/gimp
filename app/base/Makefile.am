@@ -23,8 +23,6 @@ libappbase_a_SOURCES = \
 	base-types.h		\
 	base-utils.c		\
 	base-utils.h		\
-	cpercep.c		\
-	cpercep.h		\
 	pixel-processor.c	\
 	pixel-processor.h	\
 	pixel-region.c		\
