@@ -24,6 +24,7 @@
 #include "libgimpmath/gimpmathtypes.h"
 
 #include "base/base-types.h"
+#include "config/config-types.h"
 
 #include "core/core-enums.h"
 

@@ -25,9 +25,7 @@
 
 #include "paint-funcs/paint-funcs-types.h"
 
-#include "base/base-enums.h"
-
-#include "config/config-types.h"
+#include "core/core-types.h" /* screw include policy in base/ */
 
 
 /* convenient defines */
@@ -64,6 +62,20 @@ typedef void (* TileValidateProc)   (TileManager *tm,
                                      Tile        *tile,
                                      gpointer     user_data);
 typedef void (* PixelProcessorFunc) (void);
+
+
+/*  enums  */
+
+typedef enum
+{
+  SIOX_REFINEMENT_NO_CHANGE          = 0,
+  SIOX_REFINEMENT_ADD_FOREGROUND     = (1 << 0),
+  SIOX_REFINEMENT_ADD_BACKGROUND     = (1 << 1),
+  SIOX_REFINEMENT_CHANGE_SENSITIVITY = (1 << 2),
+  SIOX_REFINEMENT_CHANGE_SMOOTHNESS  = (1 << 3),
+  SIOX_REFINEMENT_CHANGE_MULTIBLOB   = (1 << 4),
+  SIOX_REFINEMENT_RECALCULATE        = 0xFF
+} SioxRefinementType;
 
 
 #endif /* __BASE_TYPES_H__ */

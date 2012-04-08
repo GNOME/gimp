@@ -21,8 +21,6 @@
 #ifndef __GIMP_BASE_CONFIG_H__
 #define __GIMP_BASE_CONFIG_H__
 
-#include "base/base-enums.h"
-
 
 #define GIMP_TYPE_BASE_CONFIG            (gimp_base_config_get_type ())
 #define GIMP_BASE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BASE_CONFIG, GimpBaseConfig))

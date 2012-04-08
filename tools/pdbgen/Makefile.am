@@ -71,7 +71,6 @@ EXTRA_DIST = \
 
 enum_headers = \
 	../../libgimpbase/gimpbaseenums.h	\
-	../../app/base/base-enums.h		\
 	../../app/core/core-enums.h		\
 	../../app/text/text-enums.h		\
 	../../app/paint/paint-enums.h		\

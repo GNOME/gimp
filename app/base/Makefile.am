@@ -19,7 +19,6 @@ noinst_LIBRARIES = libappbase.a
 libappbase_a_SOURCES = \
 	base.c			\
 	base.h			\
-	base-enums.c		\
 	base-enums.h		\
 	base-types.h		\
 	base-utils.c		\
@@ -46,24 +45,3 @@ libappbase_a_SOURCES = \
 	tile-rowhints.h		\
 	tile-swap.c		\
 	tile-swap.h
-
-#
-# rules to generate built sources
-#
-# setup autogeneration dependencies
-gen_sources = xgen-bec
-CLEANFILES = $(gen_sources)
-
-base-enums.c: $(srcdir)/base-enums.h $(GIMP_MKENUMS)
-	$(GIMP_MKENUMS) \
-		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"base-enums.h\"\n#include \"gimp-intl.h\"" \
-		--fprod "\n/* enumerations from \"@filename@\" */" \
-		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
-		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
-		--vtail "    { 0, NULL, NULL }\n  };\n" \
-		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
-		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
-		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		$(srcdir)/base-enums.h > xgen-bec \
-	&& cp xgen-bec $(@F) \
-	&& rm -f xgen-bec
