@@ -15,7 +15,7 @@ INCLUDES = \
 	-I$(top_srcdir)/app	\
 	$(BABL_CFLAGS)		\
 	$(CAIRO_CFLAGS)		\
-	$(GLIB_CFLAGS)		\
+	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 
 noinst_LIBRARIES = libapppaint-funcs.a

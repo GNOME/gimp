@@ -22,7 +22,7 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "base/temp-buf.h"
 
 #include "gimpbezierdesc.h"
 #include "gimpboundary.h"

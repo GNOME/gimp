@@ -51,5 +51,8 @@ gsize     temp_buf_get_memsize   (TempBuf       *buf);
 void      temp_buf_dump          (TempBuf       *buf,
                                   const gchar   *filename);
 
+GeglBuffer * gimp_temp_buf_create_buffer (TempBuf  *temp_buf,
+                                          gboolean  take_ownership);
+
 
 #endif  /*  __TEMP_BUF_H__  */

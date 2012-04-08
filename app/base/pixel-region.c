@@ -20,8 +20,7 @@
 #include <stdarg.h>
 #include <string.h>
 
-#include <babl/babl.h>
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "base-types.h"
 

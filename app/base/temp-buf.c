@@ -23,9 +23,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <babl/babl.h>
 #include <cairo.h>
-#include <glib-object.h>
+#include <gegl.h>
 #include <glib/gstdio.h>
 
 #include "base-types.h"
@@ -243,4 +242,29 @@ temp_buf_dump (TempBuf     *buf,
   write (fd, temp_buf_get_data (buf), temp_buf_get_data_size (buf));
 
   close (fd);
+}
+
+GeglBuffer  *
+gimp_temp_buf_create_buffer (TempBuf  *temp_buf,
+                             gboolean  take_ownership)
+{
+  GeglBuffer *buffer;
+
+  g_return_val_if_fail (temp_buf != NULL, NULL);
+
+  buffer =
+    gegl_buffer_linear_new_from_data (temp_buf_get_data (temp_buf),
+                                      temp_buf->format,
+                                      GEGL_RECTANGLE (0, 0,
+                                                      temp_buf->width,
+                                                      temp_buf->height),
+                                      GEGL_AUTO_ROWSTRIDE,
+                                      take_ownership ?
+                                      (GDestroyNotify) temp_buf_free : NULL,
+                                      take_ownership ?
+                                      temp_buf : NULL);
+
+  g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", temp_buf);
+
+  return buffer;
 }

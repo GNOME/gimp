@@ -24,7 +24,6 @@
 
 #include "gimp-gegl-types.h"
 
-#include "base/temp-buf.h"
 #include "base/tile-manager.h"
 
 #include "core/gimpprogress.h"
@@ -243,31 +242,6 @@ gimp_gegl_buffer_get_tiles (GeglBuffer *buffer)
   gegl_buffer_flush (buffer);
 
   return gimp_tile_backend_tile_manager_get_tiles (backend);
-}
-
-GeglBuffer  *
-gimp_temp_buf_create_buffer (TempBuf  *temp_buf,
-                             gboolean  take_ownership)
-{
-  GeglBuffer *buffer;
-
-  g_return_val_if_fail (temp_buf != NULL, NULL);
-
-  buffer =
-    gegl_buffer_linear_new_from_data (temp_buf_get_data (temp_buf),
-                                      temp_buf->format,
-                                      GEGL_RECTANGLE (0, 0,
-                                                      temp_buf->width,
-                                                      temp_buf->height),
-                                      GEGL_AUTO_ROWSTRIDE,
-                                      take_ownership ?
-                                      (GDestroyNotify) temp_buf_free : NULL,
-                                      take_ownership ?
-                                      temp_buf : NULL);
-
-  g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", temp_buf);
-
-  return buffer;
 }
 
 TempBuf *
