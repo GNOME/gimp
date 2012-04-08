@@ -121,7 +121,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
         }
     }
 
-  if (gimp_use_gegl (image->gimp) && ! dest_buffer)
+  if (FALSE /* XXX gimp_use_gegl (image->gimp) && ! dest_buffer */)
     {
       GeglBuffer *mask_buffer = NULL;
       GeglNode   *apply;
