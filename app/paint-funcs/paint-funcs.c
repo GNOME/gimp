@@ -1674,47 +1674,6 @@ blend_region (PixelRegion *src1,
 
 
 void
-copy_region (PixelRegion *src,
-             PixelRegion *dest)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (2, src, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      if (src->tiles && dest->tiles &&
-          src->curtile && dest->curtile &&
-          src->offx == 0 && dest->offx == 0 &&
-          src->offy == 0 && dest->offy == 0 &&
-          src->w  == tile_ewidth (src->curtile)  &&
-          dest->w == tile_ewidth (dest->curtile) &&
-          src->h  == tile_eheight (src->curtile) &&
-          dest->h == tile_eheight (dest->curtile))
-        {
-          tile_manager_map_over_tile (dest->tiles,
-                                      dest->curtile, src->curtile);
-        }
-      else
-        {
-          const guchar *s      = src->data;
-          guchar       *d      = dest->data;
-          gint          h      = src->h;
-          gint          pixels = src->w * src->bytes;
-
-          while (h --)
-            {
-              memcpy (d, s, pixels);
-
-              s += src->rowstride;
-              d += dest->rowstride;
-            }
-        }
-    }
-}
-
-
-void
 convolve_region (PixelRegion         *srcR,
                  PixelRegion         *destR,
                  const gfloat        *matrix,

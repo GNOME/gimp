@@ -248,9 +248,6 @@ void  blend_region                        (PixelRegion *src1,
                                            PixelRegion *dest,
                                            guchar       blend);
 
-void  copy_region                         (PixelRegion *src,
-                                           PixelRegion *dest);
-
 void  convolve_region                     (PixelRegion         *srcR,
                                            PixelRegion         *destR,
                                            const gfloat        *matrix,
