@@ -1052,7 +1052,7 @@ gimp_layer_new (GimpImage            *image,
  * gimp_layer_new_from_buffer:
  * @buffer:     The buffer to make the new layer from.
  * @dest_image: The image the new layer will be added to.
- * @type:       The #GimpImageType of the new layer.
+ * @format:     The #Babl format of the new layer.
  * @name:       The new layer's name.
  * @opacity:    The new layer's opacity.
  * @mode:       The new layer's mode.
@@ -1097,7 +1097,7 @@ gimp_layer_new_from_buffer (GeglBuffer           *buffer,
  * gimp_layer_new_from_pixbuf:
  * @pixbuf:     The pixbuf to make the new layer from.
  * @dest_image: The image the new layer will be added to.
- * @type:       The #GimpImageType of the new layer.
+ * @format:     The #Babl format of the new layer.
  * @name:       The new layer's name.
  * @opacity:    The new layer's opacity.
  * @mode:       The new layer's mode.
