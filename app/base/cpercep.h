@@ -34,9 +34,6 @@ from the Author.
 #ifndef __CPERCEP_H__
 #define __CPERCEP_H__
 
-
-void  cpercep_init         (void);
-
 void  cpercep_rgb_to_space (double  inr,
                             double  ing,
                             double  inb,

@@ -785,8 +785,6 @@ siox_init (TileManager  *pixels,
                                         NULL, NULL,
                                         (GDestroyNotify) siox_cache_entry_free);
 
-  cpercep_init ();
-
 #ifdef SIOX_DEBUG
   g_printerr ("siox.c: siox_init (bpp=%d, "
               "x=%d, y=%d, width=%d, height=%d, offset_x=%d, offset_y=%d)\n",
