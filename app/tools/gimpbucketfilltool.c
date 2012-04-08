@@ -187,6 +187,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
 
           switch (options->fill_mode)
             {
+            default:
             case GIMP_FG_BUCKET_FILL:
               fill_type = GIMP_FOREGROUND_FILL;
               break;
