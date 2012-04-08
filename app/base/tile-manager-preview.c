@@ -25,8 +25,9 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "core/gimptempbuf.h"
+
 #include "pixel-region.h"
-#include "temp-buf.h"
 #include "tile-manager.h"
 #include "tile-manager-preview.h"
 

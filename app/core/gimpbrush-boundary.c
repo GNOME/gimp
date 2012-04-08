@@ -22,12 +22,11 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimpbezierdesc.h"
 #include "gimpboundary.h"
 #include "gimpbrush.h"
 #include "gimpbrush-boundary.h"
+#include "gimptempbuf.h"
 
 
 static GimpBezierDesc *

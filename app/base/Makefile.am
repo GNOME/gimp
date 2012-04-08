@@ -30,8 +30,6 @@ libappbase_a_SOURCES = \
 	pixel-region.h		\
 	siox.c			\
 	siox.h			\
-	temp-buf.c		\
-	temp-buf.h		\
 	tile.c			\
 	tile.h			\
 	tile-private.h		\

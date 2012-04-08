@@ -26,11 +26,10 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimpbrushgenerated.h"
 #include "gimpbrushgenerated-load.h"
 #include "gimpbrushgenerated-save.h"
+#include "gimptempbuf.h"
 
 #include "gimp-intl.h"
 

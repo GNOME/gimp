@@ -25,8 +25,6 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
@@ -34,6 +32,7 @@
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpmarshal.h"
+#include "gimptempbuf.h"
 #include "gimpundo.h"
 #include "gimpundostack.h"
 

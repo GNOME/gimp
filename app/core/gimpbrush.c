@@ -25,8 +25,6 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimpbezierdesc.h"
 #include "gimpbrush.h"
 #include "gimpbrush-boundary.h"
@@ -36,6 +34,7 @@
 #include "gimpbrushgenerated.h"
 #include "gimpmarshal.h"
 #include "gimptagged.h"
+#include "gimptempbuf.h"
 
 #include "gimp-intl.h"
 

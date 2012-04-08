@@ -25,7 +25,7 @@
 
 #include <glib-object.h>
 
-#include "base-types.h"
+#include "core/core-types.h" /* eek, but this file will die anyway */
 
 #include "config/gimpbaseconfig.h"
 

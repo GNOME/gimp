@@ -21,8 +21,6 @@
 
 #include "paint-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -33,6 +31,7 @@
 #include "core/gimpdynamicsoutput.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
+#include "core/gimptempbuf.h"
 
 #include "gimpconvolve.h"
 #include "gimpconvolveoptions.h"

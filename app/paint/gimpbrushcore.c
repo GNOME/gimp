@@ -26,7 +26,6 @@
 #include "paint-types.h"
 
 #include "base/pixel-region.h"
-#include "base/temp-buf.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -37,6 +36,7 @@
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptempbuf.h"
 
 #include "gimpbrushcore.h"
 #include "gimpbrushcore-kernels.h"

@@ -27,13 +27,12 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimpcontext.h"
 #include "gimpgradient.h"
 #include "gimpgradient-load.h"
 #include "gimpgradient-save.h"
 #include "gimptagged.h"
+#include "gimptempbuf.h"
 
 
 #define EPSILON 1e-10

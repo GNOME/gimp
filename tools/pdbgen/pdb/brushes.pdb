@@ -198,11 +198,11 @@ CODE
 
 
 @headers = qw(<string.h>
-              "base/temp-buf.h"
               "core/gimp.h"
               "core/gimpbrush.h"
               "core/gimpcontext.h"
               "core/gimpdatafactory.h"
+              "core/gimptempbuf.h"
               "gimppdb-utils.h");
 
 @procs = qw(brushes_refresh

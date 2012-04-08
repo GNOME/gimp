@@ -23,8 +23,6 @@
 
 #include "paint-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"

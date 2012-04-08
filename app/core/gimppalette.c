@@ -27,13 +27,12 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimp-utils.h"
 #include "gimppalette.h"
 #include "gimppalette-load.h"
 #include "gimppalette-save.h"
 #include "gimptagged.h"
+#include "gimptempbuf.h"
 
 #include "gimp-intl.h"
 

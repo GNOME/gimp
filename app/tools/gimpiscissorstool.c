@@ -57,7 +57,6 @@
 #include "tools-types.h"
 
 #include "base/pixel-region.h"
-#include "base/temp-buf.h"
 #include "base/tile-manager.h"
 #include "base/tile.h"
 
@@ -68,6 +67,7 @@
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimpscanconvert.h"
+#include "core/gimptempbuf.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"

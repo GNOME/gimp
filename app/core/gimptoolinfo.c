@@ -26,8 +26,6 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimp.h"
 #include "gimpdatafactory.h"
 #include "gimpfilteredcontainer.h"

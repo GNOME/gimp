@@ -30,8 +30,6 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "config/gimpcoreconfig.h"
 
 #include "gegl/gimp-gegl-utils.h"
@@ -65,6 +63,7 @@
 #include "gimpprojection.h"
 #include "gimpsamplepoint.h"
 #include "gimpselection.h"
+#include "gimptempbuf.h"
 #include "gimptemplate.h"
 #include "gimpundostack.h"
 

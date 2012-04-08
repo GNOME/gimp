@@ -31,7 +31,7 @@
 
 #include "text-types.h"
 
-#include "base/temp-buf.h"
+#include "core/gimptempbuf.h"
 
 #include "gimpfont.h"
 

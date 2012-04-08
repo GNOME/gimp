@@ -111,10 +111,10 @@ CODE
 
 
 @headers = qw(<string.h>
-              "base/temp-buf.h"
               "core/gimpcontext.h"
               "core/gimpdatafactory.h"
               "core/gimppattern.h"
+              "core/gimptempbuf.h"
               "gimppdb-utils.h");
 
 @procs = qw(pattern_get_info

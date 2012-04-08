@@ -22,10 +22,11 @@
 
 #include <gegl.h>
 
-#include "base-types.h"
+#include "core/core-types.h" /* eek, but this file will die anyway */
+
+#include "core/gimptempbuf.h"
 
 #include "pixel-region.h"
-#include "temp-buf.h"
 #include "tile-manager.h"
 #include "tile.h"
 

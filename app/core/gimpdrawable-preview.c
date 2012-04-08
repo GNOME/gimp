@@ -26,7 +26,6 @@
 #include "core-types.h"
 
 #include "base/pixel-region.h"
-#include "base/temp-buf.h"
 #include "base/tile-manager-preview.h"
 
 #include "paint-funcs/subsample-region.h"
@@ -42,6 +41,7 @@
 #include "gimpdrawable-private.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
+#include "gimptempbuf.h"
 
 
 /*  local function prototypes  */

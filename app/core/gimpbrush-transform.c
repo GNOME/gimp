@@ -25,13 +25,12 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimpbrush.h"
 #include "gimpbrush-transform.h"
+#include "gimptempbuf.h"
 
 
 #define MAX_BLUR_KERNEL 15

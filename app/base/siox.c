@@ -40,7 +40,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "base-types.h"
+#include "core/core-types.h" /* eek, but this file will die anyway */
 
 #include "paint-funcs/paint-funcs.h"
 

@@ -184,6 +184,7 @@ typedef struct _GimpGradientSegment GimpGradientSegment;
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 typedef struct _GimpSamplePoint     GimpSamplePoint;
 typedef struct _GimpScanConvert     GimpScanConvert;
+typedef struct _GimpTempBuf         GimpTempBuf;
 typedef         guint32             GimpTattoo;
 
 /* The following hack is made so that we can reuse the definition

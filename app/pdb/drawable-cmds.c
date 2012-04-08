@@ -23,7 +23,6 @@
 
 #include "pdb-types.h"
 
-#include "base/temp-buf.h"
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable-foreground-extract.h"
@@ -33,6 +32,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimptempbuf.h"
 #include "gegl/gimp-gegl-utils.h"
 #include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"

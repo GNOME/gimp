@@ -24,9 +24,8 @@
 
 #include "tools-types.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimpbrush.h"
+#include "core/gimptempbuf.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"

@@ -21,7 +21,7 @@
 
 #include <glib-object.h>
 
-#include "paint-funcs-types.h"
+#include "core/core-types.h" /* eek, but this file will die anyway */
 
 #include "base/pixel-region.h"
 

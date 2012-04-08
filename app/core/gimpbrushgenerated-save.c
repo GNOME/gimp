@@ -34,8 +34,6 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimpbrushgenerated.h"
 #include "gimpbrushgenerated-save.h"
 

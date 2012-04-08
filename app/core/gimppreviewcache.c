@@ -21,9 +21,8 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimppreviewcache.h"
+#include "gimptempbuf.h"
 
 
 #define MAX_CACHE_PREVIEWS 5

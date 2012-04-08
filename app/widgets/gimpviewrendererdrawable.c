@@ -28,13 +28,12 @@
 
 #include "widgets-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-preview.h"
 #include "core/gimpimage.h"
+#include "core/gimptempbuf.h"
 
 #include "gimpviewrendererdrawable.h"
 

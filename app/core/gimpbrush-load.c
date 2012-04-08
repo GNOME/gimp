@@ -45,11 +45,10 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"
 #include "gimpbrush-load.h"
+#include "gimptempbuf.h"
 
 #include "gimp-intl.h"
 

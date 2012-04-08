@@ -27,12 +27,11 @@
 
 #include "widgets-types.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppattern.h"
+#include "core/gimptempbuf.h"
 
 #include "pdb/gimppdb.h"
 

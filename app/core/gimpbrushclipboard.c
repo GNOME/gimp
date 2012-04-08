@@ -24,14 +24,13 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimpbuffer.h"
 #include "gimpbrushclipboard.h"
 #include "gimpimage.h"
+#include "gimptempbuf.h"
 
 #include "gimp-intl.h"
 

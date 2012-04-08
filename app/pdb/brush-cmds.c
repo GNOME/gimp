@@ -25,13 +25,13 @@
 
 #include "pdb-types.h"
 
-#include "base/temp-buf.h"
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimptempbuf.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"

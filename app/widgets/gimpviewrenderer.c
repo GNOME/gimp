@@ -33,10 +33,9 @@
 
 #include "widgets-types.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptempbuf.h"
 #include "core/gimpviewable.h"
 
 #include "gimprender.h"

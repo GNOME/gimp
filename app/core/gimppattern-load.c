@@ -47,13 +47,12 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimppattern.h"
 #include "gimppattern-header.h"
 #include "gimppattern-load.h"
+#include "gimptempbuf.h"
 
 #include "gimp-intl.h"
 

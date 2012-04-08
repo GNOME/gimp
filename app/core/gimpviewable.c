@@ -29,13 +29,12 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpmarshal.h"
+#include "gimptempbuf.h"
 #include "gimpviewable.h"
 
 #include "themes/Default/images/gimp-core-pixbufs.h"

@@ -25,13 +25,12 @@
 
 #include "paint-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimptempbuf.h"
 
 #include "gimpinkoptions.h"
 #include "gimpink.h"

@@ -24,7 +24,6 @@
 #include "paint-types.h"
 
 #include "base/pixel-region.h"
-#include "base/temp-buf.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -37,6 +36,7 @@
 #include "core/gimpdynamicsoutput.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
+#include "core/gimptempbuf.h"
 
 #include "gimpsmudge.h"
 #include "gimpsmudgeoptions.h"

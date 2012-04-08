@@ -24,8 +24,6 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gimpbrushpipe.h"
 #include "gimpbrushpipe-load.h"
 

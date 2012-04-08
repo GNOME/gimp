@@ -21,13 +21,13 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
 #include "base/tile-manager-preview.h"
 
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
 #include "gimpprojection.h"
+#include "gimptempbuf.h"
 
 
 void

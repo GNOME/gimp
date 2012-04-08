@@ -17,19 +17,15 @@
 
 #include "config.h"
 
-#include <fcntl.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 #include <cairo.h>
 #include <gegl.h>
 #include <glib/gstdio.h>
 
-#include "base-types.h"
+#include "core-types.h"
 
-#include "temp-buf.h"
+#include "gimptempbuf.h"
 
 
 GimpTempBuf *

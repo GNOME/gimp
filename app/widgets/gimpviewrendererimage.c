@@ -27,9 +27,8 @@
 
 #include "widgets-types.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimpimage.h"
+#include "core/gimptempbuf.h"
 
 #include "gimpviewrendererimage.h"
 

@@ -347,6 +347,8 @@ libappcore_a_sources = \
 	gimptagged.h				\
 	gimptaggedcontainer.c			\
 	gimptaggedcontainer.h			\
+	gimptempbuf.c				\
+	gimptempbuf.h				\
 	gimptemplate.c				\
 	gimptemplate.h				\
 	gimptoolinfo.c				\

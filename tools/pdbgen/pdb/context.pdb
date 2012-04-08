@@ -2195,11 +2195,11 @@ CODE
     );
 }
 
-@headers = qw("base/temp-buf.h"
-              "core/gimp.h"
+@headers = qw("core/gimp.h"
               "core/gimpbrush.h"
               "core/gimpcontainer.h"
               "core/gimpdatafactory.h"
+              "core/gimptempbuf.h"
               "libgimpconfig/gimpconfig.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimpplugin-context.h"

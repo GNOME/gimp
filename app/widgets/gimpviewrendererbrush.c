@@ -25,10 +25,9 @@
 
 #include "widgets-types.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimpbrushpipe.h"
 #include "core/gimpbrushgenerated.h"
+#include "core/gimptempbuf.h"
 
 #include "gimpviewrendererbrush.h"
 

@@ -28,12 +28,12 @@
 
 #include "pdb-types.h"
 
-#include "base/temp-buf.h"
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimptempbuf.h"
 #include "plug-in/gimpplugin-context.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"

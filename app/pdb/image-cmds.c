@@ -29,7 +29,6 @@
 
 #include "pdb-types.h"
 
-#include "base/temp-buf.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
@@ -52,6 +51,7 @@
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
 #include "core/gimpselection.h"
+#include "core/gimptempbuf.h"
 #include "core/gimpunit.h"
 #include "vectors/gimpvectors.h"
 

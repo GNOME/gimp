@@ -27,18 +27,16 @@
 
 #include "paint-types.h"
 
-#include "base/temp-buf.h"
-
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimp-apply-operation.h"
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
-#include "core/gimp-utils.h"
 
 #include "gimpperspectiveclone.h"
 #include "gimpperspectivecloneoptions.h"

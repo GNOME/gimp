@@ -25,11 +25,12 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "paint-funcs-types.h"
+#include "core/core-types.h" /* eek, but this file will die anyway */
+
+#include "core/gimptempbuf.h"
 
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
-#include "base/temp-buf.h"
 #include "base/tile-manager.h"
 #include "base/tile-rowhints.h"
 #include "base/tile.h"

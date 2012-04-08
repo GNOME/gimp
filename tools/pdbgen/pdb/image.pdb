@@ -2891,10 +2891,10 @@ CODE
 
 @headers = qw("libgimpmath/gimpmath.h"
               "libgimpbase/gimpbase.h"
-              "base/temp-buf.h"
               "core/gimp.h"
               "core/gimpcontainer.h"
               "core/gimpprogress.h"
+              "core/gimptempbuf.h"
               "core/gimpunit.h"
               "gimppdbcontext.h"
               "gimppdberror.h"

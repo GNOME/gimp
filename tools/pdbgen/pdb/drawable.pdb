@@ -908,11 +908,11 @@ CODE
 }
 
 
-@headers = qw("base/temp-buf.h"
-              "config/gimpcoreconfig.h"
+@headers = qw("config/gimpcoreconfig.h"
               "gegl/gimp-gegl-utils.h"
               "core/gimp.h"
               "core/gimpdrawable-offset.h"
+              "core/gimptempbuf.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 
