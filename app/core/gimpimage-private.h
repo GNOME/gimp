@@ -100,7 +100,7 @@ struct _GimpImagePrivate
   GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
 
   /*  Preview  */
-  TempBuf           *preview;               /*  the projection preview       */
+  GimpTempBuf       *preview;               /*  the projection preview       */
 
   /*  Signal emmision accumulator  */
   GimpImageFlushAccumulator  flush_accum;

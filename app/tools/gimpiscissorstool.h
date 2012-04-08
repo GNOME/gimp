@@ -68,7 +68,7 @@ struct _GimpIscissorsTool
   gint            ix, iy;       /*  initial coordinates                   */
   gint            nx, ny;       /*  new coordinates                       */
 
-  TempBuf        *dp_buf;       /*  dynamic programming buffer            */
+  GimpTempBuf    *dp_buf;       /*  dynamic programming buffer            */
 
   ICurve         *livewire;     /*  livewire boundary curve               */
 

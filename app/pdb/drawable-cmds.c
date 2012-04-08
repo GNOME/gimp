@@ -719,9 +719,9 @@ drawable_thumbnail_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      TempBuf   *buf;
-      gint       dwidth, dheight;
+      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpTempBuf *buf;
+      gint         dwidth, dheight;
 
       g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
@@ -809,8 +809,8 @@ drawable_sub_thumbnail_invoker (GimpProcedure      *procedure,
       if ((src_x + src_width)  <= gimp_item_get_width  (GIMP_ITEM (drawable)) &&
           (src_y + src_height) <= gimp_item_get_height (GIMP_ITEM (drawable)))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-          TempBuf   *buf;
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpTempBuf *buf;
 
           if (image->gimp->config->layer_previews)
             buf = gimp_drawable_get_sub_preview (drawable,

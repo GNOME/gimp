@@ -84,7 +84,7 @@ pixel_region_init (PixelRegion *PR,
 
 void
 pixel_region_init_temp_buf (PixelRegion *PR,
-                            TempBuf     *temp_buf,
+                            GimpTempBuf *temp_buf,
                             gint         x,
                             gint         y,
                             gint         w,

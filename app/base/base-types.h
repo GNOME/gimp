@@ -53,7 +53,7 @@ typedef struct _PixelRegionHolder   PixelRegionHolder;
 
 typedef struct _SioxState           SioxState;
 
-typedef struct _TempBuf             TempBuf;
+typedef struct _GimpTempBuf         GimpTempBuf;
 
 typedef struct _Tile                Tile;
 typedef struct _TileManager         TileManager;

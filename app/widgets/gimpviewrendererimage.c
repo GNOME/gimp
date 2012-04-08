@@ -75,12 +75,12 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
       (gimp_image_get_component_visible (image, rendererimage->channel) &&
        gimp_image_get_component_visible (image, GIMP_ALPHA_CHANNEL)))
     {
-      gint      view_width;
-      gint      view_height;
-      gdouble   xres;
-      gdouble   yres;
-      gboolean  scaling_up;
-      TempBuf  *render_buf = NULL;
+      gint         view_width;
+      gint         view_height;
+      gdouble      xres;
+      gdouble      yres;
+      gboolean     scaling_up;
+      GimpTempBuf *render_buf = NULL;
 
       gimp_image_get_resolution (image, &xres, &yres);
 
@@ -97,7 +97,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
       if (scaling_up)
         {
-          TempBuf *temp_buf;
+          GimpTempBuf *temp_buf;
 
           temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                     renderer->context,
@@ -126,7 +126,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
           /*  xresolution != yresolution */
           if (view_width > renderer->width || view_height > renderer->height)
             {
-              TempBuf *temp_buf;
+              GimpTempBuf *temp_buf;
 
               temp_buf = temp_buf_scale (render_buf,
                                          renderer->width, renderer->height);

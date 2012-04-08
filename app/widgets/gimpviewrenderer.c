@@ -74,7 +74,7 @@ static cairo_pattern_t *
                  gimp_view_renderer_create_background (GimpViewRenderer   *renderer,
                                                        GtkWidget          *widget);
 
-static void      gimp_view_render_temp_buf_to_surface (TempBuf            *temp_buf,
+static void      gimp_view_render_temp_buf_to_surface (GimpTempBuf        *temp_buf,
                                                        gint                channel,
                                                        GimpViewBG          inside_bg,
                                                        GimpViewBG          outside_bg,
@@ -748,7 +748,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                 GtkWidget        *widget)
 {
   GdkPixbuf   *pixbuf;
-  TempBuf     *temp_buf;
+  GimpTempBuf *temp_buf;
   const gchar *stock_id;
 
   pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
@@ -791,7 +791,7 @@ gimp_view_renderer_size_changed (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
-                                           TempBuf          *temp_buf)
+                                           GimpTempBuf      *temp_buf)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (temp_buf != NULL);
@@ -809,7 +809,7 @@ gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
-                                    TempBuf          *temp_buf,
+                                    GimpTempBuf      *temp_buf,
                                     gint              channel,
                                     GimpViewBG        inside_bg,
                                     GimpViewBG        outside_bg)
@@ -917,7 +917,7 @@ gimp_view_renderer_render_stock (GimpViewRenderer *renderer,
 }
 
 static void
-gimp_view_render_temp_buf_to_surface (TempBuf         *temp_buf,
+gimp_view_render_temp_buf_to_surface (GimpTempBuf     *temp_buf,
                                       gint             channel,
                                       GimpViewBG       inside_bg,
                                       GimpViewBG       outside_bg,

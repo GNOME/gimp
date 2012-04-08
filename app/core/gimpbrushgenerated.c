@@ -71,13 +71,13 @@ static void          gimp_brush_generated_transform_size(GimpBrush    *gbrush,
                                                          gdouble       angle,
                                                          gint         *width,
                                                          gint         *height);
-static TempBuf     * gimp_brush_generated_transform_mask(GimpBrush    *gbrush,
+static GimpTempBuf * gimp_brush_generated_transform_mask(GimpBrush    *gbrush,
                                                          gdouble       scale,
                                                          gdouble       aspect_ratio,
                                                          gdouble       angle,
                                                          gdouble       hardness);
 
-static TempBuf     * gimp_brush_generated_calc          (GimpBrushGenerated      *brush,
+static GimpTempBuf * gimp_brush_generated_calc          (GimpBrushGenerated      *brush,
                                                          GimpBrushGeneratedShape  shape,
                                                          gfloat                   radius,
                                                          gint                     spikes,
@@ -336,7 +336,7 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
   *height = half_height * 2 + 1;
 }
 
-static TempBuf *
+static GimpTempBuf *
 gimp_brush_generated_transform_mask (GimpBrush *gbrush,
                                      gdouble    scale,
                                      gdouble    aspect_ratio,
@@ -450,7 +450,7 @@ gimp_brush_generated_calc_lut (gdouble radius,
   return lookup;
 }
 
-static TempBuf *
+static GimpTempBuf *
 gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                            GimpBrushGeneratedShape  shape,
                            gfloat                   radius,
@@ -470,7 +470,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
   gdouble      c, s, cs, ss;
   GimpVector2  x_axis;
   GimpVector2  y_axis;
-  TempBuf     *mask;
+  GimpTempBuf *mask;
 
   gimp_brush_generated_get_half_size (brush,
                                       shape,

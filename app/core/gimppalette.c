@@ -60,7 +60,7 @@ static gboolean      gimp_palette_get_popup_size    (GimpViewable         *viewa
                                                      gboolean              dot_for_dot,
                                                      gint                 *popup_width,
                                                      gint                 *popup_height);
-static TempBuf     * gimp_palette_get_new_preview   (GimpViewable         *viewable,
+static GimpTempBuf * gimp_palette_get_new_preview   (GimpViewable         *viewable,
                                                      GimpContext          *context,
                                                      gint                  width,
                                                      gint                  height);
@@ -195,14 +195,14 @@ gimp_palette_get_popup_size (GimpViewable *viewable,
   return FALSE;
 }
 
-static TempBuf *
+static GimpTempBuf *
 gimp_palette_get_new_preview (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
                               gint          height)
 {
   GimpPalette *palette  = GIMP_PALETTE (viewable);
-  TempBuf     *temp_buf;
+  GimpTempBuf *temp_buf;
   guchar      *buf;
   guchar      *b;
   GList       *list;

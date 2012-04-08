@@ -71,7 +71,7 @@ static gint64        gimp_brush_get_memsize           (GimpObject           *obj
 static gboolean      gimp_brush_get_size              (GimpViewable         *viewable,
                                                        gint                 *width,
                                                        gint                 *height);
-static TempBuf     * gimp_brush_get_new_preview       (GimpViewable         *viewable,
+static GimpTempBuf * gimp_brush_get_new_preview       (GimpViewable         *viewable,
                                                        GimpContext          *context,
                                                        gint                  width,
                                                        gint                  height);
@@ -275,23 +275,23 @@ gimp_brush_get_size (GimpViewable *viewable,
   return TRUE;
 }
 
-static TempBuf *
+static GimpTempBuf *
 gimp_brush_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
                             gint          height)
 {
-  GimpBrush     *brush       = GIMP_BRUSH (viewable);
-  const TempBuf *mask_buf    = NULL;
-  gboolean       free_mask   = FALSE;
-  const TempBuf *pixmap_buf  = NULL;
-  TempBuf       *return_buf  = NULL;
-  gint           mask_width;
-  gint           mask_height;
-  guchar        *mask;
-  guchar        *buf;
-  gint           x, y;
-  gboolean       scaled = FALSE;
+  GimpBrush         *brush       = GIMP_BRUSH (viewable);
+  const GimpTempBuf *mask_buf    = NULL;
+  gboolean           free_mask   = FALSE;
+  const GimpTempBuf *pixmap_buf  = NULL;
+  GimpTempBuf       *return_buf  = NULL;
+  gint               mask_width;
+  gint               mask_height;
+  guchar            *mask;
+  guchar            *buf;
+  gint               x, y;
+  gboolean           scaled = FALSE;
 
   mask_buf   = brush->mask;
   pixmap_buf = brush->pixmap;
@@ -315,7 +315,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
           if (! mask_buf)
             {
               mask_buf = temp_buf_new (1, 1, babl_format ("Y u8"));
-              temp_buf_data_clear ((TempBuf *) mask_buf);
+              temp_buf_data_clear ((GimpTempBuf *) mask_buf);
               free_mask = TRUE;
             }
 
@@ -369,7 +369,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   if (scaled)
     {
       if (free_mask)
-        temp_buf_free ((TempBuf *) mask_buf);
+        temp_buf_free ((GimpTempBuf *) mask_buf);
 
       gimp_brush_end_use (brush);
     }
@@ -590,16 +590,16 @@ gimp_brush_transform_size (GimpBrush     *brush,
                                                 width, height);
 }
 
-const TempBuf *
+const GimpTempBuf *
 gimp_brush_transform_mask (GimpBrush *brush,
                            gdouble    scale,
                            gdouble    aspect_ratio,
                            gdouble    angle,
                            gdouble    hardness)
 {
-  const TempBuf *mask;
-  gint           width;
-  gint           height;
+  const GimpTempBuf *mask;
+  gint               width;
+  gint               height;
 
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (scale > 0.0, NULL);
@@ -639,16 +639,16 @@ gimp_brush_transform_mask (GimpBrush *brush,
   return mask;
 }
 
-const TempBuf *
+const GimpTempBuf *
 gimp_brush_transform_pixmap (GimpBrush *brush,
                              gdouble    scale,
                              gdouble    aspect_ratio,
                              gdouble    angle,
                              gdouble    hardness)
 {
-  const TempBuf *pixmap;
-  gint           width;
-  gint           height;
+  const GimpTempBuf *pixmap;
+  gint               width;
+  gint               height;
 
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (brush->pixmap != NULL, NULL);
@@ -739,7 +739,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
   return boundary;
 }
 
-TempBuf *
+GimpTempBuf *
 gimp_brush_get_mask (const GimpBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, NULL);
@@ -748,7 +748,7 @@ gimp_brush_get_mask (const GimpBrush *brush)
   return brush->mask;
 }
 
-TempBuf *
+GimpTempBuf *
 gimp_brush_get_pixmap (const GimpBrush *brush)
 {
   g_return_val_if_fail (brush != NULL, NULL);

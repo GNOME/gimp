@@ -45,7 +45,7 @@ static gint64        gimp_pattern_get_memsize       (GimpObject           *objec
 static gboolean      gimp_pattern_get_size          (GimpViewable         *viewable,
                                                      gint                 *width,
                                                      gint                 *height);
-static TempBuf     * gimp_pattern_get_new_preview   (GimpViewable         *viewable,
+static GimpTempBuf * gimp_pattern_get_new_preview   (GimpViewable         *viewable,
                                                      GimpContext          *context,
                                                      gint                  width,
                                                      gint                  height);
@@ -138,14 +138,14 @@ gimp_pattern_get_size (GimpViewable *viewable,
   return TRUE;
 }
 
-static TempBuf *
+static GimpTempBuf *
 gimp_pattern_get_new_preview (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
                               gint          height)
 {
   GimpPattern *pattern = GIMP_PATTERN (viewable);
-  TempBuf     *temp_buf;
+  GimpTempBuf *temp_buf;
   GeglBuffer  *src_buffer;
   GeglBuffer  *dest_buffer;
   gint         copy_width;
@@ -265,7 +265,7 @@ gimp_pattern_get_standard (GimpContext *context)
   return standard_pattern;
 }
 
-TempBuf *
+GimpTempBuf *
 gimp_pattern_get_mask (const GimpPattern *pattern)
 {
   g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);

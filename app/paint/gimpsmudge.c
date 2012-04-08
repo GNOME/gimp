@@ -164,13 +164,13 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                    GimpPaintOptions *paint_options,
                    const GimpCoords *coords)
 {
-  GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
-  GeglBuffer *paint_buffer;
-  gint        paint_buffer_x;
-  gint        paint_buffer_y;
-  TempBuf    *accum_temp;
-  gint        accum_size;
-  gint        x, y;
+  GimpSmudge  *smudge = GIMP_SMUDGE (paint_core);
+  GeglBuffer  *paint_buffer;
+  gint         paint_buffer_x;
+  gint         paint_buffer_y;
+  GimpTempBuf *accum_temp;
+  gint         accum_size;
+  gint         x, y;
 
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;

@@ -32,17 +32,17 @@
 #include "temp-buf.h"
 
 
-TempBuf *
+GimpTempBuf *
 temp_buf_new (gint        width,
               gint        height,
               const Babl *format)
 {
-  TempBuf *temp;
+  GimpTempBuf *temp;
 
   g_return_val_if_fail (width > 0 && height > 0, NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  temp = g_slice_new (TempBuf);
+  temp = g_slice_new (GimpTempBuf);
 
   temp->format  = format;
   temp->width   = width;
@@ -57,10 +57,10 @@ temp_buf_new (gint        width,
   return temp;
 }
 
-TempBuf *
-temp_buf_copy (TempBuf *src)
+GimpTempBuf *
+temp_buf_copy (GimpTempBuf *src)
 {
-  TempBuf *dest;
+  GimpTempBuf *dest;
 
   g_return_val_if_fail (src != NULL, NULL);
 
@@ -76,12 +76,12 @@ temp_buf_copy (TempBuf *src)
   return dest;
 }
 
-TempBuf *
-temp_buf_scale (TempBuf *src,
-                gint     new_width,
-                gint     new_height)
+GimpTempBuf *
+temp_buf_scale (GimpTempBuf *src,
+                gint         new_width,
+                gint         new_height)
 {
-  TempBuf      *dest;
+  GimpTempBuf  *dest;
   const guchar *src_data;
   guchar       *dest_data;
   gdouble       x_ratio;
@@ -132,10 +132,10 @@ temp_buf_scale (TempBuf *src,
  * temp_buf_demultiply:
  * @buf:
  *
- * Converts a TempBuf with pre-multiplied alpha to a 'normal' TempBuf.
+ * Converts a GimpTempBuf with pre-multiplied alpha to a 'normal' GimpTempBuf.
  */
 void
-temp_buf_demultiply (TempBuf *buf)
+temp_buf_demultiply (GimpTempBuf *buf)
 {
   guchar *data;
   gint    pixels;
@@ -181,30 +181,30 @@ temp_buf_demultiply (TempBuf *buf)
 }
 
 void
-temp_buf_free (TempBuf *buf)
+temp_buf_free (GimpTempBuf *buf)
 {
   g_return_if_fail (buf != NULL);
 
   if (buf->data)
     g_free (buf->data);
 
-  g_slice_free (TempBuf, buf);
+  g_slice_free (GimpTempBuf, buf);
 }
 
 guchar *
-temp_buf_get_data (const TempBuf *buf)
+temp_buf_get_data (const GimpTempBuf *buf)
 {
   return buf->data;
 }
 
 gsize
-temp_buf_get_data_size (TempBuf *buf)
+temp_buf_get_data_size (GimpTempBuf *buf)
 {
   return babl_format_get_bytes_per_pixel (buf->format) * buf->width * buf->height;
 }
 
 guchar *
-temp_buf_data_clear (TempBuf *buf)
+temp_buf_data_clear (GimpTempBuf *buf)
 {
   memset (buf->data, 0, temp_buf_get_data_size (buf));
 
@@ -212,10 +212,10 @@ temp_buf_data_clear (TempBuf *buf)
 }
 
 gsize
-temp_buf_get_memsize (TempBuf *buf)
+temp_buf_get_memsize (GimpTempBuf *buf)
 {
   if (buf)
-    return (sizeof (TempBuf) + temp_buf_get_data_size (buf));
+    return (sizeof (GimpTempBuf) + temp_buf_get_data_size (buf));
 
   return 0;
 }
@@ -226,11 +226,11 @@ temp_buf_get_memsize (TempBuf *buf)
  * @buf:
  * @file:
  *
- * Dumps a TempBuf to a raw RGB image that is easy to analyze, for
+ * Dumps a GimpTempBuf to a raw RGB image that is easy to analyze, for
  * example with GIMP.
  **/
 void
-temp_buf_dump (TempBuf     *buf,
+temp_buf_dump (GimpTempBuf *buf,
                const gchar *filename)
 {
   gint fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY, 0666);
@@ -245,8 +245,8 @@ temp_buf_dump (TempBuf     *buf,
 }
 
 GeglBuffer  *
-gimp_temp_buf_create_buffer (TempBuf  *temp_buf,
-                             gboolean  take_ownership)
+gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf,
+                             gboolean     take_ownership)
 {
   GeglBuffer *buffer;
 

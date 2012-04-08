@@ -220,8 +220,8 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
     {
-      const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
-      TempBuf    *temp_buf;
+      const Babl  *format = gimp_drawable_get_format_with_alpha (drawable);
+      GimpTempBuf *temp_buf;
 
       temp_buf = temp_buf_new ((x2 - x1), (y2 - y1), format);
 

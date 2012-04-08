@@ -36,7 +36,7 @@
 
 /*  public functions  */
 
-TempBuf *
+GimpTempBuf *
 gimp_vectors_get_new_preview (GimpViewable *viewable,
                               GimpContext  *context,
                               gint          width,
@@ -47,7 +47,7 @@ gimp_vectors_get_new_preview (GimpViewable *viewable,
   GimpStroke  *cur_stroke;
   gdouble      xscale, yscale;
   guchar      *data;
-  TempBuf     *temp_buf;
+  GimpTempBuf *temp_buf;
 
   vectors = GIMP_VECTORS (viewable);
   item    = GIMP_ITEM (viewable);

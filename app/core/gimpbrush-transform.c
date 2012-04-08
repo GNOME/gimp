@@ -39,7 +39,7 @@
 
 /*  local function prototypes  */
 
-static void    gimp_brush_transform_bounding_box     (TempBuf           *brush,
+static void    gimp_brush_transform_bounding_box     (GimpTempBuf       *brush,
                                                       const GimpMatrix3 *matrix,
                                                       gint              *x,
                                                       gint              *y,
@@ -100,15 +100,15 @@ gimp_brush_real_transform_size (GimpBrush *brush,
  * Some variables end with the suffix _i to indicate they have been
  * premultiplied by int_multiple
  */
-TempBuf *
+GimpTempBuf *
 gimp_brush_real_transform_mask (GimpBrush *brush,
                                 gdouble    scale,
                                 gdouble    aspect_ratio,
                                 gdouble    angle,
                                 gdouble    hardness)
 {
-  TempBuf      *result;
-  TempBuf      *source;
+  GimpTempBuf  *result;
+  GimpTempBuf  *source;
   guchar       *dest;
   const guchar *src;
   GimpMatrix3   matrix;
@@ -328,7 +328,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
   if (hardness < 1.0)
     {
-      TempBuf     *blur_src;
+      GimpTempBuf *blur_src;
       GeglBuffer  *src_buffer;
       GeglBuffer  *dest_buffer;
       gint         kernel_size =
@@ -395,15 +395,15 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
  * Some variables end with the suffix _i to indicate they have been
  * premultiplied by int_multiple
  */
-TempBuf *
+GimpTempBuf *
 gimp_brush_real_transform_pixmap (GimpBrush *brush,
                                   gdouble    scale,
                                   gdouble    aspect_ratio,
                                   gdouble    angle,
                                   gdouble    hardness)
 {
-  TempBuf      *result;
-  TempBuf      *source;
+  GimpTempBuf  *result;
+  GimpTempBuf  *source;
   guchar       *dest;
   const guchar *src;
   GimpMatrix3   matrix;
@@ -628,7 +628,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
   if (hardness < 1.0)
     {
-      TempBuf     *blur_src;
+      GimpTempBuf *blur_src;
       GeglBuffer  *src_buffer;
       GeglBuffer  *dest_buffer;
       gint         kernel_size =
@@ -700,7 +700,7 @@ gimp_brush_transform_matrix (gdouble      width,
 /*  private functions  */
 
 static void
-gimp_brush_transform_bounding_box (TempBuf           *brush,
+gimp_brush_transform_bounding_box (GimpTempBuf       *brush,
                                    const GimpMatrix3 *matrix,
                                    gint              *x,
                                    gint              *y,

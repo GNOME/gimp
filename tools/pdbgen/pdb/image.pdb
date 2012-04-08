@@ -2839,8 +2839,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  TempBuf *buf;
-  gint     dwidth, dheight;
+  GimpTempBuf *buf;
+  gint         dwidth, dheight;
 
   g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 

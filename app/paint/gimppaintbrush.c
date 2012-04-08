@@ -180,7 +180,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       /* otherwise check if the brush has a pixmap and use that to
        * color the area
        */
-      TempBuf *area = gimp_gegl_buffer_get_temp_buf (paint_buffer);
+      GimpTempBuf *area = gimp_gegl_buffer_get_temp_buf (paint_buffer);
 
       gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
                                               coords,

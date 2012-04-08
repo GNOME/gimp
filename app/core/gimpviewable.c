@@ -64,7 +64,7 @@ struct _GimpViewablePrivate
   gint          freeze_count;
   GimpViewable *parent;
 
-  TempBuf      *preview_temp_buf;
+  GimpTempBuf  *preview_temp_buf;
   GdkPixbuf    *preview_pixbuf;
 };
 
@@ -348,8 +348,8 @@ gimp_viewable_real_get_new_pixbuf (GimpViewable *viewable,
                                    gint          width,
                                    gint          height)
 {
-  TempBuf   *temp_buf;
-  GdkPixbuf *pixbuf = NULL;
+  GimpTempBuf *temp_buf;
+  GdkPixbuf   *pixbuf = NULL;
 
   temp_buf = gimp_viewable_get_preview (viewable, context, width, height);
 
@@ -677,10 +677,10 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
  * method, and executes it, caching the result.  If everything fails,
  * #NULL is returned.
  *
- * Returns: A #TempBuf containg the preview image, or #NULL if none can
- *          be found or created.
+ * Returns: A #GimpTempBuf containg the preview image, or #NULL if
+ *          none can be found or created.
  **/
-TempBuf *
+GimpTempBuf *
 gimp_viewable_get_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
@@ -688,7 +688,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 {
   GimpViewablePrivate *private;
   GimpViewableClass   *viewable_class;
-  TempBuf             *temp_buf = NULL;
+  GimpTempBuf         *temp_buf = NULL;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
@@ -741,17 +741,17 @@ gimp_viewable_get_preview (GimpViewable *viewable,
  * then if that fails for a "get_preview" method.  This function does
  * not look for a cached preview.
  *
- * Returns: A #TempBuf containg the preview image, or #NULL if none can
- *          be found or created.
+ * Returns: A #GimpTempBuf containg the preview image, or #NULL if
+ *          none can be found or created.
  **/
-TempBuf *
+GimpTempBuf *
 gimp_viewable_get_new_preview (GimpViewable *viewable,
                                GimpContext  *context,
                                gint          width,
                                gint          height)
 {
   GimpViewableClass *viewable_class;
-  TempBuf           *temp_buf = NULL;
+  GimpTempBuf       *temp_buf = NULL;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
@@ -792,18 +792,18 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
  * generate a preview in situations where layer previews have been
  * disabled in the current Gimp configuration.
  *
- * Returns: a #TempBuf containing the preview image.
+ * Returns: a #GimpTempBuf containing the preview image.
  **/
-TempBuf *
+GimpTempBuf *
 gimp_viewable_get_dummy_preview (GimpViewable  *viewable,
                                  gint           width,
                                  gint           height,
                                  gint           bpp)
 {
-  GdkPixbuf *pixbuf;
-  TempBuf   *buf;
-  guchar    *src;
-  guchar    *dest;
+  GdkPixbuf   *pixbuf;
+  GimpTempBuf *buf;
+  guchar      *src;
+  guchar      *dest;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);

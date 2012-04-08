@@ -136,7 +136,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GeglBuffer          *paint_buffer;
   gint                 paint_buffer_x;
   gint                 paint_buffer_y;
-  TempBuf             *convolve_temp;
+  GimpTempBuf         *convolve_temp;
   GeglBuffer          *convolve_buffer;
   gdouble              fade_point;
   gdouble              opacity;

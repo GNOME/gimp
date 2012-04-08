@@ -36,8 +36,8 @@ struct _GimpBrush
 {
   GimpData        parent_instance;
 
-  TempBuf        *mask;       /*  the actual mask                */
-  TempBuf        *pixmap;     /*  optional pixmap data           */
+  GimpTempBuf    *mask;       /*  the actual mask                */
+  GimpTempBuf    *pixmap;     /*  optional pixmap data           */
 
   gint            spacing;    /*  brush's spacing                */
   GimpVector2     x_axis;     /*  for calculating brush spacing  */
@@ -68,12 +68,12 @@ struct _GimpBrushClass
                                            gdouble           angle,
                                            gint             *width,
                                            gint             *height);
-  TempBuf        * (* transform_mask)     (GimpBrush        *brush,
+  GimpTempBuf    * (* transform_mask)     (GimpBrush        *brush,
                                            gdouble           scale,
                                            gdouble           aspect_ratio,
                                            gdouble           angle,
                                            gdouble           hardness);
-  TempBuf        * (* transform_pixmap)   (GimpBrush        *brush,
+  GimpTempBuf    * (* transform_pixmap)   (GimpBrush        *brush,
                                            gdouble           scale,
                                            gdouble           aspect_ratio,
                                            gdouble           angle,
@@ -116,12 +116,12 @@ void                   gimp_brush_transform_size     (GimpBrush        *brush,
                                                       gdouble           angle,
                                                       gint             *width,
                                                       gint             *height);
-const TempBuf        * gimp_brush_transform_mask     (GimpBrush        *brush,
+const GimpTempBuf    * gimp_brush_transform_mask     (GimpBrush        *brush,
                                                       gdouble           scale,
                                                       gdouble           aspect_ratio,
                                                       gdouble           angle,
                                                       gdouble           hardness);
-const TempBuf        * gimp_brush_transform_pixmap   (GimpBrush        *brush,
+const GimpTempBuf    * gimp_brush_transform_pixmap   (GimpBrush        *brush,
                                                       gdouble           scale,
                                                       gdouble           aspect_ratio,
                                                       gdouble           angle,
@@ -134,8 +134,8 @@ const GimpBezierDesc * gimp_brush_transform_boundary (GimpBrush        *brush,
                                                       gint             *width,
                                                       gint             *height);
 
-TempBuf              * gimp_brush_get_mask           (const GimpBrush  *brush);
-TempBuf              * gimp_brush_get_pixmap         (const GimpBrush  *brush);
+GimpTempBuf          * gimp_brush_get_mask           (const GimpBrush  *brush);
+GimpTempBuf          * gimp_brush_get_pixmap         (const GimpBrush  *brush);
 
 gint                   gimp_brush_get_spacing        (const GimpBrush  *brush);
 void                   gimp_brush_set_spacing        (GimpBrush        *brush,

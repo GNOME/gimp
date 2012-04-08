@@ -1691,8 +1691,8 @@ image_thumbnail_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      TempBuf *buf;
-      gint     dwidth, dheight;
+      GimpTempBuf *buf;
+      gint         dwidth, dheight;
 
       g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 

@@ -19,7 +19,7 @@
 #define __TEMP_BUF_H__
 
 
-struct _TempBuf
+struct _GimpTempBuf
 {
   const Babl *format;  /*  pixel format  */
   gint        width;
@@ -32,27 +32,27 @@ struct _TempBuf
 
 /*  The temp buffer functions  */
 
-TempBuf * temp_buf_new           (gint           width,
-                                  gint           height,
-                                  const Babl    *fomat);
-TempBuf * temp_buf_copy          (TempBuf       *src);
-TempBuf * temp_buf_scale         (TempBuf       *buf,
-                                  gint           width,
-                                  gint           height) G_GNUC_WARN_UNUSED_RESULT;
+GimpTempBuf * temp_buf_new           (gint               width,
+                                      gint               height,
+                                      const Babl        *fomat);
+GimpTempBuf * temp_buf_copy          (GimpTempBuf       *src);
+GimpTempBuf * temp_buf_scale         (GimpTempBuf       *buf,
+                                      gint               width,
+                                      gint               height) G_GNUC_WARN_UNUSED_RESULT;
 
-void      temp_buf_demultiply    (TempBuf       *buf);
+void          temp_buf_demultiply    (GimpTempBuf       *buf);
 
-void      temp_buf_free          (TempBuf       *buf);
-guchar  * temp_buf_get_data      (const TempBuf *buf);
-gsize     temp_buf_get_data_size (TempBuf       *buf);
-guchar  * temp_buf_data_clear    (TempBuf       *buf);
+void          temp_buf_free          (GimpTempBuf       *buf);
+guchar      * temp_buf_get_data      (const GimpTempBuf *buf);
+gsize         temp_buf_get_data_size (GimpTempBuf       *buf);
+guchar      * temp_buf_data_clear    (GimpTempBuf       *buf);
 
-gsize     temp_buf_get_memsize   (TempBuf       *buf);
-void      temp_buf_dump          (TempBuf       *buf,
-                                  const gchar   *filename);
+gsize         temp_buf_get_memsize   (GimpTempBuf       *buf);
+void          temp_buf_dump          (GimpTempBuf       *buf,
+                                      const gchar       *filename);
 
-GeglBuffer * gimp_temp_buf_create_buffer (TempBuf  *temp_buf,
-                                          gboolean  take_ownership);
+GeglBuffer  * gimp_temp_buf_create_buffer (GimpTempBuf  *temp_buf,
+                                          gboolean       take_ownership);
 
 
 #endif  /*  __TEMP_BUF_H__  */

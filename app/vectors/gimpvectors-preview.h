@@ -23,10 +23,10 @@
  *  virtual function of GimpVectors -- dont't call directly
  */
 
-TempBuf * gimp_vectors_get_new_preview (GimpViewable *viewable,
-                                        GimpContext  *context,
-                                        gint          width,
-                                        gint          height);
+GimpTempBuf * gimp_vectors_get_new_preview (GimpViewable *viewable,
+                                            GimpContext  *context,
+                                            gint          width,
+                                            gint          height);
 
 
 #endif /* __GIMP_VECTORS_PREVIEW_H__ */

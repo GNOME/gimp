@@ -46,22 +46,22 @@
 
 /*  local function prototypes  */
 
-static TempBuf * gimp_drawable_preview_private (GimpDrawable *drawable,
-                                                gint          width,
-                                                gint          height);
-static TempBuf * gimp_drawable_indexed_preview (GimpDrawable *drawable,
-                                                const guchar *cmap,
-                                                gint          src_x,
-                                                gint          src_y,
-                                                gint          src_width,
-                                                gint          src_height,
-                                                gint          dest_width,
-                                                gint          dest_height);
+static GimpTempBuf * gimp_drawable_preview_private (GimpDrawable *drawable,
+                                                    gint          width,
+                                                    gint          height);
+static GimpTempBuf * gimp_drawable_indexed_preview (GimpDrawable *drawable,
+                                                    const guchar *cmap,
+                                                    gint          src_x,
+                                                    gint          src_y,
+                                                    gint          src_width,
+                                                    gint          src_height,
+                                                    gint          dest_width,
+                                                    gint          dest_height);
 
 
 /*  public functions  */
 
-TempBuf *
+GimpTempBuf *
 gimp_drawable_get_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
@@ -84,9 +84,9 @@ gimp_drawable_get_preview (GimpViewable *viewable,
       gimp_image_get_width  (image) > PREVIEW_CACHE_PRIME_WIDTH &&
       gimp_image_get_height (image) > PREVIEW_CACHE_PRIME_HEIGHT)
     {
-      TempBuf *tb = gimp_drawable_preview_private (drawable,
-                                                   PREVIEW_CACHE_PRIME_WIDTH,
-                                                   PREVIEW_CACHE_PRIME_HEIGHT);
+      GimpTempBuf *tb = gimp_drawable_preview_private (drawable,
+                                                       PREVIEW_CACHE_PRIME_WIDTH,
+                                                       PREVIEW_CACHE_PRIME_HEIGHT);
 
       /* Save the 2nd call */
       if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
@@ -120,7 +120,7 @@ gimp_drawable_preview_bytes (GimpDrawable *drawable)
   return bytes;
 }
 
-TempBuf *
+GimpTempBuf *
 gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                                gint          src_x,
                                gint          src_y,
@@ -164,12 +164,12 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 
 /*  private functions  */
 
-static TempBuf *
+static GimpTempBuf *
 gimp_drawable_preview_private (GimpDrawable *drawable,
                                gint          width,
                                gint          height)
 {
-  TempBuf *ret_buf;
+  GimpTempBuf *ret_buf;
 
   if (! drawable->private->preview_valid ||
       ! (ret_buf = gimp_preview_cache_get (&drawable->private->preview_cache,
@@ -195,7 +195,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
   return ret_buf;
 }
 
-static TempBuf *
+static GimpTempBuf *
 gimp_drawable_indexed_preview (GimpDrawable *drawable,
                                const guchar *cmap,
                                gint          src_x,
@@ -205,7 +205,7 @@ gimp_drawable_indexed_preview (GimpDrawable *drawable,
                                gint          dest_width,
                                gint          dest_height)
 {
-  TempBuf     *preview_buf;
+  GimpTempBuf *preview_buf;
   PixelRegion  srcPR;
   PixelRegion  destPR;
   gint         bytes     = gimp_drawable_preview_bytes (drawable);

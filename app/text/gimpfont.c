@@ -70,28 +70,28 @@ struct _GimpFontClass
 };
 
 
-static void      gimp_font_finalize         (GObject       *object);
-static void      gimp_font_set_property     (GObject       *object,
-                                             guint          property_id,
-                                             const GValue  *value,
-                                             GParamSpec    *pspec);
+static void          gimp_font_finalize         (GObject       *object);
+static void          gimp_font_set_property     (GObject       *object,
+                                                 guint          property_id,
+                                                 const GValue  *value,
+                                                 GParamSpec    *pspec);
 
-static void      gimp_font_get_preview_size (GimpViewable  *viewable,
-                                             gint           size,
-                                             gboolean       popup,
-                                             gboolean       dot_for_dot,
-                                             gint          *width,
-                                             gint          *height);
-static gboolean  gimp_font_get_popup_size   (GimpViewable  *viewable,
-                                             gint           width,
-                                             gint           height,
-                                             gboolean       dot_for_dot,
-                                             gint          *popup_width,
-                                             gint          *popup_height);
-static TempBuf * gimp_font_get_new_preview  (GimpViewable  *viewable,
-                                             GimpContext   *context,
-                                             gint           width,
-                                             gint           height);
+static void          gimp_font_get_preview_size (GimpViewable  *viewable,
+                                                 gint           size,
+                                                 gboolean       popup,
+                                                 gboolean       dot_for_dot,
+                                                 gint          *width,
+                                                 gint          *height);
+static gboolean      gimp_font_get_popup_size   (GimpViewable  *viewable,
+                                                 gint           width,
+                                                 gint           height,
+                                                 gboolean       dot_for_dot,
+                                                 gint          *popup_width,
+                                                 gint          *popup_height);
+static GimpTempBuf * gimp_font_get_new_preview  (GimpViewable  *viewable,
+                                                 GimpContext   *context,
+                                                 gint           width,
+                                                 gint           height);
 
 static const gchar * gimp_font_get_sample_string (PangoContext         *context,
                                                   PangoFontDescription *font_desc);
@@ -229,7 +229,7 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   return TRUE;
 }
 
-static TempBuf *
+static GimpTempBuf *
 gimp_font_get_new_preview (GimpViewable *viewable,
                            GimpContext  *context,
                            gint          width,
@@ -243,7 +243,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   gint             layout_height;
   gint             layout_x;
   gint             layout_y;
-  TempBuf         *temp_buf;
+  GimpTempBuf     *temp_buf;
   cairo_t         *cr;
   cairo_surface_t *surface;
 

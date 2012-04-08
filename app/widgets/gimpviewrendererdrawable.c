@@ -78,7 +78,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
   gdouble       xres       = 1.0;
   gdouble       yres       = 1.0;
   gboolean      scaling_up;
-  TempBuf      *render_buf = NULL;
+  GimpTempBuf  *render_buf = NULL;
 
   drawable = GIMP_DRAWABLE (renderer->viewable);
   item     = GIMP_ITEM (drawable);
@@ -175,7 +175,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
         }
       else
         {
-          TempBuf *temp_buf;
+          GimpTempBuf *temp_buf;
 
           temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                     renderer->context,

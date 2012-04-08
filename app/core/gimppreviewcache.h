@@ -23,14 +23,14 @@
 #define PREVIEW_CACHE_PRIME_HEIGHT 112
 
 
-TempBuf * gimp_preview_cache_get         (GSList  **plist,
-                                          gint      width,
-                                          gint      height);
-void      gimp_preview_cache_add         (GSList  **plist,
-                                          TempBuf  *buf);
-void      gimp_preview_cache_invalidate  (GSList  **plist);
+GimpTempBuf * gimp_preview_cache_get         (GSList      **plist,
+                                              gint          width,
+                                              gint          height);
+void          gimp_preview_cache_add         (GSList      **plist,
+                                              GimpTempBuf  *buf);
+void          gimp_preview_cache_invalidate  (GSList      **plist);
 
-gsize     gimp_preview_cache_get_memsize (GSList   *cache);
+gsize         gimp_preview_cache_get_memsize (GSList       *cache);
 
 
 #endif /* __GIMP_PREVIEW_CACHE_H__ */

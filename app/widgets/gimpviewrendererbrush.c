@@ -89,7 +89,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
   GimpViewRendererBrush *renderbrush = GIMP_VIEW_RENDERER_BRUSH (renderer);
-  TempBuf               *temp_buf;
+  GimpTempBuf           *temp_buf;
 
   if (renderbrush->pipe_timeout_id)
     {
@@ -141,7 +141,7 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   GimpViewRenderer      *renderer    = GIMP_VIEW_RENDERER (data);
   GimpBrushPipe         *brush_pipe;
   GimpBrush             *brush;
-  TempBuf               *temp_buf;
+  GimpTempBuf           *temp_buf;
 
   if (! renderer->viewable)
     {

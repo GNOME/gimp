@@ -77,11 +77,11 @@ struct _GimpViewableClass
                                           gboolean       dot_for_dot,
                                           gint          *popup_width,
                                           gint          *popup_height);
-  TempBuf       * (* get_preview)        (GimpViewable  *viewable,
+  GimpTempBuf   * (* get_preview)        (GimpViewable  *viewable,
                                           GimpContext   *context,
                                           gint           width,
                                           gint           height);
-  TempBuf       * (* get_new_preview)    (GimpViewable  *viewable,
+  GimpTempBuf   * (* get_new_preview)    (GimpViewable  *viewable,
                                           GimpContext   *context,
                                           gint           width,
                                           gint           height);
@@ -136,16 +136,16 @@ gboolean        gimp_viewable_get_popup_size     (GimpViewable  *viewable,
                                                   gint          *popup_width,
                                                   gint          *popup_height);
 
-TempBuf       * gimp_viewable_get_preview        (GimpViewable  *viewable,
+GimpTempBuf   * gimp_viewable_get_preview        (GimpViewable  *viewable,
                                                   GimpContext   *context,
                                                   gint           width,
                                                   gint           height);
-TempBuf       * gimp_viewable_get_new_preview    (GimpViewable  *viewable,
+GimpTempBuf   * gimp_viewable_get_new_preview    (GimpViewable  *viewable,
                                                   GimpContext   *context,
                                                   gint           width,
                                                   gint           height);
 
-TempBuf       * gimp_viewable_get_dummy_preview  (GimpViewable  *viewable,
+GimpTempBuf   * gimp_viewable_get_dummy_preview  (GimpViewable  *viewable,
                                                   gint           width,
                                                   gint           height,
                                                   gint           bpp);

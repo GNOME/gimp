@@ -31,16 +31,16 @@
 #include "tile-manager-preview.h"
 
 
-static TempBuf * tile_manager_create_preview (TileManager *tiles,
-                                              gint         src_x,
-                                              gint         src_y,
-                                              gint         src_width,
-                                              gint         src_height,
-                                              gint         dest_width,
-                                              gint         dest_height);
+static GimpTempBuf * tile_manager_create_preview (TileManager *tiles,
+                                                  gint         src_x,
+                                                  gint         src_y,
+                                                  gint         src_width,
+                                                  gint         src_height,
+                                                  gint         dest_width,
+                                                  gint         dest_height);
 
 
-TempBuf *
+GimpTempBuf *
 tile_manager_get_preview (TileManager *tiles,
                           gint         width,
                           gint         height)
@@ -55,7 +55,7 @@ tile_manager_get_preview (TileManager *tiles,
                                       width, height);
 }
 
-TempBuf *
+GimpTempBuf *
 tile_manager_get_sub_preview (TileManager *tiles,
                               gint         src_x,
                               gint         src_y,
@@ -84,7 +84,7 @@ tile_manager_get_sub_preview (TileManager *tiles,
                                       dest_width, dest_height);
 }
 
-static TempBuf *
+static GimpTempBuf *
 tile_manager_create_preview (TileManager *tiles,
                              gint         src_x,
                              gint         src_y,
@@ -93,7 +93,7 @@ tile_manager_create_preview (TileManager *tiles,
                              gint         dest_width,
                              gint         dest_height)
 {
-  TempBuf     *preview;
+  GimpTempBuf *preview;
   PixelRegion  srcPR;
   PixelRegion  destPR;
   gint         subsample = 1;

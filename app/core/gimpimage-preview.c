@@ -92,7 +92,7 @@ gimp_image_get_popup_size (GimpViewable *viewable,
   return FALSE;
 }
 
-TempBuf *
+GimpTempBuf *
 gimp_image_get_preview (GimpViewable *viewable,
                         GimpContext  *context,
                         gint          width,
@@ -120,7 +120,7 @@ gimp_image_get_preview (GimpViewable *viewable,
     }
 }
 
-TempBuf *
+GimpTempBuf *
 gimp_image_get_new_preview (GimpViewable *viewable,
                             GimpContext  *context,
                             gint          width,
@@ -128,7 +128,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 {
   GimpImage      *image      = GIMP_IMAGE (viewable);
   GimpProjection *projection = gimp_image_get_projection (image);
-  TempBuf        *buf;
+  GimpTempBuf    *buf;
   TileManager    *tiles;
   gdouble         scale_x;
   gdouble         scale_y;

@@ -31,32 +31,32 @@
 #include "gimpimage.h"
 
 
-static void      gimp_buffer_finalize         (GObject       *object);
+static void          gimp_buffer_finalize         (GObject       *object);
 
-static gint64    gimp_buffer_get_memsize      (GimpObject    *object,
-                                               gint64        *gui_size);
+static gint64        gimp_buffer_get_memsize      (GimpObject    *object,
+                                                   gint64        *gui_size);
 
-static gboolean  gimp_buffer_get_size         (GimpViewable  *viewable,
-                                               gint          *width,
-                                               gint          *height);
-static void      gimp_buffer_get_preview_size (GimpViewable  *viewable,
-                                               gint           size,
-                                               gboolean       is_popup,
-                                               gboolean       dot_for_dot,
-                                               gint          *popup_width,
-                                               gint          *popup_height);
-static gboolean  gimp_buffer_get_popup_size   (GimpViewable  *viewable,
-                                               gint           width,
-                                               gint           height,
-                                               gboolean       dot_for_dot,
-                                               gint          *popup_width,
-                                               gint          *popup_height);
-static TempBuf * gimp_buffer_get_new_preview  (GimpViewable  *viewable,
-                                               GimpContext   *context,
-                                               gint           width,
-                                               gint           height);
-static gchar   * gimp_buffer_get_description  (GimpViewable  *viewable,
-                                               gchar        **tooltip);
+static gboolean      gimp_buffer_get_size         (GimpViewable  *viewable,
+                                                   gint          *width,
+                                                   gint          *height);
+static void          gimp_buffer_get_preview_size (GimpViewable  *viewable,
+                                                   gint           size,
+                                                   gboolean       is_popup,
+                                                   gboolean       dot_for_dot,
+                                                   gint          *popup_width,
+                                                   gint          *popup_height);
+static gboolean      gimp_buffer_get_popup_size   (GimpViewable  *viewable,
+                                                   gint           width,
+                                                   gint           height,
+                                                   gboolean       dot_for_dot,
+                                                   gint          *popup_width,
+                                                   gint          *popup_height);
+static GimpTempBuf * gimp_buffer_get_new_preview  (GimpViewable  *viewable,
+                                                   GimpContext   *context,
+                                                   gint           width,
+                                                   gint           height);
+static gchar       * gimp_buffer_get_description  (GimpViewable  *viewable,
+                                                   gchar        **tooltip);
 
 
 G_DEFINE_TYPE (GimpBuffer, gimp_buffer, GIMP_TYPE_VIEWABLE)
@@ -189,14 +189,14 @@ gimp_buffer_get_popup_size (GimpViewable *viewable,
   return FALSE;
 }
 
-static TempBuf *
+static GimpTempBuf *
 gimp_buffer_get_new_preview (GimpViewable *viewable,
                              GimpContext  *context,
                              gint          width,
                              gint          height)
 {
-  GimpBuffer *buffer = GIMP_BUFFER (viewable);
-  TempBuf    *preview;
+  GimpBuffer  *buffer = GIMP_BUFFER (viewable);
+  GimpTempBuf *preview;
 
   preview = temp_buf_new (width, height, gimp_buffer_get_format (buffer));
 

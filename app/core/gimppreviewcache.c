@@ -31,9 +31,9 @@
 
 typedef struct
 {
-  TempBuf *buf;
-  gint     width;
-  gint     height;
+  GimpTempBuf *buf;
+  gint         width;
+  gint         height;
 } PreviewNearest;
 
 
@@ -41,8 +41,8 @@ static gint
 preview_cache_compare (gconstpointer  a,
                        gconstpointer  b)
 {
-  const TempBuf *buf1 = a;
-  const TempBuf *buf2 = b;
+  const GimpTempBuf *buf1 = a;
+  const GimpTempBuf *buf2 = b;
 
   if (buf1->width > buf2->width && buf1->height > buf2->height)
     return -1;
@@ -54,7 +54,7 @@ static void
 preview_cache_find_exact (gpointer data,
                           gpointer udata)
 {
-  TempBuf        *buf     = data;
+  GimpTempBuf    *buf     = data;
   PreviewNearest *nearest = udata;
 
   if (nearest->buf)
@@ -71,7 +71,7 @@ static void
 preview_cache_find_biggest (gpointer data,
                             gpointer udata)
 {
-  TempBuf        *buf     = data;
+  GimpTempBuf    *buf     = data;
   PreviewNearest *nearest = udata;
 
   if (buf->width >= nearest->width && buf->height >= nearest->height)
@@ -93,8 +93,8 @@ preview_cache_find_biggest (gpointer data,
 static void
 preview_cache_remove_smallest (GSList **plist)
 {
-  GSList  *list;
-  TempBuf *smallest = NULL;
+  GSList      *list;
+  GimpTempBuf *smallest = NULL;
 
 #ifdef PREVIEW_CACHE_DEBUG
   g_print ("preview_cache_remove_smallest\n");
@@ -108,7 +108,7 @@ preview_cache_remove_smallest (GSList **plist)
         }
       else
         {
-          TempBuf *this = list->data;
+          GimpTempBuf *this = list->data;
 
           if (smallest->height * smallest->width > this->height * this->width)
             {
@@ -140,7 +140,7 @@ preview_cache_print (GSList *plist)
 
   for (list = plist; list; list = list->next)
     {
-      TempBuf *buf = (TempBuf *) list->data;
+      GimpTempBuf *buf = list->data;
 
       g_print ("\tvalue w,h [%d,%d]\n", buf->width, buf->height);
     }
@@ -160,8 +160,8 @@ gimp_preview_cache_invalidate (GSList **plist)
 }
 
 void
-gimp_preview_cache_add (GSList  **plist,
-                        TempBuf  *buf)
+gimp_preview_cache_add (GSList      **plist,
+                        GimpTempBuf  *buf)
 {
 #ifdef PREVIEW_CACHE_DEBUG
   g_print ("gimp_preview_cache_add: %d x %d\n", buf->width, buf->height);
@@ -176,7 +176,7 @@ gimp_preview_cache_add (GSList  **plist,
   *plist = g_slist_insert_sorted (*plist, buf, preview_cache_compare);
 }
 
-TempBuf *
+GimpTempBuf *
 gimp_preview_cache_get (GSList **plist,
                         gint     width,
                         gint     height)
@@ -208,16 +208,16 @@ gimp_preview_cache_get (GSList **plist,
 
   if (pn.buf)
     {
-      TempBuf *preview;
-      gint     pwidth;
-      gint     pheight;
-      gdouble  x_ratio;
-      gdouble  y_ratio;
-      guchar  *src_data;
-      guchar  *dest_data;
-      gint     bytes;
-      gint     loop1;
-      gint     loop2;
+      GimpTempBuf *preview;
+      gint         pwidth;
+      gint         pheight;
+      gdouble      x_ratio;
+      gdouble      y_ratio;
+      guchar      *src_data;
+      guchar      *dest_data;
+      gint         bytes;
+      gint         loop1;
+      gint         loop2;
 
 #ifdef PREVIEW_CACHE_DEBUG
       g_print ("gimp_preview_cache_get: nearest value: %d x %d\n",
@@ -287,7 +287,7 @@ gimp_preview_cache_get_memsize (GSList *cache)
     return 0;
 
   for (list = cache; list; list = list->next)
-    memsize += sizeof (GSList) + temp_buf_get_memsize ((TempBuf *) list->data);
+    memsize += sizeof (GSList) + temp_buf_get_memsize (list->data);
 
   return memsize;
 }

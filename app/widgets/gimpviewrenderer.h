@@ -141,9 +141,9 @@ void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
 /*  protected  */
 
 void   gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
-                                                  TempBuf          *temp_buf);
+                                                  GimpTempBuf      *temp_buf);
 void   gimp_view_renderer_render_temp_buf        (GimpViewRenderer *renderer,
-                                                  TempBuf          *temp_buf,
+                                                  GimpTempBuf      *temp_buf,
                                                   gint              channel,
                                                   GimpViewBG        inside_bg,
                                                   GimpViewBG        outside_bg);

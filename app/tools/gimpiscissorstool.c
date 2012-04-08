@@ -158,7 +158,7 @@ static void          iscissors_convert         (GimpIscissorsTool *iscissors,
 static TileManager * gradient_map_new          (GimpImage         *image);
 
 static void          find_optimal_path         (TileManager       *gradient_map,
-                                                TempBuf           *dp_buf,
+                                                GimpTempBuf       *dp_buf,
                                                 gint               x1,
                                                 gint               y1,
                                                 gint               x2,
@@ -188,7 +188,7 @@ static gboolean      clicked_on_curve          (GimpIscissorsTool *iscissors,
                                                 gdouble            y);
 
 static GPtrArray   * plot_pixels               (GimpIscissorsTool *iscissors,
-                                                TempBuf           *dp_buf,
+                                                GimpTempBuf       *dp_buf,
                                                 gint               x1,
                                                 gint               y1,
                                                 gint               xs,
@@ -1458,7 +1458,7 @@ calculate_link (TileManager *gradient_map,
 
 static GPtrArray *
 plot_pixels (GimpIscissorsTool *iscissors,
-             TempBuf           *dp_buf,
+             GimpTempBuf       *dp_buf,
              gint               x1,
              gint               y1,
              gint               xs,
@@ -1509,7 +1509,7 @@ plot_pixels (GimpIscissorsTool *iscissors,
 
 static void
 find_optimal_path (TileManager *gradient_map,
-                   TempBuf     *dp_buf,
+                   GimpTempBuf *dp_buf,
                    gint         x1,
                    gint         y1,
                    gint         x2,

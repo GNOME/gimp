@@ -258,7 +258,7 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
   GimpItem        *item  = GIMP_ITEM (drawable);
   GimpImage       *image = gimp_item_get_image (item);
   GimpChannel     *mask  = gimp_image_get_mask (image);
-  TempBuf         *temp_buf;
+  GimpTempBuf     *temp_buf;
   PixelRegion      src2PR;
   gint             x, y, width, height;
   gint             offset_x, offset_y;

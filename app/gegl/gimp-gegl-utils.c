@@ -244,7 +244,7 @@ gimp_gegl_buffer_get_tiles (GeglBuffer *buffer)
   return gimp_tile_backend_tile_manager_get_tiles (backend);
 }
 
-TempBuf *
+GimpTempBuf *
 gimp_gegl_buffer_get_temp_buf (GeglBuffer *buffer)
 {
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
