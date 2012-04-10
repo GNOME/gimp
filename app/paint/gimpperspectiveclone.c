@@ -392,7 +392,6 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
 
   dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2d - x1d, y2d - y1d),
                                  src_format_alpha);
-  gegl_buffer_clear (dest_buffer, NULL);
 
   gimp_perspective_clone_get_matrix (clone, &matrix);
 

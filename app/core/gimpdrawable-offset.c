@@ -101,10 +101,6 @@ gimp_drawable_offset (GimpDrawable   *drawable,
           gegl_buffer_set_color (new_buffer, NULL, color);
           g_object_unref (color);
         }
-      else
-        {
-          gegl_buffer_clear (new_buffer, NULL);
-        }
     }
 
   if (offset_x >= 0)

@@ -341,8 +341,6 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   mask_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
                                  babl_format ("Y u8"));
 
-  gegl_buffer_clear (mask_buffer, NULL);
-
   /* render the stroke into it */
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 

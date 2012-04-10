@@ -397,7 +397,6 @@ gimp_paint_core_start (GimpPaintCore     *core,
                                           gimp_item_get_width  (item),
                                           gimp_item_get_height (item)),
                           babl_format ("Y u8"));
-  gegl_buffer_clear (core->canvas_buffer, NULL);
 
   /*  Get the initial undo extents  */
 
