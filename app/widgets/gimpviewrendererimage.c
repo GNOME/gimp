@@ -120,6 +120,8 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
       if (render_buf)
         {
+          gint render_buf_x    = 0;
+          gint render_buf_y    = 0;
           gint component_index = -1;
 
           /*  xresolution != yresolution */
@@ -134,16 +136,17 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
             }
 
           if (view_width  < renderer->width)
-            render_buf->x = (renderer->width  - view_width)  / 2;
+            render_buf_x = (renderer->width  - view_width)  / 2;
 
           if (view_height < renderer->height)
-            render_buf->y = (renderer->height - view_height) / 2;
+            render_buf_y = (renderer->height - view_height) / 2;
 
           if (rendererimage->channel != -1)
             component_index =
               gimp_image_get_component_index (image, rendererimage->channel);
 
           gimp_view_renderer_render_temp_buf (renderer, render_buf,
+                                              render_buf_x, render_buf_y,
                                               component_index,
                                               GIMP_VIEW_BG_CHECKS,
                                               GIMP_VIEW_BG_WHITE);

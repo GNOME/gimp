@@ -199,36 +199,41 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   if (render_buf)
     {
+      gint render_buf_x = 0;
+      gint render_buf_y = 0;
+
       if (image && ! renderer->is_popup)
         {
           if (offset_x != 0)
-            render_buf->x =
+            render_buf_x =
               ROUND ((((gdouble) renderer->width /
                        (gdouble) gimp_image_get_width (image)) *
                       (gdouble) offset_x));
 
           if (offset_y != 0)
-            render_buf->y =
+            render_buf_y =
               ROUND ((((gdouble) renderer->height /
                        (gdouble) gimp_image_get_height (image)) *
                       (gdouble) offset_y));
 
           if (scaling_up)
             {
-              if (render_buf->x < 0) render_buf->x = 0;
-              if (render_buf->y < 0) render_buf->y = 0;
+              if (render_buf_x < 0) render_buf_x = 0;
+              if (render_buf_y < 0) render_buf_y = 0;
             }
         }
       else
         {
           if (view_width < width)
-            render_buf->x = (width - view_width) / 2;
+            render_buf_x = (width - view_width) / 2;
 
           if (view_height < height)
-            render_buf->y = (height - view_height) / 2;
+            render_buf_y = (height - view_height) / 2;
         }
 
-      gimp_view_renderer_render_temp_buf (renderer, render_buf, -1,
+      gimp_view_renderer_render_temp_buf (renderer, render_buf,
+                                          render_buf_x, render_buf_y,
+                                          -1,
                                           GIMP_VIEW_BG_CHECKS,
                                           GIMP_VIEW_BG_CHECKS);
       gimp_temp_buf_unref (render_buf);
