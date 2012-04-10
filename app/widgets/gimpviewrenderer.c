@@ -33,6 +33,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp-cairo.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptempbuf.h"
@@ -73,7 +74,8 @@ static cairo_pattern_t *
                  gimp_view_renderer_create_background (GimpViewRenderer   *renderer,
                                                        GtkWidget          *widget);
 
-static void      gimp_view_render_temp_buf_to_surface (GimpTempBuf        *temp_buf,
+static void      gimp_view_render_temp_buf_to_surface (GimpViewRenderer   *renderer,
+                                                       GimpTempBuf        *temp_buf,
                                                        gint                channel,
                                                        GimpViewBG          inside_bg,
                                                        GimpViewBG          outside_bg,
@@ -695,8 +697,10 @@ gimp_view_renderer_real_draw (GimpViewRenderer *renderer,
       if (renderer->bg_stock_id)
         {
           if (! renderer->pattern)
-            renderer->pattern = gimp_view_renderer_create_background (renderer,
-                                                                      widget);
+            {
+              renderer->pattern = gimp_view_renderer_create_background (renderer,
+                                                                        widget);
+            }
 
           cairo_set_source (cr, renderer->pattern);
           cairo_paint (cr);
@@ -724,12 +728,10 @@ gimp_view_renderer_real_draw (GimpViewRenderer *renderer,
       if (content == CAIRO_CONTENT_COLOR_ALPHA)
         {
           if (! renderer->pattern)
-            {
-              renderer->pattern =
-                gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM,
-                                                gimp_render_light_check_color (),
-                                                gimp_render_dark_check_color ());
-            }
+            renderer->pattern =
+              gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM,
+                                              gimp_render_light_check_color (),
+                                              gimp_render_dark_check_color ());
 
           cairo_set_source (cr, renderer->pattern);
           cairo_fill_preserve (cr);
@@ -824,7 +826,8 @@ gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
                                                     renderer->width,
                                                     renderer->height);
 
-  gimp_view_render_temp_buf_to_surface (temp_buf,
+  gimp_view_render_temp_buf_to_surface (renderer,
+                                        temp_buf,
                                         channel,
                                         inside_bg,
                                         outside_bg,
@@ -916,46 +919,21 @@ gimp_view_renderer_render_stock (GimpViewRenderer *renderer,
 }
 
 static void
-gimp_view_render_temp_buf_to_surface (GimpTempBuf     *temp_buf,
-                                      gint             channel,
-                                      GimpViewBG       inside_bg,
-                                      GimpViewBG       outside_bg,
-                                      cairo_surface_t *surface,
-                                      gint             dest_width,
-                                      gint             dest_height)
+gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
+                                      GimpTempBuf      *temp_buf,
+                                      gint              channel,
+                                      GimpViewBG        inside_bg,
+                                      GimpViewBG        outside_bg,
+                                      cairo_surface_t  *surface,
+                                      gint              surface_width,
+                                      gint              surface_height)
 {
-  const guchar *src;
-  const guchar *pad_buf;
-  guchar       *dest;
-  gint          i, j;
-  gint          x1, y1;
-  gint          x2, y2;
-  gint          bytes;
-  gint          rowstride;
-  gint          dest_stride;
-  gboolean      color;
-  gboolean      has_alpha;
-  gboolean      render_composite;
-  gint          red_component;
-  gint          green_component;
-  gint          blue_component;
-  gint          alpha_component;
+  cairo_t *cr;
+  gint     x, y;
+  gint     width, height;
 
   g_return_if_fail (temp_buf != NULL);
   g_return_if_fail (surface != NULL);
-
-  /* In rare cases we can get here while GIMP is exiting, handle that
-   * by checking for availability of the buffers
-   */
-  if (! gimp_render_check_buf ||
-      ! gimp_render_empty_buf ||
-      ! gimp_render_white_buf)
-    return;
-
-  cairo_surface_flush (surface);
-
-  dest        = cairo_image_surface_get_data (surface);
-  dest_stride = cairo_image_surface_get_stride (surface);
 
   /*  Here are the different cases this functions handles correctly:
    *  1)  Offset temp_buf which does not necessarily cover full image area
@@ -969,146 +947,170 @@ gimp_view_render_temp_buf_to_surface (GimpTempBuf     *temp_buf,
    *  3)  If image is gray, then temp_buf should have bytes == {1, 2}
    */
 
-  bytes            = babl_format_get_bytes_per_pixel (temp_buf->format);
-  color            = (bytes == 3 || bytes == 4);
-  has_alpha        = babl_format_has_alpha (temp_buf->format);
-  render_composite = (channel == -1);
-  rowstride        = temp_buf->width * bytes;
+  cr = cairo_create (surface);
 
-  /*  render the checkerboard only if the temp_buf has alpha *and*
-   *  we render a composite view
-   */
-  if (has_alpha && render_composite && outside_bg == GIMP_VIEW_BG_CHECKS)
-    pad_buf = gimp_render_check_buf;
-  else if (outside_bg == GIMP_VIEW_BG_WHITE)
-    pad_buf = gimp_render_white_buf;
-  else
-    pad_buf = gimp_render_empty_buf;
-
-  if (render_composite)
+  if (outside_bg == GIMP_VIEW_BG_CHECKS ||
+      inside_bg  == GIMP_VIEW_BG_CHECKS)
     {
-      if (color)
+      if (! renderer->pattern)
+        renderer->pattern =
+          gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM,
+                                          gimp_render_light_check_color (),
+                                          gimp_render_dark_check_color ());
+    }
+
+  switch (outside_bg)
+    {
+    case GIMP_VIEW_BG_CHECKS:
+      cairo_set_source (cr, renderer->pattern);
+      break;
+
+    case GIMP_VIEW_BG_WHITE:
+      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+      break;
+    }
+
+  cairo_paint (cr);
+
+  if (! gimp_rectangle_intersect (0, 0,
+                                  surface_width, surface_height,
+                                  temp_buf->x, temp_buf->y,
+                                  temp_buf->width, temp_buf->height,
+                                  &x, &y,
+                                  &width, &height))
+    {
+      cairo_destroy (cr);
+      return;
+    }
+
+  if (inside_bg != outside_bg &&
+      babl_format_has_alpha (temp_buf->format) && channel == -1)
+    {
+      cairo_rectangle (cr, x, y, width, height);
+
+      switch (inside_bg)
         {
-          red_component   = RED;
-          green_component = GREEN;
-          blue_component  = BLUE;
-          alpha_component = ALPHA;
+        case GIMP_VIEW_BG_CHECKS:
+          cairo_set_source (cr, renderer->pattern);
+          break;
+
+        case GIMP_VIEW_BG_WHITE:
+          cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+          break;
         }
-      else
-        {
-          red_component   = GRAY;
-          green_component = GRAY;
-          blue_component  = GRAY;
-          alpha_component = ALPHA_G;
-        }
+
+      cairo_fill (cr);
+    }
+
+  if (babl_format_has_alpha (temp_buf->format) && channel == -1)
+    {
+      GeglBuffer      *src_buffer;
+      GeglBuffer      *dest_buffer;
+      cairo_surface_t *alpha_surface;
+
+      alpha_surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+                                                  width, height);
+
+      src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
+      dest_buffer = gimp_cairo_image_surface_create_buffer (alpha_surface);
+
+      gegl_buffer_copy (src_buffer,
+                        GEGL_RECTANGLE (x - temp_buf->x,
+                                        y - temp_buf->y,
+                                        width, height),
+                        dest_buffer,
+                        GEGL_RECTANGLE (0, 0, 0, 0));
+
+      g_object_unref (src_buffer);
+      g_object_unref (dest_buffer);
+
+      cairo_surface_mark_dirty (alpha_surface);
+
+      cairo_translate (cr, x, y);
+      cairo_rectangle (cr, 0, 0, width, height);
+      cairo_set_source_surface (cr, alpha_surface, 0, 0);
+      cairo_fill (cr);
+
+      cairo_surface_destroy (alpha_surface);
+    }
+  else if (channel == -1)
+    {
+      GeglBuffer *src_buffer;
+      GeglBuffer *dest_buffer;
+
+      cairo_surface_flush (surface);
+
+      src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
+      dest_buffer = gimp_cairo_image_surface_create_buffer (surface);
+
+      gegl_buffer_copy (src_buffer,
+                        GEGL_RECTANGLE (x - temp_buf->x,
+                                        y - temp_buf->y,
+                                        width, height),
+                        dest_buffer,
+                        GEGL_RECTANGLE (x, y, 0, 0));
+
+      g_object_unref (src_buffer);
+      g_object_unref (dest_buffer);
+
+      cairo_surface_mark_dirty (surface);
     }
   else
     {
-      red_component   = channel;
-      green_component = channel;
-      blue_component  = channel;
-      alpha_component = 0;
-    }
+      const Babl   *fish;
+      const guchar *src;
+      guchar       *dest;
+      gint          dest_stride;
+      gint          bytes;
+      gint          rowstride;
+      gint          i;
 
-  x1 = CLAMP (temp_buf->x, 0, dest_width);
-  y1 = CLAMP (temp_buf->y, 0, dest_height);
-  x2 = CLAMP (temp_buf->x + temp_buf->width,  0, dest_width);
-  y2 = CLAMP (temp_buf->y + temp_buf->height, 0, dest_height);
+      cairo_surface_flush (surface);
 
-  src = gimp_temp_buf_get_data (temp_buf) + ((y1 - temp_buf->y) * rowstride +
-                                             (x1 - temp_buf->x) * bytes);
+      bytes     = babl_format_get_bytes_per_pixel (temp_buf->format);
+      rowstride = temp_buf->width * bytes;
 
-  for (i = 0; i < dest_height; i++)
-    {
-      guchar       *d = dest;
-      const guchar *cb;
-      gint          offset;
+      src = gimp_temp_buf_get_data (temp_buf) + ((y - temp_buf->y) * rowstride +
+                                                 (x - temp_buf->x) * bytes);
 
-      if (i & 0x4)
-        {
-          offset = 4;
-          cb = pad_buf + offset * 3;
-        }
-      else
-        {
-          offset = 0;
-          cb = pad_buf;
-        }
+      dest        = cairo_image_surface_get_data (surface);
+      dest_stride = cairo_image_surface_get_stride (surface);
 
-      /*  The interesting stuff between leading & trailing
-       *  vertical transparency
-       */
-      if (i >= y1 && i < y2)
+      dest += y * dest_stride + x * 4;
+
+      fish = babl_fish (temp_buf->format,
+                        babl_format ("cairo-RGB24"));
+
+      for (i = y; i < (y + height); i++)
         {
           const guchar *s = src;
+          guchar       *d = dest;
+          gint          j;
 
-          /*  Handle the leading transparency  */
-          for (j = 0; j < x1; j++, d += 4, cb += 3)
+          for (j = x; j < (x + width); j++, d += 4, s += bytes)
             {
-              GIMP_CAIRO_RGB24_SET_PIXEL (d, cb[0], cb[1], cb[2]);
-            }
-
-          /*  The stuff in the middle  */
-          for (j = x1; j < x2; j++, d += 4, s += bytes)
-            {
-              if (has_alpha && render_composite)
+              if (bytes > 2)
                 {
-                  const guint a = s[alpha_component] << 8;
+                  guchar pixel[4] = { s[channel], s[channel], s[channel], 255 };
 
-                  if (inside_bg == GIMP_VIEW_BG_CHECKS)
-                    {
-                      if ((j + offset) & 0x4)
-                        {
-                          GIMP_CAIRO_RGB24_SET_PIXEL (d,
-                                                      gimp_render_blend_dark_check [a | s[red_component]],
-                                                      gimp_render_blend_dark_check [a | s[green_component]],
-                                                      gimp_render_blend_dark_check [a | s[blue_component]]);
-                        }
-                      else
-                        {
-                          GIMP_CAIRO_RGB24_SET_PIXEL (d,
-                                                      gimp_render_blend_light_check [a | s[red_component]],
-                                                      gimp_render_blend_light_check [a | s[green_component]],
-                                                      gimp_render_blend_light_check [a | s[blue_component]]);
-                        }
-                    }
-                  else /* GIMP_VIEW_BG_WHITE */
-                    {
-                      GIMP_CAIRO_RGB24_SET_PIXEL (d,
-                                                  gimp_render_blend_white [a | s[red_component]],
-                                                  gimp_render_blend_white [a | s[green_component]],
-                                                  gimp_render_blend_white [a | s[blue_component]]);
-                    }
+                  babl_process (fish, pixel, d, 1);
                 }
               else
                 {
-                  GIMP_CAIRO_RGB24_SET_PIXEL (d,
-                                              s[red_component],
-                                              s[green_component],
-                                              s[blue_component]);
+                  guchar pixel[2] = { s[channel], 255 };
+
+                  babl_process (fish, pixel, d, 1);
                 }
             }
 
-          /*  Handle the trailing transparency  */
-          for (j = x2; j < dest_width; j++, d+= 4, cb += 3)
-            {
-              GIMP_CAIRO_RGB24_SET_PIXEL (d, cb[0], cb[1], cb[2]);
-            }
-
           src += rowstride;
-        }
-      else
-        {
-          for (j = 0; j < dest_width; j++, d+= 4, cb += 3)
-            {
-              GIMP_CAIRO_RGB24_SET_PIXEL (d, cb[0], cb[1], cb[2]);
-            }
+          dest += dest_stride;
         }
 
-      dest += dest_stride;
+      cairo_surface_mark_dirty (surface);
     }
 
-  cairo_surface_mark_dirty (surface);
+  cairo_destroy (cr);
 }
 
 /* This function creates a background pattern from a stock icon

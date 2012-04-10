@@ -19,17 +19,6 @@
 #define __GIMP_RENDER_H__
 
 
-/* buffers that contain pre-rendered patterns/colors */
-extern guchar *gimp_render_check_buf;
-extern guchar *gimp_render_empty_buf;
-extern guchar *gimp_render_white_buf;
-
-/* lookup tables for blending over a checkerboard */
-extern guchar *gimp_render_blend_dark_check;
-extern guchar *gimp_render_blend_light_check;
-extern guchar *gimp_render_blend_white;
-
-
 void            gimp_render_init              (Gimp *gimp);
 void            gimp_render_exit              (Gimp *gimp);
 

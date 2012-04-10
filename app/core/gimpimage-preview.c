@@ -143,51 +143,15 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
   buf = tile_manager_get_preview (tiles, width, height);
 
-  /* FIXME: We could avoid this if the view renderer and all other
-   *        preview code would know how to deal with pre-multiply alpha.
-   */
   if (is_premult)
     {
-      guchar *data;
-      gint    pixels;
-
-      g_return_if_fail (buf != NULL);
-
-      switch (babl_format_get_bytes_per_pixel (buf->format))
+      if (buf->format == babl_format ("Y'A u8"))
         {
-        case 1:
-          break;
-
-        case 2:
-          data = gimp_temp_buf_get_data (buf);
-          pixels = buf->width * buf->height;
-          while (pixels--)
-            {
-              data[0] = (data[0] << 8) / (data[1] + 1);
-
-              data += 2;
-            }
-          break;
-
-        case 3:
-          break;
-
-        case 4:
-          data = gimp_temp_buf_get_data (buf);
-          pixels = buf->width * buf->height;
-          while (pixels--)
-            {
-              data[0] = (data[0] << 8) / (data[3] + 1);
-              data[1] = (data[1] << 8) / (data[3] + 1);
-              data[2] = (data[2] << 8) / (data[3] + 1);
-
-              data += 4;
-            }
-          break;
-
-        default:
-          g_warn_if_reached ();
-          break;
+          buf->format = babl_format ("Y'aA u8");
+        }
+      else if (buf->format == babl_format ("R'G'B'A u8"))
+        {
+          buf->format = babl_format ("R'aG'aB'aA u8");
         }
     }
 
