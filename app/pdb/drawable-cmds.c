@@ -63,7 +63,7 @@ drawable_type_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      type = gimp_drawable_type (drawable);
+      type = gimp_babl_format_get_image_type (gimp_drawable_get_format (drawable));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

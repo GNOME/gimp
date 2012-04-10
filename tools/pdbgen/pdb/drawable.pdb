@@ -283,7 +283,7 @@ sub drawable_type {
     %invoke = (
 	code => <<'CODE'
 {
-  type = gimp_drawable_type (drawable);
+  type = gimp_babl_format_get_image_type (gimp_drawable_get_format (drawable));
 }
 CODE
     );

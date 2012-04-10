@@ -28,6 +28,8 @@
 
 #include "plug-in-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
@@ -687,7 +689,11 @@ gimp_plug_in_procedure_get_sensitive (const GimpPlugInProcedure *proc,
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
 
   if (drawable)
-    image_type = gimp_drawable_type (drawable);
+    {
+      const Babl *format = gimp_drawable_get_format (drawable);
+
+      image_type = gimp_babl_format_get_image_type (format);
+    }
 
   switch (image_type)
     {
