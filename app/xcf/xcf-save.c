@@ -29,6 +29,7 @@
 #include "core/core-types.h"
 
 #include "gegl/gimp-gegl-tile-compat.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -1173,7 +1174,7 @@ xcf_save_layer (XcfInfo    *info,
   value = gimp_item_get_height (GIMP_ITEM (layer));
   xcf_write_int32_check_error (info, &value, 1);
 
-  value = gimp_drawable_type (GIMP_DRAWABLE (layer));
+  value = gimp_babl_format_get_image_type (gimp_drawable_get_format (GIMP_DRAWABLE (layer)));
   xcf_write_int32_check_error (info, &value, 1);
 
   /* write out the layers name */
