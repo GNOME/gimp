@@ -28,10 +28,9 @@
 
 #include "display-types.h"
 
+#include "core/gimp-cairo.h"
 #include "core/gimpboundary.h"
 #include "core/gimpparamspecs.h"
-
-#include "widgets/gimpcairo.h"
 
 #include "gimpcanvasboundary.h"
 #include "gimpdisplayshell.h"

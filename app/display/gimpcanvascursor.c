@@ -28,7 +28,7 @@
 
 #include "display-types.h"
 
-#include "widgets/gimpcairo.h"
+#include "core/gimp-cairo.h"
 
 #include "gimpcanvascursor.h"
 #include "gimpdisplayshell.h"

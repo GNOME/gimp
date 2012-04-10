@@ -28,10 +28,9 @@
 
 #include "display-types.h"
 
+#include "core/gimp-cairo.h"
 #include "core/gimpgrid.h"
 #include "core/gimplayer.h"
-
-#include "widgets/gimpcairo.h"
 
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-style.h"

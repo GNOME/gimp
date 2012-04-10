@@ -27,12 +27,11 @@
 
 #include "display-types.h"
 
+#include "core/gimp-cairo.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojection.h"
-
-#include "widgets/gimpcairo.h"
 
 #include "gimpcanvas.h"
 #include "gimpcanvaspath.h"

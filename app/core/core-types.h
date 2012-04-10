@@ -233,6 +233,18 @@ struct _GimpCoords
   gdouble direction;
 };
 
+/*  temp hack as replacement for GdkSegment  */
+
+typedef struct _GimpSegment GimpSegment;
+
+struct _GimpSegment
+{
+  gint x1;
+  gint y1;
+  gint x2;
+  gint y2;
+};
+
 
 #include "gegl/gimp-gegl-types.h"
 #include "paint/paint-types.h"

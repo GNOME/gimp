@@ -29,7 +29,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-quick-mask.h"
 
-#include "widgets/gimpcairo.h"
+#include "widgets/gimpcairo-wilber.h"
 #include "widgets/gimpuimanager.h"
 
 #include "gimpcanvasitem.h"

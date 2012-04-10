@@ -281,17 +281,4 @@ typedef gboolean    (* GimpPanedBoxDroppedFunc)      (GtkWidget         *source,
                                                       gpointer           data);
 
 
-/*  temp hack as replacement for GdkSegment  */
-
-typedef struct _GimpSegment GimpSegment;
-
-struct _GimpSegment
-{
-  gint x1;
-  gint y1;
-  gint x2;
-  gint y2;
-};
-
-
 #endif /* __WIDGETS_TYPES_H__ */

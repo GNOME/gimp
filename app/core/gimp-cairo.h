@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcairo.h
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * gimp-cairo.h
+ * Copyright (C) 2010-2012  Michael Natterer <mitch@gimp.org>
  *
  * Some code here is based on code from librsvg that was originally
  * written by Raph Levien <raph@artofcode.com> for Gill.
@@ -38,11 +38,6 @@ void              gimp_cairo_add_arc                (cairo_t       *cr,
 void              gimp_cairo_add_segments           (cairo_t       *cr,
                                                      GimpSegment   *segs,
                                                      gint           n_segs);
-
-void              gimp_cairo_draw_toolbox_wilber    (GtkWidget     *widget,
-                                                     cairo_t       *cr);
-void              gimp_cairo_draw_drop_wilber       (GtkWidget     *widget,
-                                                     cairo_t       *cr);
 
 
 #endif /* __GIMP_CAIRO_H__ */

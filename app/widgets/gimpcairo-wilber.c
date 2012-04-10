@@ -29,7 +29,104 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include <gimpcairo-wilber.h>
+#include "widgets-types.h"
+
+#include "gimpcairo-wilber.h"
+
+
+void
+gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
+                                cairo_t   *cr)
+{
+  GtkStyle     *style;
+  GtkStateType  state;
+  GtkAllocation allocation;
+  gdouble       wilber_width;
+  gdouble       wilber_height;
+  gdouble       factor;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (cr != NULL);
+
+  style = gtk_widget_get_style (widget);
+  state = gtk_widget_get_state (widget);
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
+
+  factor = allocation.width / wilber_width * 0.9;
+
+  if (! gtk_widget_get_has_window (widget))
+    cairo_translate (cr, allocation.x, allocation.y);
+
+  cairo_scale (cr, factor, factor);
+
+  gimp_cairo_wilber (cr,
+                     (allocation.width  / factor - wilber_width)  / 2.0,
+                     (allocation.height / factor - wilber_height) / 2.0);
+
+  cairo_set_source_rgba (cr,
+                         style->fg[state].red   / 65535.0,
+                         style->fg[state].green / 65535.0,
+                         style->fg[state].blue  / 65535.0,
+                         0.10);
+  cairo_fill (cr);
+}
+
+void
+gimp_cairo_draw_drop_wilber (GtkWidget *widget,
+                             cairo_t   *cr)
+{
+  GtkStyle     *style;
+  GtkStateType  state;
+  GtkAllocation allocation;
+  gdouble       wilber_width;
+  gdouble       wilber_height;
+  gdouble       width;
+  gdouble       height;
+  gdouble       side;
+  gdouble       factor;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (cr != NULL);
+
+  style  = gtk_widget_get_style (widget);
+  state  = gtk_widget_get_state (widget);
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
+
+  wilber_width  /= 2;
+  wilber_height /= 2;
+
+  side = MIN (MIN (allocation.width, allocation.height),
+              MAX (allocation.width, allocation.height) / 2);
+
+  width  = MAX (wilber_width,  side);
+  height = MAX (wilber_height, side);
+
+  factor = MIN (width / wilber_width, height / wilber_height);
+
+  if (! gtk_widget_get_has_window (widget))
+    cairo_translate (cr, allocation.x, allocation.y);
+
+  cairo_scale (cr, factor, factor);
+
+  /*  magic factors depend on the image used, everything else is generic
+   */
+  gimp_cairo_wilber (cr,
+                     - wilber_width * 0.6,
+                     allocation.height / factor - wilber_height * 1.1);
+
+  cairo_set_source_rgba (cr,
+                         style->fg[state].red   / 65535.0,
+                         style->fg[state].green / 65535.0,
+                         style->fg[state].blue  / 65535.0,
+                         0.15);
+  cairo_fill (cr);
+}
 
 
 /* This string is a path description as found in SVG files.  You can

@@ -23,6 +23,8 @@ libappcore_a_sources = \
 	gimp.h					\
 	gimp-apply-operation.c			\
 	gimp-apply-operation.h			\
+	gimp-cairo.c				\
+	gimp-cairo.h				\
 	gimp-contexts.c				\
 	gimp-contexts.h				\
 	gimp-edit.c				\
