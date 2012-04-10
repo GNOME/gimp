@@ -141,7 +141,7 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
                   gimp_marshal_VOID__ENUM_POINTER_BOXED_INT,
                   G_TYPE_NONE, 4,
                   GIMP_TYPE_COLOR_PICK_STATE,
-                  GIMP_TYPE_IMAGE_TYPE,
+                  G_TYPE_POINTER,
                   GIMP_TYPE_RGB | G_SIGNAL_TYPE_STATIC_SCOPE,
                   G_TYPE_INT);
 
