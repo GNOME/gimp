@@ -66,14 +66,14 @@
 #define GIMP_MAINIMAGE_LAYER1_NAME      "layer1"
 #define GIMP_MAINIMAGE_LAYER1_WIDTH     50
 #define GIMP_MAINIMAGE_LAYER1_HEIGHT    51
-#define GIMP_MAINIMAGE_LAYER1_TYPE      GIMP_RGBA_IMAGE
+#define GIMP_MAINIMAGE_LAYER1_FORMAT    babl_format ("R'G'B'A u8")
 #define GIMP_MAINIMAGE_LAYER1_OPACITY   1.0
 #define GIMP_MAINIMAGE_LAYER1_MODE      GIMP_NORMAL_MODE
 
 #define GIMP_MAINIMAGE_LAYER2_NAME      "layer2"
 #define GIMP_MAINIMAGE_LAYER2_WIDTH     25
 #define GIMP_MAINIMAGE_LAYER2_HEIGHT    251
-#define GIMP_MAINIMAGE_LAYER2_TYPE      GIMP_RGB_IMAGE
+#define GIMP_MAINIMAGE_LAYER2_FORMAT    babl_format ("R'G'B' u8")
 #define GIMP_MAINIMAGE_LAYER2_OPACITY   0.0
 #define GIMP_MAINIMAGE_LAYER2_MODE      GIMP_MULTIPLY_MODE
 
@@ -368,7 +368,7 @@ gimp_create_mainimage (Gimp     *gimp,
   layer = gimp_layer_new (image,
                           GIMP_MAINIMAGE_LAYER1_WIDTH,
                           GIMP_MAINIMAGE_LAYER1_HEIGHT,
-                          GIMP_MAINIMAGE_LAYER1_TYPE,
+                          GIMP_MAINIMAGE_LAYER1_FORMAT,
                           GIMP_MAINIMAGE_LAYER1_NAME,
                           GIMP_MAINIMAGE_LAYER1_OPACITY,
                           GIMP_MAINIMAGE_LAYER1_MODE);
@@ -380,7 +380,7 @@ gimp_create_mainimage (Gimp     *gimp,
   layer = gimp_layer_new (image,
                           GIMP_MAINIMAGE_LAYER2_WIDTH,
                           GIMP_MAINIMAGE_LAYER2_HEIGHT,
-                          GIMP_MAINIMAGE_LAYER2_TYPE,
+                          GIMP_MAINIMAGE_LAYER2_FORMAT,
                           GIMP_MAINIMAGE_LAYER2_NAME,
                           GIMP_MAINIMAGE_LAYER2_OPACITY,
                           GIMP_MAINIMAGE_LAYER2_MODE);
@@ -580,7 +580,7 @@ gimp_create_mainimage (Gimp     *gimp,
       layer = gimp_layer_new (image,
                               GIMP_MAINIMAGE_LAYER1_WIDTH,
                               GIMP_MAINIMAGE_LAYER1_HEIGHT,
-                              GIMP_MAINIMAGE_LAYER1_TYPE,
+                              GIMP_MAINIMAGE_LAYER1_FORMAT,
                               GIMP_MAINIMAGE_LAYER3_NAME,
                               GIMP_MAINIMAGE_LAYER1_OPACITY,
                               GIMP_MAINIMAGE_LAYER1_MODE);
@@ -594,7 +594,7 @@ gimp_create_mainimage (Gimp     *gimp,
       layer = gimp_layer_new (image,
                               GIMP_MAINIMAGE_LAYER1_WIDTH,
                               GIMP_MAINIMAGE_LAYER1_HEIGHT,
-                              GIMP_MAINIMAGE_LAYER1_TYPE,
+                              GIMP_MAINIMAGE_LAYER1_FORMAT,
                               GIMP_MAINIMAGE_LAYER4_NAME,
                               GIMP_MAINIMAGE_LAYER1_OPACITY,
                               GIMP_MAINIMAGE_LAYER1_MODE);
@@ -618,7 +618,7 @@ gimp_create_mainimage (Gimp     *gimp,
       layer = gimp_layer_new (image,
                               GIMP_MAINIMAGE_LAYER1_WIDTH,
                               GIMP_MAINIMAGE_LAYER1_HEIGHT,
-                              GIMP_MAINIMAGE_LAYER1_TYPE,
+                              GIMP_MAINIMAGE_LAYER1_FORMAT,
                               GIMP_MAINIMAGE_LAYER5_NAME,
                               GIMP_MAINIMAGE_LAYER1_OPACITY,
                               GIMP_MAINIMAGE_LAYER1_MODE);
@@ -738,9 +738,9 @@ gimp_assert_mainimage (GimpImage *image,
   g_assert_cmpint (gimp_item_get_height (GIMP_ITEM (layer)),
                    ==,
                    GIMP_MAINIMAGE_LAYER1_HEIGHT);
-  g_assert_cmpint (gimp_drawable_type (GIMP_DRAWABLE (layer)),
+  g_assert_cmpstr (babl_get_name (gimp_drawable_get_format (GIMP_DRAWABLE (layer))),
                    ==,
-                   GIMP_MAINIMAGE_LAYER1_TYPE);
+                   babl_get_name (GIMP_MAINIMAGE_LAYER1_FORMAT));
   g_assert_cmpstr (gimp_object_get_name (GIMP_DRAWABLE (layer)),
                    ==,
                    GIMP_MAINIMAGE_LAYER1_NAME);
@@ -758,9 +758,9 @@ gimp_assert_mainimage (GimpImage *image,
   g_assert_cmpint (gimp_item_get_height (GIMP_ITEM (layer)),
                    ==,
                    GIMP_MAINIMAGE_LAYER2_HEIGHT);
-  g_assert_cmpint (gimp_drawable_type (GIMP_DRAWABLE (layer)),
+  g_assert_cmpstr (babl_get_name (gimp_drawable_get_format (GIMP_DRAWABLE (layer))),
                    ==,
-                   GIMP_MAINIMAGE_LAYER2_TYPE);
+                   babl_get_name (GIMP_MAINIMAGE_LAYER2_FORMAT));
   g_assert_cmpstr (gimp_object_get_name (GIMP_DRAWABLE (layer)),
                    ==,
                    GIMP_MAINIMAGE_LAYER2_NAME);

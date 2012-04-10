@@ -78,7 +78,8 @@ AM_LDFLAGS = \
 	-u $(SYMPREFIX)gimp_error_dialog_new		\
 	-u $(SYMPREFIX)menus_save			\
 	-u $(SYMPREFIX)gimp_tools_save			\
-	-u $(SYMPREFIX)gimp_curve_map_pixels
+	-u $(SYMPREFIX)gimp_curve_map_pixels		\
+	-u $(SYMPREFIX)gimp_param_spec_duplicate
 
 # Note that we have some duplicate entries here too to work around
 # circular dependencies and systems on the same architectural layer as
