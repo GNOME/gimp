@@ -31,7 +31,6 @@
 
 #include "config-types.h"
 
-#include "base/base-types.h" /* eek */
 #include "base/base-utils.h"
 #include "base/pixel-processor.h"
 

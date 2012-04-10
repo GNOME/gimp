@@ -19,6 +19,11 @@
 #define __TILE_MANAGER_H__
 
 
+typedef void (* TileValidateProc)   (TileManager *tm,
+                                     Tile        *tile,
+                                     gpointer     user_data);
+
+
 #define GIMP_TYPE_TILE_MANAGER               (gimp_tile_manager_get_type ())
 #define GIMP_VALUE_HOLDS_TILE_MANAGER(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_TILE_MANAGER))
 

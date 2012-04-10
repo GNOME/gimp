@@ -36,6 +36,8 @@ struct _PixelRegion
   gint         process_count;  /*  used internally               */
 };
 
+typedef struct _PixelRegionHolder   PixelRegionHolder;
+
 struct _PixelRegionHolder
 {
   PixelRegion *PR;
@@ -44,6 +46,8 @@ struct _PixelRegionHolder
   gint         starty;
   gint         count;
 };
+
+typedef struct _PixelRegionIterator PixelRegionIterator;
 
 struct _PixelRegionIterator
 {

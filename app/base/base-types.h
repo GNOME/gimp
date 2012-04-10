@@ -19,10 +19,6 @@
 #define __BASE_TYPES_H__
 
 
-#include "libgimpbase/gimpbasetypes.h"
-#include "libgimpmath/gimpmathtypes.h"
-#include "libgimpcolor/gimpcolortypes.h"
-
 #include "paint-funcs/paint-funcs-types.h"
 
 #include "core/core-types.h" /* screw include policy in base/ */
@@ -45,23 +41,13 @@
 
 /* types */
 
-typedef struct _PixelRegionIterator PixelRegionIterator;
 typedef struct _PixelRegion         PixelRegion;
-typedef struct _PixelRegionHolder   PixelRegionHolder;
 
 typedef struct _SioxState           SioxState;
 
 typedef struct _Tile                Tile;
 typedef struct _TileManager         TileManager;
 typedef struct _TilePyramid         TilePyramid;
-
-
-/*  functions  */
-
-typedef void (* TileValidateProc)   (TileManager *tm,
-                                     Tile        *tile,
-                                     gpointer     user_data);
-typedef void (* PixelProcessorFunc) (void);
 
 
 /*  enums  */
