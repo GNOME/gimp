@@ -200,3 +200,11 @@ gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf)
 
   return buffer;
 }
+
+GimpTempBuf *
+gimp_gegl_buffer_get_temp_buf (GeglBuffer *buffer)
+{
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+
+  return g_object_get_data (G_OBJECT (buffer), "gimp-temp-buf");
+}

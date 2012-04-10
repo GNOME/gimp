@@ -39,6 +39,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojection.h"
+#include "core/gimptempbuf.h"
 
 #include "gimppaintcore.h"
 #include "gimppaintcoreundo.h"
