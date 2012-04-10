@@ -44,8 +44,6 @@ gimp_temp_buf_new (gint        width,
   temp->format    = format;
   temp->width     = width;
   temp->height    = height;
-  temp->x         = 0;
-  temp->y         = 0;
 
   temp->data = g_new (guchar,
                       width * height *
@@ -55,7 +53,7 @@ gimp_temp_buf_new (gint        width,
 }
 
 GimpTempBuf *
-gimp_temp_buf_copy (GimpTempBuf *src)
+gimp_temp_buf_copy (const GimpTempBuf *src)
 {
   GimpTempBuf *dest;
 
@@ -98,9 +96,9 @@ gimp_temp_buf_unref (GimpTempBuf *buf)
 }
 
 GimpTempBuf *
-gimp_temp_buf_scale (GimpTempBuf *src,
-                     gint         new_width,
-                     gint         new_height)
+gimp_temp_buf_scale (const GimpTempBuf *src,
+                     gint               new_width,
+                     gint               new_height)
 {
   GimpTempBuf  *dest;
   const guchar *src_data;
@@ -113,6 +111,9 @@ gimp_temp_buf_scale (GimpTempBuf *src,
 
   g_return_val_if_fail (src != NULL, NULL);
   g_return_val_if_fail (new_width > 0 && new_height > 0, NULL);
+
+  if (new_width == src->width && new_height == src->height)
+    return gimp_temp_buf_copy (src);
 
   dest = gimp_temp_buf_new (new_width,
                             new_height,
@@ -156,7 +157,7 @@ gimp_temp_buf_get_data (const GimpTempBuf *buf)
 }
 
 gsize
-gimp_temp_buf_get_data_size (GimpTempBuf *buf)
+gimp_temp_buf_get_data_size (const GimpTempBuf *buf)
 {
   return babl_format_get_bytes_per_pixel (buf->format) * buf->width * buf->height;
 }
@@ -170,7 +171,7 @@ gimp_temp_buf_data_clear (GimpTempBuf *buf)
 }
 
 gsize
-gimp_temp_buf_get_memsize (GimpTempBuf *buf)
+gimp_temp_buf_get_memsize (const GimpTempBuf *buf)
 {
   if (buf)
     return (sizeof (GimpTempBuf) + gimp_temp_buf_get_data_size (buf));

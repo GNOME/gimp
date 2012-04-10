@@ -22,34 +22,30 @@
 struct _GimpTempBuf
 {
   gint        ref_count;
-  const Babl *format;  /*  pixel format  */
+  const Babl *format;
   gint        width;
   gint        height;
-  gint        x, y;      /*  origin of data source                          */
-  guchar     *data;      /*  The data buffer. Do never access this field
-                           directly, use temp_buf_get_data() instead !!   */
+  guchar     *data;
 };
 
-
-/*  The temp buffer functions  */
 
 GimpTempBuf * gimp_temp_buf_new           (gint               width,
                                            gint               height,
                                            const Babl        *fomat) G_GNUC_WARN_UNUSED_RESULT;
-GimpTempBuf * gimp_temp_buf_copy          (GimpTempBuf       *src) G_GNUC_WARN_UNUSED_RESULT;
+GimpTempBuf * gimp_temp_buf_copy          (const GimpTempBuf *src) G_GNUC_WARN_UNUSED_RESULT;
 
 GimpTempBuf * gimp_temp_buf_ref           (GimpTempBuf       *buf);
 void          gimp_temp_buf_unref         (GimpTempBuf       *buf);
 
-GimpTempBuf * gimp_temp_buf_scale         (GimpTempBuf       *buf,
+GimpTempBuf * gimp_temp_buf_scale         (const GimpTempBuf *buf,
                                            gint               width,
                                            gint               height) G_GNUC_WARN_UNUSED_RESULT;
 
 guchar      * gimp_temp_buf_get_data      (const GimpTempBuf *buf);
-gsize         gimp_temp_buf_get_data_size (GimpTempBuf       *buf);
+gsize         gimp_temp_buf_get_data_size (const GimpTempBuf *buf);
 guchar      * gimp_temp_buf_data_clear    (GimpTempBuf       *buf);
 
-gsize         gimp_temp_buf_get_memsize   (GimpTempBuf       *buf);
+gsize         gimp_temp_buf_get_memsize   (const GimpTempBuf *buf);
 
 GeglBuffer  * gimp_temp_buf_create_buffer (GimpTempBuf       *temp_buf) G_GNUC_WARN_UNUSED_RESULT;
 
