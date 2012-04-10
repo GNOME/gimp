@@ -36,6 +36,34 @@
 static cairo_user_data_key_t surface_data_key = { 0, };
 
 
+GeglBuffer *
+gimp_cairo_image_surface_create_buffer (cairo_surface_t *surface)
+{
+  const Babl *format;
+  gint        width;
+  gint        height;
+
+  g_return_val_if_fail (surface != NULL, NULL);
+  g_return_val_if_fail (cairo_surface_get_type (surface) ==
+                        CAIRO_SURFACE_TYPE_IMAGE, NULL);
+
+  width  = cairo_image_surface_get_width  (surface);
+  height = cairo_image_surface_get_height (surface);
+
+  if (cairo_surface_get_content (surface) == CAIRO_CONTENT_COLOR_ALPHA)
+    format = babl_format ("cairo-ARGB32");
+  else
+    format = babl_format ("cairo-RGB24");
+
+  return
+    gegl_buffer_linear_new_from_data (cairo_image_surface_get_data (surface),
+                                      format,
+                                      GEGL_RECTANGLE (0, 0, width, height),
+                                      cairo_image_surface_get_stride (surface),
+                                      (GDestroyNotify) cairo_surface_destroy,
+                                      cairo_surface_reference (surface));
+}
+
 cairo_pattern_t *
 gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
                                    const GimpRGB *bg,

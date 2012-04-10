@@ -25,19 +25,21 @@
 #define __GIMP_CAIRO_H__
 
 
-cairo_pattern_t * gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
-                                                     const GimpRGB *bg,
-                                                     gint           index);
+GeglBuffer      * gimp_cairo_image_surface_create_buffer (cairo_surface_t *surface);
 
-void              gimp_cairo_add_arc                (cairo_t       *cr,
-                                                     gdouble        center_x,
-                                                     gdouble        center_y,
-                                                     gdouble        radius,
-                                                     gdouble        start_angle,
-                                                     gdouble        slice_angle);
-void              gimp_cairo_add_segments           (cairo_t       *cr,
-                                                     GimpSegment   *segs,
-                                                     gint           n_segs);
+cairo_pattern_t * gimp_cairo_stipple_pattern_create      (const GimpRGB   *fg,
+                                                          const GimpRGB   *bg,
+                                                          gint             index);
+
+void              gimp_cairo_add_arc                     (cairo_t         *cr,
+                                                          gdouble          center_x,
+                                                          gdouble          center_y,
+                                                          gdouble          radius,
+                                                          gdouble          start_angle,
+                                                          gdouble          slice_angle);
+void              gimp_cairo_add_segments                (cairo_t         *cr,
+                                                          GimpSegment     *segs,
+                                                          gint             n_segs);
 
 
 #endif /* __GIMP_CAIRO_H__ */

@@ -36,6 +36,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimp-cairo.h"
 #include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
@@ -670,18 +671,13 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   cairo_surface_flush (surface);
 
-  buffer =
-    gegl_buffer_linear_new_from_data (cairo_image_surface_get_data (surface),
-                                      babl_format ("cairo-ARGB32"),
-                                      GEGL_RECTANGLE (0, 0, width, height),
-                                      cairo_image_surface_get_stride (surface),
-                                      (GDestroyNotify) cairo_surface_destroy,
-                                      surface);
+  buffer = gimp_cairo_image_surface_create_buffer (surface);
 
   gegl_buffer_copy (buffer, NULL,
                     gimp_drawable_get_buffer (drawable), NULL);
 
   g_object_unref (buffer);
+  cairo_surface_destroy (surface);
 
   gimp_drawable_update (drawable, 0, 0, width, height);
 }

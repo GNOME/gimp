@@ -135,10 +135,12 @@ workaround_that_file_depends_on_plug_in = \
 # core, vectors and gegl are on the same architectural layer, prevent
 # the linker from panicing
 calm_down_linker = \
-	-u $(SYMPREFIX)gimp_vectors_undo_get_type	\
-	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
-	-u $(SYMPREFIX)gimp_curve_map_pixels
+	-u $(SYMPREFIX)gimp_vectors_undo_get_type		\
+	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type		\
+	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type		\
+	-u $(SYMPREFIX)gimp_curve_map_pixels			\
+	-u $(SYMPREFIX)gimp_cairo_image_surface_create_buffer	\
+	-u $(SYMPREFIX)gimp_param_spec_duplicate
 
 AM_LDFLAGS = \
 	$(munix)					\
@@ -147,8 +149,7 @@ AM_LDFLAGS = \
 	$(workaround_that_core_depends_on_xcf)		\
 	$(workaround_that_core_depends_on_pdb)		\
 	$(workaround_that_plug_in_depends_on_pdb)	\
-	$(workaround_that_file_depends_on_plug_in)	\
-	-u $(SYMPREFIX)gimp_param_spec_duplicate
+	$(workaround_that_file_depends_on_plug_in)
 
 gimpconsoleldadd = \
 	xcf/libappxcf.a			\
