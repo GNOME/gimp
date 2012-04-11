@@ -35,7 +35,6 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
-#include "gimpdrawable-convert.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-private.h"
@@ -694,23 +693,23 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpImageBaseType  new_base_type,
                                  gboolean           push_undo)
 {
-  switch (new_base_type)
-    {
-    case GIMP_RGB:
-      gimp_drawable_convert_rgb (drawable, dest_image, push_undo);
-      break;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
 
-    case GIMP_GRAY:
-      gimp_drawable_convert_grayscale (drawable, dest_image, push_undo);
-      break;
+  format = gimp_image_get_format (dest_image, new_base_type,
+                                  gimp_drawable_has_alpha (drawable));
 
-    case GIMP_INDEXED:
-      gimp_drawable_convert_indexed (drawable, dest_image, push_undo);
-      break;
+  dest_buffer =
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                          gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                          gimp_item_get_height (GIMP_ITEM (drawable))),
+                          format);
 
-    default:
-      break;
-    }
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                    dest_buffer, NULL);
+
+  gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
+  g_object_unref (dest_buffer);
 }
 
 static GeglBuffer *
@@ -1157,13 +1156,11 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             gboolean           push_undo)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (dest_image == NULL || GIMP_IS_IMAGE (dest_image));
-  g_return_if_fail (new_base_type != GIMP_INDEXED || GIMP_IS_IMAGE (dest_image));
+  g_return_if_fail (GIMP_IS_IMAGE (dest_image));
+  g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable));
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
-
-  g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable));
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
                                                     new_base_type, push_undo);

@@ -446,7 +446,7 @@ gimp_channel_convert (GimpItem  *item,
 
   if (! gimp_drawable_is_gray (drawable))
     {
-      gimp_drawable_convert_type (drawable, NULL, GIMP_GRAY, FALSE);
+      gimp_drawable_convert_type (drawable, dest_image, GIMP_GRAY, FALSE);
     }
 
   if (gimp_drawable_has_alpha (drawable))

@@ -37,7 +37,6 @@
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
-#include "gimpdrawable-convert.h"
 #include "gimpdrawable-operation.h"
 #include "gimperror.h"
 #include "gimpimage-undo-push.h"

@@ -128,8 +128,6 @@ libappcore_a_sources = \
 	gimpdrawable-bucket-fill.h		\
 	gimpdrawable-combine.c			\
 	gimpdrawable-combine.h			\
-	gimpdrawable-convert.c			\
-	gimpdrawable-convert.h			\
 	gimpdrawable-equalize.c			\
 	gimpdrawable-equalize.h			\
 	gimpdrawable-foreground-extract.c	\

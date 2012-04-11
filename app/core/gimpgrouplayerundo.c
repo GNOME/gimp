@@ -120,7 +120,8 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
         GimpImageBaseType type;
 
         type = gimp_drawable_get_base_type (GIMP_DRAWABLE (group));
-        gimp_drawable_convert_type (GIMP_DRAWABLE (group), NULL,
+        gimp_drawable_convert_type (GIMP_DRAWABLE (group),
+                                    gimp_item_get_image (GIMP_ITEM (group)),
                                     group_layer_undo->prev_type, FALSE);
         group_layer_undo->prev_type = type;
       }
