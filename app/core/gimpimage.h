@@ -112,17 +112,13 @@ GimpImageBaseType  gimp_image_base_type            (const GimpImage  *image);
 CombinationMode    gimp_image_get_combination_mode (GimpImageType     dest_type,
                                                     gint              src_bytes);
 
-const Babl * gimp_image_get_format               (const GimpImage    *image,
-                                                  GimpImageType       type);
-const Babl * gimp_image_get_format_with_alpha    (const GimpImage    *image,
-                                                  GimpImageType       type);
-const Babl * gimp_image_get_format_without_alpha (const GimpImage    *image,
-                                                  GimpImageType       type);
-
-const Babl * gimp_image_get_layer_format         (const GimpImage    *image,
+const Babl    * gimp_image_get_format            (const GimpImage    *image,
+                                                  GimpImageBaseType   base_type,
                                                   gboolean            with_alpha);
-const Babl * gimp_image_get_channel_format       (const GimpImage    *image);
-const Babl * gimp_image_get_mask_format          (const GimpImage    *image);
+const Babl    * gimp_image_get_layer_format      (const GimpImage    *image,
+                                                  gboolean            with_alpha);
+const Babl    * gimp_image_get_channel_format    (const GimpImage    *image);
+const Babl    * gimp_image_get_mask_format       (const GimpImage    *image);
 
 gint            gimp_image_get_ID                (const GimpImage    *image);
 GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,

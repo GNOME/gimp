@@ -42,10 +42,8 @@ gimp_drawable_convert_rgb (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (! gimp_drawable_is_rgb (drawable));
 
-  if (gimp_drawable_has_alpha (drawable))
-    format = gimp_image_get_format (dest_image, GIMP_RGBA_IMAGE);
-  else
-    format = gimp_image_get_format (dest_image, GIMP_RGB_IMAGE);
+  format = gimp_image_get_format (dest_image, GIMP_RGB,
+                                  gimp_drawable_has_alpha (drawable));
 
   dest_buffer =
     gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -72,10 +70,8 @@ gimp_drawable_convert_grayscale (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (! gimp_drawable_is_gray (drawable));
 
-  if (gimp_drawable_has_alpha (drawable))
-    format = gimp_image_get_format (dest_image, GIMP_GRAYA_IMAGE);
-  else
-    format = gimp_image_get_format (dest_image, GIMP_GRAY_IMAGE);
+  format = gimp_image_get_format (dest_image, GIMP_GRAY,
+                                  gimp_drawable_has_alpha (drawable));
 
   dest_buffer =
     gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -102,10 +98,8 @@ gimp_drawable_convert_indexed (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (! gimp_drawable_is_indexed (drawable));
 
-  if (gimp_drawable_has_alpha (drawable))
-    format = gimp_image_get_format (dest_image, GIMP_INDEXEDA_IMAGE);
-  else
-    format = gimp_image_get_format (dest_image, GIMP_INDEXED_IMAGE);
+  format = gimp_image_get_format (dest_image, GIMP_INDEXED,
+                                  gimp_drawable_has_alpha (drawable));
 
   dest_buffer =
     gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,

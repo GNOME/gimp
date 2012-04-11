@@ -75,8 +75,12 @@ layer_new_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      gboolean has_alpha =  (type == GIMP_RGBA_IMAGE ||
+                             type == GIMP_GRAYA_IMAGE ||
+                             type == GIMP_INDEXEDA_IMAGE);
+
       layer = gimp_layer_new (image, width, height,
-                              gimp_image_get_format (image, type),
+                              gimp_image_get_layer_format (image, has_alpha),
                               name, opacity / 100.0, mode);
 
       if (! layer)

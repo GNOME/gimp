@@ -1387,9 +1387,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
         if (! gimp_drawable_is_gray (drawable))
           {
             const Babl *copy_format =
-              gimp_image_get_format (image,
-                                     gimp_drawable_has_alpha (drawable) ?
-                                     GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
+              gimp_image_get_format (image, GIMP_GRAY,
+                                     gimp_drawable_has_alpha (drawable));
 
             src_buffer =
               gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,

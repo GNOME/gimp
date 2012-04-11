@@ -1475,75 +1475,13 @@ gimp_image_get_combination_mode (GimpImageType dest_type,
 }
 
 const Babl *
-gimp_image_get_format (const GimpImage *image,
-                       GimpImageType    type)
+gimp_image_get_format (const GimpImage   *image,
+                       GimpImageBaseType  base_type,
+                       gboolean           with_alpha)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  switch (type)
-    {
-    case GIMP_RGB_IMAGE:      return babl_format ("R'G'B' u8");
-    case GIMP_RGBA_IMAGE:     return babl_format ("R'G'B'A u8");
-    case GIMP_GRAY_IMAGE:     return babl_format ("Y' u8");
-    case GIMP_GRAYA_IMAGE:    return babl_format ("Y'A u8");
-    case GIMP_INDEXED_IMAGE:  return gimp_image_colormap_get_rgb_format (image);
-    case GIMP_INDEXEDA_IMAGE: return gimp_image_colormap_get_rgba_format (image);
-    }
-
-  g_warn_if_reached ();
-
-  return NULL;
-}
-
-const Babl *
-gimp_image_get_format_with_alpha (const GimpImage *image,
-                                  GimpImageType    type)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  switch (type)
-    {
-    case GIMP_RGB_IMAGE:
-    case GIMP_RGBA_IMAGE:     return babl_format ("R'G'B'A u8");
-    case GIMP_GRAY_IMAGE:
-    case GIMP_GRAYA_IMAGE:    return babl_format ("Y'A u8");
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE: return gimp_image_colormap_get_rgba_format (image);
-    }
-
-  g_warn_if_reached ();
-
-  return NULL;
-}
-
-const Babl *
-gimp_image_get_format_without_alpha (const GimpImage *image,
-                                     GimpImageType    type)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  switch (type)
-    {
-    case GIMP_RGB_IMAGE:
-    case GIMP_RGBA_IMAGE:     return babl_format ("R'G'B' u8");
-    case GIMP_GRAY_IMAGE:
-    case GIMP_GRAYA_IMAGE:    return babl_format ("Y' u8");
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE: return gimp_image_colormap_get_rgb_format (image);
-    }
-
-  g_warn_if_reached ();
-
-  return NULL;
-}
-
-const Babl *
-gimp_image_get_layer_format (const GimpImage *image,
-                             gboolean         with_alpha)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  switch (GIMP_IMAGE_GET_PRIVATE (image)->base_type)
+  switch (base_type)
     {
     case GIMP_RGB:
       if (with_alpha)
@@ -1565,6 +1503,17 @@ gimp_image_get_layer_format (const GimpImage *image,
     }
 
   g_return_val_if_reached (NULL);
+}
+
+const Babl *
+gimp_image_get_layer_format (const GimpImage *image,
+                             gboolean         with_alpha)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return gimp_image_get_format (image,
+                                GIMP_IMAGE_GET_PRIVATE (image)->base_type,
+                                with_alpha);
 }
 
 const Babl *

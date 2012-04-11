@@ -35,6 +35,7 @@
 #include "core/gimpdynamicsoutput.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimptempbuf.h"
 
 #include "gimppaintbrush.h"
 #include "gimppaintoptions.h"

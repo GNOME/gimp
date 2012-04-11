@@ -1089,6 +1089,7 @@ xcf_load_layer (XcfInfo    *info,
   gint           width;
   gint           height;
   gint           type;
+  gboolean       has_alpha;
   gboolean       is_fs_drawable;
   gchar         *name;
 
@@ -1103,9 +1104,13 @@ xcf_load_layer (XcfInfo    *info,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &type, 1);
   info->cp += xcf_read_string (info->fp, &name, 1);
 
+  has_alpha = (type == GIMP_RGBA_IMAGE ||
+               type == GIMP_GRAYA_IMAGE ||
+               type == GIMP_INDEXEDA_IMAGE);
+
   /* create a new layer */
   layer = gimp_layer_new (image, width, height,
-                          gimp_image_get_format (image, type),
+                          gimp_image_get_layer_format (image, has_alpha),
                           name, 255, GIMP_NORMAL_MODE);
   g_free (name);
   if (! layer)

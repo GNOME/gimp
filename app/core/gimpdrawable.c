@@ -1598,8 +1598,9 @@ gimp_drawable_get_format_with_alpha (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  return gimp_image_get_format_with_alpha (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                           gimp_drawable_type (drawable));
+  return gimp_image_get_format (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                gimp_drawable_get_base_type (drawable),
+                                TRUE);
 }
 
 const Babl *
@@ -1607,8 +1608,9 @@ gimp_drawable_get_format_without_alpha (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  return gimp_image_get_format_without_alpha (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                              gimp_drawable_type (drawable));
+  return gimp_image_get_format (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                gimp_drawable_get_base_type (drawable),
+                                FALSE);
 }
 
 gboolean
