@@ -653,10 +653,11 @@ term_source (j_decompress_ptr cinfo)
 }
 
 gint32
-load_thumbnail_image (const gchar  *filename,
-                      gint         *width,
-                      gint         *height,
-                      GError      **error)
+load_thumbnail_image (const gchar   *filename,
+                      gint          *width,
+                      gint          *height,
+                      GimpImageType *type,
+                      GError       **error)
 {
   gint32 volatile  image_ID;
   ExifData        *exif_data;
@@ -951,6 +952,8 @@ load_thumbnail_image (const gchar  *filename,
     }
 
   jpeg_exif_rotate (image_ID, orientation);
+
+  *type = layer_type;
 
   return image_ID;
 }

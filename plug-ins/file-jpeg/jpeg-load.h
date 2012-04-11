@@ -26,10 +26,11 @@ gint32 load_image           (const gchar  *filename,
 
 #ifdef HAVE_LIBEXIF
 
-gint32 load_thumbnail_image (const gchar  *filename,
-                             gint         *width,
-                             gint         *height,
-                             GError      **error);
+gint32 load_thumbnail_image (const gchar   *filename,
+                             gint          *width,
+                             gint          *height,
+                             GimpImageType *type,
+                             GError       **error);
 
 #endif /* HAVE_LIBEXIF */
 

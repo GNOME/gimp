@@ -191,7 +191,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[4];
+  static GimpParam   values[6];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
@@ -257,21 +257,27 @@ run (const gchar      *name,
         }
       else
         {
-          const gchar *filename = param[0].data.d_string;
-          gint         width    = 0;
-          gint         height   = 0;
+          const gchar  *filename = param[0].data.d_string;
+          gint          width    = 0;
+          gint          height   = 0;
+          GimpImageType type     = -1;
 
-          image_ID = load_thumbnail_image (filename, &width, &height, &error);
+          image_ID = load_thumbnail_image (filename, &width, &height, &type,
+                                           &error);
 
           if (image_ID != -1)
             {
-              *nreturn_vals = 4;
+              *nreturn_vals = 6;
               values[1].type         = GIMP_PDB_IMAGE;
               values[1].data.d_image = image_ID;
               values[2].type         = GIMP_PDB_INT32;
               values[2].data.d_int32 = width;
               values[3].type         = GIMP_PDB_INT32;
               values[3].data.d_int32 = height;
+              values[4].type         = GIMP_PDB_INT32;
+              values[4].data.d_int32 = type;
+              values[5].type         = GIMP_PDB_INT32;
+              values[5].data.d_int32 = 1; /* num_layers */
             }
           else
             {
