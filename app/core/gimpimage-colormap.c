@@ -73,9 +73,14 @@ gimp_image_colormap_init (GimpImage *image)
 
   if (! private->babl_palette_rgb)
     {
-      babl_new_palette (NULL,
+      gchar *format_name = g_strdup_printf ("-gimp-indexed-format-%d",
+                                            gimp_image_get_ID (image));
+
+      babl_new_palette (format_name,
                         &private->babl_palette_rgb,
                         &private->babl_palette_rgba);
+
+      g_free (format_name);
     }
 
   gimp_palette_set_columns (private->palette, 16);
