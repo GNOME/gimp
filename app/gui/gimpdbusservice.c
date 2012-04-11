@@ -22,6 +22,7 @@
 
 #if HAVE_DBUS_GLIB
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <dbus/dbus-glib.h>
 

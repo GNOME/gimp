@@ -114,7 +114,7 @@ static void     gimp_thumbnail_set_info            (GimpThumbnail  *thumbnail,
                                                     const gchar    *mime_type,
                                                     gint            width,
                                                     gint            height,
-                                                    GimpImageType   type,
+                                                    const Babl     *format,
                                                     gint            num_layers);
 
 
@@ -353,7 +353,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       gint           height     = 0;
       const gchar   *mime_type  = NULL;
       GError        *error      = NULL;
-      GimpImageType  type       = -1;
+      const Babl    *format     = NULL;
       gint           num_layers = -1;
 
       g_object_ref (imagefile);
@@ -361,13 +361,13 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       image = file_open_thumbnail (private->gimp, context, progress,
                                    thumbnail->image_uri, size,
                                    &mime_type, &width, &height,
-                                   &type, &num_layers, NULL);
+                                   &format, &num_layers, NULL);
 
       if (image)
         {
           gimp_thumbnail_set_info (private->thumbnail,
                                    mime_type, width, height,
-                                   type, num_layers);
+                                   format, num_layers);
         }
       else
         {
@@ -997,7 +997,7 @@ gimp_thumbnail_set_info_from_image (GimpThumbnail *thumbnail,
  * @mime_type:  MIME type of the image associated with this thumbnail
  * @width:      width of the image associated with this thumbnail
  * @height:     height of the image associated with this thumbnail
- * @type:       type of the image (or -1 if the type is not known)
+ * @format:     format of the image (or NULL if the type is not known)
  * @num_layers: number of layers in the image
  *              (or -1 if the number of layers is not known)
  *
@@ -1008,7 +1008,7 @@ gimp_thumbnail_set_info (GimpThumbnail *thumbnail,
                          const gchar   *mime_type,
                          gint           width,
                          gint           height,
-                         GimpImageType  type,
+                         const Babl    *format,
                          gint           num_layers)
 {
   /*  peek the thumbnail to make sure that mtime and filesize are set  */
@@ -1020,23 +1020,13 @@ gimp_thumbnail_set_info (GimpThumbnail *thumbnail,
                 "image-height",   height,
                 NULL);
 
-  if (type != -1)
-    {
-      GimpEnumDesc *desc;
-
-      desc = gimp_enum_get_desc (g_type_class_peek (GIMP_TYPE_IMAGE_TYPE),
-                                 type);
-
-      if (desc)
-        g_object_set (thumbnail,
-                      "image-type", desc->value_desc,
-                      NULL);
-    }
+  if (format)
+    g_object_set (thumbnail,
+                  "image-type", gimp_babl_get_description (format),
+                  NULL);
 
   if (num_layers != -1)
-    {
-      g_object_set (thumbnail,
-                    "image-num-layers", num_layers,
-                    NULL);
-    }
+    g_object_set (thumbnail,
+                  "image-num-layers", num_layers,
+                  NULL);
 }

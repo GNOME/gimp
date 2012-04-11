@@ -229,7 +229,7 @@ file_open_image (Gimp                *gimp,
  * @mime_type:    return location for image MIME type
  * @image_width:  return location for image width
  * @image_height: return location for image height
- * @type:         return location for image type (set to -1 if unknown)
+ * @format:       return location for image format (set to NULL if unknown)
  * @num_layers:   return location for number of layers
  *                (set to -1 if the number of layers is not known)
  * @error:
@@ -247,7 +247,7 @@ file_open_thumbnail (Gimp           *gimp,
                      const gchar   **mime_type,
                      gint           *image_width,
                      gint           *image_height,
-                     GimpImageType  *type,
+                     const Babl    **format,
                      gint           *num_layers,
                      GError        **error)
 {
@@ -260,13 +260,13 @@ file_open_thumbnail (Gimp           *gimp,
   g_return_val_if_fail (mime_type != NULL, NULL);
   g_return_val_if_fail (image_width != NULL, NULL);
   g_return_val_if_fail (image_height != NULL, NULL);
-  g_return_val_if_fail (type != NULL, NULL);
+  g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (num_layers != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   *image_width  = 0;
   *image_height = 0;
-  *type         = -1;
+  *format       = NULL;
   *num_layers   = -1;
 
   file_proc = file_procedure_find (gimp->plug_in_manager->load_procs, uri,
@@ -320,10 +320,42 @@ file_open_thumbnail (Gimp           *gimp,
                 {
                   gint value = g_value_get_int (&return_vals->values[4]);
 
-                  if (gimp_enum_get_value (GIMP_TYPE_IMAGE_TYPE, value,
-                                           NULL, NULL, NULL, NULL))
+                  switch (value)
                     {
-                      *type = value;
+                    case GIMP_RGB_IMAGE:
+                      *format = babl_format ("R'G'B' u8");
+                      break;
+
+                    case GIMP_RGBA_IMAGE:
+                      *format = babl_format ("R'G'B'A u8");
+                      break;
+
+                    case GIMP_GRAY_IMAGE:
+                      *format = babl_format ("Y' u8");
+                      break;
+
+                    case GIMP_GRAYA_IMAGE:
+                      *format = babl_format ("Y'A u8");
+                      break;
+
+                    case GIMP_INDEXED_IMAGE:
+                    case GIMP_INDEXEDA_IMAGE:
+                      {
+                        const Babl *rgb;
+                        const Babl *rgba;
+
+                        babl_new_palette ("-gimp-indexed-format-dummy",
+                                          &rgb, &rgba);
+
+                        if (value == GIMP_INDEXED_IMAGE)
+                          *format = rgb;
+                        else
+                          *format = rgba;
+                      }
+                      break;
+
+                    default:
+                      break;
                     }
                 }
 
