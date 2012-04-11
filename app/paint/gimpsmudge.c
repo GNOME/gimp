@@ -376,6 +376,7 @@ gimp_smudge_accumulator_size (GimpPaintOptions *paint_options,
                               gint             *accumulator_size)
 {
 
-  /* Note: the max brush mask size plus a border of 1 pixel */
-  *accumulator_size = ceil (sqrt (2 * SQR(paint_options->brush_size)) + 2);
+  /* Note: the max brush mask size plus a border of 1 pixel and a little
+   * headroom */
+  *accumulator_size = ceil (sqrt (2 * SQR (paint_options->brush_size + 1)) + 2);
 }
