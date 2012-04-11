@@ -300,7 +300,7 @@ gimp_desaturate_full (gint32             drawable_ID,
  * Equalize the contents of the specified drawable.
  *
  * This procedure equalizes the contents of the specified drawable.
- * Each intensity channel is equalizeed independently. The equalized
+ * Each intensity channel is equalized independently. The equalized
  * intensity is given as inten' = (255 - inten). Indexed color
  * drawables are not valid for this operation. The 'mask_only' option
  * specifies whether to adjust only the area of the image within the
