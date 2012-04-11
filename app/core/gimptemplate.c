@@ -425,7 +425,7 @@ gimp_template_get_resolution_unit (GimpTemplate *template)
 GimpImageBaseType
 gimp_template_get_image_type (GimpTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_RGB_IMAGE);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_RGB);
 
   return GET_PRIVATE (template)->image_type;
 }
