@@ -22,7 +22,9 @@
 #define __GIMP_GEGL_H__
 
 
-void   gimp_gegl_init (Gimp *gimp);
+void          gimp_gegl_init            (Gimp       *gimp);
+
+const gchar * gimp_babl_get_description (const Babl *babl);
 
 
 #endif /* __GIMP_GEGL_H__ */

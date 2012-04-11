@@ -31,6 +31,8 @@
 
 #include "config/gimpdisplayconfig.h"
 
+#include "gegl/gimp-gegl.h"
+
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -131,17 +133,6 @@ gimp_display_shell_title_image_type (GimpImage *image)
 
   gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE,
                        gimp_image_base_type (image), NULL, NULL, &name, NULL);
-
-  return name;
-}
-
-static const gchar *
-gimp_display_shell_title_drawable_type (GimpDrawable *drawable)
-{
-  const gchar *name = "";
-
-  gimp_enum_get_value (GIMP_TYPE_IMAGE_TYPE,
-                       gimp_drawable_type (drawable), NULL, NULL, &name, NULL);
 
   return name;
 }
@@ -248,10 +239,11 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
             case 'T': /* drawable type */
               {
                 GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+                const Babl   *format   = gimp_drawable_get_format (drawable);
 
                 if (drawable)
                   i += print (title, title_len, i, "%s",
-                              gimp_display_shell_title_drawable_type (drawable));
+                              gimp_babl_get_description (format));
               }
               break;
 
