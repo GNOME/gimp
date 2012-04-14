@@ -1,14 +1,14 @@
 # Breton translation for gimp
 # Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
 # This file is distributed under the same license as the gimp package.
-# Alan Monfort <alan.monfort@free.fr>, 2007-2011.
+# Alan Monfort <alan.monfort@free.fr>, 2007-2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2010-08-18 05:18+0000\n"
-"PO-Revision-Date: 2010-08-25 16:44+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-03-10 17:30+0000\n"
+"PO-Revision-Date: 2012-04-06 23:04+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig <drouizig@drouizig.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,22 +17,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1057
+#: ../libgimp/gimp.c:1077
 msgid "success"
 msgstr "taol berzh"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1061
+#: ../libgimp/gimp.c:1081
 msgid "execution error"
 msgstr "fazi gant an erounit"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1065
+#: ../libgimp/gimp.c:1085
 msgid "calling error"
 msgstr "fazi gervel"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1069
+#: ../libgimp/gimp.c:1089
 msgid "cancelled"
 msgstr "dilezet"
 
@@ -189,7 +189,7 @@ msgid "_Ignore"
 msgstr "_Leuskel a-gostez"
 
 #: ../libgimp/gimpexport.c:518
-#: ../libgimp/gimpexport.c:989
+#: ../libgimp/gimpexport.c:988
 msgid "_Export"
 msgstr "_Ezporzhiañ"
 
@@ -222,7 +222,7 @@ msgstr ""
 "Emaoc'h oc'h enrollañ ur sanell (diuzad enrollet) evel %s.\n"
 "Ne vo ket enrollet an treuzfollennoù hewel ganti."
 
-#: ../libgimp/gimpexport.c:980
+#: ../libgimp/gimpexport.c:979
 msgid "Export Image as "
 msgstr "Ezporzhiañ ar skeudenn evel "
 
@@ -238,8 +238,11 @@ msgstr "Hep"
 msgid "Gradient Selection"
 msgstr "Diuzad ilrezennoù"
 
-#: ../libgimp/gimpmenu.c:459
-#: ../libgimpwidgets/gimpintstore.c:248
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
+#: ../libgimp/gimpmenu.c:461
+#: ../libgimpwidgets/gimpintstore.c:241
 msgid "(Empty)"
 msgstr "(Goullo)"
 
@@ -364,7 +367,7 @@ msgstr "Deiziad :"
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: ../libgimp/gimpunitcache.c:56
+#: ../libgimp/gimpunitcache.c:54
 msgid "percent"
 msgstr "dregant"
 
@@ -897,7 +900,7 @@ msgstr "Leuniet"
 #: ../libgimpbase/gimputils.c:183
 #: ../modules/color-selector-cmyk-lcms.c:424
 #: ../modules/color-selector-cmyk-lcms.c:430
-#: ../modules/display-filter-lcms.c:182
+#: ../modules/display-filter-lcms.c:178
 msgid "(invalid UTF-8 string)"
 msgstr "(hedad nodoù UTF-8 didalvoudek)"
 
@@ -908,43 +911,43 @@ msgstr "(hedad nodoù UTF-8 didalvoudek)"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "Mode of operation for color management."
 msgstr "Mod gwezhiañ evit an ardeiñ liv."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile of your (primary) monitor."
 msgstr "Aelad liv ho skramm (pennañ)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
 msgstr "Mar gweredekaet e vo klasket gant GIMP arverañ aelad ar skrammañ liv  diouzh ar reizhiad prenestrañ. Arveret e vo neuze aelad ar skramm kefluniet evel un adaelad."
 
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: ../libgimpconfig/gimpcolorconfig.c:60
 msgid "The default RGB working space color profile."
 msgstr "Aelad liv an egor labourat RGG dre ziouer."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "An aelad liv SMMD averet evit amdreiñ an RGG da SMMD."
 
-#: ../libgimpconfig/gimpcolorconfig.c:62
+#: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "An aelad liv arveret evit darvanañ un handelv moullet (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:64
+#: ../libgimpconfig/gimpcolorconfig.c:66
 msgid "Sets how colors are mapped for your display."
 msgstr "Arventennañ a ra penaos e vo glennet al livioù evit ar skrammañ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:66
+#: ../libgimpconfig/gimpcolorconfig.c:68
 msgid "Sets how colors are converted from RGB working space to the print simulation device."
 msgstr "Arventennañ a ra penaos e vez amdroet al livioù diouzh an egor livventerezhel war arver en trevnad da zarvanañ ar moullañ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:69
+#: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
 msgstr "Mar gweredekaet e vo merket al livioù na vint ket evit bezañ krouet en egor livventerezhel gant an darvanad moullañ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:74
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Al liv da arverañ evit ober livioù er-maez eus an dirïad livioù."
 
@@ -985,7 +988,7 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Livverk dizave"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:105
+#: ../libgimpconfig/gimpconfig-deserialize.c:106
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "ar werzh evit ar reveziadenn %s n'eo ket un hedad UTF-8 talvoudek"
@@ -1013,9 +1016,9 @@ msgstr "e-pad ma oa o tezrannañ ar reveziadenn '%s' : %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
 #: ../libgimpconfig/gimpconfig-iface.c:495
-#: ../libgimpconfig/gimpscanner.c:506
-#: ../libgimpconfig/gimpscanner.c:587
-#: ../libgimpwidgets/gimpcolorprofilestore.c:664
+#: ../libgimpconfig/gimpscanner.c:559
+#: ../libgimpconfig/gimpscanner.c:641
+#: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "fazi dezrannañ lazhus"
 
@@ -1064,12 +1067,19 @@ msgstr ""
 msgid "Could not create '%s': %s"
 msgstr "N'haller ket krouiñ '%s' : %s"
 
-#: ../libgimpconfig/gimpscanner.c:263
+#: ../libgimpconfig/gimpscanner.c:268
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "Hedad UTF-8 didalvoudek."
 
-#: ../libgimpconfig/gimpscanner.c:614
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpscanner.c:431
+#, c-format
+#| msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgid "expected 'yes' or 'no' for boolean token, got '%s'"
+msgstr "'yes' pe 'no' gortozet evit ar reveziadenn volean, bet '%s'"
+
+#: ../libgimpconfig/gimpscanner.c:668
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fazi e-pad dezrannadur '%s' war an arroudenn %d : %s"
@@ -1128,27 +1138,27 @@ msgstr "N'haller ket krouiñ ar malvennoù evit %s : %s"
 msgid "_Search:"
 msgstr "_Klask :"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:133
+#: ../libgimpwidgets/gimpcolorbutton.c:135
 msgid "_Foreground Color"
 msgstr "Liv ar _rakva"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:137
+#: ../libgimpwidgets/gimpcolorbutton.c:139
 msgid "_Background Color"
 msgstr "Liv an _drekva"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:141
+#: ../libgimpwidgets/gimpcolorbutton.c:143
 msgid "Blac_k"
 msgstr "_Du"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:145
+#: ../libgimpwidgets/gimpcolorbutton.c:147
 msgid "_White"
 msgstr "_Gwenn"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:152
+#: ../libgimpwidgets/gimpcolorprofilestore.c:146
 msgid "Select color profile from disk..."
 msgstr "Diuzañ un aelad liv diwar ar gantenn..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:288
+#: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgctxt "profile"
 msgid "None"
 msgstr "Tra ebet"
@@ -1157,108 +1167,108 @@ msgstr "Tra ebet"
 msgid "Scales"
 msgstr "Skeulioù"
 
-#: ../libgimpwidgets/gimpcolorselection.c:217
+#: ../libgimpwidgets/gimpcolorselection.c:220
 msgid "Current:"
 msgstr "Bremanel :"
 
-#: ../libgimpwidgets/gimpcolorselection.c:226
+#: ../libgimpwidgets/gimpcolorselection.c:229
 msgid "Old:"
 msgstr "Kozh :"
 
-#: ../libgimpwidgets/gimpcolorselection.c:311
+#: ../libgimpwidgets/gimpcolorselection.c:314
 msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
 msgstr "Notennadur liv c'hwezekredel  evel ma 'z eo arveret e HTML ha CSS. Degemeret e vez an anvioù liv CSS gant an enmoned-mañ."
 
-#: ../libgimpwidgets/gimpcolorselection.c:317
+#: ../libgimpwidgets/gimpcolorselection.c:320
 msgid "HTML _notation:"
 msgstr "_Notennadur HTML :"
 
-#: ../libgimpwidgets/gimpfileentry.c:197
+#: ../libgimpwidgets/gimpfileentry.c:200
 msgid "Open a file selector to browse your folders"
 msgstr "Digeriñ un diuzer restroù evit furchal e-touez ho teuliadoù"
 
-#: ../libgimpwidgets/gimpfileentry.c:198
+#: ../libgimpwidgets/gimpfileentry.c:201
 msgid "Open a file selector to browse your files"
 msgstr "Digeriñ un diuzer restroù evit furchal e-touez ho restroù"
 
-#: ../libgimpwidgets/gimpfileentry.c:358
+#: ../libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
 msgstr "Diuzañ un teuliad"
 
-#: ../libgimpwidgets/gimpfileentry.c:360
+#: ../libgimpwidgets/gimpfileentry.c:363
 msgid "Select File"
 msgstr "Diuzañ ur restr"
 
-#: ../libgimpwidgets/gimphelpui.c:430
+#: ../libgimpwidgets/gimphelpui.c:432
 msgid "Press F1 for more help"
 msgstr "Pouezañ war F1 evit bezañ skoazellet muioc'h"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:217
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
 msgid "Kilobytes"
 msgstr "Kiloeizhbitoù"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:218
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
 msgid "Megabytes"
 msgstr "a vegaeizhbitoù"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:219
+#: ../libgimpwidgets/gimpmemsizeentry.c:222
 msgid "Gigabytes"
 msgstr "Gigaeizhbitoù"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:278
-#: ../libgimpwidgets/gimppageselector.c:1176
+#: ../libgimpwidgets/gimppageselector.c:282
+#: ../libgimpwidgets/gimppageselector.c:1178
 msgid "Nothing selected"
 msgstr "Netra bet diuzet"
 
-#: ../libgimpwidgets/gimppageselector.c:296
+#: ../libgimpwidgets/gimppageselector.c:300
 msgid "Select _All"
 msgstr "Diuz_añ pep tra"
 
-#: ../libgimpwidgets/gimppageselector.c:316
+#: ../libgimpwidgets/gimppageselector.c:320
 msgid "Select _range:"
 msgstr "Diuzañ al l_edad :"
 
-#: ../libgimpwidgets/gimppageselector.c:328
+#: ../libgimpwidgets/gimppageselector.c:332
 msgid "Open _pages as"
 msgstr "Digeriñ ar _bajenn evel"
 
-#: ../libgimpwidgets/gimppageselector.c:429
+#: ../libgimpwidgets/gimppageselector.c:433
 msgid "Page 000"
 msgstr "Pajenn 000"
 
-#: ../libgimpwidgets/gimppageselector.c:517
-#: ../libgimpwidgets/gimppageselector.c:754
+#: ../libgimpwidgets/gimppageselector.c:521
+#: ../libgimpwidgets/gimppageselector.c:758
 #, c-format
 msgid "Page %d"
 msgstr "Pajenn %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1181
+#: ../libgimpwidgets/gimppageselector.c:1183
 msgid "One page selected"
 msgstr "Ur bajenn diuzet"
 
-#: ../libgimpwidgets/gimppageselector.c:1188
-#: ../libgimpwidgets/gimppageselector.c:1192
+#: ../libgimpwidgets/gimppageselector.c:1190
+#: ../libgimpwidgets/gimppageselector.c:1194
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d bajenn diuzet"
 msgstr[1] "An holl e-touez %d a bajennoù diuzet"
 
-#: ../libgimpwidgets/gimppatheditor.c:234
+#: ../libgimpwidgets/gimppatheditor.c:239
 msgid "Writable"
 msgstr "Daskemmus"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#: ../libgimpwidgets/gimppatheditor.c:248
 msgid "Folder"
 msgstr "Renkell"
 
-#: ../libgimpwidgets/gimppickbutton.c:125
+#: ../libgimpwidgets/gimppickbutton.c:127
 msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
 msgstr "Klikañ war ar gorzennig, ha klikañ war ul liv n'eus forzh pelec'h war ar skramm evit diuzañ al liv-mañ."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:287
+#: ../libgimpwidgets/gimppreview.c:290
 msgid "_Preview"
 msgstr "_Alberz"
 
@@ -1270,7 +1280,7 @@ msgstr "Ment an damer"
 msgid "Check Style"
 msgstr "Stil an damer"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1868
+#: ../libgimpwidgets/gimppropwidgets.c:1878
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1331,66 +1341,64 @@ msgid "_Resize"
 msgstr "Ad_mentañ"
 
 #: ../libgimpwidgets/gimpstock.c:205
-#: ../libgimpwidgets/gimpstock.c:339
+#: ../libgimpwidgets/gimpstock.c:340
 msgid "_Scale"
 msgstr "_Skeulaat"
 
-#: ../libgimpwidgets/gimpstock.c:314
+#: ../libgimpwidgets/gimpstock.c:315
 msgid "Cr_op"
 msgstr "Didr_oc'hañ"
 
-#: ../libgimpwidgets/gimpstock.c:334
+#: ../libgimpwidgets/gimpstock.c:335
 msgid "_Transform"
 msgstr "_Treuzfurmiñ"
 
-#: ../libgimpwidgets/gimpstock.c:338
+#: ../libgimpwidgets/gimpstock.c:339
 msgid "_Rotate"
 msgstr "_C'hwelañ"
 
-#: ../libgimpwidgets/gimpstock.c:340
+#: ../libgimpwidgets/gimpstock.c:341
 msgid "_Shear"
 msgstr "_Sizailhañ"
 
-#: ../libgimpwidgets/gimpunitmenu.c:288
+#: ../libgimpwidgets/gimpunitmenu.c:264
 msgid "More..."
 msgstr "Muioc'h..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:603
+#: ../libgimpwidgets/gimpunitmenu.c:490
 msgid "Unit Selection"
 msgstr "Diuzad an unanennoù"
 
-#: ../libgimpwidgets/gimpunitmenu.c:652
+#: ../libgimpwidgets/gimpunitmenu.c:539
 msgid "Unit"
 msgstr "Unanenn"
 
-#: ../libgimpwidgets/gimpunitmenu.c:656
+#: ../libgimpwidgets/gimpunitmenu.c:543
 msgid "Factor"
 msgstr "Parenn"
 
-#: ../libgimpwidgets/gimpwidgets.c:521
+#: ../libgimpwidgets/gimpwidgets.c:516
 msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
 msgstr "Arverañ ar werzh-mañ evel hadenn ar grouerez niveroù dargouezhek - reiñ a ra tu deoc'h da adober ur riñvadenn \"dargouezhek\" lavaret"
 
-#: ../libgimpwidgets/gimpwidgets.c:525
+#: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
 msgstr "Hadenn _nevez"
 
-#: ../libgimpwidgets/gimpwidgets.c:538
+#: ../libgimpwidgets/gimpwidgets.c:533
 msgid "Seed random number generator with a generated random number"
 msgstr "Hadennañ ar grouerez niveroù dargouezhek gant un niver dargouezek bet krouet"
 
-#: ../libgimpwidgets/gimpwidgets.c:542
+#: ../libgimpwidgets/gimpwidgets.c:537
 msgid "_Randomize"
 msgstr "Da_rgouezhezkaat"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:49
-#| msgid "Visible"
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Diweredekaet"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:50
-#| msgid "Green"
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Skramm"
@@ -1584,11 +1592,11 @@ msgstr "Dourlivañ"
 msgid "Pressure"
 msgstr "Gwask"
 
-#: ../modules/color-selector-wheel.c:74
+#: ../modules/color-selector-wheel.c:71
 msgid "HSV color wheel"
 msgstr "Rodad livioù APL"
 
-#: ../modules/color-selector-wheel.c:105
+#: ../modules/color-selector-wheel.c:102
 msgid "Wheel"
 msgstr "Rod"
 
@@ -1610,113 +1618,113 @@ msgstr "An trevnad ma vo lennet dargouezhioù DirectInput dioutañ."
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller-dx-dinput.c:419
+#: ../modules/controller-dx-dinput.c:418
 #, c-format
 msgid "Button %d"
 msgstr "Afell %d"
 
-#: ../modules/controller-dx-dinput.c:422
+#: ../modules/controller-dx-dinput.c:421
 #, c-format
 msgid "Button %d Press"
 msgstr "Afell %d Pouezañ"
 
-#: ../modules/controller-dx-dinput.c:425
+#: ../modules/controller-dx-dinput.c:424
 #, c-format
 msgid "Button %d Release"
 msgstr "Afell %d Leuskel"
 
-#: ../modules/controller-dx-dinput.c:442
+#: ../modules/controller-dx-dinput.c:441
 #: ../modules/controller-linux-input.c:89
 msgid "X Move Left"
 msgstr "Dilec'hiadur kleiz X"
 
-#: ../modules/controller-dx-dinput.c:445
+#: ../modules/controller-dx-dinput.c:444
 #: ../modules/controller-linux-input.c:90
 msgid "X Move Right"
 msgstr "Dilec'hiadur dehou X"
 
-#: ../modules/controller-dx-dinput.c:451
+#: ../modules/controller-dx-dinput.c:450
 msgid "Y Move Away"
 msgstr "Dilec'hiadur Y pell"
 
-#: ../modules/controller-dx-dinput.c:454
+#: ../modules/controller-dx-dinput.c:453
 msgid "Y Move Near"
 msgstr "Dilec'hiadur Y nes"
 
-#: ../modules/controller-dx-dinput.c:460
+#: ../modules/controller-dx-dinput.c:459
 #: ../modules/controller-linux-input.c:93
 msgid "Z Move Up"
 msgstr "Dilec'hiadur war sav Z"
 
-#: ../modules/controller-dx-dinput.c:463
+#: ../modules/controller-dx-dinput.c:462
 #: ../modules/controller-linux-input.c:94
 msgid "Z Move Down"
 msgstr "Dilec'hiadur diskenn Z"
 
-#: ../modules/controller-dx-dinput.c:469
+#: ../modules/controller-dx-dinput.c:468
 msgid "X Axis Tilt Away"
 msgstr "Ahel X stouet pell"
 
-#: ../modules/controller-dx-dinput.c:472
+#: ../modules/controller-dx-dinput.c:471
 msgid "X Axis Tilt Near"
 msgstr "Ahel X stouet nes"
 
-#: ../modules/controller-dx-dinput.c:478
+#: ../modules/controller-dx-dinput.c:477
 #: ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
 msgstr "Ahel Y stouet a-zehou"
 
-#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-dx-dinput.c:480
 #: ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
 msgstr "Ahel Y stouet a-gleiz"
 
-#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-dx-dinput.c:486
 #: ../modules/controller-linux-input.c:100
 msgid "Z Axis Turn Left"
 msgstr "Ahel Z troet a-gleiz"
 
-#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-dx-dinput.c:489
 #: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Right"
 msgstr "Ahel Z troet a-zehou"
 
-#: ../modules/controller-dx-dinput.c:501
+#: ../modules/controller-dx-dinput.c:500
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Riklell %d Kreskiñ"
 
-#: ../modules/controller-dx-dinput.c:504
+#: ../modules/controller-dx-dinput.c:503
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Riklell %d Digreskiñ"
 
-#: ../modules/controller-dx-dinput.c:514
+#: ../modules/controller-dx-dinput.c:513
 #, c-format
 msgid "POV %d X View"
 msgstr "Gwel POV %d X"
 
-#: ../modules/controller-dx-dinput.c:517
+#: ../modules/controller-dx-dinput.c:516
 #, c-format
 msgid "POV %d Y View"
 msgstr "Gwel POV %d Y"
 
-#: ../modules/controller-dx-dinput.c:520
+#: ../modules/controller-dx-dinput.c:519
 #, c-format
 msgid "POV %d Return"
 msgstr "Distro POV %d"
 
-#: ../modules/controller-dx-dinput.c:1082
+#: ../modules/controller-dx-dinput.c:1081
 msgid "DirectInput Events"
 msgstr "Dargouezhioù DirectInput"
 
-#: ../modules/controller-dx-dinput.c:1093
+#: ../modules/controller-dx-dinput.c:1092
 #: ../modules/controller-linux-input.c:524
 #: ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "Trevnad ebet bet kefluniet"
 
-#: ../modules/controller-dx-dinput.c:1118
+#: ../modules/controller-dx-dinput.c:1117
 #: ../modules/controller-linux-input.c:587
 msgid "Device not available"
 msgstr "N'eo ket hegerz an trevnad"
@@ -1937,115 +1945,115 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "Reolerezh enankañ MIDI GIMP"
 
-#: ../modules/display-filter-color-blind.c:66
+#: ../modules/display-filter-color-blind.c:67
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (digizididigezh ouzh ruz)"
 
-#: ../modules/display-filter-color-blind.c:68
+#: ../modules/display-filter-color-blind.c:69
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (digizididigezh ouzh gwer)"
 
-#: ../modules/display-filter-color-blind.c:70
+#: ../modules/display-filter-color-blind.c:71
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (digizididigezh ouzh glas)"
 
-#: ../modules/display-filter-color-blind.c:197
+#: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Sil darvanañ skorted al liv (treol Brettel-Vienot-Mollon)"
 
-#: ../modules/display-filter-color-blind.c:260
+#: ../modules/display-filter-color-blind.c:257
 msgid "Color Deficient Vision"
 msgstr "Gweled al livioù skort"
 
-#: ../modules/display-filter-color-blind.c:482
+#: ../modules/display-filter-color-blind.c:486
 msgid "Color _deficiency type:"
 msgstr "Rizh ar skorte_d liv :"
 
-#: ../modules/display-filter-gamma.c:89
+#: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
 msgstr "Sil skrammañ al livioù Gamma"
 
-#: ../modules/display-filter-gamma.c:128
+#: ../modules/display-filter-gamma.c:125
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/display-filter-gamma.c:231
+#: ../modules/display-filter-gamma.c:237
 msgid "_Gamma:"
 msgstr "_Gamma :"
 
-#: ../modules/display-filter-high-contrast.c:89
+#: ../modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
 msgstr "Sil skrammañ al livioù o dargemm uhel"
 
-#: ../modules/display-filter-high-contrast.c:128
+#: ../modules/display-filter-high-contrast.c:125
 msgid "Contrast"
 msgstr "Dargemm"
 
-#: ../modules/display-filter-high-contrast.c:231
+#: ../modules/display-filter-high-contrast.c:237
 msgid "Contrast c_ycles:"
 msgstr "Kelc'hiadoù dargemmoù :"
 
-#: ../modules/display-filter-lcms.c:101
+#: ../modules/display-filter-lcms.c:97
 msgid "Color management display filter using ICC color profiles"
 msgstr "Sil skrammañ ardoadur al livioù oc'h arverañ an aelad liv mod ICC"
 
-#: ../modules/display-filter-lcms.c:133
+#: ../modules/display-filter-lcms.c:129
 msgid "Color Management"
 msgstr "Ardeiñ al livioù"
 
-#: ../modules/display-filter-lcms.c:190
+#: ../modules/display-filter-lcms.c:186
 msgid "None"
 msgstr "Tra ebet"
 
-#: ../modules/display-filter-lcms.c:211
+#: ../modules/display-filter-lcms.c:207
 msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
 msgstr "Kemeret eo e gefluniadur gant ar sil-mañ diouzh kevrenn ardeiñ al livioù e boestad emziviz ar Gwellvezioù"
 
-#: ../modules/display-filter-lcms.c:225
+#: ../modules/display-filter-lcms.c:221
 msgid "Mode of operation:"
 msgstr "Mod ar gwezhiadur :"
 
-#: ../modules/display-filter-lcms.c:232
+#: ../modules/display-filter-lcms.c:228
 msgid "Image profile:"
 msgstr "Aelad ar skeudenn :"
 
-#: ../modules/display-filter-lcms.c:240
+#: ../modules/display-filter-lcms.c:236
 msgid "Monitor profile:"
 msgstr "Aelad ar skramm :"
 
-#: ../modules/display-filter-lcms.c:248
+#: ../modules/display-filter-lcms.c:244
 msgid "Print simulation profile:"
 msgstr "Aelad darvanañ ar moullañ :"
 
-#: ../modules/display-filter-proof.c:96
+#: ../modules/display-filter-proof.c:93
 msgid "Color proof filter using ICC color profile"
 msgstr "Sil gwiriañ al livioù oc'h arverañ an aelad liv ICC"
 
-#: ../modules/display-filter-proof.c:144
+#: ../modules/display-filter-proof.c:141
 msgid "Color Proof"
 msgstr "Gwiriañ al livioù"
 
-#: ../modules/display-filter-proof.c:310
+#: ../modules/display-filter-proof.c:338
 msgid "Choose an ICC Color Profile"
 msgstr "Dibab un aelad liv ICC"
 
-#: ../modules/display-filter-proof.c:337
+#: ../modules/display-filter-proof.c:365
 msgid "All files (*.*)"
 msgstr "An holl restroù (*.*)"
 
-#: ../modules/display-filter-proof.c:342
+#: ../modules/display-filter-proof.c:370
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Aelad liv ICC (*.icc, *.icm)"
 
-#: ../modules/display-filter-proof.c:400
+#: ../modules/display-filter-proof.c:428
 msgid "_Profile:"
 msgstr "_Aelad :"
 
-#: ../modules/display-filter-proof.c:406
+#: ../modules/display-filter-proof.c:434
 msgid "_Intent:"
 msgstr "_Deouez al livioù :"
 
-#: ../modules/display-filter-proof.c:411
+#: ../modules/display-filter-proof.c:439
 msgid "_Black Point Compensation"
 msgstr "Poent kempouezañ an _du"
 
