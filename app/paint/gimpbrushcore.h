@@ -121,7 +121,7 @@ void   gimp_brush_core_color_area_with_pixmap
                                       (GimpBrushCore            *core,
                                        GimpDrawable             *drawable,
                                        const GimpCoords         *coords,
-                                       GimpTempBuf              *area,
+                                       GeglBuffer               *area,
                                        gint                      area_x,
                                        gint                      area_y,
                                        GimpBrushApplicationMode  mode);

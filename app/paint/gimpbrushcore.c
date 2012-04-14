@@ -25,8 +25,6 @@
 
 #include "paint-types.h"
 
-#include "base/pixel-region.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpbrush.h"
@@ -119,14 +117,12 @@ static void      gimp_brush_core_invalidate_cache   (GimpBrush         *brush,
                                                      GimpBrushCore     *core);
 
 /*  brush pipe utility functions  */
-static void  gimp_brush_core_paint_line_pixmap_mask (GimpImage         *dest,
-                                                     GimpDrawable      *drawable,
+static void  gimp_brush_core_paint_line_pixmap_mask (GimpDrawable      *drawable,
                                                      const GimpTempBuf *pixmap_mask,
                                                      const GimpTempBuf *brush_mask,
                                                      guchar            *d,
                                                      gint               x,
                                                      gint               y,
-                                                     gint               bytes,
                                                      gint               width,
                                                      GimpBrushApplicationMode  mode);
 
@@ -1546,27 +1542,23 @@ void
 gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
                                         const GimpCoords         *coords,
-                                        GimpTempBuf              *area,
+                                        GeglBuffer               *area,
                                         gint                      area_x,
                                         gint                      area_y,
                                         GimpBrushApplicationMode  mode)
 {
-  GimpImage         *image;
-  PixelRegion        destPR;
-  void              *pr;
-  guchar            *d;
-  gint               ulx;
-  gint               uly;
-  gint               offsetx;
-  gint               offsety;
-  gint               y;
-  const GimpTempBuf *pixmap_mask;
-  const GimpTempBuf *brush_mask;
+  GeglBufferIterator *iter;
+  GeglRectangle      *roi;
+  gint                bpp;
+  gint                ulx;
+  gint                uly;
+  gint                offsetx;
+  gint                offsety;
+  const GimpTempBuf  *pixmap_mask;
+  const GimpTempBuf  *brush_mask;
 
   g_return_if_fail (GIMP_IS_BRUSH (core->brush));
   g_return_if_fail (core->brush->pixmap != NULL);
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /*  scale the brushes  */
   pixmap_mask = gimp_brush_core_transform_pixmap (core, core->brush);
@@ -1579,11 +1571,6 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   else
     brush_mask = NULL;
 
-  pixel_region_init_temp_buf (&destPR, area,
-                              0, 0, area->width, area->height);
-
-  pr = pixel_regions_register (1, &destPR);
-
   /*  Calculate upper left corner of brush as in
    *  gimp_paint_core_get_paint_area.  Ugly to have to do this here, too.
    */
@@ -1593,38 +1580,43 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   /*  Not sure why this is necessary, but empirically the code does
    *  not work without it for even-sided brushes.  See bug #166622.
    */
-  if (pixmap_mask->width %2 == 0)
+  if (pixmap_mask->width % 2 == 0)
     ulx += ROUND (coords->x) - floor (coords->x);
-  if (pixmap_mask->height %2 == 0)
+  if (pixmap_mask->height % 2 == 0)
     uly += ROUND (coords->y) - floor (coords->y);
 
   offsetx = area_x - ulx;
   offsety = area_y - uly;
 
-  for (; pr != NULL; pr = pixel_regions_process (pr))
-    {
-      d = destPR.data;
+  bpp = babl_format_get_bytes_per_pixel (gegl_buffer_get_format (area));
 
-      for (y = 0; y < destPR.h; y++)
+  iter = gegl_buffer_iterator_new (area, NULL, 0, NULL,
+                                   GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+  roi = &iter->roi[0];
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      guchar *d = iter->data[0];
+      gint    y;
+
+      for (y = 0; y < roi->height; y++)
         {
-          gimp_brush_core_paint_line_pixmap_mask (image, drawable,
+          gimp_brush_core_paint_line_pixmap_mask (drawable,
                                                   pixmap_mask, brush_mask,
                                                   d, offsetx, y + offsety,
-                                                  destPR.bytes, destPR.w, mode);
-          d += destPR.rowstride;
+                                                  roi->width, mode);
+          d += roi->width * bpp;
         }
     }
 }
 
 static void
-gimp_brush_core_paint_line_pixmap_mask (GimpImage                *dest,
-                                        GimpDrawable             *drawable,
+gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
                                         const GimpTempBuf        *pixmap_mask,
                                         const GimpTempBuf        *brush_mask,
                                         guchar                   *d,
                                         gint                      x,
                                         gint                      y,
-                                        gint                      bytes,
                                         gint                      width,
                                         GimpBrushApplicationMode  mode)
 {
