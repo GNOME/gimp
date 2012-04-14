@@ -37,6 +37,7 @@
 #include "gimpoperationcagetransform.h"
 #include "gimpoperationequalize.h"
 #include "gimpoperationgrow.h"
+#include "gimpoperationhistogramsink.h"
 #include "gimpoperationsetalpha.h"
 #include "gimpoperationshapeburst.h"
 #include "gimpoperationshrink.h"
@@ -138,6 +139,7 @@ gimp_gegl_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_GROW);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HISTOGRAM_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_SET_ALPHA);
   g_type_class_ref (GIMP_TYPE_OPERATION_SHAPEBURST);
   g_type_class_ref (GIMP_TYPE_OPERATION_SHRINK);

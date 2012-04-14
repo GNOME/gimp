@@ -64,6 +64,8 @@ libappgegl_a_sources = \
 	gimpoperationequalize.h			\
 	gimpoperationgrow.c			\
 	gimpoperationgrow.h			\
+	gimpoperationhistogramsink.c		\
+	gimpoperationhistogramsink.h		\
 	gimpoperationsetalpha.c			\
 	gimpoperationsetalpha.h			\
 	gimpoperationshapeburst.c		\
