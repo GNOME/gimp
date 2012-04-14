@@ -103,7 +103,7 @@ typedef struct
   GtkWidget *time;
   GtkWidget *comment;
   GtkWidget *save_transp_pixels;
-  GtkObject *compression_level;
+  GtkAdjustment *compression_level;
 }
 PngSaveGui;
 
@@ -2017,7 +2017,8 @@ save_dialog (gint32    image_ID,
 
   /* Compression level scale */
   pg.compression_level =
-    GTK_OBJECT (gtk_builder_get_object (builder, "compression-level"));
+    GTK_ADJUSTMENT (gtk_builder_get_object (builder, "compression-level"));
+  gtk_adjustment_set_value (pg.compression_level, pngvals.compression_level);
   g_signal_connect (pg.compression_level, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);
@@ -2149,6 +2150,6 @@ load_gui_defaults (PngSaveGui *pg)
 
 #undef SET_ACTIVE
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (pg->compression_level),
+  gtk_adjustment_set_value (pg->compression_level,
                             pngvals.compression_level);
 }
