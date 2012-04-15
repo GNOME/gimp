@@ -31,6 +31,7 @@
 #include "core/gimpparamspecs-duplicate.h"
 
 #include "gimp-gegl-config-proxy.h"
+#include "gimp-gegl-utils.h"
 
 
 static GHashTable *config_types      = NULL;
@@ -278,17 +279,13 @@ gimp_gegl_config_proxy_sync (GimpObject  *proxy,
 
           if (GIMP_IS_PARAM_SPEC_RGB (gimp_pspec))
             {
-              GeglColor *gegl_color = gegl_color_new (NULL);
               GimpRGB    gimp_color;
+              GeglColor *gegl_color;
 
               gimp_value_get_rgb (&value, &gimp_color);
               g_value_unset (&value);
 
-              gegl_color_set_rgba (gegl_color,
-                                   gimp_color.r,
-                                   gimp_color.g,
-                                   gimp_color.b,
-                                   gimp_color.a);
+              gegl_color = gimp_gegl_color_new (&gimp_color);
 
               g_value_init (&value, gegl_pspec->value_type);
               g_value_take_object (&value, gegl_color);

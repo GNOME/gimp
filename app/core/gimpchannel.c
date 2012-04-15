@@ -882,12 +882,7 @@ gimp_channel_get_node (GimpItem *item)
   source = gimp_drawable_get_source_node (drawable);
   gegl_node_add_child (node, source);
 
-  color = gegl_color_new (NULL);
-  gegl_color_set_rgba (color,
-                       channel->color.r,
-                       channel->color.g,
-                       channel->color.b,
-                       channel->color.a);
+  color = gimp_gegl_color_new (&channel->color);
 
   g_warn_if_fail (channel->color_node == NULL);
 
@@ -1759,14 +1754,7 @@ gimp_channel_set_color (GimpChannel   *channel,
 
       if (channel->color_node)
         {
-          GeglColor *gegl_color;
-
-          gegl_color = gegl_color_new (NULL);
-          gegl_color_set_rgba (gegl_color,
-                               channel->color.r,
-                               channel->color.g,
-                               channel->color.b,
-                               channel->color.a);
+          GeglColor *gegl_color = gimp_gegl_color_new (&channel->color);
 
           gegl_node_set (channel->color_node,
                          "value", gegl_color,
@@ -1825,14 +1813,7 @@ gimp_channel_set_opacity (GimpChannel *channel,
 
       if (channel->color_node)
         {
-          GeglColor *gegl_color;
-
-          gegl_color = gegl_color_new (NULL);
-          gegl_color_set_rgba (gegl_color,
-                               channel->color.r,
-                               channel->color.g,
-                               channel->color.b,
-                               channel->color.a);
+          GeglColor *gegl_color = gimp_gegl_color_new (&channel->color);
 
           gegl_node_set (channel->color_node,
                          "value", gegl_color,
