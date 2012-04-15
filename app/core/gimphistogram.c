@@ -57,7 +57,6 @@ struct _GimpHistogram
 
 static void  gimp_histogram_alloc_values         (GimpHistogram *histogram,
                                                   gint           bytes);
-static void  gimp_histogram_free_values          (GimpHistogram *histogram);
 static void  gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
                                                   PixelRegion   *region,
                                                   PixelRegion   *mask);
@@ -98,7 +97,7 @@ gimp_histogram_unref (GimpHistogram *histogram)
 
   if (histogram->ref_count == 0)
     {
-      gimp_histogram_free_values (histogram);
+      gimp_histogram_clear_values (histogram);
       g_slice_free (GimpHistogram, histogram);
     }
 }
@@ -144,12 +143,7 @@ gimp_histogram_calculate (GimpHistogram *histogram,
   gint i;
 
   g_return_if_fail (histogram != NULL);
-
-  if (! region)
-    {
-      gimp_histogram_free_values (histogram);
-      return;
-    }
+  g_return_if_fail (region != NULL);
 
   gimp_histogram_alloc_values (histogram, region->bytes);
 
@@ -173,6 +167,23 @@ gimp_histogram_calculate (GimpHistogram *histogram,
           histogram->values[0][j] += histogram->values[i][j];
       }
 #endif
+}
+
+void
+gimp_histogram_clear_values (GimpHistogram *histogram)
+{
+  gint i;
+
+  g_return_if_fail (histogram != NULL);
+
+  for (i = 0; i < NUM_SLOTS; i++)
+    if (histogram->values[i])
+      {
+        g_free (histogram->values[i]);
+        histogram->values[i] = NULL;
+      }
+
+  histogram->n_channels = 0;
 }
 
 
@@ -550,27 +561,12 @@ gimp_histogram_alloc_values (GimpHistogram *histogram,
 {
   if (bytes + 1 != histogram->n_channels)
     {
-      gimp_histogram_free_values (histogram);
+      gimp_histogram_clear_values (histogram);
 
       histogram->n_channels = bytes + 1;
 
       histogram->values[0] = g_new (gdouble, histogram->n_channels * 256);
     }
-}
-
-static void
-gimp_histogram_free_values (GimpHistogram *histogram)
-{
-  gint i;
-
-  for (i = 0; i < NUM_SLOTS; i++)
-    if (histogram->values[i])
-      {
-        g_free (histogram->values[i]);
-        histogram->values[i] = NULL;
-      }
-
-  histogram->n_channels = 0;
 }
 
 static void

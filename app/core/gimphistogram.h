@@ -32,6 +32,8 @@ void            gimp_histogram_calculate     (GimpHistogram        *histogram,
                                               PixelRegion          *region,
                                               PixelRegion          *mask);
 
+void            gimp_histogram_clear_values  (GimpHistogram        *histogram);
+
 gdouble         gimp_histogram_get_maximum   (GimpHistogram        *histogram,
                                               GimpHistogramChannel  channel);
 gdouble         gimp_histogram_get_count     (GimpHistogram        *histogram,

@@ -372,7 +372,7 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
       if (editor->drawable)
         gimp_drawable_calculate_histogram (editor->drawable, editor->histogram);
       else
-        gimp_histogram_calculate (editor->histogram, NULL, NULL);
+        gimp_histogram_clear_values (editor->histogram);
 
       gimp_histogram_editor_info_update (editor);
 
