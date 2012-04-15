@@ -1704,9 +1704,27 @@ gimp_channel_new_from_component (GimpImage       *image,
 
   dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
-  gegl_buffer_set_format (dest_buffer, format);
-  gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
-  gegl_buffer_set_format (dest_buffer, NULL);
+  if (TRUE)
+    {
+      GeglBuffer *temp;
+
+      temp = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                              gimp_drawable_get_format (GIMP_DRAWABLE (channel)));
+
+      gegl_buffer_set_format (temp, format);
+      gegl_buffer_copy (src_buffer, NULL, temp, NULL);
+      gegl_buffer_set_format (temp, NULL);
+
+      gegl_buffer_copy (temp, NULL, dest_buffer, NULL);
+
+      g_object_unref (temp);
+    }
+  else
+    {
+      gegl_buffer_set_format (dest_buffer, format);
+      gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
+      gegl_buffer_set_format (dest_buffer, NULL);
+    }
 
   return channel;
 }
