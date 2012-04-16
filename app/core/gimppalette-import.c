@@ -275,7 +275,6 @@ gimp_palette_import_extract (GimpImage     *image,
 {
   GeglBuffer         *buffer;
   GeglBufferIterator *iter;
-  GeglRectangle      *roi;
   GeglRectangle      *mask_roi = NULL;
   GeglRectangle       rect     = { x, y, width, height };
   GHashTable         *colors   = NULL;
@@ -288,7 +287,6 @@ gimp_palette_import_extract (GimpImage     *image,
 
   iter = gegl_buffer_iterator_new (buffer, &rect, 0, format,
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
   bpp = babl_format_get_bytes_per_pixel (format);
 
   if (selection_only &&
@@ -296,15 +294,13 @@ gimp_palette_import_extract (GimpImage     *image,
     {
       GimpDrawable *mask = GIMP_DRAWABLE (gimp_image_get_mask (image));
 
-      buffer = gimp_drawable_get_buffer (mask);
-
       rect.x = x + pickable_off_x;
       rect.y = y + pickable_off_y;
 
-      format = gimp_drawable_get_format (mask);
+      buffer = gimp_drawable_get_buffer (mask);
+      format = babl_format ("Y u8");
 
-      gegl_buffer_iterator_add (iter, buffer, &rect, 0,
-                                gimp_drawable_get_format (mask),
+      gegl_buffer_iterator_add (iter, buffer, &rect, 0, format,
                                 GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
       mask_roi = &iter->roi[1];
       mask_bpp = babl_format_get_bytes_per_pixel (format);
@@ -314,46 +310,34 @@ gimp_palette_import_extract (GimpImage     *image,
     {
       const guchar *data      = iter->data[0];
       const guchar *mask_data = NULL;
-      gint          i, j;
 
       if (mask_roi)
         mask_data = iter->data[1];
 
-      for (i = 0; i < roi->height; i++)
+      while (iter->length--)
         {
-          const guchar *idata = data;
-          const guchar *mdata = mask_data;
-
-          for (j = 0; j < roi->width; j++)
+          /*  ignore unselected, and completely transparent pixels  */
+          if ((! mask_data || *mask_data) && data[ALPHA])
             {
-              /*  ignore unselected, and completely transparent pixels  */
-              if ((! mdata || *mdata) && idata[ALPHA])
-                {
-                  guchar rgba[MAX_CHANNELS]     = { 0, };
-                  guchar rgb_real[MAX_CHANNELS] = { 0, };
+              guchar rgba[MAX_CHANNELS]     = { 0, };
+              guchar rgb_real[MAX_CHANNELS] = { 0, };
 
-                  memcpy (rgba, idata, 4);
-                  memcpy (rgb_real, rgba, 4);
+              memcpy (rgba, data, 4);
+              memcpy (rgb_real, rgba, 4);
 
-                  rgba[0] = (rgba[0] / threshold) * threshold;
-                  rgba[1] = (rgba[1] / threshold) * threshold;
-                  rgba[2] = (rgba[2] / threshold) * threshold;
+              rgba[0] = (rgba[0] / threshold) * threshold;
+              rgba[1] = (rgba[1] / threshold) * threshold;
+              rgba[2] = (rgba[2] / threshold) * threshold;
 
-                  colors = gimp_palette_import_store_colors (colors,
-                                                             rgba, rgb_real,
-                                                             n_colors);
-                }
-
-              idata += bpp;
-
-              if (mdata)
-                mdata += mask_bpp;
+              colors = gimp_palette_import_store_colors (colors,
+                                                         rgba, rgb_real,
+                                                         n_colors);
             }
 
-          data += roi->width * bpp;
+          data += bpp;
 
           if (mask_data)
-            mask_data += mask_roi->width * mask_bpp;
+            mask_data += mask_bpp;
         }
     }
 
