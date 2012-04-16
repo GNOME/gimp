@@ -22,7 +22,7 @@
 #include <string.h>
 
 #undef G_DISABLE_DEPRECATED /* GStaticMutex */
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -32,7 +32,6 @@
 #include "base/pixel-region.h"
 
 #include "gimphistogram.h"
-
 
 #ifdef ENABLE_MP
 #define NUM_SLOTS  GIMP_MAX_NUM_THREADS
@@ -136,6 +135,183 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
 }
 
 void
+gimp_histogram_calc_gegl (GimpHistogram       *histogram,
+                          GeglBuffer          *buffer,
+                          const GeglRectangle *buffer_rect,
+                          GeglBuffer          *mask,
+                          const GeglRectangle *mask_rect)
+{
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                bpp;
+  gdouble            *values;
+
+  g_return_if_fail (histogram != NULL);
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+  g_return_if_fail (buffer_rect != NULL);
+
+  format = gegl_buffer_get_format (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+
+  gimp_histogram_alloc_values (histogram, bpp);
+
+  iter = gegl_buffer_iterator_new (buffer, buffer_rect, 0, NULL,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  if (mask)
+    gegl_buffer_iterator_add (iter, mask, mask_rect, 0,
+                              babl_format ("Y float"),
+                              GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  values = histogram->values[0];
+
+#define VALUE(c,i) (values[(c) * 256 + (i)])
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const guchar *data = iter->data[0];
+      gint          max;
+
+      if (mask)
+        {
+          const gfloat *mask_data = iter->data[1];
+
+          switch (bpp)
+            {
+            case 1:
+              while (iter->length)
+                {
+                  const gdouble masked = *mask_data;
+
+                  VALUE (0, data[0]) += masked;
+
+                  data += bpp;
+                  mask_data += 1;
+                }
+              break;
+
+            case 2:
+              while (iter->length--)
+                {
+                  const gdouble masked = *mask_data;
+                  const gdouble weight = data[1] / 255.0;
+
+                  VALUE (0, data[0]) += weight * masked;
+                  VALUE (1, data[1]) += masked;
+
+                  data += bpp;
+                  mask_data += 1;
+                }
+              break;
+
+            case 3: /* calculate separate value values */
+              while (iter->length--)
+                {
+                  const gdouble masked = *mask_data;
+
+                  VALUE (1, data[0]) += masked;
+                  VALUE (2, data[1]) += masked;
+                  VALUE (3, data[2]) += masked;
+
+                  max = MAX (data[0], data[1]);
+                  max = MAX (data[2], max);
+
+                  VALUE (0, max) += masked;
+
+                  data += bpp;
+                  mask_data += 1;
+                }
+              break;
+
+            case 4: /* calculate separate value values */
+              while (iter->length--)
+                {
+                  const gdouble masked = *mask_data;
+                  const gdouble weight = data[3] / 255.0;
+
+                  VALUE (1, data[0]) += weight * masked;
+                  VALUE (2, data[1]) += weight * masked;
+                  VALUE (3, data[2]) += weight * masked;
+                  VALUE (4, data[3]) += masked;
+
+                  max = MAX (data[0], data[1]);
+                  max = MAX (data[2], max);
+
+                  VALUE (0, max) += weight * masked;
+
+                  data += bpp;
+                  mask_data += 1;
+                }
+              break;
+            }
+        }
+      else /* no mask */
+        {
+          switch (bpp)
+            {
+            case 1:
+              while (iter->length--)
+                {
+                  VALUE (0, data[0]) += 1.0;
+
+                  data += bpp;
+                }
+              break;
+
+            case 2:
+              while (iter->length--)
+                {
+                  const gdouble weight = data[1] / 255;
+
+                  VALUE (0, data[0]) += weight;
+                  VALUE (1, data[1]) += 1.0;
+
+                  data += bpp;
+                }
+              break;
+
+            case 3: /* calculate separate value values */
+              while (iter->length--)
+                {
+                  VALUE (1, data[0]) += 1.0;
+                  VALUE (2, data[1]) += 1.0;
+                  VALUE (3, data[2]) += 1.0;
+
+                  max = MAX (data[0], data[1]);
+                  max = MAX (data[2], max);
+
+                  VALUE (0, max) += 1.0;
+
+                  data += bpp;
+                }
+              break;
+
+            case 4: /* calculate separate value values */
+              while (iter->length--)
+                {
+                  const gdouble weight = data[3] / 255;
+
+                  VALUE (1, data[0]) += weight;
+                  VALUE (2, data[1]) += weight;
+                  VALUE (3, data[2]) += weight;
+                  VALUE (4, data[3]) += 1.0;
+
+                  max = MAX (data[0], data[1]);
+                  max = MAX (data[2], max);
+
+                  VALUE (0, max) += weight;
+
+                  data += bpp;
+                }
+              break;
+            }
+        }
+    }
+
+#undef VALUE
+}
+
+void
 gimp_histogram_calculate (GimpHistogram *histogram,
                           PixelRegion   *region,
                           PixelRegion   *mask)
@@ -146,11 +322,6 @@ gimp_histogram_calculate (GimpHistogram *histogram,
   g_return_if_fail (region != NULL);
 
   gimp_histogram_alloc_values (histogram, region->bytes);
-
-  for (i = 0; i < NUM_SLOTS; i++)
-    if (histogram->values[i])
-      memset (histogram->values[i],
-              0, histogram->n_channels * 256 * sizeof (gdouble));
 
   pixel_regions_process_parallel ((PixelProcessorFunc)
                                   gimp_histogram_calculate_sub_region,
@@ -565,7 +736,16 @@ gimp_histogram_alloc_values (GimpHistogram *histogram,
 
       histogram->n_channels = bytes + 1;
 
-      histogram->values[0] = g_new (gdouble, histogram->n_channels * 256);
+      histogram->values[0] = g_new0 (gdouble, histogram->n_channels * 256);
+    }
+  else
+    {
+      gint i;
+
+      for (i = 0; i < NUM_SLOTS; i++)
+        if (histogram->values[i])
+          memset (histogram->values[i],
+                  0, histogram->n_channels * 256 * sizeof (gdouble));
     }
 }
 

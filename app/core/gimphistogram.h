@@ -28,6 +28,12 @@ void            gimp_histogram_unref         (GimpHistogram        *histogram);
 
 GimpHistogram * gimp_histogram_duplicate     (GimpHistogram        *histogram);
 
+void            gimp_histogram_calc_gegl     (GimpHistogram        *histogram,
+                                              GeglBuffer           *buffer,
+                                              const GeglRectangle  *buffer_rect,
+                                              GeglBuffer           *mask,
+                                              const GeglRectangle  *mask_rect);
+
 void            gimp_histogram_calculate     (GimpHistogram        *histogram,
                                               PixelRegion          *region,
                                               PixelRegion          *mask);
