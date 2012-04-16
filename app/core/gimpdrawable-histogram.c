@@ -23,12 +23,8 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
-
 #include "gegl/gimp-gegl-nodes.h"
 
-#include "gimp.h" /* gimp_use_gegl */
-#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpdrawable-histogram.h"
 #include "gimphistogram.h"
@@ -53,9 +49,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
   mask  = gimp_image_get_mask (image);
 
-  GIMP_TIMER_START();
-
-  if (FALSE) // gimp_use_gegl (image->gimp))
+  if (FALSE)
     {
       GeglNode      *node = gegl_node_new ();
       GeglNode      *buffer_source;
@@ -102,7 +96,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
       g_object_unref (processor);
       g_object_unref (node);
     }
-  else if (gimp_use_gegl (image->gimp))
+  else
     {
       if (! gimp_channel_is_empty (mask))
         {
@@ -110,7 +104,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-          gimp_histogram_calc_gegl (histogram,
+          gimp_histogram_calculate (histogram,
                                     gimp_drawable_get_buffer (drawable),
                                     GEGL_RECTANGLE (x, y, width, height),
                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
@@ -119,35 +113,10 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
         }
       else
         {
-          gimp_histogram_calc_gegl (histogram,
+          gimp_histogram_calculate (histogram,
                                     gimp_drawable_get_buffer (drawable),
                                     GEGL_RECTANGLE (x, y, width, height),
                                     NULL, NULL);
         }
     }
-  else
-    {
-      PixelRegion  region;
-      PixelRegion  mask_region;
-
-      pixel_region_init (&region, gimp_drawable_get_tiles (drawable),
-                         x, y, width, height, FALSE);
-
-      if (! gimp_channel_is_empty (mask))
-        {
-          gint off_x, off_y;
-
-          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-          pixel_region_init (&mask_region,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                             x + off_x, y + off_y, width, height, FALSE);
-          gimp_histogram_calculate (histogram, &region, &mask_region);
-        }
-      else
-        {
-          gimp_histogram_calculate (histogram, &region, NULL);
-        }
-    }
-
-  GIMP_TIMER_END("histogram");
 }

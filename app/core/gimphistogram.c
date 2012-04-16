@@ -21,44 +21,27 @@
 
 #include <string.h>
 
-#undef G_DISABLE_DEPRECATED /* GStaticMutex */
 #include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
-
 #include "gimphistogram.h"
-
-#ifdef ENABLE_MP
-#define NUM_SLOTS  GIMP_MAX_NUM_THREADS
-#else
-#define NUM_SLOTS  1
-#endif
 
 
 struct _GimpHistogram
 {
-  gint           ref_count;
-  gint           n_channels;
-#ifdef ENABLE_MP
-  GStaticMutex   mutex;
-  gchar          slots[NUM_SLOTS];
-#endif
-  gdouble       *values[NUM_SLOTS];
+  gint     ref_count;
+  gint     n_channels;
+  gdouble *values;
 };
 
 
 /*  local function prototypes  */
 
-static void  gimp_histogram_alloc_values         (GimpHistogram *histogram,
-                                                  gint           bytes);
-static void  gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
-                                                  PixelRegion   *region,
-                                                  PixelRegion   *mask);
+static void   gimp_histogram_alloc_values (GimpHistogram *histogram,
+                                           gint           bytes);
 
 
 /*  public functions  */
@@ -69,10 +52,6 @@ gimp_histogram_new (void)
   GimpHistogram *histogram = g_slice_new0 (GimpHistogram);
 
   histogram->ref_count = 1;
-
-#ifdef ENABLE_MP
-  g_static_mutex_init (&histogram->mutex);
-#endif
 
   return histogram;
 }
@@ -119,23 +98,15 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
 
   dup = gimp_histogram_new ();
 
-#ifdef ENABLE_MP
-  g_static_mutex_lock (&histogram->mutex);
-#endif
-
   dup->n_channels = histogram->n_channels;
-  dup->values[0]  = g_memdup (histogram->values[0],
+  dup->values     = g_memdup (histogram->values,
                               sizeof (gdouble) * dup->n_channels * 256);
-
-#ifdef ENABLE_MP
-  g_static_mutex_unlock (&histogram->mutex);
-#endif
 
   return dup;
 }
 
 void
-gimp_histogram_calc_gegl (GimpHistogram       *histogram,
+gimp_histogram_calculate (GimpHistogram       *histogram,
                           GeglBuffer          *buffer,
                           const GeglRectangle *buffer_rect,
                           GeglBuffer          *mask,
@@ -144,7 +115,6 @@ gimp_histogram_calc_gegl (GimpHistogram       *histogram,
   GeglBufferIterator *iter;
   const Babl         *format;
   gint                bpp;
-  gdouble            *values;
 
   g_return_if_fail (histogram != NULL);
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
@@ -163,9 +133,7 @@ gimp_histogram_calc_gegl (GimpHistogram       *histogram,
                               babl_format ("Y float"),
                               GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-  values = histogram->values[0];
-
-#define VALUE(c,i) (values[(c) * 256 + (i)])
+#define VALUE(c,i) (histogram->values[(c) * 256 + (i)])
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -312,53 +280,21 @@ gimp_histogram_calc_gegl (GimpHistogram       *histogram,
 }
 
 void
-gimp_histogram_calculate (GimpHistogram *histogram,
-                          PixelRegion   *region,
-                          PixelRegion   *mask)
-{
-  gint i;
-
-  g_return_if_fail (histogram != NULL);
-  g_return_if_fail (region != NULL);
-
-  gimp_histogram_alloc_values (histogram, region->bytes);
-
-  pixel_regions_process_parallel ((PixelProcessorFunc)
-                                  gimp_histogram_calculate_sub_region,
-                                  histogram, 2, region, mask);
-
-#ifdef ENABLE_MP
-  /* add up all slots */
-  for (i = 1; i < NUM_SLOTS; i++)
-    if (histogram->values[i])
-      {
-        gint j;
-
-        for (j = 0; j < histogram->n_channels * 256; j++)
-          histogram->values[0][j] += histogram->values[i][j];
-      }
-#endif
-}
-
-void
 gimp_histogram_clear_values (GimpHistogram *histogram)
 {
-  gint i;
-
   g_return_if_fail (histogram != NULL);
 
-  for (i = 0; i < NUM_SLOTS; i++)
-    if (histogram->values[i])
-      {
-        g_free (histogram->values[i]);
-        histogram->values[i] = NULL;
-      }
+  if (histogram->values)
+    {
+      g_free (histogram->values);
+      histogram->values = NULL;
+    }
 
   histogram->n_channels = 0;
 }
 
 
-#define HISTOGRAM_VALUE(c,i) (histogram->values[0][(c) * 256 + (i)])
+#define HISTOGRAM_VALUE(c,i) (histogram->values[(c) * 256 + (i)])
 
 
 gdouble
@@ -374,7 +310,7 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values[0] ||
+  if (! histogram->values ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0.0;
 
@@ -405,7 +341,7 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values[0] ||
+  if (! histogram->values ||
       bin < 0 || bin >= 256 ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
@@ -469,7 +405,7 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
             gimp_histogram_get_count (histogram,
                                       GIMP_HISTOGRAM_BLUE, start, end));
 
-  if (! histogram->values[0] ||
+  if (! histogram->values ||
       start > end ||
       channel >= histogram->n_channels)
     return 0.0;
@@ -499,7 +435,7 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values[0] ||
+  if (! histogram->values ||
       start > end ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
@@ -545,7 +481,7 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values[0] ||
+  if (! histogram->values ||
       start > end ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
@@ -607,7 +543,7 @@ gimp_histogram_get_threshold (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values[0] ||
+  if (! histogram->values ||
       start > end ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
@@ -690,7 +626,7 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values[0] ||
+  if (! histogram->values ||
       start > end ||
       (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
@@ -736,281 +672,11 @@ gimp_histogram_alloc_values (GimpHistogram *histogram,
 
       histogram->n_channels = bytes + 1;
 
-      histogram->values[0] = g_new0 (gdouble, histogram->n_channels * 256);
+      histogram->values = g_new0 (gdouble, histogram->n_channels * 256);
     }
   else
     {
-      gint i;
-
-      for (i = 0; i < NUM_SLOTS; i++)
-        if (histogram->values[i])
-          memset (histogram->values[i],
-                  0, histogram->n_channels * 256 * sizeof (gdouble));
+      memset (histogram->values,
+              0, histogram->n_channels * 256 * sizeof (gdouble));
     }
-}
-
-static void
-gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
-                                     PixelRegion   *region,
-                                     PixelRegion   *mask)
-{
-  const guchar *src, *msrc;
-  const guchar *m, *s;
-  gdouble      *values;
-  gint          h, w, max;
-
-#ifdef ENABLE_MP
-  gint slot = 0;
-
-  /* find an unused temporary slot to put our results in and lock it */
-  g_static_mutex_lock (&histogram->mutex);
-
-  while (histogram->slots[slot])
-    slot++;
-
-  values = histogram->values[slot];
-  histogram->slots[slot] = 1;
-
-  g_static_mutex_unlock (&histogram->mutex);
-
-  if (! values)
-    {
-      histogram->values[slot] = g_new0 (gdouble, histogram->n_channels * 256);
-      values = histogram->values[slot];
-    }
-
-#else
-  values = histogram->values[0];
-#endif
-
-#define VALUE(c,i) (values[(c) * 256 + (i)])
-
-  h = region->h;
-
-  if (mask)
-    {
-      src  = region->data;
-      msrc = mask->data;
-
-      switch (region->bytes)
-        {
-        case 1:
-          while (h--)
-            {
-              s = src;
-              m = msrc;
-              w = region->w;
-
-              while (w--)
-                {
-                  const gdouble masked = m[0] / 255.0;
-
-                  VALUE (0, s[0]) += masked;
-
-                  s += 1;
-                  m += 1;
-                }
-
-              src  += region->rowstride;
-              msrc += mask->rowstride;
-            }
-          break;
-
-        case 2:
-          while (h--)
-            {
-              s = src;
-              m = msrc;
-              w = region->w;
-
-              while (w--)
-                {
-                  const gdouble masked = m[0] / 255.0;
-                  const gdouble weight = s[1] / 255.0;
-
-                  VALUE (0, s[0]) += weight * masked;
-                  VALUE (1, s[1]) += masked;
-
-                  s += 2;
-                  m += 1;
-                }
-
-              src  += region->rowstride;
-              msrc += mask->rowstride;
-            }
-          break;
-
-        case 3: /* calculate separate value values */
-          while (h--)
-            {
-              s = src;
-              m = msrc;
-              w = region->w;
-
-              while (w--)
-                {
-                  const gdouble masked = m[0] / 255.0;
-
-                  VALUE (1, s[0]) += masked;
-                  VALUE (2, s[1]) += masked;
-                  VALUE (3, s[2]) += masked;
-
-                  max = (s[0] > s[1]) ? s[0] : s[1];
-
-                  if (s[2] > max)
-                    VALUE (0, s[2]) += masked;
-                  else
-                    VALUE (0, max) += masked;
-
-                  s += 3;
-                  m += 1;
-                }
-
-              src  += region->rowstride;
-              msrc += mask->rowstride;
-            }
-          break;
-
-        case 4: /* calculate separate value values */
-          while (h--)
-            {
-              s = src;
-              m = msrc;
-              w = region->w;
-
-              while (w--)
-                {
-                  const gdouble masked = m[0] / 255.0;
-                  const gdouble weight = s[3] / 255.0;
-
-                  VALUE (1, s[0]) += weight * masked;
-                  VALUE (2, s[1]) += weight * masked;
-                  VALUE (3, s[2]) += weight * masked;
-                  VALUE (4, s[3]) += masked;
-
-                  max = (s[0] > s[1]) ? s[0] : s[1];
-
-                  if (s[2] > max)
-                   VALUE (0, s[2]) += weight * masked;
-                  else
-                    VALUE (0, max) += weight * masked;
-
-                  s += 4;
-                  m += 1;
-                }
-
-              src  += region->rowstride;
-              msrc += mask->rowstride;
-            }
-          break;
-        }
-    }
-  else /* no mask */
-    {
-      src = region->data;
-
-      switch (region->bytes)
-        {
-        case 1:
-          while (h--)
-            {
-              s = src;
-              w = region->w;
-
-              while (w--)
-                {
-                  VALUE (0, s[0]) += 1.0;
-
-                  s += 1;
-                }
-
-              src += region->rowstride;
-            }
-          break;
-
-        case 2:
-          while (h--)
-            {
-              s = src;
-              w = region->w;
-
-              while (w--)
-                {
-                  const gdouble weight = s[1] / 255;
-
-                  VALUE (0, s[0]) += weight;
-                  VALUE (1, s[1]) += 1.0;
-
-                  s += 2;
-                }
-
-              src += region->rowstride;
-            }
-          break;
-
-        case 3: /* calculate separate value values */
-          while (h--)
-            {
-              s = src;
-              w = region->w;
-
-              while (w--)
-                {
-                  VALUE (1, s[0]) += 1.0;
-                  VALUE (2, s[1]) += 1.0;
-                  VALUE (3, s[2]) += 1.0;
-
-                  max = (s[0] > s[1]) ? s[0] : s[1];
-
-                  if (s[2] > max)
-                    VALUE (0, s[2]) += 1.0;
-                  else
-                    VALUE (0, max) += 1.0;
-
-                  s += 3;
-                }
-
-              src += region->rowstride;
-            }
-          break;
-
-        case 4: /* calculate separate value values */
-          while (h--)
-            {
-              s = src;
-              w = region->w;
-
-              while (w--)
-                {
-                  const gdouble weight = s[3] / 255;
-
-                  VALUE (1, s[0]) += weight;
-                  VALUE (2, s[1]) += weight;
-                  VALUE (3, s[2]) += weight;
-                  VALUE (4, s[3]) += 1.0;
-
-                  max = (s[0] > s[1]) ? s[0] : s[1];
-
-                  if (s[2] > max)
-                    VALUE (0, s[2]) += weight;
-                  else
-                    VALUE (0, max) += weight;
-
-                  s += 4;
-                }
-
-              src += region->rowstride;
-            }
-          break;
-        }
-    }
-
-#ifdef ENABLE_MP
-  /* unlock this slot */
-  g_static_mutex_lock (&histogram->mutex);
-
-  histogram->slots[slot] = 0;
-
-  g_static_mutex_unlock (&histogram->mutex);
-#endif
 }
