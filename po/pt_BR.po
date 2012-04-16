@@ -8,12 +8,11 @@
 # Rodrigo Padula de Oliveira <contato@rodrigopadula.com>, 2011.
 # Vanessa Gomes de Lima <vane.gomesl@gmail.com>, 2012.
 # Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2006, 2007, 2008, 2012.
-
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"Report-Msgid-Bugs-To: gwidion@gmail.com\n"
-"POT-Creation-Date: 2012-04-13 15:19-0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-16 11:44-0300\n"
 "PO-Revision-Date: 2012-04-15 22:38-0300\n"
 "Last-Translator: Joao S. O. Bueno <gwidion@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
@@ -2390,7 +2389,8 @@ msgstr "_Sobrescrever"
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
 msgstr ""
-"Exporta a imagem de volta para o arquivo no mesmo formato em que foi importada"
+"Exporta a imagem de volta para o arquivo no mesmo formato em que foi "
+"importada"
 
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
@@ -4818,7 +4818,8 @@ msgstr "Atualiza_r definições de ferramenta"
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
 msgstr ""
-"Atualiza todos as definições de ferramenta a partir das disponíveis em arquivo"
+"Atualiza todos as definições de ferramenta a partir das disponíveis em "
+"arquivo"
 
 #: ../app/actions/tool-presets-actions.c:81
 msgctxt "tool-presets-action"
@@ -6075,8 +6076,8 @@ msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
 msgstr ""
-"Cursores que dependem do contexto ajudam. Eles ficam ativados por "
-"padrão. Entretanto, eles requerem recursos extras que você pode querer não "
+"Cursores que dependem do contexto ajudam. Eles ficam ativados por padrão. "
+"Entretanto, eles requerem recursos extras que você pode querer não "
 "desperdiçar."
 
 #: ../app/config/gimprc-blurbs.h:74
@@ -6126,9 +6127,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:160
 msgid "When enabled, the selected dynamics will be used for all tools."
 msgstr ""
-"Quando habilitado, a dinâmica de pintura selecionada será utilizado por todas "
-"as "
-"ferramentas."
+"Quando habilitado, a dinâmica de pintura selecionada será utilizado por "
+"todas as ferramentas."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -6166,8 +6166,8 @@ msgstr ""
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
-"Seleciona o nível de interpolação padrão utilizado para redimensionar"
-" e para outras transformações."
+"Seleciona o nível de interpolação padrão utilizado para redimensionar e para "
+"outras transformações."
 
 #: ../app/config/gimprc-blurbs.h:211
 msgid "Specifies the language to use for the user interface."
@@ -6246,8 +6246,8 @@ msgstr ""
 "Quando habilitado, o servidor X é consultado sobre a posição do mouse a cada "
 "evento de movimentação, em vez de se confiar na dica de posição. Isto "
 "significa que pintar com pincéis grandes deve ser mais preciso, mas pode se "
-"tornar mais lento. Entretanto, em alguns servidores X habilitar esta "
-"opção resulta em mais velocidade."
+"tornar mais lento. Entretanto, em alguns servidores X habilitar esta opção "
+"resulta em mais velocidade."
 
 #: ../app/config/gimprc-blurbs.h:278
 msgid ""
@@ -6285,8 +6285,7 @@ msgid ""
 "into and out of images."
 msgstr ""
 "Quando habilitado, as janelas de imagem irão se  redimensionar "
-"automaticamente "
-"quando se aumentar ou diminuir o nível de zoom."
+"automaticamente quando se aumentar ou diminuir o nível de zoom."
 
 #: ../app/config/gimprc-blurbs.h:298
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -6365,7 +6364,8 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "Quando habilitado, o padrão é que as barras de rolagem sejam visíveis. Isso "
-"também pode ser alterado com a opção \"Visualizar->Exibir Barras de Rolagem\"."
+"também pode ser alterado com a opção \"Visualizar->Exibir Barras de Rolagem"
+"\"."
 
 #: ../app/config/gimprc-blurbs.h:343
 msgid ""
@@ -7875,8 +7875,7 @@ msgid ""
 msgstr ""
 "Você tem uma pasta de dados para gravação configurada (%s), mas esta pasta "
 "não existe. Por favor crie a pasta ou corrija sua configuração na seção de "
-"\"Pastas\" "
-"da janela de Preferências."
+"\"Pastas\" da janela de Preferências."
 
 #: ../app/core/gimpdatafactory.c:763
 #, c-format
@@ -7885,11 +7884,10 @@ msgid ""
 "your data search path. You probably edited the gimprc file manually, please "
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
-"Você tem uma pasta de dados para gravação configurada, mas esta pasta "
-"não faz parte dos caminhos de busca de dados. Você provavelmente editou seu "
-"arquivo gimprc "
-"manualmente - por favor corrija sua configuração na seção de \"Pastas\" "
-"da janela de Preferências."
+"Você tem uma pasta de dados para gravação configurada, mas esta pasta não "
+"faz parte dos caminhos de busca de dados. Você provavelmente editou seu "
+"arquivo gimprc manualmente - por favor corrija sua configuração na seção de "
+"\"Pastas\" da janela de Preferências."
 
 #: ../app/core/gimpdatafactory.c:773
 #, c-format
@@ -9122,19 +9120,17 @@ msgid ""
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
 "Você pode usar esta janela para exportar para vários formatos de arquivos de "
-"imagem. Se "
-"você quer salvar a imagem para o formato XCF do GIMP, use Arquivo→Salvar em "
-"vez desta opção."
+"imagem. Se você quer salvar a imagem para o formato XCF do GIMP, use "
+"Arquivo→Salvar em vez desta opção."
 
 #: ../app/dialogs/file-save-dialog.c:565
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
-"Você pode usar esta janela para salvar a imagem no formato XCF do GIMP. Use a "
-"opção "
-"Arquivo→Exportar para gravar a imagem em outros formatos (JPG, PNG, GIF, etc.."
-".)"
+"Você pode usar esta janela para salvar a imagem no formato XCF do GIMP. Use "
+"a opção Arquivo→Exportar para gravar a imagem em outros formatos (JPG, PNG, "
+"GIF, etc...)"
 
 #: ../app/dialogs/file-save-dialog.c:571
 msgid ""
@@ -10900,8 +10896,8 @@ msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
 msgstr ""
-"Converte um buffer de coeficientes para um buffer de coordenadas "
-"para a ferramenta de Gaiola do GIMP"
+"Converte um buffer de coeficientes para um buffer de coordenadas para a "
+"ferramenta de Gaiola do GIMP"
 
 #: ../app/gegl/gimpoperationcagetransform.c:128
 msgid "Fill with plain color"
@@ -11280,8 +11276,8 @@ msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
 msgstr ""
-"O item '%s' (%d) não pode ser usado por que ainda não é um item direto "
-"em uma árvore de items."
+"O item '%s' (%d) não pode ser usado por que ainda não é um item direto em "
+"uma árvore de items."
 
 #: ../app/pdb/gimppdb-utils.c:420
 #, c-format
@@ -11289,9 +11285,8 @@ msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"Os itens '%s' (%d) e  '%s' (%d) não podem ser usados por que não são parte da "
-"mesma "
-"árvore de items."
+"Os itens '%s' (%d) e  '%s' (%d) não podem ser usados por que não são parte "
+"da mesma árvore de items."
 
 #: ../app/pdb/gimppdb-utils.c:445
 #, c-format
@@ -11312,7 +11307,8 @@ msgstr "Tentativa de adicionar o item '%s' (%d) a imagem errada"
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
-"O item '%s' (%d) não pode ser modificado por que seus conteúdos estão travados"
+"O item '%s' (%d) não pode ser modificado por que seus conteúdos estão "
+"travados"
 
 #: ../app/pdb/gimppdb-utils.c:516
 #, c-format
@@ -12389,8 +12385,8 @@ msgstr "Corta apenas a camada selecionada"
 #: ../app/tools/gimpcropoptions.c:88
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
 msgstr ""
-"Permite o redimensionamento da tela da imagem ao criar a "
-"área de corte maior que o tamanho da imagem"
+"Permite o redimensionamento da tela da imagem ao criar a área de corte maior "
+"que o tamanho da imagem"
 
 #: ../app/tools/gimpcropoptions.c:164
 msgid "Current layer only"
@@ -12669,8 +12665,8 @@ msgid ""
 "Paint over areas to mark color values for inclusion or exclusion from "
 "selection"
 msgstr ""
-"Pinte sobre áreas da imagem parar marcar valores cor para incluir ou "
-"excluir da seleção"
+"Pinte sobre áreas da imagem parar marcar valores cor para incluir ou excluir "
+"da seleção"
 
 #: ../app/tools/gimpforegroundselectoptions.c:98
 msgid "Size of the brush used for refinements"
@@ -14912,8 +14908,8 @@ msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
 msgstr ""
-"Você está prestes a apagar as configurações armazenadas para este dispositivo."
-"\n"
+"Você está prestes a apagar as configurações armazenadas para este "
+"dispositivo.\n"
 "Na próxima vez que este dispositivo for ligado, as configurações padrões "
 "serão utilizadas."
 
@@ -16061,5 +16057,3 @@ msgstr "Crie e edite imagens ou fotografias"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
 msgstr "Editor de imagens"
-
-

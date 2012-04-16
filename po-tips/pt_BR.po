@@ -4,25 +4,26 @@
 # This file is distributed under the same license as the gimp package.
 # based on the GNOME 1.4 translation to Portuguese (pt) by
 #
-# Leandro A. F. Pereira <leandro@linuxmag.com.br>, 2004,.
-# João S. O. Bueno Calligaris<gwidion@mpc.com.br>, 2007,.
-# Alexandre Folle de Menezes <afmenez@terra.com.br>, 2003.
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2002.
-# João S. O. Bueno Calligaris <gwidion@mpc.com.br>, 2004.
+# Alexandre Folle de Menezes <afmenez@terra.com.br>, 2003.
+# Leandro A. F. Pereira <leandro.pereira@gmail.com>, 2004,.
 # Pedro de Medeiros <pedrovmm@gmail.com>, 2007.
-# Joao S. O. Bueno <gwidion@mpc.com.br>, 2008.
+# Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2007, 2008, 2012.
+
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-08 00:00-0300\n"
-"PO-Revision-Date: 2008-10-08 00:02-0300\n"
-"Last-Translator: Joao S. O. Bueno <gwidion@mpc.com.br>\n"
-"Language-Team: Brazilian Portuguese <GNOME-l10n-br <Gnome-l10n-BR@listas.cipsga.org.br>>\n"
+"POT-Creation-Date: 2012-04-16 12:20-0300\n"
+"PO-Revision-Date: 2012-04-16 12:22-0300\n"
+"Last-Translator: Joao S. O. Bueno <gwidion@gmail.com>\n"
+"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid ""
@@ -205,13 +206,13 @@ msgstr ""
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and every aspect of your work-in-progress. Once a project is "
-"completed, you can save it as JPEG, PNG, GIF, ..."
+"the layers and many aspects of your work-in-progress. Once a project is "
+"completed, you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Quando salvar uma imagem para trabalhar nela mais tarde, tente usar XCF, o "
+"Quando salvar uma imagem para trabalhar nela mais tarde, use XCF, o "
 "formato de arquivo nativo do GIMP (use a extensão de arquivo <tt>.xcf</tt>). "
 "Isto preserva as camadas e todos os aspectos do seu trabalho em andamento. "
-"Uma vez completado o projeto, grave-o como JPEG, PNG, GIF, ..."
+"Uma vez completado o projeto, você pode exporta-lo como JPEG, PNG, GIF, ..."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""

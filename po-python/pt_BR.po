@@ -1,315 +1,347 @@
 # translation of pt_BR.po to Brazilian Portuguese
 # translation of pt_BR.po to
-# Mensagens em português do Brazil pt_BR para o  GIMP.
+# Mensagens em português do Brazil pt_BR para o GIMP.
 #
-# Joao S. O. Bueno <gwidion@mpc.com.br>,2007, 2008.
+# Joao S. O. Bueno <gwidion@gmail.com>, 2007, 2008, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-08 00:38-0300\n"
-"PO-Revision-Date: 2008-10-08 00:43-0300\n"
-"Last-Translator: Joao S. O. Bueno <gwidion@mpc.com.br>\n"
-"Language-Team: Brazilian Portuguese <GNOME-l10n-br <Gnome-l10n-BR@listas.cipsga.org.br>>\n"
+"POT-Creation-Date: 2012-04-16 12:17-0300\n"
+"PO-Revision-Date: 2012-04-16 12:19-0300\n"
+"Last-Translator: Joao S. O. Bueno <gwidion@gmail.com>\n"
+"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:385
+#: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
 msgstr "Sem informação sobre a exceção"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
-msgid "An error occured running %s"
+msgid "An error occurred running %s"
 msgstr "Ocorreu um erro ao executar %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:405
+#: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
 msgstr "_Mais informações"
 
-#: ../plug-ins/pygimp/gimpfu.py:511 ../plug-ins/pygimp/gimpfu.py:523
-#: ../plug-ins/pygimp/gimpfu.py:529
+#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
+#: ../plug-ins/pygimp/gimpfu.py:544
 msgid "No"
 msgstr "Não"
 
-#: ../plug-ins/pygimp/gimpfu.py:521 ../plug-ins/pygimp/gimpfu.py:529
+#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
 msgid "Yes"
 msgstr "Sim"
 
-#: ../plug-ins/pygimp/gimpfu.py:580 ../plug-ins/pygimp/gimpui.py:224
+#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Seleção de arquivos do python-fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:591
+#: ../plug-ins/pygimp/gimpfu.py:607
 msgid "Python-Fu Folder Selection"
 msgstr "Seleção de pastas do python-fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:682
+#: ../plug-ins/pygimp/gimpfu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Saída inválida para '%s'"
 
-#: ../plug-ins/pygimp/gimpui.py:177
+#: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
 msgstr "Seleção de cores do python-fu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Salvando como XHTML colorido"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Salva como um XHTML colorido"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "XHTML colorido"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "Origem dos caracteres"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Código fonte"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Arquivo texto"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Texto da entrada "
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "Arquivo a _ler, ou texto a usar"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "_Tamanho  da fonte (px)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "_Escrever um arquivo CSS separado"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:53
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+msgid "Gradient to use"
+msgstr "Degradê a usar"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+msgid "File Name"
+msgstr "Nome do arquivo"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
 msgstr "Adiciona uma camada de nevoeiro"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:58
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Fog..."
 msgstr "_Nevoeiro..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "_Layer name"
 msgstr "_Nome da camada"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Clouds"
 msgstr "Nuvens"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "_Fog color"
 msgstr "Cor do _nevoeiro"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Turbulence"
 msgstr "_Turbulência"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "Op_acity"
 msgstr "Opa_cidade"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
 msgstr "Desloca as cores da paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
 msgstr "_Deslocar paleta..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 msgid "Off_set"
 msgstr "D_eslocamento"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
 msgid "Sort the colors in a palette"
 msgstr "Ordena as cores da paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
 msgstr "_Ordena paleta..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
 msgid "Color _model"
 msgstr "_Modelo de cor"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "Channel to _sort"
 msgstr "Canal a _ordenar"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Red or Hue"
 msgstr "Vermelho ou matiz"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Green or Saturation"
 msgstr "Verde ou saturação"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
 msgid "Blue or Value"
 msgstr "Azul ou valor"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "_Ascending"
 msgstr "_Ascendente"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Cria um degradê repetitivo usando cores da paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "Paleta para degradê com _repetições"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "Cria um degradê usando cores da paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "Paleta para degradê"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "Fatiar"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Corta uma imagem ao longo das suas guias, cria imagens e um trecho de HTML "
 "com uma tabela - opcionalmente gera javascript para animar as três camadas "
 "de cima da imagem quando o mouse estiver sobre a tabela"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "_Fatiar..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
 msgstr "Caminho para a exportação de HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Filename for export"
 msgstr "Nome do arquivo para exportação"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "Prefixo dos nomes das imagens"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "Formato das imagens"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Separate image folder"
 msgstr "Separar pasta de imagens"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
 msgid "Folder for image export"
 msgstr "Pasta para exportação de imagens"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Space between table elements"
 msgstr "Espaço entre os elementos da tabela"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr "Animação Javascript para onmouseover e clicked"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
 msgstr "Não animar os cantos da tabela"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+#: ../plug-ins/pygimp/plug-ins/python-console.py:56
 msgid "Python Console"
 msgstr "Console Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+#: ../plug-ins/pygimp/plug-ins/python-console.py:60
 msgid "_Browse..."
 msgstr "_Procurar..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:139
+#: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
 msgstr "Navegador procedural do Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:168
+#: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Não foi possível abrir '%s' para escrita: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#: ../plug-ins/pygimp/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Não foi possível escrever em '%s': %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:191
+#: ../plug-ins/pygimp/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
 msgstr "Salvar saída do console Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:217
+#: ../plug-ins/pygimp/plug-ins/python-console.py:216
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interpretador interativo de Python no GIMP"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:222
+#: ../plug-ins/pygimp/plug-ins/python-console.py:221
 msgid "_Console"
 msgstr "_Console"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr ""
 "Adiciona uma sombra projetada a uma camada, e opcionalmente cria um chanfro "
 "nas bordas"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
 msgstr "_Sombra projetada com chanfro..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
 msgstr "_Desfocagem da sombra"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
 msgstr "_Chanfrar"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
 msgstr "_Sombra projetada"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
 msgstr "Deslocamento _x  da sombra"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Deslocamento _y da sombra"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+msgid "Create a new brush with characters from a text sequence"
+msgstr "Cria um novo pincel usando letras uma linha de texto"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+msgid "New Brush from _Text..."
+msgstr "Novo pincel a partir de _texto..."
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+msgid "Font"
+msgstr "Fonte"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+msgid "Pixel Size"
+msgstr "Tamanho em pixels"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+msgid "Text"
+msgstr "Texto"
 
