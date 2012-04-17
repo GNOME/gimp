@@ -26,11 +26,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
-#include "base/tile.h"
-#include "base/tile-manager.h"
-
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-contiguous-region.h"
@@ -47,34 +42,24 @@ static gint pixel_difference              (const guchar        *col1,
                                            gboolean             has_alpha,
                                            gboolean             select_transparent,
                                            GimpSelectCriterion  select_criterion);
-static void ref_tiles                     (TileManager         *src,
-                                           TileManager         *mask,
-                                           Tile               **s_tile,
-                                           Tile               **m_tile,
-                                           gint                 x,
-                                           gint                 y,
-                                           guchar             **s,
-                                           guchar             **m);
-static gboolean find_contiguous_segment   (GimpImage           *image,
-                                           const guchar        *col,
-                                           PixelRegion         *src,
-                                           PixelRegion         *mask,
-                                           gint                 width,
+static gboolean find_contiguous_segment   (const guchar        *col,
+                                           GeglBuffer          *src_buffer,
+                                           GeglBuffer          *mask_buffer,
+                                           const Babl          *src_format,
                                            gint                 bytes,
-                                           const Babl          *fish,
                                            gboolean             has_alpha,
+                                           gint                 width,
                                            gboolean             select_transparent,
                                            GimpSelectCriterion  select_criterion,
                                            gboolean             antialias,
                                            gint                 threshold,
-                                           gint                 initial,
+                                           gint                 initial_x,
+                                           gint                 initial_y,
                                            gint                *start,
                                            gint                *end);
-static void find_contiguous_region_helper (GimpImage           *image,
-                                           PixelRegion         *mask,
-                                           PixelRegion         *src,
-                                           const Babl          *fish,
-                                           gboolean             has_alpha,
+static void find_contiguous_region_helper (GeglBuffer          *src_buffer,
+                                           GeglBuffer          *mask_buffer,
+                                           const Babl          *format,
                                            gboolean             select_transparent,
                                            GimpSelectCriterion  select_criterion,
                                            gboolean             antialias,
@@ -97,15 +82,12 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
                                       gint                 x,
                                       gint                 y)
 {
-  PixelRegion    srcPR, maskPR;
-  GimpPickable  *pickable;
-  TileManager   *tiles;
-  GimpChannel   *mask;
-  const Babl    *src_format;
-  const Babl    *fish = NULL;
-  gboolean       has_alpha;
-  gint           bytes;
-  Tile          *tile;
+  GimpPickable *pickable;
+  GeglBuffer   *src_buffer;
+  GimpChannel  *mask;
+  GeglBuffer   *mask_buffer;
+  const Babl   *src_format;
+  guchar        start_col[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -118,69 +100,42 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
   gimp_pickable_flush (pickable);
 
   src_format = gimp_pickable_get_format (pickable);
-  has_alpha  = babl_format_has_alpha (src_format);
-  bytes      = babl_format_get_bytes_per_pixel (src_format);
+  if (babl_format_is_palette (src_format))
+    src_format = babl_format ("R'G'B'A u8");
 
-  tiles = gimp_pickable_get_tiles (pickable);
-  pixel_region_init (&srcPR, tiles,
-                     0, 0,
-                     tile_manager_width (tiles),
-                     tile_manager_height (tiles),
-                     FALSE);
+  src_buffer = gimp_pickable_get_buffer (pickable);
 
-  mask = gimp_channel_new_mask (image, srcPR.w, srcPR.h);
-  pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                     0, 0,
-                     gimp_item_get_width  (GIMP_ITEM (mask)),
-                     gimp_item_get_height (GIMP_ITEM (mask)),
-                     TRUE);
+  mask = gimp_channel_new_mask (image,
+                                gegl_buffer_get_width  (src_buffer),
+                                gegl_buffer_get_height (src_buffer));
 
-  tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
-  if (tile)
+  mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
+  gegl_buffer_sample (src_buffer, x, y, NULL, start_col, src_format,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
+  if (babl_format_has_alpha (src_format))
     {
-      const guchar *start;
-      guchar        start_col[MAX_CHANNELS];
-
-      start = tile_data_pointer (tile, x, y);
-
-      if (has_alpha)
+      if (select_transparent)
         {
-          if (select_transparent)
-            {
-              /*  don't select transparent regions if the start pixel isn't
-               *  fully transparent
-               */
-              if (start[bytes - 1] > 0)
-                select_transparent = FALSE;
-            }
+          gint bytes = babl_format_get_bytes_per_pixel (src_format);
+
+          /*  don't select transparent regions if the start pixel isn't
+           *  fully transparent
+           */
+          if (start_col[bytes - 1] > 0)
+            select_transparent = FALSE;
         }
-      else
-        {
-          select_transparent = FALSE;
-        }
-
-      if (babl_format_is_palette (src_format))
-        {
-          fish = babl_fish (src_format, babl_format ("R'G'B'A u8"));
-
-          babl_process (fish, start, start_col, 1);
-        }
-      else
-        {
-          gint i;
-
-          for (i = 0; i < bytes; i++)
-            start_col[i] = start[i];
-        }
-
-      find_contiguous_region_helper (image, &maskPR, &srcPR,
-                                     fish, has_alpha,
-                                     select_transparent, select_criterion,
-                                     antialias, threshold,
-                                     x, y, start_col);
-
-      tile_release (tile, FALSE);
     }
+  else
+    {
+      select_transparent = FALSE;
+    }
+
+  find_contiguous_region_helper (src_buffer, mask_buffer, src_format,
+                                 select_transparent, select_criterion,
+                                 antialias, threshold,
+                                 x, y, start_col);
 
   return mask;
 }
@@ -402,160 +357,90 @@ pixel_difference (const guchar        *col1,
     }
 }
 
-static void
-ref_tiles (TileManager  *src,
-           TileManager  *mask,
-           Tile        **s_tile,
-           Tile        **m_tile,
-           gint          x,
-           gint          y,
-           guchar      **s,
-           guchar      **m)
-{
-  if (*s_tile != NULL)
-    tile_release (*s_tile, FALSE);
-  if (*m_tile != NULL)
-    tile_release (*m_tile, TRUE);
-
-  *s_tile = tile_manager_get_tile (src, x, y, TRUE, FALSE);
-  *m_tile = tile_manager_get_tile (mask, x, y, TRUE, TRUE);
-
-  *s = tile_data_pointer (*s_tile, x, y);
-  *m = tile_data_pointer (*m_tile, x, y);
-}
-
 static gboolean
-find_contiguous_segment (GimpImage           *image,
-                         const guchar        *col,
-                         PixelRegion         *src,
-                         PixelRegion         *mask,
-                         gint                 width,
+find_contiguous_segment (const guchar        *col,
+                         GeglBuffer          *src_buffer,
+                         GeglBuffer          *mask_buffer,
+                         const Babl          *src_format,
                          gint                 bytes,
-                         const Babl          *fish,
                          gboolean             has_alpha,
+                         gint                 width,
                          gboolean             select_transparent,
                          GimpSelectCriterion  select_criterion,
                          gboolean             antialias,
                          gint                 threshold,
-                         gint                 initial,
+                         gint                 initial_x,
+                         gint                 initial_y,
                          gint                *start,
                          gint                *end)
 {
-  guchar *s;
-  guchar *m;
-  guchar  s_color[MAX_CHANNELS];
-  guchar  diff;
-  gint    col_bytes = bytes;
-  Tile   *s_tile    = NULL;
-  Tile   *m_tile    = NULL;
+  guchar s[MAX_CHANNELS];
+  guchar mask_row[width];
+  guchar diff;
 
-  ref_tiles (src->tiles, mask->tiles,
-             &s_tile, &m_tile, src->x, src->y, &s, &m);
+  gegl_buffer_sample (src_buffer, initial_x, initial_y, NULL, s, src_format,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-  if (fish)
-    {
-      col_bytes = has_alpha ? 4 : 3;
-
-      babl_process (fish, s, s_color, 1);
-
-      diff = pixel_difference (col, s_color, antialias, threshold,
-                               col_bytes, has_alpha, select_transparent,
-                               select_criterion);
-     }
-  else
-    {
-      diff = pixel_difference (col, s, antialias, threshold,
-                               col_bytes, has_alpha, select_transparent,
-                               select_criterion);
-    }
+  diff = pixel_difference (col, s, antialias, threshold,
+                           bytes, has_alpha, select_transparent,
+                           select_criterion);
 
   /* check the starting pixel */
   if (! diff)
-    {
-      tile_release (s_tile, FALSE);
-      tile_release (m_tile, TRUE);
-      return FALSE;
-    }
+    return FALSE;
 
-  *m-- = diff;
-  s -= bytes;
-  *start = initial - 1;
+  mask_row[initial_x] = diff;
+
+  *start = initial_x - 1;
 
   while (*start >= 0 && diff)
     {
-      if (! ((*start + 1) % TILE_WIDTH))
-        ref_tiles (src->tiles, mask->tiles,
-                   &s_tile, &m_tile, *start, src->y, &s, &m);
+      gegl_buffer_sample (src_buffer, *start, initial_y, NULL, s, src_format,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-      if (fish)
-        {
-          babl_process (fish, s, s_color, 1);
+      diff = pixel_difference (col, s, antialias, threshold,
+                               bytes, has_alpha, select_transparent,
+                               select_criterion);
 
-          diff = pixel_difference (col, s_color, antialias, threshold,
-                                   col_bytes, has_alpha, select_transparent,
-                                   select_criterion);
-        }
-      else
-        {
-          diff = pixel_difference (col, s, antialias, threshold,
-                                   col_bytes, has_alpha, select_transparent,
-                                   select_criterion);
-        }
+      mask_row[*start] = diff;
 
-      if ((*m-- = diff))
-        {
-          s -= bytes;
-          (*start)--;
-        }
+      if (diff)
+        (*start)--;
     }
 
   diff = 1;
-  *end = initial + 1;
-
-  if (*end % TILE_WIDTH && *end < width)
-    ref_tiles (src->tiles, mask->tiles,
-               &s_tile, &m_tile, *end, src->y, &s, &m);
+  *end = initial_x + 1;
 
   while (*end < width && diff)
     {
-      if (! (*end % TILE_WIDTH))
-        ref_tiles (src->tiles, mask->tiles,
-                   &s_tile, &m_tile, *end, src->y, &s, &m);
+      gegl_buffer_sample (src_buffer, *end, initial_y, NULL, s, src_format,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-      if (fish)
-        {
-          babl_process (fish, s, s_color, 1);
+      diff = pixel_difference (col, s, antialias, threshold,
+                               bytes, has_alpha, select_transparent,
+                               select_criterion);
 
-          diff = pixel_difference (col, s_color, antialias, threshold,
-                                   col_bytes, has_alpha, select_transparent,
-                                   select_criterion);
-        }
-      else
-        {
-          diff = pixel_difference (col, s, antialias, threshold,
-                                   col_bytes, has_alpha, select_transparent,
-                                   select_criterion);
-        }
+      mask_row[*end] = diff;
 
-      if ((*m++ = diff))
-        {
-          s += bytes;
-          (*end)++;
-        }
+      if (diff)
+        (*end)++;
     }
 
-  tile_release (s_tile, FALSE);
-  tile_release (m_tile, TRUE);
+  gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (*start, initial_y,
+                                                *end - *start, 1),
+                   0, babl_format ("Y u8"), &mask_row[*start],
+                   GEGL_AUTO_ROWSTRIDE);
+
+  /* XXX this should now be needed and is a performance killer */
+  gegl_buffer_sample_cleanup (mask_buffer);
 
   return TRUE;
 }
 
 static void
-find_contiguous_region_helper (GimpImage           *image,
-                               PixelRegion         *mask,
-                               PixelRegion         *src,
-                               const Babl          *fish,
-                               gboolean             has_alpha,
+find_contiguous_region_helper (GeglBuffer          *src_buffer,
+                               GeglBuffer          *mask_buffer,
+                               const Babl          *format,
                                gboolean             select_transparent,
                                GimpSelectCriterion  select_criterion,
                                gboolean             antialias,
@@ -566,8 +451,7 @@ find_contiguous_region_helper (GimpImage           *image,
 {
   gint    start, end;
   gint    new_start, new_end;
-  gint    val;
-  Tile   *tile;
+  guchar  val;
   GQueue *coord_stack;
 
   coord_stack = g_queue_new ();
@@ -589,23 +473,23 @@ find_contiguous_region_helper (GimpImage           *image,
 
       for (x = start + 1; x < end; x++)
         {
-          tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
-          val = *(const guchar *) tile_data_pointer (tile, x, y);
-          tile_release (tile, FALSE);
+          gegl_buffer_sample (mask_buffer, x, y, NULL, &val,
+                              babl_format ("Y u8"),
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
           if (val != 0)
             continue;
 
-          src->x = x;
-          src->y = y;
-
-          if (! find_contiguous_segment (image, col, src, mask, src->w,
-                                         src->bytes, fish, has_alpha,
+          if (! find_contiguous_segment (col, src_buffer, mask_buffer,
+                                         format,
+                                         babl_format_get_bytes_per_pixel (format),
+                                         babl_format_has_alpha (format),
+                                         gegl_buffer_get_width (src_buffer),
                                          select_transparent, select_criterion,
-                                         antialias, threshold, x,
+                                         antialias, threshold, x, y,
                                          &new_start, &new_end))
             continue;
 
-          if (y + 1 < src->h)
+          if (y + 1 < gegl_buffer_get_height (src_buffer))
             {
               g_queue_push_tail (coord_stack, GINT_TO_POINTER (y + 1));
               g_queue_push_tail (coord_stack, GINT_TO_POINTER (new_start));
