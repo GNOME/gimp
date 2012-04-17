@@ -325,28 +325,17 @@ gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
                         guchar               blend)
 {
   GeglBufferIterator *iter;
-  const Babl         *top_format;
-  const Babl         *bottom_format;
-  const Babl         *dest_format;
-  gint                top_bpp;
-  gint                bottom_bpp;
-  gint                dest_bpp;
 
-  top_format    = gegl_buffer_get_format (top_buffer);
-  bottom_format = gegl_buffer_get_format (bottom_buffer);
-  dest_format   = gegl_buffer_get_format (dest_buffer);
-
-  top_bpp    = babl_format_get_bytes_per_pixel (top_format);
-  bottom_bpp = babl_format_get_bytes_per_pixel (bottom_format);
-  dest_bpp   = babl_format_get_bytes_per_pixel (dest_format);
-
-  iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0, NULL,
+  iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0,
+                                   babl_format ("R'G'B'A u8"),
                                    GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-  gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0, NULL,
+  gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0,
+                            babl_format ("R'G'B'A u8"),
                             GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0, NULL,
+  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
+                            babl_format ("R'G'B'A u8"),
                             GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
@@ -354,55 +343,33 @@ gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
       const guchar *top    = iter->data[0];
       const guchar *bottom = iter->data[1];
       guchar       *dest   = iter->data[2];
+      const guint   blend1 = 255 - blend;
+      const guint   blend2 = blend + 1;
 
-      if (babl_format_has_alpha (top_format))
+      while (iter->length--)
         {
-          const guint blend1 = 255 - blend;
-          const guint blend2 = blend + 1;
-          const guint c      = top_bpp - 1;
+          const gint  a1 = blend1 * bottom[3];
+          const gint  a2 = blend2 * top[3];
+          const gint  a  = a1 + a2;
+          guint       b;
 
-          while (iter->length--)
+          if (!a)
             {
-              const gint  a1 = blend1 * bottom[c];
-              const gint  a2 = blend2 * top[c];
-              const gint  a  = a1 + a2;
-              guint       b;
-
-              if (!a)
-                {
-                  for (b = 0; b < top_bpp; b++)
-                    dest[b] = 0;
-                }
-              else
-                {
-                  for (b = 0; b < c; b++)
-                    dest[b] =
-                      bottom[b] + (bottom[b] * a1 + top[b] * a2 - a * bottom[b]) / a;
-
-                  dest[c] = a >> 8;
-                }
-
-              top    += top_bpp;
-              bottom += bottom_bpp;
-              dest   += dest_bpp;
+              for (b = 0; b < 4; b++)
+                dest[b] = 0;
             }
-        }
-      else
-        {
-          const guchar blend1 = 255 - blend;
-
-          while (iter->length--)
+          else
             {
-              guint b;
-
-              for (b = 0; b < top_bpp; b++)
+              for (b = 0; b < 3; b++)
                 dest[b] =
-                  bottom[b] + (bottom[b] * blend1 + top[b] * blend - bottom[b] * 255) / 255;
+                  bottom[b] + (bottom[b] * a1 + top[b] * a2 - a * bottom[b]) / a;
 
-              top    += top_bpp;
-              bottom += bottom_bpp;
-              dest   += dest_bpp;
+              dest[3] = a >> 8;
             }
+
+          top    += 4;
+          bottom += 4;
+          dest   += 4;
         }
     }
 }
