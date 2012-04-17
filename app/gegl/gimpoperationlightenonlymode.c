@@ -3,6 +3,7 @@
  *
  * gimpoperationlightenonlymode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +41,14 @@ static gboolean gimp_operation_lighten_only_mode_process (GeglOperation       *o
 G_DEFINE_TYPE (GimpOperationLightenOnlyMode, gimp_operation_lighten_only_mode,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
+static void prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("R'G'B'A float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "output", format);
+}
 
 static void
 gimp_operation_lighten_only_mode_class_init (GimpOperationLightenOnlyModeClass *klass)
@@ -55,7 +64,8 @@ gimp_operation_lighten_only_mode_class_init (GimpOperationLightenOnlyModeClass *
            "description", "GIMP lighten only mode operation",
            NULL);
 
-  point_class->process         = gimp_operation_lighten_only_mode_process;
+  point_class->process     = gimp_operation_lighten_only_mode_process;
+  operation_class->prepare = prepare;
 }
 
 static void
@@ -69,7 +79,7 @@ gimp_operation_lighten_only_mode_process (GeglOperation       *operation,
                                           void                *aux_buf,
                                           void                *out_buf,
                                           glong                samples,
-                                          const GeglRectangle *roi,
+                                          const GeglRectangle *result,
                                           gint                 level)
 {
   gfloat *in    = in_buf;
@@ -78,10 +88,19 @@ gimp_operation_lighten_only_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      out[RED]   = in[RED];
-      out[GREEN] = in[GREEN];
-      out[BLUE]  = in[BLUE];
+      gint b;
+      gfloat comp_alpha = MIN (in[ALPHA] * layer[ALPHA], layer[ALPHA] * in[ALPHA]);
+      gfloat new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
+      gfloat ratio      = comp_alpha / new_alpha;
+
       out[ALPHA] = in[ALPHA];
+
+      for (b = RED; b < ALPHA; b++)
+        {
+          gfloat comp = MAX (layer[b], in[b]);
+
+          out[b] = comp * ratio + in[b] * (1 - ratio);
+        }
 
       in    += 4;
       layer += 4;
