@@ -167,9 +167,6 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   gint        accum_size;
   gint        x, y;
 
-  if (gimp_drawable_is_indexed (drawable))
-    return FALSE;
-
   paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
                                                    paint_options, coords,
                                                    &paint_buffer_x,
@@ -254,9 +251,6 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   gdouble             dynamic_rate;
   gint                x, y;
   gdouble             hardness;
-
-  if (gimp_drawable_is_indexed (drawable))
-    return;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
