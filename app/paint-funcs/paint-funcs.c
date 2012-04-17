@@ -1645,35 +1645,6 @@ color_erase_inten_pixels (const guchar   *src1,
 /**************************************************/
 
 void
-blend_region (PixelRegion *src1,
-              PixelRegion *src2,
-              PixelRegion *dest,
-              guchar       blend)
-{
-  gpointer pr;
-
-  for (pr = pixel_regions_register (3, src1, src2, dest);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      const guchar *s1 = src1->data;
-      const guchar *s2 = src2->data;
-      guchar       *d  = dest->data;
-      gint          h  = src1->h;
-
-      while (h --)
-        {
-          blend_pixels (s1, s2, d, blend, src1->w, src1->bytes);
-
-          s1 += src1->rowstride;
-          s2 += src2->rowstride;
-          d += dest->rowstride;
-        }
-    }
-}
-
-
-void
 convolve_region (PixelRegion         *srcR,
                  PixelRegion         *destR,
                  const gfloat        *matrix,

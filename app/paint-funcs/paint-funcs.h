@@ -19,15 +19,6 @@
 #define __PAINT_FUNCS_H__
 
 
-/*  Paint functions  */
-
-void  blend_pixels          (const guchar *src1,
-                             const guchar *src2,
-                             guchar       *dest,
-                             guchar        blend,
-                             guint         w,
-                             guint         bytes);
-
 /*  apply the mask data to the alpha channel of the pixel data  */
 void  apply_mask_to_alpha_channel         (guchar       *src,
                                            const guchar *mask,
@@ -242,11 +233,6 @@ void  paint_funcs_color_erase_helper      (GimpRGB       *src,
 
 
 /*  Region functions  */
-
-void  blend_region                        (PixelRegion *src1,
-                                           PixelRegion *src2,
-                                           PixelRegion *dest,
-                                           guchar       blend);
 
 void  convolve_region                     (PixelRegion         *srcR,
                                            PixelRegion         *destR,
