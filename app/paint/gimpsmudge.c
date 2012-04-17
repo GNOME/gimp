@@ -23,13 +23,9 @@
 
 #include "paint-types.h"
 
-#include "base/pixel-region.h"
-
-#include "paint-funcs/paint-funcs.h"
-
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
-#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
@@ -164,13 +160,12 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                    GimpPaintOptions *paint_options,
                    const GimpCoords *coords)
 {
-  GimpSmudge  *smudge = GIMP_SMUDGE (paint_core);
-  GeglBuffer  *paint_buffer;
-  gint         paint_buffer_x;
-  gint         paint_buffer_y;
-  GimpTempBuf *accum_temp;
-  gint         accum_size;
-  gint         x, y;
+  GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
+  GeglBuffer *paint_buffer;
+  gint        paint_buffer_x;
+  gint        paint_buffer_y;
+  gint        accum_size;
+  gint        x, y;
 
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;
@@ -185,10 +180,10 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   gimp_smudge_accumulator_size (paint_options, &accum_size);
 
   /*  Allocate the accumulation buffer */
-  accum_temp = gimp_temp_buf_new (accum_size, accum_size,
-                                  gimp_drawable_get_format (drawable));
-  smudge->accum_buffer = gimp_temp_buf_create_buffer (accum_temp);
-  gimp_temp_buf_unref (accum_temp);
+  smudge->accum_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                          accum_size,
+                                                          accum_size),
+                                          gimp_drawable_get_format (drawable));
 
   /*  adjust the x and y coordinates to the upper left corner of the
    *  accumulator
@@ -251,7 +246,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   GeglBuffer         *paint_buffer;
   gint                paint_buffer_x;
   gint                paint_buffer_y;
-  PixelRegion         srcPR, tempPR;
+  gint                paint_buffer_width;
+  gint                paint_buffer_height;
   gdouble             fade_point;
   gdouble             opacity;
   gdouble             rate;
@@ -284,15 +280,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   if (! paint_buffer)
     return;
 
+  paint_buffer_width  = gegl_buffer_get_width  (paint_buffer);
+  paint_buffer_height = gegl_buffer_get_height (paint_buffer);
+
   /*  Get the unclipped acumulator coordinates  */
   gimp_smudge_accumulator_coords (paint_core, coords, &x, &y);
-
-  /* srcPR will be the pixels under the current painthit from the drawable */
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     paint_buffer_x,
-                     paint_buffer_y,
-                     gegl_buffer_get_width  (paint_buffer),
-                     gegl_buffer_get_height (paint_buffer), FALSE);
 
   /* Enable dynamic rate */
   rate_output = gimp_dynamics_get_output (dynamics,
@@ -305,14 +297,6 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   rate = (options->rate / 100.0) * dynamic_rate;
 
-  /* The tempPR will be the built up buffer (for smudge) */
-  pixel_region_init_temp_buf (&tempPR,
-                              gimp_gegl_buffer_get_temp_buf (smudge->accum_buffer),
-                              paint_buffer_x - x,
-                              paint_buffer_y - y,
-                              gegl_buffer_get_width  (paint_buffer),
-                              gegl_buffer_get_height (paint_buffer));
-
   /*  Smudge uses the buffer Accum.
    *  For each successive painthit Accum is built like this
    *    Accum =  rate*Accum  + (1-rate)*I.
@@ -321,13 +305,28 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
    *    (Accum,1) (if no alpha),
    */
 
-  blend_region (&srcPR, &tempPR, &tempPR, ROUND (rate * 255.0));
+  gimp_gegl_smudge_blend (smudge->accum_buffer,
+                          GEGL_RECTANGLE (paint_buffer_x - x,
+                                          paint_buffer_y - y,
+                                          paint_buffer_width,
+                                          paint_buffer_height),
+                          gimp_drawable_get_buffer (drawable),
+                          GEGL_RECTANGLE (paint_buffer_x,
+                                          paint_buffer_y,
+                                          paint_buffer_width,
+                                          paint_buffer_height),
+                          smudge->accum_buffer,
+                          GEGL_RECTANGLE (paint_buffer_x - x,
+                                          paint_buffer_y - y,
+                                          paint_buffer_width,
+                                          paint_buffer_height),
+                          ROUND (rate * 255.0));
 
   gegl_buffer_copy (smudge->accum_buffer,
                     GEGL_RECTANGLE (paint_buffer_x - x,
                                     paint_buffer_y - y,
-                                    gegl_buffer_get_width  (paint_buffer),
-                                    gegl_buffer_get_height (paint_buffer)),
+                                    paint_buffer_width,
+                                    paint_buffer_height),
                     paint_buffer,
                     GEGL_RECTANGLE (0, 0, 0, 0));
 

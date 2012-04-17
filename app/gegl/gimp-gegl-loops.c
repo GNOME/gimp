@@ -307,3 +307,102 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
       break;
     }
 }
+
+/*
+ * blend_pixels patched 8-24-05 to fix bug #163721.  Note that this change
+ * causes the function to treat src1 and src2 asymmetrically.  This gives the
+ * right behavior for the smudge tool, which is the only user of this function
+ * at the time of patching.  If you want to use the function for something
+ * else, caveat emptor.
+ */
+void
+gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
+                        const GeglRectangle *top_rect,
+                        GeglBuffer          *bottom_buffer,
+                        const GeglRectangle *bottom_rect,
+                        GeglBuffer          *dest_buffer,
+                        const GeglRectangle *dest_rect,
+                        guchar               blend)
+{
+  GeglBufferIterator *iter;
+  const Babl         *top_format;
+  const Babl         *bottom_format;
+  const Babl         *dest_format;
+  gint                top_bpp;
+  gint                bottom_bpp;
+  gint                dest_bpp;
+
+  top_format    = gegl_buffer_get_format (top_buffer);
+  bottom_format = gegl_buffer_get_format (bottom_buffer);
+  dest_format   = gegl_buffer_get_format (dest_buffer);
+
+  top_bpp    = babl_format_get_bytes_per_pixel (top_format);
+  bottom_bpp = babl_format_get_bytes_per_pixel (bottom_format);
+  dest_bpp   = babl_format_get_bytes_per_pixel (dest_format);
+
+  iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0, NULL,
+                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0, NULL,
+                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0, NULL,
+                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const guchar *top    = iter->data[0];
+      const guchar *bottom = iter->data[1];
+      guchar       *dest   = iter->data[2];
+
+      if (babl_format_has_alpha (top_format))
+        {
+          const guint blend1 = 255 - blend;
+          const guint blend2 = blend + 1;
+          const guint c      = top_bpp - 1;
+
+          while (iter->length--)
+            {
+              const gint  a1 = blend1 * bottom[c];
+              const gint  a2 = blend2 * top[c];
+              const gint  a  = a1 + a2;
+              guint       b;
+
+              if (!a)
+                {
+                  for (b = 0; b < top_bpp; b++)
+                    dest[b] = 0;
+                }
+              else
+                {
+                  for (b = 0; b < c; b++)
+                    dest[b] =
+                      bottom[b] + (bottom[b] * a1 + top[b] * a2 - a * bottom[b]) / a;
+
+                  dest[c] = a >> 8;
+                }
+
+              top    += top_bpp;
+              bottom += bottom_bpp;
+              dest   += dest_bpp;
+            }
+        }
+      else
+        {
+          const guchar blend1 = 255 - blend;
+
+          while (iter->length--)
+            {
+              guint b;
+
+              for (b = 0; b < top_bpp; b++)
+                dest[b] =
+                  bottom[b] + (bottom[b] * blend1 + top[b] * blend - bottom[b] * 255) / 255;
+
+              top    += top_bpp;
+              bottom += bottom_bpp;
+              dest   += dest_bpp;
+            }
+        }
+    }
+}
