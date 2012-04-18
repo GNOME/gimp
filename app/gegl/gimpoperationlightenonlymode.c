@@ -28,7 +28,7 @@
 
 #include "gimpoperationlightenonlymode.h"
 
-
+static void gimp_operation_lighten_only_mode_prepare     (GeglOperation       *operation);
 static gboolean gimp_operation_lighten_only_mode_process (GeglOperation       *operation,
                                                           void                *in_buf,
                                                           void                *aux_buf,
@@ -41,14 +41,6 @@ static gboolean gimp_operation_lighten_only_mode_process (GeglOperation       *o
 G_DEFINE_TYPE (GimpOperationLightenOnlyMode, gimp_operation_lighten_only_mode,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
-static void prepare (GeglOperation *operation)
-{
-  const Babl *format = babl_format ("R'G'B'A float");
-
-  gegl_operation_set_format (operation, "input",  format);
-  gegl_operation_set_format (operation, "aux",    format);
-  gegl_operation_set_format (operation, "output", format);
-}
 
 static void
 gimp_operation_lighten_only_mode_class_init (GimpOperationLightenOnlyModeClass *klass)
@@ -65,12 +57,22 @@ gimp_operation_lighten_only_mode_class_init (GimpOperationLightenOnlyModeClass *
            NULL);
 
   point_class->process     = gimp_operation_lighten_only_mode_process;
-  operation_class->prepare = prepare;
+  operation_class->prepare = gimp_operation_lighten_only_mode_prepare;
 }
 
 static void
 gimp_operation_lighten_only_mode_init (GimpOperationLightenOnlyMode *self)
 {
+}
+
+static void
+gimp_operation_lighten_only_mode_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("R'G'B'A float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
@@ -89,11 +91,9 @@ gimp_operation_lighten_only_mode_process (GeglOperation       *operation,
   while (samples--)
     {
       gint b;
-      gfloat comp_alpha = MIN (in[ALPHA] * layer[ALPHA], layer[ALPHA] * in[ALPHA]);
+      gfloat comp_alpha = in[ALPHA] * layer[ALPHA];
       gfloat new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
       gfloat ratio      = comp_alpha / new_alpha;
-
-      out[ALPHA] = in[ALPHA];
 
       for (b = RED; b < ALPHA; b++)
         {
@@ -101,6 +101,8 @@ gimp_operation_lighten_only_mode_process (GeglOperation       *operation,
 
           out[b] = comp * ratio + in[b] * (1 - ratio);
         }
+
+      out[ALPHA] = in[ALPHA];
 
       in    += 4;
       layer += 4;

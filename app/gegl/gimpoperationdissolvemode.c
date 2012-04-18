@@ -99,12 +99,12 @@ gimp_operation_dissolve_mode_process (GeglOperation       *operation,
                                       const GeglRectangle *result,
                                       gint                 level)
 {
-  gint    x, y, i;
+  gint    x, y;
   gfloat *in  = in_buf;
   gfloat *out = out_buf;
   gfloat *aux = aux_buf;
-  
-  for (i = 0, y = result->y; y < result->y + result->height; y++)
+
+  for (y = result->y; y < result->y + result->height; y++)
     {
       GRand *gr = g_rand_new_with_seed (random_table[y % RANDOM_TABLE_SIZE]);
 
@@ -112,7 +112,7 @@ gimp_operation_dissolve_mode_process (GeglOperation       *operation,
       for (x = 0; x < result->x; x++)
         g_rand_int (gr);
 
-      for (x = result->x; x < result->x + result->width; x++, i++)
+      for (x = result->x; x < result->x + result->width; x++)
         {
           if (g_rand_int_range (gr, 0, 255) >= aux[3] * 255)
             {
