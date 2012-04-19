@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-06 18:37+0000\n"
-"PO-Revision-Date: 2011-12-06 18:45+0200\n"
+"POT-Creation-Date: 2012-02-10 19:00+0000\n"
+"PO-Revision-Date: 2012-02-10 23:09+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -46,15 +46,8 @@ msgstr ""
 "Puteți executa multe operații de strat prin clic-dreapta pe eticheta text a "
 "unui strat în dialogul de straturi."
 
-# de la 2.8 salvarea se face exclusiv în xcf, salvarea în xcf nu acoperă „every aspect” (citat de pe gimp-developer-list: „It was never true -- e.g. undo history is not saved, tool options are
-# not saved...”), iar salvarea la alt tip de fișier se face prin export
+# de la 2.8 salvarea se face exclusiv în xcf, salvarea în xcf nu acoperă „every aspect” (citat de pe gimp-developer-list: „It was never true -- e.g. undo history is not saved, tool options are not saved...”), iar salvarea la alt tip de fișier se face prin export
 #: ../data/tips/gimp-tips.xml.in.h:4
-#, fuzzy
-#| msgid ""
-#| "When you save an image to work on it again later, try using XCF, GIMP's "
-#| "native file format (use the file extension <tt>.xcf</tt>). This preserves "
-#| "the layers and every aspect of your work-in-progress. Once a project is "
-#| "completed, you can save it as JPEG, PNG, GIF, ..."
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -63,8 +56,8 @@ msgid ""
 msgstr ""
 "Când salvați o imagine pentru a lucra la ea mai târziu, folosiți XCF, "
 "formatul nativ GIMP (cu extensia <tt>.xcf</tt>). Astfel se conservă "
-"straturile și alte câteva aspecte al lucrului în desfășurare. Odată ce "
-"proiectul este complet, puteți să îl exportați ca JPEG, PNG, GIF, ..."
+"straturile și multe alte aspecte ale lucrului în desfășurare. Odată ce "
+"proiectul este complet, puteți să îl exportați ca JPEG, PNG, GIF, etc."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""

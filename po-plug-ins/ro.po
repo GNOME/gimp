@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-06 18:35+0000\n"
-"PO-Revision-Date: 2011-12-31 00:46+0200\n"
+"POT-Creation-Date: 2012-04-02 10:34+0000\n"
+"PO-Revision-Date: 2012-04-03 00:16+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -607,12 +607,12 @@ msgstr "Orientare"
 
 # comun pentru mai multe opțiuni
 #: ../plug-ins/common/blinds.c:262 ../plug-ins/common/ripple.c:561
-#: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:535
+#: ../plug-ins/common/tile-small.c:434 ../plug-ins/pagecurl/pagecurl.c:537
 msgid "_Horizontal"
 msgstr "_Orizontal"
 
 #: ../plug-ins/common/blinds.c:265 ../plug-ins/common/ripple.c:564
-#: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:534
+#: ../plug-ins/common/tile-small.c:444 ../plug-ins/pagecurl/pagecurl.c:536
 msgid "_Vertical"
 msgstr "_Vertical"
 
@@ -625,7 +625,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-gif-load.c:943
 #: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
 #: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:887 ../plug-ins/common/file-pnm.c:583
+#: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
 #: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
 #: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:997
 #: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
@@ -635,7 +635,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
-#: ../plug-ins/gfig/gfig-dialog.c:1306
+#: ../plug-ins/gfig/gfig-dialog.c:1321
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
@@ -1045,7 +1045,7 @@ msgstr "Încarcă configurările mixerului de canale"
 #: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
 #: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
-#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:752
+#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:756
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1014
 #: ../plug-ins/common/file-ps.c:2910 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
@@ -1064,8 +1064,8 @@ msgstr "Încarcă configurările mixerului de canale"
 #: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:926
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:923
+#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:222
 #: ../plug-ins/help/gimphelplocale.c:238
 #: ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
@@ -1084,7 +1084,7 @@ msgstr "Salvează configurările mixerului de canale"
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
 #: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:486
 #: ../plug-ins/common/file-pcx.c:712 ../plug-ins/common/file-pix.c:526
-#: ../plug-ins/common/file-png.c:1285 ../plug-ins/common/file-pnm.c:1010
+#: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
 #: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
 #: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
 #: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:684
@@ -1097,7 +1097,7 @@ msgstr "Salvează configurările mixerului de canale"
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
 #: ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
-#: ../plug-ins/gfig/gfig.c:798 ../plug-ins/ifs-compose/ifs-compose.c:2408
+#: ../plug-ins/gfig/gfig.c:797 ../plug-ins/ifs-compose/ifs-compose.c:2408
 #: ../plug-ins/lighting/lighting-ui.c:1223
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -2282,7 +2282,7 @@ msgstr "Curbare"
 #: ../plug-ins/common/curve-bend.c:1262
 #: ../plug-ins/gimpressionist/orientmap.c:590
 #: ../plug-ins/gimpressionist/sizemap.c:459
-#: ../plug-ins/print/print-page-layout.c:171
+#: ../plug-ins/print/print-page-layout.c:175
 msgid "Preview"
 msgstr "Previzualizare"
 
@@ -2299,7 +2299,7 @@ msgstr "Pre_vizualizează automat"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve-bend.c:1310 ../plug-ins/common/ripple.c:523
-#: ../plug-ins/gfig/gfig-dialog.c:1228
+#: ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "Opțiuni"
 
@@ -2731,7 +2731,7 @@ msgstr "Eliminare dungi"
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
-#: ../plug-ins/print/print-page-layout.c:264
+#: ../plug-ins/print/print-page-layout.c:280
 msgid "_Width:"
 msgstr "_Lățime:"
 
@@ -2947,7 +2947,7 @@ msgstr "Sobel _vertical"
 msgid "_Keep sign of result (one direction only)"
 msgstr "Păstrează se_mnul rezultatului (numai o singură direcție)"
 
-#: ../plug-ins/common/edge-sobel.c:371
+#: ../plug-ins/common/edge-sobel.c:372
 msgid "Sobel edge detecting"
 msgstr "Detectare de margine Sobel"
 
@@ -3053,7 +3053,7 @@ msgstr "Gravare"
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
-#: ../plug-ins/print/print-page-layout.c:266
+#: ../plug-ins/print/print-page-layout.c:282
 msgid "_Height:"
 msgstr "Î_nălțime:"
 
@@ -3091,7 +3091,7 @@ msgstr "Încarcă o paletă KISS"
 #: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
 #: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:759 ../plug-ins/common/file-pnm.c:499
+#: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:499
 #: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
 #: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
 #: ../plug-ins/common/file-tiff-load.c:603 ../plug-ins/common/file-wmf.c:994
@@ -3120,7 +3120,7 @@ msgstr "Adâncime de bit nesuportată (%d)!"
 #: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
 #: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1292 ../plug-ins/common/file-pnm.c:1015
+#: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
 #: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:694
 #: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
@@ -3682,7 +3682,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1829
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1902
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Nu s-a putut salva transparența, se va salva opacitatea în loc."
 
@@ -3715,7 +3715,7 @@ msgid "Save creation time"
 msgstr "Salvează timpul de creare"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1878
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1951
 msgid "PNG"
 msgstr "PNG"
 
@@ -3910,7 +3910,7 @@ msgstr "_Importă"
 
 #: ../plug-ins/common/file-pdf-load.c:1126
 msgid "Error getting number of pages from the given PDF file."
-msgstr ""
+msgstr "Eroare la obținerea numărului de pagini din fișierul PDF dat."
 
 #: ../plug-ins/common/file-pdf-load.c:1168
 msgid "_Width (pixels):"
@@ -3924,17 +3924,14 @@ msgstr "Î_nălțime (pixeli):"
 msgid "_Resolution:"
 msgstr "_Rezoluție:"
 
-# opțiune în dialogul de curbare
 #. Antialiasing
 #: ../plug-ins/common/file-pdf-load.c:1182
-#, fuzzy
-#| msgid "_Antialiasing"
 msgid "Use _Anti-aliasing"
-msgstr "_Antialias"
+msgstr "Folosește _antialias"
 
 #: ../plug-ins/common/file-pdf-load.c:1460
 #: ../plug-ins/common/file-pdf-load.c:1461 ../plug-ins/common/file-svg.c:917
-#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:285
+#: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:301
 #, c-format
 msgid "pixels/%a"
 msgstr "pixeli/%a"
@@ -4012,39 +4009,38 @@ msgstr ""
 msgid "Alias Pix image"
 msgstr "imagine Alias Pix"
 
-#: ../plug-ins/common/file-png.c:275 ../plug-ins/common/file-png.c:296
-#: ../plug-ins/common/file-png.c:316 ../plug-ins/common/file-png.c:333
+#: ../plug-ins/common/file-png.c:279 ../plug-ins/common/file-png.c:300
+#: ../plug-ins/common/file-png.c:320 ../plug-ins/common/file-png.c:337
 msgid "PNG image"
 msgstr "imagine PNG"
 
-#: ../plug-ins/common/file-png.c:640
+#: ../plug-ins/common/file-png.c:644
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "Eroare la încărcarea fișierului: %s"
 
 # a se vedea discuția despe struct de aici http://groups.google.com/group/diacritice/browse_thread/thread/d3bdbc53b15cc4ca
-#: ../plug-ins/common/file-png.c:728
+#: ../plug-ins/common/file-png.c:732
 #, c-format
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr "Eroare la crearea struct de citire PNG în timpul salvării „%s”."
 
-#: ../plug-ins/common/file-png.c:738
+#: ../plug-ins/common/file-png.c:742
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Eroare la citirea „%s”. Fișier corupt?"
 
-#: ../plug-ins/common/file-png.c:867
+#: ../plug-ins/common/file-png.c:871
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Model de culoare necunoscut în fișierul PNG „%s”."
 
-#: ../plug-ins/common/file-png.c:878
-#, fuzzy, c-format
-#| msgid "Could not create working folder '%s': %s"
+#: ../plug-ins/common/file-png.c:882
+#, c-format
 msgid "Could not create new image for '%s': %s"
-msgstr "Nu s-a putut crea dosarul de lucru „%s”: %s"
+msgstr "Nu s-a putut crea o imagine nouă pentru „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:927
+#: ../plug-ins/common/file-png.c:936
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -4052,27 +4048,46 @@ msgstr ""
 "Fișierul PNG a specificat un decalaj care a determinat stratul să fie "
 "poziționat în afara imaginii."
 
+#: ../plug-ins/common/file-png.c:1238
+msgid "Apply PNG Offset"
+msgstr "Aplică decalajul PNG"
+
+#: ../plug-ins/common/file-png.c:1242
+msgid "Ignore PNG offset"
+msgstr "Ignoră decalajul PNG"
+
+#: ../plug-ins/common/file-png.c:1243
+msgid "Apply PNG offset to layer"
+msgstr "Aplică decalajul PNG la strat"
+
+#: ../plug-ins/common/file-png.c:1267
+#, c-format
+msgid ""
+"The PNG image you are importing specifies an offset of %d, %d. Do you want "
+"to apply this offset to the layer?"
+msgstr ""
+"Imaginea PNG pe care o importați specifică un decalaj de %d, %d. Vreți să "
+"fie aplicat acest decalaj la strat?"
+
 # a se vedea discuția despe struct de aici http://groups.google.com/group/diacritice/browse_thread/thread/d3bdbc53b15cc4ca
-#: ../plug-ins/common/file-png.c:1262
+#: ../plug-ins/common/file-png.c:1335
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "Eroare la crearea struct de scriere PNG în timpul salvării „%s”."
 
-#: ../plug-ins/common/file-png.c:1272
+#: ../plug-ins/common/file-png.c:1345
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Eroare la salvarea „%s”. Nu s-a putut salva imaginea."
 
-#: ../plug-ins/common/file-png.c:1895
+#: ../plug-ins/common/file-png.c:1968
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Eroare la încărcarea fișierului UI „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:1896
-#, fuzzy
-#| msgid "Unknown reason"
+#: ../plug-ins/common/file-png.c:1969
 msgid "Unknown error"
-msgstr "Motiv necunoscut"
+msgstr "Eroare necunoscută"
 
 #: ../plug-ins/common/file-pnm.c:248
 msgid "PNM Image"
@@ -4147,10 +4162,8 @@ msgid "Raw"
 msgstr "Brut"
 
 #: ../plug-ins/common/file-pnm.c:1227
-#, fuzzy
-#| msgid "ASCII art"
 msgid "ASCII"
-msgstr "Grafică ASCII"
+msgstr "ASCII"
 
 #: ../plug-ins/common/file-ps.c:579 ../plug-ins/common/file-ps.c:671
 msgid "PostScript document"
@@ -4733,7 +4746,7 @@ msgstr "CCITT Group _4 fax"
 
 #: ../plug-ins/common/file-tiff-save.c:1102
 msgid "Save _color values from transparent pixels"
-msgstr "Salvează valorile de _culoare pentru pixelii transparenți"
+msgstr "Salvează valorile de _culoare din pixelii transparenți"
 
 #: ../plug-ins/common/file-tiff-save.c:1118 ../plug-ins/common/file-xbm.c:1235
 msgid "Comment:"
@@ -4872,16 +4885,14 @@ msgid "'%s' is not a valid X cursor."
 msgstr "„%s” nu este un cursor X valid."
 
 #: ../plug-ins/common/file-xmc.c:686
-#, fuzzy, c-format
-#| msgid "The width of '%s' is too big for X cursor."
+#, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
-msgstr "Lățimea lui „%s” este prea mare pentru cursorul X."
+msgstr "Cadrul %d al „%s” este prea lat pentru un cursor X."
 
 #: ../plug-ins/common/file-xmc.c:693
-#, fuzzy, c-format
-#| msgid "The width of '%s' is too big for X cursor."
+#, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
-msgstr "Lățimea lui „%s” este prea mare pentru cursorul X."
+msgstr "Cadrul %d al „%s” este prea înalt pentru un cursor X."
 
 #: ../plug-ins/common/file-xmc.c:896
 #, c-format
@@ -4889,16 +4900,14 @@ msgid "there is no image chunk in \"%s\"."
 msgstr "nu este nicio bucată de imagine în „%s”."
 
 #: ../plug-ins/common/file-xmc.c:938
-#, fuzzy, c-format
-#| msgid "The width of '%s' is too big for X cursor."
+#, c-format
 msgid "'%s' is too wide for an X cursor."
-msgstr "Lățimea lui „%s” este prea mare pentru cursorul X."
+msgstr "„%s” este prea lat pentru un cursor X."
 
 #: ../plug-ins/common/file-xmc.c:945
-#, fuzzy, c-format
-#| msgid "The width of '%s' is too big for X cursor."
+#, c-format
 msgid "'%s' is too high for an X cursor."
-msgstr "Lățimea lui „%s” este prea mare pentru cursorul X."
+msgstr "„%s” este prea înalt pentru un cursor X."
 
 #: ../plug-ins/common/file-xmc.c:1015
 #, c-format
@@ -5041,53 +5050,41 @@ msgid "Comment is limited to %d characters."
 msgstr "Comentariul este limitat la %d caractere."
 
 #: ../plug-ins/common/file-xmc.c:1489
-#, fuzzy, c-format
-#| msgid ""
-#| "This plug-in can only handle RGBA image format with 8bit color depth."
+#, c-format
 msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr ""
 "Acest plug-in poate manipula numai imagini RGBA cu adâncime de culoare de 8 "
 "biți."
 
 #: ../plug-ins/common/file-xmc.c:1507
-#, fuzzy, c-format
-#| msgid "Height of '%s' is too large. Please reduce more than %dpx."
+#, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
-msgstr "Înălțimea pentru „%s” este prea mare. Reduceți mai mult de %dpx."
+msgstr "Cadrul „%s” este prea larg. Reduceți cât să nu depășească %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1514
-#, fuzzy, c-format
-#| msgid "Height of '%s' is too large. Please reduce more than %dpx."
+#, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
-msgstr "Înălțimea pentru „%s” este prea mare. Reduceți mai mult de %dpx."
+msgstr "Cadrul „%s” este prea înalt. Reduceți cât să nu depășească %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1521
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
-msgstr ""
+msgstr "Lățimea și/sau înălțimea cadrului „%s” este zero!"
 
 #: ../plug-ins/common/file-xmc.c:1561
-#, fuzzy, c-format
-#| msgid ""
-#| "Cannot save the cursor because the hot spot is not on '%s'.\n"
-#| "Try to change the hot spot position, layer geometry or save without auto-"
-#| "crop."
+#, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-"
 "crop."
 msgstr ""
-"Nu se poate salva cursorul deoarece punctul activ nu este pe „%s”.\n"
+"Nu se poate salva cursorul, deoarece punctul activ nu este pe cadrul „%s”.\n"
 "Încercați să schimbați poziția punctului activ, geometria stratului, sau "
 "salvați fără decupare automată."
 
 # hm ? sisteme sau medii ?
 #: ../plug-ins/common/file-xmc.c:1718
-#, fuzzy, c-format
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "which width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
+#, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "width or height is more than %ipx.\n"
@@ -5097,15 +5094,7 @@ msgstr ""
 "căror lățime sau înălțime este mai mare decât %ipx.\n"
 "Va zăpăci ecranul pe anumite sisteme."
 
-# hm ? observ că nici alții nu au tradus gnome-appearance-properties
 #: ../plug-ins/common/file-xmc.c:1725
-#, fuzzy
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "whose nominal size is not supported by gnome-appearance-properties.\n"
-#| "You can satisfy it by checking \"Replace the size of all frame...\" in "
-#| "the save dialog, or your cursor may not appear in gnome-appearance-"
-#| "properties."
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by GNOME settings.\n"
@@ -5113,23 +5102,19 @@ msgid ""
 "save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
 "Cursorul a fost salvat cu succes, dar conține unul sau mai multe cadre ale "
-"căror dimensiuni nominale nu sunt suportate de „gnome-appearance-"
-"properties”.\n"
+"căror dimensiuni nominale nu sunt suportate de setările GNOME.\n"
 "Puteți satisface cerințele prin bifarea opțiunii „Înlocuiește dimensiunea "
 "tuturor cadrelor...” în dialogul de salvare, altfel cursorul ar putea să nu "
-"apară în gnome-appearance-properties."
+"apară în setările GNOME."
 
 #: ../plug-ins/common/file-xmc.c:1962
-#, fuzzy, c-format
-#| msgid ""
-#| "The parasite \"%s\" is too long for X cursor.\n"
-#| "The overflowed string was dropped."
+#, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
 "fit."
 msgstr ""
-"Parazitul „%s” este prea lung pentru cursorul X.\n"
-"Șirul excedentar a fost abandonat."
+"Parazitul „%s” este prea lung pentru un comentariu de cursor X. A fost tăiat "
+"cât să încapă."
 
 #. translators: the %i is *always* 8 here
 #: ../plug-ins/common/file-xmc.c:2165
@@ -5561,7 +5546,7 @@ msgstr "_Grilă..."
 msgid "Drawing grid"
 msgstr "Desenare grilă"
 
-#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1376
+#: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1391
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Grid"
 msgstr "Grilă"
@@ -6371,7 +6356,7 @@ msgid "_Factory Defaults"
 msgstr "_Valori implicite"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1278
+#: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1293
 msgid "Antialiasing"
 msgstr "Antialias"
 
@@ -6470,24 +6455,24 @@ msgstr "_Schimbare..."
 msgid "_Slur..."
 msgstr "S_curgere..."
 
-#: ../plug-ins/common/noise-randomize.c:769
+#: ../plug-ins/common/noise-randomize.c:767
 #: ../plug-ins/common/noise-solid.c:603
 msgid "_Random seed:"
 msgstr "Sămânță aleatoa_re:"
 
-#: ../plug-ins/common/noise-randomize.c:778
+#: ../plug-ins/common/noise-randomize.c:776
 msgid "R_andomization (%):"
 msgstr "R_andomizare (%):"
 
-#: ../plug-ins/common/noise-randomize.c:781
+#: ../plug-ins/common/noise-randomize.c:779
 msgid "Percentage of pixels to be filtered"
 msgstr "Procentul de pixeli de filtrat"
 
-#: ../plug-ins/common/noise-randomize.c:793
+#: ../plug-ins/common/noise-randomize.c:791
 msgid "R_epeat:"
 msgstr "R_epetiție:"
 
-#: ../plug-ins/common/noise-randomize.c:796
+#: ../plug-ins/common/noise-randomize.c:794
 msgid "Number of times to apply filter"
 msgstr "Numărul de câte ori să fie aplicat filtrul"
 
@@ -8391,7 +8376,7 @@ msgid "Smear"
 msgstr "Mânjit"
 
 #: ../plug-ins/common/warp.c:502 ../plug-ins/file-fits/fits.c:1020
-#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1482
+#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1497
 msgid "Black"
 msgstr "Negru"
 
@@ -8875,8 +8860,8 @@ msgstr "Încărcare fișier FITS"
 msgid "Replacement for undefined pixels"
 msgstr "Înlocuitor pentru pixeli nedefiniți"
 
-#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1308
-#: ../plug-ins/gfig/gfig-dialog.c:1483
+#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1323
+#: ../plug-ins/gfig/gfig-dialog.c:1498
 msgid "White"
 msgstr "Alb"
 
@@ -9137,7 +9122,7 @@ msgstr "Sal_vează ca valori implicite"
 
 #: ../plug-ins/file-jpeg/jpeg.c:139 ../plug-ins/file-jpeg/jpeg.c:177
 msgid "JPEG image"
-msgstr "imagine JPEG"
+msgstr "Imagine JPEG"
 
 #: ../plug-ins/file-jpeg/jpeg.c:303
 msgid "Export Preview"
@@ -9543,7 +9528,7 @@ msgstr "Răsucit"
 msgid "Horseshoe"
 msgstr "Copită"
 
-#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1464
+#: ../plug-ins/flame/flame.c:752 ../plug-ins/gfig/gfig-dialog.c:1479
 msgid "Polar"
 msgstr "Polar"
 
@@ -9682,7 +9667,7 @@ msgstr "C_ameră"
 
 # hm ? niciun sau nicio ?
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:277 ../plug-ins/gimpressionist/utils.c:142
+#: ../plug-ins/gfig/gfig-dialog.c:275 ../plug-ins/gimpressionist/utils.c:142
 #: ../plug-ins/gradient-flare/gradient-flare.c:881
 #, c-format
 msgid ""
@@ -9973,34 +9958,34 @@ msgstr "„%s” nu este un fișier FractalExplorer"
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "„%s” este corupt. Linia %d din secțiunea Opțiuni este incorectă."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:238
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:236
 msgid "Render fractal art"
 msgstr "Randare de artă fractal"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:243
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:241
 msgid "_Fractal Explorer..."
 msgstr "Explorator de _fractal..."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:371
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:368
 msgid "Rendering fractal"
 msgstr "Randare fractal"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:754
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:751
 #: ../plug-ins/gradient-flare/gradient-flare.c:3201
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Sigur vreți să ștergeți „%s” din listă și de pe disc?"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:758
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:755
 msgid "Delete Fractal"
 msgstr "Șterge fractalul"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:947
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:944
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Fișierul „%s” nu este un fișier FractalExplorer"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:957
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:954
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -10009,252 +9994,252 @@ msgstr ""
 "Fișierul „%s” este corupt.\n"
 "Linia %d din secțiunea Opțiuni este incorectă."
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1002
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:999
 msgid "My first fractal"
 msgstr "Primul meu fractal"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1066
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1063
 msgid "Select folder and rescan collection"
 msgstr "Selectați dosarul și rescanați colecția"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1078
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1075
 msgid "Apply currently selected fractal"
 msgstr "Aplică fractalul selectat curent"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1090
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1087
 msgid "Delete currently selected fractal"
 msgstr "Șterge fractalul selectat curent"
 
 # titlu pe bară
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1113
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1110
 msgid "Rescan for Fractals"
 msgstr "Rescanare de fractali"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer.c:1132
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1129
 msgid "Add FractalExplorer Path"
 msgstr "Adaugă o cale FractalExplorer"
 
-#: ../plug-ins/gfig/gfig-bezier.c:442
+#: ../plug-ins/gfig/gfig-bezier.c:401
 msgid "Closed"
 msgstr "Închidere"
 
-#: ../plug-ins/gfig/gfig-bezier.c:447
+#: ../plug-ins/gfig/gfig-bezier.c:406
 msgid "Close curve on completion"
 msgstr "Închide curba la completare"
 
-#: ../plug-ins/gfig/gfig-bezier.c:452
+#: ../plug-ins/gfig/gfig-bezier.c:411
 msgid "Show Line Frame"
 msgstr "Arată cadrul de linii"
 
-#: ../plug-ins/gfig/gfig-bezier.c:457
+#: ../plug-ins/gfig/gfig-bezier.c:416
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 "Desenează linii între punctele de control. Numai în timpul creării unei "
 "curbe."
 
 #. Start building the dialog up
-#: ../plug-ins/gfig/gfig-dialog.c:289
+#: ../plug-ins/gfig/gfig-dialog.c:287
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: ../plug-ins/gfig/gfig-dialog.c:337
+#: ../plug-ins/gfig/gfig-dialog.c:335
 msgid "Tool Options"
 msgstr "Opțiuni pentru instrumente"
 
 # hm ? substantiv sau verb ?
-#: ../plug-ins/gfig/gfig-dialog.c:354
+#: ../plug-ins/gfig/gfig-dialog.c:352
 msgid "_Stroke"
 msgstr "_Contur"
 
 #. Fill frame on right side
-#: ../plug-ins/gfig/gfig-dialog.c:401
+#: ../plug-ins/gfig/gfig-dialog.c:399
 msgid "Fill"
 msgstr "Umplere"
 
-#: ../plug-ins/gfig/gfig-dialog.c:415
+#: ../plug-ins/gfig/gfig-dialog.c:413
 msgid "No fill"
 msgstr "Fără umplere"
 
-#: ../plug-ins/gfig/gfig-dialog.c:416
+#: ../plug-ins/gfig/gfig-dialog.c:414
 msgid "Color fill"
 msgstr "Umplere cu culoare"
 
-#: ../plug-ins/gfig/gfig-dialog.c:417
+#: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "Pattern fill"
 msgstr "Umplere cu model"
 
-#: ../plug-ins/gfig/gfig-dialog.c:418
+#: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Shape gradient"
 msgstr "Degrade de formă"
 
-#: ../plug-ins/gfig/gfig-dialog.c:419
+#: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Vertical gradient"
 msgstr "Degrade vertical"
 
-#: ../plug-ins/gfig/gfig-dialog.c:420
+#: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Horizontal gradient"
 msgstr "Degrade orizontal"
 
 #. "show image" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:480
+#: ../plug-ins/gfig/gfig-dialog.c:478
 msgid "Show image"
 msgstr "Arată imaginea"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:493
+#: ../plug-ins/gfig/gfig-dialog.c:491
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "Acroșează la grilă"
 
 #. "show grid" checkbutton at bottom of style frame
-#: ../plug-ins/gfig/gfig-dialog.c:502
+#: ../plug-ins/gfig/gfig-dialog.c:500
 msgid "Show grid"
 msgstr "Arată grila"
 
 # titlu pe bară
-#: ../plug-ins/gfig/gfig-dialog.c:639
+#: ../plug-ins/gfig/gfig-dialog.c:635
 msgid "Load Gfig Object Collection"
 msgstr "Încărcare colecție de obiecte Gfig"
 
 # titlu pe bară
-#: ../plug-ins/gfig/gfig-dialog.c:688
+#: ../plug-ins/gfig/gfig-dialog.c:684
 msgid "Save Gfig Drawing"
 msgstr "Salvare desen Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:833
+#: ../plug-ins/gfig/gfig-dialog.c:848
 msgid "First Gfig"
 msgstr "Primul Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:871
+#: ../plug-ins/gfig/gfig-dialog.c:886
 msgid "_Undo"
 msgstr "An_ulează"
 
-#: ../plug-ins/gfig/gfig-dialog.c:875
+#: ../plug-ins/gfig/gfig-dialog.c:890
 msgid "_Clear"
 msgstr "_Curăță"
 
-#: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/imagemap/imap_menu.c:208
+#: ../plug-ins/gfig/gfig-dialog.c:894 ../plug-ins/imagemap/imap_menu.c:208
 msgid "_Grid"
 msgstr "_Grilă"
 
-#: ../plug-ins/gfig/gfig-dialog.c:887
+#: ../plug-ins/gfig/gfig-dialog.c:902
 msgid "Raise selected object"
 msgstr "Ridică obiectul selectat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:891
+#: ../plug-ins/gfig/gfig-dialog.c:906
 msgid "Lower selected object"
 msgstr "Coboară obiectul selectat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:895
+#: ../plug-ins/gfig/gfig-dialog.c:910
 msgid "Raise selected object to top"
 msgstr "Ridică obiectul selectat sus de tot"
 
-#: ../plug-ins/gfig/gfig-dialog.c:899
+#: ../plug-ins/gfig/gfig-dialog.c:914
 msgid "Lower selected object to bottom"
 msgstr "Coboară obiectul selectat jos de tot"
 
-#: ../plug-ins/gfig/gfig-dialog.c:903
+#: ../plug-ins/gfig/gfig-dialog.c:918
 msgid "Show previous object"
 msgstr "Arată obiectul precedent"
 
-#: ../plug-ins/gfig/gfig-dialog.c:907
+#: ../plug-ins/gfig/gfig-dialog.c:922
 msgid "Show next object"
 msgstr "Arată obiectul următor"
 
-#: ../plug-ins/gfig/gfig-dialog.c:911 ../plug-ins/gfig/gfig-stock.c:52
+#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
 msgstr "Arată toate obiectele"
 
-#: ../plug-ins/gfig/gfig-dialog.c:917 ../plug-ins/gfig/gfig-stock.c:46
+#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create line"
 msgstr "Creează o linie"
 
-#: ../plug-ins/gfig/gfig-dialog.c:920 ../plug-ins/gfig/gfig-stock.c:50
+#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create rectangle"
 msgstr "Creează un dreptunghi"
 
-#: ../plug-ins/gfig/gfig-dialog.c:923 ../plug-ins/gfig/gfig-stock.c:41
+#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:41
 msgid "Create circle"
 msgstr "Creează un cerc"
 
-#: ../plug-ins/gfig/gfig-dialog.c:926 ../plug-ins/gfig/gfig-stock.c:45
+#: ../plug-ins/gfig/gfig-dialog.c:941 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Create ellipse"
 msgstr "Creează o elipsă"
 
-#: ../plug-ins/gfig/gfig-dialog.c:929 ../plug-ins/gfig/gfig-stock.c:43
+#: ../plug-ins/gfig/gfig-dialog.c:944 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Create arc"
 msgstr "Creează un arc"
 
-#: ../plug-ins/gfig/gfig-dialog.c:932 ../plug-ins/gfig/gfig-stock.c:49
+#: ../plug-ins/gfig/gfig-dialog.c:947 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Create reg polygon"
 msgstr "Creează un poligon regulat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:935 ../plug-ins/gfig/gfig-stock.c:54
+#: ../plug-ins/gfig/gfig-dialog.c:950 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
 msgstr "Creează o stea"
 
-#: ../plug-ins/gfig/gfig-dialog.c:938 ../plug-ins/gfig/gfig-stock.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:953 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Create spiral"
 msgstr "Creează o spirală"
 
-#: ../plug-ins/gfig/gfig-dialog.c:941
+#: ../plug-ins/gfig/gfig-dialog.c:956
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Creează o curbă Bezier. Shift + buton termină crearea obiectului."
 
-#: ../plug-ins/gfig/gfig-dialog.c:945 ../plug-ins/gfig/gfig-stock.c:47
+#: ../plug-ins/gfig/gfig-dialog.c:960 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
 msgstr "Mută un obiect"
 
-#: ../plug-ins/gfig/gfig-dialog.c:948 ../plug-ins/gfig/gfig-stock.c:48
+#: ../plug-ins/gfig/gfig-dialog.c:963 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move a single point"
 msgstr "Mută un singur punct"
 
-#: ../plug-ins/gfig/gfig-dialog.c:951 ../plug-ins/gfig/gfig-stock.c:42
+#: ../plug-ins/gfig/gfig-dialog.c:966 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Copy an object"
 msgstr "Cpiază un obiect"
 
-#: ../plug-ins/gfig/gfig-dialog.c:954 ../plug-ins/gfig/gfig-stock.c:44
+#: ../plug-ins/gfig/gfig-dialog.c:969 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Delete an object"
 msgstr "Șterge un obiect"
 
-#: ../plug-ins/gfig/gfig-dialog.c:957 ../plug-ins/gfig/gfig-stock.c:51
+#: ../plug-ins/gfig/gfig-dialog.c:972 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Select an object"
 msgstr "Selectează un obiect"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1039
+#: ../plug-ins/gfig/gfig-dialog.c:1054
 msgid "This tool has no options"
 msgstr "Acest instrument nu are opțiuni"
 
 #. Put buttons in
-#: ../plug-ins/gfig/gfig-dialog.c:1250
+#: ../plug-ins/gfig/gfig-dialog.c:1265
 msgid "Show position"
 msgstr "Arată poziția"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1262
+#: ../plug-ins/gfig/gfig-dialog.c:1277
 msgid "Show control points"
 msgstr "Arată punctele de control"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1296
+#: ../plug-ins/gfig/gfig-dialog.c:1311
 msgid "Max undo:"
 msgstr "Număr maxim de anulări:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1305
+#: ../plug-ins/gfig/gfig-dialog.c:1320
 #: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Transparent"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1307
+#: ../plug-ins/gfig/gfig-dialog.c:1322
 msgid "Foreground"
 msgstr "Prim-plan "
 
-#: ../plug-ins/gfig/gfig-dialog.c:1309 ../plug-ins/imagemap/imap_cmd_copy.c:53
+#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: ../plug-ins/imagemap/imap_menu.c:159
 msgid "Copy"
 msgstr "Copiază"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1318
+#: ../plug-ins/gfig/gfig-dialog.c:1333
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -10262,115 +10247,115 @@ msgstr ""
 "Tipul de fundal pentru strat. Copierea face ca stratul precedent să fie "
 "copiat înainte de executarea desenului."
 
-#: ../plug-ins/gfig/gfig-dialog.c:1324
+#: ../plug-ins/gfig/gfig-dialog.c:1339
 msgid "Background:"
 msgstr "Fundal:"
 
 # hm ? sau estompat ?
-#: ../plug-ins/gfig/gfig-dialog.c:1327
+#: ../plug-ins/gfig/gfig-dialog.c:1342
 msgid "Feather"
 msgstr "Estompează"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1350
+#: ../plug-ins/gfig/gfig-dialog.c:1365
 msgid "Radius:"
 msgstr "Rază:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1408
+#: ../plug-ins/gfig/gfig-dialog.c:1423
 msgid "Grid spacing:"
 msgstr "Spațiere grilă:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1425
+#: ../plug-ins/gfig/gfig-dialog.c:1440
 msgid "Polar grid sectors desired:"
 msgstr "Sectoare dorite pentru grila polară:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1447
+#: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Polar grid radius interval:"
 msgstr "Interval de rază al grilei polare:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1463 ../plug-ins/imagemap/imap_menu.c:219
+#: ../plug-ins/gfig/gfig-dialog.c:1478 ../plug-ins/imagemap/imap_menu.c:219
 msgid "Rectangle"
 msgstr "Dreptunghi"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1465
+#: ../plug-ins/gfig/gfig-dialog.c:1480
 msgid "Isometric"
 msgstr "Izometric"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1474
+#: ../plug-ins/gfig/gfig-dialog.c:1489
 msgid "Grid type:"
 msgstr "Tip grilă:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1481
+#: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
 msgid "Normal"
 msgstr "Normal"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1484
+#: ../plug-ins/gfig/gfig-dialog.c:1499
 msgid "Grey"
 msgstr "Gri"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1485
+#: ../plug-ins/gfig/gfig-dialog.c:1500
 msgid "Darker"
 msgstr "Mai întunecat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1486
+#: ../plug-ins/gfig/gfig-dialog.c:1501
 msgid "Lighter"
 msgstr "Mai luminos"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1487
+#: ../plug-ins/gfig/gfig-dialog.c:1502
 msgid "Very dark"
 msgstr "Foarte întunecat"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1496
+#: ../plug-ins/gfig/gfig-dialog.c:1511
 msgid "Grid color:"
 msgstr "Culoare grilă:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1717
+#: ../plug-ins/gfig/gfig-dialog.c:1732
 msgid "Sides:"
 msgstr "Părți:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1727
+#: ../plug-ins/gfig/gfig-dialog.c:1742
 msgid "Right"
 msgstr "Dreapta"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1728
+#: ../plug-ins/gfig/gfig-dialog.c:1743
 msgid "Left"
 msgstr "Stânga"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1738
+#: ../plug-ins/gfig/gfig-dialog.c:1753
 #: ../plug-ins/gimpressionist/orientation.c:147
 msgid "Orientation:"
 msgstr "Orientare:"
 
-#: ../plug-ins/gfig/gfig-dobject.c:584
+#: ../plug-ins/gfig/gfig-dobject.c:580
 msgid "Hey where has the object gone ?"
 msgstr "Hei, unde a dispărut obiectul?"
 
-#: ../plug-ins/gfig/gfig-dobject.c:953
+#: ../plug-ins/gfig/gfig-dobject.c:922
 msgid "Error reading file"
 msgstr "Eroare la citirea fișierului"
 
-#: ../plug-ins/gfig/gfig-dobject.c:1042
+#: ../plug-ins/gfig/gfig-dobject.c:1011
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Editare de obiect doar în citire - nu veți putea să îl salvați"
 
-#: ../plug-ins/gfig/gfig-poly.c:50
+#: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
 msgstr "Numărul de laturi ale poligonului regulat"
 
-#: ../plug-ins/gfig/gfig-preview.c:328
+#: ../plug-ins/gfig/gfig-preview.c:337
 msgid "Object Details"
 msgstr "Detalii obiect"
 
 #. Position labels
-#: ../plug-ins/gfig/gfig-preview.c:379
+#: ../plug-ins/gfig/gfig-preview.c:388
 msgid "XY position:"
 msgstr "Poziție XY:"
 
-#: ../plug-ins/gfig/gfig-spiral.c:54
+#: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
 msgstr "Numărul de rotiri ale spiralei"
 
-#: ../plug-ins/gfig/gfig-star.c:51
+#: ../plug-ins/gfig/gfig-star.c:52
 msgid "Star Number of Points"
 msgstr "Numărul de colțuri ale stelei"
 
@@ -10378,22 +10363,22 @@ msgstr "Numărul de colțuri ale stelei"
 msgid "Create bezier curve"
 msgstr "Creează curbe Bézier"
 
-#: ../plug-ins/gfig/gfig.c:123
+#: ../plug-ins/gfig/gfig.c:122
 msgid "Create geometric shapes"
 msgstr "Creează forme geometrice"
 
-#: ../plug-ins/gfig/gfig.c:134
+#: ../plug-ins/gfig/gfig.c:133
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: ../plug-ins/gfig/gfig.c:735
+#: ../plug-ins/gfig/gfig.c:734
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Eroare la încercarea de a salva figura ca parazit: nu se poate atașa "
 "parazitul la obiectul grafic."
 
-#: ../plug-ins/gfig/gfig.c:762
+#: ../plug-ins/gfig/gfig.c:761
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
@@ -11039,106 +11024,82 @@ msgstr ""
 "aibă vreo influență"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:1
-#, fuzzy
-#| msgid "Interlace"
 msgid "I_nterlace"
-msgstr "Întrețese"
+msgstr "Î_ntrețesut"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:2
-#, fuzzy
-#| msgid "Comment:"
 msgid "_GIF comment:"
-msgstr "Comentariu:"
+msgstr "Comentariu _GIF:"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:3
-#, fuzzy
-#| msgid "MNG animation"
 msgid "As _animation"
-msgstr "animație MNG"
+msgstr "Ca _animație"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:4
-#, fuzzy
-#| msgid "MNG Options"
 msgid "GIF Options"
-msgstr "Opțiuni MNG"
+msgstr "Opțiuni GIF"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
 msgid "_Loop forever"
-msgstr ""
+msgstr "În buc_lă la infinit"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
 msgid "_Delay between frames where unspecified:"
-msgstr ""
+msgstr "Întârzierea între ca_dre acolo unde nu este specificat:"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "_Frame disposal where unspecified:"
-msgstr ""
+msgstr "Dispunerea cadrului acolo unde nu este speci_ficat:"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
 msgid "_Use delay entered above for all frames"
-msgstr ""
+msgstr "Folosește întârzierea introd_usă deasupra pentru toate cadrele"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:10
 msgid "U_se disposal entered above for all frames"
-msgstr ""
+msgstr "Folo_sește dispunerea introdusă deasupra pentru toate cadrele"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:11
-#, fuzzy
-#| msgid "Animated MNG Options"
 msgid "Animated GIF Options"
-msgstr "Opțiuni de animație MNG"
+msgstr "Opțiuni de animație GIF"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:1
 msgid "_Interlacing (Adam7)"
-msgstr ""
+msgstr "Întrețesere (Adam_7)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:2
-#, fuzzy
-#| msgid "Save background color"
 msgid "Save _background color"
-msgstr "Salvează culoarea de fundal"
+msgstr "Salvează _culoarea de fundal"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:4
-#, fuzzy
-#| msgid "Start offset:"
 msgid "Save layer o_ffset"
-msgstr "Decalaj de pornire:"
+msgstr "Salvează _decalajul de strat"
 
+# accelerator pe r este deja pe butonul renunță
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
-#, fuzzy
-#| msgid "Save resolution"
 msgid "Save _resolution"
-msgstr "Salvează rezoluția"
+msgstr "Salvează re_zoluția"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:6
-#, fuzzy
-#| msgid "Save creation time"
 msgid "Save creation _time"
-msgstr "Salvează timpul de creare"
+msgstr "Salvează _timpul de creare"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
-#, fuzzy
-#| msgid "_Save comment to file"
 msgid "Save comme_nt"
-msgstr "_Salvează comentariul în fișier"
+msgstr "Salvează come_ntariul"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-#, fuzzy
-#| msgid "Save _color values from transparent pixels"
 msgid "Save color _values from transparent pixels"
-msgstr "Salvează valorile de _culoare pentru pixelii transparenți"
+msgstr "Salvează _valorile de culoare din pixelii transparenți"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:9
-#, fuzzy
-#| msgid "PNG compression level:"
 msgid "Co_mpression level:"
-msgstr "Nivel de compresie PNG:"
+msgstr "Nivel de co_mpresie:"
 
+# accelerator pe a este deja pe butonul ajutor
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
-#, fuzzy
-#| msgid "Sa_ve Defaults"
 msgid "S_ave Defaults"
-msgstr "Sal_vează ca valori implicite"
+msgstr "Salvează ca valori _implicite"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -12595,7 +12556,7 @@ msgstr "Intensitate luminozitate"
 #: ../plug-ins/lighting/lighting-ui.c:469
 #: ../plug-ins/map-object/map-object-ui.c:613
 #: ../plug-ins/map-object/map-object-ui.c:940
-#: ../plug-ins/print/print-page-layout.c:355
+#: ../plug-ins/print/print-page-layout.c:371
 msgid "Position"
 msgstr "Poziție"
 
@@ -12998,12 +12959,12 @@ msgid "Z scale (size)"
 msgstr "Scală Z (dimensiune)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:414
+#: ../plug-ins/print/print-page-layout.c:430
 msgid "_Top:"
 msgstr "_Sus:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:433
+#: ../plug-ins/print/print-page-layout.c:449
 msgid "_Bottom:"
 msgstr "_Jos:"
 
@@ -13012,7 +12973,7 @@ msgid "Images for the Cap Faces"
 msgstr "Imagini pentru fețele de la capete"
 
 #: ../plug-ins/map-object/map-object-ui.c:1181
-#: ../plug-ins/print/print-page-layout.c:231
+#: ../plug-ins/print/print-page-layout.c:247
 msgid "Size"
 msgstr "Dimensiune"
 
@@ -13103,7 +13064,7 @@ msgstr "Desenează un labirint"
 msgid "_Maze..."
 msgstr "_Labirint..."
 
-#: ../plug-ins/maze/maze.c:425
+#: ../plug-ins/maze/maze.c:427
 msgid "Drawing maze"
 msgstr "Desenare labirint"
 
@@ -13185,135 +13146,127 @@ msgstr "Răsucește unul dintre colțurile imaginii"
 msgid "_Pagecurl..."
 msgstr "_Pagină răsucită..."
 
-#: ../plug-ins/pagecurl/pagecurl.c:440
+#: ../plug-ins/pagecurl/pagecurl.c:442
 msgid "Pagecurl Effect"
 msgstr "Efect de pagină răsucită"
 
-#: ../plug-ins/pagecurl/pagecurl.c:462
+#: ../plug-ins/pagecurl/pagecurl.c:464
 msgid "Curl Location"
 msgstr "Amplasare buclă"
 
-#: ../plug-ins/pagecurl/pagecurl.c:481
+#: ../plug-ins/pagecurl/pagecurl.c:483
 msgid "Lower right"
 msgstr "Dreapta jos"
 
-#: ../plug-ins/pagecurl/pagecurl.c:482
+#: ../plug-ins/pagecurl/pagecurl.c:484
 msgid "Lower left"
 msgstr "Stânga jos"
 
-#: ../plug-ins/pagecurl/pagecurl.c:483
+#: ../plug-ins/pagecurl/pagecurl.c:485
 msgid "Upper left"
 msgstr "Stânga sus"
 
-#: ../plug-ins/pagecurl/pagecurl.c:484
+#: ../plug-ins/pagecurl/pagecurl.c:486
 msgid "Upper right"
 msgstr "Dreapta sus"
 
-#: ../plug-ins/pagecurl/pagecurl.c:524
+#: ../plug-ins/pagecurl/pagecurl.c:526
 msgid "Curl Orientation"
 msgstr "Orientare răsucire"
 
-#: ../plug-ins/pagecurl/pagecurl.c:569
+#: ../plug-ins/pagecurl/pagecurl.c:571
 msgid "_Shade under curl"
 msgstr "Umbră _sub răsucire"
 
-#: ../plug-ins/pagecurl/pagecurl.c:582
+#: ../plug-ins/pagecurl/pagecurl.c:584
 msgid "Current gradient (reversed)"
 msgstr "Degrade curent (inversat)"
 
-#: ../plug-ins/pagecurl/pagecurl.c:587
+#: ../plug-ins/pagecurl/pagecurl.c:589
 msgid "Current gradient"
 msgstr "Degrade curent"
 
-#: ../plug-ins/pagecurl/pagecurl.c:592
+#: ../plug-ins/pagecurl/pagecurl.c:594
 msgid "Foreground / background colors"
 msgstr "Culori de prim-plan și de fundal"
 
-#: ../plug-ins/pagecurl/pagecurl.c:612
+#: ../plug-ins/pagecurl/pagecurl.c:614
 msgid "_Opacity:"
 msgstr "_Opacitate:"
 
-#: ../plug-ins/pagecurl/pagecurl.c:735
+#: ../plug-ins/pagecurl/pagecurl.c:730
 msgid "Curl Layer"
 msgstr "Strat buclă"
 
-#: ../plug-ins/pagecurl/pagecurl.c:1026
+#: ../plug-ins/pagecurl/pagecurl.c:1022
 msgid "Page Curl"
 msgstr "Pagină răsucită"
 
-#: ../plug-ins/print/print-page-layout.c:149
+#: ../plug-ins/print/print-page-layout.c:153
 msgid "Ignore Page _Margins"
 msgstr "Ignoră _marginile paginii"
 
 #. crop marks toggle
-#: ../plug-ins/print/print-page-layout.c:160
+#: ../plug-ins/print/print-page-layout.c:164
 msgid "_Draw Crop Marks"
 msgstr "_Desenează marcajele de decupare"
 
-#: ../plug-ins/print/print-page-layout.c:306
+#: ../plug-ins/print/print-page-layout.c:322
 msgid "_X resolution:"
 msgstr "Rezoluție _X:"
 
-#: ../plug-ins/print/print-page-layout.c:310
+#: ../plug-ins/print/print-page-layout.c:326
 msgid "_Y resolution:"
 msgstr "Rezoluție _Y:"
 
-#: ../plug-ins/print/print-page-layout.c:381
+#: ../plug-ins/print/print-page-layout.c:397
 msgid "_Left:"
 msgstr "S_tânga:"
 
-#: ../plug-ins/print/print-page-layout.c:400
+#: ../plug-ins/print/print-page-layout.c:416
 msgid "_Right:"
 msgstr "D_reapta:"
 
 # hm ? sau centrează ?
-#: ../plug-ins/print/print-page-layout.c:454
+#: ../plug-ins/print/print-page-layout.c:470
 msgid "C_enter:"
 msgstr "C_entru:"
 
 #. if and how to center the image on the page
-#: ../plug-ins/print/print-page-layout.c:461
+#: ../plug-ins/print/print-page-layout.c:477
 msgctxt "center-mode"
 msgid "None"
 msgstr "Fără"
 
-#: ../plug-ins/print/print-page-layout.c:462
+#: ../plug-ins/print/print-page-layout.c:478
 msgid "Horizontally"
 msgstr "Orizontal"
 
-#: ../plug-ins/print/print-page-layout.c:463
+#: ../plug-ins/print/print-page-layout.c:479
 msgid "Vertically"
 msgstr "Vertical"
 
-#: ../plug-ins/print/print-page-layout.c:464
+#: ../plug-ins/print/print-page-layout.c:480
 msgid "Both"
 msgstr "Amândouă"
 
-#: ../plug-ins/print/print.c:102
+#: ../plug-ins/print/print.c:89
 msgid "Print the image"
 msgstr "Tipărește imaginea"
 
-#: ../plug-ins/print/print.c:107
+#: ../plug-ins/print/print.c:94
 msgid "_Print..."
 msgstr "Ti_părește..."
 
-#: ../plug-ins/print/print.c:118
-msgid "Adjust page size and orientation for printing"
-msgstr "Ajustează dimensiunea și orientarea hârtiei pentru tipărire"
-
-#: ../plug-ins/print/print.c:124
-msgid "Page Set_up"
-msgstr "Aran_jare în pagină"
-
-#: ../plug-ins/print/print.c:263
+#: ../plug-ins/print/print.c:216
 msgid "Image Settings"
 msgstr "Configurări de imagine"
 
-#: ../plug-ins/print/print.c:347
+#: ../plug-ins/print/print.c:267
 msgid "An error occurred while trying to print:"
 msgstr "A apărut o eroare la încercarea de a tipări:"
 
-#: ../plug-ins/print/print.c:374
+#: ../plug-ins/print/print.c:294
 msgid "Printing"
 msgstr "Tipărire"
 
@@ -13380,6 +13333,12 @@ msgstr "_Captură de ecran..."
 msgid "No data captured"
 msgstr "Nicio dată capturată"
 
+#~ msgid "Adjust page size and orientation for printing"
+#~ msgstr "Ajustează dimensiunea și orientarea hârtiei pentru tipărire"
+
+#~ msgid "Page Set_up"
+#~ msgstr "Aran_jare în pagină"
+
 #~ msgid "Ascii"
 #~ msgstr "ASCII"
 
@@ -13405,31 +13364,3 @@ msgstr "Nicio dată capturată"
 
 #~ msgid "Width of '%s' is too large. Please reduce more than %dpx."
 #~ msgstr "Lățimea pentru „%s” este prea mare. Reduceți mai mult de %dpx."
-
-# hm ? sigur este vorba despre un fișier ?
-#~ msgid "The size of '%s' is zero!"
-#~ msgstr "Dimensiunea fișierului „%s” este zero!"
-
-#~ msgid "BMP"
-#~ msgstr "BMP"
-
-#~ msgid "Frequency (rows):"
-#~ msgstr "Frecvență (rânduri):"
-
-#~ msgid "2x1,1x1,1x1 (4:2:2)"
-#~ msgstr "2x1,1x1,1x1 (4:2:2)"
-
-#~ msgid "1x2,1x1,1x1"
-#~ msgstr "1x2,1x1,1x1"
-
-#~ msgid "2x2,1x1,1x1 (smallest file)"
-#~ msgstr "2x2,1x1,1x1 (cel mai mic fișier)"
-
-#~ msgid "There was an error taking the screenshot."
-#~ msgstr "A apărut o eroare la preluarea capturii de ecran."
-
-#~ msgid "Send to Back"
-#~ msgstr "Trimite în spate"
-
-#~ msgid "pixels/%s"
-#~ msgstr "pixeli/%s"
