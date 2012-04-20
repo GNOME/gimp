@@ -250,22 +250,14 @@ gimp_gegl_node_set_layer_mode (GeglNode             *node,
   switch (mode)
     {
     case GIMP_BEHIND_MODE:
-    case GIMP_MULTIPLY_MODE:
-    case GIMP_SCREEN_MODE:
-    case GIMP_OVERLAY_MODE:
     case GIMP_DIFFERENCE_MODE:
-    case GIMP_ADDITION_MODE:
     case GIMP_SUBTRACT_MODE:
-    case GIMP_DARKEN_ONLY_MODE:
     case GIMP_HUE_MODE:
     case GIMP_SATURATION_MODE:
     case GIMP_COLOR_MODE:
     case GIMP_VALUE_MODE:
     case GIMP_DIVIDE_MODE:
-    case GIMP_DODGE_MODE:
-    case GIMP_BURN_MODE:
     case GIMP_HARDLIGHT_MODE:
-    case GIMP_SOFTLIGHT_MODE:
     case GIMP_GRAIN_EXTRACT_MODE:
     case GIMP_GRAIN_MERGE_MODE:
     case GIMP_COLOR_ERASE_MODE:
@@ -294,7 +286,7 @@ gimp_gegl_node_set_layer_mode (GeglNode             *node,
     case GIMP_DIFFERENCE_MODE:    operation = "gimp:difference-mode"; break;
     case GIMP_ADDITION_MODE:      operation = "gimp:addition-mode"; break;
     case GIMP_SUBTRACT_MODE:      operation = "gimp:subtract-mode"; break;
-    case GIMP_DARKEN_ONLY_MODE:   operation = "gimp:darken-mode"; break;
+    case GIMP_DARKEN_ONLY_MODE:   operation = "gimp:darken-only-mode"; break;
     case GIMP_LIGHTEN_ONLY_MODE:  operation = "gimp:lighten-only-mode"; break;
     case GIMP_HUE_MODE:           operation = "gimp:hue-mode"; break;
     case GIMP_SATURATION_MODE:    operation = "gimp:saturation-mode"; break;

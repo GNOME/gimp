@@ -3,6 +3,7 @@
  *
  * gimpoperationmultiplymode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +29,7 @@
 #include "gimpoperationmultiplymode.h"
 
 
+static void gimp_operation_multiply_mode_prepare     (GeglOperation       *operation);
 static gboolean gimp_operation_multiply_mode_process (GeglOperation       *operation,
                                                       void                *in_buf,
                                                       void                *aux_buf,
@@ -55,12 +57,23 @@ gimp_operation_multiply_mode_class_init (GimpOperationMultiplyModeClass *klass)
            "description", "GIMP multiply mode operation",
            NULL);
 
-  point_class->process         = gimp_operation_multiply_mode_process;
+  point_class->process     = gimp_operation_multiply_mode_process;
+  operation_class->prepare = gimp_operation_multiply_mode_prepare;
 }
 
 static void
 gimp_operation_multiply_mode_init (GimpOperationMultiplyMode *self)
 {
+}
+
+static void
+gimp_operation_multiply_mode_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("R'G'B'A float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "aux",    format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
@@ -78,9 +91,18 @@ gimp_operation_multiply_mode_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      out[RED]   = in[RED];
-      out[GREEN] = in[GREEN];
-      out[BLUE]  = in[BLUE];
+      gint b;
+      gfloat comp_alpha = in[ALPHA] * layer[ALPHA];
+      gfloat new_alpha  = in[ALPHA] + (1 - in[ALPHA]) * comp_alpha;
+      gfloat ratio      = comp_alpha / new_alpha;
+
+      for (b = RED; b < ALPHA; b++)
+        {
+          gfloat comp = CLAMP (layer[b] * in[b], 0.0, 1.0);
+
+          out[b] = comp * ratio + in[b] * (1 - ratio);
+        }
+
       out[ALPHA] = in[ALPHA];
 
       in    += 4;
