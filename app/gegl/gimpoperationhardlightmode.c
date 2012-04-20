@@ -51,9 +51,9 @@ gimp_operation_hardlight_mode_class_init (GimpOperationHardlightModeClass *klass
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:hardlight-mode",
-           "description", "GIMP hardlight mode operation",
-           NULL);
+                                 "name",        "gimp:hardlight-mode",
+                                 "description", "GIMP hardlight mode operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_hardlight_mode_process;
 }

@@ -100,10 +100,10 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
   object_class->finalize                   = gimp_operation_cage_transform_finalize;
 
   gegl_operation_class_set_keys (operation_class,
-           "name"                   , "gimp:cage-transform",
-           "categories"             , "transform",
-           "description"            , _("Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage tool"),
-           NULL);
+                                 "name",        "gimp:cage-transform",
+                                 "categories",  "transform",
+                                 "description", _("Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage tool"),
+                                 NULL);
 
   operation_class->prepare                 = gimp_operation_cage_transform_prepare;
 

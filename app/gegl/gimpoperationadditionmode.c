@@ -53,9 +53,9 @@ gimp_operation_addition_mode_class_init (GimpOperationAdditionModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:addition-mode",
-           "description", "GIMP addition mode operation",
-           NULL);
+                                 "name",        "gimp:addition-mode",
+                                 "description", "GIMP addition mode operation",
+                                 NULL);
 
   point_class->process     = gimp_operation_addition_mode_process;
   operation_class->prepare = gimp_operation_addition_mode_prepare;

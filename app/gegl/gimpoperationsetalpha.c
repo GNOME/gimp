@@ -34,23 +34,23 @@ enum
 };
 
 
-static void   gimp_operation_set_alpha_get_property (GObject    *object,
-                                                     guint       property_id,
-                                                     GValue     *value,
-                                                     GParamSpec *pspec);
-static void   gimp_operation_set_alpha_set_property (GObject      *object,
-                                                     guint         property_id,
-                                                     const GValue *value,
-                                                     GParamSpec   *pspec);
+static void       gimp_operation_set_alpha_get_property (GObject             *object,
+                                                         guint                property_id,
+                                                         GValue              *value,
+                                                         GParamSpec          *pspec);
+static void       gimp_operation_set_alpha_set_property (GObject             *object,
+                                                         guint                property_id,
+                                                         const GValue        *value,
+                                                         GParamSpec          *pspec);
 
-static void   gimp_operation_set_alpha_prepare      (GeglOperation       *operation);
-static gboolean   gimp_operation_set_alpha_process  (GeglOperation       *operation,
-                                                     void                *in_buf,
-                                                     void                *aux_buf,
-                                                     void                *out_buf,
-                                                     glong                samples,
-                                                     const GeglRectangle *roi,
-                                                     gint                 level);
+static void       gimp_operation_set_alpha_prepare      (GeglOperation       *operation);
+static gboolean   gimp_operation_set_alpha_process      (GeglOperation       *operation,
+                                                         void                *in_buf,
+                                                         void                *aux_buf,
+                                                         void                *out_buf,
+                                                         glong                samples,
+                                                         const GeglRectangle *roi,
+                                                         gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationSetAlpha, gimp_operation_set_alpha,
@@ -70,14 +70,14 @@ gimp_operation_set_alpha_class_init (GimpOperationSetAlphaClass *klass)
   object_class->get_property = gimp_operation_set_alpha_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-            "name"        , "gimp:set-alpha",
-            "categories"  , "color",
-            "description" , "Set a buffer's alpha channel to a value",
-            NULL);
+                                 "name",        "gimp:set-alpha",
+                                 "categories",  "color",
+                                 "description", "Set a buffer's alpha channel to a value",
+                                 NULL);
 
-  operation_class->prepare     = gimp_operation_set_alpha_prepare;
+  operation_class->prepare = gimp_operation_set_alpha_prepare;
 
-  point_class->process         = gimp_operation_set_alpha_process;
+  point_class->process     = gimp_operation_set_alpha_process;
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_double ("value",

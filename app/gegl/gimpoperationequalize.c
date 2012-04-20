@@ -40,22 +40,22 @@ enum
 };
 
 
-static void   gimp_operation_equalize_finalize     (GObject    *object);
-static void   gimp_operation_equalize_get_property (GObject    *object,
-                                                    guint       property_id,
-                                                    GValue     *value,
-                                                    GParamSpec *pspec);
-static void   gimp_operation_equalize_set_property (GObject      *object,
-                                                    guint         property_id,
-                                                    const GValue *value,
-                                                    GParamSpec   *pspec);
+static void     gimp_operation_equalize_finalize     (GObject             *object);
+static void     gimp_operation_equalize_get_property (GObject             *object,
+                                                      guint                property_id,
+                                                      GValue              *value,
+                                                      GParamSpec          *pspec);
+static void     gimp_operation_equalize_set_property (GObject             *object,
+                                                      guint                property_id,
+                                                      const GValue        *value,
+                                                      GParamSpec          *pspec);
 
-static gboolean gimp_operation_equalize_process (GeglOperation       *operation,
-                                                 void                *in_buf,
-                                                 void                *out_buf,
-                                                 glong                samples,
-                                                 const GeglRectangle *roi,
-                                                 gint                 level);
+static gboolean gimp_operation_equalize_process      (GeglOperation       *operation,
+                                                      void                *in_buf,
+                                                      void                *out_buf,
+                                                      glong                samples,
+                                                      const GeglRectangle *roi,
+                                                      gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationEqualize, gimp_operation_equalize,
@@ -76,12 +76,12 @@ gimp_operation_equalize_class_init (GimpOperationEqualizeClass *klass)
   object_class->get_property   = gimp_operation_equalize_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-          "name"        , "gimp:equalize",
-          "categories"  , "color",
-          "description" , "GIMP Equalize operation",
-          NULL);
+                                 "name",        "gimp:equalize",
+                                 "categories",  "color",
+                                 "description", "GIMP Equalize operation",
+                                 NULL);
 
-  point_class->process         = gimp_operation_equalize_process;
+  point_class->process = gimp_operation_equalize_process;
 
   g_object_class_install_property (object_class, PROP_HISTOGRAM,
                                    g_param_spec_pointer ("histogram",

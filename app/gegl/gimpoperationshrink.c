@@ -41,28 +41,29 @@ enum
 };
 
 
-static void     gimp_operation_shrink_get_property (GObject      *object,
-                                                    guint         property_id,
-                                                    GValue       *value,
-                                                    GParamSpec   *pspec);
-static void     gimp_operation_shrink_set_property (GObject      *object,
-                                                    guint         property_id,
-                                                    const GValue *value,
-                                                    GParamSpec   *pspec);
+static void     gimp_operation_shrink_get_property (GObject             *object,
+                                                    guint                property_id,
+                                                    GValue              *value,
+                                                    GParamSpec          *pspec);
+static void     gimp_operation_shrink_set_property (GObject             *object,
+                                                    guint                property_id,
+                                                    const GValue        *value,
+                                                    GParamSpec          *pspec);
 
+static void          gimp_operation_shrink_prepare (GeglOperation       *operation);
 static GeglRectangle
-gimp_operation_shrink_get_required_for_output (GeglOperation       *self,
-                                               const gchar         *input_pad,
-                                               const GeglRectangle *roi);
+     gimp_operation_shrink_get_required_for_output (GeglOperation       *self,
+                                                    const gchar         *input_pad,
+                                                    const GeglRectangle *roi);
 static GeglRectangle
-      gimp_operation_shrink_get_cached_region (GeglOperation       *self,
-                                               const GeglRectangle *roi);
-static void     gimp_operation_shrink_prepare (GeglOperation       *operation);
-static gboolean gimp_operation_shrink_process (GeglOperation       *operation,
-                                               GeglBuffer          *input,
-                                               GeglBuffer          *output,
-                                               const GeglRectangle *roi,
-                                               gint                 level);
+           gimp_operation_shrink_get_cached_region (GeglOperation       *self,
+                                                    const GeglRectangle *roi);
+
+static gboolean      gimp_operation_shrink_process (GeglOperation       *operation,
+                                                    GeglBuffer          *input,
+                                                    GeglBuffer          *output,
+                                                    const GeglRectangle *roi,
+                                                    gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationShrink, gimp_operation_shrink,
@@ -82,16 +83,16 @@ gimp_operation_shrink_class_init (GimpOperationShrinkClass *klass)
   object_class->get_property   = gimp_operation_shrink_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-          "name"        , "gimp:shrink",
-          "categories"  , "gimp",
-          "description" , "GIMP Shrink operation",
-          NULL);
+                                 "name",        "gimp:shrink",
+                                 "categories",  "gimp",
+                                 "description", "GIMP Shrink operation",
+                                 NULL);
 
   operation_class->prepare                 = gimp_operation_shrink_prepare;
   operation_class->get_required_for_output = gimp_operation_shrink_get_required_for_output;
   operation_class->get_cached_region       = gimp_operation_shrink_get_cached_region;
 
-  filter_class->process        = gimp_operation_shrink_process;
+  filter_class->process                    = gimp_operation_shrink_process;
 
   g_object_class_install_property (object_class, PROP_RADIUS_X,
                                    g_param_spec_int ("radius-x",

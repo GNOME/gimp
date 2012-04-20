@@ -56,12 +56,12 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:desaturate",
-           "categories" , "color",
-           "description", "GIMP Desaturate operation",
-           NULL);
+                                 "name",        "gimp:desaturate",
+                                 "categories",  "color",
+                                 "description", "GIMP Desaturate operation",
+                                 NULL);
 
-  point_class->process         = gimp_operation_desaturate_process;
+  point_class->process = gimp_operation_desaturate_process;
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,

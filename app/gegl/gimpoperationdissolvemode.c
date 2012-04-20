@@ -29,22 +29,23 @@
 
 #include "gimpoperationdissolvemode.h"
 
+
+#define RANDOM_TABLE_SIZE 4096
+
+static void     gimp_operation_dissolve_mode_prepare (GeglOperation       *operation);
+static gboolean gimp_operation_dissolve_mode_process (GeglOperation       *operation,
+                                                      void                *in_buf,
+                                                      void                *aux_buf,
+                                                      void                *out_buf,
+                                                      glong                samples,
+                                                      const GeglRectangle *result,
+                                                      gint                 level);
+
+
 G_DEFINE_TYPE (GimpOperationDissolveMode, gimp_operation_dissolve_mode,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
-#define RANDOM_TABLE_SIZE 4096
 static gint32 random_table[RANDOM_TABLE_SIZE];
-
-static void     gimp_operation_dissolve_mode_prepare (
-                                                GeglOperation       *operation);
-static gboolean gimp_operation_dissolve_mode_process (
-                                                GeglOperation       *operation,
-                                                void                *in_buf,
-                                                void                *aux_buf,
-                                                void                *out_buf,
-                                                glong                samples,
-                                                const GeglRectangle *result,
-                                                gint                 level);
 
 
 static void

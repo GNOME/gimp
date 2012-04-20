@@ -51,9 +51,9 @@ gimp_operation_difference_mode_class_init (GimpOperationDifferenceModeClass *kla
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:difference-mode",
-           "description", "GIMP difference mode operation",
-           NULL);
+                                 "name",        "gimp:difference-mode",
+                                 "description", "GIMP difference mode operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_difference_mode_process;
 }

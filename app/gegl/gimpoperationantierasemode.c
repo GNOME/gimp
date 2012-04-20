@@ -51,9 +51,9 @@ gimp_operation_anti_erase_mode_class_init (GimpOperationAntiEraseModeClass *klas
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:anti-erase-mode",
-           "description", "GIMP anti erase mode operation",
-           NULL);
+                                 "name",        "gimp:anti-erase-mode",
+                                 "description", "GIMP anti erase mode operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_anti_erase_mode_process;
 }

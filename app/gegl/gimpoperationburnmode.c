@@ -29,7 +29,7 @@
 #include "gimpoperationburnmode.h"
 
 
-static void gimp_operation_burn_mode_prepare     (GeglOperation       *operation);
+static void     gimp_operation_burn_mode_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_burn_mode_process (GeglOperation       *operation,
                                                   void                *in_buf,
                                                   void                *aux_buf,
@@ -53,9 +53,9 @@ gimp_operation_burn_mode_class_init (GimpOperationBurnModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:burn-mode",
-           "description", "GIMP burn mode operation",
-           NULL);
+                                 "name",        "gimp:burn-mode",
+                                 "description", "GIMP burn mode operation",
+                                 NULL);
 
   point_class->process     = gimp_operation_burn_mode_process;
   operation_class->prepare = gimp_operation_burn_mode_prepare;

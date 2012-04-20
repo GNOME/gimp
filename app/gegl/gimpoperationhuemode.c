@@ -51,9 +51,9 @@ gimp_operation_hue_mode_class_init (GimpOperationHueModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:hue-mode",
-           "description", "GIMP hue mode operation",
-           NULL);
+                                 "name",        "gimp:hue-mode",
+                                 "description", "GIMP hue mode operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_hue_mode_process;
 }

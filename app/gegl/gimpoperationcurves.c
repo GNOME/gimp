@@ -60,12 +60,12 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:curves",
-           "categories" , "color",
-           "description", "GIMP Curves operation",
-           NULL);
+                                 "name",        "gimp:curves",
+                                 "categories",  "color",
+                                 "description", "GIMP Curves operation",
+                                 NULL);
 
-  point_class->process         = gimp_operation_curves_process;
+  point_class->process = gimp_operation_curves_process;
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,

@@ -81,16 +81,16 @@ gimp_operation_shapeburst_class_init (GimpOperationShapeburstClass *klass)
   object_class->get_property   = gimp_operation_shapeburst_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-    "name"        , "gimp:shapeburst",
-    "categories"  , "gimp",
-    "description" , "GIMP Shapeburst operation",
-    NULL);
+                                 "name",        "gimp:shapeburst",
+                                 "categories",  "gimp",
+                                 "description", "GIMP Shapeburst operation",
+                                 NULL);
 
   operation_class->prepare                 = gimp_operation_shapeburst_prepare;
   operation_class->get_required_for_output = gimp_operation_shapeburst_get_required_for_output;
   operation_class->get_cached_region       = gimp_operation_shapeburst_get_cached_region;
 
-  filter_class->process        = gimp_operation_shapeburst_process;
+  filter_class->process                    = gimp_operation_shapeburst_process;
 
   g_object_class_install_property (object_class, PROP_MAX_ITERATIONS,
                                    g_param_spec_double ("max-iterations",

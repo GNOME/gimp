@@ -51,9 +51,9 @@ gimp_operation_replace_mode_class_init (GimpOperationReplaceModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:replace-mode",
-           "description", "GIMP replace mode operation",
-           NULL);
+                                 "name",        "gimp:replace-mode",
+                                 "description", "GIMP replace mode operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_replace_mode_process;
 }

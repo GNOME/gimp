@@ -51,9 +51,9 @@ gimp_operation_divide_mode_class_init (GimpOperationDivideModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:divide-mode",
-           "description", "GIMP divide mode operation",
-           NULL);
+                                 "name",        "gimp:divide-mode",
+                                 "description", "GIMP divide mode operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_divide_mode_process;
 }

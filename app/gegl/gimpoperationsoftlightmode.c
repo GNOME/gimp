@@ -29,7 +29,7 @@
 #include "gimpoperationsoftlightmode.h"
 
 
-static void gimp_operation_softlight_mode_prepare     (GeglOperation       *operation);
+static void     gimp_operation_softlight_mode_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_softlight_mode_process (GeglOperation       *operation,
                                                        void                *in_buf,
                                                        void                *aux_buf,
@@ -53,12 +53,13 @@ gimp_operation_softlight_mode_class_init (GimpOperationSoftlightModeClass *klass
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:softlight-mode",
-           "description", "GIMP softlight mode operation",
-           NULL);
+                                 "name",        "gimp:softlight-mode",
+                                 "description", "GIMP softlight mode operation",
+                                 NULL);
+
+  operation_class->prepare = gimp_operation_softlight_mode_prepare;
 
   point_class->process     = gimp_operation_softlight_mode_process;
-  operation_class->prepare = gimp_operation_softlight_mode_prepare;
 }
 
 static void

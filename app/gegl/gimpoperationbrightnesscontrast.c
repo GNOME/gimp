@@ -57,10 +57,10 @@ gimp_operation_brightness_contrast_class_init (GimpOperationBrightnessContrastCl
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                  "name"       , "gimp:brightness-contrast",
-                  "categories" , "color",
-                  "description", "GIMP Brightness-Contrast operation",
-                  NULL);
+                                 "name",        "gimp:brightness-contrast",
+                                 "categories",  "color",
+                                 "description", "GIMP Brightness-Contrast operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_brightness_contrast_process;
 

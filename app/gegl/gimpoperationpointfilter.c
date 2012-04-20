@@ -112,9 +112,7 @@ gimp_operation_point_filter_set_property (GObject      *object,
 static void
 gimp_operation_point_filter_prepare (GeglOperation *operation)
 {
-  const Babl *format;
-
-  format = babl_format ("R'G'B'A float");
+  const Babl *format = babl_format ("R'G'B'A float");
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);

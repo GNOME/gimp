@@ -51,9 +51,9 @@ gimp_operation_behind_mode_class_init (GimpOperationBehindModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:behind-mode",
-           "description", "GIMP behind mode operation",
-           NULL);
+                                 "name",        "gimp:behind-mode",
+                                 "description", "GIMP behind mode operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_behind_mode_process;
 }

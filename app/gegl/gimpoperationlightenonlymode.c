@@ -28,7 +28,7 @@
 
 #include "gimpoperationlightenonlymode.h"
 
-static void gimp_operation_lighten_only_mode_prepare     (GeglOperation       *operation);
+static void     gimp_operation_lighten_only_mode_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_lighten_only_mode_process (GeglOperation       *operation,
                                                           void                *in_buf,
                                                           void                *aux_buf,
@@ -52,12 +52,13 @@ gimp_operation_lighten_only_mode_class_init (GimpOperationLightenOnlyModeClass *
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:lighten-only-mode",
-           "description", "GIMP lighten only mode operation",
-           NULL);
+                                 "name",        "gimp:lighten-only-mode",
+                                 "description", "GIMP lighten only mode operation",
+                                 NULL);
+
+  operation_class->prepare = gimp_operation_lighten_only_mode_prepare;
 
   point_class->process     = gimp_operation_lighten_only_mode_process;
-  operation_class->prepare = gimp_operation_lighten_only_mode_prepare;
 }
 
 static void

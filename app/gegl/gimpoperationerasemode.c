@@ -51,9 +51,9 @@ gimp_operation_erase_mode_class_init (GimpOperationEraseModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:erase-mode",
-           "description", "GIMP erase mode operation",
-           NULL);
+                                 "name",        "gimp:erase-mode",
+                                 "description", "GIMP erase mode operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_erase_mode_process;
 }

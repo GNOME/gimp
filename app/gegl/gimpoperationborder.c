@@ -83,16 +83,16 @@ gimp_operation_border_class_init (GimpOperationBorderClass *klass)
   object_class->get_property   = gimp_operation_border_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-      "name"        , "gimp:border",
-      "categories"  , "gimp",
-      "description" , "GIMP Border operation",
-      NULL);
+                                 "name",        "gimp:border",
+                                 "categories",  "gimp",
+                                 "description", "GIMP Border operation",
+                                 NULL);
 
   operation_class->prepare                 = gimp_operation_border_prepare;
   operation_class->get_required_for_output = gimp_operation_border_get_required_for_output;
   operation_class->get_cached_region       = gimp_operation_border_get_cached_region;
 
-  filter_class->process        = gimp_operation_border_process;
+  filter_class->process                    = gimp_operation_border_process;
 
   g_object_class_install_property (object_class, PROP_RADIUS_X,
                                    g_param_spec_int ("radius-x",

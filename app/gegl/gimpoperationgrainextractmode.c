@@ -51,9 +51,9 @@ gimp_operation_grain_extract_mode_class_init (GimpOperationGrainExtractModeClass
   point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-             "name"       , "gimp:grain-extract-mode",
-             "description", "GIMP grain extract mode operation",
-             NULL);
+                                 "name",        "gimp:grain-extract-mode",
+                                 "description", "GIMP grain extract mode operation",
+                                 NULL);
 
   point_class->process         = gimp_operation_grain_extract_mode_process;
 }

@@ -57,12 +57,12 @@ gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass *klass
   object_class->get_property   = gimp_operation_point_filter_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-           "name"       , "gimp:hue-saturation",
-           "categories" , "color",
-           "description", "GIMP Hue-Saturation operation",
-           NULL);
+                                 "name",        "gimp:hue-saturation",
+                                 "categories",  "color",
+                                 "description", "GIMP Hue-Saturation operation",
+                                 NULL);
 
-  point_class->process         = gimp_operation_hue_saturation_process;
+  point_class->process = gimp_operation_hue_saturation_process;
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
