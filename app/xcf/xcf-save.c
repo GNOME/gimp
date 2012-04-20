@@ -100,10 +100,12 @@ static gboolean xcf_save_level         (XcfInfo           *info,
 static gboolean xcf_save_tile          (XcfInfo           *info,
                                         GeglBuffer        *buffer,
                                         GeglRectangle     *tile_rect,
+                                        const Babl        *format,
                                         GError           **error);
 static gboolean xcf_save_tile_rle      (XcfInfo           *info,
                                         GeglBuffer        *buffer,
                                         GeglRectangle     *tile_rect,
+                                        const Babl        *format,
                                         guchar            *rlebuf,
                                         GError           **error);
 static gboolean xcf_save_parasite      (XcfInfo           *info,
@@ -1315,6 +1317,7 @@ xcf_save_buffer (XcfInfo     *info,
   gint        tmp1, tmp2;
   GError     *tmp_error = NULL;
 
+  /* XXX use an appropriate format here */
   format = gegl_buffer_get_format (buffer);
 
   width  = gegl_buffer_get_width (buffer);
@@ -1398,6 +1401,7 @@ xcf_save_level (XcfInfo     *info,
   guchar     *rlebuf;
   GError     *tmp_error = NULL;
 
+  /* XXX use an appropriate format here */
   format = gegl_buffer_get_format (buffer);
 
   width  = gegl_buffer_get_width (buffer);
@@ -1437,10 +1441,11 @@ xcf_save_level (XcfInfo     *info,
       switch (info->compression)
         {
         case COMPRESS_NONE:
-          xcf_check_error (xcf_save_tile (info, buffer, &rect, error));
+          xcf_check_error (xcf_save_tile (info, buffer, &rect, format,
+                                          error));
           break;
         case COMPRESS_RLE:
-          xcf_check_error (xcf_save_tile_rle (info, buffer, &rect,
+          xcf_check_error (xcf_save_tile_rle (info, buffer, &rect, format,
                                               rlebuf, error));
           break;
         case COMPRESS_ZLIB:
@@ -1483,15 +1488,15 @@ static gboolean
 xcf_save_tile (XcfInfo        *info,
                GeglBuffer     *buffer,
                GeglRectangle  *tile_rect,
+               const Babl     *format,
                GError        **error)
 {
-  const Babl *format    = gegl_buffer_get_format (buffer);
-  gint        bpp       = babl_format_get_bytes_per_pixel (format);
-  gint        tile_size = bpp * tile_rect->width * tile_rect->height;
-  guchar     *tile_data = g_alloca (tile_size);
-  GError     *tmp_error = NULL;
+  gint    bpp       = babl_format_get_bytes_per_pixel (format);
+  gint    tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar *tile_data = g_alloca (tile_size);
+  GError *tmp_error = NULL;
 
-  gegl_buffer_get (buffer, tile_rect, 1.0, NULL, tile_data,
+  gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   xcf_write_int8_check_error (info, tile_data, tile_size);
@@ -1503,18 +1508,18 @@ static gboolean
 xcf_save_tile_rle (XcfInfo        *info,
                    GeglBuffer     *buffer,
                    GeglRectangle  *tile_rect,
+                   const Babl     *format,
                    guchar         *rlebuf,
                    GError        **error)
 {
-  const Babl *format    = gegl_buffer_get_format (buffer);
-  gint        bpp       = babl_format_get_bytes_per_pixel (format);
-  gint        tile_size = bpp * tile_rect->width * tile_rect->height;
-  guchar     *tile_data = g_alloca (tile_size);
-  gint        len       = 0;
-  gint        i, j;
-  GError     *tmp_error  = NULL;
+  gint    bpp       = babl_format_get_bytes_per_pixel (format);
+  gint    tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar *tile_data = g_alloca (tile_size);
+  gint    len       = 0;
+  gint    i, j;
+  GError *tmp_error  = NULL;
 
-  gegl_buffer_get (buffer, tile_rect, 1.0, NULL, tile_data,
+  gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   for (i = 0; i < bpp; i++)

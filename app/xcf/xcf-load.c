@@ -102,10 +102,12 @@ static gboolean        xcf_load_level         (XcfInfo       *info,
                                                GeglBuffer    *buffer);
 static gboolean        xcf_load_tile          (XcfInfo       *info,
                                                GeglBuffer    *buffer,
-                                               GeglRectangle *tile_rect);
+                                               GeglRectangle *tile_rect,
+                                               const Babl    *format);
 static gboolean        xcf_load_tile_rle      (XcfInfo       *info,
                                                GeglBuffer    *buffer,
                                                GeglRectangle *tile_rect,
+                                               const Babl    *format,
                                                gint           data_length);
 static GimpParasite  * xcf_load_parasite      (XcfInfo       *info);
 static gboolean        xcf_load_old_paths     (XcfInfo       *info,
@@ -1388,15 +1390,19 @@ static gboolean
 xcf_load_level (XcfInfo    *info,
                 GeglBuffer *buffer)
 {
-  guint32 saved_pos;
-  guint32 offset, offset2;
-  gint    n_tile_rows;
-  gint    n_tile_cols;
-  guint   ntiles;
-  gint    width;
-  gint    height;
-  gint    i;
-  gint    fail;
+  const Babl *format;
+  guint32     saved_pos;
+  guint32     offset, offset2;
+  gint        n_tile_rows;
+  gint        n_tile_cols;
+  guint       ntiles;
+  gint        width;
+  gint        height;
+  gint        i;
+  gint        fail;
+
+  /* XXX use an appropriate format here */
+  format = gegl_buffer_get_format (buffer);
 
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
@@ -1460,11 +1466,12 @@ xcf_load_level (XcfInfo    *info,
       switch (info->compression)
         {
         case COMPRESS_NONE:
-          if (!xcf_load_tile (info, buffer, &rect))
+          if (!xcf_load_tile (info, buffer, &rect, format))
             fail = TRUE;
           break;
         case COMPRESS_RLE:
-          if (!xcf_load_tile_rle (info, buffer, &rect, offset2 - offset))
+          if (!xcf_load_tile_rle (info, buffer, &rect, format,
+                                  offset2 - offset))
             fail = TRUE;
           break;
         case COMPRESS_ZLIB:
@@ -1503,16 +1510,16 @@ xcf_load_level (XcfInfo    *info,
 static gboolean
 xcf_load_tile (XcfInfo       *info,
                GeglBuffer    *buffer,
-               GeglRectangle *tile_rect)
+               GeglRectangle *tile_rect,
+               const Babl    *format)
 {
-  const Babl *format    = gegl_buffer_get_format (buffer);
-  gint        bpp       = babl_format_get_bytes_per_pixel (format);
-  gint        tile_size = bpp * tile_rect->width * tile_rect->height;
-  guchar     *tile_data = g_alloca (tile_size);
+  gint    bpp       = babl_format_get_bytes_per_pixel (format);
+  gint    tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar *tile_data = g_alloca (tile_size);
 
   info->cp += xcf_read_int8 (info->fp, tile_data, tile_size);
 
-  gegl_buffer_set (buffer, tile_rect, 0, NULL, tile_data,
+  gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
                    GEGL_AUTO_ROWSTRIDE);
 
   return TRUE;
@@ -1522,17 +1529,17 @@ static gboolean
 xcf_load_tile_rle (XcfInfo       *info,
                    GeglBuffer    *buffer,
                    GeglRectangle *tile_rect,
+                   const Babl    *format,
                    gint           data_length)
 {
-  const Babl *format    = gegl_buffer_get_format (buffer);
-  gint        bpp       = babl_format_get_bytes_per_pixel (format);
-  gint        tile_size = bpp * tile_rect->width * tile_rect->height;
-  guchar     *tile_data = g_alloca (tile_size);
-  gint        i;
-  gint        nmemb_read_successfully;
-  guchar     *xcfdata;
-  guchar     *xcfodata;
-  guchar     *xcfdatalimit;
+  gint    bpp       = babl_format_get_bytes_per_pixel (format);
+  gint    tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar *tile_data = g_alloca (tile_size);
+  gint    i;
+  gint    nmemb_read_successfully;
+  guchar *xcfdata;
+  guchar *xcfodata;
+  guchar *xcfdatalimit;
 
   /* Workaround for bug #357809: avoid crashing on g_malloc() and skip
    * this tile (return TRUE without storing data) as if it did not
@@ -1644,7 +1651,7 @@ xcf_load_tile_rle (XcfInfo       *info,
         }
     }
 
-  gegl_buffer_set (buffer, tile_rect, 0, NULL, tile_data,
+  gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
                    GEGL_AUTO_ROWSTRIDE);
 
   return TRUE;
