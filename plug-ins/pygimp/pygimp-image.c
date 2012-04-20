@@ -204,7 +204,7 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
         return NULL;
     }
 
-    return pygimp_layer_new(layer_id);
+    return pygimp_group_layer_new(layer_id);
 }
 
 
@@ -236,7 +236,7 @@ img_enable_undo(PyGimpImage *self)
 static PyObject *
 img_flatten(PyGimpImage *self)
 {
-    return pygimp_layer_new(gimp_image_flatten(self->ID));
+    return pygimp_group_layer_new(gimp_image_flatten(self->ID));
 }
 
 static PyObject *
@@ -316,7 +316,7 @@ img_merge_visible_layers(PyGimpImage *self, PyObject *args)
 	return NULL;
     }
 
-    return pygimp_layer_new(id);
+    return pygimp_group_layer_new(id);
 }
 
 static PyObject *
@@ -340,7 +340,7 @@ img_merge_down(PyGimpImage *self, PyObject *args)
 	return NULL;
     }
 
-    return pygimp_layer_new(id);
+    return pygimp_group_layer_new(id);
 }
 
 static PyObject *
@@ -359,7 +359,7 @@ img_pick_correlate_layer(PyGimpImage *self, PyObject *args)
 	return Py_None;
     }
 
-    return pygimp_layer_new(id);
+    return pygimp_group_layer_new(id);
 }
 
 static PyObject *
@@ -756,7 +756,7 @@ img_get_layer_by_tattoo(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "i:get_layer_by_tattoo", &tattoo))
 	return NULL;
 
-    return pygimp_layer_new(gimp_image_get_layer_by_tattoo(self->ID, tattoo));
+    return pygimp_group_layer_new(gimp_image_get_layer_by_tattoo(self->ID, tattoo));
 }
 
 static PyObject *
@@ -1019,7 +1019,7 @@ img_get_active_layer(PyGimpImage *self, void *closure)
 	return Py_None;
     }
 
-    return pygimp_layer_new(id);
+    return pygimp_group_layer_new(id);
 }
 
 static int
@@ -1222,7 +1222,7 @@ img_get_layers(PyGimpImage *self, void *closure)
     ret = PyList_New(n_layers);
 
     for (i = 0; i < n_layers; i++)
-	PyList_SetItem(ret, i, pygimp_layer_new(layers[i]));
+	PyList_SetItem(ret, i, pygimp_group_layer_new(layers[i]));
 
     g_free(layers);
 

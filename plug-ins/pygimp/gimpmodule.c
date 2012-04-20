@@ -1770,6 +1770,8 @@ static struct _PyGimp_Functions pygimp_api_functions = {
     pygimp_drawable_new,
     &PyGimpLayer_Type,
     pygimp_layer_new,
+    &PyGimpGroupLayer_Type,
+    pygimp_group_layer_new,
     &PyGimpChannel_Type,
     pygimp_channel_new,
     &PyGimpVectors_Type,
@@ -1818,6 +1820,12 @@ initgimp(void)
     PyGimpLayer_Type.tp_alloc = PyType_GenericAlloc;
     PyGimpLayer_Type.tp_new = PyType_GenericNew;
     if (PyType_Ready(&PyGimpLayer_Type) < 0)
+        return;
+
+    PyGimpGroupLayer_Type.ob_type = &PyType_Type;
+    PyGimpGroupLayer_Type.tp_alloc = PyType_GenericAlloc;
+    PyGimpGroupLayer_Type.tp_new = PyType_GenericNew;
+    if (PyType_Ready(&PyGimpGroupLayer_Type) < 0)
         return;
 
     PyGimpChannel_Type.ob_type = &PyType_Type;
@@ -1901,6 +1909,9 @@ initgimp(void)
 
     Py_INCREF(&PyGimpLayer_Type);
     PyModule_AddObject(m, "Layer", (PyObject *)&PyGimpLayer_Type);
+    
+    Py_INCREF(&PyGimpGroupLayer_Type);
+    PyModule_AddObject(m, "GroupLayer", (PyObject *)&PyGimpGroupLayer_Type);
 
     Py_INCREF(&PyGimpChannel_Type);
     PyModule_AddObject(m, "Channel", (PyObject *)&PyGimpChannel_Type);

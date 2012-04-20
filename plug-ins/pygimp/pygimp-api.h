@@ -37,7 +37,7 @@ typedef struct {
     PyObject_HEAD
     gint32 ID;
     GimpDrawable *drawable;
-} PyGimpDrawable, PyGimpLayer, PyGimpChannel;
+} PyGimpDrawable, PyGimpLayer, PyGimpGroupLayer, PyGimpChannel;
 
 typedef struct {
     PyObject_HEAD
@@ -59,6 +59,9 @@ struct _PyGimp_Functions {
 
     PyTypeObject *Layer_Type;
     PyObject *(* layer_new)(gint32 ID);
+
+    PyTypeObject *GroupLayer_Type;
+    PyObject *(* group_layer_new)(gint32 ID);
 
     PyTypeObject *Channel_Type;
     PyObject *(* channel_new)(gint32 ID);
@@ -87,6 +90,8 @@ struct _PyGimp_Functions *_PyGimp_API;
 #define pygimp_drawable_new     (_PyGimp_API->drawable_new)
 #define PyGimpLayer_Type        (_PyGimp_API->Layer_Type)
 #define pygimp_layer_new        (_PyGimp_API->layer_new)
+#define PyGimpGroupLayer_Type   (_PyGimp_API->GroupLayer_Type)
+#define pygimp_group_layer_new  (_PyGimp_API->group_layer_new)
 #define PyGimpChannel_Type      (_PyGimp_API->Channel_Type)
 #define pygimp_channel_new      (_PyGimp_API->channel_new)
 #define PyGimpVectors_Type      (_PyGimp_API->Vectors_Type)

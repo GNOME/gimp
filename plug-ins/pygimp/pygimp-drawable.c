@@ -1923,6 +1923,118 @@ pygimp_layer_new(gint32 ID)
 /* End of code for Layer objects */
 /* -------------------------------------------------------- */
 
+static PyMethodDef grouplay_methods[] = {
+    {NULL,              NULL}           /* sentinel */
+};
+
+static PyObject *
+grouplay_get_layers(PyGimpGroupLayer *self, void *closure)
+{
+    gint32 *layers;
+    gint n_layers, i;
+    PyObject *ret;
+
+    layers = gimp_item_get_children(self->ID, &n_layers);
+
+    ret = PyList_New(n_layers);
+
+    for (i = 0; i < n_layers; i++)
+        PyList_SetItem(ret, i, pygimp_group_layer_new(layers[i]));
+
+    g_free(layers);
+
+    return ret;
+}
+
+static PyGetSetDef grouplay_getsets[] = {
+    { "layers", (getter)grouplay_get_layers, (setter)0 },
+    { NULL, (getter)0, (setter)0 }
+};
+
+static PyObject *
+grouplay_repr(PyGimpLayer *self)
+{
+    PyObject *s;
+    gchar *name;
+
+    name = gimp_item_get_name(self->ID);
+    s = PyString_FromFormat("<gimp.GroupLayer '%s'>", name ? name : "(null)");
+    g_free(name);
+
+    return s;
+}
+
+PyTypeObject PyGimpGroupLayer_Type = {
+    PyObject_HEAD_INIT(NULL)
+    0,                                  /* ob_size */
+    "gimp.GroupLayer",                  /* tp_name */
+    sizeof(PyGimpGroupLayer),                /* tp_basicsize */
+    0,                                  /* tp_itemsize */
+    /* methods */
+    (destructor)drw_dealloc,            /* tp_dealloc */
+    (printfunc)0,                       /* tp_print */
+    (getattrfunc)0,                     /* tp_getattr */
+    (setattrfunc)0,                     /* tp_setattr */
+    (cmpfunc)drw_cmp,                   /* tp_compare */
+    (reprfunc)grouplay_repr,                 /* tp_repr */
+    0,                                  /* tp_as_number */
+    0,                                  /* tp_as_sequence */
+    0,                                  /* tp_as_mapping */
+    (hashfunc)0,                        /* tp_hash */
+    (ternaryfunc)0,                     /* tp_call */
+    (reprfunc)0,                        /* tp_str */
+    (getattrofunc)0,                    /* tp_getattro */
+    (setattrofunc)0,                    /* tp_setattro */
+    0,                                  /* tp_as_buffer */
+    Py_TPFLAGS_DEFAULT,                 /* tp_flags */
+    NULL, /* Documentation string */
+    (traverseproc)0,                    /* tp_traverse */
+    (inquiry)0,                         /* tp_clear */
+    (richcmpfunc)0,                     /* tp_richcompare */
+    0,                                  /* tp_weaklistoffset */
+    (getiterfunc)0,                     /* tp_iter */
+    (iternextfunc)0,                    /* tp_iternext */
+    grouplay_methods,                   /* tp_methods */
+    0,                                  /* tp_members */
+    grouplay_getsets,                        /* tp_getset */
+    &PyGimpLayer_Type,                  /* tp_base */
+    (PyObject *)0,                      /* tp_dict */
+    0,                                  /* tp_descr_get */
+    0,                                  /* tp_descr_set */
+    0,                                  /* tp_dictoffset */
+    (initproc)lay_init,                 /* tp_init */
+    (allocfunc)0,                       /* tp_alloc */
+    (newfunc)0,                         /* tp_new */
+};
+
+PyObject *
+pygimp_group_layer_new(gint32 ID)
+{
+    PyGimpGroupLayer *self;
+
+    if (!gimp_item_is_valid(ID) || !gimp_item_is_layer(ID)) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+    
+    if (!gimp_item_is_group(ID)) {
+        return pygimp_layer_new(ID);
+    }
+
+    self = PyObject_NEW(PyGimpGroupLayer, &PyGimpGroupLayer_Type);
+
+    if (self == NULL)
+        return NULL;
+
+    self->ID = ID;
+    self->drawable = NULL;
+
+    return (PyObject *)self;
+}
+
+/* End of code for GroupLayer objects */
+/* -------------------------------------------------------- */
+
 
 static PyObject *
 chn_copy(PyGimpChannel *self)

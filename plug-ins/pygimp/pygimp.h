@@ -76,6 +76,10 @@ extern PyTypeObject PyGimpLayer_Type;
 #define pygimp_layer_check(v) (PyObject_TypeCheck(v, &PyGimpLayer_Type))
 PyObject *pygimp_layer_new(gint32 ID);
 
+extern PyTypeObject PyGimpGroupLayer_Type;
+#define pygimp_layer__group_check(v) (PyObject_TypeCheck(v, &PyGimpGroupLayer_Type))
+PyObject *pygimp_group_layer_new(gint32 ID);
+
 extern PyTypeObject PyGimpChannel_Type;
 #define pygimp_channel_check(v) (PyObject_TypeCheck(v, &PyGimpChannel_Type))
 PyObject *pygimp_channel_new(gint32 ID);
