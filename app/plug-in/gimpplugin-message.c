@@ -190,6 +190,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
   GimpWireMessage  msg;
   GimpDrawable    *drawable;
   GeglBuffer      *buffer;
+  const Babl      *format;
   GeglRectangle    tile_rect;
 
   tile_data.drawable_ID = -1;
@@ -309,15 +310,18 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
       return;
     }
 
+  /* XXX use an appropriate format here */
+  format = gegl_buffer_get_format (buffer);
+
   if (tile_data.use_shm)
     {
-      gegl_buffer_set (buffer, &tile_rect, 0, NULL,
+      gegl_buffer_set (buffer, &tile_rect, 0, format,
                        gimp_plug_in_shm_get_addr (plug_in->manager->shm),
                        GEGL_AUTO_ROWSTRIDE);
     }
   else
     {
-      gegl_buffer_set (buffer, &tile_rect, 0, NULL,
+      gegl_buffer_set (buffer, &tile_rect, 0, format,
                        tile_info->data,
                        GEGL_AUTO_ROWSTRIDE);
     }
@@ -398,6 +402,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
       return;
     }
 
+  /* XXX use an appropriate format here */
   format = gegl_buffer_get_format (buffer);
 
   tile_size = (babl_format_get_bytes_per_pixel (format) *
@@ -413,7 +418,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
 
   if (tile_data.use_shm)
     {
-      gegl_buffer_get (buffer, &tile_rect, 1.0, NULL,
+      gegl_buffer_get (buffer, &tile_rect, 1.0, format,
                        gimp_plug_in_shm_get_addr (plug_in->manager->shm),
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
     }
@@ -421,7 +426,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
     {
       tile_data.data = g_malloc (tile_size);
 
-      gegl_buffer_get (buffer, &tile_rect, 1.0, NULL,
+      gegl_buffer_get (buffer, &tile_rect, 1.0, format,
                        tile_data.data,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
     }
