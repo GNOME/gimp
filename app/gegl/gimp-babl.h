@@ -24,9 +24,12 @@
 
 void                gimp_babl_init                  (void);
 
-const gchar       * gimp_babl_get_description       (const Babl *babl);
+const gchar       * gimp_babl_get_description       (const Babl        *babl);
 
-GimpImageBaseType   gimp_babl_format_get_base_type  (const Babl *format);
+GimpImageBaseType   gimp_babl_format_get_base_type  (const Babl        *format);
+
+const Babl        * gimp_babl_format                (GimpImageBaseType  base_type,
+                                                     gboolean           with_alpha);
 
 
 #endif /* __GIMP_BABL_H__ */

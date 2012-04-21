@@ -32,7 +32,7 @@
 
 #include "config/gimpcoreconfig.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimp-babl.h"
 
 #include "gimp.h"
 #include "gimp-parasites.h"
@@ -1484,16 +1484,8 @@ gimp_image_get_format (const GimpImage   *image,
   switch (base_type)
     {
     case GIMP_RGB:
-      if (with_alpha)
-        return babl_format ("R'G'B'A u8");
-      else
-        return babl_format ("R'G'B' u8");
-
     case GIMP_GRAY:
-      if (with_alpha)
-        return babl_format ("Y'A u8");
-      else
-        return babl_format ("Y' u8");
+      return gimp_babl_format (base_type, with_alpha);
 
     case GIMP_INDEXED:
       if (with_alpha)

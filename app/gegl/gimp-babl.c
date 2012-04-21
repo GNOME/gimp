@@ -146,3 +146,29 @@ gimp_babl_format_get_base_type (const Babl *format)
 
   g_return_val_if_reached (-1);
 }
+
+const Babl *
+gimp_babl_format (GimpImageBaseType  base_type,
+                  gboolean           with_alpha)
+{
+  switch (base_type)
+    {
+    case GIMP_RGB:
+      if (with_alpha)
+        return babl_format ("R'G'B'A u8");
+      else
+        return babl_format ("R'G'B' u8");
+
+    case GIMP_GRAY:
+      if (with_alpha)
+        return babl_format ("Y'A u8");
+      else
+        return babl_format ("Y' u8");
+
+    case GIMP_INDEXED:
+      /* need to use the image's api for this */
+      break;
+    }
+
+  g_return_val_if_reached (NULL);
+}
