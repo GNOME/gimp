@@ -99,7 +99,7 @@ gimp_operation_burn_mode_process (GeglOperation       *operation,
       for (b = RED; b < ALPHA; b++)
         {
           gfloat comp = (1 - in[b]) / layer[b];
-          comp = CLAMP (1 - comp, 0.0, 1.0);
+          comp = CLAMP (1 - comp, 0, 1);
 
           out[b] = comp * ratio + in[b] * (1 - ratio);
         }

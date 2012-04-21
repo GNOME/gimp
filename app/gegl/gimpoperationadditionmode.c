@@ -98,7 +98,8 @@ gimp_operation_addition_mode_process (GeglOperation       *operation,
 
       for (b = RED; b < ALPHA; b++)
         {
-          gfloat comp = CLAMP (in[b] + layer[b], 0.0, 1.0);
+          gfloat comp = in[b] + layer[b];
+          comp = CLAMP (comp, 0, 1);
 
           out[b] = comp * ratio + in[b] * (1 - ratio);
         }

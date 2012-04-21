@@ -98,7 +98,8 @@ gimp_operation_dodge_mode_process (GeglOperation       *operation,
 
       for (b = RED; b < ALPHA; b++)
         {
-          gfloat comp = MIN (in[b] / (1 - layer[b]), 1);
+          gfloat comp = in[b] / (1 - layer[b]);
+          comp = MIN (comp, 1);
 
           out[b] = comp * ratio + in[b] * (1 - ratio);
         }

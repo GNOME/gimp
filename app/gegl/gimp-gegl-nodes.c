@@ -250,16 +250,10 @@ gimp_gegl_node_set_layer_mode (GeglNode             *node,
   switch (mode)
     {
     case GIMP_BEHIND_MODE:
-    case GIMP_DIFFERENCE_MODE:
-    case GIMP_SUBTRACT_MODE:
     case GIMP_HUE_MODE:
     case GIMP_SATURATION_MODE:
     case GIMP_COLOR_MODE:
     case GIMP_VALUE_MODE:
-    case GIMP_DIVIDE_MODE:
-    case GIMP_HARDLIGHT_MODE:
-    case GIMP_GRAIN_EXTRACT_MODE:
-    case GIMP_GRAIN_MERGE_MODE:
     case GIMP_COLOR_ERASE_MODE:
     case GIMP_ERASE_MODE:
     case GIMP_REPLACE_MODE:
