@@ -673,10 +673,9 @@ gimp_selection_extract (GimpSelection *selection,
   /*  How many bytes in the temp buffer?  */
   if (babl_format_is_palette (src_format) && ! keep_indexed)
     {
-      if (add_alpha || babl_format_has_alpha (src_format))
-        dest_format = babl_format ("R'G'B'A u8");
-      else
-        dest_format = babl_format ("R'G'B' u8");
+      dest_format = gimp_image_get_format (image, GIMP_RGB,
+                                           add_alpha ||
+                                           babl_format_has_alpha (src_format));
     }
   else
     {
