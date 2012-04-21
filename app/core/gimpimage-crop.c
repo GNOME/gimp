@@ -389,6 +389,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
   for (y = y1; y < y2 && !abort; y++)
     {
       rect.y = y;
+      /* XXX use an appropriate format here */
       gegl_buffer_get (buffer, &rect, 1.0, NULL, buf,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
       for (x = 0; x < width && !abort; x++)

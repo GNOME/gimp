@@ -680,6 +680,7 @@ generate_boundary (GeglBuffer          *buffer,
 
   boundary = gimp_boundary_new (region);
 
+  /* XXX use an appropriate format here */
   format = gegl_buffer_get_format (buffer);
   bpp = babl_format_get_bytes_per_pixel (format);
 
