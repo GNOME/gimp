@@ -118,7 +118,8 @@ static void       gimp_drawable_transform          (GimpItem          *item,
 static gboolean   gimp_drawable_get_pixel_at       (GimpPickable      *pickable,
                                                     gint               x,
                                                     gint               y,
-                                                    guchar            *pixel);
+                                                    const Babl        *format,
+                                                    gpointer           pixel);
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               x,
                                                     gint               y,
@@ -636,7 +637,8 @@ static gboolean
 gimp_drawable_get_pixel_at (GimpPickable *pickable,
                             gint          x,
                             gint          y,
-                            guchar       *pixel)
+                            const Babl   *format,
+                            gpointer      pixel)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
 
@@ -646,8 +648,7 @@ gimp_drawable_get_pixel_at (GimpPickable *pickable,
     return FALSE;
 
   gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
-                      x, y, NULL, pixel,
-                      gimp_drawable_get_format (drawable),
+                      x, y, NULL, pixel, format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   return TRUE;

@@ -44,7 +44,8 @@ struct _GimpPickableInterface
   gboolean        (* get_pixel_at)          (GimpPickable *pickable,
                                              gint          x,
                                              gint          y,
-                                             guchar       *pixel);
+                                             const Babl   *format,
+                                             gpointer      pixel);
   gint            (* get_opacity_at)        (GimpPickable *pickable,
                                              gint          x,
                                              gint          y);
@@ -62,7 +63,8 @@ TileManager   * gimp_pickable_get_tiles             (GimpPickable *pickable);
 gboolean        gimp_pickable_get_pixel_at          (GimpPickable *pickable,
                                                      gint          x,
                                                      gint          y,
-                                                     guchar       *pixel);
+                                                     const Babl   *format,
+                                                     gpointer      pixel);
 gboolean        gimp_pickable_get_color_at          (GimpPickable *pickable,
                                                      gint          x,
                                                      gint          y,

@@ -96,7 +96,8 @@ static TileManager   * gimp_image_map_get_tiles       (GimpPickable        *pick
 static gboolean        gimp_image_map_get_pixel_at    (GimpPickable        *pickable,
                                                        gint                 x,
                                                        gint                 y,
-                                                       guchar              *pixel);
+                                                       const Babl          *format,
+                                                       gpointer             pixel);
 
 static void            gimp_image_map_update_undo_buffer
                                                       (GimpImageMap        *image_map,
@@ -280,7 +281,8 @@ static gboolean
 gimp_image_map_get_pixel_at (GimpPickable *pickable,
                              gint          x,
                              gint          y,
-                             guchar       *pixel)
+                             const Babl   *format,
+                             gpointer      pixel)
 {
   GimpImageMap *image_map = GIMP_IMAGE_MAP (pickable);
   GimpItem     *item      = GIMP_ITEM (image_map->drawable);
@@ -301,8 +303,7 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
             {
               gegl_buffer_sample (image_map->undo_buffer,
                                   x - offset_x, y - offset_y,
-                                  NULL, pixel,
-                                  gimp_drawable_get_format (image_map->drawable),
+                                  NULL, pixel, format,
                                   GEGL_SAMPLER_NEAREST,
                                   GEGL_ABYSS_NONE);
 
@@ -311,7 +312,7 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
         }
 
       return gimp_pickable_get_pixel_at (GIMP_PICKABLE (image_map->drawable),
-                                         x, y, pixel);
+                                         x, y, format, pixel);
     }
 
   return FALSE;

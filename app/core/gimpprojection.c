@@ -67,7 +67,8 @@ static TileManager * gimp_projection_get_tiles           (GimpPickable    *picka
 static gboolean    gimp_projection_get_pixel_at          (GimpPickable    *pickable,
                                                           gint             x,
                                                           gint             y,
-                                                          guchar          *pixel);
+                                                          const Babl      *format,
+                                                          gpointer         pixel);
 static gint        gimp_projection_get_opacity_at        (GimpPickable    *pickable,
                                                           gint             x,
                                                           gint             y);
@@ -338,7 +339,8 @@ static gboolean
 gimp_projection_get_pixel_at (GimpPickable *pickable,
                               gint          x,
                               gint          y,
-                              guchar       *pixel)
+                              const Babl   *format,
+                              gpointer      pixel)
 {
   GeglBuffer *buffer = gimp_projection_get_buffer (pickable);
 
@@ -348,8 +350,7 @@ gimp_projection_get_pixel_at (GimpPickable *pickable,
       y >= gegl_buffer_get_height (buffer))
     return FALSE;
 
-  gegl_buffer_sample (buffer, x, y, NULL, pixel,
-                      gimp_projection_get_format (pickable),
+  gegl_buffer_sample (buffer, x, y, NULL, pixel, format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   return TRUE;
