@@ -63,6 +63,7 @@ gimp_pattern_load (GimpContext  *context,
                    GError      **error)
 {
   GimpPattern   *pattern = NULL;
+  const Babl    *format  = NULL;
   gint           fd;
   PatternHeader  header;
   gint           bn_size;
@@ -155,8 +156,15 @@ gimp_pattern_load (GimpContext  *context,
 
   g_free (name);
 
-  pattern->mask = gimp_temp_buf_new (header.width, header.height,
-                                     gimp_bpp_to_babl_format (header.bytes));
+  switch (header.bytes)
+    {
+    case 1: format = babl_format ("Y' u8");      break;
+    case 2: format = babl_format ("Y'A u8");     break;
+    case 3: format = babl_format ("R'G'B' u8");  break;
+    case 4: format = babl_format ("R'G'B'A u8"); break;
+    }
+
+  pattern->mask = gimp_temp_buf_new (header.width, header.height, format);
 
   if (read (fd, gimp_temp_buf_get_data (pattern->mask),
             header.width * header.height * header.bytes) <
@@ -216,10 +224,9 @@ gimp_pattern_load_pixbuf (GimpContext  *context,
                           NULL);
   g_free (name);
 
-  pattern->mask =
-    gimp_temp_buf_new (gdk_pixbuf_get_width (pixbuf),
-                       gdk_pixbuf_get_height (pixbuf),
-                       gimp_bpp_to_babl_format (gdk_pixbuf_get_n_channels (pixbuf)));
+  pattern->mask = gimp_temp_buf_new (gdk_pixbuf_get_width (pixbuf),
+                                     gdk_pixbuf_get_height (pixbuf),
+                                     gimp_pixbuf_get_format (pixbuf));
 
   src_buffer  = gimp_pixbuf_create_buffer (pixbuf);
   dest_buffer = gimp_temp_buf_create_buffer (pattern->mask);

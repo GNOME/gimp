@@ -26,6 +26,7 @@
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
+#include "gimpprojectable.h"
 #include "gimpprojection.h"
 #include "gimptempbuf.h"
 
@@ -141,7 +142,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   level = gimp_projection_get_level (projection, scale_x, scale_y);
   tiles = gimp_projection_get_tiles_at_level (projection, level, &is_premult);
 
-  buf = tile_manager_get_preview (tiles, width, height);
+  buf = tile_manager_get_preview (tiles,
+                                  gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
+                                  width, height);
 
   if (is_premult)
     {

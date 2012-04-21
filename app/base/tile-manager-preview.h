@@ -20,9 +20,11 @@
 
 
 GimpTempBuf * tile_manager_get_preview     (TileManager *tiles,
+                                            const Babl  *format,
                                             gint         width,
                                             gint         height);
 GimpTempBuf * tile_manager_get_sub_preview (TileManager *tiles,
+                                            const Babl  *format,
                                             gint         src_x,
                                             gint         src_y,
                                             gint         src_width,

@@ -25,7 +25,7 @@
 
 #include "paint-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimp-babl.h"
 
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
@@ -1620,8 +1620,9 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
                                         gint                      width,
                                         GimpBrushApplicationMode  mode)
 {
-  gint    pixmap_bytes;
-  guchar *b;
+  GimpImageBaseType  pixmap_base_type;
+  gint               pixmap_bytes;
+  guchar            *b;
 
   /*  Make sure x, y are positive  */
   while (x < 0)
@@ -1629,7 +1630,8 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
   while (y < 0)
     y += pixmap_mask->height;
 
-  pixmap_bytes = babl_format_get_bytes_per_pixel (pixmap_mask->format);
+  pixmap_base_type = gimp_babl_format_get_base_type (pixmap_mask->format);
+  pixmap_bytes     = babl_format_get_bytes_per_pixel (pixmap_mask->format);
 
   /* Point to the approriate scanline */
   b = (gimp_temp_buf_get_data (pixmap_mask) +
@@ -1644,7 +1646,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
       guchar       *l        = line_buf;
       gint          i;
 
-      fish = babl_fish (gimp_bpp_to_babl_format_with_alpha (pixmap_bytes),
+      fish = babl_fish (gimp_babl_format (pixmap_base_type, TRUE),
                         gimp_drawable_get_format_with_alpha (drawable));
 
       /* put the source pixmap's pixels, plus the mask's alpha, into
@@ -1672,7 +1674,7 @@ gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
       guchar     *l        = line_buf;
       gint        i;
 
-      fish = babl_fish (gimp_bpp_to_babl_format (pixmap_bytes),
+      fish = babl_fish (pixmap_mask->format,
                         gimp_drawable_get_format_with_alpha (drawable));
 
       /* put the source pixmap's pixels, into one line, so we can use

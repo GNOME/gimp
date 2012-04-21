@@ -159,6 +159,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                                           dest_width, dest_height);
 
   return tile_manager_get_sub_preview (gimp_drawable_get_tiles (drawable),
+                                       gimp_drawable_get_preview_format (drawable),
                                        src_x, src_y, src_width, src_height,
                                        dest_width, dest_height);
 }

@@ -57,62 +57,6 @@ gimp_babl_format_get_image_type (const Babl *format)
   g_return_val_if_reached (-1);
 }
 
-/**
- * gimp_bpp_to_babl_format:
- * @bpp: bytes per pixel
- *
- * Return the Babl format to use for a given number of bytes per pixel.
- * This function assumes that the data is 8bit.
- *
- * Return value: the Babl format to use
- **/
-const Babl *
-gimp_bpp_to_babl_format (guint bpp)
-{
-  g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
-
-  switch (bpp)
-    {
-    case 1:
-      return babl_format ("Y' u8");
-    case 2:
-      return babl_format ("Y'A u8");
-    case 3:
-      return babl_format ("R'G'B' u8");
-    case 4:
-      return babl_format ("R'G'B'A u8");
-    }
-
-  return NULL;
-}
-
-/**
- * gimp_bpp_to_babl_format_with_alpha:
- * @bpp: bytes per pixel
- *
- * Return the Babl format to use for a given number of bytes per pixel.
- * This function assumes that the data is 8bit.
- *
- * Return value: the Babl format to use
- **/
-const Babl *
-gimp_bpp_to_babl_format_with_alpha (guint bpp)
-{
-  g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
-
-  switch (bpp)
-    {
-      case 1:
-      case 2:
-        return babl_format ("Y'A u8");
-      case 3:
-      case 4:
-        return babl_format ("R'G'B'A u8");
-    }
-
-  return NULL;
-}
-
 const gchar *
 gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
 {
@@ -129,24 +73,36 @@ gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
   return "nearest";
 }
 
+const Babl *
+gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
+{
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
+
+  switch (gdk_pixbuf_get_n_channels (pixbuf))
+    {
+    case 3: return babl_format ("R'G'B' u8");
+    case 4: return babl_format ("R'G'B'A u8");
+    }
+
+  g_return_val_if_reached (NULL);
+}
+
 GeglBuffer *
 gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
 {
-  gint          width;
-  gint          height;
-  gint          rowstride;
-  gint          channels;
+  gint width;
+  gint height;
+  gint rowstride;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
   width     = gdk_pixbuf_get_width (pixbuf);
   height    = gdk_pixbuf_get_height (pixbuf);
   rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-  channels  = gdk_pixbuf_get_n_channels (pixbuf);
 
   return gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
-                                           gimp_bpp_to_babl_format (channels),
-                                           GEGL_RECTANGLE (0,0,width,height),
+                                           gimp_pixbuf_get_format (pixbuf),
+                                           GEGL_RECTANGLE (0, 0, width, height),
                                            rowstride,
                                            (GDestroyNotify) g_object_unref,
                                            g_object_ref (pixbuf));

@@ -27,9 +27,6 @@
 
 GimpImageType    gimp_babl_format_get_image_type (const Babl            *format);
 
-const Babl  * gimp_bpp_to_babl_format            (guint                  bpp) G_GNUC_CONST;
-const Babl  * gimp_bpp_to_babl_format_with_alpha (guint                  bpp) G_GNUC_CONST;
-
 const gchar * gimp_interpolation_to_gegl_filter  (GimpInterpolationType  interpolation) G_GNUC_CONST;
 
 GeglBuffer  * gimp_gegl_buffer_new               (const GeglRectangle   *rect,
@@ -40,6 +37,7 @@ GeglBuffer  * gimp_tile_manager_create_buffer    (TileManager           *tm,
                                                   const Babl            *format);
 TileManager * gimp_gegl_buffer_get_tiles         (GeglBuffer            *buffer);
 
+const Babl  * gimp_pixbuf_get_format             (GdkPixbuf             *pixbuf);
 GeglBuffer  * gimp_pixbuf_create_buffer          (GdkPixbuf             *pixbuf);
 
 void          gimp_gegl_buffer_refetch_tiles     (GeglBuffer            *buffer);
