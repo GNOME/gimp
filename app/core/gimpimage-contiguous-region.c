@@ -208,7 +208,7 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
   mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
   gegl_buffer_iterator_add (iter, mask_buffer,
-                            NULL, 0, babl_format ("Y' u8"),
+                            NULL, 0, babl_format ("Y u8"),
                             GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))

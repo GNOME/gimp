@@ -1529,7 +1529,7 @@ gimp_image_get_mask_format (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return babl_format ("Y' u8");
+  return babl_format ("Y u8");
 }
 
 gint

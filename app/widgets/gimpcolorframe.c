@@ -504,7 +504,8 @@ gimp_color_frame_update (GimpColorFrame *frame)
   switch (frame->frame_mode)
     {
     case GIMP_COLOR_FRAME_MODE_PIXEL:
-      if (frame->sample_format == babl_format ("Y' u8") ||
+      if (frame->sample_format == babl_format ("Y u8")  ||
+          frame->sample_format == babl_format ("Y' u8") ||
           frame->sample_format == babl_format ("Y'A u8"))
         {
           names[0]  = _("Value:");

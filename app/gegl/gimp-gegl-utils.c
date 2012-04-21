@@ -37,7 +37,8 @@ gimp_babl_format_get_image_type (const Babl *format)
 {
   g_return_val_if_fail (format != NULL, -1);
 
-  if (format == babl_format ("Y' u8"))
+  if (format == babl_format ("Y u8") ||
+      format == babl_format ("Y' u8"))
     return GIMP_GRAY_IMAGE;
   else if (format == babl_format ("Y'A u8"))
     return GIMP_GRAYA_IMAGE;
@@ -61,7 +62,8 @@ gimp_babl_format_get_base_type (const Babl *format)
 {
   g_return_val_if_fail (format != NULL, -1);
 
-  if (format == babl_format ("Y' u8") ||
+  if (format == babl_format ("Y u8")  ||
+      format == babl_format ("Y' u8") ||
       format == babl_format ("Y'A u8"))
     {
       return GIMP_GRAY;

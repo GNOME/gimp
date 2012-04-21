@@ -153,6 +153,10 @@ gimp_image_get_new_preview (GimpViewable *viewable,
         {
           buf->format = babl_format ("R'aG'aB'aA u8");
         }
+      else
+        {
+          g_warn_if_reached ();
+        }
     }
 
   return buf;
