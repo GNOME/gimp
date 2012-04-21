@@ -28,8 +28,6 @@
 
 #include "widgets-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-preview.h"
 #include "core/gimpimage.h"
@@ -165,10 +163,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             }
           else
             {
-              gint bytes = gimp_drawable_preview_bytes (drawable);
+              const Babl *format = gimp_drawable_get_preview_format (drawable);
 
-              render_buf = gimp_temp_buf_new (1, 1,
-                                              gimp_bpp_to_babl_format (bytes));
+              render_buf = gimp_temp_buf_new (1, 1, format);
               gimp_temp_buf_data_clear (render_buf);
             }
         }

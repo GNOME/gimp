@@ -22,22 +22,22 @@
 /*
  *  virtual function of GimpDrawable -- dont't call directly
  */
-GimpTempBuf * gimp_drawable_get_preview     (GimpViewable *viewable,
-                                             GimpContext  *context,
-                                             gint          width,
-                                             gint          height);
+GimpTempBuf * gimp_drawable_get_preview        (GimpViewable *viewable,
+                                                GimpContext  *context,
+                                                gint          width,
+                                                gint          height);
 
 /*
  *  normal functions (no virtuals)
  */
-gint          gimp_drawable_preview_bytes   (GimpDrawable *drawable);
-GimpTempBuf * gimp_drawable_get_sub_preview (GimpDrawable *drawable,
-                                             gint          src_x,
-                                             gint          src_y,
-                                             gint          src_width,
-                                             gint          src_height,
-                                             gint          dest_width,
-                                             gint          dest_height);
+const Babl  * gimp_drawable_get_preview_format (GimpDrawable *drawable);
+GimpTempBuf * gimp_drawable_get_sub_preview    (GimpDrawable *drawable,
+                                                gint          src_x,
+                                                gint          src_y,
+                                                gint          src_width,
+                                                gint          src_height,
+                                                gint          dest_width,
+                                                gint          dest_height);
 
 
 #endif /* __GIMP_DRAWABLE__PREVIEW_H__ */

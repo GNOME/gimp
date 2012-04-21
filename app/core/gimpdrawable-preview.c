@@ -98,26 +98,28 @@ gimp_drawable_get_preview (GimpViewable *viewable,
   return gimp_drawable_preview_private (drawable, width, height);
 }
 
-gint
-gimp_drawable_preview_bytes (GimpDrawable *drawable)
+const Babl *
+gimp_drawable_get_preview_format (GimpDrawable *drawable)
 {
-  gint bytes = 0;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   switch (gimp_drawable_get_base_type (drawable))
     {
-    case GIMP_RGB:
     case GIMP_GRAY:
-      bytes = gimp_drawable_bytes (drawable);
-      break;
+      if (gimp_drawable_has_alpha (drawable))
+        return babl_format ("Y'A u8");
+      else
+        return babl_format ("Y' u8");
 
+    case GIMP_RGB:
     case GIMP_INDEXED:
-      bytes = gimp_drawable_has_alpha (drawable) ? 4 : 3;
-      break;
+      if (gimp_drawable_has_alpha (drawable))
+        return babl_format ("R'G'B'A u8");
+      else
+        return babl_format ("R'G'B' u8");
     }
 
-  return bytes;
+  g_return_val_if_reached (NULL);
 }
 
 GimpTempBuf *
@@ -208,7 +210,6 @@ gimp_drawable_indexed_preview (GimpDrawable *drawable,
   GimpTempBuf *preview_buf;
   PixelRegion  srcPR;
   PixelRegion  destPR;
-  gint         bytes     = gimp_drawable_preview_bytes (drawable);
   gint         subsample = 1;
 
   /*  calculate 'acceptable' subsample  */
@@ -221,7 +222,7 @@ gimp_drawable_indexed_preview (GimpDrawable *drawable,
                      FALSE);
 
   preview_buf = gimp_temp_buf_new (dest_width, dest_height,
-                                   gimp_bpp_to_babl_format (bytes));
+                                   gimp_drawable_get_preview_format (drawable));
 
   pixel_region_init_temp_buf (&destPR, preview_buf,
                               0, 0, dest_width, dest_height);
