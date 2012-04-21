@@ -25,7 +25,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimpboundary.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimplayer-floating-sel.h"
@@ -758,7 +757,7 @@ gimp_rectangle_select_tool_execute (GimpRectangleTool *rectangle,
 
       /*  if the click was inside the marching ants  */
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
-                                        pressx, pressy) > GIMP_BOUNDARY_HALF_WAY)
+                                        pressx, pressy) > 0.5)
         {
           gint x1, y1, x2, y2;
 

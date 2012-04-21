@@ -141,8 +141,7 @@ static void            gimp_group_layer_convert_type (GimpDrawable      *drawabl
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
 static GList         * gimp_group_layer_get_layers   (GimpProjectable *projectable);
-static gint            gimp_group_layer_get_opacity_at
-                                                     (GimpPickable    *pickable,
+static gdouble       gimp_group_layer_get_opacity_at (GimpPickable    *pickable,
                                                       gint             x,
                                                       gint             y);
 
@@ -940,13 +939,14 @@ gimp_group_layer_get_layers (GimpProjectable *projectable)
   return gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
 }
 
-static gint
+static gdouble
 gimp_group_layer_get_opacity_at (GimpPickable *pickable,
                                  gint          x,
                                  gint          y)
 {
   /* Only consider child layers as having content */
-  return 0;
+
+  return GIMP_OPACITY_TRANSPARENT;
 }
 
 

@@ -159,7 +159,7 @@ static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
 
-static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
+static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
                                                  gint                y);
 
@@ -960,39 +960,37 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
     active[gimp_drawable_bytes (drawable) - 1] = FALSE;
 }
 
-static gint
+static gdouble
 gimp_layer_get_opacity_at (GimpPickable *pickable,
                            gint          x,
                            gint          y)
 {
   GimpLayer *layer = GIMP_LAYER (pickable);
-  guchar     value = 0;
+  gdouble    value = GIMP_OPACITY_TRANSPARENT;
 
   if (x >= 0 && x < gimp_item_get_width  (GIMP_ITEM (layer)) &&
       y >= 0 && y < gimp_item_get_height (GIMP_ITEM (layer)) &&
       gimp_item_get_visible (GIMP_ITEM (layer)))
     {
-      /*  If the point is inside, and the layer has no
-       *  alpha channel, success!
-       */
       if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-        return OPAQUE_OPACITY;
-
-      /*  Otherwise, determine if the alpha value at
-       *  the given point is non-zero
-       */
-      gegl_buffer_sample (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
-                          x, y, NULL, &value, babl_format ("A u8"),
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+        {
+          value = GIMP_OPACITY_OPAQUE;
+        }
+      else
+        {
+          gegl_buffer_sample (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                              x, y, NULL, &value, babl_format ("A double"),
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+        }
 
       if (layer->mask)
         {
-          gint mask_value;
+          gdouble mask_value;
 
           mask_value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer->mask),
                                                      x, y);
 
-          value = value * mask_value / 255;
+          value *= mask_value;
         }
     }
 

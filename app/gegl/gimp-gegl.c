@@ -134,6 +134,12 @@ gimp_gegl_init (Gimp *gimp)
                    babl_component ("A"),
                    NULL);
 
+  babl_format_new ("name", "A double",
+                   babl_model ("R'G'B'A"),
+                   babl_type ("double"),
+                   babl_component ("A"),
+                   NULL);
+
   g_type_class_ref (GIMP_TYPE_OPERATION_BORDER);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);

@@ -69,7 +69,7 @@ static gboolean    gimp_projection_get_pixel_at          (GimpPickable    *picka
                                                           gint             y,
                                                           const Babl      *format,
                                                           gpointer         pixel);
-static gint        gimp_projection_get_opacity_at        (GimpPickable    *pickable,
+static gdouble     gimp_projection_get_opacity_at        (GimpPickable    *pickable,
                                                           gint             x,
                                                           gint             y);
 
@@ -356,12 +356,12 @@ gimp_projection_get_pixel_at (GimpPickable *pickable,
   return TRUE;
 }
 
-static gint
+static gdouble
 gimp_projection_get_opacity_at (GimpPickable *pickable,
                                 gint          x,
                                 gint          y)
 {
-  return OPAQUE_OPACITY;
+  return GIMP_OPACITY_OPAQUE;
 }
 
 GimpProjection *

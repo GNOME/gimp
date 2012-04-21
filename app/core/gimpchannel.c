@@ -167,7 +167,7 @@ static void      gimp_channel_swap_pixels    (GimpDrawable        *drawable,
                                               gint                 x,
                                               gint                 y);
 
-static gint      gimp_channel_get_opacity_at (GimpPickable        *pickable,
+static gdouble   gimp_channel_get_opacity_at (GimpPickable        *pickable,
                                               gint                 x,
                                               gint                 y);
 
@@ -941,38 +941,29 @@ gimp_channel_swap_pixels (GimpDrawable *drawable,
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;
 }
 
-static gint
+static gdouble
 gimp_channel_get_opacity_at (GimpPickable *pickable,
                              gint          x,
                              gint          y)
 {
   GimpChannel *channel = GIMP_CHANNEL (pickable);
-  guchar       value;
+  gdouble      value   = GIMP_OPACITY_TRANSPARENT;
 
-  /*  Some checks to cut back on unnecessary work  */
-  if (channel->bounds_known)
+  if (x >= 0 && x < gimp_item_get_width  (GIMP_ITEM (channel)) &&
+      y >= 0 && y < gimp_item_get_height (GIMP_ITEM (channel)))
     {
-      if (channel->empty   ||
-          x <  channel->x1 ||
-          x >= channel->x2 ||
-          y <  channel->y1 ||
-          y >= channel->y2)
+      if (! channel->bounds_known ||
+          (! channel->empty &&
+           x >= channel->x1 &&
+           x <  channel->x2 &&
+           y >= channel->y1 &&
+           y <  channel->y2))
         {
-          return 0;
+          gegl_buffer_sample (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                              x, y, NULL, &value, babl_format ("Y double"),
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
         }
     }
-  else
-    {
-      if (x < 0 || x >= gimp_item_get_width  (GIMP_ITEM (channel)) ||
-          y < 0 || y >= gimp_item_get_height (GIMP_ITEM (channel)))
-        {
-          return 0;
-        }
-    }
-
-  gegl_buffer_sample (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                      x, y, NULL, &value, babl_format ("Y u8"),
-                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   return value;
 }

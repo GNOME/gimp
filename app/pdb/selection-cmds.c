@@ -21,6 +21,8 @@
 
 #include <gegl.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "pdb-types.h"
 
 #include "core/gimpchannel.h"
@@ -100,7 +102,12 @@ selection_value_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      value = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (image)), x, y);
+      gdouble val;
+
+      val= gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (image)),
+                                         x, y);
+
+      value = ROUND (CLAMP (val, 0.0, 1.0) * 255.0);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
