@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&component=general\n"
-"POT-Creation-Date: 2010-08-05 21:41+0000\n"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-02-24 13:06+0000\n"
 "PO-Revision-Date: 2010-08-07 16:12+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
+#: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:1
 msgid "GNU Image Manipulation Program"
 msgstr "GIMP – Programul GNU de procesare a imaginilor"
 
@@ -92,104 +92,104 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "Interpretorul batch „%s” nu este disponibil. Módul batch este dezactivat."
 
-#: ../app/main.c:144 ../tools/gimp-remote.c:60
+#: ../app/main.c:148 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr "Arată informația despre versiune și ieși"
 
-#: ../app/main.c:149
+#: ../app/main.c:153
 msgid "Show license information and exit"
 msgstr "Arată informația despre licență și ieși"
 
 # a fost: Fii mai verbos
-#: ../app/main.c:154
+#: ../app/main.c:158
 msgid "Be more verbose"
 msgstr "Informații detaliate"
 
-#: ../app/main.c:159
+#: ../app/main.c:163
 msgid "Start a new GIMP instance"
 msgstr "Pornește o instanță GIMP nouă"
 
 # hm ?
-#: ../app/main.c:164
+#: ../app/main.c:168
 msgid "Open images as new"
 msgstr "Deschide imagini ca noi"
 
-#: ../app/main.c:169
+#: ../app/main.c:173
 msgid "Run without a user interface"
 msgstr "Execută fără interfață utilizator"
 
-#: ../app/main.c:174
+#: ../app/main.c:178
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Nu încărca peneluri, degradeuri, modele, ..."
 
-#: ../app/main.c:179
+#: ../app/main.c:183
 msgid "Do not load any fonts"
 msgstr "Nu încărca niciun font"
 
-#: ../app/main.c:184
+#: ../app/main.c:188
 msgid "Do not show a startup window"
 msgstr "Nu arăta fereastră de pornire"
 
-#: ../app/main.c:189
+#: ../app/main.c:193
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Nu folosi memorie partajată între GIMP și plugin-uri"
 
-#: ../app/main.c:194
+#: ../app/main.c:198
 msgid "Do not use special CPU acceleration functions"
 msgstr "Nu folosi funcții speciale de accelerare CPU"
 
-#: ../app/main.c:199
+#: ../app/main.c:203
 msgid "Use an alternate sessionrc file"
 msgstr "Folosește un fișier sessionrc alternativ"
 
-#: ../app/main.c:204
+#: ../app/main.c:208
 msgid "Use an alternate user gimprc file"
 msgstr "Folosește un fișier gimprc utilizator alternativ"
 
-#: ../app/main.c:209
+#: ../app/main.c:213
 msgid "Use an alternate system gimprc file"
 msgstr "Folosește un fișierul gimprc sistem alternativ"
 
-#: ../app/main.c:214
+#: ../app/main.c:218
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Comandă batch de executat (poate fi folosită de multe ori)"
 
-#: ../app/main.c:219
+#: ../app/main.c:223
 msgid "The procedure to process batch commands with"
 msgstr "Procedura cu care să fie procesată comanda batch"
 
-#: ../app/main.c:224
+#: ../app/main.c:228
 msgid "Send messages to console instead of using a dialog"
 msgstr "Trimite mesajele la consolă în locul folosirii unui dialog"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:230
+#: ../app/main.c:234
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Mod compatibilitate PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:236
+#: ../app/main.c:240
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Depanare în cazul unei avarii la program (never|query|always)"
 
-#: ../app/main.c:241
+#: ../app/main.c:245
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Activează rutina de tratare a semnalelor de depanare non-fatale"
 
 # a fost: Formulează toate avertismentele ca fatale
-#: ../app/main.c:246
+#: ../app/main.c:250
 msgid "Make all warnings fatal"
 msgstr "Consideră toate avertismentele ca fiind erori fatale"
 
-#: ../app/main.c:251
+#: ../app/main.c:255
 msgid "Output a gimprc file with default settings"
 msgstr "Creează un fișier gimprc cu configurările implicite"
 
-#: ../app/main.c:355
+#: ../app/main.c:383
 msgid "[FILE|URI...]"
 msgstr "[FIȘIER|URI...]"
 
-#: ../app/main.c:373
+#: ../app/main.c:401
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -198,24 +198,24 @@ msgstr ""
 "Asigurați-vă că există configurările potrivite pentru mediul afișorului pe "
 "care îl aveți."
 
-#: ../app/main.c:392
+#: ../app/main.c:420
 msgid "Another GIMP instance is already running."
 msgstr "Altă instanță GIMP este deja pornită."
 
 # hm ? apăsați orice tastă nu prea este valabil pentru *orice* tastă
-#: ../app/main.c:462
+#: ../app/main.c:490
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Rezultate furnizate de GIMP. Apăsați orice tastă pentru a închide această "
 "fereastră."
 
 # hm ? apăsați orice tastă nu prea este valabil pentru *orice* tastă
-#: ../app/main.c:463
+#: ../app/main.c:491
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Apăsați orice tastă pentru a închide această fereastră)\n"
 
-#: ../app/main.c:480
+#: ../app/main.c:508
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Rezultate furnizate de GIMP. Puteți minimiza această feeastră, dar să nu o "
@@ -242,7 +242,7 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"Numele directorului care ține configurația de utilizator GIMP nu poate fi "
+"Numele directorului care ține configurția de utilizator GIMP nu poate fi "
 "convertit la UTF-8: %s\n"
 "\n"
 "Probabil că sistemul de fișiere stochează fișierele într-o altă codare decât "
@@ -690,7 +690,7 @@ msgid "New Channel Color"
 msgstr "Culoare pentru canalul nou"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:584
+#: ../app/display/gimpdisplayshell-dnd.c:603
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:773 ../app/widgets/gimptoolbox-dnd.c:313
 #, c-format
@@ -855,7 +855,7 @@ msgstr "Eșantion combinat"
 #: ../app/dialogs/file-open-dialog.c:273
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:537
+#: ../app/display/gimpdisplayshell-dnd.c:556
 #: ../app/widgets/gimplayertreeview.c:730 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:981
 #, c-format
@@ -4104,7 +4104,7 @@ msgstr "Culoare de um_plere"
 
 #: ../app/actions/view-actions.c:71
 msgid "Move to Screen"
-msgstr "Mută pe un anumit ecran"
+msgstr "_Mută pe un anumit ecran"
 
 #: ../app/actions/view-actions.c:76
 msgid "Create another view on this image"
@@ -8719,8 +8719,8 @@ msgstr[2] ""
 "pierdute."
 
 #: ../app/display/gimpdisplayshell-dnd.c:255
-#: ../app/display/gimpdisplayshell-dnd.c:587
-#: ../app/display/gimpdisplayshell-dnd.c:658
+#: ../app/display/gimpdisplayshell-dnd.c:606
+#: ../app/display/gimpdisplayshell-dnd.c:677
 msgid "Drop New Layer"
 msgstr "Plasează un strat nou"
 
@@ -8728,13 +8728,13 @@ msgstr "Plasează un strat nou"
 msgid "Drop New Path"
 msgstr "Plasează un traseu nou"
 
-#: ../app/display/gimpdisplayshell-dnd.c:497
+#: ../app/display/gimpdisplayshell-dnd.c:513
 #: ../app/widgets/gimplayertreeview.c:719
 msgid "Drop layers"
 msgstr "Plasează straturi"
 
 # hm ?
-#: ../app/display/gimpdisplayshell-dnd.c:648
+#: ../app/display/gimpdisplayshell-dnd.c:667
 #: ../app/widgets/gimplayertreeview.c:801 ../app/widgets/gimptoolbox-dnd.c:361
 msgid "Dropped Buffer"
 msgstr "Zonă tampon plasată"
@@ -12441,20 +12441,20 @@ msgstr "Nu s-a putut porni plugin-ul de navigare pentru ajutor GIMP."
 msgid "Use _Web Browser"
 msgstr "Folosește navigatorul _web"
 
-#: ../app/widgets/gimphelp.c:614
+#: ../app/widgets/gimphelp.c:615
 msgid "GIMP user manual is missing"
 msgstr "Lipsă manual de utilizare GIMP"
 
-#: ../app/widgets/gimphelp.c:621
+#: ../app/widgets/gimphelp.c:622
 msgid "_Read Online"
 msgstr "Citi_re online"
 
-#: ../app/widgets/gimphelp.c:645
+#: ../app/widgets/gimphelp.c:646
 msgid "The GIMP user manual is not installed on your computer."
 msgstr ""
 "Manualul de utilizare GIMP nu este instalat pe calculatorul dumneavoastră."
 
-#: ../app/widgets/gimphelp.c:648
+#: ../app/widgets/gimphelp.c:649
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -13122,13 +13122,13 @@ msgstr "Salvare „%s”"
 msgid "Error saving XCF file: %s"
 msgstr "Eroare la salvarea fișierului XCF: %s"
 
-#: ../desktop/gimp.desktop.in.in.h:1
-msgid "Create images and edit photographs"
-msgstr "Creează imagini și editează fotografii"
-
-#: ../desktop/gimp.desktop.in.in.h:3
+#: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Editor de imagine"
+
+#: ../desktop/gimp.desktop.in.in.h:3
+msgid "Create images and edit photographs"
+msgstr "Creează imagini și editează fotografii"
 
 #: ../tools/gimp-remote.c:65
 msgid "Use a running GIMP only, never start a new one"
