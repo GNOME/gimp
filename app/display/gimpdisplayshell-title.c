@@ -31,7 +31,7 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "gegl/gimp-gegl.h"
+#include "gegl/gimp-babl.h"
 
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"

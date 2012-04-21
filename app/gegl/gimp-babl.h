@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl.h
- * Copyright (C) 2007 Øyvind Kolås <pippin@gimp.org>
+ * gimp-babl.h
+ * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_H__
-#define __GIMP_GEGL_H__
+#ifndef __GIMP_BABL_H__
+#define __GIMP_BABL_H__
 
 
-void   gimp_gegl_init (Gimp *gimp);
+void          gimp_babl_init            (void);
+
+const gchar * gimp_babl_get_description (const Babl *babl);
 
 
-#endif /* __GIMP_GEGL_H__ */
+#endif /* __GIMP_BABL_H__ */

@@ -18,6 +18,8 @@ noinst_LIBRARIES = libappgegl.a
 libappgegl_a_sources = \
 	gimp-gegl-enums.h			\
 	gimp-gegl-types.h			\
+	gimp-babl.c				\
+	gimp-babl.h				\
 	gimp-gegl.c				\
 	gimp-gegl.h				\
 	gimp-gegl-config-proxy.c		\

@@ -34,7 +34,7 @@
 
 #include "config/gimpcoreconfig.h"
 
-#include "gegl/gimp-gegl.h"
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
