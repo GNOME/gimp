@@ -28,6 +28,7 @@
 
 #include "base/pixel-region.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 

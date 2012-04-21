@@ -122,3 +122,27 @@ gimp_babl_get_description (const Babl *babl)
   return g_strconcat ("ERROR: unknown Babl format ",
                       babl_get_name (babl), NULL);
 }
+
+GimpImageBaseType
+gimp_babl_format_get_base_type (const Babl *format)
+{
+  g_return_val_if_fail (format != NULL, -1);
+
+  if (format == babl_format ("Y u8")  ||
+      format == babl_format ("Y' u8") ||
+      format == babl_format ("Y'A u8"))
+    {
+      return GIMP_GRAY;
+    }
+  else if (format == babl_format ("R'G'B' u8") ||
+           format == babl_format ("R'G'B'A u8"))
+    {
+      return GIMP_RGB;
+    }
+  else if (babl_format_is_palette (format))
+    {
+      return GIMP_INDEXED;
+    }
+
+  g_return_val_if_reached (-1);
+}

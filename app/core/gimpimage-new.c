@@ -26,7 +26,7 @@
 
 #include "config/gimpcoreconfig.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimp-babl.h"
 
 #include "gimp.h"
 #include "gimpbuffer.h"

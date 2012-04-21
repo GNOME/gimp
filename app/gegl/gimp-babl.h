@@ -22,9 +22,11 @@
 #define __GIMP_BABL_H__
 
 
-void          gimp_babl_init            (void);
+void                gimp_babl_init                  (void);
 
-const gchar * gimp_babl_get_description (const Babl *babl);
+const gchar       * gimp_babl_get_description       (const Babl *babl);
+
+GimpImageBaseType   gimp_babl_format_get_base_type  (const Babl *format);
 
 
 #endif /* __GIMP_BABL_H__ */
