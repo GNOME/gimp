@@ -134,6 +134,12 @@ gimp_gegl_init (Gimp *gimp)
                    babl_component ("A"),
                    NULL);
 
+  babl_format_new ("name", "A float",
+                   babl_model ("R'G'B'A"),
+                   babl_type ("float"),
+                   babl_component ("A"),
+                   NULL);
+
   babl_format_new ("name", "A double",
                    babl_model ("R'G'B'A"),
                    babl_type ("double"),

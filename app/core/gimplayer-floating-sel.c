@@ -215,6 +215,7 @@ floating_sel_boundary (GimpLayer *layer,
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
           layer->fs.segs = gimp_boundary_find (buffer, NULL,
+                                               babl_format ("A float"),
                                                GIMP_BOUNDARY_WITHIN_BOUNDS,
                                                0, 0, width, height,
                                                GIMP_BOUNDARY_HALF_WAY,

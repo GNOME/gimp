@@ -995,6 +995,7 @@ gimp_channel_real_boundary (GimpChannel         *channel,
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
           channel->segs_out = gimp_boundary_find (buffer, &rect,
+                                                  babl_format ("Y float"),
                                                   GIMP_BOUNDARY_IGNORE_BOUNDS,
                                                   x1, y1, x2, y2,
                                                   GIMP_BOUNDARY_HALF_WAY,
@@ -1007,6 +1008,7 @@ gimp_channel_real_boundary (GimpChannel         *channel,
           if (x2 > x1 && y2 > y1)
             {
               channel->segs_in = gimp_boundary_find (buffer, NULL,
+                                                     babl_format ("Y float"),
                                                      GIMP_BOUNDARY_WITHIN_BOUNDS,
                                                      x1, y1, x2, y2,
                                                      GIMP_BOUNDARY_HALF_WAY,

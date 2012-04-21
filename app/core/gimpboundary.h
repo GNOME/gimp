@@ -20,7 +20,7 @@
 
 
 /* half intensity for mask */
-#define GIMP_BOUNDARY_HALF_WAY 127
+#define GIMP_BOUNDARY_HALF_WAY 0.5
 
 
 typedef enum
@@ -43,12 +43,13 @@ struct _GimpBoundSeg
 
 GimpBoundSeg * gimp_boundary_find      (GeglBuffer          *buffer,
                                         const GeglRectangle *region,
+                                        const Babl          *format,
                                         GimpBoundaryType     type,
                                         gint                 x1,
                                         gint                 y1,
                                         gint                 x2,
                                         gint                 y2,
-                                        guchar               threshold,
+                                        gfloat               threshold,
                                         gint                *num_segs);
 GimpBoundSeg * gimp_boundary_sort      (const GimpBoundSeg  *segs,
                                         gint                 num_segs,

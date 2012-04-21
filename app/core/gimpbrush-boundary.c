@@ -50,11 +50,12 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
       buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) mask);
 
       bound_segs = gimp_boundary_find (buffer, NULL,
+                                       babl_format ("Y float"),
                                        GIMP_BOUNDARY_WITHIN_BOUNDS,
                                        0, 0,
                                        gegl_buffer_get_width  (buffer),
                                        gegl_buffer_get_height (buffer),
-                                       0,
+                                       0.0,
                                        &n_bound_segs);
 
       g_object_unref (buffer);

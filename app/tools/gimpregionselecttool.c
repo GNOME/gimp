@@ -369,6 +369,7 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (region_sel->region_mask));
 
   segs = gimp_boundary_find (buffer, NULL,
+                             babl_format ("Y float"),
                              GIMP_BOUNDARY_WITHIN_BOUNDS,
                              0, 0,
                              gimp_item_get_width  (GIMP_ITEM (region_sel->region_mask)),
