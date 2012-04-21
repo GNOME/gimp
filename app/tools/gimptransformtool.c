@@ -972,7 +972,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpContext          *context = GIMP_CONTEXT (options);
   GimpProgress         *progress;
-  TileManager          *ret  = NULL;
+  TileManager          *ret     = NULL;
+  GimpTransformResize   clip    = options->clip;
 
   progress = gimp_progress_start (GIMP_PROGRESS (tool),
                                   tr_tool->progress_text, FALSE);
@@ -983,7 +984,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                 options->direction,
                                 options->interpolation,
                                 options->recursion_level,
-                                options->clip,
+                                clip,
                                 progress);
 
   if (orig_tiles)
@@ -992,14 +993,12 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
        *  normal drawable, or the selection
        */
 
-      GimpTransformResize clip_result = options->clip;
-
       /*  always clip the selction and unfloated channels
        *  so they keep their size
        */
       if (GIMP_IS_CHANNEL (active_item) &&
           tile_manager_bpp (orig_tiles) == 1)
-        clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
+        clip = GIMP_TRANSFORM_RESIZE_CLIP;
 
       ret = gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
                                                   context,
@@ -1010,7 +1009,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                   options->direction,
                                                   options->interpolation,
                                                   options->recursion_level,
-                                                  clip_result,
+                                                  clip,
                                                   new_offset_x,
                                                   new_offset_y,
                                                   progress);
@@ -1019,12 +1018,17 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
     {
       /*  this happens for entire drawables, paths and layer groups  */
 
+      /*  always clip layer masks so they keep their size
+       */
+      if (GIMP_IS_CHANNEL (active_item))
+        clip = GIMP_TRANSFORM_RESIZE_CLIP;
+
       gimp_item_transform (active_item, context,
                            &tr_tool->transform,
                            options->direction,
                            options->interpolation,
                            options->recursion_level,
-                           options->clip,
+                           clip,
                            progress);
     }
 
