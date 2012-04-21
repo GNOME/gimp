@@ -333,7 +333,7 @@ gimp_heal_laplace_iteration (gdouble *matrix,
       off0 =  i * rowstride;
       offm0 = i * width;
 
-      for (j = (i % 2) + 1; j < width; j += 2)
+      for (j = (i % 2) ? 0 : 1; j < width; j += 2)
         {
           off = off0 + j * depth;
           offm = offm0 + j;
