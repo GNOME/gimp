@@ -24,7 +24,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 #include <pango/pangocairo.h>
 #include <pango/pangofc-fontmap.h>
 

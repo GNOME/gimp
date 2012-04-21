@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <string.h> /* memcmp */
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"

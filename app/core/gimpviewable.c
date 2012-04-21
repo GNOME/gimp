@@ -794,35 +794,33 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
  * Returns: a #GimpTempBuf containing the preview image.
  **/
 GimpTempBuf *
-gimp_viewable_get_dummy_preview (GimpViewable  *viewable,
-                                 gint           width,
-                                 gint           height,
-                                 gint           bpp)
+gimp_viewable_get_dummy_preview (GimpViewable *viewable,
+                                 gint          width,
+                                 gint          height,
+                                 const Babl   *format)
 {
   GdkPixbuf   *pixbuf;
   GimpTempBuf *buf;
-  guchar      *src;
-  guchar      *dest;
+  GeglBuffer  *src_buffer;
+  GeglBuffer  *dest_buffer;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
-  g_return_val_if_fail (bpp == 3 || bpp == 4, NULL);
+  g_return_val_if_fail (format != NULL, NULL);
 
-  pixbuf = gimp_viewable_get_dummy_pixbuf (viewable, width, height, bpp);
+  pixbuf = gimp_viewable_get_dummy_pixbuf (viewable, width, height,
+                                           babl_format_has_alpha (format));
 
-  buf = gimp_temp_buf_new (width, height, gimp_bpp_to_babl_format (bpp));
+  buf = gimp_temp_buf_new (width, height, format);
 
-  src  = gdk_pixbuf_get_pixels (pixbuf);
-  dest = gimp_temp_buf_get_data (buf);
+  src_buffer  = gimp_pixbuf_create_buffer (pixbuf);
+  dest_buffer = gimp_temp_buf_create_buffer (buf);
 
-  while (height--)
-    {
-      memcpy (dest, src, width * bpp);
+  gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
 
-      src  += gdk_pixbuf_get_rowstride (pixbuf);
-      dest += width * bpp;
-    }
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
 
   g_object_unref (pixbuf);
 
@@ -968,7 +966,7 @@ GdkPixbuf *
 gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
                                 gint           width,
                                 gint           height,
-                                gint           bpp)
+                                gboolean       with_alpha)
 {
   GdkPixbuf *icon;
   GdkPixbuf *pixbuf;
@@ -978,7 +976,6 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
-  g_return_val_if_fail (bpp == 3 || bpp == 4, NULL);
 
   icon = gdk_pixbuf_new_from_inline (-1, stock_question_64, FALSE, NULL);
 
@@ -993,7 +990,7 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
   w = RINT (ratio * (gdouble) w);
   h = RINT (ratio * (gdouble) h);
 
-  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, (bpp == 4), 8, width, height);
+  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, with_alpha, 8, width, height);
   gdk_pixbuf_fill (pixbuf, 0xffffffff);
 
   if (w && h)

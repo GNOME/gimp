@@ -735,13 +735,22 @@ drawable_thumbnail_invoker (GimpProcedure      *procedure,
         width  = MAX (1, (height * dwidth) / dheight);
 
       if (image->gimp->config->layer_previews)
-        buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable), context,
-                                             width, height);
+        {
+          buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable), context,
+                                               width, height);
+        }
       else
-        buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
-                                               width, height,
-                                               gimp_drawable_has_alpha (drawable) ?
-                                               4 : 3);
+        {
+          const Babl *format;
+
+          if (gimp_drawable_has_alpha (drawable))
+            format = babl_format ("R'G'B'A u8");
+          else
+            format = babl_format ("R'G'B' u8");
+
+          buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+                                                 width, height, format);
+        }
 
       if (buf)
         {
@@ -813,15 +822,25 @@ drawable_sub_thumbnail_invoker (GimpProcedure      *procedure,
           GimpTempBuf *buf;
 
           if (image->gimp->config->layer_previews)
-            buf = gimp_drawable_get_sub_preview (drawable,
-                                                 src_x, src_y,
-                                                 src_width, src_height,
-                                                 dest_width, dest_height);
+            {
+              buf = gimp_drawable_get_sub_preview (drawable,
+                                                   src_x, src_y,
+                                                   src_width, src_height,
+                                                   dest_width, dest_height);
+            }
           else
-            buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
-                                                   dest_width, dest_height,
-                                                   gimp_drawable_has_alpha (drawable) ?
-                                                   4 : 3);
+            {
+              const Babl *format;
+
+              if (gimp_drawable_has_alpha (drawable))
+                format = babl_format ("R'G'B'A u8");
+              else
+                format = babl_format ("R'G'B' u8");
+
+              buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+                                                     dest_width, dest_height,
+                                                     format);
+            }
 
           if (buf)
             {

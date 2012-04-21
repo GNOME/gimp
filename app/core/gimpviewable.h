@@ -148,7 +148,7 @@ GimpTempBuf   * gimp_viewable_get_new_preview    (GimpViewable  *viewable,
 GimpTempBuf   * gimp_viewable_get_dummy_preview  (GimpViewable  *viewable,
                                                   gint           width,
                                                   gint           height,
-                                                  gint           bpp);
+                                                  const Babl    *format);
 
 GdkPixbuf     * gimp_viewable_get_pixbuf         (GimpViewable  *viewable,
                                                   GimpContext   *context,
@@ -162,7 +162,7 @@ GdkPixbuf     * gimp_viewable_get_new_pixbuf     (GimpViewable  *viewable,
 GdkPixbuf     * gimp_viewable_get_dummy_pixbuf   (GimpViewable  *viewable,
                                                   gint           width,
                                                   gint           height,
-                                                  gint           bpp);
+                                                  gboolean       with_alpha);
 
 gchar         * gimp_viewable_get_description    (GimpViewable  *viewable,
                                                   gchar        **tooltip);
