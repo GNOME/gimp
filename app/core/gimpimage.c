@@ -1551,7 +1551,12 @@ gimp_image_get_mask_format (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return babl_format ("Y u8");
+  switch (gimp_image_get_precision (image))
+    {
+    case GIMP_PRECISION_U8: return babl_format ("Y u8");
+    }
+
+  g_return_val_if_reached (NULL);
 }
 
 gint
@@ -2061,12 +2066,33 @@ gimp_image_get_component_format (const GimpImage *image,
 
   switch (channel)
     {
-    case GIMP_RED_CHANNEL:     return babl_format ("R' u8");
-    case GIMP_GREEN_CHANNEL:   return babl_format ("G' u8");
-    case GIMP_BLUE_CHANNEL:    return babl_format ("B' u8");
-    case GIMP_GRAY_CHANNEL:    return babl_format ("Y' u8");
-    case GIMP_INDEXED_CHANNEL: return babl_format ("Y' u8"); /* XXX: seems wrong */
-    case GIMP_ALPHA_CHANNEL:   return babl_format ("A u8");
+    case GIMP_RED_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_image_get_precision (image),
+                                         RED);
+
+    case GIMP_GREEN_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_image_get_precision (image),
+                                         GREEN);
+
+    case GIMP_BLUE_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_image_get_precision (image),
+                                         BLUE);
+
+    case GIMP_ALPHA_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_image_get_precision (image),
+                                         ALPHA);
+
+    case GIMP_GRAY_CHANNEL:
+      return gimp_babl_component_format (GIMP_GRAY,
+                                         gimp_image_get_precision (image),
+                                         GRAY);
+
+    case GIMP_INDEXED_CHANNEL:
+      return babl_format ("Y' u8"); /* XXX: seems wrong */
     }
 
   return NULL;

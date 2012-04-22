@@ -206,3 +206,54 @@ gimp_babl_format (GimpImageBaseType  base_type,
 
   g_return_val_if_reached (NULL);
 }
+
+const Babl *
+gimp_babl_component_format (GimpImageBaseType base_type,
+                            GimpPrecision     precision,
+                            gint              index)
+{
+  switch (base_type)
+    {
+    case GIMP_RGB:
+      switch (precision)
+        {
+        case GIMP_PRECISION_U8:
+          switch (index)
+            {
+            case 0: return babl_format ("R' u8");
+            case 1: return babl_format ("G' u8");
+            case 2: return babl_format ("B' u8");
+            case 3: return babl_format ("A u8");
+            default:
+              break;
+            }
+
+        default:
+          break;
+        }
+      break;
+
+    case GIMP_GRAY:
+      switch (precision)
+        {
+        case GIMP_PRECISION_U8:
+          switch (index)
+            {
+            case 0: return babl_format ("Y' u8");
+            case 1: return babl_format ("A u8");
+            default:
+              break;
+            }
+
+        default:
+          break;
+        }
+      break;
+
+    case GIMP_INDEXED:
+      /* need to use the image's api for this */
+      break;
+    }
+
+  g_return_val_if_reached (NULL);
+}
