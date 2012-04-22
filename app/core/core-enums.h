@@ -324,7 +324,7 @@ typedef enum
 } GimpOrientationType;
 
 
-#define GIMP_PRECISION_GET_TYPE (gimp_precision_get_type ())
+#define GIMP_TYPE_PRECISION (gimp_precision_get_type ())
 
 GType gimp_precision_get_type (void) G_GNUC_CONST;
 

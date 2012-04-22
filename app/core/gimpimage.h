@@ -106,7 +106,8 @@ GType           gimp_image_get_type              (void) G_GNUC_CONST;
 GimpImage     * gimp_image_new                   (Gimp               *gimp,
                                                   gint                width,
                                                   gint                height,
-                                                  GimpImageBaseType   base_type);
+                                                  GimpImageBaseType   base_type,
+                                                  GimpPrecision       precision);
 
 GimpImageBaseType  gimp_image_base_type            (const GimpImage  *image);
 GimpPrecision      gimp_image_get_precision        (const GimpImage  *image);

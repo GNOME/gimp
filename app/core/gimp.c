@@ -1117,13 +1117,14 @@ gimp_create_image (Gimp              *gimp,
                    gint               width,
                    gint               height,
                    GimpImageBaseType  type,
+                   GimpPrecision      precision,
                    gboolean           attach_comment)
 {
   GimpImage *image;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  image = gimp_image_new (gimp, width, height, type);
+  image = gimp_image_new (gimp, width, height, type, precision);
 
   if (attach_comment)
     {

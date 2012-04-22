@@ -98,6 +98,7 @@ gimp_image_new_from_template (Gimp         *gimp,
                              gimp_template_get_width (template),
                              gimp_template_get_height (template),
                              gimp_template_get_image_type (template),
+                             GIMP_PRECISION_U8, /* XXX add to template */
                              FALSE);
 
   gimp_image_undo_disable (image);
@@ -174,7 +175,9 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   new_image = gimp_create_image (gimp,
                                  gimp_item_get_width  (item),
                                  gimp_item_get_height (item),
-                                 type, TRUE);
+                                 type,
+                                 gimp_drawable_get_precision (drawable),
+                                 TRUE);
   gimp_image_undo_disable (new_image);
 
   if (type == GIMP_INDEXED)
@@ -231,7 +234,9 @@ gimp_image_new_from_component (Gimp            *gimp,
   new_image = gimp_create_image (gimp,
                                  gimp_image_get_width  (image),
                                  gimp_image_get_height (image),
-                                 GIMP_GRAY, TRUE);
+                                 GIMP_GRAY,
+                                 gimp_image_get_precision (image),
+                                 TRUE);
 
   gimp_image_undo_disable (new_image);
 
@@ -279,6 +284,7 @@ gimp_image_new_from_buffer (Gimp       *gimp,
                              gimp_buffer_get_width  (paste),
                              gimp_buffer_get_height (paste),
                              gimp_babl_format_get_base_type (format),
+                             gimp_babl_format_get_precision (format),
                              TRUE);
   gimp_image_undo_disable (image);
 
@@ -337,6 +343,7 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
                                  gdk_pixbuf_get_width  (pixbuf),
                                  gdk_pixbuf_get_height (pixbuf),
                                  base_type,
+                                 GIMP_PRECISION_U8,
                                  FALSE);
 
   gimp_image_undo_disable (new_image);

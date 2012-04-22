@@ -152,7 +152,8 @@ image_new_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      image = gimp_create_image (gimp, width, height, type, FALSE);
+      image = gimp_create_image (gimp, width, height, type,
+                                 GIMP_PRECISION_U8, FALSE);
 
       if (! image)
         success = FALSE;

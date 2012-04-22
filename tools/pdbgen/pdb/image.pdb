@@ -113,7 +113,8 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  image = gimp_create_image (gimp, width, height, type, FALSE);
+  image = gimp_create_image (gimp, width, height, type,
+                             GIMP_PRECISION_U8, FALSE);
 
   if (! image)
     success = FALSE;

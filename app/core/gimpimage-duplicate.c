@@ -91,6 +91,7 @@ gimp_image_duplicate (GimpImage *image)
                                  gimp_image_get_width  (image),
                                  gimp_image_get_height (image),
                                  gimp_image_base_type (image),
+                                 gimp_image_get_precision (image),
                                  FALSE);
   gimp_image_undo_disable (new_image);
 

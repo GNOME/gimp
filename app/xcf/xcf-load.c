@@ -149,7 +149,9 @@ xcf_load_image (Gimp     *gimp,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &image_type, 1);
 
-  image = gimp_create_image (gimp, width, height, image_type, FALSE);
+  image = gimp_create_image (gimp, width, height, image_type,
+                             GIMP_PRECISION_U8,
+                             FALSE);
 
   gimp_image_undo_disable (image);
 

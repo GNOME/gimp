@@ -181,6 +181,7 @@ GimpImage    * gimp_create_image         (Gimp                *gimp,
                                           gint                 width,
                                           gint                 height,
                                           GimpImageBaseType    type,
+                                          GimpPrecision        precision,
                                           gboolean             attach_comment);
 
 void           gimp_set_default_context  (Gimp                *gimp,

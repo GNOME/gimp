@@ -126,7 +126,8 @@ enum
   PROP_ID,
   PROP_WIDTH,
   PROP_HEIGHT,
-  PROP_BASE_TYPE
+  PROP_BASE_TYPE,
+  PROP_PRECISION
 };
 
 
@@ -594,6 +595,13 @@ gimp_image_class_init (GimpImageClass *klass)
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_PRECISION,
+                                   g_param_spec_enum ("precision", NULL, NULL,
+                                                      GIMP_TYPE_PRECISION,
+                                                      GIMP_PRECISION_U8,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
   g_type_class_add_private (klass, sizeof (GimpImagePrivate));
 }
 
@@ -813,6 +821,9 @@ gimp_image_set_property (GObject      *object,
     case PROP_BASE_TYPE:
       private->base_type = g_value_get_enum (value);
       break;
+    case PROP_PRECISION:
+      private->precision = g_value_get_enum (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -844,6 +855,9 @@ gimp_image_get_property (GObject    *object,
       break;
     case PROP_BASE_TYPE:
       g_value_set_enum (value, private->base_type);
+      break;
+    case PROP_PRECISION:
+      g_value_set_enum (value, private->precision);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1451,7 +1465,8 @@ GimpImage *
 gimp_image_new (Gimp              *gimp,
                 gint               width,
                 gint               height,
-                GimpImageBaseType  base_type)
+                GimpImageBaseType  base_type,
+                GimpPrecision      precision)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -1460,6 +1475,7 @@ gimp_image_new (Gimp              *gimp,
                        "width",     width,
                        "height",    height,
                        "base-type", base_type,
+                       "precision", precision,
                        NULL);
 }
 
