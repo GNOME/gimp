@@ -189,7 +189,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
-  result = gimp_temp_buf_new (dest_width, dest_height, babl_format ("Y u8"));
+  result = gimp_temp_buf_new (dest_width, dest_height,
+                              brush->mask->format);
 
   dest = gimp_temp_buf_get_data (result);
   src  = gimp_temp_buf_get_data (source);
@@ -487,7 +488,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gimp_matrix3_invert (&matrix);
 
   result = gimp_temp_buf_new (dest_width, dest_height,
-                              babl_format ("R'G'B' u8"));
+                              brush->pixmap->format);
 
   dest = gimp_temp_buf_get_data (result);
   src  = gimp_temp_buf_get_data (source);
