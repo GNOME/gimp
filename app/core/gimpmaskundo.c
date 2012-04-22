@@ -81,9 +81,10 @@ gimp_mask_undo_constructed (GObject *object)
 
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
-      GimpDrawable  *drawable    = GIMP_DRAWABLE (channel);
+      GimpDrawable *drawable = GIMP_DRAWABLE (channel);
 
-      mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE(0,0,x2-x1, y2-y1),
+      mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                           x2 - x1, y2 - y1),
                                            babl_format ("Y float"));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
@@ -126,15 +127,16 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
-      GeglRectangle  src_rect    = { x1, y1, x2 - x1, y2 - y1 };
-
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                                     babl_format ("Y float"));
 
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), &src_rect,
-                        new_buffer, GEGL_RECTANGLE (0,0,0,0));
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
+                        new_buffer,
+                        GEGL_RECTANGLE (0, 0, 0, 0));
 
-      gegl_buffer_clear (gimp_drawable_get_buffer (drawable), &src_rect);
+      gegl_buffer_clear (gimp_drawable_get_buffer (drawable),
+                         GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
     }
   else
     {
@@ -143,13 +145,13 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   if (mask_undo->buffer)
     {
-      GeglRectangle  dest_rect = { mask_undo->x, mask_undo->y, 0, 0 };
-
       width  = gegl_buffer_get_width  (mask_undo->buffer);
       height = gegl_buffer_get_height (mask_undo->buffer);
 
-      gegl_buffer_copy (mask_undo->buffer, NULL,
-                        gimp_drawable_get_buffer (drawable), &dest_rect);
+      gegl_buffer_copy (mask_undo->buffer,
+                        NULL,
+                        gimp_drawable_get_buffer (drawable),
+                        GEGL_RECTANGLE (mask_undo->x, mask_undo->y, 0, 0));
 
       g_object_unref (mask_undo->buffer);
     }
