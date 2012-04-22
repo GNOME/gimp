@@ -795,8 +795,8 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                          gdouble                   image_opacity,
                          GimpPaintApplicationMode  mode)
 {
-  PixelRegion paint_maskPR;
-  gint        width, height;
+  GeglRectangle  mask_rect;
+  gint           width, height;
 
   if (! gimp_drawable_has_alpha (drawable))
     {
@@ -823,22 +823,15 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                    paint_opacity);
 
       /* initialize the maskPR from the canvas buffer */
-      pixel_region_init (&paint_maskPR,
-                         gimp_gegl_buffer_get_tiles (core->canvas_buffer),
-                         core->paint_buffer_x,
-                         core->paint_buffer_y,
-                         width, height,
-                         FALSE);
+      paint_mask = core->canvas_buffer;
+
+      mask_rect = *GEGL_RECTANGLE (core->paint_buffer_x,
+                                   core->paint_buffer_y,
+                                   width, height);
     }
   else
     {
-      /* The mask is just the paint_mask */
-      pixel_region_init_temp_buf (&paint_maskPR,
-                                  gimp_gegl_buffer_get_temp_buf (paint_mask),
-                                  paint_mask_rect->x,
-                                  paint_mask_rect->y,
-                                  paint_mask_rect->width,
-                                  paint_mask_rect->height);
+      mask_rect = *paint_mask_rect;
     }
 
   /*  apply the paint area to the image  */
@@ -846,7 +839,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                 GEGL_RECTANGLE (0, 0, width, height),
                                 FALSE, NULL,
                                 image_opacity,
-                                &paint_maskPR,
+                                paint_mask, &mask_rect,
                                 core->paint_buffer_x,
                                 core->paint_buffer_y);
 

@@ -1207,19 +1207,21 @@ gimp_drawable_replace_buffer (GimpDrawable        *drawable,
                               gboolean             push_undo,
                               const gchar         *undo_desc,
                               gdouble              opacity,
-                              PixelRegion         *maskPR,
+                              GeglBuffer          *mask,
+                              const GeglRectangle *mask_region,
                               gint                 x,
                               gint                 y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
-  g_return_if_fail (maskPR != NULL);
+  g_return_if_fail (GEGL_IS_BUFFER (mask));
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->replace_buffer (drawable, buffer,
                                                       buffer_region,
                                                       push_undo, undo_desc,
-                                                      opacity, maskPR,
+                                                      opacity,
+                                                      mask, mask_region,
                                                       x, y);
 }
 

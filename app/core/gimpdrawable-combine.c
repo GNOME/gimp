@@ -252,7 +252,8 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
                                    gboolean             push_undo,
                                    const gchar         *undo_desc,
                                    gdouble              opacity,
-                                   PixelRegion         *maskPR,
+                                   GeglBuffer          *mask_buffer,
+                                   const GeglRectangle *mask_buffer_region,
                                    gint                 dest_x,
                                    gint                 dest_y)
 {
@@ -261,6 +262,7 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
   GimpChannel     *mask  = gimp_image_get_mask (image);
   GimpTempBuf     *temp_buf;
   PixelRegion      src2PR;
+  PixelRegion      maskPR;
   gint             x, y, width, height;
   gint             offset_x, offset_y;
   PixelRegion      src1PR, destPR;
@@ -280,6 +282,26 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
       pixel_region_init (&src2PR, gimp_gegl_buffer_get_tiles (buffer),
                          buffer_region->x, buffer_region->y,
                          buffer_region->width, buffer_region->height,
+                         FALSE);
+    }
+
+  temp_buf = gimp_gegl_buffer_get_temp_buf (mask_buffer);
+
+  if (temp_buf)
+    {
+      pixel_region_init_temp_buf (&maskPR, temp_buf,
+                                  mask_buffer_region->x,
+                                  mask_buffer_region->y,
+                                  mask_buffer_region->width,
+                                  mask_buffer_region->height);
+    }
+  else
+    {
+      pixel_region_init (&maskPR, gimp_gegl_buffer_get_tiles (mask_buffer),
+                         mask_buffer_region->x,
+                         mask_buffer_region->y,
+                         mask_buffer_region->width,
+                         mask_buffer_region->height,
                          FALSE);
     }
 
@@ -366,7 +388,7 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
 
       pixel_region_init_temp_buf (&tempPR, temp_buf, 0, 0, width, height);
 
-      apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
+      apply_mask_to_region (&tempPR, &maskPR, OPAQUE_OPACITY);
 
       pixel_region_init_temp_buf (&tempPR, temp_buf, 0, 0, width, height);
 
@@ -379,7 +401,7 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
     }
   else
     {
-      combine_regions_replace (&src1PR, &src2PR, &destPR, maskPR, NULL,
+      combine_regions_replace (&src1PR, &src2PR, &destPR, &maskPR, NULL,
                                opacity * 255.999,
                                active_components,
                                operation);

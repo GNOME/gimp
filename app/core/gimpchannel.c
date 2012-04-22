@@ -152,7 +152,8 @@ static void      gimp_channel_replace_buffer (GimpDrawable        *drawable,
                                               gboolean             push_undo,
                                               const gchar         *undo_desc,
                                               gdouble              opacity,
-                                              PixelRegion          *maskPR,
+                                              GeglBuffer          *mask,
+                                              const GeglRectangle *mask_region,
                                               gint                 x,
                                               gint                 y);
 static void      gimp_channel_set_buffer     (GimpDrawable        *drawable,
@@ -835,7 +836,8 @@ gimp_channel_replace_buffer (GimpDrawable        *drawable,
                              gboolean             push_undo,
                              const gchar         *undo_desc,
                              gdouble              opacity,
-                             PixelRegion         *maskPR,
+                             GeglBuffer          *mask,
+                             const GeglRectangle *mask_region,
                              gint                 x,
                              gint                 y)
 {
@@ -845,7 +847,7 @@ gimp_channel_replace_buffer (GimpDrawable        *drawable,
                                                       buffer_region,
                                                       push_undo, undo_desc,
                                                       opacity,
-                                                      maskPR,
+                                                      mask, mask_region,
                                                       x, y);
 
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;

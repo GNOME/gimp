@@ -40,7 +40,8 @@ void   gimp_drawable_real_replace_buffer (GimpDrawable         *drawable,
                                           gboolean              push_undo,
                                           const gchar          *undo_desc,
                                           gdouble               opacity,
-                                          PixelRegion          *maskPR,
+                                          GeglBuffer           *mask,
+                                          const GeglRectangle  *mask_region,
                                           gint                  x,
                                           gint                  y);
 
