@@ -49,7 +49,7 @@ enum
   PROP_XRESOLUTION,
   PROP_YRESOLUTION,
   PROP_RESOLUTION_UNIT,
-  PROP_IMAGE_TYPE,
+  PROP_BASE_TYPE,
   PROP_FILL_TYPE,
   PROP_COMMENT,
   PROP_FILENAME
@@ -68,7 +68,8 @@ struct _GimpTemplatePrivate
   gdouble            yresolution;
   GimpUnit           resolution_unit;
 
-  GimpImageBaseType  image_type;
+  GimpImageBaseType  base_type;
+
   GimpFillType       fill_type;
 
   gchar             *comment;
@@ -149,8 +150,8 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                  FALSE, FALSE, GIMP_UNIT_INCH,
                                  GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_IMAGE_TYPE,
-                                 "image-type",
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_TYPE,
+                                 "image-type", /* serialized name */
                                  NULL,
                                  GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB,
                                  GIMP_PARAM_STATIC_STRINGS);
@@ -228,8 +229,8 @@ gimp_template_set_property (GObject      *object,
     case PROP_RESOLUTION_UNIT:
       private->resolution_unit = g_value_get_int (value);
       break;
-    case PROP_IMAGE_TYPE:
-      private->image_type = g_value_get_enum (value);
+    case PROP_BASE_TYPE:
+      private->base_type = g_value_get_enum (value);
       break;
     case PROP_FILL_TYPE:
       private->fill_type = g_value_get_enum (value);
@@ -278,8 +279,8 @@ gimp_template_get_property (GObject    *object,
     case PROP_RESOLUTION_UNIT:
       g_value_set_int (value, private->resolution_unit);
       break;
-    case PROP_IMAGE_TYPE:
-      g_value_set_enum (value, private->image_type);
+    case PROP_BASE_TYPE:
+      g_value_set_enum (value, private->base_type);
       break;
     case PROP_FILL_TYPE:
       g_value_set_enum (value, private->fill_type);
@@ -306,7 +307,7 @@ gimp_template_notify (GObject    *object,
   if (G_OBJECT_CLASS (parent_class)->notify)
     G_OBJECT_CLASS (parent_class)->notify (object, pspec);
 
-  channels = ((private->image_type == GIMP_RGB ? 3 : 1)     /* color      */ +
+  channels = ((private->base_type == GIMP_RGB ? 3 : 1)     /* color      */ +
               (private->fill_type == GIMP_TRANSPARENT_FILL) /* alpha      */ +
               1                                             /* selection  */);
 
@@ -315,7 +316,7 @@ gimp_template_notify (GObject    *object,
                            (guint64) private->height);
 
   private->initial_size +=
-    gimp_projection_estimate_memsize (private->image_type,
+    gimp_projection_estimate_memsize (private->base_type,
                                       private->width, private->height);
 
   if (! strcmp (pspec->name, "stock-id"))
@@ -341,7 +342,7 @@ gimp_template_set_from_image (GimpTemplate *template,
 {
   gdouble             xresolution;
   gdouble             yresolution;
-  GimpImageBaseType   image_type;
+  GimpImageBaseType   base_type;
   const GimpParasite *parasite;
   gchar              *comment = NULL;
 
@@ -350,10 +351,10 @@ gimp_template_set_from_image (GimpTemplate *template,
 
   gimp_image_get_resolution (image, &xresolution, &yresolution);
 
-  image_type = gimp_image_base_type (image);
+  base_type = gimp_image_base_type (image);
 
-  if (image_type == GIMP_INDEXED)
-    image_type = GIMP_RGB;
+  if (base_type == GIMP_INDEXED)
+    base_type = GIMP_RGB;
 
   parasite =  gimp_image_parasite_find (image, "gimp-comment");
   if (parasite)
@@ -366,7 +367,7 @@ gimp_template_set_from_image (GimpTemplate *template,
                 "xresolution",     xresolution,
                 "yresolution",     yresolution,
                 "resolution-unit", gimp_image_get_unit (image),
-                "image-type",      image_type,
+                "image-type",      base_type,
                 "comment",         comment,
                 NULL);
 
@@ -423,11 +424,11 @@ gimp_template_get_resolution_unit (GimpTemplate *template)
 }
 
 GimpImageBaseType
-gimp_template_get_image_type (GimpTemplate *template)
+gimp_template_get_base_type (GimpTemplate *template)
 {
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_RGB);
 
-  return GET_PRIVATE (template)->image_type;
+  return GET_PRIVATE (template)->base_type;
 }
 
 GimpFillType

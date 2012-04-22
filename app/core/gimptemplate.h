@@ -77,7 +77,7 @@ gdouble             gimp_template_get_resolution_x    (GimpTemplate *template);
 gdouble             gimp_template_get_resolution_y    (GimpTemplate *template);
 GimpUnit            gimp_template_get_resolution_unit (GimpTemplate *template);
 
-GimpImageBaseType   gimp_template_get_image_type      (GimpTemplate *template);
+GimpImageBaseType   gimp_template_get_base_type       (GimpTemplate *template);
 GimpFillType        gimp_template_get_fill_type       (GimpTemplate *template);
 
 const gchar       * gimp_template_get_comment         (GimpTemplate *template);

@@ -674,7 +674,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   private->block_aspect = FALSE;
 
   gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE,
-                       gimp_template_get_image_type (template),
+                       gimp_template_get_base_type (template),
                        NULL, NULL, &desc, NULL);
 
   xres = ROUND (gimp_template_get_resolution_x (template));
