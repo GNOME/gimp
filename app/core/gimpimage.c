@@ -1291,10 +1291,20 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
+#if 0
+      /* XXX use real format once the legacy projection is gone */
       return gimp_image_get_format (image, GIMP_RGB, TRUE);
+#else
+      return babl_format ("R'G'B'A u8");
+#endif
 
     case GIMP_GRAY:
+#if 0
+      /* XXX use real format once the legacy projection is gone */
       return gimp_image_get_format (image, GIMP_GRAY, TRUE);
+#else
+      return babl_format ("Y'A u8");
+#endif
     }
 
   g_assert_not_reached ();
